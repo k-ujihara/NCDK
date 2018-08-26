@@ -22,7 +22,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Numerics;
 using NCDK.Sgroups;
 using NCDK.Stereo;
@@ -326,7 +326,7 @@ namespace NCDK.IO
             sgroup.Subscript = "n";
             sgroup.PutValue(SgroupKey.CtabConnectivity, "HH");
             sgroups.Add(sgroup);
-            mol.SetProperty(CDKPropertyName.CtabSgroups, sgroups);
+            mol.SetCtabSgroups(sgroups);
             string res = WriteToStr(mol);
             Assert.IsTrue(res.Contains("M  V30 1 SRU 0 ATOMS=(2 2 3) XBONDS=(2 1 3) LABEL=n CONNECT=HH\n"));
         }
@@ -358,7 +358,7 @@ namespace NCDK.IO
             sgroup.Type = SgroupType.CtabMultipleGroup;
             sgroup.Subscript = repeatAtoms.ToString();
             sgroups.Add(sgroup);
-            mol.SetProperty(CDKPropertyName.CtabSgroups, sgroups);
+            mol.SetCtabSgroups(sgroups);
             string res = WriteToStr(mol);
             Assert.IsTrue(res.Contains("M  V30 1 MUL 0 ATOMS=(50 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 2-\n"
                                                     + "M  V30 2 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 -\n"

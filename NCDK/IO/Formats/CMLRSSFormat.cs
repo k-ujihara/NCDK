@@ -19,6 +19,7 @@
 
 using NCDK.Tools;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -49,7 +50,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => null;
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = Array.Empty<string>();
+        public override IReadOnlyList<string> NameExtensions { get; } = Array.Empty<string>();
 
         /// <inheritdoc/>
         public string ReaderClassName => null;
@@ -62,8 +63,8 @@ namespace NCDK.IO.Formats
 
         /// <inheritdoc/>
         public DataFeatures SupportedDataFeatures =>
-                DataFeatures.HAS_3D_COORDINATES | DataFeatures.HAS_GRAPH_REPRESENTATION
-                    | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+                DataFeatures.Has3DCoordinates | DataFeatures.HasGraphRepresentation
+                    | DataFeatures.HasAtomElementSymbol;
 
         /// <inheritdoc/>
         public DataFeatures RequiredDataFeatures => DataFeatures.None;

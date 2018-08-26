@@ -2,11 +2,11 @@
 NCDK.QSAR.Descriptors.Atomic.VdWRadiusDescriptor
 NCDK.QSAR.Descriptors.Atomic.StabilizationPlusChargeDescriptor
 NCDK.QSAR.Descriptors.Atomic.SigmaElectronegativityDescriptor
-NCDK.QSAR.Descriptors.Atomic.RDFProtonDescriptor_GSR
-NCDK.QSAR.Descriptors.Atomic.RDFProtonDescriptor_GHR_topol
-NCDK.QSAR.Descriptors.Atomic.RDFProtonDescriptor_GHR
-NCDK.QSAR.Descriptors.Atomic.RDFProtonDescriptor_GDR
-NCDK.QSAR.Descriptors.Atomic.RDFProtonDescriptor_G3R
+NCDK.QSAR.Descriptors.Atomic.RDFProtonDescriptorGSR
+NCDK.QSAR.Descriptors.Atomic.RDFProtonDescriptorGHRTopology
+NCDK.QSAR.Descriptors.Atomic.RDFProtonDescriptorGHR
+NCDK.QSAR.Descriptors.Atomic.RDFProtonDescriptorGDR
+NCDK.QSAR.Descriptors.Atomic.RDFProtonDescriptorG3R
 NCDK.QSAR.Descriptors.Atomic.ProtonTotalPartialChargeDescriptor
 NCDK.QSAR.Descriptors.Atomic.ProtonAffinityHOSEDescriptor
 NCDK.QSAR.Descriptors.Atomic.PiElectronegativityDescriptor

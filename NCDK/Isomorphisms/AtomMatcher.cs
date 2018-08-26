@@ -110,7 +110,7 @@ namespace NCDK.Isomorphisms
             /// </summary>
             /// <param name="atom">an atom</param>
             /// <returns>the atomic number</returns>
-            private int GetAtomicNumber(IAtom atom)
+            private static int GetAtomicNumber(IAtom atom)
             {
                 int? elem = atom.AtomicNumber;
                 if (elem != null) return elem.Value;

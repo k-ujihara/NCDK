@@ -50,6 +50,6 @@ namespace NCDK
         /// <summary>
         /// The sum of all bond orders in the ring.
         /// </summary>
-        int BondOrderSum { get; }
+        int GetBondOrderSum();
     }
 }

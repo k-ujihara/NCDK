@@ -19,6 +19,7 @@
 
 using NCDK.Tools;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -29,11 +30,9 @@ namespace NCDK.IO.Formats
     // @cdk.githash
     public class HINFormat : SimpleChemFormatMatcher, IChemFormatMatcher
     {
-        private static IResourceFormat myself = new HINFormat();
-
         public HINFormat() { }
 
-        public static IResourceFormat Instance => myself;
+        public static IResourceFormat Instance { get; } = new HINFormat();
 
         /// <inheritdoc/>
         public override string FormatName => "HyperChem HIN";
@@ -45,7 +44,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions => new string[] { "hin" };
+        public override IReadOnlyList<string> NameExtensions => new string[] { "hin" };
 
         /// <inheritdoc/>
         public override string ReaderClassName => typeof(HINReader).FullName;
@@ -73,10 +72,10 @@ namespace NCDK.IO.Formats
         public override bool IsXmlBased => false;
 
         /// <inheritdoc/>
-        public override DataFeatures SupportedDataFeatures => RequiredDataFeatures | DataFeatures.HAS_GRAPH_REPRESENTATION;
+        public override DataFeatures SupportedDataFeatures => RequiredDataFeatures | DataFeatures.HasGraphRepresentation;
 
         /// <inheritdoc/>
-        public override DataFeatures RequiredDataFeatures => DataFeatures.HAS_3D_COORDINATES | DataFeatures.HAS_ATOM_PARTIAL_CHARGES
-                    | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+        public override DataFeatures RequiredDataFeatures => DataFeatures.Has3DCoordinates | DataFeatures.HasAtomPartialCharges
+                    | DataFeatures.HasAtomElementSymbol;
     }
 }

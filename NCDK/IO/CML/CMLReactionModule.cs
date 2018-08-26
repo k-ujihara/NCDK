@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml.Linq;
@@ -48,7 +49,7 @@ namespace NCDK.IO.CML
 
         public override void StartElement(CMLStack xpath, XElement element)
         {
-            if ("reaction".Equals(element.Name.LocalName))
+            if (string.Equals("reaction", element.Name.LocalName, StringComparison.Ordinal))
             {
                 //            cdo.StartObject("Reaction");
                 if (CurrentReactionSet == null)
@@ -58,7 +59,7 @@ namespace NCDK.IO.CML
                 if (id != null) CurrentReaction.Id = id;
                 //                cdo.SetObjectProperty("Reaction", "id", id);
             }
-            else if ("reactionList".Equals(element.Name.LocalName))
+            else if (string.Equals("reactionList", element.Name.LocalName, StringComparison.Ordinal))
             {
                 //            cdo.StartObject("ReactionSet");
                 CurrentReactionSet = CurrentChemFile.Builder.NewReactionSet();
@@ -66,7 +67,7 @@ namespace NCDK.IO.CML
                 if (id != null) CurrentReactionSet.Id = id;
                 //                cdo.SetObjectProperty("reactionList", "id", id);
             }
-            else if ("reactant".Equals(element.Name.LocalName))
+            else if (string.Equals("reactant", element.Name.LocalName, StringComparison.Ordinal))
             {
                 //            cdo.StartObject("Reactant");
                 if (CurrentReaction == null)
@@ -89,7 +90,7 @@ namespace NCDK.IO.CML
                 }
                 //                cdo.SetObjectProperty("Reactant", "id", id);
             }
-            else if ("product".Equals(element.Name.LocalName))
+            else if (string.Equals("product", element.Name.LocalName, StringComparison.Ordinal))
             {
                 //            cdo.StartObject("Product");
                 if (CurrentReaction == null)
@@ -112,7 +113,7 @@ namespace NCDK.IO.CML
                 }
                 //                cdo.SetObjectProperty("Product", "id", id);
             }
-            else if ("substance".Equals(element.Name.LocalName))
+            else if (string.Equals("substance", element.Name.LocalName, StringComparison.Ordinal))
             {
                 //            cdo.StartObject("Agent");
                 if (CurrentReaction == null)
@@ -135,7 +136,7 @@ namespace NCDK.IO.CML
                 }
                 //                cdo.SetObjectProperty("Agent", "id", id);
             }
-            else if ("molecule".Equals(element.Name.LocalName))
+            else if (string.Equals("molecule", element.Name.LocalName, StringComparison.Ordinal))
             {
                 // clear existing molecule data
                 base.NewMolecule();
@@ -183,44 +184,35 @@ namespace NCDK.IO.CML
         {
             var local = element.Name.LocalName;
 
-            if ("reaction".Equals(local))
+            switch (local)
             {
-                //            cdo.EndObject("Reaction");
-                CurrentReactionSet.Add(CurrentReaction);
-                CurrentChemModel.ReactionSet = CurrentReactionSet;
-            }
-            else if ("reactionList".Equals(local))
-            {
-                //            cdo.EndObject("ReactionSet");
-                CurrentChemModel.ReactionSet = CurrentReactionSet;
-                /* FIXME: this should be when document is closed! */
-            }
-            else if ("reactant".Equals(local))
-            {
-                //            cdo.EndObject("Reactant");
-                CurrentReaction.Reactants.Add(CurrentMolecule);
-            }
-            else if ("product".Equals(local))
-            {
-                //            cdo.EndObject("Product");
-                CurrentReaction.Products.Add(CurrentMolecule);
-            }
-            else if ("substance".Equals(local))
-            {
-                //            cdo.EndObject("Agent");
-                CurrentReaction.Agents.Add(CurrentMolecule);
-            }
-            else if ("molecule".Equals(local))
-            {
-                Debug.WriteLine("Storing Molecule");
-                //if the current molecule exists in the currentMoleculeSet means that is a reference in these.
-                if (CurrentMoleculeSet.GetMultiplier(CurrentMolecule) == -1) base.StoreData();
-                // do nothing else but store atom/bond information
-            }
-            else
-            {
-                base.EndElement(xpath, element);
-            }
+                case "reaction":
+                    CurrentReactionSet.Add(CurrentReaction);
+                    CurrentChemModel.ReactionSet = CurrentReactionSet;
+                    break;
+                case "reactionList":
+                    CurrentChemModel.ReactionSet = CurrentReactionSet;
+                    /* FIXME: this should be when document is closed! */
+                    break;
+                case "reactant":
+                    CurrentReaction.Reactants.Add(CurrentMolecule);
+                    break;
+                case "product":
+                    CurrentReaction.Products.Add(CurrentMolecule);
+                    break;
+                case "substance":
+                    CurrentReaction.Agents.Add(CurrentMolecule);
+                    break;
+                case "molecule":
+                    Debug.WriteLine("Storing Molecule");
+                    //if the current molecule exists in the currentMoleculeSet means that is a reference in these.
+                    if (CurrentMoleculeSet.GetMultiplier(CurrentMolecule) == -1) base.StoreData();
+                    // do nothing else but store atom/bond information
+                    break;
+                default:
+                    base.EndElement(xpath, element);
+                    break;
+            }                    
         }
 
         /// <summary>
@@ -229,11 +221,12 @@ namespace NCDK.IO.CML
         /// <param name="molSet">Molecules</param>
         /// <param name="id">The ID the look</param>
         /// <returns>The IAtomContainer with the ID</returns>
-        private IAtomContainer GetMoleculeFromID(IEnumerable<IAtomContainer> molSet, string id)
+        private static IAtomContainer GetMoleculeFromID(IEnumerable<IAtomContainer> molSet, string id)
         {
             foreach (var mol in molSet)
             {
-                if (mol.Id.Equals(id)) return mol;
+                if (string.Equals(mol.Id, id, StringComparison.Ordinal))
+                    return mol;
             }
             return null;
         }

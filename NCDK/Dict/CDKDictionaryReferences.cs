@@ -39,39 +39,44 @@ namespace NCDK.Dict
     // @cdk.created    2003-08-06
     // @cdk.keyword    dictionary, implicit CDK references
     // @cdk.module     dict
-    public class CDKDictionaryReferences
+    public static class CDKDictionaryReferences
     {
-        private static string prefix = DictionaryDatabase.DictRefPropertyName;
+        private const string prefix = DictionaryDatabase.DictRefPropertyName;
 
-        public static void MakeReferencesExplicit(IChemObject obj)
+        public static void MakeReferencesExplicit(IChemObject o)
         {
-            if (obj is IAtom)
+            if (o == null)
             {
-                MakeReferencesExplicitForAtom((IAtom)obj);
+                throw new System.ArgumentNullException(nameof(o));
             }
-            else if (obj is IBond)
+
+            if (o is IAtom)
             {
-                MakeReferencesExplicitForBond((IBond)obj);
+                MakeReferencesExplicitForAtom((IAtom)o);
             }
-            else if (obj is IChemModel)
+            else if (o is IBond)
             {
-                MakeReferencesExplicitForChemModel((IChemModel)obj);
+                MakeReferencesExplicitForBond((IBond)o);
             }
-            else if (obj is IIsotope)
+            else if (o is IChemModel)
             {
-                MakeReferencesExplicitForIsotope((IIsotope)obj);
+                MakeReferencesExplicitForChemModel((IChemModel)o);
             }
-            else if (obj is IElement)
+            else if (o is IIsotope)
             {
-                MakeReferencesExplicitForElement((IElement)obj);
+                MakeReferencesExplicitForIsotope((IIsotope)o);
             }
-            else if (obj is IAtomContainer)
+            else if (o is IElement)
             {
-                MakeReferencesExplicitForMolecule((IAtomContainer)obj);
+                MakeReferencesExplicitForElement((IElement)o);
             }
-            else if (obj is IReaction)
+            else if (o is IAtomContainer)
             {
-                MakeReferencesExplicitForReaction((IReaction)obj);
+                MakeReferencesExplicitForMolecule((IAtomContainer)o);
+            }
+            else if (o is IReaction)
+            {
+                MakeReferencesExplicitForReaction((IReaction)o);
             }
         }
 
@@ -101,29 +106,28 @@ namespace NCDK.Dict
             element.SetProperty(prefix + ":field:symbol", "chemical:atomSymbol");
             element.SetProperty(prefix + ":field:atomicNumber", "chemical:atomicNumber");
 
-            if (element.Symbol.Equals("C"))
+            switch (element.Symbol)
             {
-                element.SetProperty(prefix + ":self:" + selfCounter++, "element:carbon");
-            }
-            else if (element.Symbol.Equals("N"))
-            {
-                element.SetProperty(prefix + ":self:" + selfCounter++, "element:nitrogen");
-            }
-            else if (element.Symbol.Equals("O"))
-            {
-                element.SetProperty(prefix + ":self:" + selfCounter++, "element:oxygen");
-            }
-            else if (element.Symbol.Equals("H"))
-            {
-                element.SetProperty(prefix + ":self:" + selfCounter++, "element:hydrogen");
-            }
-            else if (element.Symbol.Equals("S"))
-            {
-                element.SetProperty(prefix + ":self:" + selfCounter++, "element:sulphur");
-            }
-            else if (element.Symbol.Equals("P"))
-            {
-                element.SetProperty(prefix + ":self:" + selfCounter++, "element:phosphorus");
+                case "C":
+                    element.SetProperty(prefix + ":self:" + selfCounter++, "element:carbon");
+                    break;
+                case "N":
+                    element.SetProperty(prefix + ":self:" + selfCounter++, "element:nitrogen");
+                    break;
+                case "O":
+                    element.SetProperty(prefix + ":self:" + selfCounter++, "element:oxygen");
+                    break;
+                case "H":
+                    element.SetProperty(prefix + ":self:" + selfCounter++, "element:hydrogen");
+                    break;
+                case "S":
+                    element.SetProperty(prefix + ":self:" + selfCounter++, "element:sulphur");
+                    break;
+                case "P":
+                    element.SetProperty(prefix + ":self:" + selfCounter++, "element:phosphorus");
+                    break;
+                default:
+                    break;
             }
         }
 

@@ -28,8 +28,6 @@ namespace NCDK.Reactions.Types
     // @cdk.githash
     public abstract class AbstractRearrangementReaction : ReactionEngine, IReactionProcess
     {
-        public AbstractRearrangementReaction() { }
-
         /// <inheritdoc/>
         public abstract ReactionSpecification Specification { get; }
 
@@ -107,7 +105,7 @@ namespace NCDK.Reactions.Types
             return setOfReactions;
         }
         
-        private void SetActiveCenters(IAtomContainer reactant, CheckReactant checkReatant, CheckReactantAtom checkReatantAtom, CheckAtom checkAtom)
+        private static void SetActiveCenters(IAtomContainer reactant, CheckReactant checkReatant, CheckReactantAtom checkReatantAtom, CheckAtom checkAtom)
         {
             if (checkReatant != null && !checkReatant(reactant)) return;
 

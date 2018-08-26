@@ -1,6 +1,6 @@
 using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Templates;
 using System.Collections.Generic;
@@ -233,7 +233,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void Or()
         {
-            ICycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(3));
+            ICycleFinder cf = Cycles.Or(Cycles.AllSimpleFinder, Cycles.GetAllFinder(3));
             IAtomContainer fullerene = GetFullerene();
             CheckSize(cf.Find(fullerene, fullerene.Atoms.Count), 120);
         }
@@ -242,7 +242,7 @@ namespace NCDK.Graphs
         public virtual void Unchorded()
         {
             IAtomContainer container = TestMoleculeFactory.MakeAnthracene();
-            CheckSize(Cycles.GetUnchorded(Cycles.AllFinder).Find(container), 3);
+            CheckSize(Cycles.GetUnchorded(Cycles.AllSimpleFinder).Find(container), 3);
         }
 
         // load a boron fullerene

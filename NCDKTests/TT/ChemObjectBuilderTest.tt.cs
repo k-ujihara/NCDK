@@ -1,6 +1,7 @@
 
 
 
+
 /* Copyright (C) 2010  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net

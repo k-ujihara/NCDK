@@ -20,7 +20,7 @@
 using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
-using NCDK.Default;
+using NCDK.Silent;
 
 namespace NCDK.Graphs.Rebond
 {

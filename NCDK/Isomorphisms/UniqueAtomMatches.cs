@@ -75,7 +75,7 @@ namespace NCDK.Isomorphisms
         /// </summary>
         /// <param name="mapping">an atom mapping</param>
         /// <returns>a bit set of the mapped vertices (values in array)</returns>
-        private BitArray ToBitArray(int[] mapping)
+        private static BitArray ToBitArray(int[] mapping)
         {
             BitArray hits = new BitArray(0);
             foreach (var v in mapping)

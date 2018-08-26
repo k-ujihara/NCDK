@@ -52,7 +52,9 @@ namespace NCDK.Templates
         private static readonly Dictionary<string, string> singleLetterToThreeLetter;
         private static readonly Dictionary<string, string> threeLetterToSingleLetter;
 
+#pragma warning disable CA1810 // Initialize reference type static fields inline
         static AminoAcids()
+#pragma warning restore CA1810 // Initialize reference type static fields inline
         {
             // Create set of AtomContainers
             proteinogenics = new AminoAcid[20];
@@ -68,7 +70,7 @@ namespace NCDK.Templates
                     int counter = 0;
                     foreach (var ac in containersList)
                     {
-                        Debug.WriteLine("Adding AA: ", ac);
+                        Debug.WriteLine($"Adding AA: {ac}");
                         // convert into an AminoAcid
                         AminoAcid aminoAcid = new AminoAcid();
                         foreach (var next in ac.GetProperties().Keys)
@@ -76,20 +78,20 @@ namespace NCDK.Templates
                             Debug.WriteLine("Prop: " + next.ToString());
                             if (next is DictRef dictRef)
                             {
-                                // Debug.WriteLine("DictRef type: " + dictRef.Type);
-                                if (dictRef.Type.Equals("pdb:residueName"))
+                                // Debug.WriteLine("DictRef type: " + dictRef.Type}");
+                                if (string.Equals(dictRef.Type, "pdb:residueName", StringComparison.Ordinal))
                                 {
                                     aminoAcid.SetProperty(ResidueNameKey, ac.GetProperty<string>(next).ToUpperInvariant());
                                     aminoAcid.MonomerName = ac.GetProperty<string>(next);
                                 }
-                                else if (dictRef.Type.Equals("pdb:oneLetterCode"))
+                                else if (string.Equals(dictRef.Type, "pdb:oneLetterCode", StringComparison.Ordinal))
                                 {
                                     aminoAcid.SetProperty(ResidueNameShortKey, ac.GetProperty<string>(next));
                                 }
-                                else if (dictRef.Type.Equals("pdb:id"))
+                                else if (string.Equals(dictRef.Type, "pdb:id", StringComparison.Ordinal))
                                 {
                                     aminoAcid.SetProperty(IdKey, ac.GetProperty<string>(next));
-                                    Debug.WriteLine("Set AA ID to: ", ac.GetProperty<string>(next));
+                                    Debug.WriteLine($"Set AA ID to: {ac.GetProperty<string>(next)}");
                                 }
                                 else
                                 {
@@ -100,17 +102,17 @@ namespace NCDK.Templates
                         foreach (var atom in ac.Atoms)
                         {
                             string dictRef = atom.GetProperty<string>("org.openscience.cdk.dict");
-                            if (dictRef != null && dictRef.Equals("pdb:nTerminus"))
+                            switch (dictRef)
                             {
-                                aminoAcid.AddNTerminus(atom);
-                            }
-                            else if (dictRef != null && dictRef.Equals("pdb:cTerminus"))
-                            {
-                                aminoAcid.AddCTerminus(atom);
-                            }
-                            else
-                            {
-                                aminoAcid.Atoms.Add(atom);
+                                case "pdb:nTerminus":
+                                    aminoAcid.AddNTerminus(atom);
+                                    break;
+                                case "pdb:cTerminus":
+                                    aminoAcid.AddCTerminus(atom);
+                                    break;
+                                default:
+                                    aminoAcid.Atoms.Add(atom);
+                                    break;
                             }
                         }
                         foreach (var bond in ac.Bonds)

@@ -20,21 +20,21 @@ namespace NCDK.QSAR.Descriptors.Atomic
 {
 <#
         var fn = Path.Combine(new FileInfo(this.Host.TemplateFile).Directory.Parent.Parent.FullName, "IAtomicDescriptor");
-		using (var reader = new StreamReader(fn))
-		{
-			string line;
-			while ((line = reader.ReadLine()) != null)
-			{
-				if (line.Length > 0 && line[0] == '#')
-					continue;
-				line = line.Trim();
-				if (string.IsNullOrEmpty(line))
-					continue;
-				var cIndex = line.LastIndexOf(".");
-				var className = line.Substring(cIndex + 1);
+        using (var reader = new StreamReader(fn))
+        {
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (line.Length > 0 && line[0] == '#')
+                    continue;
+                line = line.Trim();
+                if (string.IsNullOrEmpty(line))
+                    continue;
+                var cIndex = line.LastIndexOf(".");
+                var className = line.Substring(cIndex + 1);
 #>
-	public partial class <#=className#>
-	{
+    public partial class <#=className#>
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -72,9 +72,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -84,11 +84,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
+    }
 <#
-			}
-		}
+            }
+        }
 #>
 }

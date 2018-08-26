@@ -196,8 +196,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             }
         }
 
-        private int SearchCorrespondingAtom(int mappedAtomsSize, int atomFromOtherMolecule, int molecule,
-                IList<int> mappedAtomsOrg)
+        private static int SearchCorrespondingAtom(int mappedAtomsSize, int atomFromOtherMolecule, int molecule, IList<int> mappedAtomsOrg)
         {
             List<int> mappedAtoms = new List<int>(mappedAtomsOrg);
 

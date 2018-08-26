@@ -19,7 +19,7 @@
 
 using System.Collections.Generic;
 using System.IO;
-using NCDK.Config.AtomType;
+using NCDK.Config.AtomTypes;
 
 namespace NCDK.Config
 {
@@ -34,9 +34,19 @@ namespace NCDK.Config
         : IAtomTypeConfigurator
     {
         private const string configFile = "NCDK.Config.Data.structgen_atomtypes.xml";
+        private Stream stream;
 
         /// <inheritdoc/>
-        public Stream Stream { get; set; }
+        public Stream GetStream()
+        {
+            return stream;
+        }
+
+        /// <inheritdoc/>
+        public void SetStream(Stream value)
+        {
+            stream = value;
+        }
 
         public CDKBasedAtomTypeConfigurator() { }
 
@@ -45,13 +55,13 @@ namespace NCDK.Config
         /// </summary>
         /// <param name="builder">used to construct the <see cref="IAtomType"/>'s</param>
         /// <returns><see cref="IEnumerable{IAtomType}"/> with read IAtomType's.</returns>
-        /// <exception cref="IOException">when a problem occurred with reading from the <see cref="Stream"/></exception>
+        /// <exception cref="IOException">when a problem occurred with reading from the <see cref="GetStream()"/></exception>
         public IEnumerable<IAtomType> ReadAtomTypes(IChemObjectBuilder builder)
         {
-            if (Stream == null)
-                Stream = ResourceLoader.GetAsStream(configFile);
+            if (GetStream() == null)
+                SetStream(ResourceLoader.GetAsStream(configFile));
 
-            return new AtomTypeReader(Stream).ReadAtomTypes(builder);
+            return new AtomTypeReader(GetStream()).ReadAtomTypes(builder);
         }
     }
 }

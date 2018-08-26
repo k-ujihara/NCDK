@@ -41,9 +41,9 @@ namespace <#= ns.NS #>
             IChemSequence cs = new ChemSequence();
             Assert.IsNotNull(cs);
         }
-		
+        
 <# if (ns.IsSilent) { #> 
-		<#@ include file="TestAbstractChemObjectTest.ttinclude" #>
+        <#@ include file="TestAbstractChemObjectTest.ttinclude" #>
 <# } #>
     }
 }

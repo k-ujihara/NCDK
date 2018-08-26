@@ -86,9 +86,13 @@ namespace NCDK.Geometries
                 int nwanted = nLigands;
                 string elementType = refAtom.Symbol;
                 // try to deal with lone pairs on small hetero
-                if (elementType.Equals("N") || elementType.Equals("O") || elementType.Equals("S"))
+                switch (elementType)
                 {
-                    nwanted = 3;
+                    case "N":
+                    case "O":
+                    case "S":
+                        nwanted = 3;
+                        break;
                 }
                 var newPoints = Calculate3DCoordinatesForLigands(atomContainer, refAtom, nwanted, length, angle);
                 for (int j = 0; j < nLigands; j++)
@@ -164,7 +168,7 @@ namespace NCDK.Geometries
        // @cdk.keyword coordinate generation
         public static Vector3?[] Calculate3DCoordinatesForLigands(IAtomContainer atomContainer, IAtom refAtom, int nwanted, double length, double angle)
         {
-            var newPoints = new Vector3?[0];
+            var newPoints = Array.Empty<Vector3?>();
             var aPoint = refAtom.Point3D;
             // get ligands
             var connectedAtoms = atomContainer.GetConnectedAtoms(refAtom);
@@ -205,7 +209,7 @@ namespace NCDK.Geometries
                         break;
                     }
                 }
-                newPoints = Calculate3DCoordinates1(aPoint, bAtom.Point3D, (jAtom != null) ? jAtom.Point3D : null, nwanted, length, angle);
+                newPoints = Calculate3DCoordinates1(aPoint, bAtom.Point3D, jAtom?.Point3D, nwanted, length, angle);
             }
             else if (nwithCoords == 2)
             {
@@ -241,7 +245,7 @@ namespace NCDK.Geometries
         /// <returns>Vector3[] nwanted points (or zero if failed)</returns>
         public static Vector3?[] Calculate3DCoordinates0(Vector3 aPoint, int nwanted, double length)
         {
-            var points = new Vector3?[0];
+            var points = Array.Empty<Vector3?>();
             if (nwanted == 1)
             {
                 points = new Vector3?[1];
@@ -346,7 +350,7 @@ namespace NCDK.Geometries
         public static Vector3?[] Calculate3DCoordinates2(Vector3? aPoint, Vector3? bPoint, Vector3? cPoint, int nwanted,
                 double length, double angle)
         {
-            var newPoints = new Vector3?[0];
+            var newPoints = Array.Empty<Vector3?>();
             double ang2 = angle / 2.0;
 
             Vector3 ba = aPoint.Value - bPoint.Value;

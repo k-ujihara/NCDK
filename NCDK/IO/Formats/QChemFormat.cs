@@ -18,6 +18,7 @@
  */
 
 using NCDK.Tools;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -51,7 +52,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "qc" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "qc" };
 
         /// <inheritdoc/>
         public override string ReaderClassName => null;
@@ -62,7 +63,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.IndexOf("Welcome to Q-Chem") != -1)
+            if (line.Contains("Welcome to Q-Chem"))
             {
                 return true;
             }

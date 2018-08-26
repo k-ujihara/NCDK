@@ -278,15 +278,14 @@ namespace NCDK.Stereo
         /// <param name="carriers">the carriers</param>
         /// <param name="order">the order of the configuration 0-30.</param>
         public Octahedral(IAtom focus, IAtom[] carriers, int order)
-            : base(focus, carriers, new StereoElement(StereoElement.Classes.Octahedral, order))
+            : base(focus, carriers, new StereoElement(StereoClass.Octahedral, order))
         {
             if (order < 0 || order > 30)
-                throw new ArgumentOutOfRangeException("Invalid configuration order!"
-                                                   + "Should be in range 1-30");
+                throw new ArgumentOutOfRangeException(nameof(order), "Invalid configuration order! Should be in range 1-30");
         }
 
         public Octahedral(IAtom focus, IAtom[] carriers, StereoElement stereo)
-            : this(focus, carriers, stereo.Configure.Order())
+            : this(focus, carriers, stereo.Configuration.Order())
         { }
 
         /// <summary>
@@ -310,12 +309,12 @@ namespace NCDK.Stereo
                 throw new ArgumentException(
                     "Invalid config order: " + cfg + ", octahedral should be"
                     + "1 <= order <= 30!");
-            IAtom[] carriers = InvApply(Carriers.ToArray(), PERMUTATIONS[cfg - 1]);
+            var carriers = InvApply(Carriers.ToArray(), PERMUTATIONS[cfg - 1]);
             return new Octahedral(Focus, carriers, 1);
         }
 
         /// <inheritdoc/>
-        protected override IStereoElement<IAtom, IAtom> Create(IAtom focus, IList<IAtom> carriers, StereoElement stereo)
+        protected override IStereoElement<IAtom, IAtom> Create(IAtom focus, IReadOnlyList<IAtom> carriers, StereoElement stereo)
         {
             return new Octahedral(focus,
                                   carriers.ToArray(),

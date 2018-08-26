@@ -63,33 +63,31 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Returns the largest (number of atoms) ring set in a molecule
-        ///
+        /// </summary>
         /// <param name="ringSystems">RingSystems of a molecule</param>
         /// <returns>The largestRingSet</returns>
-        /// </summary>
-        public static IRingSet GetLargestRingSet(IList<IRingSet> ringSystems)
+        public static IRingSet GetLargestRingSet(IEnumerable<IRingSet> ringSystems)
         {
             IRingSet largestRingSet = null;
             int atomNumber = 0;
             IAtomContainer container = null;
-            for (int i = 0; i < ringSystems.Count; i++)
+            foreach (var ringSystem in ringSystems)
             {
-                container = RingSetManipulator.GetAllInOneContainer(ringSystems[i]);
+                container = RingSetManipulator.GetAllInOneContainer(ringSystem);
                 if (atomNumber < container.Atoms.Count)
                 {
                     atomNumber = container.Atoms.Count;
-                    largestRingSet = ringSystems[i];
+                    largestRingSet = ringSystem;
                 }
             }
             return largestRingSet;
         }
 
         /// <summary>
-        /// Return the total number of bonds over all the rings in the colllection.
-        ///
+        /// Return the total number of bonds over all the rings in the collection.
+        /// </summary>
         /// <param name="set">The collection of rings</param>
         /// <returns>The total number of bonds</returns>
-        /// </summary>
         public static int GetBondCount(IRingSet set)
         {
             int count = 0;
@@ -118,7 +116,7 @@ namespace NCDK.Tools.Manipulator
         public static void Sort(IList<IRing> ringSet)
         {
             var ringList = ringSet.ToList();
-            ringList.Sort(new RingSizeComparator(RingSizeComparator.SMALL_FIRST));
+            ringList.Sort(new RingSizeComparator(SortMode.SmallFirst));
             ringSet.Clear();
             foreach (var aRingList in ringList)
                 ringSet.Add(aRingList);
@@ -130,7 +128,7 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         /// <param name="ringSet">The collection of rings</param>
         /// <param name="bond">A bond which must be contained by the heaviest ring</param>
-        /// <returns>The ring with the higest number of double bonds connected to a given bond</returns>
+        /// <returns>The ring with the highest number of double bonds connected to a given bond</returns>
         public static IRing GetHeaviestRing(IRingSet ringSet, IBond bond)
         {
             var rings = ringSet.GetRings(bond);
@@ -138,10 +136,10 @@ namespace NCDK.Tools.Manipulator
             int maxOrderSum = 0;
             foreach (var ring1 in rings)
             {
-                if (maxOrderSum < ((IRing)ring1).BondOrderSum)
+                if (maxOrderSum < ((IRing)ring1).GetBondOrderSum())
                 {
                     ring = (IRing)ring1;
-                    maxOrderSum = ring.BondOrderSum;
+                    maxOrderSum = ring.GetBondOrderSum();
                 }
             }
             return ring;
@@ -169,7 +167,7 @@ namespace NCDK.Tools.Manipulator
                 for (int j = 0; j < ring1.Atoms.Count; j++)
                 {
                     atom1 = ring1.Atoms[j];
-                    /* Look at each of the other rings in the ringset */
+                    /* Look at each of the other rings in the ring set */
                     for (int k = i + 1; k < ringSet.Count; k++)
                     {
                         ring2 = (IRing)ringSet[k];
@@ -208,13 +206,13 @@ namespace NCDK.Tools.Manipulator
         /// <remarks>
         /// <note type="important">
         /// This method only returns meaningful results if <paramref name="atom1"/> and 
-        /// <paramref name="atom2"/> are members of the same molecule for which the RingSet was calculated!
+        /// <paramref name="atom2"/> are members of the same molecule for which the ring set was calculated!
         /// </note>
         /// </remarks>
         /// <param name="ringSet">The collection of rings</param>
         /// <param name="atom1">The first atom</param>
         /// <param name="atom2">The second atom</param>
-        /// <returns>bool true if <paramref name="atom1"/> and <paramref name="atom2"/> share membership of at least one ring or ring system, false otherwise</returns>
+        /// <returns><see langword="true"/> if <paramref name="atom1"/> and <paramref name="atom2"/> share membership of at least one ring or ring system, false otherwise</returns>
         public static bool IsSameRing(IRingSet ringSet, IAtom atom1, IAtom atom2)
         {
             foreach (var atomContainer in ringSet)
@@ -227,7 +225,7 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Checks - and returns 'true' - if a certain ring is already
-        /// stored in the ringset. This is not a test for equality of Ring
+        /// stored in the ring set. This is not a test for equality of Ring
         /// objects, but compares all Bond objects of the ring.
         /// </summary>
         /// <param name="newRing">The ring to be tested if it is already stored</param>
@@ -236,9 +234,6 @@ namespace NCDK.Tools.Manipulator
         public static bool RingAlreadyInSet(IRing newRing, IRingSet ringSet)
         {
             IRing ring;
-            //          IBond[] bonds;
-            //          IBond[] newBonds;
-            //          IBond bond;
             int equalCount;
             bool equals;
             for (int f = 0; f < ringSet.Count; f++)
@@ -246,9 +241,6 @@ namespace NCDK.Tools.Manipulator
                 equals = false;
                 equalCount = 0;
                 ring = (IRing)ringSet[f];
-
-                //              bonds = ring.Bonds;
-                //              newBonds = newRing.Bonds;
 
                 if (ring.Bonds.Count == newRing.Bonds.Count)
                 {
@@ -278,9 +270,10 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// Iterates over the rings in the ring set, and marks the ring
         /// aromatic if all atoms and all bonds are aromatic.
-        ///
-        /// This method assumes that aromaticity perception has been done before hand.
         /// </summary>
+        /// <remarks>
+        /// This method assumes that aromaticity perception has been done before hand.
+        /// </remarks>
         /// <param name="ringset">The collection of rings</param>
         public static void MarkAromaticRings(IRingSet ringset)
         {

@@ -35,7 +35,8 @@ namespace NCDK.Tools
     // @cdk.created    2005-18-07
     // @cdk.module     extra
     // @cdk.githash
-    public class AtomTypeTools
+    [Obsolete("This is legacy")]
+    public static class AtomTypeTools
     {
         public const int NotInRing = 100;
         public const int PyrroleRing = 4;
@@ -44,44 +45,43 @@ namespace NCDK.Tools
         public const int PyridineRing = 10;
         public const int PyrimidineRing = 12;
         public const int BenzeneRing = 5;
-        HOSECodeGenerator hcg = null;
+        static HOSECodeGenerator hcg = new HOSECodeGenerator();
 
-        /// <summary>
-        /// Constructor for the MMFF94AtomTypeMatcher object.
-        /// </summary>
-        public AtomTypeTools()
-        {
-            hcg = new HOSECodeGenerator();
-        }
-
-        public IRingSet AssignAtomTypePropertiesToAtom(IAtomContainer molecule)
+        private static readonly string PyrroleSmi = Cansmi(CDK.SilentSmilesParser.ParseSmiles("c1cc[nH]c1"));
+        private static readonly string FuranSmi = Cansmi(CDK.SilentSmilesParser.ParseSmiles("o1cccc1"));
+        private static readonly string ThiopheneSmi = Cansmi(CDK.SilentSmilesParser.ParseSmiles("c1ccsc1"));
+        private static readonly string PyridineSmi = Cansmi(CDK.SilentSmilesParser.ParseSmiles("c1ccncc1"));
+        private static readonly string PyrimidineSmi = Cansmi(CDK.SilentSmilesParser.ParseSmiles("c1cncnc1"));
+        private static readonly string BenzeneSmi = Cansmi(CDK.SilentSmilesParser.ParseSmiles("c1ccccc1"));
+        
+        public static IRingSet AssignAtomTypePropertiesToAtom(IAtomContainer molecule)
         {
             return AssignAtomTypePropertiesToAtom(molecule, true);
         }
 
         /// <summary>
-        ///  Method assigns certain properties to an atom. Necessary for the atom type matching
-        ///  Properties:
-        ///  <list type="bullet">
-        ///   <item>aromaticity)</item>
+        /// Method assigns certain properties to an atom. Necessary for the atom type matching
+        /// Properties:
+        /// <list type="bullet">
+        ///   <item>aromaticity</item>
         ///   <item>ChemicalGroup (CDKChemicalRingGroupConstant)</item>
         ///   <item>
         ///     <item>SSSR</item>
         ///     <item>Ring/Group, ringSize, aromaticity</item>
         ///     <item>SphericalMatcher (HoSe Code)</item>
         ///   </item>
-        ///  </list>
+        /// </list>
         /// </summary>
         /// <param name="molecule"></param>
-        /// <param name="aromaticity">bool true/false true if aromaticity should be calculated</param>
+        /// <param name="aromaticity"><see langword="true"/> if aromaticity should be calculated</param>
         /// <returns>sssrf ring set of the molecule</returns>
-        public IRingSet AssignAtomTypePropertiesToAtom(IAtomContainer molecule, bool aromaticity)
+        public static IRingSet AssignAtomTypePropertiesToAtom(IAtomContainer molecule, bool aromaticity)
         {
-            SmilesGenerator sg = new SmilesGenerator();
+            var sg = new SmilesGenerator();
 
             Debug.WriteLine("assignAtomTypePropertiesToAtom Start ...");
             string hoseCode = "";
-            IRingSet ringSetMolecule = Cycles.FindSSSR(molecule).ToRingSet();
+            var ringSetMolecule = Cycles.FindSSSR(molecule).ToRingSet();
             Debug.WriteLine(ringSetMolecule);
 
             if (aromaticity)
@@ -92,15 +92,14 @@ namespace NCDK.Tools
                 }
                 catch (Exception cdk1)
                 {
-                    //Debug.WriteLine("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.ToString());
-                    Trace.TraceError("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.ToString());
+                    Trace.TraceError($"AROMATICITYError: Cannot determine aromaticity due to: {cdk1.ToString()}");
                 }
             }
 
             for (int i = 0; i < molecule.Atoms.Count; i++)
             {
                 // FIXME: remove casting
-                IAtom atom2 = molecule.Atoms[i];
+                var atom2 = molecule.Atoms[i];
                 //Atom aromatic is set by HueckelAromaticityDetector
                 //Atom in ring?
                 if (ringSetMolecule.Contains(atom2))
@@ -108,7 +107,7 @@ namespace NCDK.Tools
                     var ringSetA = ringSetMolecule.Builder.NewRingSet();
                     ringSetA.AddRange(ringSetMolecule.GetRings(atom2));
                     RingSetManipulator.Sort(ringSetA);
-                    IRing sring = (IRing)ringSetA.Last();
+                    var sring = ringSetA.Last();
                     atom2.SetProperty(CDKPropertyName.PartOfRingOfSize, sring.RingSize);
                     atom2.SetProperty(
                         CDKPropertyName.ChemicalGroupConstant,
@@ -130,7 +129,7 @@ namespace NCDK.Tools
                 }
                 catch (CDKException ex1)
                 {
-                    throw new CDKException("Could not build HOSECode from atom " + i + " due to " + ex1.ToString(), ex1);
+                    throw new CDKException($"Could not build HOSECode from atom {i} due to {ex1.ToString()}", ex1);
                 }
             }
             return ringSetMolecule;
@@ -152,10 +151,10 @@ namespace NCDK.Tools
             foreach (var bond in subgraph.Bonds)
                 bonds.Add(bond);
 
-            int?[] hCount = new int?[subgraph.Atoms.Count];
+            var hCount = new int?[subgraph.Atoms.Count];
             for (int i = 0; i < subgraph.Atoms.Count; i++)
             {
-                IAtom atom = subgraph.Atoms[i];
+                var atom = subgraph.Atoms[i];
                 int removed = 0;
                 foreach (var bond in molecule.GetConnectedBonds(atom))
                 {
@@ -166,7 +165,7 @@ namespace NCDK.Tools
                 atom.ImplicitHydrogenCount = (hCount[i] == null ? removed : hCount[i] + removed);
             }
 
-            string smi = Cansmi(subgraph);
+            var smi = Cansmi(subgraph);
 
             // reset for fused rings!
             for (int i = 0; i < subgraph.Atoms.Count; i++)
@@ -188,19 +187,6 @@ namespace NCDK.Tools
             return SmilesGenerator.Unique().Create(mol);
         }
 
-        private string PyrroleSmi = null;
-        private string FuranSmi = null;
-        private string ThiopheneSmi = null;
-        private string PyridineSmi = null;
-        private string PyrimidineSmi = null;
-        private string BenzeneSmi = null;
-
-        private static string Smicache(string cached, SmilesParser smipar, string input)
-        {
-            if (cached != null) return cached;
-            return cached = Cansmi(smipar.ParseSmiles(input));
-        }
-
         /// <summary>
         ///  Identifies ringSystem and returns a number which corresponds to
         ///  CDKChemicalRingConstant
@@ -208,30 +194,27 @@ namespace NCDK.Tools
         /// <param name="ring">Ring class with the ring system</param>
         /// <param name="smile">smile of the ring system</param>
         /// <returns>chemicalRingConstant</returns>
-        private int RingSystemClassifier(IRing ring, string smile)
+        private static int RingSystemClassifier(IRing ring, string smile)
         {
-            /* Console.Out.WriteLine("IN AtomTypeTools Smile:"+smile); */
-            Debug.WriteLine("Comparing ring systems: SMILES=", smile);
-
-            SmilesParser smipar = new SmilesParser(ring.Builder);
-
-            if (smile.Equals(Smicache(PyrroleSmi, smipar, "c1cc[nH]c1")))
+            Debug.WriteLine($"Comparing ring systems: SMILES={smile}");
+            
+            if (smile.Equals(PyrroleSmi, StringComparison.Ordinal))
                 return PyrroleRing;
-            else if (smile.Equals(Smicache(FuranSmi, smipar, "o1cccc1")))
+            else if (smile.Equals(FuranSmi, StringComparison.Ordinal))
                 return FuranRing;
-            else if (smile.Equals(Smicache(ThiopheneSmi, smipar, "c1ccsc1")))
+            else if (smile.Equals(ThiopheneSmi, StringComparison.Ordinal))
                 return ThiopheneRing;
-            else if (smile.Equals(Smicache(PyridineSmi, smipar, "c1ccncc1")))
+            else if (smile.Equals(PyridineSmi, StringComparison.Ordinal))
                 return PyridineRing;
-            else if (smile.Equals(Smicache(PyrimidineSmi, smipar, "c1cncnc1")))
+            else if (smile.Equals(PyrimidineSmi, StringComparison.Ordinal))
                 return PyrimidineRing;
-            else if (smile.Equals(Smicache(BenzeneSmi, smipar, "c1ccccc1")))
+            else if (smile.Equals(BenzeneSmi, StringComparison.Ordinal))
                 return BenzeneRing;
 
             int ncount = 0;
             foreach (var atom in ring.Atoms)
             {
-                if (atom.Symbol.Equals("N"))
+                if (string.Equals(atom.Symbol, "N", StringComparison.Ordinal))
                 {
                     ncount = ncount + 1;
                 }
@@ -256,7 +239,7 @@ namespace NCDK.Tools
             }
         }
 
-        private string RemoveAromaticityFlagsFromHoseCode(string hoseCode)
+        private static string RemoveAromaticityFlagsFromHoseCode(string hoseCode)
         {
             string hosecode = "";
             for (int i = 0; i < hoseCode.Length; i++)

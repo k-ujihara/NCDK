@@ -2,13 +2,13 @@
 {
     class SettingManager_Example
     {
-        void Main()
+        static void Main()
         {
             {
                 #region 
                 // create the manager and add a setting
                 var manager = new SettingManager<BooleanIOSetting>();
-                manager.Add(new BooleanIOSetting("Sample", IOSetting.Importance.Medium, "This is a sample?", "true"));
+                manager.Add(new BooleanIOSetting("Sample", Importance.Medium, "This is a sample?", "true"));
 
                 // check the setting is present (case insensitive)
                 if (manager.Has("sample"))
@@ -22,7 +22,7 @@
                 #endregion
             }
             {
-                IOSetting.Importance importance = IOSetting.Importance.Medium;
+                Importance importance = Importance.Medium;
                 string some = null;
                 #region Add
                 var manager = new SettingManager<BooleanIOSetting>();
@@ -34,7 +34,7 @@
                 #endregion
             }
             {
-                IOSetting.Importance importance = IOSetting.Importance.Medium;
+                Importance importance = Importance.Medium;
                 string some = null;
                 #region get
                 var manager = new SettingManager<BooleanIOSetting>();

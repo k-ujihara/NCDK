@@ -34,7 +34,8 @@ namespace NCDK.Isomorphisms.Matchers
             return sb.ToString();
         }
 
-        private IChemObjectBuilder builder;
+        private readonly IChemObjectBuilder builder;
+
         /// <inheritdoc/>
         public override IChemObjectBuilder Builder => builder;
 

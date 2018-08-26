@@ -25,6 +25,7 @@
 using NCDK.Config;
 using NCDK.Numerics;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Xml.Linq;
 
 namespace NCDK.IO.PubChemXml
@@ -36,7 +37,7 @@ namespace NCDK.IO.PubChemXml
     // @cdk.githash
     // @author       Egon Willighagen <egonw@users.sf.net>
     // @cdk.created  2008-05-05
-    public class PubChemXMLHelper
+    internal class PubChemXMLHelper
     {
         private IChemObjectBuilder builder;
         private IsotopeFactory factory;
@@ -49,7 +50,7 @@ namespace NCDK.IO.PubChemXml
         public PubChemXMLHelper(IChemObjectBuilder builder)
         {
             this.builder = builder;
-            factory = Isotopes.Instance;
+            factory = BODRIsotopeFactory.Instance;
         }
 
         // general elements
@@ -192,7 +193,7 @@ namespace NCDK.IO.PubChemXml
             return model;
         }
 
-        public string GetSID(XElement parser)
+        public static string GetSID(XElement parser)
         {
             string sid = "unknown";
             if (!parser.Name.Equals(Name_EL_PCSUBSTANCE_SID))
@@ -207,7 +208,7 @@ namespace NCDK.IO.PubChemXml
             return sid;
         }
 
-        public string GetCID(XElement parser)
+        public static string GetCID(XElement parser)
         {
             string cid = "unknown";
             if (!parser.Name.Equals(Name_EL_PCCOMPOUND_ID))
@@ -227,7 +228,7 @@ namespace NCDK.IO.PubChemXml
             {
                 if (Name_EL_ELEMENT.Equals(elm.Name))
                 {
-                    int atomicNumber = int.Parse(elm.Value);
+                    int atomicNumber = int.Parse(elm.Value, NumberFormatInfo.InvariantInfo);
                     IElement element = factory.GetElement(atomicNumber);
                     if (element == null)
                     {
@@ -254,7 +255,7 @@ namespace NCDK.IO.PubChemXml
                 ParseAtomCharges(elm, molecule);
         }
 
-        public void ParserCompoundInfoData(XElement parser, IAtomContainer molecule)
+        public static void ParserCompoundInfoData(XElement parser, IAtomContainer molecule)
         {
             string urnLabel = null;
             string urnName = null;
@@ -281,7 +282,7 @@ namespace NCDK.IO.PubChemXml
             }
         }
 
-        public void ParseAtomCharges(XElement parser, IAtomContainer molecule)
+        public static void ParseAtomCharges(XElement parser, IAtomContainer molecule)
         {
             if (!Name_EL_ATOMSCHARGE.Equals(parser.Name))
                 return;
@@ -294,9 +295,9 @@ namespace NCDK.IO.PubChemXml
                     foreach (var aie in elm.Descendants())
                     {
                         if (Name_EL_ATOMINT_AID.Equals(aie.Name))
-                            aid = int.Parse(aie.Value);
+                            aid = int.Parse(aie.Value, NumberFormatInfo.InvariantInfo);
                         else if (Name_EL_ATOMINT_VALUE.Equals(aie.Name))
-                            charge = int.Parse(aie.Value);
+                            charge = int.Parse(aie.Value, NumberFormatInfo.InvariantInfo);
                     }
                     molecule.Atoms[aid - 1].FormalCharge = charge;
                 }
@@ -325,7 +326,7 @@ namespace NCDK.IO.PubChemXml
             return molecule;
         }
 
-        public void ParserBondBlock(XElement parser, IAtomContainer molecule)
+        public static void ParserBondBlock(XElement parser, IAtomContainer molecule)
         {
             List<string> id1s = new List<string>();
             List<string> id2s = new List<string>();
@@ -346,10 +347,10 @@ namespace NCDK.IO.PubChemXml
                 throw new CDKException("Number of bond orders does not match number of bonds in bond block.");
             for (int i = 0; i < id1s.Count; i++)
             {
-                IAtom atom1 = molecule.Atoms[int.Parse(id1s[i]) - 1];
-                IAtom atom2 = molecule.Atoms[int.Parse(id2s[i]) - 1];
+                IAtom atom1 = molecule.Atoms[int.Parse(id1s[i], NumberFormatInfo.InvariantInfo) - 1];
+                IAtom atom2 = molecule.Atoms[int.Parse(id2s[i], NumberFormatInfo.InvariantInfo) - 1];
                 IBond bond = molecule.Builder.NewBond(atom1, atom2);
-                int order = int.Parse(orders[i]);
+                int order = int.Parse(orders[i], NumberFormatInfo.InvariantInfo);
                 if (order == 1)
                 {
                     bond.Order = BondOrder.Single;
@@ -372,7 +373,7 @@ namespace NCDK.IO.PubChemXml
             }
         }
 
-        public void ParserCoordBlock(XElement parser, IAtomContainer molecule)
+        public static void ParserCoordBlock(XElement parser, IAtomContainer molecule)
         {
             List<string> ids = new List<string>();
             List<string> xs = new List<string>();
@@ -403,21 +404,21 @@ namespace NCDK.IO.PubChemXml
 
             for (int i = 0; i < ids.Count; i++)
             {
-                IAtom atom = molecule.Atoms[int.Parse(ids[i]) - 1];
+                IAtom atom = molecule.Atoms[int.Parse(ids[i], NumberFormatInfo.InvariantInfo) - 1];
                 if (has3dCoords)
                 {
-                    Vector3 coord = new Vector3(double.Parse(xs[i]), double.Parse(ys[i]), double.Parse(zs[i]));
+                    Vector3 coord = new Vector3(double.Parse(xs[i], NumberFormatInfo.InvariantInfo), double.Parse(ys[i], NumberFormatInfo.InvariantInfo), double.Parse(zs[i], NumberFormatInfo.InvariantInfo));
                     atom.Point3D = coord;
                 }
                 else if (has2dCoords)
                 {
-                    Vector2 coord = new Vector2(double.Parse(xs[i]), double.Parse(ys[i]));
+                    Vector2 coord = new Vector2(double.Parse(xs[i], NumberFormatInfo.InvariantInfo), double.Parse(ys[i], NumberFormatInfo.InvariantInfo));
                     atom.Point2D = coord;
                 }
             }
         }
 
-        private List<string> ParseValues(XElement parser, XName fieldTag)
+        private static List<string> ParseValues(XElement parser, XName fieldTag)
         {
             List<string> values = new List<string>();
             foreach (var elm in parser.Descendants())

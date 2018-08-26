@@ -22,6 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -252,17 +253,17 @@ namespace NCDK.Renderers.Generators.Standards
             }
         }
 
-        private bool IsUpperCase(char c)
+        private static bool IsUpperCase(char c)
         {
             return c >= 'A' && c <= 'Z';
         }
 
-        private bool IsLowerCase(char c)
+        private static bool IsLowerCase(char c)
         {
             return c >= 'a' && c <= 'z';
         }
 
-        private bool IsDigit(char c)
+        private static bool IsDigit(char c)
         {
             return c >= '0' && c <= '9';
         }
@@ -538,11 +539,11 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="number">atomic number</param>
         /// <param name="mass">atomic mass</param>
         /// <returns>the mass is the major mass for the atomic number</returns>
-        private bool IsMajorIsotope(int number, int mass)
+        private static bool IsMajorIsotope(int number, int mass)
         {
             try
             {
-                IIsotope isotope = Config.Isotopes.Instance.GetMajorIsotope(number);
+                IIsotope isotope = BODRIsotopeFactory.Instance.GetMajorIsotope(number);
                 return isotope != null && isotope.MassNumber.Equals(mass);
             }
             catch (IOException)

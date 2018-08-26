@@ -1,6 +1,7 @@
 using NCDK.Common.Collections;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -22,13 +23,6 @@ namespace NCDK.FaulonSignatures
         private DAG dag;
 
         /// <summary>
-        /// If the signature is considered as a tree, the height is the maximum 
-        /// distance from the root to the leaves. A height of -1 is taken to mean
-        /// the same as the maximum possible height, which is the graph diameter
-        /// </summary>
-        private int height;
-
-        /// <summary>
         /// The number of vertices from the graph that were visited to make the
         /// signature. This is either the number of vertices in the graph - if the
         /// height is equal to the graph diameter - or the number of vertices seen up
@@ -46,12 +40,12 @@ namespace NCDK.FaulonSignatures
 
         public enum InvariantType { String, Integer };
 
-        private InvariantType invariantType;
+        private readonly InvariantType invariantType;
 
         /// <summary>
         /// Create an abstract vertex signature.
         /// </summary>
-        public AbstractVertexSignature()
+        protected AbstractVertexSignature()
            : this(InvariantType.String)
         { }
 
@@ -60,7 +54,7 @@ namespace NCDK.FaulonSignatures
         /// for the initial invariants. 
         /// </summary>
         /// <param name="invariantType"></param>
-        public AbstractVertexSignature(InvariantType invariantType)
+        protected AbstractVertexSignature(InvariantType invariantType)
         {
             this.vertexCount = 0;
             this.invariantType = invariantType;
@@ -69,7 +63,12 @@ namespace NCDK.FaulonSignatures
         /// <summary>
         /// The height of the signature.
         /// </summary>
-        public int Height => this.height;
+        /// <remarks>
+        /// If the signature is considered as a tree, the height is the maximum 
+        /// distance from the root to the leaves. A height of -1 is taken to mean
+        /// the same as the maximum possible height, which is the graph diameter
+        /// </remarks>
+        public int Height { get; private set; }
 
         /// <summary>
         /// Look up the original graph vertex that <paramref name="vertexIndex"/> maps to.  
@@ -110,7 +109,7 @@ namespace NCDK.FaulonSignatures
         /// <param name="height">the maximum height of the signature</param>
         public void Create(int rootVertexIndex, int graphVertexCount, int height)
         {
-            this.height = height;
+            this.Height = height;
             vertexMapping = new Dictionary<int, int>
             {
                 [rootVertexIndex] = 0
@@ -241,17 +240,8 @@ namespace NCDK.FaulonSignatures
         public string ToCanonicalString()
         {
             StringBuilder stringBuffer = new StringBuilder();
-            //        Console.Out.WriteLine("CANONIZING " + 
-            //                GetOriginalVertexIndex(dag.GetRoot().vertexIndex)
-            //                + " " + vertexMapping);
-            //        Console.Out.WriteLine(dag);
             TMP_COLORING_COUNT = 0;
             this.Canonize(0, stringBuffer);
-            //        Console.Out.WriteLine("invariants " + dag.CopyInvariants());
-            //        Console.Out.WriteLine("occur" + GetOccurrences());
-
-            //        Console.Out.WriteLine("COLORINGS " + TMP_COLORING_COUNT);
-            //        Console.Out.WriteLine(stringBuffer.ToString());
             return stringBuffer.ToString();
         }
 
@@ -269,15 +259,12 @@ namespace NCDK.FaulonSignatures
 
             this.dag.UpdateVertexInvariants();
             int[] parents = dag.GetParentsInFinalString();
-            //        Console.Out.WriteLine("pars\t" + Arrays.ToString(parents));
             List<int> orbit = this.dag.CreateOrbit(parents);
-            //        Console.Out.WriteLine(dag.CopyInvariants());
             if (orbit.Count < 2)
             {
                 // Color all uncolored atoms having two parents 
                 // or more according to their invariant.
                 List<InvariantInt> pairs = dag.GetInvariantPairs(parents);
-                //            Console.Out.WriteLine("coloring " + pairs);
                 foreach (var pair in pairs)
                 {
                     this.dag.SetColor(pair.index, color);
@@ -288,27 +275,23 @@ namespace NCDK.FaulonSignatures
 
                 // Creating the root signature string.
                 string signature = this.ToString();
-                int cmp = signature.CompareTo(canonicalVertexSignature.ToString());
+                int cmp = string.Compare(signature, canonicalVertexSignature.ToString(), StringComparison.Ordinal);
                 int l = canonicalVertexSignature.Length;
                 if (cmp > 0)
                 {
-                    //                Console.Out.WriteLine(TMP_COLORING_COUNT + " replacing " + signature + " old= " + canonicalVertexSignature);
                     var temp = signature + canonicalVertexSignature.ToString().Substring(l);
                     canonicalVertexSignature.Clear();
                     canonicalVertexSignature.Append(temp);
                 }
                 else
                 {
-                    //                Console.Out.WriteLine(TMP_COLORING_COUNT + " rejecting " + cmp + " " + signature);
                 }
                 return;
             }
             else
             {
-                //            Console.Out.WriteLine("setting color " + color + " for orbit " + orbit);
                 foreach (var o in orbit)
                 {
-                    //                Console.Out.WriteLine("setting color " + color + " for element " + o);
                     this.dag.SetColor(o, color);
                     Invariants invariantsCopy = this.dag.CopyInvariants();
                     this.Canonize(color + 1, canonicalVertexSignature);
@@ -515,7 +498,7 @@ namespace NCDK.FaulonSignatures
                     else
                     {        // color
                         ss = s.Substring(j, k - 1 - j);
-                        color = int.Parse(s.Substring(k, i - k));
+                        color = int.Parse(s.Substring(k, i - k), NumberFormatInfo.InvariantInfo);
                     }
                     if (tree == null)
                     {

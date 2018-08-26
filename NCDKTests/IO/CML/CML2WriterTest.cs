@@ -25,7 +25,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NCDK.Aromaticities;
 using NCDK.Config;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Formula;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
@@ -200,7 +200,7 @@ namespace NCDK.IO.CML
         public void TestReactionScheme1()
         {
             StringWriter writer = new StringWriter();
-            IReactionScheme scheme1 = Default.ChemObjectBuilder.Instance.NewReactionScheme();
+            IReactionScheme scheme1 = ChemObjectBuilder.Instance.NewReactionScheme();
             scheme1.Id = "rs0";
             IReactionScheme scheme2 = scheme1.Builder.NewReactionScheme();
             scheme2.Id = "rs1";
@@ -249,7 +249,7 @@ namespace NCDK.IO.CML
             ReactionScheme scheme1 = new ReactionScheme();
             scheme1.Id = "rs0";
 
-            IReaction reaction = Default.ChemObjectBuilder.Instance.NewReaction();
+            IReaction reaction = ChemObjectBuilder.Instance.NewReaction();
             reaction.Id = "r1";
             IAtomContainer moleculeA = reaction.Builder.NewAtomContainer();
             moleculeA.Id = "A";
@@ -291,7 +291,7 @@ namespace NCDK.IO.CML
             ReactionScheme scheme1 = new ReactionScheme();
             scheme1.Id = "rs0";
 
-            IReaction reaction = Default.ChemObjectBuilder.Instance.NewReaction();
+            IReaction reaction = ChemObjectBuilder.Instance.NewReaction();
             reaction.Id = "r1";
             IAtomContainer moleculeA = reaction.Builder.NewAtomContainer();
             moleculeA.Id = "A";
@@ -341,7 +341,7 @@ namespace NCDK.IO.CML
             ReactionScheme scheme1 = new ReactionScheme();
             scheme1.Id = "rs0";
 
-            IReaction reaction = Default.ChemObjectBuilder.Instance.NewReaction();
+            IReaction reaction = ChemObjectBuilder.Instance.NewReaction();
             reaction.Id = "r1";
             IAtomContainer moleculeA = reaction.Builder.NewAtomContainer();
             moleculeA.Id = "A";
@@ -416,7 +416,7 @@ namespace NCDK.IO.CML
         public void TestReactionProperty()
         {
             StringWriter writer = new StringWriter();
-            IReaction reaction = Default.ChemObjectBuilder.Instance.NewReaction();
+            IReaction reaction = ChemObjectBuilder.Instance.NewReaction();
             reaction.Id = "r1";
             reaction.SetProperty("blabla", "blabla2");
             CMLWriter cmlWriter = new CMLWriter(writer);
@@ -438,7 +438,7 @@ namespace NCDK.IO.CML
         //        chain.Id = "rsl1";
         //
         //
-        //        IReaction reaction = Default.ChemObjectBuilder.Instance.NewReaction();
+        //        IReaction reaction = ChemObjectBuilder.Instance.NewReaction();
         //        reaction.Id = "r1";
         //        IAtomContainer moleculeA = reaction.GetNewBuilder().NewAtomContainer();
         //        moleculeA.Id = "A";
@@ -481,7 +481,7 @@ namespace NCDK.IO.CML
         //        scheme1.Add(scheme2);
         //
         //
-        //        IReaction reaction1 = Default.ChemObjectBuilder.Instance.NewReaction();
+        //        IReaction reaction1 = ChemObjectBuilder.Instance.NewReaction();
         //        reaction1.Id = "r1.1";
         //        IAtomContainer moleculeA = reaction1.GetNewBuilder().NewAtomContainer();
         //        moleculeA.Id = "A";

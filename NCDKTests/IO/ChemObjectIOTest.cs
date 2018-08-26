@@ -22,7 +22,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO.Formats;
 using NCDK.IO.Listener;
 using NCDK.IO.Setting;
@@ -72,33 +72,37 @@ namespace NCDK.IO
             Assert.IsNotNull(format, "The IChemObjectIO.Format method returned null.");
         }
 
-        private static IChemObject[] acceptableNNChemObjects =
+        private static IChemObject[] AcceptableNNChemObjects =
             { new ChemFile(), new ChemModel(), new Silent.AtomContainer(), new Reaction() };
 
         [TestMethod()]
         public virtual void TestAcceptsAtLeastOneNonotifyObject()
         {
             bool oneAccepted = false;
-            foreach (var obj in acceptableNNChemObjects)
+            foreach (var obj in AcceptableNNChemObjects)
             {
                 if (ChemObjectIOToTest.Accepts(obj.GetType()))
                 {
                     oneAccepted = true;
                 }
             }
-            Assert.IsTrue(oneAccepted,
-                    "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction");
+            Assert.IsTrue(oneAccepted, "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction");
         }
 
         /// <summary>static objects, shared between tests - difficult to locate bugs.</summary>
         [Obsolete]
-        protected static IChemObject[] acceptableChemObjects = {new ChemFile(), new ChemModel(), new Silent.AtomContainer(),
-            new Reaction(), new RGroupQuery(Default.ChemObjectBuilder.Instance)};
+        protected static IChemObject[] acceptableChemObjects =
+        {
+            new ChemFile(),
+            new ChemModel(),
+            new Silent.AtomContainer(),
+            new Reaction(),
+            new RGroupQuery(ChemObjectBuilder.Instance)
+        };
 
         protected static IChemObject[] AcceptableChemObjects()
         {
-            return new IChemObject[]{new ChemFile(), new ChemModel(), new Silent.AtomContainer(), new Reaction(),
-                new RGroupQuery(Default.ChemObjectBuilder.Instance)};
+            return new IChemObject[]{new ChemFile(), new ChemModel(), new Silent.AtomContainer(), new Reaction(), new RGroupQuery(ChemObjectBuilder.Instance)};
         }
 
         [TestMethod()]

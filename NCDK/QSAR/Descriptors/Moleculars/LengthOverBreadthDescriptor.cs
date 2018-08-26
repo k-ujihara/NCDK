@@ -66,8 +66,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the PetitjeanNumberDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lengthOverBreadth",
                 typeof(LengthOverBreadthDescriptor).FullName,
@@ -76,7 +76,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// Sets the parameters attribute of the PetitjeanNumberDescriptor object
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
@@ -87,7 +87,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 double.NaN,
                 double.NaN
             };
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, DescriptorNames, e);
         }
 
         /// <summary>
@@ -166,13 +166,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 mmLOB
             };
 
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, DescriptorNames);
         }
 
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(2);
 
-        private void RotateZ(double[][] coords, double theta)
+        private static void RotateZ(double[][] coords, double theta)
         {
             int natom = coords.Length;
             double[][] m;
@@ -202,7 +202,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        private double[] Extents(IAtomContainer atomContainer, double[][] coords, bool withRadii)
+        private static double[] Extents(IAtomContainer atomContainer, double[][] coords, bool withRadii)
         {
             double xmax = -1e30;
             double ymax = -1e30;

@@ -41,7 +41,6 @@ namespace NCDK.Graphs.Invariant
     public class GIMatrix
     {
         private double[][] array; // the matrix itself as an array of doubles
-        private int m, n; // matrix's params (m=no of line, n=no of columns)
 
         /// <summary>
         /// Class constructor. Uses an array of integers to create a new Matrix object. Note that integers
@@ -62,8 +61,8 @@ namespace NCDK.Graphs.Invariant
             }
             //    VerifyMatrixFormat(temp);
             this.array = temp;
-            m = temp.Length;
-            n = temp[0].Length;
+            Height = temp.Length;
+            Width = temp[0].Length;
         } // constructor Matrix(int[][])
 
         /// <summary>
@@ -84,8 +83,8 @@ namespace NCDK.Graphs.Invariant
                     temp[i][j] = array[i][j];
             }
             this.array = temp;
-            m = array.Length;
-            n = array[0].Length;
+            Height = array.Length;
+            Width = array[0].Length;
         } // constructor Matrix(double[][])
 
         /// <summary>
@@ -100,8 +99,8 @@ namespace NCDK.Graphs.Invariant
             for (int i = 0; i < line; i++)
                 for (int j = 0; j < col; j++)
                     array[i][j] = 0.0;
-            m = line;
-            n = col;
+            Height = line;
+            Width = col;
         } // constructor Matrix(int,int)
 
         /// <summary>
@@ -126,8 +125,8 @@ namespace NCDK.Graphs.Invariant
                 }
             }
             this.array = temp;
-            m = array.Length;
-            n = array[0].Length;
+            Height = array.Length;
+            Width = array[0].Length;
         } // constructor Matrix(Matrix)
 
         /// <summary>
@@ -140,19 +139,19 @@ namespace NCDK.Graphs.Invariant
         public GIMatrix(GIMatrix[][] table)
         {
             VerifyTableFormat(table);
-            m = n = 0;
+            Height = Width = 0;
             for (int i = 0; i < table.Length; i++)
-                m += table[i][0].Height;
+                Height += table[i][0].Height;
             for (int j = 0; j < table[0].Length; j++)
-                n += table[0][j].Width;
-            double[][] temp = Arrays.CreateJagged<double>(m, n);
+                Width += table[0][j].Width;
+            double[][] temp = Arrays.CreateJagged<double>(Height, Width);
             int k = 0; // counters for matrices
-            for (int i = 0; i < m; i++)
+            for (int i = 0; i < Height; i++)
             {
-                temp[i] = new double[n]; // line by line ...
+                temp[i] = new double[Width]; // line by line ...
                 if (i == table[k][0].Height) k++; // last line of matrix reached
                 int h = 0;
-                for (int j = 0; j < n; j++)
+                for (int j = 0; j < Width; j++)
                 {
                     if (j == table[k][h].Width) h++; // last column of matrix reached
                     try
@@ -171,19 +170,19 @@ namespace NCDK.Graphs.Invariant
         /// <summary>
         /// The number of lines of the matrix.
         /// </summary>
-        public int Height => m;
+        public int Height { get; }
 
         /// <summary>
         /// The number of columns of the matrix.
         /// </summary>
-        public int Width => n;
+        public int Width { get; }
 
         /// <summary>
         /// The internal representation of the matrix, that is an array of double objects.
         ///  (first index is the line, second is the column)
         /// </summary>
         /// <exception cref="BadMatrixFormatException">in case the given array is unproper to construct a matrix</exception>
-        public double[][] ArrayValue
+        internal double[][] ArrayValue
         {
             get { return array; }
             set
@@ -202,7 +201,10 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="ArgumentOutOfRangeException">if the given index is out of the matrix's range</exception>
         public double GetValueAt(int i, int j)
         {
-            if ((i < 0) || (i >= m) || (j < 0) || (j >= n)) throw new ArgumentOutOfRangeException();
+            if ((i < 0) || (i >= Height))
+                throw new ArgumentOutOfRangeException(nameof(i));
+            if ((j < 0) || (j >= Width))
+                throw new ArgumentOutOfRangeException(nameof(j));
             return array[i][j];
         } // method GetValueAt(int,int)
 
@@ -215,7 +217,10 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="ArgumentOutOfRangeException">if the given index is out of the matrix's range</exception>
         public void SetValueAt(int i, int j, double element)
         {
-            if ((i < 0) || (i >= m) || (j < 0) || (j >= n)) throw new ArgumentOutOfRangeException();
+            if ((i < 0) || (i >= Height))
+                throw new ArgumentOutOfRangeException(nameof(i));
+            if ((j < 0) || (j >= Width))
+                throw new ArgumentOutOfRangeException(nameof(j));
             array[i][j] = element;
         } // method SetValueAt(int,int,double)
 
@@ -227,9 +232,10 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="ArgumentOutOfRangeException">if the given index is out of the matrix's range</exception>
         public GIMatrix GetLine(int i)
         {
-            if ((i < 0) || (i >= m)) throw new ArgumentOutOfRangeException();
-            double[][] line = Arrays.CreateJagged<double>(1, n);
-            for (int k = 0; k < n; k++)
+            if ((i < 0) || (i >= Height))
+                throw new ArgumentOutOfRangeException(nameof(i));
+            double[][] line = Arrays.CreateJagged<double>(1, Width);
+            for (int k = 0; k < Width; k++)
                 line[0][k] = array[i][k];
             try
             {
@@ -249,9 +255,10 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="ArgumentOutOfRangeException">if the given index is out of the matrix's range</exception>
         public GIMatrix GetColumn(int j)
         {
-            if ((j < 0) || (j >= n)) throw new ArgumentOutOfRangeException();
-            double[][] column = Arrays.CreateJagged<double>(m, 1);
-            for (int k = 0; k < m; k++)
+            if ((j < 0) || (j >= Width))
+                throw new ArgumentOutOfRangeException(nameof(j));
+            double[][] column = Arrays.CreateJagged<double>(Height, 1);
+            for (int k = 0; k < Height; k++)
                 column[k][0] = array[k][j];
             try
             {
@@ -272,9 +279,10 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="BadMatrixFormatException">in case the given Matrix is unproper to replace a line of this Matrix</exception>
         public void SetLine(int i, GIMatrix line)
         {
-            if ((i < 0) || (i >= m)) throw new ArgumentOutOfRangeException();
-            if ((line.Height != 1) || (line.Width != n)) throw new BadMatrixFormatException();
-            for (int k = 0; k < n; k++)
+            if ((i < 0) || (i >= Height))
+                throw new ArgumentOutOfRangeException(nameof(i));
+            if ((line.Height != 1) || (line.Width != Width)) throw new BadMatrixFormatException();
+            for (int k = 0; k < Width; k++)
                 array[i][k] = line.GetValueAt(0, k);
         } // method SetLine(int,Matrix)
 
@@ -287,9 +295,11 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="BadMatrixFormatException">in case the given Matrix is unproper to replace a column of this Matrix</exception>
         public void SetColumn(int j, GIMatrix column)
         {
-            if ((j < 0) || (j >= n)) throw new ArgumentOutOfRangeException();
-            if ((column.Height != m) || (column.Width != 1)) throw new BadMatrixFormatException();
-            for (int k = 0; k < m; k++)
+            if ((j < 0) || (j >= Width))
+                throw new ArgumentOutOfRangeException(nameof(j));
+            if ((column.Height != Height) || (column.Width != 1))
+                throw new BadMatrixFormatException();
+            for (int k = 0; k < Height; k++)
                 array[k][j] = column.GetValueAt(k, 0);
         } // method SetColumn(int,Matrix)
 
@@ -350,10 +360,11 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="BadMatrixFormatException">if the given matrix doesn't have the same dimensions as this one</exception>
         public bool Equals(GIMatrix matrix)
         {
-            if ((Height != matrix.Height) || (Width != matrix.Width)) throw new BadMatrixFormatException();
+            if ((Height != matrix.Height) || (Width != matrix.Width))
+                throw new BadMatrixFormatException();
             double[][] temp = matrix.ArrayValue;
-            for (int i = 0; i < m; i++)
-                for (int j = 0; j < n; j++)
+            for (int i = 0; i < Height; i++)
+                for (int j = 0; j < Width; j++)
                     if (!(array[i][j] == temp[i][j])) return false;
             return true;
         } // method Equals(Matrix)
@@ -364,7 +375,7 @@ namespace NCDK.Graphs.Invariant
         /// <returns>true if this matrix is square</returns>
         public bool IsSquare()
         {
-            return (m == n);
+            return (Height == Width);
         } // method IsSquare()
 
         /// <summary>
@@ -374,9 +385,10 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="BadMatrixFormatException">if the matrix is not square</exception>
         public bool IsSymmetric()
         {
-            if (m != n) throw new BadMatrixFormatException();
+            if (Height != Width)
+                throw new BadMatrixFormatException();
             // the loop looks in the lower half of the matrix to find non-symetric elements
-            for (int i = 1; i < m; i++)
+            for (int i = 1; i < Height; i++)
                 // starts at index 1 because index (0,0) always symmetric
                 for (int j = 0; j < i; j++)
                     if (!(array[i][j] == array[j][i])) return false;
@@ -392,9 +404,10 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="BadMatrixFormatException">if the matrix is not square</exception>
         public bool IsAntisymmetric()
         {
-            if (m != n) throw new BadMatrixFormatException();
+            if (Height != Width)
+                throw new BadMatrixFormatException();
             // the loop looks in the lower half of the matrix to find non-antisymetric elements
-            for (int i = 0; i < m; i++)
+            for (int i = 0; i < Height; i++)
                 // not as IsSymmetric() loop
                 for (int j = 0; j <= i; j++)
                     if (!(array[i][j] == -array[j][i])) return false;
@@ -409,9 +422,10 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="BadMatrixFormatException">if the matrix is not square</exception>
         public bool IsTriangularSuperior()
         {
-            if (m != n) throw new BadMatrixFormatException();
+            if (Height != Width)
+                throw new BadMatrixFormatException();
             // the loop looks in the lower half of the matrix to find non-null elements
-            for (int i = 1; i < m; i++)
+            for (int i = 1; i < Height; i++)
                 // starts at index 1 because index (0,0) is on the diagonal
                 for (int j = 0; j < i; j++)
                     if (!(array[i][j] == 0.0)) return false;
@@ -426,11 +440,12 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="BadMatrixFormatException">if the matrix is not square</exception>
         public bool IsTriangularInferior()
         {
-            if (m != n) throw new BadMatrixFormatException();
+            if (Height != Width)
+                throw new BadMatrixFormatException();
             // the loop looks in the upper half of the matrix to find non-null elements
-            for (int i = 1; i < m; i++)
+            for (int i = 1; i < Height; i++)
                 // starts at index 1 because index (0,0) is on the diagonal
-                for (int j = i; j < n; j++)
+                for (int j = i; j < Width; j++)
                     if (!(array[i][j] == 0.0)) return false;
             return true; // the matrix has passed the test
         } // method IsTriangularInferior()
@@ -443,9 +458,10 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="BadMatrixFormatException">if the matrix is not square</exception>
         public bool IsDiagonal()
         {
-            if (m != n) throw new BadMatrixFormatException();
+            if (Height != Width)
+                throw new BadMatrixFormatException();
             // the loop looks both halves of the matrix to find non-null elements
-            for (int i = 1; i < m; i++)
+            for (int i = 1; i < Height; i++)
                 // starts at index 1 because index (0,0) must not be checked
                 for (int j = 0; j < i; j++)
                     if ((!(array[i][j] == 0.0)) || (!(array[j][i] == 0.0))) return false; // not null
@@ -459,7 +475,8 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="BadMatrixFormatException">if the matrix is not square</exception>
         public bool IsInvertible()
         {
-            if (m != n) throw new BadMatrixFormatException();
+            if (Height != Width)
+                throw new BadMatrixFormatException();
             return (!(Determinant() == 0)); // det != 0
         } // method IsInvertible()
 
@@ -479,7 +496,7 @@ namespace NCDK.Graphs.Invariant
             {
                 throw new MatrixNotInvertibleException();
             }
-            GIMatrix I = CreateIdentity(n); // Creates an identity matrix of same dimensions
+            GIMatrix I = CreateIdentity(Width); // Creates an identity matrix of same dimensions
             GIMatrix table;
             try
             {
@@ -491,14 +508,14 @@ namespace NCDK.Graphs.Invariant
                 return null;
             } // never happens
             table = table.GaussJordan(); // linear reduction method applied
-            double[][] inv = Arrays.CreateJagged<double>(m, n);
-            for (int i = 0; i < m; i++)
+            double[][] inv = Arrays.CreateJagged<double>(Height, Width);
+            for (int i = 0; i < Height; i++)
                 // extracts inverse matrix
-                for (int j = n; j < 2 * n; j++)
+                for (int j = Width; j < 2 * Width; j++)
                 {
                     try
                     {
-                        inv[i][j - n] = table.GetValueAt(i, j);
+                        inv[i][j - Width] = table.GetValueAt(i, j);
                     }
                     catch (IndexOutOfRangeException)
                     {
@@ -530,12 +547,12 @@ namespace NCDK.Graphs.Invariant
                 int j = 0;
                 int k = 0;
                 bool end = false;
-                while ((i < m) && (!end))
+                while ((i < Height) && (!end))
                 {
                     bool allZero = true; // true if all elements under line i are null (zero)
-                    while (j < n)
+                    while (j < Width)
                     { // determination of the pivot
-                        for (k = i; k < m; k++)
+                        for (k = i; k < Height; k++)
                         {
                             if (!(tempMatrix.GetValueAt(k, j) == 0.0))
                             { // if an element != 0
@@ -548,7 +565,7 @@ namespace NCDK.Graphs.Invariant
                         else
                             break;
                     }
-                    if (j == n)
+                    if (j == Width)
                         end = true;
                     else
                     {
@@ -556,7 +573,7 @@ namespace NCDK.Graphs.Invariant
                         if (!(tempMatrix.GetValueAt(i, j) == 1.0)) // if element != 1
                             tempMatrix = // A = L(i)(1/a(i,j))(A)
                             tempMatrix.MultiplyLine(i, 1 / tempMatrix.GetValueAt(i, j));
-                        for (int q = 0; q < m; q++)
+                        for (int q = 0; q < Height; q++)
                             if (q != i) // A = L(q,i)(-a(q,j))(A)
                                 tempMatrix = tempMatrix.AddLine(q, i, -tempMatrix.GetValueAt(q, j));
                     }
@@ -581,10 +598,11 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="BadMatrixFormatException">if the matrix is not square</exception>
         public GIMatrix Transpose()
         {
-            if (m != n) throw new BadMatrixFormatException();
+            if (Height != Width)
+                throw new BadMatrixFormatException();
             double[][] transpose = Arrays.CreateJagged<double>(array.Length, array[0].Length);
-            for (int i = 0; i < m; i++)
-                for (int j = 0; j < n; j++)
+            for (int i = 0; i < Height; i++)
+                for (int j = 0; j < Width; j++)
                     transpose[i][j] = array[j][i];
             return new GIMatrix(transpose);
         } // method Transpose()
@@ -597,10 +615,11 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="BadMatrixFormatException">if the matrix is not square</exception>
         public GIMatrix Diagonal()
         {
-            if (m != n) throw new BadMatrixFormatException();
+            if (Height != Width)
+                throw new BadMatrixFormatException();
             double[][] diagonal = Arrays.CreateJagged<double>(array.Length, array[0].Length);
-            for (int i = 0; i < m; i++)
-                for (int j = 0; j < n; j++)
+            for (int i = 0; i < Height; i++)
+                for (int j = 0; j < Width; j++)
                 {
                     if (i == j)
                         diagonal[i][j] = array[i][j];
@@ -620,9 +639,10 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="ArgumentOutOfRangeException">if the given index is out of the matrix's range</exception>
         public GIMatrix MultiplyLine(int i, double c)
         {
-            if ((i < 0) || (i >= m)) throw new ArgumentOutOfRangeException();
+            if ((i < 0) || (i >= Height))
+                throw new ArgumentOutOfRangeException(nameof(i));
             double[][] temp = array;
-            for (int k = 0; k < n; k++)
+            for (int k = 0; k < Width; k++)
                 temp[i][k] = c * temp[i][k]; // mutliply every member of the line by c
             try
             {
@@ -643,7 +663,10 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="ArgumentOutOfRangeException">if the given index is out of the matrix's range</exception>
         public GIMatrix InvertLine(int i, int j)
         {
-            if ((i < 0) || (i >= m) || (j < 0) || (j >= m)) throw new ArgumentOutOfRangeException();
+            if ((i < 0) || (i >= Height))
+                throw new ArgumentOutOfRangeException(nameof(i));
+            if ((j < 0) || (j >= Width))
+                throw new ArgumentOutOfRangeException(nameof(j));
             double[][] temp = array;
             double[] tempLine = temp[j]; // temporary line
             temp[j] = temp[i];
@@ -669,9 +692,12 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="ArgumentOutOfRangeException">if the given index is out of the matrix's range</exception>
         public GIMatrix AddLine(int i, int j, double c)
         {
-            if ((i < 0) || (i >= m) || (j < 0) || (j >= m)) throw new ArgumentOutOfRangeException();
+            if ((i < 0) || (i >= Height))
+                throw new ArgumentOutOfRangeException(nameof(i));
+            if ((j < 0) || (j >= Width))
+                throw new ArgumentOutOfRangeException(nameof(j));
             double[][] temp = array;
-            for (int k = 0; k < n; k++)
+            for (int k = 0; k < Width; k++)
                 temp[i][k] = temp[i][k] + c * temp[j][k]; // add multiplied element of i to element of j
             try
             {
@@ -688,12 +714,13 @@ namespace NCDK.Graphs.Invariant
         /// </summary>
         public GIMatrix Add(GIMatrix b)
         {
-            if ((b == null) || (m != b.m) || (n != b.n)) return null;
+            if ((b == null) || (Height != b.Height) || (Width != b.Width))
+                return null;
 
             int i, j;
-            GIMatrix result = new GIMatrix(m, n);
-            for (i = 0; i < m; i++)
-                for (j = 0; j < n; j++)
+            GIMatrix result = new GIMatrix(Height, Width);
+            for (i = 0; i < Height; i++)
+                for (j = 0; j < Width; j++)
                     result.array[i][j] = array[i][j] + b.array[i][j];
             return result;
         }
@@ -707,8 +734,8 @@ namespace NCDK.Graphs.Invariant
         public GIMatrix Multiply(double c)
         {
             double[][] temp = array;
-            for (int i = 0; i < m; i++)
-                for (int j = 0; j < n; j++)
+            for (int i = 0; i < Height; i++)
+                for (int j = 0; j < Width; j++)
                     temp[i][j] = c * temp[i][j];
             try
             {
@@ -731,16 +758,17 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="BadMatrixFormatException">if the matrix passed in arguments has wrong dimensions</exception>
         public GIMatrix Multiply(GIMatrix matrix)
         {
-            if (n != matrix.Height) throw new BadMatrixFormatException(); // unsuitable dimensions
+            if (Width != matrix.Height)
+                throw new BadMatrixFormatException(); // unsuitable dimensions
             int p = matrix.Width;
-            double[][] temp = Arrays.CreateJagged<double>(m, p);
+            double[][] temp = Arrays.CreateJagged<double>(Height, p);
             double[][] multiplied = matrix.ArrayValue;
-            for (int i = 0; i < m; i++)
+            for (int i = 0; i < Height; i++)
                 // line index of the first matrix
                 for (int k = 0; k < p; k++)
                 { // column index of the second matrix
                     temp[i][k] = array[i][0] * multiplied[0][k]; // first multiplication
-                    for (int j = 1; j < n; j++)
+                    for (int j = 1; j < Width; j++)
                         // sum of multiplications
                         temp[i][k] = temp[i][k] + array[i][j] * multiplied[j][k];
                 }
@@ -757,7 +785,7 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="BadMatrixFormatException">if the matrix is not square</exception>
         public double Determinant()
         {
-            if (m != n) throw new BadMatrixFormatException();
+            if (Height != Width) throw new BadMatrixFormatException();
             return Det(array); // use of recursive method
         } // method Determinant()
 
@@ -774,7 +802,7 @@ namespace NCDK.Graphs.Invariant
 
         // Returns the minor of the array (supposed square) i.e. the array least its i-th line
         // and j-th column
-        private double[][] M(double[][] mat, int i, int j)
+        private static double[][] M(double[][] mat, int i, int j)
         {
             double[][] temp = Arrays.CreateJagged<double>(mat.Length - 1, mat[0].Length - 1); // "void minor"
             for (int k = 0; k < i; k++)
@@ -802,40 +830,47 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="BadMatrixFormatException">if the matrix is not square</exception>
         public double Trace()
         {
-            if (m != n) throw new BadMatrixFormatException();
+            if (Height != Width)
+                throw new BadMatrixFormatException();
             double trace = array[0][0];
-            for (int i = 1; i < m; i++)
+            for (int i = 1; i < Height; i++)
                 trace = trace + array[i][i];
             return trace;
         } // method Trace()
 
         // Verifies if the matrix is of good format when calling a constructor or setArrayValue
-        private void VerifyMatrixFormat(double[][] testedMatrix)
+        private static void VerifyMatrixFormat(double[][] testedMatrix)
         {
-            if ((testedMatrix.Length == 0) || (testedMatrix[0].Length == 0)) throw new BadMatrixFormatException();
+            if ((testedMatrix.Length == 0) || (testedMatrix[0].Length == 0))
+                throw new BadMatrixFormatException();
             int noOfColumns = testedMatrix[0].Length;
             for (int i = 1; i < testedMatrix.Length; i++)
-                if (testedMatrix[i].Length != noOfColumns) throw new BadMatrixFormatException();
+                if (testedMatrix[i].Length != noOfColumns)
+                    throw new BadMatrixFormatException();
         } // method VerifyMatrixFormat(double[][])
 
         // In the case of the implementation of a table i.e. an array of matrices, verifies if the table is proper.
-        private void VerifyTableFormat(GIMatrix[][] testedTable)
+        private static void VerifyTableFormat(GIMatrix[][] testedTable)
         {
-            if ((testedTable.Length == 0) || (testedTable[0].Length == 0)) throw new BadMatrixFormatException();
+            if ((testedTable.Length == 0) || (testedTable[0].Length == 0))
+                throw new BadMatrixFormatException();
             int noOfColumns = testedTable[0].Length;
             int currentHeigth, currentWidth;
             for (int i = 0; i < testedTable.Length; i++)
             { // verifies correspondence of m's (heigth)
-                if (testedTable[i].Length != noOfColumns) throw new BadMatrixFormatException();
+                if (testedTable[i].Length != noOfColumns)
+                    throw new BadMatrixFormatException();
                 currentHeigth = testedTable[i][0].Height;
                 for (int j = 1; j < testedTable[0].Length; j++)
-                    if (testedTable[i][j].Height != currentHeigth) throw new BadMatrixFormatException();
+                    if (testedTable[i][j].Height != currentHeigth)
+                        throw new BadMatrixFormatException();
             }
             for (int j = 0; j < testedTable[0].Length; j++)
             { // verifies correspondence of n's (width)
                 currentWidth = testedTable[0][j].Width;
                 for (int i = 1; i < testedTable.Length; i++)
-                    if (testedTable[i][j].Width != currentWidth) throw new BadMatrixFormatException();
+                    if (testedTable[i][j].Width != currentWidth)
+                        throw new BadMatrixFormatException();
             }
         } // method VerifyTableFormat(Matrix[][])
 

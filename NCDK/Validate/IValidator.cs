@@ -39,7 +39,7 @@ namespace NCDK.Validate
 
         ValidationReport ValidateChemModel(IChemModel subject);
 
-        ValidationReport ValidateChemObject(IChemObject obj);
+        ValidationReport ValidateChemObject(IChemObject o);
 
         ValidationReport ValidateChemSequence(IChemSequence subject);
 

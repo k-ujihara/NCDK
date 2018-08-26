@@ -54,32 +54,27 @@ namespace NCDK.IO.RandomAccess
 
         protected override bool IsRecordEnd(string line)
         {
-            return line.Equals("$$$$");
+            return string.Equals(line, "$$$$", StringComparison.Ordinal);
         }
 
         /// <seealso cref="IChemObjectIO.Format"/>
-        public IResourceFormat Format => MDLFormat.Instance;
+        public virtual IResourceFormat Format => MDLFormat.Instance;
 
         public override bool IsReadOnly => true;
 
         public override IChemObject this[int index]
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+            get => throw new NotImplementedException();
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+            set => throw new NotImplementedException();
         }
 
         protected override IChemObject ProcessContent()
         {
             // return chemObjectReader.Read(builder.NewAtomContainer());
             //Read(IAtomContainer) doesn't read properties ...
-            IChemObject co = chemObjectReader.Read(builder.NewChemFile());
+            IChemObject co = ChemObjectReader.Read(Builder.NewChemFile());
             if (co is IChemFile)
             {
                 var cm = ((IChemFile)co).FirstOrDefault();
@@ -97,25 +92,9 @@ namespace NCDK.IO.RandomAccess
             return co;
         }
 
-        public void SetReader(TextReader reader)
-        {
-            throw new NotSupportedException();
-        }
-
-        public void SetReader(Stream reader)
-        {
-            throw new NotSupportedException();
-
-        }
-
         public bool Accepts(Type classObject)
         {
-            return chemObjectReader.Accepts(classObject);
-        }
-
-        public void Remove()
-        {
-            throw new NotSupportedException("Cannot remove entries with " + "the " + nameof(RandomAccessSDFReader));
+            return ChemObjectReader.Accepts(classObject);
         }
 
         public override int IndexOf(IChemObject item)

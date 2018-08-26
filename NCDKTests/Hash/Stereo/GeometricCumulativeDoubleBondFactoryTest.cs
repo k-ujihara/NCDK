@@ -23,7 +23,7 @@
 using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NCDK.Default;
+using NCDK.Silent;
 
 namespace NCDK.Hash.Stereo
 {

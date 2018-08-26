@@ -18,6 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.QSAR.Results;
+using NCDK.Silent;
 using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -38,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestWeightDescriptor()
         {
             Descriptor.Parameters = new object[] { "*" };
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCC");
             Assert.AreEqual(44.06, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
         }
@@ -48,7 +49,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestNoHydrogens()
         {
             Descriptor.Parameters = new object[] { "*" };
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             mol.Atoms.Add(builder.NewAtom("C"));
             Assert.AreEqual(12.00, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
@@ -59,7 +60,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestExplicitHydrogens()
         {
             Descriptor.Parameters = new object[] { "*" };
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms.Add(builder.NewAtom("H"));
@@ -78,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestImplicitHydrogens()
         {
             Descriptor.Parameters = new object[] { "*" };
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[0].ImplicitHydrogenCount = 4;

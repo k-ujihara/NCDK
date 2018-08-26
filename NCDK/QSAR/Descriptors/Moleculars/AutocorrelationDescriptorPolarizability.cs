@@ -46,13 +46,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int natom = container.Atoms.Count;
             double[] polars = new double[natom];
 
-            Polarizability polar = new Polarizability();
             for (int i = 0; i < natom; i++)
             {
                 IAtom atom = container.Atoms[i];
                 try
                 {
-                    polars[i] = polar.CalculateGHEffectiveAtomPolarizability(container, atom, false, dmat);
+                    polars[i] = Polarizability.CalculateGHEffectiveAtomPolarizability(container, atom, false, dmat);
                 }
                 catch (Exception ex1)
                 {
@@ -120,10 +119,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     for (int i = 0; i < natom; i++)
                     {
-                        if (molecule.Atoms[i].Symbol.Equals("H")) continue;
+                        if (string.Equals(molecule.Atoms[i].Symbol, "H", StringComparison.Ordinal)) continue;
                         for (int j = 0; j < natom; j++)
                         {
-                            if (molecule.Atoms[j].Symbol.Equals("H")) continue;
+                            if (string.Equals(molecule.Atoms[j].Symbol, "H", StringComparison.Ordinal)) continue;
                             if (distancematrix[i][j] == k)
                             {
                                 polarizabilitySum[k] += w[i] * w[j];
@@ -142,7 +141,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
                 }
 
-                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result,
+                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result,
                         DescriptorNames);
 
             }
@@ -158,14 +157,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             ArrayResult<double> results = new ArrayResult<double>(5);
             for (int i = 0; i < 5; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results,
                     DescriptorNames, e);
         }
 
         public override IReadOnlyList<string> ParameterNames => null;
         public override object GetParameterType(string name) => null;
 
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             get { return null; }
             set { }
@@ -173,8 +172,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationPolarizability",
                typeof(AutocorrelationDescriptorPolarizability).FullName, 

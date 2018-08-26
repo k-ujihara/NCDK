@@ -18,7 +18,8 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Config.Isotopes;
+using NCDK.Silent;
 
 namespace NCDK.Config.Isotope
 {

@@ -22,6 +22,7 @@ using NCDK.QSAR.Results;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.MCSS;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -68,8 +69,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
-        public DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aminoAcidsCount",
                 typeof(AminoAcidCountDescriptor).FullName,
@@ -79,7 +80,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the <see cref="AminoAcidCountDescriptor"/> object.
         /// </summary>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             get { return null; }
             set { } // no parameters exist
@@ -96,15 +97,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public DescriptorValue<ArrayResult<int>> Calculate(IAtomContainer ac)
         {
             ac = Clone(ac); // don't modify input
-            int resultLength = substructureSet.Count;
-            ArrayResult<int> results = new ArrayResult<int>(resultLength);
+            var resultLength = substructureSet.Count;
+            var results = new ArrayResult<int>(resultLength);
 
-            UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
+            var universalIsomorphismTester = new UniversalIsomorphismTester();
             IAtomContainer substructure;
             for (int i = 0; i < resultLength; i++)
             {
                 substructure = substructureSet[i];
-                IList<IList<RMap>> maps;
+                IEnumerable<IReadOnlyList<RMap>> maps = null;
                 try
                 {
                     maps = universalIsomorphismTester.GetSubgraphMaps(ac, substructure);
@@ -113,15 +114,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     for (int j = 0; j < resultLength; j++)
                         results.Add(0);    // TODO: original code is (int)double.NaN.
-                    return new DescriptorValue<ArrayResult<int>>(_Specification, ParameterNames, Parameters, results, DescriptorNames, new CDKException("Error in substructure search: " + e.Message));
+                    return new DescriptorValue<ArrayResult<int>>(specification, ParameterNames, Parameters, results, DescriptorNames, new CDKException("Error in substructure search: " + e.Message));
                 }
                 if (maps != null)
                 {
-                    results.Add(maps.Count);
+                    results.Add(maps.Count());
                 }
             }
 
-            return new DescriptorValue<ArrayResult<int>>(_Specification, ParameterNames, Parameters, results, DescriptorNames);
+            return new DescriptorValue<ArrayResult<int>>(specification, ParameterNames, Parameters, results, DescriptorNames);
         }
 
         /// <summary>
@@ -138,7 +139,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// Gets the parameterNames attribute of the AromaticAtomsCountDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => new string[0];
+        public override IReadOnlyList<string> ParameterNames => System.Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute of the AromaticAtomsCountDescriptor object.

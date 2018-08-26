@@ -19,6 +19,7 @@
 
 using NCDK.Tools;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -52,7 +53,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "pdb", "ent" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "pdb", "ent" };
 
         /// <inheritdoc/>
         public override string ReaderClassName { get; } = typeof(PDBReader).FullName;
@@ -75,10 +76,10 @@ namespace NCDK.IO.Formats
 
         /// <inheritdoc/>
         public override DataFeatures SupportedDataFeatures =>
-            DataFeatures.HAS_FRACTIONAL_CRYSTAL_COORDINATES | RequiredDataFeatures;
+            DataFeatures.HasFractionalCrystalCoordinates | RequiredDataFeatures;
 
         /// <inheritdoc/>
         public override DataFeatures RequiredDataFeatures =>
-            DataFeatures.HAS_3D_COORDINATES | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+            DataFeatures.Has3DCoordinates | DataFeatures.HasAtomElementSymbol;
     }
 }

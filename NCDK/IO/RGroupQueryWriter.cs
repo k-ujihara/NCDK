@@ -26,6 +26,7 @@ using NCDK.IO.Formats;
 using NCDK.Isomorphisms.Matchers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -104,7 +105,7 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="atomContainer"></param>
         /// <returns>CTAB block</returns>
-        private string GetCTAB(IAtomContainer atomContainer)
+        private static string GetCTAB(IAtomContainer atomContainer)
         {
             StringWriter strWriter = new StringWriter();
             MDLV2000Writer mdlWriter = new MDLV2000Writer(strWriter);
@@ -121,7 +122,7 @@ namespace NCDK.IO
             //strip of the individual header, as we have one super header instead.
             for (int line = 1; line <= 3; line++)
             {
-                ctab = ctab.Substring(ctab.IndexOf(LSEP) + (LSEP.Length));
+                ctab = ctab.Substring(ctab.IndexOf(LSEP, StringComparison.Ordinal) + (LSEP.Length));
             }
             return ctab;
         }
@@ -145,7 +146,7 @@ namespace NCDK.IO
             try
             {
                 IRGroupQuery rGroupQuery = (IRGroupQuery)obj;
-                string now = DateTime.UtcNow.ToString("MMddyyHHmm");
+                string now = DateTime.UtcNow.ToString("MMddyyHHmm", DateTimeFormatInfo.InvariantInfo);
                 IAtomContainer rootAtc = rGroupQuery.RootStructure;
 
                 //Construct header
@@ -176,7 +177,7 @@ namespace NCDK.IO
                 //from the order in the atom block. See CT spec for more on that.
                 foreach (var rgroupAtom in rGroupQuery.RootAttachmentPoints.Keys)
                 {
-                    IDictionary<int, IBond> rApo = rGroupQuery.RootAttachmentPoints[rgroupAtom];
+                    var rApo = rGroupQuery.RootAttachmentPoints[rgroupAtom];
                     if (rApo.Count > 1)
                     {
                         int prevPos = -1;

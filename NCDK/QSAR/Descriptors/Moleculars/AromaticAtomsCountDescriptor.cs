@@ -59,8 +59,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public AromaticAtomsCountDescriptor() { }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticAtomsCount",
                 typeof(AromaticAtomsCountDescriptor).FullName, "The Chemistry Development Kit");
@@ -69,11 +69,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the AromaticAtomsCountDescriptor object.
         /// </summary>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length != 1)
+                if (value.Count != 1)
                 {
                     throw new CDKException("AromaticAtomsCountDescriptor expects one parameter");
                 }
@@ -116,7 +116,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
                 catch (CDKException)
                 {
-                    return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters,
+                    return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters,
                         new Result<int>(0), DescriptorNames,
                         new CDKException("Error during atom type perception"));
                 }
@@ -126,7 +126,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
                 catch (CDKException e)
                 {
-                    return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters,
+                    return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters,
                         new Result<int>(0), DescriptorNames,
                         new CDKException($"Error during aromaticity detection: {e.Message}"));
                 }
@@ -138,7 +138,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     aromaticAtomsCount += 1;
                 }
             }
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(aromaticAtomsCount), DescriptorNames);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(aromaticAtomsCount), DescriptorNames);
         }
 
         /// <summary>

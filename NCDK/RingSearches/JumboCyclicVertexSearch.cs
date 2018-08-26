@@ -37,7 +37,7 @@ namespace NCDK.RingSearches
         : ICyclicVertexSearch
     {
         /// <summary>graph representation</summary>
-        private readonly int[][] g;
+        private readonly IReadOnlyList<IReadOnlyList<int>> g;
 
         /// <summary>set of known cyclic vertices</summary>
         private readonly BitArray cyclic;
@@ -52,21 +52,19 @@ namespace NCDK.RingSearches
         private BitArray visited;
 
         /// <summary>the vertices in our path at a given vertex index</summary>
-        private BitArray[] state;
+        private readonly BitArray[] state;
 
         /// <summary>vertex colored by each component.</summary>
         private int[] colors;
-
-        private int numCycles = 0;
 
         /// <summary>
         /// Create a new cyclic vertex search for the provided graph.
         /// </summary>
         /// <param name="graph">adjacency list representation of a graph</param>
-        public JumboCyclicVertexSearch(int[][] graph)
+        public JumboCyclicVertexSearch(IReadOnlyList<IReadOnlyList<int>> graph)
         {
             this.g = graph;
-            int n = graph.Length;
+            int n = graph.Count;
 
             cyclic = new BitArray(n);
 
@@ -120,7 +118,7 @@ namespace NCDK.RingSearches
                 // include w - they are adjacent
                 if (prev[w])
                 {
-                    numCycles++;
+                    NumCycles++;
                     // we have a cycle, xor the state when we last visited 'w'
                     // with our current state. this set is all the vertices
                     // we visited since then
@@ -140,7 +138,7 @@ namespace NCDK.RingSearches
         /// <summary>Synchronisation lock.</summary>
         private readonly object syncLock = new object();
 
-        public int NumCycles =>numCycles;
+        public int NumCycles { get; private set; } = 0;
 
         /// <summary>
         /// Lazily build an indexed lookup of vertex color. The vertex color
@@ -151,7 +149,7 @@ namespace NCDK.RingSearches
         /// <returns>vertex colors</returns>
         public int[] VertexColor()
         {
-            int[] result = colors;
+            var result = colors;
             if (result == null)
             {
                 lock (syncLock)
@@ -174,7 +172,7 @@ namespace NCDK.RingSearches
         /// <returns>vertex colors</returns>
         private int[] BuildVertexColor()
         {
-            int[] color = new int[g.Length];
+            int[] color = new int[g.Count];
 
             int n = 1;
             Arrays.Fill(color, -1);
@@ -199,7 +197,7 @@ namespace NCDK.RingSearches
         /// <inheritdoc/>
         public bool Cyclic(int u, int v)
         {
-            int[] colors = VertexColor();
+            var colors = VertexColor();
 
             // if either vertex has no color then the edge can not
             // be cyclic
@@ -231,7 +229,7 @@ namespace NCDK.RingSearches
         /// <inheritdoc/>
         public int[][] Isolated()
         {
-            List<int[]> isolated = new List<int[]>(cycles.Count());
+            var isolated = new List<int[]>(cycles.Count());
             for (int i = 0; i < cycles.Count(); i++)
             {
                 if (!fused[i]) isolated.Add(ToArray(cycles[i]));
@@ -242,7 +240,7 @@ namespace NCDK.RingSearches
         /// <inheritdoc/>
         public int[][] Fused()
         {
-            List<int[]> fused = new List<int[]>(cycles.Count());
+            var fused = new List<int[]>(cycles.Count());
             for (int i = 0; i < cycles.Count(); i++)
             {
                 if (this.fused[i]) fused.Add(ToArray(cycles[i]));

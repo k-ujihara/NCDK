@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace NCDK.Formula
 {
     /// <summary>
@@ -6,7 +8,7 @@ namespace NCDK.Formula
     // @author Miguel Rojas Cherto
     // @cdk.module  formula
     // @cdk.githash
-    public class IsotopePatternManipulator
+    public static class IsotopePatternManipulator
     {
         /// <summary>
         /// Return the isotope pattern normalized to the highest abundance.
@@ -28,20 +30,26 @@ namespace NCDK.Formula
                     isoHighest = isoContainer;
                 }
             }
-            /* Normalize */
-            IsotopePattern isoNormalized = new IsotopePattern();
-            foreach (var isoContainer in isotopeP.Isotopes)
+            IsotopePattern isoNormalized;
             {
-                double inten = isoContainer.Intensity / isoHighest.Intensity;
-                IsotopeContainer icClone;
-                icClone = (IsotopeContainer)isoContainer.Clone();
-                icClone.Intensity = inten;
-                if (isoHighest.Equals(isoContainer))
-                    isoNormalized.SetMonoIsotope(icClone);
-                else
-                    isoNormalized.Isotopes.Add(icClone);
+                /* Normalize */
+                var newIsotopes = new List<IsotopeContainer>();
+                IsotopeContainer monoIsotope = null;
+                foreach (var isoContainer in isotopeP.Isotopes)
+                {
+                    var inten = isoContainer.Intensity / isoHighest.Intensity;
+                    var icClone = (IsotopeContainer)isoContainer.Clone();
+                    icClone.Intensity = inten;
+                    if (isoHighest.Equals(isoContainer))
+                        monoIsotope = icClone;
+                    newIsotopes.Add(icClone);
+                }
+                isoNormalized = new IsotopePattern(newIsotopes);
+                if (monoIsotope != null)
+                    isoNormalized.MonoIsotope = monoIsotope;
+                isoNormalized.Charge = isotopeP.Charge;
             }
-            isoNormalized.Charge = isotopeP.Charge;
+            
             return isoNormalized;
         }
 
@@ -53,7 +61,7 @@ namespace NCDK.Formula
         /// <returns>The IsotopePattern sorted</returns>
         public static IsotopePattern SortAndNormalizedByIntensity(IsotopePattern isotopeP)
         {
-            IsotopePattern isoNorma = Normalize(isotopeP);
+            var isoNorma = Normalize(isotopeP);
             return SortByIntensity(isoNorma);
         }
 
@@ -64,7 +72,7 @@ namespace NCDK.Formula
         /// <returns>The IsotopePattern sorted</returns>
         public static IsotopePattern SortByIntensity(IsotopePattern isotopeP)
         {
-            IsotopePattern isoSort = (IsotopePattern)isotopeP.Clone();
+            var isoSort = (IsotopePattern)isotopeP.Clone();
 
             // Do nothing for empty isotope pattern
             if (isoSort.Isotopes.Count == 0)
@@ -78,7 +86,7 @@ namespace NCDK.Formula
                     return o2.Intensity.CompareTo(o1.Intensity);
                 });
             // Set the monoisotopic peak to the one with highest intensity
-            isoSort.SetMonoIsotope(listISO[0]);
+            isoSort.MonoIsotope = listISO[0];
 
             return isoSort;
         }
@@ -90,7 +98,7 @@ namespace NCDK.Formula
         /// <returns>The IsotopePattern sorted</returns>
         public static IsotopePattern SortByMass(IsotopePattern isotopeP)
         {
-            IsotopePattern isoSort = (IsotopePattern)isotopeP.Clone();
+            var isoSort = (IsotopePattern)isotopeP.Clone();
 
             // Do nothing for empty isotope pattern
             if (isoSort.Isotopes.Count == 0)
@@ -104,7 +112,7 @@ namespace NCDK.Formula
             });
 
             // Set the monoisotopic peak to the one with lowest mass
-            isoSort.SetMonoIsotope(listISO[0]);
+            isoSort.MonoIsotope = listISO[0];
 
             return isoSort;
         }

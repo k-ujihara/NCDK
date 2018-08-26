@@ -72,8 +72,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public WeightedPathDescriptor() { }
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weightedPath",
                 typeof(WeightedPathDescriptor).FullName,
@@ -82,7 +82,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the WeightedPathDescriptor object.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
@@ -197,13 +197,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             mid += count;
             retval.Add(mid);
 
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval, DescriptorNames);
         }
 
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
 
-        private double[] GetPathWeights(List<IList<IAtom>> pathList, IAtomContainer atomContainer)
+        private static double[] GetPathWeights(List<IList<IAtom>> pathList, IAtomContainer atomContainer)
         {
             double[] pathWts = new double[pathList.Count];
             for (int i = 0; i < pathList.Count; i++)

@@ -88,14 +88,14 @@ namespace NCDK.FaulonSignatures.Simple
             PermuteTest(new SimpleGraph("0:1,0:2,0:3,1:4,2:4,3:4"));
         }
 
-        [TestCategory("SlowTest")]
+        [TestCategory("VerySlowTest"), Ignore()]
         [TestMethod()]
         public void LargePermuteTestA()
         {
             PermuteTest(new SimpleGraph("5:7,6:7,0:6,1:6,2:5,3:5,0:4,1:4,2:4,3:4,0:3,2:3,0:1,1:2"));
         }
 
-        [TestCategory("SlowTest")]
+        [TestCategory("VerySlowTest"), Ignore()]
         [TestMethod()]
         public void LargePermuteTestB()
         {

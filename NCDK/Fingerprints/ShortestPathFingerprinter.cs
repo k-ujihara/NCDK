@@ -22,15 +22,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Aromaticities;
 using NCDK.Common.Collections;
 using NCDK.Common.Primitives;
-using NCDK.Aromaticities;
 using NCDK.Graphs;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace NCDK.Fingerprints
@@ -50,7 +50,7 @@ namespace NCDK.Fingerprints
     /// <para>The FingerPrinter calculates fingerprint based on the Shortest Paths between two atoms. It also takes into account
     /// ring system, charges etc while generating a fingerprint. </para>
     /// <para>The FingerPrinter assumes that hydrogens are explicitly given! Furthermore, if pseudo atoms or atoms with
-    /// malformed symbols are present, their atomic number is taken as one more than the last element currently supported in <see cref="PeriodicTable"/>.
+    /// malformed symbols are present, their atomic number is taken as one more than the last element currently supported in <see cref="NCDK.Tools.PeriodicTable"/>.
     /// </para>
     /// </remarks>
     // @author Syed Asad Rahman (2012)
@@ -69,7 +69,7 @@ namespace NCDK.Fingerprints
         /// <summary>
         /// The default length of created fingerprints.
         /// </summary>
-        private int fingerprintLength;
+        private readonly int fingerprintLength;
 
         private readonly RandomNumber rand = new RandomNumber();
 
@@ -123,7 +123,7 @@ namespace NCDK.Fingerprints
         /// <param name="ac">The <see cref="IAtomContainer"/> for which a fingerprint is generated</param>
         /// <returns><see cref="IDictionary{T, T}"/> of raw fingerprint paths/features</returns>
         /// <exception cref="NotSupportedException">method is not supported</exception>
-        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer ac)
+        public override IReadOnlyDictionary<string, int> GetRawFingerprint(IAtomContainer ac)
         {
             throw new NotSupportedException();
         }
@@ -145,7 +145,7 @@ namespace NCDK.Fingerprints
             foreach (var hash in hashes)
             {
                 int position = GetRandomNumber(hash);
-                uniquePaths.Add(position.ToString(), hash);
+                uniquePaths.Add(position.ToString(NumberFormatInfo.InvariantInfo), hash);
             }
         }
 
@@ -157,7 +157,7 @@ namespace NCDK.Fingerprints
         /// </summary>
         /// <param name="container">The molecule to search</param>
         /// <returns>A map of path strings, keyed on themselves</returns>
-        private int[] FindPaths(IAtomContainer container)
+        private static int[] FindPaths(IAtomContainer container)
         {
             ShortestPathWalker walker = new ShortestPathWalker(container);
             // convert paths to hashes
@@ -176,7 +176,7 @@ namespace NCDK.Fingerprints
             RingSetManipulator.Sort(sssr);
             foreach (var ring in sssr)
             {
-                int toHashCode = Strings.GetJavaHashCode(ring.Atoms.Count.ToString());
+                int toHashCode = Strings.GetJavaHashCode(ring.Atoms.Count.ToString(NumberFormatInfo.InvariantInfo));
                 paths.Insert(patternIndex, toHashCode);
                 patternIndex++;
             }
@@ -187,7 +187,7 @@ namespace NCDK.Fingerprints
                 int charge = atom.FormalCharge ?? 0;
                 if (charge != 0)
                 {
-                    l.Add(atom.Symbol + charge.ToString());
+                    l.Add(atom.Symbol + charge.ToString(NumberFormatInfo.InvariantInfo));
                 }
             }
             {
@@ -204,7 +204,7 @@ namespace NCDK.Fingerprints
                 var st = atom.StereoParity;
                 if (st != StereoAtomParities.Undefined)
                 {
-                    l.Add(atom.Symbol + st.ToString());
+                    l.Add(atom.Symbol + st.ToString(NumberFormatInfo.InvariantInfo));
                 }
             }
             {
@@ -231,7 +231,7 @@ namespace NCDK.Fingerprints
             return paths.ToArray();
         }
 
-        public override int Count => fingerprintLength;
+        public override int Length => fingerprintLength;
 
         public override ICountFingerprint GetCountFingerprint(IAtomContainer iac)
         {

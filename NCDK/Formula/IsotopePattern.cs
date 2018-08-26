@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.Formula
@@ -12,59 +13,65 @@ namespace NCDK.Formula
     // @cdk.githash
     public class IsotopePattern
     {
-        internal List<IsotopeContainer> isotopes = new List<IsotopeContainer>();
-        public IList<IsotopeContainer> Isotopes => isotopes;
+        internal readonly List<IsotopeContainer> isotopes = new List<IsotopeContainer>();
+        private int monoIsotopePosition = -1;
+        private double charge = 0;
 
-        private int monoIsotopePosition;
-
-        /// <summary>
-        /// Constructor of the IsotopePattern object.
-        /// </summary>
         public IsotopePattern()
-        { }
-
-        /// <summary>
-        /// Set the mono isotope object. Adds the isoContainer to the isotope 
-        ///                 pattern, if it is not already added. 
-        /// </summary>
-        /// <param name="isoContainer">The IsotopeContainer object</param>
-        public void SetMonoIsotope(IsotopeContainer isoContainer)
+            : this(Array.Empty<IsotopeContainer>())
         {
-            if (!Isotopes.Contains(isoContainer))
-                Isotopes.Add(isoContainer);
-            monoIsotopePosition = Isotopes.IndexOf(isoContainer);
         }
 
-        /// <summary>
-        /// Returns the mono-isotope peak that form this isotope pattern.
-        /// </summary>
-        /// <returns>The IsotopeContainer acting as mono-isotope</returns>
-        public IsotopeContainer GetMonoIsotope()
+        public IsotopePattern(IEnumerable<IsotopeContainer> isotopes)
         {
-            return Isotopes[monoIsotopePosition];
+            this.isotopes.AddRange(isotopes);
+        }
+
+        public IReadOnlyList<IsotopeContainer> Isotopes => isotopes;
+
+        /// <summary>
+        /// The mono-isotope peak that form this isotope pattern.
+        /// </summary>
+        /// <remarks>
+        /// Adds the isoContainer to the isotope pattern, if it is not already added. 
+        /// </remarks>
+        public IsotopeContainer MonoIsotope
+        {
+            get => isotopes[monoIsotopePosition];
+
+            set
+            {
+                if (!isotopes.Contains(value))
+                    isotopes.Add(value);
+                monoIsotopePosition = isotopes.IndexOf(value);
+            }
         }
 
         /// <summary>
         /// the charge in this pattern.
         /// </summary>
-        public double Charge { get; set; } = 0;
+        public double Charge
+        {
+            get => charge;
+            set => charge = value;
+        }
 
         /// <summary>
-        /// Clones this IsotopePattern object and its content.
+        /// Clones this <see cref="IsotopePattern"/> object and its content.
         /// </summary>
         /// <returns>The cloned object</returns>
         public object Clone()
         {
-            IsotopePattern isoClone = new IsotopePattern();
-            IsotopeContainer isoHighest = GetMonoIsotope();
+            var isoClone = new IsotopePattern();
+            var isoHighest = this.MonoIsotope;
             foreach (var isoContainer in Isotopes)
             {
                 if (isoHighest.Equals(isoContainer))
-                    isoClone.SetMonoIsotope((IsotopeContainer)isoContainer.Clone());
+                    isoClone.MonoIsotope = (IsotopeContainer)isoContainer.Clone();
                 else
-                    isoClone.Isotopes.Add((IsotopeContainer)isoContainer.Clone());
+                    isoClone.isotopes.Add((IsotopeContainer)isoContainer.Clone());
             }
-            isoClone.Charge = Charge;
+            isoClone.charge = charge;
             return isoClone;
         }
     }

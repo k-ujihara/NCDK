@@ -20,10 +20,11 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Base;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
 using NCDK.Templates;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.RingSearches
 {
@@ -46,8 +47,8 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestCyclic_Int()
         {
-            int n = spiro.Atoms.Count;
-            RingSearch ringSearch = new RingSearch(spiro);
+            var n = spiro.Atoms.Count;
+            var ringSearch = new RingSearch(spiro);
             for (int i = 0; i < n; i++)
             {
                 Assert.IsTrue(ringSearch.Cyclic(i));
@@ -57,8 +58,8 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestIsolated()
         {
-            RingSearch search = new RingSearch(spiro);
-            int[][] isolated = search.Isolated();
+            var search = new RingSearch(spiro);
+            var isolated = search.Isolated();
             Assert.AreEqual(2, isolated.Length);
             Assert.IsTrue(Compares.AreOrderLessDeepEqual(new[] { 4, 7 }, new int[] { isolated[0].Length, isolated[1].Length }));
         }
@@ -72,7 +73,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestRingFragments()
         {
-            IAtomContainer fragment = new RingSearch(spiro).RingFragments();
+            var fragment = new RingSearch(spiro).RingFragments();
             Assert.AreEqual(spiro.Atoms.Count, fragment.Atoms.Count);
             Assert.AreEqual(spiro.Bonds.Count, fragment.Bonds.Count);
         }
@@ -80,8 +81,8 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestIsolatedRingFragments()
         {
-            RingSearch search = new RingSearch(spiro);
-            IList<IAtomContainer> isolated = search.IsolatedRingFragments();
+            var search = new RingSearch(spiro);
+            var isolated = search.IsolatedRingFragments().ToList();
             Assert.AreEqual(2, isolated.Count);
             Assert.IsTrue(Compares.AreOrderLessDeepEqual(new[] { 4, 7 }, new int[] { isolated[0].Atoms.Count, isolated[1].Atoms.Count }));
         }
@@ -89,9 +90,9 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestFusedRingFragments()
         {
-            RingSearch search = new RingSearch(spiro);
-            IList<IAtomContainer> fused = search.FusedRingFragments();
-            Assert.AreEqual(0, fused.Count);
+            var search = new RingSearch(spiro);
+            var fused = search.FusedRingFragments();
+            Assert.AreEqual(0, fused.Count());
         }
     }
 }

@@ -62,8 +62,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the VAdjMaDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vAdjMa",
                 typeof(VAdjMaDescriptor).FullName,
@@ -72,7 +72,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// Tthe parameters attribute of the VAdjMaDescriptor object
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
@@ -97,7 +97,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 vadjMa += (Math.Log(n) / Math.Log(2)) + 1;
             }
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(vadjMa), DescriptorNames);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(vadjMa), DescriptorNames);
         }
 
         /// <inheritdoc/>

@@ -24,15 +24,16 @@
 
 using NCDK.Common.Primitives;
 using NCDK.Config;
-using NCDK.Default;
 using NCDK.Graphs.Rebond;
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
 using NCDK.Numerics;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -175,7 +176,7 @@ namespace NCDK.IO
                 do
                 {
                     cRead = oInput.ReadLine();
-                    Debug.WriteLine("Read line: ", cRead);
+                    Debug.WriteLine($"Read line: {cRead}");
                     if (cRead != null)
                     {
                         lineLength = cRead.Length;
@@ -230,7 +231,7 @@ namespace NCDK.IO
                                         string strandName = oAtom.ChainID;
                                         if (strandName == null || strandName.Length == 0)
                                         {
-                                            strandName = chain.ToString();
+                                            strandName = chain.ToString(NumberFormatInfo.InvariantInfo);
                                         }
                                         oStrand = oBP.GetStrand(strandName);
                                         if (oStrand == null)
@@ -238,12 +239,12 @@ namespace NCDK.IO
                                             oStrand = new PDBStrand
                                             {
                                                 StrandName = strandName,
-                                                Id = chain.ToString()
+                                                Id = chain.ToString(NumberFormatInfo.InvariantInfo)
                                             };
                                         }
 
                                         // search for an existing monomer or create a new one.
-                                        oMonomer = oBP.GetMonomer(cResidue.ToString(), chain.ToString());
+                                        oMonomer = oBP.GetMonomer(cResidue.ToString(), chain.ToString(NumberFormatInfo.InvariantInfo));
                                         if (oMonomer == null)
                                         {
                                             PDBMonomer monomer = new PDBMonomer
@@ -272,7 +273,7 @@ namespace NCDK.IO
                                         if (isDup)
                                             Trace.TraceWarning("Duplicate serial ID found for atom: ", oAtom);
                                     }
-                                    Debug.WriteLine("Added ATOM: ", oAtom);
+                                    Debug.WriteLine($"Added ATOM: {oAtom}");
 
                                     // As HETATMs cannot be considered to either belong to a certain monomer or strand,
                                     // they are dealt with seperately.
@@ -309,7 +310,7 @@ namespace NCDK.IO
                                     chain++;
                                     oStrand = new PDBStrand
                                     {
-                                        StrandName = chain.ToString()
+                                        StrandName = chain.ToString(NumberFormatInfo.InvariantInfo)
                                     };
                                     Debug.WriteLine("Added new STRAND");
                                     #endregion
@@ -412,16 +413,15 @@ namespace NCDK.IO
                             case "CONECT":
                                 {
                                     #region
-                                    // ***********************************************************
                                     // Read connectivity information from CONECT records. Only
                                     // covalent bonds are dealt with. Perhaps salt bridges
                                     // should be dealt with in the same way..?
                                     if (!readConnect.IsSet)
                                         break;
-                                    cRead.Trim();
+                                    cRead = cRead.Trim();
                                     if (cRead.Length < 16)
                                     {
-                                        Debug.WriteLine("Skipping unexpected empty CONECT line! : ", cRead);
+                                        Debug.WriteLine($"Skipping unexpected empty CONECT line! : {cRead}");
                                     }
                                     else
                                     {
@@ -436,7 +436,7 @@ namespace NCDK.IO
                                             {
                                                 try
                                                 {
-                                                    atomFromNumber = int.Parse(part);
+                                                    atomFromNumber = int.Parse(part, NumberFormatInfo.InvariantInfo);
                                                 }
                                                 catch (FormatException)
                                                 {
@@ -446,7 +446,7 @@ namespace NCDK.IO
                                             {
                                                 try
                                                 {
-                                                    atomToNumber = int.Parse(part);
+                                                    atomToNumber = int.Parse(part, NumberFormatInfo.InvariantInfo);
                                                 }
                                                 catch (FormatException)
                                                 {
@@ -461,7 +461,6 @@ namespace NCDK.IO
                                             lineIndex += 5;
                                         }
                                     }
-                                    // **********************************************************
                                     #endregion
                                 }
                                 break;
@@ -475,10 +474,10 @@ namespace NCDK.IO
                                     {
                                         StructureType = PDBStructure.Helix,
                                         StartChainID = cRead[19],
-                                        StartSequenceNumber = int.Parse(cRead.Substring(21, 4).Trim()),
+                                        StartSequenceNumber = int.Parse(cRead.Substring(21, 4).Trim(), NumberFormatInfo.InvariantInfo),
                                         StartInsertionCode = cRead[25],
                                         EndChainID = cRead[31],
-                                        EndSequenceNumber = int.Parse(cRead.Substring(33, 4).Trim()),
+                                        EndSequenceNumber = int.Parse(cRead.Substring(33, 4).Trim(), NumberFormatInfo.InvariantInfo),
                                         EndInsertionCode = cRead[37]
                                     };
                                     oBP.Add(structure);
@@ -492,10 +491,10 @@ namespace NCDK.IO
                                     {
                                         StructureType = PDBStructure.Sheet,
                                         StartChainID = cRead[21],
-                                        StartSequenceNumber = int.Parse(cRead.Substring(22, 4).Trim()),
+                                        StartSequenceNumber = int.Parse(cRead.Substring(22, 4).Trim(), NumberFormatInfo.InvariantInfo),
                                         StartInsertionCode = cRead[26],
                                         EndChainID = cRead[32],
-                                        EndSequenceNumber = int.Parse(cRead.Substring(33, 4).Trim()),
+                                        EndSequenceNumber = int.Parse(cRead.Substring(33, 4).Trim(), NumberFormatInfo.InvariantInfo),
                                         EndInsertionCode = cRead[37]
                                     };
                                     oBP.Add(structure);
@@ -509,10 +508,10 @@ namespace NCDK.IO
                                     {
                                         StructureType = PDBStructure.Turn,
                                         StartChainID = cRead[19],
-                                        StartSequenceNumber = int.Parse(cRead.Substring(20, 4).Trim()),
+                                        StartSequenceNumber = int.Parse(cRead.Substring(20, 4).Trim(), NumberFormatInfo.InvariantInfo),
                                         StartInsertionCode = cRead[24],
                                         EndChainID = cRead[30],
-                                        EndSequenceNumber = int.Parse(cRead.Substring(31, 4).Trim()),
+                                        EndSequenceNumber = int.Parse(cRead.Substring(31, 4).Trim(), NumberFormatInfo.InvariantInfo),
                                         EndInsertionCode = cRead[35]
                                     };
                                     oBP.Add(structure);
@@ -533,7 +532,7 @@ namespace NCDK.IO
                     Trace.TraceError(cRead);
                     Trace.TraceError("01234567890123456789012345678901234567890123456789012345678901234567890123456789");
                     Trace.TraceError("          1         2         3         4         5         6         7         ");
-                    Trace.TraceError("  error: " + e.Message);
+                    Trace.TraceError($"  error: {e.Message}");
                     Debug.WriteLine(e);
                     Console.Error.WriteLine(e.StackTrace);
                 }
@@ -581,14 +580,13 @@ namespace NCDK.IO
             molecule.Bonds.Add(bond);
         }
 
-        private bool CreateBondsWithRebondTool(IAtomContainer molecule)
+        private static bool CreateBondsWithRebondTool(IAtomContainer molecule)
         {
             RebondTool tool = new RebondTool(2.0, 0.5, 0.5);
             try
             {
-                //             configure atoms
-                AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt",
-                        molecule.Builder);
+                // configure atoms
+                AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt", molecule.Builder);
                 foreach (var atom in molecule.Atoms)
                 {
                     try
@@ -615,7 +613,7 @@ namespace NCDK.IO
             }
             catch (Exception e)
             {
-                Trace.TraceError("Could not rebond the polymer: " + e.Message);
+                Trace.TraceError($"Could not rebond the polymer: {e.Message}");
                 Debug.WriteLine(e);
             }
             return true;
@@ -625,16 +623,18 @@ namespace NCDK.IO
         {
             return c >= 'A' && c <= 'Z';
         }
+
         private static bool IsLower(char c)
         {
             return c >= 'a' && c <= 'z';
         }
+
         private static bool IsDigit(char c)
         {
             return c >= '0' && c <= '9';
         }
 
-        private string ParseAtomSymbol(string str)
+        private static string ParseAtomSymbol(string str)
         {
             if (string.IsNullOrEmpty(str))
                 return null;
@@ -725,16 +725,16 @@ namespace NCDK.IO
                 throw new InvalidDataException("PDBReader error during ReadAtom(): line too short");
             }
 
-            bool isHetatm = cLine.Substring(0, 6).Equals("HETATM");
+            bool isHetatm = cLine.StartsWith("HETATM", StringComparison.Ordinal);
             string atomName = cLine.Substring(12, 4).Trim();
             string resName = cLine.Substring(17, 3).Trim();
             string symbol = ParseAtomSymbol(cLine);
 
             if (symbol == null)
-                HandleError("Cannot parse symbol from " + atomName);
+                HandleError($"Cannot parse symbol from {atomName}");
 
-            PDBAtom oAtom = new PDBAtom(symbol, new Vector3(double.Parse(cLine.Substring(30, 8)),
-                        double.Parse(cLine.Substring(38, 8)), double.Parse(cLine.Substring(46, 8))));
+            PDBAtom oAtom = new PDBAtom(symbol, new Vector3(double.Parse(cLine.Substring(30, 8), NumberFormatInfo.InvariantInfo),
+                        double.Parse(cLine.Substring(38, 8), NumberFormatInfo.InvariantInfo), double.Parse(cLine.Substring(46, 8), NumberFormatInfo.InvariantInfo)));
             if (useHetDictionary.IsSet && isHetatm)
             {
                 string cdkType = TypeHetatm(resName, atomName);
@@ -753,7 +753,7 @@ namespace NCDK.IO
             }
 
             oAtom.Record = cLine;
-            oAtom.Serial = int.Parse(cLine.Substring(6, 5).Trim());
+            oAtom.Serial = int.Parse(cLine.Substring(6, 5).Trim(), NumberFormatInfo.InvariantInfo);
             oAtom.Name = atomName.Trim();
             oAtom.AltLoc = cLine.Substring(16, 1).Trim();
             oAtom.ResName = resName;
@@ -773,7 +773,7 @@ namespace NCDK.IO
                 string frag = cLine.Substring(54, Math.Min(lineLength - 54, 6)).Trim();
                 if (frag.Length > 0)
                 {
-                    oAtom.Occupancy = double.Parse(frag);
+                    oAtom.Occupancy = double.Parse(frag, NumberFormatInfo.InvariantInfo);
                 }
             }
             if (lineLength >= 65)
@@ -781,7 +781,7 @@ namespace NCDK.IO
                 string frag = cLine.Substring(60, Math.Min(lineLength - 60, 6)).Trim();
                 if (frag.Length > 0)
                 {
-                    oAtom.TempFactor = double.Parse(frag);
+                    oAtom.TempFactor = double.Parse(frag, NumberFormatInfo.InvariantInfo);
                 }
             }
             if (lineLength >= 75)
@@ -809,11 +809,11 @@ namespace NCDK.IO
                     {
                         var aa = frag.ToCharArray();
                         Array.Reverse(aa);
-                        oAtom.Charge = double.Parse(new string(aa));
+                        oAtom.Charge = double.Parse(new string(aa), NumberFormatInfo.InvariantInfo);
                     }
                     else
                     {
-                        oAtom.Charge = double.Parse(frag);
+                        oAtom.Charge = double.Parse(frag, NumberFormatInfo.InvariantInfo);
                     }
                 }
             }
@@ -824,7 +824,7 @@ namespace NCDK.IO
             // special treatment.
             string oxt = cLine.Substring(13, 3).Trim();
 
-            if (oxt.Equals("OXT"))
+            if (string.Equals(oxt, "OXT", StringComparison.Ordinal))
             {
                 oAtom.Oxt = true;
             }
@@ -842,8 +842,7 @@ namespace NCDK.IO
             if (hetDictionary == null)
             {
                 ReadHetDictionary();
-                cdkAtomTypeFactory = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl",
-                        Default.ChemObjectBuilder.Instance);
+                cdkAtomTypeFactory = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", ChemObjectBuilder.Instance);
             }
             string key = resName + "." + atomName;
             if (hetDictionary.ContainsKey(key))
@@ -867,7 +866,7 @@ namespace NCDK.IO
                     if (colonIndex == -1) continue;
                     string typeKey = line.Substring(0, colonIndex);
                     string typeValue = line.Substring(colonIndex + 1);
-                    if (typeValue.Equals("null"))
+                    if (string.Equals(typeValue, "null", StringComparison.Ordinal))
                     {
                         hetDictionary[typeKey] = null;
                     }
@@ -906,11 +905,11 @@ namespace NCDK.IO
 
         private void InitIOSettings()
         {
-            useRebondTool = IOSettings.Add(new BooleanIOSetting("UseRebondTool", IOSetting.Importance.Low,
+            useRebondTool = IOSettings.Add(new BooleanIOSetting("UseRebondTool", Importance.Low,
                     "Should the PDBReader deduce bonding patterns?", "false"));
-            readConnect = IOSettings.Add(new BooleanIOSetting("ReadConnectSection", IOSetting.Importance.Low,
+            readConnect = IOSettings.Add(new BooleanIOSetting("ReadConnectSection", Importance.Low,
                     "Should the CONECT be read?", "true"));
-            useHetDictionary = IOSettings.Add(new BooleanIOSetting("UseHetDictionary", IOSetting.Importance.Low,
+            useHetDictionary = IOSettings.Add(new BooleanIOSetting("UseHetDictionary", Importance.Low,
                     "Should the PDBReader use the HETATM dictionary for atom types?", "false"));
         }
 
@@ -918,7 +917,7 @@ namespace NCDK.IO
         {
             foreach (var setting in IOSettings.Settings)
             {
-                FireIOSettingQuestion(setting);
+                ProcessIOSettingQuestion(setting);
             }
         }
     }

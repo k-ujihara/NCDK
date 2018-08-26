@@ -40,7 +40,7 @@ namespace NCDK.Graphs
     /// </summary>
     /// <remarks>
     /// <list type="bullet">
-    /// <item><see cref="AllFinder()"/> - all simple cycles in the graph, the number of
+    /// <item><see cref="AllSimpleFinder()"/> - all simple cycles in the graph, the number of
     /// cycles generated may be very large and may not be feasible for some
     /// molecules, such as, fullerene.</item> <item><see cref="MCBFinder"/> (aka. SSSR) - minimum
     /// cycle basis (MCB) of a graph, these cycles are linearly independent and can
@@ -149,7 +149,7 @@ namespace NCDK.Graphs
         /// <seealso cref="FindAll(IAtomContainer)"/>
         /// <seealso cref="AllCycles"/>
         /// <seealso cref="AllRingsFinder"/>
-        public static ICycleFinder AllFinder => CycleComputation.All;
+        public static ICycleFinder AllSimpleFinder => CycleComputation.All;
 
         /// <summary>
         /// All cycles of smaller than or equal to the specified length. If a length
@@ -245,7 +245,7 @@ namespace NCDK.Graphs
         /// <remarks>
         /// A cycle finder which will compute a set of cycles traditionally
         /// used by the CDK to test for aromaticity. This set of cycles is the
-        /// MCB/SSSR and <see cref="AllFinder()"/> cycles for fused systems with 3 or less rings.
+        /// MCB/SSSR and <see cref="AllSimpleFinder()"/> cycles for fused systems with 3 or less rings.
         /// This allows on to test aromaticity of envelope rings in compounds such as
         /// azulene without generating an huge number of cycles for large fused
         /// systems (e.g. fullerenes). The use case was that computation of all
@@ -272,7 +272,7 @@ namespace NCDK.Graphs
         /// </example>
         /// <returns>a cycle finder which computes all cycles if possible or provides the vertex short cycles</returns>
         [Obsolete("use " + nameof(Or) + " to define a custom fall - back)")]
-        public static ICycleFinder AllOrVertexShortFinder { get; } = Or(AllFinder, VertexShortFinder);
+        public static ICycleFinder AllOrVertexShortFinder { get; } = Or(AllSimpleFinder, VertexShortFinder);
 
         /// <summary>
         /// Find and mark all cyclic atoms and bonds in the provided molecule.
@@ -283,7 +283,7 @@ namespace NCDK.Graphs
         /// <seealso href="https://en.wikipedia.org/wiki/Circuit_rank">Circuit Rank</seealso> 
         public static int MarkRingAtomsAndBonds(IAtomContainer mol)
         {
-            EdgeToBondMap bonds = EdgeToBondMap.WithSpaceFor(mol);
+            var bonds = EdgeToBondMap.WithSpaceFor(mol);
             return MarkRingAtomsAndBonds(mol, GraphUtil.ToAdjList(mol, bonds), bonds);
         }
 
@@ -353,12 +353,12 @@ namespace NCDK.Graphs
         /// </example>
         /// <returns>all simple cycles</returns>
         /// <exception cref="IntractableException">the algorithm reached a limit which caused it to abort in reasonable time</exception>
-        /// <seealso cref="AllFinder()"/>
+        /// <seealso cref="AllSimpleFinder()"/>
         /// <seealso cref="AllCycles"/>
         /// <seealso cref="AllRingsFinder"/>
         public static Cycles FindAll(IAtomContainer container)
         {
-            return AllFinder.Find(container, container.Atoms.Count);
+            return AllSimpleFinder.Find(container, container.Atoms.Count);
         }
 
         /// <summary>
@@ -370,7 +370,7 @@ namespace NCDK.Graphs
         /// <exception cref="IntractableException">computation was not feasible</exception>
         public static Cycles FindAll(IAtomContainer container, int length)
         {
-            return AllFinder.Find(container, length);
+            return AllSimpleFinder.Find(container, length);
         }
 
         /// <summary>
@@ -671,11 +671,11 @@ namespace NCDK.Graphs
             /// <inheritdoc/>
             public Cycles Find(IAtomContainer molecule, int length)
             {
-                EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(molecule);
-                int[][] graph = GraphUtil.ToAdjList(molecule, bondMap);
-                RingSearch ringSearch = new RingSearch(molecule, graph);
+                var bondMap = EdgeToBondMap.WithSpaceFor(molecule);
+                var graph = GraphUtil.ToAdjList(molecule, bondMap);
+                var ringSearch = new RingSearch(molecule, graph);
 
-                IList<int[]> walks = new List<int[]>(6);
+                var walks = new List<int[]>(6);
 
                 // all isolated cycles are relevant - all we need to do is walk around
                 // the vertices in the subset 'isolated'
@@ -756,8 +756,8 @@ namespace NCDK.Graphs
         {
             // note currently no way to say the size of the RingSet
             // even through we know it
-            IChemObjectBuilder builder = container.Builder;
-            IRingSet rings = builder.NewRingSet();
+            var builder = container.Builder;
+            var rings = builder.NewRingSet();
 
             foreach (var cycle in cycles)
             {
@@ -776,8 +776,8 @@ namespace NCDK.Graphs
         /// <returns>the ring for the specified cycle</returns>
         private static IRing ToRing(IAtomContainer container, int[] cycle, EdgeToBondMap bondMap)
         {
-            IAtom[] atoms = new IAtom[cycle.Length - 1];
-            IBond[] bonds = new IBond[cycle.Length - 1];
+            var atoms = new IAtom[cycle.Length - 1];
+            var bonds = new IBond[cycle.Length - 1];
 
             for (int i = 1; i < cycle.Length; i++)
             {
@@ -787,8 +787,8 @@ namespace NCDK.Graphs
                 bonds[i - 1] = GetBond(container, bondMap, u, v);
             }
 
-            IChemObjectBuilder builder = container.Builder;
-            IAtomContainer ring = builder.NewAtomContainer(atoms, bonds);
+            var builder = container.Builder;
+            var ring = builder.NewAtomContainer(atoms, bonds);
 
             return builder.NewRing(ring);
         }
@@ -819,7 +819,7 @@ namespace NCDK.Graphs
             private readonly int predefinedLength;
 
             /// <summary>
-            /// See <see cref="AllRingsFinder.Threshold.PubChem_99"/>.
+            /// See <see cref="Threshold.PubChem99"/>.
             /// </summary>
             private readonly int threshold = 684;
 
@@ -989,7 +989,7 @@ namespace NCDK.Graphs
             /// <param name="path">a path</param>
             /// <param name="graph">the adjacency of atoms</param>
             /// <returns>accept the path as unchorded</returns>
-            private bool Accept(int[] path, int[][] graph)
+            private static bool Accept(int[] path, int[][] graph)
             {
                 BitArray vertices = new BitArray(0);
 

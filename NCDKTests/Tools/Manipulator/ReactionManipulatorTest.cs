@@ -18,7 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Smiles;
 using System.Linq;
@@ -32,7 +32,7 @@ namespace NCDK.Tools.Manipulator
     public class ReactionManipulatorTest : CDKTestCase
     {
         private IReaction reaction;
-        private IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        private IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
         public ReactionManipulatorTest()
             : base()
@@ -293,7 +293,7 @@ namespace NCDK.Tools.Manipulator
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
             IReaction reaction = smipar.ParseReactionSmiles("[CH2]CO.CC(=O)O>[H+]>CCOC(=O)C.O |^1:0| ethyl esterification");
-            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles);
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.CxSmiles);
             // convert to molecule
             IAtomContainer mol = ReactionManipulator.ToMolecule(reaction);
             Assert.AreEqual("[CH2]CO.CC(=O)O.[H+].CCOC(=O)C.O |^1:0|", smigen.Create(mol));

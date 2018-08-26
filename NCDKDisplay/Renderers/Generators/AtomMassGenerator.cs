@@ -45,7 +45,7 @@ namespace NCDK.Renderers.Generators
             {
                 try
                 {
-                    var expectedMassNumber = Isotopes.Instance.GetMajorIsotope(atom.Symbol).MassNumber;
+                    var expectedMassNumber = BODRIsotopeFactory.Instance.GetMajorIsotope(atom.Symbol).MassNumber;
                     if (massNumber != expectedMassNumber) return true;
                 }
                 catch (IOException e)

@@ -28,18 +28,19 @@ namespace NCDK.Isomorphisms.Matchers
     {
         public abstract bool Matches(IAtom atom);
 
-        public QueryAtom(string symbol, IChemObjectBuilder builder)
+        protected QueryAtom(string symbol, IChemObjectBuilder builder)
             : this(builder)
         {
             this.symbol = symbol;
             this.atomicNumber = PeriodicTable.GetAtomicNumber(symbol);
         }
 
-        private IChemObjectBuilder builder;
+        private readonly IChemObjectBuilder builder;
+
         /// <inheritdoc/>
         public override IChemObjectBuilder Builder => builder;
 
-        public QueryAtom(IChemObjectBuilder builder)
+        protected QueryAtom(IChemObjectBuilder builder)
         {
             this.builder = builder;
         }

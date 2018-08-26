@@ -23,7 +23,7 @@
  */
 using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Graphs;
 using NCDK.Stereo;
 using NCDK.Smiles;

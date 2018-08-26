@@ -2,8 +2,6 @@ namespace NCDK.FaulonSignatures.Chemistry
 {
     public class MoleculeBuilder : AbstractGraphBuilder
     {
-        private Molecule molecule;
-
         public MoleculeBuilder()
             : base()
         { }
@@ -12,36 +10,38 @@ namespace NCDK.FaulonSignatures.Chemistry
                 int vertexIndex1, int vertexIndex2,
                 string symbolA, string symbolB, string edgeLabel)
         {
-            if (edgeLabel.Equals(""))
+            switch (edgeLabel)
             {
-                this.molecule.AddBond(vertexIndex1, vertexIndex2, Molecule.BondOrder.Single);
-            }
-            else if (edgeLabel.Equals("="))
-            {
-                this.molecule.AddBond(vertexIndex1, vertexIndex2, Molecule.BondOrder.Double);
-            }
-            else if (edgeLabel.Equals("#"))
-            {
-                this.molecule.AddBond(vertexIndex1, vertexIndex2, Molecule.BondOrder.Triple);
+                case "":
+                    this.Molecule.AddBond(vertexIndex1, vertexIndex2, Molecule.BondOrder.Single);
+                    break;
+                case "=":
+                    this.Molecule.AddBond(vertexIndex1, vertexIndex2, Molecule.BondOrder.Double);
+                    break;
+                case "#":
+                    this.Molecule.AddBond(vertexIndex1, vertexIndex2, Molecule.BondOrder.Triple);
+                    break;
+                default:
+                    break;
             }
         }
 
         public override void MakeGraph()
         {
-            this.molecule = new Molecule();
+            this.Molecule = new Molecule();
         }
 
         public override void MakeVertex(string label)
         {
-            this.molecule.AddAtom(label);
+            this.Molecule.AddAtom(label);
         }
 
         public Molecule FromTree(ColoredTree tree)
         {
             base.MakeFromColoredTree(tree);
-            return this.molecule;
+            return this.Molecule;
         }
 
-        public Molecule Molecule => this.molecule;
+        public Molecule Molecule { get; private set; }
     }
 }

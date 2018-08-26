@@ -26,6 +26,7 @@ using NCDK.Graphs;
 using NCDK.Tools;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.Smiles
 {
@@ -58,18 +59,13 @@ namespace NCDK.Smiles
     // @cdk.module smiles
     // @cdk.githash
     [Obsolete("Use " + nameof(Aromaticities.Kekulization))]
-    public class FixBondOrdersTool
+    public static class FixBondOrdersTool
     {
-        /// <summary>
-        /// <see langword="true"/> if the next or running calculation should be interrupted.
-        /// </summary>
-        public bool Interrupted;
-
         private class Matrix
         {
-            private int[] mArray;
-            private int rowCount;
-            private int columnCount;
+            private readonly int[] mArray;
+            private readonly int rowCount;
+            private readonly int columnCount;
 
             public Matrix(int rows, int cols)
             {
@@ -139,16 +135,11 @@ namespace NCDK.Smiles
         }
 
         /// <summary>
-        /// Constructor for the FixBondOrdersTool object.
-        /// </summary>
-        public FixBondOrdersTool() { }
-
-        /// <summary>
         /// Function to add double/single bond order information for molecules having rings containing all atoms marked <see cref="Hybridization.SP2"/> or <see cref="Hybridization.Planar3"/> hybridisation.
         /// </summary>
         /// <param name="molecule">The <see cref="IAtomContainer"/> to kekulise</param>
         /// <returns>The <see cref="IAtomContainer"/> with Kekulé structure</returns>
-        public IAtomContainer KekuliseAromaticRings(IAtomContainer molecule)
+        public static IAtomContainer KekuliseAromaticRings(IAtomContainer molecule)
         {
             IAtomContainer mNew = null;
             mNew = (IAtomContainer)molecule.Clone();
@@ -174,8 +165,8 @@ namespace NCDK.Smiles
             }
 
             //We need to establish which rings share bonds and set up sets of such interdependant rings
-            IList<int[]> rBondsArray = null;
-            IList<IList<int>> ringGroups = null;
+            List<int[]> rBondsArray = null;
+            List<List<int>> ringGroups = null;
 
             //Start by getting a list (same dimensions and ordering as ring set) of all the ring bond numbers in the reduced ring set
             rBondsArray = GetRingSystem(mNew, ringSet);
@@ -190,14 +181,14 @@ namespace NCDK.Smiles
                 SetAllRingBondsSingleOrder(ringGroups[i], ringSet);
 
                 //Set up  lists of atoms, bonds and atom pairs for this ringGroup
-                IList<int> atomNos = null;
+                List<int> atomNos = null;
                 atomNos = GetAtomNosForRingGroup(mNew, ringGroups[i], ringSet);
 
-                IList<int> bondNos = null;
+                List<int> bondNos = null;
                 bondNos = GetBondNosForRingGroup(mNew, ringGroups[i], ringSet);
 
                 //Array of same dimensions as bondNos (cols in Matrix)
-                IList<int[]> atomNoPairs = null;
+                List<int[]> atomNoPairs = null;
                 atomNoPairs = GetAtomNoPairsForRingGroup(mNew, bondNos);
 
                 //Set up adjacency Matrix
@@ -225,7 +216,7 @@ namespace NCDK.Smiles
                 }
 
                 //Array of same dimensions as atomNos (rows in Matrix)
-                IList<int> freeValencies = null;
+                List<int> freeValencies = null;
                 freeValencies = GetFreeValenciesForRingGroup(mNew, atomNos, M, ringSet);
 
                 //Array of "answers"
@@ -257,7 +248,7 @@ namespace NCDK.Smiles
         /// </summary>
         /// <param name="m">The <see cref="IAtomContainer"/> from which we want to remove rings</param>
         /// <returns>The set of reduced rings</returns>
-        private IRingSet RemoveExtraRings(IAtomContainer m)
+        private static IRingSet RemoveExtraRings(IAtomContainer m)
         {
             IRingSet rs = Cycles.FindSSSR(m).ToRingSet();
 
@@ -294,7 +285,7 @@ namespace NCDK.Smiles
         /// <param name="mol">The IAtomContainer for which to store the IRingSet.</param>
         /// <param name="ringSet">The IRingSet to store</param>
         /// <returns>The List of int arrays for the bond numbers of each ringSet</returns>
-        private IList<int[]> GetRingSystem(IAtomContainer mol, IRingSet ringSet)
+        private static List<int[]> GetRingSystem(IAtomContainer mol, IRingSet ringSet)
         {
             List<int[]> bondsArray;
             bondsArray = new List<int[]>();
@@ -316,10 +307,10 @@ namespace NCDK.Smiles
         /// </summary>
         /// <param name="rBondsArray"></param>
         /// <returns>A List of Lists each containing the ring indices of a set of fused rings</returns>
-        private IList<IList<int>> AssignRingGroups(IList<int[]> rBondsArray)
+        private static List<List<int>> AssignRingGroups(List<int[]> rBondsArray)
         {
-            IList<IList<int>> ringGroups;
-            ringGroups = new List<IList<int>>();
+            List<List<int>> ringGroups;
+            ringGroups = new List<List<int>>();
             for (int i = 0; i < rBondsArray.Count - 1; i++)
             { //for each ring except the last in rBondsArray
                 for (int j = 0; j < rBondsArray[i].Length; j++)
@@ -366,7 +357,7 @@ namespace NCDK.Smiles
             return ringGroups;
         }
 
-        private bool CombineGroups(IList<IList<int>> ringGroups)
+        private static bool CombineGroups(List<List<int>> ringGroups)
         {
             for (int i = 0; i < ringGroups.Count - 1; i++)
             {
@@ -398,7 +389,7 @@ namespace NCDK.Smiles
         /// Sets all bonds in an <see cref="IRingSet"/> to single order.
         /// </summary>
         /// <returns>True for success</returns>
-        private bool SetAllRingBondsSingleOrder(IList<int> ringGroup, IRingSet ringSet)
+        private static bool SetAllRingBondsSingleOrder(List<int> ringGroup, IRingSet ringSet)
         {
             foreach (var i in ringGroup)
             {
@@ -414,7 +405,7 @@ namespace NCDK.Smiles
         /// Gets the List of atom nos corresponding to a particular set of fused rings.
         /// </summary>
         /// <returns>List of atom numbers for each set</returns>
-        private IList<int> GetAtomNosForRingGroup(IAtomContainer molecule, IList<int> ringGroup, IRingSet ringSet)
+        private static List<int> GetAtomNosForRingGroup(IAtomContainer molecule, List<int> ringGroup, IRingSet ringSet)
         {
             List<int> atc = new List<int>();
             foreach (var i in ringGroup)
@@ -441,7 +432,7 @@ namespace NCDK.Smiles
         /// Gets the List of bond nos corresponding to a particular set of fused rings.
         /// </summary>
         /// <returns>List of bond numbers for each set</returns>
-        private IList<int> GetBondNosForRingGroup(IAtomContainer molecule, IList<int> ringGroup, IRingSet ringSet)
+        private static List<int> GetBondNosForRingGroup(IAtomContainer molecule, List<int> ringGroup, IRingSet ringSet)
         {
             List<int> btc = new List<int>();
             foreach (var i in ringGroup)
@@ -468,7 +459,7 @@ namespace NCDK.Smiles
         /// Gets List of atom number pairs for each bond in a list of bonds for the molecule.
         /// </summary>
         /// <returns>List of atom pairs</returns>
-        private IList<int[]> GetAtomNoPairsForRingGroup(IAtomContainer molecule, IList<int> bondsToCheck)
+        private static List<int[]> GetAtomNoPairsForRingGroup(IAtomContainer molecule, List<int> bondsToCheck)
         {
             List<int[]> aptc = new List<int[]>();
             foreach (var i in bondsToCheck)
@@ -485,7 +476,7 @@ namespace NCDK.Smiles
         /// Function to set up an array of integers corresponding to indicate how many free valencies need fulfilling for each atom through ring bonds.
         /// </summary>
         /// <returns>The List of free valencies available for extra ring bonding</returns>
-        private IList<int> GetFreeValenciesForRingGroup(IAtomContainer molecule, IList<int> atomsToCheck, Matrix M, IRingSet rs)
+        private static List<int> GetFreeValenciesForRingGroup(IAtomContainer molecule, List<int> atomsToCheck, Matrix M, IRingSet rs)
         {
             List<int> fvtc = new List<int>();
             for (int i = 0; i < atomsToCheck.Count; i++)
@@ -493,10 +484,9 @@ namespace NCDK.Smiles
                 int j = atomsToCheck[i];
 
                 //Put in an implicit hydrogen atom for Planar3 C- atoms in 5-membered rings (it doesn't get put in by the Smiles parser)
-                if (("C".Equals(molecule.Atoms[j].Symbol))
+                if (string.Equals("C", molecule.Atoms[j].Symbol, StringComparison.Ordinal)
                         && (molecule.Atoms[j].Hybridization == Hybridization.Planar3))
                 {
-
                     //Check that ring containing the atom is five-membered
                     foreach (var ac in rs)
                     {
@@ -528,8 +518,7 @@ namespace NCDK.Smiles
                 {
                     implicitH = molecule.Atoms[j].ImplicitHydrogenCount.Value;
                 }
-                fvtc.Add(molecule.Atoms[j].Valency.Value
-                        - (implicitH + (int)molecule.GetBondOrderSum(molecule.Atoms[j])) + M.SumOfRow(i));
+                fvtc.Add(molecule.Atoms[j].Valency.Value - (implicitH + (int)molecule.GetBondOrderSum(molecule.Atoms[j])) + M.SumOfRow(i));
             }
             return fvtc;
         }
@@ -552,7 +541,7 @@ namespace NCDK.Smiles
         /// continues.
         /// </summary>
         /// <returns>True or false for success or failure</returns>
-        private bool SolveMatrix(Matrix M, IList<int> atomNos, IList<int> bondNos, IList<int> freeValencies, IList<int[]> atomNoPairs, IList<int> bondOrder)
+        private static bool SolveMatrix(Matrix M, List<int> atomNos, List<int> bondNos, List<int> freeValencies, List<int[]> atomNoPairs, List<int> bondOrder)
         {
             // Look for bonds that need to be a certain order
             List<int> solved = new List<int>();

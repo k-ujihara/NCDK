@@ -32,7 +32,7 @@ namespace NCDK
 
         internal ChemObjectRef(IChemObject chemobj)
         {
-            this.chemobj = chemobj ?? throw new ArgumentNullException("Proxy object can not be null!");
+            this.chemobj = chemobj ?? throw new ArgumentNullException(nameof(chemobj), "Proxy object can not be null!");
         }
 
         /// <inheritdoc/>
@@ -86,7 +86,7 @@ namespace NCDK
         }
 
         /// <inheritdoc/>
-        public IDictionary<object, object> GetProperties()
+        public IReadOnlyDictionary<object, object> GetProperties()
         {
             return chemobj.GetProperties();
         }
@@ -100,19 +100,7 @@ namespace NCDK
 
         public bool IsPlaced { get { return chemobj.IsPlaced; } set { chemobj.IsPlaced = value; } }
         public bool IsVisited { get { return chemobj.IsVisited; } set { chemobj.IsVisited = value; } }
-
-        /// <inheritdoc/>
-        public void SetProperties(IDictionary<object, object> properties)
-        {
-            chemobj.SetProperties(properties);
-        }
-
-        /// <inheritdoc/>
-        public void AddProperties(IDictionary<object, object> properties)
-        {
-            chemobj.AddProperties(properties);
-        }
-
+        
         public void SetProperties(IEnumerable<KeyValuePair<object, object>> properties)
         {
             chemobj.SetProperties(properties);

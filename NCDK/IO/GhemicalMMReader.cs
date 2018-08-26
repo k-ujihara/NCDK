@@ -24,6 +24,7 @@ using NCDK.IO.Formats;
 using NCDK.Numerics;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.IO
@@ -117,22 +118,22 @@ namespace NCDK.IO
                 {
                     var st = Strings.Tokenize(line);
                     string command = st[0];
-                    if ("!Header".Equals(command))
+                    if (string.Equals("!Header", command, StringComparison.Ordinal))
                     {
                         Trace.TraceWarning("Ignoring header");
                     }
-                    else if ("!Info".Equals(command))
+                    else if (string.Equals("!Info", command, StringComparison.Ordinal))
                     {
                         Trace.TraceWarning("Ignoring info");
                     }
-                    else if ("!Atoms".Equals(command))
+                    else if (string.Equals("!Atoms", command, StringComparison.Ordinal))
                     {
                         Trace.TraceInformation("Reading atom block");
                         // determine number of atoms to read
                         try
                         {
-                            numberOfAtoms = int.Parse(st[1]);
-                            Debug.WriteLine("  #atoms: " + numberOfAtoms);
+                            numberOfAtoms = int.Parse(st[1], NumberFormatInfo.InvariantInfo);
+                            Debug.WriteLine($"  #atoms: {numberOfAtoms}");
                             atoms = new int[numberOfAtoms];
                             atomxs = new double[numberOfAtoms];
                             atomys = new double[numberOfAtoms];
@@ -143,8 +144,8 @@ namespace NCDK.IO
                             {
                                 line = input.ReadLine();
                                 var atomInfoFields = Strings.Tokenize(line);
-                                int atomID = int.Parse(atomInfoFields[0]);
-                                atoms[atomID] = int.Parse(atomInfoFields[1]);
+                                int atomID = int.Parse(atomInfoFields[0], NumberFormatInfo.InvariantInfo);
+                                atoms[atomID] = int.Parse(atomInfoFields[1], NumberFormatInfo.InvariantInfo);
                                 Debug.WriteLine("Set atomic number of atom (" + atomID + ") to: " + atoms[atomID]);
                             }
                         }
@@ -156,13 +157,13 @@ namespace NCDK.IO
                             Debug.WriteLine(exception);
                         }
                     }
-                    else if ("!Bonds".Equals(command))
+                    else if (string.Equals("!Bonds", command, StringComparison.Ordinal))
                     {
                         Trace.TraceInformation("Reading bond block");
                         try
                         {
                             // determine number of bonds to read
-                            numberOfBonds = int.Parse(st[1]);
+                            numberOfBonds = int.Parse(st[1], NumberFormatInfo.InvariantInfo);
                             bondatomid1 = new int[numberOfAtoms];
                             bondatomid2 = new int[numberOfAtoms];
                             bondorder = new BondOrder[numberOfAtoms];
@@ -171,18 +172,18 @@ namespace NCDK.IO
                             {
                                 line = input.ReadLine();
                                 var bondInfoFields = Strings.Tokenize(line);
-                                bondatomid1[i] = int.Parse(bondInfoFields[0]);
-                                bondatomid2[i] = int.Parse(bondInfoFields[1]);
+                                bondatomid1[i] = int.Parse(bondInfoFields[0], NumberFormatInfo.InvariantInfo);
+                                bondatomid2[i] = int.Parse(bondInfoFields[1], NumberFormatInfo.InvariantInfo);
                                 string order = bondInfoFields[2];
-                                if ("D".Equals(order))
+                                if (string.Equals("D", order, StringComparison.Ordinal))
                                 {
                                     bondorder[i] = BondOrder.Double;
                                 }
-                                else if ("S".Equals(order))
+                                else if (string.Equals("S", order, StringComparison.Ordinal))
                                 {
                                     bondorder[i] = BondOrder.Single;
                                 }
-                                else if ("T".Equals(order))
+                                else if (string.Equals("T", order, StringComparison.Ordinal))
                                 {
                                     bondorder[i] = BondOrder.Triple;
                                 }
@@ -202,7 +203,7 @@ namespace NCDK.IO
                             Debug.WriteLine(exception);
                         }
                     }
-                    else if ("!Coord".Equals(command))
+                    else if (string.Equals("!Coord", command, StringComparison.Ordinal))
                     {
                         Trace.TraceInformation("Reading coordinate block");
                         try
@@ -211,10 +212,10 @@ namespace NCDK.IO
                             {
                                 line = input.ReadLine();
                                 var atomInfoFields = Strings.Tokenize(line);
-                                int atomID = int.Parse(atomInfoFields[0]);
-                                double x = double.Parse(atomInfoFields[1]);
-                                double y = double.Parse(atomInfoFields[2]);
-                                double z = double.Parse(atomInfoFields[3]);
+                                int atomID = int.Parse(atomInfoFields[0], NumberFormatInfo.InvariantInfo);
+                                double x = double.Parse(atomInfoFields[1], NumberFormatInfo.InvariantInfo);
+                                double y = double.Parse(atomInfoFields[2], NumberFormatInfo.InvariantInfo);
+                                double z = double.Parse(atomInfoFields[3], NumberFormatInfo.InvariantInfo);
                                 atomxs[atomID] = x;
                                 atomys[atomID] = y;
                                 atomzs[atomID] = z;
@@ -228,7 +229,7 @@ namespace NCDK.IO
                             Debug.WriteLine(exception);
                         }
                     }
-                    else if ("!Charges".Equals(command))
+                    else if (string.Equals("!Charges", command, StringComparison.Ordinal))
                     {
                         Trace.TraceInformation("Reading charges block");
                         try
@@ -237,8 +238,8 @@ namespace NCDK.IO
                             {
                                 line = input.ReadLine();
                                 var atomInfoFields = Strings.Tokenize(line);
-                                int atomID = int.Parse(atomInfoFields[0]);
-                                double charge = double.Parse(atomInfoFields[1]);
+                                int atomID = int.Parse(atomInfoFields[0], NumberFormatInfo.InvariantInfo);
+                                double charge = double.Parse(atomInfoFields[1], NumberFormatInfo.InvariantInfo);
                                 atomcharges[atomID] = charge;
                             }
                         }
@@ -250,7 +251,7 @@ namespace NCDK.IO
                             Debug.WriteLine(exception);
                         }
                     }
-                    else if ("!End".Equals(command))
+                    else if (string.Equals("!End", command, StringComparison.Ordinal))
                     {
                         Trace.TraceInformation("Found end of file");
                         // Store atoms
@@ -259,18 +260,18 @@ namespace NCDK.IO
                         {
                             try
                             {
-                                IAtom atom = model.Builder.NewAtom(Isotopes.Instance.GetElementSymbol(atoms[i]));
+                                IAtom atom = model.Builder.NewAtom(BODRIsotopeFactory.Instance.GetElementSymbol(atoms[i]));
                                 atom.AtomicNumber = atoms[i];
                                 atom.Point3D = new Vector3(atomxs[i], atomys[i], atomzs[i]);
                                 atom.Charge = atomcharges[i];
                                 container.Atoms.Add(atom);
-                                Debug.WriteLine("Stored atom: " + atom);
+                                Debug.WriteLine($"Stored atom: {atom}");
                             }
                             catch (Exception exception)
                             {
                                 if (!(exception is IOException || exception is ArgumentException))
                                     throw;
-                                Trace.TraceError("Cannot create an atom with atomic number: " + atoms[i]);
+                                Trace.TraceError($"Cannot create an atom with atomic number: {atoms[i]}");
                                 Debug.WriteLine(exception);
                             }
                         }

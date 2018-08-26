@@ -18,7 +18,6 @@
  */
 
 using NCDK.Numerics;
-using System.Linq;
 using System.Text;
 
 namespace NCDK.Tools.Diff.Tree
@@ -32,7 +31,7 @@ namespace NCDK.Tools.Diff.Tree
     public class Point3DDifference
         : AbstractDifferenceList, IDifferenceList
     {
-        private string name;
+        private readonly string name;
 
         private Point3DDifference(string name)
         {
@@ -67,7 +66,8 @@ namespace NCDK.Tools.Diff.Tree
         /// <returns>a <see cref="string"/></returns>
         public override string ToString()
         {
-            if (differences.Count() == 0) return "";
+            if (ChildCount() == 0)
+                return "";
 
             StringBuilder diffBuffer = new StringBuilder();
             diffBuffer.Append(this.name).Append('{');

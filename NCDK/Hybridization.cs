@@ -39,11 +39,11 @@ namespace NCDK
         /// <summary>
         /// A geometry of neighboring atoms when an s orbital is hybridized with one p orbital.
         /// </summary>
-		SP1,
+        SP1,
         /// <summary>
         /// A geometry of neighboring atoms when an s orbital is hybridized with two p orbitals.
         /// </summary>
-		SP2,
+        SP2,
         /// <summary>
         /// A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals.
         /// </summary>
@@ -74,7 +74,7 @@ namespace NCDK
         SP3D5,
     }
 
-	public static class HybridizationTools
+    public static class HybridizationTools
     {
         public static bool IsUnset(this Hybridization value)
         {
@@ -86,31 +86,31 @@ namespace NCDK
             if (string.IsNullOrWhiteSpace(value))
                 return Unset;
 
-            switch (value.ToLowerInvariant())
+            switch (value.ToUpperInvariant())
             {
-                case "s":
+                case "S":
                     return S;
-                case "sp":
+                case "SP":
                     return SP1;
-                case "sp1":
+                case "SP1":
                     return SP1;
-                case "sp2":
+                case "SP2":
                     return SP2;
-                case "sp3":
-                case "tetrahedral":
+                case "SP3":
+                case "TETRAHEDRAL":
                     return SP3;
-                case "planar":
+                case "PLANAR":
                     return Planar3;
-                case "sp3d1":
+                case "SP3D1":
                     return SP3D1;
-                case "sp3d2":
-                case "octahedral":
+                case "SP3D2":
+                case "OCTAHEDRAL":
                     return SP3D2;
-                case "sp3d3":
+                case "SP3D3":
                     return SP3D3;
-                case "sp3d4":
+                case "SP3D4":
                     return SP3D4;
-                case "sp3d5":
+                case "SP3D5":
                     return SP3D5;
                 default:
                     break;

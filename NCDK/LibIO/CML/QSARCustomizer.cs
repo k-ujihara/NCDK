@@ -25,6 +25,7 @@
 using NCDK.QSAR;
 using NCDK.QSAR.Results;
 using System;
+using System.Globalization;
 using System.Text;
 using System.Xml.Linq;
 
@@ -58,7 +59,7 @@ namespace NCDK.LibIO.CML
             CustomizeIChemObject(molecule, nodeToAdd);
         }
 
-        private XElement CreateScalar(IDescriptorResult value)
+        private static XElement CreateScalar(IDescriptorResult value)
         {
             XElement scalar = null;
             switch (value)
@@ -76,7 +77,7 @@ namespace NCDK.LibIO.CML
                     {
                         scalar = new CMLArray();
                         scalar.SetAttributeValue(CMLElement.Attribute_dataType, "xsd:int");
-                        scalar.SetAttributeValue(CMLElement.Attribute_size, result.Length.ToString());
+                        scalar.SetAttributeValue(CMLElement.Attribute_size, result.Length.ToString(NumberFormatInfo.InvariantInfo));
                         StringBuilder buffer = new StringBuilder();
                         for (int i = 0; i < result.Length; i++)
                         {
@@ -107,7 +108,7 @@ namespace NCDK.LibIO.CML
             return scalar;
         }
 
-        private void CustomizeIChemObject(IChemObject obj, object nodeToAdd)
+        private static void CustomizeIChemObject(IChemObject obj, object nodeToAdd)
         {
             if (!(nodeToAdd is XElement)) throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
 
@@ -151,14 +152,14 @@ namespace NCDK.LibIO.CML
                     metaData.SetAttributeValue(CMLElement.Attribute_content, specs.ImplementationVendor);
                     metadataList.Add(metaData);
                     // add parameter setting to the metadata list
-                    object[] parameters = value.Parameters;
-                    //                Debug.WriteLine("Value: " + value.Specification.ImplementationIdentifier);
-                    if (parameters != null && parameters.Length > 0)
+                    var parameters = value.Parameters;
+                    //                Debug.WriteLine($"Value: {value.Specification.ImplementationIdentifier}");
+                    if (parameters != null && parameters.Count > 0)
                     {
                         var paramNames = value.ParameterNames;
                         var paramSettings = new CMLMetadataList();
                         paramSettings.SetAttributeValue(CMLElement.Attribute_title, QSAR_NAMESPACE + ":" + "descriptorParameters");
-                        for (int i = 0; i < parameters.Length; i++)
+                        for (int i = 0; i < parameters.Count; i++)
                         {
                             var paramSetting = new CMLMetadata();
                             string paramName = paramNames[i];
@@ -169,7 +170,7 @@ namespace NCDK.LibIO.CML
                             }
                             else if (paramVal == null)
                             {
-                                // Trace.TraceError("Parameter setting was null! Cannot output to CML. Problem param: " + paramName);
+                                // Trace.TraceError($"Parameter setting was null! Cannot output to CML. Problem param: {paramName}");
                             }
                             else
                             {
@@ -181,7 +182,7 @@ namespace NCDK.LibIO.CML
                         metadataList.Add(paramSettings);
                     }
                     property.Add(metadataList);
-                    var scalar = this.CreateScalar(result);
+                    var scalar = CreateScalar(result);
                     scalar.SetAttributeValue(CMLElement.Attribute_dictRef, specsRef);
                     // add the actual descriptor value
                     property.Add(scalar);

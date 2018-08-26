@@ -31,9 +31,9 @@ namespace NCDK.Tools.Diff.Tree
     // @cdk.module diff
     // @cdk.githash
     public class ChemObjectDifference
-            : AbstractDifferenceList, IDifferenceList
+        : AbstractDifferenceList, IDifferenceList
     {
-        private string name;
+        private readonly string name;
 
         public ChemObjectDifference(string name)
         {
@@ -42,28 +42,18 @@ namespace NCDK.Tools.Diff.Tree
 
         /// <summary>
         /// Returns a <see cref="string"/> representation for this <see cref="IDifference"/>.
-        ///
-        /// <returns>a <see cref="string"/></returns>
         /// </summary>
-
+        /// <returns>A <see cref="string"/> representation for this <see cref="IDifference"/></returns>
         public override string ToString()
         {
-            if (differences.Count() == 0) return "";
+            if (ChildCount() == 0)
+                return "";
 
-            StringBuilder diffBuffer = new StringBuilder();
-            diffBuffer.Append(this.name).Append('{');
-            IEnumerable<IDifference> children = GetChildren();
-            bool isFirst = true;
-            foreach (var child in children)
-            {
-                if (!isFirst)
-                {
-                    diffBuffer.Append(", ");
-                    isFirst = false;
-                }
-                diffBuffer.Append(child.ToString());
-            }
-            diffBuffer.Append('}');
+            var diffBuffer = new StringBuilder();
+            diffBuffer.Append(this.name)
+                      .Append('{')
+                      .Append(string.Join(", ", GetChildren()))
+                      .Append('}');
 
             return diffBuffer.ToString();
         }

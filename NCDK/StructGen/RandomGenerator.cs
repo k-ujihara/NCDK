@@ -29,13 +29,13 @@ using System.Linq;
 namespace NCDK.StructGen
 {
     /// <summary>
-    /// RandomGenerator is a generator of constitutional isomers. It needs to be
+    /// <see cref="RandomGenerator"/> is a generator of constitutional isomers. It needs to be
     /// provided with a starting constitution and it makes random moves in
     /// constitutional space from there.
     /// This generator was first suggested by J.-L. Faulon <token>cdk-cite-FAU96</token>.
     /// </summary>
     /// <remarks>
-    /// <para>Unlike the VicinitySampler, this methods does not sample
+    /// <para>Unlike the <see cref="VicinitySampler"/>, this methods does not sample
     /// the full Faulon vicinity.</para>
     /// </remarks>
     /// <seealso cref="VicinitySampler"/>
@@ -46,8 +46,8 @@ namespace NCDK.StructGen
     {
         private static System.Random random = new System.Random();
 
-        private IAtomContainer proposedStructure = null;
         private IAtomContainer molecule = null;
+        private IAtomContainer proposedStructure = null;
         private IAtomContainer trial = null;
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace NCDK.StructGen
         /// <param name="molecule">The starting structure</param>
         public RandomGenerator(IAtomContainer molecule)
         {
-            SetMolecule(molecule);
+            this.molecule = molecule;
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace NCDK.StructGen
             Debug.WriteLine("RandomGenerator->ProposeStructure() Start");
             do
             {
-                trial = (IAtomContainer)molecule.Clone();
+                trial = (IAtomContainer)Molecule.Clone();
                 Mutate(trial);
                 Debug.WriteLine("BondCounts:    " + string.Join(" ", trial.Atoms.Select(n => trial.GetConnectedBonds(n).Count())));
                 Debug.WriteLine("BondOrderSums: " + string.Join(" ", trial.Atoms.Select(n => trial.GetBondOrderSum(n))));
@@ -96,7 +96,7 @@ namespace NCDK.StructGen
         /// pattern between them according to rules described
         /// in "Faulon, JCICS 1996, 36, 731".
         /// </summary>
-        public void Mutate(IAtomContainer ac)
+        public virtual void Mutate(IAtomContainer ac)
         {
             Debug.WriteLine("RandomGenerator->Mutate() Start");
             int nrOfAtoms = ac.Atoms.Count;
@@ -123,7 +123,7 @@ namespace NCDK.StructGen
                         x2 = (int)(random.NextDouble() * nrOfAtoms);
                         y1 = (int)(random.NextDouble() * nrOfAtoms);
                         y2 = (int)(random.NextDouble() * nrOfAtoms);
-                        Debug.WriteLine("RandomGenerator->Mutate(): x1, x2, y1, y2: " + x1 + ", " + x2 + ", " + y1 + ", " + y2);
+                        Debug.WriteLine($"RandomGenerator->Mutate(): x1, x2, y1, y2: {x1}, {x2}, {y1}, {y2}");
                     } while (!(x1 != x2 && x1 != y1 && x1 != y2 && x2 != y1 && x2 != y2 && y1 != y2));
                     ax1 = ac.Atoms[x1];
                     ay1 = ac.Atoms[y1];
@@ -174,8 +174,7 @@ namespace NCDK.StructGen
                     {
                         a22 = 0;
                     }
-                    Debug.WriteLine("RandomGenerator->Mutate()->The old bond orders: a11, a12, a21, a22: " + +a11 + ", " + a12
-                            + ", " + a21 + ", " + a22);
+                    Debug.WriteLine($"RandomGenerator->Mutate()->The old bond orders: a11, a12, a21, a22: {a11}, {a12}, {a21}, {a22}");
                 } while (nonZeroBondsCounter < 2);
 
                 /* Compute the range for b11 (see Faulons formulae for details) */
@@ -185,9 +184,9 @@ namespace NCDK.StructGen
                 upperborder = MathTools.Min(cmin);
                 /* Randomly choose b11 != a11 in the range max > r > min */
                 Debug.WriteLine("*** New Try ***");
-                Debug.WriteLine("a11 = ", a11);
-                Debug.WriteLine("upperborder = ", upperborder);
-                Debug.WriteLine("lowerborder = ", lowerborder);
+                Debug.WriteLine($"a11 = {a11}");
+                Debug.WriteLine($"upperborder = {upperborder}");
+                Debug.WriteLine($"lowerborder = {lowerborder}");
                 choiceCounter = 0;
                 for (double f = lowerborder; f <= upperborder; f++)
                 {
@@ -202,12 +201,12 @@ namespace NCDK.StructGen
                     b11 = choices[(int)(random.NextDouble() * choiceCounter)];
                 }
 
-                Debug.WriteLine("b11 = " + b11);
+                Debug.WriteLine($"b11 = {b11}");
             } while (!(b11 != a11 && (b11 >= lowerborder && b11 <= upperborder)));
 
-            double b12 = a11 + a12 - b11;
-            double b21 = a11 + a21 - b11;
-            double b22 = a22 - a11 + b11;
+            var b12 = a11 + a12 - b11;
+            var b21 = a11 + a21 - b11;
+            var b22 = a22 - a11 + b11;
 
             if (b11 > 0)
             {
@@ -277,24 +276,18 @@ namespace NCDK.StructGen
                 ac.Bonds.Remove(b4);
             }
 
-            Debug.WriteLine("a11 a12 a21 a22: " + a11 + " " + a12 + " " + a21 + " " + a22);
-            Debug.WriteLine("b11 b12 b21 b22: " + b11 + " " + b12 + " " + b21 + " " + b22);
+            Debug.WriteLine($"a11 a12 a21 a22: {a11} {a12} {a21} {a22}");
+            Debug.WriteLine($"b11 b12 b21 b22: {b11} {b12} {b21} {b22}");
         }
 
         /// <summary>
-        /// Assigns a starting structure to this generator.
-        /// </summary>
-        /// <param name="molecule">a starting structure for this generator</param>
-        public void SetMolecule(IAtomContainer molecule)
-        {
-            this.molecule = molecule;
-        }
-
-        /// <summary>
-        /// Returns the molecule which reflects the current state of this
+        /// The molecule which reflects the current state of this
         /// stochastic structure generator.
         /// </summary>
-        /// <returns>The molecule</returns>
-        public IAtomContainer Molecule => this.molecule;
+        public IAtomContainer Molecule
+        {
+            get => molecule;
+            set => this.molecule = value;
+        }
     }
 }

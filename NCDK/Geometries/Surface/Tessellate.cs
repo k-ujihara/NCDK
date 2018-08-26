@@ -44,26 +44,27 @@ namespace NCDK.Geometries.Surface
     // @cdk.githash
     public class Tessellate
     {
-        Triangle[] Oldtess;
-        int maxlevel;
+        private Triangle[] Oldtess;
+        private readonly int maxlevel;
 
         public Tessellate()
         {
-            this.Oldtess = this.RepIco();
+            this.Oldtess = RepIco();
             this.maxlevel = 4;
         }
 
         public Tessellate(string type, int level)
         {
-            if (type.Equals("tet"))
-                this.Oldtess = this.RepTet();
-            else if (type.Equals("oct"))
-                this.Oldtess = this.RepOct();
-            else if (type.Equals("ico")) this.Oldtess = this.RepIco();
+            if (string.Equals(type, "tet", StringComparison.Ordinal))
+                this.Oldtess = RepTet();
+            else if (string.Equals(type, "oct", StringComparison.Ordinal))
+                this.Oldtess = RepOct();
+            else if (string.Equals(type, "ico", StringComparison.Ordinal))
+                this.Oldtess = RepIco();
             this.maxlevel = level;
         }
 
-        private Vector3 Midpoint(Vector3 p1, Vector3 p2)
+        private static Vector3 Midpoint(Vector3 p1, Vector3 p2)
         {
             double x, y, z;
             x = 0.5 * (p1.X + p2.X);
@@ -72,7 +73,7 @@ namespace NCDK.Geometries.Surface
             return (new Vector3(x, y, z));
         }
 
-        private void Normalize(Vector3 p)
+        private static void Normalize(Vector3 p)
         {
             double mag = p.X * p.X + p.Y * p.Y + p.Z * p.Z;
             if (mag != 0.0)
@@ -138,17 +139,27 @@ namespace NCDK.Geometries.Surface
             return (ret);
         }
 
-        private Triangle[] RepTet()
+        private static Triangle[] RepTet()
         {
             double sqrt3 = 0.5773502692;
-            Vector3[] v = {new Vector3(sqrt3, sqrt3, sqrt3), new Vector3(-sqrt3, -sqrt3, sqrt3),
-                new Vector3(-sqrt3, sqrt3, -sqrt3), new Vector3(sqrt3, -sqrt3, -sqrt3)};
-            Triangle[] rep = {new Triangle(v[0], v[1], v[2]), new Triangle(v[0], v[3], v[1]),
-                new Triangle(v[2], v[1], v[3]), new Triangle(v[3], v[0], v[2])};
+            Vector3[] v =
+            {
+                new Vector3(sqrt3, sqrt3, sqrt3),
+                new Vector3(-sqrt3, -sqrt3, sqrt3),
+                new Vector3(-sqrt3, sqrt3, -sqrt3),
+                new Vector3(sqrt3, -sqrt3, -sqrt3),
+            };
+            Triangle[] rep = 
+            {
+                new Triangle(v[0], v[1], v[2]),
+                new Triangle(v[0], v[3], v[1]),
+                new Triangle(v[2], v[1], v[3]),
+                new Triangle(v[3], v[0], v[2]),
+            };
             return (rep);
         }
 
-        private Triangle[] RepOct()
+        private static Triangle[] RepOct()
         {
             Vector3[] v = {new Vector3(1.0, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0), new Vector3(0.0, 1.0, 0.0),
                 new Vector3(0.0, -1.0, 0.0), new Vector3(0.0, 0.0, 1.0), new Vector3(0.0, 0.0, -1.0)};
@@ -158,7 +169,7 @@ namespace NCDK.Geometries.Surface
             return (rep);
         }
 
-        private Triangle[] RepIco()
+        private static Triangle[] RepIco()
         {
             double tau = 0.8506508084;
             double one = 0.5257311121;

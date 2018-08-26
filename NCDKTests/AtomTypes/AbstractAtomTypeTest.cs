@@ -20,6 +20,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
 using NCDK.Tools.Manipulator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -92,7 +93,7 @@ namespace NCDK.AtomTypes
         private void AssertConsistentProperties(IAtomContainer mol, IAtom atom, IAtomType matched)
         {
             // X has no properties; nothing to match
-            if ("X".Equals(matched.AtomTypeName))
+            if (string.Equals("X", matched.AtomTypeName, StringComparison.Ordinal))
             {
                 return;
             }

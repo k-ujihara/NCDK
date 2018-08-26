@@ -34,30 +34,30 @@ namespace NCDK.Validate
         public const string ErrorMarker = "NCDK.Validate.error";
         public const string WarningMarker = "NCDK.Validate.warning";
 
-        public static void MarkWithError(IChemObject obj)
+        public static void MarkWithError(IChemObject o)
         {
-            obj.SetProperty(ErrorMarker, true);
+            o.SetProperty(ErrorMarker, true);
         }
 
-        public static void MarkWithWarning(IChemObject obj)
+        public static void MarkWithWarning(IChemObject o)
         {
-            obj.SetProperty(WarningMarker, true);
+            o.SetProperty(WarningMarker, true);
         }
 
-        public static void UnMarkWithError(IChemObject obj)
+        public static void UnmarkWithError(IChemObject o)
         {
-            obj.RemoveProperty(ErrorMarker);
+            o.RemoveProperty(ErrorMarker);
         }
 
-        public static void UnMarkWithWarning(IChemObject obj)
+        public static void UnmarkWithWarning(IChemObject o)
         {
-            obj.RemoveProperty(WarningMarker);
+            o.RemoveProperty(WarningMarker);
         }
 
-        public static void Unmark(IChemObject obj)
+        public static void Unmark(IChemObject o)
         {
-            UnMarkWithWarning(obj);
-            UnMarkWithError(obj);
+            UnmarkWithWarning(o);
+            UnmarkWithError(o);
         }
     }
 }

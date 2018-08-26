@@ -1,21 +1,18 @@
-using NCDK.FaulonSignatures;
 using System.Collections.Generic;
 
 namespace NCDK.FaulonSignatures.EdgeColored
 {
     public class EdgeColoredVertexSignature : AbstractVertexSignature
     {
-        private EdgeColoredGraph graph;
-        private IDictionary<string, int> colorMap;
+        private readonly EdgeColoredGraph graph;
+        private IReadOnlyDictionary<string, int> colorMap;
 
-        public EdgeColoredVertexSignature(
-                int rootVertexIndex, EdgeColoredGraph graph, IDictionary<string, int> colorMap)
+        public EdgeColoredVertexSignature(int rootVertexIndex, EdgeColoredGraph graph, IReadOnlyDictionary<string, int> colorMap)
             : this(rootVertexIndex, -1, graph, colorMap)
         { }
 
-        public EdgeColoredVertexSignature(
-                int rootVertexIndex, int height, EdgeColoredGraph graph, IDictionary<string, int> colorMap)
-                : base()
+        public EdgeColoredVertexSignature(int rootVertexIndex, int height, EdgeColoredGraph graph, IReadOnlyDictionary<string, int> colorMap)
+            : base()
         {
             this.graph = graph;
             this.colorMap = colorMap;
@@ -36,7 +33,7 @@ namespace NCDK.FaulonSignatures.EdgeColored
 
         public override string GetEdgeLabel(int vertexIndex, int otherVertexIndex)
         {
-            EdgeColoredGraph.Edge edge = this.graph.GetEdge(vertexIndex, otherVertexIndex);
+            var edge = this.graph.GetEdge(vertexIndex, otherVertexIndex);
             if (edge != null)
             {
                 return edge.edgeLabel;

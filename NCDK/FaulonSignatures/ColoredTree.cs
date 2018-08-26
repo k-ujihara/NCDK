@@ -11,20 +11,13 @@ namespace NCDK.FaulonSignatures
     // @author maclean
     public class ColoredTree
     {
-
         public class Node : IVisitableColoredTree
         {
-
             public List<Node> children = new List<Node>();
-
             public readonly string label;
-
             public readonly string edgeLabel;
-
             public readonly Node parent;
-
             public readonly int color;
-
             public readonly int height;
 
             public Node(string label, Node parent, int height)
@@ -110,16 +103,14 @@ namespace NCDK.FaulonSignatures
             }
         }
 
-        private int height;
-
-        private Node root;
+        private readonly Node root;
 
         private int maxColor;
 
         public ColoredTree(string rootLabel)
         {
             this.root = new Node(rootLabel, null, 1);
-            this.height = 1;
+            this.Height = 1;
         }
 
         public void Accept(IColoredTreeVisitor visitor)
@@ -153,9 +144,9 @@ namespace NCDK.FaulonSignatures
 
         public void UpdateHeight(int height)
         {
-            if (height > this.height)
+            if (height > this.Height)
             {
-                this.height = height;
+                this.Height = height;
             }
         }
 
@@ -166,7 +157,7 @@ namespace NCDK.FaulonSignatures
             return builder.ToString();
         }
 
-        public int Height => this.height;
+        public int Height { get; private set; }
 
         public int NumberOfColors()
         {

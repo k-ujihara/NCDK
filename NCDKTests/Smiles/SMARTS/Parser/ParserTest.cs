@@ -19,6 +19,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Isomorphisms.Matchers.SMARTS;
+using NCDK.Silent;
 using System.IO;
 
 namespace NCDK.Smiles.SMARTS.Parser
@@ -38,7 +39,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         [TestMethod()]
         public void TestQueryAtomCreation()
         {
-            var container = SMARTSParser.Parse("*", Default.ChemObjectBuilder.Instance);
+            var container = SMARTSParser.Parse("*", ChemObjectBuilder.Instance);
             Assert.AreEqual(1, container.Atoms.Count);
             IAtom atom = container.Atoms[0];
             Assert.IsTrue(atom is SMARTSAtom);
@@ -47,7 +48,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         [TestMethod()]
         public void TestAliphaticAtom()
         {
-            var container = SMARTSParser.Parse("A", Default.ChemObjectBuilder.Instance);
+            var container = SMARTSParser.Parse("A", ChemObjectBuilder.Instance);
             Assert.AreEqual(1, container.Atoms.Count);
             IAtom atom = container.Atoms[0];
             Assert.IsTrue(atom is SMARTSAtom);
@@ -56,7 +57,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         [TestMethod()]
         public void TestAromaticAtom()
         {
-            var container = SMARTSParser.Parse("a", Default.ChemObjectBuilder.Instance);
+            var container = SMARTSParser.Parse("a", ChemObjectBuilder.Instance);
             Assert.AreEqual(1, container.Atoms.Count);
             IAtom atom = container.Atoms[0];
             Assert.IsTrue(atom is SMARTSAtom);
@@ -65,7 +66,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         [TestMethod()]
         public void TestDegree()
         {
-            var container = SMARTSParser.Parse("[D2]", Default.ChemObjectBuilder.Instance);
+            var container = SMARTSParser.Parse("[D2]", ChemObjectBuilder.Instance);
             Assert.AreEqual(1, container.Atoms.Count);
             IAtom atom = container.Atoms[0];
             Assert.IsTrue(atom is SMARTSAtom);
@@ -74,7 +75,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         [TestMethod()]
         public void TestImplicitHCount()
         {
-            var container = SMARTSParser.Parse("[h3]", Default.ChemObjectBuilder.Instance);
+            var container = SMARTSParser.Parse("[h3]", ChemObjectBuilder.Instance);
             Assert.AreEqual(1, container.Atoms.Count);
             IAtom atom = container.Atoms[0];
             Assert.IsTrue(atom is SMARTSAtom);
@@ -83,7 +84,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         [TestMethod()]
         public void TestTotalHCount()
         {
-            var container = SMARTSParser.Parse("[H2]", Default.ChemObjectBuilder.Instance);
+            var container = SMARTSParser.Parse("[H2]", ChemObjectBuilder.Instance);
             Assert.AreEqual(1, container.Atoms.Count);
             IAtom atom = container.Atoms[0];
             Assert.IsTrue(atom is SMARTSAtom);
@@ -95,7 +96,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         [TestMethod()]
         public void TestSingleBond()
         {
-            var container = SMARTSParser.Parse("C-C", Default.ChemObjectBuilder.Instance);
+            var container = SMARTSParser.Parse("C-C", ChemObjectBuilder.Instance);
             Assert.AreEqual(2, container.Atoms.Count);
             Assert.AreEqual(1, container.Bonds.Count);
             IBond bond = container.Bonds[0];
@@ -107,7 +108,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         [TestMethod()]
         public void TestDoubleBond()
         {
-            var container = SMARTSParser.Parse("C=C", Default.ChemObjectBuilder.Instance);
+            var container = SMARTSParser.Parse("C=C", ChemObjectBuilder.Instance);
             Assert.AreEqual(2, container.Atoms.Count);
             Assert.AreEqual(1, container.Bonds.Count);
             IBond bond = container.Bonds[0];
@@ -119,7 +120,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         [TestMethod()]
         public void TestTripleBond()
         {
-            var container = SMARTSParser.Parse("C#C", Default.ChemObjectBuilder.Instance);
+            var container = SMARTSParser.Parse("C#C", ChemObjectBuilder.Instance);
             Assert.AreEqual(2, container.Atoms.Count);
             Assert.AreEqual(1, container.Bonds.Count);
             IBond bond = container.Bonds[0];
@@ -131,7 +132,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         [TestMethod()]
         public void TestAromaticBond()
         {
-            var container = SMARTSParser.Parse("C:C", Default.ChemObjectBuilder.Instance);
+            var container = SMARTSParser.Parse("C:C", ChemObjectBuilder.Instance);
             Assert.AreEqual(2, container.Atoms.Count);
             Assert.AreEqual(1, container.Bonds.Count);
             IBond bond = container.Bonds[0];
@@ -141,7 +142,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         [TestMethod()]
         public void TestAnyOrderBond()
         {
-            var container = SMARTSParser.Parse("C~C", Default.ChemObjectBuilder.Instance);
+            var container = SMARTSParser.Parse("C~C", ChemObjectBuilder.Instance);
             Assert.AreEqual(2, container.Atoms.Count);
             Assert.AreEqual(1, container.Bonds.Count);
             IBond bond = container.Bonds[0];
@@ -154,7 +155,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         [TestMethod()]
         public void Test2LetterSMARTS()
         {
-            var query = SMARTSParser.Parse("Sc1ccccc1", Default.ChemObjectBuilder.Instance);
+            var query = SMARTSParser.Parse("Sc1ccccc1", ChemObjectBuilder.Instance);
             Assert.AreEqual(7, query.Atoms.Count);
             Assert.AreEqual("S", query.Atoms[0].Symbol);
         }

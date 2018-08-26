@@ -217,7 +217,7 @@ namespace NCDK.Depict
         /// <param name="highlight">highlight the provided set of atoms and bonds in the depiction in the specified color</param>
         /// <returns>depiction instance</returns>
         /// <exception cref="CDKException">a depiction could not be generated</exception>
-        public Depiction Depict(IAtomContainer mol, IDictionary<IChemObject, Color> highlight = null)
+        public Depiction Depict(IAtomContainer mol, IReadOnlyDictionary<IChemObject, Color> highlight = null)
         {
             return Depict(new[] { mol }, 1, 1, highlight);
         }
@@ -230,8 +230,8 @@ namespace NCDK.Depict
         /// <param name="mols">molecules</param>
         /// <returns>depiction</returns>
         /// <exception cref="CDKException">a depiction could not be generated</exception>
-        /// <seealso cref="Depict(IEnumerable{IAtomContainer}, int, int, IDictionary{IChemObject, Color})"/>
-        public Depiction Depict(IEnumerable<IAtomContainer> mols, IDictionary<IChemObject, Color> highlight = null)
+        /// <seealso cref="Depict(IEnumerable{IAtomContainer}, int, int, IReadOnlyDictionary{IChemObject, Color})"/>
+        public Depiction Depict(IEnumerable<IAtomContainer> mols, IReadOnlyDictionary<IChemObject, Color> highlight = null)
         {
             var molList = mols.ToList();
             var grid = Dimensions.DetermineGrid(molList.Count());
@@ -248,7 +248,7 @@ namespace NCDK.Depict
         /// <param name="ncol">number of columns</param>
         /// <returns>depiction</returns>
         /// <exception cref="CDKException">a depiction could not be generated</exception>
-        public Depiction Depict(IEnumerable<IAtomContainer> mols, int nrow, int ncol, IDictionary<IChemObject, Color> highlight = null)
+        public Depiction Depict(IEnumerable<IAtomContainer> mols, int nrow, int ncol, IReadOnlyDictionary<IChemObject, Color> highlight = null)
         {
             if (highlight == null)
                 highlight = Dictionaries.Empty<IChemObject, Color>();
@@ -305,7 +305,7 @@ namespace NCDK.Depict
         /// <param name="mols">molecules</param>
         /// <returns>coordinates</returns>
         /// <exception cref="CDKException"></exception>
-        private void PrepareCoords(IEnumerable<IAtomContainer> mols)
+        private static void PrepareCoords(IEnumerable<IAtomContainer> mols)
         {
             foreach (IAtomContainer mol in mols)
             {
@@ -353,7 +353,7 @@ namespace NCDK.Depict
         /// <param name="rxn">reaction instance</param>
         /// <returns>depiction</returns>
         /// <exception cref="CDKException">a depiction could not be generated</exception>
-        public Depiction Depict(IReaction rxn, IDictionary<IChemObject, Color> highlight = null)
+        public Depiction Depict(IReaction rxn, IReadOnlyDictionary<IChemObject, Color> highlight = null)
         {
             if (highlight == null)
                 highlight = Dictionaries.Empty<IChemObject, Color>();
@@ -520,7 +520,7 @@ namespace NCDK.Depict
             return colorMap;
         }
 
-        private int AccessAtomMap(IAtom atom)
+        private static int AccessAtomMap(IAtom atom)
         {
             var mapidx = atom.GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
             if (mapidx == null)
@@ -635,7 +635,7 @@ namespace NCDK.Depict
         /// <param name="container">a molecule</param>
         /// <returns>if coordinates needed to be generated</returns>
         /// <exception cref="CDKException">coordinates could not be generated</exception>
-        private bool Ensure2DLayout(IAtomContainer container)
+        private static bool Ensure2DLayout(IAtomContainer container)
         {
             if (!GeometryUtil.Has2DCoordinates(container))
             {
@@ -968,7 +968,7 @@ namespace NCDK.Depict
             return CaclModelScale(mols);
         }
 
-        private double MedianBondLength(ICollection<IBond> bonds)
+        private static double MedianBondLength(ICollection<IBond> bonds)
         {
             if (!bonds.Any())
                 return 1.5;

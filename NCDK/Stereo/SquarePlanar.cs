@@ -68,23 +68,24 @@ namespace NCDK.Stereo
     /// <seealso cref="Octahedral"/>
     public sealed class SquarePlanar : AbstractStereo<IAtom, IAtom>
     {
-        private static readonly int[][] PERMUTATIONS = new int[][]{
-        new[]
-        {A, B, C, D,  A, D, C, B,
-         B, C, D, A,  B, A, D, C,
-         C, D, A, B,  C, B, A, D,
-         D, C, B, A,  D, A, B, C}, // SP1 (U)
-        new[]
-        {A, C, B, D,  A, D, B, C,
-         B, D, A, C,  B, C, A, D,
-         C, A, D, B,  C, B, D, A,
-         D, B, C, A,  D, A, C, B}, // SP2 (4)
-        new[]
-        {A, B, D, C,  A, C, D, B,
-         B, A, C, D,  B, D, C, A,
-         C, D, B, A,  C, A, B, D,
-         D, C, A, B,  D, B, A, C},  // SP3 (Z)
-    };
+        private static readonly int[][] PERMUTATIONS = new int[][]
+        {
+            new[]
+            {A, B, C, D,  A, D, C, B,
+             B, C, D, A,  B, A, D, C,
+             C, D, A, B,  C, B, A, D,
+             D, C, B, A,  D, A, B, C}, // SP1 (U)
+            new[]
+            {A, C, B, D,  A, D, B, C,
+             B, D, A, C,  B, C, A, D,
+             C, A, D, B,  C, B, D, A,
+             D, B, C, A,  D, A, C, B}, // SP2 (4)
+            new[]
+            {A, B, D, C,  A, C, D, B,
+             B, A, C, D,  B, D, C, A,
+             C, D, B, A,  C, A, B, D,
+             D, C, A, B,  D, B, A, C},  // SP3 (Z)
+        };
 
         /// <summary>
         /// Create a square-planar configuration around a provided focus atom. The
@@ -95,18 +96,16 @@ namespace NCDK.Stereo
         /// <param name="carriers">the carriers</param>
         /// <param name="order">the configuration order, 1-3</param>
         public SquarePlanar(IAtom focus, IAtom[] carriers, int order)
-                : base(focus, carriers, new StereoElement(StereoElement.Classes.SquarePlanar, order))
+            : base(focus, carriers, new StereoElement(StereoClass.SquarePlanar, order))
         {
             if (Configure.Order() < 0 || Configure.Order() > 3)
-                throw new ArgumentOutOfRangeException("Invalid configuration order,"
-                                                   + "should be between 1-3");
+                throw new ArgumentException("Invalid configuration order, should be between 1-3");
         }
 
         public SquarePlanar(IAtom focus, IAtom[] carriers, StereoElement stereo)
-            : this(focus, carriers, stereo.Configure.Order())
+            : this(focus, carriers, stereo.Configuration.Order())
         {
         }
-
 
         /// <summary>
         /// Normalize the configuration to the lowest configuration order (1) -
@@ -118,15 +117,12 @@ namespace NCDK.Stereo
             int cfg = Configure.Order();
             if (cfg == 1)
                 return this;
-            IAtom[] carriers = InvApply(Carriers.ToArray(),
-                                         PERMUTATIONS[cfg - 1]);
-            return new SquarePlanar(Focus,
-                                    carriers,
-                                    StereoElement.SquarePlanarU);
+            IAtom[] carriers = InvApply(Carriers, PERMUTATIONS[cfg - 1]);
+            return new SquarePlanar(Focus, carriers, StereoElement.SquarePlanarU);
         }
 
         /// <inheritdoc/>
-        protected override IStereoElement<IAtom, IAtom> Create(IAtom focus, IList<IAtom> carriers, StereoElement stereo)
+        protected override IStereoElement<IAtom, IAtom> Create(IAtom focus, IReadOnlyList<IAtom> carriers, StereoElement stereo)
         {
             return new SquarePlanar(focus, carriers.ToArray(), stereo);
         }

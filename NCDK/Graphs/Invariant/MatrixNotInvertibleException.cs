@@ -24,5 +24,16 @@ namespace NCDK.Graphs.Invariant
     // @cdk.githash
     public class MatrixNotInvertibleException : Exception
     {
-    }
+        public MatrixNotInvertibleException()
+        {
+        }
+
+        public MatrixNotInvertibleException(string message) : base(message)
+        {
+        }
+
+        public MatrixNotInvertibleException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+   }
 }

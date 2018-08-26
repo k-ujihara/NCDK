@@ -22,6 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using System;
 using System.Collections;
 
 namespace NCDK.Hash
@@ -63,7 +64,7 @@ namespace NCDK.Hash
                 for (int i = 0; i < container.Atoms.Count; i++)
                 {
                     IAtom atom = container.Atoms[i];
-                    hydrogens.Set(i, "H".Equals(atom.Symbol));
+                    hydrogens.Set(i, "H".Equals(atom.Symbol, StringComparison.Ordinal));
                 }
                 return Suppressed.FromBitSet(hydrogens);
             }

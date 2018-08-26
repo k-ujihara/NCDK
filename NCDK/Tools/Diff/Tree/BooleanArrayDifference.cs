@@ -33,7 +33,7 @@ namespace NCDK.Tools.Diff.Tree
     public class BooleanArrayDifference
         : AbstractDifferenceList, IDifferenceList
     {
-        private string name;
+        private readonly string name;
 
         private BooleanArrayDifference(string name)
         {
@@ -96,7 +96,8 @@ namespace NCDK.Tools.Diff.Tree
         /// <returns>a <see cref="string"/></returns>
         public override string ToString()
         {
-            if (differences.Count() == 0) return "";
+            if (ChildCount() == 0)
+                return "";
 
             var diffBuffer = new StringBuilder();
             diffBuffer.Append(this.name).Append('{');

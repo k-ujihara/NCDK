@@ -22,6 +22,7 @@
  * 
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using System.Diagnostics;
 using System.IO;
 
@@ -37,10 +38,10 @@ namespace NCDK.IO.Iterator
             string filename = "NCDK.Data.ASN.PubChem.aceticAcids38.xml";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            var reader = new EnumerablePCCompoundXMLReader(new StreamReader(ins), Default.ChemObjectBuilder.Instance);
+            var reader = new EnumerablePCCompoundXMLReader(new StreamReader(ins), ChemObjectBuilder.Instance);
 
             int molCount = 0;
-            var set = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var set = ChemObjectBuilder.Instance.NewAtomContainerSet();
             foreach (var obj in reader)
             {
                 // Console.Out.WriteLine("next molecule found");

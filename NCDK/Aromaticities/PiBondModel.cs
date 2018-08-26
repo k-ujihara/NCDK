@@ -22,6 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 using NCDK.RingSearches;
+using System.Collections.Generic;
 
 namespace NCDK.Aromaticities
 {
@@ -36,11 +37,11 @@ namespace NCDK.Aromaticities
     sealed class PiBondModel : ElectronDonation
     {
         /// <inheritdoc/>
-        public override int[] Contribution(IAtomContainer container, RingSearch ringSearch)
+        public override IReadOnlyList<int> Contribution(IAtomContainer container, RingSearch ringSearch)
         {
             int n = container.Atoms.Count;
-            int[] electrons = new int[n];
-            int[] piBonds = new int[n];
+            var electrons = new int[n];
+            var piBonds = new int[n];
 
             // count number of cyclic pi bonds
             foreach (var bond in container.Bonds)

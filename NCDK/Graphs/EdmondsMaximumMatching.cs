@@ -104,7 +104,8 @@ namespace NCDK.Graphs
             wAncestors = new BitArray(graph.Length);
 
             // continuously augment while we find new paths
-            while (ExistAugmentingPath()) ;
+            while (ExistAugmentingPath())
+                ;
         }
 
         /// <summary>

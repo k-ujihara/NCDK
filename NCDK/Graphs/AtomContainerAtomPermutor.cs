@@ -54,9 +54,9 @@ namespace NCDK.Graphs
         /// <returns></returns>
         public override IAtomContainer ContainerFromPermutation(int[] permutation)
         {
-            IAtomContainer permutedContainer = (IAtomContainer)atomContainer.Clone();
-            IAtom[] atoms = new IAtom[atomContainer.Atoms.Count];
-            for (int i = 0; i < atomContainer.Atoms.Count; i++)
+            IAtomContainer permutedContainer = (IAtomContainer)AtomContainer.Clone();
+            IAtom[] atoms = new IAtom[AtomContainer.Atoms.Count];
+            for (int i = 0; i < AtomContainer.Atoms.Count; i++)
             {
                 atoms[permutation[i]] = permutedContainer.Atoms[i];
             }

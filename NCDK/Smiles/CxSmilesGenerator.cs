@@ -24,6 +24,7 @@
 using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using static NCDK.Smiles.CxSmilesState;
@@ -53,7 +54,7 @@ namespace NCDK.Smiles
                 }
                 else
                 {
-                    sb.Append("&#").Append(c.ToString()).Append(";");
+                    sb.Append("&#").Append(new string(new[] { c })).Append(";");
                 }
             }
             return sb.ToString();
@@ -72,9 +73,9 @@ namespace NCDK.Smiles
             return alen.CompareTo(blen);
         }
 
-        internal static string Generate(CxSmilesState state, SmiFlavor opts, int[] components, int[] ordering)
+        internal static string Generate(CxSmilesState state, SmiFlavors opts, int[] components, int[] ordering)
         {
-            if (!SmiFlavors.IsSet(opts, SmiFlavor.CxSmilesWithCoords))
+            if (!SmiFlavorTool.IsSet(opts, SmiFlavors.CxSmilesWithCoords))
                 return "";
 
             int[] invorder = Inverse(ordering);
@@ -83,11 +84,11 @@ namespace NCDK.Smiles
             sb.Append(' ');
             sb.Append('|');
 
-            Comparison<int> invComp = (a, b) => invorder[a].CompareTo(invorder[b]);
-            Comparison<int> comp = (a, b) => ordering[a].CompareTo(ordering[b]);
+            //int invComp(int a, int b) => invorder[a].CompareTo(invorder[b]);
+            int comp(int a, int b) => ordering[a].CompareTo(ordering[b]);
 
             // Fragment Grouping
-            if (SmiFlavors.IsSet(opts, SmiFlavor.CxFragmentGroup) &&
+            if (SmiFlavorTool.IsSet(opts, SmiFlavors.CxFragmentGroup) &&
                 state.fragGroups != null && state.fragGroups.Any())
             {
                 int maxCompId = 0;
@@ -110,7 +111,7 @@ namespace NCDK.Smiles
                 for (int i = 0; i < compMap.Length; i++)
                     compMap[i]--;
 
-                Comparison<int> compComp = (a, b) => compMap[a].CompareTo(compMap[b]);
+                int compComp(int a, int b) => compMap[a].CompareTo(compMap[b]);
 
                 List<List<int>> fragGroupCpy = new List<List<int>>(state.fragGroups);
                 foreach (var idxs in fragGroupCpy)
@@ -128,7 +129,7 @@ namespace NCDK.Smiles
             }
 
             // Atom Labels
-            if (SmiFlavors.IsSet(opts, SmiFlavor.CxAtomLabel) &&
+            if (SmiFlavorTool.IsSet(opts, SmiFlavors.CxAtomLabel) &&
                 state.atomLabels != null && state.atomLabels.Any())
             {
                 if (sb.Length > 2)
@@ -137,8 +138,7 @@ namespace NCDK.Smiles
                 int nonempty_cnt = 0;
                 foreach (int idx in invorder)
                 {
-                    string label;
-                    if (!state.atomLabels.TryGetValue(idx, out label))
+                    if (!state.atomLabels.TryGetValue(idx, out string label))
                         label = "";
                     else nonempty_cnt++;
                     sb.Append(Encode_alias(label));
@@ -151,7 +151,7 @@ namespace NCDK.Smiles
             }
 
             // Atom Values
-            if (SmiFlavors.IsSet(opts, SmiFlavor.CxAtomValue) &&
+            if (SmiFlavorTool.IsSet(opts, SmiFlavors.CxAtomValue) &&
                 state.atomValues != null && state.atomValues.Any())
             {
 
@@ -174,14 +174,14 @@ namespace NCDK.Smiles
             }
 
             // 2D/3D Coordinates
-            if (SmiFlavors.IsSet(opts, SmiFlavor.CxCoordinates) &&
-                state.AtomCoords != null && state.AtomCoords.Any())
+            if (SmiFlavorTool.IsSet(opts, SmiFlavors.CxCoordinates) &&
+                state.atomCoords != null && state.atomCoords.Any())
             {
                 if (sb.Length > 2) sb.Append(',');
                 sb.Append('(');
                 for (int i = 0; i < ordering.Length; i++)
                 {
-                    double[] xyz = state.AtomCoords[invorder[i]];
+                    double[] xyz = state.atomCoords[invorder[i]];
                     if (i != 0) sb.Append(';');
                     if (xyz[0] != 0)
                         sb.Append(Strings.ToSimpleString(xyz[0], 2));
@@ -196,7 +196,7 @@ namespace NCDK.Smiles
             }
 
             // Multi-center/Positional variation bonds
-            if (SmiFlavors.IsSet(opts, SmiFlavor.CxMulticenter) &&
+            if (SmiFlavorTool.IsSet(opts, SmiFlavors.CxMulticenter) &&
                 state.positionVar != null && state.positionVar.Any())
             {
                 if (sb.Length > 2) sb.Append(',');
@@ -221,7 +221,7 @@ namespace NCDK.Smiles
             }
 
             // *CCO* |$_AP1;;;;_AP2$,Sg:n:1,2,3::ht|
-            if (SmiFlavors.IsSet(opts, SmiFlavor.CxPolymer) &&
+            if (SmiFlavorTool.IsSet(opts, SmiFlavors.CxPolymer) &&
                 state.sgroups != null && state.sgroups.Any())
             {
                 var sgroups = new List<PolymerSgroup>(state.sgroups);
@@ -232,8 +232,9 @@ namespace NCDK.Smiles
                 sgroups.Sort((a, b) =>
                 {
                     int cmp = 0;
-                    cmp = a.type.CompareTo(b.type);
-                    if (cmp != 0) return cmp;
+                    cmp = string.CompareOrdinal(a.type, b.type);
+                    if (cmp != 0)
+                        return cmp;
                     cmp = CxSmilesGenerator.Compare(comp, a.atomset, b.atomset);
                     return cmp;
                 });
@@ -256,14 +257,13 @@ namespace NCDK.Smiles
             }
 
             // [C]1[CH][CH]CCC1 |^1:1,2,^3:0|
-            if (SmiFlavors.IsSet(opts, SmiFlavor.CxRadical) &&
+            if (SmiFlavorTool.IsSet(opts, SmiFlavors.CxRadical) &&
                 state.atomRads != null && state.atomRads.Any())
             {
                 var radinv = new SortedDictionary<CxSmilesState.Radical, List<int>>();
                 foreach (var e in state.atomRads)
                 {
-                    List<int> idxs;
-                    if (!radinv.TryGetValue(e.Value, out idxs))
+                    if (!radinv.TryGetValue(e.Value, out List<int> idxs))
                         radinv[e.Value] = idxs = new List<int>();
                     idxs.Add(e.Key);
                 }
@@ -292,7 +292,7 @@ namespace NCDK.Smiles
         private static void AppendIntegers(int[] invorder, char sep, StringBuilder sb, List<int> vals)
         {
             if (vals.Any())
-                sb.Append(string.Join(sep.ToString(), vals.Select(v => invorder[v].ToString())));
+                sb.Append(string.Join(new string(new[] { sep }), vals.Select(v => invorder[v].ToString(NumberFormatInfo.InvariantInfo))));
         }
     }
 }

@@ -54,10 +54,14 @@ namespace NCDK.StructGen.Stochastic
 
         /// <summary>
         /// Randomly generates a single, connected, correctly bonded structure from
-        /// a number of fragments.  IMPORTANT: The AtomContainers in the set must be
-        /// connected. If an AtomContainer is disconnected, no valid result will
-        /// be formed
+        /// a number of fragments.
         /// </summary>
+        /// <remarks>
+        /// <note type="important">
+        /// The <see cref="IAtomContainer"/> in the set must be
+        /// connected. If an <see cref="IAtomContainer"/> is disconnected, no valid result will
+        /// </note>
+        /// </remarks>
         /// <param name="atomContainers">The fragments to generate for.</param>
         /// <returns>The newly formed structure.</returns>
         /// <exception cref="CDKException">No valid result could be formed.</exception>"
@@ -65,7 +69,7 @@ namespace NCDK.StructGen.Stochastic
         {
             var container = Generate2(atomContainers);
             if (container == null)
-                throw new CDKException("Could not combine the fragments to combine a valid, satured structure");
+                throw new CDKException("Could not combine the fragments to combine a valid, saturated structure");
             return container;
         }
 
@@ -87,19 +91,18 @@ namespace NCDK.StructGen.Stochastic
                         if (ac == null)
                             continue;
 
-                        foreach (var atom in AtomContainerManipulator.GetAtomArray(ac))
+                        foreach (var atom in ac.Atoms.ToList())
                         {
                             if (!satCheck.IsSaturated(atom, ac))
                             {
-                                IAtom partner = GetAnotherUnsaturatedNode(atom, ac, atomContainers);
+                                var partner = GetAnotherUnsaturatedNode(atom, ac, atomContainers);
                                 if (partner != null)
                                 {
-                                    IAtomContainer toadd = AtomContainerSetManipulator.GetRelevantAtomContainer(
-                                            atomContainers, partner);
-                                    double cmax1 = satCheck.GetCurrentMaxBondOrder(atom, ac);
-                                    double cmax2 = satCheck.GetCurrentMaxBondOrder(partner, toadd);
-                                    double max = Math.Min(cmax1, cmax2);
-                                    double order = Math.Min(Math.Max(1.0, max), 3.0);//(double)Math.Round(Math.Random() * max)
+                                    var toadd = AtomContainerSetManipulator.GetRelevantAtomContainer( atomContainers, partner);
+                                    var cmax1 = satCheck.GetCurrentMaxBondOrder(atom, ac);
+                                    var cmax2 = satCheck.GetCurrentMaxBondOrder(partner, toadd);
+                                    var max = Math.Min(cmax1, cmax2);
+                                    var order = Math.Min(Math.Max(1.0, max), 3.0);//(double)Math.Round(Math.Random() * max)
                                     Debug.WriteLine($"cmax1, cmax2, max, order: {cmax1}, {cmax2}, {max}, {order}");
                                     if (toadd != ac)
                                     {
@@ -118,7 +121,7 @@ namespace NCDK.StructGen.Stochastic
                     }
                 } while (bondFormed);
                 if (atomContainers.Count == 1
-                        && satCheck.AllSaturated(atomContainers[0]))
+                 && satCheck.AllSaturated(atomContainers[0]))
                 {
                     structureFound = true;
                 }
@@ -133,13 +136,11 @@ namespace NCDK.StructGen.Stochastic
         }
 
         /// <summary>
-        ///  Gets a randomly selected unsaturated atom from the set. If there are any, it will be from another
-        ///  container than exclusionAtom.
+        /// Gets a randomly selected unsaturated atom from the set. If there are any, it will be from another
+        /// container than exclusionAtom.
         /// </summary>
         /// <returns>The unsaturated atom.</returns>
-        private IAtom GetAnotherUnsaturatedNode(IAtom exclusionAtom,
-                                           IAtomContainer exclusionAtomContainer,
-                                           IChemObjectSet<IAtomContainer> atomContainers)
+        private IAtom GetAnotherUnsaturatedNode(IAtom exclusionAtom, IAtomContainer exclusionAtomContainer, IChemObjectSet<IAtomContainer> atomContainers)
         {
             IAtom atom;
 
@@ -159,12 +160,13 @@ namespace NCDK.StructGen.Stochastic
                 }
             }
             {
-                int next = exclusionAtomContainer.Atoms.Count;//(int) (Math.random() * ac.getAtomCount());
+                var next = exclusionAtomContainer.Atoms.Count;//(int) (Math.random() * ac.getAtomCount());
                 for (int f = 0; f < next; f++)
                 {
                     atom = exclusionAtomContainer.Atoms[f];
-                    if (!satCheck.IsSaturated(atom, exclusionAtomContainer) && exclusionAtom != atom
-                        && !exclusionAtomContainer.GetConnectedAtoms(exclusionAtom).Contains(atom))
+                    if (!satCheck.IsSaturated(atom, exclusionAtomContainer) 
+                     && exclusionAtom != atom
+                     && !exclusionAtomContainer.GetConnectedAtoms(exclusionAtom).Contains(atom))
                     {
                         return atom;
                     }

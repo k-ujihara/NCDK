@@ -21,7 +21,8 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
+using System.Linq;
 
 namespace NCDK.RingSearches
 {
@@ -73,13 +74,13 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestIsolatedRingFragments()
         {
-            Assert.IsTrue(new RingSearch(empty).IsolatedRingFragments().Count == 0);
+            Assert.IsTrue(new RingSearch(empty).IsolatedRingFragments().Count() == 0);
         }
 
         [TestMethod()]
         public void TestFusedRingFragments()
         {
-            Assert.IsTrue(new RingSearch(empty).FusedRingFragments().Count == 0);
+            Assert.IsTrue(new RingSearch(empty).FusedRingFragments().Count() == 0);
         }
     }
 }

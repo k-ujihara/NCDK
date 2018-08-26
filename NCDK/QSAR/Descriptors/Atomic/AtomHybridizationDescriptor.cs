@@ -45,8 +45,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the AtomHybridizationDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomHybridization",
                 typeof(AtomHybridizationDescriptor).FullName,
@@ -55,13 +55,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// This descriptor does have any parameter.
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "aHyb" };
 
         private DescriptorValue<Result<Hybridization>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<Hybridization>>(_Specification, ParameterNames, Parameters, new Result<Hybridization>(Hybridization.Unset), DescriptorNames, e);
+            return new DescriptorValue<Result<Hybridization>>(specification, ParameterNames, Parameters, new Result<Hybridization>(Hybridization.Unset), DescriptorNames, e);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
             Hybridization atomHybridization = matched.Hybridization;
             var result = new Result<Hybridization>(atomHybridization);
-            return new DescriptorValue<Result<Hybridization>>(_Specification, ParameterNames, Parameters, result, DescriptorNames);
+            return new DescriptorValue<Result<Hybridization>>(specification, ParameterNames, Parameters, result, DescriptorNames);
         }
 
         /// <summary>

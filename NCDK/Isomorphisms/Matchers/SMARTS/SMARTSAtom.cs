@@ -28,7 +28,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     // @cdk.keyword SMARTS
     public abstract class SMARTSAtom : QueryAtom, IQueryAtom
     {
-        public SMARTSAtom(IChemObjectBuilder builder)
+        protected SMARTSAtom(IChemObjectBuilder builder)
             : base(builder)
         { }
 
@@ -39,12 +39,11 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <param name="atom">the atom to obtain the invariants of</param>
         /// <returns>the atom invariants for the atom</returns>
         /// <exception cref="NullReferenceException">thrown if the invariants were not set</exception>
-        internal SMARTSAtomInvariants Invariants(IAtom atom)
+        internal static SMARTSAtomInvariants Invariants(IAtom atom)
         {
             SMARTSAtomInvariants inv = atom.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key);
             if (inv == null)
-                throw new NullReferenceException(
-                        "Missing SMARTSAtomInvariants - please compute these values before matching.");
+                throw new NullReferenceException("Missing SMARTSAtomInvariants - please compute these values before matching.");
             return inv;
         }
 

@@ -236,7 +236,8 @@ namespace NCDK.Hash
         /// <exception cref="NullReferenceException">no encoder provided</exception>
         public HashGeneratorMaker Encode(IAtomEncoder encoder)
         {
-            if (encoder == null) throw new ArgumentNullException("no encoder provided");
+            if (encoder == null)
+                throw new ArgumentNullException(nameof(encoder), "no encoder provided");
             customEncoders.Add(encoder);
             return this;
         }
@@ -271,7 +272,9 @@ namespace NCDK.Hash
         /// </summary>
         /// <returns>instance of the generator</returns>
         /// <exception cref="ArgumentException">no depth or encoders were configured</exception>
+#pragma warning disable CA1822 // Mark members as static
         public IEnsembleHashGenerator Ensemble()
+#pragma warning restore CA1822 // Mark members as static
         {
             throw new NotSupportedException("not yet supported");
         }
@@ -361,10 +364,9 @@ namespace NCDK.Hash
 
             /// <summary>
             /// Create a new conjugated encoder from a left and right encoder.
-            ///
+            /// </summary>
             /// <param name="left">encoder</param>
             /// <param name="right">encoder</param>
-            /// </summary>
             public ConjugatedEncoder(IStereoEncoder left, IStereoEncoder right)
             {
                 this.left = left;

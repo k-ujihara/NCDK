@@ -86,7 +86,7 @@ namespace NCDK.Dict
         {
             Entry entry = GetTestClass();
             Assert.IsNotNull(entry.DescriptorMetadata);
-            IList<string> metadata = entry.DescriptorMetadata;
+            var metadata = entry.DescriptorMetadata;
             Assert.AreEqual(0, metadata.Count);
             entry.AddDescriptorMetadata("This entry was written by me.");
             metadata = entry.DescriptorMetadata;

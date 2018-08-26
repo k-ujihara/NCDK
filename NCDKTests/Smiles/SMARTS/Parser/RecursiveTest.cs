@@ -22,8 +22,10 @@ using NCDK.Aromaticities;
 using NCDK.Common.Base;
 using NCDK.Graphs;
 using NCDK.IO.Iterator;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System.IO;
+using System.Linq;
 using static NCDK.Smiles.SMARTS.Parser.SMARTSSearchTest;
 
 namespace NCDK.Smiles.SMARTS.Parser
@@ -42,8 +44,8 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public void Match(string smarts, string smiles)
         {
-            SMARTSQueryTool sqt = new SMARTSQueryTool(smarts, Default.ChemObjectBuilder.Instance);
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SMARTSQueryTool sqt = new SMARTSQueryTool(smarts, ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);
             Aromaticity.CDKLegacy.Apply(atomContainer);
@@ -51,7 +53,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             if (status)
             {
                 nmatch = sqt.MatchesCount;
-                nqmatch = sqt.GetUniqueMatchingAtoms().Count;
+                nqmatch = sqt.GetUniqueMatchingAtoms().Count();
             }
             else
             {
@@ -443,9 +445,9 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             string filename = "drugs.smi";
             var ins = ResourceLoader.GetAsStream(GetType(), filename);
-            using (EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, Default.ChemObjectBuilder.Instance))
+            using (EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, ChemObjectBuilder.Instance))
             {
-                SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", Default.ChemObjectBuilder.Instance);
+                SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", ChemObjectBuilder.Instance);
                 sqt.SetAromaticity(new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder));
                 int nmatch = 0;
                 int nmol = 0;
@@ -483,11 +485,11 @@ namespace NCDK.Smiles.SMARTS.Parser
             string filename = "drugs.smi";
             var ins = ResourceLoader.GetAsStream(GetType(), filename);
 
-            SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", Default.ChemObjectBuilder.Instance);
+            SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", ChemObjectBuilder.Instance);
 
             // iterating SMILES reader doesn't allow us to turn off automatic aromaticity
             // perception
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
 
             int nmatch = 0;
             int nmol = 0;

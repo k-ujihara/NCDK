@@ -19,6 +19,7 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace NCDK.Formula.Rules
 {
@@ -64,7 +65,7 @@ namespace NCDK.Formula.Rules
         /// <summary>
         /// The parameters attribute of the <see cref="IsotopePatternRule"/> object.
         /// </summary>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             get
             {
@@ -87,7 +88,7 @@ namespace NCDK.Formula.Rules
 
             set
             {
-                if (value.Length != 2)
+                if (value.Count != 2)
                     throw new CDKException("IsotopePatternRule expects two parameter");
 
                 if (!(value[0] is IList<double[]>))
@@ -96,11 +97,7 @@ namespace NCDK.Formula.Rules
                 if (!(value[1] is double))
                     throw new CDKException("The parameter two must be of type Double");
 
-                pattern = new IsotopePattern();
-                foreach (var listISO in (IList<double[]>)value[0])
-                {
-                    pattern.Isotopes.Add(new IsotopeContainer(listISO[0], listISO[1]));
-                }
+                pattern = new IsotopePattern(((IList<double[]>)value[0]).Select(n => new IsotopeContainer(n[0], n[1])));
 
                 isotopePatternSimilarity.Tolerance = (double)value[1];
             }

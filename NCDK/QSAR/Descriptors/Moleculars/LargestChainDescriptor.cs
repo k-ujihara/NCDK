@@ -67,8 +67,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public LargestChainDescriptor() { }
 
         /// <inheritdoc/> 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestChain",
                 typeof(LargestChainDescriptor).FullName,
@@ -83,11 +83,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </para>
         /// </summary>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 2)
+                if (value.Count > 2)
                 {
                     throw new CDKException("LargestChainDescriptor only expects two parameter");
                 }
@@ -110,7 +110,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private IDescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(max), DescriptorNames);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(max), DescriptorNames);
         }
 
         /// <inheritdoc/>

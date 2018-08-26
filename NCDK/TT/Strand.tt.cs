@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -44,11 +45,12 @@ namespace NCDK.Default
     // @cdk.created 2004-12-20
     // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
     // @author      Ola Spjuth <ola.spjuth@farmbio.uu.se>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class Strand 
         : AtomContainer, IStrand
     {
-        private IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();
+        private Dictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();
 
         /// <summary>
         /// The strand name.
@@ -63,7 +65,7 @@ namespace NCDK.Default
         public Strand()
             : base()
         {
-		    Monomer oMonomer = new Monomer
+            Monomer oMonomer = new Monomer
             {
                 MonomerName = "",
                 MonomerType = "Unknown"
@@ -101,12 +103,12 @@ namespace NCDK.Default
             }
         }
 
-        private class  ReadOnlyNonEmptyDictionary<T>
+        private class ReadOnlyNonEmptyDictionary<T>
             : IReadOnlyDictionary<string, T>
         {
-            IDictionary<string, T> dictionary;
+            IReadOnlyDictionary<string, T> dictionary;
 
-            public ReadOnlyNonEmptyDictionary(IDictionary<string, T> dictionary)
+            public ReadOnlyNonEmptyDictionary(IReadOnlyDictionary<string, T> dictionary)
             {
                 this.dictionary = dictionary;
             }
@@ -119,7 +121,7 @@ namespace NCDK.Default
             public IEnumerator<KeyValuePair<string, T>> GetEnumerator() 
             {
                 foreach (var pair in dictionary)
-                    if (pair.Key != "")
+                    if (pair.Key.Length != 0)
                         yield return pair;
                 yield break;
             }
@@ -195,11 +197,12 @@ namespace NCDK.Silent
     // @cdk.created 2004-12-20
     // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
     // @author      Ola Spjuth <ola.spjuth@farmbio.uu.se>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class Strand 
         : AtomContainer, IStrand
     {
-        private IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();
+        private Dictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();
 
         /// <summary>
         /// The strand name.
@@ -214,7 +217,7 @@ namespace NCDK.Silent
         public Strand()
             : base()
         {
-		    Monomer oMonomer = new Monomer
+            Monomer oMonomer = new Monomer
             {
                 MonomerName = "",
                 MonomerType = "Unknown"
@@ -252,12 +255,12 @@ namespace NCDK.Silent
             }
         }
 
-        private class  ReadOnlyNonEmptyDictionary<T>
+        private class ReadOnlyNonEmptyDictionary<T>
             : IReadOnlyDictionary<string, T>
         {
-            IDictionary<string, T> dictionary;
+            IReadOnlyDictionary<string, T> dictionary;
 
-            public ReadOnlyNonEmptyDictionary(IDictionary<string, T> dictionary)
+            public ReadOnlyNonEmptyDictionary(IReadOnlyDictionary<string, T> dictionary)
             {
                 this.dictionary = dictionary;
             }
@@ -270,7 +273,7 @@ namespace NCDK.Silent
             public IEnumerator<KeyValuePair<string, T>> GetEnumerator() 
             {
                 foreach (var pair in dictionary)
-                    if (pair.Key != "")
+                    if (pair.Key.Length != 0)
                         yield return pair;
                 yield break;
             }

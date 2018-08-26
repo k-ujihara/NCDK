@@ -32,6 +32,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -88,24 +89,10 @@ namespace NCDK.Fingerprints
         /// <summary>The default search depth used to create the fingerprints.</summary>
         public const int DefaultSearchDepth = 7;
 
-        private int size;
-        private int searchDepth;
+        private readonly int size;
         private int pathLimit = DefaultPathLimit;
 
         private bool hashPseudoAtoms = false;
-
-        private static readonly IDictionary<string, string> QueryReplace = new Dictionary<string, string>()
-        {
-            { "Cl", "X" },
-            { "Br", "Z" },
-            { "Si", "Y" },
-            { "As", "D" },
-            { "Li", "L" },
-            { "Se", "E" },
-            { "Na", "G" },
-            { "Ca", "J" },
-            { "Al", "A" },
-        };
 
         /// <summary>
         /// Creates a fingerprint generator of length <see cref="DefaultSize"/> 
@@ -129,14 +116,14 @@ namespace NCDK.Fingerprints
         public Fingerprinter(int size, int searchDepth)
         {
             this.size = size;
-            this.searchDepth = searchDepth;
+            this.SearchDepth = searchDepth;
         }
 
         protected override IEnumerable<KeyValuePair<string, string>> GetParameters()
         {
-            yield return new KeyValuePair<string, string>("searchDepth", searchDepth.ToString());
-            yield return new KeyValuePair<string, string>("pathLimit", pathLimit.ToString());
-            yield return new KeyValuePair<string, string>("hashPseudoAtoms", hashPseudoAtoms.ToString());
+            yield return new KeyValuePair<string, string>("searchDepth", SearchDepth.ToString(NumberFormatInfo.InvariantInfo));
+            yield return new KeyValuePair<string, string>("pathLimit", pathLimit.ToString(NumberFormatInfo.InvariantInfo));
+            yield return new KeyValuePair<string, string>("hashPseudoAtoms", hashPseudoAtoms.ToString(NumberFormatInfo.InvariantInfo));
             yield break;
         }
 
@@ -158,10 +145,10 @@ namespace NCDK.Fingerprints
                 Aromaticity.CDKLegacy.Apply(container);
             }
             long after = DateTime.Now.Ticks;
-            Debug.WriteLine("time for aromaticity calculation: " + (after - before) + " ticks");
+            Debug.WriteLine($"time for aromaticity calculation: {after - before} ticks");
             Debug.WriteLine("Finished Aromaticity Detection");
             BitArray bitSet = new BitArray(size);
-            EncodePaths(container, searchDepth, bitSet, size);
+            EncodePaths(container, SearchDepth, bitSet, size);
 
             return new BitSetFingerprint(bitSet);
         }
@@ -176,12 +163,12 @@ namespace NCDK.Fingerprints
         }
 
         /// <inheritdoc/>
-        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
+        public override IReadOnlyDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
         {
             throw new NotSupportedException();
         }
 
-        private IBond FindBond(List<IBond> bonds, IAtom beg, IAtom end)
+        private static IBond FindBond(List<IBond> bonds, IAtom beg, IAtom end)
         {
             foreach (IBond bond in bonds)
                 if (bond.Contains(beg) && bond.Contains(end))
@@ -230,7 +217,7 @@ namespace NCDK.Fingerprints
             return buffer.ToString();
         }
 
-        private int AppendHash(int hash, string str)
+        private static int AppendHash(int hash, string str)
         {
             int len = str.Length;
             for (int i = 0; i < len; i++)
@@ -429,7 +416,7 @@ namespace NCDK.Fingerprints
             path.Reverse();
 
             int x;
-            if (reverse.CompareTo(forward) < 0)
+            if (string.CompareOrdinal(reverse, forward) < 0)
                 x = forward.GetHashCode();
             else
                 x = reverse.GetHashCode();
@@ -442,13 +429,13 @@ namespace NCDK.Fingerprints
         /// <param name="a">atom a</param>
         /// <param name="b">atom b</param>
         /// <returns>comparison &lt;0 a is less than b, &gt;0 a is more than b</returns>
-        private int Compare(IAtom a, IAtom b)
+        private static int Compare(IAtom a, IAtom b)
         {
             int elemA = GetElem(a);
             int elemB = GetElem(b);
             if (elemA == elemB)
                 return 0;
-            return GetAtomSymbol(a).CompareTo(GetAtomSymbol(b));
+            return string.CompareOrdinal(GetAtomSymbol(a), GetAtomSymbol(b));
         }
 
         /// <summary>
@@ -459,7 +446,7 @@ namespace NCDK.Fingerprints
         /// <returns>comparison &lt;0 a is less than b, &gt;0 a is more than b</returns>
         private int Compare(IBond a, IBond b)
         {
-            return GetBondSymbol(a).CompareTo(GetBondSymbol(b));
+            return string.CompareOrdinal(GetBondSymbol(a), GetBondSymbol(b));
         }
 
         /// <summary>
@@ -512,7 +499,7 @@ namespace NCDK.Fingerprints
             return atom.AtomicNumber ?? 0;
         }
 
-        private string GetAtomSymbol(IAtom atom)
+        private static string GetAtomSymbol(IAtom atom)
         {
             // XXX: backwards compatibility
             // This is completely random, I believe the intention is because
@@ -586,9 +573,9 @@ namespace NCDK.Fingerprints
             this.hashPseudoAtoms = value;
         }
 
-        public int SearchDepth => searchDepth;
+        public int SearchDepth { get; }
 
-        public override int Count => size;
+        public override int Length => size;
 
         public override ICountFingerprint GetCountFingerprint(IAtomContainer container)
         {

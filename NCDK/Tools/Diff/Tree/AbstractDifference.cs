@@ -20,7 +20,7 @@
 namespace NCDK.Tools.Diff.Tree
 {
     /// <summary>
-    /// Difference between two IChemObjects.
+    /// Difference between two <see cref="IChemObject"/>s.
     /// </summary>
     // @author     egonw
     // @cdk.module diff

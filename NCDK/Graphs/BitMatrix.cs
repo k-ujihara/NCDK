@@ -155,7 +155,8 @@ namespace NCDK.Graphs
         /// </summary>
         public void Add(BitArray row)
         {
-            if (m >= max) throw new IndexOutOfRangeException("initialise matrix with more rows");
+            if (m >= max)
+                throw new InvalidOperationException("initialise matrix with more rows");
             rows[m] = row;
             indices[m] = m;
             m++;

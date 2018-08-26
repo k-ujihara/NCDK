@@ -21,7 +21,9 @@ using NCDK.IO.Formats;
 using NCDK.IO.Setting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Text;
 
 namespace NCDK.IO
 {
@@ -120,7 +122,7 @@ namespace NCDK.IO
                 writer.Write("%nprocl=" + proccount.GetSettingValue());
                 writer.Write('\n');
             }
-            if (!memory.Setting.Equals("unset"))
+            if (!string.Equals(memory.Setting, "unset", StringComparison.Ordinal))
             {
                 writer.Write("%Mem=" + memory.Setting);
                 writer.Write('\n');
@@ -142,19 +144,19 @@ namespace NCDK.IO
             // write the command line
             writer.Write("# " + method.Setting + "/" + basis.Setting + " ");
             string commandString = command.Setting;
-            if (commandString.Equals("energy calculation"))
+            if (string.Equals(commandString, "energy calculation", StringComparison.Ordinal))
             {
                 // ok, no special command needed
             }
-            else if (commandString.Equals("geometry optimization"))
+            else if (string.Equals(commandString, "geometry optimization", StringComparison.Ordinal))
             {
                 writer.Write("opt");
             }
-            else if (commandString.Equals("IR frequency calculation"))
+            else if (string.Equals(commandString, "IR frequency calculation", StringComparison.Ordinal))
             {
                 writer.Write("freq");
             }
-            else if (commandString.Equals("IR frequency calculation (with Raman)"))
+            else if (string.Equals(commandString, "IR frequency calculation (with Raman)", StringComparison.Ordinal))
             {
                 writer.Write("freq=noraman");
             }
@@ -192,19 +194,21 @@ namespace NCDK.IO
             // Loop through the atoms and write them out:
             foreach (var a in mol.Atoms)
             {
-                string st = a.Symbol;
+                var sb = new StringBuilder(a.Symbol);
 
                 // export Eucledian coordinates (indicated by the 0)
-                st = st + " 0 ";
+                sb.Append(" 0 ");
 
                 // export the 3D coordinates
                 var p3 = a.Point3D;
                 if (p3 != null)
                 {
-                    st = st + p3.Value.X.ToString() + " " + p3.Value.Y.ToString() + " "
-                            + p3.Value.Z.ToString();
+                    sb.Append(p3.Value.X.ToString(NumberFormatInfo.InvariantInfo)).Append(" ")
+                        .Append(p3.Value.Y.ToString(NumberFormatInfo.InvariantInfo)).Append(" ")
+                        .Append(p3.Value.Z.ToString(NumberFormatInfo.InvariantInfo));
                 }
 
+                var st = sb.ToString();
                 writer.Write(st, 0, st.Length);
                 writer.Write('\n');
             }
@@ -223,7 +227,7 @@ namespace NCDK.IO
                 "6-311g",
                 "6-311+g**"
             };
-            basis = new OptionIOSetting("Basis", IOSetting.Importance.Medium, "Which basis set do you want to use?",
+            basis = new OptionIOSetting("Basis", Importance.Medium, "Which basis set do you want to use?",
                     basisOptions, "6-31g");
 
             var methodOptions = new List<string>
@@ -232,7 +236,7 @@ namespace NCDK.IO
                 "b3lyp",
                 "rhf"
             };
-            method = new OptionIOSetting("Method", IOSetting.Importance.Medium, "Which method do you want to use?",
+            method = new OptionIOSetting("Method", Importance.Medium, "Which method do you want to use?",
                     methodOptions, "b3lyp");
 
             var commandOptions = new List<string>
@@ -242,22 +246,22 @@ namespace NCDK.IO
                 "IR frequency calculation",
                 "IR frequency calculation (with Raman)"
             };
-            command = IOSettings.Add(new OptionIOSetting("Command", IOSetting.Importance.High,
+            command = IOSettings.Add(new OptionIOSetting("Command", Importance.High,
                     "What kind of job do you want to perform?", commandOptions, "energy calculation"));
 
-            comment = IOSettings.Add(new StringIOSetting("Comment", IOSetting.Importance.Low,
+            comment = IOSettings.Add(new StringIOSetting("Comment", Importance.Low,
                     "What comment should be put in the file?", "Created with CDK (http://cdk.sf.net/)"));
 
-            memory = IOSettings.Add(new StringIOSetting("Memory", IOSetting.Importance.Low,
+            memory = IOSettings.Add(new StringIOSetting("Memory", Importance.Low,
                     "How much memory do you want to use?", "unset"));
 
-            shell = IOSettings.Add(new BooleanIOSetting("OpenShell", IOSetting.Importance.Medium,
+            shell = IOSettings.Add(new BooleanIOSetting("OpenShell", Importance.Medium,
                     "Should the calculation be open shell?", "false"));
 
-            proccount = IOSettings.Add(new IntegerIOSetting("ProcessorCount", IOSetting.Importance.Low,
+            proccount = IOSettings.Add(new IntegerIOSetting("ProcessorCount", Importance.Low,
                     "How many processors should be used by Gaussian?", "1"));
 
-            usecheckpoint = new BooleanIOSetting("UseCheckPointFile", IOSetting.Importance.Low,
+            usecheckpoint = new BooleanIOSetting("UseCheckPointFile", Importance.Low,
                     "Should a check point file be saved?", "false");
         }
 
@@ -265,7 +269,7 @@ namespace NCDK.IO
         {
             foreach (var setting in IOSettings.Settings)
             {
-                FireIOSettingQuestion(setting);
+                ProcessIOSettingQuestion(setting);
             }
         }
     }

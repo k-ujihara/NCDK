@@ -87,7 +87,7 @@ namespace NCDK.Fingerprints
         }
 
         /// <inheritdoc/>
-        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
+        public override IReadOnlyDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
         {
             throw new NotSupportedException();
         }
@@ -107,17 +107,17 @@ namespace NCDK.Fingerprints
         /// <param name="rslist">A list of all ring systems in ac</param>
         /// <exception cref="CDKException">for example if input can not be cloned.</exception>
         /// <returns>a BitArray representing the fingerprint</returns>
-        public IBitFingerprint GetBitFingerprint(IAtomContainer atomContainer, IRingSet ringSet, IList<IRingSet> rslist)
+        public IBitFingerprint GetBitFingerprint(IAtomContainer atomContainer, IRingSet ringSet, IEnumerable<IRingSet> rslist)
         {
-            IAtomContainer container;
-            container = (IAtomContainer)atomContainer.Clone();
+            var container = (IAtomContainer)atomContainer.Clone();
 
-            IBitFingerprint fingerprint = fingerprinter.GetBitFingerprint(container);
-            int size = this.Count;
-            double weight = MolecularFormulaManipulator.GetTotalNaturalAbundance(MolecularFormulaManipulator.GetMolecularFormula(container));
+            var fingerprint = fingerprinter.GetBitFingerprint(container);
+            var size = this.Length;
+            var weight = MolecularFormulaManipulator.GetTotalNaturalAbundance(MolecularFormulaManipulator.GetMolecularFormula(container));
             for (int i = 1; i < 11; i++)
             {
-                if (weight > (100 * i)) fingerprint.Set(size - 26 + i); // 26 := RESERVED_BITS+1
+                if (weight > (100 * i))
+                    fingerprint.Set(size - 26 + i); // 26 := RESERVED_BITS+1
             }
             if (ringSet == null)
             {
@@ -126,13 +126,14 @@ namespace NCDK.Fingerprints
             }
             for (int i = 0; i < 7; i++)
             {
-                if (ringSet.Count > i) fingerprint.Set(size - 15 + i); // 15 := RESERVED_BITS+1+10 mass bits
+                if (ringSet.Count > i)
+                    fingerprint.Set(size - 15 + i); // 15 := RESERVED_BITS+1+10 mass bits
             }
             int maximumringsystemsize = 0;
-            for (int i = 0; i < rslist.Count; i++)
+            foreach (var rs in rslist)
             {
-                if (((IRingSet)rslist[i]).Count > maximumringsystemsize)
-                    maximumringsystemsize = ((IRingSet)rslist[i]).Count;
+                if (rs.Count > maximumringsystemsize)
+                    maximumringsystemsize = rs.Count;
             }
             for (int i = 0; i < maximumringsystemsize && i < 9; i++)
             {
@@ -142,7 +143,7 @@ namespace NCDK.Fingerprints
         }
 
         /// <inheritdoc/>
-        public override int Count => fingerprinter.Count + ReservedBits;
+        public override int Length => fingerprinter.Length + ReservedBits;
 
         /// <inheritdoc/>
         public override ICountFingerprint GetCountFingerprint(IAtomContainer container)

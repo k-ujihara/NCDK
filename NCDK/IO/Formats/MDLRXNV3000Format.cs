@@ -53,7 +53,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "rxn" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "rxn" };
 
         /// <inheritdoc/>
         public override string ReaderClassName { get; } = typeof(MDLRXNV3000Reader).FullName;
@@ -64,7 +64,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.StartsWith("$RXN V3000"))
+            if (line.StartsWith("$RXN V3000", StringComparison.Ordinal))
             {
                 return true;
             }

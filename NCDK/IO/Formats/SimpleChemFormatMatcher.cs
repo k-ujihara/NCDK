@@ -23,7 +23,6 @@
  */
 
 using NCDK.Tools;
-using System;
 using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
@@ -55,14 +54,16 @@ namespace NCDK.IO.Formats
         /// </summary>
         /// <param name="lines">lines of the input to be checked</param>
         /// <returns>runs the lines</returns>
-        public MatchResult Matches(IList<string> lines)
+        public MatchResult Matches(IEnumerable<string> lines)
         {
-            for (int i = 0; i < lines.Count; i++)
-            {
-                if (Matches(i + 1, lines[i]))
+            int i = 0;
+            foreach (var line in lines)
+            { 
+                if (Matches(i + 1, line))
                     return new MatchResult(true, this, i);
+                i++;
             }
-            return MatchResult.NO_MATCH;
+            return MatchResult.NoMatch;
         }
     }
 }

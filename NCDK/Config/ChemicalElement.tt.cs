@@ -141,24 +141,26 @@ namespace NCDK.Config
         public static readonly ChemicalElement Darmstadtium = new ChemicalElement("Darmstadtium", 110, "Ds", 7, 10, null, null, null);
         public static readonly ChemicalElement Roentgenium = new ChemicalElement("Roentgenium", 111, "Rg", 7, 11, null, null, null);
         public static readonly ChemicalElement Copernicium = new ChemicalElement("Copernicium", 112, "Cn", 7, 12, null, null, null);
-        [Obsolete]
+        [Obsolete("Use " + nameof(Nihonium))]
         public static readonly ChemicalElement Ununtrium = new ChemicalElement("Ununtrium", 113, "Uut", 0, 0, null, null, null);
         public static readonly ChemicalElement Nihonium = new ChemicalElement("Nihonium", 113, "Nh", 0, 0, null, null, null);
         public static readonly ChemicalElement Flerovium = new ChemicalElement("Flerovium", 114, "Fl", 0, 0, null, null, null);
-        [Obsolete]
+        [Obsolete("Use " + nameof(Moscovium))]
         public static readonly ChemicalElement Ununpentium = new ChemicalElement("Ununpentium", 115, "Uup", 0, 0, null, null, null);
         public static readonly ChemicalElement Moscovium = new ChemicalElement("Moscovium", 115, "Mc", 0, 0, null, null, null);
         public static readonly ChemicalElement Livermorium = new ChemicalElement("Livermorium", 116, "Lv", 0, 0, null, null, null);
-        [Obsolete]
+        [Obsolete("Use " + nameof(Tennessine))]
         public static readonly ChemicalElement Ununseptium = new ChemicalElement("Ununseptium", 117, "Uus", 0, 0, null, null, null);
         public static readonly ChemicalElement Tennessine = new ChemicalElement("Tennessine", 117, "Ts", 0, 0, null, null, null);
-        [Obsolete]
+        [Obsolete("Use " + nameof(Oganesson))]
         public static readonly ChemicalElement Ununoctium = new ChemicalElement("Ununoctium", 118, "Uuo", 0, 0, null, null, null);
         public static readonly ChemicalElement Oganesson = new ChemicalElement("Oganesson", 118, "Og", 0, 0, null, null, null);
-	}
+    }
     public sealed partial class ChemicalElement
-	{
+    {
+#pragma warning disable CA1034 // Nested types should not be visible
         public static class AtomicNumbers
+#pragma warning restore CA1034 // Nested types should not be visible
         {
             public const int Unknown = 0;
             public const int Hydrogen = 1;
@@ -285,9 +287,9 @@ namespace NCDK.Config
             public const int Oganesson = 118;
         }
 
-		private static IReadOnlyDictionary<string, ChemicalElement> symbolMap;
-		
-		/// <summary>
+        private static IReadOnlyDictionary<string, ChemicalElement> symbolMap;
+        
+        /// <summary>
         /// Lookup elements by symbol / name.
         /// </summary>
         internal static IReadOnlyDictionary<string, ChemicalElement> SymbolMap
@@ -546,20 +548,15 @@ namespace NCDK.Config
                         ["og"] = ChemicalElements.Oganesson,
                         // recently named elements
                         ["uub"] = ChemicalElements.Copernicium, // 2009
-						["ununbium"] = ChemicalElements.Copernicium,
-						["uuq"] = ChemicalElements.Flerovium, // 2012
-						["ununquadium"] = ChemicalElements.Flerovium,
-						["uuh"] = ChemicalElements.Livermorium, // 2012
-						["ununhexium"] = ChemicalElements.Livermorium,
-						// 2016
-						["uut"] = ChemicalElements.Nihonium,
-						["uup"] = ChemicalElements.Moscovium,
-						["uus"] = ChemicalElements.Tennessine,
-						["uuo"] = ChemicalElements.Oganesson,
-						// alternative spellings
-						["sulphur"] = ChemicalElements.Sulfur,
-						["cesium"] = ChemicalElements.Caesium,
-						["aluminum"] = ChemicalElements.Aluminium,
+                        ["ununbium"] = ChemicalElements.Copernicium,
+                        ["uuq"] = ChemicalElements.Flerovium, // 2012
+                        ["ununquadium"] = ChemicalElements.Flerovium,
+                        ["uuh"] = ChemicalElements.Livermorium, // 2012
+                        ["ununhexium"] = ChemicalElements.Livermorium,
+                        // alternative spellings
+                        ["sulphur"] = ChemicalElements.Sulfur,
+                        ["cesium"] = ChemicalElements.Caesium,
+                        ["aluminum"] = ChemicalElements.Aluminium,
                     };
                 }
                 return symbolMap;
@@ -573,136 +570,136 @@ namespace NCDK.Config
         /// </summary>
         public static IReadOnlyList<ChemicalElement> Values
         {
-			get
-			{
-				if (values == null)
-				{
-					values = new ChemicalElement[] 
-					{
-			        ChemicalElements.Unknown,
-			        ChemicalElements.Hydrogen,
-			        ChemicalElements.Helium,
-			        ChemicalElements.Lithium,
-			        ChemicalElements.Beryllium,
-			        ChemicalElements.Boron,
-			        ChemicalElements.Carbon,
-			        ChemicalElements.Nitrogen,
-			        ChemicalElements.Oxygen,
-			        ChemicalElements.Fluorine,
-			        ChemicalElements.Neon,
-			        ChemicalElements.Sodium,
-			        ChemicalElements.Magnesium,
-			        ChemicalElements.Aluminium,
-			        ChemicalElements.Silicon,
-			        ChemicalElements.Phosphorus,
-			        ChemicalElements.Sulfur,
-			        ChemicalElements.Chlorine,
-			        ChemicalElements.Argon,
-			        ChemicalElements.Potassium,
-			        ChemicalElements.Calcium,
-			        ChemicalElements.Scandium,
-			        ChemicalElements.Titanium,
-			        ChemicalElements.Vanadium,
-			        ChemicalElements.Chromium,
-			        ChemicalElements.Manganese,
-			        ChemicalElements.Iron,
-			        ChemicalElements.Cobalt,
-			        ChemicalElements.Nickel,
-			        ChemicalElements.Copper,
-			        ChemicalElements.Zinc,
-			        ChemicalElements.Gallium,
-			        ChemicalElements.Germanium,
-			        ChemicalElements.Arsenic,
-			        ChemicalElements.Selenium,
-			        ChemicalElements.Bromine,
-			        ChemicalElements.Krypton,
-			        ChemicalElements.Rubidium,
-			        ChemicalElements.Strontium,
-			        ChemicalElements.Yttrium,
-			        ChemicalElements.Zirconium,
-			        ChemicalElements.Niobium,
-			        ChemicalElements.Molybdenum,
-			        ChemicalElements.Technetium,
-			        ChemicalElements.Ruthenium,
-			        ChemicalElements.Rhodium,
-			        ChemicalElements.Palladium,
-			        ChemicalElements.Silver,
-			        ChemicalElements.Cadmium,
-			        ChemicalElements.Indium,
-			        ChemicalElements.Tin,
-			        ChemicalElements.Antimony,
-			        ChemicalElements.Tellurium,
-			        ChemicalElements.Iodine,
-			        ChemicalElements.Xenon,
-			        ChemicalElements.Caesium,
-			        ChemicalElements.Barium,
-			        ChemicalElements.Lanthanum,
-			        ChemicalElements.Cerium,
-			        ChemicalElements.Praseodymium,
-			        ChemicalElements.Neodymium,
-			        ChemicalElements.Promethium,
-			        ChemicalElements.Samarium,
-			        ChemicalElements.Europium,
-			        ChemicalElements.Gadolinium,
-			        ChemicalElements.Terbium,
-			        ChemicalElements.Dysprosium,
-			        ChemicalElements.Holmium,
-			        ChemicalElements.Erbium,
-			        ChemicalElements.Thulium,
-			        ChemicalElements.Ytterbium,
-			        ChemicalElements.Lutetium,
-			        ChemicalElements.Hafnium,
-			        ChemicalElements.Tantalum,
-			        ChemicalElements.Tungsten,
-			        ChemicalElements.Rhenium,
-			        ChemicalElements.Osmium,
-			        ChemicalElements.Iridium,
-			        ChemicalElements.Platinum,
-			        ChemicalElements.Gold,
-			        ChemicalElements.Mercury,
-			        ChemicalElements.Thallium,
-			        ChemicalElements.Lead,
-			        ChemicalElements.Bismuth,
-			        ChemicalElements.Polonium,
-			        ChemicalElements.Astatine,
-			        ChemicalElements.Radon,
-			        ChemicalElements.Francium,
-			        ChemicalElements.Radium,
-			        ChemicalElements.Actinium,
-			        ChemicalElements.Thorium,
-			        ChemicalElements.Protactinium,
-			        ChemicalElements.Uranium,
-			        ChemicalElements.Neptunium,
-			        ChemicalElements.Plutonium,
-			        ChemicalElements.Americium,
-			        ChemicalElements.Curium,
-			        ChemicalElements.Berkelium,
-			        ChemicalElements.Californium,
-			        ChemicalElements.Einsteinium,
-			        ChemicalElements.Fermium,
-			        ChemicalElements.Mendelevium,
-			        ChemicalElements.Nobelium,
-			        ChemicalElements.Lawrencium,
-			        ChemicalElements.Rutherfordium,
-			        ChemicalElements.Dubnium,
-			        ChemicalElements.Seaborgium,
-			        ChemicalElements.Bohrium,
-			        ChemicalElements.Hassium,
-			        ChemicalElements.Meitnerium,
-			        ChemicalElements.Darmstadtium,
-			        ChemicalElements.Roentgenium,
-			        ChemicalElements.Copernicium,
-			        ChemicalElements.Nihonium,
-			        ChemicalElements.Flerovium,
-			        ChemicalElements.Moscovium,
-			        ChemicalElements.Livermorium,
-			        ChemicalElements.Tennessine,
-			        ChemicalElements.Oganesson,
-					};
-				}
-				return values;
-			}
-		}
+            get
+            {
+                if (values == null)
+                {
+                    values = new ChemicalElement[] 
+                    {
+                    ChemicalElements.Unknown,
+                    ChemicalElements.Hydrogen,
+                    ChemicalElements.Helium,
+                    ChemicalElements.Lithium,
+                    ChemicalElements.Beryllium,
+                    ChemicalElements.Boron,
+                    ChemicalElements.Carbon,
+                    ChemicalElements.Nitrogen,
+                    ChemicalElements.Oxygen,
+                    ChemicalElements.Fluorine,
+                    ChemicalElements.Neon,
+                    ChemicalElements.Sodium,
+                    ChemicalElements.Magnesium,
+                    ChemicalElements.Aluminium,
+                    ChemicalElements.Silicon,
+                    ChemicalElements.Phosphorus,
+                    ChemicalElements.Sulfur,
+                    ChemicalElements.Chlorine,
+                    ChemicalElements.Argon,
+                    ChemicalElements.Potassium,
+                    ChemicalElements.Calcium,
+                    ChemicalElements.Scandium,
+                    ChemicalElements.Titanium,
+                    ChemicalElements.Vanadium,
+                    ChemicalElements.Chromium,
+                    ChemicalElements.Manganese,
+                    ChemicalElements.Iron,
+                    ChemicalElements.Cobalt,
+                    ChemicalElements.Nickel,
+                    ChemicalElements.Copper,
+                    ChemicalElements.Zinc,
+                    ChemicalElements.Gallium,
+                    ChemicalElements.Germanium,
+                    ChemicalElements.Arsenic,
+                    ChemicalElements.Selenium,
+                    ChemicalElements.Bromine,
+                    ChemicalElements.Krypton,
+                    ChemicalElements.Rubidium,
+                    ChemicalElements.Strontium,
+                    ChemicalElements.Yttrium,
+                    ChemicalElements.Zirconium,
+                    ChemicalElements.Niobium,
+                    ChemicalElements.Molybdenum,
+                    ChemicalElements.Technetium,
+                    ChemicalElements.Ruthenium,
+                    ChemicalElements.Rhodium,
+                    ChemicalElements.Palladium,
+                    ChemicalElements.Silver,
+                    ChemicalElements.Cadmium,
+                    ChemicalElements.Indium,
+                    ChemicalElements.Tin,
+                    ChemicalElements.Antimony,
+                    ChemicalElements.Tellurium,
+                    ChemicalElements.Iodine,
+                    ChemicalElements.Xenon,
+                    ChemicalElements.Caesium,
+                    ChemicalElements.Barium,
+                    ChemicalElements.Lanthanum,
+                    ChemicalElements.Cerium,
+                    ChemicalElements.Praseodymium,
+                    ChemicalElements.Neodymium,
+                    ChemicalElements.Promethium,
+                    ChemicalElements.Samarium,
+                    ChemicalElements.Europium,
+                    ChemicalElements.Gadolinium,
+                    ChemicalElements.Terbium,
+                    ChemicalElements.Dysprosium,
+                    ChemicalElements.Holmium,
+                    ChemicalElements.Erbium,
+                    ChemicalElements.Thulium,
+                    ChemicalElements.Ytterbium,
+                    ChemicalElements.Lutetium,
+                    ChemicalElements.Hafnium,
+                    ChemicalElements.Tantalum,
+                    ChemicalElements.Tungsten,
+                    ChemicalElements.Rhenium,
+                    ChemicalElements.Osmium,
+                    ChemicalElements.Iridium,
+                    ChemicalElements.Platinum,
+                    ChemicalElements.Gold,
+                    ChemicalElements.Mercury,
+                    ChemicalElements.Thallium,
+                    ChemicalElements.Lead,
+                    ChemicalElements.Bismuth,
+                    ChemicalElements.Polonium,
+                    ChemicalElements.Astatine,
+                    ChemicalElements.Radon,
+                    ChemicalElements.Francium,
+                    ChemicalElements.Radium,
+                    ChemicalElements.Actinium,
+                    ChemicalElements.Thorium,
+                    ChemicalElements.Protactinium,
+                    ChemicalElements.Uranium,
+                    ChemicalElements.Neptunium,
+                    ChemicalElements.Plutonium,
+                    ChemicalElements.Americium,
+                    ChemicalElements.Curium,
+                    ChemicalElements.Berkelium,
+                    ChemicalElements.Californium,
+                    ChemicalElements.Einsteinium,
+                    ChemicalElements.Fermium,
+                    ChemicalElements.Mendelevium,
+                    ChemicalElements.Nobelium,
+                    ChemicalElements.Lawrencium,
+                    ChemicalElements.Rutherfordium,
+                    ChemicalElements.Dubnium,
+                    ChemicalElements.Seaborgium,
+                    ChemicalElements.Bohrium,
+                    ChemicalElements.Hassium,
+                    ChemicalElements.Meitnerium,
+                    ChemicalElements.Darmstadtium,
+                    ChemicalElements.Roentgenium,
+                    ChemicalElements.Copernicium,
+                    ChemicalElements.Nihonium,
+                    ChemicalElements.Flerovium,
+                    ChemicalElements.Moscovium,
+                    ChemicalElements.Livermorium,
+                    ChemicalElements.Tennessine,
+                    ChemicalElements.Oganesson,
+                    };
+                }
+                return values;
+            }
+        }
     }
 }
 

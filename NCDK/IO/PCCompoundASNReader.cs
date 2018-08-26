@@ -150,25 +150,25 @@ namespace NCDK.IO
         private void ProcessBlock(string line)
         {
             string command = GetCommand(line);
-            if (command.Equals("atoms"))
+            if (string.Equals(command, "atoms", StringComparison.Ordinal))
             {
                 // parse frame by frame
                 Debug.WriteLine("ASN atoms found");
                 ProcessAtomBlock();
             }
-            else if (command.Equals("bonds"))
+            else if (string.Equals(command, "bonds", StringComparison.Ordinal))
             {
                 // ok, that fine
                 Debug.WriteLine("ASN bonds found");
                 ProcessBondBlock();
             }
-            else if (command.Equals("props"))
+            else if (string.Equals(command, "props", StringComparison.Ordinal))
             {
                 // ok, that fine
                 Debug.WriteLine("ASN props found");
                 ProcessPropsBlock();
             }
-            else if (command.Equals("PC-Compound ::="))
+            else if (string.Equals(command, "PC-Compound ::=", StringComparison.Ordinal))
             {
                 // ok, that fine
                 Debug.WriteLine("ASN PC-Compound found");
@@ -207,26 +207,32 @@ namespace NCDK.IO
             URN urn = new URN();
             while (line != null)
             {
-                if (line.IndexOf("urn") != -1)
+                if (line.Contains("urn"))
                 {
                     urn = ExtractURN();
                 }
-                else if (line.IndexOf("value") != -1)
+                else if (line.Contains("value"))
                 {
-                    Debug.WriteLine("Found a prop value line: " + line);
-                    if (line.IndexOf(" sval") != -1)
+                    Debug.WriteLine($"Found a prop value line: {line}");
+                    if (line.Contains(" sval"))
                     {
-                        Debug.WriteLine("Label: " + urn.Label);
-                        Debug.WriteLine("Name: " + urn.Name);
-                        if ("InChI".Equals(urn.Label))
+                        Debug.WriteLine($"Label: {urn.Label}");
+                        Debug.WriteLine($"Name: {urn.Name}");
+                        switch (urn.Label)
                         {
-                            string value = GetQuotedValue(line.Substring(line.IndexOf("value sval") + 10));
-                            molecule.SetProperty(CDKPropertyName.InChI, value);
-                        }
-                        else if ("SMILES".Equals(urn.Label) && "Canonical".Equals(urn.Name))
-                        {
-                            string value = GetQuotedValue(line.Substring(line.IndexOf("value sval") + 10));
-                            molecule.SetProperty(CDKPropertyName.SMILES, value);
+                            case "InChI":
+                                {
+                                    string value = GetQuotedValue(line.Substring(line.IndexOf("value sval", StringComparison.Ordinal) + 10));
+                                    molecule.SetProperty(CDKPropertyName.InChI, value);
+                                }
+                                break;
+                            case "SMILES":
+                                if ("Canonical".Equals(urn.Name, StringComparison.Ordinal))
+                                {
+                                    string value = GetQuotedValue(line.Substring(line.IndexOf("value sval", StringComparison.Ordinal) + 10));
+                                    molecule.SetProperty(CDKPropertyName.SMILES, value);
+                                }
+                                break;
                         }
                     }
                 }
@@ -248,14 +254,11 @@ namespace NCDK.IO
             string line = input.ReadLine();
             while (line != null)
             {
-                if (line.IndexOf("name") != -1)
-                {
-                    urn.Name = GetQuotedValue(line.Substring(line.IndexOf("name") + 4));
-                }
-                else if (line.IndexOf("label") != -1)
-                {
-                    urn.Label = GetQuotedValue(line.Substring(line.IndexOf("label") + 4));
-                }
+                int n;
+                if ((n = line.IndexOf("name", StringComparison.Ordinal)) != -1)
+                    urn.Name = GetQuotedValue(line.Substring(n + 4));
+                else if ((n = line.IndexOf("label", StringComparison.Ordinal)) != -1)
+                    urn.Label = GetQuotedValue(line.Substring(n + 5));
                 else if (line.IndexOf('}') != -1 && line.IndexOf('\"') == -1)
                 {
                     // ok, don't return if it also has a "
@@ -342,13 +345,13 @@ namespace NCDK.IO
         private void ProcessAtomBlockBlock(string line)
         {
             string command = GetCommand(line);
-            if (command.Equals("aid"))
+            if (string.Equals(command, "aid", StringComparison.Ordinal))
             {
                 // assume this is the first block in the atom block
                 Debug.WriteLine("ASN atoms aid found");
                 ProcessAtomAIDs();
             }
-            else if (command.Equals("element"))
+            else if (string.Equals(command, "element", StringComparison.Ordinal))
             {
                 // assume this is the first block in the atom block
                 Debug.WriteLine("ASN atoms element found");
@@ -364,13 +367,13 @@ namespace NCDK.IO
         private void ProcessBondBlockBlock(string line, NewBondInfo newBondInfo)
         {
             string command = GetCommand(line);
-            if (command.Equals("aid1"))
+            if (string.Equals(command, "aid1", StringComparison.Ordinal))
             {
                 // assume this is the first block in the atom block
                 Debug.WriteLine("ASN bonds aid1 found");
                 ProcessBondAtomIDs(0, newBondInfo);
             }
-            else if (command.Equals("aid2"))
+            else if (string.Equals(command, "aid2", StringComparison.Ordinal))
             {
                 // assume this is the first block in the atom block
                 Debug.WriteLine("ASN bonds aid2 found");
@@ -419,8 +422,8 @@ namespace NCDK.IO
                 }
                 else
                 {
-                    //                Debug.WriteLine("Found an atom ID: " + line);
-                    //                Debug.WriteLine("  index: " + atomIndex);
+                    //                Debug.WriteLine($"Found an atom ID: {line}");
+                    //                Debug.WriteLine($"  index: {atomIndex}");
                     //                    IBond bond = GetBond(bondIndex);
                     //string id = GetValue(line);
                     //IAtom atom = (IAtom)atomIDs[id];
@@ -462,7 +465,7 @@ namespace NCDK.IO
                 else
                 {
                     //                Debug.WriteLine("Found symbol: " + ToSymbol(GetValue(line)));
-                    //                Debug.WriteLine("  index: " + atomIndex);
+                    //                Debug.WriteLine($"  index: {atomIndex}");
                     IAtom atom = GetAtom(atomIndex);
                     atom.Symbol = ToSymbol(GetValue(line));
                     atomIndex++;
@@ -471,9 +474,10 @@ namespace NCDK.IO
             }
         }
 
-        private string ToSymbol(string value)
+        private static string ToSymbol(string value)
         {
-            if (value.Length == 1) return value.ToUpperInvariant();
+            if (value.Length == 1)
+                return value.ToUpperInvariant();
             return value.Substring(0, 1).ToUpperInvariant() + value.Substring(1);
         }
 
@@ -483,12 +487,12 @@ namespace NCDK.IO
             int openBrackets = 0;
             while (line != null)
             {
-                //            Debug.WriteLine("SkipBlock: line=" + line);
+                //            Debug.WriteLine($"SkipBlock: line={line}");
                 if (line.IndexOf('{') != -1)
                 {
                     openBrackets++;
                 }
-                //            Debug.WriteLine(" #open brackets: " + openBrackets);
+                //            Debug.WriteLine($" #open brackets: {openBrackets}");
                 if (line.IndexOf('}') != -1)
                 {
                     if (openBrackets == 0) return;
@@ -498,7 +502,7 @@ namespace NCDK.IO
             }
         }
 
-        private string GetCommand(string line)
+        private static string GetCommand(string line)
         {
             StringBuilder buffer = new StringBuilder();
             int i = 0;
@@ -519,7 +523,7 @@ namespace NCDK.IO
             return foundBracket ? buffer.ToString().Trim() : null;
         }
 
-        private string GetValue(string line)
+        private static string GetValue(string line)
         {
             StringBuilder buffer = new StringBuilder();
             int i = 0;
@@ -550,7 +554,7 @@ namespace NCDK.IO
         {
             StringBuilder buffer = new StringBuilder();
             int i = 0;
-            //        Debug.WriteLine("QV line: " + line);
+            //        Debug.WriteLine($"QV line: {line}");
             bool startQuoteFound = false;
             while (line != null)
             {

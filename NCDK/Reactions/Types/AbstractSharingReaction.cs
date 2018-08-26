@@ -29,8 +29,6 @@ namespace NCDK.Reactions.Types
     // @cdk.githash
     public abstract class AbstractSharingReaction : ReactionEngine, IReactionProcess
     {
-        public AbstractSharingReaction() { }
-
         /// <inheritdoc/>
         public abstract ReactionSpecification Specification { get; }
 
@@ -86,7 +84,7 @@ namespace NCDK.Reactions.Types
             return setOfReactions;
         }
         
-        private void SetActiveCenters(IAtomContainer reactant, CheckReactantAtom checkReactantAtom, CheckAtom checkAtom, CheckBond checkBond)
+        private static void SetActiveCenters(IAtomContainer reactant, CheckReactantAtom checkReactantAtom, CheckAtom checkAtom, CheckBond checkBond)
         {
             foreach (var atomi in reactant.Atoms)
             {

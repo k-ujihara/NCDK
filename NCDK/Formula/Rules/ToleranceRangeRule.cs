@@ -19,6 +19,7 @@
 
 using NCDK.Tools.Manipulator;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NCDK.Formula.Rules
@@ -65,7 +66,7 @@ namespace NCDK.Formula.Rules
         /// <summary>
         /// The parameters attribute of the ToleranceRangeRule object.
         /// </summary>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             get
             {
@@ -77,7 +78,7 @@ namespace NCDK.Formula.Rules
             }
             set
             {
-                if (value.Length > 2) throw new CDKException("ToleranceRangeRule expects only two parameter");
+                if (value.Count > 2) throw new CDKException("ToleranceRangeRule expects only two parameter");
                 if (!(value[0] is double)) throw new CDKException("The parameter 0 must be of type Double");
                 if (!(value[1] is double)) throw new CDKException("The parameter 1 must be of type Double");
 

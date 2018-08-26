@@ -41,7 +41,7 @@ namespace NCDK.IO
         /// <summary>
         /// Sends a frame read event to the registered ReaderListeners.
         /// </summary>
-        protected void FireFrameRead()
+        protected void FrameRead()
         {
             foreach (var listener in Listeners)
             {
@@ -69,7 +69,8 @@ namespace NCDK.IO
 
         public void HandleError(string message, Exception exception)
         {
-            if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message, exception);
+            if (this.ErrorHandler != null)
+                this.ErrorHandler.HandleError(message, exception);
             if (this.ReaderMode == ChemObjectReaderMode.Strict)
             {
                 throw new CDKException(message, exception);
@@ -78,13 +79,15 @@ namespace NCDK.IO
 
         public void HandleError(string message, int row, int colStart, int colEnd)
         {
-            if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message, row, colStart, colEnd);
+            if (this.ErrorHandler != null)
+                this.ErrorHandler.HandleError(message, row, colStart, colEnd);
             if (this.ReaderMode == ChemObjectReaderMode.Strict) throw new CDKException(message);
         }
 
         public void HandleError(string message, int row, int colStart, int colEnd, Exception exception)
         {
-            if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message, row, colStart, colEnd, exception);
+            if (this.ErrorHandler != null)
+                this.ErrorHandler.HandleError(message, row, colStart, colEnd, exception);
             if (this.ReaderMode == ChemObjectReaderMode.Strict)
             {
                 throw new CDKException(message, exception);

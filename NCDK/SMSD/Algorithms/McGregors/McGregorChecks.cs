@@ -24,6 +24,7 @@ using NCDK.Isomorphisms.Matchers;
 using NCDK.SMSD.Helper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.SMSD.Algorithms.McGregors
 {
@@ -34,9 +35,9 @@ namespace NCDK.SMSD.Algorithms.McGregors
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
-    public class McGregorChecks
+    public static class McGregorChecks
     {
-        protected internal static bool IsFurtherMappingPossible(IAtomContainer source, IAtomContainer target,
+        internal static bool IsFurtherMappingPossible(IAtomContainer source, IAtomContainer target,
                 int neighborBondNumA, int neighborBondNumB, IList<int> iBondNeighborAtomsA,
                 IList<int> iBondNeighborAtomsB, IList<string> cBondNeighborsA, IList<string> cBondNeighborsB,
                 bool shouldMatchBonds)
@@ -86,7 +87,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return false;
         }
 
-        protected internal static bool IsMatchFeasible(IAtomContainer ac1, IBond bondA1, IAtomContainer ac2, IBond bondA2,
+        internal static bool IsMatchFeasible(IAtomContainer ac1, IBond bondA1, IAtomContainer ac2, IBond bondA2,
                 bool shouldMatchBonds)
         {
             if (ac1 is IQueryAtomContainer)
@@ -124,7 +125,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             }
         }
 
-        protected internal static int SearchCorrespondingAtom(int mappedAtomsSize, int atomFromOtherMolecule, int molecule, IList<int> mappedAtomsOrg)
+        internal static int SearchCorrespondingAtom(int mappedAtomsSize, int atomFromOtherMolecule, int molecule, IList<int> mappedAtomsOrg)
         {
             List<int> mappedAtoms = new List<int>(mappedAtomsOrg);
 
@@ -143,7 +144,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return correspondingAtom;
         }
 
-        protected internal static bool IsAtomMatch(string g1A, string g2A, string g1B, string g2B)
+        internal static bool IsAtomMatch(string g1A, string g2A, string g1B, string g2B)
         {
             if ((string.Equals(g1A, g1B, StringComparison.OrdinalIgnoreCase) && string.Equals(g2A, g2B, StringComparison.OrdinalIgnoreCase))
                     || (string.Equals(g1A, g2B, StringComparison.OrdinalIgnoreCase) && string.Equals(g2A, g1B, StringComparison.OrdinalIgnoreCase)))
@@ -154,7 +155,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
         }
 
         // Modified function call by ASAD in Java have to check
-        protected internal static int RemoveTreeStructure(BinaryTree curStruc)
+        internal static int RemoveTreeStructure(BinaryTree curStruc)
         {
             BinaryTree equalStruc = curStruc.Equal;
             BinaryTree notEqualStruc = curStruc.NotEqual;
@@ -176,7 +177,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
         //Function compaires a structure array with itself. Sometimes a mapping occurs several times within the array.
         //The function eliminates these recurring mappings. Function is called in function best_solution.
         //The function is called by itself as long as the last list element is processed.
-        protected internal static IList<int> RemoveRecurringMappings(IList<int> atomMapping)
+        internal static IList<int> RemoveRecurringMappings(IList<int> atomMapping)
         {
             bool exist = true;
             List<int> tempMap = new List<int>();
@@ -212,7 +213,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
         /// position by zeros. Only the entry of the current position is set to one.
         /// Return value "count_arcsleft" counts the number of arcs, which are still in the matrix.
         /// </summary>
-        protected internal static void RemoveRedundantArcs(int row, int column, IList<int> marcs, McgregorHelper mcGregorHelper)
+        internal static void RemoveRedundantArcs(int row, int column, IList<int> marcs, McgregorHelper mcGregorHelper)
         {
             int neighborBondNumA = mcGregorHelper.NeighborBondNumA;
             int neighborBondNumB = mcGregorHelper.NeighborBondNumB;
@@ -254,7 +255,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             marcs[row * neighborBondNumB + column] = 1;
         }
 
-        protected internal static List<string> GenerateCSetCopy(int bondNumber, IList<string> cSet)
+        internal static List<string> GenerateCSetCopy(int bondNumber, IList<string> cSet)
         {
             List<string> cTabCopy = new List<string>();
             for (int a = 0; a < bondNumber; a++)
@@ -267,7 +268,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return cTabCopy;
         }
 
-        protected internal static List<string> GenerateCTabCopy(IAtomContainer atomContainer)
+        internal static List<string> GenerateCTabCopy(IAtomContainer atomContainer)
         {
             List<string> cTabCopy = new List<string>();
             foreach (var bond in atomContainer.Bonds)
@@ -282,8 +283,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return cTabCopy;
         }
 
-        protected static bool Case1(int g1Atom, int g3Atom, int g4Atom, int rowAtom1, int rowAtom2,
-                int columnAtom3, int columnAtom4)
+        static bool Case1(int g1Atom, int g3Atom, int g4Atom, int rowAtom1, int rowAtom2, int columnAtom3, int columnAtom4)
         {
             if (((g1Atom == rowAtom1) || (g1Atom == rowAtom2))
                     && (!(((columnAtom3 == g3Atom) || (columnAtom4 == g3Atom)) || ((columnAtom3 == g4Atom) || (columnAtom4 == g4Atom)))))
@@ -293,7 +293,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return false;
         }
 
-        protected static bool Case2(int g2Atom, int g3Atom, int g4Atom, int rowAtom1, int rowAtom2, int columnAtom3, int columnAtom4)
+        static bool Case2(int g2Atom, int g3Atom, int g4Atom, int rowAtom1, int rowAtom2, int columnAtom3, int columnAtom4)
         {
             if (((g2Atom == rowAtom1) || (g2Atom == rowAtom2))
                     && (!(((columnAtom3 == g3Atom) || (columnAtom4 == g3Atom)) || ((columnAtom3 == g4Atom) || (columnAtom4 == g4Atom)))))
@@ -303,7 +303,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return false;
         }
 
-        protected static bool Case3(int g1Atom, int g3Atom, int g2Atom, int rowAtom1, int rowAtom2, int columnAtom3, int columnAtom4)
+        static bool Case3(int g1Atom, int g3Atom, int g2Atom, int rowAtom1, int rowAtom2, int columnAtom3, int columnAtom4)
         {
             if (((g3Atom == columnAtom3) || (g3Atom == columnAtom4))
                     && (!(((rowAtom1 == g1Atom) || (rowAtom2 == g1Atom)) || ((rowAtom1 == g2Atom) || (rowAtom2 == g2Atom)))))
@@ -313,7 +313,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return false;
         }
 
-        protected static bool Case4(int g1Atom, int g2Atom, int g4Atom, int rowAtom1, int rowAtom2, int columnAtom3, int columnAtom4)
+        static bool Case4(int g1Atom, int g2Atom, int g4Atom, int rowAtom1, int rowAtom2, int columnAtom3, int columnAtom4)
         {
             if (((g4Atom == columnAtom3) || (g4Atom == columnAtom4))
                     && (!(((rowAtom1 == g1Atom) || (rowAtom2 == g1Atom)) || ((rowAtom1 == g2Atom) || (rowAtom2 == g2Atom)))))
@@ -323,7 +323,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return false;
         }
 
-        protected static bool Cases(int g1Atom, int g2Atom, int g3Atom, int g4Atom, int rowAtom1, int rowAtom2, int columnAtom3, int columnAtom4)
+        static bool Cases(int g1Atom, int g2Atom, int g3Atom, int g4Atom, int rowAtom1, int rowAtom2, int columnAtom3, int columnAtom4)
         {
             if (Case1(g1Atom, g3Atom, g4Atom, rowAtom1, rowAtom2, columnAtom3, columnAtom4)
                     || Case2(g2Atom, g3Atom, g4Atom, rowAtom1, rowAtom2, columnAtom3, columnAtom4)
@@ -335,7 +335,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return false;
         }
 
-        protected internal static List<int> SetArcs(IAtomContainer source, IAtomContainer target, int neighborBondNumA,
+        internal static List<int> SetArcs(IAtomContainer source, IAtomContainer target, int neighborBondNumA,
                 int neighborBondNumB, List<int> iBondNeighborAtomsA, List<int> iBondNeighborAtomsB,
                 List<string> cBondNeighborsA, List<string> cBondNeighborsB, List<int> modifiedARCS,
                 bool shouldMatchBonds)
@@ -374,7 +374,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return modifiedARCS;
         }
 
-        protected internal static int CountArcsLeft(List<int> tempmarcs, int neighborBondNumA, int neighborBondNumB)
+        internal static int CountArcsLeft(List<int> tempmarcs, int neighborBondNumA, int neighborBondNumB)
         {
             int arcsleft = 0;
 
@@ -392,8 +392,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return arcsleft;
         }
 
-        protected internal static int ChangeCharBonds(int correspondingAtom, string newSymbol, int neighborBondNum,
-                IAtomContainer atomContainer, IList<string> cBondNeighbors)
+        internal static int ChangeCharBonds(int correspondingAtom, string newSymbol, int neighborBondNum, IAtomContainer atomContainer, IList<string> cBondNeighbors)
         {
             for (int atomIndex = 0; atomIndex < neighborBondNum; atomIndex++)
             {
@@ -415,8 +414,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return 0;
         }
 
-        protected internal static int ChangeCharBonds(int correspondingAtom, string newSymbol, int neighborBondNum,
-                IList<int> iBondNeighbors, IList<string> cBondNeighbors)
+        internal static int ChangeCharBonds(int correspondingAtom, string newSymbol, int neighborBondNum, IList<int> iBondNeighbors, IList<string> cBondNeighbors)
         {
             for (int atomIndex = 0; atomIndex < neighborBondNum; atomIndex++)
             {
@@ -492,9 +490,9 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return false;
         }
 
-        internal static List<int> MarkUnMappedAtoms(bool flag, IAtomContainer container, IDictionary<int, int> presentMapping)
+        internal static List<int> MarkUnMappedAtoms(bool flag, IAtomContainer container, IReadOnlyDictionary<int, int> presentMapping)
         {
-            List<int> unmappedMolAtoms = new List<int>();
+            var unmappedMolAtoms = new List<int>();
 
             int unmappedNum = 0;
             bool atomIsUnmapped = true;

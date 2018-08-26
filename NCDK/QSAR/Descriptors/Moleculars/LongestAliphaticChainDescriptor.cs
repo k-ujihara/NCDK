@@ -52,7 +52,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:largestAliphaticChain
     public class LongestAliphaticChainDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
-        public const string CHECK_RING_SYSTEM = "checkRingSystem";
+        private const string CHECK_RING_SYSTEM = "checkRingSystem";
         private bool checkRingSystem = false;
         private static readonly string[] NAMES = { "nAtomLAC" };
 
@@ -62,8 +62,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public LongestAliphaticChainDescriptor() { }
 
         /// <inheritdoc/> 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#longestAliphaticChain",
                 typeof(LongestAliphaticChainDescriptor).FullName, "The Chemistry Development Kit");
@@ -75,11 +75,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// aromaticity has been checked (TRUE) or not (FALSE).</para>
         /// </summary>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
                     throw new CDKException("LongestAliphaticChainDescriptor only expects one parameter");
                 }
@@ -102,7 +102,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception e)
         {
             return new DescriptorValue<Result<int>>(
-                _Specification,
+                specification,
                 ParameterNames,
                 Parameters,
                 new Result<int>(0),
@@ -178,7 +178,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
 
             return new DescriptorValue<Result<int>>(
-                _Specification,
+                specification,
                 ParameterNames,
                 Parameters,
                 new Result<int>(longest),
@@ -200,7 +200,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
         public override object GetParameterType(string name)
         {
-            if (name.Equals(CHECK_RING_SYSTEM))
+            if (name.Equals(CHECK_RING_SYSTEM, StringComparison.Ordinal))
                 return true;
             else
                 throw new ArgumentException("No parameter for name", nameof(name));

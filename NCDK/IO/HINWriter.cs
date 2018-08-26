@@ -21,6 +21,7 @@ using NCDK.IO.Formats;
 using System.IO;
 using System;
 using NCDK.Numerics;
+using System.Globalization;
 
 namespace NCDK.IO
 {
@@ -153,9 +154,9 @@ namespace NCDK.IO
                         chrg = atom.Charge.Value;
                         Vector3 point = atom.Point3D.Value;
 
-                        line = line + (i + 1).ToString() + " - " + sym + " ** - " + chrg.ToString() + " "
-                                + point.X.ToString() + " " + point.Y.ToString() + " "
-                                + point.Z.ToString() + " ";
+                        line = line + (i + 1).ToString(NumberFormatInfo.InvariantInfo) + " - " + sym + " ** - " + chrg.ToString(NumberFormatInfo.InvariantInfo) + " "
+                                + point.X.ToString(NumberFormatInfo.InvariantInfo) + " " + point.Y.ToString(NumberFormatInfo.InvariantInfo) + " "
+                                + point.Z.ToString(NumberFormatInfo.InvariantInfo) + " ";
 
                         string abuf = "";
                         int ncon = 0;
@@ -179,11 +180,11 @@ namespace NCDK.IO
                                 else if (bondOrder == BondOrder.Triple)
                                     bondType = "t";
                                 else if (bond.IsAromatic) bondType = "a";
-                                abuf = abuf + (serial + 1).ToString() + " " + bondType + " ";
+                                abuf = abuf + (serial + 1).ToString(NumberFormatInfo.InvariantInfo) + " " + bondType + " ";
                                 ncon++;
                             }
                         }
-                        line = line + " " + ncon.ToString() + " " + abuf;
+                        line = line + " " + ncon.ToString(NumberFormatInfo.InvariantInfo) + " " + abuf;
                         writer.Write(line, 0, line.Length);
                         writer.Write('\n');
                         i++;

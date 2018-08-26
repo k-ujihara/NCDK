@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Tools;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -48,7 +49,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "mop", "mopcrt", "mopout" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "mop", "mopcrt", "mopout" };
 
         /// <inheritdoc/>
         public override string ReaderClassName => null;

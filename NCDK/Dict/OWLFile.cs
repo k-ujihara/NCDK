@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Xml;
@@ -54,29 +55,29 @@ namespace NCDK.Dict
 
                 var doc = XDocument.Parse(text);
                 var root = doc.Root;
-                Debug.WriteLine("Found root element: ", root.Name);
+                Debug.WriteLine($"Found root element: {root.Name}");
 
                 // Extract ownNS from root element
                 //            final string ownNS = root.GetBaseURI();
                 string ownNS = root.Attribute("xmlns").Value;
                 dict.NS = ownNS;
 
-                Debug.WriteLine("Found ontology namespace: ", ownNS);
+                Debug.WriteLine($"Found ontology namespace: {ownNS}");
 
                 // process the defined facts
                 var entries = root.Elements();
                 //Trace.TraceInformation("Found #elements in OWL dict:", entries.Count());
                 foreach (var entry in entries)
                 {
-                    if (entry.Name.NamespaceName.Equals(ownNS))
+                    if (entry.Name.NamespaceName.Equals(ownNS, StringComparison.Ordinal))
                     {
                         Entry dbEntry = Unmarshal(entry, ownNS);
                         dict.AddEntry(dbEntry);
-                        Debug.WriteLine("Added entry: ", dbEntry);
+                        Debug.WriteLine($"Added entry: {dbEntry}");
                     }
                     else
                     {
-                        Debug.WriteLine("Found a non-fact: ", entry.Name);
+                        Debug.WriteLine($"Found a non-fact: {entry.Name}");
                     }
                 }
             }
@@ -99,16 +100,16 @@ namespace NCDK.Dict
         {
             // create a new entry by ID
             XAttribute id = entry.Attribute(rdfNS + "ID");
-            Debug.WriteLine("ID: ", id.Value);
+            Debug.WriteLine($"ID: {id.Value}");
             Entry dbEntry = new Entry(id.Value);
 
             // set additional, optional data
             XElement label = entry.Element(rdfsNS + "label");
-            Debug.WriteLine("label: ", label);
+            Debug.WriteLine($"label: {label}");
             if (label != null) dbEntry.Label = label.Value;
 
             dbEntry.ClassName = entry.Name.LocalName;
-            Debug.WriteLine("class name: ", dbEntry.ClassName);
+            Debug.WriteLine($"class name: {dbEntry.ClassName}");
 
             XElement definition = entry.Element(ownNS + "definition");
             if (definition != null)

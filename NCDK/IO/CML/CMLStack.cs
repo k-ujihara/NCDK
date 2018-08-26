@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,7 +34,9 @@ namespace NCDK.IO.CML
     // @cdk.module io
     // @cdk.githash
     // @cdk.keyword stack    
+#pragma warning disable CA1010 // Collections should implement generic interface
     public sealed class CMLStack : Stack<string>
+#pragma warning restore CA1010 // Collections should implement generic interface
     {
         /// <returns>A string representation of the stack.</returns>
         public override string ToString()
@@ -55,7 +58,7 @@ namespace NCDK.IO.CML
         /// <returns></returns>
         internal bool EndsWith(string lastElement)
         {
-            return Peek().Equals(lastElement);
+            return string.Equals(Peek(), lastElement, StringComparison.Ordinal);
         }
 
         /// <summary>
@@ -66,7 +69,7 @@ namespace NCDK.IO.CML
         /// <returns></returns>
         internal bool EndsWith(string oneButLast, string lastElement)
         {
-            return EndsWith(lastElement) && this.ElementAt(1).Equals(oneButLast);
+            return EndsWith(lastElement) && string.Equals(this.ElementAt(1), oneButLast, StringComparison.Ordinal);
         }
 
         /// <summary>
@@ -74,7 +77,7 @@ namespace NCDK.IO.CML
         /// </summary>
         internal bool EndsWith(string twoButLast, string oneButLast, string lastElement)
         {
-            return EndsWith(oneButLast, lastElement) && this.ElementAt(2).Equals(twoButLast);
+            return EndsWith(oneButLast, lastElement) && string.Equals(this.ElementAt(2), twoButLast, StringComparison.Ordinal);
         }
     }
 }

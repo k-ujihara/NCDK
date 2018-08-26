@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Globalization;
 
 namespace NCDK.Graphs.InChI
 {
@@ -159,7 +160,7 @@ namespace NCDK.Graphs.InChI
         /// </summary>
         private static string ToString(double x)
         {
-            var s = x.ToString();
+            var s = x.ToString(NumberFormatInfo.InvariantInfo);
             return s.Contains(".") ? s : s + ".0";
         }
 

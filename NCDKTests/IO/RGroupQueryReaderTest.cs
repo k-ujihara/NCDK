@@ -23,7 +23,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO.Formats;
 using NCDK.Isomorphisms.Matchers;
 using System;
@@ -62,8 +62,6 @@ namespace NCDK.IO
             Assert.IsTrue(reader.Accepts(typeof(RGroupQuery)));
         }
 
-        public void TestAcceptsAtLeastOneDebugObject() { }
-
         public override void TestAcceptsAtLeastOneNonotifyObject() { }
 
         /// <summary>
@@ -89,7 +87,7 @@ namespace NCDK.IO
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             RGroupQueryReader reader = new RGroupQueryReader(ins);
-            RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(Default.ChemObjectBuilder.Instance));
+            RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(ChemObjectBuilder.Instance));
             reader.Close();
             Assert.IsNotNull(rGroupQuery);
             Assert.AreEqual(rGroupQuery.RGroupDefinitions.Count, 1);
@@ -100,8 +98,8 @@ namespace NCDK.IO
                 if (at is PseudoAtom)
                 {
                     Assert.AreEqual(((PseudoAtom)at).Label, "R1");
-                    IDictionary<IAtom, IDictionary<int, IBond>> rootApo = rGroupQuery.RootAttachmentPoints;
-                    IDictionary<int, IBond> apoBonds = rootApo[at];
+                    var rootApo = rGroupQuery.RootAttachmentPoints;
+                    var apoBonds = rootApo[at];
                     Assert.AreEqual(apoBonds.Count, 1);
                     // Assert that the root attachment is the bond between R1 and P
                     foreach (var bond in rGroupQuery.RootStructure.Bonds)
@@ -133,7 +131,7 @@ namespace NCDK.IO
             Assert.IsNull(rGroups[2].SecondAttachmentPoint);
 
             var configurations = rGroupQuery.GetAllConfigurations();
-            Assert.AreEqual(configurations.Count, 4);
+            Assert.AreEqual(configurations.Count(), 4);
 
             //IsRestH is set to true for R1, so with zero substitutes, the phosphor should get the restH flag set to true.
             bool restH_Identified = false;
@@ -162,11 +160,11 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRgroupQueryFile2()
         {
-            string filename = "NCDK.Data.MDL.rgfile.2.mol";
+            var filename = "NCDK.Data.MDL.rgfile.2.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            RGroupQueryReader reader = new RGroupQueryReader(ins);
-            RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(Default.ChemObjectBuilder.Instance));
+            var reader = new RGroupQueryReader(ins);
+            var rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(ChemObjectBuilder.Instance));
             reader.Close();
             Assert.IsNotNull(rGroupQuery);
             Assert.AreEqual(rGroupQuery.RGroupDefinitions.Count, 3);
@@ -185,20 +183,20 @@ namespace NCDK.IO
                 {
                     Assert.IsTrue(RGroupQuery.IsValidRgroupQueryLabel(((PseudoAtom)at).Label));
 
-                    int rgroupNum = int.Parse(((PseudoAtom)at).Label.Substring(1));
+                    var rgroupNum = int.Parse(((PseudoAtom)at).Label.Substring(1));
                     Assert.IsTrue(rgroupNum == 1 || rgroupNum == 2 || rgroupNum == 11);
                     switch (rgroupNum)
                     {
                         case 1:
                             {
                                 //Test: R1 has two attachment points, defined by AAL
-                                IDictionary<IAtom, IDictionary<int, IBond>> rootApo = rGroupQuery.RootAttachmentPoints;
-                                IDictionary<int, IBond> apoBonds = rootApo[at];
+                                var rootApo = rGroupQuery.RootAttachmentPoints;
+                                var apoBonds = rootApo[at];
                                 Assert.AreEqual(apoBonds.Count, 2);
                                 Assert.AreEqual(apoBonds[1].GetOther(at).Symbol, "N");
                                 Assert.IsTrue(apoBonds[2].GetOther(at).Symbol.Equals("C"));
                                 //Test: Oxygens are the 2nd APO's for R1
-                                RGroupList rList = rGroupQuery.RGroupDefinitions[1];
+                                var rList = rGroupQuery.RGroupDefinitions[1];
                                 Assert.AreEqual(rList.RGroups.Count, 2);
                                 var rGroups = rList.RGroups;
                                 Assert.AreEqual(rGroups[0].SecondAttachmentPoint.Symbol, "O");
@@ -232,7 +230,7 @@ namespace NCDK.IO
             }
 
             var configurations = rGroupQuery.GetAllConfigurations();
-            Assert.AreEqual(12, configurations.Count);
+            Assert.AreEqual(12, configurations.Count());
 
             //Test restH values
             int countRestHForSmallestConfigurations = 0;
@@ -266,14 +264,14 @@ namespace NCDK.IO
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             RGroupQueryReader reader = new RGroupQueryReader(ins);
-            RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(Default.ChemObjectBuilder.Instance));
+            RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(ChemObjectBuilder.Instance));
             reader.Close();
             Assert.IsNotNull(rGroupQuery);
             Assert.AreEqual(rGroupQuery.RGroupDefinitions.Count, 1);
             Assert.AreEqual(rGroupQuery.RootStructure.Atoms.Count, 10);
             Assert.AreEqual(rGroupQuery.RootAttachmentPoints.Count, 2);
 
-            Assert.AreEqual(rGroupQuery.GetAllConfigurations().Count, 8);
+            Assert.AreEqual(rGroupQuery.GetAllConfigurations().Count(), 8);
 
             //Test correctness AAL lines
             foreach (var at in rGroupQuery.GetRgroupQueryAtoms(1))
@@ -282,13 +280,13 @@ namespace NCDK.IO
                 {
                     Assert.AreEqual(((PseudoAtom)at).Label, "R1");
 
-                    IDictionary<int, IBond> apoBonds = rGroupQuery.RootAttachmentPoints[at];
+                    var apoBonds = rGroupQuery.RootAttachmentPoints[at];
                     Assert.AreEqual(apoBonds.Count, 2);
 
-                    IAtom boundAtom1 = apoBonds[1].GetOther(at);
+                    var boundAtom1 = apoBonds[1].GetOther(at);
                     Assert.IsTrue(boundAtom1.Symbol.Equals("Te") || boundAtom1.Symbol.Equals("S"));
 
-                    IAtom boundAtom2 = apoBonds[2].GetOther(at);
+                    var boundAtom2 = apoBonds[2].GetOther(at);
                     Assert.IsTrue(boundAtom2.Symbol.Equals("Po") || boundAtom2.Symbol.Equals("O"));
                 }
             }
@@ -307,11 +305,11 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRgroupQueryFile4()
         {
-            string filename = "NCDK.Data.MDL.rgfile.4.mol";
+            var filename = "NCDK.Data.MDL.rgfile.4.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            RGroupQueryReader reader = new RGroupQueryReader(ins);
-            RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(Default.ChemObjectBuilder.Instance));
+            var reader = new RGroupQueryReader(ins);
+            var rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(ChemObjectBuilder.Instance));
             reader.Close();
             Assert.IsNotNull(rGroupQuery);
             Assert.AreEqual(rGroupQuery.RGroupDefinitions.Count, 1);
@@ -319,14 +317,14 @@ namespace NCDK.IO
 
             var allrGroupQueryAtoms = rGroupQuery.GetAllRgroupQueryAtoms();
             Assert.AreEqual(allrGroupQueryAtoms.Count, 1);
-            RGroupList rList = rGroupQuery.RGroupDefinitions[1];
+            var rList = rGroupQuery.RGroupDefinitions[1];
             Assert.AreEqual(rList.RGroups.Count, 2);
             Assert.AreEqual(rList.RequiredRGroupNumber, 0);
             Assert.IsFalse(rList.IsRestH);
             Assert.AreEqual(rGroupQuery.RootAttachmentPoints.Count, 0);
             Assert.IsTrue(rGroupQuery.AreSubstituentsDefined());
 
-            Assert.AreEqual(rGroupQuery.GetAllConfigurations().Count, 2);
+            Assert.AreEqual(rGroupQuery.GetAllConfigurations().Count(), 2);
 
             // This query has a detached R-group, test for empty attachment points
             var rGroups = rList.RGroups;
@@ -345,17 +343,17 @@ namespace NCDK.IO
         [TestCategory("SlowTest")]
         public void TestRgroupQueryFile5()
         {
-            string filename = "NCDK.Data.MDL.rgfile.5.mol";
+            var filename = "NCDK.Data.MDL.rgfile.5.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            RGroupQueryReader reader = new RGroupQueryReader(ins);
-            RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(Default.ChemObjectBuilder.Instance));
+            var reader = new RGroupQueryReader(ins);
+            var rGroupQuery = reader.Read(new RGroupQuery(ChemObjectBuilder.Instance));
             reader.Close();
             Assert.IsNotNull(rGroupQuery);
             Assert.AreEqual(rGroupQuery.RGroupDefinitions.Count, 4);
 
             //Test combinatorial explosion: R5 has many different configurations
-            Assert.AreEqual(rGroupQuery.GetAllConfigurations().Count, 17820);
+            Assert.AreEqual(rGroupQuery.GetAllConfigurations().Count(), 17820);
         }
 
         /// <summary>
@@ -367,11 +365,11 @@ namespace NCDK.IO
         [ExpectedException(typeof(CDKException))]
         public void TestRgroupQueryFile6()
         {
-            string filename = "NCDK.Data.MDL.rgfile.6.mol";
+            var filename = "NCDK.Data.MDL.rgfile.6.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            RGroupQueryReader reader = new RGroupQueryReader(ins);
-            RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(Default.ChemObjectBuilder.Instance));
+            var reader = new RGroupQueryReader(ins);
+            var rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(ChemObjectBuilder.Instance));
             reader.Close();
             Assert.IsNotNull(rGroupQuery);
             Assert.AreEqual(rGroupQuery.RGroupDefinitions.Count, 3);
@@ -383,7 +381,6 @@ namespace NCDK.IO
 
             //Getting for all configurations won't happen, because not all groups were set
             rGroupQuery.GetAllConfigurations(); // Will raise exception
-
         }
 
         /// <summary>
@@ -397,16 +394,16 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRgroupQueryFile7()
         {
-            string filename = "NCDK.Data.MDL.rgfile.7.mol";
+            var filename = "NCDK.Data.MDL.rgfile.7.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            RGroupQueryReader reader = new RGroupQueryReader(ins);
-            RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(Default.ChemObjectBuilder.Instance));
+            var reader = new RGroupQueryReader(ins);
+            var rGroupQuery = reader.Read(new RGroupQuery(ChemObjectBuilder.Instance));
             reader.Close();
             Assert.IsNotNull(rGroupQuery);
             Assert.AreEqual(rGroupQuery.RGroupDefinitions.Count, 1);
             Assert.AreEqual(rGroupQuery.RootStructure.Atoms.Count, 9);
-            Assert.AreEqual(rGroupQuery.GetAllConfigurations().Count, 20);
+            Assert.AreEqual(rGroupQuery.GetAllConfigurations().Count(), 20);
         }
     }
 }

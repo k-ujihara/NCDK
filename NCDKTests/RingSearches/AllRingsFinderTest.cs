@@ -16,12 +16,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.IO;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Templates;
-
 using System;
 
 namespace NCDK.RingSearches
@@ -54,7 +54,6 @@ namespace NCDK.RingSearches
             IRingSet ringSet = null;
             AllRingsFinder arf = new AllRingsFinder();
             IAtomContainer molecule = TestMoleculeFactory.MakeEthylPropylPhenantren();
-            //Display(molecule);
 
             ringSet = arf.FindAllRings(molecule);
 
@@ -68,18 +67,14 @@ namespace NCDK.RingSearches
             IRingSet ringSet = null;
             AllRingsFinder arf = new AllRingsFinder();
             IAtomContainer molecule = TestMoleculeFactory.MakeEthylPropylPhenantren();
-            //Display(molecule);
 
             ringSet = arf.FindAllRings(molecule);
-            for (int i = 0; i < ringSet.Count; i++)
+            foreach (var ring in ringSet)
             {
-                Ring ring = (Ring)ringSet[i];
-                for (int j = 0; j < ring.Bonds.Count; j++)
+                foreach (var ec in ring.Bonds)
                 {
-                    IBond ec = ring.Bonds[j];
-
-                    IAtom atom1 = ec.Begin;
-                    IAtom atom2 = ec.End;
+                    var atom1 = ec.Begin;
+                    var atom2 = ec.End;
                     Assert.IsTrue(ring.Contains(atom1));
                     Assert.IsTrue(ring.Contains(atom2));
                 }
@@ -92,31 +87,6 @@ namespace NCDK.RingSearches
             AllRingsFinder arf = new AllRingsFinder();
             IAtomContainer molecule = TestMoleculeFactory.MakeEthylPropylPhenantren();
             arf.FindAllRings(molecule);
-        }
-
-        [TestMethod(), Ignore()] // timeout not longer used
-        public void TestSetTimeout_long()
-        {
-            AllRingsFinder arf = new AllRingsFinder();
-            arf.SetTimeout(1);
-            IAtomContainer molecule = TestMoleculeFactory.MakeEthylPropylPhenantren();
-            arf.FindAllRings(molecule);
-        }
-
-        [TestMethod(), Ignore()] // timeout not longer used
-        public void TestCheckTimeout()
-        {
-            AllRingsFinder arf = new AllRingsFinder();
-            arf.SetTimeout(3);
-            arf.CheckTimeout();
-        }
-
-        [TestMethod(), Ignore()] // timeout not longer used
-        public void TestGetTimeout()
-        {
-            AllRingsFinder arf = new AllRingsFinder();
-            arf.SetTimeout(3);
-            Assert.AreEqual(3, arf.TimeOut, 0.01);
         }
 
         [TestMethod()]
@@ -143,7 +113,7 @@ namespace NCDK.RingSearches
         public void TestBigRingSystem()
         {
             IRingSet ringSet = null;
-            AllRingsFinder arf = AllRingsFinder.UsingThreshold(AllRingsFinder.Threshold.PubChem_994);
+            AllRingsFinder arf = AllRingsFinder.UsingThreshold(Threshold.PubChem994);
 
             string filename = "NCDK.Data.MDL.ring_03419.mol";
             var ins = ResourceLoader.GetAsStream(filename);
@@ -261,7 +231,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestRingFlags1()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer molecule = sp.ParseSmiles("c1ccccc1");
             foreach (var a in molecule.Atoms)
                 a.IsInRing = false;
@@ -279,7 +249,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestRingFlags2()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer molecule = sp.ParseSmiles("C1CCCC1CC");
             foreach (var a in molecule.Atoms)
                 a.IsInRing = false;

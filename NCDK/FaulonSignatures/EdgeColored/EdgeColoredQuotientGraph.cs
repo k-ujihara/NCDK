@@ -7,7 +7,7 @@ namespace NCDK.FaulonSignatures.EdgeColored
     {
         private EdgeColoredGraph graph;
 
-        public EdgeColoredQuotientGraph(EdgeColoredGraph graph, IDictionary<string, int> colorMap)
+        public EdgeColoredQuotientGraph(EdgeColoredGraph graph, IReadOnlyDictionary<string, int> colorMap)
             : base()
         {
             this.graph = graph;
@@ -16,7 +16,7 @@ namespace NCDK.FaulonSignatures.EdgeColored
             base.Construct(graphSignature.GetSymmetryClasses());
         }
 
-        public EdgeColoredQuotientGraph(EdgeColoredGraph graph, IDictionary<string, int> colorMap, int height)
+        public EdgeColoredQuotientGraph(EdgeColoredGraph graph, IReadOnlyDictionary<string, int> colorMap, int height)
                 : base()
         {
             this.graph = graph;

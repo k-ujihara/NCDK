@@ -25,6 +25,7 @@ using NCDK.Common.Collections;
 using NCDK.Numerics;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Linq;
 
 namespace NCDK.Layout
 {
@@ -37,8 +38,7 @@ namespace NCDK.Layout
     {
         // lower bound on scores
         private const double MIN_SCORE = 0.00001;
-
-        double[][] contribution;
+        readonly double[][] contribution;
         internal double score;
         IAtom[] atoms;
 
@@ -46,7 +46,7 @@ namespace NCDK.Layout
         {
             int numAtoms = mol.Atoms.Count;
             this.contribution = Arrays.CreateJagged<double>(numAtoms, numAtoms);
-            this.atoms = AtomContainerManipulator.GetAtomArray(mol);
+            this.atoms = mol.Atoms.ToArray();
             for (int v = 0; v < numAtoms; v++)
                 foreach (var w in adjList[v])
                     contribution[v][v] = contribution[v][w] = -1;

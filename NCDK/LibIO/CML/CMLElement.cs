@@ -1,6 +1,7 @@
 ﻿using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -90,7 +91,7 @@ namespace NCDK.LibIO.CML
         internal const string Attribute_errorValue = "errorValue";
         internal const string Attribute_value = "value";
 
-        protected static string Concat<T>(T[] values)
+        protected static string Concat<T>(IEnumerable<T> values)
         {
             var sb = new StringBuilder();
             bool isFirst = true;
@@ -121,7 +122,7 @@ namespace NCDK.LibIO.CML
             var ret = new int[ss.Length];
             for (int i = 0; i < ss.Length; i++)
             {
-                ret[i] = int.Parse(ss[i]);
+                ret[i] = int.Parse(ss[i], NumberFormatInfo.InvariantInfo);
             }
             return ret;
         }
@@ -165,19 +166,19 @@ namespace NCDK.LibIO.CML
             var vs = GetAttributeValue(name, null);
             if (vs == null)
                 return defaultValue;
-            return int.Parse(vs);
+            return int.Parse(vs, NumberFormatInfo.InvariantInfo);
         }
 
         protected int GetAttributeValueAsInt(string name)
         {
             var vs = GetAttributeValue(name);
-            return int.Parse(vs);
+            return int.Parse(vs, NumberFormatInfo.InvariantInfo);
         }
 
         protected double GetAttributeValueAsDouble(string name)
         {
             var vs = GetAttributeValue(name);
-            return double.Parse(vs);
+            return double.Parse(vs, NumberFormatInfo.InvariantInfo);
         }
 
         protected int[] GetAttributeValueAsInts(string name)

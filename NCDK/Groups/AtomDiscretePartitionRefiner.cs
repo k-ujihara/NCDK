@@ -33,13 +33,13 @@ namespace NCDK.Groups
         /// <summary>
         /// Ignore the elements when creating the initial partition.
         /// </summary>
-        private bool ignoreElements;
+        private readonly bool ignoreElements;
 
         /// <summary>
         /// Specialised option to allow generating automorphisms
         /// that ignore the bond order.
         /// </summary>
-        private bool ignoreBondOrders;
+        private readonly bool ignoreBondOrders;
 
         /// <summary>
         /// Default constructor - does not ignore elements or bond orders

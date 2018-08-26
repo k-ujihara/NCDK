@@ -52,8 +52,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the ProtonTotalPartialChargeDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#protonPartialCharge",
                 typeof(ProtonTotalPartialChargeDescriptor).FullName, "The Chemistry Development Kit");
@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the ProtonTotalPartialChargeDescriptor
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public IReadOnlyList<string> DescriptorNames { get; } = MakeDescriptorNames();
         private static string[] MakeDescriptorNames()
@@ -79,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             ArrayResult<double> result = new ArrayResult<double>(MAX_PROTON_COUNT);
             for (int i = 0; i < neighboors.Count + 1; i++)
                 result.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, DescriptorNames, e);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int hydrogenNeighbors = 0;
             foreach (var neighboor in neighboors)
             {
-                if (neighboor.Symbol.Equals("H"))
+                if (string.Equals(neighboor.Symbol, "H", StringComparison.Ordinal))
                 {
                     hydrogenNeighbors++;
                     protonPartialCharge.Add(neighboor.Charge.Value);
@@ -132,7 +132,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < remainder; i++)
                 protonPartialCharge.Add(double.NaN);
 
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, protonPartialCharge, DescriptorNames);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, protonPartialCharge, DescriptorNames);
         }
 
         /// <summary>

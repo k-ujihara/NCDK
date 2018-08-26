@@ -22,6 +22,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.Groups
 {
@@ -217,7 +218,7 @@ namespace NCDK.Groups
         }
 
         class NBacktracker
-            : PermutationGroup.IBacktracker
+            : IBacktracker
         {
             List<Permutation> all;
 
@@ -249,10 +250,10 @@ namespace NCDK.Groups
         }
 
         class FinishEarlyBacktracker
-            : PermutationGroup.IBacktracker
+            : IBacktracker
         {
             List<Permutation> all;
-            int max;
+            readonly int max;
 
             public FinishEarlyBacktracker(List<Permutation> all, int max)
             {

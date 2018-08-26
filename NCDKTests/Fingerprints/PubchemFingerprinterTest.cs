@@ -27,6 +27,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.Common.Base;
 using NCDK.Common.Collections;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
@@ -45,7 +46,7 @@ namespace NCDK.Fingerprints
 
         public override IFingerprinter GetBitFingerprinter()
         {
-            return new PubchemFingerprinter(Default.ChemObjectBuilder.Instance);
+            return new PubchemFingerprinter(ChemObjectBuilder.Instance);
         }
 
         [TestInitialize()]
@@ -57,15 +58,15 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestGetSize()
         {
-            IFingerprinter printer = new PubchemFingerprinter(Default.ChemObjectBuilder.Instance);
-            Assert.AreEqual(881, printer.Count);
+            IFingerprinter printer = new PubchemFingerprinter(ChemObjectBuilder.Instance);
+            Assert.AreEqual(881, printer.Length);
         }
 
         [TestMethod()]
         public void TestFingerprint()
         {
-            IFingerprinter printer = new PubchemFingerprinter(Default.ChemObjectBuilder.Instance);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(Default.ChemObjectBuilder.Instance);
+            IFingerprinter printer = new PubchemFingerprinter(ChemObjectBuilder.Instance);
+            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(ChemObjectBuilder.Instance);
 
             IAtomContainer mol1 = parser.ParseSmiles("c1ccccc1CCc1ccccc1");
             IAtomContainer mol2 = parser.ParseSmiles("c1ccccc1CC");
@@ -85,7 +86,7 @@ namespace NCDK.Fingerprints
             BitArray bs1 = printer.GetBitFingerprint(mol1).AsBitSet();
             BitArray bs2 = printer.GetBitFingerprint(mol2).AsBitSet();
 
-            Assert.AreEqual(881, printer.Count);
+            Assert.AreEqual(881, printer.Length);
 
             Assert.IsFalse(FingerprinterTool.IsSubset(bs1, bs2),
                 "c1ccccc1CC was detected as a subset of c1ccccc1CCc1ccccc1");
@@ -94,7 +95,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void Testfp2()
         {
-            IFingerprinter printer = new PubchemFingerprinter(Default.ChemObjectBuilder.Instance);
+            IFingerprinter printer = new PubchemFingerprinter(ChemObjectBuilder.Instance);
 
             IAtomContainer mol1 = parser.ParseSmiles("CC(N)CCCN");
             IAtomContainer mol2 = parser.ParseSmiles("CC(N)CCC");
@@ -131,12 +132,12 @@ namespace NCDK.Fingerprints
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
-            IFingerprinter printer = new PubchemFingerprinter(Default.ChemObjectBuilder.Instance);
+            IFingerprinter printer = new PubchemFingerprinter(ChemObjectBuilder.Instance);
             BitArray fp = printer.GetBitFingerprint(mol).AsBitSet();
             BitArray ref_ = PubchemFingerprinter
                     .Decode("AAADceBwPABAAAAAAAAAAAAAAAAAAAAAAAAkSAAAAAAAAAAAAAAAGgQACAAACBS0wAOCCAAABgQAAAAAAAAAAAAAAAAAAAAAAAAREAIAAAAiQAAFAAAHAAHAYAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
 
-            Assert.IsTrue(BitArrays.AreEqual(ref_, fp));
+            Assert.IsTrue(BitArrays.Equals(ref_, fp));
         }
 
         /// <summary>
@@ -154,12 +155,12 @@ namespace NCDK.Fingerprints
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
-            IFingerprinter printer = new PubchemFingerprinter(Default.ChemObjectBuilder.Instance);
+            IFingerprinter printer = new PubchemFingerprinter(ChemObjectBuilder.Instance);
             BitArray fp = printer.GetBitFingerprint(mol).AsBitSet();
             BitArray ref_ = PubchemFingerprinter
                     .Decode("AAADceB+AAAAAAAAAAAAAAAAAAAAAAAAAAA8YMGCAAAAAAAB1AAAHAAAAAAADAjBHgQwgJMMEACgAyRiRACCgCAhAiAI2CA4ZJgIIOLAkZGEIAhggADIyAcQgMAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
 
-            Assert.IsTrue(BitArrays.AreEqual(ref_, fp));
+            Assert.IsTrue(BitArrays.Equals(ref_, fp));
         }
 
         /// <summary>
@@ -176,12 +177,12 @@ namespace NCDK.Fingerprints
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
-            IFingerprinter printer = new PubchemFingerprinter(Default.ChemObjectBuilder.Instance);
+            IFingerprinter printer = new PubchemFingerprinter(ChemObjectBuilder.Instance);
             BitArray fp = printer.GetBitFingerprint(mol).AsBitSet();
             BitArray ref_ = PubchemFingerprinter
                     .Decode("AAADccBzMAAGAAAAAAAAAAAAAAAAAAAAAAA8QAAAAAAAAAABwAAAHgIYCAAADA6BniAwzpJqEgCoAyTyTASChCAnJiIYumGmTtgKJnLD1/PEdQhkwBHY3Qe82AAOIAAAAAAAAABAAAAAAAAAAAAAAAAAAA==");
 
-            Assert.IsTrue(BitArrays.AreEqual(ref_, fp));
+            Assert.IsTrue(BitArrays.Equals(ref_, fp));
         }
 
         [TestMethod()]
@@ -250,12 +251,12 @@ namespace NCDK.Fingerprints
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
 
             Aromaticity.CDKLegacy.Apply(mol);
-            IFingerprinter printer = new PubchemFingerprinter(Default.ChemObjectBuilder.Instance);
+            IFingerprinter printer = new PubchemFingerprinter(ChemObjectBuilder.Instance);
             BitArray fp = printer.GetBitFingerprint(mol).AsBitSet();
             BitArray ref_ = PubchemFingerprinter
                     .Decode("AAADcYBgAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAGAAAAAAACACAEAAwAIAAAACAACBCAAACAAAgAAAIiAAAAIgIICKAERCAIAAggAAIiAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
 
-            Assert.IsTrue(BitArrays.AreEqual(ref_, fp));
+            Assert.IsTrue(BitArrays.Equals(ref_, fp));
         }
 
         class FpRunner
@@ -272,7 +273,7 @@ namespace NCDK.Fingerprints
             public void Call()
             {
                 BitArray fp = null;
-                IFingerprinter fpr = new PubchemFingerprinter(Default.ChemObjectBuilder.Instance);
+                IFingerprinter fpr = new PubchemFingerprinter(ChemObjectBuilder.Instance);
                 try
                 {
                     fp = fpr.GetBitFingerprint(mol).AsBitSet();
@@ -305,7 +306,7 @@ namespace NCDK.Fingerprints
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol2);
             Aromaticity.CDKLegacy.Apply(mol2);
 
-            IFingerprinter fp = new PubchemFingerprinter(Default.ChemObjectBuilder.Instance);
+            IFingerprinter fp = new PubchemFingerprinter(ChemObjectBuilder.Instance);
             BitArray bs1 = fp.GetBitFingerprint(mol1).AsBitSet();
             BitArray bs2 = fp.GetBitFingerprint(mol2).AsBitSet();
 
@@ -323,8 +324,8 @@ namespace NCDK.Fingerprints
             BitArray fb2 = objs[1].Result;
             Assert.IsNotNull(fb2);
 
-            Assert.IsTrue(BitArrays.AreEqual(bs1, fb1));
-            Assert.IsTrue(BitArrays.AreEqual(bs2, fb2));
+            Assert.IsTrue(BitArrays.Equals(bs1, fb1));
+            Assert.IsTrue(BitArrays.Equals(bs2, fb2));
         }
 
         /// <summary>
@@ -349,13 +350,13 @@ namespace NCDK.Fingerprints
             IBitFingerprint superBits = fpr.GetBitFingerprint(superStructure);
             IBitFingerprint subBits = fpr.GetBitFingerprint(subStructure);
 
-            Assert.IsTrue(BitArrays.AreEqual(
+            Assert.IsTrue(BitArrays.Equals(
                 AsBitSet(9, 10, 14, 18, 19, 33, 143, 146, 255, 256, 283, 284, 285, 293, 301, 332, 344, 349, 351,
                             353, 355, 368, 370, 371, 376, 383, 384, 395, 401, 412, 416, 421, 423, 434, 441, 446, 449, 454,
                             455, 464, 470, 471, 480, 489, 490, 500, 502, 507, 513, 514, 516, 520, 524, 531, 532, 545, 546,
                             549, 552, 556, 558, 564, 570, 586, 592, 599, 600, 607, 633, 658, 665),
                subBits.AsBitSet()));
-            Assert.IsTrue(BitArrays.AreEqual(
+            Assert.IsTrue(BitArrays.Equals(
                 AsBitSet(9, 10, 11, 14, 18, 19, 33, 34, 143, 146, 150, 153, 255, 256, 257, 258, 283, 284, 285, 293,
                         301, 332, 344, 349, 351, 353, 355, 368, 370, 371, 374, 376, 383, 384, 395, 401, 412, 416, 417,
                         421, 423, 427, 434, 441, 446, 449, 454, 455, 460, 464, 470, 471, 479, 480, 489, 490, 500, 502,

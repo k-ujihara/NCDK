@@ -22,15 +22,14 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.Graphs;
 using NCDK.IO;
 using NCDK.Numerics;
 using NCDK.RingSearches;
+using NCDK.Silent;
 using NCDK.Templates;
 using NCDK.Tools.Diff;
 using System.Collections;
-using System.Collections.Generic;
 
 namespace NCDK.Fingerprints
 {
@@ -65,17 +64,17 @@ namespace NCDK.Fingerprints
         }
 
         [TestMethod()]
-        public void TestgetBitFingerprint_IAtomContainer_IRingSet_List()
+        public void TestgetBitFingerprintIAtomContainerIRingSetList()
         {
-            ExtendedFingerprinter fingerprinter = new ExtendedFingerprinter();
+            var fingerprinter = new ExtendedFingerprinter();
             Assert.IsNotNull(fingerprinter);
 
-            IAtomContainer mol = TestMoleculeFactory.MakeIndole();
-            IRingSet rs = Cycles.FindSSSR(mol).ToRingSet();
-            IList<IRingSet> rslist = RingPartitioner.PartitionRings(rs);
-            BitArray bs = fingerprinter.GetBitFingerprint(mol, rs, rslist).AsBitSet();
-            IAtomContainer frag1 = TestMoleculeFactory.MakePyrrole();
-            BitArray bs1 = fingerprinter.GetBitFingerprint(frag1).AsBitSet();
+            var mol = TestMoleculeFactory.MakeIndole();
+            var rs = Cycles.FindSSSR(mol).ToRingSet();
+            var rslist = RingPartitioner.PartitionRings(rs);
+            var bs = fingerprinter.GetBitFingerprint(mol, rs, rslist).AsBitSet();
+            var frag1 = TestMoleculeFactory.MakePyrrole();
+            var bs1 = fingerprinter.GetBitFingerprint(frag1).AsBitSet();
             Assert.IsTrue(FingerprinterTool.IsSubset(bs, bs1));
             Assert.IsFalse(FingerprinterTool.IsSubset(bs1, bs));
         }
@@ -85,7 +84,7 @@ namespace NCDK.Fingerprints
         {
             IFingerprinter fingerprinter = new ExtendedFingerprinter(512);
             Assert.IsNotNull(fingerprinter);
-            Assert.AreEqual(512, fingerprinter.Count);
+            Assert.AreEqual(512, fingerprinter.Length);
         }
 
         [TestMethod()]
@@ -433,7 +432,7 @@ namespace NCDK.Fingerprints
             Assert.IsNotNull(fp);
 
             string diff2 = AtomContainerDiff.Diff(mol, clone);
-            Assert.IsTrue(diff2.Equals(""), "There was a difference\n" + diff2);
+            Assert.IsTrue(diff2.Length == 0, "There was a difference\n" + diff2);
         }
     }
 }

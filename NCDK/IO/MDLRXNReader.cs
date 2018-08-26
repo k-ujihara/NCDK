@@ -26,6 +26,7 @@ using NCDK.Common.Primitives;
 using NCDK.IO.Formats;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -113,21 +114,21 @@ namespace NCDK.IO
             }
         }
 
-        public bool Accepts(IChemObject obj)
+        public static bool Accepts(IChemObject o)
         {
-            if (obj is IReaction)
+            if (o is IReaction)
             {
                 return true;
             }
-            else if (obj is IChemModel)
+            else if (o is IChemModel)
             {
                 return true;
             }
-            else if (obj is IChemFile)
+            else if (o is IChemFile)
             {
                 return true;
             }
-            else if (obj is IReactionSet)
+            else if (o is IReactionSet)
             {
                 return true;
             }
@@ -185,10 +186,10 @@ namespace NCDK.IO
                 string line;
                 while ((line = input.ReadLine()) != null)
                 {
-                    Debug.WriteLine("line: ", line);
+                    Debug.WriteLine($"line: {line}");
                     // apparently, this is a SDF file, continue with
                     // reading mol files
-                    if (line.Equals("$$$$"))
+                    if (string.Equals(line, "$$$$", StringComparison.Ordinal))
                     {
                         r = ReadReaction(setOfReactions.Builder);
 
@@ -229,7 +230,7 @@ namespace NCDK.IO
                             string data = line;
                             while ((line = input.ReadLine()) != null && line.Trim().Length > 0)
                             {
-                                if (line.Equals("$$$$"))
+                                if (string.Equals(line, "$$$$", StringComparison.Ordinal))
                                 {
                                     Trace.TraceError($"Expecting data line here, but found end of molecule: {line}");
                                     break;
@@ -306,9 +307,9 @@ namespace NCDK.IO
                 
                 // this line contains the number of reactants and products
                 var tokens = Strings.Tokenize(countsLine);
-                reactantCount = int.Parse(tokens[0]);
+                reactantCount = int.Parse(tokens[0], NumberFormatInfo.InvariantInfo);
                 Trace.TraceInformation("Expecting " + reactantCount + " reactants in file");
-                productCount = int.Parse(tokens[1]);
+                productCount = int.Parse(tokens[1], NumberFormatInfo.InvariantInfo);
                 Trace.TraceInformation("Expecting " + productCount + " products in file");
             }
             catch (Exception exception)
@@ -334,7 +335,7 @@ namespace NCDK.IO
                         molFileLine = input.ReadLine();
                         molFile.Append(molFileLine);
                         molFile.Append('\n');
-                    } while (!molFileLine.Equals("M  END"));
+                    } while (!string.Equals(molFileLine, "M  END", StringComparison.Ordinal));
 
                     // read MDL molfile content
                     MDLReader reader = new MDLReader(new StringReader(molFile.ToString()));
@@ -373,7 +374,7 @@ namespace NCDK.IO
                         molFileLine = input.ReadLine();
                         molFile.Append(molFileLine);
                         molFile.Append('\n');
-                    } while (!molFileLine.Equals("M  END"));
+                    } while (!string.Equals(molFileLine, "M  END", StringComparison.Ordinal));
 
                     // read MDL molfile content
                     MDLReader reader = new MDLReader(new StringReader(molFile.ToString()), base.ReaderMode);

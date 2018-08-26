@@ -19,6 +19,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.QSAR.Results;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 
@@ -40,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestKappaShapeIndicesDescriptor()
         {
             double[] testResult = { 5, 2.25, 4 };
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("O=C(O)CC");
             AtomContainerManipulator.RemoveHydrogens(mol);
             ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(mol).Value;

@@ -22,7 +22,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Smiles;
@@ -46,7 +46,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestInit_3args_1()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/OCC=C");
             IAtomContainer queryac = sp.ParseSmiles("CCCOCC(C)=C");
 
@@ -63,7 +63,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestInit_3args_2()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/OCC=C");
             IAtomContainer queryac = sp.ParseSmiles("CCCOCC(C)=C");
 
@@ -82,7 +82,7 @@ namespace NCDK.SMSD
         {
             try
             {
-                SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+                SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
                 sp.Kekulise(false);
                 IAtomContainer target = null;
                 target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
@@ -110,7 +110,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestSet_IAtomContainer_IAtomContainer()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -152,7 +152,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestSet_MolHandler_MolHandler()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
 
             IAtomContainer target1 = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
@@ -170,7 +170,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetAllAtomMapping()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             sp.Kekulise(false);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
@@ -200,7 +200,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetAllMapping()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             sp.Kekulise(false);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
@@ -223,7 +223,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetFirstAtomMapping()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -241,7 +241,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetFirstMapping()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -259,7 +259,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestSetChemFilters()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/OCC=C");
             IAtomContainer queryac = sp.ParseSmiles("CCCOCC(C)=C");
 
@@ -275,7 +275,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetFragmentSize()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -292,7 +292,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetStereoScore()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/OCC=C");
             IAtomContainer queryac = sp.ParseSmiles("CCCOCC(C)=C");
 
@@ -309,7 +309,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetEnergyScore()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -326,7 +326,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetReactantMolecule()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -343,7 +343,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetProductMolecule()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -360,7 +360,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetTanimotoSimilarity()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -378,7 +378,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestIsStereoMisMatch()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -394,7 +394,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestIsSubgraph()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -410,7 +410,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetEuclideanDistance()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -432,7 +432,7 @@ namespace NCDK.SMSD
         public void TestQueryAtomContainerDefault()
         {
             Isomorphism smsd = new Isomorphism(Algorithm.Default, true);
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer query = sp.ParseSmiles("CC");
             IAtomContainer target = sp.ParseSmiles("C1CCC12CCCC2");
 
@@ -450,7 +450,7 @@ namespace NCDK.SMSD
         public void TestQueryAtomContainerMCSPLUS()
         {
             Isomorphism smsd = new Isomorphism(Algorithm.MCSPlus, true);
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer query = sp.ParseSmiles("CC");
             IAtomContainer target = sp.ParseSmiles("C1CCC12CCCC2");
 
@@ -467,7 +467,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestQueryAtomContainerSubstructure()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer query = sp.ParseSmiles("CC");
             IAtomContainer target = sp.ParseSmiles("C1CCC12CCCC2");
 
@@ -496,7 +496,7 @@ namespace NCDK.SMSD
         public void TestQueryAtomCount()
         {
             Isomorphism smsd = new Isomorphism(Algorithm.Default, true);
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer query = sp.ParseSmiles("CC");
             IAtomContainer target = sp.ParseSmiles("C1CCC12CCCC2");
 
@@ -515,7 +515,7 @@ namespace NCDK.SMSD
         public void TestMatchCount()
         {
             Isomorphism smsd = new Isomorphism(Algorithm.Default, true);
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer query = sp.ParseSmiles("CC");
             IAtomContainer target = sp.ParseSmiles("C1CCC12CCCC2");
 
@@ -534,7 +534,7 @@ namespace NCDK.SMSD
         public void TestMatchCountCDKMCS()
         {
             Isomorphism smsd = new Isomorphism(Algorithm.CDKMCS, true);
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer query = sp.ParseSmiles("CC");
             IAtomContainer target = sp.ParseSmiles("C1CCC12CCCC2");
 
@@ -553,7 +553,7 @@ namespace NCDK.SMSD
         public void TestImpossibleQuery()
         {
             Isomorphism smsd = new Isomorphism(Algorithm.Default, true);
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer query = sp.ParseSmiles("CC");
             IAtomContainer target = sp.ParseSmiles("C");
 

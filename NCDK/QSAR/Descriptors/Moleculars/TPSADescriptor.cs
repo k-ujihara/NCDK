@@ -23,6 +23,7 @@ using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -135,8 +136,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Gets the specification attribute of the TPSADescriptor object.
         /// </summary>
         /// <returns>The specification value</returns>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#tpsa",
                 typeof(TPSADescriptor).FullName,
@@ -149,11 +150,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// the descriptor routine should check for aromaticity (<see langword="true"/>) or
         /// not (<see langword="false"/>).</para>
         /// </summary>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length != 1)
+                if (value.Count != 1)
                 {
                     throw new CDKException("TPSADescriptor expects one parameter");
                 }
@@ -175,7 +176,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
@@ -224,71 +225,76 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             // iterate over all atoms of ac
             foreach (var atom in ac.Atoms)
             {
-                if (atom.Symbol.Equals("N") || atom.Symbol.Equals("O") || atom.Symbol.Equals("S") || atom.Symbol.Equals("P"))
+                switch (atom.Symbol)
                 {
-                    int singleBondCount = 0;
-                    int doubleBondCount = 0;
-                    int tripleBondCount = 0;
-                    int aromaticBondCount = 0;
-                    double maxBondOrder = 0;
-                    double bondOrderSum = 0;
-                    int hCount = 0;
-                    int isIn3MemberRing = 0;
+                    case "N":
+                    case "O":
+                    case "S":
+                    case "P":
+                        int singleBondCount = 0;
+                        int doubleBondCount = 0;
+                        int tripleBondCount = 0;
+                        int aromaticBondCount = 0;
+                        double maxBondOrder = 0;
+                        double bondOrderSum = 0;
+                        int hCount = 0;
+                        int isIn3MemberRing = 0;
 
-                    // counting the number of single/double/triple/aromatic bonds
-                    var connectedBonds = ac.GetConnectedBonds(atom);
-                    foreach (var connectedBond in connectedBonds)
-                    {
-                        if (connectedBond.IsAromatic)
-                            aromaticBondCount++;
-                        else if (connectedBond.Order == BondOrder.Single)
-                            singleBondCount++;
-                        else if (connectedBond.Order == BondOrder.Double)
-                            doubleBondCount++;
-                        else if (connectedBond.Order == BondOrder.Triple) tripleBondCount++;
-                    }
-                    int formalCharge = atom.FormalCharge.Value;
-                    var connectedAtoms = ac.GetConnectedAtoms(atom).ToList();
-                    int numberOfNeighbours = connectedAtoms.Count;
-
-                    // EXPLICIT hydrogens: count the number of hydrogen atoms
-                    for (int neighbourIndex = 0; neighbourIndex < numberOfNeighbours; neighbourIndex++)
-                        if (((IAtom)connectedAtoms[neighbourIndex]).Symbol.Equals("H")) hCount++;
-                    // IMPLICIT hydrogens: count the number of hydrogen atoms and adjust other atom profile properties
-                    int implicitHAtoms = atom.ImplicitHydrogenCount ?? 0;
-
-                    for (int hydrogenIndex = 0; hydrogenIndex < implicitHAtoms; hydrogenIndex++)
-                    {
-                        hCount++;
-                        numberOfNeighbours++;
-                        singleBondCount++;
-                    }
-                    // Calculate bond order sum using the counters of single/double/triple/aromatic bonds
-                    bondOrderSum += singleBondCount * 1.0;
-                    bondOrderSum += doubleBondCount * 2.0;
-                    bondOrderSum += tripleBondCount * 3.0;
-                    bondOrderSum += aromaticBondCount * 1.5;
-                    // setting maxBondOrder
-                    if (singleBondCount > 0) maxBondOrder = 1.0;
-                    if (aromaticBondCount > 0) maxBondOrder = 1.5;
-                    if (doubleBondCount > 0) maxBondOrder = 2.0;
-                    if (tripleBondCount > 0) maxBondOrder = 3.0;
-
-                    // isIn3MemberRing checker
-                    if (rs.Contains(atom))
-                    {
-                        var rsAtom = rs.GetRings(atom);
-                        foreach (var ring in rsAtom)
+                        // counting the number of single/double/triple/aromatic bonds
+                        var connectedBonds = ac.GetConnectedBonds(atom);
+                        foreach (var connectedBond in connectedBonds)
                         {
-                            if (ring.RingSize == 3) isIn3MemberRing = 1;
+                            if (connectedBond.IsAromatic)
+                                aromaticBondCount++;
+                            else if (connectedBond.Order == BondOrder.Single)
+                                singleBondCount++;
+                            else if (connectedBond.Order == BondOrder.Double)
+                                doubleBondCount++;
+                            else if (connectedBond.Order == BondOrder.Triple) tripleBondCount++;
                         }
-                    }
-                    // create a profile of the current atom (atoms[atomIndex]) according to the profile definition in the constructor
-                    string profile = atom.Symbol + "+" + maxBondOrder.ToString("F1") + "+" + bondOrderSum.ToString("F1") + "+" + numberOfNeighbours
-                            + "+" + hCount + "+" + formalCharge + "+" + aromaticBondCount + "+" + isIn3MemberRing + "+"
-                            + singleBondCount + "+" + doubleBondCount + "+" + tripleBondCount;
-                    //Debug.WriteLine("tpsa profile: "+ profile);
-                    profiles.Add(profile);
+                        int formalCharge = atom.FormalCharge.Value;
+                        var connectedAtoms = ac.GetConnectedAtoms(atom).ToList();
+                        int numberOfNeighbours = connectedAtoms.Count;
+
+                        // EXPLICIT hydrogens: count the number of hydrogen atoms
+                        for (int neighbourIndex = 0; neighbourIndex < numberOfNeighbours; neighbourIndex++)
+                            if (((IAtom)connectedAtoms[neighbourIndex]).Symbol.Equals("H", StringComparison.Ordinal))
+                                hCount++;
+                        // IMPLICIT hydrogens: count the number of hydrogen atoms and adjust other atom profile properties
+                        int implicitHAtoms = atom.ImplicitHydrogenCount ?? 0;
+
+                        for (int hydrogenIndex = 0; hydrogenIndex < implicitHAtoms; hydrogenIndex++)
+                        {
+                            hCount++;
+                            numberOfNeighbours++;
+                            singleBondCount++;
+                        }
+                        // Calculate bond order sum using the counters of single/double/triple/aromatic bonds
+                        bondOrderSum += singleBondCount * 1.0;
+                        bondOrderSum += doubleBondCount * 2.0;
+                        bondOrderSum += tripleBondCount * 3.0;
+                        bondOrderSum += aromaticBondCount * 1.5;
+                        // setting maxBondOrder
+                        if (singleBondCount > 0) maxBondOrder = 1.0;
+                        if (aromaticBondCount > 0) maxBondOrder = 1.5;
+                        if (doubleBondCount > 0) maxBondOrder = 2.0;
+                        if (tripleBondCount > 0) maxBondOrder = 3.0;
+
+                        // isIn3MemberRing checker
+                        if (rs.Contains(atom))
+                        {
+                            var rsAtom = rs.GetRings(atom);
+                            foreach (var ring in rsAtom)
+                            {
+                                if (ring.RingSize == 3) isIn3MemberRing = 1;
+                            }
+                        }
+                        // create a profile of the current atom (atoms[atomIndex]) according to the profile definition in the constructor
+                        string profile = atom.Symbol + "+" + maxBondOrder.ToString("F1", NumberFormatInfo.InvariantInfo) + "+" + bondOrderSum.ToString("F1", NumberFormatInfo.InvariantInfo) + "+" + numberOfNeighbours
+                                + "+" + hCount + "+" + formalCharge + "+" + aromaticBondCount + "+" + isIn3MemberRing + "+"
+                                + singleBondCount + "+" + doubleBondCount + "+" + tripleBondCount;
+                        profiles.Add(profile);
+                        break;
                 }
             }
             // END OF ATOM LOOP
@@ -299,13 +305,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 if (map.ContainsKey(profiles[profileIndex]))
                 {
                     tpsa += (double)map[profiles[profileIndex]];
-                    //Debug.WriteLine("tpsa contribs: " + profiles.ElementAt(profileIndex) + "\t" + ((double)map[profiles.ElementAt(profileIndex])).Value);
                 }
             }
             profiles.Clear(); // remove all profiles from the profiles-Vector
-                              //Debug.WriteLine("tpsa: " + tpsa);
 
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(tpsa), DescriptorNames);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(tpsa), DescriptorNames);
         }
 
         /// <inheritdoc/>

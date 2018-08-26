@@ -52,12 +52,12 @@ namespace NCDK.Isomorphisms.MCSS
         /// <summary>
         /// The extension attribute of the RNode object.
         /// </summary>
-        public BitArray Extension { get; set; } = null;
+        public BitArray Extension { get; private set; } = null;
 
         /// <summary>
         /// The extension attribute of the RNode object.
         /// </summary>
-        public BitArray Forbidden { get; set; } = null;
+        public BitArray Forbidden { get; private set; } = null;
 
         /// <summary>
         ///  Constructor for the RNode object.

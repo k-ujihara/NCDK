@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -27,10 +28,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Serialization;
 using NCDK.Config;
 using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace NCDK.Default
@@ -41,32 +44,25 @@ namespace NCDK.Default
     /// <example>
     /// An Atom class is instantiated with at least the atom symbol:
     /// <code>
-    ///   Atom a = new Atom("C");
+    /// Atom a = new Atom("C");
     /// </code>
     ///
     /// Once instantiated all field not filled by passing parameters
-    /// to the constructor are null. Atoms can be configured by using
-    /// the IsotopeFactory.configure() method:
+    /// to the constructor are <see langword="null"/>. Atoms can be configured by using
+    /// the <see cref="IsotopeFactory.Configure(IAtom)"/> method:
     /// <code>
-    ///   IsotopeFactory factory = SomeIsotopeFactory.GetInstance(a.Builder);
-    ///   factory.Configure(a);
+    /// IsotopeFactory factory = SomeIsotopeFactory.GetInstance(a.Builder);
+    /// factory.Configure(a);
     /// </code>
-    ///
-    /// More examples about using this class can be found in the
-    /// Junit test for this class.
     /// </example>
     /// <seealso cref="NCDK.Config.XMLIsotopeFactory.GetInstance(IChemObjectBuilder)"/>
     // @cdk.githash
     // @author     steinbeck
     // @cdk.created    2000-10-02
     // @cdk.keyword    atom
-    [Serializable]
     public class Atom
-        : AtomType, IAtom
+        : AtomType, IAtom, ISerializable
     {
-        // Let's keep this exact specification of what kind of point2d we're talking
-        // of here, since there are so many around in the java standard api
-
         internal double? charge;
         internal int? implicitHydrogenCount;
         internal Vector2? point2D;
@@ -74,6 +70,40 @@ namespace NCDK.Default
         internal Vector3? fractionalPoint3D;
         internal int stereoParity;
         internal bool isSingleOrDouble;
+
+        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddNullableValue(nameof(charge), charge);
+            info.AddNullableValue(nameof(implicitHydrogenCount), implicitHydrogenCount);
+            info.AddNullableValue(nameof(point2D), point2D);
+            info.AddNullableValue(nameof(point3D), point3D);
+            info.AddNullableValue(nameof(fractionalPoint3D), fractionalPoint3D);
+            info.AddValue(nameof(stereoParity), stereoParity);
+            info.AddValue(nameof(isSingleOrDouble), isSingleOrDouble);
+        }
+
+        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
+        protected Atom(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+            charge = info.GetNullable<double>(nameof(charge));
+            implicitHydrogenCount = info.GetNullable<int>(nameof(implicitHydrogenCount));
+
+            covalentRadius = info.GetNullable<double>(nameof(covalentRadius));
+            hybridization = (Hybridization)info.GetInt32(nameof(hybridization));
+            valency = info.GetNullable<int>(nameof(valency));
+            formalNeighbourCount = info.GetNullable<int>(nameof(formalNeighbourCount));
+            atomTypeName = info.GetString(nameof(atomTypeName));
+            isHydrogenBondAcceptor = info.GetBoolean(nameof(isHydrogenBondAcceptor));
+            isHydrogenBondDonor = info.GetBoolean(nameof(isHydrogenBondDonor));
+            isAliphatic = info.GetBoolean(nameof(isAliphatic));
+            isAromatic = info.GetBoolean(nameof(isAromatic));
+            isInRing = info.GetBoolean(nameof(isInRing));
+            isReactiveCenter = info.GetBoolean(nameof(isReactiveCenter));
+        }
+
 
         /// <summary>
         /// Constructs an completely unset Atom.
@@ -117,8 +147,8 @@ namespace NCDK.Default
         /// Constructs an Atom from a string containing an element symbol and optionally
         /// the atomic mass, hydrogen count, and formal charge. 
         /// </summary>
-		/// <remarks>
-		/// The symbol grammar allows
+        /// <remarks>
+        /// The symbol grammar allows
         /// easy construction from common symbols, for example:
         /// 
         /// <code>
@@ -134,7 +164,7 @@ namespace NCDK.Default
         ///     hcnt := 'H' \d+
         ///     fchg := '+' \d+? | '-' \d+?
         /// </pre>
-		/// </remarks>
+        /// </remarks>
         /// <param name="symbol">string with the element symbol</param>
         public Atom(string symbol) : base((string)null)
         {
@@ -191,24 +221,24 @@ namespace NCDK.Default
             }
         }
 
-		/// <inheritdoc/>
-		public virtual IAtomContainer Container => null;
+        /// <inheritdoc/>
+        public virtual IAtomContainer Container => null;
 
-		/// <inheritdoc/>
-		public virtual int Index => -1;
+        /// <inheritdoc/>
+        public virtual int Index => -1;
 
-		/// <inheritdoc/>
-		public virtual IReadOnlyList<IBond> Bonds
-		{ 
-			get { throw new NotSupportedException(); } 
-		}
+        /// <inheritdoc/>
+        public virtual IReadOnlyList<IBond> Bonds
+        { 
+            get { throw new NotSupportedException(); } 
+        }
 
-		/// <inheritdoc/>
-		public IBond GetBond(IAtom atom) 
-		{
-			throw new InvalidOperationException();
-	    }
-		
+        /// <inheritdoc/>
+        public IBond GetBond(IAtom atom) 
+        {
+            throw new InvalidOperationException();
+        }
+        
         /// <summary>
         /// The partial charge of this atom.
         /// </summary>
@@ -301,9 +331,8 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public override bool Compare(object obj)
         {
-            var aa = obj as IAtom;
-			// XXX: floating point comparision!
-            return aa != null && base.Compare(obj)
+            // XXX: floating point comparision!
+            return obj is IAtom aa && base.Compare(obj)
                 && Point2D == aa.Point2D
                 && Point3D == aa.Point3D
                 && ImplicitHydrogenCount == aa.ImplicitHydrogenCount
@@ -362,7 +391,7 @@ namespace NCDK.Default
 
         private static bool ParseAtomSymbol(IAtom atom, string str)
         {
-			ChemicalElement elem;
+            ChemicalElement elem;
 
             int len = str.Length;
             int pos = 0;
@@ -372,41 +401,36 @@ namespace NCDK.Default
             int hcnt = 0;
             int chg = 0;
 
+            // optional mass
+            if (pos < len && IsDigit(str[pos]))
             {
-                // optional mass
-				if (pos < len && IsDigit(str[pos])) 
-				{
-					mass = (str[pos++] - '0');
-					while (pos < len && IsDigit(str[pos]))
-						mass = 10 * mass + (str[pos++] - '0');
-				}
-                else if ("R".Equals(str))
+                mass = (str[pos++] - '0');
+                while (pos < len && IsDigit(str[pos]))
+                    mass = 10 * mass + (str[pos++] - '0');
+            }
+            else
+            {
+                switch (str)
                 {
-                    atom.AtomicNumber = 0;
-                    atom.Symbol = "R";
-                    return true;
+                    case "R":
+                        atom.AtomicNumber = 0;
+                        atom.Symbol = "R";
+                        return true;
+                    case "*":
+                        atom.AtomicNumber = 0;
+                        atom.Symbol = "*";
+                        return true;
+                    case "D":
+                        atom.AtomicNumber = 1;
+                        atom.MassNumber = 2;
+                        atom.Symbol = "H";
+                        return true;
+                    case "T":
+                        atom.AtomicNumber = 1;
+                        atom.MassNumber = 3;
+                        atom.Symbol = "H";
+                        return true;
                 }
-                else if ("*".Equals(str))
-                {
-                    atom.AtomicNumber = 0;
-                    atom.Symbol = "*";
-                    return true;
-                }
-                else if ("D".Equals(str))
-                {
-                    atom.AtomicNumber = 1;
-                    atom.MassNumber = 2;
-                    atom.Symbol = "H";
-                    return true;
-                }
-                else if ("T".Equals(str))
-                {
-                    atom.AtomicNumber = 1;
-                    atom.MassNumber = 3;
-                    atom.Symbol = "H";
-                    return true;
-                }
-
             }
 
             // atom symbol
@@ -487,19 +511,19 @@ namespace NCDK.Default
             return pos == len && len > 0;
         }
 
-		/// <inheritdoc/>
-		public override int GetHashCode() 
-		{
-			return base.GetHashCode();
-		}
+        /// <inheritdoc/>
+        public override int GetHashCode() 
+        {
+            return base.GetHashCode();
+        }
 
-		/// <inheritdoc/>
-		public override bool Equals(object obj) 
-		{
-			if (obj is AtomRef)
-				return base.Equals(((AtomRef) obj).Deref());
-			return base.Equals(obj);
-		}
+        /// <inheritdoc/>
+        public override bool Equals(object other) 
+        {
+            if (other is AtomRef)
+                return base.Equals(((AtomRef)other).Deref());
+            return base.Equals(other);
+        }
     }
 }
 namespace NCDK.Silent
@@ -510,32 +534,25 @@ namespace NCDK.Silent
     /// <example>
     /// An Atom class is instantiated with at least the atom symbol:
     /// <code>
-    ///   Atom a = new Atom("C");
+    /// Atom a = new Atom("C");
     /// </code>
     ///
     /// Once instantiated all field not filled by passing parameters
-    /// to the constructor are null. Atoms can be configured by using
-    /// the IsotopeFactory.configure() method:
+    /// to the constructor are <see langword="null"/>. Atoms can be configured by using
+    /// the <see cref="IsotopeFactory.Configure(IAtom)"/> method:
     /// <code>
-    ///   IsotopeFactory factory = SomeIsotopeFactory.GetInstance(a.Builder);
-    ///   factory.Configure(a);
+    /// IsotopeFactory factory = SomeIsotopeFactory.GetInstance(a.Builder);
+    /// factory.Configure(a);
     /// </code>
-    ///
-    /// More examples about using this class can be found in the
-    /// Junit test for this class.
     /// </example>
     /// <seealso cref="NCDK.Config.XMLIsotopeFactory.GetInstance(IChemObjectBuilder)"/>
     // @cdk.githash
     // @author     steinbeck
     // @cdk.created    2000-10-02
     // @cdk.keyword    atom
-    [Serializable]
     public class Atom
-        : AtomType, IAtom
+        : AtomType, IAtom, ISerializable
     {
-        // Let's keep this exact specification of what kind of point2d we're talking
-        // of here, since there are so many around in the java standard api
-
         internal double? charge;
         internal int? implicitHydrogenCount;
         internal Vector2? point2D;
@@ -543,6 +560,40 @@ namespace NCDK.Silent
         internal Vector3? fractionalPoint3D;
         internal int stereoParity;
         internal bool isSingleOrDouble;
+
+        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddNullableValue(nameof(charge), charge);
+            info.AddNullableValue(nameof(implicitHydrogenCount), implicitHydrogenCount);
+            info.AddNullableValue(nameof(point2D), point2D);
+            info.AddNullableValue(nameof(point3D), point3D);
+            info.AddNullableValue(nameof(fractionalPoint3D), fractionalPoint3D);
+            info.AddValue(nameof(stereoParity), stereoParity);
+            info.AddValue(nameof(isSingleOrDouble), isSingleOrDouble);
+        }
+
+        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
+        protected Atom(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+            charge = info.GetNullable<double>(nameof(charge));
+            implicitHydrogenCount = info.GetNullable<int>(nameof(implicitHydrogenCount));
+
+            covalentRadius = info.GetNullable<double>(nameof(covalentRadius));
+            hybridization = (Hybridization)info.GetInt32(nameof(hybridization));
+            valency = info.GetNullable<int>(nameof(valency));
+            formalNeighbourCount = info.GetNullable<int>(nameof(formalNeighbourCount));
+            atomTypeName = info.GetString(nameof(atomTypeName));
+            isHydrogenBondAcceptor = info.GetBoolean(nameof(isHydrogenBondAcceptor));
+            isHydrogenBondDonor = info.GetBoolean(nameof(isHydrogenBondDonor));
+            isAliphatic = info.GetBoolean(nameof(isAliphatic));
+            isAromatic = info.GetBoolean(nameof(isAromatic));
+            isInRing = info.GetBoolean(nameof(isInRing));
+            isReactiveCenter = info.GetBoolean(nameof(isReactiveCenter));
+        }
+
 
         /// <summary>
         /// Constructs an completely unset Atom.
@@ -586,8 +637,8 @@ namespace NCDK.Silent
         /// Constructs an Atom from a string containing an element symbol and optionally
         /// the atomic mass, hydrogen count, and formal charge. 
         /// </summary>
-		/// <remarks>
-		/// The symbol grammar allows
+        /// <remarks>
+        /// The symbol grammar allows
         /// easy construction from common symbols, for example:
         /// 
         /// <code>
@@ -603,7 +654,7 @@ namespace NCDK.Silent
         ///     hcnt := 'H' \d+
         ///     fchg := '+' \d+? | '-' \d+?
         /// </pre>
-		/// </remarks>
+        /// </remarks>
         /// <param name="symbol">string with the element symbol</param>
         public Atom(string symbol) : base((string)null)
         {
@@ -660,24 +711,24 @@ namespace NCDK.Silent
             }
         }
 
-		/// <inheritdoc/>
-		public virtual IAtomContainer Container => null;
+        /// <inheritdoc/>
+        public virtual IAtomContainer Container => null;
 
-		/// <inheritdoc/>
-		public virtual int Index => -1;
+        /// <inheritdoc/>
+        public virtual int Index => -1;
 
-		/// <inheritdoc/>
-		public virtual IReadOnlyList<IBond> Bonds
-		{ 
-			get { throw new NotSupportedException(); } 
-		}
+        /// <inheritdoc/>
+        public virtual IReadOnlyList<IBond> Bonds
+        { 
+            get { throw new NotSupportedException(); } 
+        }
 
-		/// <inheritdoc/>
-		public IBond GetBond(IAtom atom) 
-		{
-			throw new InvalidOperationException();
-	    }
-		
+        /// <inheritdoc/>
+        public IBond GetBond(IAtom atom) 
+        {
+            throw new InvalidOperationException();
+        }
+        
         /// <summary>
         /// The partial charge of this atom.
         /// </summary>
@@ -763,9 +814,8 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public override bool Compare(object obj)
         {
-            var aa = obj as IAtom;
-			// XXX: floating point comparision!
-            return aa != null && base.Compare(obj)
+            // XXX: floating point comparision!
+            return obj is IAtom aa && base.Compare(obj)
                 && Point2D == aa.Point2D
                 && Point3D == aa.Point3D
                 && ImplicitHydrogenCount == aa.ImplicitHydrogenCount
@@ -824,7 +874,7 @@ namespace NCDK.Silent
 
         private static bool ParseAtomSymbol(IAtom atom, string str)
         {
-			ChemicalElement elem;
+            ChemicalElement elem;
 
             int len = str.Length;
             int pos = 0;
@@ -834,48 +884,36 @@ namespace NCDK.Silent
             int hcnt = 0;
             int chg = 0;
 
+            // optional mass
+            if (pos < len && IsDigit(str[pos]))
             {
-                elem = ChemicalElement.OfString(str);
-                if (elem != ChemicalElements.Unknown)
+                mass = (str[pos++] - '0');
+                while (pos < len && IsDigit(str[pos]))
+                    mass = 10 * mass + (str[pos++] - '0');
+            }
+            else
+            {
+                switch (str)
                 {
-                    atom.AtomicNumber = elem.AtomicNumber;
-                    atom.Symbol = elem.Symbol;
-                    return true;
+                    case "R":
+                        atom.AtomicNumber = 0;
+                        atom.Symbol = "R";
+                        return true;
+                    case "*":
+                        atom.AtomicNumber = 0;
+                        atom.Symbol = "*";
+                        return true;
+                    case "D":
+                        atom.AtomicNumber = 1;
+                        atom.MassNumber = 2;
+                        atom.Symbol = "H";
+                        return true;
+                    case "T":
+                        atom.AtomicNumber = 1;
+                        atom.MassNumber = 3;
+                        atom.Symbol = "H";
+                        return true;
                 }
-                else if ("R".Equals(str))
-                {
-                    atom.AtomicNumber = 0;
-                    atom.Symbol = "R";
-                    return true;
-                }
-                else if ("*".Equals(str))
-                {
-                    atom.AtomicNumber = 0;
-                    atom.Symbol = "*";
-                    return true;
-                }
-                else if ("D".Equals(str))
-                {
-                    atom.AtomicNumber = 1;
-                    atom.MassNumber = 2;
-                    atom.Symbol = "H";
-                    return true;
-                }
-                else if ("T".Equals(str))
-                {
-                    atom.AtomicNumber = 1;
-                    atom.MassNumber = 3;
-                    atom.Symbol = "H";
-                    return true;
-                }
-
-                // optional mass
-				if (pos < len && IsDigit(str[pos])) 
-				{
-					mass = (str[pos++] - '0');
-					while (pos < len && IsDigit(str[pos]))
-						mass = 10 * mass + (str[pos++] - '0');
-				}
             }
 
             // atom symbol
@@ -956,18 +994,18 @@ namespace NCDK.Silent
             return pos == len && len > 0;
         }
 
-		/// <inheritdoc/>
-		public override int GetHashCode() 
-		{
-			return base.GetHashCode();
-		}
+        /// <inheritdoc/>
+        public override int GetHashCode() 
+        {
+            return base.GetHashCode();
+        }
 
-		/// <inheritdoc/>
-		public override bool Equals(object obj) 
-		{
-			if (obj is AtomRef)
-				return base.Equals(((AtomRef) obj).Deref());
-			return base.Equals(obj);
-		}
+        /// <inheritdoc/>
+        public override bool Equals(object other) 
+        {
+            if (other is AtomRef)
+                return base.Equals(((AtomRef)other).Deref());
+            return base.Equals(other);
+        }
     }
 }

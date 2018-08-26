@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
@@ -36,7 +37,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         public void TestSomeMethod()
         {
             // TODO review the generated test code and remove the default call to fail.
-            Assert.IsNotNull(ExactMapping.ExtractMapping(new List<IList<int>>(), new List<int>(), new List<int>()));
+            Assert.IsNotNull(ExactMapping.ExtractMapping(new List<IReadOnlyList<int>>(), new List<int>(), new List<int>()));
         }
     }
 }

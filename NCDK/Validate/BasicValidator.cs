@@ -118,69 +118,72 @@ namespace NCDK.Validate
 
         // the Atom tests
 
-        private ValidationReport ValidateCharge(IAtom atom)
+        private static ValidationReport ValidateCharge(IAtom atom)
         {
             ValidationReport report = new ValidationReport();
             ValidationTest tooCharged = new ValidationTest(atom, "Atom has an unlikely large positive or negative charge");
-            if (atom.Symbol.Equals("O") || atom.Symbol.Equals("N") || atom.Symbol.Equals("C")
-                    || atom.Symbol.Equals("H"))
+            switch (atom.Symbol)
             {
-                if (atom.FormalCharge == 0)
-                {
-                    report.OKs.Add(tooCharged);
-                }
-                else
-                {
-                    tooCharged.Details = $"Atom {atom.Symbol} has charge {atom.FormalCharge}";
-                    if (atom.FormalCharge < -3)
+                case "O":
+                case "N":
+                case "C":
+                case "H":
+                    if (atom.FormalCharge == 0)
                     {
-                        report.Errors.Add(tooCharged);
+                        report.OKs.Add(tooCharged);
                     }
-                    else if (atom.FormalCharge < -1)
+                    else
                     {
-                        report.Warnings.Add(tooCharged);
+                        tooCharged.Details = $"Atom {atom.Symbol} has charge {atom.FormalCharge}";
+                        if (atom.FormalCharge < -3)
+                        {
+                            report.Errors.Add(tooCharged);
+                        }
+                        else if (atom.FormalCharge < -1)
+                        {
+                            report.Warnings.Add(tooCharged);
+                        }
+                        else if (atom.FormalCharge > 3)
+                        {
+                            report.Errors.Add(tooCharged);
+                        }
+                        else if (atom.FormalCharge > 1)
+                        {
+                            report.Warnings.Add(tooCharged);
+                        }
                     }
-                    else if (atom.FormalCharge > 3)
+                    break;
+                default:
+                    if (atom.FormalCharge == 0)
                     {
-                        report.Errors.Add(tooCharged);
+                        report.OKs.Add(tooCharged);
                     }
-                    else if (atom.FormalCharge > 1)
+                    else
                     {
-                        report.Warnings.Add(tooCharged);
+                        tooCharged.Details = $"Atom {atom.Symbol} has charge {atom.FormalCharge}";
+                        if (atom.FormalCharge < -4)
+                        {
+                            report.Errors.Add(tooCharged);
+                        }
+                        else if (atom.FormalCharge < -3)
+                        {
+                            report.Warnings.Add(tooCharged);
+                        }
+                        else if (atom.FormalCharge > 4)
+                        {
+                            report.Errors.Add(tooCharged);
+                        }
+                        else if (atom.FormalCharge > 3)
+                        {
+                            report.Warnings.Add(tooCharged);
+                        }
                     }
-                }
-            }
-            else
-            {
-                if (atom.FormalCharge == 0)
-                {
-                    report.OKs.Add(tooCharged);
-                }
-                else
-                {
-                    tooCharged.Details = $"Atom {atom.Symbol} has charge {atom.FormalCharge}";
-                    if (atom.FormalCharge < -4)
-                    {
-                        report.Errors.Add(tooCharged);
-                    }
-                    else if (atom.FormalCharge < -3)
-                    {
-                        report.Warnings.Add(tooCharged);
-                    }
-                    else if (atom.FormalCharge > 4)
-                    {
-                        report.Errors.Add(tooCharged);
-                    }
-                    else if (atom.FormalCharge > 3)
-                    {
-                        report.Warnings.Add(tooCharged);
-                    }
-                }
+                    break;
             }
             return report;
         }
 
-        private ValidationReport ValidateHydrogenCount(IAtom atom)
+        private static ValidationReport ValidateHydrogenCount(IAtom atom)
         {
             ValidationReport report = new ValidationReport();
             ValidationTest negativeHydrogenCount = new ValidationTest(atom,
@@ -201,7 +204,7 @@ namespace NCDK.Validate
             return report;
         }
 
-        private ValidationReport ValidatePseudoAtom(IAtom atom)
+        private static ValidationReport ValidatePseudoAtom(IAtom atom)
         {
             ValidationReport report = new ValidationReport();
             ValidationTest isElementOrPseudo = new ValidationTest(atom, "Non-element atom must be of class PseudoAtom.");
@@ -215,7 +218,7 @@ namespace NCDK.Validate
                 // check whether atom is really an element
                 try
                 {
-                    IsotopeFactory isotopeFactory = Isotopes.Instance;
+                    IsotopeFactory isotopeFactory = BODRIsotopeFactory.Instance;
                     IElement element = isotopeFactory.GetElement(atom.Symbol);
                     if (element == null)
                     {
@@ -239,7 +242,7 @@ namespace NCDK.Validate
 
         // the Bond tests
 
-        private ValidationReport ValidateStereoChemistry(IBond bond)
+        private static ValidationReport ValidateStereoChemistry(IBond bond)
         {
             ValidationReport report = new ValidationReport();
             ValidationTest bondStereo = new ValidationTest(bond, "Defining stereochemistry on bonds is not safe.",
@@ -255,13 +258,13 @@ namespace NCDK.Validate
             return report;
         }
 
-        private ValidationReport ValidateMaxBondOrder(IBond bond)
+        private static ValidationReport ValidateMaxBondOrder(IBond bond)
         {
             ValidationReport report = new ValidationReport();
             ValidationTest maxBO = new ValidationTest(bond, "Bond order exceeds the maximum for one of its atoms.");
             try
             {
-                AtomTypeFactory structgenATF = AtomTypeFactory.GetInstance("NCDK.Dict.cdk-atom-types.owl", bond.Builder);
+                var structgenATF = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", bond.Builder);
                 for (int i = 0; i < bond.Atoms.Count; i++)
                 {
                     IAtom atom = bond.Atoms[i];
@@ -310,13 +313,13 @@ namespace NCDK.Validate
 
         // the Isotope tests
 
-        public ValidationReport ValidateIsotopeExistence(IIsotope isotope)
+        public static ValidationReport ValidateIsotopeExistence(IIsotope isotope)
         {
             ValidationReport report = new ValidationReport();
             ValidationTest isotopeExists = new ValidationTest(isotope, "Isotope with this mass number is not known for this element.");
             try
             {
-                IsotopeFactory isotopeFac = Isotopes.Instance;
+                IsotopeFactory isotopeFac = BODRIsotopeFactory.Instance;
                 var isotopes = isotopeFac.GetIsotopes(isotope.Symbol);
                 bool foundKnownIsotope = false;
                 if (isotope.MassNumber != 0)
@@ -348,13 +351,13 @@ namespace NCDK.Validate
 
         // the Molecule tests
 
-        private ValidationReport ValidateBondOrderSum(IAtom atom, IAtomContainer molecule)
+        private static ValidationReport ValidateBondOrderSum(IAtom atom, IAtomContainer molecule)
         {
             ValidationReport report = new ValidationReport();
             ValidationTest checkBondSum = new ValidationTest(atom, "The atom's total bond order is too high.");
             try
             {
-                AtomTypeFactory structgenATF = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", atom.Builder);
+                var structgenATF = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", atom.Builder);
                 int bos = (int)molecule.GetBondOrderSum(atom);
                 var atomTypes = structgenATF.GetAtomTypes(atom.Symbol).ToList();
                 if (atomTypes.Count == 0)
@@ -407,8 +410,7 @@ namespace NCDK.Validate
             return report;
         }
 
-        private ValidationReport ValidateAtomCountConservation(IReaction reaction, IAtomContainer reactants,
-                IAtomContainer products)
+        private static ValidationReport ValidateAtomCountConservation(IReaction reaction, IAtomContainer reactants, IAtomContainer products)
         {
             ValidationReport report = new ValidationReport();
             ValidationTest atomCount = new ValidationTest(reaction, "Atom count mismatch for reaction: the product side has a different atom count than the reactant side.");
@@ -423,7 +425,7 @@ namespace NCDK.Validate
             return report;
         }
 
-        private ValidationReport ValidateChargeConservation(IReaction reaction, IAtomContainer reactants,
+        private static ValidationReport ValidateChargeConservation(IReaction reaction, IAtomContainer reactants,
                 IAtomContainer products)
         {
             ValidationReport report = new ValidationReport();

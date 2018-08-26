@@ -18,7 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 
 namespace NCDK.Formula
 {
@@ -30,7 +30,7 @@ namespace NCDK.Formula
     [TestClass()]
     public class AdductFormulaTest : AbstractAdductFormulaTest
     {
-        protected override IChemObjectBuilder Builder => Default.ChemObjectBuilder.Instance;
+        protected override IChemObjectBuilder Builder => ChemObjectBuilder.Instance;
 
         [TestMethod()]
         public void TestAdductFormula()

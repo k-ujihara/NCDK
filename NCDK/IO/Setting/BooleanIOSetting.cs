@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
+
 namespace NCDK.IO.Setting
 {
     /// <summary>
@@ -35,7 +37,7 @@ namespace NCDK.IO.Setting
 
         /// <summary>
         /// Sets the setting for a certain question. The setting
-        /// is a bool, and it accepts only "true" and "false".
+        /// is a boolean, and it accepts only "true" and "false".
         /// </summary>
         public override string Setting
         {
@@ -46,25 +48,28 @@ namespace NCDK.IO.Setting
 
             set
             {
-                if (value.Equals("true") || value.Equals("false"))
+                switch (value)
                 {
-                    this.setting = value;
-                }
-                else if (value.Equals("True") || value.Equals("yes") || value.Equals("y"))
-                {
-                    this.setting = "true";
-                }
-                else if (value.Equals("False") || value.Equals("no") || value.Equals("n"))
-                {
-                    this.setting = "false";
-                }
-                else
-                {
-                    throw new CDKException("Setting " + value + " is not a bool.");
+                    case "true":
+                    case "false":
+                        this.setting = value;
+                        break;
+                    case "True":
+                    case "yes":
+                    case "y":
+                        this.setting = "true";
+                        break;
+                    case "False":
+                    case "no":
+                    case "n":
+                        this.setting = "false";
+                        break;
+                    default:
+                        throw new CDKException($"Setting {value} is not a boolean.");
                 }
             }
         }
 
-        public bool IsSet => string.Equals(setting, "true");
+        public bool IsSet => string.Equals(setting, "true", StringComparison.Ordinal);
     }
 }

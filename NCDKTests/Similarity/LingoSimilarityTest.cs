@@ -22,11 +22,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Fingerprints;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
-using System.Collections.Generic;
 
 namespace NCDK.Similarity
 {
@@ -37,15 +37,15 @@ namespace NCDK.Similarity
         [TestMethod()]
         public void TestLingoSim()
         {
-            IAtomContainer mol1 = TestMoleculeFactory.MakeIndole();
-            IAtomContainer mol2 = TestMoleculeFactory.MakeIndole();
+            var mol1 = TestMoleculeFactory.MakeIndole();
+            var mol2 = TestMoleculeFactory.MakeIndole();
             AddImplicitHydrogens(mol1);
             AddImplicitHydrogens(mol2);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);
-            LingoFingerprinter fingerprinter = new LingoFingerprinter();
-            IDictionary<string, int> bs1 = fingerprinter.GetRawFingerprint(mol1);
-            IDictionary<string, int> bs2 = fingerprinter.GetRawFingerprint(mol2);
+            var fingerprinter = new LingoFingerprinter();
+            var bs1 = fingerprinter.GetRawFingerprint(mol1);
+            var bs2 = fingerprinter.GetRawFingerprint(mol2);
             var lingosim = LingoSimilarity.Calculate(bs1, bs2);
             Assert.AreEqual(1.0, lingosim, 0.01);
         }

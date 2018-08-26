@@ -39,7 +39,7 @@ namespace NCDK.Validate
             return ValidateChemSequenceNulls(subject);
         }
 
-        private ValidationReport ValidateChemFileNulls(IChemFile chemFile)
+        private static ValidationReport ValidateChemFileNulls(IChemFile chemFile)
         {
             ValidationReport report = new ValidationReport();
             ValidationTest hasNulls = new ValidationTest(chemFile, "ChemFile contains a null ChemSequence.");
@@ -58,7 +58,7 @@ namespace NCDK.Validate
             return report;
         }
 
-        private ValidationReport ValidateChemSequenceNulls(IChemSequence sequence)
+        private static ValidationReport ValidateChemSequenceNulls(IChemSequence sequence)
         {
             ValidationReport report = new ValidationReport();
             ValidationTest hasNulls = new ValidationTest(sequence, "ChemSequence contains a null ChemModel.");

@@ -16,10 +16,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Graphs;
 using NCDK.Templates;
-using System.Collections.Generic;
 
 namespace NCDK.RingSearches
 {
@@ -38,7 +38,7 @@ namespace NCDK.RingSearches
         }
 
         [TestMethod()]
-        public void TestConvertToAtomContainer_IRingSet()
+        public void TestConvertToAtomContainerIRingSet()
         {
             IAtomContainer molecule = TestMoleculeFactory.MakeAlphaPinene();
 
@@ -51,17 +51,17 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestPartitionIntoRings()
         {
-            IAtomContainer azulene = TestMoleculeFactory.MakeAzulene();
-            IRingSet ringSet = Cycles.FindSSSR(azulene).ToRingSet();
-            IList<IRingSet> list = RingPartitioner.PartitionRings(ringSet);
+            var azulene = TestMoleculeFactory.MakeAzulene();
+            var ringSet = Cycles.FindSSSR(azulene).ToRingSet();
+            var list = RingPartitioner.PartitionRings(ringSet);
             Assert.AreEqual(1, list.Count);
 
-            IAtomContainer biphenyl = TestMoleculeFactory.MakeBiphenyl();
+            var biphenyl = TestMoleculeFactory.MakeBiphenyl();
             ringSet = Cycles.FindSSSR(biphenyl).ToRingSet();
             list = RingPartitioner.PartitionRings(ringSet);
             Assert.AreEqual(2, list.Count);
 
-            IAtomContainer spiro = TestMoleculeFactory.MakeSpiroRings();
+            var spiro = TestMoleculeFactory.MakeSpiroRings();
             ringSet = Cycles.FindSSSR(spiro).ToRingSet();
             list = RingPartitioner.PartitionRings(ringSet);
             Assert.AreEqual(1, list.Count);

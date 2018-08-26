@@ -18,6 +18,7 @@
  */
 
 using NCDK.Tools;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -48,7 +49,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "xyz" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "xyz" };
 
         /// <inheritdoc/>
         public string ReaderClassName { get; } = typeof(XYZReader).FullName;
@@ -60,9 +61,9 @@ namespace NCDK.IO.Formats
         public override bool IsXmlBased => false;
 
         /// <inheritdoc/>
-        public DataFeatures SupportedDataFeatures => RequiredDataFeatures | DataFeatures.HAS_ATOM_PARTIAL_CHARGES;
+        public DataFeatures SupportedDataFeatures => RequiredDataFeatures | DataFeatures.HasAtomPartialCharges;
 
         /// <inheritdoc/>
-        public DataFeatures RequiredDataFeatures => DataFeatures.HAS_3D_COORDINATES | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+        public DataFeatures RequiredDataFeatures => DataFeatures.Has3DCoordinates | DataFeatures.HasAtomElementSymbol;
     }
 }

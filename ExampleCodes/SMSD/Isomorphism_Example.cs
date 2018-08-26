@@ -1,15 +1,16 @@
-﻿using NCDK.Smiles;
+﻿using NCDK.Silent;
+using NCDK.Smiles;
 using System;
 
 namespace NCDK.SMSD
 {
-    class Isomorphism_Example
+    static class Isomorphism_Example
     {
-        void Main()
+        static void Main()
         {
             {
                 #region 1
-                SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+                SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
                 // Benzene
                 IAtomContainer A1 = sp.ParseSmiles("C1=CC=CC=C1");
                 // Napthalene
@@ -45,7 +46,7 @@ namespace NCDK.SMSD
             }
             {
                 #region 2
-                SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+                SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
                 // Benzene
                 IAtomContainer A1 = sp.ParseSmiles("C1=CC=CC=C1");
                 // Napthalene

@@ -36,12 +36,12 @@ namespace NCDK.Hash.Stereo
         /// <summary>
         /// Encode one or more stereo elements based on the current invariants. If
         /// any stereo element are uncovered then the corresponding value in the
-        /// <paramref name="next"/>[] array is modified.
+        /// <paramref name="nextInvariants"/> array is modified.
         /// </summary>
         /// <param name="current">current invariants</param>
-        /// <param name="next">next invariants</param>
+        /// <param name="nextInvariants">next invariants</param>
         /// <returns>whether any stereo configurations were encoded</returns>
-        bool Encode(long[] current, long[] next);
+        bool Encode(long[] current, long[] nextInvariants);
 
         /// <summary>
         /// Reset the stereo-encoders, any currently perceived configurations will be

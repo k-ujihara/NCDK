@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System.Diagnostics;
 using System.IO;
@@ -41,9 +42,9 @@ namespace NCDK.IO.Iterator
             IChemSequence set;
             using (var ins = ResourceLoader.GetAsStream(filename))
             using (var sr = new StreamReader(ins))
-            using (var reader = new EnumerablePCSubstancesXMLReader(sr, Default.ChemObjectBuilder.Instance))
+            using (var reader = new EnumerablePCSubstancesXMLReader(sr, ChemObjectBuilder.Instance))
             {
-                set = Default.ChemObjectBuilder.Instance.NewChemSequence();
+                set = ChemObjectBuilder.Instance.NewChemSequence();
                 foreach (var obj in reader)
                 {
                     Assert.IsNotNull(obj);

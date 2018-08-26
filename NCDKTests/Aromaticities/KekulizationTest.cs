@@ -24,8 +24,9 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Base;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
+using System.Linq;
 
 namespace NCDK.Aromaticities
 {
@@ -495,7 +496,7 @@ namespace NCDK.Aromaticities
         void AssertBondOrders(IAtomContainer ac, params BondOrder[] expected)
         {
             Kekulization.Kekulize(ac);
-            IBond[] bonds = AtomContainerManipulator.GetBondArray(ac);
+            IBond[] bonds = ac.Bonds.ToArray(); ;
             BondOrder[] actual = new BondOrder[bonds.Length];
             for (int i = 0; i < bonds.Length; i++)
                 actual[i] = bonds[i].Order;

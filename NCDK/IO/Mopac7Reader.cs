@@ -26,6 +26,8 @@ using NCDK.Common.Primitives;
 using NCDK.IO.Formats;
 using NCDK.Numerics;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -46,11 +48,11 @@ namespace NCDK.IO
     public class Mopac7Reader : DefaultChemObjectReader
     {
         TextReader input = null;
-        private static string[] parameters = {"NO. OF FILLED LEVELS", "TOTAL ENERGY", "FINAL HEAT OF FORMATION",
+        private static readonly IReadOnlyList<string> parameters = new[] {"NO. OF FILLED LEVELS", "TOTAL ENERGY", "FINAL HEAT OF FORMATION",
             "IONIZATION POTENTIAL", "ELECTRONIC ENERGY", "CORE-CORE REPULSION", "MOLECULAR WEIGHT", "EHOMO", "ELUMO"};
-        private static string[] units = { "", "EV", "KJ", "", "EV", "EV", "", "EV", "EV" };
-        private static string eigenvalues = "EIGENVALUES";
-        private static string filledLevels = "NO. OF FILLED LEVELS";
+        private static readonly IReadOnlyList<string> units = new[] { "", "EV", "KJ", "", "EV", "EV", "", "EV", "EV" };
+        private const string eigenvalues = "EIGENVALUES";
+        private const string filledLevels = "NO. OF FILLED LEVELS";
 
         /// <summary>
         /// Constructs a new Mopac7reader that can read a molecule from a given <see cref="TextReader"/>.
@@ -73,7 +75,7 @@ namespace NCDK.IO
         // -1618.31024 EV ELECTRONIC ENERGY = -6569.42640 EV POINT GROUP: C1
         // CORE-CORE REPULSION = 4951.11615 EV IONIZATION POTENTIAL = 10.76839 NO.
         // OF FILLED LEVELS = 23 MOLECULAR WEIGHT = 122.123
-        
+
         private static readonly string[] expected_columns = { "NO.", "ATOM", "X", "Y", "Z" };
         public override T Read<T>(T obj)
         {
@@ -85,11 +87,12 @@ namespace NCDK.IO
                     string line = input.ReadLine();
                     while (line != null)
                     {
-                        if (line.IndexOf("****  MAX. NUMBER OF ATOMS ALLOWED") > -1) throw new CDKException(line);
-                        if (line.IndexOf("TO CONTINUE CALCULATION SPECIFY \"GEO-OK\"") > -1) throw new CDKException(line);
-                        if ("CARTESIAN COORDINATES".Equals(line.Trim()))
+                        if (line.IndexOf("****  MAX. NUMBER OF ATOMS ALLOWED", StringComparison.Ordinal) > -1)
+                            throw new CDKException(line);
+                        if (line.IndexOf("TO CONTINUE CALCULATION SPECIFY \"GEO-OK\"", StringComparison.Ordinal) > -1)
+                            throw new CDKException(line);
+                        if (string.Equals("CARTESIAN COORDINATES", line.Trim(), StringComparison.Ordinal))
                         {
-
                             IAtomContainer atomcontainer = ((IAtomContainer)obj);
                             input.ReadLine(); //reads blank line
                             line = input.ReadLine();
@@ -98,14 +101,14 @@ namespace NCDK.IO
                             int okCols = 0;
                             if (columns.Count == expected_columns.Length)
                                 for (int i = 0; i < expected_columns.Length; i++)
-                                    okCols += (columns[i].Equals(expected_columns[i])) ? 1 : 0;
+                                    okCols += (string.Equals(columns[i], expected_columns[i], StringComparison.Ordinal)) ? 1 : 0;
 
-                            if (okCols < expected_columns.Length) continue;
-                            //if (!"    NO.       ATOM         X         Y         Z".Equals(line)) continue;
+                            if (okCols < expected_columns.Length)
+                                continue;
 
                             input.ReadLine(); //reads blank line
                             int atomIndex = 0;
-                            while (line.Trim() != "")
+                            while (line.Trim().Length != 0)
                             {
                                 line = input.ReadLine();
                                 var tokens = Strings.Tokenize(line);
@@ -118,52 +121,42 @@ namespace NCDK.IO
                                     switch (token)
                                     {
                                         case 0:
+                                            atomIndex = int.Parse(tokenStr, NumberFormatInfo.InvariantInfo) - 1;
+                                            if (atomIndex < atomcontainer.Atoms.Count)
                                             {
-                                                atomIndex = int.Parse(tokenStr) - 1;
-                                                if (atomIndex < atomcontainer.Atoms.Count)
-                                                {
-                                                    atom = atomcontainer.Atoms[atomIndex];
-                                                }
-                                                else
-                                                    atom = null;
-                                                break;
+                                                atom = atomcontainer.Atoms[atomIndex];
                                             }
+                                            else
+                                                atom = null;
+                                            break;
                                         case 1:
-                                            {
-                                                if ((atom != null) && (!tokenStr.Equals(atom.Symbol))) atom = null;
-                                                break;
-                                            }
+                                            if ((atom != null) && (!string.Equals(tokenStr, atom.Symbol, StringComparison.Ordinal)))
+                                                atom = null;
+                                            break;
                                         case 2:
-                                            {
-                                                point3d[0] = double.Parse(tokenStr);
-                                                break;
-                                            }
+                                            point3d[0] = double.Parse(tokenStr, NumberFormatInfo.InvariantInfo);
+                                            break;
                                         case 3:
-                                            {
-                                                point3d[1] = double.Parse(tokenStr);
-                                                break;
-                                            }
+                                            point3d[1] = double.Parse(tokenStr, NumberFormatInfo.InvariantInfo);
+                                            break;
                                         case 4:
-                                            {
-                                                point3d[2] = double.Parse(tokenStr);
-                                                if (atom != null) atom.Point3D = new Vector3(point3d[0], point3d[1], point3d[2]);
-                                                break;
-                                            }
-
+                                            point3d[2] = double.Parse(tokenStr, NumberFormatInfo.InvariantInfo);
+                                            if (atom != null)
+                                                atom.Point3D = new Vector3(point3d[0], point3d[1], point3d[2]);
+                                            break;
                                     }
                                     token++;
                                     if (atom == null) break;
                                 }
-                                if ((atom == null) || ((atomIndex + 1) >= atomcontainer.Atoms.Count)) break;
-
+                                if ((atom == null) || ((atomIndex + 1) >= atomcontainer.Atoms.Count))
+                                    break;
                             }
-
                         }
-                        else if (line.IndexOf(Mopac7Reader.eigenvalues) >= 0)
+                        else if (line.IndexOf(Mopac7Reader.eigenvalues, StringComparison.Ordinal) >= 0)
                         {
                             line = input.ReadLine();
                             line = input.ReadLine();
-                            while (!line.Trim().Equals(""))
+                            while (line.Trim().Length != 0)
                             {
                                 eigenvalues.Append(line);
                                 line = input.ReadLine();
@@ -171,8 +164,8 @@ namespace NCDK.IO
                             container.SetProperty(Mopac7Reader.eigenvalues, eigenvalues.ToString());
                         }
                         else
-                            for (int i = 0; i < parameters.Length; i++)
-                                if (line.IndexOf(parameters[i]) >= 0)
+                            for (int i = 0; i < parameters.Count; i++)
+                                if (line.IndexOf(parameters[i], StringComparison.Ordinal) >= 0)
                                 {
                                     string value = line.Substring(line.LastIndexOf('=') + 1).Trim();
 
@@ -200,34 +193,35 @@ namespace NCDK.IO
                 return default(T);
         }
 
-        private void CalcHomoLumo(IAtomContainer mol)
+        private static void CalcHomoLumo(IAtomContainer mol)
         {
             var eigenProp = mol.GetProperty<string>(eigenvalues);
             if (eigenProp == null) return;
             //mol.GetProperties().Remove(eigenvalues);
             var filledLevelsProp = mol.GetProperty<string>(filledLevels);
             //mol.GetProperties().Remove(filledLevels);
-            if (filledLevelsProp == null) return;
+            if (filledLevelsProp == null)
+                return;
             int nFilledLevels = 0;
             try
             {
-                nFilledLevels = int.Parse(filledLevelsProp.ToString());
+                nFilledLevels = int.Parse(filledLevelsProp, NumberFormatInfo.InvariantInfo);
             }
             catch (FormatException)
             {
                 return;
             }
-            var eigenVals = Strings.Tokenize(eigenProp.ToString());
+            var eigenVals = Strings.Tokenize(eigenProp);
             int levelCounter = 0;
             foreach (var eigenVal in eigenVals)
             {
-                if (eigenVal.Trim() == "")
+                if (string.IsNullOrWhiteSpace(eigenVal))
                     continue;
                 else
                     try
                     {
                         // check if the value is an proper double:
-                        double.Parse(eigenVal);
+                        double.Parse(eigenVal, NumberFormatInfo.InvariantInfo);
                         levelCounter++;
                         if (levelCounter == nFilledLevels)
                         {
@@ -274,3 +268,4 @@ namespace NCDK.IO
         public override IResourceFormat Format => MOPAC7Format.Instance;
     }
 }
+

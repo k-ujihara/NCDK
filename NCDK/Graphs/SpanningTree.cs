@@ -22,6 +22,7 @@
  */
 
 using NCDK.Common.Collections;
+using System.Globalization;
 
 namespace NCDK.Graphs
 {
@@ -43,7 +44,7 @@ namespace NCDK.Graphs
         private int[] parent = null;
         private int[][] cb = null;       // what is cb??? cyclic bonds?
 
-        protected bool[] bondsInTree;
+        private bool[] bondsInTree;
 
         private int sptSize = 0;
         private int edrSize = 0;
@@ -133,7 +134,7 @@ namespace NCDK.Graphs
             FastFindInit(totalVertexCount);
             for (int i = 0; i < totalVertexCount; i++)
             {
-                (atomContainer.Atoms[i]).SetProperty(ATOM_NUMBER, (i + 1).ToString());
+                (atomContainer.Atoms[i]).SetProperty(ATOM_NUMBER, (i + 1).ToString(NumberFormatInfo.InvariantInfo));
             }
             IBond bond;
             int vertex1, vertex2;
@@ -143,8 +144,8 @@ namespace NCDK.Graphs
             {
                 bondsInTree[b] = false;
                 bond = atomContainer.Bonds[b];
-                vertex1 = int.Parse((bond.Begin).GetProperty<string>(ATOM_NUMBER));
-                vertex2 = int.Parse((bond.End).GetProperty<string>(ATOM_NUMBER));
+                vertex1 = int.Parse((bond.Begin).GetProperty<string>(ATOM_NUMBER), NumberFormatInfo.InvariantInfo);
+                vertex2 = int.Parse((bond.End).GetProperty<string>(ATOM_NUMBER), NumberFormatInfo.InvariantInfo);
                 //this below is a little bit  slower
                 //v1 = atomContainer.Atoms.IndexOf(bond.GetAtomAt(0))+1;
                 //v2 = atomContainer.Atoms.IndexOf(bond.GetAtomAt(1))+1;
@@ -200,7 +201,7 @@ namespace NCDK.Graphs
         /// <param name="atom2">end of path (target)</param>
         /// <returns>a path through the spanning tree from the source to the target</returns>
         /// <exception cref="NoSuchAtomException">if the atom is not in the spanning tree</exception>
-        public IAtomContainer GetPath(IAtomContainer spt, IAtom atom1, IAtom atom2)
+        public static IAtomContainer GetPath(IAtomContainer spt, IAtom atom1, IAtom atom2)
         {
             IAtomContainer path = spt.Builder.NewAtomContainer();
             PathTools.ResetFlags(spt);
@@ -210,7 +211,7 @@ namespace NCDK.Graphs
             return path;
         }
 
-        private IRing GetRing(IAtomContainer spt, IBond bond)
+        private static IRing GetRing(IAtomContainer spt, IBond bond)
         {
             IRing ring = spt.Builder.NewRing();
             PathTools.ResetFlags(spt);
@@ -220,7 +221,7 @@ namespace NCDK.Graphs
             return ring;
         }
 
-        private void GetBondsInRing(IAtomContainer mol, IRing ring, int[] bonds)
+        private static void GetBondsInRing(IAtomContainer mol, IRing ring, int[] bonds)
         {
             for (int i = 0; i < ring.Bonds.Count; i++)
             {

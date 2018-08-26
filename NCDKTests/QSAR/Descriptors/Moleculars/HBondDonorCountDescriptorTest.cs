@@ -20,6 +20,7 @@ using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.QSAR.Results;
 using NCDK.Smiles;
+using NCDK.Silent;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -36,7 +37,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestHBondDonorCountDescriptor()
         {
             Descriptor.Parameters = new object[] { true };
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("Oc1ccccc1"); //
             Assert.AreEqual(1, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
@@ -46,7 +47,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestCID9257()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("N");
             a1.FormalCharge = 0;

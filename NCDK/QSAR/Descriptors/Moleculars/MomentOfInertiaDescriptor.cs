@@ -80,8 +80,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     {
         private static readonly string[] NAMES = { "MOMI-X", "MOMI-Y", "MOMI-Z", "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R" };
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia",
                 typeof(MomentOfInertiaDescriptor).FullName, "The Chemistry Development Kit");
@@ -89,7 +89,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the MomentOfInertiaDescriptor object.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
@@ -111,7 +111,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results,
                     DescriptorNames, e);
         }
 
@@ -130,7 +130,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer clone;
             IsotopeFactory factory;
             clone = (IAtomContainer)container.Clone();
-            factory = Isotopes.Instance;
+            factory = BODRIsotopeFactory.Instance;
             factory.ConfigureAtoms(clone);
 
             ArrayResult<double> retval = new ArrayResult<double>(7);
@@ -214,7 +214,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 pri = Math.Sqrt(eval[0] * ccf / MolecularFormulaManipulator.GetTotalExactMass(formula));
             retval.Add(Math.Sqrt(Math.PI * 2 * pri * ccf / MolecularFormulaManipulator.GetTotalExactMass(formula)));
 
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval,
                     DescriptorNames);
         }
 

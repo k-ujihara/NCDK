@@ -72,14 +72,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#basicGroupCount",
                 typeof(BasicGroupCountDescriptor).FullName, 
                 "The Chemistry Development Kit");
 
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             get { return null; }
             set { }
@@ -98,7 +98,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     if (tool.Matches(atomContainer)) count += tool.MatchesCount;
                 }
-                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(count), DescriptorNames);
+                return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(count), DescriptorNames);
             }
             catch (CDKException exception)
             {
@@ -106,9 +106,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IDescriptorResult DescriptorResultType => Result<int>.Instance;
-        public override IReadOnlyList<string> ParameterNames { get; } 
-            = new string[] { };
+        public override IDescriptorResult DescriptorResultType => Result.Instance<int>();
+        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         public override object GetParameterType(string name) 
         {
@@ -118,7 +117,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception exception)
         {
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(-1),
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(-1),
                     DescriptorNames, exception);
         }
 

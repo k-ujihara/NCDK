@@ -41,7 +41,7 @@ namespace NCDK.Formula
         {
             try
             {
-                ifac = Isotopes.Instance;
+                ifac = BODRIsotopeFactory.Instance;
             }
             catch (IOException e)
             {

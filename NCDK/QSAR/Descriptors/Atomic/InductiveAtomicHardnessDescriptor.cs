@@ -63,8 +63,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// The specification attribute of the InductiveAtomicHardnessDescriptor object
         /// </summary>
         /// <returns>The specification value</returns>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomicHardness",
                 typeof(InductiveAtomicHardnessDescriptor).FullName, "The Chemistry Development Kit");
@@ -72,13 +72,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the InductiveAtomicHardnessDescripto object
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
         }
 
         /// <summary>
@@ -156,11 +156,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             atomicHardness = 2 * atomicHardness;
             atomicHardness = atomicHardness * 0.172;
             atomicHardness = 1 / atomicHardness;
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(
                     atomicHardness), NAMES);
         }
 
-        private double CalculateSquareDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
+        private static double CalculateSquareDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
         {
             double distance;
             double tmp;
@@ -174,7 +174,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameterNames attribute of the InductiveAtomicHardnessDescriptor object
         /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[0];
+        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         /// <summary>
         ///  Gets the parameterType attribute of the InductiveAtomicHardnessDescriptor object

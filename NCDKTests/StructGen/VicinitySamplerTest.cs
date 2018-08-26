@@ -45,7 +45,7 @@ namespace NCDK.StructGen
         {
             IAtomContainer mol = TestMoleculeFactory.MakeEthylPropylPhenantren();
 
-            Isotopes.Instance.ConfigureAtoms(mol);
+            BODRIsotopeFactory.Instance.ConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
 
             var structures = VicinitySampler.Sample(mol);
@@ -65,7 +65,7 @@ namespace NCDK.StructGen
         {
             IAtomContainer mol = parser.ParseSmiles("C=CC=C");
 
-            Isotopes.Instance.ConfigureAtoms(mol);
+            BODRIsotopeFactory.Instance.ConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
 
             var structures = VicinitySampler.Sample(mol);

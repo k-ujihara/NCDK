@@ -22,6 +22,7 @@
  */
 
 using NCDK.Config;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -138,16 +139,16 @@ namespace NCDK.Tools.Manipulator
         /// <exception cref="CDKException">if an error occurs with the IsotopeFactory</exception>
         /// <returns>the molecularweight (exact mass) of the major isotopes
         ///         of all heavy atoms of the given IAtomContainer</returns>
-        private double GetMolecularWeight(T atomContainer)
+        private static double GetMolecularWeight(T atomContainer)
         {
             double mw = 0.0;
             try
             {
-                IsotopeFactory isotopeFactory = Isotopes.Instance;
+                IsotopeFactory isotopeFactory = BODRIsotopeFactory.Instance;
 
                 foreach (var atom in atomContainer.Atoms)
                 {
-                    if (!atom.Symbol.Equals("H"))
+                    if (!string.Equals(atom.Symbol, "H", StringComparison.Ordinal))
                     {
                         IIsotope majorIsotope = isotopeFactory.GetMajorIsotope(atom.Symbol);
 

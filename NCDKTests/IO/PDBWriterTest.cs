@@ -22,7 +22,7 @@
  *  */
 using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Templates;
 using System.Collections.Generic;
 using System.IO;
@@ -41,7 +41,7 @@ namespace NCDK.IO
     public class PDBWriterTest : ChemObjectIOTest
     {
         protected override Type ChemObjectIOToTestType => typeof(MDLRXNWriter);
-        private static IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        private static IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
         [TestMethod()]
         public void TestRoundTrip()

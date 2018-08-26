@@ -54,8 +54,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         public CovalentRadiusDescriptor() { }
 
         /// <inheritdoc/>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#covalentradius",
                 typeof(CovalentRadiusDescriptor).FullName, "The Chemistry Development Kit");
@@ -63,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         ///  The parameters attribute of the VdWRadiusDescriptor object.
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "covalentRadius" };
 
@@ -83,7 +83,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 catch (Exception exception)
                 {
-                    return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, exception);
+                    return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, exception);
                 }
 
             double covalentradius;
@@ -92,13 +92,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 string symbol = atom.Symbol;
                 IAtomType type = factory.GetAtomType(symbol);
                 covalentradius = type.CovalentRadius.Value;
-                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
+                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(
                         covalentradius), DescriptorNames);
             }
             catch (Exception exception)
             {
                 Debug.WriteLine(exception);
-                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
+                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(
                         double.NaN), DescriptorNames, exception);
             }
         }

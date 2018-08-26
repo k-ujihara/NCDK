@@ -34,7 +34,7 @@ namespace NCDK.Tools
     // @author     Todd Martin
     // @cdk.module extra
     // @cdk.githash
-    public class CDKUtilities
+    public static class CDKUtilities
     {
         public static string FixSmiles(string Smiles)
         {
@@ -56,7 +56,7 @@ namespace NCDK.Tools
                 for (int i = 0; i <= m.Atoms.Count - 1; i++)
                 {
                     IAtom a = m.Atoms[i];
-                    if (a.Symbol.Equals("N"))
+                    if (string.Equals(a.Symbol, "N", StringComparison.Ordinal))
                     {
                         var ca = m.GetConnectedAtoms(a).ToList();
 
@@ -68,7 +68,7 @@ namespace NCDK.Tools
 
                             for (int j = 0; j <= 2; j++)
                             {
-                                if (((IAtom)ca[j]).Symbol.Equals("O"))
+                                if ((ca[j]).Symbol.Equals("O", StringComparison.Ordinal))
                                 {
                                     count++;
                                 }
@@ -81,7 +81,7 @@ namespace NCDK.Tools
                                 for (int j = 0; j <= 2; j++)
                                 {
                                     IAtom caj = (IAtom)ca[j];
-                                    if (caj.Symbol.Equals("O"))
+                                    if (string.Equals(caj.Symbol, "O", StringComparison.Ordinal))
                                     {
                                         if (m.GetConnectedBonds(caj).Count() == 1)
                                         {// account for possibility of ONO2
@@ -127,7 +127,7 @@ namespace NCDK.Tools
                 for (int i = 0; i <= m.Atoms.Count - 1; i++)
                 {
                     IAtom a = m.Atoms[i];
-                    if (a.Symbol.Equals("N"))
+                    if (string.Equals(a.Symbol, "N", StringComparison.Ordinal))
                     {
                         var ca = m.GetConnectedAtoms(a).ToList();
 
@@ -140,7 +140,7 @@ namespace NCDK.Tools
                             for (int j = 0; j <= 2; j++)
                             {
                                 IAtom caj = ca[j];
-                                if (caj.Symbol.Equals("O"))
+                                if (string.Equals(caj.Symbol, "O", StringComparison.Ordinal))
                                 {
                                     count++;
                                 }
@@ -152,7 +152,7 @@ namespace NCDK.Tools
                                 for (int j = 0; j <= 2; j++)
                                 {
                                     IAtom caj = (IAtom)ca[j];
-                                    if (caj.Symbol.Equals("O"))
+                                    if (string.Equals(caj.Symbol, "O", StringComparison.Ordinal))
                                     {
                                         if (m.GetConnectedBonds(caj).Count() == 1)
                                         {// account for possibility of ONO2
@@ -268,7 +268,7 @@ namespace NCDK.Tools
             {
                 IAtom a = m.Atoms[i];
 
-                if (a.Symbol.Equals("S"))
+                if (string.Equals(a.Symbol, "S", StringComparison.Ordinal))
                 {
                     var connectedAtoms = m.GetConnectedAtoms(a);
 
@@ -276,7 +276,7 @@ namespace NCDK.Tools
 
                     foreach (var conAtom in connectedAtoms)
                     {
-                        if (!conAtom.Symbol.Equals("H"))
+                        if (!string.Equals(conAtom.Symbol, "H", StringComparison.Ordinal))
                         {
                             IBond bond = m.GetBond(a, conAtom);
                             if (bond.Order == BondOrder.Single)
@@ -302,7 +302,7 @@ namespace NCDK.Tools
                     {
                         foreach (var conAtom in connectedAtoms)
                         {
-                            if (conAtom.Symbol.Equals("H"))
+                            if (string.Equals(conAtom.Symbol, "H", StringComparison.Ordinal))
                             {
                                 m.RemoveAtom(conAtom);
                             }

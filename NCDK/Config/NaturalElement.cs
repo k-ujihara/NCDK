@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -44,7 +45,7 @@ namespace NCDK.Config
             this.atomicNumber = atomicNumber;
         }
 
-        public ICollection<IChemObjectListener> Listeners { get; } = new ReadOnlyCollection<IChemObjectListener>(new List<IChemObjectListener>());
+        public ICollection<IChemObjectListener> Listeners { get; } = Array.Empty<IChemObjectListener>();
         public bool Notification { get { return false; } set { } }
         public void NotifyChanged() { }
 
@@ -63,8 +64,8 @@ namespace NCDK.Config
         public void SetProperty(object key, object value) { }
         public void SetProperties(IEnumerable<KeyValuePair<object, object>> properties) { }
         public void AddProperties(IEnumerable<KeyValuePair<object, object>> properties) { }
-        private static readonly IDictionary<object, object> emptyMap = new ReadOnlyDictionary<object, object>(new Dictionary<object, object>());
-        public IDictionary<object, object> GetProperties() => emptyMap;
+        private static readonly IReadOnlyDictionary<object, object> emptyMap = NCDK.Common.Collections.Dictionaries.Empty<object, object>();
+        public IReadOnlyDictionary<object, object> GetProperties() => emptyMap;
 
         public bool Compare(object obj) => this == obj;
 

@@ -122,7 +122,7 @@ namespace NCDK.Smiles.SMARTS
         private string smarts;
         private IAtomContainer atomContainer = null;
         private QueryAtomContainer query = null;
-        private IList<int[]> mappings;
+        private List<int[]> mappings;
 
         /// <summary>
         /// Defines which set of rings to define rings in the target.
@@ -203,7 +203,7 @@ namespace NCDK.Smiles.SMARTS
         /// the molecules being tests are known to all have the same aromaticity
         /// model.
         /// </summary>
-        private bool skipAromaticity = false;
+        private readonly bool skipAromaticity = false;
 
         // a simplistic cache to store parsed SMARTS queries
         private int MAX_ENTRIES = 20;
@@ -224,7 +224,7 @@ namespace NCDK.Smiles.SMARTS
             {
                 InitializeQuery();
             }
-            catch (TokenMgrError error)
+            catch (TokenManagerException error)
             {
                 throw new ArgumentException("Error parsing SMARTS", error);
             }
@@ -322,7 +322,7 @@ namespace NCDK.Smiles.SMARTS
         /// initializing ( ring perception, aromaticity etc.) the molecule each time. If however, you modify the molecule
         /// between such multiple matchings you should use the other form of this method to force initialization.
         /// </remarks>
-        /// <param name="atomContainer">The target moleculoe</param>
+        /// <param name="atomContainer">The target molecule</param>
         /// <returns>true if the pattern is found in the target molecule, false otherwise</returns>
         /// <exception cref="CDKException">if there is an error in ring, aromaticity or isomorphism perception</exception>
         /// <seealso cref="GetMatchingAtoms"/>
@@ -400,12 +400,11 @@ namespace NCDK.Smiles.SMARTS
         /// molecule, that match the query pattern</para>
         /// </summary>
         /// <returns>A List of List of atom indices in the target molecule</returns>
-        public IList<IList<int>> GetMatchingAtoms()
+        public IEnumerable<IReadOnlyList<int>> GetMatchingAtoms()
         {
-            List<IList<int>> matched = new List<IList<int>>(mappings.Count);
             foreach (var mapping in mappings)
-                matched.Add(mapping);
-            return matched;
+                yield return mapping;
+            yield break;
         }
 
         /// <summary>
@@ -417,18 +416,18 @@ namespace NCDK.Smiles.SMARTS
         /// </para>
         /// </summary>
         /// <returns>A List of List of atom indices in the target molecule</returns>
-        public IList<IList<int>> GetUniqueMatchingAtoms()
+        public IEnumerable<IReadOnlyList<int>> GetUniqueMatchingAtoms()
         {
-            List<IList<int>> matched = new List<IList<int>>(mappings.Count);
-            HashSet<BitArray> atomSets = new HashSet<BitArray>(BitArrays.EqualityComparer);
+            var atomSets = new HashSet<BitArray>(BitArrays.EqualityComparer);
             foreach (var mapping in mappings)
             {
                 BitArray atomSet = new BitArray(0);
                 foreach (var x in mapping)
                     BitArrays.SetValue(atomSet, x, true);
-                if (atomSets.Add(atomSet)) matched.Add(mapping);
+                if (atomSets.Add(atomSet))
+                    yield return mapping;
             }
-            return matched;
+            yield break;
         }
 
         /// <summary>
@@ -469,42 +468,6 @@ namespace NCDK.Smiles.SMARTS
                 query = SMARTSParser.Parse(smarts, builder);
                 cache[smarts] = query;
             }
-        }
-
-        private IList<ICollection<int>> MatchedAtoms(IList<IList<RMap>> bondMapping, IAtomContainer atomContainer)
-        {
-            List<ICollection<int>> atomMapping = new List<ICollection<int>>();
-            // loop over each mapping
-            foreach (var mapping in bondMapping)
-            {
-                SortedSet<int> tmp = new SortedSet<int>();
-                IAtom atom1 = null;
-                IAtom atom2 = null;
-                // loop over this mapping
-                foreach (var map in mapping)
-                {
-                    int bondID = map.Id1;
-
-                    // get the atoms in this bond
-                    IBond bond = atomContainer.Bonds[bondID];
-                    atom1 = bond.Begin;
-                    atom2 = bond.End;
-
-                    int idx1 = atomContainer.Atoms.IndexOf(atom1);
-                    int idx2 = atomContainer.Atoms.IndexOf(atom2);
-
-                    if (!tmp.Contains(idx1)) tmp.Add(idx1);
-                    if (!tmp.Contains(idx2)) tmp.Add(idx2);
-                }
-                if (tmp.Count == query.Atoms.Count) atomMapping.Add(tmp);
-
-                // If there is only one bond, check if it matches both ways.
-                if (mapping.Count == 1 && atom1.AtomicNumber.Equals(atom2.AtomicNumber))
-                {
-                    atomMapping.Add(new SortedSet<int>(tmp));
-                }
-            }
-            return atomMapping;
         }
     }
 }

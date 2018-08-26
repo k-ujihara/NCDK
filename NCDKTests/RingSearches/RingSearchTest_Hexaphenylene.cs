@@ -20,9 +20,10 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
-using System.Collections.Generic;
+using NCDK.Silent;
+using System.Linq;
 
 namespace NCDK.RingSearches
 {
@@ -45,8 +46,8 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestCyclic_Int()
         {
-            int n = hexaphenylene.Atoms.Count;
-            RingSearch ringSearch = new RingSearch(hexaphenylene);
+            var n = hexaphenylene.Atoms.Count;
+            var ringSearch = new RingSearch(hexaphenylene);
             for (int i = 0; i < n; i++)
             {
                 Assert.IsTrue(ringSearch.Cyclic(i));
@@ -56,15 +57,15 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestIsolated()
         {
-            RingSearch search = new RingSearch(hexaphenylene);
-            int[][] isolated = search.Isolated();
+            var search = new RingSearch(hexaphenylene);
+            var isolated = search.Isolated();
             Assert.AreEqual(0, isolated.Length);
         }
 
         [TestMethod()]
         public void TestFused()
         {
-            int[][] fused = new RingSearch(hexaphenylene).Fused();
+            var fused = new RingSearch(hexaphenylene).Fused();
             Assert.AreEqual(1, fused.Length);
             Assert.AreEqual(hexaphenylene.Atoms.Count, fused[0].Length);
         }
@@ -72,7 +73,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestRingFragments()
         {
-            IAtomContainer fragment = new RingSearch(hexaphenylene).RingFragments();
+            var fragment = new RingSearch(hexaphenylene).RingFragments();
             Assert.AreEqual(hexaphenylene.Atoms.Count, fragment.Atoms.Count);
             Assert.AreEqual(hexaphenylene.Bonds.Count, fragment.Bonds.Count);
         }
@@ -80,16 +81,16 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestIsolatedRingFragments()
         {
-            RingSearch search = new RingSearch(hexaphenylene);
-            IList<IAtomContainer> isolated = search.IsolatedRingFragments();
-            Assert.AreEqual(0, isolated.Count);
+            var search = new RingSearch(hexaphenylene);
+            var isolated = search.IsolatedRingFragments();
+            Assert.AreEqual(0, isolated.Count());
         }
 
         [TestMethod()]
         public void TestFusedRingFragments()
         {
-            RingSearch search = new RingSearch(hexaphenylene);
-            IList<IAtomContainer> fused = search.FusedRingFragments();
+            var search = new RingSearch(hexaphenylene);
+            var fused = search.FusedRingFragments().ToList();
             Assert.AreEqual(1, fused.Count);
             Assert.AreEqual(hexaphenylene.Atoms.Count, fused[0].Atoms.Count);
             Assert.AreEqual(hexaphenylene.Bonds.Count, fused[0].Bonds.Count);

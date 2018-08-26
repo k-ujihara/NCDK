@@ -50,7 +50,7 @@ namespace NCDK.SMSD.Helper
         [TestMethod()]
         public void TestAdd()
         {
-            IDictionary<int, int> mapping = new SortedDictionary<int, int>();
+            var mapping = new SortedDictionary<int, int>();
             mapping[1] = 1;
             mapping[2] = 2;
             mapping[3] = 3;
@@ -66,16 +66,16 @@ namespace NCDK.SMSD.Helper
         [TestMethod()]
         public void TestSet()
         {
-            IDictionary<int, int> mapping1 = new SortedDictionary<int, int>();
+            var mapping1 = new SortedDictionary<int, int>();
             mapping1[1] = 1;
             mapping1[2] = 2;
             mapping1[3] = 3;
-            IDictionary<int, int> mapping2 = new SortedDictionary<int, int>();
+            var mapping2 = new SortedDictionary<int, int>();
             mapping2[1] = 2;
             mapping2[2] = 1;
             mapping2[3] = 3;
 
-            List<IDictionary<int, int>> mappings = new List<IDictionary<int, int>>(2);
+            var mappings = new List<IReadOnlyDictionary<int, int>>(2);
             mappings.Add(mapping1);
             mappings.Add(mapping2);
             FinalMappings instance = new FinalMappings();
@@ -90,16 +90,16 @@ namespace NCDK.SMSD.Helper
         [TestMethod()]
         public void TestGetIterator()
         {
-            IDictionary<int, int> mapping1 = new SortedDictionary<int, int>();
+            var mapping1 = new SortedDictionary<int, int>();
             mapping1[1] = 1;
             mapping1[2] = 2;
             mapping1[3] = 3;
-            IDictionary<int, int> mapping2 = new SortedDictionary<int, int>();
+            var mapping2 = new SortedDictionary<int, int>();
             mapping2[1] = 2;
             mapping2[2] = 1;
             mapping2[3] = 3;
 
-            List<IDictionary<int, int>> mappings = new List<IDictionary<int, int>>(2);
+            var mappings = new List<IReadOnlyDictionary<int, int>>(2);
             mappings.Add(mapping1);
             mappings.Add(mapping2);
             FinalMappings instance = new FinalMappings();
@@ -114,16 +114,16 @@ namespace NCDK.SMSD.Helper
         [TestMethod()]
         public void TestClear()
         {
-            IDictionary<int, int> mapping1 = new SortedDictionary<int, int>();
+            var mapping1 = new SortedDictionary<int, int>();
             mapping1[1] = 1;
             mapping1[2] = 2;
             mapping1[3] = 3;
-            IDictionary<int, int> mapping2 = new SortedDictionary<int, int>();
+            var mapping2 = new SortedDictionary<int, int>();
             mapping2[1] = 2;
             mapping2[2] = 1;
             mapping2[3] = 3;
 
-            List<IDictionary<int, int>> mappings = new List<IDictionary<int, int>>(2);
+            var mappings = new List<IReadOnlyDictionary<int, int>>(2);
             mappings.Add(mapping1);
             mappings.Add(mapping2);
             FinalMappings instance = new FinalMappings();
@@ -139,16 +139,16 @@ namespace NCDK.SMSD.Helper
         [TestMethod()]
         public void TestGetFinalMapping()
         {
-            IDictionary<int, int> mapping1 = new SortedDictionary<int, int>();
+            var mapping1 = new SortedDictionary<int, int>();
             mapping1[1] = 1;
             mapping1[2] = 2;
             mapping1[3] = 3;
-            IDictionary<int, int> mapping2 = new SortedDictionary<int, int>();
+            var mapping2 = new SortedDictionary<int, int>();
             mapping2[1] = 2;
             mapping2[2] = 1;
             mapping2[3] = 3;
 
-            List<IDictionary<int, int>> mappings = new List<IDictionary<int, int>>(2);
+            var mappings = new List<IReadOnlyDictionary<int, int>>(2);
             mappings.Add(mapping1);
             mappings.Add(mapping2);
             FinalMappings instance = new FinalMappings();
@@ -165,16 +165,20 @@ namespace NCDK.SMSD.Helper
         [TestMethod()]
         public void TestGetSize()
         {
-            IDictionary<int, int> mapping1 = new SortedDictionary<int, int>();
-            mapping1[1] = 1;
-            mapping1[2] = 2;
-            mapping1[3] = 3;
-            IDictionary<int, int> mapping2 = new SortedDictionary<int, int>();
-            mapping2[1] = 2;
-            mapping2[2] = 1;
-            mapping2[3] = 3;
+            var mapping1 = new SortedDictionary<int, int>
+            {
+                [1] = 1,
+                [2] = 2,
+                [3] = 3
+            };
+            var mapping2 = new SortedDictionary<int, int>
+            {
+                [1] = 2,
+                [2] = 1,
+                [3] = 3
+            };
 
-            List<IDictionary<int, int>> mappings = new List<IDictionary<int, int>>(2);
+            var mappings = new List<IReadOnlyDictionary<int, int>>(2);
             mappings.Add(mapping1);
             mappings.Add(mapping2);
             FinalMappings instance = new FinalMappings();

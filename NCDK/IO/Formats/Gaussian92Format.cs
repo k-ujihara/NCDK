@@ -18,6 +18,8 @@
  */
 
 using NCDK.Tools;
+using System;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -48,7 +50,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => null;
 
         /// <inheritdoc/>
-        public override string[] NameExtensions => new string[0];
+        public override IReadOnlyList<string> NameExtensions => Array.Empty<string>();
 
         /// <inheritdoc/>
         public override string ReaderClassName => null;
@@ -59,7 +61,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.IndexOf("Gaussian 92") >= 0)
+            if (line.IndexOf("Gaussian 92", StringComparison.Ordinal) >= 0)
             {
                 return true;
             }

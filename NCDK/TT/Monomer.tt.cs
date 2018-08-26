@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -40,6 +41,7 @@ namespace NCDK.Default
     // @author     Edgar Luttmann <edgar@uni-paderborn.de>
     // @cdk.created    2001-08-06 
     // @cdk.keyword    monomer  
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class Monomer 
         : AtomContainer, IMonomer, ICloneable
@@ -102,6 +104,7 @@ namespace NCDK.Silent
     // @author     Edgar Luttmann <edgar@uni-paderborn.de>
     // @cdk.created    2001-08-06 
     // @cdk.keyword    monomer  
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class Monomer 
         : AtomContainer, IMonomer, ICloneable

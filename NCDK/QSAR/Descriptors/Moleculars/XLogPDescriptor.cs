@@ -117,8 +117,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the XLogPDescriptor object.
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP",
                 typeof(XLogPDescriptor).FullName,
@@ -128,11 +128,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the XLogPDescriptor object.
         /// </summary>
         /// <exception cref="CDKException"></exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length != 2)
+                if (value.Count != 2)
                 {
                     throw new CDKException("XLogPDescriptor expects two parameter");
                 }
@@ -148,6 +148,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 checkAromaticity = (bool)value[0];
                 salicylFlag = (bool)value[1];
             }
+
             get
             {
                 // return the parameters as used for the descriptor calculation
@@ -159,7 +160,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
@@ -201,7 +202,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
             double xlogP = 0;
-            //        SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             string symbol = "";
             int bondCount = 0;
             int atomCount = ac.Atoms.Count;
@@ -215,11 +215,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             for (int i = 0; i < atomCount; i++)
             {
                 atomi = (IAtom)ac.Atoms[i];
-                //            Problem fused ring systems
+                // Problem fused ring systems
                 IList<IRing> atomRingSet = rs.GetRings(atomi).ToList();
                 atomi.SetProperty("IS_IN_AROMATIC_RING", false);
                 atomi.SetProperty(CDKPropertyName.PartOfRingOfSize, 0);
-                //Debug.WriteLine("atomRingSet.size "+atomRingSet.Count);
                 if (atomRingSet.Count > 0)
                 {
                     if (atomRingSet.Count > 1)
@@ -234,7 +233,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             foreach (var ring in Cycles.FindEssential(container).ToRingSet())
                                 atomRingSet.Add(ring);
                         }
-                        //Debug.WriteLine(" SSSRatomRingSet.size "+atomRingSet.Count);
                     }
                     for (int j = 0; j < atomRingSet.Count; j++)
                     {
@@ -257,15 +255,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         }
                     }
                 }
-                //else{
-                //Debug.WriteLine();
-                //}
             }
 
             for (int i = 0; i < atomCount; i++)
             {
                 atomi = (IAtom)ac.Atoms[i];
-                if (xlogPOld == xlogP & i > 0 & !symbol.Equals("H"))
+                if (xlogPOld == xlogP & i > 0 & !symbol.Equals("H", StringComparison.Ordinal))
                 {
                     //Debug.WriteLine("\nXlogPAssignmentError: Could not assign atom number:"+(i-1));
                 }
@@ -276,7 +271,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 hsCount = GetHydrogenCount(ac, atomi);
                 maxBondOrder = ac.GetMaximumBondOrder(atomi);
 #if DEBUG
-                if (!symbol.Equals("H"))
+                if (!string.Equals(symbol, "H", StringComparison.Ordinal))
                 {
                     //Debug.WriteLine("i:"+i+" Symbol:"+symbol+" "+" bondC:"+bondCount+" Charge:"+atoms[i].FormalCharge+" hsC:"+hsCount+" maxBO:"+maxBondOrder+" Arom:"+atoms[i].IsAromatic+" AtomTypeX:"+GetAtomTypeXCount(ac, atoms[i])+" PiSys:"+GetPiSystemsCount(ac, atoms[i])+" C=:"+GetDoubleBondedCarbonsCount(ac, atoms[i])+" AromCc:"+GetAromaticCarbonsCount(ac,atoms[i])+" RS:"+((int)atoms[i].GetProperty(CDKPropertyName.PART_OF_RING_OF_SIZE)).IntValue()+"\t");
                 }
@@ -291,7 +286,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                 if (hsCount >= 1)
                                 {
                                     xlogP += 0.209;
-                                    //Debug.WriteLine("XLOGP: 38         0.209");
                                 }
                                 else
                                 {
@@ -299,11 +293,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                     {
                                         case BondOrder.Double:
                                             xlogP += 2.073;
-                                            //Debug.WriteLine("XLOGP: 40         2.037");
                                             break;
                                         case BondOrder.Triple:
                                             xlogP += 0.33;
-                                            //Debug.WriteLine("XLOGP: 39         0.33");
                                             break;
                                     }
                                 }
@@ -319,18 +311,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                             if (GetAtomTypeXCount(ac, atomi) == 0)
                                             {
                                                 xlogP += 0.296;
-                                                //Debug.WriteLine("XLOGP: 34         0.296");
                                             }
                                             else
                                             {
                                                 xlogP -= 0.151;
-                                                //Debug.WriteLine("XLOGP: 35    C.ar.X    -0.151");
                                             }
                                         }
                                         else
                                         {
                                             xlogP += 0.337;
-                                            //Debug.WriteLine("XLOGP: 32         0.337");
                                         }
                                     }
                                     else if (GetAromaticNitrogensCount(ac, atomi) >= 1)
@@ -340,18 +329,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                             if (GetAtomTypeXCount(ac, atomi) == 0)
                                             {
                                                 xlogP += 0.174;
-                                                //Debug.WriteLine("XLOGP: 36    C.ar.(X)     0.174");
                                             }
                                             else
                                             {
                                                 xlogP += 0.366;
-                                                //Debug.WriteLine("XLOGP: 37         0.366");
                                             }
                                         }
                                         else if (GetHydrogenCount(ac, atomi) == 1)
                                         {
                                             xlogP += 0.126;
-                                            //Debug.WriteLine("XLOGP: 33         0.126");
                                         }
                                     }
                                     //NOT aromatic, but sp2
@@ -366,12 +352,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                                 if (GetPiSystemsCount(ac, atomi) <= 1)
                                                 {
                                                     xlogP += 0.05;
-                                                    //Debug.WriteLine("XLOGP: 26         0.05");
                                                 }
                                                 else
                                                 {
                                                     xlogP += 0.013;
-                                                    //Debug.WriteLine("XLOGP: 27         0.013");
                                                 }
                                             }
                                             else if (GetAtomTypeXCount(ac, atomi) == 1)
@@ -379,12 +363,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                                 if (GetPiSystemsCount(ac, atomi) == 0)
                                                 {
                                                     xlogP -= 0.03;
-                                                    //Debug.WriteLine("XLOGP: 28        -0.03");
                                                 }
                                                 else
                                                 {
                                                     xlogP -= 0.027;
-                                                    //Debug.WriteLine("XLOGP: 29        -0.027");
                                                 }
                                             }
                                             else if (GetAtomTypeXCount(ac, atomi) == 2)
@@ -392,12 +374,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                                 if (GetPiSystemsCount(ac, atomi) == 0)
                                                 {
                                                     xlogP += 0.005;
-                                                    //Debug.WriteLine("XLOGP: 30         0.005");
                                                 }
                                                 else
                                                 {
                                                     xlogP -= 0.315;
-                                                    //Debug.WriteLine("XLOGP: 31        -0.315");
                                                 }
                                             }
                                             break;
@@ -407,12 +387,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                                 if (GetPiSystemsCount(ac, atomi) == 0)
                                                 {
                                                     xlogP += 0.466;
-                                                    //Debug.WriteLine("XLOGP: 22         0.466");
                                                 }
                                                 if (GetPiSystemsCount(ac, atomi) == 1)
                                                 {
                                                     xlogP += 0.136;
-                                                    //Debug.WriteLine("XLOGP: 23         0.136");
                                                 }
                                             }
                                             else
@@ -420,24 +398,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                                 if (GetPiSystemsCount(ac, atomi) == 0)
                                                 {
                                                     xlogP += 0.001;
-                                                    //Debug.WriteLine("XLOGP: 24         0.001");
                                                 }
                                                 if (GetPiSystemsCount(ac, atomi) == 1)
                                                 {
                                                     xlogP -= 0.31;
-                                                    //Debug.WriteLine("XLOGP: 25        -0.31");
                                                 }
                                             }
                                             break;
                                         case 2:
                                             xlogP += 0.42;
-                                            //Debug.WriteLine("XLOGP: 21         0.42");
                                             break;
                                     }
                                     if (GetIfCarbonIsHydrophobic(ac, atomi))
                                     {
                                         xlogP += 0.211;
-                                        //Debug.WriteLine("XLOGP: Hydrophobic Carbon    0.211");
                                     }
                                 }//sp2 NOT aromatic
                                 break;
@@ -451,17 +425,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                             if (GetPiSystemsCount(ac, atomi) == 0)
                                             {
                                                 xlogP -= 0.006;
-                                                //Debug.WriteLine("XLOGP: 16        -0.006");
                                             }
                                             if (GetPiSystemsCount(ac, atomi) == 1)
                                             {
                                                 xlogP -= 0.57;
-                                                //Debug.WriteLine("XLOGP: 17        -0.57");
                                             }
                                             if (GetPiSystemsCount(ac, atomi) >= 2)
                                             {
                                                 xlogP -= 0.317;
-                                                //Debug.WriteLine("XLOGP: 18        -0.317");
                                             }
                                         }
                                         else
@@ -469,12 +440,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                             if (GetPiSystemsCount(ac, atomi) == 0)
                                             {
                                                 xlogP -= 0.316;
-                                                //Debug.WriteLine("XLOGP: 19        -0.316");
                                             }
                                             else
                                             {
                                                 xlogP -= 0.723;
-                                                //Debug.WriteLine("XLOGP: 20        -0.723");
                                             }
                                         }
                                         break;
@@ -484,17 +453,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                             if (GetPiSystemsCount(ac, atomi) == 0)
                                             {
                                                 xlogP += 0.127;
-                                                //Debug.WriteLine("XLOGP: 10         0.127");
                                             }
                                             if (GetPiSystemsCount(ac, atomi) == 1)
                                             {
                                                 xlogP -= 0.243;
-                                                //Debug.WriteLine("XLOGP: 11        -0.243");
                                             }
                                             if (GetPiSystemsCount(ac, atomi) >= 2)
                                             {
                                                 xlogP -= 0.499;
-                                                //Debug.WriteLine("XLOGP: 12        -0.499");
                                             }
                                         }
                                         else
@@ -502,17 +468,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                             if (GetPiSystemsCount(ac, atomi) == 0)
                                             {
                                                 xlogP -= 0.205;
-                                                //Debug.WriteLine("XLOGP: 13        -0.205");
                                             }
                                             if (GetPiSystemsCount(ac, atomi) == 1)
                                             {
                                                 xlogP -= 0.305;
-                                                //Debug.WriteLine("XLOGP: 14        -0.305");
                                             }
                                             if (GetPiSystemsCount(ac, atomi) >= 2)
                                             {
                                                 xlogP -= 0.709;
-                                                //Debug.WriteLine("XLOGP: 15        -0.709");
                                             }
                                         }
                                         break;
@@ -522,17 +485,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                             if (GetPiSystemsCount(ac, atomi) == 0)
                                             {
                                                 xlogP += 0.358;
-                                                //Debug.WriteLine("XLOGP:  4         0.358");
                                             }
                                             if (GetPiSystemsCount(ac, atomi) == 1)
                                             {
                                                 xlogP -= 0.008;
-                                                //Debug.WriteLine("XLOGP:  5        -0.008");
                                             }
                                             if (GetPiSystemsCount(ac, atomi) == 2)
                                             {
                                                 xlogP -= 0.185;
-                                                //Debug.WriteLine("XLOGP:  6        -0.185");
                                             }
                                         }
                                         else
@@ -540,17 +500,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                             if (GetPiSystemsCount(ac, atomi) == 0)
                                             {
                                                 xlogP -= 0.137;
-                                                //Debug.WriteLine("XLOGP:  7        -0.137");
                                             }
                                             if (GetPiSystemsCount(ac, atomi) == 1)
                                             {
                                                 xlogP -= 0.303;
-                                                //Debug.WriteLine("XLOGP:  8        -0.303");
                                             }
                                             if (GetPiSystemsCount(ac, atomi) == 2)
                                             {
                                                 xlogP -= 0.815;
-                                                //Debug.WriteLine("XLOGP:  9        -0.815");
                                             }
                                         }
                                         break;
@@ -560,26 +517,21 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                             if (GetPiSystemsCount(ac, atomi) == 0)
                                             {
                                                 xlogP += 0.528;
-                                                //Debug.WriteLine("XLOGP:  1         0.528");
                                             }
                                             if (GetPiSystemsCount(ac, atomi) == 1)
                                             {
                                                 xlogP += 0.267;
-                                                //Debug.WriteLine("XLOGP:  2         0.267");
                                             }
                                         }
                                         else
                                         {
-                                            //if (GetNitrogenOrOxygenCount(ac, atomi) == 1) {
                                             xlogP -= 0.032;
-                                            //Debug.WriteLine("XLOGP:  3        -0.032");
                                         }
                                         break;
                                 }
                                 if (GetIfCarbonIsHydrophobic(ac, atomi))
                                 {
                                     xlogP += 0.211;
-                                    //Debug.WriteLine("XLOGP: Hydrophobic Carbon    0.211");
                                 }
                                 break;
                         }
@@ -590,7 +542,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                 && maxBondOrder == BondOrder.Double)
                         {
                             xlogP += 1.178;
-                            //Debug.WriteLine("XLOGP: 66         1.178");
                         }
                         else
                         {
@@ -602,12 +553,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                     if (GetAtomTypeXCount(ac, atomi) == 0)
                                     {
                                         xlogP += 0.078;
-                                        //Debug.WriteLine("XLOGP: 57         0.078");
                                     }
                                     if (GetAtomTypeXCount(ac, atomi) == 1)
                                     {
                                         xlogP -= 0.118;
-                                        //Debug.WriteLine("XLOGP: 58        -0.118");
                                     }
                                 }
                                 if (hsCount == 1)
@@ -616,20 +565,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                     {
                                         xlogP -= 0.096;
                                         hBondDonors.Add(i);
-                                        //Debug.WriteLine("XLOGP: 55        -0.096");
                                     }
                                     else
                                     {
                                         xlogP -= 0.044;
                                         hBondDonors.Add(i);
-                                        //Debug.WriteLine("XLOGP: 56        -0.044");
                                     }
                                 }
                                 if (hsCount == 2)
                                 {
                                     xlogP -= 0.646;
                                     hBondDonors.Add(i);
-                                    //Debug.WriteLine("XLOGP: 54        -0.646");
                                 }
                             }
                             else
@@ -640,7 +586,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                     if (GetCarbonsCount(ac, atomi) == 1)
                                     {
                                         xlogP -= 0.566;
-                                        //Debug.WriteLine("XLOGP: 68        -0.566");
                                     }
                                 }
                                 else if (bondCount == 2)
@@ -649,7 +594,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                     if (atomi.GetProperty<bool>("IS_IN_AROMATIC_RING"))
                                     {
                                         xlogP -= 0.493;
-                                        //Debug.WriteLine("XLOGP: 67        -0.493");
                                         if (checkAminoAcid != 0)
                                         {
                                             checkAminoAcid += 1;
@@ -664,7 +608,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                                 if (GetDoubleBondedOxygenCount(ac, atomi) == 1)
                                                 {
                                                     xlogP += 0.427;
-                                                    //Debug.WriteLine("XLOGP: 65         0.427");
                                                 }
                                             }
                                             if (GetDoubleBondedNitrogenCount(ac, atomi) == 1)
@@ -672,12 +615,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                                 if (GetAtomTypeXCount(ac, atomi) == 0)
                                                 {
                                                     xlogP += 0.536;
-                                                    //Debug.WriteLine("XLOGP: 63         0.536");
                                                 }
                                                 if (GetAtomTypeXCount(ac, atomi) == 1)
                                                 {
                                                     xlogP -= 0.597;
-                                                    //Debug.WriteLine("XLOGP: 64        -0.597");
                                                 }
                                             }
                                         }
@@ -688,12 +629,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                                 if (GetPiSystemsCount(ac, atomi) == 0)
                                                 {
                                                     xlogP += 0.007;
-                                                    //Debug.WriteLine("XLOGP: 59         0.007");
                                                 }
                                                 if (GetPiSystemsCount(ac, atomi) == 1)
                                                 {
                                                     xlogP -= 0.275;
-                                                    //Debug.WriteLine("XLOGP: 60        -0.275");
                                                 }
                                             }
                                             else if (GetAtomTypeXCount(ac, atomi) == 1)
@@ -701,12 +640,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                                 if (GetPiSystemsCount(ac, atomi) == 0)
                                                 {
                                                     xlogP += 0.366;
-                                                    //Debug.WriteLine("XLOGP: 61         0.366");
                                                 }
                                                 if (GetPiSystemsCount(ac, atomi) == 1)
                                                 {
                                                     xlogP += 0.251;
-                                                    //Debug.WriteLine("XLOGP: 62         0.251");
                                                 }
                                             }
                                         }
@@ -717,7 +654,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                     // N sp3
                                     if (hsCount == 0)
                                     {
-                                        //if (rs.Contains(atomi)&&ringSize>3) {
                                         if (atomi.IsAromatic
                                                 || (rs.Contains(atomi)
                                                         && atomi.GetProperty<int>(CDKPropertyName.PartOfRingOfSize) > 3 && GetPiSystemsCount(ac, atomi) >= 1))
@@ -725,12 +661,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                             if (GetAtomTypeXCount(ac, atomi) == 0)
                                             {
                                                 xlogP += 0.881;
-                                                //Debug.WriteLine("XLOGP: 51         0.881");
                                             }
                                             else
                                             {
                                                 xlogP -= 0.01;
-                                                //Debug.WriteLine("XLOGP: 53        -0.01");
                                             }
                                         }
                                         else
@@ -740,18 +674,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                                 if (GetPiSystemsCount(ac, atomi) == 0)
                                                 {
                                                     xlogP += 0.159;
-                                                    //Debug.WriteLine("XLOGP: 49         0.159");
                                                 }
                                                 if (GetPiSystemsCount(ac, atomi) > 0)
                                                 {
                                                     xlogP += 0.761;
-                                                    //Debug.WriteLine("XLOGP: 50         0.761");
                                                 }
                                             }
                                             else
                                             {
                                                 xlogP -= 0.239;
-                                                //Debug.WriteLine("XLOGP: 52        -0.239");
                                             }
                                         }
                                     }
@@ -759,14 +690,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                     {
                                         if (GetAtomTypeXCount(ac, atomi) == 0)
                                         {
-                                            //                                    like pyrrole
+                                            // like pyrrole
                                             if (atomi.IsAromatic
                                                     || (rs.Contains(atomi)
                                                             && atomi.GetProperty<int>(CDKPropertyName.PartOfRingOfSize) > 3 && GetPiSystemsCount(ac, atomi) >= 2))
                                             {
                                                 xlogP += 0.545;
                                                 hBondDonors.Add(i);
-                                                //Debug.WriteLine("XLOGP: 46         0.545");
                                             }
                                             else
                                             {
@@ -774,13 +704,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                                 {
                                                     xlogP -= 0.112;
                                                     hBondDonors.Add(i);
-                                                    //Debug.WriteLine("XLOGP: 44        -0.112");
                                                 }
                                                 if (GetPiSystemsCount(ac, atomi) > 0)
                                                 {
                                                     xlogP += 0.166;
                                                     hBondDonors.Add(i);
-                                                    //Debug.WriteLine("XLOGP: 45         0.166");
                                                 }
                                             }
                                         }
@@ -790,13 +718,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                             {
                                                 xlogP += 0.153;
                                                 hBondDonors.Add(i);
-                                                //Debug.WriteLine("XLOGP: 48         0.153");
                                             }
                                             else
                                             {
                                                 xlogP += 0.324;
                                                 hBondDonors.Add(i);
-                                                //Debug.WriteLine("XLOGP: 47         0.324");
                                             }
                                         }
                                     }
@@ -808,13 +734,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                             {
                                                 xlogP -= 0.534;
                                                 hBondDonors.Add(i);
-                                                //Debug.WriteLine("XLOGP: 41        -0.534");
                                             }
                                             if (GetPiSystemsCount(ac, atomi) == 1)
                                             {
                                                 xlogP -= 0.329;
                                                 hBondDonors.Add(i);
-                                                //Debug.WriteLine("XLOGP: 42        -0.329");
                                             }
 
                                             if (checkAminoAcid != 0)
@@ -826,7 +750,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                         {
                                             xlogP -= 1.082;
                                             hBondDonors.Add(i);
-                                            //Debug.WriteLine("XLOGP: 43        -1.082");
                                         }
                                     }
                                 }
@@ -841,7 +764,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             {
                                 hBondAcceptors.Add(i);
                             }
-                            //Debug.WriteLine("XLOGP: 75    A=O    -0.399");
                         }
                         else if (bondCount == 1 && hsCount == 0
                               && (GetPresenceOfNitro(ac, atomi) || GetPresenceOfCarbonil(ac, atomi) == 1)
@@ -852,7 +774,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             {
                                 hBondAcceptors.Add(i);
                             }
-                            //Debug.WriteLine("XLOGP: 75    A=O    -0.399");
                         }
                         else if (bondCount >= 1)
                         {
@@ -863,18 +784,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                     if (GetPiSystemsCount(ac, atomi) == 0)
                                     {
                                         xlogP += 0.084;
-                                        //Debug.WriteLine("XLOGP: 72    R-O-R     0.084");
                                     }
                                     if (GetPiSystemsCount(ac, atomi) > 0)
                                     {
                                         xlogP += 0.435;
-                                        //Debug.WriteLine("XLOGP: 73    R-O-R.1     0.435");
                                     }
                                 }
                                 else if (GetAtomTypeXCount(ac, atomi) == 1)
                                 {
                                     xlogP += 0.105;
-                                    //Debug.WriteLine("XLOGP: 74    R-O-X     0.105");
                                 }
                             }
                             else
@@ -886,14 +804,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                         xlogP -= 0.467;
                                         hBondDonors.Add(i);
                                         hBondAcceptors.Add(i);
-                                        //Debug.WriteLine("XLOGP: 69    R-OH    -0.467");
                                     }
                                     if (GetPiSystemsCount(ac, atomi) == 1)
                                     {
                                         xlogP += 0.082;
                                         hBondDonors.Add(i);
                                         hBondAcceptors.Add(i);
-                                        //Debug.WriteLine("XLOGP: 70    R-OH.1     0.082");
                                     }
                                 }
                                 else if (GetAtomTypeXCount(ac, atomi) == 1)
@@ -901,7 +817,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                     xlogP -= 0.522;
                                     hBondDonors.Add(i);
                                     hBondAcceptors.Add(i);
-                                    //Debug.WriteLine("XLOGP: 71    X-OH    -0.522");
                                 }
                             }
                         }
@@ -911,19 +826,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                 || (bondCount == 1 && atomi.FormalCharge == -1))
                         {
                             xlogP -= 0.148;
-                            //Debug.WriteLine("XLOGP: 78    A=S    -0.148");
                         }
                         else if (bondCount == 2)
                         {
                             if (hsCount == 0)
                             {
                                 xlogP += 0.255;
-                                //Debug.WriteLine("XLOGP: 77    A-S-A     0.255");
                             }
                             else
                             {
                                 xlogP += 0.419;
-                                //Debug.WriteLine("XLOGP: 76    A-SH     0.419");
                             }
                         }
                         else if (bondCount == 3)
@@ -931,7 +843,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             if (GetOxygenCount(ac, atomi) >= 1)
                             {
                                 xlogP -= 1.375;
-                                //Debug.WriteLine("XLOGP: 79    A-SO-A    -1.375");
                             }
                         }
                         else if (bondCount == 4)
@@ -939,7 +850,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             if (GetDoubleBondedOxygenCount(ac, atomi) >= 2)
                             {
                                 xlogP -= 0.168;
-                                //Debug.WriteLine("XLOGP: 80    A-SO2-A    -0.168");
                             }
                         }
                         break;
@@ -947,61 +857,51 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         if (GetDoubleBondedSulfurCount(ac, atomi) >= 1 && bondCount >= 4)
                         {
                             xlogP += 1.253;
-                            //Debug.WriteLine("XLOGP: 82    S=PA3     1.253");
                         }
                         else if (GetOxygenCount(ac, atomi) >= 1 || GetDoubleBondedOxygenCount(ac, atomi) == 1
                               && bondCount >= 4)
                         {
                             xlogP -= 0.447;
-                            //Debug.WriteLine("XLOGP: 81    O=PA3    -0.447");
                         }
                         break;
                     case "F":
                         if (GetPiSystemsCount(ac, atomi) == 0)
                         {
                             xlogP += 0.375;
-                            //Debug.WriteLine("XLOGP: 83    F.0     0.512");
                         }
                         else if (GetPiSystemsCount(ac, atomi) == 1)
                         {
                             xlogP += 0.202;
-                            //Debug.WriteLine("XLOGP: 84    F.1     0.202");
                         }
                         break;
                     case "Cl":
                         if (GetPiSystemsCount(ac, atomi) == 0)
                         {
                             xlogP += 0.512;
-                            //Debug.WriteLine("XLOGP: 85    Cl.0     0.512");
                         }
                         else if (GetPiSystemsCount(ac, atomi) >= 1)
                         {
                             xlogP += 0.663;
-                            //Debug.WriteLine("XLOGP: 86    Cl.1     0.663");
                         }
                         break;
                     case "Br":
                         if (GetPiSystemsCount(ac, atomi) == 0)
                         {
                             xlogP += 0.85;
-                            //Debug.WriteLine("XLOGP: 87    Br.0     0.85");
                         }
                         else if (GetPiSystemsCount(ac, atomi) == 1)
                         {
                             xlogP += 0.839;
-                            //Debug.WriteLine("XLOGP: 88    Br.1     0.839");
                         }
                         break;
                     case "I":
                         if (GetPiSystemsCount(ac, atomi) == 0)
                         {
                             xlogP += 1.05;
-                            //Debug.WriteLine("XLOGP: 89    I.0     1.05");
                         }
                         else if (GetPiSystemsCount(ac, atomi) == 1)
                         {
                             xlogP += 1.109;
-                            //Debug.WriteLine("XLOGP: 90    I.1     1.109");
                         }
                         break;
                 }
@@ -1012,15 +912,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     case 2:
                         xlogP += 0.137;
-                        //Debug.WriteLine("XLOGP: Halogen 1-3 pair     0.137");
                         break;
                     case 3:
                         xlogP += (3 * 0.137);
-                        //Debug.WriteLine("XLOGP: Halogen 1-3 pair     0.411");
                         break;
                     case 4:
                         xlogP += (6 * 0.137);
-                        //Debug.WriteLine("XLOGP: Halogen 1-3 pair     1.902");
                         break;
                 }
 
@@ -1030,14 +927,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     if (!rs.Contains(atomi))
                     {
                         xlogP += 0.580;
-                        //Debug.WriteLine("XLOGP: sp2 Oxygen 1-5 pair     0.580");
                     }
                 }
             }
 
-            //Debug.WriteLine("XLOGP: Before Correction:"+xlogP);
             int[][] pairCheck = null;
-            //        //Debug.WriteLine("Acceptors:"+hBondAcceptors.Count+" Donors:"+hBondDonors.Count);
             if (hBondAcceptors.Count > 0 && hBondDonors.Count > 0)
             {
                 pairCheck = InitializeHydrogenPairCheck(Arrays.CreateJagged<int>(atomCount, atomCount));
@@ -1051,13 +945,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             || CheckRingLink(rs, ac, ac.Atoms[hBondDonors[j]]))
                     {
                         int dist = apsp.From(ac.Atoms[hBondAcceptors[i]]).GetDistanceTo(ac.Atoms[hBondDonors[j]]);
-                        //                    //Debug.WriteLine(" Acc:"+CheckRingLink(rs,ac,atoms[((int)hBondAcceptors[i]).IntValue()])
-                        //                    +" S:"+atoms[((int)hBondAcceptors[i]).IntValue()].Symbol
-                        //                    +" Nr:"+((int)hBondAcceptors[i]).IntValue()
-                        //                    +" Don:"+CheckRingLink(rs,ac,atoms[((int)hBondDonors[j]).IntValue()])
-                        //                    +" S:"+atoms[((int)hBondDonors[j]).IntValue()].Symbol
-                        //                    +" Nr:"+((int)hBondDonors[j]).IntValue()
-                        //                    +" i:"+i+" j:"+j+" path:"+path.Count);
                         if (CheckRingLink(rs, ac, ac.Atoms[hBondAcceptors[i]])
                                 && CheckRingLink(rs, ac, ac.Atoms[hBondDonors[j]]))
                         {
@@ -1066,7 +953,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                 xlogP += 0.429;
                                 pairCheck[hBondAcceptors[i]][hBondDonors[j]] = 1;
                                 pairCheck[hBondDonors[j]][hBondAcceptors[i]] = 1;
-                                //Debug.WriteLine("XLOGP: Internal HBonds 1-4     0.429");
                             }
                         }
                         else
@@ -1076,7 +962,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                 xlogP += 0.429;
                                 pairCheck[hBondAcceptors[i]][hBondDonors[j]] = 1;
                                 pairCheck[hBondDonors[j]][hBondAcceptors[i]] = 1;
-                                //Debug.WriteLine("XLOGP: Internal HBonds 1-5     0.429");
                             }
                         }
                     }
@@ -1095,9 +980,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     bondAtom0 = bond.Atoms[0];
                     bondAtom1 = bond.Atoms[1];
-                    if ((bondAtom0.Symbol.Equals("C") && bondAtom1.Symbol.Equals("N"))
-                            || (bondAtom0.Symbol.Equals("N") && bondAtom1.Symbol.Equals("C"))
-                            && bond.Order == BondOrder.Single)
+                    if ((bondAtom0.Symbol.Equals("C", StringComparison.Ordinal) && bondAtom1.Symbol.Equals("N", StringComparison.Ordinal))
+                     || (bondAtom0.Symbol.Equals("N", StringComparison.Ordinal) && bondAtom1.Symbol.Equals("C", StringComparison.Ordinal))
+                     && bond.Order == BondOrder.Single)
                     {
                         aminoAcid.RemoveBond(bondAtom0, bondAtom1);
                         aminoAcid.Bonds.Add(new AnyOrderQueryBond((IQueryAtom)bondAtom0, (IQueryAtom)bondAtom1, BondOrder.Single, atomContainer.Builder));
@@ -1105,7 +990,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     }
                 }
 
-                //AtomContainer aminoacid = sp.ParseSmiles("NCC(=O)O");
                 try
                 {
                     if (universalIsomorphismTester.IsSubgraph(ac, aminoAcid))
@@ -1117,7 +1001,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         {
                             map = (RMap)list[j];
                             atom1_ = ac.Atoms[map.Id1];
-                            if (atom1_.Symbol.Equals("O") && ac.GetMaximumBondOrder(atom1_) == BondOrder.Single)
+                            if (atom1_.Symbol.Equals("O", StringComparison.Ordinal) && ac.GetMaximumBondOrder(atom1_) == BondOrder.Single)
                             {
                                 if (ac.GetConnectedBonds(atom1_).Count() == 2 && GetHydrogenCount(ac, atom1_) == 0)
                                 {
@@ -1125,7 +1009,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                 else
                                 {
                                     xlogP -= 2.166;
-                                    //Debug.WriteLine("XLOGP: alpha amino acid    -2.166");
                                     break;
                                 }
                             }
@@ -1145,7 +1028,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 if (universalIsomorphismTester.IsSubgraph(ac, paba))
                 {
                     xlogP -= 0.501;
-                    //Debug.WriteLine("XLOGP: p-amino sulphonic acid    -0.501");
                 }
             }
             catch (CDKException e)
@@ -1162,7 +1044,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     if (universalIsomorphismTester.IsSubgraph(ac, salicilic))
                     {
                         xlogP += 0.554;
-                        //Debug.WriteLine("XLOGP: salicylic acid     0.554");
                     }
                 }
                 catch (CDKException e)
@@ -1171,8 +1052,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            //         ortho oxygen pair
-            //AtomContainer orthopair = sp.ParseSmiles("OCCO");
+            // ortho oxygen pair
             QueryAtomContainer orthopair = new QueryAtomContainer(atomContainer.Builder);
             AromaticAtom atom1 = new AromaticAtom(atomContainer.Builder) { Symbol = "C" };
             AromaticAtom atom2 = new AromaticAtom(atomContainer.Builder) { Symbol = "C" };
@@ -1193,7 +1073,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 if (universalIsomorphismTester.IsSubgraph(ac, orthopair))
                 {
                     xlogP -= 0.268;
-                    //Debug.WriteLine("XLOGP: Ortho oxygen pair    -0.268");
                 }
             }
             catch (CDKException e)
@@ -1201,7 +1080,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(e);
             }
 
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(xlogP), DescriptorNames);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(xlogP), DescriptorNames);
         }
 
         /// <summary>
@@ -1220,7 +1099,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="pairCheck">value</param>
         /// <returns>void</returns>
         /// </summary>
-        private int[][] InitializeHydrogenPairCheck(int[][] pairCheck)
+        private static int[][] InitializeHydrogenPairCheck(int[][] pairCheck)
         {
             for (int i = 0; i < pairCheck.Length; i++)
             {
@@ -1239,7 +1118,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="ac"></param>
         /// <param name="atom"></param>
         /// <returns>The hydrogenCount value</returns>
-        private bool CheckRingLink(IRingSet ringSet, IAtomContainer ac, IAtom atom)
+        private static bool CheckRingLink(IRingSet ringSet, IAtomContainer ac, IAtom atom)
         {
             var neighbours = ac.GetConnectedAtoms(atom);
             if (ringSet.Contains(atom))
@@ -1262,13 +1141,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="ac"></param>
         /// <param name="atom"></param>
         /// <returns>The hydrogenCount value</returns>
-        private int GetHydrogenCount(IAtomContainer ac, IAtom atom)
+        private static int GetHydrogenCount(IAtomContainer ac, IAtom atom)
         {
             var neighbours = ac.GetConnectedAtoms(atom);
             int hcounter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.Symbol.Equals("H"))
+                if (string.Equals(neighbour.Symbol, "H", StringComparison.Ordinal))
                 {
                     hcounter += 1;
                 }
@@ -1282,16 +1161,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="ac"></param>
         /// <param name="atom"></param>
         /// <returns>The alogenCount value</returns>
-        private int GetHalogenCount(IAtomContainer ac, IAtom atom)
+        private static int GetHalogenCount(IAtomContainer ac, IAtom atom)
         {
             var neighbours = ac.GetConnectedAtoms(atom);
             int acounter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.Symbol.Equals("F") || neighbour.Symbol.Equals("I")
-                        || neighbour.Symbol.Equals("Cl") || neighbour.Symbol.Equals("Br"))
+                switch (neighbour.Symbol)
                 {
-                    acounter += 1;
+                    case "F":
+                    case "I":
+                    case "Cl":
+                    case "Br":
+                        acounter += 1;
+                        break;
                 }
             }
             return acounter;
@@ -1303,22 +1186,26 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="ac"></param>
         /// <param name="atom"></param>
         /// <returns>The nitrogenOrOxygenCount value</returns>
-        private int GetAtomTypeXCount(IAtomContainer ac, IAtom atom)
+        private static int GetAtomTypeXCount(IAtomContainer ac, IAtom atom)
         {
             var neighbours = ac.GetConnectedAtoms(atom);
             int nocounter = 0;
             IBond bond;
             foreach (var neighbour in neighbours)
             {
-                if ((neighbour.Symbol.Equals("N") || neighbour.Symbol.Equals("O"))
-                        && !neighbour.GetProperty<bool>("IS_IN_AROMATIC_RING"))
+                switch (neighbour.Symbol)
                 {
-                    //if (ac.GetMaximumBondOrder(neighbours[i]) == 1.0) {
-                    bond = ac.GetBond(neighbour, atom);
-                    if (bond.Order != BondOrder.Double)
-                    {
-                        nocounter += 1;
-                    }
+                    case "N":
+                    case "O":
+                        if (!neighbour.GetProperty<bool>("IS_IN_AROMATIC_RING"))
+                        {
+                            bond = ac.GetBond(neighbour, atom);
+                            if (bond.Order != BondOrder.Double)
+                            {
+                                nocounter += 1;
+                            }
+                        }
+                        break;
                 }
             }
             return nocounter;
@@ -1330,15 +1217,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="ac"></param>
         /// <param name="atom"></param>
         /// <returns>The aromaticCarbonsCount value</returns>
-        private int GetAromaticCarbonsCount(IAtomContainer ac, IAtom atom)
+        private static int GetAromaticCarbonsCount(IAtomContainer ac, IAtom atom)
         {
             var neighbours = ac.GetConnectedAtoms(atom);
             int carocounter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.Symbol.Equals("C") && neighbour.IsAromatic)
+                switch (neighbour.Symbol)
                 {
-                    carocounter += 1;
+                    case "C":
+                        if (neighbour.IsAromatic)
+                        {
+                            carocounter += 1;
+                        }
+                        break;
                 }
             }
             return carocounter;
@@ -1350,13 +1242,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="ac"></param>
         /// <param name="atom"></param>
         /// <returns>The carbonsCount value</returns>
-        private int GetCarbonsCount(IAtomContainer ac, IAtom atom)
+        private static int GetCarbonsCount(IAtomContainer ac, IAtom atom)
         {
             var neighbours = ac.GetConnectedAtoms(atom);
             int ccounter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.Symbol.Equals("C"))
+                if (string.Equals(neighbour.Symbol, "C", StringComparison.Ordinal))
                 {
                     if (!neighbour.IsAromatic)
                     {
@@ -1373,18 +1265,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="ac"></param>
         /// <param name="atom"></param>
         /// <returns>The carbonsCount value</returns>
-        private int GetOxygenCount(IAtomContainer ac, IAtom atom)
+        private static int GetOxygenCount(IAtomContainer ac, IAtom atom)
         {
             var neighbours = ac.GetConnectedAtoms(atom);
             int ocounter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.Symbol.Equals("O"))
+                switch (neighbour.Symbol)
                 {
-                    if (!neighbour.IsAromatic)
-                    {
-                        ocounter += 1;
-                    }
+                    case "O":
+                        if (!neighbour.IsAromatic)
+                        {
+                            ocounter += 1;
+                        }
+                        break;
                 }
             }
             return ocounter;
@@ -1396,20 +1290,22 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="ac">Description of the Parameter</param>
         /// <param name="atom">Description of the Parameter</param>
         /// <returns>The doubleBondedCarbonsCount value</returns>
-        private int GetDoubleBondedCarbonsCount(IAtomContainer ac, IAtom atom)
+        private static int GetDoubleBondedCarbonsCount(IAtomContainer ac, IAtom atom)
         {
             var neighbours = ac.GetConnectedAtoms(atom);
             IBond bond;
             int cdbcounter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.Symbol.Equals("C"))
+                switch (neighbour.Symbol)
                 {
-                    bond = ac.GetBond(neighbour, atom);
-                    if (bond.Order == BondOrder.Double)
-                    {
-                        cdbcounter += 1;
-                    }
+                    case "C":
+                        bond = ac.GetBond(neighbour, atom);
+                        if (bond.Order == BondOrder.Double)
+                        {
+                            cdbcounter += 1;
+                        }
+                        break;
                 }
             }
             return cdbcounter;
@@ -1421,7 +1317,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="ac">Description of the Parameter</param>
         /// <param name="atom">Description of the Parameter</param>
         /// <returns>The doubleBondedOxygenCount value</returns>
-        private int GetDoubleBondedOxygenCount(IAtomContainer ac, IAtom atom)
+        private static int GetDoubleBondedOxygenCount(IAtomContainer ac, IAtom atom)
         {
             var neighbours = ac.GetConnectedAtoms(atom);
             IBond bond;
@@ -1433,20 +1329,22 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.Symbol.Equals("O"))
+                switch (neighbour.Symbol)
                 {
-                    bond = ac.GetBond(neighbour, atom);
-                    if (chargeFlag && neighbour.FormalCharge == -1 && bond.Order == BondOrder.Single)
-                    {
-                        odbcounter += 1;
-                    }
-                    if (!neighbour.IsAromatic)
-                    {
-                        if (bond.Order == BondOrder.Double)
+                    case "O":
+                        bond = ac.GetBond(neighbour, atom);
+                        if (chargeFlag && neighbour.FormalCharge == -1 && bond.Order == BondOrder.Single)
                         {
                             odbcounter += 1;
                         }
-                    }
+                        if (!neighbour.IsAromatic)
+                        {
+                            if (bond.Order == BondOrder.Double)
+                            {
+                                odbcounter += 1;
+                            }
+                        }
+                        break;
                 }
             }
             return odbcounter;
@@ -1458,27 +1356,29 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="ac">Description of the Parameter</param>
         /// <param name="atom">Description of the Parameter</param>
         /// <returns>The doubleBondedSulfurCount value</returns>
-        private int GetDoubleBondedSulfurCount(IAtomContainer ac, IAtom atom)
+        private static int GetDoubleBondedSulfurCount(IAtomContainer ac, IAtom atom)
         {
             var neighbours = ac.GetConnectedAtoms(atom);
             IBond bond;
             int sdbcounter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.Symbol.Equals("S"))
+                switch (neighbour.Symbol)
                 {
-                    if (atom.FormalCharge == 1 && neighbour.FormalCharge == -1)
-                    {
-                        sdbcounter += 1;
-                    }
-                    bond = ac.GetBond(neighbour, atom);
-                    if (!neighbour.IsAromatic)
-                    {
-                        if (bond.Order == BondOrder.Double)
+                    case "S":
+                        if (atom.FormalCharge == 1 && neighbour.FormalCharge == -1)
                         {
                             sdbcounter += 1;
                         }
-                    }
+                        bond = ac.GetBond(neighbour, atom);
+                        if (!neighbour.IsAromatic)
+                        {
+                            if (bond.Order == BondOrder.Double)
+                            {
+                                sdbcounter += 1;
+                            }
+                        }
+                        break;
                 }
             }
             return sdbcounter;
@@ -1490,23 +1390,25 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="ac">Description of the Parameter</param>
         /// <param name="atom">Description of the Parameter</param>
         /// <returns>The doubleBondedNitrogenCount value</returns>
-        private int GetDoubleBondedNitrogenCount(IAtomContainer ac, IAtom atom)
+        private static int GetDoubleBondedNitrogenCount(IAtomContainer ac, IAtom atom)
         {
             var neighbours = ac.GetConnectedAtoms(atom);
             IBond bond;
             int ndbcounter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.Symbol.Equals("N"))
+                switch (neighbour.Symbol)
                 {
-                    bond = ac.GetBond(neighbour, atom);
-                    if (!neighbour.IsAromatic)
-                    {
-                        if (bond.Order == BondOrder.Double)
+                    case "N":
+                        bond = ac.GetBond(neighbour, atom);
+                        if (!neighbour.IsAromatic)
                         {
-                            ndbcounter += 1;
+                            if (bond.Order == BondOrder.Double)
+                            {
+                                ndbcounter += 1;
+                            }
                         }
-                    }
+                        break;
                 }
             }
             return ndbcounter;
@@ -1518,15 +1420,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="ac">Description of the Parameter</param>
         /// <param name="atom">Description of the Parameter</param>
         /// <returns>The aromaticNitrogensCount value</returns>
-        private int GetAromaticNitrogensCount(IAtomContainer ac, IAtom atom)
+        private static int GetAromaticNitrogensCount(IAtomContainer ac, IAtom atom)
         {
             var neighbours = ac.GetConnectedAtoms(atom);
             int narocounter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.Symbol.Equals("N") && neighbour.GetProperty<bool>("IS_IN_AROMATIC_RING"))
+                switch (neighbour.Symbol)
                 {
-                    narocounter += 1;
+                    case "N":
+                        if (neighbour.GetProperty<bool>("IS_IN_AROMATIC_RING"))
+                        {
+                            narocounter += 1;
+                        }
+                        break;
                 }
             }
             return narocounter;
@@ -1540,7 +1447,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="ac">Description of the Parameter</param>
         /// <param name="atom">Description of the Parameter</param>
         /// <returns>The piSystemsCount value</returns>
-        private int GetPiSystemsCount(IAtomContainer ac, IAtom atom)
+        private static int GetPiSystemsCount(IAtomContainer ac, IAtom atom)
         {
             var neighbours = ac.GetConnectedAtoms(atom);
             int picounter = 0;
@@ -1549,17 +1456,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 var bonds = ac.GetConnectedBonds(neighbour);
                 foreach (var bond in bonds)
                 {
-                    if (bond.Order != BondOrder.Single && !bond.GetConnectedAtom(neighbour).Equals(atom)
-                            && !neighbour.Symbol.Equals("P") && !neighbour.Symbol.Equals("S"))
+                    if (bond.Order != BondOrder.Single && !bond.GetConnectedAtom(neighbour).Equals(atom))
                     {
-                        picounter += 1;
+                        switch (neighbour.Symbol)
+                        {
+                            case "P":
+                            case "S":
+                                break;
+                            default:
+                                picounter += 1;
+                                break;
+                        }
                     }
-                    // else if (bonds[j].GetConnectedAtom(neighbours[i])!=atom &&
-                    // !neighbours[i].Symbol.Equals("P") &&
-                    // !neighbours[i].Symbol.Equals("S") &&
-                    // bonds[j].getConnectedAtom
-                    // (neighbours[i]).IsAromatic){ picounter
-                    // += 1; }
                 }
             }
             return picounter;
@@ -1571,15 +1479,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="ac">Description of the Parameter</param>
         /// <param name="atom">Description of the Parameter</param>
         /// <returns>The presenceOfCarbonil value</returns>
-        private bool GetPresenceOfHydroxy(IAtomContainer ac, IAtom atom)
+        private static bool GetPresenceOfHydroxy(IAtomContainer ac, IAtom atom)
         {
             IAtom neighbour0 = (IAtom)ac.GetConnectedAtoms(atom).First();
-            if (neighbour0.Symbol.Equals("C"))
+            if (string.Equals(neighbour0.Symbol, "C", StringComparison.Ordinal))
             {
                 var first = ac.GetConnectedAtoms(neighbour0);
                 foreach (var conAtom in first)
                 {
-                    if (conAtom.Symbol.Equals("O"))
+                    if (string.Equals(conAtom.Symbol, "O", StringComparison.Ordinal))
                     {
                         if (ac.GetBond(neighbour0, conAtom).Order == BondOrder.Single)
                         {
@@ -1600,23 +1508,22 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// Gets the presenceOfN=O attribute of the XLogPDescriptor object.
-        ///
+        /// </summary>
         /// <param name="ac">Description of the Parameter</param>
         /// <param name="atom">Description of the Parameter</param>
         /// <returns>The presenceOfNitor [bool]</returns>
-        /// </summary>
-        private bool GetPresenceOfNitro(IAtomContainer ac, IAtom atom)
+        private static bool GetPresenceOfNitro(IAtomContainer ac, IAtom atom)
         {
             var neighbours = ac.GetConnectedAtoms(atom);
             //int counter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.Symbol.Equals("N"))
+                if (string.Equals(neighbour.Symbol, "N", StringComparison.Ordinal))
                 {
                     var second = ac.GetConnectedAtoms(neighbour);
                     foreach (var conAtom in second)
                     {
-                        if (conAtom.Symbol.Equals("O"))
+                        if (string.Equals(conAtom.Symbol, "O", StringComparison.Ordinal))
                         {
                             var bond = ac.GetBond(neighbour, conAtom);
                             if (bond.Order == BondOrder.Double)
@@ -1632,20 +1539,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// Gets the presenceOfSulfat A-S(O2)-A attribute of the XLogPDescriptor object.
-        ///
+        /// </summary>
         /// <param name="ac">Description of the Parameter</param>
         /// <param name="atom">Description of the Parameter</param>
         /// <returns>The presenceOfSulfat [bool]</returns>
-        /// </summary>
-        private bool GetPresenceOfSulfat(IAtomContainer ac, IAtom atom)
+        private static bool GetPresenceOfSulfat(IAtomContainer ac, IAtom atom)
         {
             var neighbours = ac.GetConnectedAtoms(atom);
-            //IAtom[] second = null;
-            //IBond bond = null;
-            //int counter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.Symbol.Equals("S") && GetOxygenCount(ac, neighbour) >= 2
+                if (neighbour.Symbol.Equals("S", StringComparison.Ordinal) && GetOxygenCount(ac, neighbour) >= 2
                         && ac.GetConnectedBonds(neighbour).Count() == 4)
                 {
                     return true;
@@ -1656,23 +1559,22 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// Gets the presenceOfCarbonil attribute of the XLogPDescriptor object.
-        ///
+        /// </summary>
         /// <param name="ac">Description of the Parameter</param>
         /// <param name="atom">Description of the Parameter</param>
         /// <returns>The presenceOfCarbonil value</returns>
-        /// </summary>
-        private int GetPresenceOfCarbonil(IAtomContainer ac, IAtom atom)
+        private static int GetPresenceOfCarbonil(IAtomContainer ac, IAtom atom)
         {
             var neighbours = ac.GetConnectedAtoms(atom);
             int counter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.Symbol.Equals("C"))
+                if (string.Equals(neighbour.Symbol, "C", StringComparison.Ordinal))
                 {
                     var second = ac.GetConnectedAtoms(neighbour);
                     foreach (var conAtom in second)
                     {
-                        if (conAtom.Symbol.Equals("O"))
+                        if (string.Equals(conAtom.Symbol, "O", StringComparison.Ordinal))
                         {
                             var bond = ac.GetBond(neighbour, conAtom);
                             if (bond.Order == BondOrder.Double)
@@ -1693,7 +1595,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="ac">Description of the Parameter</param>
         /// <param name="atom">Description of the Parameter</param>
         /// <returns>The ifCarbonIsHydrophobic value</returns>
-        private bool GetIfCarbonIsHydrophobic(IAtomContainer ac, IAtom atom)
+        private static bool GetIfCarbonIsHydrophobic(IAtomContainer ac, IAtom atom)
         {
             var first = ac.GetConnectedAtoms(atom);
             //IAtom[] fourth = null;
@@ -1701,48 +1603,40 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 foreach (var firstAtom in first)
                 {
-                    if (firstAtom.Symbol.Equals("C") || firstAtom.Symbol.Equals("H"))
+                    switch (firstAtom.Symbol)
                     {
-                    }
-                    else
-                    {
-                        return false;
+                        case "C":
+                        case "H":
+                            break;
+                        default:
+                            return false;
                     }
                     var second = ac.GetConnectedAtoms(firstAtom);
                     if (second.Any())
                     {
                         foreach (var secondAtom in second)
                         {
-                            if (secondAtom.Symbol.Equals("C") || secondAtom.Symbol.Equals("H"))
+                            switch (secondAtom.Symbol)
                             {
-                            }
-                            else
-                            {
-                                return false;
+                                case "C":
+                                case "H":
+                                    break;
+                                default:
+                                    return false;
                             }
                             var third = ac.GetConnectedAtoms(secondAtom);
                             if (third.Any())
                             {
                                 foreach (var thirdAtom in third)
                                 {
-                                    if (thirdAtom.Symbol.Equals("C") || thirdAtom.Symbol.Equals("H"))
+                                    switch (thirdAtom.Symbol)
                                     {
+                                        case "C":
+                                        case "H":
+                                            break;
+                                        default:
+                                            return false;
                                     }
-                                    else
-                                    {
-                                        return false;
-                                    }
-                                    //fourth = ac.GetConnectedAtoms(third[c]);
-                                    //if (fourth.Length > 0) {
-                                    //    for (int d = 0; d < fourth.Length; d++) {
-                                    //        if (fourth[d].Symbol.Equals("C") || fourth[d].Symbol.Equals("H")) {
-                                    //        } else {
-                                    //            return false;
-                                    //        }
-                                    //    }
-                                    //} else {
-                                    //    return false;
-                                    //}
                                 }
                             }
                             else
@@ -1776,7 +1670,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>The parameterType value</returns>
         public override object GetParameterType(string name) => true;
 
-        private IAtomContainer CreatePaba(IChemObjectBuilder builder)
+        private static IAtomContainer CreatePaba(IChemObjectBuilder builder)
         {
             // SMILES CS(=O)(=O)c1ccc(N)cc1
             IAtomContainer container = builder.NewAtomContainer();
@@ -1840,7 +1734,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return container;
         }
 
-        private IAtomContainer NewAminoAcid(IChemObjectBuilder builder)
+        private static IAtomContainer NewAminoAcid(IChemObjectBuilder builder)
         {
             // SMILES NCC(=O)O
             IAtomContainer container = builder.NewAtomContainer();
@@ -1861,7 +1755,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return container;
         }
 
-        private IAtomContainer CreateSalicylicAcid(IChemObjectBuilder builder)
+        private static IAtomContainer CreateSalicylicAcid(IChemObjectBuilder builder)
         {
             // SMILES O=C(O)c1ccccc1O
             IAtomContainer container = builder.NewAtomContainer();

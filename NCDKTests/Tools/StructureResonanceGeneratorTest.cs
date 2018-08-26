@@ -19,7 +19,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions;
@@ -28,6 +28,7 @@ using NCDK.Reactions.Types.Parameters;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.Tools
 {
@@ -36,7 +37,6 @@ namespace NCDK.Tools
     public class StructureResonanceGeneratorTest : CDKTestCase
     {
         private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
         /// <summary>
         /// Constructor of the StructureResonanceGeneratorTest.
@@ -152,11 +152,10 @@ namespace NCDK.Tools
         //    /// <returns>The test suite</returns>
         //    /// </summary>
         //    [TestMethod()] public void TestGetAllStructures_IAtomContainer() {
-        //        IAtomContainer molecule = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CC(=O)C=O");
+        //        IAtomContainer molecule = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("CC(=O)C=O");
         //        AddExplicitHydrogens(molecule);
         //        AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-        //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        //        lpcheck.Saturate(molecule);
+        //        LonePairElectronChecker.Saturate(molecule);
         //
         //        IAtom atom =  molecule.Atoms[2];
         //        molecule.SingleElectrons.Add(new SingleElectron(atom));
@@ -181,14 +180,14 @@ namespace NCDK.Tools
         //        Assert.AreEqual(8,setOfMolecules.Count);
         //
         //        /*1*/
-        //        IAtomContainer molecule1 = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("C[C+](O)C=O");
+        //        IAtomContainer molecule1 = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("C[C+](O)C=O");
         //        For(int i = 0; i < 4; i++)
         //            molecule1.Atoms.Add(new Atom("H"));
         //        molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[5], BondOrder.Single);
         //        molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[6], BondOrder.Single);
         //        molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[7], BondOrder.Single);
         //        molecule1.AddBond(molecule1.Atoms[3], molecule1.Atoms[8], BondOrder.Single);
-        //        lpcheck.Saturate(molecule1);
+        //        LonePairElectronChecker.Saturate(molecule1);
         //        IAtom atom1 =  molecule1.Atoms[2];
         //        molecule1.SingleElectrons.Add(new SingleElectron(atom1));
         //        QueryAtomContainer qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule1);
@@ -202,7 +201,7 @@ namespace NCDK.Tools
         ////        molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[6], BondOrder.Single);
         ////        molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[7], BondOrder.Single);
         ////        molecule2.AddBond(molecule2.Atoms[3], molecule2.Atoms[8], BondOrder.Single);
-        ////        lpcheck.NewSaturate(molecule2);
+        ////        LonePairElectronChecker.NewSaturate(molecule2);
         ////        IAtom atom2a =  molecule2.Atoms[2];
         ////        molecule2.AddElectronContainer(new SingleElectron(atom2a));
         ////
@@ -232,11 +231,10 @@ namespace NCDK.Tools
         //    /// <returns>The test suite</returns>
         //    /// </summary>
         //    [TestMethod()] public void TestGetStructures_IAtomContainer() {
-        //        IAtomContainer molecule = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CC(=O)C=O");
+        //        IAtomContainer molecule = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("CC(=O)C=O");
         //        AddExplicitHydrogens(molecule);
         //        AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-        //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        //        lpcheck.Saturate(molecule);
+        //        LonePairElectronChecker.Saturate(molecule);
         //
         //        IAtom atom =  molecule.Atoms[2];
         //        molecule.SingleElectrons.Add(new SingleElectron(atom));
@@ -250,9 +248,9 @@ namespace NCDK.Tools
         //
         //        Assert.AreEqual(2,setOfMolecules.Count);
         //
-        //        IAtomContainer molecule1 = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CC(=O)C=O");
+        //        IAtomContainer molecule1 = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("CC(=O)C=O");
         //        AddExplicitHydrogens(molecule1);
-        //        lpcheck.Saturate(molecule1);
+        //        LonePairElectronChecker.Saturate(molecule1);
         //        IAtom atom1 =  molecule1.Atoms[4];
         //        molecule1.SingleElectrons.Add(new SingleElectron(atom1));
         //        selectron = molecule1.GetConnectedLonePairsList(atom1);
@@ -270,11 +268,10 @@ namespace NCDK.Tools
         //    /// <returns>The test suite</returns>
         //    /// </summary>
         //    [TestMethod()] public void TestGetStructures2() {
-        //        IAtomContainer molecule = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CCC(=O)C(C)=O");
+        //        IAtomContainer molecule = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("CCC(=O)C(C)=O");
         //        AddExplicitHydrogens(molecule);
         //        AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-        //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        //        lpcheck.Saturate(molecule);
+        //        LonePairElectronChecker.Saturate(molecule);
         //
         //        IAtom atom =  molecule.Atoms[3];
         //        molecule.SingleElectrons.Add(new SingleElectron(atom));
@@ -288,9 +285,9 @@ namespace NCDK.Tools
         //
         //        Assert.AreEqual(2,setOfMolecules.Count);
         //
-        //        IAtomContainer molecule1 = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CCC(=O)C(C)=O");
+        //        IAtomContainer molecule1 = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("CCC(=O)C(C)=O");
         //        AddExplicitHydrogens(molecule1);
-        //        lpcheck.Saturate(molecule1);
+        //        LonePairElectronChecker.Saturate(molecule1);
         //
         //        IAtom atom1 =  molecule1.Atoms[6];
         //        molecule1.SingleElectrons.Add(new SingleElectron(atom1));
@@ -462,10 +459,10 @@ namespace NCDK.Tools
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[2], BondOrder.Single);
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator gR = new StructureResonanceGenerator();
-            var reactionList = gR.Reactions;
+            var reactionList = gR.Reactions.ToList();
             reactionList.Add(new HeterolyticCleavagePBReaction());
             gR.Reactions = reactionList;
             var setOfMolecules = gR.GetStructures(molecule);
@@ -482,7 +479,7 @@ namespace NCDK.Tools
             molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[2], BondOrder.Double);
             AddExplicitHydrogens(molecule2);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule2);
-            lpcheck.Saturate(molecule2);
+            LonePairElectronChecker.Saturate(molecule2);
 
             QueryAtomContainer qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule2);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[1], qAC));
@@ -503,7 +500,7 @@ namespace NCDK.Tools
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator gR = new StructureResonanceGenerator();
             var setOfMolecules = gR.GetStructures(molecule);
@@ -520,7 +517,7 @@ namespace NCDK.Tools
             molecule1.Atoms[2].FormalCharge = -1;
             AddExplicitHydrogens(molecule1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule1);
-            lpcheck.Saturate(molecule1);
+            LonePairElectronChecker.Saturate(molecule1);
 
             QueryAtomContainer qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule1);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[1], qAC));
@@ -552,7 +549,7 @@ namespace NCDK.Tools
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator gRI = new StructureResonanceGenerator();
             var setOfMolecules = gRI.GetStructures(molecule);
@@ -578,7 +575,7 @@ namespace NCDK.Tools
             molecule1.AddBond(molecule1.Atoms[6], molecule1.Atoms[1], BondOrder.Single);
             AddExplicitHydrogens(molecule1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule1);
-            lpcheck.Saturate(molecule1);
+            LonePairElectronChecker.Saturate(molecule1);
 
             QueryAtomContainer qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule1);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[2], qAC));
@@ -602,7 +599,7 @@ namespace NCDK.Tools
             molecule2.AddBond(molecule2.Atoms[6], molecule2.Atoms[1], BondOrder.Single);
             AddExplicitHydrogens(molecule2);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule2);
-            lpcheck.Saturate(molecule2);
+            LonePairElectronChecker.Saturate(molecule2);
 
             IAtomContainer product2 = setOfMolecules[4];
             qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule2);
@@ -635,7 +632,7 @@ namespace NCDK.Tools
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator gRI = new StructureResonanceGenerator();
             IAtomContainer container = gRI.GetContainer(molecule, molecule.Atoms[0]);
@@ -669,7 +666,7 @@ namespace NCDK.Tools
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator gRI = new StructureResonanceGenerator(true);
             var setOfMolecules = gRI.GetStructures(molecule);
@@ -695,7 +692,7 @@ namespace NCDK.Tools
             molecule1.AddBond(molecule1.Atoms[6], molecule1.Atoms[1], BondOrder.Single);
             AddExplicitHydrogens(molecule1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule1);
-            lpcheck.Saturate(molecule1);
+            LonePairElectronChecker.Saturate(molecule1);
 
             QueryAtomContainer qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule1);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[1], qAC));
@@ -719,7 +716,7 @@ namespace NCDK.Tools
             molecule2.AddBond(molecule2.Atoms[6], molecule2.Atoms[1], BondOrder.Single);
             AddExplicitHydrogens(molecule2);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule2);
-            lpcheck.Saturate(molecule2);
+            LonePairElectronChecker.Saturate(molecule2);
 
             IAtomContainer product2 = setOfMolecules[2];
             qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule2);
@@ -752,7 +749,7 @@ namespace NCDK.Tools
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[1], BondOrder.Single);
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator gRI = new StructureResonanceGenerator();
             var setOfMolecules = gRI.GetStructures(molecule);
@@ -784,7 +781,7 @@ namespace NCDK.Tools
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[1], BondOrder.Single);
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator gRI = new StructureResonanceGenerator(true);
             var setOfMolecules = gRI.GetStructures(molecule);
@@ -812,7 +809,7 @@ namespace NCDK.Tools
             AddExplicitHydrogens(molecule);
             Assert.AreEqual(8, molecule.Atoms.Count);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator gRI = new StructureResonanceGenerator();
             var resonanceStructures = gRI.GetStructures(molecule);
@@ -861,7 +858,7 @@ namespace NCDK.Tools
             molecule.Atoms[0].FormalCharge = -1;
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
             Assert.AreEqual(6, molecule.Atoms.Count);
 
             StructureResonanceGenerator gRI = new StructureResonanceGenerator();
@@ -899,7 +896,7 @@ namespace NCDK.Tools
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[7], BondOrder.Single);
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             Assert.AreEqual(17, molecule.Atoms.Count);
 
@@ -933,8 +930,7 @@ namespace NCDK.Tools
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            LonePairElectronChecker lpChecker = new LonePairElectronChecker();
-            lpChecker.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             Assert.AreEqual(18, molecule.Atoms.Count);
 
@@ -976,7 +972,7 @@ namespace NCDK.Tools
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             bool isAromatic = Aromaticity.CDKLegacy.Apply(molecule);
             Assert.IsTrue(isAromatic, "Molecule is expected to be marked aromatic!");
@@ -1023,7 +1019,7 @@ namespace NCDK.Tools
             IAtomContainer molecule = TestMoleculeFactory.MakeCyclobutadiene();
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator gRI = new StructureResonanceGenerator();
             var setOfMolecules = gRI.GetStructures(molecule);
@@ -1039,7 +1035,7 @@ namespace NCDK.Tools
             IAtomContainer molecule = TestMoleculeFactory.MakeBenzene();
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator gRI = new StructureResonanceGenerator();
             var setOfMolecules = gRI.GetStructures(molecule);
@@ -1064,7 +1060,7 @@ namespace NCDK.Tools
             molecule.Atoms[0].FormalCharge = -1;
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
             Assert.AreEqual(6, molecule.Atoms.Count);
 
             StructureResonanceGenerator gRI = new StructureResonanceGenerator();
@@ -1108,7 +1104,7 @@ namespace NCDK.Tools
             molecule.Atoms[7].FormalCharge = +1;
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator sRG = new StructureResonanceGenerator();
             var setOfContainers = sRG.GetContainers(molecule);
@@ -1158,7 +1154,7 @@ namespace NCDK.Tools
             AddExplicitHydrogens(molecule);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator sRG = new StructureResonanceGenerator();
             IAtomContainer container = sRG.GetContainer(molecule, atom4);
@@ -1205,7 +1201,7 @@ namespace NCDK.Tools
             AddExplicitHydrogens(molecule);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator sRG = new StructureResonanceGenerator();
             IAtomContainer container = sRG.GetContainer(molecule, molecule.Bonds[1]);
@@ -1259,7 +1255,7 @@ namespace NCDK.Tools
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[7], BondOrder.Single);
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator sRG = new StructureResonanceGenerator();
             IAtomContainer container = sRG.GetContainer(molecule, atom4);
@@ -1301,7 +1297,7 @@ namespace NCDK.Tools
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator gRI = new StructureResonanceGenerator();
             var setOfContainers = gRI.GetContainers(molecule);
@@ -1343,7 +1339,7 @@ namespace NCDK.Tools
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator gRI = new StructureResonanceGenerator();
             var setOfContainers = gRI.GetContainers(molecule);
@@ -1377,7 +1373,7 @@ namespace NCDK.Tools
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[3], BondOrder.Single);
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator gRI = new StructureResonanceGenerator();
             var setOfContainers = gRI.GetContainers(molecule);
@@ -1414,7 +1410,7 @@ namespace NCDK.Tools
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator gRI = new StructureResonanceGenerator();
             var setOfContainers = gRI.GetContainers(molecule);
@@ -1452,7 +1448,7 @@ namespace NCDK.Tools
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator gRI = new StructureResonanceGenerator();
             var setOfContainers = gRI.GetContainers(molecule);
@@ -1506,7 +1502,7 @@ namespace NCDK.Tools
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             StructureResonanceGenerator gRI = new StructureResonanceGenerator();
             var setOfContainers = gRI.GetContainers(molecule);
@@ -1543,7 +1539,7 @@ namespace NCDK.Tools
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             Assert.IsTrue(Aromaticity.CDKLegacy.Apply(molecule));
 
@@ -1582,7 +1578,7 @@ namespace NCDK.Tools
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             Assert.IsTrue(Aromaticity.CDKLegacy.Apply(molecule));
 

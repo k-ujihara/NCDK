@@ -282,7 +282,7 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         public static IEnumerable<IAtomContainer> GetAllAtomContainers(IChemModel chemModel)
         {
-            IChemObjectSet<IAtomContainer> moleculeSet = chemModel.Builder.NewAtomContainerSet();
+            var moleculeSet = chemModel.Builder.NewAtomContainerSet();
             if (chemModel.MoleculeSet != null)
             {
                 moleculeSet.AddRange(chemModel.MoleculeSet);

@@ -17,7 +17,9 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -33,7 +35,7 @@ namespace NCDK.Pharmacophore
     // @cdk.githash
     // @cdk.keyword pharmacophore
     // @cdk.keyword 3D isomorphism
-    public class PharmacophoreUtils
+    public static class PharmacophoreUtils
     {
         /// <summary>
         /// Read in a set of pharmacophore definitions to create pharmacophore queries.
@@ -142,16 +144,16 @@ namespace NCDK.Pharmacophore
                         case PharmacophoreQueryBond dbond:
                             {
                                 elem = new XElement("distanceConstraint");
-                                elem.SetAttributeValue("lower", dbond.GetLower().ToString());
-                                elem.SetAttributeValue("upper", dbond.GetUpper().ToString());
+                                elem.SetAttributeValue("lower", dbond.GetLower().ToString(NumberFormatInfo.InvariantInfo));
+                                elem.SetAttributeValue("upper", dbond.GetUpper().ToString(NumberFormatInfo.InvariantInfo));
                                 elem.SetAttributeValue("units", "A");
                             }
                             break;
                         case PharmacophoreQueryAngleBond dbond:
                             {
                                 elem = new XElement("angleConstraint");
-                                elem.SetAttributeValue("lower", dbond.GetLower().ToString());
-                                elem.SetAttributeValue("upper", dbond.GetUpper().ToString());
+                                elem.SetAttributeValue("lower", dbond.GetLower().ToString(NumberFormatInfo.InvariantInfo));
+                                elem.SetAttributeValue("upper", dbond.GetUpper().ToString(NumberFormatInfo.InvariantInfo));
                                 elem.SetAttributeValue("units", "degrees");
                             }
                             break;
@@ -191,7 +193,7 @@ namespace NCDK.Pharmacophore
             var children = root.Elements();
             foreach (var e in children)
             {
-                if (e.Name.LocalName.Equals("pharmacophore")) ret.Add(ProcessPharmacophoreElement(e, groups));
+                if (string.Equals(e.Name.LocalName, "pharmacophore", StringComparison.Ordinal)) ret.Add(ProcessPharmacophoreElement(e, groups));
             }
             return ret;
         }
@@ -206,7 +208,7 @@ namespace NCDK.Pharmacophore
             var children = e.Elements();
             foreach (var child in children)
             { 
-                if (child.Name.LocalName.Equals("group"))
+                if (string.Equals(child.Name.LocalName, "group", StringComparison.Ordinal))
                 {
                     string id = child.Attribute("id").Value.Trim();
                     string smarts = child.Value.Trim();
@@ -230,11 +232,11 @@ namespace NCDK.Pharmacophore
             var children = e.Elements();
             foreach (var child in children)
             {
-                if (child.Name.LocalName.Equals("distanceConstraint"))
+                if (string.Equals(child.Name.LocalName, "distanceConstraint", StringComparison.Ordinal))
                 {
                     ProcessDistanceConstraint(child, local, global, ret);
                 }
-                else if (child.Name.LocalName.Equals("angleConstraint"))
+                else if (string.Equals(child.Name.LocalName, "angleConstraint", StringComparison.Ordinal))
                 {
                     ProcessAngleConstraint(child, local, global, ret);
                 }
@@ -250,13 +252,13 @@ namespace NCDK.Pharmacophore
             if (tmp == null)
                 throw new CDKException("Must have a 'lower' attribute");
             else
-                lower = double.Parse(tmp.Value);
+                lower = double.Parse(tmp.Value, NumberFormatInfo.InvariantInfo);
 
             // we may not have an upper bound specified
             double upper;
             tmp = child.Attribute("upper");
             if (tmp != null)
-                upper = double.Parse(tmp.Value);
+                upper = double.Parse(tmp.Value, NumberFormatInfo.InvariantInfo);
             else
                 upper = lower;
 
@@ -299,8 +301,8 @@ namespace NCDK.Pharmacophore
             IAtom a1 = null, a2 = null;
             foreach (var queryAtom in ret.Atoms)
             {
-                if (queryAtom.Symbol.Equals(id1)) a1 = queryAtom;
-                if (queryAtom.Symbol.Equals(id2)) a2 = queryAtom;
+                if (queryAtom.Symbol.Equals(id1, StringComparison.Ordinal)) a1 = queryAtom;
+                if (queryAtom.Symbol.Equals(id2, StringComparison.Ordinal)) a2 = queryAtom;
             }
             ret.Bonds.Add(new PharmacophoreQueryBond((PharmacophoreQueryAtom)a1, (PharmacophoreQueryAtom)a2, lower, upper));
         }
@@ -315,13 +317,13 @@ namespace NCDK.Pharmacophore
             if (tmp == null)
                 throw new CDKException("Must have a 'lower' attribute");
             else
-                lower = double.Parse(tmp.Value);
+                lower = double.Parse(tmp.Value, NumberFormatInfo.InvariantInfo);
 
             // we may not have an upper bound specified
             double upper;
             tmp = child.Attribute("upper");
             if (tmp != null)
-                upper = double.Parse(tmp.Value);
+                upper = double.Parse(tmp.Value, NumberFormatInfo.InvariantInfo);
             else
                 upper = lower;
 
@@ -378,9 +380,9 @@ namespace NCDK.Pharmacophore
             IAtom a3 = null;
             foreach (var queryAtom in ret.Atoms)
             {
-                if (queryAtom.Symbol.Equals(id1)) a1 = queryAtom;
-                if (queryAtom.Symbol.Equals(id2)) a2 = queryAtom;
-                if (queryAtom.Symbol.Equals(id3)) a3 = queryAtom;
+                if (queryAtom.Symbol.Equals(id1, StringComparison.Ordinal)) a1 = queryAtom;
+                if (queryAtom.Symbol.Equals(id2, StringComparison.Ordinal)) a2 = queryAtom;
+                if (queryAtom.Symbol.Equals(id3, StringComparison.Ordinal)) a3 = queryAtom;
             }
             ret.Bonds.Add(new PharmacophoreQueryAngleBond((PharmacophoreQueryAtom)a1, (PharmacophoreQueryAtom)a2,
                     (PharmacophoreQueryAtom)a3, lower, upper));
@@ -390,7 +392,8 @@ namespace NCDK.Pharmacophore
         {
             foreach (var queryAtom in q.Atoms)
             {
-                if (queryAtom.Symbol.Equals(id)) return true;
+                if (queryAtom.Symbol.Equals(id, StringComparison.Ordinal))
+                    return true;
             }
             return false;
         }

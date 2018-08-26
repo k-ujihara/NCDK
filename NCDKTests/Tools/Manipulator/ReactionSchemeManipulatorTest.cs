@@ -18,6 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using System.Linq;
 
 namespace NCDK.Tools.Manipulator
@@ -35,7 +36,7 @@ namespace NCDK.Tools.Manipulator
         [TestInitialize()]
         public void SetUp()
         {
-            builder = Default.ChemObjectBuilder.Instance;
+            builder = ChemObjectBuilder.Instance;
         }
 
         [TestMethod()]

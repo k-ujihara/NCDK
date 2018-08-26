@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Mathematics;
+
 using NCDK.Numerics;
 
 namespace NCDK.Stereo
@@ -35,17 +35,8 @@ namespace NCDK.Stereo
     // @author maclean
     // @cdk.module standard
     // @cdk.githash
-    public class StereoTool
+    public static class StereoTool
     {
-        /// <summary>
-        /// Currently unused, but intended for the StereoTool to indicate what it
-        /// 'means' by an assignment of some atoms to a class.
-        /// </summary>
-        public enum StereoClass
-        {
-            Tetrahedral, SquarePlanar, TrigonalBipyramidal, Octahedral
-        }
-
         /// <summary>
         /// The handedness of a tetrahedron, in terms of the point-plane distance
         /// of three of the corners, compared to the fourth.

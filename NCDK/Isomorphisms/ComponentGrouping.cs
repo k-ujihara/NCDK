@@ -23,6 +23,7 @@
  */
 
 using NCDK.Graphs;
+using System;
 
 namespace NCDK.Isomorphisms
 {
@@ -72,7 +73,7 @@ namespace NCDK.Isomorphisms
             int[] components = null;
             // no atoms -> no components
             if (target.IsEmpty())
-                components = new int[0];
+                components = Array.Empty<int>();
             // defined by reaction grouping
             if (components == null && target.Atoms[0].GetProperty<int?>(CDKPropertyName.ReactionGroup) != null)
             {

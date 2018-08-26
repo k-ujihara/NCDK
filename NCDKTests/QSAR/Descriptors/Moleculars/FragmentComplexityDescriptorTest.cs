@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Fragments;
 using NCDK.IO;
 using NCDK.QSAR.Results;
@@ -48,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             MurckoFragmenter gf = new MurckoFragmenter();
             double Complexity = 0;
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-            IAtomContainer mol = reader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
+            IAtomContainer mol = reader.Read(ChemObjectBuilder.Instance.NewAtomContainer());
             gf.GenerateFragments(mol);
             var setOfFragments = gf.GetFrameworksAsContainers();
             foreach (var setOfFragment in setOfFragments)

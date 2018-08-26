@@ -2,9 +2,9 @@
 
 namespace NCDK.Config
 {
-    public class XMLIsotopeFactory_Example
+    public static class XMLIsotopeFactory_Example
     {
-        public void Main()
+        public static void Main()
         {
             {
                 #region 1
@@ -13,7 +13,7 @@ namespace NCDK.Config
             }
             {
                 #region example
-                IsotopeFactory factory = XMLIsotopeFactory.GetInstance(Default.ChemObjectBuilder.Instance);
+                IsotopeFactory factory = XMLIsotopeFactory.GetInstance(ChemObjectBuilder.Instance);
                 IIsotope major = factory.GetMajorIsotope("H");
                 #endregion
             }

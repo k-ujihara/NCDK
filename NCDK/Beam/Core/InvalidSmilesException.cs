@@ -38,6 +38,11 @@ namespace NCDK.Beam
     // @author John May
     internal sealed class InvalidSmilesException : IOException
     {
+
+        public InvalidSmilesException()
+        {
+        }
+
         public InvalidSmilesException(string message, CharBuffer buffer)
             : this(message, buffer, 0)
         {
@@ -49,6 +54,10 @@ namespace NCDK.Beam
 
         public InvalidSmilesException(string message)
             : base(message)
+        {
+        }
+
+        public InvalidSmilesException(string message, System.Exception innerException) : base(message, innerException)
         {
         }
 

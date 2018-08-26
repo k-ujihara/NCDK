@@ -106,7 +106,7 @@ namespace NCDK.Reactions.Types
         /// lone pair electrons.
         /// </summary>
         /// <param name="reactant">The molecule to set the activity</param>
-        private void SetActiveCenters(IAtomContainer reactant)
+        private static void SetActiveCenters(IAtomContainer reactant)
         {
             foreach (var atom in reactant.Atoms)
             {

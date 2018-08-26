@@ -56,7 +56,7 @@ namespace NCDK.Graphs
         private readonly BiDiDictionary<Cycle.Edge, int> edges;
 
         /// <summary>
-        /// Initial array size for 'GetOrdering()'. This method sorts vertices by degree
+        /// Initial array size for <see cref="GetOrdering(int[][])"/>. This method sorts vertices by degree
         /// by counting how many of each degree there is then putting values in place
         /// directly. This is known as key-value counting and is used in radix
         /// sorts.
@@ -364,7 +364,8 @@ namespace NCDK.Graphs
         /// <param name="cycle">the cycle to add</param>
         private void Add(Cycle cycle)
         {
-            if (cycle.Length <= limit) cycles.Add(cycle.Length, cycle);
+            if (cycle.Length <= limit)
+                cycles.Add(cycle.Length, cycle);
         }
 
         /// <summary>
@@ -376,10 +377,9 @@ namespace NCDK.Graphs
         /// <returns>the order of each vertex</returns>
         private int[] GetOrdering(int[][] graph)
         {
-            int n = graph.Length;
-
-            int[] order = new int[n];
-            int[] count = new int[(n == 0 ? 0 : graph.Select(a => a.Length).Max()) + 3];
+            var n = graph.Length;
+            var order = new int[n];
+            var count = new int[(n == 0 ? 0 : graph.Select(a => a.Length).Max()) + 3];
 
             // count the occurrences of each key (degree)
             for (int v = 0; v < n; v++)
@@ -413,7 +413,8 @@ namespace NCDK.Graphs
         {
             int n = p.Length;
             for (int i = 1; i < n; i++)
-                if (p[i] == q[i]) return false;
+                if (p[i] == q[i])
+                    return false;
             return true;
         }
 
@@ -478,13 +479,27 @@ namespace NCDK.Graphs
         /// vector representation.
         /// </summary>
         public abstract class Cycle
-                : IComparable<Cycle>
+            : IComparable<Cycle>
         {
             protected InitialCycles parent;
 
-            internal int[] path;
-            internal ShortestPaths paths;
-            BitArray edgeVector;
+            internal readonly int[] path;
+            internal readonly ShortestPaths paths;
+
+            private BitArray edgeVector = null;
+
+            /// <summary>
+            /// The edge vector for this cycle.
+            /// </summary>
+            public virtual BitArray EdgeVector
+            {
+                get
+                {
+                    if (edgeVector == null)
+                        edgeVector = GetEdges(path); // XXX allows static Cycle
+                    return edgeVector;
+                }
+            }
 
             public Cycle(InitialCycles parent, ShortestPaths paths, int[] path)
             {
@@ -492,7 +507,6 @@ namespace NCDK.Graphs
 
                 this.path = path;
                 this.paths = paths;
-                this.edgeVector = GetEdges(path); // XXX allows static Cycle
             }
 
             /// <summary>
@@ -502,12 +516,6 @@ namespace NCDK.Graphs
             /// <param name="path">path of vertices</param>
             /// <returns>set of edges</returns>
             public abstract BitArray GetEdges(int[] path);
-
-            /// <summary>
-            /// Access the edge vector for this cycle.
-            /// </summary>
-            /// <returns>edge vector</returns>
-            public virtual BitArray EdgeVector => edgeVector;
 
             /// <summary>
             /// Access the path of this cycle.
@@ -537,7 +545,7 @@ namespace NCDK.Graphs
 
             public virtual int CompareTo(Cycle that)
             {
-                return Primitive<int>.LexicographicalComparator.Compare(this.path, that.path);
+                return Primitive.GetLexicographicalComparator<int>().Compare(this.path, that.path);
             }
 
             /// <summary>
@@ -549,7 +557,9 @@ namespace NCDK.Graphs
             public class EvenCycle
                 : Cycle
             {
-                int p, q;
+                private readonly int p;
+                private readonly int q;
+
                 int Y { get; set; }
 
                 public EvenCycle(InitialCycles parent, ShortestPaths paths, int[] pathToP, int y, int[] pathToQ)
@@ -600,7 +610,8 @@ namespace NCDK.Graphs
             public class OddCycle
                 : Cycle
             {
-                int y, z;
+                private readonly int y;
+                private readonly int z;
 
                 public OddCycle(InitialCycles parent, ShortestPaths paths, int[] pathToY, int[] pathToZ)
                     : base(parent, paths, Join(pathToY, pathToZ))

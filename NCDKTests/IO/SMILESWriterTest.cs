@@ -22,7 +22,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO.Listener;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;

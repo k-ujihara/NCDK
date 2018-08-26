@@ -50,7 +50,7 @@ namespace NCDK.Reactions
         {
             if (dictionary == null) dictionary = OpeningDictionary();
 
-            var obj = reactionClass.GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
+            var obj = reactionClass.GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());
 
             if (!(obj is IReactionProcess))
             {

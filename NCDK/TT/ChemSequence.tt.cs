@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -38,7 +39,8 @@ namespace NCDK.Default
     // @cdk.githash
     // @cdk.keyword animation
     // @cdk.keyword reaction
-     [Serializable]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
+    [Serializable]
     public class ChemSequence
         : ChemObject, IChemSequence, IChemObjectListener, ICloneable
     {
@@ -137,7 +139,8 @@ namespace NCDK.Silent
     // @cdk.githash
     // @cdk.keyword animation
     // @cdk.keyword reaction
-     [Serializable]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
+    [Serializable]
     public class ChemSequence
         : ChemObject, IChemSequence, IChemObjectListener, ICloneable
     {

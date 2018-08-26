@@ -16,6 +16,8 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+using System;
+
 namespace NCDK.Reactions.Types
 {
     /// <summary>
@@ -54,7 +56,7 @@ namespace NCDK.Reactions.Types
         /// <param name="agents">agents of the reaction (Must be in this case null).</param>
         public override IReactionSet Initiate(IChemObjectSet<IAtomContainer> reactants, IChemObjectSet<IAtomContainer> agents)
         {
-            return base.Initiate(reactants, agents, 5, false, atom => atom.Symbol.Equals("H"));
+            return base.Initiate(reactants, agents, 5, false, atom => atom.Symbol.Equals("H", StringComparison.Ordinal));
         }
     }
 }

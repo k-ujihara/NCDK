@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
@@ -29,7 +29,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             ChemFile content = (ChemFile)reader.Read(new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
             IAtomContainer ac = (IAtomContainer)cList[0];
-            Isotopes.Instance.ConfigureAtoms(ac);
+            BODRIsotopeFactory.Instance.ConfigureAtoms(ac);
 
             ArrayResult<double> result = (ArrayResult<double>)Descriptor.Calculate(ac).Value;
 
@@ -46,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             ChemFile content = (ChemFile)reader.Read(new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
             IAtomContainer ac = (IAtomContainer)cList[1];
-            Isotopes.Instance.ConfigureAtoms(ac);
+            BODRIsotopeFactory.Instance.ConfigureAtoms(ac);
 
             ArrayResult<double> result = (ArrayResult<double>)Descriptor.Calculate(ac).Value;
 
@@ -64,7 +64,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
             IAtomContainer ac = (IAtomContainer)cList[2];
 
-            Isotopes.Instance.ConfigureAtoms(ac);
+            BODRIsotopeFactory.Instance.ConfigureAtoms(ac);
 
             ArrayResult<double> result = (ArrayResult<double>)Descriptor.Calculate(ac).Value;
 
@@ -81,7 +81,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             ChemFile content = (ChemFile)reader.Read(new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
             IAtomContainer ac = (IAtomContainer)cList[3];
-            Isotopes.Instance.ConfigureAtoms(ac);
+            BODRIsotopeFactory.Instance.ConfigureAtoms(ac);
 
             ArrayResult<double> result = (ArrayResult<double>)Descriptor.Calculate(ac).Value;
 

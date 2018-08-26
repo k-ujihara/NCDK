@@ -26,6 +26,7 @@ using NCDK.Common.Base;
 using NCDK.Sgroups;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.Smiles
 {
@@ -150,11 +151,11 @@ namespace NCDK.Smiles
         {
             CxSmilesState state = new CxSmilesState();
             Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx("|(.0,-1.5,;-1.3,-.75,;-2.6,-1.5,;-3.9,-.75,;-3.9,.75,)|", state));
-            Assert.IsTrue(new AprxDoubleArray(0, -1.5, 0).Matches(state.AtomCoords[0]));
-            Assert.IsTrue(new AprxDoubleArray(-1.3, -.75, 0).Matches(state.AtomCoords[1]));
-            Assert.IsTrue(new AprxDoubleArray(-2.6, -1.5, 0).Matches(state.AtomCoords[2]));
-            Assert.IsTrue(new AprxDoubleArray(-3.9, -.75, 0).Matches(state.AtomCoords[3]));
-            Assert.IsTrue(new AprxDoubleArray(-3.9, .75, 0).Matches(state.AtomCoords[4]));
+            Assert.IsTrue(new AprxDoubleArray(0, -1.5, 0).Matches(state.atomCoords[0]));
+            Assert.IsTrue(new AprxDoubleArray(-1.3, -.75, 0).Matches(state.atomCoords[1]));
+            Assert.IsTrue(new AprxDoubleArray(-2.6, -1.5, 0).Matches(state.atomCoords[2]));
+            Assert.IsTrue(new AprxDoubleArray(-3.9, -.75, 0).Matches(state.atomCoords[3]));
+            Assert.IsTrue(new AprxDoubleArray(-3.9, .75, 0).Matches(state.atomCoords[4]));
         }
 
         [TestMethod()]
@@ -256,7 +257,7 @@ namespace NCDK.Smiles
         private class AprxDoubleArray
         {
             double[] expected;
-            double epsilon = 0.01;
+            const double epsilon = 0.01;
 
             public AprxDoubleArray(params double[] expected)
             {

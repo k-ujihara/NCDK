@@ -19,7 +19,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
@@ -34,8 +34,7 @@ namespace NCDK.Charges
     public class GasteigerPEPEPartialChargesTest : CDKTestCase
     {
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-        private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-
+        
         /// <summary>
         /// A unit test for JUnit with methylenfluoride
         /// </summary>
@@ -54,7 +53,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             peoe.CalculateCharges(molecule);
             for (int i = 0; i < molecule.Atoms.Count; i++)
@@ -71,13 +70,13 @@ namespace NCDK.Charges
             GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
             string smiles1 = "c1ccccc1";
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol1 = sp.ParseSmiles(smiles1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             Aromaticity.CDKLegacy.Apply(mol1);
             AddExplicitHydrogens(mol1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
-            lpcheck.Saturate(mol1);
+            LonePairElectronChecker.Saturate(mol1);
 
             List<bool> oldBondOrders = new List<bool>();
             for (int i = 0; i < mol1.Bonds.Count; i++)
@@ -103,7 +102,7 @@ namespace NCDK.Charges
             string smiles1 = "c1ccccc1";
             string smiles2 = "C1=CC=CC=C1";
 
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol1 = sp.ParseSmiles(smiles1);
             IAtomContainer mol2 = sp.ParseSmiles(smiles2);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
@@ -113,11 +112,11 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(mol1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
-            lpcheck.Saturate(mol1);
+            LonePairElectronChecker.Saturate(mol1);
 
             AddExplicitHydrogens(mol2);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);
-            lpcheck.Saturate(mol2);
+            LonePairElectronChecker.Saturate(mol2);
 
             peoe.CalculateCharges(mol1);
             peoe.CalculateCharges(mol2);
@@ -141,7 +140,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             peoe.AssignGasteigerPiPartialCharges(molecule, true);
             for (int i = 0; i < molecule.Atoms.Count; i++)
@@ -213,7 +212,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
             foreach (var atom in molecule.Atoms)
                 atom.Charge = 0;
 
@@ -223,7 +222,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             Assert.IsNotNull(peoe.AssignrPiMarsilliFactors(set));
         }

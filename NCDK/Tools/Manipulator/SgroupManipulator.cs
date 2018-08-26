@@ -59,25 +59,25 @@ namespace NCDK.Tools.Manipulator
         /// <param name="sgroups">collection of sgroups, can be null</param>
         /// <param name="replace">the replacement map, can be null</param>
         /// <returns>list of copied sgroups, null if sgroups input was null</returns>
-        public static IList<Sgroup> Copy(ICollection<Sgroup> sgroups, CDKObjectMap replace)
+        public static IList<Sgroup> Copy(IList<Sgroup> sgroups, CDKObjectMap replace)
         {
             if (sgroups == null)
                 return null;
             var sgroupMap = new Dictionary<Sgroup, Sgroup>();
-            foreach (Sgroup sgroup in sgroups)
+            foreach (var sgroup in sgroups)
                 sgroupMap[sgroup] = new Sgroup();
             foreach (var e in sgroupMap)
             {
-                Sgroup orgSgroup = e.Key;
-                Sgroup cpySgroup = e.Value;
+                var orgSgroup = e.Key;
+                var cpySgroup = e.Value;
                 cpySgroup.Type = orgSgroup.Type;
-                foreach (IAtom atom in orgSgroup.Atoms)
+                foreach (var atom in orgSgroup.Atoms)
                     cpySgroup.Atoms.Add(Get(replace, atom));
-                foreach (IBond bond in orgSgroup.Bonds)
+                foreach (var bond in orgSgroup.Bonds)
                     cpySgroup.Bonds.Add(Get(replace, bond));
-                foreach (Sgroup parent in orgSgroup.Parents)
+                foreach (var parent in orgSgroup.Parents)
                     cpySgroup.Parents.Add(sgroupMap[parent]);
-                foreach (SgroupKey key in SgroupKeyTools.Values)
+                foreach (var key in SgroupTool.SgroupKeyValues)
                 {
                     switch (key)
                     {

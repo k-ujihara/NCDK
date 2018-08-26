@@ -37,7 +37,7 @@ namespace NCDK.Dict
     public class Entry
     {
         private string identifier;
-        private List<string> descriptorInfo;
+        private readonly List<string> descriptorInfo;
 
         public Entry(string identifier, string term)
         {
@@ -71,7 +71,7 @@ namespace NCDK.Dict
             this.descriptorInfo.Add(metadata);
         }
 
-        public IList<string> DescriptorMetadata
+        public IReadOnlyList<string> DescriptorMetadata
         {
             get
             {

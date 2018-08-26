@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using NCDK.Common.Base;
+using System;
 
 namespace NCDK.Pharmacophore
 {
@@ -99,7 +100,7 @@ namespace NCDK.Pharmacophore
 
         private Mappings mappings = null;
 
-        private readonly Aromaticity arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.Or(Cycles.AllFinder, Cycles.RelevantFinder));
+        private readonly Aromaticity arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.Or(Cycles.AllSimpleFinder, Cycles.RelevantFinder));
 
         /// <summary>
         /// An empty constructor.
@@ -153,11 +154,12 @@ namespace NCDK.Pharmacophore
         ///          does not have 3D coordinates</exception>
         public bool Matches(IAtomContainer atomContainer, bool initializeTarget)
         {
-            if (!GeometryUtil.Has3DCoordinates(atomContainer)) throw new CDKException("Molecule must have 3D coordinates");
-            if (pharmacophoreQuery == null) throw new CDKException("Must set the query pharmacophore before matching");
+            if (!GeometryUtil.Has3DCoordinates(atomContainer))
+                throw new CDKException("Molecule must have 3D coordinates");
+            if (pharmacophoreQuery == null)
+                throw new CDKException("Must set the query pharmacophore before matching");
             if (!CheckQuery(pharmacophoreQuery))
-                throw new CDKException(
-                        "A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");
+                throw new CDKException("A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");
             string title = atomContainer.Title;
 
             if (initializeTarget)
@@ -169,11 +171,11 @@ namespace NCDK.Pharmacophore
                 // sure we get the latest set of effective coordinates
                 foreach (var iAtom in pharmacophoreMolecule.Atoms)
                 {
-                    PharmacophoreAtom patom = PharmacophoreAtom.Get(iAtom);
+                    var patom = PharmacophoreAtom.Get(iAtom);
                     var tmpList = new List<int>();
                     foreach (var idx in patom.GetMatchingAtoms())
                         tmpList.Add(idx);
-                    Vector3 coords = GetEffectiveCoordinates(atomContainer, tmpList);
+                    var coords = GetEffectiveCoordinates(atomContainer, tmpList);
                     patom.Point3D = coords;
                 }
             }
@@ -203,12 +205,13 @@ namespace NCDK.Pharmacophore
         /// <returns>a List of a List of pharmacophore constraints in the target molecule that match the query</returns>
         /// <seealso cref="PharmacophoreBond"/>
         /// <seealso cref="PharmacophoreAngleBond"/>
-        public IList<IList<IBond>> GetMatchingPharmacophoreBonds()
+        public IReadOnlyList<IReadOnlyList<IBond>> GetMatchingPharmacophoreBonds()
         {
-            if (mappings == null) return null;
+            if (mappings == null)
+                return null;
 
             // XXX: re-subsearching the query
-            var bonds = new List<IList<IBond>>();
+            var bonds = new List<IReadOnlyList<IBond>>();
             foreach (var map in mappings.ToBondMap())
             {
                 bonds.Add(new List<IBond>(map.Values));
@@ -227,11 +230,12 @@ namespace NCDK.Pharmacophore
         /// <see cref="PharmacophoreQueryAngleBond"/>. The value is the corresponding query bond.
         /// </remarks>
         /// <returns>A List of HashMaps, identifying the query constraint corresponding to a matched constraint in the target molecule.</returns>
-        public List<IDictionary<IBond, IBond>> GetTargetQueryBondMappings()
+        public IReadOnlyList<IReadOnlyDictionary<IBond, IBond>> GetTargetQueryBondMappings()
         {
-            if (mappings == null) return null;
+            if (mappings == null)
+                return null;
 
-            var bondMap = new List<IDictionary<IBond, IBond>>();
+            var bondMap = new List<IReadOnlyDictionary<IBond, IBond>>();
 
             // query -> target so need to inverse the mapping
             // XXX: re-subsearching the query
@@ -257,9 +261,10 @@ namespace NCDK.Pharmacophore
         /// </remarks>
         /// <returns>a List of a List of pharmacophore groups in the target molecule that match the query</returns>
         /// <seealso cref="PharmacophoreAtom"/>
-        public IList<IList<PharmacophoreAtom>> GetMatchingPharmacophoreAtoms()
+        public IReadOnlyList<IReadOnlyList<PharmacophoreAtom>> GetMatchingPharmacophoreAtoms()
         {
-            if (pharmacophoreMolecule == null || mappings == null) return null;
+            if (pharmacophoreMolecule == null || mappings == null)
+                return null;
             return GetPCoreAtoms(mappings);
         }
 
@@ -279,15 +284,16 @@ namespace NCDK.Pharmacophore
         /// </remarks>
         /// <returns>a List of a List of pharmacophore groups in the target molecule that match the query</returns>
         /// <seealso cref="PharmacophoreAtom"/>
-        public IList<IList<PharmacophoreAtom>> GetUniqueMatchingPharmacophoreAtoms()
+        public IReadOnlyList<IReadOnlyList<PharmacophoreAtom>> GetUniqueMatchingPharmacophoreAtoms()
         {
-            if (pharmacophoreMolecule == null || mappings == null) return null;
+            if (pharmacophoreMolecule == null || mappings == null)
+                return null;
             return GetPCoreAtoms(mappings.GetUniqueAtoms());
         }
 
-        private IList<IList<PharmacophoreAtom>> GetPCoreAtoms(Mappings mappings)
+        private static List<IReadOnlyList<PharmacophoreAtom>> GetPCoreAtoms(Mappings mappings)
         {
-            var atoms = new List<IList<PharmacophoreAtom>>();
+            var atoms = new List<IReadOnlyList<PharmacophoreAtom>>();
             // XXX: re-subsearching the query
             foreach (var map in mappings.ToAtomMap())
             {
@@ -410,9 +416,12 @@ namespace NCDK.Pharmacophore
 
                     foreach (var tatom in pharmacophoreMolecule.Atoms)
                     {
-                        if (tatom.Symbol.Equals(startQAtom.Symbol)) startl.Add(tatom);
-                        if (tatom.Symbol.Equals(middleQAtom.Symbol)) middlel.Add(tatom);
-                        if (tatom.Symbol.Equals(endQAtom.Symbol)) endl.Add(tatom);
+                        if (tatom.Symbol.Equals(startQAtom.Symbol, StringComparison.Ordinal))
+                            startl.Add(tatom);
+                        if (tatom.Symbol.Equals(middleQAtom.Symbol, StringComparison.Ordinal))
+                            middlel.Add(tatom);
+                        if (tatom.Symbol.Equals(endQAtom.Symbol, StringComparison.Ordinal))
+                            endl.Add(tatom);
                     }
 
                     // now we form the relevant angles, but we will
@@ -463,7 +472,7 @@ namespace NCDK.Pharmacophore
             return pharmacophoreMolecule;
         }
 
-        private PharmacophoreAtom NewPCoreAtom(IAtomContainer input, PharmacophoreQueryAtom qatom, string smarts, int[] mapping)
+        private static PharmacophoreAtom NewPCoreAtom(IAtomContainer input, PharmacophoreQueryAtom qatom, string smarts, int[] mapping)
         {
             Vector3 coords = GetEffectiveCoordinates(input, mapping);
             PharmacophoreAtom patom = new PharmacophoreAtom(smarts, qatom.Symbol, coords);
@@ -478,7 +487,7 @@ namespace NCDK.Pharmacophore
             arom.Apply(input);
         }
 
-        private bool HasDistanceConstraints(IQueryAtomContainer query)
+        private static bool HasDistanceConstraints(IQueryAtomContainer query)
         {
             foreach (var bond in query.Bonds)
             {
@@ -487,7 +496,7 @@ namespace NCDK.Pharmacophore
             return false;
         }
 
-        private bool HasAngleConstraints(IQueryAtomContainer query)
+        private static bool HasAngleConstraints(IQueryAtomContainer query)
         {
             foreach (var bond in query.Bonds)
             {
@@ -496,7 +505,7 @@ namespace NCDK.Pharmacophore
             return false;
         }
 
-        private int[] IntIndices(List<int> atomIndices)
+        private static int[] IntIndices(List<int> atomIndices)
         {
             int[] ret = new int[atomIndices.Count];
             for (int i = 0; i < atomIndices.Count; i++)
@@ -504,7 +513,7 @@ namespace NCDK.Pharmacophore
             return ret;
         }
 
-        private Vector3 GetEffectiveCoordinates(IAtomContainer atomContainer, List<int> atomIndices)
+        private static Vector3 GetEffectiveCoordinates(IAtomContainer atomContainer, List<int> atomIndices)
         {
             Vector3 ret = Vector3.Zero;
             foreach (var atomIndice in atomIndices)
@@ -521,7 +530,7 @@ namespace NCDK.Pharmacophore
             return ret;
         }
 
-        private Vector3 GetEffectiveCoordinates(IAtomContainer atomContainer, int[] atomIndices)
+        private static Vector3 GetEffectiveCoordinates(IAtomContainer atomContainer, int[] atomIndices)
         {
             Vector3 ret = Vector3.Zero;
             foreach (var i in atomIndices)
@@ -537,7 +546,7 @@ namespace NCDK.Pharmacophore
             return ret;
         }
 
-        private bool CheckQuery(IQueryAtomContainer query)
+        private static bool CheckQuery(IQueryAtomContainer query)
         {
             if (!(query is PharmacophoreQuery)) return false;
             Dictionary<string, string> map = new Dictionary<string, string>();
@@ -554,7 +563,8 @@ namespace NCDK.Pharmacophore
                     map[label] = smarts;
                 else
                 {
-                    if (!map[label].Equals(smarts)) return false;
+                    if (!map[label].Equals(smarts, StringComparison.Ordinal))
+                        return false;
                 }
             }
             return true;

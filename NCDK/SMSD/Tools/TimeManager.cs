@@ -34,7 +34,7 @@ namespace NCDK.SMSD.Tools
     [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd .")]
     public class TimeManager
     {
-        private DateTime startTime;
+        private readonly DateTime startTime;
         //private SimpleDateFormat dateFormat;
 
         /// <summary>

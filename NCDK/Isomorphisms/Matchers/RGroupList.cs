@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace NCDK.Isomorphisms.Matchers
@@ -44,7 +45,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// <summary>
         /// Default value for occurrence field.
         /// </summary>
-        public const string DEFAULT_OCCURRENCE = ">0";
+        internal const string DefaultOccurence = ">0";
 
         /// <summary>
         /// Unique number to identify the Rgroup.
@@ -55,7 +56,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// Indicates that sites labeled with this Rgroup may only be
         /// substituted with a member of the Rgroup or with hydrogen.
         /// </summary>
-        public bool IsRestH;
+        public bool IsRestH { get; set; }
 
         private string occurrence;
 
@@ -78,7 +79,7 @@ namespace NCDK.Isomorphisms.Matchers
         {
             this.RGroupNumber = rGroupNumber;
             this.IsRestH = false;
-            this.Occurrence = DEFAULT_OCCURRENCE;
+            this.Occurrence = DefaultOccurence;
             this.RequiredRGroupNumber = 0;
         }
 
@@ -107,7 +108,7 @@ namespace NCDK.Isomorphisms.Matchers
             {
                 if (value < 1 || value > 32)
                 {
-                    throw new ArgumentOutOfRangeException("Rgroup number must be between 1 and 32.");
+                    throw new InvalidOperationException("Rgroup number must be between 1 and 32.");
                 }
                 this.rGroupNumber = value;
             }
@@ -131,7 +132,7 @@ namespace NCDK.Isomorphisms.Matchers
 
             set
             {
-                if (value == null || value.Equals(""))
+                if (string.IsNullOrEmpty(value))
                 {
                     value = ">0"; //revert to default
                 }
@@ -143,7 +144,7 @@ namespace NCDK.Isomorphisms.Matchers
                         this.occurrence = value;
                     }
                     else
-                        throw new CDKException("Invalid occurence line: " + value);
+                        throw new CDKException("Invalid occurrence line: " + value);
                 }
             }
         }
@@ -173,7 +174,7 @@ namespace NCDK.Isomorphisms.Matchers
                     //Number: "n"
                     if (Match("^\\d+$", cond))
                     {
-                        if (int.Parse(cond) < 0) // not allowed
+                        if (int.Parse(cond, NumberFormatInfo.InvariantInfo) < 0) // not allowed
                             return false;
                         break;
                     }
@@ -181,8 +182,8 @@ namespace NCDK.Isomorphisms.Matchers
                     if (Match("^\\d+-\\d+$", cond))
                     {
                         var index_of_cond_m = cond.IndexOf('-');
-                        int from = int.Parse(cond.Substring(0, index_of_cond_m));
-                        int to = int.Parse(cond.Substring(index_of_cond_m + 1, cond.Length - (index_of_cond_m + 1)));
+                        int from = int.Parse(cond.Substring(0, index_of_cond_m), NumberFormatInfo.InvariantInfo);
+                        int to = int.Parse(cond.Substring(index_of_cond_m + 1, cond.Length - (index_of_cond_m + 1)), NumberFormatInfo.InvariantInfo);
                         if (from < 0 || to < 0 || to < from) // not allowed
                             return false;
                         break;
@@ -191,7 +192,7 @@ namespace NCDK.Isomorphisms.Matchers
                     if (Match("^<\\d+$", cond))
                     {
                         var index_of_cond_m = cond.IndexOf('<');
-                        int n = int.Parse(cond.Substring(index_of_cond_m + 1, cond.Length - (index_of_cond_m + 1)));
+                        int n = int.Parse(cond.Substring(index_of_cond_m + 1, cond.Length - (index_of_cond_m + 1)), NumberFormatInfo.InvariantInfo);
                         if (n == 0) // not allowed
                             return false;
                         break;
@@ -237,10 +238,8 @@ namespace NCDK.Isomorphisms.Matchers
         /// </remarks>
         /// <param name="maxAttachments">number of attachments</param>
         /// <returns>valid values by combining a max for R# with the occurrence cond.</returns>
-        public IList<int> MatchOccurence(int maxAttachments)
+        public IEnumerable<int> MatchOccurence(int maxAttachments)
         {
-            List<int> validValues = new List<int>();
-
             for (int val = 0; val <= maxAttachments; val++)
             {
                 bool addVal = false;
@@ -254,13 +253,13 @@ namespace NCDK.Isomorphisms.Matchers
                     string cond = token.Trim().Replace(" ", "");
                     if (Match("^\\d+$", cond))
                     { // n
-                        if (int.Parse(cond) == val) addVal = true;
+                        if (int.Parse(cond, NumberFormatInfo.InvariantInfo) == val) addVal = true;
                     }
                     if (Match("^\\d+-\\d+$", cond))
                     { // n-m
                         var cond_index_of_m = cond.IndexOf('-');
-                        int from = int.Parse(cond.Substring(0, cond_index_of_m));
-                        int to = int.Parse(cond.Substring(cond_index_of_m + 1, cond.Length - (cond_index_of_m + 1)));
+                        int from = int.Parse(cond.Substring(0, cond_index_of_m), NumberFormatInfo.InvariantInfo);
+                        int to = int.Parse(cond.Substring(cond_index_of_m + 1, cond.Length - (cond_index_of_m + 1)), NumberFormatInfo.InvariantInfo);
                         if (val >= from && val <= to)
                         {
                             addVal = true;
@@ -269,7 +268,7 @@ namespace NCDK.Isomorphisms.Matchers
                     if (Match("^>\\d+$", cond))
                     { // <n
                         var cond_index_of_gt = cond.IndexOf('>');
-                        int n = int.Parse(cond.Substring(cond_index_of_gt + 1, cond.Length - (cond_index_of_gt + 1)));
+                        int n = int.Parse(cond.Substring(cond_index_of_gt + 1, cond.Length - (cond_index_of_gt + 1)), NumberFormatInfo.InvariantInfo);
                         if (val > n)
                         {
                             addVal = true;
@@ -278,7 +277,7 @@ namespace NCDK.Isomorphisms.Matchers
                     if (Match("^<\\d+$", cond))
                     { // >n
                         var cond_index_of_lt = cond.IndexOf('<');
-                        int n = int.Parse(cond.Substring(cond_index_of_lt + 1, cond.Length - (cond_index_of_lt + 1)));
+                        int n = int.Parse(cond.Substring(cond_index_of_lt + 1, cond.Length - (cond_index_of_lt + 1)), NumberFormatInfo.InvariantInfo);
                         if (val < n)
                         {
                             addVal = true;
@@ -286,12 +285,12 @@ namespace NCDK.Isomorphisms.Matchers
                     }
                     if (addVal)
                     {
-                        validValues.Add(val);
+                        yield return val;
                     }
 
                 }
             }
-            return validValues;
+            yield break;
         }
 
         public override bool Equals(object obj)

@@ -271,20 +271,6 @@ namespace NCDK.Renderers.Generators
         }
 
         /// <summary>
-        /// Defines a color palette, the palette should provide a color the specified
-        /// identifier (id).
-        /// </summary>
-        public interface IPalette
-        {
-            /// <summary>
-            /// Obtain the color in index, id.
-            /// </summary>
-            /// <param name="id">the id of the color</param>
-            /// <returns>a color</returns>
-            Color Color(int id);
-        }
-
-        /// <summary>
         /// A palette that allows one to define the precise colors of each class. The
         /// colors are passed in the constructor.
         /// </summary>

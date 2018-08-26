@@ -18,7 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Templates;
 
@@ -50,7 +50,7 @@ namespace NCDK.Graphs
             if (ethane == null)
             {
                 // create ethane
-                IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+                IChemObjectBuilder builder = ChemObjectBuilder.Instance;
                 IAtomContainer ethaneMolecule = builder.NewAtomContainer();
                 ethaneMolecule.Atoms.Add(builder.NewAtom("C"));
                 ethaneMolecule.Atoms.Add(builder.NewAtom("C"));
@@ -92,18 +92,17 @@ namespace NCDK.Graphs
         public virtual void TestGetPath_IAtomContainer_IAtom_IAtom()
         {
             IAtomContainer ethaneMol = ethane.GetSpanningTree();
-            IAtomContainer path = ethane.GetPath(ethaneMol, ethaneMol.Atoms[0], ethaneMol.Atoms[1]);
+            IAtomContainer path = SpanningTree.GetPath(ethaneMol, ethaneMol.Atoms[0], ethaneMol.Atoms[1]);
             Assert.AreEqual(2, path.Atoms.Count);
             Assert.AreEqual(1, path.Bonds.Count);
 
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer disconnectedStructure = builder.NewAtomContainer();
             disconnectedStructure.Atoms.Add(builder.NewAtom("Na"));
             disconnectedStructure.Atoms[0].FormalCharge = +1;
             disconnectedStructure.Atoms.Add(builder.NewAtom("Cl"));
             disconnectedStructure.Atoms[1].FormalCharge = -1;
-            path = ethane
-                    .GetPath(disconnectedStructure, disconnectedStructure.Atoms[0], disconnectedStructure.Atoms[1]);
+            path = SpanningTree.GetPath(disconnectedStructure, disconnectedStructure.Atoms[0], disconnectedStructure.Atoms[1]);
             Assert.IsNotNull(path);
             Assert.AreEqual(0, path.Atoms.Count);
             Assert.AreEqual(0, path.Bonds.Count);

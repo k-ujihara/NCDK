@@ -76,25 +76,14 @@ namespace NCDK.Maths
     /// </summary>
     // @cdk.module standard
     // @cdk.githash
-    public class RandomNumbersTool
+    public static class RandomNumbersTool
     {
-        private static BitsStreamGenerator random;
-        private static long randomSeed;
-
-        static RandomNumbersTool()
-        {
-            randomSeed = System.DateTime.Now.Ticks;
-            random = new MersenneTwister(randomSeed);
-        }
+        private static long randomSeed = DateTime.Now.Ticks;
 
         /// <summary>
         /// The instance of Random used by this class.
         /// </summary>
-        public static BitsStreamGenerator Random
-        {
-            get { return random; }
-            set { random = value; }
-        }
+        public static BitsStreamGenerator Random { get; set; } = new MersenneTwister(randomSeed);
 
         /// <summary>
         /// The seed being used by this random number generator.
@@ -108,7 +97,7 @@ namespace NCDK.Maths
             set
             {
                 randomSeed = value;
-                random.SetSeed(randomSeed);
+                Random.SetSeed(randomSeed);
             }
         }
 
@@ -126,7 +115,7 @@ namespace NCDK.Maths
         /// <returns>a random integer between <paramref name="lo"/> and <paramref name="hi"/>.</returns>
         public static int RandomInt(int lo, int hi)
         {
-            return (Math.Abs(random.Next()) % (hi - lo + 1)) + lo;
+            return (Math.Abs(Random.Next()) % (hi - lo + 1)) + lo;
         }
 
         /// <summary>
@@ -146,7 +135,7 @@ namespace NCDK.Maths
         /// <returns>a random long between <paramref name="lo"/> and <paramref name="hi"/>.</returns>
         public static long RandomLong(long lo, long hi)
         {
-            return NextLong(random, hi - lo + 1L) + lo;
+            return NextLong(Random, hi - lo + 1L) + lo;
         }
 
         /// <summary>
@@ -174,7 +163,7 @@ namespace NCDK.Maths
         /// <returns>a random float between '0' and '1'.</returns>
         public static float RandomFloat()
         {
-            return random.NextFloat();
+            return Random.NextFloat();
         }
 
         /// <summary>
@@ -185,7 +174,7 @@ namespace NCDK.Maths
         /// <returns>a random float between <paramref name="lo"/> and <paramref name="hi"/>.</returns>
         public static float RandomFloat(float lo, float hi)
         {
-            return (hi - lo) * random.NextFloat() + lo;
+            return (hi - lo) * Random.NextFloat() + lo;
         }
 
         /// <summary>
@@ -194,7 +183,7 @@ namespace NCDK.Maths
         /// <returns>a random double between '0' and '1'.</returns>
         public static double RandomDouble()
         {
-            return random.NextDouble();
+            return Random.NextDouble();
         }
 
         /// <summary>
@@ -205,7 +194,7 @@ namespace NCDK.Maths
         /// <returns>a random double between <paramref name="lo"/> and <paramref name="hi"/>.</returns>
         public static double RandomDouble(double lo, double hi)
         {
-            return (hi - lo) * random.NextDouble() + lo;
+            return (hi - lo) * Random.NextDouble() + lo;
         }
 
         /// <summary>
@@ -243,7 +232,7 @@ namespace NCDK.Maths
         /// <returns>a random float from a Gaussian distribution with deviation <paramref name="dev"/>.</returns>
         public static float GaussianFloat(float dev)
         {
-            return (float)random.NextGaussian() * dev;
+            return (float)Random.NextGaussian() * dev;
         }
 
         /// <summary>
@@ -253,7 +242,7 @@ namespace NCDK.Maths
         /// <returns>a random float from a Gaussian distribution with deviation <paramref name="dev"/>.</returns>
         public static double GaussianDouble(double dev)
         {
-            return random.NextGaussian() * dev;
+            return Random.NextGaussian() * dev;
         }
 
         /// <summary>
@@ -278,7 +267,7 @@ namespace NCDK.Maths
         private double nextGaussian;
 
         /// <summary>Creates a new random number generator.</summary>
-        public BitsStreamGenerator()
+        protected BitsStreamGenerator()
         {
             nextGaussian = double.NaN;
         }
@@ -309,12 +298,12 @@ namespace NCDK.Maths
         /// </summary>
         /// <param name="bits">number of random bits to produce</param>
         /// <returns>random bits generated</returns>
-        protected abstract uint Next(int bits);
+        protected abstract uint GenerateNext(int bits);
 
         /// <inheritdoc/>
         public bool NextBool()
         {
-            return Next(1) != 0;
+            return GenerateNext(1) != 0;
         }
 
         /// <inheritdoc/>
@@ -324,7 +313,7 @@ namespace NCDK.Maths
             int iEnd = bytes.Length - 3;
             while (i < iEnd)
             {
-                uint random = Next(32);
+                uint random = GenerateNext(32);
                 bytes[i] = (byte)(random & 0xff);
                 bytes[i + 1] = (byte)((random >> 8) & 0xff);
                 bytes[i + 2] = (byte)((random >> 16) & 0xff);
@@ -332,7 +321,7 @@ namespace NCDK.Maths
                 i += 4;
             }
             {
-                uint random = Next(32);
+                uint random = GenerateNext(32);
                 while (i < bytes.Length)
                 {
                     bytes[i++] = (byte)(random & 0xff);
@@ -346,8 +335,8 @@ namespace NCDK.Maths
         /// <inheritdoc/>
         public double NextDouble()
         {
-            ulong high = ((ulong)Next(26)) << 26;
-            ulong low = (ulong)Next(26);
+            ulong high = ((ulong)GenerateNext(26)) << 26;
+            ulong low = (ulong)GenerateNext(26);
             ulong s = high | low;
             var ret = Double_1_10000000000000 * s;
             return ret;
@@ -358,7 +347,7 @@ namespace NCDK.Maths
         /// <inheritdoc/>
         public float NextFloat()
         {
-            var ret = Double_1_800000 * Next(23);
+            var ret = Double_1_800000 * GenerateNext(23);
             return (float)ret;
         }
 
@@ -389,7 +378,7 @@ namespace NCDK.Maths
         /// <inheritdoc/>
         public int Next()
         {
-            return (int)Next(32);
+            return (int)GenerateNext(32);
         }
 
         /// <summary>
@@ -412,14 +401,14 @@ namespace NCDK.Maths
             {
                 if ((n & -n) == n)
                 {
-                    var nn = (ulong)Next(31);
+                    var nn = (ulong)GenerateNext(31);
                     return (int)(((ulong)n * nn) >> 31);
                 }
                 int bits;
                 int val;
                 do
                 {
-                    bits = (int)Next(31);
+                    bits = (int)GenerateNext(31);
                     val = bits % n;
                 } while (bits - val + (n - 1) < 0);
                 return val;
@@ -430,8 +419,8 @@ namespace NCDK.Maths
         /// <inheritdoc/>
         public long NextLong()
         {
-            long high = ((long)Next(32)) << 32;
-            long low = ((long)Next(32)) & 0xffffffffL;
+            long high = ((long)GenerateNext(32)) << 32;
+            long low = ((long)GenerateNext(32)) & 0xffffffffL;
             return high | low;
         }
 

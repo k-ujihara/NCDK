@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -30,18 +31,19 @@ using System.Linq;
 using NCDK.Sgroups;
 using NCDK.Tools.Manipulator;
 
+#pragma warning disable CA1710 // Identifiers should have correct suffix
+
 namespace NCDK.Default
 {
     /// <summary>
-    /// Base class for all chemical objects that maintain a list of Atoms and
-    /// ElectronContainers. 
+    /// Base class for all chemical objects that maintain a list of <see cref="IAtom"/>s and <see cref="IElectronContainer"/>s.
     /// </summary>
     /// <example>
     /// Looping over all Bonds in the AtomContainer is typically done like: 
     /// <code>
     /// foreach (IBond aBond in atomContainer.Bonds)
     /// {
-    ///         // do something
+    ///     // do something
     /// }
     /// </code>
     /// </example>
@@ -52,10 +54,38 @@ namespace NCDK.Default
     public partial class AtomContainer
         : ChemObject, IAtomContainer, IChemObjectListener
     {
-		private static readonly IChemObjectBuilder builder = new ChemObjectBuilder(true);
+        private static readonly IChemObjectBuilder builder = new ChemObjectBuilder(true);
 
-		/// <inheritdoc/>
-		public override IChemObjectBuilder Builder => builder;
+        /// <summary>
+        /// Atoms contained by this object.
+        /// </summary>
+        internal ObservableChemObjectCollection_IAtom atoms;
+
+        /// <summary>
+        /// Bonds contained by this object.
+        /// </summary>
+        internal ObservableChemObjectCollection<IBond> bonds;
+
+        /// <summary>
+        /// Lone pairs contained by this object.
+        /// </summary>
+        internal ObservableChemObjectCollection<ILonePair> lonePairs;
+
+        /// <summary>
+        /// Single electrons contained by this object.
+        /// </summary>
+        internal ObservableChemObjectCollection<ISingleElectron> singleElectrons;
+
+        /// <summary>
+        /// Stereo elements contained by this object.
+        /// </summary>
+        internal List<IStereoElement<IChemObject, IChemObject>> stereoElements;
+
+        internal bool isAromatic;
+        internal bool isSingleOrDouble;
+
+        /// <inheritdoc/>
+        public override IChemObjectBuilder Builder => builder;
 
         internal class ObservableChemObjectCollection_IAtom
             : ObservableChemObjectCollection<IAtom>
@@ -66,26 +96,27 @@ namespace NCDK.Default
                 : base(parent, atoms)
             {
                 this.parent = parent;
-				AllowDuplicate = false;
+                AllowDuplicate = false;
             }
 
             public override IAtom this[int index]
             {
                 get => base[index];
+
                 set
                 {
                     if (index >= base.Count)
-                        throw new IndexOutOfRangeException("No atom at index: " + index);
+                        throw new ArgumentOutOfRangeException($"No atom at index:{index}");
                     int aidx = base.IndexOf(value);
                     if (aidx >= 0)
-                        throw new ArgumentException("Atom already in container at index: " + index, nameof(value));
+                        throw new InvalidOperationException($"Atom already in container at index: {index}");
                     IAtom oldAtom = base[index];
                     base[index] = value;
 
-		 
+         
                     value.Listeners.Add(parent);
                     oldAtom.Listeners.Remove(parent);
-		 
+         
 
                     // replace in electron containers
                     foreach (var bond in parent.bonds)
@@ -111,8 +142,8 @@ namespace NCDK.Default
 
                     // update stereo
                     CDKObjectMap map = null;
-                    List<IReadOnlyStereoElement<IChemObject, IChemObject>> oldStereo = null;
-                    List<IReadOnlyStereoElement<IChemObject, IChemObject>> newStereo = null;
+                    List<IStereoElement<IChemObject, IChemObject>> oldStereo = null;
+                    List<IStereoElement<IChemObject, IChemObject>> newStereo = null;
 
                     foreach (var se in parent.stereoElements)
                     {
@@ -120,15 +151,15 @@ namespace NCDK.Default
                         {
                             if (oldStereo == null)
                             {
-                                oldStereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
-                                newStereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+                                oldStereo = new List<IStereoElement<IChemObject, IChemObject>>();
+                                newStereo = new List<IStereoElement<IChemObject, IChemObject>>();
                                 map = new CDKObjectMap();
                                 foreach (var a in list)
                                     map.Add(a, a);
                                 map.Set(oldAtom, value);
                             }
                             oldStereo.Add(se);
-                            newStereo.Add((IReadOnlyStereoElement<IChemObject, IChemObject>)se.Clone(map));
+                            newStereo.Add((IStereoElement<IChemObject, IChemObject>)se.Clone(map));
                         }
                     }
                     if (oldStereo != null)
@@ -139,47 +170,19 @@ namespace NCDK.Default
                             parent.stereoElements.Add(stereo);
                     }
 
-		 
+         
                     parent.NotifyChanged();
-		 
+         
                 }
             }
         }
-
-        /// <summary>
-        /// Atoms contained by this object.
-        /// </summary>
-        internal ObservableChemObjectCollection_IAtom atoms;
-
-        /// <summary>
-        /// Bonds contained by this object.
-        /// </summary>
-        internal ObservableChemObjectCollection<IBond> bonds;
-
-        /// <summary>
-        /// Lone pairs contained by this object.
-        /// </summary>
-        internal ObservableChemObjectCollection<ILonePair> lonePairs;
-
-        /// <summary>
-        /// Single electrons contained by this object.
-        /// </summary>
-        internal ObservableChemObjectCollection<ISingleElectron> singleElectrons;
-
-        /// <summary>
-        /// Stereo elements contained by this object.
-        /// </summary>
-        internal List<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements;
-
-        internal bool isAromatic;
-        internal bool isSingleOrDouble;
 
         private void Init(
             ObservableChemObjectCollection_IAtom atoms,
             ObservableChemObjectCollection<IBond> bonds,
             ObservableChemObjectCollection<ILonePair> lonePairs,
             ObservableChemObjectCollection<ISingleElectron> singleElectrons,
-            List<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements)
+            List<IStereoElement<IChemObject, IChemObject>> stereoElements)
         {
             this.atoms = atoms;
             this.bonds = bonds;
@@ -193,14 +196,14 @@ namespace NCDK.Default
             IEnumerable<IBond> bonds,
             IEnumerable<ILonePair> lonePairs,
             IEnumerable<ISingleElectron> singleElectrons,
-            IEnumerable<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements)
+            IEnumerable<IStereoElement<IChemObject, IChemObject>> stereoElements)
         {
             Init(
                 new ObservableChemObjectCollection_IAtom(this, atoms ?? Array.Empty<IAtom>()),
                 CreateObservableChemObjectCollection(bonds ?? Array.Empty<IBond>(), true),
                 CreateObservableChemObjectCollection(lonePairs ?? Array.Empty<ILonePair>(), true),
                 CreateObservableChemObjectCollection(singleElectrons ?? Array.Empty<ISingleElectron>(), true),
-                new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(stereoElements ?? Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>())
+                new List<IStereoElement<IChemObject, IChemObject>>(stereoElements ?? Array.Empty<IStereoElement<IChemObject, IChemObject>>())
             );
         }
 
@@ -222,7 +225,7 @@ namespace NCDK.Default
                   bonds,
                   Array.Empty<ILonePair>(),
                   Array.Empty<ISingleElectron>(),
-                  Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>())
+                  Array.Empty<IStereoElement<IChemObject, IChemObject>>())
         { }
 
         /// <summary>
@@ -234,7 +237,7 @@ namespace NCDK.Default
                       Array.Empty<IBond>(), 
                       Array.Empty<ILonePair>(),
                       Array.Empty<ISingleElectron>(),
-                      Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>())
+                      Array.Empty<IStereoElement<IChemObject, IChemObject>>())
         { }
 
         /// <summary>
@@ -287,7 +290,7 @@ namespace NCDK.Default
         public virtual IList<ISingleElectron> SingleElectrons => singleElectrons;
 
         /// <inheritdoc/>
-        public virtual ICollection<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements => stereoElements;
+        public virtual ICollection<IStereoElement<IChemObject, IChemObject>> StereoElements => stereoElements;
 
         /// <summary>
         /// Returns the bond that connects the two given atoms.
@@ -360,59 +363,59 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public virtual BondOrder GetMaximumBondOrder(IAtom atom)
         {
-			BondOrder max = BondOrder.Unset;
-			foreach (IBond bond in Bonds)
-			{
-				if (!bond.Contains(atom))
-					continue;
-				if (max == BondOrder.Unset || bond.Order.Numeric() > max.Numeric()) 
-				{
-					max = bond.Order;
-				}
-			}
-			if (max == BondOrder.Unset)
-			{
-				if (!Contains(atom))
-					throw new NoSuchAtomException("Atom does not belong to this container!");
-				if (atom.ImplicitHydrogenCount != null &&
-					atom.ImplicitHydrogenCount > 0)
-					max = BondOrder.Single;
-				else
-					max = BondOrder.Unset;
-			}
-			return max;
+            BondOrder max = BondOrder.Unset;
+            foreach (IBond bond in Bonds)
+            {
+                if (!bond.Contains(atom))
+                    continue;
+                if (max == BondOrder.Unset || bond.Order.Numeric() > max.Numeric()) 
+                {
+                    max = bond.Order;
+                }
+            }
+            if (max == BondOrder.Unset)
+            {
+                if (!Contains(atom))
+                    throw new NoSuchAtomException("Atom does not belong to this container!");
+                if (atom.ImplicitHydrogenCount != null &&
+                    atom.ImplicitHydrogenCount > 0)
+                    max = BondOrder.Single;
+                else
+                    max = BondOrder.Unset;
+            }
+            return max;
         }
 
         /// <inheritdoc/>
         public virtual BondOrder GetMinimumBondOrder(IAtom atom)
         {
-			BondOrder min = BondOrder.Unset;
-			foreach (IBond bond in Bonds) 
-			{
-				if (!bond.Contains(atom))
-					continue;
-				if (min == BondOrder.Unset || bond.Order.Numeric() < min.Numeric()) 
-				{
-					min = bond.Order;
-				}
-			}
-			if (min == BondOrder.Unset) 
-			{
-				if (!Contains(atom))
-					throw new NoSuchAtomException("Atom does not belong to this container!");
-				if (atom.ImplicitHydrogenCount != null &&
-					atom.ImplicitHydrogenCount > 0)
-					min = BondOrder.Single;
-				else
-					min = BondOrder.Unset;
-			}
-			return min;
+            BondOrder min = BondOrder.Unset;
+            foreach (IBond bond in Bonds) 
+            {
+                if (!bond.Contains(atom))
+                    continue;
+                if (min == BondOrder.Unset || bond.Order.Numeric() < min.Numeric()) 
+                {
+                    min = bond.Order;
+                }
+            }
+            if (min == BondOrder.Unset) 
+            {
+                if (!Contains(atom))
+                    throw new NoSuchAtomException("Atom does not belong to this container!");
+                if (atom.ImplicitHydrogenCount != null &&
+                    atom.ImplicitHydrogenCount > 0)
+                    min = BondOrder.Single;
+                else
+                    min = BondOrder.Unset;
+            }
+            return min;
         }
 
         /// <inheritdoc/>
         public virtual void Add(IAtomContainer that)
         {
-			foreach (IAtom atom in that.Atoms)
+            foreach (IAtom atom in that.Atoms)
                 atom.IsVisited = false;
             foreach (IBond bond in that.Bonds)
                 bond.IsVisited = false;
@@ -488,15 +491,15 @@ namespace NCDK.Default
         }
 
         /// <inheritdoc/>
-		[Obsolete]
+        [Obsolete("Use " + nameof(RemoveAtom))]
         public virtual void RemoveAtomAndConnectedElectronContainers(IAtom atom)
         {
-			RemoveAtom(atom);
-		}
+            RemoveAtom(atom);
+        }
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
         public virtual void RemoveAtom(IAtom atom)
-		{
+        {
             {
                 var toRemove = bonds.Where(bond => bond.Contains(atom)).ToList();
                 foreach (var bond in toRemove)
@@ -522,11 +525,11 @@ namespace NCDK.Default
 
              NotifyChanged();         }
 
-		/// <inheritdoc/>
-		public virtual void RemoveAtom(int pos) 
-		{
-			RemoveAtom(Atoms[pos]);
-		}
+        /// <inheritdoc/>
+        public virtual void RemoveAtom(int pos) 
+        {
+            RemoveAtom(Atoms[pos]);
+        }
 
         /// <inheritdoc/>
         public virtual void RemoveAllElements()
@@ -618,7 +621,7 @@ namespace NCDK.Default
             return sb.ToString();
         }
 
-        private void Append<T>(StringBuilder sb, ICollection<T> os, string tag)
+        private static void Append<T>(StringBuilder sb, ICollection<T> os, string tag)
         {
             if (os.Count > 0)
             {
@@ -636,14 +639,13 @@ namespace NCDK.Default
             clone.bonds = CreateObservableChemObjectCollection(bonds.Where(n => n != null).Select(n => (IBond)n.Clone(map)), true);
             clone.lonePairs = CreateObservableChemObjectCollection(lonePairs.Where(n => n != null).Select(n => (ILonePair)n.Clone(map)), true);
             clone.singleElectrons = CreateObservableChemObjectCollection(singleElectrons.Where(n => n != null).Select(n => (ISingleElectron)n.Clone(map)), true);
-            clone.stereoElements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(stereoElements.Select(n => (IReadOnlyStereoElement<IChemObject, IChemObject>)n.Clone(map)));
+            clone.stereoElements = new List<IStereoElement<IChemObject, IChemObject>>(stereoElements.Select(n => (IStereoElement<IChemObject, IChemObject>)n.Clone(map)));
 
             // update sgroups
-            var sgroups = GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            var sgroups = this.GetCtabSgroups();
             if (sgroups != null)
             {
-                clone.SetProperty(CDKPropertyName.CtabSgroups,
-                    SgroupManipulator.Copy(sgroups, map));
+                clone.SetCtabSgroups(SgroupManipulator.Copy(sgroups, map));
             }
 
             return clone;
@@ -664,14 +666,14 @@ namespace NCDK.Default
         public void SetAtoms(IEnumerable<IAtom> atoms)
         {
             this.atoms.Clear();
-			this.atoms.AddRange(atoms);
+            this.atoms.AddRange(atoms);
         }
 
         /// <inheritdoc/>
         public void SetBonds(IEnumerable<IBond> bonds)
         {
             this.bonds.Clear();
-			this.bonds.AddRange(bonds);
+            this.bonds.AddRange(bonds);
         }
 
         /// <inheritdoc/>
@@ -679,24 +681,23 @@ namespace NCDK.Default
 
         /// <inheritdoc/>
         public virtual string Title 
-		{ 
-			get { return  GetProperty<string>(CDKPropertyName.Title); }
-			set { SetProperty(CDKPropertyName.Title, value); }
-		}
+        { 
+            get { return  GetProperty<string>(CDKPropertyName.Title); }
+            set { SetProperty(CDKPropertyName.Title, value); }
+        }
     }
 }
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Base class for all chemical objects that maintain a list of Atoms and
-    /// ElectronContainers. 
+    /// Base class for all chemical objects that maintain a list of <see cref="IAtom"/>s and <see cref="IElectronContainer"/>s.
     /// </summary>
     /// <example>
     /// Looping over all Bonds in the AtomContainer is typically done like: 
     /// <code>
     /// foreach (IBond aBond in atomContainer.Bonds)
     /// {
-    ///         // do something
+    ///     // do something
     /// }
     /// </code>
     /// </example>
@@ -707,10 +708,38 @@ namespace NCDK.Silent
     public partial class AtomContainer
         : ChemObject, IAtomContainer, IChemObjectListener
     {
-		private static readonly IChemObjectBuilder builder = new ChemObjectBuilder(true);
+        private static readonly IChemObjectBuilder builder = new ChemObjectBuilder(true);
 
-		/// <inheritdoc/>
-		public override IChemObjectBuilder Builder => builder;
+        /// <summary>
+        /// Atoms contained by this object.
+        /// </summary>
+        internal ObservableChemObjectCollection_IAtom atoms;
+
+        /// <summary>
+        /// Bonds contained by this object.
+        /// </summary>
+        internal ObservableChemObjectCollection<IBond> bonds;
+
+        /// <summary>
+        /// Lone pairs contained by this object.
+        /// </summary>
+        internal ObservableChemObjectCollection<ILonePair> lonePairs;
+
+        /// <summary>
+        /// Single electrons contained by this object.
+        /// </summary>
+        internal ObservableChemObjectCollection<ISingleElectron> singleElectrons;
+
+        /// <summary>
+        /// Stereo elements contained by this object.
+        /// </summary>
+        internal List<IStereoElement<IChemObject, IChemObject>> stereoElements;
+
+        internal bool isAromatic;
+        internal bool isSingleOrDouble;
+
+        /// <inheritdoc/>
+        public override IChemObjectBuilder Builder => builder;
 
         internal class ObservableChemObjectCollection_IAtom
             : ObservableChemObjectCollection<IAtom>
@@ -721,23 +750,24 @@ namespace NCDK.Silent
                 : base(parent, atoms)
             {
                 this.parent = parent;
-				AllowDuplicate = false;
+                AllowDuplicate = false;
             }
 
             public override IAtom this[int index]
             {
                 get => base[index];
+
                 set
                 {
                     if (index >= base.Count)
-                        throw new IndexOutOfRangeException("No atom at index: " + index);
+                        throw new ArgumentOutOfRangeException($"No atom at index:{index}");
                     int aidx = base.IndexOf(value);
                     if (aidx >= 0)
-                        throw new ArgumentException("Atom already in container at index: " + index, nameof(value));
+                        throw new InvalidOperationException($"Atom already in container at index: {index}");
                     IAtom oldAtom = base[index];
                     base[index] = value;
 
-		 
+         
 
                     // replace in electron containers
                     foreach (var bond in parent.bonds)
@@ -763,8 +793,8 @@ namespace NCDK.Silent
 
                     // update stereo
                     CDKObjectMap map = null;
-                    List<IReadOnlyStereoElement<IChemObject, IChemObject>> oldStereo = null;
-                    List<IReadOnlyStereoElement<IChemObject, IChemObject>> newStereo = null;
+                    List<IStereoElement<IChemObject, IChemObject>> oldStereo = null;
+                    List<IStereoElement<IChemObject, IChemObject>> newStereo = null;
 
                     foreach (var se in parent.stereoElements)
                     {
@@ -772,15 +802,15 @@ namespace NCDK.Silent
                         {
                             if (oldStereo == null)
                             {
-                                oldStereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
-                                newStereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+                                oldStereo = new List<IStereoElement<IChemObject, IChemObject>>();
+                                newStereo = new List<IStereoElement<IChemObject, IChemObject>>();
                                 map = new CDKObjectMap();
                                 foreach (var a in list)
                                     map.Add(a, a);
                                 map.Set(oldAtom, value);
                             }
                             oldStereo.Add(se);
-                            newStereo.Add((IReadOnlyStereoElement<IChemObject, IChemObject>)se.Clone(map));
+                            newStereo.Add((IStereoElement<IChemObject, IChemObject>)se.Clone(map));
                         }
                     }
                     if (oldStereo != null)
@@ -791,45 +821,17 @@ namespace NCDK.Silent
                             parent.stereoElements.Add(stereo);
                     }
 
-		 
+         
                 }
             }
         }
-
-        /// <summary>
-        /// Atoms contained by this object.
-        /// </summary>
-        internal ObservableChemObjectCollection_IAtom atoms;
-
-        /// <summary>
-        /// Bonds contained by this object.
-        /// </summary>
-        internal ObservableChemObjectCollection<IBond> bonds;
-
-        /// <summary>
-        /// Lone pairs contained by this object.
-        /// </summary>
-        internal ObservableChemObjectCollection<ILonePair> lonePairs;
-
-        /// <summary>
-        /// Single electrons contained by this object.
-        /// </summary>
-        internal ObservableChemObjectCollection<ISingleElectron> singleElectrons;
-
-        /// <summary>
-        /// Stereo elements contained by this object.
-        /// </summary>
-        internal List<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements;
-
-        internal bool isAromatic;
-        internal bool isSingleOrDouble;
 
         private void Init(
             ObservableChemObjectCollection_IAtom atoms,
             ObservableChemObjectCollection<IBond> bonds,
             ObservableChemObjectCollection<ILonePair> lonePairs,
             ObservableChemObjectCollection<ISingleElectron> singleElectrons,
-            List<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements)
+            List<IStereoElement<IChemObject, IChemObject>> stereoElements)
         {
             this.atoms = atoms;
             this.bonds = bonds;
@@ -843,14 +845,14 @@ namespace NCDK.Silent
             IEnumerable<IBond> bonds,
             IEnumerable<ILonePair> lonePairs,
             IEnumerable<ISingleElectron> singleElectrons,
-            IEnumerable<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements)
+            IEnumerable<IStereoElement<IChemObject, IChemObject>> stereoElements)
         {
             Init(
                 new ObservableChemObjectCollection_IAtom(this, atoms ?? Array.Empty<IAtom>()),
                 CreateObservableChemObjectCollection(bonds ?? Array.Empty<IBond>(), true),
                 CreateObservableChemObjectCollection(lonePairs ?? Array.Empty<ILonePair>(), true),
                 CreateObservableChemObjectCollection(singleElectrons ?? Array.Empty<ISingleElectron>(), true),
-                new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(stereoElements ?? Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>())
+                new List<IStereoElement<IChemObject, IChemObject>>(stereoElements ?? Array.Empty<IStereoElement<IChemObject, IChemObject>>())
             );
         }
 
@@ -872,7 +874,7 @@ namespace NCDK.Silent
                   bonds,
                   Array.Empty<ILonePair>(),
                   Array.Empty<ISingleElectron>(),
-                  Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>())
+                  Array.Empty<IStereoElement<IChemObject, IChemObject>>())
         { }
 
         /// <summary>
@@ -884,7 +886,7 @@ namespace NCDK.Silent
                       Array.Empty<IBond>(), 
                       Array.Empty<ILonePair>(),
                       Array.Empty<ISingleElectron>(),
-                      Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>())
+                      Array.Empty<IStereoElement<IChemObject, IChemObject>>())
         { }
 
         /// <summary>
@@ -935,7 +937,7 @@ namespace NCDK.Silent
         public virtual IList<ISingleElectron> SingleElectrons => singleElectrons;
 
         /// <inheritdoc/>
-        public virtual ICollection<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements => stereoElements;
+        public virtual ICollection<IStereoElement<IChemObject, IChemObject>> StereoElements => stereoElements;
 
         /// <summary>
         /// Returns the bond that connects the two given atoms.
@@ -1008,59 +1010,59 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public virtual BondOrder GetMaximumBondOrder(IAtom atom)
         {
-			BondOrder max = BondOrder.Unset;
-			foreach (IBond bond in Bonds)
-			{
-				if (!bond.Contains(atom))
-					continue;
-				if (max == BondOrder.Unset || bond.Order.Numeric() > max.Numeric()) 
-				{
-					max = bond.Order;
-				}
-			}
-			if (max == BondOrder.Unset)
-			{
-				if (!Contains(atom))
-					throw new NoSuchAtomException("Atom does not belong to this container!");
-				if (atom.ImplicitHydrogenCount != null &&
-					atom.ImplicitHydrogenCount > 0)
-					max = BondOrder.Single;
-				else
-					max = BondOrder.Unset;
-			}
-			return max;
+            BondOrder max = BondOrder.Unset;
+            foreach (IBond bond in Bonds)
+            {
+                if (!bond.Contains(atom))
+                    continue;
+                if (max == BondOrder.Unset || bond.Order.Numeric() > max.Numeric()) 
+                {
+                    max = bond.Order;
+                }
+            }
+            if (max == BondOrder.Unset)
+            {
+                if (!Contains(atom))
+                    throw new NoSuchAtomException("Atom does not belong to this container!");
+                if (atom.ImplicitHydrogenCount != null &&
+                    atom.ImplicitHydrogenCount > 0)
+                    max = BondOrder.Single;
+                else
+                    max = BondOrder.Unset;
+            }
+            return max;
         }
 
         /// <inheritdoc/>
         public virtual BondOrder GetMinimumBondOrder(IAtom atom)
         {
-			BondOrder min = BondOrder.Unset;
-			foreach (IBond bond in Bonds) 
-			{
-				if (!bond.Contains(atom))
-					continue;
-				if (min == BondOrder.Unset || bond.Order.Numeric() < min.Numeric()) 
-				{
-					min = bond.Order;
-				}
-			}
-			if (min == BondOrder.Unset) 
-			{
-				if (!Contains(atom))
-					throw new NoSuchAtomException("Atom does not belong to this container!");
-				if (atom.ImplicitHydrogenCount != null &&
-					atom.ImplicitHydrogenCount > 0)
-					min = BondOrder.Single;
-				else
-					min = BondOrder.Unset;
-			}
-			return min;
+            BondOrder min = BondOrder.Unset;
+            foreach (IBond bond in Bonds) 
+            {
+                if (!bond.Contains(atom))
+                    continue;
+                if (min == BondOrder.Unset || bond.Order.Numeric() < min.Numeric()) 
+                {
+                    min = bond.Order;
+                }
+            }
+            if (min == BondOrder.Unset) 
+            {
+                if (!Contains(atom))
+                    throw new NoSuchAtomException("Atom does not belong to this container!");
+                if (atom.ImplicitHydrogenCount != null &&
+                    atom.ImplicitHydrogenCount > 0)
+                    min = BondOrder.Single;
+                else
+                    min = BondOrder.Unset;
+            }
+            return min;
         }
 
         /// <inheritdoc/>
         public virtual void Add(IAtomContainer that)
         {
-			foreach (IAtom atom in that.Atoms)
+            foreach (IAtom atom in that.Atoms)
                 atom.IsVisited = false;
             foreach (IBond bond in that.Bonds)
                 bond.IsVisited = false;
@@ -1136,15 +1138,15 @@ namespace NCDK.Silent
         }
 
         /// <inheritdoc/>
-		[Obsolete]
+        [Obsolete("Use " + nameof(RemoveAtom))]
         public virtual void RemoveAtomAndConnectedElectronContainers(IAtom atom)
         {
-			RemoveAtom(atom);
-		}
+            RemoveAtom(atom);
+        }
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
         public virtual void RemoveAtom(IAtom atom)
-		{
+        {
             {
                 var toRemove = bonds.Where(bond => bond.Contains(atom)).ToList();
                 foreach (var bond in toRemove)
@@ -1170,11 +1172,11 @@ namespace NCDK.Silent
 
                     }
 
-		/// <inheritdoc/>
-		public virtual void RemoveAtom(int pos) 
-		{
-			RemoveAtom(Atoms[pos]);
-		}
+        /// <inheritdoc/>
+        public virtual void RemoveAtom(int pos) 
+        {
+            RemoveAtom(Atoms[pos]);
+        }
 
         /// <inheritdoc/>
         public virtual void RemoveAllElements()
@@ -1266,7 +1268,7 @@ namespace NCDK.Silent
             return sb.ToString();
         }
 
-        private void Append<T>(StringBuilder sb, ICollection<T> os, string tag)
+        private static void Append<T>(StringBuilder sb, ICollection<T> os, string tag)
         {
             if (os.Count > 0)
             {
@@ -1284,14 +1286,13 @@ namespace NCDK.Silent
             clone.bonds = CreateObservableChemObjectCollection(bonds.Where(n => n != null).Select(n => (IBond)n.Clone(map)), true);
             clone.lonePairs = CreateObservableChemObjectCollection(lonePairs.Where(n => n != null).Select(n => (ILonePair)n.Clone(map)), true);
             clone.singleElectrons = CreateObservableChemObjectCollection(singleElectrons.Where(n => n != null).Select(n => (ISingleElectron)n.Clone(map)), true);
-            clone.stereoElements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(stereoElements.Select(n => (IReadOnlyStereoElement<IChemObject, IChemObject>)n.Clone(map)));
+            clone.stereoElements = new List<IStereoElement<IChemObject, IChemObject>>(stereoElements.Select(n => (IStereoElement<IChemObject, IChemObject>)n.Clone(map)));
 
             // update sgroups
-            var sgroups = GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            var sgroups = this.GetCtabSgroups();
             if (sgroups != null)
             {
-                clone.SetProperty(CDKPropertyName.CtabSgroups,
-                    SgroupManipulator.Copy(sgroups, map));
+                clone.SetCtabSgroups(SgroupManipulator.Copy(sgroups, map));
             }
 
             return clone;
@@ -1312,14 +1313,14 @@ namespace NCDK.Silent
         public void SetAtoms(IEnumerable<IAtom> atoms)
         {
             this.atoms.Clear();
-			this.atoms.AddRange(atoms);
+            this.atoms.AddRange(atoms);
         }
 
         /// <inheritdoc/>
         public void SetBonds(IEnumerable<IBond> bonds)
         {
             this.bonds.Clear();
-			this.bonds.AddRange(bonds);
+            this.bonds.AddRange(bonds);
         }
 
         /// <inheritdoc/>
@@ -1327,9 +1328,9 @@ namespace NCDK.Silent
 
         /// <inheritdoc/>
         public virtual string Title 
-		{ 
-			get { return  GetProperty<string>(CDKPropertyName.Title); }
-			set { SetProperty(CDKPropertyName.Title, value); }
-		}
+        { 
+            get { return  GetProperty<string>(CDKPropertyName.Title); }
+            set { SetProperty(CDKPropertyName.Title, value); }
+        }
     }
 }

@@ -21,6 +21,7 @@ using NCDK.Config;
 using NCDK.Graphs.Matrix;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -36,14 +37,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.githash
     public class AutocorrelationDescriptorMass : AbstractMolecularDescriptor, IMolecularDescriptor
     {
-        private readonly static string[] NAMES = { "ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5" };
-        private readonly static double CARBON_MASS = 12.010735896788;
+        private readonly static string[] Names = { "ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5" };
+        private const double CarbonMass = 12.010735896788;
 
         private static double ScaledAtomicMasses(IElement element)
         {
-            IsotopeFactory isofac = Isotopes.Instance;
+            IsotopeFactory isofac = BODRIsotopeFactory.Instance;
             double realmasses = isofac.GetNaturalMass(element);
-            return (realmasses / CARBON_MASS);
+            return (realmasses / CarbonMass);
         }
 
         private static double[] ListConvertion(IAtomContainer container)
@@ -99,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     result.Add(aMasSum);
                 }
 
-                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result,
+                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result,
                         DescriptorNames);
 
             }
@@ -108,25 +109,25 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 ArrayResult<double> result = new ArrayResult<double>(5);
                 for (int i = 0; i < 5; i++)
                     result.Add(double.NaN);
-                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result,
+                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result,
                         DescriptorNames, new CDKException("Error while calculating the ATS_mass descriptor: "
                                 + ex.Message, ex));
             }
         }
 
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[0];
+        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
         public override object GetParameterType(string name) => null;
 
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             get { return null; }
             set { }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => Names;
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationMass",
                 typeof(AutocorrelationDescriptorMass).FullName,

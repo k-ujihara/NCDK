@@ -44,10 +44,12 @@ namespace <#= ns.NS #>
     [Serializable]
     public class Association : ElectronContainer, IChemObjectListener
     {
+        private readonly ObservableChemObjectCollection<IAtom> associatedAtoms;
+
         /// <summary>
         /// The atoms which take part in the association.
         /// </summary>
-        public IList<IAtom> AssociatedAtoms { get; protected set; }
+        public IList<IAtom> AssociatedAtoms => associatedAtoms;
 
         /// <summary>
         /// Constructs an association between two Atom's.
@@ -57,7 +59,8 @@ namespace <#= ns.NS #>
         /// <seealso cref="Atom"/>
         public Association(IAtom atom1, IAtom atom2)
             : this(new[] { atom1, atom2 })
-        { }
+        {
+        }
 
         /// <summary>
         /// Constructs an empty association.
@@ -65,11 +68,12 @@ namespace <#= ns.NS #>
         /// <seealso cref="Atom"/>
         public Association()
             : this(Array.Empty<IAtom>())
-        { }
+        {
+        }
 
         public Association(IEnumerable<IAtom> atoms)
         {
-            AssociatedAtoms = CreateObservableChemObjectCollection(atoms);
+            associatedAtoms = CreateObservableChemObjectCollection(atoms);
         }
 
         private ObservableChemObjectCollection<IAtom> CreateObservableChemObjectCollection(IEnumerable<IAtom> objs)

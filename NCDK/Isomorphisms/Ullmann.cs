@@ -87,8 +87,8 @@ namespace NCDK.Isomorphisms
 
         public override Mappings MatchAll(IAtomContainer target)
         {
-            EdgeToBondMap bonds2 = EdgeToBondMap.WithSpaceFor(target);
-            int[][] g2 = GraphUtil.ToAdjList(target, bonds2);
+            var bonds2 = EdgeToBondMap.WithSpaceFor(target);
+            var g2 = GraphUtil.ToAdjList(target, bonds2);
             var iterable = new UllmannIterable(query, target, g1, g2, bonds1, bonds2, atomMatcher, bondMatcher);
             return new Mappings(query, target, iterable);
         }

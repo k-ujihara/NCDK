@@ -24,10 +24,9 @@
 using NCDK.Common.Collections;
 using NCDK.Config;
 using NCDK.Graphs;
-using NCDK.Tools.Manipulator;
 using System;
 using System.Collections;
-using static NCDK.Graphs.GraphUtil;
+using System.Linq;
 
 namespace NCDK.Aromaticities
 {
@@ -77,9 +76,9 @@ namespace NCDK.Aromaticities
             Matching matching = Matching.WithCapacity(ac.Atoms.Count);
 
             // exract data structures for efficient access
-            IAtom[] atoms = AtomContainerManipulator.GetAtomArray(ac);
-            EdgeToBondMap bonds = EdgeToBondMap.WithSpaceFor(ac);
-            int[][] graph = GraphUtil.ToAdjList(ac, bonds);
+            var atoms = ac.Atoms.ToArray();
+            var bonds = EdgeToBondMap.WithSpaceFor(ac);
+            var graph = GraphUtil.ToAdjList(ac, bonds);
 
             // determine which atoms are available to have a pi bond placed
             BitArray available = IsAvailable(graph, atoms, bonds);

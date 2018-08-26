@@ -61,9 +61,9 @@ namespace NCDK.QSAR
         private static readonly XNamespace rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
         private EntryDictionary dict = null;
-        private IList<string> classNames = new List<string>(200);
-        private IList<IDescriptor> descriptors = new List<IDescriptor>(200);
-        private IList<IImplementationSpecification> speclist = null;
+        private List<string> classNames = new List<string>(200);
+        private List<IDescriptor> descriptors = new List<IDescriptor>(200);
+        private List<IImplementationSpecification> speclist = null;
         private readonly IChemObjectBuilder builder;
 
         private DescriptorEngine()
@@ -89,8 +89,8 @@ namespace NCDK.QSAR
             : this(builder)
         {
             this.classNames = classNames.ToList();
-            descriptors = InstantiateDescriptors(classNames);
-            speclist = InitializeSpecifications(descriptors).ToList();
+            descriptors = InstantiateDescriptors(classNames).ToList();
+            speclist = ToSpecifications(descriptors).ToList();
 
             // get the dictionary for the descriptors
             DictionaryDatabase dictDB = new DictionaryDatabase();
@@ -116,7 +116,7 @@ namespace NCDK.QSAR
                 o.classNames.Add(descriptor.GetType().FullName);
             }
 
-            o.speclist = o.InitializeSpecifications(o.descriptors).Cast<IImplementationSpecification>().ToList();
+            o.speclist = ToSpecifications(o.descriptors).ToList();
             Debug.WriteLine($"Found #descriptors: {o.classNames.Count}");
 
             // get the dictionary for the descriptors
@@ -192,7 +192,7 @@ namespace NCDK.QSAR
                 }
                 else
                 {
-                    Debug.WriteLine("Unknown descriptor type for: ", descriptor.GetType().FullName);
+                    Debug.WriteLine($"Unknown descriptor type for: {descriptor.GetType().FullName}");
                 }
             }
         }
@@ -223,13 +223,14 @@ namespace NCDK.QSAR
             var dictEntries = dict.Entries;
             string specRef = GetSpecRef(identifier);
 
-            Debug.WriteLine("Got identifier: " + identifier);
-            Debug.WriteLine("Final spec ref: " + specRef);
+            Debug.WriteLine($"Got identifier: {identifier}");
+            Debug.WriteLine($"Final spec ref: {specRef}");
 
             foreach (var dictEntry in dictEntries)
             {
-                if (!dictEntry.ClassName.Equals("Descriptor")) continue;
-                if (dictEntry.Id.Equals(specRef.ToLowerInvariant()))
+                if (!string.Equals(dictEntry.ClassName, "Descriptor", StringComparison.Ordinal))
+                    continue;
+                if (dictEntry.Id.Equals(specRef.ToLowerInvariant(), StringComparison.Ordinal))
                 {
                     XElement rawElement = (XElement)dictEntry.RawContent;
                     // Assert(rawElement != null);
@@ -241,8 +242,8 @@ namespace NCDK.QSAR
                     foreach (var element in classifications)
                     {
                         var attr = element.Attribute(rdfNS + "resource");
-                        if ((attr.Value.IndexOf("molecularDescriptor") != -1)
-                                || (attr.Value.IndexOf("atomicDescriptor") != -1))
+                        if (attr.Value.Contains("molecularDescriptor")
+                         || attr.Value.Contains("atomicDescriptor"))
                         {
                             string[] tmp = attr.Value.Split('#');
                             return tmp[1];
@@ -302,7 +303,7 @@ namespace NCDK.QSAR
         ///                   specification reference</param>
         /// <returns>An array containing the names of the QSAR descriptor classes that this descriptor was declared
         ///         to belong to. If an entry for the specified identifier was not found, null is returned.</returns>
-        public string[] GetDictionaryClass(string identifier)
+        public IEnumerable<string> GetDictionaryClass(string identifier)
         {
             var dictEntries = dict.Entries;
 
@@ -310,22 +311,22 @@ namespace NCDK.QSAR
             if (specRef == null)
             {
                 Trace.TraceError("Cannot determine specification for id: ", identifier);
-                return new string[0];
+                return Array.Empty<string>();
             }
             List<string> dictClasses = new List<string>();
 
             foreach (var dictEntry in dictEntries)
             {
-                if (!dictEntry.ClassName.Equals("Descriptor")) continue;
-                if (dictEntry.Id.Equals(specRef.ToLowerInvariant()))
+                if (!string.Equals(dictEntry.ClassName, "Descriptor", StringComparison.Ordinal)) continue;
+                if (dictEntry.Id.Equals(specRef.ToLowerInvariant(), StringComparison.Ordinal))
                 {
                     XElement rawElement = (XElement)dictEntry.RawContent;
                     var classifications = rawElement.Elements(dict.NS + "isClassifiedAs");
                     foreach (var element in classifications)
                     {
                         var attr = element.Attribute(rdfNS + "resource");
-                        if ((attr.Value.IndexOf("molecularDescriptor") >= 0)
-                                || (attr.Value.IndexOf("atomicDescriptor") >= 0))
+                        if (attr.Value.Contains("molecularDescriptor")
+                         || attr.Value.Contains("atomicDescriptor"))
                         {
                             continue;
                         }
@@ -360,7 +361,7 @@ namespace NCDK.QSAR
         /// <param name="descriptorSpecification">A DescriptorSpecification object</param>
         /// <returns>An array containing the names of the QSAR descriptor classes that this descriptor was declared
         ///         to belong to. If an entry for the specified identifier was not found, null is returned.</returns>
-        public string[] GetDictionaryClass(IImplementationSpecification descriptorSpecification)
+        public IEnumerable<string> GetDictionaryClass(IImplementationSpecification descriptorSpecification)
         {
             return GetDictionaryClass(descriptorSpecification.SpecificationReference);
         }
@@ -391,8 +392,9 @@ namespace NCDK.QSAR
             string definition = null;
             foreach (var dictEntry in dictEntries)
             {
-                if (!dictEntry.ClassName.Equals("Descriptor")) continue;
-                if (dictEntry.Id.Equals(specRef.ToLowerInvariant()))
+                if (!string.Equals(dictEntry.ClassName, "Descriptor", StringComparison.Ordinal))
+                    continue;
+                if (dictEntry.Id.Equals(specRef.ToLowerInvariant(), StringComparison.Ordinal))
                 {
                     definition = dictEntry.Definition;
                     break;
@@ -436,8 +438,9 @@ namespace NCDK.QSAR
             string title = null;
             foreach (var dictEntry in dictEntries)
             {
-                if (!dictEntry.ClassName.Equals("Descriptor")) continue;
-                if (dictEntry.Id.Equals(specRef.ToLowerInvariant()))
+                if (!string.Equals(dictEntry.ClassName, "Descriptor", StringComparison.Ordinal))
+                    continue;
+                if (dictEntry.Id.Equals(specRef.ToLowerInvariant(), StringComparison.Ordinal))
                 {
                     title = dictEntry.Label;
                     break;
@@ -462,7 +465,7 @@ namespace NCDK.QSAR
         /// <returns>A <see cref="IList{T}"/> of <see cref="DescriptorSpecification"/> objects. These are the keys
         ///         with which the <see cref="IDescriptorValue"/> objects can be obtained from a
         ///         molecules property list</returns>
-        public IList<IImplementationSpecification> GetDescriptorSpecifications()
+        public IEnumerable<IImplementationSpecification> GetDescriptorSpecifications()
         {
             return speclist;
         }
@@ -481,7 +484,7 @@ namespace NCDK.QSAR
         /// Returns a list containing the names of the classes implementing the descriptors.
         /// </summary>
         /// <returns>A list of class names.</returns>
-        public IList<string> GetDescriptorClassNames()
+        public IEnumerable<string> GetDescriptorClassNames()
         {
             return classNames;
         }
@@ -490,7 +493,7 @@ namespace NCDK.QSAR
         /// Returns a <see cref="IList{T}"/> containing the instantiated descriptor classes.
         /// </summary>
         /// <returns>A <see cref="IList{T}"/> containing descriptor classes</returns>
-        public IList<IDescriptor> GetDescriptorInstances()
+        public IEnumerable<IDescriptor> GetDescriptorInstances()
         {
             return descriptors;
         }
@@ -500,9 +503,9 @@ namespace NCDK.QSAR
         /// </summary>
         /// <param name="descriptors">A <see cref="IList{T}"/> of descriptor objects</param>
         /// <see cref="GetDescriptorInstances"/>
-        public void SetDescriptorInstances(IList<IDescriptor> descriptors)
+        public void SetDescriptorInstances(IEnumerable<IDescriptor> descriptors)
         {
-            this.descriptors = descriptors;
+            this.descriptors = descriptors.ToList();
         }
 
         /// <summary>
@@ -514,7 +517,7 @@ namespace NCDK.QSAR
             List<string> classList = new List<string>();
             foreach (var spec in speclist)
             {
-                string[] tmp = GetDictionaryClass(spec);
+                var tmp = GetDictionaryClass(spec);
                 if (tmp != null)
                 {
                     foreach (var t in tmp)
@@ -617,7 +620,7 @@ namespace NCDK.QSAR
             yield break;
         }
 
-        public IList<IDescriptor> InstantiateDescriptors(IEnumerable<string> descriptorClassNames)
+        public static IEnumerable<IDescriptor> InstantiateDescriptors(IEnumerable<string> descriptorClassNames)
         {
             var assembly = Assembly.GetExecutingAssembly();
             var descriptors = new List<IDescriptor>();
@@ -639,7 +642,7 @@ namespace NCDK.QSAR
             return descriptors;
         }
 
-        private IDescriptor Instantiate(Type c)
+        private static IDescriptor Instantiate(Type c)
         {
             ConstructorInfo ctor;
             ctor = c.GetConstructor(Type.EmptyTypes);
@@ -652,7 +655,7 @@ namespace NCDK.QSAR
             throw new InvalidOperationException($"descriptor {c.Name} has no usable constructors");
         }
 
-        public IEnumerable<IImplementationSpecification> InitializeSpecifications(IEnumerable<IDescriptor> descriptors)
+        public static IEnumerable<IImplementationSpecification> ToSpecifications(IEnumerable<IDescriptor> descriptors)
         {
             foreach (var descriptor in descriptors)
             {
@@ -668,14 +671,14 @@ namespace NCDK.QSAR
             for (int i = 0; i < classNames.Count; i++)
             {
                 string className = classNames[i];
-                if (className.Equals(identifier))
+                if (className.Equals(identifier, StringComparison.Ordinal))
                 {
                     IDescriptor descriptor = descriptors[i];
                     IImplementationSpecification descSpecification = descriptor.Specification;
                     string[] tmp = descSpecification.SpecificationReference.Split('#');
                     if (tmp.Length != 2)
                     {
-                        Debug.WriteLine("Something fishy with the spec ref: ", descSpecification.SpecificationReference);
+                        Debug.WriteLine($"Something fishy with the spec ref: {descSpecification.SpecificationReference}");
                     }
                     else
                     {
@@ -689,7 +692,7 @@ namespace NCDK.QSAR
                 string[] tmp = identifier.Split('#');
                 if (tmp.Length != 2)
                 {
-                    Debug.WriteLine("Something fishy with the identifier: ", identifier);
+                    Debug.WriteLine($"Something fishy with the identifier: {identifier}");
                 }
                 else
                 {

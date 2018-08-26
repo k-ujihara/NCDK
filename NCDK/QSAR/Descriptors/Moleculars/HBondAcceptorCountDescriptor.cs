@@ -87,8 +87,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///
         /// <returns>   The specification value</returns>
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondacceptors",
                 typeof(HBondAcceptorCountDescriptor).FullName,
@@ -99,11 +99,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <value>a <see langword="true"/> means that aromaticity has to be checked</value>
         /// <exception cref="CDKException"></exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length != 1)
+                if (value.Count != 1)
                 {
                     throw new CDKException($"{nameof(HBondAcceptorCountDescriptor)} expects a single parameter");
                 }
@@ -125,7 +125,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
         }
 
         /// <summary>
@@ -158,40 +158,41 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             foreach (var atom in ac.Atoms)
             {
                 // looking for suitable nitrogen atoms
-                if (atom.Symbol.Equals("N") && atom.FormalCharge <= 0)
+                if (atom.Symbol.Equals("N", StringComparison.Ordinal) && atom.FormalCharge <= 0)
                 {
-
                     // excluding nitrogens that are adjacent to an oxygen
                     var bonds = ac.GetConnectedBonds(atom);
                     int nPiBonds = 0;
                     foreach (var bond in bonds)
                     {
-                        if (bond.GetConnectedAtom(atom).Symbol.Equals("O")) goto continue_atomloop;
+                        if (bond.GetConnectedAtom(atom).Symbol.Equals("O", StringComparison.Ordinal))
+                            goto continue_atomloop;
                         if (BondOrder.Double.Equals(bond.Order)) nPiBonds++;
                     }
 
                     // if the nitrogen is aromatic and there are no pi bonds then it's
                     // lone pair cannot accept any hydrogen bonds
-                    if (atom.IsAromatic && nPiBonds == 0) continue;
+                    if (atom.IsAromatic && nPiBonds == 0)
+                        continue;
 
                     hBondAcceptors++;
                 }
                 // looking for suitable oxygen atoms
-                else if (atom.Symbol.Equals("O") && atom.FormalCharge <= 0)
+                else if (atom.Symbol.Equals("O", StringComparison.Ordinal) && atom.FormalCharge <= 0)
                 {
                     //excluding oxygens that are adjacent to a nitrogen or to an aromatic carbon
                     var neighbours = ac.GetConnectedAtoms(atom);
                     foreach (var neighbour in neighbours)
-                        if (neighbour.Symbol.Equals("N")
-                                || (neighbour.Symbol.Equals("C") && neighbour.IsAromatic))
+                        if (neighbour.Symbol.Equals("N", StringComparison.Ordinal)
+                                || (neighbour.Symbol.Equals("C", StringComparison.Ordinal) && neighbour.IsAromatic))
                             goto continue_atomloop;
                     hBondAcceptors++;
                 }
-                continue_atomloop:
+            continue_atomloop:
                 ;
             }
 
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(hBondAcceptors), DescriptorNames);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(hBondAcceptors), DescriptorNames);
         }
 
         /// <inheritdoc/>

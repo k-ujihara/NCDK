@@ -408,7 +408,7 @@ namespace NCDK.Renderers.Generators
             for (int i = 0; i < bond.Atoms.Count; i++)
             {
                 IAtom atom = bond.Atoms[i];
-                if ("H".Equals(atom.Symbol)) return true;
+                if (string.Equals("H", atom.Symbol, StringComparison.Ordinal)) return true;
             }
             return false;
         }

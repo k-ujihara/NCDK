@@ -66,7 +66,7 @@ namespace NCDK.IO
         /// <summary>
         /// Enumeration of all valid radical values.
         /// </summary>
-        public class SpinMultiplicity
+        internal class SpinMultiplicity
         {
             public static readonly SpinMultiplicity None = new SpinMultiplicity(0, 0);
             public static readonly SpinMultiplicity Monovalent = new SpinMultiplicity(2, 1);
@@ -229,14 +229,14 @@ namespace NCDK.IO
             {
                 Trace.TraceError(ex.Message);
                 Debug.WriteLine(ex);
-                throw new CDKException("Exception while writing MDL file: " + ex.Message, ex);
+                throw new CDKException($"Exception while writing MDL file: {ex.Message}", ex);
             }
-            throw new CDKException("Only supported is writing of IChemFile, " + "IChemModel, and IAtomContainer objects.");
+            throw new CDKException("Only supported is writing of IChemFile, IChemModel, and IAtomContainer objects.");
         }
 
         private void WriteChemFile(IChemFile file)
         {
-            IAtomContainer bigPile = file.Builder.NewAtomContainer();
+            var bigPile = file.Builder.NewAtomContainer();
             foreach (var container in ChemFileManipulator.GetAllAtomContainers(file))
             {
                 bigPile.Add(container);
@@ -250,8 +250,7 @@ namespace NCDK.IO
                 if (container.GetProperty<string>(CDKPropertyName.Remark) != null)
                 {
                     if (bigPile.GetProperty<string>(CDKPropertyName.Remark) != null)
-                        bigPile.SetProperty(CDKPropertyName.Remark, bigPile.GetProperty<string>(CDKPropertyName.Remark) + "; "
-                                                                 + container.GetProperty<string>(CDKPropertyName.Remark));
+                        bigPile.SetProperty(CDKPropertyName.Remark, bigPile.GetProperty<string>(CDKPropertyName.Remark) + "; " + container.GetProperty<string>(CDKPropertyName.Remark));
                     else
                         bigPile.SetProperty(CDKPropertyName.Remark, container.GetProperty<string>(CDKPropertyName.Remark));
                 }
@@ -272,8 +271,10 @@ namespace NCDK.IO
             // write header block
             // lines get shortened to 80 chars, that's in the spec
             string title = container.Title;
-            if (title == null) title = "";
-            if (title.Length > 80) title = title.Substring(0, 80);
+            if (title == null)
+                title = "";
+            if (title.Length > 80)
+                title = title.Substring(0, 80);
             writer.Write(title);
             writer.Write('\n');
 
@@ -285,23 +286,25 @@ namespace NCDK.IO
             // program input, internal registry number (R) if input through MDL
             // form. A blank line can be substituted for line 2.
             writer.Write("  CDK     ");
-            writer.Write(DateTime.Now.ToUniversalTime().ToString("MMddyyHHmm"));
+            writer.Write(DateTime.Now.ToUniversalTime().ToString("MMddyyHHmm", DateTimeFormatInfo.InvariantInfo));
             if (dim != 0)
             {
-                writer.Write(dim.ToString());
+                writer.Write(dim.ToString(NumberFormatInfo.InvariantInfo));
                 writer.Write('D');
             }
             writer.Write('\n');
 
             string comment = container.GetProperty<string>(CDKPropertyName.Remark);
-            if (comment == null) comment = "";
-            if (comment.Length > 80) comment = comment.Substring(0, 80);
+            if (comment == null)
+                comment = "";
+            if (comment.Length > 80)
+                comment = comment.Substring(0, 80);
             writer.Write(comment);
             writer.Write('\n');
 
             // index stereo elements for setting atom parity values
-            IDictionary<IAtom, ITetrahedralChirality> atomstereo = new Dictionary<IAtom, ITetrahedralChirality>();
-            IDictionary<IAtom, int> atomindex = new Dictionary<IAtom, int>();
+            var atomstereo = new Dictionary<IAtom, ITetrahedralChirality>();
+            var atomindex = new Dictionary<IAtom, int>();
             foreach (var element in container.StereoElements)
                 if (element is ITetrahedralChirality)
                     atomstereo[((ITetrahedralChirality)element).ChiralAtom] = (ITetrahedralChirality)element;
@@ -364,7 +367,7 @@ namespace NCDK.IO
 
                     // firstly check if it's a numbered R group
                     Match matcher = NUMERED_R_GROUP.Match(label);
-                    if (pseudoAtom.Symbol.Equals("R") && !string.IsNullOrEmpty(label) && matcher.Success)
+                    if (pseudoAtom.Symbol.Equals("R", StringComparison.Ordinal) && !string.IsNullOrEmpty(label) && matcher.Success)
                     {
 
                         line += "R# ";
@@ -373,7 +376,7 @@ namespace NCDK.IO
                             // we use a tree map to ensure the output order is always the same
                             rgroups = new SortedDictionary<int, int>();
                         }
-                        rgroups[f + 1] = int.Parse(matcher.Groups[1].Value);
+                        rgroups[f + 1] = int.Parse(matcher.Groups[1].Value, NumberFormatInfo.InvariantInfo);
                     }
                     // not a numbered R group - note the symbol may still be R
                     else
@@ -538,7 +541,7 @@ namespace NCDK.IO
                     {
                         try
                         {
-                            int value = int.Parse((string)atomAtomMapping);
+                            int value = int.Parse((string)atomAtomMapping, NumberFormatInfo.InvariantInfo);
                             line += FormatMDLInt(value, 3);
                         }
                         catch (FormatException)
@@ -680,7 +683,7 @@ namespace NCDK.IO
                 IAtom atom = container.Atoms[i];
                 if (atom.GetProperty<object>(CDKPropertyName.Comment) != null
                     && atom.GetProperty<object>(CDKPropertyName.Comment) is string
-                    && !atom.GetProperty<string>(CDKPropertyName.Comment).Trim().Equals(""))
+                    && atom.GetProperty<string>(CDKPropertyName.Comment).Trim().Length != 0)
                 {
                     writer.Write("V  ");
                     writer.Write(FormatMDLInt(i + 1, 3));
@@ -724,7 +727,7 @@ namespace NCDK.IO
                             atomIndexSpinMap[i] = SpinMultiplicity.DivalentSinglet;
                             break;
                         default:
-                            Debug.WriteLine("Invalid number of radicals found: " + eCount);
+                            Debug.WriteLine($"Invalid number of radicals found: {eCount}");
                             break;
                     }
                 }
@@ -756,7 +759,7 @@ namespace NCDK.IO
                     int? atomicMass = atom.MassNumber;
                     if (atomicMass != null)
                     {
-                        int majorMass = Isotopes.Instance.GetMajorIsotope(atom.Symbol).MassNumber.Value;
+                        int majorMass = BODRIsotopeFactory.Instance.GetMajorIsotope(atom.Symbol).MassNumber.Value;
                         if (atomicMass != majorMass)
                         {
                             writer.Write("M  ISO  1 ");
@@ -828,9 +831,9 @@ namespace NCDK.IO
             writer.Flush();
         }
 
-        private void WriteSgroups(IAtomContainer container, TextWriter writer, IDictionary<IAtom, int> atomidxs)
+        private static void WriteSgroups(IAtomContainer container, TextWriter writer, IReadOnlyDictionary<IAtom, int> atomidxs)
         {
-            IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            var sgroups = container.GetCtabSgroups();
             if (sgroups == null)
                 return;
 
@@ -1004,7 +1007,7 @@ namespace NCDK.IO
             }
         }
 
-        private IList<IList<T>> Wrap<T>(ICollection<T> set, int lim)
+        private static IList<IList<T>> Wrap<T>(ICollection<T> set, int lim)
         {
             IList<IList<T>> wrapped = new List<IList<T>>();
             List<T> list = new List<T>(set);
@@ -1099,12 +1102,12 @@ namespace NCDK.IO
         /// </summary>
         private void InitIOSettings()
         {
-            ForceWriteAs2DCoords = IOSettings.Add(new BooleanIOSetting("ForceWriteAs2DCoordinates", IOSetting.Importance.Low,
-                                                                   "Should coordinates always be written as 2D?", "false"));
-            WriteAromaticBondTypes = IOSettings.Add(new BooleanIOSetting("WriteAromaticBondTypes", IOSetting.Importance.Low,
-                                                                     "Should aromatic bonds be written as bond type 4?", "false"));
-            WriteQueryFormatValencies = IOSettings.Add(new BooleanIOSetting("WriteQueryFormatValencies",
-                                                                        IOSetting.Importance.Low, "Should valencies be written in the MDL Query format? (deprecated)", "false"));
+            ForceWriteAs2DCoords = IOSettings.Add(new BooleanIOSetting("ForceWriteAs2DCoordinates", Importance.Low,
+                "Should coordinates always be written as 2D?", "false"));
+            WriteAromaticBondTypes = IOSettings.Add(new BooleanIOSetting("WriteAromaticBondTypes", Importance.Low,
+                "Should aromatic bonds be written as bond type 4?", "false"));
+            WriteQueryFormatValencies = IOSettings.Add(new BooleanIOSetting("WriteQueryFormatValencies", Importance.Low,
+                "Should valencies be written in the MDL Query format? (deprecated)", "false"));
         }
 
         /// <summary>
@@ -1115,7 +1118,7 @@ namespace NCDK.IO
         {
             try
             {
-                WriteAromaticBondTypes.Setting = val.ToString();
+                WriteAromaticBondTypes.Setting = val.ToString(NumberFormatInfo.InvariantInfo);
             }
             catch (CDKException)
             {
@@ -1127,7 +1130,7 @@ namespace NCDK.IO
         {
             foreach (var setting in IOSettings.Settings)
             {
-                FireIOSettingQuestion(setting);
+                ProcessIOSettingQuestion(setting);
             }
         }
     }

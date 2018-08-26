@@ -20,6 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using NCDK.Smiles;
 using System;
 
@@ -39,7 +40,7 @@ namespace NCDK.Normalizers
         public void TestMakeDeepCopy()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer container = sp.ParseSmiles(rawMolSmiles);
 
             int counter = 0;
@@ -63,7 +64,7 @@ namespace NCDK.Normalizers
         public void TestAromatizeMolecule()
         {
             string rawMolSmiles = "C1=CC2=C(C=C1)C=CC=C2";
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles(rawMolSmiles);
             SMSDNormalizer.AromatizeMolecule(mol);
             int count = 0;
@@ -84,7 +85,7 @@ namespace NCDK.Normalizers
         public void TestGetExplicitHydrogenCount()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles(rawMolSmiles);
             IAtom atom = null;
             foreach (var a in atomContainer.Atoms)
@@ -108,7 +109,7 @@ namespace NCDK.Normalizers
         public void TestGetImplicitHydrogenCount()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles(rawMolSmiles);
             IAtom atom = null;
             foreach (var a in atomContainer.Atoms)
@@ -133,7 +134,7 @@ namespace NCDK.Normalizers
         public void TestGetHydrogenCount()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles(rawMolSmiles);
             IAtom atom = null;
             foreach (var a in atomContainer.Atoms)
@@ -156,7 +157,7 @@ namespace NCDK.Normalizers
         public void TestRemoveHydrogensAndPreserveAtomID()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles(rawMolSmiles);
             IAtom beforeAtom = null;
             IAtom afterAtom = null;
@@ -190,7 +191,7 @@ namespace NCDK.Normalizers
         public void TestConvertExplicitToImplicitHydrogens()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles(rawMolSmiles);
             int expResult = 11;
             IAtomContainer result = SMSDNormalizer.ConvertExplicitToImplicitHydrogens(atomContainer);
@@ -204,7 +205,7 @@ namespace NCDK.Normalizers
         public void TestPercieveAtomTypesAndConfigureAtoms()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles(rawMolSmiles);
             SMSDNormalizer.PercieveAtomTypesAndConfigureAtoms(atomContainer);
             Assert.IsNotNull(atomContainer);

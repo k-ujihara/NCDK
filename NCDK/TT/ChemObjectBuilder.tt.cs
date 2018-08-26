@@ -1,6 +1,7 @@
 ﻿
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -55,23 +56,23 @@ namespace NCDK.Default
 
         private bool LegacyAtomContainer { get; set; }
 
-		internal ChemObjectBuilder()
-		{
+        internal ChemObjectBuilder()
+        {
             var val = System.Environment.GetEnvironmentVariable("NCDKUseLegacyAtomContainer");
             if (string.IsNullOrWhiteSpace(val))
                 LegacyAtomContainer = false;
             else
             {
                 val = val.Trim();
-                switch (val.ToLowerInvariant())
+                switch (val.ToUpperInvariant())
                 {
-                    case "t":
-                    case "true":
+                    case "T":
+                    case "TRUE":
                     case "1":
                         LegacyAtomContainer = true;
                         break;
-                    case "f":
-                    case "false":
+                    case "F":
+                    case "FALSE":
                     case "0":
                         LegacyAtomContainer = false;
                         break;
@@ -79,21 +80,23 @@ namespace NCDK.Default
                         throw new InvalidOperationException("Invalid value, expected true/false: " + val);
                 }
             }
-		}
+        }
 
-		internal ChemObjectBuilder(bool legacyAtomContainer)
-		{
-			this.LegacyAtomContainer = legacyAtomContainer;
-		}
+        internal ChemObjectBuilder(bool legacyAtomContainer)
+        {
+            this.LegacyAtomContainer = legacyAtomContainer;
+        }
 
+#pragma warning disable CA1822
         public T New<T>() where T : IAtomContainer, new() => new T();
+#pragma warning restore
 
         // elements
         public IAtom NewAtom() => new Atom();
         public IAtom NewAtom(IElement element) => new Atom(element);
-		public IAtom NewAtom(int elem) => new Atom(elem);
-		public IAtom NewAtom(int elem, int hcnt) => new Atom(elem, hcnt);
-		public IAtom NewAtom(int elem, int hcnt, int fchg) => new Atom(elem, hcnt, fchg);
+        public IAtom NewAtom(int elem) => new Atom(elem);
+        public IAtom NewAtom(int elem, int hcnt) => new Atom(elem, hcnt);
+        public IAtom NewAtom(int elem, int hcnt, int fchg) => new Atom(elem, hcnt, fchg);
         public IAtom NewAtom(string elementSymbol) => new Atom(elementSymbol);
         public IAtom NewAtom(string elementSymbol, Vector2 point2d) => new Atom(elementSymbol, point2d);
         public IAtom NewAtom(string elementSymbol, Vector3 point3d) => new Atom(elementSymbol, point3d);
@@ -174,21 +177,21 @@ namespace NCDK.Default
         public ISubstance NewSubstance() => new Substance();
         
         // stereo components (requires some modification after instantiation)
-        public ITetrahedralChirality NewTetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligandAtoms, TetrahedralStereo chirality)
+        public ITetrahedralChirality NewTetrahedralChirality(IAtom chiralAtom, IReadOnlyList<IAtom> ligandAtoms, TetrahedralStereo chirality)
         {
             var o = new TetrahedralChirality(chiralAtom, ligandAtoms, chirality)
-			{
-				Builder = this,
-			};
+            {
+                Builder = this,
+            };
             return o;
         }
 
         public IDoubleBondStereochemistry CreateDoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, DoubleBondConformation stereo)
         {
             var o = new DoubleBondStereochemistry(stereoBond, ligandBonds, stereo)
-			{
-				Builder = this,
-			};
+            {
+                Builder = this,
+            };
             return o;
         }
 
@@ -223,23 +226,23 @@ namespace NCDK.Silent
 
         private bool LegacyAtomContainer { get; set; }
 
-		internal ChemObjectBuilder()
-		{
+        internal ChemObjectBuilder()
+        {
             var val = System.Environment.GetEnvironmentVariable("NCDKUseLegacyAtomContainer");
             if (string.IsNullOrWhiteSpace(val))
                 LegacyAtomContainer = false;
             else
             {
                 val = val.Trim();
-                switch (val.ToLowerInvariant())
+                switch (val.ToUpperInvariant())
                 {
-                    case "t":
-                    case "true":
+                    case "T":
+                    case "TRUE":
                     case "1":
                         LegacyAtomContainer = true;
                         break;
-                    case "f":
-                    case "false":
+                    case "F":
+                    case "FALSE":
                     case "0":
                         LegacyAtomContainer = false;
                         break;
@@ -247,21 +250,23 @@ namespace NCDK.Silent
                         throw new InvalidOperationException("Invalid value, expected true/false: " + val);
                 }
             }
-		}
+        }
 
-		internal ChemObjectBuilder(bool legacyAtomContainer)
-		{
-			this.LegacyAtomContainer = legacyAtomContainer;
-		}
+        internal ChemObjectBuilder(bool legacyAtomContainer)
+        {
+            this.LegacyAtomContainer = legacyAtomContainer;
+        }
 
+#pragma warning disable CA1822
         public T New<T>() where T : IAtomContainer, new() => new T();
+#pragma warning restore
 
         // elements
         public IAtom NewAtom() => new Atom();
         public IAtom NewAtom(IElement element) => new Atom(element);
-		public IAtom NewAtom(int elem) => new Atom(elem);
-		public IAtom NewAtom(int elem, int hcnt) => new Atom(elem, hcnt);
-		public IAtom NewAtom(int elem, int hcnt, int fchg) => new Atom(elem, hcnt, fchg);
+        public IAtom NewAtom(int elem) => new Atom(elem);
+        public IAtom NewAtom(int elem, int hcnt) => new Atom(elem, hcnt);
+        public IAtom NewAtom(int elem, int hcnt, int fchg) => new Atom(elem, hcnt, fchg);
         public IAtom NewAtom(string elementSymbol) => new Atom(elementSymbol);
         public IAtom NewAtom(string elementSymbol, Vector2 point2d) => new Atom(elementSymbol, point2d);
         public IAtom NewAtom(string elementSymbol, Vector3 point3d) => new Atom(elementSymbol, point3d);
@@ -342,21 +347,21 @@ namespace NCDK.Silent
         public ISubstance NewSubstance() => new Substance();
         
         // stereo components (requires some modification after instantiation)
-        public ITetrahedralChirality NewTetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligandAtoms, TetrahedralStereo chirality)
+        public ITetrahedralChirality NewTetrahedralChirality(IAtom chiralAtom, IReadOnlyList<IAtom> ligandAtoms, TetrahedralStereo chirality)
         {
             var o = new TetrahedralChirality(chiralAtom, ligandAtoms, chirality)
-			{
-				Builder = this,
-			};
+            {
+                Builder = this,
+            };
             return o;
         }
 
         public IDoubleBondStereochemistry CreateDoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, DoubleBondConformation stereo)
         {
             var o = new DoubleBondStereochemistry(stereoBond, ligandBonds, stereo)
-			{
-				Builder = this,
-			};
+            {
+                Builder = this,
+            };
             return o;
         }
 

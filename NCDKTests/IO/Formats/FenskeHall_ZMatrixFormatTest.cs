@@ -30,7 +30,7 @@ namespace NCDK.IO.Formats
     {
         public FenskeHall_ZMatrixFormatTest()
         {
-            base.SetChemFormat((IChemFormat)FenskeHall_ZMatrixFormat.Instance);
+            base.SetChemFormat((IChemFormat)FenskeHallZMatrixFormat.Instance);
         }
     }
 }

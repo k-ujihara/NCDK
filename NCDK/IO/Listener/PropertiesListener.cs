@@ -43,12 +43,12 @@ namespace NCDK.IO.Listener
     // @author Egon Willighagen <egonw@sci.kun.nl>
     public class PropertiesListener : IReaderListener, IWriterListener
     {
-        private NameValueCollection props;
+        private readonly NameValueCollection props;
 
         /// <summary>
         /// Overwrites the default writer to which the output is directed.
         /// </summary>
-        public TextWriter OutputWriter { private get; set; }
+        public TextWriter OutputWriter { get; set; }
 
         public PropertiesListener(NameValueCollection props)
         {
@@ -77,8 +77,7 @@ namespace NCDK.IO.Listener
                 }
                 catch (CDKException)
                 {
-                    string message = "Submitted Value (" + propValue + ") is not valid!";
-                    OutputWriter.WriteLine(message);
+                    OutputWriter.WriteLine($"Submitted Value ({propValue}) is not valid!");
                 }
             }
         }

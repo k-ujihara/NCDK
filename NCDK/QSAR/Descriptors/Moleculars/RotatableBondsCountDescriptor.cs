@@ -20,6 +20,7 @@
 using NCDK.Graphs;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -71,8 +72,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the RotatableBondsCountDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rotatableBondsCount",
                 typeof(RotatableBondsCountDescriptor).FullName, "The Chemistry Development Kit");
@@ -81,11 +82,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the RotatableBondsCountDescriptor object
         /// </summary>
         /// <exception cref="CDKException"></exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length != 2)
+                if (value.Count != 2)
                 {
                     throw new CDKException("RotatableBondsCount expects two parameters");
                 }
@@ -126,7 +127,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             catch (NoSuchAtomException e)
             {
-                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+                return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
             }
             foreach (var bond in ac.Bonds)
             {
@@ -139,7 +140,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 IAtom atom0 = bond.Atoms[0];
                 IAtom atom1 = bond.Atoms[1];
-                if (atom0.Symbol.Equals("H") || atom1.Symbol.Equals("H")) continue;
+                if (atom0.Symbol.Equals("H", StringComparison.Ordinal) || atom1.Symbol.Equals("H", StringComparison.Ordinal))
+                    continue;
                 if (bond.Order == BondOrder.Single)
                 {
                     if ((BondManipulator.IsLowerOrder(ac.GetMaximumBondOrder(atom0), BondOrder.Triple))
@@ -171,7 +173,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     }
                 }
             }
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(rotatableBondsCount), DescriptorNames);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(rotatableBondsCount), DescriptorNames);
         }
 
         /// <summary>
@@ -186,14 +188,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///
         /// <returns>if both partners are involved in an amide C-N bond</returns>
         /// </summary>
-        private bool IsAmide(IAtom atom0, IAtom atom1, IAtomContainer ac)
+        private static bool IsAmide(IAtom atom0, IAtom atom1, IAtomContainer ac)
         {
-
-            if (atom0.Symbol.Equals("C") && atom1.Symbol.Equals("N"))
+            if (atom0.Symbol.Equals("C", StringComparison.Ordinal) && atom1.Symbol.Equals("N", StringComparison.Ordinal))
             {
                 foreach (var neighbor in ac.GetConnectedAtoms(atom0))
                 {
-                    if (neighbor.Symbol.Equals("O")
+                    if (neighbor.Symbol.Equals("O", StringComparison.Ordinal)
                             && ac.GetBond(atom0, neighbor).Order == BondOrder.Double)
                     {
                         return true;
@@ -203,12 +204,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return false;
         }
 
-        private int GetConnectedHCount(IAtomContainer atomContainer, IAtom atom)
+        private static int GetConnectedHCount(IAtomContainer atomContainer, IAtom atom)
         {
             var connectedAtoms = atomContainer.GetConnectedAtoms(atom);
             int n = 0;
             foreach (var anAtom in connectedAtoms)
-                if (anAtom.Symbol.Equals("H")) n++;
+                if (string.Equals(anAtom.Symbol, "H", StringComparison.Ordinal)) n++;
             return n;
         }
 

@@ -18,23 +18,24 @@
  */
 
 using NCDK.Tools;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
     // @author Miguel Rojas
     // @cdk.module ioformats
     // @cdk.githash
-    public class Chem3D_Cartesian_2Format : AbstractResourceFormat, IChemFormat
+    public class Chem3DCartesian2Format : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;
 
-        public Chem3D_Cartesian_2Format() { }
+        public Chem3DCartesian2Format() { }
 
         public static IResourceFormat Instance
         {
             get
             {
-                if (myself == null) myself = new Chem3D_Cartesian_2Format();
+                if (myself == null) myself = new Chem3DCartesian2Format();
                 return myself;
             }
         }
@@ -49,7 +50,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "c3d2" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "c3d2" };
 
         /// <inheritdoc/>
         public string ReaderClassName => null;

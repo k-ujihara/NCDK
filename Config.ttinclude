@@ -157,14 +157,24 @@ foreach (var s in entities)
 
         public static explicit operator <#= name #>(int ordinal)
         {
+            return To<#= name #>(ordinal);
+        }
+
+        public static <#= name #> To<#= name #>(int ordinal)
+        {
             if (!(0 <= ordinal && ordinal < values.Length))
-                throw new System.ArgumentOutOfRangeException();
+                throw new System.ArgumentOutOfRangeException(nameof(ordinal));
             return values[ordinal];
         }
 
-        public static explicit operator int(<#= name #> obj)
+		public static explicit operator int(<#= name #> o)
         {
-            return obj.Ordinal;
+            return ToInt32(o);
+        }
+
+        public static int ToInt32(<#= name #> o)
+        {
+            return o.Ordinal;
         }
 
 <#+
@@ -196,7 +206,7 @@ foreach (var s in entities)
             <#= OName(s) #>, 
 <#+ } #>    
         };
-        public static <#= name #>[] Values => values;
+        public static System.Collections.Generic.IReadOnlyList<<#= name #>> Values => values;
 
 <#+
         if (isStruct) 

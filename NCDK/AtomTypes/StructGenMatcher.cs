@@ -19,6 +19,7 @@
 using NCDK.Config;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NCDK.AtomTypes
@@ -45,16 +46,15 @@ namespace NCDK.AtomTypes
         /// </summary>
         public StructGenMatcher() { }
 
-        public IAtomType[] FindMatchingAtomTypes(IAtomContainer atomContainer)
+        public IEnumerable<IAtomType> FindMatchingAtomTypes(IAtomContainer atomContainer)
         {
-            IAtomType[] types = new IAtomType[atomContainer.Atoms.Count];
             int typeCounter = 0;
             foreach (var atom in atomContainer.Atoms)
             {
-                types[typeCounter] = FindMatchingAtomType(atomContainer, atom);
+                yield return FindMatchingAtomType(atomContainer, atom);
                 typeCounter++;
             }
-            return types;
+            yield break;
         }
 
         /// <summary>

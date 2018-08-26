@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="AppearanceViewModel.cs" />
     <Compile Include="ChemObjectBox.cs" />
+    <Compile Include="ChemObjectChangedEventArgs.cs" />
     <Compile Include="MolWindow.xaml.cs">
       <DependentUpon>MolWindow.xaml</DependentUpon>
     </Compile>

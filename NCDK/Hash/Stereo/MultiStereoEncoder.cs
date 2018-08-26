@@ -26,7 +26,6 @@ using NCDK.Common.Collections;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace NCDK.Hash.Stereo
 {
@@ -43,15 +42,16 @@ namespace NCDK.Hash.Stereo
         private readonly BitArray unconfigured;
 
         /* list of encoders */
-        private readonly IList<IStereoEncoder> encoders;
+        private readonly IReadOnlyList<IStereoEncoder> encoders;
 
         /// <summary>
         /// Create a new multiple stereo encoder from a single list of encoders
         /// </summary>
         public MultiStereoEncoder(IList<IStereoEncoder> encoders)
         {
-            if (encoders.Count == 0) throw new ArgumentException("no stereo encoders provided");
-            this.encoders = new ReadOnlyCollection<IStereoEncoder>(new List<IStereoEncoder>(encoders));
+            if (encoders.Count == 0)
+                throw new ArgumentException("no stereo encoders provided");
+            this.encoders = new List<IStereoEncoder>(encoders);
             this.unconfigured = new BitArray(encoders.Count);
             BitArrays.Flip(unconfigured, encoders.Count);
         }

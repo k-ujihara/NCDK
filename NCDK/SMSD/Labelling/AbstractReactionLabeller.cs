@@ -1,7 +1,8 @@
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace NCDK.SMSD.Labelling
 {
@@ -12,32 +13,32 @@ namespace NCDK.SMSD.Labelling
         /// <summary>
         /// A nasty hack necessary to get around a bug in the CDK
         /// </summary>
-        private bool fixAtomMappingCastType = false;
+        private readonly bool fixAtomMappingCastType = false;
 
-        private void FixAtomMapping(IAtomContainer canonicalForm)
+        private static void FixAtomMapping(IAtomContainer canonicalForm)
         {
             foreach (var a in canonicalForm.Atoms)
             {
                 string v = a.GetProperty<string>(CDKPropertyName.AtomAtomMapping);
                 if (v != null)
                 {
-                    a.SetProperty(CDKPropertyName.AtomAtomMapping, int.Parse(v));
+                    a.SetProperty(CDKPropertyName.AtomAtomMapping, int.Parse(v, NumberFormatInfo.InvariantInfo));
                 }
             }
         }
 
-        private IDictionary<IAtom, IAtom> AtomAtomMap(IReaction reaction, IReaction clone, IDictionary<IAtomContainer, int[]> permutationMap)
+        private static IReadOnlyDictionary<IAtom, IAtom> AtomAtomMap(IReaction reaction, IReaction clone, IReadOnlyDictionary<IAtomContainer, int[]> permutationMap)
         {
             // create a Map of corresponding atoms for molecules
             // (key: original Atom, value: clone Atom)
-            IDictionary<IAtom, IAtom> atomAtom = new Dictionary<IAtom, IAtom>();
+            var atomAtom = new Dictionary<IAtom, IAtom>();
             var reactants = reaction.Reactants;
             var clonedReactants = clone.Reactants;
             for (int i = 0; i < reactants.Count; ++i)
             {
-                IAtomContainer mol = reactants[i];
-                IAtomContainer mol2 = clonedReactants[i];
-                int[] permutation = permutationMap[mol2];
+                var mol = reactants[i];
+                var mol2 = clonedReactants[i];
+                var permutation = permutationMap[mol2];
                 for (int j = 0; j < mol.Atoms.Count; ++j)
                 {
                     atomAtom[mol.Atoms[j]] = mol2.Atoms[permutation[j]];
@@ -47,9 +48,9 @@ namespace NCDK.SMSD.Labelling
             var clonedProducts = clone.Products;
             for (int i = 0; i < products.Count; ++i)
             {
-                IAtomContainer mol = products[i];
-                IAtomContainer mol2 = clonedProducts[i];
-                int[] permutation = permutationMap[mol2];
+                var mol = products[i];
+                var mol2 = clonedProducts[i];
+                var permutation = permutationMap[mol2];
                 for (int j = 0; j < mol.Atoms.Count; ++j)
                 {
                     atomAtom[mol.Atoms[j]] = mol2.Atoms[permutation[j]];
@@ -58,29 +59,29 @@ namespace NCDK.SMSD.Labelling
 
             foreach (var key in atomAtom.Keys)
             {
-                IAtomContainer keyAC = ReactionManipulator.GetRelevantAtomContainer(reaction, key);
-                int keyIndex = keyAC.Atoms.IndexOf(key);
-                IAtom value = atomAtom[key];
-                IAtomContainer valueAC = ReactionManipulator.GetRelevantAtomContainer(clone, value);
-                int valueIndex = valueAC.Atoms.IndexOf(value);
+                var keyAC = ReactionManipulator.GetRelevantAtomContainer(reaction, key);
+                var keyIndex = keyAC.Atoms.IndexOf(key);
+                var value = atomAtom[key];
+                var valueAC = ReactionManipulator.GetRelevantAtomContainer(clone, value);
+                var valueIndex = valueAC.Atoms.IndexOf(value);
                 Console.Out.WriteLine("key " + keyIndex + key.Symbol + " mapped to " + valueIndex + value.Symbol);
             }
 
             return atomAtom;
         }
 
-        private List<IMapping> CloneMappings(IReaction reaction, IDictionary<IAtom, IAtom> atomAtomMap)
+        private static List<IMapping> CloneMappings(IReaction reaction, IReadOnlyDictionary<IAtom, IAtom> atomAtomMap)
         {
             // clone the mappings
-            int numberOfMappings = reaction.Mappings.Count;
-            List<IMapping> map = new List<IMapping>();
+            var numberOfMappings = reaction.Mappings.Count;
+            var map = new List<IMapping>();
             for (int mappingIndex = 0; mappingIndex < numberOfMappings; mappingIndex++)
             {
-                IMapping mapping = reaction.Mappings[mappingIndex];
-                IChemObject keyChemObj0 = mapping[0];
-                IChemObject keyChemObj1 = mapping[1];
-                IChemObject co0 = (IChemObject)atomAtomMap[(IAtom)keyChemObj0];
-                IChemObject co1 = (IChemObject)atomAtomMap[(IAtom)keyChemObj1];
+                var mapping = reaction.Mappings[mappingIndex];
+                var keyChemObj0 = mapping[0];
+                var keyChemObj1 = mapping[1];
+                var co0 = (IChemObject)atomAtomMap[(IAtom)keyChemObj0];
+                var co1 = (IChemObject)atomAtomMap[(IAtom)keyChemObj1];
                 map.Add(new Mapping(co0, co1));
             }
             return map;
@@ -88,17 +89,17 @@ namespace NCDK.SMSD.Labelling
 
         class MappingSorter : IComparer<IMapping>
         {
-            IDictionary<IChemObject, int> indexMap;
+            private readonly IReadOnlyDictionary<IChemObject, int> indexMap;
 
-            public MappingSorter(IDictionary<IChemObject, int> indexMap)
+            public MappingSorter(IReadOnlyDictionary<IChemObject, int> indexMap)
             {
                 this.indexMap = indexMap;
             }
 
             public int Compare(IMapping o1, IMapping o2)
             {
-                IChemObject o10 = o1[0];
-                IChemObject o20 = o2[0];
+                var o10 = o1[0];
+                var o20 = o2[0];
                 return indexMap[o10].CompareTo(indexMap[o20]);
             }
         }
@@ -108,12 +109,11 @@ namespace NCDK.SMSD.Labelling
         /// in the mapping (which is assumed to be the reactant).
         /// </summary>
         /// <param name="reaction"></param>
-        private void CloneAndSortMappings(IReaction reaction, IReaction copyOfReaction,
-            IDictionary<IAtomContainer, int[]> permutationMap)
+        private static void CloneAndSortMappings(IReaction reaction, IReaction copyOfReaction,
+            IReadOnlyDictionary<IAtomContainer, int[]> permutationMap)
         {
-
             // make a lookup for the indices of the atoms in the copy
-            IDictionary<IChemObject, int> indexMap = new Dictionary<IChemObject, int>();
+            var indexMap = new Dictionary<IChemObject, int>();
             var all = ReactionManipulator.GetAllAtomContainers(copyOfReaction);
             int globalIndex = 0;
             foreach (var ac in all)
@@ -125,8 +125,8 @@ namespace NCDK.SMSD.Labelling
                 }
             }
 
-            IDictionary<IAtom, IAtom> atomAtomMap = AtomAtomMap(reaction, copyOfReaction, permutationMap);
-            List<IMapping> map = CloneMappings(reaction, atomAtomMap);
+            var atomAtomMap = AtomAtomMap(reaction, copyOfReaction, permutationMap);
+            var map = CloneMappings(reaction, atomAtomMap);
 
             var mappingSorter = new MappingSorter(indexMap);
             map.Sort(mappingSorter);
@@ -143,31 +143,31 @@ namespace NCDK.SMSD.Labelling
         public IReaction LabelReaction(IReaction reaction, ICanonicalMoleculeLabeller labeller)
         {
             Console.Out.WriteLine("labelling");
-            IReaction canonReaction = new Reaction();
+            var canonReaction = new Reaction();
 
-            IDictionary<IAtomContainer, int[]> permutationMap = new Dictionary<IAtomContainer, int[]>();
+            var permutationMap = new Dictionary<IAtomContainer, int[]>();
 
-            IChemObjectSet<IAtomContainer> canonicalProducts = Default.ChemObjectBuilder.Instance.NewChemObjectSet<IAtomContainer>();
+            var canonicalProducts = ChemObjectBuilder.Instance.NewChemObjectSet<IAtomContainer>();
             foreach (var product in reaction.Products)
             {
-                IAtomContainer canonicalForm = labeller.GetCanonicalMolecule(product);
+                var canonicalForm = labeller.GetCanonicalMolecule(product);
                 if (fixAtomMappingCastType)
                 {
                     FixAtomMapping(canonicalForm);
                 }
-                IAtomContainer canonicalMolecule = canonicalForm.Builder.NewAtomContainer(canonicalForm);
+                var canonicalMolecule = canonicalForm.Builder.NewAtomContainer(canonicalForm);
                 permutationMap[canonicalMolecule] = labeller.GetCanonicalPermutation(product);
                 canonicalProducts.Add(canonicalMolecule);
             }
-            IChemObjectSet<IAtomContainer> canonicalReactants = Default.ChemObjectBuilder.Instance.NewChemObjectSet<IAtomContainer>();
+            var canonicalReactants = ChemObjectBuilder.Instance.NewChemObjectSet<IAtomContainer>();
             foreach (var reactant in reaction.Reactants)
             {
-                IAtomContainer canonicalForm = labeller.GetCanonicalMolecule(reactant);
+                var canonicalForm = labeller.GetCanonicalMolecule(reactant);
                 if (fixAtomMappingCastType)
                 {
                     FixAtomMapping(canonicalForm);
                 }
-                IAtomContainer canonicalMolecule = canonicalForm.Builder.NewAtomContainer(canonicalForm);
+                var canonicalMolecule = canonicalForm.Builder.NewAtomContainer(canonicalForm);
                 permutationMap[canonicalMolecule] = labeller.GetCanonicalPermutation(reactant);
                 canonicalReactants.Add(canonicalMolecule);
             }

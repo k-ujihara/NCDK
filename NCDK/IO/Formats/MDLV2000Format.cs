@@ -18,6 +18,7 @@
  */
 
 using NCDK.Tools;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -25,11 +26,9 @@ namespace NCDK.IO.Formats
     // @cdk.githash
     public class MDLV2000Format : SimpleChemFormatMatcher, IChemFormatMatcher
     {
-        private static IResourceFormat myself = new MDLV2000Format();
-
         public MDLV2000Format() { }
 
-        public static IResourceFormat Instance => myself;
+        public static IResourceFormat Instance { get; } = new MDLV2000Format();
 
         /// <inheritdoc/>
         public override string FormatName => "MDL Molfile V2000";
@@ -41,7 +40,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions => new string[] { "mol" };
+        public override IReadOnlyList<string> NameExtensions => new string[] { "mol" };
 
         /// <inheritdoc/>
         public override string ReaderClassName => typeof(NCDK.IO.MDLV2000Reader).ToString();
@@ -52,7 +51,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (lineNumber == 4 && (line.IndexOf("v2000") >= 0 || line.IndexOf("V2000") >= 0))
+            if (lineNumber == 4 && (line.Contains("v2000") || line.Contains("V2000")))
             {
                 return true;
             }
@@ -64,11 +63,11 @@ namespace NCDK.IO.Formats
 
         /// <inheritdoc/>
         public override DataFeatures SupportedDataFeatures
-            => RequiredDataFeatures | DataFeatures.HAS_2D_COORDINATES | DataFeatures.HAS_3D_COORDINATES
-                    | DataFeatures.HAS_GRAPH_REPRESENTATION;
+            => RequiredDataFeatures | DataFeatures.Has2DCoordinates | DataFeatures.Has3DCoordinates
+                    | DataFeatures.HasGraphRepresentation;
 
         /// <inheritdoc/>
         public override DataFeatures RequiredDataFeatures
-            => DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+            => DataFeatures.HasAtomElementSymbol;
     }
 }

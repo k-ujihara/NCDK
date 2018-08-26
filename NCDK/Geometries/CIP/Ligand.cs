@@ -31,9 +31,9 @@ namespace NCDK.Geometries.CIP
     // @cdk.githash
     public class Ligand : ILigand
     {
-        private IAtomContainer container;
-        private IAtom centralAtom;
-        private IAtom ligandAtom;
+        private readonly IAtomContainer container;
+        private readonly IAtom centralAtom;
+        private readonly IAtom ligandAtom;
         private VisitedAtoms visitedAtoms;
 
         public Ligand(IAtomContainer container, VisitedAtoms visitedAtoms, IAtom centralAtom, IAtom ligandAtom)
@@ -49,35 +49,22 @@ namespace NCDK.Geometries.CIP
         /// <summary>
         /// <see cref="IAtomContainer"/> of which this ligand is part.
         /// </summary>
-        /// <returns>the IAtomContainer</returns>
-        public IAtomContainer GetAtomContainer()
-        {
-            return container;
-        }
+        public IAtomContainer AtomContainer => container;
 
         /// <summary>
         /// The central <see cref="IAtom"/> to which this ligand is connected via one <see cref="IBond"/>.
         /// </summary>
-        /// <returns>the central atom</returns>
-        public IAtom GetCentralAtom()
-        {
-            return centralAtom;
-        }
+        public IAtom CentralAtom => centralAtom;
 
         /// <summary>
         /// <see cref="IAtom"/> of the ligand that is connected to the chiral <see cref="IAtom"/> via
         /// one <see cref="IBond"/>.
         /// </summary>
         /// <returns>the ligand atom</returns>
-        public IAtom GetLigandAtom()
-        {
-            return ligandAtom;
-        }
+        public IAtom LigandAtom => ligandAtom;
 
-        public VisitedAtoms GetVisitedAtoms()
-        {
-            return visitedAtoms;
-        }
+        /// <inheritdoc/>
+        public VisitedAtoms VisitedAtoms => visitedAtoms;
 
         public bool IsVisited(IAtom atom)
         {

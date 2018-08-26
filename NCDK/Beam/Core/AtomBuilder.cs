@@ -81,7 +81,7 @@ namespace NCDK.Beam
                 hCount = 0,
                 charge = 0,
                 atomClass = 0;
-        private bool aromatic;
+        private readonly bool aromatic;
 
         private AtomBuilder(Element element, bool aromatic)
         {
@@ -113,7 +113,7 @@ namespace NCDK.Beam
         public static AtomBuilder Aliphatic(Element e)
         {
             if (e == null)
-                throw new ArgumentNullException("no element provided");
+                throw new ArgumentNullException(nameof(e));
             return new AtomBuilder(e, false);
         }
 
@@ -201,9 +201,7 @@ namespace NCDK.Beam
         public static AtomBuilder Create(string symbol)
         {
             Element e = OfSymbolOrUnknown(symbol);
-            if (symbol != null
-                    && symbol != ""
-                    && char.IsLower(symbol[0]))
+            if (!string.IsNullOrEmpty(symbol) && char.IsLower(symbol[0]))
             {
                 if (!e.IsAromatic())
                     throw new ArgumentException("Attempting to create an aromatic atom for an element which cannot be aromatic");
@@ -232,7 +230,7 @@ namespace NCDK.Beam
         public AtomBuilder NumOfHydrogens(int hCount)
         {
             if (hCount < 0)
-                throw new ArgumentOutOfRangeException("the number of hydrogens must be positive");
+                throw new ArgumentOutOfRangeException(nameof(hCount), "the number of hydrogens must be positive");
             this.hCount = hCount;
             return this;
         }
@@ -282,7 +280,7 @@ namespace NCDK.Beam
         public AtomBuilder AtomClass(int c)
         {
             if (c < 0)
-                throw new ArgumentOutOfRangeException("atom class must be positive");
+                throw new ArgumentOutOfRangeException(nameof(c), "atom class must be positive");
             this.atomClass = c;
             return this;
         }

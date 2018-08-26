@@ -36,8 +36,8 @@ namespace NCDK.Dict
     [Serializable]
     public class DictRef
     {
-        string type;
-        string reference;
+        readonly string type;
+        readonly string reference;
 
         public DictRef(string type, string dictRef)
         {

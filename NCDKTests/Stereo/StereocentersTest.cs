@@ -764,13 +764,13 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Nitrogen_neutral_geometric()
         {
-            Test("N(=NC)C", Stereocenters.CoordinateType.Tricoordinate, true);
-            Test("N(=NC)", Stereocenters.CoordinateType.None, false);
-            Test("N(=N)C", Stereocenters.CoordinateType.None, false);
-            Test("N(=N)", Stereocenters.CoordinateType.None, false);
-            Test("N(=NC)[H]", Stereocenters.CoordinateType.Tricoordinate, false);
-            Test("N(=N[H])[H]", Stereocenters.CoordinateType.Tricoordinate, false);
-            Test("N(=N[H])[H]", Stereocenters.CoordinateType.Tricoordinate, false);
+            Test("N(=NC)C", CoordinateType.Tricoordinate, true);
+            Test("N(=NC)", CoordinateType.None, false);
+            Test("N(=N)C", CoordinateType.None, false);
+            Test("N(=N)", CoordinateType.None, false);
+            Test("N(=NC)[H]", CoordinateType.Tricoordinate, false);
+            Test("N(=N[H])[H]", CoordinateType.Tricoordinate, false);
+            Test("N(=N[H])[H]", CoordinateType.Tricoordinate, false);
         }
 
         [TestMethod()]
@@ -782,35 +782,35 @@ namespace NCDK.Stereo
         }
 
         // assert the first atom of the SMILES is accepted as a tetrahedral center
-        void CreateTetrahedral(string smi)
+        static void CreateTetrahedral(string smi)
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            Test(sp.ParseSmiles(smi), Stereocenters.CoordinateType.Tetracoordinate, smi + " was not accepted", true);
+            Test(sp.ParseSmiles(smi), CoordinateType.Tetracoordinate, smi + " was not accepted", true);
         }
 
         // assert the first atom of the SMILES is accepted as a geometric center
-        void Geometric(string smi)
+        static void Geometric(string smi)
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            Test(sp.ParseSmiles(smi), Stereocenters.CoordinateType.Tricoordinate, smi + " was not accepted", true);
+            Test(sp.ParseSmiles(smi), CoordinateType.Tricoordinate, smi + " was not accepted", true);
         }
 
         // assert the first atom of the SMILES is accepted as a bicoordinate center
-        void Bicoordinate(string smi)
+        static void Bicoordinate(string smi)
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            Test(sp.ParseSmiles(smi), Stereocenters.CoordinateType.Bicoordinate, smi + " was not accepted", true);
+            Test(sp.ParseSmiles(smi), CoordinateType.Bicoordinate, smi + " was not accepted", true);
         }
 
         // assert the first atom of the SMILES is non stereogenic
-        void None(string smi)
+        static void None(string smi)
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            Test(sp.ParseSmiles(smi), Stereocenters.CoordinateType.None, smi + " was not rejected", true);
+            Test(sp.ParseSmiles(smi), CoordinateType.None, smi + " was not rejected", true);
         }
 
         // check if the first atom of the container is accepted
-        void Test(IAtomContainer container, Stereocenters.CoordinateType type, string mesg, bool hnorm)
+        static void Test(IAtomContainer container, CoordinateType type, string mesg, bool hnorm)
         {
             Assert.AreEqual(type, Stereocenters.Of(container).ElementType(0), mesg);
             if (hnorm)
@@ -820,7 +820,7 @@ namespace NCDK.Stereo
             }
         }
 
-        void Test(string smi, Stereocenters.CoordinateType type, bool hnorm)
+        static void Test(string smi, CoordinateType type, bool hnorm)
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             Test(sp.ParseSmiles(smi), type, smi + " was not accepted", hnorm);

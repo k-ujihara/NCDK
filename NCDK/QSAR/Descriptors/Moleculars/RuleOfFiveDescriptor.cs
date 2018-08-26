@@ -64,8 +64,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public RuleOfFiveDescriptor() { }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lipinskifailures",
                 typeof(RuleOfFiveDescriptor).FullName,
@@ -79,11 +79,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///  aromaticity should be checked or has already been checked. The name of the paramete
         ///  is checkAromaticity.</remarks>
         /// <exception cref="CDKException">if more than 1 parameter or a non-bool parameter is specified</exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length != 1)
+                if (value.Count != 1)
                 {
                     throw new CDKException("RuleOfFiveDescriptor expects one parameter");
                 }
@@ -169,10 +169,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             catch (CDKException e)
             {
-                new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+#pragma warning disable CA1806 // Do not ignore method results
+                new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+#pragma warning restore CA1806 // Do not ignore method results
             }
 
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(lipinskifailures), DescriptorNames);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(lipinskifailures), DescriptorNames);
         }
 
         /// <inheritdoc/>

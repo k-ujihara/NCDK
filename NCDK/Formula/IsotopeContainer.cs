@@ -1,4 +1,5 @@
 using NCDK.Tools.Manipulator;
+using System;
 
 namespace NCDK.Formula
 {
@@ -11,6 +12,10 @@ namespace NCDK.Formula
     // @cdk.githash
     public class IsotopeContainer
     {
+        private IMolecularFormula formula;
+        private double mass;
+        private double intensity;
+
         public IsotopeContainer()
         {
         }
@@ -23,12 +28,13 @@ namespace NCDK.Formula
         public IsotopeContainer(IMolecularFormula formula, double intensity)
         {
             Formula = formula;
-            if (formula != null) Mass = MolecularFormulaManipulator.GetTotalExactMass(formula);
+            if (formula != null)
+                Mass = MolecularFormulaManipulator.GetTotalExactMass(formula);
             Intensity = intensity;
         }
 
         /// <summary>
-        /// Constructor of the IsotopeContainer object setting a mass and intensity value.
+        /// Constructor of the <see cref="IsotopeContainer"/> object setting a mass and intensity value.
         /// </summary>
         /// <param name="mass">The mass of this container</param>
         /// <param name="intensity">The intensity of this container</param>
@@ -39,31 +45,43 @@ namespace NCDK.Formula
         }
 
         /// <summary>
-        /// the IMolecularFormula object of this container.
+        /// The <see cref="IMolecularFormula"/> object of this container.
         /// </summary>
-        public IMolecularFormula Formula { get; set; }
+        public IMolecularFormula Formula
+        {
+            get => formula;
+            set => formula = value;
+        }
 
         /// <summary>
         /// the mass value of this container.
         /// </summary>
-        public double Mass { get; set; }
+        public double Mass
+        {
+            get => mass;
+            set => mass = value;
+        }
 
         /// <summary>
         /// the intensity value of this container.
         /// </summary>
-        public double Intensity { get; set; }
+        public double Intensity
+        {
+            get => intensity;
+            set => intensity = value;
+        }
 
         /// <summary>
-        /// Clones this IsotopeContainer object and its content.
+        /// Clones this <see cref="IsotopeContainer"/> object and its content.
         /// </summary>
         /// <returns>The cloned object</returns>
         public object Clone()
         {
-            IsotopeContainer isoClone = new IsotopeContainer
+            var isoClone = new IsotopeContainer
             {
-                Formula = Formula,
-                Intensity = Intensity,
-                Mass = Mass
+                formula = formula,
+                intensity = intensity,
+                mass = mass
             };
             return isoClone;
         }

@@ -26,6 +26,7 @@ using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.IO
@@ -40,17 +41,16 @@ namespace NCDK.IO
     public class VASPReader : DefaultChemObjectReader
     {
         // This variable is used to parse the input file
-        protected string fieldVal;
-        protected int repVal = 0;
-        protected TextReader inputBuffer;
+        private string fieldVal;
+        private TextReader inputBuffer;
 
         IEnumerator<string> st = new List<string>().GetEnumerator();
 
         // VASP VARIABLES
         int natom = 1;
         int ntype = 1;
-        double[] acell = new double[3];
-        double[][] rprim = Arrays.CreateJagged<double>(3, 3);
+        readonly double[] acell = new double[3];
+        readonly double[][] rprim = Arrays.CreateJagged<double>(3, 3);
         string info = "";
         /// <summary>size is ntype. Contains the names of the atoms</summary>
         string[] anames;
@@ -124,8 +124,8 @@ namespace NCDK.IO
 
             // Get the number of different atom "NCLASS=X"
             NextVASPTokenFollowing("NCLASS");
-            ntype = int.Parse(fieldVal);
-            //Debug.WriteLine("NCLASS= " + ntype);
+            ntype = int.Parse(fieldVal, NumberFormatInfo.InvariantInfo);
+            //Debug.WriteLine($"NCLASS= {ntype}");
             inputBuffer = new StringReader(buf);
 
             // Get the different atom names
@@ -143,7 +143,7 @@ namespace NCDK.IO
             natom = 0;
             for (int i = 0; i < ntype; i++)
             {
-                natom_type[i] = int.Parse(fieldVal);
+                natom_type[i] = int.Parse(fieldVal, NumberFormatInfo.InvariantInfo);
                 NextVASPToken(false);
                 natom = natom + natom_type[i];
             }
@@ -151,7 +151,7 @@ namespace NCDK.IO
             // Get the representation type of the primitive vectors
             // only "Direct" is recognize now.
             representation = fieldVal;
-            if (representation.Equals("Direct"))
+            if (string.Equals(representation, "Direct", StringComparison.Ordinal))
             {
                 Trace.TraceInformation("Direct representation");
                 // DO NOTHING
@@ -172,7 +172,7 @@ namespace NCDK.IO
                 for (int i = 0; i < 3; i++)
                 {
                     // TODO: supoort FORTRA format
-                    acell[i] = double.Parse(fieldVal); //all the same FIX?
+                    acell[i] = double.Parse(fieldVal, NumberFormatInfo.InvariantInfo); //all the same FIX?
                 }
 
                 // Get primitive vectors
@@ -181,7 +181,7 @@ namespace NCDK.IO
                     {
                         NextVASPToken(false);
                         // TODO: supoort FORTRA format
-                        rprim[i][j] = double.Parse(fieldVal);
+                        rprim[i][j] = double.Parse(fieldVal, NumberFormatInfo.InvariantInfo);
                     }
 
                 // Get atomic position
@@ -195,21 +195,21 @@ namespace NCDK.IO
                     {
                         try
                         {
-                            atomType[atomIndex] = Isotopes.Instance.GetElement(anames[i]).AtomicNumber.Value;
+                            atomType[atomIndex] = BODRIsotopeFactory.Instance.GetElement(anames[i]).AtomicNumber.Value;
                         }
                         catch (Exception exception)
                         {
                             throw new CDKException("Could not determine atomic number!", exception);
                         }
-                        Debug.WriteLine("aname: " + anames[i]);
-                        Debug.WriteLine("atomType: " + atomType[atomIndex]);
+                        Debug.WriteLine($"aname: {anames[i]}");
+                        Debug.WriteLine($"atomType: {atomType[atomIndex]}");
 
                         NextVASPToken(false);
-                        xred[atomIndex][0] = double.Parse(fieldVal);
+                        xred[atomIndex][0] = double.Parse(fieldVal, NumberFormatInfo.InvariantInfo);
                         NextVASPToken(false);
-                        xred[atomIndex][1] = double.Parse(fieldVal);
+                        xred[atomIndex][1] = double.Parse(fieldVal, NumberFormatInfo.InvariantInfo);
                         NextVASPToken(false);
-                        xred[atomIndex][2] = double.Parse(fieldVal);
+                        xred[atomIndex][2] = double.Parse(fieldVal, NumberFormatInfo.InvariantInfo);
 
                         atomIndex = atomIndex + 1;
                         // FIXME: store atom
@@ -224,7 +224,7 @@ namespace NCDK.IO
                     string symbol = "Du";
                     try
                     {
-                        symbol = Isotopes.Instance.GetElement(atomType[i]).Symbol;
+                        symbol = BODRIsotopeFactory.Instance.GetElement(atomType[i]).Symbol;
                     }
                     catch (Exception exception)
                     {
@@ -303,7 +303,7 @@ namespace NCDK.IO
             string line;
             while ((line = inputBuffer.ReadLine()) != null)
             {
-                index = line.IndexOf(str);
+                index = line.IndexOf(str, StringComparison.Ordinal);
                 if (index > 0)
                 {
                     index = index + str.Length;

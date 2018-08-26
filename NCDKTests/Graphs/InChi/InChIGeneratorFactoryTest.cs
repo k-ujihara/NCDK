@@ -21,7 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
@@ -120,8 +120,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIToStructure_String_IChemObjectBuilder()
         {
-            InChIToStructure parser = InChIGeneratorFactory.Instance.GetInChIToStructure("InChI=1/ClH/h1H",
-                    Default.ChemObjectBuilder.Instance);
+            var parser = InChIToStructure.FromInChI("InChI=1/ClH/h1H", ChemObjectBuilder.Instance);
             Assert.IsNotNull(parser);
         }
 
@@ -129,16 +128,14 @@ namespace NCDK.Graphs.InChI
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestGetInChIToStructure_String_IChemObjectBuilder_NullString()
         {
-            InChIGeneratorFactory.Instance.GetInChIToStructure("InChI=1/ClH/h1H",
-                    Default.ChemObjectBuilder.Instance, (string)null);
+            InChIToStructure.FromInChI("InChI=1/ClH/h1H", ChemObjectBuilder.Instance, (string)null);
         }
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestGetInChIToStructure_String_IChemObjectBuilder_NullList()
         {
-            InChIGeneratorFactory.Instance.GetInChIToStructure("InChI=1/ClH/h1H",
-                    Default.ChemObjectBuilder.Instance, (List<string>)null);
+            InChIToStructure.FromInChI("InChI=1/ClH/h1H", ChemObjectBuilder.Instance, (List<string>)null);
         }
 
         /// <summary>
@@ -147,8 +144,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIToStructure_String_IChemObjectBuilder_List()
         {
-            InChIToStructure parser = InChIGeneratorFactory.Instance.GetInChIToStructure("InChI=1/ClH/h1H",
-                    Default.ChemObjectBuilder.Instance, new List<string>());
+            var parser = InChIToStructure.FromInChI("InChI=1/ClH/h1H", ChemObjectBuilder.Instance, new List<string>());
             Assert.IsNotNull(parser);
         }
 
@@ -156,7 +152,7 @@ namespace NCDK.Graphs.InChI
         public void TestSMILESConversion_TopologicalCentre()
         {
             // (2R,3R,4S,5R,6S)-3,5-dimethylheptane-2,4,6-triol
-            SmilesParser parser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer container = parser.ParseSmiles("C[C@@H](O)[C@@H](C)[C@@H](O)[C@H](C)[C@H](C)O");
 
             InChIGenerator generator = InChIGeneratorFactory.Instance.GetInChIGenerator(container);

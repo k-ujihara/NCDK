@@ -19,6 +19,7 @@
 
 using NCDK.Tools;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -49,7 +50,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "asn" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "asn" };
 
         /// <inheritdoc/>
         public override string ReaderClassName => null;
@@ -69,7 +70,8 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (lineNumber == 1 && line.StartsWith("PC-Substances", StringComparison.Ordinal)) return true;
+            if (lineNumber == 1 && line.StartsWith("PC-Substances", StringComparison.Ordinal))
+                return true;
             return false;
         }
     }

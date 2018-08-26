@@ -24,7 +24,7 @@
 
 using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Templates;
 using System;
 
@@ -37,8 +37,8 @@ namespace NCDK.Graphs
         public virtual void TestConstructor_Container_Empty()
         {
             ShortestPaths sp = new ShortestPaths(new AtomContainer(), new Atom());
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], sp.GetPathTo(1)));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0][], sp.GetPathsTo(1)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), sp.GetPathTo(1)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int[]>(), sp.GetPathsTo(1)));
             Assert.AreEqual(0, sp.GetNPathsTo(1));
             Assert.AreEqual(int.MaxValue, sp.GetDistanceTo(1));
         }
@@ -154,12 +154,12 @@ namespace NCDK.Graphs
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
         public virtual void TestIsPrecedingPathTo_OutOfBounds()
         {
             IAtomContainer benzene = TestMoleculeFactory.MakeBenzene();
             ShortestPaths paths = new ShortestPaths(benzene, benzene.Atoms[0]);
             Assert.IsFalse(paths.IsPrecedingPathTo(-1));
+            Assert.IsFalse(paths.IsPrecedingPathTo(10));
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace NCDK.Graphs
         {
             IAtomContainer simple = Simple();
             ShortestPaths paths = new ShortestPaths(simple, simple.Atoms[0]);
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], paths.GetPathTo(20)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), paths.GetPathTo(20)));
         }
 
         [TestMethod()]
@@ -279,7 +279,7 @@ namespace NCDK.Graphs
         {
             IAtomContainer simple = Simple();
             ShortestPaths paths = new ShortestPaths(simple, simple.Atoms[0]);
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], paths.GetPathTo(-1)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), paths.GetPathTo(-1)));
         }
 
         [TestMethod()]
@@ -287,7 +287,7 @@ namespace NCDK.Graphs
         {
             IAtomContainer simple = Simple();
             ShortestPaths paths = new ShortestPaths(simple, simple.Atoms[0]);
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], paths.GetPathTo(new Atom("C"))));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), paths.GetPathTo(new Atom("C"))));
         }
 
         [TestMethod()]
@@ -295,7 +295,7 @@ namespace NCDK.Graphs
         {
             IAtomContainer simple = Simple();
             ShortestPaths paths = new ShortestPaths(simple, simple.Atoms[0]);
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], paths.GetPathTo(null)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), paths.GetPathTo(null)));
         }
 
         [TestMethod()]
@@ -312,11 +312,11 @@ namespace NCDK.Graphs
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 1, 4 }, paths.GetPathTo(simple.Atoms[4])));
 
             // disconnect fragment should return 0 .Length path
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], paths.GetPathTo(simple.Atoms[5])));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], paths.GetPathTo(simple.Atoms[6])));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], paths.GetPathTo(simple.Atoms[7])));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], paths.GetPathTo(simple.Atoms[8])));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], paths.GetPathTo(simple.Atoms[9])));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), paths.GetPathTo(simple.Atoms[5])));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), paths.GetPathTo(simple.Atoms[6])));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), paths.GetPathTo(simple.Atoms[7])));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), paths.GetPathTo(simple.Atoms[8])));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), paths.GetPathTo(simple.Atoms[9])));
 
         }
 
@@ -334,11 +334,11 @@ namespace NCDK.Graphs
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 1, 4 }, paths.GetPathTo(4)));
 
             // disconnect fragment should return 0 .Length path
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], paths.GetPathTo(5)));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], paths.GetPathTo(6)));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], paths.GetPathTo(7)));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], paths.GetPathTo(8)));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], paths.GetPathTo(9)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), paths.GetPathTo(5)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), paths.GetPathTo(6)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), paths.GetPathTo(7)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), paths.GetPathTo(8)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), paths.GetPathTo(9)));
 
         }
 
@@ -518,7 +518,7 @@ namespace NCDK.Graphs
         {
             IAtomContainer simple = Simple();
             ShortestPaths paths = new ShortestPaths(simple, simple.Atoms[0]);
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0][], paths.GetPathsTo(20)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int[]>(), paths.GetPathsTo(20)));
         }
 
         [TestMethod()]
@@ -526,7 +526,7 @@ namespace NCDK.Graphs
         {
             IAtomContainer simple = Simple();
             ShortestPaths paths = new ShortestPaths(simple, simple.Atoms[0]);
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0][], paths.GetPathsTo(-1)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int[]>(), paths.GetPathsTo(-1)));
         }
 
         [TestMethod()]
@@ -534,7 +534,7 @@ namespace NCDK.Graphs
         {
             IAtomContainer simple = Simple();
             ShortestPaths paths = new ShortestPaths(simple, simple.Atoms[0]);
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0][], paths.GetPathsTo(new Atom("C"))));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int[]>(), paths.GetPathsTo(new Atom("C"))));
         }
 
         [TestMethod()]
@@ -542,7 +542,7 @@ namespace NCDK.Graphs
         {
             IAtomContainer simple = Simple();
             ShortestPaths paths = new ShortestPaths(simple, simple.Atoms[0]);
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0][], paths.GetPathsTo(null)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int[]>(), paths.GetPathsTo(null)));
         }
 
         [TestMethod()]
@@ -559,11 +559,11 @@ namespace NCDK.Graphs
             Assert.IsTrue(Compares.AreDeepEqual(new int[][] { new int[] { 0, 1, 4 } }, paths.GetPathsTo(simple.Atoms[4])));
 
             // disconnect fragment should return 0 .Length path
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0][], paths.GetPathsTo(simple.Atoms[5])));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0][], paths.GetPathsTo(simple.Atoms[6])));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0][], paths.GetPathsTo(simple.Atoms[7])));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0][], paths.GetPathsTo(simple.Atoms[8])));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0][], paths.GetPathsTo(simple.Atoms[9])));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int[]>(), paths.GetPathsTo(simple.Atoms[5])));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int[]>(), paths.GetPathsTo(simple.Atoms[6])));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int[]>(), paths.GetPathsTo(simple.Atoms[7])));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int[]>(), paths.GetPathsTo(simple.Atoms[8])));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int[]>(), paths.GetPathsTo(simple.Atoms[9])));
 
         }
 
@@ -581,11 +581,11 @@ namespace NCDK.Graphs
             Assert.IsTrue(Compares.AreDeepEqual(new int[][] { new int[] { 0, 1, 4 } }, paths.GetPathsTo(4)));
 
             // disconnect fragment should return 0 .Length path
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0][], paths.GetPathsTo(5)));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0][], paths.GetPathsTo(6)));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0][], paths.GetPathsTo(7)));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0][], paths.GetPathsTo(8)));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0][], paths.GetPathsTo(9)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int[]>(), paths.GetPathsTo(5)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int[]>(), paths.GetPathsTo(6)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int[]>(), paths.GetPathsTo(7)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int[]>(), paths.GetPathsTo(8)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int[]>(), paths.GetPathsTo(9)));
 
         }
 
@@ -698,11 +698,11 @@ namespace NCDK.Graphs
             Assert.IsTrue(Compares.AreDeepEqual(new IAtom[] { a, b, e }, paths.GetAtomsTo(e)));
 
             // disconnect fragment should return 0 .Length path
-            Assert.IsTrue(Compares.AreDeepEqual(new IAtom[0], paths.GetAtomsTo(f)));
-            Assert.IsTrue(Compares.AreDeepEqual(new IAtom[0], paths.GetAtomsTo(g)));
-            Assert.IsTrue(Compares.AreDeepEqual(new IAtom[0], paths.GetAtomsTo(h)));
-            Assert.IsTrue(Compares.AreDeepEqual(new IAtom[0], paths.GetAtomsTo(i)));
-            Assert.IsTrue(Compares.AreDeepEqual(new IAtom[0], paths.GetAtomsTo(j)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<IAtom>(), paths.GetAtomsTo(f)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<IAtom>(), paths.GetAtomsTo(g)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<IAtom>(), paths.GetAtomsTo(h)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<IAtom>(), paths.GetAtomsTo(i)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<IAtom>(), paths.GetAtomsTo(j)));
 
         }
 
@@ -726,11 +726,11 @@ namespace NCDK.Graphs
             Assert.IsTrue(Compares.AreDeepEqual(new IAtom[] { a, b, e }, paths.GetAtomsTo(4)));
 
             // disconnect fragment should return 0 .Length path
-            Assert.IsTrue(Compares.AreDeepEqual(new IAtom[0], paths.GetAtomsTo(5)));
-            Assert.IsTrue(Compares.AreDeepEqual(new IAtom[0], paths.GetAtomsTo(6)));
-            Assert.IsTrue(Compares.AreDeepEqual(new IAtom[0], paths.GetAtomsTo(7)));
-            Assert.IsTrue(Compares.AreDeepEqual(new IAtom[0], paths.GetAtomsTo(8)));
-            Assert.IsTrue(Compares.AreDeepEqual(new IAtom[0], paths.GetAtomsTo(9)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<IAtom>(), paths.GetAtomsTo(5)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<IAtom>(), paths.GetAtomsTo(6)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<IAtom>(), paths.GetAtomsTo(7)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<IAtom>(), paths.GetAtomsTo(8)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<IAtom>(), paths.GetAtomsTo(9)));
 
         }
 
@@ -739,7 +739,7 @@ namespace NCDK.Graphs
         {
             IAtomContainer simple = Simple();
             ShortestPaths paths = new ShortestPaths(simple, simple.Atoms[0]);
-            Assert.IsTrue(Compares.AreDeepEqual(new IAtom[0], paths.GetAtomsTo(20)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<IAtom>(), paths.GetAtomsTo(20)));
         }
 
         [TestMethod()]
@@ -747,7 +747,7 @@ namespace NCDK.Graphs
         {
             IAtomContainer simple = Simple();
             ShortestPaths paths = new ShortestPaths(simple, simple.Atoms[0]);
-            Assert.IsTrue(Compares.AreDeepEqual(new IAtom[0], paths.GetAtomsTo(-1)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<IAtom>(), paths.GetAtomsTo(-1)));
         }
 
         [TestMethod()]
@@ -755,7 +755,7 @@ namespace NCDK.Graphs
         {
             IAtomContainer simple = Simple();
             ShortestPaths paths = new ShortestPaths(simple, simple.Atoms[0]);
-            Assert.IsTrue(Compares.AreDeepEqual(new IAtom[0], paths.GetAtomsTo(new Atom("C"))));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<IAtom>(), paths.GetAtomsTo(new Atom("C"))));
         }
 
         [TestMethod()]
@@ -763,7 +763,7 @@ namespace NCDK.Graphs
         {
             IAtomContainer simple = Simple();
             ShortestPaths paths = new ShortestPaths(simple, simple.Atoms[0]);
-            Assert.IsTrue(Compares.AreDeepEqual(new IAtom[0], paths.GetAtomsTo(null)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<IAtom>(), paths.GetAtomsTo(null)));
         }
 
         [TestMethod()]

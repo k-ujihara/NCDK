@@ -22,34 +22,30 @@ using NCDK.Reactions.Types;
 using NCDK.Tools;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.Charges
 {
     /// <summary>
     /// The stabilization of the positive and the negative charge
     /// obtained (e.g in the polar breaking of a bond) is calculated from the sigma- and
-    ///  lone pair-electronegativity values of the atoms that are in conjugation to the atoms
-    ///  obtaining the charges. Based on H. Saller Dissertation @cdk.cite{SallerH1895}.
+    /// lone pair-electronegativity values of the atoms that are in conjugation to the atoms
+    /// obtaining the charges. Based on H. Saller Dissertation @cdk.cite{SallerH1895}.
     /// </summary>
     // @author       Miguel Rojas Cherto
     // @cdk.created  2008-104-31
     // @cdk.module   charges
     // @cdk.keyword  stabilization charge
     // @cdk.githash
-    public class StabilizationCharges
+    public static class StabilizationCharges
     {
-        /// <summary>
-        /// Constructor for the StabilizationCharges object.
-        /// </summary>
-        public StabilizationCharges() { }
-
         /// <summary>
         /// calculate the stabilization of orbitals when they contain deficiency of charge.
         /// </summary>
         /// <param name="atomContainer">the molecule to be considered</param>
         /// <param name="atom">IAtom for which effective atom StabilizationCharges factor should be calculated</param>
         /// <returns>stabilizationValue</returns>
-        public double CalculatePositive(IAtomContainer atomContainer, IAtom atom)
+        public static double CalculatePositive(IAtomContainer atomContainer, IAtom atom)
         {
             /* restrictions */
             //        if(atomContainer.GetConnectedSingleElectronsCount(atom) > 0 || atom.FormalCharge != 1){
@@ -60,7 +56,7 @@ namespace NCDK.Charges
 
             // only must be generated all structures which stabilize the atom in question.
             StructureResonanceGenerator gRI = new StructureResonanceGenerator();
-            var reactionList = gRI.Reactions;
+            var reactionList = gRI.Reactions.ToList();
             reactionList.Add(new HyperconjugationReaction());
             gRI.Reactions = reactionList;
             var resonanceS = gRI.GetStructures(atomContainer);

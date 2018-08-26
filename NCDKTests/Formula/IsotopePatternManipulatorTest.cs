@@ -14,24 +14,27 @@ namespace NCDK.Formula
         { }
 
         [TestMethod()]
-        public void TestNormalize_IsotopePattern()
+        public void TestNormalizeIsotopePattern()
         {
-            IsotopePattern spExp = new IsotopePattern();
-            spExp.SetMonoIsotope(new IsotopeContainer(156.07770, 2));
-            spExp.Isotopes.Add(new IsotopeContainer(157.08059, 0.0006));
-            spExp.Isotopes.Add(new IsotopeContainer(157.07503, 0.0002));
-            spExp.Isotopes.Add(new IsotopeContainer(158.08135, 0.004));
+            var spExp = new IsotopePattern(new[]
+                {
+                    new IsotopeContainer(156.07770, 2),
+                    new IsotopeContainer(157.08059, 0.0006),
+                    new IsotopeContainer(157.07503, 0.0002),
+                    new IsotopeContainer(158.08135, 0.004),
+                });
+            spExp.MonoIsotope = spExp.Isotopes[0];
             spExp.Charge = 1;
 
-            IsotopePattern isoNorma = IsotopePatternManipulator.Normalize(spExp);
+            var isoNorma = IsotopePatternManipulator.Normalize(spExp);
             var listISO = isoNorma.Isotopes;
-            Assert.AreEqual(1, isoNorma.GetMonoIsotope().Intensity, 0.00001);
+            Assert.AreEqual(1, isoNorma.MonoIsotope.Intensity, 0.00001);
             Assert.AreEqual(1, listISO[0].Intensity, 0.00001);
             Assert.AreEqual(0.0003, listISO[1].Intensity, 0.00001);
             Assert.AreEqual(0.0001, listISO[2].Intensity, 0.00001);
             Assert.AreEqual(0.002, listISO[3].Intensity, 0.00001);
 
-            Assert.AreEqual(156.07770, isoNorma.GetMonoIsotope().Mass, 0.00001);
+            Assert.AreEqual(156.07770, isoNorma.MonoIsotope.Mass, 0.00001);
             Assert.AreEqual(156.07770, listISO[0].Mass, 0.00001);
             Assert.AreEqual(157.08059, listISO[1].Mass, 0.00001);
             Assert.AreEqual(157.07503, listISO[2].Mass, 0.00001);
@@ -41,24 +44,27 @@ namespace NCDK.Formula
         }
 
         [TestMethod()]
-        public void TestSortByIntensity_IsotopePattern()
+        public void TestSortByIntensityIsotopePattern()
         {
-            IsotopePattern spExp = new IsotopePattern();
-            spExp.SetMonoIsotope(new IsotopeContainer(157.07503, 0.0001));
-            spExp.Isotopes.Add(new IsotopeContainer(156.07770, 1));
-            spExp.Isotopes.Add(new IsotopeContainer(157.08059, 0.0003));
-            spExp.Isotopes.Add(new IsotopeContainer(158.08135, 0.002));
+            var spExp = new IsotopePattern(new[]
+                {
+                    new IsotopeContainer(157.07503, 0.0001),
+                    new IsotopeContainer(156.07770, 1),
+                    new IsotopeContainer(157.08059, 0.0003),
+                    new IsotopeContainer(158.08135, 0.002),
+                });
+            spExp.MonoIsotope = spExp.Isotopes[0];
             spExp.Charge = 1;
 
-            IsotopePattern isoNorma = IsotopePatternManipulator.SortByIntensity(spExp);
+            var isoNorma = IsotopePatternManipulator.SortByIntensity(spExp);
             var listISO = isoNorma.Isotopes;
-            Assert.AreEqual(156.07770, isoNorma.GetMonoIsotope().Mass, 0.00001);
+            Assert.AreEqual(156.07770, isoNorma.MonoIsotope.Mass, 0.00001);
             Assert.AreEqual(156.07770, listISO[0].Mass, 0.00001);
             Assert.AreEqual(158.08135, listISO[1].Mass, 0.00001);
             Assert.AreEqual(157.08059, listISO[2].Mass, 0.00001);
             Assert.AreEqual(157.07503, listISO[3].Mass, 0.00001);
 
-            Assert.AreEqual(1, isoNorma.GetMonoIsotope().Intensity, 0.00001);
+            Assert.AreEqual(1, isoNorma.MonoIsotope.Intensity, 0.00001);
             Assert.AreEqual(1, listISO[0].Intensity, 0.00001);
             Assert.AreEqual(0.002, listISO[1].Intensity, 0.00001);
             Assert.AreEqual(0.0003, listISO[2].Intensity, 0.001);
@@ -68,24 +74,27 @@ namespace NCDK.Formula
         }
 
         [TestMethod()]
-        public void TestSortAndNormalizedByIntensity_IsotopePattern()
+        public void TestSortAndNormalizedByIntensityIsotopePattern()
         {
-            IsotopePattern spExp = new IsotopePattern();
-            spExp.Isotopes.Add(new IsotopeContainer(157.07503, 0.0002));
-            spExp.SetMonoIsotope(new IsotopeContainer(156.07770, 2));
-            spExp.Isotopes.Add(new IsotopeContainer(158.08135, 0.004));
-            spExp.Isotopes.Add(new IsotopeContainer(157.08059, 0.0006));
+            var spExp = new IsotopePattern(new[]
+                {
+                    new IsotopeContainer(157.07503, 0.0002),
+                    new IsotopeContainer(156.07770, 2),
+                    new IsotopeContainer(158.08135, 0.004),
+                    new IsotopeContainer(157.08059, 0.0006),
+                });
+            spExp.MonoIsotope = spExp.Isotopes[1];
             spExp.Charge = 1;
 
-            IsotopePattern isoNorma = IsotopePatternManipulator.SortAndNormalizedByIntensity(spExp);
+            var isoNorma = IsotopePatternManipulator.SortAndNormalizedByIntensity(spExp);
             var listISO = isoNorma.Isotopes;
-            Assert.AreEqual(156.07770, isoNorma.GetMonoIsotope().Mass, 0.00001);
+            Assert.AreEqual(156.07770, isoNorma.MonoIsotope.Mass, 0.00001);
             Assert.AreEqual(156.07770, listISO[0].Mass, 0.00001);
             Assert.AreEqual(158.08135, listISO[1].Mass, 0.00001);
             Assert.AreEqual(157.08059, listISO[2].Mass, 0.00001);
             Assert.AreEqual(157.07503, listISO[3].Mass, 0.00001);
 
-            Assert.AreEqual(1, isoNorma.GetMonoIsotope().Intensity, 0.00001);
+            Assert.AreEqual(1, isoNorma.MonoIsotope.Intensity, 0.00001);
             Assert.AreEqual(1, listISO[0].Intensity, 0.00001);
             Assert.AreEqual(0.002, listISO[1].Intensity, 0.00001);
             Assert.AreEqual(0.0003, listISO[2].Intensity, 0.00001);
@@ -95,24 +104,27 @@ namespace NCDK.Formula
         }
 
         [TestMethod()]
-        public void TestSortByMass_IsotopePattern()
+        public void TestSortByMassIsotopePattern()
         {
-            IsotopePattern spExp = new IsotopePattern();
-            spExp.Isotopes.Add(new IsotopeContainer(157.07503, 0.0002));
-            spExp.SetMonoIsotope(new IsotopeContainer(156.07770, 2));
-            spExp.Isotopes.Add(new IsotopeContainer(158.08135, 0.004));
-            spExp.Isotopes.Add(new IsotopeContainer(157.08059, 0.0006));
+            var spExp = new IsotopePattern(new[]
+                {
+                    new IsotopeContainer(157.07503, 0.0002),
+                    new IsotopeContainer(156.07770, 2),
+                    new IsotopeContainer(158.08135, 0.004),
+                    new IsotopeContainer(157.08059, 0.0006),
+                });
+            spExp.MonoIsotope = spExp.Isotopes[1];
             spExp.Charge = 1;
 
-            IsotopePattern isoNorma = IsotopePatternManipulator.SortByMass(spExp);
+            var isoNorma = IsotopePatternManipulator.SortByMass(spExp);
             var listISO = isoNorma.Isotopes;
-            Assert.AreEqual(156.07770, isoNorma.GetMonoIsotope().Mass, 0.001);
+            Assert.AreEqual(156.07770, isoNorma.MonoIsotope.Mass, 0.001);
             Assert.AreEqual(156.07770, listISO[0].Mass, 0.00001);
             Assert.AreEqual(157.07503, listISO[1].Mass, 0.00001);
             Assert.AreEqual(157.08059, listISO[2].Mass, 0.00001);
             Assert.AreEqual(158.08135, listISO[3].Mass, 0.00001);
 
-            Assert.AreEqual(2, isoNorma.GetMonoIsotope().Intensity, 0.001);
+            Assert.AreEqual(2, isoNorma.MonoIsotope.Intensity, 0.001);
             Assert.AreEqual(2, listISO[0].Intensity, 0.001);
             Assert.AreEqual(0.0002, listISO[1].Intensity, 0.00001);
             Assert.AreEqual(0.0006, listISO[2].Intensity, 0.00001);

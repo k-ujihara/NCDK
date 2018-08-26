@@ -6,7 +6,7 @@ namespace NCDK.FaulonSignatures.EdgeColored
 {
     public class EdgeColoredGraphPermutor : Permutor, IEnumerable<EdgeColoredGraph>
     {
-        private EdgeColoredGraph graph;
+        private readonly EdgeColoredGraph graph;
 
         public EdgeColoredGraphPermutor(EdgeColoredGraph graph)
             : base(graph.GetVertexCount())

@@ -24,6 +24,7 @@ using System.Diagnostics;
 using System.IO;
 using NCDK.Numerics;
 using NCDK.Common.Primitives;
+using System.Globalization;
 
 namespace NCDK.IO
 {
@@ -100,7 +101,7 @@ namespace NCDK.IO
             }
         }
 
-        private string GetMolName(string line)
+        private static string GetMolName(string line)
         {
             if (line == null) return ("");
             var toks = line.Split(' ');
@@ -178,11 +179,11 @@ namespace NCDK.IO
                         string[] toks = line.Split(' ');
 
                         string sym = toks[3];
-                        double charge = double.Parse(toks[6]);
-                        double x = double.Parse(toks[7]);
-                        double y = double.Parse(toks[8]);
-                        double z = double.Parse(toks[9]);
-                        int nbond = int.Parse(toks[10]);
+                        double charge = double.Parse(toks[6], NumberFormatInfo.InvariantInfo);
+                        double x = double.Parse(toks[7], NumberFormatInfo.InvariantInfo);
+                        double y = double.Parse(toks[8], NumberFormatInfo.InvariantInfo);
+                        double z = double.Parse(toks[9], NumberFormatInfo.InvariantInfo);
+                        int nbond = int.Parse(toks[10], NumberFormatInfo.InvariantInfo);
 
                         IAtom atom = file.Builder.NewAtom(sym, new Vector3(x, y, z));
                         atom.Charge = charge;
@@ -191,7 +192,7 @@ namespace NCDK.IO
 
                         for (int j = 11; j < (11 + nbond * 2); j += 2)
                         {
-                            int s = int.Parse(toks[j]) - 1; // since atoms start from 1 in the file
+                            int s = int.Parse(toks[j], NumberFormatInfo.InvariantInfo) - 1; // since atoms start from 1 in the file
                             char bt = toks[j + 1][0];
                             switch (bt)
                             {
@@ -263,12 +264,12 @@ namespace NCDK.IO
                 foreach (var line in aroringText)
                 {
                     string[] toks = line.Split(' ');
-                    int natom = int.Parse(toks[1]);
+                    int natom = int.Parse(toks[1], NumberFormatInfo.InvariantInfo);
                     int n = 0;
                     for (int i = 2; i < toks.Length; i += 2)
                     {
-                        int molnum = int.Parse(toks[i]); // starts from 1
-                        int atnum = int.Parse(toks[i + 1]); // starts from 1
+                        int molnum = int.Parse(toks[i], NumberFormatInfo.InvariantInfo); // starts from 1
+                        int atnum = int.Parse(toks[i + 1], NumberFormatInfo.InvariantInfo); // starts from 1
                         mols[molnum - 1].Atoms[atnum - 1].IsAromatic = true;
                         n++;
                     }
@@ -285,7 +286,7 @@ namespace NCDK.IO
             return file;
         }
 
-        private bool IsConnected(IAtomContainer atomContainer, IAtom atom1, IAtom atom2)
+        private static bool IsConnected(IAtomContainer atomContainer, IAtom atom1, IAtom atom2)
         {
             foreach (var bond in atomContainer.Bonds)
             {

@@ -23,10 +23,10 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
-using NCDK.Default;
 using NCDK.IO;
 using NCDK.Isomorphisms;
 using NCDK.Numerics;
+using NCDK.Silent;
 using NCDK.Tools.Diff;
 using System;
 using System.Collections.Generic;
@@ -45,7 +45,7 @@ namespace NCDK.Geometries
     public class GeometryUtilTest : CDKTestCase
     {
         [TestMethod()]
-        public void TestHas2DCoordinates_IAtomContainer()
+        public void TestHas2DCoordinatesIAtomContainer()
         {
             Atom atom1 = new Atom("C") { Point2D = new Vector2(1, 1) };
             Atom atom2 = new Atom("C") { Point2D = new Vector2(1, 0) };
@@ -63,7 +63,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestHas2DCoordinates_EmptyAtomContainer()
+        public void TestHas2DCoordinatesEmptyAtomContainer()
         {
             IAtomContainer container = new AtomContainer();
             Assert.IsFalse(GeometryUtil.Has2DCoordinates(container));
@@ -71,7 +71,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestHas2DCoordinates_Partial()
+        public void TestHas2DCoordinatesPartial()
         {
             IAtomContainer container = new AtomContainer();
             Atom atom1 = new Atom("C");
@@ -85,7 +85,7 @@ namespace NCDK.Geometries
 
         // @cdk.bug 2936440
         [TestMethod()]
-        public void TestHas2DCoordinates_With000()
+        public void TestHas2DCoordinatesWith000()
         {
             string filenameMol = "NCDK.Data.MDL.with000coordinate.mol";
             var ins = ResourceLoader.GetAsStream(filenameMol);
@@ -96,7 +96,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void Get2DCoordinateCoverage_EmptyAtomContainer()
+        public void Get2DCoordinateCoverageEmptyAtomContainer()
         {
             IAtomContainer container = new AtomContainer();
             Assert.AreEqual(GeometryUtil.CoordinateCoverage.None, GeometryUtil.Get2DCoordinateCoverage(container));
@@ -105,7 +105,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void Get2DCoordinateCoverage_Partial()
+        public void Get2DCoordinateCoveragePartial()
         {
             IAtomContainer container = new AtomContainer();
 
@@ -124,7 +124,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void Get2DCoordinateCoverage_Full()
+        public void Get2DCoordinateCoverageFull()
         {
             IAtomContainer container = new AtomContainer();
 
@@ -144,7 +144,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void Get2DCoordinateCoverage_None_3D()
+        public void Get2DCoordinateCoverageNone3D()
         {
             IAtomContainer container = new AtomContainer();
 
@@ -164,7 +164,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestTranslateAllPositive_IAtomContainer()
+        public void TestTranslateAllPositiveIAtomContainer()
         {
             IAtomContainer container = new AtomContainer();
             IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement())
@@ -176,7 +176,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestGetLength2D_IBond()
+        public void TestGetLength2DIBond()
         {
             Atom o = new Atom("O", new Vector2(0.0, 0.0));
             Atom c = new Atom("C", new Vector2(1.0, 0.0));
@@ -194,7 +194,7 @@ namespace NCDK.Geometries
             var ins = ResourceLoader.GetAsStream(filenameMolOne);
             IAtomContainer molOne;
             IAtomContainer molTwo;
-            IDictionary<int, int> mappedAtoms = new Dictionary<int, int>();
+            var mappedAtoms = new Dictionary<int, int>();
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             molOne = reader.Read(new AtomContainer());
 
@@ -202,7 +202,7 @@ namespace NCDK.Geometries
             reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             molTwo = reader.Read(new AtomContainer());
 
-            mappedAtoms = AtomMappingTools.MapAtomsOfAlignedStructures(molOne, molTwo, mappedAtoms);
+            AtomMappingTools.MapAtomsOfAlignedStructures(molOne, molTwo, mappedAtoms);
             //Debug.WriteLine("mappedAtoms:"+mappedAtoms.ToString());
             //Debug.WriteLine("***** ANGLE VARIATIONS *****");
             double AngleRMSD = GeometryUtil.GetAngleRMSD(molOne, molTwo, mappedAtoms);
@@ -226,7 +226,7 @@ namespace NCDK.Geometries
             atom1.Point2D = new Vector2(1, 1);
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(1, 0);
-            IAtomContainer ac = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer ac = ChemObjectBuilder.Instance.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             GeometryUtil.Rotate(ac, Vector2.Zero, Math.PI / 2);
@@ -241,13 +241,13 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestGetMinMax_IAtomContainer()
+        public void TestGetMinMaxIAtomContainer()
         {
             Atom atom1 = new Atom("C");
             atom1.Point2D = new Vector2(1, 1);
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(1, 0);
-            IAtomContainer ac = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer ac = ChemObjectBuilder.Instance.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             double[] minmax = GeometryUtil.GetMinMax(ac);
@@ -265,7 +265,7 @@ namespace NCDK.Geometries
             atom1.Point2D = new Vector2(-2, -1);
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(-5, -1);
-            IAtomContainer ac = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer ac = ChemObjectBuilder.Instance.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             double[] minmax = GeometryUtil.GetMinMax(ac);
@@ -276,7 +276,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestRotate_IAtom_Point3d_Point3d_Double()
+        public void TestRotateIAtomPoint3dPoint3dDouble()
         {
             Atom atom1 = new Atom("C");
             atom1.Point3D = new Vector3(1, 1, 0);
@@ -285,7 +285,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestNormalize_Point3d()
+        public void TestNormalizePoint3d()
         {
             Vector3 p = new Vector3(1, 1, 0);
             p = Vector3.Normalize(p);
@@ -295,13 +295,13 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestGet2DCenter_IAtomContainer()
+        public void TestGet2DCenterIAtomContainer()
         {
             Atom atom1 = new Atom("C");
             atom1.Point2D = new Vector2(1, 1);
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(1, 0);
-            IAtomContainer ac = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer ac = ChemObjectBuilder.Instance.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             Vector2 p = GeometryUtil.Get2DCenter(ac);
@@ -310,7 +310,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestGet2DCenterOfMass_IAtomContainer()
+        public void TestGet2DCenterOfMassIAtomContainer()
         {
             Atom atom1 = new Atom("C");
             atom1.Point2D = new Vector2(1, 1);
@@ -318,7 +318,7 @@ namespace NCDK.Geometries
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(1, 0);
             atom2.ExactMass = 12.0;
-            IAtomContainer ac = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer ac = ChemObjectBuilder.Instance.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             Vector2? p = GeometryUtil.Get2DCentreOfMass(ac);
@@ -328,7 +328,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestGet2DCenter_arrayIAtom()
+        public void TestGet2DCenterArrayIAtom()
         {
             IAtomContainer container = new AtomContainer();
             Atom atom1 = new Atom("C");
@@ -343,16 +343,16 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestGet2DCenter_IRingSet()
+        public void TestGet2DCenterIRingSet()
         {
             Atom atom1 = new Atom("C");
             atom1.Point2D = new Vector2(1, 1);
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(1, 0);
-            IRing ac = Default.ChemObjectBuilder.Instance.NewRing();
+            IRing ac = ChemObjectBuilder.Instance.NewRing();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
-            IRingSet ringset = Default.ChemObjectBuilder.Instance.NewRingSet();
+            IRingSet ringset = ChemObjectBuilder.Instance.NewRingSet();
             ringset.Add(ac);
             Vector2 p = GeometryUtil.Get2DCenter(ac);
             Assert.AreEqual(p.X, 1.0, .1);
@@ -360,13 +360,13 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestGet2DCenter_Iterator()
+        public void TestGet2DCenterIterator()
         {
             Atom atom1 = new Atom("C");
             atom1.Point2D = new Vector2(1, 1);
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(1, 0);
-            IAtomContainer ac = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer ac = ChemObjectBuilder.Instance.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             Vector2 p = GeometryUtil.Get2DCenter(ac.Atoms);
@@ -375,7 +375,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestHas2DCoordinates_IAtom()
+        public void TestHas2DCoordinatesIAtom()
         {
             Atom atom1 = new Atom("C");
             atom1.Point2D = new Vector2(1, 1);
@@ -387,7 +387,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestHas2DCoordinates_IBond()
+        public void TestHas2DCoordinatesIBond()
         {
             Atom atom1 = new Atom("C");
             atom1.Point2D = new Vector2(1, 1);
@@ -405,7 +405,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestHas2DCoordinatesNew_IAtomContainer()
+        public void TestHas2DCoordinatesNewIAtomContainer()
         {
             Atom atom1 = new Atom("C");
             atom1.Point2D = new Vector2(1, 1);
@@ -436,7 +436,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestHas3DCoordinates_IAtomContainer()
+        public void TestHas3DCoordinatesIAtomContainer()
         {
             Atom atom1 = new Atom("C");
             atom1.Point2D = new Vector2(1, 1);
@@ -458,7 +458,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestHas3DCoordinates_EmptyAtomContainer()
+        public void TestHas3DCoordinatesEmptyAtomContainer()
         {
             IAtomContainer container = new AtomContainer();
             Assert.IsFalse(GeometryUtil.Has3DCoordinates(container));
@@ -466,7 +466,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void Get3DCoordinateCoverage_EmptyAtomContainer()
+        public void Get3DCoordinateCoverageEmptyAtomContainer()
         {
             IAtomContainer container = new AtomContainer();
             Assert.AreEqual(GeometryUtil.CoordinateCoverage.None, GeometryUtil.Get3DCoordinateCoverage(container));
@@ -475,7 +475,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void Get3DCoordinateCoverage_Partial()
+        public void Get3DCoordinateCoveragePartial()
         {
             IAtomContainer container = new AtomContainer();
 
@@ -494,7 +494,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void Get3DCoordinateCoverage_Full()
+        public void Get3DCoordinateCoverageFull()
         {
             IAtomContainer container = new AtomContainer();
 
@@ -514,7 +514,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void Get3DCoordinateCoverage_None_2D()
+        public void Get3DCoordinateCoverageNone2D()
         {
             IAtomContainer container = new AtomContainer();
 
@@ -534,13 +534,13 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestTranslateAllPositive_IAtomContainer_HashMap()
+        public void TestTranslateAllPositiveIAtomContainerHashMap()
         {
             Atom atom1 = new Atom("C");
             atom1.Point2D = new Vector2(-1, -1);
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(1, 0);
-            IAtomContainer ac = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer ac = ChemObjectBuilder.Instance.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             GeometryUtil.TranslateAllPositive(ac);
@@ -551,21 +551,21 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestGetLength2D_IBond_HashMap()
+        public void TestGetLength2DIBondHashMap()
         {
             Atom atom1 = new Atom("C");
             atom1.Point2D = new Vector2(-1, -1);
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(1, 0);
             IBond bond = new Bond(atom1, atom2);
-            IAtomContainer ac = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer ac = ChemObjectBuilder.Instance.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             Assert.AreEqual(GeometryUtil.GetLength2D(bond), 2.23, 0.01);
         }
 
         [TestMethod()]
-        public void TestGetClosestAtom_Multiatom()
+        public void TestGetClosestAtomMultiatom()
         {
             IAtom atom1 = new Atom("C");
             atom1.Point2D = new Vector2(-1, -1);
@@ -583,7 +583,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestGetClosestAtom_Double_Double_IAtomContainer_IAtom()
+        public void TestGetClosestAtomDoubleDoubleIAtomContainerIAtom()
         {
             IAtom atom1 = new Atom("C");
             atom1.Point2D = new Vector2(1, 0);
@@ -600,7 +600,7 @@ namespace NCDK.Geometries
         /// Tests if not the central atom is returned as closest atom.
         /// </summary>
         [TestMethod()]
-        public void TestGetClosestAtom_IAtomContainer_IAtom()
+        public void TestGetClosestAtomIAtomContainerIAtom()
         {
             IAtom atom1 = new Atom("C");
             atom1.Point2D = new Vector2(-1, -1);
@@ -614,7 +614,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestShiftContainerHorizontal_IAtomContainer_Rectangle2D_Rectangle2D_Double()
+        public void TestShiftContainerHorizontalIAtomContainerRectangle2DRectangle2DDouble()
         {
             IAtom atom1 = new Atom("C");
             atom1.Point2D = new Vector2(0, 1);
@@ -646,7 +646,7 @@ namespace NCDK.Geometries
         /// </summary>
         // @ Thrown when the cloning failed.
         [TestMethod()]
-        public void TestShiftContainerHorizontal_Two_vertical_molecules()
+        public void TestShiftContainerHorizontalTwoverticalmolecules()
         {
             IAtom atom1 = new Atom("C");
             atom1.Point2D = Vector2.Zero;
@@ -673,7 +673,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestGetBondLengthAverage_IReaction()
+        public void TestGetBondLengthAverageIReaction()
         {
             IAtom atom1 = new Atom("C");
             atom1.Point2D = Vector2.Zero;
@@ -693,7 +693,7 @@ namespace NCDK.Geometries
         /// <see cref="IAtomContainer"/>s in the IReaction.
         /// </summary>
         [TestMethod()]
-        public void TestGetBondLengthAverage_MultiReaction()
+        public void TestGetBondLengthAverageMultiReaction()
         {
             IReaction reaction = new Reaction();
 
@@ -723,7 +723,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestShiftReactionVertical_IAtomContainer_Rectangle2D_Rectangle2D_Double()
+        public void TestShiftReactionVerticalIAtomContainerRectangle2DRectangle2DDouble()
         {
             IAtom atom1 = new Atom("C");
             atom1.Point2D = new Vector2(0, 1);
@@ -760,7 +760,7 @@ namespace NCDK.Geometries
         /// </summary>
         // @ Thrown when the cloning failed.
         [TestMethod()]
-        public void TestShiftReactionVertical_Two_horizontal_molecules()
+        public void TestShiftReactionVerticalTwohorizontalmolecules()
         {
             IAtom atom1 = new Atom("C");
             atom1.Point2D = Vector2.Zero;
@@ -772,8 +772,8 @@ namespace NCDK.Geometries
             react1.Atoms.Add(atom1);
             react1.Atoms.Add(atom2);
             react1.AddBond(react1.Atoms[0], react1.Atoms[1], BondOrder.Single);
-            IReaction reaction2 = (IReaction)reaction.Clone();
-            IAtomContainer react2 = reaction2.Reactants[0];
+            var reaction2 = (IReaction)reaction.Clone();
+            var react2 = reaction2.Reactants[0];
 
             // shift the second reaction up
             GeometryUtil.ShiftReactionVertical(reaction2, GeometryUtil.GetMinMax(react2), GeometryUtil.GetMinMax(react1),
@@ -890,16 +890,16 @@ namespace NCDK.Geometries
             Assert.AreEqual(1d, GeometryUtil.GetBondLengthMedian(container));
         }
 
-        private IAtom AtomAt(Vector2? p)
+        private static IAtom AtomAt(Vector2? p)
         {
-            IAtom atom = new Atom("C");
+            var atom = new Atom("C");
             atom.Point2D = p;
             return atom;
         }
 
-        private int AlignmentTestHelper(IAtom zero, params IAtom[] pos)
+        private static int AlignmentTestHelper(IAtom zero, params IAtom[] pos)
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(zero);
             foreach (var atom in pos)
             {

@@ -28,13 +28,14 @@
 
 using NCDK.Common.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.QSAR.Results;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Globalization;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -69,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void Nop() { }
 
         // run through the cases
-        private void Validate(Stream ins)
+        private static void Validate(Stream ins)
         {
             var content = new Dictionary<string, byte[]>();
             using (var zip = new ZipArchive(ins))
@@ -94,8 +95,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 string basefn = idx.ToString();
                 while (basefn.Length < 6)
                     basefn = "0" + basefn;
-                byte[] molBytes;
-                if (!content.TryGetValue(basefn + ".mol", out molBytes))
+                if (!content.TryGetValue(basefn + ".mol", out byte[] molBytes))
                     break;
 
                 AtomContainer mol = new AtomContainer();
@@ -110,10 +110,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     bits = Strings.Tokenize(rdr.ReadLine(), ' ');
                 }
-                int wantSmallRings = int.Parse(bits[0]);
-                int wantRingBlocks = int.Parse(bits[1]);
-                int wantAromRings = int.Parse(bits[2]);
-                int wantAromBlocks = int.Parse(bits[3]);
+                int wantSmallRings = int.Parse(bits[0], NumberFormatInfo.InvariantInfo);
+                int wantRingBlocks = int.Parse(bits[1], NumberFormatInfo.InvariantInfo);
+                int wantAromRings = int.Parse(bits[2], NumberFormatInfo.InvariantInfo);
+                int wantAromBlocks = int.Parse(bits[3], NumberFormatInfo.InvariantInfo);
 
                 Trace.TraceInformation("FN=" + basefn + " MOL=" + mol.Atoms.Count + "," + mol.Bonds.Count + " nSmallRings="
                         + wantSmallRings + " nRingBlocks=" + wantRingBlocks + " nAromRings=" + wantAromRings

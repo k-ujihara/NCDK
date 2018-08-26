@@ -42,7 +42,7 @@ namespace NCDK.Fingerprints
         /// <summary>
         /// The size of the fingerprint, i.e., the number of hash bins.
         /// </summary>
-        long Count { get; }
+        long Length { get; }
 
         /// <summary>
         /// Performs a logical <b>AND</b> of the bits in this target bit set with

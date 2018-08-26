@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -27,8 +28,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Serialization;
 using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
 
@@ -39,25 +40,43 @@ namespace NCDK.Default
     /// </summary>
     /// <example>
     /// For example, an carbon 13 isotope can be created with:
-	/// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+1"]/*' />
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+1"]/*' />
     /// A full specification can be constructed with:
-	/// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+2"]/*' />
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+2"]/*' />
     /// Once instantiated all field not filled by passing parameters
     /// to the constructor are null. Isotopes can be configured by using
     /// the <see cref="NCDK.Config.IsotopeFactory.Configure(IAtom, IIsotope)"/> method:
-	/// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
     /// </example>
     // @cdk.githash 
     // @author     steinbeck
     // @cdk.created    2001-08-21 
     // @cdk.keyword     isotope 
-    [Serializable]
     public class Isotope
-		: Element, IIsotope, ICloneable
+        : Element, IIsotope, ICloneable, ISerializable
     {
         private double? naturalAbundance;
         private double? exactMass;
         private int? massNumber;
+
+        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddNullableValue(nameof(naturalAbundance), naturalAbundance);
+            info.AddNullableValue(nameof(exactMass), exactMass);
+            info.AddNullableValue(nameof(massNumber), massNumber);
+        }
+
+        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
+        protected Isotope(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+            symbol = info.GetString(nameof(symbol));
+            naturalAbundance = info.GetNullable<double>(nameof(naturalAbundance));
+            exactMass = info.GetNullable<double>(nameof(exactMass));
+            massNumber = info.GetNullable<int>(nameof(massNumber));
+        }
 
         /// <summary>
         ///  Constructor for the Isotope object.
@@ -117,11 +136,11 @@ namespace NCDK.Default
         /// abundance and mass number are copied too.
         /// </summary>
         /// <param name="element"><see cref="IElement"/> to copy information from</param>
-		public Isotope(IElement element)
+        public Isotope(IElement element)
             : base(element)
         {
             if (element is IIsotope isotope)           
-			{
+            {
                 this.exactMass = isotope.ExactMass;
                 this.naturalAbundance = isotope.NaturalAbundance;
                 this.massNumber = isotope.MassNumber;
@@ -134,8 +153,8 @@ namespace NCDK.Default
         /// <example>
         /// Once instantiated all field not filled by passing parameters
         /// to the constructor are null. Isotopes can be configured by using
-		/// the <see cref="NCDK.Config.IsotopeFactory.Configure(IAtom, IIsotope)"/> method:
-	    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
+        /// the <see cref="NCDK.Config.IsotopeFactory.Configure(IAtom, IIsotope)"/> method:
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
         /// </example>
         public virtual double? NaturalAbundance
         {
@@ -153,8 +172,8 @@ namespace NCDK.Default
         /// <example>
         /// Once instantiated all field not filled by passing parameters
         /// to the constructor are null. Isotopes can be configured by using
-		/// the <see cref="NCDK.Config.IsotopeFactory.Configure(IAtom, IIsotope)"/> method:
-	    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
+        /// the <see cref="NCDK.Config.IsotopeFactory.Configure(IAtom, IIsotope)"/> method:
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
         /// </example>
         public virtual double? ExactMass
         {
@@ -172,8 +191,8 @@ namespace NCDK.Default
         /// <example>
         /// Once instantiated all field not filled by passing parameters
         /// to the constructor are null. Isotopes can be configured by using
-		/// the <see cref="NCDK.Config.IsotopeFactory.Configure(IAtom, IIsotope)"/> method:
-	    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
+        /// the <see cref="NCDK.Config.IsotopeFactory.Configure(IAtom, IIsotope)"/> method:
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
         /// </example>
         public virtual int? MassNumber
         {
@@ -207,8 +226,7 @@ namespace NCDK.Default
         /// <returns>true if the isotopes are equal</returns>
         public override bool Compare(object obj)
         {
-            var isotope = obj as Isotope;
-            return isotope != null && base.Compare(obj)
+            return obj is Isotope isotope && base.Compare(obj)
                 && isotope.MassNumber == MassNumber
                 && NearlyEquals(isotope.ExactMass, ExactMass)
                 && NearlyEquals(isotope.NaturalAbundance, NaturalAbundance);
@@ -232,25 +250,43 @@ namespace NCDK.Silent
     /// </summary>
     /// <example>
     /// For example, an carbon 13 isotope can be created with:
-	/// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+1"]/*' />
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+1"]/*' />
     /// A full specification can be constructed with:
-	/// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+2"]/*' />
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+2"]/*' />
     /// Once instantiated all field not filled by passing parameters
     /// to the constructor are null. Isotopes can be configured by using
     /// the <see cref="NCDK.Config.IsotopeFactory.Configure(IAtom, IIsotope)"/> method:
-	/// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
     /// </example>
     // @cdk.githash 
     // @author     steinbeck
     // @cdk.created    2001-08-21 
     // @cdk.keyword     isotope 
-    [Serializable]
     public class Isotope
-		: Element, IIsotope, ICloneable
+        : Element, IIsotope, ICloneable, ISerializable
     {
         private double? naturalAbundance;
         private double? exactMass;
         private int? massNumber;
+
+        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddNullableValue(nameof(naturalAbundance), naturalAbundance);
+            info.AddNullableValue(nameof(exactMass), exactMass);
+            info.AddNullableValue(nameof(massNumber), massNumber);
+        }
+
+        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
+        protected Isotope(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+            symbol = info.GetString(nameof(symbol));
+            naturalAbundance = info.GetNullable<double>(nameof(naturalAbundance));
+            exactMass = info.GetNullable<double>(nameof(exactMass));
+            massNumber = info.GetNullable<int>(nameof(massNumber));
+        }
 
         /// <summary>
         ///  Constructor for the Isotope object.
@@ -310,11 +346,11 @@ namespace NCDK.Silent
         /// abundance and mass number are copied too.
         /// </summary>
         /// <param name="element"><see cref="IElement"/> to copy information from</param>
-		public Isotope(IElement element)
+        public Isotope(IElement element)
             : base(element)
         {
             if (element is IIsotope isotope)           
-			{
+            {
                 this.exactMass = isotope.ExactMass;
                 this.naturalAbundance = isotope.NaturalAbundance;
                 this.massNumber = isotope.MassNumber;
@@ -327,8 +363,8 @@ namespace NCDK.Silent
         /// <example>
         /// Once instantiated all field not filled by passing parameters
         /// to the constructor are null. Isotopes can be configured by using
-		/// the <see cref="NCDK.Config.IsotopeFactory.Configure(IAtom, IIsotope)"/> method:
-	    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
+        /// the <see cref="NCDK.Config.IsotopeFactory.Configure(IAtom, IIsotope)"/> method:
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
         /// </example>
         public virtual double? NaturalAbundance
         {
@@ -345,8 +381,8 @@ namespace NCDK.Silent
         /// <example>
         /// Once instantiated all field not filled by passing parameters
         /// to the constructor are null. Isotopes can be configured by using
-		/// the <see cref="NCDK.Config.IsotopeFactory.Configure(IAtom, IIsotope)"/> method:
-	    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
+        /// the <see cref="NCDK.Config.IsotopeFactory.Configure(IAtom, IIsotope)"/> method:
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
         /// </example>
         public virtual double? ExactMass
         {
@@ -363,8 +399,8 @@ namespace NCDK.Silent
         /// <example>
         /// Once instantiated all field not filled by passing parameters
         /// to the constructor are null. Isotopes can be configured by using
-		/// the <see cref="NCDK.Config.IsotopeFactory.Configure(IAtom, IIsotope)"/> method:
-	    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
+        /// the <see cref="NCDK.Config.IsotopeFactory.Configure(IAtom, IIsotope)"/> method:
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
         /// </example>
         public virtual int? MassNumber
         {
@@ -397,8 +433,7 @@ namespace NCDK.Silent
         /// <returns>true if the isotopes are equal</returns>
         public override bool Compare(object obj)
         {
-            var isotope = obj as Isotope;
-            return isotope != null && base.Compare(obj)
+            return obj is Isotope isotope && base.Compare(obj)
                 && isotope.MassNumber == MassNumber
                 && NearlyEquals(isotope.ExactMass, ExactMass)
                 && NearlyEquals(isotope.NaturalAbundance, NaturalAbundance);

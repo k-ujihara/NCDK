@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.AtomTypes
 {
@@ -42,16 +43,15 @@ namespace NCDK.AtomTypes
             }
         }
 
-        public IAtomType[] FindMatchingAtomTypes(IAtomContainer atomContainer)
+        public IEnumerable<IAtomType> FindMatchingAtomTypes(IAtomContainer atomContainer)
         {
-            IAtomType[] types = new IAtomType[atomContainer.Atoms.Count];
             int typeCounter = 0;
             foreach (var atom in atomContainer.Atoms)
             {
-                types[typeCounter] = FindMatchingAtomType(atomContainer, atom);
+                yield return FindMatchingAtomType(atomContainer, atom);
                 typeCounter++;
             }
-            return types;
+            yield break;
         }
 
         public IAtomType FindMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
@@ -73,7 +73,7 @@ namespace NCDK.AtomTypes
                 foreach (var attached in attachedAtoms)
                 {
                     IBond b = atomContainer.GetBond(atom, attached);
-                    if (attached.Symbol.Equals("H")) NumHAtoms++;
+                    if (string.Equals(attached.Symbol, "H", StringComparison.Ordinal)) NumHAtoms++;
 
                     if (atom.IsAromatic && attached.IsAromatic)
                     {
@@ -82,7 +82,7 @@ namespace NCDK.AtomTypes
                         if (SameRing)
                         {
                             NumAromaticBonds2++;
-                            if (element.Equals("N"))
+                            if (string.Equals(element, "N", StringComparison.Ordinal))
                             {
                                 if (b.Order == BondOrder.Single) NumAromaticBondsTotal2++;
                                 if (b.Order == BondOrder.Double)

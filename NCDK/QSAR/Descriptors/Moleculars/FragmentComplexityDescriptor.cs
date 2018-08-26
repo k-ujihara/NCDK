@@ -52,8 +52,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public FragmentComplexityDescriptor() { }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#NilaComplexity",
                 typeof(FragmentComplexityDescriptor).FullName,
@@ -63,11 +63,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the FragmentComplexityDescriptor object.
         /// This descriptor takes no parameter.
         /// </summary>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 0)
+                if (value.Count > 0)
                 {
                     throw new CDKException("FragmentComplexityDescriptor expects no parameter");
                 }
@@ -93,18 +93,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double h = 0;
             for (int i = 0; i < container.Atoms.Count; i++)
             {
-                if (!container.Atoms[i].Symbol.Equals("H"))
+                if (!string.Equals(container.Atoms[i].Symbol, "H", StringComparison.Ordinal))
                 {
                     a++;
                 }
-                if (!container.Atoms[i].Symbol.Equals("H") & !container.Atoms[i].Symbol.Equals("C"))
+                if (!container.Atoms[i].Symbol.Equals("H", StringComparison.Ordinal) & !container.Atoms[i].Symbol.Equals("C", StringComparison.Ordinal))
                 {
                     h++;
                 }
             }
             int b = container.Bonds.Count + AtomContainerManipulator.GetImplicitHydrogenCount(container);
             double c = Math.Abs(b * b - a * a + a) + (h / 100);
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(c), DescriptorNames);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(c), DescriptorNames);
         }
 
         /// <inheritdoc/>

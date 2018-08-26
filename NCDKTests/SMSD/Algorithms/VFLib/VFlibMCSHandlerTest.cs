@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Smiles;
 using NCDK.SMSD.Tools;
@@ -47,7 +47,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
         [TestMethod()]
         public override void TestSearchMCS()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = null;
             try
             {
@@ -81,7 +81,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
         [TestMethod()]
         public void TestSet_IAtomContainer_IAtomContainer()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -126,7 +126,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
         [TestMethod()]
         public void TestSet_MolHandler_MolHandler()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
 
             IAtomContainer target1 = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
@@ -144,7 +144,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
         [TestMethod()]
         public void TestGetAllAtomMapping()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -164,7 +164,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
         [TestMethod()]
         public void TestGetAllMapping()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -184,7 +184,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
         [TestMethod()]
         public void TestGetFirstAtomMapping()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -204,7 +204,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
         [TestMethod()]
         public void TestGetFirstMapping()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
 

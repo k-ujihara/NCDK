@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -19,7 +20,7 @@ namespace NCDK.Common.Primitives
 
         public static string ToFormatedString(double value, string format, int maxChars)
         {
-            var s = value.ToString(format);
+            var s = value.ToString(format, NumberFormatInfo.InvariantInfo);
             var indexOfPeriod = s.IndexOf('.');
             if (indexOfPeriod == -1)
                 return s;
@@ -37,7 +38,7 @@ namespace NCDK.Common.Primitives
         {
             if (numberOfDecimalPlaces < 0)
                 throw new ArgumentException("Invalid argument", nameof(numberOfDecimalPlaces));
-            var s = value.ToString("F" + (numberOfDecimalPlaces == 0 ? "" : numberOfDecimalPlaces.ToString()));
+            var s = value.ToString("F" + (numberOfDecimalPlaces == 0 ? "" : numberOfDecimalPlaces.ToString(NumberFormatInfo.InvariantInfo)), NumberFormatInfo.InvariantInfo);
             if (!isZeroLeading)
             {
                 if (s.StartsWithChar('0'))
@@ -51,7 +52,7 @@ namespace NCDK.Common.Primitives
                 s = s.Substring(0, s.Length - 1);
             if (s.EndsWithChar('.'))
                 s = s.Substring(0, s.Length - 1);
-            if (s == "" || s == "-")
+            if (s.Length == 0 || s == "-")
                 s = "0";
             return s;
         }
@@ -125,8 +126,8 @@ namespace NCDK.Common.Primitives
             if (maxZeroLength < 0)
                 throw new ArgumentOutOfRangeException(nameof(maxZeroLength));
 
-            var v = value.ToString("F" + maxZeroLength.ToString());
-            bool needToCutZeros = v.StartsWith(value.ToString(), StringComparison.Ordinal);
+            var v = value.ToString("F" + maxZeroLength.ToString(NumberFormatInfo.InvariantInfo), NumberFormatInfo.InvariantInfo);
+            bool needToCutZeros = v.StartsWith(value.ToString(NumberFormatInfo.InvariantInfo), StringComparison.Ordinal);
 
             if (v.StartsWith("0.", StringComparison.Ordinal))
                 v = v.Substring(1);

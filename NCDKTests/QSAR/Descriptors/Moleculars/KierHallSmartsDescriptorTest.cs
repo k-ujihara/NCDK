@@ -16,9 +16,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.QSAR.Results;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
@@ -52,7 +54,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void Test1()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCO");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -68,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void Test2()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("c1c(CN)cc(CCNC)cc1C(CO)CC(=O)CCOCCCO");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -88,7 +90,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void Test3()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("C#CC(C)(C)C(C)(C)C#C");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);

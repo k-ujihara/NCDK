@@ -18,7 +18,7 @@
  */
 using NCDK.Common.Mathematics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Geometries;
 using NCDK.IO;
 using System;

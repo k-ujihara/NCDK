@@ -18,11 +18,12 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.IO;
+using NCDK.Silent;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.AtomTypes
 {
@@ -36,56 +37,54 @@ namespace NCDK.AtomTypes
     [TestClass()]
     public class SybylAtomTypeMatcherTest : AbstractSybylAtomTypeTest
     {
-        private static IDictionary<string, int> testedAtomTypes = new Dictionary<string, int>();
-
-        static SybylAtomTypeMatcherTest()
+        private static readonly IDictionary<string, int> testedAtomTypes = new Dictionary<string, int>
         {
             // do not complain about a few non-tested atom types
             // so, just mark them as tested
-            testedAtomTypes["LP"] = 1;
-            testedAtomTypes["Du"] = 1;
-            testedAtomTypes["Du.C"] = 1;
-            testedAtomTypes["Any"] = 1;
-            testedAtomTypes["Hal"] = 1;
-            testedAtomTypes["Het"] = 1;
-            testedAtomTypes["Hev"] = 1;
-            testedAtomTypes["X"] = 1;
-            testedAtomTypes["Het"] = 1;
-            testedAtomTypes["H.t3p"] = 1;
-            testedAtomTypes["H.spc"] = 1;
-            testedAtomTypes["O.t3p"] = 1;
-            testedAtomTypes["O.spc"] = 1;
-        }
+            ["LP"] = 1,
+            ["Du"] = 1,
+            ["Du.C"] = 1,
+            ["Any"] = 1,
+            ["Hal"] = 1,
+            ["Het"] = 1,
+            ["Hev"] = 1,
+            ["X"] = 1,
+            ["Het"] = 1,
+            ["H.t3p"] = 1,
+            ["H.spc"] = 1,
+            ["O.t3p"] = 1,
+            ["O.spc"] = 1,
+        };
 
         [TestMethod()]
         public void TestGetInstance_IChemObjectBuilder()
         {
-            IAtomTypeMatcher matcher = SybylAtomTypeMatcher.GetInstance(Silent.ChemObjectBuilder.Instance);
+            var matcher = SybylAtomTypeMatcher.GetInstance(Silent.ChemObjectBuilder.Instance);
             Assert.IsNotNull(matcher);
         }
 
         [TestMethod()]
         public void TestFindMatchingAtomType_IAtomContainer_IAtom()
         {
-            IAtomTypeMatcher matcher = SybylAtomTypeMatcher.GetInstance(Silent.ChemObjectBuilder.Instance);
+            var matcher = SybylAtomTypeMatcher.GetInstance(Silent.ChemObjectBuilder.Instance);
             Assert.IsNotNull(matcher);
-            IAtomContainer ethane = TestMoleculeFactory.MakeAlkane(2);
-            string[] expectedTypes = { "C.3", "C.3" };
+            var ethane = TestMoleculeFactory.MakeAlkane(2);
+            var expectedTypes = new[] { "C.3", "C.3" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, ethane);
         }
 
         [TestMethod()]
         public void TestFindMatchingAtomType_IAtomContainer()
         {
-            string filename = "NCDK.Data.Mol2.atomtyping.mol2";
+            var filename = "NCDK.Data.Mol2.atomtyping.mol2";
             var ins = ResourceLoader.GetAsStream(filename);
-            Mol2Reader reader = new Mol2Reader(ins);
-            IAtomContainer mol = (IAtomContainer)reader.Read(new AtomContainer());
+            var reader = new Mol2Reader(ins);
+            var mol = reader.Read(new AtomContainer());
 
             // just check consistency; other methods do perception testing
-            SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.GetInstance(Default.ChemObjectBuilder.Instance);
-            IAtomType[] types = matcher.FindMatchingAtomTypes(mol);
-            for (int i = 0; i < types.Length; i++)
+            var matcher = SybylAtomTypeMatcher.GetInstance(ChemObjectBuilder.Instance);
+            var types = matcher.FindMatchingAtomTypes(mol).ToList();
+            for (int i = 0; i < types.Count; i++)
             {
                 IAtomType type = matcher.FindMatchingAtomType(mol, mol.Atoms[i]);
                 Assert.AreEqual(type.AtomTypeName, types[i].AtomTypeName);
@@ -97,15 +96,15 @@ namespace NCDK.AtomTypes
         {
             string filename = "NCDK.Data.Mol2.atomtyping.mol2";
             var ins = ResourceLoader.GetAsStream(filename);
-            Mol2Reader reader = new Mol2Reader(ins);
-            IAtomContainer molecule = (IAtomContainer)reader.Read(new AtomContainer());
+            var reader = new Mol2Reader(ins);
+            var molecule = (IAtomContainer)reader.Read(new AtomContainer());
             Assert.IsNotNull(molecule);
-            IAtomContainer reference = (IAtomContainer)molecule.Clone();
+            var reference = (IAtomContainer)molecule.Clone();
 
             // test if the perceived atom types match that
             PercieveAtomTypesAndConfigureAtoms(molecule);
-            IEnumerator<IAtom> refAtoms = reference.Atoms.GetEnumerator();
-            IEnumerator<IAtom> atoms = molecule.Atoms.GetEnumerator();
+            var refAtoms = reference.Atoms.GetEnumerator();
+            var atoms = molecule.Atoms.GetEnumerator();
             while (atoms.MoveNext() && refAtoms.MoveNext())
             {
                 // work around aromaticity, which we skipped for now
@@ -120,11 +119,11 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestBenzene()
         {
-            IAtomContainer benzene = TestMoleculeFactory.MakeBenzene();
+            var benzene = TestMoleculeFactory.MakeBenzene();
 
             // test if the perceived atom types match that
-            SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.GetInstance(benzene.Builder);
-            IAtomType[] types = matcher.FindMatchingAtomTypes(benzene);
+            var matcher = SybylAtomTypeMatcher.GetInstance(benzene.Builder);
+            var types = matcher.FindMatchingAtomTypes(benzene);
             foreach (var type in types)
             {
                 Assert.AreEqual("C.ar", type.AtomTypeName);
@@ -134,13 +133,13 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAdenine()
         {
-            IAtomContainer mol = TestMoleculeFactory.MakeAdenine();
-            string[] expectedTypes = { "C.ar", "C.ar", "C.ar", "N.ar", "N.ar", "N.ar", "N.ar", "N.3", "C.ar", "C.ar" };
-            SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.GetInstance(mol.Builder);
-            IAtomType[] types = matcher.FindMatchingAtomTypes(mol);
+            var mol = TestMoleculeFactory.MakeAdenine();
+            var expectedTypes = new[] { "C.ar", "C.ar", "C.ar", "N.ar", "N.ar", "N.ar", "N.ar", "N.3", "C.ar", "C.ar" };
+            var matcher = SybylAtomTypeMatcher.GetInstance(mol.Builder);
+            var types = matcher.FindMatchingAtomTypes(mol).ToList();
             for (int i = 0; i < expectedTypes.Length; i++)
             {
-                AssertAtomType(testedAtomTypes, "Incorrect perception for atom " + i, expectedTypes[i], types[i]);
+                AssertAtomType(testedAtomTypes, $"Incorrect perception for atom {i}", expectedTypes[i], types[i]);
             }
         }
 
@@ -150,11 +149,11 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestBenzene_AtomContainer()
         {
-            IAtomContainer benzene = TestMoleculeFactory.MakeBenzene();
+            var benzene = TestMoleculeFactory.MakeBenzene();
 
             // test if the perceived atom types match that
-            SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.GetInstance(benzene.Builder);
-            IAtomType[] types = matcher.FindMatchingAtomTypes(benzene);
+            var matcher = SybylAtomTypeMatcher.GetInstance(benzene.Builder);
+            var types = matcher.FindMatchingAtomTypes(benzene);
             foreach (var type in types)
             {
                 Assert.AreEqual("C.ar", type.AtomTypeName);
@@ -164,17 +163,17 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAtomTyping4()
         {
-            string filename = "NCDK.Data.Mol2.atomtyping4.mol2";
+            var filename = "NCDK.Data.Mol2.atomtyping4.mol2";
             var ins = ResourceLoader.GetAsStream(filename);
-            Mol2Reader reader = new Mol2Reader(ins);
-            IAtomContainer molecule = (IAtomContainer)reader.Read(new AtomContainer());
+            var reader = new Mol2Reader(ins);
+            var molecule = (IAtomContainer)reader.Read(new AtomContainer());
             Assert.IsNotNull(molecule);
-            IAtomContainer reference = (IAtomContainer)molecule.Clone();
+            var reference = (IAtomContainer)molecule.Clone();
 
             // test if the perceived atom types match that
             PercieveAtomTypesAndConfigureAtoms(molecule);
-            IEnumerator<IAtom> refAtoms = reference.Atoms.GetEnumerator();
-            IEnumerator<IAtom> atoms = molecule.Atoms.GetEnumerator();
+            var refAtoms = reference.Atoms.GetEnumerator();
+            var atoms = molecule.Atoms.GetEnumerator();
             while (atoms.MoveNext() && refAtoms.MoveNext())
             {
                 // work around aromaticity, which we skipped for now
@@ -191,11 +190,11 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestNonExistingType()
         {
-            IAtomContainer mol = new AtomContainer();
-            IAtom atom = new Atom();
+            var mol = new AtomContainer();
+            var atom = new Atom();
             mol.Atoms.Add(atom);
-            SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.GetInstance(mol.Builder);
-            IAtomType type = matcher.FindMatchingAtomType(mol, atom);
+            var matcher = SybylAtomTypeMatcher.GetInstance(mol.Builder);
+            var type = matcher.FindMatchingAtomType(mol, atom);
             Assert.IsNotNull(type);
             Assert.AreEqual("X", type.AtomTypeName);
         }
@@ -203,17 +202,17 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAtomTyping2()
         {
-            string filename = "NCDK.Data.Mol2.atomtyping2.mol2";
+            var filename = "NCDK.Data.Mol2.atomtyping2.mol2";
             var ins = ResourceLoader.GetAsStream(filename);
-            Mol2Reader reader = new Mol2Reader(ins);
-            IAtomContainer molecule = (IAtomContainer)reader.Read(new AtomContainer());
+            var reader = new Mol2Reader(ins);
+            var molecule = reader.Read(new AtomContainer());
             Assert.IsNotNull(molecule);
-            IAtomContainer reference = (IAtomContainer)molecule.Clone();
+            var reference = (IAtomContainer)molecule.Clone();
 
             // test if the perceived atom types match that
             PercieveAtomTypesAndConfigureAtoms(molecule);
-            IEnumerator<IAtom> refAtoms = reference.Atoms.GetEnumerator();
-            IEnumerator<IAtom> atoms = molecule.Atoms.GetEnumerator();
+            var refAtoms = reference.Atoms.GetEnumerator();
+            var atoms = molecule.Atoms.GetEnumerator();
             while (atoms.MoveNext() && refAtoms.MoveNext())
             {
                 // work around aromaticity, which we skipped for now
@@ -227,17 +226,17 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAtomTyping3()
         {
-            string filename = "NCDK.Data.Mol2.atomtyping3.mol2";
+            var filename = "NCDK.Data.Mol2.atomtyping3.mol2";
             var ins = ResourceLoader.GetAsStream(filename);
-            Mol2Reader reader = new Mol2Reader(ins);
-            IAtomContainer molecule = (IAtomContainer)reader.Read(new AtomContainer());
+            var reader = new Mol2Reader(ins);
+            var molecule = (IAtomContainer)reader.Read(new AtomContainer());
             Assert.IsNotNull(molecule);
-            IAtomContainer reference = (IAtomContainer)molecule.Clone();
+            var reference = (IAtomContainer)molecule.Clone();
 
             // test if the perceived atom types match that
             PercieveAtomTypesAndConfigureAtoms(molecule);
-            IEnumerator<IAtom> refAtoms = reference.Atoms.GetEnumerator();
-            IEnumerator<IAtom> atoms = molecule.Atoms.GetEnumerator();
+            var refAtoms = reference.Atoms.GetEnumerator();
+            var atoms = molecule.Atoms.GetEnumerator();
             while (atoms.MoveNext() && refAtoms.MoveNext())
             {
                 // work around aromaticity, which we skipped for now
@@ -248,16 +247,17 @@ namespace NCDK.AtomTypes
             }
         }
 
-        private void PercieveAtomTypesAndConfigureAtoms(IAtomContainer container)
+        private static void PercieveAtomTypesAndConfigureAtoms(IAtomContainer container)
         {
-            SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.GetInstance(container.Builder);
-            IEnumerator<IAtom> atoms = container.Atoms.GetEnumerator();
+            var matcher = SybylAtomTypeMatcher.GetInstance(container.Builder);
+            var atoms = container.Atoms.GetEnumerator();
             while (atoms.MoveNext())
             {
-                IAtom atom = atoms.Current;
+                var atom = atoms.Current;
                 atom.AtomTypeName = null;
-                IAtomType matched = matcher.FindMatchingAtomType(container, atom);
-                if (matched != null) AtomTypeManipulator.Configure(atom, matched);
+                var matched = matcher.FindMatchingAtomType(container, atom);
+                if (matched != null)
+                    AtomTypeManipulator.Configure(atom, matched);
             }
         }
 
@@ -707,13 +707,13 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestH2S()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom s = Default.ChemObjectBuilder.Instance.NewAtom("S");
-            IAtom h1 = Default.ChemObjectBuilder.Instance.NewAtom("H");
-            IAtom h2 = Default.ChemObjectBuilder.Instance.NewAtom("H");
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom s = ChemObjectBuilder.Instance.NewAtom("S");
+            IAtom h1 = ChemObjectBuilder.Instance.NewAtom("H");
+            IAtom h2 = ChemObjectBuilder.Instance.NewAtom("H");
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(s, h1, BondOrder.Single);
-            IBond b2 = Default.ChemObjectBuilder.Instance.NewBond(s, h2, BondOrder.Single);
+            IBond b1 = ChemObjectBuilder.Instance.NewBond(s, h1, BondOrder.Single);
+            IBond b2 = ChemObjectBuilder.Instance.NewBond(s, h2, BondOrder.Single);
 
             mol.Atoms.Add(s);
             mol.Atoms.Add(h1);
@@ -755,8 +755,7 @@ namespace NCDK.AtomTypes
             ferrocene.AddBond(ferrocene.Atoms[8], ferrocene.Atoms[9], BondOrder.Single);
             ferrocene.AddBond(ferrocene.Atoms[9], ferrocene.Atoms[5], BondOrder.Single);
 
-            string[] expectedTypes = new string[]{"C.2", "C.2", "C.2", "C.2", "Any", "C.2", "C.2", "C.2", "C.2", "Any",
-                "Fe"};
+            var expectedTypes = new string[] {"C.2", "C.2", "C.2", "C.2", "Any", "C.2", "C.2", "C.2", "C.2", "Any", "Fe"};
             AssertAtomTypes(testedAtomTypes, expectedTypes, ferrocene);
         }
 
@@ -770,21 +769,21 @@ namespace NCDK.AtomTypes
             mol.Atoms.Add(atom2);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Triple);
 
-            string[] expectedTypes = { "N.1", "C.1" };
+            var expectedTypes = new[] { "N.1", "C.1" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
         }
 
         [TestMethod()]
         public void TestAniline()
         {
-            IAtomContainer benzene = TestMoleculeFactory.MakeBenzene();
-            IAtom nitrogen = benzene.Builder.NewAtom("N");
+            var benzene = TestMoleculeFactory.MakeBenzene();
+            var nitrogen = benzene.Builder.NewAtom("N");
             benzene.Atoms.Add(nitrogen);
             benzene.Bonds.Add(benzene.Builder.NewBond(benzene.Atoms[0], nitrogen, BondOrder.Single));
 
             // test if the perceived atom types match that
-            SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.GetInstance(benzene.Builder);
-            IAtomType[] types = matcher.FindMatchingAtomTypes(benzene);
+            var matcher = SybylAtomTypeMatcher.GetInstance(benzene.Builder);
+            var types = matcher.FindMatchingAtomTypes(benzene).ToList();
             for (int i = 0; i < 6; i++)
             {
                 AssertAtomType(testedAtomTypes, "Incorrect perception for atom " + i, "C.ar", types[i]);
@@ -852,13 +851,13 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestH2Se()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom se = Default.ChemObjectBuilder.Instance.NewAtom("Se");
-            IAtom h1 = Default.ChemObjectBuilder.Instance.NewAtom("H");
-            IAtom h2 = Default.ChemObjectBuilder.Instance.NewAtom("H");
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom se = ChemObjectBuilder.Instance.NewAtom("Se");
+            IAtom h1 = ChemObjectBuilder.Instance.NewAtom("H");
+            IAtom h2 = ChemObjectBuilder.Instance.NewAtom("H");
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(se, h1, BondOrder.Single);
-            IBond b2 = Default.ChemObjectBuilder.Instance.NewBond(se, h2, BondOrder.Single);
+            IBond b1 = ChemObjectBuilder.Instance.NewBond(se, h1, BondOrder.Single);
+            IBond b2 = ChemObjectBuilder.Instance.NewBond(se, h2, BondOrder.Single);
 
             mol.Atoms.Add(se);
             mol.Atoms.Add(h1);

@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO.Listener;
 using NCDK.Smiles;
 using NCDK.Templates;
@@ -40,7 +40,7 @@ namespace NCDK.IO
     public class SDFWriterTest : ChemObjectWriterTest
     {
         protected override Type ChemObjectIOToTestType => typeof(SDFWriter);
-        private static IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        private static IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
         [TestMethod()]
         public void TestAccepts()
@@ -112,13 +112,13 @@ namespace NCDK.IO
             IChemObjectSet<IAtomContainer> molSet = new ChemObjectSet<IAtomContainer>();
             IAtomContainer molecule = new AtomContainer();
             molecule.Atoms.Add(new Atom("C"));
-            molecule.SetProperty(InvPair.CanonicalLabelKey, "bar");
+            molecule.SetProperty(InvPair.CanonicalLabelPropertyKey, "bar");
             molSet.Add(molecule);
 
             SDFWriter sdfWriter = new SDFWriter(writer);
             sdfWriter.Write(molSet);
             sdfWriter.Close();
-            Assert.IsTrue(writer.ToString().IndexOf(InvPair.CanonicalLabelKey) == -1);
+            Assert.IsTrue(writer.ToString().IndexOf(InvPair.CanonicalLabelPropertyKey) == -1);
         }
 
         [TestMethod()]
@@ -322,7 +322,7 @@ namespace NCDK.IO
         {
             IAtomContainer adenine = TestMoleculeFactory.MakeAdenine();
             StringWriter sw = new StringWriter();
-            SDFWriter sdf = new SDFWriter(sw, new string[0]);
+            SDFWriter sdf = new SDFWriter(sw, Array.Empty<string>());
             adenine.SetProperty("one", "a");
             adenine.SetProperty("two", "b");
             sdf.Write(adenine);

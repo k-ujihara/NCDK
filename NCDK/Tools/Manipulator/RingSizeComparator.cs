@@ -25,23 +25,26 @@ using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
 {
+    public enum SortMode
+    {
+        /// <summary>Flag to denote that the set is order with the largest ring first</summary>
+        LargeFirst = 1,
+        
+        /// <summary>Flag to denote that the set is order with the smallest ring first</summary>
+        SmallFirst = 2,
+    }
+
     // @cdk.module standard
     // @cdk.githash
     public class RingSizeComparator : IComparer<IRing>
     {
-        /// <summary>Flag to denote that the set is order with the largest ring first</summary>
-        public const int LARGE_FIRST = 1;
-        /// <summary>Flag to denote that the set is order with the smallest ring first</summary>
-        public const int SMALL_FIRST = 2;
-
-        int sortOrder = SMALL_FIRST;
+        private readonly SortMode sortOrder = SortMode.SmallFirst;
 
         /// <summary>
         /// Constructs a new comparator to sort rings by size.
         /// </summary>
-        /// <param name="order">Sort order: either RingSet.SMALL_FIRST or
-        ///                                 RingSet.LARGE_FIRST.</param>
-        public RingSizeComparator(int order)
+        /// <param name="order">Sort order: either <see cref="SortMode.SmallFirst"/> or <see cref="SortMode.LargeFirst"/>.</param>
+        public RingSizeComparator(SortMode order)
         {
             sortOrder = order;
         }
@@ -51,19 +54,19 @@ namespace NCDK.Tools.Manipulator
             int size1 = object1.Atoms.Count;
             int size2 = object2.Atoms.Count;
             if (size1 == size2) return 0;
-            if (size1 > size2 && sortOrder == SMALL_FIRST)
+            if (size1 > size2 && sortOrder == SortMode.SmallFirst)
             {
                 return 1;
             }
-            if (size1 > size2 && sortOrder == LARGE_FIRST)
+            if (size1 > size2 && sortOrder == SortMode.LargeFirst)
             {
                 return -1;
             }
-            if (size1 < size2 && sortOrder == SMALL_FIRST)
+            if (size1 < size2 && sortOrder == SortMode.SmallFirst)
             {
                 return -1;
             }
-            if (size1 < size2 && sortOrder == LARGE_FIRST)
+            if (size1 < size2 && sortOrder == SortMode.LargeFirst)
             {
                 return 1;
             }

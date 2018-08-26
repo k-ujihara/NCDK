@@ -32,8 +32,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     public class SigmaElectronegativityDescriptorTest : AtomicDescriptorTest
     {
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-        private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-
+    
         public SigmaElectronegativityDescriptorTest()
         {
             SetDescriptor(typeof(SigmaElectronegativityDescriptor));
@@ -199,7 +198,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AddExplicitHydrogens(molA);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molA);
-            lpcheck.Saturate(molA);
+            LonePairElectronChecker.Saturate(molA);
 
             double resultA = ((Result<double>)descriptor.Calculate(molA.Atoms[3], molA).Value).Value;
 
@@ -218,7 +217,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AddExplicitHydrogens(molB);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molB);
-            lpcheck.Saturate(molB);
+            LonePairElectronChecker.Saturate(molB);
 
             Assert.AreEqual(1, molB.Atoms[3].FormalCharge.Value, 0.00001);
             Assert.AreEqual(1, molB.SingleElectrons.Count, 0.00001);

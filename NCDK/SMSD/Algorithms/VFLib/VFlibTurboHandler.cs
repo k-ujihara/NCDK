@@ -54,30 +54,29 @@ namespace NCDK.SMSD.Algorithms.VFLib
     [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd .")]
     public class VFlibTurboHandler : AbstractSubGraph, IMCSBase
     {
-        private List<IDictionary<IAtom, IAtom>> allAtomMCS = null;
-        private IDictionary<IAtom, IAtom> atomsMCS = null;
-        private List<IDictionary<IAtom, IAtom>> allAtomMCSCopy = null;
-        private IDictionary<int, int> firstMCS = null;
-        private List<IDictionary<int, int>> allMCS = null;
-        private List<IDictionary<int, int>> allMCSCopy = null;
-        private IQueryAtomContainer queryMol = null;
-        private IAtomContainer mol1 = null;
-        private IAtomContainer mol2 = null;
-        private IDictionary<INode, IAtom> vfLibSolutions = null;
+        private readonly List<IReadOnlyDictionary<IAtom, IAtom>> allAtomMCS;
+        private readonly Dictionary<IAtom, IAtom> atomsMCS;
+        private readonly List<IReadOnlyDictionary<IAtom, IAtom>> allAtomMCSCopy;
+        private readonly SortedDictionary<int, int> firstMCS;
+        private readonly List<IReadOnlyDictionary<int, int>> allMCS;
+        private readonly List<IReadOnlyDictionary<int, int>> allMCSCopy;
+        private IQueryAtomContainer queryMol;
+        private IAtomContainer mol1;
+        private IAtomContainer mol2;
+        private Dictionary<INode, IAtom> vfLibSolutions;
         private int vfMCSSize = -1;
-        private bool bondMatchFlag = false;
 
         /// <summary>
         /// Constructor for an extended VF Algorithm for the MCS search
         /// </summary>
         public VFlibTurboHandler()
         {
-            allAtomMCS = new List<IDictionary<IAtom, IAtom>>();
-            allAtomMCSCopy = new List<IDictionary<IAtom, IAtom>>();
+            allAtomMCS = new List<IReadOnlyDictionary<IAtom, IAtom>>();
+            allAtomMCSCopy = new List<IReadOnlyDictionary<IAtom, IAtom>>();
             atomsMCS = new Dictionary<IAtom, IAtom>();
             firstMCS = new SortedDictionary<int, int>();
-            allMCS = new List<IDictionary<int, int>>();
-            allMCSCopy = new List<IDictionary<int, int>>();
+            allMCS = new List<IReadOnlyDictionary<int, int>>();
+            allMCSCopy = new List<IReadOnlyDictionary<int, int>>();
         }
 
         private void SetFirstMappings()
@@ -116,7 +115,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             mol2 = target;
         }
 
-        private bool HasMap(IDictionary<int, int> map, List<IDictionary<int, int>> mapGlobal)
+        private static bool HasMap(IReadOnlyDictionary<int, int> map, List<IReadOnlyDictionary<int, int>> mapGlobal)
         {
             foreach (var test in mapGlobal)
             {
@@ -128,27 +127,27 @@ namespace NCDK.SMSD.Algorithms.VFLib
             return false;
         }
 
-        public IList<IDictionary<IAtom, IAtom>> GetAllAtomMapping()
+        public IReadOnlyList<IReadOnlyDictionary<IAtom, IAtom>> GetAllAtomMapping()
         {
-            return new ReadOnlyCollection<IDictionary<IAtom, IAtom>>(allAtomMCS);
+            return allAtomMCS;
         }
 
-        public IList<IDictionary<int, int>> GetAllMapping()
+        public IReadOnlyList<IReadOnlyDictionary<int, int>> GetAllMapping()
         {
-            return new ReadOnlyCollection<IDictionary<int, int>>(allMCS);
+            return allMCS;
         }
 
-        public IDictionary<IAtom, IAtom> GetFirstAtomMapping()
+        public IReadOnlyDictionary<IAtom, IAtom> GetFirstAtomMapping()
         {
-            return new ReadOnlyDictionary<IAtom, IAtom>(atomsMCS);
+            return atomsMCS;
         }
 
-        public IDictionary<int, int> GetFirstMapping()
+        public IReadOnlyDictionary<int, int> GetFirstMapping()
         {
-            return new ReadOnlyDictionary<int, int>(firstMCS);
+            return firstMCS;
         }
 
-        private int CheckCommonAtomCount(IAtomContainer reactantMolecule, IAtomContainer productMolecule)
+        private static int CheckCommonAtomCount(IAtomContainer reactantMolecule, IAtomContainer productMolecule)
         {
             List<string> atoms = new List<string>();
             for (int i = 0; i < reactantMolecule.Atoms.Count; i++)
@@ -180,7 +179,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
                 mapper = new VFMapper(query);
                 if (mapper.HasMap(GetProductMol()))
                 {
-                    IDictionary<INode, IAtom> map = mapper.GetFirstMap(GetProductMol());
+                    var map = mapper.GetFirstMap(GetProductMol());
                     if (map != null)
                     {
                         foreach (var e in map)
@@ -195,7 +194,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
                 mapper = new VFMapper(query);
                 if (mapper.HasMap(GetProductMol()))
                 {
-                    IDictionary<INode, IAtom> map = mapper.GetFirstMap(GetProductMol());
+                    var map = mapper.GetFirstMap(GetProductMol());
                     if (map != null)
                     {
                         foreach (var e in map)
@@ -210,7 +209,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
                 mapper = new VFMapper(query);
                 if (mapper.HasMap(GetReactantMol()))
                 {
-                    IDictionary<INode, IAtom> map = mapper.GetFirstMap(GetReactantMol());
+                    var map = mapper.GetFirstMap(GetReactantMol());
                     if (map != null)
                     {
                         foreach (var e in map)
@@ -223,27 +222,24 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         private void SearchMcGregorMapping()
         {
-            IList<IList<int>> mappings = new List<IList<int>>();
+            var mappings = new List<IReadOnlyList<int>>();
             foreach (var firstPassMappings in allMCSCopy)
             {
                 McGregor mgit = new McGregor(GetReactantMol(), GetProductMol(), mappings, IsBondMatchFlag);
                 mgit.StartMcGregorIteration(mgit.MCSSize, firstPassMappings); //Start McGregor search
-                mappings = mgit.Mappings;
+                mappings = mgit.mappings;
                 mgit = null;
             }
-            //        Console.Out.WriteLine("\nSol count after MG" + mappings.Count);
             SetMcGregorMappings(mappings);
             vfMCSSize = vfMCSSize / 2;
-            //        Console.Out.WriteLine("After set Sol count MG" + allMCS.Count);
-            //        Console.Out.WriteLine("MCSSize " + vfMCSSize + "\n");
         }
 
         private void SetVFMappings(bool ronp, IQuery query)
         {
             int counter = 0;
 
-            IDictionary<IAtom, IAtom> atomatomMapping = new Dictionary<IAtom, IAtom>();
-            IDictionary<int, int> indexindexMapping = new SortedDictionary<int, int>();
+            var atomatomMapping = new Dictionary<IAtom, IAtom>();
+            var indexindexMapping = new SortedDictionary<int, int>();
             if (vfLibSolutions.Count > vfMCSSize)
             {
                 this.vfMCSSize = vfLibSolutions.Count;
@@ -270,8 +266,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
                 atomatomMapping[qAtom] = tAtom;
                 indexindexMapping[qIndex] = tIndex;
             }
-            //            Console.Out.WriteLine("indexindexMapping " + indexindexMapping.Count);
-            //            Console.Out.WriteLine("MCS Size " + vfMCSSize);
             if (atomatomMapping.Count != 0 && !HasMap(indexindexMapping, allMCSCopy)
                     && indexindexMapping.Count == vfMCSSize)
             {
@@ -279,10 +273,9 @@ namespace NCDK.SMSD.Algorithms.VFLib
                 allMCSCopy.Insert(counter, indexindexMapping);
                 counter++;
             }
-            //        Console.Out.WriteLine("allMCSCopy " + allMCSCopy.Count);
         }
 
-        private void SetMcGregorMappings(IList<IList<int>> mappings)
+        private void SetMcGregorMappings(List<IReadOnlyList<int>> mappings)
         {
             int counter = 0;
             this.vfMCSSize = 0;
@@ -295,8 +288,8 @@ namespace NCDK.SMSD.Algorithms.VFLib
                     allMCS.Clear();
                     counter = 0;
                 }
-                IDictionary<IAtom, IAtom> atomatomMapping = new Dictionary<IAtom, IAtom>();
-                IDictionary<int, int> indexindexMapping = new SortedDictionary<int, int>();
+                var atomatomMapping = new Dictionary<IAtom, IAtom>();
+                var indexindexMapping = new SortedDictionary<int, int>();
                 for (int index = 0; index < mapping.Count; index += 2)
                 {
                     IAtom qAtom = null;
@@ -332,17 +325,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
         {
             IsBondMatchFlag = shouldMatchBonds;
             SearchVFMappings();
-            //        bool flag = McGregorFlag();
-            //        if (flag && vfLibSolutions.Count != 0) {
-            //            try {
-            //                SearchMcGregorMapping();
-            //            } catch (CDKException ex) {
-            //                Trace.TraceError(Level.SEVERE, null, ex);
-            //            } catch (IOException ex) {
-            //                Trace.TraceError(Level.SEVERE, null, ex);
-            //            }
-            //
-            //        } else
 
             if (allAtomMCSCopy.Count != 0)
             {
@@ -353,17 +335,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             return (allMCS.Count != 0 && allMCS.First().Count == GetReactantMol().Atoms.Count) ? true : false;
         }
 
-        public bool IsBondMatchFlag
-        {
-            get
-            {
-                return bondMatchFlag;
-            }
-            set
-            {
-                this.bondMatchFlag = value;
-            }
-        }
+        public bool IsBondMatchFlag { get; set; } = false;
 
         private IAtomContainer GetReactantMol()
         {

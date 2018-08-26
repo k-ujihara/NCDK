@@ -20,6 +20,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -81,7 +82,7 @@ namespace NCDK.Reactions.Types
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
 
             // reverse process
-            var setOfReactants2 = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants2 = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants2.Add(molecule2);
 
             IReactionSet setOfReactions2 = type.Initiate(setOfReactants2, null);
@@ -145,7 +146,7 @@ namespace NCDK.Reactions.Types
             molecule2.Bonds[0].IsReactiveCenter = true;
             molecule2.Bonds[1].IsReactiveCenter = true;
             molecule2.Bonds[5].IsReactiveCenter = true;
-            var setOfReactants2 = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants2 = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants2.Add(molecule2);
 
             var setOfReactions2 = type.Initiate(setOfReactants2, null);
@@ -248,7 +249,7 @@ namespace NCDK.Reactions.Types
         // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
 
             IAtomContainer molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("O"));

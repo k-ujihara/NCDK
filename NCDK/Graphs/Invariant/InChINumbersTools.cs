@@ -18,10 +18,11 @@
  */
 
 using NCDK.Common.Collections;
+using NCDK.Graphs.InChI;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using NCDK.Graphs.InChI;
 
 namespace NCDK.Graphs.Invariant
 {
@@ -41,8 +42,8 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="CDKException">When the InChI could not be generated</exception>
         public static long[] GetNumbers(IAtomContainer atomContainer)
         {
-            string aux = AuxInfo(atomContainer);
-            long[] numbers = new long[atomContainer.Atoms.Count];
+            var aux = AuxInfo(atomContainer);
+            var numbers = new long[atomContainer.Atoms.Count];
             ParseAuxInfo(aux, numbers);
             return numbers;
         }
@@ -53,11 +54,11 @@ namespace NCDK.Graphs.Invariant
         /// <param name="numbers">the atom numbers</param>
         public static void ParseAuxInfo(string aux, long[] numbers)
         {
-            aux = aux.Substring(aux.IndexOf("/N:") + 3);
+            aux = aux.Substring(aux.IndexOf("/N:", StringComparison.Ordinal) + 3);
             string numberStringAux = aux.Substring(0, aux.IndexOf('/'));
             int i = 1;
             foreach (string numberString in numberStringAux.Split(',', ';'))
-                numbers[int.Parse(numberString) - 1] = i++;
+                numbers[int.Parse(numberString, NumberFormatInfo.InvariantInfo) - 1] = i++;
         }
 
         /// <summary>
@@ -102,61 +103,60 @@ namespace NCDK.Graphs.Invariant
         internal static long[] ParseUSmilesNumbers(string aux, IAtomContainer container)
         {
             int index;
-            long[] numbers = new long[container.Atoms.Count];
+            var numbers = new long[container.Atoms.Count];
             int[] first = null;
             int label = 1;
 
-            if ((index = aux.IndexOf("/R:")) >= 0)
+            if ((index = aux.IndexOf("/R:", StringComparison.Ordinal)) >= 0)
             { // reconnected metal numbers
-                int endIndex = aux.IndexOf('/', index + 8);
+                var endIndex = aux.IndexOf('/', index + 8);
                 if (endIndex < 0)
                     endIndex = aux.Length;
-                string[] baseNumbers = aux.Substring(index + 8, endIndex - (index + 8)).Split(';');
+                var baseNumbers = aux.Substring(index + 8, endIndex - (index + 8)).Split(';');
                 first = new int[baseNumbers.Length];
                 Arrays.Fill(first, -1);
                 for (int i = 0; i < baseNumbers.Length; i++)
                 {
-                    string[] numbering = baseNumbers[i].Split(',');
-                    first[i] = int.Parse(numbering[0]) - 1;
+                    var numbering = baseNumbers[i].Split(',');
+                    first[i] = int.Parse(numbering[0], NumberFormatInfo.InvariantInfo) - 1;
                     foreach (string number in numbering)
                     {
-                        numbers[int.Parse(number) - 1] = label++;
+                        numbers[int.Parse(number, NumberFormatInfo.InvariantInfo) - 1] = label++;
                     }
                 }
             }
-            else if ((index = aux.IndexOf("/N:")) >= 0)
+            else if ((index = aux.IndexOf("/N:", StringComparison.Ordinal)) >= 0)
             { // standard numbers
 
                 // read the standard numbers first (need to reference back for some structures)
-                string[] baseNumbers = aux.Substring(index + 3, aux.IndexOf('/', index + 3) - (index + 3)).Split(';');
+                var baseNumbers = aux.Substring(index + 3, aux.IndexOf('/', index + 3) - (index + 3)).Split(';');
                 first = new int[baseNumbers.Length];
                 Arrays.Fill(first, -1);
 
-                if ((index = aux.IndexOf("/F:")) >= 0)
+                if ((index = aux.IndexOf("/F:", StringComparison.Ordinal)) >= 0)
                 {
-                    string[] fixedHNumbers = aux.Substring(index + 3, aux.IndexOf('/', index + 3) - (index + 3)).Split(';');
+                    var fixedHNumbers = aux.Substring(index + 3, aux.IndexOf('/', index + 3) - (index + 3)).Split(';');
                     for (int i = 0; i < fixedHNumbers.Length; i++)
                     {
-                        string component = fixedHNumbers[i];
+                        var component = fixedHNumbers[i];
 
                         // m, 2m, 3m ... need to lookup number in the base numbering
                         if (component[component.Length - 1] == 'm')
                         {
-                            int n = component.Length > 1 ? int
-                                    .Parse(component.Substring(0, component.Length - 1)) : 1;
+                            var n = component.Length > 1 ? int.Parse(component.Substring(0, component.Length - 1), NumberFormatInfo.InvariantInfo) : 1;
                             for (int j = 0; j < n; j++)
                             {
-                                string[] numbering = baseNumbers[i + j].Split(',');
-                                first[i + j] = int.Parse(numbering[0]) - 1;
+                                var numbering = baseNumbers[i + j].Split(',');
+                                first[i + j] = int.Parse(numbering[0], NumberFormatInfo.InvariantInfo) - 1;
                                 foreach (var number in numbering)
-                                    numbers[int.Parse(number) - 1] = label++;
+                                    numbers[int.Parse(number, NumberFormatInfo.InvariantInfo) - 1] = label++;
                             }
                         }
                         else
                         {
-                            string[] numbering = component.Split(',');
+                            var numbering = component.Split(',');
                             foreach (var number in numbering)
-                                numbers[int.Parse(number) - 1] = label++;
+                                numbers[int.Parse(number, NumberFormatInfo.InvariantInfo) - 1] = label++;
                         }
                     }
                 }
@@ -164,10 +164,10 @@ namespace NCDK.Graphs.Invariant
                 {
                     for (int i = 0; i < baseNumbers.Length; i++)
                     {
-                        string[] numbering = baseNumbers[i].Split(',');
-                        first[i] = int.Parse(numbering[0]) - 1;
+                        var numbering = baseNumbers[i].Split(',');
+                        first[i] = int.Parse(numbering[0], NumberFormatInfo.InvariantInfo) - 1;
                         foreach (var number in numbering)
-                            numbers[int.Parse(number) - 1] = label++;
+                            numbers[int.Parse(number, NumberFormatInfo.InvariantInfo) - 1] = label++;
                     }
                 }
             }
@@ -182,15 +182,17 @@ namespace NCDK.Graphs.Invariant
             {
                 if (v >= 0)
                 {
-                    IAtom atom = container.Atoms[v];
-                    if (atom.FormalCharge == null) continue;
+                    var atom = container.Atoms[v];
+                    if (atom.FormalCharge == null)
+                        continue;
                     if (atom.AtomicNumber == 8 && atom.FormalCharge == -1)
                     {
                         var neighbors = container.GetConnectedAtoms(atom);
                         if (neighbors.Count() == 1)
                         {
-                            IAtom correctedStart = FindPiBondedOxygen(container, neighbors.First());
-                            if (correctedStart != null) Exch(numbers, v, container.Atoms.IndexOf(correctedStart));
+                            var correctedStart = FindPiBondedOxygen(container, neighbors.First());
+                            if (correctedStart != null)
+                                Exch(numbers, v, container.Atoms.IndexOf(correctedStart));
                         }
                     }
                 }
@@ -198,7 +200,8 @@ namespace NCDK.Graphs.Invariant
 
             // assign unlabelled atoms
             for (int i = 0; i < numbers.Length; i++)
-                if (numbers[i] == 0) numbers[i] = label++;
+                if (numbers[i] == 0)
+                    numbers[i] = label++;
 
             return numbers;
         }
@@ -211,7 +214,7 @@ namespace NCDK.Graphs.Invariant
         /// <param name="j">another index</param>
         private static void Exch(long[] values, int i, int j)
         {
-            long k = values[i];
+            var k = values[i];
             values[i] = values[j];
             values[j] = k;
         }
@@ -228,9 +231,10 @@ namespace NCDK.Graphs.Invariant
             {
                 if (bond.Order == BondOrder.Double)
                 {
-                    IAtom neighbor = bond.GetOther(atom);
-                    int charge = neighbor.FormalCharge ?? 0;
-                    if (neighbor.AtomicNumber == 8 && charge == 0) return neighbor;
+                    var neighbor = bond.GetOther(atom);
+                    var charge = neighbor.FormalCharge ?? 0;
+                    if (neighbor.AtomicNumber == 8 && charge == 0)
+                        return neighbor;
                 }
             }
             return null;
@@ -246,10 +250,10 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="CDKException">the inchi could not be generated</exception>
         public static string AuxInfo(IAtomContainer container, params InChIOption[] options)
         {
-            InChIGeneratorFactory factory = InChIGeneratorFactory.Instance;
-            bool org = factory.IgnoreAromaticBonds;
+            var factory = InChIGeneratorFactory.Instance;
+            var org = factory.IgnoreAromaticBonds;
             factory.IgnoreAromaticBonds = true;
-            InChIGenerator gen = factory.GetInChIGenerator(container, new List<InChIOption>(options));
+            var gen = factory.GetInChIGenerator(container, new List<InChIOption>(options));
             factory.IgnoreAromaticBonds = org; // an option on the singleton so we should reset for others
             if (gen.ReturnStatus != InChIReturnCode.Ok && gen.ReturnStatus != InChIReturnCode.Warning)
                 throw new CDKException("Could not generate InChI Numbers: " + gen.Message);

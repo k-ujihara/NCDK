@@ -37,25 +37,29 @@ namespace NCDK.Stereo
     public class TetrahedralChirality
         : AbstractStereo<IAtom, IAtom>, ITetrahedralChirality
     {
-        public TetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligands, TetrahedralStereo stereo)
+        public TetrahedralChirality(IAtom chiralAtom, IReadOnlyList<IAtom> ligands, TetrahedralStereo stereo)
             : this(chiralAtom, ligands, stereo.ToConfiguration())
         {
         }
 
-        public TetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligands, StereoElement.Configuration configure)
-            : base(chiralAtom, ligands.ToList(), new StereoElement(StereoElement.Classes.Tetrahedral, configure))
+        public TetrahedralChirality(IAtom chiralAtom, IReadOnlyList<IAtom> ligands, StereoConfigurations configure)
+            : base(chiralAtom, ligands.ToList(), new StereoElement(StereoClass.Tetrahedral, configure))
         {
         }
 
-        public TetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligands, StereoElement stereo)
-            : this(chiralAtom, ligands, stereo.Configure)
+        public TetrahedralChirality(IAtom chiralAtom, IReadOnlyList<IAtom> ligands, StereoElement stereo)
+            : this(chiralAtom, ligands, stereo.Configuration)
         {
         }
 
         /// <summary>
         /// An array of ligand atoms around the chiral atom.
         /// </summary>
-        public virtual IList<IAtom> Ligands => Carriers;
+        public virtual IReadOnlyList<IAtom> Ligands
+        {
+            get => Carriers;
+            set => Carriers = value;
+        }
 
         /// <summary>
         /// Atom that is the chirality center.
@@ -71,7 +75,7 @@ namespace NCDK.Stereo
             set { Configure = value.ToConfiguration(); }
         }
 
-        protected override IStereoElement<IAtom, IAtom> Create(IAtom focus, IList<IAtom> carriers, StereoElement stereo)
+        protected override IStereoElement<IAtom, IAtom> Create(IAtom focus, IReadOnlyList<IAtom> carriers, StereoElement stereo)
         {
             return new TetrahedralChirality(focus, carriers, stereo);
         }

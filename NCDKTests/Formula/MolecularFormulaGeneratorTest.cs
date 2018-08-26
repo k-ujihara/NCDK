@@ -41,7 +41,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestGetNextFormula()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -67,7 +67,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestGetAllFormulas()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -95,7 +95,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestGetFinishedPercentage()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -140,7 +140,7 @@ namespace NCDK.Formula
         [Timeout(1000)]
         public void TestCancel()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -194,7 +194,7 @@ namespace NCDK.Formula
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestNegativeMass()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
@@ -208,7 +208,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestMinCounts()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -244,7 +244,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestMaxCounts()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -280,7 +280,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestSingleCarbon()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
@@ -303,7 +303,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestCarbons()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
@@ -326,7 +326,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestWater()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -369,7 +369,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestUseFullEnumerationWhenNoHydrogen()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope n = ifac.GetMajorIsotope("N");
             IIsotope o = ifac.GetMajorIsotope("O");
@@ -390,7 +390,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestUseFullEnumerationWhenSuperLargeMassDeviation()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -413,7 +413,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestUseFullEnumerationWhenExceedIntegerSpace()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -435,7 +435,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestUseRoundRobinWheneverPossible()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -457,7 +457,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestSmallMass()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -486,7 +486,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestMiddleMass()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -515,7 +515,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestHighMass()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -547,7 +547,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestFormulaFoundInRange()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -585,7 +585,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestFormulaFoundInRange2()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -624,7 +624,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestCompoundWith7Elements()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -659,7 +659,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestDifferentIsotopes()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             var carbons = ifac.GetIsotopes("C");
             IIsotope c13 = carbons.ElementAt(5); // 13
@@ -684,7 +684,7 @@ namespace NCDK.Formula
             trueFormula.Add(c13, 1);
             trueFormula.Add(h, 5);
 
-            Assert.AreEqual(trueFormula.Count, mfSet[0].Count);
+            Assert.AreEqual(trueFormula.IsotopesCount, mfSet[0].IsotopesCount);
             Assert.AreEqual(trueFormula.GetCount(c), mfSet[0].GetCount(c));
             Assert.AreEqual(trueFormula.GetCount(c13), mfSet[0].GetCount(c13));
         }
@@ -696,7 +696,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestFixedElementCounts()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -726,7 +726,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestMassRangeTooHigh()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -755,7 +755,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestMassRangeTooLow()
         {
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");

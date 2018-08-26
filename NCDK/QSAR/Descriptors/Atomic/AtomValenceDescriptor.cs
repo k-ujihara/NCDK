@@ -43,8 +43,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the AtomValenceDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomValence",
                 typeof(AtomValenceDescriptor).FullName, "The Chemistry Development Kit");
@@ -52,7 +52,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         ///  The parameters attribute of the VdWRadiusDescriptor object.
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "val" };
 
@@ -65,7 +65,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         public DescriptorValue<Result<int>> Calculate(IAtom atom, IAtomContainer container)
         {
             int atomValence = AtomValenceTool.GetValence(atom);
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(atomValence), DescriptorNames);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(atomValence), DescriptorNames);
         }
 
         /// <summary>

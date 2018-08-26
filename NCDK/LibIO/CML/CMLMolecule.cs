@@ -1,4 +1,6 @@
-﻿namespace NCDK.LibIO.CML
+﻿using System.Globalization;
+
+namespace NCDK.LibIO.CML
 {
     public partial class CMLMolecule
     {
@@ -41,7 +43,7 @@
         public int FormalCharge
         {
             get { return GetAttributeValueAsInt(Attribute_formalCharge); }
-            set { SetAttributeValue(Attribute_formalCharge, value.ToString()); }
+            set { SetAttributeValue(Attribute_formalCharge, value.ToString(NumberFormatInfo.InvariantInfo)); }
         }
 
         public string SpinMultiplicity

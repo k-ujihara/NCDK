@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -32,15 +33,17 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.Collections;
 
+#pragma warning disable CA1710 // Identifiers should have correct suffix
+
 namespace NCDK.Default
 {
-	public class AtomContainerSet
-		: ChemObjectSet<IAtomContainer>, IAtomContainerSet
-	{
-		public AtomContainerSet()
-			: base()
-		{}
-	}
+    public class AtomContainerSet
+        : ChemObjectSet<IAtomContainer>, IAtomContainerSet
+    {
+        public AtomContainerSet()
+            : base()
+        {}
+    }
 
     /// <summary>
     /// A set of AtomContainers.
@@ -54,7 +57,7 @@ namespace NCDK.Default
          where T : IChemObject
     {
         internal IList<T> atomContainers;
-        internal IList<double?> multipliers;
+        internal List<double?> multipliers;
 
          /// <summary> Constructs an empty ChemObjectSet.</summary>
         public ChemObjectSet()
@@ -142,7 +145,7 @@ namespace NCDK.Default
             multipliers[position] = multiplier;
              NotifyChanged();         }
 
-        public IReadOnlyList<double?> GetMultipliers() => new ReadOnlyCollection<double?>(multipliers);
+        public IReadOnlyList<double?> GetMultipliers() => multipliers;
 
         /// <summary>
         /// Sets the multipliers of the AtomContainers.
@@ -302,8 +305,8 @@ namespace NCDK.Default
 
         class CompareRefByIndex : IComparer<int>
         {
-            ChemObjectSet<T> parent;
-            IComparer<T> comparator;
+            private readonly ChemObjectSet<T> parent;
+            private IComparer<T> comparator;
 
             public CompareRefByIndex(ChemObjectSet<T> parent, IComparer<T> comparator)
             {
@@ -320,13 +323,13 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
-	public class AtomContainerSet
-		: ChemObjectSet<IAtomContainer>, IAtomContainerSet
-	{
-		public AtomContainerSet()
-			: base()
-		{}
-	}
+    public class AtomContainerSet
+        : ChemObjectSet<IAtomContainer>, IAtomContainerSet
+    {
+        public AtomContainerSet()
+            : base()
+        {}
+    }
 
     /// <summary>
     /// A set of AtomContainers.
@@ -340,7 +343,7 @@ namespace NCDK.Silent
          where T : IChemObject
     {
         internal IList<T> atomContainers;
-        internal IList<double?> multipliers;
+        internal List<double?> multipliers;
 
          /// <summary> Constructs an empty ChemObjectSet.</summary>
         public ChemObjectSet()
@@ -428,7 +431,7 @@ namespace NCDK.Silent
             multipliers[position] = multiplier;
                     }
 
-        public IReadOnlyList<double?> GetMultipliers() => new ReadOnlyCollection<double?>(multipliers);
+        public IReadOnlyList<double?> GetMultipliers() => multipliers;
 
         /// <summary>
         /// Sets the multipliers of the AtomContainers.
@@ -588,8 +591,8 @@ namespace NCDK.Silent
 
         class CompareRefByIndex : IComparer<int>
         {
-            ChemObjectSet<T> parent;
-            IComparer<T> comparator;
+            private readonly ChemObjectSet<T> parent;
+            private IComparer<T> comparator;
 
             public CompareRefByIndex(ChemObjectSet<T> parent, IComparer<T> comparator)
             {

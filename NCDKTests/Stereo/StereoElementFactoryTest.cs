@@ -25,7 +25,7 @@
 using NCDK.Common.Base;
 using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using System.Linq;
 using NCDK.Smiles;
@@ -56,7 +56,7 @@ namespace NCDK.Stereo
             mol.AddBond(mol.Atoms[4], mol.Atoms[5], BondOrder.Double);
             mol.AddBond(mol.Atoms[0], mol.Atoms[5], BondOrder.Single);
             StereoElementFactory factory = StereoElementFactory.Using2DCoordinates(mol);
-            Assert.AreEqual(0, factory.CreateAll().Count);
+            Assert.AreEqual(0, factory.CreateAll().Count());
         }
 
         // >=8 is okay for db stereo (ala inchi)
@@ -81,7 +81,7 @@ namespace NCDK.Stereo
             mol.AddBond(mol.Atoms[6], mol.Atoms[7], BondOrder.Double);
             mol.AddBond(mol.Atoms[0], mol.Atoms[7], BondOrder.Single);
             StereoElementFactory factory = StereoElementFactory.Using2DCoordinates(mol);
-            Assert.AreEqual(4, factory.CreateAll().Count);
+            Assert.AreEqual(4, factory.CreateAll().Count());
         }
 
         // not okay... but technically the trans form exists
@@ -104,7 +104,7 @@ namespace NCDK.Stereo
             mol.AddBond(mol.Atoms[5], mol.Atoms[6], BondOrder.Single);
             mol.AddBond(mol.Atoms[6], mol.Atoms[0], BondOrder.Single);
             StereoElementFactory factory = StereoElementFactory.Using2DCoordinates(mol);
-            Assert.AreEqual(0, factory.CreateAll().Count);
+            Assert.AreEqual(0, factory.CreateAll().Count());
         }
 
         [TestMethod()]
@@ -120,7 +120,7 @@ namespace NCDK.Stereo
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Double);
             mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single);
             StereoElementFactory factory = StereoElementFactory.Using2DCoordinates(mol);
-            Assert.AreEqual(1, factory.CreateAll().Count);
+            Assert.AreEqual(1, factory.CreateAll().Count());
         }
 
         [TestMethod()]
@@ -143,7 +143,7 @@ namespace NCDK.Stereo
             mol.AddBond(mol.Atoms[5], mol.Atoms[6], BondOrder.Single, BondStereo.None);
             mol.AddBond(mol.Atoms[2], mol.Atoms[6], BondOrder.Single, BondStereo.None);
             StereoElementFactory factory = StereoElementFactory.Using2DCoordinates(mol);
-            Assert.AreEqual(2, factory.CreateAll().Count);
+            Assert.AreEqual(2, factory.CreateAll().Count());
         }
 
         [TestMethod()]
@@ -656,7 +656,7 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[1], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[5], BondOrder.Single);
 
-            var stereos = StereoElementFactory.Using3DCoordinates(m).CreateAll();
+            var stereos = StereoElementFactory.Using3DCoordinates(m).CreateAll().ToList();
             Assert.AreEqual(1, stereos.Count);
             Assert.IsInstanceOfType(stereos[0], typeof(ExtendedTetrahedral));
             ExtendedTetrahedral et = (ExtendedTetrahedral)stereos[0];
@@ -683,7 +683,7 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[1], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[5], BondOrder.Single);
 
-            var stereos = StereoElementFactory.Using3DCoordinates(m).CreateAll();
+            var stereos = StereoElementFactory.Using3DCoordinates(m).CreateAll().ToList();
             Assert.AreEqual(1, stereos.Count);
             Assert.IsInstanceOfType(stereos[0], typeof(ExtendedTetrahedral));
             ExtendedTetrahedral et = (ExtendedTetrahedral)stereos[0];
@@ -783,7 +783,7 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[3], m.Atoms[7], BondOrder.Single);
 
             var elements = StereoElementFactory.Using2DCoordinates(m).CreateAll();
-            Assert.AreEqual(3, elements.Count);
+            Assert.AreEqual(3, elements.Count());
         }
 
         /// <summary>
@@ -804,7 +804,7 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[0], m.Atoms[2], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[3], BondOrder.Double);
             m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Single);
-            var elements = StereoElementFactory.Using3DCoordinates(m).CreateAll();
+            var elements = StereoElementFactory.Using3DCoordinates(m).CreateAll().ToList();
             Assert.AreEqual(0, elements.Count);
         }
 
@@ -828,7 +828,7 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[2], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[7], BondOrder.Single);
 
-            var elements = StereoElementFactory.Using3DCoordinates(m).CreateAll();
+            var elements = StereoElementFactory.Using3DCoordinates(m).CreateAll().ToList();
             // XXX: really 3 but we can't tell the middle centre is one ATM, see
             //      'dontCreateStereoForNonStereogenicIn3D'
             Assert.AreEqual(2, elements.Count);
@@ -848,7 +848,7 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[0], m.Atoms[3], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
 
-            var elements = StereoElementFactory.Using3DCoordinates(m).CreateAll();
+            var elements = StereoElementFactory.Using3DCoordinates(m).CreateAll().ToList();
 
             // methane carbon is of course non-stereogenic
             Assert.AreEqual(0, elements.Count);
@@ -880,19 +880,19 @@ namespace NCDK.Stereo
 
             Assert.IsTrue(StereoElementFactory.Using2DCoordinates(m)
                                            .CreateAll()
-                                           .Count == 0);
+                                           .Count() == 0);
             Assert.IsTrue(StereoElementFactory.Using2DCoordinates(m)
                                            .InterpretProjections(Projection.Haworth)
                                            .CreateAll()
-                                           .Count == 0);
+                                           .Count() == 0);
             Assert.IsTrue(StereoElementFactory.Using2DCoordinates(m)
                                            .InterpretProjections(Projection.Chair)
                                            .CreateAll()
-                                           .Count == 0);
+                                           .Count() == 0);
             Assert.IsFalse(StereoElementFactory.Using2DCoordinates(m)
                                             .InterpretProjections(Projection.Fischer)
                                             .CreateAll()
-                                            .Count == 0);
+                                            .Count() == 0);
         }
 
         /// <summary>
@@ -930,19 +930,19 @@ namespace NCDK.Stereo
 
             Assert.IsTrue(StereoElementFactory.Using2DCoordinates(m)
                                            .CreateAll()
-                                           .Count == 0);
+                                           .Count() == 0);
             Assert.IsTrue(StereoElementFactory.Using2DCoordinates(m)
                                            .InterpretProjections(Projection.Fischer)
                                            .CreateAll()
-                                           .Count == 0);
+                                           .Count() == 0);
             Assert.IsTrue(StereoElementFactory.Using2DCoordinates(m)
                                            .InterpretProjections(Projection.Chair)
                                            .CreateAll()
-                                           .Count == 0);
+                                           .Count() == 0);
             Assert.IsFalse(StereoElementFactory.Using2DCoordinates(m)
                                             .InterpretProjections(Projection.Haworth)
                                             .CreateAll()
-                                            .Count == 0);
+                                            .Count() == 0);
         }
 
         /// <summary>
@@ -980,19 +980,19 @@ namespace NCDK.Stereo
 
             Assert.IsTrue(StereoElementFactory.Using2DCoordinates(m)
                                            .CreateAll()
-                                           .Count == 0);
+                                           .Count() == 0);
             Assert.IsTrue(StereoElementFactory.Using2DCoordinates(m)
                                            .InterpretProjections(Projection.Fischer)
                                            .CreateAll()
-                                           .Count == 0);
+                                           .Count() == 0);
             Assert.IsTrue(StereoElementFactory.Using2DCoordinates(m)
                                            .InterpretProjections(Projection.Haworth)
                                            .CreateAll()
-                                           .Count == 0);
+                                           .Count() == 0);
             Assert.IsFalse(StereoElementFactory.Using2DCoordinates(m)
                                             .InterpretProjections(Projection.Chair)
                                             .CreateAll()
-                                            .Count == 0);
+                                            .Count() == 0);
         }
 
         /// <summary>
@@ -1014,9 +1014,9 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
             var elements = StereoElementFactory.Using2DCoordinates(m).CreateAll();
-            Assert.AreEqual(1, elements.Count);
+            Assert.AreEqual(1, elements.Count());
             m.SetStereoElements(elements);
-            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo);
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Stereo);
             Assert.AreEqual("[C@]([H])(C)(C)CC", smigen.Create(m));
         }
 
@@ -1036,9 +1036,9 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Double);
             var elements = StereoElementFactory.Using2DCoordinates(m).CreateAll();
-            Assert.AreEqual(1, elements.Count);
+            Assert.AreEqual(1, elements.Count());
             m.SetStereoElements(elements);
-            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo);
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Stereo);
             Assert.AreEqual("[P@@](O)(C)(CC)=O", smigen.Create(m));
         }
 
@@ -1057,12 +1057,10 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Double);
-            var elements = StereoElementFactory.Using2DCoordinates(m)
-                                                                            .CheckSymmetry(true)
-                                                                            .CreateAll();
-            Assert.AreEqual(0, elements.Count);
+            var elements = StereoElementFactory.Using2DCoordinates(m).CheckSymmetry(true).CreateAll();
+            Assert.AreEqual(0, elements.Count());
             m.SetStereoElements(elements);
-            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo);
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Stereo);
             Assert.AreEqual("P(O)(C)(CC)=O", smigen.Create(m));
         }
 
@@ -1084,12 +1082,10 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[0], m.Atoms[3], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
-            var elements = StereoElementFactory.Using2DCoordinates(m)
-                                                                .CheckSymmetry(true)
-                                                                .CreateAll();
-            Assert.AreEqual(0, elements.Count);
+            var elements = StereoElementFactory.Using2DCoordinates(m).CheckSymmetry(true).CreateAll();
+            Assert.AreEqual(0, elements.Count());
             m.SetStereoElements(elements);
-            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo);
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Stereo);
             Assert.AreEqual("C([H])(C)(C)CC", smigen.Create(m));
         }
 
@@ -1112,9 +1108,9 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
             var elements = StereoElementFactory.Using2DCoordinates(m).CreateAll();
-            Assert.AreEqual(1, elements.Count);
+            Assert.AreEqual(1, elements.Count());
             m.SetStereoElements(elements);
-            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo);
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Stereo);
             Assert.AreEqual("[C@]([H])([H])(C)CC", smigen.Create(m));
             AtomContainerManipulator.SuppressHydrogens(m);
             Assert.AreEqual("[C@H2](C)CC", smigen.Create(m));
@@ -1178,47 +1174,37 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[18], m.Atoms[21], BondOrder.Double);
             m.AddBond(m.Atoms[4], m.Atoms[19], BondOrder.Single);
             m.AddBond(m.Atoms[18], m.Atoms[5], BondOrder.Single);
-            var stereo =
-                StereoElementFactory.Using2DCoordinates(m)
-                                    .CreateAll();
+            var stereo =StereoElementFactory.Using2DCoordinates(m).CreateAll().ToList();
             Assert.AreEqual(0, stereo.Count);
             m.Bonds[12].Stereo = BondStereo.Up;
-            var stereoUp =
-                StereoElementFactory.Using2DCoordinates(m)
-                                    .CreateAll();
+            var stereoUp = StereoElementFactory.Using2DCoordinates(m).CreateAll().ToList();
             Assert.AreEqual(1, stereoUp.Count);
             m.Bonds[12].Stereo = BondStereo.Down;
-            var stereoDown =
-                StereoElementFactory.Using2DCoordinates(m)
-                                    .CreateAll();
+            var stereoDown = StereoElementFactory.Using2DCoordinates(m).CreateAll().ToList();
             Assert.AreEqual(1, stereoDown.Count);
             var s1 = stereoUp[0];
             var s2 = stereoDown[0];
             Assert.AreEqual(s2.Focus, s1.Focus);
-            Assert.IsTrue(Compares.AreDeepEqual(s2.ReadOnlyCarriers, s1.ReadOnlyCarriers));
-            Assert.AreEqual(StereoElement.Configuration.Right, s1.Configure);
-            Assert.AreEqual(StereoElement.Configuration.Left, s2.Configure);
+            Assert.IsTrue(Compares.AreDeepEqual(s2.Carriers, s1.Carriers));
+            Assert.AreEqual(StereoConfigurations.Right, s1.Configure);
+            Assert.AreEqual(StereoConfigurations.Left, s2.Configure);
 
             // now test placement of wedges else where
             m.Bonds[12].Stereo = BondStereo.None;
             m.GetBond(m.Atoms[9], m.Atoms[12]).Stereo = BondStereo.Up;
-            var stereoUpOther =
-                StereoElementFactory.Using2DCoordinates(m)
-                                    .CreateAll();
+            var stereoUpOther = StereoElementFactory.Using2DCoordinates(m).CreateAll().ToList();
             Assert.AreEqual(1, stereoUpOther.Count);
             var s3 = stereoUpOther[0];
             Assert.AreEqual(s2.Focus, s3.Focus);
-            Assert.IsTrue(Compares.AreDeepEqual(s2.ReadOnlyCarriers, s3.ReadOnlyCarriers));
+            Assert.IsTrue(Compares.AreDeepEqual(s2.Carriers, s3.Carriers));
             Assert.AreEqual(s2.Configure, s3.Configure);
 
             m.GetBond(m.Atoms[9], m.Atoms[12]).Stereo = BondStereo.Down;
-            var stereoDownOther =
-                StereoElementFactory.Using2DCoordinates(m)
-                                    .CreateAll();
+            var stereoDownOther = StereoElementFactory.Using2DCoordinates(m).CreateAll().ToList();
             Assert.AreEqual(1, stereoDownOther.Count);
             var s4 = stereoDownOther[0];
             Assert.AreEqual(s1.Focus, s4.Focus);
-            Assert.IsTrue(Compares.AreDeepEqual(s1.ReadOnlyCarriers, s4.ReadOnlyCarriers));
+            Assert.IsTrue(Compares.AreDeepEqual(s1.Carriers, s4.Carriers));
             Assert.AreEqual(s1.Configure, s4.Configure);
         }
 
@@ -1258,10 +1244,8 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[11], m.Atoms[12], BondOrder.Single);
             m.AddBond(m.Atoms[7], m.Atoms[13], BondOrder.Single);
             m.AddBond(m.Atoms[5], m.Atoms[14], BondOrder.Single);
-            var stereo =
-                 StereoElementFactory.Using2DCoordinates(m)
-                                     .CreateAll();
-            Assert.AreEqual(1, stereo.Count);
+            var stereo = StereoElementFactory.Using2DCoordinates(m).CreateAll();
+            Assert.AreEqual(1, stereo.Count());
         }
 
         // @cdk.smiles CC1=C(C(O)=CC=C1)C1=CC=CC=C1 
@@ -1298,10 +1282,8 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[0], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[11], m.Atoms[12], BondOrder.Single);
             m.AddBond(m.Atoms[7], m.Atoms[13], BondOrder.Single);
-            var stereo =
-                            StereoElementFactory.Using2DCoordinates(m)
-                                                .CreateAll();
-            Assert.AreEqual(0, stereo.Count);
+            var stereo = StereoElementFactory.Using2DCoordinates(m).CreateAll();
+            Assert.AreEqual(0, stereo.Count());
         }
 
         // @cdk.smiles CC1=C(C=CC=C1)C1=C(C)C=CC=C1 
@@ -1338,10 +1320,8 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[0], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[11], m.Atoms[12], BondOrder.Single);
             m.AddBond(m.Atoms[5], m.Atoms[13], BondOrder.Single);
-            var stereo =
-                   StereoElementFactory.Using2DCoordinates(m)
-                                       .CreateAll();
-            Assert.AreEqual(0, stereo.Count);
+            var stereo = StereoElementFactory.Using2DCoordinates(m).CreateAll();
+            Assert.AreEqual(0, stereo.Count());
         }
 
         // @cdk.smiles [H]C1=CC=C2C=CC=CC2=C1C1=C([H])C=CC2=C1C=CC=C2 
@@ -1396,10 +1376,8 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[20], m.Atoms[21], BondOrder.Double);
             m.AddBond(m.Atoms[16], m.Atoms[21], BondOrder.Single);
             m.AddBond(m.Atoms[12], m.Atoms[13], BondOrder.Single);
-            var stereo =
-                            StereoElementFactory.Using2DCoordinates(m)
-                                                .CreateAll();
-            Assert.AreEqual(0, stereo.Count);
+            var stereo = StereoElementFactory.Using2DCoordinates(m).CreateAll();
+            Assert.AreEqual(0, stereo.Count());
         }
 
         // @cdk.smiles CC1=CC=CC(Cl)=C1C1=C(C)C=CC=C1 
@@ -1438,25 +1416,27 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[8], m.Atoms[9], BondOrder.Single);
             m.AddBond(m.Atoms[8], m.Atoms[13], BondOrder.Double);
             m.AddBond(m.Atoms[13], m.Atoms[14], BondOrder.Single);
-            var stereo =
-                       StereoElementFactory.Using3DCoordinates(m)
-                                           .CreateAll();
-            Assert.AreEqual(1, stereo.Count);
+            var stereo = StereoElementFactory.Using3DCoordinates(m).CreateAll();
+            Assert.AreEqual(1, stereo.Count());
         }
 
         static IAtom Atom(string symbol, int h, double x, double y)
         {
-            IAtom a = new Atom(symbol);
-            a.ImplicitHydrogenCount = h;
-            a.Point2D = new Vector2(x, y);
+            IAtom a = new Atom(symbol)
+            {
+                ImplicitHydrogenCount = h,
+                Point2D = new Vector2(x, y)
+            };
             return a;
         }
 
         static IAtom Atom(string symbol, int h, double x, double y, double z)
         {
-            IAtom a = new Atom(symbol);
-            a.ImplicitHydrogenCount = h;
-            a.Point3D = new Vector3(x, y, z);
+            IAtom a = new Atom(symbol)
+            {
+                ImplicitHydrogenCount = h,
+                Point3D = new Vector3(x, y, z)
+            };
             return a;
         }
     }

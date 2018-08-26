@@ -18,7 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Tools.Manipulator;
 
@@ -41,7 +41,7 @@ namespace NCDK.QSAR
         public void CheckUniqueMolecularDescriptorNames()
         {
             DescriptorEngine engine = new DescriptorEngine(new string[] { typeof(IMolecularDescriptor).FullName },
-                    Default.ChemObjectBuilder.Instance);
+                    ChemObjectBuilder.Instance);
             var specs = engine.GetDescriptorSpecifications();
 
             // we work with a simple molecule with 3D coordinates
@@ -52,7 +52,7 @@ namespace NCDK.QSAR
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
             IAtomContainer ac = (IAtomContainer)cList[0];
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
-            Isotopes.Instance.ConfigureAtoms(ac);
+            BODRIsotopeFactory.Instance.ConfigureAtoms(ac);
             engine.Process(ac);
 
             int ncalc = 0;
@@ -72,7 +72,7 @@ namespace NCDK.QSAR
             {
                 if (!uniqueNames.Add(name)) dups.Add(name);
             }
-            Assert.AreEqual(specs.Count, ncalc);
+            Assert.AreEqual(specs.Count(), ncalc);
             Assert.AreEqual(descNames.Count, uniqueNames.Count);
             if (dups.Count != 0)
             {

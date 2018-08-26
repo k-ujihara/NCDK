@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -53,10 +52,10 @@ namespace NCDK.Beam
             private readonly bool[] visited;
             private readonly int[] ordering;
             private int i;
-            public IDictionary<Edge, Edge> acc = new Dictionary<Edge, Edge>();
+            public Dictionary<Edge, Edge> acc = new Dictionary<Edge, Edge>();
 
-            private IList<Edge> doubleBonds = new List<Edge>();
-            private ICollection<int> adj = new HashSet<int>();
+            private List<Edge> doubleBonds = new List<Edge>();
+            private HashSet<int> adj = new HashSet<int>();
 
             public Traversal(Graph g)
             {
@@ -64,7 +63,7 @@ namespace NCDK.Beam
                 this.visited = new bool[g.Order];
                 this.ordering = new int[g.Order];
 
-                BitArray dbAtoms = new BitArray(g.Order);
+                var dbAtoms = new BitArray(g.Order);
                 for (int u = 0; u < g.Order; u++)
                 {
                     if (!visited[u])
@@ -81,7 +80,7 @@ namespace NCDK.Beam
             {
                 visited[u] = true;
                 ordering[u] = i++;
-                BitArray dbAtoms = new BitArray(g.Order);
+                var dbAtoms = new BitArray(g.Order);
                 foreach (var e in g.GetEdges(u))
                 {
                     int v = e.Other(u);
@@ -90,7 +89,6 @@ namespace NCDK.Beam
                     {
                         if (e.Bond == Bond.Double && HasAdjDirectionalLabels(g, e))
                         {
-
                             dbAtoms.Set(u, true);
                             dbAtoms.Set(v, true);
 
@@ -116,14 +114,14 @@ namespace NCDK.Beam
                 return dbAtoms;
             }
 
-            private bool HasAdjDirectionalLabels(Graph g, Edge e)
+            private static bool HasAdjDirectionalLabels(Graph g, Edge e)
             {
                 int u = e.Either();
                 int v = e.Other(u);
                 return HasAdjDirectionalLabels(g, u) && HasAdjDirectionalLabels(g, v);
             }
 
-            private bool HasAdjDirectionalLabels(Graph g, int u)
+            private static bool HasAdjDirectionalLabels(Graph g, int u)
             {
                 foreach (var f in g.GetEdges(u))
                     if (f.Bond.IsDirectional)
@@ -133,13 +131,12 @@ namespace NCDK.Beam
 
             private void Flip(Graph g, Edge e, BitArray dbAtoms)
             {
-
-                int u = e.Either();
-                int v = e.Other(u);
+                var u = e.Either();
+                var v = e.Other(u);
 
                 if (ordering[u] < ordering[v])
                 {
-                    Edge first = FirstDirectionalLabel(g, u);
+                    var first = FirstDirectionalLabel(g, u);
                     if (first != null)
                     {
                         Flip(first, u, dbAtoms);
@@ -152,7 +149,7 @@ namespace NCDK.Beam
                 }
                 else
                 {
-                    Edge first = FirstDirectionalLabel(g, v);
+                    var first = FirstDirectionalLabel(g, v);
                     if (first != null)
                     {
                         Flip(first, v, dbAtoms);
@@ -194,8 +191,7 @@ namespace NCDK.Beam
                 {
                     if (f.Bond == Bond.Up || f.Bond == Bond.Down)
                     {
-                        if (first == null || ordering[f.Other(u)] < ordering[first
-                                .Other(u)])
+                        if (first == null || ordering[f.Other(u)] < ordering[first.Other(u)])
                             first = f;
                     }
                 }
@@ -211,7 +207,7 @@ namespace NCDK.Beam
                 visited.Set(u, true);
                 foreach (var e in g.GetEdges(u))
                 {
-                    int v = e.Other(u);
+                    var v = e.Other(u);
                     if (!visited[v])
                     {
                         if (replacement.TryGetValue(e, out Edge f))

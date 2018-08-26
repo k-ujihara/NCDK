@@ -23,9 +23,9 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Collections;
-using NCDK.Default;
 using NCDK.Graphs;
 using NCDK.IO;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
@@ -66,7 +66,7 @@ namespace NCDK.Fingerprints
         {
             IFingerprinter fingerprinter = new Fingerprinter(512);
             Assert.IsNotNull(fingerprinter);
-            Assert.AreEqual(512, fingerprinter.Count);
+            Assert.AreEqual(512, fingerprinter.Length);
         }
 
         [TestMethod()]
@@ -85,7 +85,7 @@ namespace NCDK.Fingerprints
             IAtomContainer mol = TestMoleculeFactory.MakeIndole();
             IBitFingerprint bs = fingerprinter.GetBitFingerprint(mol);
             Assert.IsNotNull(bs);
-            Assert.AreEqual(fingerprinter.Count, bs.Count);
+            Assert.AreEqual(fingerprinter.Length, bs.Length);
         }
 
         [TestMethod()]
@@ -254,7 +254,7 @@ namespace NCDK.Fingerprints
 
         public static IAtomContainer MakeFragment1()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -274,7 +274,7 @@ namespace NCDK.Fingerprints
 
         public static IAtomContainer MakeFragment4()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
 
@@ -284,7 +284,7 @@ namespace NCDK.Fingerprints
 
         public static IAtomContainer MakeFragment2()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -305,7 +305,7 @@ namespace NCDK.Fingerprints
 
         public static IAtomContainer MakeFragment3()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -325,7 +325,7 @@ namespace NCDK.Fingerprints
 
         public static IAtomContainer MakeButane()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -340,7 +340,7 @@ namespace NCDK.Fingerprints
 
         public static IAtomContainer MakePropylAmine()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2

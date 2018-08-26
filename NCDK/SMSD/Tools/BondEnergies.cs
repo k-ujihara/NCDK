@@ -222,7 +222,7 @@ namespace NCDK.SMSD.Tools
         /// <param name="bondOrder">(single, double etc)</param>
         /// <returns>bond energy</returns>
         /// </summary>
-        public int GetEnergies(IAtom sourceAtom, IAtom targetAtom, BondOrder bondOrder)
+        public virtual int GetEnergies(IAtom sourceAtom, IAtom targetAtom, BondOrder bondOrder)
         {
             int dKJPerMol = -1;
 
@@ -253,7 +253,7 @@ namespace NCDK.SMSD.Tools
         /// <param name="bondOrder">(single, double etc)</param>
         /// <returns>bond energy</returns>
         /// </summary>
-        public int GetEnergies(string sourceAtom, string targetAtom, BondOrder bondOrder)
+        public static int GetEnergies(string sourceAtom, string targetAtom, BondOrder bondOrder)
         {
             int dKJPerMol = -1;
 
@@ -283,7 +283,7 @@ namespace NCDK.SMSD.Tools
         /// <param name="bond">(single, double etc)</param>
         /// <returns>bond energy</returns>
         /// </summary>
-        public int GetEnergies(IBond bond)
+        public static int GetEnergies(IBond bond)
         {
             int dKJPerMol = -1;
             foreach (var entry in bondEngergies)
@@ -297,7 +297,7 @@ namespace NCDK.SMSD.Tools
             return dKJPerMol;
         }
 
-        private int SetHydrogenBlock(int key)
+        private static int SetHydrogenBlock(int key)
         {
             bondEngergies[key++] = new BondEnergy("H", "H", BondOrder.Single, 432);
             bondEngergies[key++] = new BondEnergy("H", "B", BondOrder.Single, 389);
@@ -319,9 +319,8 @@ namespace NCDK.SMSD.Tools
             return key;
         }
 
-        private int SetGroup13(int key)
+        private static int SetGroup13(int key)
         {
-
             bondEngergies[key++] = new BondEnergy("B", "B", BondOrder.Single, 293);
             bondEngergies[key++] = new BondEnergy("B", "O", BondOrder.Single, 536);
             bondEngergies[key++] = new BondEnergy("B", "F", BondOrder.Single, 613);
@@ -330,7 +329,7 @@ namespace NCDK.SMSD.Tools
             return key;
         }
 
-        private int SetGroup14Part1(int key)
+        private static int SetGroup14Part1(int key)
         {
             bondEngergies[key++] = new BondEnergy("C", "C", BondOrder.Single, 346);
             bondEngergies[key++] = new BondEnergy("C", "C", BondOrder.Double, 602);
@@ -356,7 +355,7 @@ namespace NCDK.SMSD.Tools
             return key;
         }
 
-        private int SetGroup14Part2(int key)
+        private static int SetGroup14Part2(int key)
         {
 
             bondEngergies[key++] = new BondEnergy("Si", "Si", BondOrder.Single, 222);
@@ -387,7 +386,7 @@ namespace NCDK.SMSD.Tools
             return key;
         }
 
-        private int SetGroup15(int key)
+        private static int SetGroup15(int key)
         {
             bondEngergies[key++] = new BondEnergy("N", "N", BondOrder.Single, 167);
             bondEngergies[key++] = new BondEnergy("N", "N", BondOrder.Double, 418);
@@ -423,7 +422,7 @@ namespace NCDK.SMSD.Tools
 
         }
 
-        private int SetGroup16(int key)
+        private static int SetGroup16(int key)
         {
 
             bondEngergies[key++] = new BondEnergy("O", "O", BondOrder.Single, 142);
@@ -441,7 +440,7 @@ namespace NCDK.SMSD.Tools
 
         }
 
-        private int SetGroup17(int key)
+        private static int SetGroup17(int key)
         {
             bondEngergies[key++] = new BondEnergy("F", "F", BondOrder.Single, 155);
             bondEngergies[key++] = new BondEnergy("Cl", "Cl", BondOrder.Single, 240);
@@ -457,7 +456,7 @@ namespace NCDK.SMSD.Tools
 
         }
 
-        private int SetGroup18(int key)
+        private static int SetGroup18(int key)
         {
             bondEngergies[key++] = new BondEnergy("Kr", "F", BondOrder.Single, 50);
             bondEngergies[key++] = new BondEnergy("Xe", "O", BondOrder.Single, 84);

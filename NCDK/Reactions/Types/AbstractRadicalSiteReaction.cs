@@ -21,6 +21,7 @@ using NCDK.Reactions.Types.Parameters;
 using NCDK.RingSearches;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,8 +33,6 @@ namespace NCDK.Reactions.Types
     // @cdk.githash
     public abstract class AbstractRadicalSiteReaction : ReactionEngine, IReactionProcess
     {
-        public AbstractRadicalSiteReaction() { }
-
         /// <inheritdoc/>
         public abstract ReactionSpecification Specification { get; }
 
@@ -71,7 +70,7 @@ namespace NCDK.Reactions.Types
             {
                 if (atomi.IsReactiveCenter && reactant.GetConnectedSingleElectrons(atomi).Count() == 1)
                 {
-                    IList<IAtom> atom1s = null;
+                    IEnumerable<IAtom> atom1s = null;
                     if (checkPrev)
                     {
                         hcg.GetSpheres(reactant, atomi, length - 1, true);
@@ -123,14 +122,14 @@ namespace NCDK.Reactions.Types
             return setOfReactions;
         }
         
-        private void SetActiveCenters(IAtomContainer reactant, int length, bool checkPrev, AtomCheck atomCheck)
+        private static void SetActiveCenters(IAtomContainer reactant, int length, bool checkPrev, AtomCheck atomCheck)
         {
             HOSECodeGenerator hcg = new HOSECodeGenerator();
             foreach (var atomi in reactant.Atoms)
             {
                 if (reactant.GetConnectedSingleElectrons(atomi).Count() == 1)
                 {
-                    IList<IAtom> atom1s = null;
+                    IEnumerable<IAtom> atom1s = null;
                     if (checkPrev)
                     {
                         hcg.GetSpheres(reactant, atomi, length - 1, true);
@@ -140,9 +139,11 @@ namespace NCDK.Reactions.Types
                     hcg.GetSpheres(reactant, atomi, length, true);
                     foreach (var atoml in hcg.GetNodesInSphere(length))
                     {
-                        if (atoml != null && !atoml.IsInRing
-                                && (atoml.FormalCharge ?? 0) == 0
-                                && !atoml.Symbol.Equals("H") && reactant.GetMaximumBondOrder(atoml) == BondOrder.Single)
+                        if (atoml != null 
+                         && !atoml.IsInRing
+                         && (atoml.FormalCharge ?? 0) == 0
+                         && !atoml.Symbol.Equals("H", StringComparison.Ordinal)
+                         && reactant.GetMaximumBondOrder(atoml) == BondOrder.Single)
                         {
                             foreach (var atomR in reactant.GetConnectedAtoms(atoml))
                             {

@@ -159,12 +159,12 @@ namespace NCDK.Beam
                 return -1;
             }
 
-            private int Valence(Element elem, int q)
+            private static int Valence(Element elem, int q)
             {
                 return Valence(Element.OfNumber(elem.AtomicNumber - q));
             }
 
-            private int Valence(Element elem)
+            private static int Valence(Element elem)
             {
                 if (
                     elem == Boron ||
@@ -214,7 +214,7 @@ namespace NCDK.Beam
             /// <param name="charge"> charge on the cyclic atom</param>
             /// <returns>number of donated electrons</returns>
             /// </summary>
-            int AcyclicContribution(IAtom cyclic, IAtom acyclic, int charge)
+            static int AcyclicContribution(IAtom cyclic, IAtom acyclic, int charge)
             {
                 var aa = cyclic.Element;
                 if (aa == Carbon)

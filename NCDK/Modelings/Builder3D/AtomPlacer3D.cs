@@ -38,7 +38,7 @@ namespace NCDK.Modelings.Builder3D
     // @cdk.githash
     public class AtomPlacer3D
     {
-        private IDictionary<string, object> pSet = null;
+        private IReadOnlyDictionary<string, object> pSet = null;
         private double[] distances;
         private int[] firstAtoms = null;
         private double[] angles = null;
@@ -52,24 +52,23 @@ namespace NCDK.Modelings.Builder3D
         private const double DEFAULT_SP2_ANGLE = 120.000;
         private const double DEFAULT_SP_ANGLE = 180.000;
 
-        internal AtomPlacer3D() { }
+        public AtomPlacer3D()
+        {
+        }
 
-        /// <summary>
-        ///  Initialize the atomPlacer class.
-        /// </summary>
         /// <param name="parameterSet">Force Field parameter as Dictionary</param>
-        public void Initilize(IDictionary<string, object> parameterSet)
+        public AtomPlacer3D(IReadOnlyDictionary<string, object> parameterSet)
         {
             pSet = parameterSet;
         }
 
         /// <summary>
-        ///  Count and find first heavy Atom(s) (non Hydrogens) in a chain.
+        /// Count and find first heavy Atom(s) (non Hydrogens) in a chain.
         /// </summary>
         /// <param name="molecule">the reference molecule for searching the chain</param>
         /// <param name="chain">chain to be searched</param>
         /// <returns>the atom number of the first heavy atom the number of heavy atoms in the chain</returns>
-        public int[] FindHeavyAtomsInChain(IAtomContainer molecule, IAtomContainer chain)
+        public virtual int[] FindHeavyAtomsInChain(IAtomContainer molecule, IAtomContainer chain)
         {
             int[] heavy = { -1, -1 };
             int hc = 0;
@@ -89,26 +88,12 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Mark all atoms in chain as placed. (<see cref="IChemObject.IsPlaced"/>)
-        /// </summary>
-        /// <param name="ac">chain</param>
-        /// <returns>chain all atoms marked as placed</returns>
-        public IAtomContainer MarkPlaced(IAtomContainer ac)
-        {
-            for (int i = 0; i < ac.Atoms.Count; i++)
-            {
-                ac.Atoms[i].IsPlaced = true;
-            }
-            return ac;
-        }
-
-        /// <summary>
-        ///  Method assigns 3D coordinates to the heavy atoms in an aliphatic chain.
+        /// Method assigns 3D coordinates to the heavy atoms in an aliphatic chain.
         /// </summary>
         /// <param name="molecule">the reference molecule for the chain</param>
         /// <param name="chain">the atoms to be assigned, must be connected</param>
         /// <exception cref="CDKException">the 'chain' was not a chain</exception>
-        public void PlaceAliphaticHeavyChain(IAtomContainer molecule, IAtomContainer chain)
+        public virtual void PlaceAliphaticHeavyChain(IAtomContainer molecule, IAtomContainer chain)
         {
             //Debug.WriteLine("******** Place aliphatic Chain *********");
             int[] first = new int[2];
@@ -133,7 +118,7 @@ namespace NCDK.Modelings.Builder3D
                 {
                     if (!chain.Atoms[i].IsVisited)
                     {
-                        //Debug.WriteLine("Counter:" + counter);
+                        //Debug.WriteLine($"Counter:{counter}");
                         nextAtomNr = molecule.Atoms.IndexOf(chain.Atoms[i]);
                         id2 = molecule.Atoms[firstAtoms[counter - 1]].AtomTypeName;
                         id1 = molecule.Atoms[nextAtomNr].AtomTypeName;
@@ -142,7 +127,7 @@ namespace NCDK.Modelings.Builder3D
                             throw new CDKException("atoms do not form a chain, please use ModelBuilder3D");
 
                         distances[counter] = GetBondLengthValue(id1, id2);
-                        //Debug.WriteLine(" Distance:" + distances[counter]);
+                        //Debug.WriteLine($" Distance:{distances[counter]}");
                         firstAtoms[counter] = nextAtomNr;
                         secondAtoms[counter] = firstAtoms[counter - 1];
                         if (counter > 1)
@@ -167,7 +152,7 @@ namespace NCDK.Modelings.Builder3D
                                 }
                             }
                             thirdAtoms[counter] = firstAtoms[counter - 2];
-                            //Debug.WriteLine(" Angle:" + angles[counter]);
+                            //Debug.WriteLine($" Angle:{angles[counter]}");
                         }
                         else
                         {
@@ -218,7 +203,7 @@ namespace NCDK.Modelings.Builder3D
         /// <param name="molecule">the molecule to be placed in 3D</param>
         /// <param name="flagBranched">marks branched chain</param>
         // @author: egonw,cho
-        public void ZMatrixChainToCartesian(IAtomContainer molecule, bool flagBranched)
+        public virtual void ZMatrixChainToCartesian(IAtomContainer molecule, bool flagBranched)
         {
             Vector3? result = null;
             for (int index = 0; index < distances.Length; index++)
@@ -285,24 +270,24 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Gets the hybridisation state of an atom.
+        /// Gets the hybridisation state of an atom.
         /// </summary>
-        /// <param name="atom1">atom</param>
+        /// <param name="atom">atom</param>
         /// <returns>The hybridisationState value (sp=1;sp2=2;sp3=3)</returns>
-        private int GetHybridisationState(IAtom atom1)
+        private static int GetHybridisationState(IAtom atom)
         {
-            BondOrder maxBondOrder = atom1.MaxBondOrder;
+            BondOrder maxBondOrder = atom.MaxBondOrder;
 
             //        if (atom1.FormalNeighbourCount == 1 || maxBondOrder > 4) {
-            if (atom1.FormalNeighbourCount == 1)
+            if (atom.FormalNeighbourCount == 1)
             {
                 // WTF??
             }
-            else if (atom1.FormalNeighbourCount == 2 || maxBondOrder == BondOrder.Triple)
+            else if (atom.FormalNeighbourCount == 2 || maxBondOrder == BondOrder.Triple)
             {
                 return 1; //sp
             }
-            else if (atom1.FormalNeighbourCount == 3 || (maxBondOrder == BondOrder.Double))
+            else if (atom.FormalNeighbourCount == 3 || (maxBondOrder == BondOrder.Double))
             {
                 return 2; //sp2
             }
@@ -314,8 +299,8 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Gets the doubleBondConfiguration2D attribute of the AtomPlacer3D object
-        ///  using existing 2D coordinates.
+        /// Gets the doubleBondConfiguration2D attribute of the AtomPlacer3D object
+        /// using existing 2D coordinates.
         /// </summary>
         /// <param name="bond">the double bond</param>
         /// <param name="aa">coordinates (Vector2) of atom1 connected to bond</param>
@@ -323,7 +308,7 @@ namespace NCDK.Modelings.Builder3D
         /// <param name="cc">coordinates (Vector2) of atom3 connected to bond</param>
         /// <param name="dd">coordinates (Vector2) of atom4 connected to bond</param>
         /// <returns>The doubleBondConfiguration2D value</returns>
-        private int GetDoubleBondConfiguration2D(IBond bond, Vector2? aa, Vector2? bb, Vector2? cc, Vector2? dd)
+        private static int GetDoubleBondConfiguration2D(IBond bond, Vector2? aa, Vector2? bb, Vector2? cc, Vector2? dd)
         {
             if (bond.Order != BondOrder.Double)
             {
@@ -350,12 +335,12 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Gets the distanceValue attribute of the parameter set.
+        /// Gets the distanceValue attribute of the parameter set.
         /// </summary>
         /// <param name="id1">atom1 id</param>
         /// <param name="id2">atom2 id</param>
         /// <returns>The distanceValue value from the force field parameter set</returns>
-        public double GetBondLengthValue(string id1, string id2)
+        public virtual double GetBondLengthValue(string id1, string id2)
         {
             string dkey = "";
             if (pSet.ContainsKey(("bond" + id1 + ";" + id2)))
@@ -381,7 +366,7 @@ namespace NCDK.Modelings.Builder3D
         /// <param name="id2">Description of the Parameter</param>
         /// <param name="id3">Description of the Parameter</param>
         /// <returns>The angleKey value</returns>
-        public double GetAngleValue(string id1, string id2, string id3)
+        public virtual double GetAngleValue(string id1, string id2, string id3)
         {
             string akey = "";
             if (pSet.ContainsKey(("angle" + id1 + ";" + id2 + ";" + id3)))
@@ -519,12 +504,11 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Gets the farthestAtom attribute of the AtomPlacer3D object.
+        /// Gets the farthestAtom attribute of the AtomPlacer3D object.
         /// </summary>
         /// <param name="refAtomPoint">Description of the Parameter</param>
-        /// <param name="ac">Description of the Parameter</param>
         /// <returns>The farthestAtom value</returns>
-        public IAtom GetFarthestAtom(Vector3 refAtomPoint, IAtomContainer ac)
+        public virtual IAtom GetFarthestAtom(Vector3 refAtomPoint, IAtomContainer ac)
         {
             double distance = 0;
             IAtom atom = null;
@@ -543,9 +527,10 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Gets the unplacedRingHeavyAtom attribute of the AtomPlacer3D object.
+        /// Gets the unplacedRingHeavyAtom attribute of the AtomPlacer3D object.
         /// </summary>
-        /// <param name="molecule">/// <param name="atom">Description of the Parameter</param></param>
+        /// <param name="molecule"></param>
+        /// <param name="atom">Description of the Parameter</param>
         /// <returns>The unplacedRingHeavyAtom value</returns>
         public IAtom GetUnplacedRingHeavyAtom(IAtomContainer molecule, IAtom atom)
         {
@@ -563,18 +548,18 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Calculates the geometric center of all placed atoms in the atomcontainer.
+        /// Calculates the geometric center of all placed atoms in the <paramref name="molecule"/>.
         /// </summary>
         /// <param name="molecule"></param>
-        /// <returns><see cref="Vector3"/> the geometric center</returns>
-        public Vector3 GeometricCenterAllPlacedAtoms(IAtomContainer molecule)
+        /// <returns><see cref="Vector3"/>the geometric center</returns>
+        public virtual Vector3 GeometricCenterAllPlacedAtoms(IAtomContainer molecule)
         {
             IAtomContainer allPlacedAtoms = GetAllPlacedAtoms(molecule);
             return GeometryUtil.Get3DCenter(allPlacedAtoms);
         }
 
         /// <summary>
-        ///  Returns a placed atom connected to a given atom.
+        /// Returns a placed atom connected to a given atom.
         /// </summary>
         /// <param name="molecule"></param>
         /// <param name="atom">The Atom whose placed bonding partners are to be returned</param>
@@ -656,10 +641,10 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Gets the allPlacedAtoms attribute of the AtomPlacer3D object.
+        /// Gets the all placed atoms attribute of the AtomPlacer3D object.
         /// </summary>
         /// <returns>The allPlacedAtoms value</returns>
-        private IAtomContainer GetAllPlacedAtoms(IAtomContainer molecule)
+        private static IAtomContainer GetAllPlacedAtoms(IAtomContainer molecule)
         {
             IAtomContainer placedAtoms = molecule.Builder.NewAtomContainer();    // Changed by Kaz
             for (int i = 0; i < molecule.Atoms.Count; i++)
@@ -732,13 +717,13 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        /// Determine if the atom is heavy (non-hydrogen).
+        /// Determine if the atom is heavy, typically non-hydrogen.
         /// </summary>
         /// <param name="atom">The atom to be checked</param>
-        /// <returns>True if the atom is non-hydrogen</returns>
-        internal bool IsHeavyAtom(IAtom atom)
+        /// <returns><see langword="true"/> if the atom is heavy, typically non-hydrogen</returns>
+        public virtual bool IsHeavyAtom(IAtom atom)
         {
-            return !atom.Symbol.Equals("H");
+            return !string.Equals(atom.Symbol, "H", StringComparison.Ordinal);
         }
     }
 }

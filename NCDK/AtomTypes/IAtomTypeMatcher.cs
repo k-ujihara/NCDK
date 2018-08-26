@@ -18,6 +18,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System.Collections.Generic;
+
 namespace NCDK.AtomTypes
 {
     /// <summary>
@@ -46,6 +48,6 @@ namespace NCDK.AtomTypes
         /// <param name="container">AtomContainer for which atom types are perceived</param>
         /// <returns>The matching AtomType</returns>      
         /// <exception cref="CDKException"> when something went wrong with going through the AtomType's</exception>        
-        IAtomType[] FindMatchingAtomTypes(IAtomContainer container);
+        IEnumerable<IAtomType> FindMatchingAtomTypes(IAtomContainer container);
     }
 }

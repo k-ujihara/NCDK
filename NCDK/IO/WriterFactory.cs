@@ -51,7 +51,7 @@ namespace NCDK.IO
             registeredReaders = new Dictionary<string, System.Type>(); // Type is IChemObjectWriter
         }
 
-        public void RegisterWriter(System.Type writer)
+        public static void RegisterWriter(System.Type writer)
         {
             if (writer == null) return;
             if (typeof(IChemObjectWriter).IsAssignableFrom(writer))

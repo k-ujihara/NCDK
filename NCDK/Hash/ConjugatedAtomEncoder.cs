@@ -24,7 +24,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace NCDK.Hash
 {
@@ -55,7 +54,7 @@ namespace NCDK.Hash
     internal sealed class ConjugatedAtomEncoder : IAtomEncoder
     {
         /* ordered list of encoders */
-        private readonly IList<IAtomEncoder> encoders;
+        private readonly List<IAtomEncoder> encoders;
 
         /// <summary>
         /// Create a new conjugated encoder for the specified list of atom encoders.
@@ -64,11 +63,13 @@ namespace NCDK.Hash
         /// <param name="encoders">non-empty list of encoders</param>
         /// <exception cref="ArgumentNullException">the list of encoders was null</exception>
         /// <exception cref="ArgumentException">the list of encoders was empty</exception>
-        public ConjugatedAtomEncoder(IList<IAtomEncoder> encoders)
+        public ConjugatedAtomEncoder(IEnumerable<IAtomEncoder> encoders)
         {
-            if (encoders == null) throw new ArgumentNullException("null list of encoders");
-            if (encoders.Count == 0) throw new ArgumentException("no encoders provided");
-            this.encoders = new ReadOnlyCollection<IAtomEncoder>(new List<IAtomEncoder>(encoders));
+            if (encoders == null)
+                throw new ArgumentNullException(nameof(encoders), "null list of encoders");
+            this.encoders = new List<IAtomEncoder>(encoders);
+            if (this.encoders.Count == 0)
+                throw new ArgumentException("no encoders provided");
         }
 
         public int Encode(IAtom atom, IAtomContainer container)
@@ -93,13 +94,12 @@ namespace NCDK.Hash
         /// <exception cref="ArgumentNullException">either argument was null</exception>
         public static IAtomEncoder Create(IAtomEncoder encoder, params IAtomEncoder[] encoders)
         {
-            if (encoder == null || encoders == null) throw new ArgumentNullException("null encoders provided");
-            List<IAtomEncoder> tmp = new List<IAtomEncoder>(encoders.Length + 1)
-            {
-                encoder
-            };
-            foreach (var e in encoders)
-                tmp.Add(e);
+            if (encoder == null)
+                throw new ArgumentNullException(nameof(encoder), "null encoder provided");
+            if (encoders == null)
+                throw new ArgumentNullException(nameof(encoders), "null encoders provided");
+            var tmp = new List<IAtomEncoder>(encoders.Length + 1) { encoder };
+            tmp.AddRange(encoders);
             return new ConjugatedAtomEncoder(tmp);
         }
     }

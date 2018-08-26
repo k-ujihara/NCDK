@@ -18,6 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.QSAR.Results;
+using NCDK.Silent;
 using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Atomic
@@ -36,7 +37,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { 0.77 };
             IAtomicDescriptor descriptor = new CovalentRadiusDescriptor();
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("NCCN(C)(C)");
             double retval = ((Result<double>)descriptor.Calculate(mol.Atoms[1], mol).Value).Value;
 

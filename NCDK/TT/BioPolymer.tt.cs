@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -38,10 +39,10 @@ namespace NCDK.Default
     public class BioPolymer
         : Polymer, IBioPolymer
     {
-        private IDictionary<string, IStrand> strands;
+        private Dictionary<string, IStrand> strands;
 
         public BioPolymer()
-                : base()
+            : base()
         {
             strands = new Dictionary<string, IStrand>();
         }
@@ -164,7 +165,7 @@ namespace NCDK.Default
             }
         }
 
-        public IDictionary<string, IStrand> GetStrandMap()
+        public IReadOnlyDictionary<string, IStrand> GetStrandMap()
         {
             return strands;
         }
@@ -199,10 +200,10 @@ namespace NCDK.Silent
     public class BioPolymer
         : Polymer, IBioPolymer
     {
-        private IDictionary<string, IStrand> strands;
+        private Dictionary<string, IStrand> strands;
 
         public BioPolymer()
-                : base()
+            : base()
         {
             strands = new Dictionary<string, IStrand>();
         }
@@ -325,7 +326,7 @@ namespace NCDK.Silent
             }
         }
 
-        public IDictionary<string, IStrand> GetStrandMap()
+        public IReadOnlyDictionary<string, IStrand> GetStrandMap()
         {
             return strands;
         }

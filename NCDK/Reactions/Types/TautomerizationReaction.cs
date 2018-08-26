@@ -16,7 +16,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Reactions.Types.Parameters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -53,7 +55,8 @@ namespace NCDK.Reactions.Types
 
             // if the parameter hasActiveCenter is not fixed yet, set the active centers
             IParameterReaction ipr = base.GetParameterClass(typeof(SetReactionCenter));
-            if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
+            if (ipr != null && !ipr.IsSetParameter)
+                SetActiveCenters(reactant);
 
             foreach (var atomi in reactant.Atoms)
             {
@@ -85,13 +88,12 @@ namespace NCDK.Reactions.Types
                                         {
                                             foreach (var bondk in reactant.GetConnectedBonds(atomk))
                                             {
-                                                if (bondk.Equals(bondj)) continue;
-                                                if (bondk.IsReactiveCenter
-                                                        && bondk.Order == BondOrder.Single)
+                                                if (bondk.Equals(bondj))
+                                                    continue;
+                                                if (bondk.IsReactiveCenter && bondk.Order == BondOrder.Single)
                                                 {
                                                     IAtom atoml = bondk.GetOther(atomk); // Atom pos 4
-                                                    if (atoml.IsReactiveCenter
-                                                            && atoml.Symbol.Equals("H"))
+                                                    if (atoml.IsReactiveCenter && atoml.Symbol.Equals("H", StringComparison.Ordinal))
                                                     {
                                                         var atomList = new List<IAtom>
                                                         {
@@ -144,7 +146,7 @@ namespace NCDK.Reactions.Types
         ///  </pre>
         /// </summary>
         /// <param name="reactant">The molecule to set the activity</param>
-        private void SetActiveCenters(IAtomContainer reactant)
+        private static void SetActiveCenters(IAtomContainer reactant)
         {
             foreach (var atomi in reactant.Atoms)
             {
@@ -175,7 +177,7 @@ namespace NCDK.Reactions.Types
                                                 if (bondk.Order == BondOrder.Single)
                                                 {
                                                     IAtom atoml = bondk.GetOther(atomk); // Atom pos 4
-                                                    if (atoml.Symbol.Equals("H"))
+                                                    if (string.Equals(atoml.Symbol, "H", StringComparison.Ordinal))
                                                     {
                                                         atomi.IsReactiveCenter = true;
                                                         atomj.IsReactiveCenter = true;

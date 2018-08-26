@@ -20,6 +20,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
+using NCDK.Silent;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
@@ -35,7 +36,6 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class AdductionSodiumLPReactionTest : ReactionProcessTest
     {
-        private readonly LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
         public AdductionSodiumLPReactionTest()
@@ -198,7 +198,7 @@ namespace NCDK.Reactions.Types
         // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             IAtomContainer molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.Atoms.Add(builder.NewAtom("C"));
@@ -217,7 +217,7 @@ namespace NCDK.Reactions.Types
             {
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
-                lpcheck.Saturate(molecule);
+                LonePairElectronChecker.Saturate(molecule);
             }
             catch (CDKException e)
             {
@@ -254,7 +254,7 @@ namespace NCDK.Reactions.Types
             {
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
-                lpcheck.Saturate(molecule);
+                LonePairElectronChecker.Saturate(molecule);
             }
             catch (CDKException e)
             {

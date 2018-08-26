@@ -113,7 +113,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     public class WHIMDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         string type = "";
-        IDictionary<string, double> hashatwt, hashvdw, hasheneg, hashpol;
+        private readonly Dictionary<string, double> hashatwt;
+        private readonly Dictionary<string, double> hashvdw;
+        private readonly Dictionary<string, double> hasheneg;
+        private readonly Dictionary<string, double> hashpol;
 
         public WHIMDescriptor()
         {
@@ -121,94 +124,101 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             // set up the values from TOD98
 
-            this.hashatwt = new Dictionary<string, double>();
-            this.hashvdw = new Dictionary<string, double>();
-            this.hasheneg = new Dictionary<string, double>();
-            this.hashpol = new Dictionary<string, double>();
+            this.hashatwt = new Dictionary<string, double>
+            {
+                ["H"] = 0.084,
+                ["B"] = 0.900,
+                ["C"] = 1.000,
+                ["N"] = 1.166,
+                ["O"] = 1.332,
+                ["F"] = 1.582,
+                ["Al"] = 2.246,
+                ["Si"] = 2.339,
+                ["P"] = 2.579,
+                ["S"] = 2.670,
+                ["Cl"] = 2.952,
+                ["Fe"] = 4.650,
+                ["Co"] = 4.907,
+                ["Ni"] = 4.887,
+                ["Cu"] = 5.291,
+                ["Zn"] = 5.445,
+                ["Br"] = 6.653,
+                ["Sn"] = 9.884,
+                ["I"] = 10.566
+            };
 
-            this.hashatwt["H"] = 0.084;
-            this.hashatwt["B"] = 0.900;
-            this.hashatwt["C"] = 1.000;
-            this.hashatwt["N"] = 1.166;
-            this.hashatwt["O"] = 1.332;
-            this.hashatwt["F"] = 1.582;
-            this.hashatwt["Al"] = 2.246;
-            this.hashatwt["Si"] = 2.339;
-            this.hashatwt["P"] = 2.579;
-            this.hashatwt["S"] = 2.670;
-            this.hashatwt["Cl"] = 2.952;
-            this.hashatwt["Fe"] = 4.650;
-            this.hashatwt["Co"] = 4.907;
-            this.hashatwt["Ni"] = 4.887;
-            this.hashatwt["Cu"] = 5.291;
-            this.hashatwt["Zn"] = 5.445;
-            this.hashatwt["Br"] = 6.653;
-            this.hashatwt["Sn"] = 9.884;
-            this.hashatwt["I"] = 10.566;
+            this.hashvdw = new Dictionary<string, double>
+            {
+                ["H"] = 0.299,
+                ["B"] = 0.796,
+                ["C"] = 1.000,
+                ["N"] = 0.695,
+                ["O"] = 0.512,
+                ["F"] = 0.410,
+                ["Al"] = 1.626,
+                ["Si"] = 1.424,
+                ["P"] = 1.181,
+                ["S"] = 1.088,
+                ["Cl"] = 1.035,
+                ["Fe"] = 1.829,
+                ["Co"] = 1.561,
+                ["Ni"] = 0.764,
+                ["Cu"] = 0.512,
+                ["Zn"] = 1.708,
+                ["Br"] = 1.384,
+                ["Sn"] = 2.042,
+                ["I"] = 1.728
+            };
 
-            this.hashvdw["H"] = 0.299;
-            this.hashvdw["B"] = 0.796;
-            this.hashvdw["C"] = 1.000;
-            this.hashvdw["N"] = 0.695;
-            this.hashvdw["O"] = 0.512;
-            this.hashvdw["F"] = 0.410;
-            this.hashvdw["Al"] = 1.626;
-            this.hashvdw["Si"] = 1.424;
-            this.hashvdw["P"] = 1.181;
-            this.hashvdw["S"] = 1.088;
-            this.hashvdw["Cl"] = 1.035;
-            this.hashvdw["Fe"] = 1.829;
-            this.hashvdw["Co"] = 1.561;
-            this.hashvdw["Ni"] = 0.764;
-            this.hashvdw["Cu"] = 0.512;
-            this.hashvdw["Zn"] = 1.708;
-            this.hashvdw["Br"] = 1.384;
-            this.hashvdw["Sn"] = 2.042;
-            this.hashvdw["I"] = 1.728;
+            this.hasheneg = new Dictionary<string, double>
+            {
+                ["H"] = 0.944,
+                ["B"] = 0.828,
+                ["C"] = 1.000,
+                ["N"] = 1.163,
+                ["O"] = 1.331,
+                ["F"] = 1.457,
+                ["Al"] = 0.624,
+                ["Si"] = 0.779,
+                ["P"] = 0.916,
+                ["S"] = 1.077,
+                ["Cl"] = 1.265,
+                ["Fe"] = 0.728,
+                ["Co"] = 0.728,
+                ["Ni"] = 0.728,
+                ["Cu"] = 0.740,
+                ["Zn"] = 0.810,
+                ["Br"] = 1.172,
+                ["Sn"] = 0.837,
+                ["I"] = 1.012
+            };
 
-            this.hasheneg["H"] = 0.944;
-            this.hasheneg["B"] = 0.828;
-            this.hasheneg["C"] = 1.000;
-            this.hasheneg["N"] = 1.163;
-            this.hasheneg["O"] = 1.331;
-            this.hasheneg["F"] = 1.457;
-            this.hasheneg["Al"] = 0.624;
-            this.hasheneg["Si"] = 0.779;
-            this.hasheneg["P"] = 0.916;
-            this.hasheneg["S"] = 1.077;
-            this.hasheneg["Cl"] = 1.265;
-            this.hasheneg["Fe"] = 0.728;
-            this.hasheneg["Co"] = 0.728;
-            this.hasheneg["Ni"] = 0.728;
-            this.hasheneg["Cu"] = 0.740;
-            this.hasheneg["Zn"] = 0.810;
-            this.hasheneg["Br"] = 1.172;
-            this.hasheneg["Sn"] = 0.837;
-            this.hasheneg["I"] = 1.012;
-
-            this.hashpol["H"] = 0.379;
-            this.hashpol["B"] = 1.722;
-            this.hashpol["C"] = 1.000;
-            this.hashpol["N"] = 0.625;
-            this.hashpol["O"] = 0.456;
-            this.hashpol["F"] = 0.316;
-            this.hashpol["Al"] = 3.864;
-            this.hashpol["Si"] = 3.057;
-            this.hashpol["P"] = 2.063;
-            this.hashpol["S"] = 1.648;
-            this.hashpol["Cl"] = 1.239;
-            this.hashpol["Fe"] = 4.773;
-            this.hashpol["Co"] = 4.261;
-            this.hashpol["Ni"] = 3.864;
-            this.hashpol["Cu"] = 3.466;
-            this.hashpol["Zn"] = 4.034;
-            this.hashpol["Br"] = 1.733;
-            this.hashpol["Sn"] = 4.375;
-            this.hashpol["I"] = 3.040;
+            this.hashpol = new Dictionary<string, double>
+            {
+                ["H"] = 0.379,
+                ["B"] = 1.722,
+                ["C"] = 1.000,
+                ["N"] = 0.625,
+                ["O"] = 0.456,
+                ["F"] = 0.316,
+                ["Al"] = 3.864,
+                ["Si"] = 3.057,
+                ["P"] = 2.063,
+                ["S"] = 1.648,
+                ["Cl"] = 1.239,
+                ["Fe"] = 4.773,
+                ["Co"] = 4.261,
+                ["Ni"] = 3.864,
+                ["Cu"] = 3.466,
+                ["Zn"] = 4.034,
+                ["Br"] = 1.733,
+                ["Sn"] = 4.375,
+                ["I"] = 3.040
+            };
         }
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#WHIM",
                 typeof(WHIMDescriptor).FullName,
@@ -221,11 +231,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///               mass, volume, eneg, polar</para>
         /// </summary>
         /// <exception cref="CDKException">if the parameters are of the wrong type</exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length != 1)
+                if (value.Count != 1)
                 {
                     throw new CDKException("WHIMDescriptor requires 1 parameter");
                 }
@@ -234,9 +244,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     throw new CDKException("Parameters must be of type string");
                 }
                 this.type = (string)value[0];
-                if (!this.type.Equals("unity") && !this.type.Equals("mass") && !this.type.Equals("volume")
-                        && !this.type.Equals("eneg") && !this.type.Equals("polar"))
-                    throw new CDKException("Weighting scheme must be one of those specified in the API");
+                switch (this.type)
+                {
+                    case "unity":
+                    case "mass":
+                    case "volume":
+                    case "eneg":
+                    case "polar":
+                        break;
+                    default:
+                        throw new CDKException("Weighting scheme must be one of those specified in the API");
+                }
             }
             get
             {
@@ -274,7 +292,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results,
                     DescriptorNames, e);
         }
 
@@ -310,28 +328,29 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IDictionary<string, double> hash = null;
             double[] wt = new double[ac.Atoms.Count];
 
-            if (this.type.Equals("unity"))
+            if (string.Equals(this.type, "unity", StringComparison.Ordinal))
             {
                 for (int i = 0; i < ac.Atoms.Count; i++)
                     wt[i] = 1.0;
             }
             else
             {
-                if (this.type.Equals("mass"))
+                switch (this.type)
                 {
-                    hash = this.hashatwt;
-                }
-                else if (this.type.Equals("volume"))
-                {
-                    hash = this.hashvdw;
-                }
-                else if (this.type.Equals("eneg"))
-                {
-                    hash = this.hasheneg;
-                }
-                else if (this.type.Equals("polar"))
-                {
-                    hash = this.hashpol;
+                    case "mass":
+                        hash = this.hashatwt;
+                        break;
+                    case "volume":
+                        hash = this.hashvdw;
+                        break;
+                    case "eneg":
+                        hash = this.hasheneg;
+                        break;
+                    case "polar":
+                        hash = this.hashpol;
+                        break;
+                    default:
+                        break;
                 }
                 for (int i = 0; i < ac.Atoms.Count; i++)
                 {
@@ -439,7 +458,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     d
                 };
 
-                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
+                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval, DescriptorNames);
             }
         }
 
@@ -450,9 +469,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         class PCA
         {
-            Matrix<double> evec;
-            Matrix<double> t;
-            double[] eval;
+            private readonly Matrix<double> evec;
+            private Matrix<double> t;
+            private readonly double[] eval;
 
             public PCA(double[][] cmat, double[] wt)
             {

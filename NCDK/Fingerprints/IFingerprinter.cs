@@ -89,11 +89,11 @@ namespace NCDK.Fingerprints
         /// <param name="container">IAtomContainer for which the fingerprint should be calculated.</param>
         /// <returns>the raw fingerprint</returns>
         /// <exception cref="CDKException"></exception>
-        IDictionary<string, int> GetRawFingerprint(IAtomContainer container);
+        IReadOnlyDictionary<string, int> GetRawFingerprint(IAtomContainer container);
 
         /// <summary>
         /// The size (or length) of the fingerprint.
         /// </summary>
-        int Count { get; }
+        int Length { get; }
     }
 }

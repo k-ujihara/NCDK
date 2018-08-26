@@ -34,27 +34,23 @@ namespace NCDK.Geometries.CIP
         /// <summary>
         /// <see cref="IAtomContainer"/> of which this ligand is part.
         /// </summary>
-        /// <returns>the IAtomContainer</returns>
-        IAtomContainer GetAtomContainer();
+        IAtomContainer AtomContainer { get; }
 
         /// <summary>
         /// The central <see cref="IAtom"/> to which this ligand is connected via one <see cref="IBond"/>.
         /// </summary>
-        /// <returns>the central atom</returns>
-        IAtom GetCentralAtom();
+        IAtom CentralAtom { get; }
 
         /// <summary>
         /// <see cref="IAtom"/> of the ligand that is connected to the central <see cref="IAtom"/> via
         /// one <see cref="IBond"/>.
         /// </summary>
-        /// <returns>the ligand atom</returns>
-        IAtom GetLigandAtom();
+        IAtom LigandAtom { get; }
 
         /// <summary>
-        /// Returns a list of visitedAtoms.
+        /// A <see cref="CIP.VisitedAtoms"/> list with visited atoms
         /// </summary>
-        /// <returns>a <see cref="VisitedAtoms"/> list with visited atoms</returns>
-        VisitedAtoms GetVisitedAtoms();
+        VisitedAtoms VisitedAtoms { get; }
 
         /// <summary>
         /// Returns a true if the atom has been visited before.

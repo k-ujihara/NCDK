@@ -24,10 +24,10 @@ using System.Text;
 namespace NCDK.Isomorphisms.Matchers
 {
     /// <summary>
-    ///  A QueryAtom that matches all symbols but those in this container. You may
-    ///  add symbols to this container. This QueryAtom will only give a match if it
-    ///  does NOT contain the symbol of the Atom to match (example: add "C" to get a
-    ///  match for all non-"C"-Atoms).
+    /// A QueryAtom that matches all symbols but those in this container. You may
+    /// add symbols to this container. This QueryAtom will only give a match if it
+    /// does NOT contain the symbol of the Atom to match (example: add "C" to get a
+    /// match for all non-"C"-Atoms).
     /// </summary>
     // @author        kha
     // @cdk.githash
@@ -44,8 +44,6 @@ namespace NCDK.Isomorphisms.Matchers
         public InverseSymbolSetQueryAtom(IChemObjectBuilder builder)
             : base(builder)
         { }
-
-        public void SetOperator(string str) { }
 
         /// <summary>
         ///  The matches implementation of the <see cref="QueryAtom"/> interface.

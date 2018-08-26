@@ -40,7 +40,7 @@ namespace NCDK.Reactions
         {
             if (reactionMechanism == null)
             {
-                var descriptor = descriptorClass.GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
+                var descriptor = descriptorClass.GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());
                 if (!(descriptor is IReactionMechanism))
                 {
                     throw new CDKException("The passed reaction class must be a IReactionMechanism");

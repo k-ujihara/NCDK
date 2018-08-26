@@ -19,7 +19,7 @@ namespace NCDK
                     continue;
                 var main = type.GetMethod("Main", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic, null, new Type[] { typeof(string[]) }, null);
                 if (main != null)
-                    main.Invoke(null, new object[] { new string[0] });
+                    main.Invoke(null, new object[] { Array.Empty<string>() });
             }
         }
 

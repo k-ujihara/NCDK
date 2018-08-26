@@ -68,7 +68,7 @@ namespace NCDK.Formula.Rules
         private Dictionary<string, int> hashMap;
 
         /// <summary> A enumeration of the possible mass range according the rules. </summary>
-        public class RangeMass
+        internal sealed class RangeMass
         {
             /// <summary>IMolecularFormula from a metabolite with a mass lower than 500 Da.</summary>
             public static readonly RangeMass Minus500 = new RangeMass();
@@ -81,7 +81,7 @@ namespace NCDK.Formula.Rules
         }
 
         /// <summary> A enumeration of the possible databases according the rules.</summary>
-        public class Database
+        internal sealed class Database
         {
             /// <summary>Wiley mass spectral database.</summary>
             public static readonly Database Wiley = new Database();
@@ -101,7 +101,7 @@ namespace NCDK.Formula.Rules
         /// <summary>
         /// The parameters attribute of the MMElementRule object.
         /// </summary>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             get
             {
@@ -114,7 +114,8 @@ namespace NCDK.Formula.Rules
 
             set
             {
-                if (value.Length > 2) throw new CDKException("MMElementRule only expects maximal two parameters");
+                if (value.Count > 2)
+                    throw new CDKException("MMElementRule only expects maximal two parameters");
 
                 if (value[0] != null)
                 {
@@ -123,7 +124,7 @@ namespace NCDK.Formula.Rules
                     databaseUsed = (Database)value[0];
                 }
 
-                if (value.Length > 1 && value[1] != null)
+                if (value.Count > 1 && value[1] != null)
                 {
                     if (!(value[1] is RangeMass))
                         throw new CDKException("The parameter must be of type RangeMass enum");
@@ -279,7 +280,7 @@ namespace NCDK.Formula.Rules
                 ["F"] = 16,
                 ["Cl"] = 10,
                 ["Br"] = 4,
-                ["Br"] = 8
+                ["Si"] = 8
             };
 
             return map;

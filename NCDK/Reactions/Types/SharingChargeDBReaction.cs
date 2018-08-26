@@ -48,13 +48,13 @@ namespace NCDK.Reactions.Types
         /// <returns>The specification value</returns>
         public ReactionSpecification Specification =>
             new ReactionSpecification(
-                    "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#SharingChargeDB", this
-                            .GetType().Name, "$Id$", "The Chemistry Development Kit");
+                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#SharingChargeDB",
+                this.GetType().Name, "$Id$", "The Chemistry Development Kit");
 
         /// <summary>
-        ///  Initiate process.
-        ///  It is needed to call the addExplicitHydrogensToSatisfyValency
-        ///  from the class tools.HydrogenAdder.
+        /// Initiate process.
+        /// It is needed to call the addExplicitHydrogensToSatisfyValency
+        /// from the class tools.HydrogenAdder.
         /// </summary>
         /// <param name="reactants">reactants of the reaction.</param>
         /// <param name="agents">agents of the reaction (Must be in this case null).</param>
@@ -127,7 +127,7 @@ namespace NCDK.Reactions.Types
         ///  </pre>
         /// </summary>
         /// <param name="reactant">The molecule to set the activity</param>
-        private void SetActiveCenters(IAtomContainer reactant)
+        private static void SetActiveCenters(IAtomContainer reactant)
         {
             foreach (var atomi in reactant.Atoms)
             {

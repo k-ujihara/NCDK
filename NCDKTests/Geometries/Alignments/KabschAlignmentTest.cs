@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.IO;
 using NCDK.Numerics;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System.Linq;
 

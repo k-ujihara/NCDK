@@ -73,7 +73,7 @@ namespace NCDK.FaulonSignatures
             }
         }
 
-        private List<VirtualEdge> edges;
+        private readonly List<VirtualEdge> edges;
 
         public VirtualGraphBuilder()
             : base()

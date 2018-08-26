@@ -1,10 +1,8 @@
-﻿using static NCDK.RingSearches.AllRingsFinder.Threshold;
-
-namespace NCDK.RingSearches
+﻿namespace NCDK.RingSearches
 {
     class AllRingsFinder_Example
     {
-        public void Main()
+        public static void Main()
         {
             {
                 IChemObjectSet<IAtomContainer> ms = null;
@@ -26,7 +24,7 @@ namespace NCDK.RingSearches
             {
                 #region UsingThreshold
                 // using static NCDK.RingSearches.AllRingsFinder.Threshold;
-                AllRingsFinder arf = AllRingsFinder.UsingThreshold(PubChem_99);
+                AllRingsFinder arf = AllRingsFinder.UsingThreshold(Threshold.PubChem99);
                 #endregion
             }
         }

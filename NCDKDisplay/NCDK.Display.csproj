@@ -63,6 +63,7 @@
     <Compile Include="Renderers\Generators\AtomShapeType.cs" />
     <Compile Include="Renderers\Generators\BasicGenerator.cs" />
     <Compile Include="Renderers\Generators\BasicSceneGenerator.cs" />
+    <Compile Include="Renderers\Generators\IPalette.cs" />
     <Compile Include="Renderers\HighlightStyle.cs" />
     <Compile Include="Renderers\ObserbableDictionary.cs" />
     <Compile Include="Renderers\RendererModelTools.tt.cs">

@@ -74,8 +74,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the PartialPiChargeDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialPiCharge",
                 typeof(PartialPiChargeDescriptor).FullName, "The Chemistry Development Kit");
@@ -100,25 +100,25 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </list>
         /// </remarks>
         /// <exception cref="CDKException">Description of the Exception</exception>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 3)
+                if (value.Count > 3)
                     throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
 
                 if (!(value[0] is int))
                     throw new CDKException("The parameter must be of type int");
                 maxIterations = (int)value[0];
 
-                if (value.Length > 1 && value[1] != null)
+                if (value.Count > 1 && value[1] != null)
                 {
                     if (!(value[1] is bool))
                         throw new CDKException("The parameter must be of type bool");
                     lpeChecker = (bool)value[1];
                 }
 
-                if (value.Length > 2 && value[2] != null)
+                if (value.Count > 2 && value[2] != null)
                 {
                     if (!(value[2] is int))
                         throw new CDKException("The parameter must be of type int");
@@ -136,7 +136,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
         }
 
         /// <summary>
@@ -170,10 +170,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
                 if (lpeChecker)
                 {
-                    LonePairElectronChecker lpcheck = new LonePairElectronChecker();
                     try
                     {
-                        lpcheck.Saturate(ac);
+                        LonePairElectronChecker.Saturate(ac);
                     }
                     catch (CDKException e)
                     {
@@ -208,7 +207,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             atom.MaxBondOrder = originalMaxBondOrder;
             atom.BondOrderSum = originalBondOrderSum;
 
-            return GetCachedDescriptorValue(atom) != null ? new DescriptorValue<Result<double>>(_Specification, ParameterNames,
+            return GetCachedDescriptorValue(atom) != null ? new DescriptorValue<Result<double>>(specification, ParameterNames,
                     Parameters, (Result<double>)GetCachedDescriptorValue(atom), NAMES) : null;
         }
 
@@ -224,9 +223,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>The parameterType value</returns>
         public object GetParameterType(string name)
         {
-            if ("maxIterations".Equals(name)) return int.MaxValue;
-            if ("lpeChecker".Equals(name)) return true;
-            if ("maxResonStruc".Equals(name)) return int.MaxValue;
+            if (string.Equals("maxIterations", name, StringComparison.Ordinal)) return int.MaxValue;
+            if (string.Equals("lpeChecker", name, StringComparison.Ordinal)) return true;
+            if (string.Equals("maxResonStruc", name, StringComparison.Ordinal)) return int.MaxValue;
             return null;
         }
     }

@@ -20,8 +20,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 
 namespace NCDK.SMSD.Algorithms.MCSPluses
 {
@@ -36,7 +37,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         public void TestSomeMethod()
         {
             // TODO review the generated test code and remove the default call to fail.
-            Assert.IsNotNull(new MCSPlus().GetOverlaps(new AtomContainer(), new AtomContainer(), true));
+            Assert.IsNotNull(MCSPlus.GetOverlaps(new AtomContainer(), new AtomContainer(), true));
         }
     }
 }

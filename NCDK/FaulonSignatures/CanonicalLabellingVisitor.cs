@@ -6,9 +6,9 @@ namespace NCDK.FaulonSignatures
 {
     public class CanonicalLabellingVisitor : IDAGVisitor
     {
-        private int[] labelling;
+        private readonly int[] labelling;
         private int currentLabel;
-        private IComparer<Node> comparator = null;
+        private readonly IComparer<Node> comparator = null;
 
         public CanonicalLabellingVisitor(
                 int vertexCount, IComparer<Node> comparator)

@@ -19,7 +19,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System.Linq;
 
 namespace NCDK.Config
@@ -44,7 +44,7 @@ namespace NCDK.Config
             var configFile = "NCDK.Dict.Data.cdk-atom-types.owl";
             var ins = ResourceLoader.GetAsStream(configFile);
             var configurator = new OWLBasedAtomTypeConfigurator();
-            configurator.Stream = ins;
+            configurator.SetStream(ins);
             var atomTypes = configurator.ReadAtomTypes(new ChemObject().Builder);
             Assert.AreNotSame(0, atomTypes.Count());
         }

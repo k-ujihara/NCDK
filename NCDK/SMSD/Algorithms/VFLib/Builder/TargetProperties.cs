@@ -35,47 +35,34 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd .")]
-    [Serializable]
     public class TargetProperties 
     {
-        private IDictionary<IAtom, int> connectedTargetAtomCountMap = null;
-        private IDictionary<IAtom, IList<IAtom>> connectedTargetAtomListMap = null;
-        private IBond[][] map = null;
-        private IDictionary<IAtom, int> atoms = null;
-        private IDictionary<int, IAtom> atomsIndex = null;
+        private Dictionary<IAtom, int> connectedTargetAtomCountMap = null;
+        private readonly Dictionary<IAtom, IReadOnlyList<IAtom>> connectedTargetAtomListMap = null;
+        private readonly IBond[][] map = null;
+        private Dictionary<IAtom, int> atoms = null;
+        private readonly Dictionary<int, IAtom> atomsIndex = null;
 
-        /// <summary>
-        /// </summary>
-        /// <returns>the connectedTargetAtomCountMap</returns>
         public int CountNeighbors(IAtom atom)
         {
             if (connectedTargetAtomCountMap == null || !connectedTargetAtomCountMap.ContainsKey(atom))
             {
-                Console.Out.WriteLine("Object not found in " + atoms.Count + " atoms");
+                Console.Out.WriteLine($"Object not found in {atoms.Count} atoms");
                 return 0;
             }
             return connectedTargetAtomCountMap[atom];
         }
 
-        /// <summary>
-        /// </summary>
-        /// <returns>the connected Target Atom List</returns>
-        public IList<IAtom> GetNeighbors(IAtom atom)
+        public IReadOnlyList<IAtom> GetNeighbors(IAtom atom)
         {
             return connectedTargetAtomListMap[atom];
         }
 
-        /// <summary>
-        /// </summary>
-        /// <returns>the map</returns>
         public IBond GetBond(IAtom atom1, IAtom atom2)
         {
             return map[atoms[atom2]][atoms[atom1]];
         }
 
-        /// <summary>
-        /// atom count
-        /// </summary>
         public int AtomCount => atoms.Count;
 
         public TargetProperties(IAtomContainer container)
@@ -84,7 +71,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
             atoms = new Dictionary<IAtom, int>();
             atomsIndex = new Dictionary<int, IAtom>();
             connectedTargetAtomCountMap = new Dictionary<IAtom, int>();
-            connectedTargetAtomListMap = new Dictionary<IAtom, IList<IAtom>>();
+            connectedTargetAtomListMap = new Dictionary<IAtom, IReadOnlyList<IAtom>>();
             map = Arrays.CreateJagged<IBond>(container.Atoms.Count, container.Atoms.Count);
             foreach (var atom in container.Atoms)
             {

@@ -207,10 +207,10 @@ namespace NCDK
             Assert.IsTrue(clone is IMolecularFormulaSet);
             Assert.AreNotSame(mfS, clone);
             Assert.AreEqual(mfS.Count(), ((IMolecularFormulaSet)clone).Count());
-            Assert.AreEqual(mfS[0].Count, ((IMolecularFormulaSet)clone)
-                    [0].Count);
-            Assert.AreEqual(mfS[1].Count, ((IMolecularFormulaSet)clone)
-                    [1].Count);
+            Assert.AreEqual(mfS[0].IsotopesCount, ((IMolecularFormulaSet)clone)
+                    [0].IsotopesCount);
+            Assert.AreEqual(mfS[1].IsotopesCount, ((IMolecularFormulaSet)clone)
+                    [1].IsotopesCount);
         }
 
         [TestMethod()]

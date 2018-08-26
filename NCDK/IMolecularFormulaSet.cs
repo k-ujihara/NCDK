@@ -21,12 +21,6 @@ using System.Collections.Generic;
 
 namespace NCDK
 {
-    /*
- *  <p>
- *
-
- *
- */
     /// <summary>
     /// Class defining a molecular formula object. It maintains a list of list <see cref="IMolecularFormula"/>.
     /// </summary>
@@ -43,6 +37,7 @@ namespace NCDK
     // @cdk.created 2007-11-20
     // @cdk.keyword molecular formula
     // @cdk.githash
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public interface IMolecularFormulaSet
         : ICDKObject, IList<IMolecularFormula>
     {

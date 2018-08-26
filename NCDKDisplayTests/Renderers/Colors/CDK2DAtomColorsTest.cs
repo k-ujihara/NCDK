@@ -21,7 +21,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System.Windows.Media;
 using WPF = System.Windows;
 

@@ -17,11 +17,12 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Numerics;
 using NCDK.Config;
+using NCDK.Numerics;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Diagnostics;
+using System.Linq;
 
 namespace NCDK.Charges
 {
@@ -67,23 +68,19 @@ namespace NCDK.Charges
         {
             if (factory == null)
             {
-                factory = AtomTypeFactory
-                        .GetInstance("NCDK.Config.Data.jmol_atomtypes.txt", ac.Builder);
+                factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt", ac.Builder);
             }
 
             int stepsLimit = 9;
-            IAtom[] atoms = AtomContainerManipulator.GetAtomArray(ac);
-            double[] pChInch = new double[atoms.Length * (stepsLimit + 1)];
-            double[] ElEn = new double[atoms.Length * (stepsLimit + 1)];
-            double[] pCh = new double[atoms.Length * (stepsLimit + 1)];
-            double[] startEE = GetPaulingElectronegativities(ac, true);
+            var atoms = ac.Atoms.ToArray();
+            var pChInch = new double[atoms.Length * (stepsLimit + 1)];
+            var ElEn = new double[atoms.Length * (stepsLimit + 1)];
+            var pCh = new double[atoms.Length * (stepsLimit + 1)];
+            var startEE = GetPaulingElectronegativities(ac, true);
             for (int e = 0; e < atoms.Length; e++)
             {
                 ElEn[e] = startEE[e];
-                //Debug.WriteLine("INDU: initial EE "+startEE[e]);
             }
-            //double tmp1 = 0;
-            //double tmp2 = 0;
             for (int s = 1; s < 10; s++)
             {
                 for (int a = 0; a < atoms.Length; a++)
@@ -97,10 +94,7 @@ namespace NCDK.Charges
                         atoms[a].SetProperty("InductivePartialCharge", pCh[a + (s * atoms.Length)]);
                         atoms[a].SetProperty("EffectiveAtomicElectronegativity", ElEn[a + (s * atoms.Length)]);
                     }
-                    //tmp1 = pCh[a + (s * atoms.Length)];
-                    //tmp2 = ElEn[a + (s * atoms.Length)];
-                    //Debug.WriteLine("DONE step " + s + ", atom " + atoms[a].Symbol + ", ch " + tmp1 + ", ee " + tmp2);
-                }
+               }
             }
             return ac;
         }
@@ -113,8 +107,7 @@ namespace NCDK.Charges
             }
             catch (Exception exception)
             {
-                throw new CDKException("Could not calculate inductive partial charges: " + exception.Message,
-                        exception);
+                throw new CDKException($"Could not calculate inductive partial charges: {exception.Message}", exception);
             }
         }
 
@@ -127,80 +120,73 @@ namespace NCDK.Charges
         /// <returns>The pauling electronegativities</returns>
         public double[] GetPaulingElectronegativities(IAtomContainer ac, bool modified)
         {
-            double[] paulingElectronegativities = new double[ac.Atoms.Count];
+            var paulingElectronegativities = new double[ac.Atoms.Count];
             IElement element = null;
             string symbol = null;
             int atomicNumber = 0;
             try
             {
-                ifac = Isotopes.Instance;
+                ifac = BODRIsotopeFactory.Instance;
                 for (int i = 0; i < ac.Atoms.Count; i++)
                 {
-                    IAtom atom = ac.Atoms[i];
+                    var atom = ac.Atoms[i];
                     symbol = ac.Atoms[i].Symbol;
                     element = ifac.GetElement(symbol);
                     atomicNumber = element.AtomicNumber.Value;
                     if (modified)
                     {
-                        if (symbol.Equals("Cl"))
+                        switch (symbol)
                         {
-                            paulingElectronegativities[i] = 3.28;
-                        }
-                        else if (symbol.Equals("Br"))
-                        {
-                            paulingElectronegativities[i] = 3.13;
-                        }
-                        else if (symbol.Equals("I"))
-                        {
-                            paulingElectronegativities[i] = 2.93;
-                        }
-                        else if (symbol.Equals("H"))
-                        {
-                            paulingElectronegativities[i] = 2.10;
-                        }
-                        else if (symbol.Equals("C"))
-                        {
-                            if (ac.GetMaximumBondOrder(atom) == BondOrder.Single)
-                            {
-                                // Csp3
-                                paulingElectronegativities[i] = 2.20;
-                            }
-                            else if (ac.GetMaximumBondOrder(atom) == BondOrder.Double)
-                            {
-                                paulingElectronegativities[i] = 2.31;
-                            }
-                            else
-                            {
-                                paulingElectronegativities[i] = 3.15;
-                            }
-                        }
-                        else if (symbol.Equals("O"))
-                        {
-                            if (ac.GetMaximumBondOrder(atom) == BondOrder.Single)
-                            {
-                                // Osp3
-                                paulingElectronegativities[i] = 3.20;
-                            }
-                            else if (ac.GetMaximumBondOrder(atom) != BondOrder.Single)
-                            {
-                                paulingElectronegativities[i] = 4.34;
-                            }
-                        }
-                        else if (symbol.Equals("Si"))
-                        {
-                            paulingElectronegativities[i] = 1.99;
-                        }
-                        else if (symbol.Equals("S"))
-                        {
-                            paulingElectronegativities[i] = 2.74;
-                        }
-                        else if (symbol.Equals("N"))
-                        {
-                            paulingElectronegativities[i] = 2.59;
-                        }
-                        else
-                        {
-                            paulingElectronegativities[i] = pauling[atomicNumber];
+                            case "Cl":
+                                paulingElectronegativities[i] = 3.28;
+                                break;
+                            case "Br":
+                                paulingElectronegativities[i] = 3.13;
+                                break;
+                            case "I":
+                                paulingElectronegativities[i] = 2.93;
+                                break;
+                            case "H":
+                                paulingElectronegativities[i] = 2.10;
+                                break;
+                            case "C":
+                                if (ac.GetMaximumBondOrder(atom) == BondOrder.Single)
+                                {
+                                    // Csp3
+                                    paulingElectronegativities[i] = 2.20;
+                                }
+                                else if (ac.GetMaximumBondOrder(atom) == BondOrder.Double)
+                                {
+                                    paulingElectronegativities[i] = 2.31;
+                                }
+                                else
+                                {
+                                    paulingElectronegativities[i] = 3.15;
+                                }
+                                break;
+                            case "O":
+                                if (ac.GetMaximumBondOrder(atom) == BondOrder.Single)
+                                {
+                                    // Osp3
+                                    paulingElectronegativities[i] = 3.20;
+                                }
+                                else if (ac.GetMaximumBondOrder(atom) != BondOrder.Single)
+                                {
+                                    paulingElectronegativities[i] = 4.34;
+                                }
+                                break;
+                            case "Si":
+                                paulingElectronegativities[i] = 1.99;
+                                break;
+                            case "S":
+                                paulingElectronegativities[i] = 2.74;
+                                break;
+                            case "N":
+                                paulingElectronegativities[i] = 2.59;
+                                break;
+                            default:
+                                paulingElectronegativities[i] = pauling[atomicNumber];
+                                break;
                         }
                     }
                     else
@@ -213,7 +199,7 @@ namespace NCDK.Charges
             catch (Exception ex1)
             {
                 Debug.WriteLine(ex1);
-                throw new CDKException("Problems with IsotopeFactory due to " + ex1.ToString(), ex1);
+                throw new CDKException($"Problems with IsotopeFactory due to {ex1.Message}", ex1);
             }
         }
 
@@ -233,8 +219,7 @@ namespace NCDK.Charges
         {
             if (factory == null)
             {
-                factory = AtomTypeFactory
-                        .GetInstance("NCDK.Config.Data.jmol_atomtypes.txt", ac.Builder);
+                factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt", ac.Builder);
             }
             IAtom target = null;
             double core = 0;
@@ -277,7 +262,7 @@ namespace NCDK.Charges
                     catch (Exception ex1)
                     {
                         Debug.WriteLine(ex1);
-                        throw new CDKException("Problems with AtomTypeFactory due to " + ex1.Message, ex1);
+                        throw new CDKException($"Problems with AtomTypeFactory due to {ex1.Message}", ex1);
                     }
                     if (GetCovalentRadius(symbol, ac.GetMaximumBondOrder(atom)) > 0)
                     {
@@ -315,8 +300,7 @@ namespace NCDK.Charges
             double incrementedCharge = 0;
             double radiusTarget = 0;
             target = ac.Atoms[atomPosition];
-            //Debug.WriteLine("ATOM "+target.Symbol+" AT POSITION "+atomPosition);
-            allAtoms = AtomContainerManipulator.GetAtomArray(ac);
+            allAtoms = ac.Atoms.ToArray();
             double tmp = 0;
             double radius = 0;
             string symbol = null;
@@ -337,7 +321,7 @@ namespace NCDK.Charges
             catch (Exception ex1)
             {
                 Debug.WriteLine(ex1);
-                throw new CDKException("Problems with AtomTypeFactory due to " + ex1.Message, ex1);
+                throw new CDKException($"Problems with AtomTypeFactory due to {ex1.Message}", ex1);
             }
 
             for (int a = 0; a < allAtoms.Length; a++)
@@ -367,12 +351,9 @@ namespace NCDK.Charges
                     tmp = tmp * ((radius * radius) + (radiusTarget * radiusTarget));
                     tmp = tmp / (CalculateSquaredDistanceBetweenTwoAtoms(target, allAtoms[a]));
                     incrementedCharge += tmp;
-                    //if(actualStep==1)
-                    //Debug.WriteLine("INDU: particular atom "+symbol+ ", radii: "+ radius+ " - " + radiusTarget+", dist: "+CalculateSquaredDistanceBetweenTwoAtoms(target, allAtoms[a]));
                 }
             }
             incrementedCharge = 0.172 * incrementedCharge;
-            //Debug.WriteLine("Increment: " +incrementedCharge);
             return incrementedCharge;
         }
 
@@ -382,72 +363,64 @@ namespace NCDK.Charges
         /// <param name="symbol">symbol of the atom</param>
         /// <param name="maxBondOrder">its max bond order</param>
         /// <returns>The covalentRadius value given by the reference</returns>
-        private double GetCovalentRadius(string symbol, BondOrder maxBondOrder)
+        private static double GetCovalentRadius(string symbol, BondOrder maxBondOrder)
         {
             double radiusTarget = 0;
-            if (symbol.Equals("F"))
+            switch (symbol)
             {
-                radiusTarget = 0.64;
-            }
-            else if (symbol.Equals("Cl"))
-            {
-                radiusTarget = 0.99;
-            }
-            else if (symbol.Equals("Br"))
-            {
-                radiusTarget = 1.14;
-            }
-            else if (symbol.Equals("I"))
-            {
-                radiusTarget = 1.33;
-            }
-            else if (symbol.Equals("H"))
-            {
-                radiusTarget = 0.30;
-            }
-            else if (symbol.Equals("C"))
-            {
-                if (maxBondOrder == BondOrder.Single)
-                {
-                    // Csp3
-                    radiusTarget = 0.77;
-                }
-                else if (maxBondOrder == BondOrder.Double)
-                {
-                    radiusTarget = 0.67;
-                }
-                else
-                {
-                    radiusTarget = 0.60;
-                }
-            }
-            else if (symbol.Equals("O"))
-            {
-                if (maxBondOrder == BondOrder.Single)
-                {
-                    // Csp3
-                    radiusTarget = 0.66;
-                }
-                else if (maxBondOrder != BondOrder.Single)
-                {
-                    radiusTarget = 0.60;
-                }
-            }
-            else if (symbol.Equals("Si"))
-            {
-                radiusTarget = 1.11;
-            }
-            else if (symbol.Equals("S"))
-            {
-                radiusTarget = 1.04;
-            }
-            else if (symbol.Equals("N"))
-            {
-                radiusTarget = 0.70;
-            }
-            else
-            {
-                radiusTarget = 0;
+                case "F":
+                    radiusTarget = 0.64;
+                    break;
+                case "Cl":
+                    radiusTarget = 0.99;
+                    break;
+                case "Br":
+                    radiusTarget = 1.14;
+                    break;
+                case "I":
+                    radiusTarget = 1.33;
+                    break;
+                case "H":
+                    radiusTarget = 0.30;
+                    break;
+                case "C":
+                    if (maxBondOrder == BondOrder.Single)
+                    {
+                        // Csp3
+                        radiusTarget = 0.77;
+                    }
+                    else if (maxBondOrder == BondOrder.Double)
+                    {
+                        radiusTarget = 0.67;
+                    }
+                    else
+                    {
+                        radiusTarget = 0.60;
+                    }
+                    break;
+                case "O":
+                    if (maxBondOrder == BondOrder.Single)
+                    {
+                        // Csp3
+                        radiusTarget = 0.66;
+                    }
+                    else if (maxBondOrder != BondOrder.Single)
+                    {
+                        radiusTarget = 0.60;
+                    }
+                    break;
+                case "Si":
+                    radiusTarget = 1.11;
+                    break;
+                case "S":
+                    radiusTarget = 1.04;
+                    break;
+                case "N":
+                    radiusTarget = 0.70;
+                    break;
+                default:
+                    radiusTarget = 0;
+                    break;
             }
             return radiusTarget;
         }
@@ -458,12 +431,12 @@ namespace NCDK.Charges
         /// <param name="atom1">first atom</param>
         /// <param name="atom2">second atom</param>
         /// <returns>squared distance between the 2 atoms</returns>
-        private double CalculateSquaredDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
+        private static double CalculateSquaredDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
         {
             double distance = 0;
             double tmp = 0;
-            Vector3 firstPoint = atom1.Point3D.Value;
-            Vector3 secondPoint = atom2.Point3D.Value;
+            var firstPoint = atom1.Point3D.Value;
+            var secondPoint = atom2.Point3D.Value;
             tmp = Vector3.Distance(firstPoint, secondPoint);
             distance = tmp * tmp;
             return distance;

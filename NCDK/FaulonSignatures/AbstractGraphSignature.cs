@@ -14,18 +14,12 @@ namespace NCDK.FaulonSignatures
         /// The separator is printed between vertex signature strings
         /// </summary>
         private readonly string separator;
-
-        /// <summary>
-        /// This is the height the signature is created with, which cannot be exceeded.
-        /// </summary>
-        private int height;
-
         private string graphSignature; // XXX
 
         /// <summary>
         /// Create a graph signature with a default separator.
         /// </summary>
-        public AbstractGraphSignature()
+        protected AbstractGraphSignature()
             : this(" + ", -1)
         { }
 
@@ -33,7 +27,7 @@ namespace NCDK.FaulonSignatures
         /// Create a graph signature with the given separator.
         /// </summary>
         /// <param name="separator">the separator to use</param>
-        public AbstractGraphSignature(string separator)
+        protected AbstractGraphSignature(string separator)
                 : this(separator, -1)
         { }
 
@@ -41,7 +35,7 @@ namespace NCDK.FaulonSignatures
         /// Create a graph signature with a default separator and the given height.
         /// </summary>
         /// <param name="height">the height of the vertex signatures made from this graph.</param>
-        public AbstractGraphSignature(int height)
+        protected AbstractGraphSignature(int height)
                 : this(" + ", height)
         { }
 
@@ -50,16 +44,16 @@ namespace NCDK.FaulonSignatures
         /// </summary>
         /// <param name="separator">the separator to use</param>
         /// <param name="height">the height of the vertex signatures made from this graph.</param>
-        public AbstractGraphSignature(string separator, int height)
+        protected AbstractGraphSignature(string separator, int height)
         {
             this.separator = separator;
-            this.height = height;
+            this.Height = height;
         }
 
         /// <summary>
         /// The height that the graph signature was created with.
         /// </summary>
-        public int Height => this.height;
+        public int Height { get; }
 
         /// <summary>
         /// Get the vertex count of the graph that this is the signature of.
@@ -104,7 +98,7 @@ namespace NCDK.FaulonSignatures
             {
                 string signatureString = this.SignatureStringForVertex(i);
                 if (canonicalString == null ||
-                        canonicalString.CompareTo(signatureString) > 0)
+                        string.Compare(canonicalString, signatureString, StringComparison.Ordinal) > 0)
                 {
                     canonicalString = signatureString;
                 }
@@ -257,7 +251,7 @@ namespace NCDK.FaulonSignatures
         }
 
         /// <summary>
-        /// Test the the vertices in the graph, to see if the order they are in
+        /// Test the vertices in the graph, to see if the order they are in
         /// (confusingly called the 'labelling' of the graph) is canonical. The 
         /// order that is canonical according to this method may not be the same as
         /// the canonical order from another method.
@@ -299,7 +293,7 @@ namespace NCDK.FaulonSignatures
                 AbstractVertexSignature signatureForVertexI = SignatureForVertex(i);
                 string signatureString = signatureForVertexI.ToCanonicalString();
                 if (canonicalSignature == null ||
-                        signatureString.CompareTo(canonicalSignatureString) < 0)
+                        string.Compare(signatureString, canonicalSignatureString, StringComparison.Ordinal) < 0)
                 {
                     canonicalSignature = signatureForVertexI;
                     canonicalSignatureString = signatureString;

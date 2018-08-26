@@ -117,7 +117,7 @@ namespace NCDK.Pharmacophore
             return lower;
         }
 
-        private double Round(double val, int places)
+        private static double Round(double val, int places)
         {
             long factor = (long)Math.Pow(10, places);
             val = val * factor;

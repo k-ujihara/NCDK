@@ -37,14 +37,14 @@ namespace NCDK.QSAR
         /// Default implementation of initialise allows optional override.
         /// </summary>
         /// <param name="builder">chem object build</param>
-        public void Initialise(IChemObjectBuilder builder)
+        public virtual void Initialise(IChemObjectBuilder builder)
         {
             // do nothing
         }
 
         public abstract IImplementationSpecification Specification { get; }
         public abstract IReadOnlyList<string> ParameterNames { get; }
-        public abstract object[] Parameters { get; set; }
+        public abstract IReadOnlyList<object> Parameters { get; set; }
         public abstract IReadOnlyList<string> DescriptorNames { get; }
         public abstract object GetParameterType(string name);
     }

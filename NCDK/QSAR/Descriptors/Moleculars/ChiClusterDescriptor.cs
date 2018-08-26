@@ -71,8 +71,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public ChiClusterDescriptor() { }
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiCluster",
                 typeof(ChiClusterDescriptor).FullName,
@@ -81,7 +81,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public override IReadOnlyList<string> ParameterNames => null;
         public override object GetParameterType(string name) => null;
         public override IReadOnlyList<string> DescriptorNames => NAMES;
-        public override object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
@@ -89,13 +89,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results,
                     DescriptorNames, e);
         }
 
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
-            if (sp == null) sp = new SmilesParser(container.Builder);
+            if (sp == null)
+                sp = new SmilesParser(container.Builder);
 
             // removeHydrogens does a deep copy, so no need to clone
             IAtomContainer localAtomContainer = AtomContainerManipulator.RemoveHydrogens(container);
@@ -157,15 +158,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 order6v,
             };
 
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval, DescriptorNames);
         }
 
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(8);
 
-        private IList<IList<int>> Order3(IAtomContainer atomContainer)
+        private IEnumerable<IReadOnlyList<int>> Order3(IAtomContainer atomContainer)
         {
-            QueryAtomContainer[] queries = new QueryAtomContainer[1];
+            var queries = new QueryAtomContainer[1];
             try
             {
                 queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("C(C)(C)(C)"), false);
@@ -177,13 +178,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ChiIndexUtils.GetFragments(atomContainer, queries);
         }
 
-        private IList<IList<int>> Order4(IAtomContainer atomContainer)
+        private IEnumerable<IReadOnlyList<int>> Order4(IAtomContainer atomContainer)
         {
-            QueryAtomContainer[] queries = new QueryAtomContainer[1];
+            var queries = new QueryAtomContainer[1];
             try
             {
-                queries[0] = QueryAtomContainerCreator
-                        .CreateAnyAtomAnyBondContainer(sp.ParseSmiles("C(C)(C)(C)(C)"), false);
+                queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("C(C)(C)(C)(C)"), false);
             }
             catch (InvalidSmilesException e)
             {
@@ -192,9 +192,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ChiIndexUtils.GetFragments(atomContainer, queries);
         }
 
-        private IList<IList<int>> Order5(IAtomContainer atomContainer)
+        private IEnumerable<IReadOnlyList<int>> Order5(IAtomContainer atomContainer)
         {
-            QueryAtomContainer[] queries = new QueryAtomContainer[1];
+            var queries = new QueryAtomContainer[1];
             try
             {
                 queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC(C)C(C)(C)"), false);
@@ -206,9 +206,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ChiIndexUtils.GetFragments(atomContainer, queries);
         }
 
-        private IList<IList<int>> Order6(IAtomContainer atomContainer)
+        private IEnumerable<IReadOnlyList<int>> Order6(IAtomContainer atomContainer)
         {
-            QueryAtomContainer[] queries = new QueryAtomContainer[1];
+            var queries = new QueryAtomContainer[1];
             try
             {
                 queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC(C)C(C)(C)C"), false);

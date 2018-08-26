@@ -19,6 +19,7 @@
 
 using NCDK.Tools;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -49,7 +50,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "ctx" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "ctx" };
 
         /// <inheritdoc/>
         public override string ReaderClassName => "NCDK.IO.CTXReader";

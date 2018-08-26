@@ -18,6 +18,7 @@
  */
 
 using NCDK.QSAR.Results;
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -70,8 +71,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         ///  The specification attribute of the BondCountDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondCount",
                 typeof(BondCountDescriptor).FullName,
@@ -81,11 +82,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the BondCountDescriptor object
         /// </summary>
         /// <exception cref="CDKException">Description of the Exception</exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
                     throw new CDKException("BondCount only expects one parameter");
                 }
@@ -112,7 +113,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             get
             {
-                if (order.Equals(""))
+                if (string.IsNullOrEmpty(order))
                     return new string[] { "nB" };
                 else
                     return new string[] { "nB" + order };
@@ -126,7 +127,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>The number of bonds of a certain type.</returns>
         public DescriptorValue<Result<int>> Calculate(IAtomContainer container)
         {
-            if (order.Equals(""))
+            if (string.IsNullOrEmpty(order))
             {
                 int bondCount = 0;
                 foreach (var bond in container.Bonds)
@@ -134,7 +135,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     bool hasHydrogen = false;
                     for (int i = 0; i < bond.Atoms.Count; i++)
                     {
-                        if (bond.Atoms[i].Symbol.Equals("H"))
+                        if (string.Equals(bond.Atoms[i].Symbol, "H", StringComparison.Ordinal))
                         {
                             hasHydrogen = true;
                             break;
@@ -142,7 +143,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     }
                     if (!hasHydrogen) bondCount++;
                 }
-                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(bondCount), DescriptorNames, null);
+                return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(bondCount), DescriptorNames, null);
             }
             else
             {
@@ -154,20 +155,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         bondCount += 1;
                     }
                 }
-                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(bondCount), DescriptorNames);
+                return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(bondCount), DescriptorNames);
             }
         }
 
-        private bool BondMatch(BondOrder order, string orderString)
+        private static bool BondMatch(BondOrder order, string orderString)
         {
-            if (order == BondOrder.Single && "s".Equals(orderString))
+            if (order == BondOrder.Single && "s".Equals(orderString, StringComparison.Ordinal))
                 return true;
-            else if (order == BondOrder.Double && "d".Equals(orderString))
+            else if (order == BondOrder.Double && "d".Equals(orderString, StringComparison.Ordinal))
                 return true;
-            else if (order == BondOrder.Triple && "t".Equals(orderString))
+            else if (order == BondOrder.Triple && "t".Equals(orderString, StringComparison.Ordinal))
                 return true;
             else
-                return (order == BondOrder.Quadruple && "q".Equals(orderString));
+                return (order == BondOrder.Quadruple && "q".Equals(orderString, StringComparison.Ordinal));
         }
 
         /// <inheritdoc/>
@@ -185,7 +186,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>The parameterType value</returns>
         public override object GetParameterType(string name)
         {
-            if ("order".Equals(name)) return "";
+            if (string.Equals("order", name, StringComparison.Ordinal)) return "";
             return null;
         }
 

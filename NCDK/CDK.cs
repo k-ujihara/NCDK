@@ -35,5 +35,7 @@ namespace NCDK
         /// </summary>
         /// <returns>The library version</returns>
         public static string Version => typeof(CDK).Assembly.GetName().Version.ToString();
+
+        internal static Smiles.SmilesParser SilentSmilesParser { get; } = new Smiles.SmilesParser(Silent.ChemObjectBuilder.Instance);
     }
 }

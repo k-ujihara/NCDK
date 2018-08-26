@@ -61,8 +61,6 @@ namespace NCDK.IO.Iterator
         private IChemObjectBuilder builder;
         private BooleanIOSetting forceReadAs3DCoords;
 
-        private static readonly string LINE_SEPARATOR = "\n";
-
         // patterns to match
         private static readonly Regex MDL_Version = new Regex("[vV](2000|3000)", RegexOptions.Compiled);
         private const string M_END = "M  END";
@@ -165,7 +163,7 @@ namespace NCDK.IO.Iterator
             while ((currentLine = input.ReadLine()) != null)
             {
                 // still in a molecule
-                buffer.Append(currentLine).Append(LINE_SEPARATOR);
+                buffer.Append(currentLine).Append('\n');
                 lineNum++;
 
                 // do MDL molfile version checking
@@ -174,14 +172,15 @@ namespace NCDK.IO.Iterator
                     var versionMatcher = MDL_Version.Match(currentLine);
                     if (versionMatcher.Success)
                     {
-                        currentFormat = "2000".Equals(versionMatcher.Groups[1].Value) ? (IChemFormat)MDLV2000Format.Instance
-                                : (IChemFormat)MDLV3000Format.Instance;
+                        currentFormat = string.Equals("2000", versionMatcher.Groups[1].Value, StringComparison.Ordinal) 
+                            ? (IChemFormat)MDLV2000Format.Instance
+                            : (IChemFormat)MDLV3000Format.Instance;
                     }
                 }
 
                 if (currentLine.StartsWith(M_END, StringComparison.Ordinal))
                 {
-                    Debug.WriteLine("MDL file part read: ", buffer);
+                    Debug.WriteLine($"MDL file part read: {buffer}");
 
                     IAtomContainer molecule = null;
 
@@ -192,7 +191,7 @@ namespace NCDK.IO.Iterator
                     }
                     catch (Exception exception)
                     {
-                        Trace.TraceError("Error while reading next molecule: " + exception.Message);
+                        Trace.TraceError($"Error while reading next molecule: {exception.Message}");
                         Debug.WriteLine(exception);
                     }
 
@@ -245,7 +244,7 @@ namespace NCDK.IO.Iterator
             {
                 if (currentLine.StartsWith(SDF_RECORD_SEPARATOR, StringComparison.Ordinal))
                     break;
-                Debug.WriteLine("looking for data header: ", currentLine);
+                Debug.WriteLine($"looking for data header: {currentLine}");
                 string str = currentLine;
                 if (str.StartsWith(SDF_DATA_HEADER, StringComparison.Ordinal))
                 {
@@ -303,7 +302,7 @@ namespace NCDK.IO.Iterator
             return str;
         }
 
-        private string ExtractFieldName(string str)
+        private static string ExtractFieldName(string str)
         {
             int index = str.IndexOf('<');
             if (index != -1)
@@ -339,14 +338,13 @@ namespace NCDK.IO.Iterator
 
         private void InitIOSettings()
         {
-            forceReadAs3DCoords = new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.Low,
-                    "Should coordinates always be read as 3D?", "false");
+            forceReadAs3DCoords = new BooleanIOSetting("ForceReadAs3DCoordinates", Importance.Low, "Should coordinates always be read as 3D?", "false");
             Add(forceReadAs3DCoords);
         }
 
         public void CustomizeJob()
         {
-            FireIOSettingQuestion(forceReadAs3DCoords);
+            ProcessIOSettingQuestion(forceReadAs3DCoords);
         }
     }
 }

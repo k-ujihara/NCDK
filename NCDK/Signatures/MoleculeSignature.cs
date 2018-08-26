@@ -70,7 +70,7 @@ namespace NCDK.Signatures
         /// <summary>
         /// The molecule to use when making atom signatures
         /// </summary>
-        private IAtomContainer molecule;
+        private readonly IAtomContainer molecule;
 
         /// <summary>
         /// Creates a signature that represents this molecule.
@@ -175,7 +175,7 @@ namespace NCDK.Signatures
             for (int i = 0; i < GetVertexCount(); i++)
             {
                 string signatureForI = SignatureStringForVertex(i, height);
-                if (canonicalSignature == null || canonicalSignature.CompareTo(signatureForI) < 0)
+                if (canonicalSignature == null || string.CompareOrdinal(canonicalSignature, signatureForI) < 0)
                 {
                     canonicalSignature = signatureForI;
                 }

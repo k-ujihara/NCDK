@@ -65,7 +65,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
         /// This map is shared among all states obtained through nextState.
         /// </summary>
         /// <returns>the current mapping of query atoms onto target atoms</returns>
-        IDictionary<INode, IAtom> GetMap();
+        IReadOnlyDictionary<INode, IAtom> GetMap();
 
         /// <summary>
         /// Returns true if another candidate match can be found or

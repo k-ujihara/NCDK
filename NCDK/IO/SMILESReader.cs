@@ -124,7 +124,7 @@ namespace NCDK.IO
                 while ((line = input.ReadLine()) != null)
                 {
                     line = line.Trim();
-                    Debug.WriteLine("Line: ", line);
+                    Debug.WriteLine($"Line: {line}");
 
                     string name = Suffix(line);
 
@@ -179,7 +179,7 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="line">input line</param>
         /// <returns>the suffix - or an empty line</returns>
-        private string Suffix(string line)
+        private static string Suffix(string line)
         {
             for (int i = 0; i < line.Length; i++)
             {

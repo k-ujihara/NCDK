@@ -23,8 +23,8 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using NCDK.Smiles;
-using System.Collections.Generic;
 
 namespace NCDK.Fingerprints
 {
@@ -40,17 +40,17 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestGetSize()
         {
-            IFingerprinter fingerprinter = new LingoFingerprinter();
+            var fingerprinter = new LingoFingerprinter();
             Assert.IsNotNull(fingerprinter);
-            Assert.AreEqual(-1, fingerprinter.Count);
+            Assert.AreEqual(-1, fingerprinter.Length);
         }
 
         [TestMethod()]
         public override void TestGetCountFingerprint()
         {
-            LingoFingerprinter fpr = new LingoFingerprinter(4);
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("Oc1ccccc1");
+            var fpr = new LingoFingerprinter(4);
+            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var mol = sp.ParseSmiles("Oc1ccccc1");
             ICountFingerprint fp = fpr.GetCountFingerprint(mol);
             Assert.AreEqual(2, fp.GetCountForHash("cccc".GetHashCode()));
             Assert.AreEqual(1, fp.GetCountForHash("Oc0c".GetHashCode()));
@@ -62,13 +62,13 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public override void TestGetRawFingerprint()
         {
-            LingoFingerprinter lfp = new LingoFingerprinter(3);
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("SPONC");
-            IDictionary<string, int> map = lfp.GetRawFingerprint(mol);
+            var lfp = new LingoFingerprinter(3);
+            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var mol = sp.ParseSmiles("SPONC");
+            var map = lfp.GetRawFingerprint(mol);
             Assert.AreEqual(3, map.Count);
             // depend on canonical ordering of the SMILES since lingos uses Unique SMILES
-            string[] subs = { "PON", "ONC", "SPO" };
+            var subs = new[] { "PON", "ONC", "SPO" };
             foreach (var s in subs)
                 Assert.IsTrue(map.ContainsKey(s));
         }

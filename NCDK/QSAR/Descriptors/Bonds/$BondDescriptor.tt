@@ -12,7 +12,7 @@
 // retrieved one by one.
 // @cdk.module qsar
 // @cdk.githash
-	
+    
 using NCDK.QSAR.Results;
 using System.Collections.Generic;
 
@@ -20,21 +20,21 @@ namespace NCDK.QSAR.Descriptors.Bonds
 {
 <#
         var fn = Path.Combine(new FileInfo(this.Host.TemplateFile).Directory.Parent.Parent.FullName, "IBondDescriptor");
-		using (var reader = new StreamReader(fn))
-		{
-			string line;
-			while ((line = reader.ReadLine()) != null)
-			{
-				if (line.Length > 0 && line[0] == '#')
-					continue;
-				line = line.Trim();
-				if (string.IsNullOrEmpty(line))
-					continue;
-				var cIndex = line.LastIndexOf(".");
-				var className = line.Substring(cIndex + 1);
+        using (var reader = new StreamReader(fn))
+        {
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (line.Length > 0 && line[0] == '#')
+                    continue;
+                line = line.Trim();
+                if (string.IsNullOrEmpty(line))
+                    continue;
+                var cIndex = line.LastIndexOf(".");
+                var className = line.Substring(cIndex + 1);
 #>
-	public partial class <#=className#>
-	{
+    public partial class <#=className#>
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
 
         private IDictionary<object, object> cachedDescriptorValues = null;
@@ -73,9 +73,9 @@ namespace NCDK.QSAR.Descriptors.Bonds
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -87,9 +87,9 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
         IDescriptorValue IBondDescriptor.Calculate(IBond bond, IAtomContainer atomContainer)
             => Calculate(bond, atomContainer);
-	}
+    }
 <#
-			}
-		}
+            }
+        }
 #>
 }

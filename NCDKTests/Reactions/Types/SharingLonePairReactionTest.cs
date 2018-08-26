@@ -21,6 +21,7 @@ using NCDK.AtomTypes;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
+using NCDK.Silent;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
@@ -36,7 +37,6 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class SharingLonePairReactionTest : ReactionProcessTest
     {
-        private readonly LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
         public SharingLonePairReactionTest()
@@ -210,7 +210,7 @@ namespace NCDK.Reactions.Types
         /// <returns>The IAtomContainerSet</returns>
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
 
             IAtomContainer molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
@@ -223,7 +223,7 @@ namespace NCDK.Reactions.Types
                 AddExplicitHydrogens(molecule);
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
-                lpcheck.Saturate(molecule);
+                LonePairElectronChecker.Saturate(molecule);
             }
             catch (Exception e)
             {
@@ -252,7 +252,7 @@ namespace NCDK.Reactions.Types
                 AddExplicitHydrogens(molecule);
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
-                lpcheck.Saturate(molecule);
+                LonePairElectronChecker.Saturate(molecule);
             }
             catch (Exception e)
             {

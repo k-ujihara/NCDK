@@ -11,8 +11,8 @@ using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-	public partial class VdWRadiusDescriptor
-	{
+    public partial class VdWRadiusDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -50,9 +50,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -62,11 +62,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class StabilizationPlusChargeDescriptor
-	{
+    }
+    public partial class StabilizationPlusChargeDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -104,9 +104,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -116,11 +116,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class SigmaElectronegativityDescriptor
-	{
+    }
+    public partial class SigmaElectronegativityDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -158,9 +158,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -170,11 +170,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class RDFProtonDescriptor_GSR
-	{
+    }
+    public partial class RDFProtonDescriptorGSR
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -212,9 +212,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -224,11 +224,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class RDFProtonDescriptor_GHR_topol
-	{
+    }
+    public partial class RDFProtonDescriptorGHRTopology
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -266,9 +266,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -278,11 +278,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class RDFProtonDescriptor_GHR
-	{
+    }
+    public partial class RDFProtonDescriptorGHR
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -320,9 +320,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -332,11 +332,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class RDFProtonDescriptor_GDR
-	{
+    }
+    public partial class RDFProtonDescriptorGDR
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -374,9 +374,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -386,11 +386,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class RDFProtonDescriptor_G3R
-	{
+    }
+    public partial class RDFProtonDescriptorG3R
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -428,9 +428,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -440,11 +440,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class ProtonTotalPartialChargeDescriptor
-	{
+    }
+    public partial class ProtonTotalPartialChargeDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -482,9 +482,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -494,11 +494,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class ProtonAffinityHOSEDescriptor
-	{
+    }
+    public partial class ProtonAffinityHOSEDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -536,9 +536,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -548,11 +548,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class PiElectronegativityDescriptor
-	{
+    }
+    public partial class PiElectronegativityDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -590,9 +590,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -602,11 +602,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class PeriodicTablePositionDescriptor
-	{
+    }
+    public partial class PeriodicTablePositionDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -644,9 +644,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -656,11 +656,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class PartialTChargePEOEDescriptor
-	{
+    }
+    public partial class PartialTChargePEOEDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -698,9 +698,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -710,11 +710,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class PartialTChargeMMFF94Descriptor
-	{
+    }
+    public partial class PartialTChargeMMFF94Descriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -752,9 +752,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -764,11 +764,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class PartialSigmaChargeDescriptor
-	{
+    }
+    public partial class PartialSigmaChargeDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -806,9 +806,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -818,11 +818,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class PartialPiChargeDescriptor
-	{
+    }
+    public partial class PartialPiChargeDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -860,9 +860,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -872,11 +872,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class IsProtonInConjugatedPiSystemDescriptor
-	{
+    }
+    public partial class IsProtonInConjugatedPiSystemDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -914,9 +914,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -926,11 +926,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class IsProtonInAromaticSystemDescriptor
-	{
+    }
+    public partial class IsProtonInAromaticSystemDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -968,9 +968,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -980,11 +980,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class IPAtomicHOSEDescriptor
-	{
+    }
+    public partial class IPAtomicHOSEDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -1022,9 +1022,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -1034,11 +1034,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class InductiveAtomicSoftnessDescriptor
-	{
+    }
+    public partial class InductiveAtomicSoftnessDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -1076,9 +1076,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -1088,11 +1088,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class InductiveAtomicHardnessDescriptor
-	{
+    }
+    public partial class InductiveAtomicHardnessDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -1130,9 +1130,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -1142,11 +1142,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class EffectiveAtomPolarizabilityDescriptor
-	{
+    }
+    public partial class EffectiveAtomPolarizabilityDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -1184,9 +1184,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -1196,11 +1196,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class DistanceToAtomDescriptor
-	{
+    }
+    public partial class DistanceToAtomDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -1238,9 +1238,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -1250,11 +1250,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class CovalentRadiusDescriptor
-	{
+    }
+    public partial class CovalentRadiusDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -1292,9 +1292,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -1304,11 +1304,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class BondsToAtomDescriptor
-	{
+    }
+    public partial class BondsToAtomDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -1346,9 +1346,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -1358,11 +1358,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class AtomValenceDescriptor
-	{
+    }
+    public partial class AtomValenceDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -1400,9 +1400,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -1412,11 +1412,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class AtomHybridizationVSEPRDescriptor
-	{
+    }
+    public partial class AtomHybridizationVSEPRDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -1454,9 +1454,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -1466,11 +1466,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class AtomHybridizationDescriptor
-	{
+    }
+    public partial class AtomHybridizationDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -1508,9 +1508,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -1520,11 +1520,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
-	public partial class AtomDegreeDescriptor
-	{
+    }
+    public partial class AtomDegreeDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
         private IDictionary<object, object> cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
@@ -1562,9 +1562,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -1574,7 +1574,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+        IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
-	}
+    }
 }

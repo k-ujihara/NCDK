@@ -2,9 +2,7 @@
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=true,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 namespace NCDK.Smiles.SMARTS.Parser
 {
-
-    public
-    class ASTExplicitAtom : SimpleNode
+    internal class ASTExplicitAtom : SimpleNode
     {
         public ASTExplicitAtom(int id)
           : base(id)
@@ -15,7 +13,6 @@ namespace NCDK.Smiles.SMARTS.Parser
           : base(p, id)
         {
         }
-
 
         /// <summary>
         /// The element symbol.

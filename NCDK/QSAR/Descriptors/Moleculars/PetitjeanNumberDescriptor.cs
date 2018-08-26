@@ -69,8 +69,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the PetitjeanNumberDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanNumber",
                 typeof(PetitjeanNumberDescriptor).FullName, "The Chemistry Development Kit");
@@ -78,7 +78,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the PetitjeanNumberDescriptor object
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
@@ -98,7 +98,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 petitjeanNumber = 0;
             else
                 petitjeanNumber = (diameter - radius) / (double)diameter;
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(petitjeanNumber), DescriptorNames);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(petitjeanNumber), DescriptorNames);
         }
 
         /// <inheritdoc/>

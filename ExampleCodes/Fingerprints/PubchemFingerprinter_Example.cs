@@ -5,14 +5,14 @@ namespace NCDK.Fingerprints
 {
         public class PubchemFingerprinter_Example
     {
-        public void Main()
+        public static void Main()
         {
             {
                 #region 
                 var molecule = new AtomContainer();
                 IFingerprinter fingerprinter = new PubchemFingerprinter(Silent.ChemObjectBuilder.Instance);
                 IBitFingerprint fingerprint = fingerprinter.GetBitFingerprint(molecule);
-                Console.WriteLine(fingerprint.Count); // returns 881
+                Console.WriteLine(fingerprint.Length); // returns 881
                 #endregion
             }
         }

@@ -19,7 +19,7 @@
 namespace NCDK.Smiles.SMARTS.Parser
 {
     /// <summary>Token Manager.</summary>
-    public class SMARTSParserTokenManager
+    internal class SMARTSParserTokenManager
     {
         // Required by SetState
         void Backup(int n) { input_stream.Backup(n); }
@@ -29,7 +29,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         /// <summary>Set debug output.</summary>
         public void SetDebugStream(System.IO.Stream ds) { debugStream = ds; }
-        private int JjStopStringLiteralDfa_1(int pos, long active0, long active1, long active2)
+        private static int JjStopStringLiteralDfa_1(int pos, long active0, long active1, long active2)
         {
             switch (pos)
             {
@@ -446,7 +446,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 catch (System.IO.IOException) { return curPos; }
             }
         }
-        private int JjStopStringLiteralDfa_0(int pos, long active0, long active1, long active2)
+        private static int JjStopStringLiteralDfa_0(int pos, long active0, long active1, long active2)
         {
             switch (pos)
             {
@@ -930,8 +930,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 catch (System.IO.IOException) { return curPos; }
             }
         }
-        static readonly int[] jjnextStates = {
-    };
+        static readonly int[] jjnextStates = System.Array.Empty<int>();
 
         /// <summary>Token literal values.</summary>
         public static readonly string[] jjstrLiteralImages = new string[] {
@@ -1024,7 +1023,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         public void SwitchTo(int lexState)
         {
             if (lexState >= 2 || lexState < 0)
-                throw new TokenMgrError("Error: Ignoring invalid lexical state : " + lexState + ". State unchanged.", TokenMgrError.ErrorCodes.InvalidLexicalState);
+                throw new TokenManagerException("Error: Ignoring invalid lexical state : " + lexState + ". State unchanged.", TokenManagerException.ErrorCodes.InvalidLexicalState);
             else
                 curLexState = lexState;
         }
@@ -1054,7 +1053,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         int curLexState = 1;
-        int defaultLexState = 1;
+        const int defaultLexState = 1;
         int jjnewStateCnt;
         int jjround;
         int jjmatchedPos;
@@ -1123,7 +1122,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                     input_stream.Backup(1);
                     error_after = curPos <= 1 ? "" : input_stream.GetImage();
                 }
-                throw new TokenMgrError(EOFSeen, curLexState, error_line, error_column, error_after, curChar, TokenMgrError.ErrorCodes.LexicalError);
+                throw new TokenManagerException(EOFSeen, curLexState, error_line, error_column, error_after, curChar, TokenManagerException.ErrorCodes.LexicalError);
             }
         }
 

@@ -60,8 +60,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the KappaShapeIndicesDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierValues",
                 typeof(KappaShapeIndicesDescriptor).FullName, "The Chemistry Development Kit");
@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the
         /// KappaShapeIndicesDescriptor object
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
@@ -206,7 +206,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             kierValues.Add(kier1);
             kierValues.Add(kier2);
             kierValues.Add(kier3);
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, kierValues,
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, kierValues,
                     DescriptorNames);
         }
 

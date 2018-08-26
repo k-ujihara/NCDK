@@ -41,10 +41,10 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
     [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public class MCSPlusHandler : AbstractMCSAlgorithm, IMCSBase
     {
-        private static IList<IDictionary<IAtom, IAtom>> allAtomMCS = null;
-        private static IDictionary<IAtom, IAtom> atomsMCS = null;
-        private static IDictionary<int, int> firstMCS = null;
-        private static List<IDictionary<int, int>> allMCS = null;
+        private static List<IReadOnlyDictionary<IAtom, IAtom>> allAtomMCS = null;
+        private static Dictionary<IAtom, IAtom> atomsMCS = null;
+        private static SortedDictionary<int, int> firstMCS = null;
+        private static List<IReadOnlyDictionary<int, int>> allMCS = null;
         private IAtomContainer source = null;
         private IAtomContainer target = null;
         private bool flagExchange = false;
@@ -54,10 +54,10 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         /// </summary>
         public MCSPlusHandler()
         {
-            allAtomMCS = new List<IDictionary<IAtom, IAtom>>();
+            allAtomMCS = new List<IReadOnlyDictionary<IAtom, IAtom>>();
             atomsMCS = new Dictionary<IAtom, IAtom>();
             firstMCS = new SortedDictionary<int, int>();
-            allMCS = new List<IDictionary<int, int>>();
+            allMCS = new List<IReadOnlyDictionary<int, int>>();
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -79,17 +79,17 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         [MethodImpl(MethodImplOptions.Synchronized)]
         public override void SearchMCS(bool shouldMatchBonds)
         {
-            IList<IList<int>> mappings = null;
+            IList<IReadOnlyList<int>> mappings = null;
             try
             {
                 if (source.Atoms.Count >= target.Atoms.Count)
                 {
-                    mappings = new MCSPlus().GetOverlaps(source, target, shouldMatchBonds);
+                    mappings = MCSPlus.GetOverlaps(source, target, shouldMatchBonds);
                 }
                 else
                 {
                     flagExchange = true;
-                    mappings = new MCSPlus().GetOverlaps(target, source, shouldMatchBonds);
+                    mappings = MCSPlus.GetOverlaps(target, source, shouldMatchBonds);
                 }
                 PostFilter.Filter(mappings);
                 SetAllMapping();
@@ -112,8 +112,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
                 int counter = 0;
                 foreach (var solution in finalSolution)
                 {
-                    //                Console.Out.WriteLine("Number of MCS solution: " + solution);
-                    IDictionary<int, int> validSolution = new SortedDictionary<int, int>();
+                    var validSolution = new SortedDictionary<int, int>();
                     if (!flagExchange)
                     {
                         foreach (var map in solution)
@@ -145,7 +144,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
                 int counter = 0;
                 foreach (var solution in allMCS)
                 {
-                    IDictionary<IAtom, IAtom> atomMappings = new Dictionary<IAtom, IAtom>();
+                    var atomMappings = new Dictionary<IAtom, IAtom>();
                     foreach (var map in solution)
                     {
                         int iIndex = map.Key;
@@ -168,43 +167,47 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private void SetFirstMapping()
+        private static void SetFirstMapping()
         {
             if (allMCS.Count != 0)
             {
-                firstMCS = new SortedDictionary<int, int>(allMCS.First());
+                firstMCS = new SortedDictionary<int, int>();
+                foreach (var e in allMCS.First())
+                    firstMCS.Add(e.Key, e.Value);
             }
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private void SetFirstAtomMapping()
+        private static void SetFirstAtomMapping()
         {
             if (allAtomMCS.Count != 0)
             {
-                atomsMCS = new Dictionary<IAtom, IAtom>(allAtomMCS.First());
+                atomsMCS = new Dictionary<IAtom, IAtom>();
+                foreach (var e in allAtomMCS.First())
+                    atomsMCS.Add(e.Key, e.Value);
             }
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public IList<IDictionary<int, int>> GetAllMapping()
+        public IReadOnlyList<IReadOnlyDictionary<int, int>> GetAllMapping()
         {
             return allMCS;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public IDictionary<int, int> GetFirstMapping()
+        public IReadOnlyDictionary<int, int> GetFirstMapping()
         {
             return firstMCS;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public IList<IDictionary<IAtom, IAtom>> GetAllAtomMapping()
+        public IReadOnlyList<IReadOnlyDictionary<IAtom, IAtom>> GetAllAtomMapping()
         {
             return allAtomMCS;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public IDictionary<IAtom, IAtom> GetFirstAtomMapping()
+        public IReadOnlyDictionary<IAtom, IAtom> GetFirstAtomMapping()
         {
             return atomsMCS;
         }

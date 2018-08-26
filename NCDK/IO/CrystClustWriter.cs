@@ -20,6 +20,7 @@
 using NCDK.IO.Formats;
 using NCDK.Numerics;
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.IO
@@ -138,7 +139,7 @@ namespace NCDK.IO
         private void WriteCrystal(ICrystal crystal)
         {
             string sg = crystal.SpaceGroup;
-            if ("P 2_1 2_1 2_1".Equals(sg))
+            if (string.Equals("P 2_1 2_1 2_1", sg, StringComparison.Ordinal))
             {
                 Writeln("P 21 21 21 (1)");
             }
@@ -154,11 +155,11 @@ namespace NCDK.IO
 
             // output number of atoms
             int noatoms = crystal.Atoms.Count;
-            Write(noatoms.ToString());
+            Write(noatoms.ToString(NumberFormatInfo.InvariantInfo));
             Writeln("");
 
             // output number of asym. units (Z)
-            if (sg.Equals("P1"))
+            if (string.Equals(sg, "P1", StringComparison.Ordinal))
             {
                 Writeln("1");
             }
@@ -178,9 +179,9 @@ namespace NCDK.IO
                 // output atom charge
                 Writeln(atom.Charge.ToString());
                 // output coordinates
-                Writeln(atom.Point3D.Value.X.ToString());
-                Writeln(atom.Point3D.Value.Y.ToString());
-                Writeln(atom.Point3D.Value.Z.ToString());
+                Writeln(atom.Point3D.Value.X.ToString(NumberFormatInfo.InvariantInfo));
+                Writeln(atom.Point3D.Value.Y.ToString(NumberFormatInfo.InvariantInfo));
+                Writeln(atom.Point3D.Value.Z.ToString(NumberFormatInfo.InvariantInfo));
             }
         }
 
@@ -211,11 +212,11 @@ namespace NCDK.IO
 
         private void WriteVector3d(Vector3 vector)
         {
-            Write(vector.X.ToString());
+            Write(vector.X.ToString(NumberFormatInfo.InvariantInfo));
             Writeln("");
-            Write(vector.Y.ToString());
+            Write(vector.Y.ToString(NumberFormatInfo.InvariantInfo));
             Writeln("");
-            Write(vector.Z.ToString());
+            Write(vector.Z.ToString(NumberFormatInfo.InvariantInfo));
             Writeln("");
         }
     }

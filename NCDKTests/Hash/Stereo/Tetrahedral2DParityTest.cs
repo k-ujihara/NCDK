@@ -42,14 +42,14 @@ namespace NCDK.Hash.Stereo
         [ExpectedException(typeof(ArgumentException))]
         public void TestConstruction_InvalidCoords()
         {
-            new Tetrahedral2DParity(new Vector2[0], new int[4]);
+            new Tetrahedral2DParity(Array.Empty<Vector2>(), new int[4]);
         }
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
         public void TestConstruction_InvalidElev()
         {
-            new Tetrahedral2DParity(new Vector2[4], new int[0]);
+            new Tetrahedral2DParity(new Vector2[4], Array.Empty<int>());
         }
 
         /// <summary>

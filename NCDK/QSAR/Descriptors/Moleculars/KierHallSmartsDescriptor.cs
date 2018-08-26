@@ -23,6 +23,7 @@ using NCDK.Smiles.SMARTS;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -299,13 +300,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     public class KierHallSmartsDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static string[] names;
-        private static readonly string[] SMARTS = EStateFragments.Smarts;
+        private static readonly IReadOnlyList<string> SMARTS = EStateFragments.Smarts;
 
         public KierHallSmartsDescriptor()
         {
-            string[] tmp = EStateFragments.Names;
-            names = new string[tmp.Length];
-            for (int i = 0; i < tmp.Length; i++)
+            var tmp = EStateFragments.Names;
+            names = new string[tmp.Count];
+            for (int i = 0; i < tmp.Count; i++)
                 names[i] = "khs." + tmp[i];
         }
 
@@ -322,8 +323,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <item>Implementation-Vendor: CDK, JOELib, or anything else</item>
         /// </list></para>
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierHallSmarts",
                 typeof(KierHallSmartsDescriptor).FullName,
@@ -333,7 +334,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the descriptor.
         /// </summary>
         /// <exception cref="CDKException">if any parameters are specified</exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             get
             {
@@ -352,7 +353,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             ArrayResult<int> result = new ArrayResult<int>();
             foreach (var smart in SMARTS)
                 result.Add(0);
-            return new DescriptorValue<ArrayResult<int>>(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<int>>(specification, ParameterNames, Parameters, result, DescriptorNames, e);
         }
 
         /// <summary>
@@ -370,17 +371,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer atomContainer = (IAtomContainer)container.Clone();
             atomContainer = AtomContainerManipulator.RemoveHydrogens(atomContainer);
 
-            int[] counts = new int[SMARTS.Length];
+            int[] counts = new int[SMARTS.Count];
             try
             {
                 SMARTSQueryTool sqt = new SMARTSQueryTool("C", container.Builder);
-                for (int i = 0; i < SMARTS.Length; i++)
+                for (int i = 0; i < SMARTS.Count; i++)
                 {
                     sqt.Smarts = SMARTS[i];
                     bool status = sqt.Matches(atomContainer);
                     if (status)
                     {
-                        counts[i] = sqt.GetUniqueMatchingAtoms().Count;
+                        counts[i] = sqt.GetUniqueMatchingAtoms().Count();
                     }
                     else
                         counts[i] = 0;
@@ -395,11 +396,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             foreach (var i in counts)
                 result.Add(i);
 
-            return new DescriptorValue<ArrayResult<int>>(_Specification, ParameterNames, Parameters, result, DescriptorNames);
+            return new DescriptorValue<ArrayResult<int>>(specification, ParameterNames, Parameters, result, DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<int>(SMARTS.Length);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<int>(SMARTS.Count);
 
         /// <summary>
         /// Gets the parameterNames attribute of the descriptor.

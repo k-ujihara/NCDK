@@ -33,22 +33,21 @@ namespace NCDK.SMSD
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
-    public interface IFinalMapping : IEnumerable<IDictionary<int, int>>
+    public interface IFinalMapping : IEnumerable<IReadOnlyDictionary<int, int>>
     {
-
         /// <summary>
         /// Adds mapping to the mapping list
         /// </summary>
         /// <param name="mapping">List of all MCS mapping between a given
         /// reactant and product</param>
-        void Add(IDictionary<int, int> mapping);
+        void Add(IReadOnlyDictionary<int, int> mapping);
 
         /// <summary>
         /// Sets mapping list
         /// <param name="list">List of all MCS mapping between a given
         /// reactant and product</param>
         /// </summary>
-        void Set(IList<IDictionary<int, int>> list);
+        void Set(IList<IReadOnlyDictionary<int, int>> list);
 
         /// <summary>
         /// clear the mapping
@@ -59,7 +58,7 @@ namespace NCDK.SMSD
         /// Returns the stored mappings
         /// </summary>
         /// <returns>get of MCS mapping List</returns>
-        IList<IDictionary<int, int>> GetFinalMapping();
+        IReadOnlyList<IReadOnlyDictionary<int, int>> GetFinalMapping();
 
         /// <summary>
         /// Returns number of stored mappings

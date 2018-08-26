@@ -52,18 +52,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     {
         public FractionalPSADescriptor() { }
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fractionalPSA", 
                 typeof(FractionalPSADescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length != 0)
+                if (value.Count != 0)
                 {
                     throw new CDKException("The FractionalPSADescriptor expects zero parameters");
                 }
@@ -78,7 +78,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 //  molecular weight
                 foreach (var atom in mol.Atoms)
                 {
-                    weight += Isotopes.Instance.GetMajorIsotope(atom.Symbol).ExactMass.Value;
+                    weight += BODRIsotopeFactory.Instance.GetMajorIsotope(atom.Symbol).ExactMass.Value;
                     weight += (atom.ImplicitHydrogenCount ?? 0) * 1.00782504;
                 }
             }
@@ -121,7 +121,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     throw;
                 return GetDummyDescriptorValue(exception);
             }
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(
                     weight == 0 ? 0 : polar / weight), DescriptorNames);
         }
 

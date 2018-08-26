@@ -20,6 +20,7 @@
 using NCDK.Common.Primitives;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Smiles.SMARTS.Parser;
+using System;
 using System.Text;
 
 namespace NCDK.Pharmacophore
@@ -83,7 +84,7 @@ namespace NCDK.Pharmacophore
         public bool Matches(IAtom atom)
         {
             PharmacophoreAtom patom = PharmacophoreAtom.Get(atom);
-            return patom.Symbol.Equals(Symbol);
+            return patom.Symbol.Equals(Symbol, StringComparison.Ordinal);
         }
 
         /// <summary>

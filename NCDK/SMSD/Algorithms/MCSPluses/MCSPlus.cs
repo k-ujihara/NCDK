@@ -22,7 +22,7 @@
  */
 using NCDK.Common.Collections;
 using NCDK.SMSD.Algorithms.McGregors;
-using NCDK.SMSD.Global;
+using NCDK.SMSD.Globals;
 using NCDK.SMSD.Tools;
 using System;
 using System.Collections.Generic;
@@ -40,26 +40,20 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
-    public class MCSPlus
+    public static class MCSPlus
     {
-        /// <summary>
-        /// Default constructor added
-        /// </summary>
-        public MCSPlus()
-        { }
-
         private static TimeManager timeManager = null;
 
         /// <summary>
         /// the timeout
         /// </summary>
-        protected static double GetTimeOut() => TimeOut.Instance.Time;
+        internal static double GetTimeOut() => TimeOut.Instance.Time;
 
         /// <summary>
         /// the timeManager
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        protected static TimeManager GetTimeManager()
+        internal static TimeManager GetTimeManager()
         {
             return timeManager;
         }
@@ -68,16 +62,16 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         /// </summary>
         /// <param name="aTimeManager">the timeManager to set</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        protected internal static void SetTimeManager(TimeManager aTimeManager)
+        internal static void SetTimeManager(TimeManager aTimeManager)
         {
             TimeOut.Instance.Enabled = false;
             timeManager = aTimeManager;
         }
 
-        internal IList<IList<int>> GetOverlaps(IAtomContainer ac1, IAtomContainer ac2, bool shouldMatchBonds)
+        internal static List<IReadOnlyList<int>> GetOverlaps(IAtomContainer ac1, IAtomContainer ac2, bool shouldMatchBonds)
         {
-            Deque<IList<int>> maxCliqueSet = null;
-            IList<IList<int>> mappings = new List<IList<int>>();
+            Deque<IReadOnlyList<int>> maxCliqueSet = null;
+            var mappings = new List<IReadOnlyList<int>>();
             try
             {
                 GenerateCompatibilityGraph gcg = new GenerateCompatibilityGraph(ac1, ac2, shouldMatchBonds);
@@ -86,16 +80,8 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
                 var cEdges = gcg.GetCEgdes();
                 var dEdges = gcg.GetDEgdes();
 
-                //            Console.Error.WriteLine("**************************************************");
-                //            Console.Error.WriteLine("CEdges: " + CEdges.Count);
-                //            Console.Out.WriteLine("DEdges: " + DEdges.Count);
-
                 BKKCKCF init = new BKKCKCF(compGraphNodes, cEdges, dEdges);
                 maxCliqueSet = init.GetMaxCliqueSet();
-
-                //            Console.Error.WriteLine("**************************************************");
-                //            Console.Error.WriteLine("Max_Cliques_Set: " + maxCliqueSet.Count);
-                //            Console.Out.WriteLine("Best Clique Size: " + init.GetBestCliqueSize());
 
                 //clear all the compatibility graph content
                 gcg.Clear();
@@ -107,7 +93,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
                     {
                         McGregor mgit = new McGregor(ac1, ac2, mappings, shouldMatchBonds);
                         mgit.StartMcGregorIteration(mgit.MCSSize, cliqueList, compGraphNodes);
-                        mappings = mgit.Mappings;
+                        mappings = mgit.mappings;
                         mgit = null;
                     }
                     else

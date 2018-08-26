@@ -35,16 +35,16 @@ namespace NCDK
         {
             IChemObject obj = NewChemObject();
             IRing r = obj.Builder.NewRing(5, "C");
-            Assert.AreEqual(5, r.BondOrderSum);
+            Assert.AreEqual(5, r.GetBondOrderSum());
 
             BondManipulator.IncreaseBondOrder(r.Bonds[0]);
-            Assert.AreEqual(6, r.BondOrderSum);
+            Assert.AreEqual(6, r.GetBondOrderSum());
 
             BondManipulator.IncreaseBondOrder(r.Bonds[0]);
-            Assert.AreEqual(7, r.BondOrderSum);
+            Assert.AreEqual(7, r.GetBondOrderSum());
 
             BondManipulator.IncreaseBondOrder(r.Bonds[4]);
-            Assert.AreEqual(8, r.BondOrderSum);
+            Assert.AreEqual(8, r.GetBondOrderSum());
         }
 
         [TestMethod()]

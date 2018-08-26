@@ -3,6 +3,10 @@ namespace NCDK
     public sealed class IntractableException
         : CDKException
     {
+        public IntractableException()
+        {
+        }
+
         public IntractableException(string message)
             : base(message)
         {
@@ -17,6 +21,9 @@ namespace NCDK
             : this(desc + " did not finish after " + t + " ms.")
         {
         }
+
+        public IntractableException(string message, System.Exception innerException) : base(message, innerException)
+        {
+        }
     }
 }
-

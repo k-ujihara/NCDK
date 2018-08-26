@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -36,6 +37,7 @@ namespace NCDK.Default
     // @cdk.module  silent
     // @cdk.githash
     // @cdk.keyword ring, set of
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class RingSet
         : ChemObjectSet<IRing>,  IRingSet, ICloneable
@@ -128,6 +130,7 @@ namespace NCDK.Silent
     // @cdk.module  silent
     // @cdk.githash
     // @cdk.keyword ring, set of
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class RingSet
         : ChemObjectSet<IRing>,  IRingSet, ICloneable

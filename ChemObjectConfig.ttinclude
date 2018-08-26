@@ -1,6 +1,6 @@
 ﻿<#
 /*
- * Copyright (C) 2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
+ * Copyright (C) 2017-2018  Kazuya Ujihara <ujihara.kazuya@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
  #>
+
 <#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ output extension=".tt.cs" #>
 <#@ Assembly Name="System.Core.dll" #>
@@ -75,7 +76,7 @@
         /// <summary>
         /// A dictionary for the storage of any kind of properties of this object.
         /// </summary>
-        IDictionary<object, object> properties;
+        private Dictionary<object, object> properties;
 
         private void InitProperties()
         {
@@ -83,7 +84,7 @@
         }
 
         /// <inheritdoc/>
-        public virtual void SetProperty(object description, object property)
+        public virtual void SetProperty(object description, object value)
         {
 #if DEBUG
             if (description != null && !AcceptablePropertyKeyTypes.Contains(description.GetType()))
@@ -91,7 +92,7 @@
 #endif
             if (this.properties == null)
                 InitProperties();
-            properties[description] = property;
+            properties[description] = value;
 <#+ if (addNofityChanged) { #>
             NotifyChanged();
 <#+ } #>
@@ -137,10 +138,10 @@
             return defaultValue;
         }
 
-        private static readonly IDictionary<object, object> emptyProperties = new System.Collections.ObjectModel.ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
+        private static readonly IReadOnlyDictionary<object, object> emptyProperties = NCDK.Common.Collections.Dictionaries.Empty<object, object>();
 
         /// <inheritdoc/>
-        public virtual IDictionary<object, object> GetProperties() 
+        public virtual IReadOnlyDictionary<object, object> GetProperties() 
         {
             if (this.properties == null)
                 return emptyProperties;

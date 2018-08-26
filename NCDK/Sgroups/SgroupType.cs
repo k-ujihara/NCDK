@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace NCDK.Sgroups
@@ -125,50 +126,5 @@ namespace NCDK.Sgroups
 
         // extension for handling positional variation and distributed coordination bonds
         ExtMulticenter,
-    }
-
-	public static class SgroupTypeTools
-    { 
-		private static readonly string[] ctabKeys = new string[]
-		{
-			"",
-			"SUP",
-			"MUL",
-			"SRU",
-			"MON",
-			"MOD", 
-			"COP", 
-			"MER", 
-			"CRO",
-			"GRA", 
-			"ANY", 
-			"COM",
-			"MIX",
-			"FOR",
-			"DAT",
-			"GEN", 
-			"N/A",
-		};
-
-        private static readonly Dictionary<string, SgroupType> map;
-
-        static SgroupTypeTools()
-        {
-            map = new Dictionary<string, SgroupType>();
-			for (int i = 0; i < ctabKeys.Length; i++)
-            {
-                map.Add(ctabKeys[i], (SgroupType)i);
-            }
-        }
-
-        public static string Key(this SgroupType value)
-			=> ctabKeys[(int)value];
-
-        public static SgroupType Parse(string str)
-        {
-            if (!map.TryGetValue(str, out SgroupType o))
-                return SgroupType.CtabGeneric;
-            return o;
-        }
     }
 }

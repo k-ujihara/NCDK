@@ -38,16 +38,18 @@ namespace NCDK.Groups
     // @cdk.module group
     public sealed class Permutation : IReadOnlyList<int>
     {
+        private readonly int[] values;
+        
         /// <summary>
         /// Constructs an identity permutation with <paramref name="size"/> elements.
         /// </summary>
         /// <param name="size">the number of elements in the permutation</param>
         public Permutation(int size)
         {
-            this.Values = new int[size];
+            this.values = new int[size];
             for (int i = 0; i < size; i++)
             {
-                this.Values[i] = i;
+                this.values[i] = i;
             }
         }
 
@@ -57,7 +59,7 @@ namespace NCDK.Groups
         /// <param name="values">the elements of the permutation</param>
         public Permutation(params int[] values)
         {
-            this.Values = values;
+            this.values = values;
         }
 
         /// <summary>
@@ -66,20 +68,22 @@ namespace NCDK.Groups
         /// <param name="other">the other permutation</param>
         public Permutation(Permutation other)
         {
-            this.Values = (int[])other.Values.Clone();
+            this.values = (int[])other.values.Clone();
         }
 
         public override bool Equals(object other)
         {
-            if (this == other) return true;
-            if (other == null || GetType() != other.GetType()) return false;
+            if (this == other)
+                return true;
+            if (other == null || GetType() != other.GetType())
+                return false;
 
-            return Arrays.AreEqual(Values, ((Permutation)other).Values);
+            return Arrays.AreEqual(values, ((Permutation)other).values);
         }
 
         public override int GetHashCode()
         {
-            return Arrays.GetHashCode(Values);
+            return Arrays.GetHashCode(values);
         }
 
         /// <summary>
@@ -88,9 +92,9 @@ namespace NCDK.Groups
         /// <returns><see langword="true"/> if for all i, p[i] = i</returns>
         public bool IsIdentity()
         {
-            for (int i = 0; i < this.Values.Length; i++)
+            for (int i = 0; i < this.values.Length; i++)
             {
-                if (this.Values[i] != i)
+                if (this.values[i] != i)
                 {
                     return false;
                 }
@@ -101,7 +105,7 @@ namespace NCDK.Groups
         /// <summary>
         /// The number of elements in the permutation.
         /// </summary>
-        public int Count => this.Values.Length;
+        public int Count => this.values.Length;
 
         /// <summary>
         /// The permutation value
@@ -109,20 +113,14 @@ namespace NCDK.Groups
         /// <param name="index">Index</param>
         public int this[int index]
         {
-            get
-            {
-                return this.Values[index];
-            }
-            set
-            {
-                this.Values[index] = value;
-            }
+            get => this.values[index];
+            set => this.values[index] = value;
         }
 
         /// <summary>
         /// All the values as an array.
         /// </summary>
-        public int[] Values { get; private set; }
+        public IReadOnlyList<int> Values => values;
 
         /// <summary>
         /// Find an r such that <c>this[r] != other[r]</c>.
@@ -132,7 +130,7 @@ namespace NCDK.Groups
         public int FirstIndexOfDifference(Permutation other)
         {
             int r = 0;
-            while ((r < Values.Length) && Values[r] == other[r])
+            while ((r < values.Length) && values[r] == other[r])
             {
                 r++;
             }
@@ -144,17 +142,14 @@ namespace NCDK.Groups
         /// </summary>
         /// <param name="element">any element in the orbit</param>
         /// <returns>the list of elements reachable in this permutation</returns>
-        public IList<int> GetOrbit(int element)
+        public IReadOnlyCollection<int> GetOrbit(int element)
         {
-            var orbit = new List<int>
-            {
-                element
-            };
-            int i = Values[element];
-            while (i != element && orbit.Count < Values.Length)
+            var orbit = new List<int> { element };
+            int i = values[element];
+            while (i != element && orbit.Count < values.Length)
             {
                 orbit.Add(i);
-                i = Values[i];
+                i = values[i];
             }
             return orbit;
         }
@@ -166,12 +161,12 @@ namespace NCDK.Groups
         /// <exception cref="ArgumentException"> if the permutations are of different size</exception>
         public void SetTo(Permutation other)
         {
-            if (this.Values.Length != other.Values.Length)
+            if (this.values.Length != other.values.Length)
                 throw new ArgumentException("permutations are different size");
 
-            for (int i = 0; i < this.Values.Length; i++)
+            for (int i = 0; i < this.values.Length; i++)
             {
-                this.Values[i] = other.Values[i];
+                this.values[i] = other.values[i];
             }
         }
 
@@ -182,10 +177,10 @@ namespace NCDK.Groups
         /// <returns>a new permutation with the result of multiplying the permutations</returns>
         public Permutation Multiply(Permutation other)
         {
-            Permutation newPermutation = new Permutation(Values.Length);
-            for (int i = 0; i < Values.Length; i++)
+            Permutation newPermutation = new Permutation(values.Length);
+            for (int i = 0; i < values.Length; i++)
             {
-                newPermutation.Values[i] = this.Values[other.Values[i]];
+                newPermutation.values[i] = this.values[other.values[i]];
             }
             return newPermutation;
         }
@@ -196,10 +191,10 @@ namespace NCDK.Groups
         /// <returns>the inverse of this permutation</returns>
         public Permutation Invert()
         {
-            Permutation inversion = new Permutation(Values.Length);
-            for (int i = 0; i < Values.Length; i++)
+            Permutation inversion = new Permutation(values.Length);
+            for (int i = 0; i < values.Length; i++)
             {
-                inversion.Values[this.Values[i]] = i;
+                inversion.values[this.values[i]] = i;
             }
             return inversion;
         }
@@ -210,7 +205,7 @@ namespace NCDK.Groups
         /// <returns>the cycle form of the permutation as a string</returns>
         public string ToCycleString()
         {
-            int n = this.Values.Length;
+            int n = this.values.Length;
             bool[] p = new bool[n];
             Arrays.Fill(p, true);
 
@@ -224,10 +219,10 @@ namespace NCDK.Groups
                     sb.Append(i);
                     p[i] = false;
                     j = i;
-                    while (p[Values[j]])
+                    while (p[values[j]])
                     {
                         sb.Append(", ");
-                        j = Values[j];
+                        j = values[j];
                         sb.Append(j);
                         p[j] = false;
                     }
@@ -239,12 +234,12 @@ namespace NCDK.Groups
 
         public IEnumerator<int> GetEnumerator()
         {
-            return ((IEnumerable<int>)Values).GetEnumerator();
+            return ((IEnumerable<int>)values).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return Values.GetEnumerator();
+            return values.GetEnumerator();
         }
     }
 }

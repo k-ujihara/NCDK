@@ -112,8 +112,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mde",
                 typeof(MDEDescriptor).FullName, "The Chemistry Development Kit");
@@ -122,7 +122,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the WeightDescriptor object.
         /// </summary>
         /// <exception cref="CDKException">if more than 1 parameter is specified or if the parameter is not of type string</exception>
-        public override object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
@@ -142,14 +142,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 retval.Add(Dedge(local, i));
             }
 
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval,
                     DescriptorNames);
         }
 
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(19);
 
-        private double Dedge(IAtomContainer atomContainer, int which)
+        private static double Dedge(IAtomContainer atomContainer, int which)
         {
             int[][] adjMatrix = AdjacencyMatrix.GetMatrix(atomContainer);
             int[][] tdist = PathTools.ComputeFloydAPSP(adjMatrix);
@@ -251,7 +251,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return retval;
         }
 
-        private int[][] EvalATable(IAtomContainer atomContainer, int atomicNum)
+        private static int[][] EvalATable(IAtomContainer atomContainer, int atomicNum)
         {
             //IAtom[] atoms = atomContainer.GetAtoms();
             int natom = atomContainer.Atoms.Count;
@@ -269,7 +269,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return atypes;
         }
 
-        private double EvalCValue(int[][] distmat, int[][] codemat, int type1, int type2)
+        private static double EvalCValue(int[][] distmat, int[][] codemat, int type1, int type2)
         {
             double lambda = 1;
             double n = 0;

@@ -34,7 +34,7 @@ namespace NCDK.Geometries.Volume
     // @cdk.module   standard
     // @cdk.keyword  volume, molecular
     // @cdk.githash
-    public class VABCVolume
+    public static class VABCVolume
     {
         /// <summary>
         /// Values are taken from the spreadsheet where possible. The values in the
@@ -57,23 +57,16 @@ namespace NCDK.Geometries.Volume
                 { "Si", 38.7923854248 },
             };
 
-        private static AtomTypeFactory atomTypeList = null;
+        private static readonly AtomTypeFactory atomTypeList = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", Silent.ChemObjectBuilder.Instance);
 
         /// <summary>
         /// Calculates the volume for the given <see cref="IAtomContainer"/>. This methods assumes
         /// that atom types have been perceived.
         /// </summary>
         /// <param name="molecule"><see cref="IAtomContainer"/> to calculate the volume of.</param>
-        /// <returns>the volume in cubic Ångstrom.</returns>
+        /// <returns>the volume in cubic Ångström.</returns>
         public static double Calculate(IAtomContainer molecule)
         {
-            if (atomTypeList == null)
-            {
-                atomTypeList = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl",
-                        molecule.Builder // take whatever we got first
-                        );
-            }
-
             double sum = 0.0;
             int totalHCount = 0;
             foreach (var atom in molecule.Atoms)
@@ -85,9 +78,9 @@ namespace NCDK.Geometries.Volume
 
                 // add volumes of implicit hydrogens?
                 IAtomType type = atomTypeList.GetAtomType(atom.AtomTypeName);
-                if (type == null) throw new CDKException("Unknown atom type for atom: " + atom.Symbol);
+                if (type == null) throw new CDKException($"Unknown atom type for atom: {atom.Symbol}");
                 if (type.FormalNeighbourCount == null)
-                    throw new CDKException("Formal neighbor count not given for : " + type.AtomTypeName);
+                    throw new CDKException($"Formal neighbor count not given for : {type.AtomTypeName}");
                 int hCount = type.FormalNeighbourCount.Value - molecule.GetConnectedBonds(atom).Count();
                 sum += (hCount * bondiiVolumes["H"]);
                 totalHCount += hCount;

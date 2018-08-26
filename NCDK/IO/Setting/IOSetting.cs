@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
+
 namespace NCDK.IO.Setting
 {
     /// <summary>
@@ -28,19 +30,6 @@ namespace NCDK.IO.Setting
     // @author Egon Willighagen <egonw@sci.kun.nl>
     public abstract class IOSetting : ISetting
     {
-        public struct Importance
-        {
-            private int ordinal;
-            public int Ordinal => ordinal;
-            public Importance(int ordinal)
-            {
-                this.ordinal = ordinal;
-            }
-            public static readonly Importance High = new Importance(0);
-            public static readonly Importance Medium = new Importance(1);
-            public static readonly Importance Low = new Importance(2);
-        }
-
         /// <summary>
         /// The default constructor that sets this field. All textual
         /// information is supposed to be English. Localization is taken care
@@ -50,7 +39,7 @@ namespace NCDK.IO.Setting
         /// <param name="level">Level at which question is asked</param>
         /// <param name="question">Question that is popped to the user when the ReaderSetting needs setting</param>
         /// <param name="defaultSetting">The default setting, used if not overwritten by a user</param>
-        public IOSetting(string name, Importance level, string question, string defaultSetting)
+        protected IOSetting(string name, Importance level, string question, string defaultSetting)
         {
             this.Level = level;
             this.Name = name;
@@ -67,5 +56,31 @@ namespace NCDK.IO.Setting
         /// The setting for a certain question. It will throw a CDKException when the setting is not valid.
         /// </summary>
         public virtual string Setting { get; set; } // by default, except all input, so no setting checking
+    }
+
+    public struct Importance : IEquatable<Importance>
+    {
+        public int Ordinal { get; }
+
+        public Importance(int ordinal)
+        {
+            this.Ordinal = ordinal;
+        }
+
+        public static readonly Importance High = new Importance(0);
+        public static readonly Importance Medium = new Importance(1);
+        public static readonly Importance Low = new Importance(2);
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Importance))
+                return false;
+            return Ordinal == ((Importance)obj).Ordinal;
+        }
+
+        public override int GetHashCode() => Ordinal;
+        public static bool operator ==(Importance left, Importance right) => left.Ordinal == right.Ordinal;
+        public static bool operator !=(Importance left, Importance right) => left.Ordinal == right.Ordinal;
+        public bool Equals(Importance other) => Ordinal == other.Ordinal;
     }
 }

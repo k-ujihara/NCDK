@@ -25,6 +25,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static NCDK.Graphs.InitialCyclesTest;
 using NCDK.Common.Base;
+using System;
 
 namespace NCDK.Graphs
 {
@@ -39,7 +40,7 @@ namespace NCDK.Graphs
             int[][] bicyclo = Bicyclo;
             EssentialCycles essential = new EssentialCycles(bicyclo);
             int[][] paths = essential.GetPaths();
-            Assert.IsTrue(Compares.AreDeepEqual(new object[0][], paths));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<object[]>(), paths));
         }
 
         [TestMethod()]

@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Utils.Xml;
 using System;
 using System.Diagnostics;
@@ -29,48 +29,39 @@ namespace NCDK.IO.InChI
     /// XReader handler for INChI XML fragment parsing.
     /// </summary>
     /// <remarks>
-    /// <para>The supported elements are: identifier, formula and
+    /// <para>
+    /// The supported elements are: identifier, formula and
     /// connections. All other elements are not parsed (at this moment).
     /// This parser is written based on the INChI files in data/ichi
     /// for version 1.1Beta.
     /// </para>
     /// <para>The returned ChemFile contains a ChemSequence in
-    /// which the ChemModel represents the molecule.</para>
+    /// which the ChemModel represents the molecule.
+    /// </para>
     /// </remarks>
     /// <seealso cref="InChIReader"/>
     // @cdk.module extra
     // @cdk.githash
-    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
+    [Obsolete]
     public class InChIHandler : XContentHandler
     {
-        private InChIContentProcessorTool inchiTool;
-
-        private ChemFile chemFile;
         private ChemSequence chemSequence;
         private ChemModel chemModel;
         private IChemObjectSet<IAtomContainer> setOfMolecules;
         private IAtomContainer tautomer;
 
-        /// <summary>
-        /// Constructor for the IChIHandler.
-        /// </summary>
-        public InChIHandler()
-        {
-            inchiTool = new InChIContentProcessorTool();
-        }
-
         public override void DoctypeDecl(XDocumentType docType)
         {
             if (docType == null)
                 return;
-            Trace.TraceInformation("DocType root element: " + docType.Name);
-            Trace.TraceInformation("DocType root PUBLIC: " + docType.PublicId);
-            Trace.TraceInformation("DocType root SYSTEM: " + docType.SystemId);
+            Trace.TraceInformation($"DocType root element: {docType.Name}");
+            Trace.TraceInformation($"DocType root PUBLIC: {docType.PublicId}");
+            Trace.TraceInformation($"DocType root SYSTEM: {docType.SystemId}");
         }
 
         public override void StartDocument()
         {
-            chemFile = new ChemFile();
+            ChemFile = new ChemFile();
             chemSequence = new ChemSequence();
             chemModel = new ChemModel();
             setOfMolecules = new ChemObjectSet<IAtomContainer>();
@@ -78,13 +69,13 @@ namespace NCDK.IO.InChI
 
         public override void EndDocument()
         {
-            chemFile.Add(chemSequence);
+            ChemFile.Add(chemSequence);
         }
 
         public override void EndElement(XElement element)
         {
-            Debug.WriteLine("end element: ", element.ToString());
-            if ("identifier".Equals(element.Name.LocalName))
+            Debug.WriteLine($"end element: {element.ToString()}");
+            if (string.Equals("identifier", element.Name.LocalName, StringComparison.Ordinal))
             {
                 if (tautomer != null)
                 {
@@ -94,12 +85,12 @@ namespace NCDK.IO.InChI
                     chemSequence.Add(chemModel);
                 }
             }
-            else if ("formula".Equals(element.Name.LocalName))
+            else if (string.Equals("formula", element.Name.LocalName, StringComparison.Ordinal))
             {
                 if (tautomer != null)
                 {
                     Trace.TraceInformation("Parsing <formula> chars: ", element.Value);
-                    tautomer = new AtomContainer(inchiTool.ProcessFormula(
+                    tautomer = new AtomContainer(InChIContentProcessorTool.ProcessFormula(
                             setOfMolecules.Builder.NewAtomContainer(), element.Value));
                 }
                 else
@@ -107,12 +98,12 @@ namespace NCDK.IO.InChI
                     Trace.TraceWarning("Cannot set atom info for empty tautomer");
                 }
             }
-            else if ("connections".Equals(element.Name.LocalName))
+            else if (string.Equals("connections", element.Name.LocalName, StringComparison.Ordinal))
             {
                 if (tautomer != null)
                 {
                     Trace.TraceInformation("Parsing <connections> chars: ", element.Value);
-                    inchiTool.ProcessConnections(element.Value, tautomer, -1);
+                    InChIContentProcessorTool.ProcessConnections(element.Value, tautomer, -1);
                 }
                 else
                 {
@@ -131,19 +122,20 @@ namespace NCDK.IO.InChI
         /// </summary>
         public override void StartElement(XElement element)
         {
-            Debug.WriteLine("startElement: ", element.ToString());
-            Debug.WriteLine("uri: ", element.Name.NamespaceName);
-            Debug.WriteLine("local: ", element.Name.LocalName);
-            Debug.WriteLine("raw: ", element.ToString());
-            if ("INChI".Equals(element.Name.LocalName))
+            Debug.WriteLine($"startElement: {element.ToString()}");
+            Debug.WriteLine($"uri: {element.Name.NamespaceName}");
+            Debug.WriteLine($"local: {element.Name.LocalName}");
+            Debug.WriteLine($"raw: {element.ToString()}");
+            if (string.Equals("INChI", element.Name.LocalName, StringComparison.Ordinal))
             {
                 // check version
                 foreach (var att in element.Attributes())
                 {
-                    if (att.Name.LocalName.Equals("version")) Trace.TraceInformation("INChI version: ", att.Value);
+                    if (string.Equals(att.Name.LocalName, "version", StringComparison.Ordinal))
+                        Trace.TraceInformation("INChI version: ", att.Value);
                 }
             }
-            else if ("structure".Equals(element.Name.LocalName))
+            else if (string.Equals("structure", element.Name.LocalName, StringComparison.Ordinal))
             {
                 tautomer = new AtomContainer();
             }
@@ -153,6 +145,6 @@ namespace NCDK.IO.InChI
             }
         }
 
-        public ChemFile ChemFile => chemFile;
+        public ChemFile ChemFile { get; private set; }
     }
 }

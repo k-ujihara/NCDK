@@ -54,7 +54,7 @@ namespace NCDK.FaulonSignatures
         /// <returns>true if the strings are equal</returns>
         public bool HasSignature(string otherSignatureString)
         {
-            return this.signatureString.Equals(otherSignatureString);
+            return string.Equals(this.signatureString, otherSignatureString, StringComparison.Ordinal);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace NCDK.FaulonSignatures
         /// <seealso cref="IComparable.CompareTo(object)"/>
         public int CompareTo(SymmetryClass o)
         {
-            return this.signatureString.CompareTo(o.signatureString);
+            return string.Compare(this.signatureString, o.signatureString, StringComparison.Ordinal);
         }
 
         public override string ToString()

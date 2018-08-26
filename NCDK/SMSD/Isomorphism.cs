@@ -25,11 +25,11 @@
 
 using NCDK.Isomorphisms.Matchers;
 using NCDK.SMSD.Algorithms.MCSPluses;
-using NCDK.SMSD.Algorithms.RGraph;
-using NCDK.SMSD.Algorithms.Single;
+using NCDK.SMSD.Algorithms.RGraphs;
+using NCDK.SMSD.Algorithms.Singles;
 using NCDK.SMSD.Algorithms.VFLib;
 using NCDK.SMSD.Filters;
-using NCDK.SMSD.Global;
+using NCDK.SMSD.Globals;
 using NCDK.SMSD.Tools;
 using System;
 using System.Collections.Generic;
@@ -73,20 +73,19 @@ namespace NCDK.SMSD
     [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public sealed class Isomorphism : AbstractMCS
     {
-        private List<IDictionary<int, int>> allMCS = null;
-        private IDictionary<int, int> firstSolution = null;
-        private List<IDictionary<IAtom, IAtom>> allAtomMCS = null;
-        private IDictionary<IAtom, IAtom> firstAtomMCS = null;
-        private List<IDictionary<IBond, IBond>> allBondMCS = null;
-        private IDictionary<IBond, IBond> firstBondMCS = null;
+        private List<IReadOnlyDictionary<int, int>> allMCS = null;
+        private SortedDictionary<int, int> firstSolution = null;
+        private List<IReadOnlyDictionary<IAtom, IAtom>> allAtomMCS = null;
+        private Dictionary<IAtom, IAtom> firstAtomMCS = null;
+        private IReadOnlyList<IReadOnlyDictionary<IBond, IBond>> allBondMCS = null;
         private MolHandler rMol = null;
         private IQueryAtomContainer queryMol = null;
         private MolHandler pMol = null;
         private IAtomContainer pAC = null;
-        private IList<double> stereoScore = null;
-        private IList<int> fragmentSize = null;
-        private IList<double> bEnergies = null;
-        private Algorithm algorithmType;
+        private IReadOnlyList<double> stereoScore = null;
+        private IReadOnlyList<int> fragmentSize = null;
+        private IReadOnlyList<double> bEnergies = null;
+        private readonly Algorithm algorithmType;
         private bool removeHydrogen = false;
         private bool subGraph = false;
 
@@ -107,11 +106,11 @@ namespace NCDK.SMSD
         {
             this.algorithmType = algorithmType;
             firstSolution = new SortedDictionary<int, int>();
-            allMCS = new List<IDictionary<int, int>>();
-            allAtomMCS = new List<IDictionary<IAtom, IAtom>>();
+            allMCS = new List<IReadOnlyDictionary<int, int>>();
+            allAtomMCS = new List<IReadOnlyDictionary<IAtom, IAtom>>();
             firstAtomMCS = new Dictionary<IAtom, IAtom>();
-            allBondMCS = new List<IDictionary<IBond, IBond>>();
-            firstBondMCS = new Dictionary<IBond, IBond>();
+            allBondMCS = new List<IReadOnlyDictionary<IBond, IBond>>();
+            FirstBondMap = new Dictionary<IBond, IBond>();
 
             SetTime(bondTypeFlag);
             IsMatchBonds = bondTypeFlag;
@@ -166,9 +165,8 @@ namespace NCDK.SMSD
             if (allAtomMCS.Count != 0 && firstAtomMCS.Count != 0 && firstAtomMCS.Count > 1)
             {
                 AllBondMaps = MakeBondMapsOfAtomMaps(mol1, mol2, allAtomMCS);
-                var firstMap = AllBondMaps.FirstOrDefault();
-                if (firstMap != null)
-                    SetFirstBondMap(firstMap);
+                if (AllBondMaps.Count != 0)
+                    SetFirstBondMap(AllBondMaps[0]);
             }
         }
 
@@ -179,10 +177,11 @@ namespace NCDK.SMSD
         /// <param name="mappings">mappings between source and target molecule atoms</param>
         /// <returns>bond maps between source and target molecules based on the atoms</returns>
         /// </summary>
-        public static List<IDictionary<IBond, IBond>> MakeBondMapsOfAtomMaps(IAtomContainer ac1, IAtomContainer ac2,
-                List<IDictionary<IAtom, IAtom>> mappings)
+        public static IReadOnlyList<IReadOnlyDictionary<IBond, IBond>> MakeBondMapsOfAtomMaps(
+            IAtomContainer ac1, IAtomContainer ac2,
+            IReadOnlyList<IReadOnlyDictionary<IAtom, IAtom>> mappings)
         {
-            List<IDictionary<IBond, IBond>> bondMaps = new List<IDictionary<IBond, IBond>>();
+            List<IReadOnlyDictionary<IBond, IBond>> bondMaps = new List<IReadOnlyDictionary<IBond, IBond>>();
             foreach (var mapping in mappings)
             {
                 bondMaps.Add(MakeBondMapOfAtomMap(ac1, ac2, mapping));
@@ -198,10 +197,11 @@ namespace NCDK.SMSD
         /// <param name="mapping">mappings between source and target molecule atoms</param>
         /// <returns>bond map between source and target molecules based on the atoms</returns>
         /// </summary>
-        public static IDictionary<IBond, IBond> MakeBondMapOfAtomMap(IAtomContainer ac1, IAtomContainer ac2,
-                IDictionary<IAtom, IAtom> mapping)
+        public static IReadOnlyDictionary<IBond, IBond> MakeBondMapOfAtomMap(
+            IAtomContainer ac1, IAtomContainer ac2,
+            IReadOnlyDictionary<IAtom, IAtom> mapping)
         {
-            IDictionary<IBond, IBond> maps = new Dictionary<IBond, IBond>();
+            var maps = new Dictionary<IBond, IBond>();
 
             foreach (var mapS in mapping)
             {
@@ -228,10 +228,7 @@ namespace NCDK.SMSD
                 }
             }
 
-            //        Console.Out.WriteLine("bond Map size:" + maps.Count);
-
             return maps;
-
         }
 
         private void ChooseAlgorithm(int rBondCount, int pBondCount)
@@ -445,7 +442,7 @@ namespace NCDK.SMSD
             allAtomMCS.AddRange(mcs.GetAllAtomMapping());
         }
 
-        private int GetHCount(IAtomContainer molecule)
+        private static int GetHCount(IAtomContainer molecule)
         {
             int count = 0;
             foreach (var atom in molecule.Atoms)
@@ -567,12 +564,12 @@ namespace NCDK.SMSD
             }
         }
 
-        public bool IsTimeOut()
+        public static bool IsTimeOut()
         {
             return TimeOut.Instance.Enabled;
         }
 
-        public void ReSetTimeOut()
+        public static void ResetTimeOut()
         {
             TimeOut.Instance.Enabled = false;
         }
@@ -680,25 +677,25 @@ namespace NCDK.SMSD
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public override IDictionary<int, int> GetFirstMapping()
+        public override IReadOnlyDictionary<int, int> GetFirstMapping()
         {
             return firstSolution.Count == 0 ? null : firstSolution;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public override IList<IDictionary<int, int>> GetAllMapping()
+        public override IReadOnlyList<IReadOnlyDictionary<int, int>> GetAllMapping()
         {
             return allMCS.Count == 0 ? null : allMCS;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public override IDictionary<IAtom, IAtom> GetFirstAtomMapping()
+        public override IReadOnlyDictionary<IAtom, IAtom> GetFirstAtomMapping()
         {
             return firstAtomMCS.Count == 0 ? null : firstAtomMCS;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public override IList<IDictionary<IAtom, IAtom>> GetAllAtomMapping()
+        public override IReadOnlyList<IReadOnlyDictionary<IAtom, IAtom>> GetAllAtomMapping()
         {
             return allAtomMCS.Count == 0 ? null : allAtomMCS;
         }
@@ -895,7 +892,7 @@ namespace NCDK.SMSD
 
         public bool IsMatchBonds { get; set; }
 
-        public List<IDictionary<IBond, IBond>> AllBondMaps
+        public IReadOnlyList<IReadOnlyDictionary<IBond, IBond>> AllBondMaps
         {
             get
             {
@@ -907,15 +904,15 @@ namespace NCDK.SMSD
             }
         }
 
-        public IDictionary<IBond, IBond> FirstBondMap => firstBondMCS;
+        public IReadOnlyDictionary<IBond, IBond> FirstBondMap { get; private set; } = null;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="firstBondMCS">The firstBondMCS to set</param>
-        private void SetFirstBondMap(IDictionary<IBond, IBond> firstBondMCS)
+        private void SetFirstBondMap(IReadOnlyDictionary<IBond, IBond> firstBondMCS)
         {
-            this.firstBondMCS = firstBondMCS;
+            this.FirstBondMap = firstBondMCS;
         }
     }
 }

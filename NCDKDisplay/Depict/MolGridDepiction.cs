@@ -73,7 +73,7 @@ namespace NCDK.Depict
                     if (fromIndex >= toIndex)
                         break;
 
-                    List<Bounds> molsublist = molecules.GetRange(fromIndex, toIndex - fromIndex);
+                    var molsublist = molecules.GetRange(fromIndex, toIndex - fromIndex);
                     // need to pad list
                     while (molsublist.Count < nCol)
                         molsublist.Add(new Bounds());
@@ -97,15 +97,14 @@ namespace NCDK.Depict
             double zoom = model.GetZoomFactor();
 
             // row and col offsets for alignment
-            double[] yOffset = new double[nRow + 1];
-            double[] xOffset = new double[nCol + 1];
+            var yOffset = new double[nRow + 1];
+            var xOffset = new double[nCol + 1];
 
-            Dimensions required = Dimensions.OfGrid(elements, yOffset, xOffset).Scale(scale * zoom);
+            var required = Dimensions.OfGrid(elements, yOffset, xOffset).Scale(scale * zoom);
+            var total = CalcTotalDimensions(margin, padding, required, null);
+            var fitting = CalcFitting(margin, padding, required, null);
 
-            Dimensions total = CalcTotalDimensions(margin, padding, required, null);
-            double fitting = CalcFitting(margin, padding, required, null);
-
-            IDrawVisitor visitor = WPFDrawVisitor.ForVectorGraphics(drawingContext);
+            var visitor = WPFDrawVisitor.ForVectorGraphics(drawingContext);
 
             if (model.GetBackgroundColor() != Colors.Transparent)
                 visitor.Visit(new RectangleElement(new Point(0, 0), total.width, total.height, true, model.GetBackgroundColor()), Transform.Identity);
@@ -147,8 +146,7 @@ namespace NCDK.Depict
                 return 1; // no fitting
             Dimensions targetDim = dimensions;
 
-            targetDim = targetDim.Add(-2 * margin, -2 * margin)
-                                             .Add(-((nCol - 1) * padding), -((nRow - 1) * padding));
+            targetDim = targetDim.Add(-2 * margin, -2 * margin).Add(-((nCol - 1) * padding), -((nRow - 1) * padding));
             double resize = Math.Min(targetDim.width / required.width,
                                      targetDim.height / required.height);
             if (resize > 1 && !model.GetFitToScreen())

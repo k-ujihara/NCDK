@@ -32,7 +32,7 @@ namespace NCDK.QSAR
     // @cdk.dictref valence, atom
     public static class AtomValenceTool
     {
-        private static IDictionary<string, int> valencesTable = new Dictionary<string, int>
+        private static Dictionary<string, int> valencesTable = new Dictionary<string, int>
         {
             { "H", 1 },
             { "He", 8 },
@@ -87,7 +87,7 @@ namespace NCDK.QSAR
         public static int GetValence(IAtom atom)
         {
             if (!valencesTable.TryGetValue(atom.Symbol, out int ret))
-                throw new System.NullReferenceException();
+                throw new NoSuchAtomException();
             return ret;
         }
     }

@@ -1,8 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NCDK.Default;
 using NCDK.Numerics;
-using System.Windows.Media;
+using NCDK.Silent;
 using WPF = System.Windows;
 
 namespace NCDK.Renderers.Generators.Standards

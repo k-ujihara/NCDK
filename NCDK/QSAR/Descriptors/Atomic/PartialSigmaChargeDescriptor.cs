@@ -62,8 +62,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the PartialSigmaChargeDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialSigmaCharge",
                 typeof(PartialSigmaChargeDescriptor).FullName, "The Chemistry Development Kit");
@@ -73,11 +73,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <para>Number of maximum iterations</para>
         /// </summary>
         /// <exception cref="CDKException"></exception>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
                     throw new CDKException("PartialSigmaChargeDescriptor only expects one parameter");
                 }
@@ -124,12 +124,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 catch (Exception e)
                 {
-                    return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+                    return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
                 }
             }
             atom.Charge = originalCharge;
 
-            return GetCachedDescriptorValue(atom) != null ? new DescriptorValue<Result<double>>(_Specification, ParameterNames,
+            return GetCachedDescriptorValue(atom) != null ? new DescriptorValue<Result<double>>(specification, ParameterNames,
                     Parameters, (Result<double>)GetCachedDescriptorValue(atom), NAMES) : null;
         }
 
@@ -145,7 +145,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>The parameterType value</returns>
         public object GetParameterType(string name)
         {
-            if ("maxIterations".Equals(name)) return int.MaxValue;
+            if (string.Equals("maxIterations", name, StringComparison.Ordinal)) return int.MaxValue;
             return null;
         }
     }

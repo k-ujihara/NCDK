@@ -16,7 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.ForceField.MMFF;
+using NCDK.ForceFields;
 using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
@@ -46,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     public partial class PartialTChargeMMFF94Descriptor : IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "partialTCMMFF94" };
-        private static readonly string CHARGE_CACHE = "mmff.qsar.charge.cache";
+        private const string Key_ChargeCache = "mmff.qsar.charge.cache";
         private Mmff mmff;
 
         /// <summary>
@@ -60,8 +60,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the PartialTChargeMMFF94Descriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialTChargeMMFF94",
                 typeof(PartialTChargeMMFF94Descriptor).FullName, "The Chemistry Development Kit");
@@ -69,7 +69,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the PartialTChargeMMFF94Descriptor object
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public IReadOnlyList<string> DescriptorNames => NAMES;
 
@@ -83,15 +83,15 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>partial charge of parameter atom</returns>
         public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer org)
         {
-            if (atom.GetProperty<double?>(CHARGE_CACHE) == null)
+            if (atom.GetProperty<double?>(Key_ChargeCache) == null)
             {
                 IAtomContainer copy = (IAtomContainer)org.Clone();
                 foreach (var a in org.Atoms)
                 {
                     if (a.ImplicitHydrogenCount == null || a.ImplicitHydrogenCount != 0)
                     {
-                        Trace.TraceError("Hydrogens must be explict for MMFF charge calculation");
-                        return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters,
+                        Trace.TraceError("Hydrogens must be explicit for MMFF charge calculation");
+                        return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters,
                                                    new Result<double>(double.NaN), NAMES);
                     }
                 }
@@ -104,14 +104,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 // cache charges
                 for (int i = 0; i < org.Atoms.Count; i++)
                 {
-                    org.Atoms[i].SetProperty(CHARGE_CACHE, copy.Atoms[i].Charge.Value);
+                    org.Atoms[i].SetProperty(Key_ChargeCache, copy.Atoms[i].Charge.Value);
                 }
             }
 
-            return new DescriptorValue<Result<double>>(_Specification,
+            return new DescriptorValue<Result<double>>(specification,
                                        ParameterNames,
                                        Parameters,
-                                       new Result<double>(atom.GetProperty<double>(CHARGE_CACHE)),
+                                       new Result<double>(atom.GetProperty<double>(Key_ChargeCache)),
                                        NAMES);
         }
 

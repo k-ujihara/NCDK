@@ -114,7 +114,7 @@ namespace NCDK.Beam
             return h;
         }
 
-        private IAtom AsBracketAtom(int u, Graph g)
+        private static IAtom AsBracketAtom(int u, Graph g)
         {
             IAtom a = g.GetAtom(u);
             int sum = a.IsAromatic() ? 1 : 0;
@@ -131,9 +131,9 @@ namespace NCDK.Beam
                                             a.IsAromatic());
         }
 
-        private Topology ToTrigonal(Graph g, Edge e, int u)
+        private static Topology ToTrigonal(Graph g, Edge e, int u)
         {
-            IList<Edge> es = g.GetEdges(u);
+            var es = g.GetEdges(u);
             int offset = es.IndexOf(e);
 
             // vertex information for topology
@@ -210,7 +210,7 @@ namespace NCDK.Beam
             return b == Bond.Down;
         }
 
-        private List<Edge> DoubleBondLabelledEdges(Graph g)
+        private static List<Edge> DoubleBondLabelledEdges(Graph g)
         {
             List<Edge> es = new List<Edge>();
             for (int u = 0; u < g.Order; u++)

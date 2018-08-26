@@ -19,7 +19,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.StructGen.Stochastic.Operator
+namespace NCDK.StructGen.Stochastic.Operators
 {
     // @cdk.module test-structgen
      [TestClass()]

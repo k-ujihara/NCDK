@@ -24,5 +24,16 @@ namespace NCDK.Graphs.Invariant
     // @cdk.githash
     public class BadMatrixFormatException : Exception
     {
+        public BadMatrixFormatException()
+        {
+        }
+
+        public BadMatrixFormatException(string message) : base(message)
+        {
+        }
+
+        public BadMatrixFormatException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
     }
 }

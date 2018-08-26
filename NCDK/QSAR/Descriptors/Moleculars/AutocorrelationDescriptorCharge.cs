@@ -96,7 +96,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     result.Add(aChargeSum);
                 }
-                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, NAMES);
+                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, NAMES);
 
             }
             catch (Exception ex)
@@ -104,15 +104,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 ArrayResult<double> result = new ArrayResult<double>(5);
                 for (int i = 0; i < 5; i++)
                     result.Add(double.NaN);
-                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, NAMES,
+                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, NAMES,
                         new CDKException("Error while calculating the ATS_charge descriptor: " + ex.Message, ex));
             }
         }
 
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[0];
+        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
         public override object GetParameterType(string name) => null;
 
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             get { return null; }
             set { }
@@ -120,8 +120,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
              new DescriptorSpecification(
                     "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationCharge",
                     typeof(AutocorrelationDescriptorCharge).FullName,

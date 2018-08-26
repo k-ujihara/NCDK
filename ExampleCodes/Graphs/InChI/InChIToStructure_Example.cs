@@ -1,17 +1,16 @@
-﻿using System;
+﻿using NCDK.Silent;
+using System;
 
 namespace NCDK.Graphs.InChI
 {
     class InChIToStructure_Example
     {
-        void Main()
+        static void Main()
         {
             string inchi = "inchi";
             #region 
-            // Generate factory -  if native code does not load
-            InChIGeneratorFactory factory = new InChIGeneratorFactory();
             // Get InChIToStructure
-            InChIToStructure intostruct = factory.GetInChIToStructure(inchi, Default.ChemObjectBuilder.Instance);
+            InChIToStructure intostruct = InChIToStructure.FromInChI(inchi, ChemObjectBuilder.Instance);
 
             InChIReturnCode ret = intostruct.ReturnStatus;
             if (ret == InChIReturnCode.Warning)

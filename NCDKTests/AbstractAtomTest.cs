@@ -34,7 +34,7 @@ namespace NCDK
         /// Method to test the get/SetCharge() methods.
         /// </summary>
         [TestMethod()]
-        public virtual void TestSetCharge_Double()
+        public virtual void TestSetChargeDouble()
         {
             double charge = 0.15;
 
@@ -46,14 +46,14 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetCharge()
         {
-            TestSetCharge_Double();
+            TestSetChargeDouble();
         }
 
         /// <summary>
         /// Method to test the get/SetHydrogenCount() methods.
         /// </summary>
         [TestMethod()]
-        public virtual void TestSetImplicitHydrogenCount_Integer()
+        public virtual void TestSetImplicitHydrogenCountInteger()
         {
             int count = 1;
 
@@ -74,7 +74,7 @@ namespace NCDK
         /// Method to test the SetFractional3D() methods.
         /// </summary>
         [TestMethod()]
-        public virtual void TestSetFractionalPoint3d_Point3d()
+        public virtual void TestSetFractionalPoint3dPoint3d()
         {
             IAtom a = (IAtom)NewChemObject();
             a.FractionalPoint3D = new Vector3(0.5, 0.5, 0.5);
@@ -88,7 +88,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetFractionalPoint3d()
         {
-            TestSetFractionalPoint3d_Point3d();
+            TestSetFractionalPoint3dPoint3d();
         }
 
         [TestMethod()]
@@ -103,7 +103,7 @@ namespace NCDK
         }
 
         [TestMethod()]
-        public virtual void TestSetPoint3d_Point3d()
+        public virtual void TestSetPoint3dPoint3d()
         {
             Vector3 point3d = new Vector3(1, 2, 3);
 
@@ -125,7 +125,7 @@ namespace NCDK
         }
 
         [TestMethod()]
-        public virtual void TestSetPoint2d_Point2d()
+        public virtual void TestSetPoint2dPoint2d()
         {
             Vector2 point2d = new Vector2(1, 2);
 
@@ -138,10 +138,10 @@ namespace NCDK
         /// Method to test the get/SetHydrogenCount() methods.
         /// </summary>
         [TestMethod()]
-        public virtual void TestSetStereoParity_Integer()
+        public virtual void TestSetStereoParityInteger()
         {
             var parity = StereoAtomParities.Plus;
-            IAtom a = (IAtom)NewChemObject();
+            var a = (IAtom)NewChemObject();
             a.StereoParity = parity;
             Assert.AreEqual(parity, a.StereoParity);
         }
@@ -149,7 +149,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetStereoParity()
         {
-            TestSetStereoParity_Integer();
+            TestSetStereoParityInteger();
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace NCDK
         /// Method to test the Clone() method
         /// </summary>
         [TestMethod()]
-        public virtual void TestClone_Point2d()
+        public virtual void TestClonePoint2d()
         {
             IAtom atom = (IAtom)NewChemObject();
             atom.Point2D = new Vector2(2, 3);
@@ -181,10 +181,10 @@ namespace NCDK
         }
 
         /// <summary>
-        /// Method to test the Clone() method
+        /// Method to test the <see cref="System.ICloneable.Clone()"/> method
         /// </summary>
         [TestMethod()]
-        public virtual void TestClone_Point3d()
+        public virtual void TestClonePoint3d()
         {
             IAtom atom = (IAtom)NewChemObject();
             atom.Point3D = new Vector3(2, 3, 4);
@@ -193,10 +193,10 @@ namespace NCDK
         }
 
         /// <summary>
-        /// Method to test the Clone() method
+        /// Method to test the <see cref="System.ICloneable.Clone()"/> method
         /// </summary>
         [TestMethod()]
-        public virtual void TestClone_FractionalPoint3d()
+        public virtual void TestCloneFractionalPoint3d()
         {
             IAtom atom = (IAtom)NewChemObject();
             atom.FractionalPoint3D = new Vector3(2, 3, 4);
@@ -205,10 +205,10 @@ namespace NCDK
         }
 
         /// <summary>
-        /// Method to test the Clone() method
+        /// Method to test the <see cref="System.ICloneable.Clone()"/> method
         /// </summary>
         [TestMethod()]
-        public virtual void TestClone_HydrogenCount()
+        public virtual void TestCloneHydrogenCount()
         {
             IAtom atom = (IAtom)NewChemObject();
             atom.ImplicitHydrogenCount = 3;
@@ -220,10 +220,10 @@ namespace NCDK
         }
 
         /// <summary>
-        /// Method to test the Clone() method
+        /// Method to test the <see cref="System.ICloneable.Clone()"/> method
         /// </summary>
         [TestMethod()]
-        public virtual void TestClone_StereoParity()
+        public virtual void TestCloneStereoParity()
         {
             IAtom atom = (IAtom)NewChemObject();
             atom.StereoParity = 3;
@@ -235,10 +235,10 @@ namespace NCDK
         }
 
         /// <summary>
-        /// Method to test the Clone() method
+        /// Method to test the <see cref="System.ICloneable.Clone()"/> method
         /// </summary>
         [TestMethod()]
-        public virtual void TestClone_Charge()
+        public virtual void TestCloneCharge()
         {
             IAtom atom = (IAtom)NewChemObject();
             atom.Charge = 1.0;
@@ -265,7 +265,7 @@ namespace NCDK
         }
 
         [TestMethod()]
-        public virtual void TestToString_FractionalCoordinates()
+        public virtual void TestToStringFractionalCoordinates()
         {
             IAtom atom = (IAtom)NewChemObject();
             atom.FractionalPoint3D = new Vector3(2, 3, 4);
@@ -281,7 +281,6 @@ namespace NCDK
         {
             IAtom atom = (IAtom)NewChemObject();
             Assert.AreEqual(null, atom.Charge);
-            //        Assert.AreEqual(0.0, atom.Charge, 0.00000001);
         }
     }
 }

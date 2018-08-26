@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
@@ -277,7 +278,7 @@ namespace NCDK.Tools.Manipulator
         {
             foreach (var reaction in reactionSet)
             {
-                if (reaction.Id != null && reaction.Id.Equals(id))
+                if (string.Equals(reaction.Id, id, StringComparison.Ordinal))
                 {
                     return reaction;
                 }

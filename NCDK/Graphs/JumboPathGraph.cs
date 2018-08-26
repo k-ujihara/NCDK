@@ -77,9 +77,9 @@ namespace NCDK.Graphs
 
             // check configuration
             if (!(ord > 2))
-                throw new ArgumentOutOfRangeException(nameof(graph), "graph was acyclic");
+                throw new ArgumentOutOfRangeException(nameof(mGraph), "graph was acyclic");
             if (!(limit >= 3 && limit <= ord))
-                throw new ArgumentOutOfRangeException(nameof(graph), "limit should be from 3 to |V|");
+                throw new ArgumentOutOfRangeException(nameof(limit), "limit should be from 3 to |V|");
 
             for (int v = 0; v < ord; v++)
                 graph[v] = new List<JumboPathGraph.PathEdge>();
@@ -134,7 +134,7 @@ namespace NCDK.Graphs
         /// <param name="edges">edges which are currently incident to <i>x</i></param>
         /// <param name="x">a vertex in the graph</param>
         /// <returns>reduced edges</returns>
-        private List<PathEdge> Combine(List<PathEdge> edges, int x)
+        private static List<PathEdge> Combine(List<PathEdge> edges, int x)
         {
             int n = edges.Count;
             List<PathEdge> reduced = new List<PathEdge>(n);

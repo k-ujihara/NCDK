@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Reactions.Types.Parameters;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
@@ -29,8 +30,6 @@ namespace NCDK.Reactions.Types
     // @cdk.githash
     public abstract class AbstractAdductionLPReaction : ReactionEngine, IReactionProcess
     {
-        public AbstractAdductionLPReaction() { }
-
         /// <inheritdoc/>
         public abstract ReactionSpecification Specification { get; }
 
@@ -45,9 +44,11 @@ namespace NCDK.Reactions.Types
             IAtomContainer reactant = reactants[0];
 
             IParameterReaction ipr = base.GetParameterClass(typeof(SetReactionCenter));
-            if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
+            if (ipr != null && !ipr.IsSetParameter)
+                SetActiveCenters(reactant);
 
-            if (AtomContainerManipulator.GetTotalCharge(reactant) > 0) return setOfReactions;
+            if (AtomContainerManipulator.GetTotalCharge(reactant) > 0)
+                return setOfReactions;
 
             foreach (var atomi in reactant.Atoms)
             {
@@ -56,10 +57,7 @@ namespace NCDK.Reactions.Types
                    && reactant.GetConnectedLonePairs(atomi).Any()
                    && !reactant.GetConnectedSingleElectrons(atomi).Any())
                 {
-                    var atomList = new List<IAtom>
-                    {
-                        atomi
-                    };
+                    var atomList = new List<IAtom> { atomi };
                     IAtom atomH = reactant.Builder.NewAtom(atomSymbol);
                     atomH.FormalCharge = 1;
                     atomList.Add(atomH);
@@ -81,9 +79,10 @@ namespace NCDK.Reactions.Types
             return setOfReactions;
         }
 
-        private void SetActiveCenters(IAtomContainer reactant)
+        private static void SetActiveCenters(IAtomContainer reactant)
         {
-            if (AtomContainerManipulator.GetTotalCharge(reactant) > 0) return;
+            if (AtomContainerManipulator.GetTotalCharge(reactant) > 0)
+                return;
 
             foreach (var atomi in reactant.Atoms)
             {

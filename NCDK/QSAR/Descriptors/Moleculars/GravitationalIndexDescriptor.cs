@@ -83,8 +83,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public GravitationalIndexDescriptor() { }
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#gravitationalIndex",
                 typeof(GravitationalIndexDescriptor).FullName,
@@ -93,7 +93,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the GravitationalIndexDescriptor object.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
@@ -115,7 +115,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results,
                     DescriptorNames, e);
         }
 
@@ -134,7 +134,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double mass2;
             try
             {
-                factory = Isotopes.Instance;
+                factory = BODRIsotopeFactory.Instance;
             }
             catch (Exception e)
             {
@@ -175,7 +175,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     return GetDummyDescriptorValue(new CDKException("GravitationalIndex: Only handles 2 center bonds"));
                 }
 
-                if (b.Atoms[0].Symbol.Equals("H") || b.Atoms[1].Symbol.Equals("H")) continue;
+                if (b.Atoms[0].Symbol.Equals("H", StringComparison.Ordinal) || b.Atoms[1].Symbol.Equals("H", StringComparison.Ordinal))
+                    continue;
 
                 mass1 = factory.GetMajorIsotope(b.Atoms[0].Symbol).MassNumber.Value;
                 mass2 = factory.GetMajorIsotope(b.Atoms[1].Symbol).MassNumber.Value;
@@ -198,7 +199,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var x = new List<int>();
             for (int i = 0; i < container.Atoms.Count; i++)
             {
-                if (!container.Atoms[i].Symbol.Equals("H")) x.Add(i);
+                if (!string.Equals(container.Atoms[i].Symbol, "H", StringComparison.Ordinal)) x.Add(i);
             }
             int npair = x.Count * (x.Count - 1) / 2;
             var p = new Pair[npair];
@@ -257,7 +258,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 Math.Pow(allheavysum, 1.0 / 3.0)
             };
 
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval,
                     DescriptorNames);
         }
 

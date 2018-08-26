@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace NCDK.Geometries.Alignments
 {
-    public class KabschAlignment_Example
+    public static class KabschAlignment_Example
     {
-        public void Main()
+        public static void Main()
         {
             {
                 #region
-                AtomContainer ac1 = new AtomContainer();    // molecule 1
-                AtomContainer ac2 = new AtomContainer();    // molecule 2
+                var ac1 = new AtomContainer();    // molecule 1
+                var ac2 = new AtomContainer();    // molecule 2
                 try
                 {
                     KabschAlignment sa = new KabschAlignment(ac1.Atoms, ac2.Atoms);

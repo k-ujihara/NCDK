@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Reflection;
 using static NCDK.DoubleBondConformation;
 
@@ -37,7 +38,7 @@ namespace NCDK
         /// <summary>Z-form</summary>
         Together,
         
-		/// <summary>E-form</summary>
+        /// <summary>E-form</summary>
         Opposite,
     }
 
@@ -56,27 +57,27 @@ namespace NCDK
         public static DoubleBondConformation Invert(this DoubleBondConformation value)
             => value == Together ? Opposite : Together;
 
-        public static DoubleBondConformation ToConformation(this StereoElement.Configuration configure)
+        public static DoubleBondConformation ToConformation(this StereoConfigurations configure)
         {
             switch (configure)
             {
-                case StereoElement.Configuration.Together:
+                case StereoConfigurations.Together:
                     return Together;
-                case StereoElement.Configuration.Opposite:
+                case StereoConfigurations.Opposite:
                     return Opposite;
                 default:
-                    throw new System.ArgumentException("Cannot map config to enum: " + configure);
+                    throw new ArgumentException("Cannot map config to enum: " + configure);
             }
         }
 
-        public static StereoElement.Configuration ToConfiguration(this DoubleBondConformation conformation)
+        public static StereoConfigurations ToConfiguration(this DoubleBondConformation conformation)
         {
             switch (conformation)
             {
                 case DoubleBondConformation.Together:
-                    return StereoElement.Configuration.Together;
+                    return StereoConfigurations.Together;
                 case DoubleBondConformation.Opposite:
-                    return StereoElement.Configuration.Opposite;
+                    return StereoConfigurations.Opposite;
                 default:
                     throw new System.ArgumentException("Cannot map enum to config: " + conformation);
             }

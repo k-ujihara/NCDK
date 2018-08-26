@@ -20,10 +20,10 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.Templates;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.RingSearches
 {
@@ -41,16 +41,15 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestCyclic()
         {
-            int n = bicyclo.Atoms.Count;
+            var n = bicyclo.Atoms.Count;
             Assert.AreEqual(n, new RingSearch(bicyclo).Cyclic().Length, "cyclic vertices should be invariant for any ordering");
         }
 
         [TestMethod()]
         public void TestCyclic_Int()
         {
-            int n = bicyclo.Atoms.Count;
-
-            RingSearch ringSearch = new RingSearch(bicyclo);
+            var n = bicyclo.Atoms.Count;
+            var ringSearch = new RingSearch(bicyclo);
             for (int i = 0; i < n; i++)
                 Assert.IsTrue(ringSearch.Cyclic(i), "all atoms should be cyclic");
         }
@@ -70,9 +69,8 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestRingFragments()
         {
-            int n = bicyclo.Atoms.Count;
-
-            IAtomContainer fragment = new RingSearch(bicyclo).RingFragments();
+            var n = bicyclo.Atoms.Count;
+            var fragment = new RingSearch(bicyclo).RingFragments();
             Assert.AreEqual(bicyclo.Atoms.Count, fragment.Atoms.Count);
             Assert.AreEqual(bicyclo.Bonds.Count, fragment.Bonds.Count);
         }
@@ -80,16 +78,15 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestIsolatedRingFragments()
         {
-            int n = bicyclo.Atoms.Count;
-
-            IList<IAtomContainer> fragments = new RingSearch(bicyclo).IsolatedRingFragments();
-            Assert.IsTrue(fragments.Count == 0);
+            var n = bicyclo.Atoms.Count;
+            var fragments = new RingSearch(bicyclo).IsolatedRingFragments();
+            Assert.IsTrue(fragments.Count() == 0);
         }
 
         [TestMethod()]
         public void TestFusedRingFragments()
         {
-            IList<IAtomContainer> fragments = new RingSearch(bicyclo).FusedRingFragments();
+            var fragments = new RingSearch(bicyclo).FusedRingFragments().ToList();
             Assert.AreEqual(1, fragments.Count);
             IAtomContainer fragment = fragments[0];
             Assert.AreEqual(bicyclo.Atoms.Count, fragment.Atoms.Count);

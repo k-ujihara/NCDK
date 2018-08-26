@@ -18,7 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
-using NCDK.Default;
+using NCDK.Silent;
 using System;
 
 namespace NCDK.Smiles
@@ -40,7 +40,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void TestInvPair_long_IAtom()
+        public void TestInvPairLongIAtom()
         {
             IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
             InvPair pair = new InvPair(5L, atom);
@@ -50,7 +50,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void TestEquals_Object()
+        public void TestEqualsObject()
         {
             IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
             InvPair pair = new InvPair(5L, atom);
@@ -69,7 +69,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void TestSetAtom_IAtom()
+        public void TestSetAtomIAtom()
         {
             IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
             InvPair pair = new InvPair();
@@ -123,12 +123,12 @@ namespace NCDK.Smiles
             IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
             InvPair pair = new InvPair(5L, atom);
             pair.Commit();
-            Assert.IsNotNull(atom.GetProperty<long>(InvPair.CanonicalLabelKey));
-            Assert.AreEqual(5, ((long)atom.GetProperty<long>(InvPair.CanonicalLabelKey)));
+            Assert.IsNotNull(atom.GetProperty<long>(InvPair.CanonicalLabelPropertyKey));
+            Assert.AreEqual(5, ((long)atom.GetProperty<long>(InvPair.CanonicalLabelPropertyKey)));
         }
 
         [TestMethod()]
-        public void TestSetCurr_long()
+        public void TestSetCurrLong()
         {
             IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
             InvPair pair = new InvPair(5L, atom);
@@ -146,7 +146,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void TestSetLast_long()
+        public void TestSetLastLong()
         {
             IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
             InvPair pair = new InvPair(5L, atom);

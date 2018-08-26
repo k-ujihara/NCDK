@@ -24,6 +24,7 @@
 
 using NCDK.Hash.Stereo;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.Hash
 {
@@ -90,8 +91,9 @@ namespace NCDK.Hash
                 IStereoEncoderFactory factory, int depth)
                 : base(pseudorandom)
         {
-            if (depth < 0) throw new ArgumentOutOfRangeException("depth cannot be less then 0");
-            this.seedGenerator = seedGenerator ?? throw new ArgumentNullException("seed generator cannot be null");
+            if (depth < 0)
+                throw new ArgumentOutOfRangeException(nameof(depth), "depth cannot be less then 0");
+            this.seedGenerator = seedGenerator ?? throw new ArgumentNullException(nameof(seedGenerator), "seed generator cannot be null");
             this.factory = factory;
             this.depth = depth;
         }
@@ -112,7 +114,7 @@ namespace NCDK.Hash
 
         public override long[] Generate(IAtomContainer container)
         {
-            int[][] graph = ToAdjList(container);
+            var graph = ToAdjList(container);
             return Generate(seedGenerator.Generate(container), factory.Create(container, graph), graph, Suppressed.None);
         }
 
@@ -129,11 +131,11 @@ namespace NCDK.Hash
         public override long[] Generate(long[] current, IStereoEncoder encoder, int[][] graph, Suppressed suppressed)
         {
             int n = graph.Length;
-            long[] next = Copy(current);
+            var next = Copy(current);
 
             // buffers for including adjacent invariants
-            long[] unique = new long[n];
-            long[] included = new long[n];
+            var unique = new long[n];
+            var included = new long[n];
 
             while (encoder.Encode(current, next))
             {

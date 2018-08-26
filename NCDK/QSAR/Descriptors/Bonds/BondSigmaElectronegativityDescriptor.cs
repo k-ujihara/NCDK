@@ -63,8 +63,8 @@ namespace NCDK.QSAR.Descriptors.Bonds
         /// <summary>
         /// The specification attribute of the BondSigmaElectronegativityDescriptor object.
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondSigmaElectronegativity",
                 typeof(BondSigmaElectronegativityDescriptor).FullName, "The Chemistry Development Kit");
@@ -72,11 +72,11 @@ namespace NCDK.QSAR.Descriptors.Bonds
         /// <summary>
         /// The parameters attribute of the BondSigmaElectronegativityDescriptor object.
         /// </summary>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
                     throw new CDKException("SigmaElectronegativityDescriptor only expects one parameter");
                 }
@@ -84,7 +84,9 @@ namespace NCDK.QSAR.Descriptors.Bonds
                 {
                     throw new CDKException("The parameter must be of type int");
                 }
-                if (value.Length == 0) return;
+                if (value.Count == 0)
+                    return;
+
                 maxIterations = (int)value[0];
             }
             get
@@ -98,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
         private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
         }
 
         /// <summary>
@@ -128,7 +130,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             double electroAtom1 = electronegativity.CalculateSigmaElectronegativity(ac, bond.Atoms[0]);
             double electroAtom2 = electronegativity.CalculateSigmaElectronegativity(ac, bond.Atoms[1]);
 
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(Math.Abs(electroAtom1 - electroAtom2)), NAMES);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(Math.Abs(electroAtom1 - electroAtom2)), NAMES);
         }
 
         /// <summary>

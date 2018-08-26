@@ -4,14 +4,9 @@ using NCDK.Isomorphisms.Matchers.SMARTS;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
-    public class ASTGroup : SimpleNode
+    internal class ASTGroup : SimpleNode
     {
-        internal const int ROLE_REACTANT = ReactionRoleQueryAtom.ROLE_REACTANT;
-        internal const int ROLE_AGENT = ReactionRoleQueryAtom.ROLE_AGENT;
-        internal const int ROLE_PRODUCT = ReactionRoleQueryAtom.ROLE_PRODUCT;
-        internal const int ROLE_ANY = ReactionRoleQueryAtom.ROLE_ANY;
-
-        private int role = ROLE_ANY;
+        public ReactionRoles Role { get; set; } = ReactionRoles.Any;
 
         public ASTGroup(int id)
           : base(id)
@@ -21,16 +16,6 @@ namespace NCDK.Smiles.SMARTS.Parser
         public ASTGroup(SMARTSParser p, int id)
           : base(p, id)
         {
-        }
-
-        public void SetRole(int role)
-        {
-            this.role = role;
-        }
-
-        public int GetRole()
-        {
-            return this.role;
         }
 
         /// <summary>Accept the visitor. </summary>

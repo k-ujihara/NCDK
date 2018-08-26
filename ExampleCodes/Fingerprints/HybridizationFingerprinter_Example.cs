@@ -12,7 +12,7 @@ namespace NCDK.Fingerprints
                 var molecule = new AtomContainer();
                 var fingerprinter = new HybridizationFingerprinter();
                 var fingerprint = fingerprinter.GetBitFingerprint(molecule);
-                Console.WriteLine(fingerprint.Count); // returns 1024 by default
+                Console.WriteLine(fingerprint.Length); // returns 1024 by default
                 #endregion
             }
         }

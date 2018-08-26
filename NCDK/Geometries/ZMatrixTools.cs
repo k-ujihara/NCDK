@@ -22,8 +22,9 @@
  */
 
 using NCDK.Common.Mathematics;
-using System;
 using NCDK.Numerics;
+using System;
+using System.Collections.Generic;
 
 namespace NCDK.Geometries
 {
@@ -34,26 +35,25 @@ namespace NCDK.Geometries
     // @cdk.githash
     // @cdk.keyword Z-matrix
     // @cdk.created 2004-02-09
-    public static class ZMatrixTools
+    internal static class ZMatrixTools
     {
         /// <summary>
-        /// Takes the given Z Matrix coordinates and converts them to cartesian coordinates.
-        /// The first Atom end up in the origin, the second on on the x axis, and the third
-        /// one in the XY plane. The rest is added by applying the Zmatrix distances, angles
+        /// Takes the given Z Matrix coordinates and converts them to Cartesian coordinates.
+        /// The first Atom end up in the origin, the second on the x axis, and the third
+        /// one in the XY plane. The rest is added by applying the Z matrix distances, angles
         /// and dihedrals. Angles are in degrees.
         /// </summary>
         /// <param name="distances">Array of distance variables of the Z matrix</param>
-        /// <param name="first_atoms">Array of angle variables of the Z matrix</param>
+        /// <param name="firstAtoms">Array of angle variables of the Z matrix</param>
         /// <param name="angles">Array of distance variables of the Z matrix</param>
-        /// <param name="second_atoms">Array of atom ids of the first invoked atom in distance, angle and dihedral</param>
+        /// <param name="secondAtoms">Array of atom ids of the first invoked atom in distance, angle and dihedral</param>
         /// <param name="dihedrals">Array of atom ids of the second invoked atom in angle and dihedral</param>
-        /// <param name="third_atoms">Array of atom ids of the third invoked atom in dihedral</param>
-        /// <returns>The cartesian coordinates</returns>
-       // @cdk.dictref blue-obelisk:zmatrixCoordinatesIntoCartesianCoordinates
-        public static Vector3[] ZMatrixToCartesian(double[] distances, int[] first_atoms, double[] angles,
-                int[] second_atoms, double[] dihedrals, int[] third_atoms)
+        /// <param name="thirdAtoms">Array of atom ids of the third invoked atom in dihedral</param>
+        /// <returns>The Cartesian coordinates</returns>
+        // @cdk.dictref blue-obelisk:zmatrixCoordinatesIntoCartesianCoordinates
+        public static Vector3[] ZMatrixToCartesian(double[] distances, int[] firstAtoms, double[] angles, int[] secondAtoms, double[] dihedrals, int[] thirdAtoms)
         {
-            Vector3[] cartesianCoords = new Vector3[distances.Length];
+            var cartesianCoords = new Vector3[distances.Length];
             for (int index = 0; index < distances.Length; index++)
             {
                 if (index == 0)
@@ -70,19 +70,19 @@ namespace NCDK.Geometries
                         -Math.Cos((angles[2] / 180) * Math.PI) * distances[2] + distances[1], 
                         Math.Sin((angles[2] / 180) * Math.PI) * distances[2], 
                         0);
-                    if (first_atoms[index] == 0)
+                    if (firstAtoms[index] == 0)
                         cartesianCoords[index].X = (cartesianCoords[index].X - distances[1]) * -1;
                 }
                 else
                 {
-                    Vector3 cd = cartesianCoords[third_atoms[index]] - cartesianCoords[second_atoms[index]];
-                    Vector3 bc = cartesianCoords[second_atoms[index]] - cartesianCoords[first_atoms[index]];
-                    Vector3 n1 = Vector3.Cross(cd, bc);
-                    Vector3 n2 = Rotate(n1, bc, -dihedrals[index]);
-                    Vector3 ba = Rotate(bc, n2, -angles[index]);
+                    var cd = cartesianCoords[thirdAtoms[index]] - cartesianCoords[secondAtoms[index]];
+                    var bc = cartesianCoords[secondAtoms[index]] - cartesianCoords[firstAtoms[index]];
+                    var n1 = Vector3.Cross(cd, bc);
+                    var n2 = Rotate(n1, bc, -dihedrals[index]);
+                    var ba = Rotate(bc, n2, -angles[index]);
                     ba = Vector3.Normalize(ba);
                     ba *= distances[index];
-                    Vector3 result = cartesianCoords[first_atoms[index]] + ba;
+                    var result = cartesianCoords[firstAtoms[index]] + ba;
                     cartesianCoords[index] = result;
                 }
             }

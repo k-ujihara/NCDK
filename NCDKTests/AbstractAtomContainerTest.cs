@@ -918,7 +918,7 @@ namespace NCDK
 
             container.RemoveAllElements();
 
-            foreach (IReadOnlyStereoElement<IChemObject, IChemObject> element in container.StereoElements)
+            foreach (IStereoElement<IChemObject, IChemObject> element in container.StereoElements)
             {
                 count++;
             }
@@ -968,7 +968,7 @@ namespace NCDK
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestSetAtomOutOfRange()
         {
             IAtomContainer container = (IAtomContainer)NewChemObject();
@@ -988,7 +988,7 @@ namespace NCDK
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentException), AllowDerivedTypes = true)]
+        [ExpectedException(typeof(InvalidOperationException), AllowDerivedTypes = true)]
         public void TestSetAtomSameMolecule()
         {
             IAtomContainer container = (IAtomContainer)NewChemObject();
@@ -1082,7 +1082,7 @@ namespace NCDK
             container.AddBond(container.Atoms[0], container.Atoms[2], BondOrder.Single);
             container.AddBond(container.Atoms[0], container.Atoms[3], BondOrder.Single);
             container.AddBond(container.Atoms[0], container.Atoms[4], BondOrder.Single);
-            container.StereoElements.Add(new TetrahedralChirality(container.Atoms[0], container.Atoms.Skip(1).Take(4), TetrahedralStereo.Clockwise));
+            container.StereoElements.Add(new TetrahedralChirality(container.Atoms[0], container.Atoms.Skip(1).Take(4).ToList(), TetrahedralStereo.Clockwise));
 
             IAtom aNew = bldr.NewAtom();
             container.Atoms[2] = aNew;
@@ -3189,12 +3189,12 @@ namespace NCDK
             sgroup.Atoms.Add(a2);
             sgroup.Bonds.Add(b1);
             sgroup.Bonds.Add(b2);
-            mol.SetProperty(CDKPropertyName.CtabSgroups, new[] { sgroup });
-            IAtomContainer clone = (IAtomContainer)mol.Clone();
-            ICollection<Sgroup> sgroups = clone.GetProperty<ICollection<Sgroup>>(CDKPropertyName.CtabSgroups);
+            mol.SetCtabSgroups(new[] { sgroup });
+            var clone = (IAtomContainer)mol.Clone();
+            var sgroups = clone.GetCtabSgroups();
             Assert.IsNotNull(sgroups);
             Assert.AreEqual(1, sgroups.Count);
-            Sgroup clonedSgroup = sgroups.First();
+            var clonedSgroup = sgroups.First();
             Assert.AreEqual(SgroupType.CtabStructureRepeatUnit, clonedSgroup.Type);
             Assert.AreEqual("n", clonedSgroup.Subscript);
             Assert.IsFalse(clonedSgroup.Atoms.Contains(a2));

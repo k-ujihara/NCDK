@@ -20,9 +20,10 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
-using System.Collections.Generic;
+using NCDK.Silent;
+using System.Linq;
 
 namespace NCDK.RingSearches
 {
@@ -45,8 +46,8 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestCyclic_Int()
         {
-            int n = benzylbenzene.Atoms.Count;
-            RingSearch ringSearch = new RingSearch(benzylbenzene);
+            var n = benzylbenzene.Atoms.Count;
+            var ringSearch = new RingSearch(benzylbenzene);
 
             int cyclic = 0, acyclic = 0;
             for (int i = 0; i < n; i++)
@@ -65,8 +66,8 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestIsolated()
         {
-            RingSearch search = new RingSearch(benzylbenzene);
-            int[][] isolated = search.Isolated();
+            var search = new RingSearch(benzylbenzene);
+            var isolated = search.Isolated();
             Assert.AreEqual(2, isolated.Length);
             Assert.AreEqual(6, isolated[0].Length);
             Assert.AreEqual(6, isolated[1].Length);
@@ -81,7 +82,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestRingFragments()
         {
-            IAtomContainer fragment = new RingSearch(benzylbenzene).RingFragments();
+            var fragment = new RingSearch(benzylbenzene).RingFragments();
             Assert.AreEqual(benzylbenzene.Atoms.Count - 1, fragment.Atoms.Count);
             Assert.AreEqual(benzylbenzene.Bonds.Count - 2, fragment.Bonds.Count);
         }
@@ -89,8 +90,8 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestIsolatedRingFragments()
         {
-            RingSearch search = new RingSearch(benzylbenzene);
-            IList<IAtomContainer> isolated = search.IsolatedRingFragments();
+            var search = new RingSearch(benzylbenzene);
+            var isolated = search.IsolatedRingFragments().ToList();
             Assert.AreEqual(2, isolated.Count);
             Assert.AreEqual(6, isolated[0].Atoms.Count);
             Assert.AreEqual(6, isolated[0].Bonds.Count);
@@ -101,9 +102,9 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestFusedRingFragments()
         {
-            RingSearch search = new RingSearch(benzylbenzene);
-            IList<IAtomContainer> fused = search.FusedRingFragments();
-            Assert.AreEqual(0, fused.Count);
+            var search = new RingSearch(benzylbenzene);
+            var fused = search.FusedRingFragments();
+            Assert.AreEqual(0, fused.Count());
         }
 
         // @cdk.inchi InChI=1S/C13H12/c1-3-7-12(8-4-1)11-13-9-5-2-6-10-13/h1-10H,11H2

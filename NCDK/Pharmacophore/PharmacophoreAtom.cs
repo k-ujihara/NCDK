@@ -135,7 +135,7 @@ namespace NCDK.Pharmacophore
             if (!(o is PharmacophoreAtom)) return false;
 
             PharmacophoreAtom that = (PharmacophoreAtom)o;
-            return Smarts.Equals(that.Smarts) && symbol.Equals(that.Symbol)
+            return Smarts.Equals(that.Smarts, StringComparison.Ordinal) && symbol.Equals(that.Symbol, StringComparison.Ordinal)
                     && Point3D.Equals(that.Point3D) && Arrays.AreEqual(this.matchingAtoms, that.matchingAtoms);
         }
     }

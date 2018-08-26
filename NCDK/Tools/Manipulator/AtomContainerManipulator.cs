@@ -87,17 +87,18 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        /// Returns an atom in an atomcontainer identified by id
+        /// Returns an atom in an atom container identified by id
         /// </summary>
-        /// <param name="ac">The AtomContainer to search in</param>
+        /// <param name="ac">The atom container to search in</param>
         /// <param name="id">The id to search for</param>
-        /// <returns>An atom having id id</returns>
+        /// <returns>An atom having <paramref name="id"/></returns>
         /// <exception cref="CDKException">There is no such atom</exception>
         public static IAtom GetAtomById(IAtomContainer ac, string id)
         {
             for (int i = 0; i < ac.Atoms.Count; i++)
             {
-                if (ac.Atoms[i].Id != null && ac.Atoms[i].Id.Equals(id)) return ac.Atoms[i];
+                if (ac.Atoms[i].Id != null && string.Equals(ac.Atoms[i].Id, id, StringComparison.Ordinal))
+                    return ac.Atoms[i];
             }
             throw new CDKException("no suc atom");
         }
@@ -118,11 +119,11 @@ namespace NCDK.Tools.Manipulator
             if (idx < 0)
                 return false;
             container.Atoms[idx] = newAtom ?? throw new ArgumentNullException(nameof(newAtom), "Replacement atom was null!");
-            var sgrougs = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            var sgrougs = container.GetCtabSgroups();
             if (sgrougs != null)
             {
                 bool updated = false;
-                List<Sgroup> replaced = new List<Sgroup>();
+                var replaced = new List<Sgroup>();
                 foreach (Sgroup org in sgrougs)
                 {
                     if (org.Atoms.Contains(oldAtom))
@@ -151,8 +152,7 @@ namespace NCDK.Tools.Manipulator
                 }
                 if (updated)
                 {
-                    container.SetProperty(CDKPropertyName.CtabSgroups,
-                        new ReadOnlyCollection<Sgroup>(replaced));
+                    container.SetCtabSgroups(replaced);
                 }
             }
 
@@ -191,7 +191,7 @@ namespace NCDK.Tools.Manipulator
         {
             try
             {
-                Isotopes isotopes = Isotopes.Instance;
+                var isotopes = BODRIsotopeFactory.Instance;
                 double mass = 0.0;
                 double hExactMass = isotopes.GetMajorIsotope(1).ExactMass.Value;
                 foreach (var atom in atomContainer.Atoms)
@@ -218,7 +218,7 @@ namespace NCDK.Tools.Manipulator
         {
             try
             {
-                Isotopes isotopes = Isotopes.Instance;
+                BODRIsotopeFactory isotopes = BODRIsotopeFactory.Instance;
                 double hmass = isotopes.GetNaturalMass(ChemicalElements.Hydrogen.ToIElement());
                 double mw = 0.0;
                 foreach (IAtom atom in mol.Atoms)
@@ -260,7 +260,7 @@ namespace NCDK.Tools.Manipulator
         {
             try
             {
-                Isotopes isotopes = Isotopes.Instance;
+                BODRIsotopeFactory isotopes = BODRIsotopeFactory.Instance;
                 double hydgrogenMass = isotopes.GetNaturalMass(ChemicalElements.Hydrogen.ToIElement());
 
                 double mass = 0.0;
@@ -293,7 +293,7 @@ namespace NCDK.Tools.Manipulator
         {
             try
             {
-                Isotopes isotopes = Isotopes.Instance;
+                BODRIsotopeFactory isotopes = BODRIsotopeFactory.Instance;
                 double abundance = 1.0;
                 double hAbundance = isotopes.GetMajorIsotope(1).NaturalAbundance.Value;
 
@@ -374,11 +374,12 @@ namespace NCDK.Tools.Manipulator
         /// <exception cref="ArgumentNullException">if the provided container was null</exception>
         public static int GetTotalHydrogenCount(IAtomContainer container)
         {
-            if (container == null) throw new ArgumentNullException("null container provided");
+            if (container == null)
+                throw new ArgumentNullException(nameof(container), "null container provided");
             int hydrogens = 0;
             foreach (var atom in container.Atoms)
             {
-                if (ChemicalElements.Hydrogen.Symbol.Equals(atom.Symbol))
+                if (ChemicalElements.Hydrogen.Symbol.Equals(atom.Symbol, StringComparison.Ordinal))
                 {
                     hydrogens++;
                 }
@@ -432,7 +433,7 @@ namespace NCDK.Tools.Manipulator
             int hCount = 0;
             foreach (var connected in atomContainer.GetConnectedAtoms(atom))
             {
-                if (ChemicalElements.Hydrogen.Symbol.Equals(connected.Symbol))
+                if (ChemicalElements.Hydrogen.Symbol.Equals(connected.Symbol, StringComparison.Ordinal))
                 {
                     hCount++;
                 }
@@ -465,7 +466,7 @@ namespace NCDK.Tools.Manipulator
 
             foreach (var atom in atomContainer.Atoms)
             {
-                if (!atom.Symbol.Equals("H"))
+                if (!string.Equals(atom.Symbol, "H", StringComparison.Ordinal))
                 {
                     int? hCount = atom.ImplicitHydrogenCount;
                     if (hCount != null)
@@ -489,15 +490,15 @@ namespace NCDK.Tools.Manipulator
                 atomContainer.Bonds.Add(bond);
 
             // update stereo elements with an implicit part
-            var stereos = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+            var stereos = new List<IStereoElement<IChemObject, IChemObject>>();
             foreach (var stereo in atomContainer.StereoElements)
             {
                 switch (stereo)
                 {
                     case ITetrahedralChirality tc:
                         {
-                            IAtom focus = tc.Focus;
-                            IAtom[] carriers = tc.Carriers.ToArray();
+                            var focus = tc.Focus;
+                            var carriers = tc.Carriers.ToArray();
 
                             // in sulfoxide - the implicit part of the tetrahedral centre
                             // is a lone pair
@@ -515,8 +516,8 @@ namespace NCDK.Tools.Manipulator
                         break;
                     case ExtendedTetrahedral tc:
                         {
-                            IAtom focus = tc.Focus;
-                            IAtom[] carriers = tc.Carriers.ToArray();
+                            var focus = tc.Focus;
+                            var carriers = tc.Carriers.ToArray();
 
                             // in sulfoxide - the implicit part of the tetrahedral centre
                             // is a lone pair
@@ -550,7 +551,7 @@ namespace NCDK.Tools.Manipulator
 
         public static IList<string> GetAllIDs(IAtomContainer mol)
         {
-            IList<string> idList = new List<string>();
+            var idList = new List<string>();
             if (mol != null)
             {
                 if (mol.Id != null) idList.Add(mol.Id);
@@ -577,10 +578,10 @@ namespace NCDK.Tools.Manipulator
         public static IAtomContainer RemoveNonChiralHydrogens(IAtomContainer org)
         {
             var map = new CDKObjectMap(); // maps original atoms to clones.
-            IList<IAtom> orgAtomsToRemove = new List<IAtom>(); // lists removed Hs.
+            var orgAtomsToRemove = new List<IAtom>(); // lists removed Hs.
 
             // Clone atoms except those to be removed.
-            IAtomContainer cpy = (IAtomContainer)org.Clone(map);
+            var cpy = (IAtomContainer)org.Clone(map);
             int count = org.Atoms.Count;
 
             foreach (var atom in org.Atoms)
@@ -592,7 +593,7 @@ namespace NCDK.Tools.Manipulator
                     // test whether connected to a single hetero atom only, otherwise keep
                     if (org.GetConnectedAtoms(atom).Count() == 1)
                     {
-                        IAtom neighbour = org.GetConnectedAtoms(atom).ElementAt(0);
+                        var neighbour = org.GetConnectedAtoms(atom).ElementAt(0);
                         // keep if the neighbouring hetero atom has stereo information, otherwise continue checking
                         var stereoParity = neighbour.StereoParity;
                         if (stereoParity == StereoAtomParities.Undefined)
@@ -602,10 +603,11 @@ namespace NCDK.Tools.Manipulator
                             foreach (var bond in org.GetConnectedBonds(neighbour))
                             {
                                 BondStereo bondStereo = bond.Stereo;
-                                if (bondStereo != BondStereo.None) addToRemove = false;
-                                IAtom neighboursNeighbour = bond.GetOther(neighbour);
+                                if (bondStereo != BondStereo.None)
+                                    addToRemove = false;
+                                var neighboursNeighbour = bond.GetOther(neighbour);
                                 // remove in any case if the hetero atom is connected to more than one hydrogen
-                                if (neighboursNeighbour.Symbol.Equals("H") && neighboursNeighbour != atom)
+                                if (neighboursNeighbour.Symbol.Equals("H", StringComparison.Ordinal) && neighboursNeighbour != atom)
                                 {
                                     addToRemove = true;
                                     break;
@@ -620,7 +622,7 @@ namespace NCDK.Tools.Manipulator
             }
 
             // rescue any false positives, i.e., hydrogens that are stereo-relevant
-            // the use of IReadOnlyStereoElement<IChemObject, IChemObject> is not fully integrated yet to describe stereo information
+            // the use of IStereoElement<IChemObject, IChemObject> is not fully integrated yet to describe stereo information
             foreach (var stereoElement in org.StereoElements)
             {
                 switch (stereoElement)
@@ -629,7 +631,7 @@ namespace NCDK.Tools.Manipulator
                         {
                             foreach (var atom in tetChirality.Ligands)
                             {
-                                if (atom.Symbol.Equals("H") && orgAtomsToRemove.Contains(atom))
+                                if (atom.Symbol.Equals("H", StringComparison.Ordinal) && orgAtomsToRemove.Contains(atom))
                                 {
                                     orgAtomsToRemove.Remove(atom);
                                 }
@@ -668,7 +670,8 @@ namespace NCDK.Tools.Manipulator
             }
             foreach (var atom in cpy.Atoms)
             {
-                if (atom.ImplicitHydrogenCount == null) atom.ImplicitHydrogenCount = 0;
+                if (atom.ImplicitHydrogenCount == null)
+                    atom.ImplicitHydrogenCount = 0;
             }
 
             return cpy;
@@ -702,7 +705,7 @@ namespace NCDK.Tools.Manipulator
             bool anyHydrogenPresent = false;
             foreach (var atom in org.Atoms)
             {
-                if ("H".Equals(atom.Symbol))
+                if (string.Equals("H", atom.Symbol, StringComparison.Ordinal))
                 {
                     anyHydrogenPresent = true;
                     break;
@@ -714,7 +717,7 @@ namespace NCDK.Tools.Manipulator
 
             // crossing atoms, positional variation atoms etc
             ISet<IAtom> xatoms = new NCDK.Common.Collections.EmptySet<IAtom>();
-            ICollection<Sgroup> sgroups = org.GetProperty<ICollection<Sgroup>>(CDKPropertyName.CtabSgroups);
+            var sgroups = org.GetCtabSgroups();
             if (sgroups != null)
             {
                 xatoms = new HashSet<IAtom>();
@@ -730,8 +733,8 @@ namespace NCDK.Tools.Manipulator
 
             // we need fast adjacency checks (to check for suppression and
             // update hydrogen counts)
-            GraphUtil.EdgeToBondMap bondmap = GraphUtil.EdgeToBondMap.WithSpaceFor(org);
-            int[][] graph = GraphUtil.ToAdjList(org, bondmap);
+            var bondmap = EdgeToBondMap.WithSpaceFor(org);
+            var graph = GraphUtil.ToAdjList(org, bondmap);
 
             int nOrgAtoms = org.Atoms.Count;
             int nOrgBonds = org.Bonds.Count;
@@ -739,15 +742,15 @@ namespace NCDK.Tools.Manipulator
             int nCpyAtoms = 0;
             int nCpyBonds = 0;
 
-            ISet<IAtom> hydrogens = new HashSet<IAtom>();
-            ISet<IBond> bondsToHydrogens = new HashSet<IBond>();
-            IAtom[] cpyAtoms = new IAtom[nOrgAtoms];
+            var hydrogens = new HashSet<IAtom>();
+            var bondsToHydrogens = new HashSet<IBond>();
+            var cpyAtoms = new IAtom[nOrgAtoms];
 
             // filter the original container atoms for those that can/can't
             // be suppressed
             for (int v = 0; v < nOrgAtoms; v++)
             {
-                IAtom atom = org.Atoms[v];
+                var atom = org.Atoms[v];
                 if (SuppressibleHydrogen(org, graph, bondmap, v) &&
                     !xatoms.Contains(atom))
                 {
@@ -768,8 +771,8 @@ namespace NCDK.Tools.Manipulator
 
             // we now update the bonds - we have auxiliary variable remaining that
             // bypasses the set membership checks if all suppressed bonds are found
-            IBond[] cpyBonds = new IBond[nOrgBonds - hydrogens.Count()];
-            int remaining = hydrogens.Count();
+            var cpyBonds = new IBond[nOrgBonds - hydrogens.Count()];
+            var remaining = hydrogens.Count();
 
             foreach (var bond in org.Bonds)
             {
@@ -788,7 +791,7 @@ namespace NCDK.Tools.Manipulator
 
             org.SetBonds(cpyBonds);
 
-            var elements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+            var elements = new List<IStereoElement<IChemObject, IChemObject>>();
 
             foreach (var se in org.StereoElements)
             {
@@ -796,8 +799,8 @@ namespace NCDK.Tools.Manipulator
                 {
                     case ITetrahedralChirality tc:
                         {
-                            IAtom focus = tc.ChiralAtom;
-                            var neighbors = tc.Ligands;
+                            var focus = tc.ChiralAtom;
+                            var neighbors = tc.Ligands.ToList();
                             bool updated = false;
                             for (int i = 0; i < neighbors.Count; i++)
                             {
@@ -807,6 +810,7 @@ namespace NCDK.Tools.Manipulator
                                     updated = true;
                                 }
                             }
+                            tc.Ligands = neighbors;
 
                             // no changes
                             if (!updated)
@@ -821,11 +825,11 @@ namespace NCDK.Tools.Manipulator
                         break;
                     case IDoubleBondStereochemistry db:
                         {
-                            DoubleBondConformation conformation = db.Stereo;
+                            var conformation = db.Stereo;
 
-                            IBond orgStereo = db.StereoBond;
-                            IBond orgLeft = db.Bonds[0];
-                            IBond orgRight = db.Bonds[1];
+                            var orgStereo = db.StereoBond;
+                            var orgLeft = db.Bonds[0];
+                            var orgRight = db.Bonds[1];
 
                             // we use the following variable names to refer to the
                             // double bond atoms and substituents
@@ -833,15 +837,15 @@ namespace NCDK.Tools.Manipulator
                             //  \     /
                             //   u = v
 
-                            IAtom u = orgStereo.Begin;
-                            IAtom v = orgStereo.End;
-                            IAtom x = orgLeft.GetOther(u);
-                            IAtom y = orgRight.GetOther(v);
+                            var u = orgStereo.Begin;
+                            var v = orgStereo.End;
+                            var x = orgLeft.GetOther(u);
+                            var y = orgRight.GetOther(v);
 
                             // if xNew == x and yNew == y we don't need to find the
                             // connecting bonds
-                            IAtom xNew = x;
-                            IAtom yNew = y;
+                            var xNew = x;
+                            var yNew = y;
 
                             if (hydrogens.Contains(x))
                             {
@@ -857,8 +861,8 @@ namespace NCDK.Tools.Manipulator
 
                             // no other atoms connected, invalid double-bond configuration
                             // is removed. example [2H]/C=C/[H]
-                            if (x == null || y == null ||
-                                xNew == null || yNew == null) continue;
+                            if (x == null || y == null || xNew == null || yNew == null)
+                                continue;
 
                             // no changes
                             if (x.Equals(xNew) && y.Equals(yNew))
@@ -868,12 +872,10 @@ namespace NCDK.Tools.Manipulator
                             }
 
                             // XXX: may perform slow operations but works for now
-                            IBond cpyLeft = !object.Equals(xNew, x) ? org.GetBond(u, xNew) : orgLeft;
-                            IBond cpyRight = !object.Equals(yNew, y) ? org.GetBond(v, yNew) : orgRight;
+                            var cpyLeft = !object.Equals(xNew, x) ? org.GetBond(u, xNew) : orgLeft;
+                            var cpyRight = !object.Equals(yNew, y) ? org.GetBond(v, yNew) : orgRight;
 
-                            elements.Add(new DoubleBondStereochemistry(orgStereo,
-                                                                       new IBond[] { cpyLeft, cpyRight },
-                                                                       conformation));
+                            elements.Add(new DoubleBondStereochemistry(orgStereo, new IBond[] { cpyLeft, cpyRight }, conformation));
                         }
                         break;
                     case Atropisomeric a:
@@ -891,7 +893,7 @@ namespace NCDK.Tools.Manipulator
 
             if (org.SingleElectrons.Count > 0)
             {
-                ICollection<ISingleElectron> remove = new HashSet<ISingleElectron>();
+                var remove = new HashSet<ISingleElectron>();
                 foreach (var se in org.SingleElectrons)
                 {
                     if (hydrogens.Contains(se.Atom)) remove.Add(se);
@@ -904,7 +906,7 @@ namespace NCDK.Tools.Manipulator
 
             if (org.LonePairs.Count > 0)
             {
-                ICollection<ILonePair> remove = new HashSet<ILonePair>();
+                var remove = new HashSet<ILonePair>();
                 foreach (var lp in org.LonePairs)
                 {
                     if (hydrogens.Contains(lp.Atom)) remove.Add(lp);
@@ -921,7 +923,7 @@ namespace NCDK.Tools.Manipulator
                 {
                     if (sgroup.GetValue(SgroupKey.CtabParentAtomList) != null)
                     {
-                        ICollection<IAtom> pal = (ICollection<IAtom>)sgroup.GetValue(SgroupKey.CtabParentAtomList);
+                        var pal = (ICollection<IAtom>)sgroup.GetValue(SgroupKey.CtabParentAtomList);
                         foreach (var hydrogen in hydrogens)
                             pal.Remove(hydrogen);
                     }
@@ -961,17 +963,21 @@ namespace NCDK.Tools.Manipulator
         private static bool SuppressibleHydrogen(IAtomContainer container, IAtom atom)
         {
             // is the atom a hydrogen
-            if (!"H".Equals(atom.Symbol)) return false;
+            if (!"H".Equals(atom.Symbol, StringComparison.Ordinal))
+                return false;
             // is the hydrogen an ion?
-            if (atom.FormalCharge != null && atom.FormalCharge != 0) return false;
+            if (atom.FormalCharge != null && atom.FormalCharge != 0)
+                return false;
             // is the hydrogen deuterium / tritium?
-            if (atom.MassNumber != null) return false;
+            if (atom.MassNumber != null)
+                return false;
             // molecule hydrogen with implicit H?
-            if (atom.ImplicitHydrogenCount != null && atom.ImplicitHydrogenCount != 0) return false;
+            if (atom.ImplicitHydrogenCount != null && atom.ImplicitHydrogenCount != 0)
+                return false;
             // molecule hydrogen
             var neighbors = container.GetConnectedAtoms(atom).ToList();
-            if (neighbors.Count == 1 && (neighbors[0].Symbol.Equals("H") ||
-                                      neighbors[0] is IPseudoAtom)) return false;
+            if (neighbors.Count == 1 && (neighbors[0].Symbol.Equals("H", StringComparison.Ordinal) || neighbors[0] is IPseudoAtom))
+                return false;
             // what about bridging hydrogens?
             // hydrogens with atom-atom mapping?
             return true;
@@ -1007,28 +1013,34 @@ namespace NCDK.Tools.Manipulator
         /// <param name="graph">adjacent list representation</param>
         /// <param name="v">vertex (atom index)</param>
         /// <returns>the atom is a hydrogen and it can be suppressed (implicit)</returns>
-        private static bool SuppressibleHydrogen(IAtomContainer container, int[][] graph, GraphUtil.EdgeToBondMap bondmap, int v)
+        private static bool SuppressibleHydrogen(IAtomContainer container, int[][] graph, EdgeToBondMap bondmap, int v)
         {
-            IAtom atom = container.Atoms[v];
+            var atom = container.Atoms[v];
 
             // is the atom a hydrogen
-            if (!"H".Equals(atom.Symbol)) return false;
+            if (!"H".Equals(atom.Symbol, StringComparison.Ordinal))
+                return false;
             // is the hydrogen an ion?
-            if (atom.FormalCharge != null && atom.FormalCharge != 0) return false;
+            if (atom.FormalCharge != null && atom.FormalCharge != 0)
+                return false;
             // is the hydrogen deuterium / tritium?
-            if (atom.MassNumber != null) return false;
+            if (atom.MassNumber != null)
+                return false;
             // hydrogen is either not attached to 0 or 2 neighbors
-            if (graph[v].Length != 1) return false;
+            if (graph[v].Length != 1)
+                return false;
             // non-single bond
-            if (bondmap[v, graph[v][0]].Order != BondOrder.Single) return false;
+            if (bondmap[v, graph[v][0]].Order != BondOrder.Single)
+                return false;
 
             // okay the hydrogen has one neighbor, if that neighbor is a
             // hydrogen (i.e. molecular hydrogen) then we can not suppress it
-            if ("H".Equals(container.Atoms[graph[v][0]].Symbol))
+            if (string.Equals("H", container.Atoms[graph[v][0]].Symbol, StringComparison.Ordinal))
                 return false;
             // can not nicely suppress hydrogens on pseudo atoms
             if (container.Atoms[graph[v][0]] is IPseudoAtom)
                 return false;
+
             return true;
         }
 
@@ -1045,7 +1057,8 @@ namespace NCDK.Tools.Manipulator
         {
             foreach (var neighbor in container.GetConnectedAtoms(atom))
             {
-                if (!neighbor.Equals(exclude1) && !neighbor.Equals(exclude2)) return neighbor;
+                if (!neighbor.Equals(exclude1) && !neighbor.Equals(exclude2))
+                    return neighbor;
             }
             return null;
         }
@@ -1069,21 +1082,21 @@ namespace NCDK.Tools.Manipulator
         /// <param name="preserve">a list of H atoms to preserve.</param>
         /// <returns>The mol without Hs.</returns>
         // @cdk.keyword      hydrogens, removal
-        [Obsolete("not used by the internal API " + nameof(SuppressHydrogens) + "will now only suppress hydrogens that can be represent as a h count")]
+        [Obsolete("not used by the internal API " + nameof(SuppressHydrogens) + " will now only suppress hydrogens that can be represent as a h count")]
         private static IAtomContainer RemoveHydrogens(IAtomContainer ac, List<IAtom> preserve)
         {
-            IDictionary<IAtom, IAtom> map = new Dictionary<IAtom, IAtom>();
+            var map = new Dictionary<IAtom, IAtom>();
             // maps original atoms to clones.
-            IList<IAtom> remove = new List<IAtom>();
+            var remove = new List<IAtom>();
             // lists removed Hs.
 
             // Clone atoms except those to be removed.
-            IAtomContainer mol = ac.Builder.NewAtomContainer();
+            var mol = ac.Builder.NewAtomContainer();
             int count = ac.Atoms.Count;
             for (int i = 0; i < count; i++)
             {
                 // Clone/remove this atom?
-                IAtom atom = ac.Atoms[i];
+                var atom = ac.Atoms[i];
                 if (!SuppressibleHydrogen(ac, atom) || preserve.Contains(atom))
                 {
                     IAtom a = null;
@@ -1104,9 +1117,9 @@ namespace NCDK.Tools.Manipulator
             for (int i = 0; i < count; i++)
             {
                 // Check bond.
-                IBond bond = ac.Bonds[i];
-                IAtom atom0 = bond.Begin;
-                IAtom atom1 = bond.End;
+                var bond = ac.Bonds[i];
+                var atom0 = bond.Begin;
+                var atom1 = bond.End;
                 bool remove_bond = false;
                 foreach (var atom in bond.Atoms)
                 {
@@ -1120,9 +1133,7 @@ namespace NCDK.Tools.Manipulator
                 // Clone/remove this bond?
                 if (!remove_bond)
                 {
-                    // if (!remove.Contains(atoms[0]) && !remove.Contains(atoms[1]))
-
-                    IBond clone = (IBond)ac.Bonds[i].Clone();
+                    var clone = (IBond)ac.Bonds[i].Clone();
                     clone.SetAtoms(new[] { map[atom0], map[atom1] });
                     mol.Bonds.Add(clone);
                 }
@@ -1134,7 +1145,7 @@ namespace NCDK.Tools.Manipulator
                 // Process neighbours.
                 foreach (var neighbor in ac.GetConnectedAtoms(Remove))
                 {
-                    IAtom neighb = map[neighbor];
+                    var neighb = map[neighbor];
                     neighb.ImplicitHydrogenCount = neighb.ImplicitHydrogenCount + 1;
                 }
             }
@@ -1157,13 +1168,13 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        ///  A method to remove ElectronContainerListeners.
-        ///  ElectronContainerListeners are used to detect changes
-        ///  in ElectronContainers (like bonds) and to notifiy
-        ///  registered Listeners in the event of a change.
-        ///  If an object looses interest in such changes, it should
-        ///  unregister with this AtomContainer in order to improve
-        ///  performance of this class.
+        /// A method to remove ElectronContainerListeners.
+        /// ElectronContainerListeners are used to detect changes
+        /// in ElectronContainers (like bonds) and to notify
+        /// registered Listeners in the event of a change.
+        /// If an object looses interest in such changes, it should
+        /// unregister with this AtomContainer in order to improve
+        /// performance of this class.
         /// </summary>
         public static void UnregIsterElectronContainerListeners(IAtomContainer container)
         {
@@ -1173,13 +1184,13 @@ namespace NCDK.Tools.Manipulator
             }
         }
         /// <summary>
-        ///  A method to remove AtomListeners.
-        ///  AtomListeners are used to detect changes
-        ///  in Atom objects within this AtomContainer and to notifiy
-        ///  registered Listeners in the event of a change.
-        ///  If an object looses interest in such changes, it should
-        ///  unregister with this AtomContainer in order to improve
-        ///  performance of this class.
+        /// A method to remove AtomListeners.
+        /// AtomListeners are used to detect changes
+        /// in Atom objects within this AtomContainer and to notify
+        /// registered Listeners in the event of a change.
+        /// If an object looses interest in such changes, it should
+        /// unregister with this AtomContainer in order to improve
+        /// performance of this class.
         /// </summary>
         public static void UnregIsterAtomListeners(IAtomContainer container)
         {
@@ -1199,7 +1210,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>An AtomContainer containing the intersection between <paramref name="container1"/> and <paramref name="container2"/></returns>
         public static IAtomContainer GetIntersection(IAtomContainer container1, IAtomContainer container2)
         {
-            IAtomContainer intersection = container1.Builder.NewAtomContainer();
+            var intersection = container1.Builder.NewAtomContainer();
 
             foreach (var atom1 in container1.Atoms)
                 if (container2.Contains(atom1))
@@ -1209,66 +1220,6 @@ namespace NCDK.Tools.Manipulator
                     intersection.AddElectronContainer(electronContainer1);
 
             return intersection;
-        }
-
-        /// <summary>
-        /// Constructs an array of Atom objects from an AtomContainer.
-        /// </summary>
-        /// <param name="container">The original AtomContainer.</param>
-        /// <returns>The array of Atom objects.</returns>
-        public static IAtom[] GetAtomArray(IAtomContainer container)
-        {
-            return container.Atoms.ToArray();
-        }
-
-        /// <summary>
-        /// Constructs an array of Atom objects from a List of Atom objects.
-        /// </summary>
-        /// <param name="list">The original List.</param>
-        /// <returns>The array of Atom objects.</returns>
-        public static IAtom[] GetAtomArray(IEnumerable<IAtom> list)
-        {
-            return list.ToArray();
-        }
-
-        /// <summary>
-        /// Constructs an array of Bond objects from an AtomContainer.
-        /// </summary>
-        /// <param name="container">The original AtomContainer.</param>
-        /// <returns>The array of Bond objects.</returns>
-        public static IBond[] GetBondArray(IAtomContainer container)
-        {
-            return container.Bonds.ToArray();
-        }
-
-        /// <summary>
-        /// Constructs an array of Atom objects from a List of Atom objects.
-        /// </summary>
-        /// <param name="list">The original List.</param>
-        /// <returns>The array of Atom objects.</returns>
-        public static IBond[] GetBondArray(IEnumerable<IBond> list)
-        {
-            return list.ToArray();
-        }
-
-        /// <summary>
-        /// Constructs an array of Bond objects from an AtomContainer.
-        /// </summary>
-        /// <param name="container">The original AtomContainer.</param>
-        /// <returns>The array of Bond objects.</returns>
-        public static IElectronContainer[] GetElectronContainerArray(IAtomContainer container)
-        {
-            return container.GetElectronContainers().ToArray();
-        }
-
-        /// <summary>
-        /// Constructs an array of Atom objects from a List of Atom objects.
-        /// </summary>
-        /// <param name="list">The original List.</param>
-        /// <returns>The array of Atom objects.</returns>
-        public static IElectronContainer[] GetElectronContainerArray(IEnumerable<IElectronContainer> list)
-        {
-            return list.ToArray();
         }
 
         /// <summary>
@@ -1282,10 +1233,10 @@ namespace NCDK.Tools.Manipulator
         /// <param name="container"></param>
         public static void PercieveAtomTypesAndConfigureAtoms(IAtomContainer container)
         {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+            var matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
             foreach (var atom in container.Atoms)
             {
-                IAtomType matched = matcher.FindMatchingAtomType(container, atom);
+                var matched = matcher.FindMatchingAtomType(container, atom);
                 if (matched != null)
                     AtomTypeManipulator.Configure(atom, matched);
             }
@@ -1301,10 +1252,10 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         public static void PercieveAtomTypesAndConfigureUnsetProperties(IAtomContainer container)
         {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+            var matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
             foreach (var atom in container.Atoms)
             {
-                IAtomType matched = matcher.FindMatchingAtomType(container, atom);
+                var matched = matcher.FindMatchingAtomType(container, atom);
                 if (matched != null) AtomTypeManipulator.ConfigureUnsetProperties(atom, matched);
             }
         }
@@ -1353,7 +1304,7 @@ namespace NCDK.Tools.Manipulator
             int sum = 0;
             foreach (var bond in container.Bonds)
             {
-                BondOrder order = bond.Order;
+                var order = bond.Order;
                 if (!order.IsUnset())
                 {
                     sum += order.Numeric();
@@ -1374,10 +1325,10 @@ namespace NCDK.Tools.Manipulator
         // @cdk.keyword    hydrogens, removal
         public static IList<IAtom> GetHeavyAtoms(IAtomContainer container)
         {
-            List<IAtom> newAc = new List<IAtom>();
+            var newAc = new List<IAtom>();
             for (int f = 0; f < container.Atoms.Count; f++)
             {
-                if (!container.Atoms[f].Symbol.Equals("H"))
+                if (!string.Equals(container.Atoms[f].Symbol, "H", StringComparison.Ordinal))
                 {
                     newAc.Add(container.Atoms[f]);
                 }
@@ -1394,7 +1345,7 @@ namespace NCDK.Tools.Manipulator
         [Obsolete("not all attributes are removed producing unexpected results, use " + nameof(Anonymise))]
         public static IAtomContainer CreateAllCarbonAllSingleNonAromaticBondAtomContainer(IAtomContainer atomContainer)
         {
-            IAtomContainer query = (IAtomContainer)atomContainer.Clone();
+            var query = (IAtomContainer)atomContainer.Clone();
             for (int i = 0; i < query.Bonds.Count; i++)
             {
                 query.Bonds[i].Order = BondOrder.Single;
@@ -1419,10 +1370,10 @@ namespace NCDK.Tools.Manipulator
         /// <returns>anonymised container</returns>
         public static IAtomContainer Anonymise(IAtomContainer src)
         {
-            IChemObjectBuilder builder = src.Builder;
+            var builder = src.Builder;
 
-            IAtom[] atoms = new IAtom[src.Atoms.Count];
-            IBond[] bonds = new IBond[src.Bonds.Count];
+            var atoms = new IAtom[src.Atoms.Count];
+            var bonds = new IBond[src.Bonds.Count];
 
             for (int i = 0; i < atoms.Length; i++)
             {
@@ -1430,13 +1381,13 @@ namespace NCDK.Tools.Manipulator
             }
             for (int i = 0; i < bonds.Length; i++)
             {
-                IBond bond = src.Bonds[i];
+                var bond = src.Bonds[i];
                 int u = src.Atoms.IndexOf(bond.Begin);
                 int v = src.Atoms.IndexOf(bond.End);
                 bonds[i] = builder.NewBond(atoms[u], atoms[v]);
             }
 
-            IAtomContainer dest = builder.NewAtomContainer(atoms, bonds);
+            var dest = builder.NewAtomContainer(atoms, bonds);
             return dest;
         }
 
@@ -1451,10 +1402,10 @@ namespace NCDK.Tools.Manipulator
         /// <returns>the skeleton copy</returns>
         public static IAtomContainer Skeleton(IAtomContainer src)
         {
-            IChemObjectBuilder builder = src.Builder;
+            var builder = src.Builder;
 
-            IAtom[] atoms = new IAtom[src.Atoms.Count];
-            IBond[] bonds = new IBond[src.Bonds.Count];
+            var atoms = new IAtom[src.Atoms.Count];
+            var bonds = new IBond[src.Bonds.Count];
 
             for (int i = 0; i < atoms.Length; i++)
             {
@@ -1462,13 +1413,13 @@ namespace NCDK.Tools.Manipulator
             }
             for (int i = 0; i < bonds.Length; i++)
             {
-                IBond bond = src.Bonds[i];
-                int u = src.Atoms.IndexOf(bond.Begin);
-                int v = src.Atoms.IndexOf(bond.End);
+                var bond = src.Bonds[i];
+                var u = src.Atoms.IndexOf(bond.Begin);
+                var v = src.Atoms.IndexOf(bond.End);
                 bonds[i] = builder.NewBond(atoms[u], atoms[v]);
             }
 
-            IAtomContainer dest = builder.NewAtomContainer(atoms, bonds);
+            var dest = builder.NewAtomContainer(atoms, bonds);
             return dest;
         }
 
@@ -1484,7 +1435,7 @@ namespace NCDK.Tools.Manipulator
             double count = 0;
             foreach (var bond in container.GetConnectedBonds(atom))
             {
-                BondOrder order = bond.Order;
+                var order = bond.Order;
                 if (!order.IsUnset())
                 {
                     count += order.Numeric();
@@ -1510,7 +1461,7 @@ namespace NCDK.Tools.Manipulator
             // note - we could check for any aromatic bonds to avoid RingSearch but
             // RingSearch is fast enough it probably wouldn't do much to check
             // before hand
-            RingSearch rs = new RingSearch(ac);
+            var rs = new RingSearch(ac);
             bool singleOrDouble = false;
             foreach (var bond in rs.RingFragments().Bonds)
             {

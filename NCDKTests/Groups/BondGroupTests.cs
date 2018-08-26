@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using NCDK.Smiles;
 
 namespace NCDK.Groups
@@ -32,14 +33,14 @@ namespace NCDK.Groups
     {
         private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        public IAtomContainer GetMol(string smiles)
+        public static IAtomContainer GetMol(string smiles)
         {
-            SmilesParser parser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            var parser = new SmilesParser(ChemObjectBuilder.Instance);
             parser.Kekulise(false);
             return parser.ParseSmiles(smiles);
         }
 
-        public void Test(IAtomContainer mol, int expected)
+        public static void Test(IAtomContainer mol, int expected)
         {
             BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
             PermutationGroup group = refiner.GetAutomorphismGroup(mol);

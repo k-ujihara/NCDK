@@ -18,10 +18,9 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.IO;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
-
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,7 +34,7 @@ namespace NCDK.AtomTypes
     [TestClass()]
     public class CDKAtomTypeMatcherFilesTest : AbstractCDKAtomTypeTest
     {
-        private static IDictionary<string, int> testedAtomTypes = new Dictionary<string, int>();
+        private static readonly Dictionary<string, int> testedAtomTypes = new Dictionary<string, int>();
 
         [TestMethod()]
         public void TestFile3()
@@ -113,8 +112,8 @@ namespace NCDK.AtomTypes
             Assert.IsNotNull(chemFile);
             IAtomContainer mol2 = ChemFileManipulator.GetAllAtomContainers(chemFile).First();
 
-            IAtomType[] types1 = atomTypeMatcher.FindMatchingAtomTypes(mol1);
-            IAtomType[] types2 = atomTypeMatcher.FindMatchingAtomTypes(mol2);
+            var types1 = atomTypeMatcher.FindMatchingAtomTypes(mol1).ToList();
+            var types2 = atomTypeMatcher.FindMatchingAtomTypes(mol2).ToList();
             for (int i = 0; i < mol1.Atoms.Count; i++)
             {
                 Assert.IsNotNull(types1[i], "Atom typing in mol1 failed for atom " + (i + 1));

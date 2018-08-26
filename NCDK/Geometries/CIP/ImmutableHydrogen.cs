@@ -41,6 +41,10 @@ namespace NCDK.Geometries.CIP
     {
         private const string SymbolH = "H";
 
+        public ImmutableHydrogen()
+        {
+        }
+
         /// <summary>
         /// This field is not used by this immutable hydrogen.
         /// Any setting will have no effect what so ever.
@@ -53,7 +57,6 @@ namespace NCDK.Geometries.CIP
         public int StereoParity { get { return StereoAtomParities.Undefined; } set { } }
         public string AtomTypeName { get { return null; } set { } }
         public double? BondOrderSum { get { return null; } set { } }
-        public double? GetCovalentRadius { get { return null; } set { } }
         public int? FormalCharge { get { return null; } set { } }
         public int? FormalNeighbourCount { get { return null; } set { } }
         public Hybridization Hybridization { get { return Hybridization.Unset; } set { } }
@@ -77,7 +80,7 @@ namespace NCDK.Geometries.CIP
         public string Id { get { return null; } set { } }
         public bool Notification { get { return false; } set { } }
 
-        public IDictionary<object, object> GetProperties() => null;
+        public IReadOnlyDictionary<object, object> GetProperties() => null;
         public T GetProperty<T>(object description) => default(T);
         public T GetProperty<T>(object description, T defaltValue) => default(T);
         public void RemoveProperty(object description) { }
@@ -131,6 +134,11 @@ namespace NCDK.Geometries.CIP
         public IBond GetBond(IAtom atom)
         {
             throw new InvalidOperationException();
+        }
+
+        public bool Equals(IAtom other)
+        {
+            return this == other;
         }
     }
 }

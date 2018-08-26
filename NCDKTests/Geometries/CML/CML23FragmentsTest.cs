@@ -21,10 +21,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.Dict;
 using NCDK.QSAR;
 using NCDK.QSAR.Results;
+using NCDK.Silent;
 using NCDK.Stereo;
 using System.IO;
 using System.Linq;

@@ -18,6 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.QSAR.Results;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 
@@ -36,7 +37,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestWienerNumbersDescriptor()
         {
             double[] testResult = { 18, 2 };
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
             AtomContainerManipulator.RemoveHydrogens(mol);
             ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
@@ -51,7 +52,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestWithExplicitHydrogens()
         {
             double[] testResult = { 18, 2 };
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
             ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
             Assert.AreEqual(testResult[0], retval[0], 0.0001);
@@ -64,7 +65,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestOriginalWienerPaperCompounds()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             double[] testResult = { 10, 20, 35, 56, 84, 120, 165, 220, 286 };
             string smiles = "CCC";
             for (int i = 0; i < testResult.Length; i++)

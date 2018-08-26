@@ -18,7 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.AtomTypes;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
@@ -38,7 +38,7 @@ namespace NCDK.Reactions.Types
     /// </summary>
     /// <example>
     /// <code>
-    ///  var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+    ///  var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
     ///  setOfReactants.Add(new AtomContainer());
     ///  IReactionProcess type = new RearrangementLonePairReaction();
     ///  Dictionary&lt;string,object&gt; params = new Dictionary&lt;string,object&gt;();
@@ -63,7 +63,6 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class RearrangementLonePairReactionTest : ReactionProcessTest
     {
-        private readonly LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
         public RearrangementLonePairReactionTest()
@@ -256,7 +255,7 @@ namespace NCDK.Reactions.Types
         // @cdk.inchi  InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
 
             IAtomContainer molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("O"));
@@ -273,7 +272,7 @@ namespace NCDK.Reactions.Types
                 AddExplicitHydrogens(molecule);
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
-                lpcheck.Saturate(molecule);
+                LonePairElectronChecker.Saturate(molecule);
             }
             catch (Exception e)
             {
@@ -309,7 +308,7 @@ namespace NCDK.Reactions.Types
                 AddExplicitHydrogens(molecule);
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
-                lpcheck.Saturate(molecule);
+                LonePairElectronChecker.Saturate(molecule);
 
             }
             catch (Exception e)
@@ -361,11 +360,11 @@ namespace NCDK.Reactions.Types
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
-            lpcheck.Saturate(molecule);
+            LonePairElectronChecker.Saturate(molecule);
 
             IReactionProcess type = new RearrangementLonePairReaction();
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
             /* automatic search of the center active */
             List<IParameterReaction> paramList = new List<IParameterReaction>();
@@ -399,7 +398,7 @@ namespace NCDK.Reactions.Types
             molecule1.AddBond(molecule1.Atoms[6], molecule1.Atoms[1], BondOrder.Single);
             AddExplicitHydrogens(molecule1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule1);
-            lpcheck.Saturate(molecule1);
+            LonePairElectronChecker.Saturate(molecule1);
 
             QueryAtomContainer qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule1);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(product1, qAC));

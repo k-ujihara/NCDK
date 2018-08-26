@@ -21,6 +21,8 @@
  */
 
 using NCDK.Tools;
+using System;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -51,7 +53,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "mossoutput" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "mossoutput" };
 
         /// <inheritdoc/>
         public override string ReaderClassName => null;
@@ -62,7 +64,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (lineNumber == 1 && line.Equals("id,description,nodes,edges,s_abs,s_rel,c_abs,c_rel"))
+            if (lineNumber == 1 && line.Equals("id,description,nodes,edges,s_abs,s_rel,c_abs,c_rel", StringComparison.Ordinal))
             {
                 return true;
             }
@@ -73,9 +75,9 @@ namespace NCDK.IO.Formats
         public override bool IsXmlBased => false;
 
         /// <inheritdoc/>
-        public override DataFeatures SupportedDataFeatures => DataFeatures.HAS_GRAPH_REPRESENTATION;
+        public override DataFeatures SupportedDataFeatures => DataFeatures.HasGraphRepresentation;
 
         /// <inheritdoc/>
-        public override DataFeatures RequiredDataFeatures => DataFeatures.HAS_GRAPH_REPRESENTATION;
+        public override DataFeatures RequiredDataFeatures => DataFeatures.HasGraphRepresentation;
     }
 }

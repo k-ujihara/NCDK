@@ -20,7 +20,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Tools.Manipulator;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Config;
 
 namespace NCDK.Smiles
@@ -31,37 +31,18 @@ namespace NCDK.Smiles
     [TestClass()]
     public class FixBondOrdersToolTest : CDKTestCase
     {
-        private static FixBondOrdersTool fbot = new FixBondOrdersTool();
-
-        [TestMethod()]
-        public void TestConstructors()
-        {
-            // basically: just test that no exception is thrown
-            Assert.IsNotNull(new FixBondOrdersTool());
-        }
-
-        [TestMethod()]
-        public void TestInterruption()
-        {
-            fbot.Interrupted = false;
-            Assert.IsFalse(fbot.Interrupted);
-            fbot.Interrupted = true;
-            Assert.IsTrue(fbot.Interrupted);
-            fbot.Interrupted = false;
-        }
-
         [TestMethod()]
         [Timeout(1000)]
         public void TestPyrrole()
         {
             string smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
-            SmilesParser smilesParser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
             smilesParser.Kekulise(false);
             IAtomContainer molecule = smilesParser.ParseSmiles(smiles);
             AtomContainerManipulator.SetSingleOrDoubleFlags(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
-            molecule = fbot.KekuliseAromaticRings(molecule);
+            molecule = FixBondOrdersTool.KekuliseAromaticRings(molecule);
             Assert.IsNotNull(molecule);
 
             molecule = (IAtomContainer)AtomContainerManipulator.RemoveHydrogens(molecule);
@@ -86,7 +67,7 @@ namespace NCDK.Smiles
             AtomContainerManipulator.SetSingleOrDoubleFlags(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
-            molecule = fbot.KekuliseAromaticRings(molecule);
+            molecule = FixBondOrdersTool.KekuliseAromaticRings(molecule);
             Assert.IsNotNull(molecule);
 
             molecule = (IAtomContainer)AtomContainerManipulator.RemoveHydrogens(molecule);
@@ -104,10 +85,10 @@ namespace NCDK.Smiles
         public void TestLargeRingSystem()
         {
             string smiles = "O=C1Oc6ccccc6(C(O)C1C5c2ccccc2CC(c3ccc(cc3)c4ccccc4)C5)";
-            SmilesParser smilesParser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer molecule = smilesParser.ParseSmiles(smiles);
 
-            molecule = fbot.KekuliseAromaticRings(molecule);
+            molecule = FixBondOrdersTool.KekuliseAromaticRings(molecule);
             Assert.IsNotNull(molecule);
 
             molecule = (IAtomContainer)AtomContainerManipulator.RemoveHydrogens(molecule);
@@ -128,10 +109,10 @@ namespace NCDK.Smiles
         public void TestLargeBioclipseUseCase()
         {
             string smiles = "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@@H]6COc7cc(OC)ccc7[C@H]56";
-            SmilesParser smilesParser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer molecule = smilesParser.ParseSmiles(smiles);
 
-            molecule = fbot.KekuliseAromaticRings(molecule);
+            molecule = FixBondOrdersTool.KekuliseAromaticRings(molecule);
             Assert.IsNotNull(molecule);
 
             molecule = (IAtomContainer)AtomContainerManipulator.RemoveHydrogens(molecule);
@@ -188,9 +169,9 @@ namespace NCDK.Smiles
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(enol);
 
             // now have the algorithm have a go at it
-            enol = fbot.KekuliseAromaticRings(enol);
+            enol = FixBondOrdersTool.KekuliseAromaticRings(enol);
             Assert.IsNotNull(enol);
-            //Assert.IsTrue(fbot.IsOK(enol));
+            //Assert.IsTrue(FixBondOrdersTool.IsOK(enol));
 
             // now check whether it did the right thing
             Assert.AreEqual(BondOrder.Double, enol.Bonds[0].Order); ;
@@ -244,7 +225,7 @@ namespace NCDK.Smiles
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(enol);
 
             // now have the algorithm have a go at it
-            enol = fbot.KekuliseAromaticRings(enol);
+            enol = FixBondOrdersTool.KekuliseAromaticRings(enol);
             Assert.IsNotNull(enol);
             // Assert.IsTrue(dbst.IsOK(enol));
 
@@ -315,7 +296,7 @@ namespace NCDK.Smiles
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(enol);
 
             // now have the algorithm have a go at it
-            enol = fbot.KekuliseAromaticRings(enol);
+            enol = FixBondOrdersTool.KekuliseAromaticRings(enol);
             Assert.IsNotNull(enol);
             //Assert.IsTrue(dbst.IsOK(enol));
 
@@ -351,7 +332,7 @@ namespace NCDK.Smiles
             SmilesParser smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             IAtomContainer molecule = smilesParser.ParseSmiles(smiles);
 
-            molecule = fbot.KekuliseAromaticRings(molecule);
+            molecule = FixBondOrdersTool.KekuliseAromaticRings(molecule);
             Assert.IsNotNull(molecule);
         }
     }

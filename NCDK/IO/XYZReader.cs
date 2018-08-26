@@ -26,6 +26,7 @@ using NCDK.IO.Formats;
 using NCDK.Numerics;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.IO
@@ -101,7 +102,7 @@ namespace NCDK.IO
                 {
                     // parse frame by frame
                     string token = line.Split('\t', ' ', ',', ';')[0];
-                    number_of_atoms = int.Parse(token);
+                    number_of_atoms = int.Parse(token, NumberFormatInfo.InvariantInfo);
                     string info = input.ReadLine();
 
                     IChemModel chemModel = file.Builder.NewChemModel();
@@ -119,7 +120,7 @@ namespace NCDK.IO
                             var comment = m.GetProperty(CDKPropertyName.Comment, "");
                             comment = comment + line.Substring(1).Trim();
                             m.SetProperty(CDKPropertyName.Comment, comment);
-                            Debug.WriteLine("Found and set comment: ", comment);
+                            Debug.WriteLine($"Found and set comment: {comment}");
                             i--; // a comment line does not count as an atom
                         }
                         else
@@ -136,10 +137,10 @@ namespace NCDK.IO
                             else
                             {
                                 string atomtype = tokenizer[0];
-                                x = double.Parse(tokenizer[1]);
-                                y = double.Parse(tokenizer[2]);
-                                z = double.Parse(tokenizer[3]);
-                                if (fields == 8) charge = double.Parse(tokenizer[4]);
+                                x = double.Parse(tokenizer[1], NumberFormatInfo.InvariantInfo);
+                                y = double.Parse(tokenizer[2], NumberFormatInfo.InvariantInfo);
+                                z = double.Parse(tokenizer[3], NumberFormatInfo.InvariantInfo);
+                                if (fields == 8) charge = double.Parse(tokenizer[4], NumberFormatInfo.InvariantInfo);
 
                                 IAtom atom = file.Builder.NewAtom(atomtype, new Vector3(x, y, z));
                                 atom.Charge = charge;

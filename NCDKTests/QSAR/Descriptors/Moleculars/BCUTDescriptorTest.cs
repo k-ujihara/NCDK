@@ -19,7 +19,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.QSAR.Results;
 using NCDK.Smiles;
@@ -123,7 +123,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             string smiles1 = "c1ccccc1";
             string smiles2 = "C1=CC=CC=C1";
 
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol1 = sp.ParseSmiles(smiles1);
             IAtomContainer mol2 = sp.ParseSmiles(smiles2);
 
@@ -148,7 +148,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestHAddition()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
             ArrayResult<double> result1 = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
             for (int i = 0; i < result1.Length; i++)

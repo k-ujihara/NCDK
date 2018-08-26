@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Isomorphisms.Matchers;
 using System.Collections.Generic;
@@ -57,13 +58,13 @@ namespace NCDK.SMSD
 
             public override double GetEuclideanDistance() => 0.0;
 
-            public override IList<IDictionary<IAtom, IAtom>> GetAllAtomMapping() => null;
+            public override IReadOnlyList<IReadOnlyDictionary<IAtom, IAtom>> GetAllAtomMapping() => null;
 
-            public override IList<IDictionary<int, int>> GetAllMapping() => null;
+            public override IReadOnlyList<IReadOnlyDictionary<int, int>> GetAllMapping() => null;
 
-            public override IDictionary<IAtom, IAtom> GetFirstAtomMapping() => null;
+            public override IReadOnlyDictionary<IAtom, IAtom> GetFirstAtomMapping() => null;
 
-            public override IDictionary<int, int> GetFirstMapping() => null;
+            public override IReadOnlyDictionary<int, int> GetFirstMapping() => null;
 
             public override double BondSensitiveTimeOut
             {

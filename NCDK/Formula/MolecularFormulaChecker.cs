@@ -25,6 +25,7 @@ using NCDK.Formula.Rules;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace NCDK.Formula
 {
@@ -42,21 +43,21 @@ namespace NCDK.Formula
     public class MolecularFormulaChecker
     {
        /// <summary>List of IRules to be applied in the validation.</summary>
-        private IList<IRule> rules;
+        private readonly IReadOnlyList<IRule> rules;
 
         /// <summary>
         /// Construct an instance of <see cref="MolecularFormulaChecker"/>. It must be initialized with the rules to applied.
         /// </summary>
-        /// <param name="rules">A <see cref="IList{T}"/> with <see cref="IRule"/> to be applied</param>
-        public MolecularFormulaChecker(IList<IRule> rules)
+        /// <param name="rules"><see cref="IRule"/>s to be applied</param>
+        public MolecularFormulaChecker(IEnumerable<IRule> rules)
         {
-            this.rules = rules;
+            this.rules = rules.ToList();
         }
 
         /// <summary>
         /// The <see cref="IRule"/> to be applied to validate the <see cref="IMolecularFormula"/>.
         /// </summary>
-        public IList<IRule> Rules => rules;
+        public IReadOnlyList<IRule> Rules => rules;
 
         /// <summary>
         /// Validate if a <see cref="IMolecularFormula"/> is valid. The result more close to 1 means
@@ -71,7 +72,7 @@ namespace NCDK.Formula
         {
             double result = 1.0;
 
-            IMolecularFormula formulaWith = IsValid(formula);
+            var formulaWith = IsValid(formula);
             var properties = formulaWith.GetProperties();
 
             foreach (var rule in rules)
@@ -88,13 +89,13 @@ namespace NCDK.Formula
         /// <see cref="IsValidSum(IMolecularFormula)"/>.
         /// </summary>
         /// <param name="formula">The IMolecularFormula value</param>
-        /// <returns>The IMolecularFormula with the results for each <see cref="IRule"/> into properties</returns>
+        /// <returns>The <see cref="IMolecularFormula"/> with the results for each <see cref="IRule"/> into properties</returns>
         /// <seealso cref="IsValidSum(IMolecularFormula)"/>
         public IMolecularFormula IsValid(IMolecularFormula formula)
         {
             Trace.TraceInformation("Generating the validity of the molecular formula");
 
-            if (formula.Count == 0)
+            if (formula.IsotopesCount == 0)
             {
                 Trace.TraceError("Proposed molecular formula has not elements");
                 return formula;

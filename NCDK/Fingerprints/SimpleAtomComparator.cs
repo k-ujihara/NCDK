@@ -37,7 +37,6 @@ namespace NCDK.Fingerprints
     // @cdk.keyword similarity
     // @cdk.module fingerprint
     // @cdk.githash
-    [Serializable]
     public class SimpleAtomComparator : IComparer<IAtom>
     {
         public int Compare(IAtom o1, IAtom o2)

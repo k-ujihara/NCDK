@@ -19,7 +19,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Geometries;
 using NCDK.IO;
 using NCDK.Layout;
@@ -117,9 +117,9 @@ namespace NCDK.Modelings.Builder3D
         [TestCategory("SlowTest")]
         public void TestModelBuilder3D_Konstanz()
         {
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Default.ChemObjectBuilder.Instance);
+            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(ChemObjectBuilder.Instance);
             string smile = "C12(-[H])-C3(-C(-[H])(-[H])-C(-C4(-C5(-C(-Cl)(-Cl)-C(-C-3-4-[H])(-Cl)-C(-Cl)(-[H])-C-5(-Cl)-[H])-Cl)-[H])(-[H])-C-2(-O-1)-[H])-[H]";
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles(smile);
             AddExplicitHydrogens(mol);
             mol = mb3d.Generate3DCoordinates(mol, false);
@@ -360,7 +360,7 @@ namespace NCDK.Modelings.Builder3D
         [TestCategory("SlowTest")]
         public void TestModelBuilder3D_bug_1241421()
         {
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Default.ChemObjectBuilder.Instance);
+            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(ChemObjectBuilder.Instance);
             string filename = "NCDK.Data.MDL.bug1241421.mol";
             Stream ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -376,7 +376,7 @@ namespace NCDK.Modelings.Builder3D
         [TestCategory("SlowTest")]
         public void TestModelBuilder3D_reserpine()
         {
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Default.ChemObjectBuilder.Instance);
+            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(ChemObjectBuilder.Instance);
             string filename = "NCDK.Data.MDL.reserpine.mol";
             Stream ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);

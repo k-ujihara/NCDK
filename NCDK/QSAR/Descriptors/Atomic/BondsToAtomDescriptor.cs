@@ -57,8 +57,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the BondsToAtomDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondsToAtom",
                 typeof(BondsToAtomDescriptor).FullName, "The Chemistry Development Kit");
@@ -68,11 +68,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         /// <exception cref="CDKException">Description of the Exception</exception>
         /// <param name="value">The parameter is the position to focus</param>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
                     throw new CDKException("BondsToAtomDescriptor only expects one parameters");
                 }
@@ -103,7 +103,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             // could be cached
             int bondsToAtom = new ShortestPaths(container, atom).GetDistanceTo(focus);
 
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(
                     bondsToAtom), DescriptorNames);
         }
 

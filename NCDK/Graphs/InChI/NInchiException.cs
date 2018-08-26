@@ -25,7 +25,7 @@ namespace NCDK.Graphs.InChI
     /// Exception thrown by JniInchi.
     /// </summary>
     // @author Sam Adams
-    internal class NInchiException : Exception
+    public class NInchiException : Exception
     {
         /// <summary>
         /// Constructor.
@@ -51,5 +51,9 @@ namespace NCDK.Graphs.InChI
         public NInchiException(Exception ex)
             : base(ex.Message, ex)
         { }
+
+        public NInchiException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
     }
 }

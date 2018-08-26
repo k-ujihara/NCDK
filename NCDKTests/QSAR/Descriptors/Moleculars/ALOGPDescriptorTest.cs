@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.QSAR.Results;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
@@ -36,7 +36,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public ALOGPDescriptorTest()
         {
             SetDescriptor(typeof(ALOGPDescriptor));
-            hydrogenAdder = CDKHydrogenAdder.GetInstance(Default.ChemObjectBuilder.Instance);
+            hydrogenAdder = CDKHydrogenAdder.GetInstance(ChemObjectBuilder.Instance);
         }
 
         /// <summary>
@@ -46,11 +46,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestChloroButane()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom c1 = Default.ChemObjectBuilder.Instance.NewAtom("C");
-            IAtom c2 = Default.ChemObjectBuilder.Instance.NewAtom("C");
-            IAtom c3 = Default.ChemObjectBuilder.Instance.NewAtom("C");
-            IAtom cl = Default.ChemObjectBuilder.Instance.NewAtom("Cl");
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom c1 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c2 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c3 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom cl = ChemObjectBuilder.Instance.NewAtom("Cl");
             mol.Atoms.Add(c1);
             mol.Atoms.Add(c2);
             mol.Atoms.Add(c3);

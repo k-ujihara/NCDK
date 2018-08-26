@@ -15,7 +15,7 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 
@@ -35,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.Substances
             ISubstance material = new Substance();
             material.Add(
                 MolecularFormulaManipulator.GetAtomContainer(
-                    "ZnO", Default.ChemObjectBuilder.Instance
+                    "ZnO", ChemObjectBuilder.Instance
                 )
             );
             var value = descriptor.Calculate(material);
@@ -51,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Substances
             ISubstance material = new Substance();
             material.Add(
                 MolecularFormulaManipulator.GetAtomContainer(
-                    "Fe3O4", Default.ChemObjectBuilder.Instance
+                    "Fe3O4", ChemObjectBuilder.Instance
                 )
             );
             var value = descriptor.Calculate(material);

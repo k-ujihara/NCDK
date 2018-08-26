@@ -46,42 +46,35 @@ namespace NCDK.Tools
         /// </summary>
         public int Compare(string o1, string o2)
         {
-            if (C_ELEMENT_SYMBOL.Equals(o1))
+            switch (o1)
             {
-                if (C_ELEMENT_SYMBOL.Equals(o2))
-                {
-                    return 0;
-                }
-                else
-                {
-                    return -1;
-                }
-            }
-            else if (H_ELEMENT_SYMBOL.Equals(o1))
-            {
-                if (C_ELEMENT_SYMBOL.Equals(o2))
-                {
-                    return 1;
-                }
-                else if (H_ELEMENT_SYMBOL.Equals(o2))
-                {
-                    return 0;
-                }
-                else
-                {
-                    return -1;
-                }
-            }
-            else
-            {
-                if (C_ELEMENT_SYMBOL.Equals(o2) || H_ELEMENT_SYMBOL.Equals(o2))
-                {
-                    return 1;
-                }
-                else
-                {
-                    return string.Compare((string)o1, (string)o2, StringComparison.Ordinal);
-                }
+                case C_ELEMENT_SYMBOL:
+                    switch (o2)
+                    {
+                        case C_ELEMENT_SYMBOL:
+                            return 0;
+                        default:
+                            return -1;
+                    }
+                case H_ELEMENT_SYMBOL:
+                    switch (o2)
+                    {
+                        case C_ELEMENT_SYMBOL:
+                            return 1;
+                        case H_ELEMENT_SYMBOL:
+                            return 0;
+                        default:
+                            return -1;
+                    }
+                default:
+                    switch (o2)
+                    {
+                        case C_ELEMENT_SYMBOL:
+                        case H_ELEMENT_SYMBOL:
+                            return 1;
+                        default:
+                            return string.Compare(o1, o2, StringComparison.Ordinal);
+                    }
             }
         }
     }

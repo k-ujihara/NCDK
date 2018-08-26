@@ -37,7 +37,7 @@ namespace NCDK
     // @cdk.keyword biopolymer
     // @cdk.keyword pdbpolymer
     public interface IPDBPolymer
-   : IBioPolymer
+        : IBioPolymer
     {
         /// <summary>
         /// Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
@@ -56,10 +56,10 @@ namespace NCDK
         void AddAtom(IPDBAtom oAtom, IMonomer oMonomer, IStrand oStrand);
 
         /// <summary>
-        /// Adds the PDBStructure structure a this PDBPolymer.
+        /// Adds the <see cref="IPDBStructure"/> structure a this <see cref="IPDBPolymer"/>.
         /// </summary>
-        /// <param name="structure">The PDBStructure to add</param>
-        void Add(IPDBStructure structure);
+        /// <param name="structureToAdd">The <see cref="IPDBStructure"/> to add</param>
+        void Add(IPDBStructure structureToAdd);
 
         /// <summary>
         /// Returns a Collection containing the PDBStructure in the PDBPolymer.

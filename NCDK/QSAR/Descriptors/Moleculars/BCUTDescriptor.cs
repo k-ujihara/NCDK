@@ -130,8 +130,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             this.checkAromaticity = true;
         }
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT",
                typeof(BCUTDescriptor).FullName, "The Chemistry Development Kit");
 
@@ -146,12 +146,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <exception cref="CDKException">if the parameters are of the wrong type</exception>
         /// <seealso cref="Parameters"/>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
                 // we expect 3 parameters
-                if (value.Length != 3)
+                if (value.Count != 3)
                 {
                     throw new CDKException("BCUTDescriptor requires 3 parameters");
                 }
@@ -232,7 +232,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        private bool HasUndefined(double[][] m)
+        private static bool HasUndefined(double[][] m)
         {
             foreach (var aM in m)
             {
@@ -358,7 +358,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int nheavy = 0;
             for (int i = 0; i < molecule.Atoms.Count; i++)
             {
-                if (!molecule.Atoms[i].Symbol.Equals("H")) nheavy++;
+                if (!string.Equals(molecule.Atoms[i].Symbol, "H", StringComparison.Ordinal)) nheavy++;
             }
 
             if (nheavy == 0) return GetDummyDescriptorValue(new CDKException("No heavy atoms in the molecule"));
@@ -371,8 +371,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 for (int i = 0; i < molecule.Atoms.Count; i++)
                 {
-                    if (molecule.Atoms[i].Symbol.Equals("H")) continue;
-                    diagvalue[counter] = Isotopes.Instance.GetMajorIsotope(molecule.Atoms[i].Symbol).ExactMass.Value;
+                    if (string.Equals(molecule.Atoms[i].Symbol, "H", StringComparison.Ordinal)) continue;
+                    diagvalue[counter] = BODRIsotopeFactory.Instance.GetMajorIsotope(molecule.Atoms[i].Symbol).ExactMass.Value;
                     counter++;
                 }
             }
@@ -390,15 +390,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double[] eval1 = eigenDecomposition.Select(n => n.Real).ToArray();
 
             // get charge weighted BCUT
-            LonePairElectronChecker lpcheck = new LonePairElectronChecker();
             GasteigerMarsiliPartialCharges peoe;
             try
             {
-                lpcheck.Saturate(molecule);
+                LonePairElectronChecker.Saturate(molecule);
                 double[] charges = new double[molecule.Atoms.Count];
-                //            pepe = new GasteigerPEPEPartialCharges();
-                //            pepe.CalculateCharges(molecule);
-                //            for (int i = 0; i < molecule.Atoms.Count; i++) charges[i] = molecule.Atoms[i].Charge;
                 peoe = new GasteigerMarsiliPartialCharges();
                 peoe.AssignGasteigerMarsiliSigmaPartialCharges(molecule, true);
                 for (int i = 0; i < molecule.Atoms.Count; i++)
@@ -415,7 +411,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             counter = 0;
             for (int i = 0; i < molecule.Atoms.Count; i++)
             {
-                if (molecule.Atoms[i].Symbol.Equals("H")) continue;
+                if (string.Equals(molecule.Atoms[i].Symbol, "H", StringComparison.Ordinal)) continue;
                 diagvalue[counter] = molecule.Atoms[i].Charge.Value;
                 counter++;
             }
@@ -429,13 +425,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int[][] topoDistance = PathTools.ComputeFloydAPSP(AdjacencyMatrix.GetMatrix(molecule));
 
             // get polarizability weighted BCUT
-            Polarizability pol = new Polarizability();
             counter = 0;
             for (int i = 0; i < molecule.Atoms.Count; i++)
             {
-                if (molecule.Atoms[i].Symbol.Equals("H")) continue;
-                diagvalue[counter] = pol.CalculateGHEffectiveAtomPolarizability(molecule, molecule.Atoms[i], false,
-                        topoDistance);
+                if (string.Equals(molecule.Atoms[i].Symbol, "H", StringComparison.Ordinal))
+                    continue;
+                diagvalue[counter] = Polarizability.CalculateGHEffectiveAtomPolarizability(molecule, molecule.Atoms[i], false, topoDistance);
                 counter++;
             }
             burdenMatrix = BurdenMatrix.EvalMatrix(molecule, diagvalue);
@@ -515,7 +510,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval,
                     DescriptorNames);
         }
 
@@ -527,7 +522,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             ArrayResult<double> results = new ArrayResult<double>(6);
             for (int i = 0; i < 6; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results,
                     DescriptorNames, e);
         }
 

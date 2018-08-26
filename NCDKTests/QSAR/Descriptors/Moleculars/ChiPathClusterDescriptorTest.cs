@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Numerics;
 using NCDK.QSAR.Results;
 using NCDK.Smiles;
@@ -179,7 +179,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestCovalentMetal()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCCC[Sn](CCCC)(CCCC)c1cc(Cl)c(Nc2nc(C)nc(N(CCC)CC3CC3)c2Cl)c(Cl)c1");
             ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
             Assert.IsNotNull(ret);
@@ -187,12 +187,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         // @cdk.bug 3023326
         [TestMethod()]
-        [ExpectedException(typeof(NullReferenceException))]
         public void TestCovalentPlatinum()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CC1CN[Pt]2(N1)OC(=O)C(C)P(=O)(O)O2");
             var dummy = Descriptor.Calculate(mol).Value;
+            if (dummy is ArrayResult<double> result)
+                Assert.IsTrue(double.IsNaN(result[0]));
+            else
+                Assert.Fail();
         }
     }
 }

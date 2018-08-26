@@ -59,18 +59,18 @@ namespace NCDK.Fingerprints
     // @cdk.githash
     public class EStateFingerprinter : AbstractFingerprinter, IFingerprinter
     {
-        private static readonly string[] PATTERNS = EStateFragments.Smarts;
+        private static readonly IReadOnlyList<string> PATTERNS = EStateFragments.Smarts;
 
         public EStateFingerprinter() { }
 
         /// <inheritdoc/>
         public override IBitFingerprint GetBitFingerprint(IAtomContainer atomContainer)
         {
-            int bitsetLength = PATTERNS.Length;
+            int bitsetLength = PATTERNS.Count;
             BitArray fingerPrint = new BitArray(bitsetLength);
 
             SMARTSQueryTool sqt = new SMARTSQueryTool("C", atomContainer.Builder);
-            for (int i = 0; i < PATTERNS.Length; i++)
+            for (int i = 0; i < PATTERNS.Count; i++)
             {
                 sqt.Smarts = PATTERNS[i];
                 bool status = sqt.Matches(atomContainer);
@@ -80,13 +80,13 @@ namespace NCDK.Fingerprints
         }
 
         /// <inheritdoc/>
-        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
+        public override IReadOnlyDictionary<string, int> GetRawFingerprint(IAtomContainer mol)
         {
             throw new NotSupportedException();
         }
 
         /// <inheritdoc/>
-        public override int Count => PATTERNS.Length;
+        public override int Length => PATTERNS.Count;
 
         /// <inheritdoc/>
         public override ICountFingerprint GetCountFingerprint(IAtomContainer container)

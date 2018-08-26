@@ -66,7 +66,7 @@ namespace NCDK.Hash.Stereo
             m_tc.SetupGet(n => n.Stereo).Returns(TetrahedralStereo.Clockwise);
             m_container.Setup(n => n.StereoElements).Returns(new[] { tc });
 
-            IStereoEncoder encoder = new TetrahedralElementEncoderFactory().Create(container, new int[0][]); // graph not used
+            IStereoEncoder encoder = new TetrahedralElementEncoderFactory().Create(container, Array.Empty<int[]>()); // graph not used
 
             Assert.AreEqual(-1, GetGeometricParity(encoder).Parity); // clockwise
         }
@@ -95,7 +95,7 @@ namespace NCDK.Hash.Stereo
             m_tc.SetupGet(n => n.Stereo).Returns(TetrahedralStereo.Clockwise);
             m_container.Setup(n => n.StereoElements).Returns(new[] { tc });
 
-            IStereoEncoder encoder = new TetrahedralElementEncoderFactory().Create(container, new int[0][]); // graph not used
+            IStereoEncoder encoder = new TetrahedralElementEncoderFactory().Create(container, Array.Empty<int[]>()); // graph not used
 
             Assert.AreEqual(-1, GetGeometricParity(encoder).Parity); // clockwise (we didn't have to move the implied H)
         }
@@ -124,7 +124,7 @@ namespace NCDK.Hash.Stereo
             m_tc.SetupGet(n => n.Stereo).Returns(TetrahedralStereo.Clockwise);
             m_container.Setup(n => n.StereoElements).Returns(new[] { tc });
 
-            IStereoEncoder encoder = new TetrahedralElementEncoderFactory().Create(container, new int[0][]); // graph not used
+            IStereoEncoder encoder = new TetrahedralElementEncoderFactory().Create(container, Array.Empty<int[]>()); // graph not used
 
             // anti-clockwise (inverted as we had to move the implicit H to the back
             // with an odd number of inversions)
@@ -155,7 +155,7 @@ namespace NCDK.Hash.Stereo
             m_tc.SetupGet(n => n.Stereo).Returns(TetrahedralStereo.Clockwise);
             m_container.Setup(n => n.StereoElements).Returns(new[] { tc });
 
-            IStereoEncoder encoder = new TetrahedralElementEncoderFactory().Create(container, new int[0][]); // graph not used
+            IStereoEncoder encoder = new TetrahedralElementEncoderFactory().Create(container, Array.Empty<int[]>()); // graph not used
 
             // clockwise - we had to move the implied H but we moved it an even
             // number of times
@@ -195,7 +195,7 @@ namespace NCDK.Hash.Stereo
                 }
                 return (IList<IStereoEncoder>)field.GetValue(encoder);
             }
-            return new IStereoEncoder[0];
+            return Array.Empty<IStereoEncoder>();
         }
     }
 }

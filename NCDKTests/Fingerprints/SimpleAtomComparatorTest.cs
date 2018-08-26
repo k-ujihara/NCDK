@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Fingerprints;
+using NCDK.Silent;
 
 namespace NCDK.Fingerprints
 {
@@ -8,7 +9,7 @@ namespace NCDK.Fingerprints
     [TestClass()]
     public class SimpleAtomComparatorTest
     {
-        private IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        private IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
         [TestMethod()]
         public void TestCompare_NullHybridization()

@@ -22,11 +22,11 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Graphs.Canon;
+using NCDK.Graphs.Invariant;
+using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NCDK.Numerics;
 
 namespace NCDK.Geometries
 {
@@ -161,7 +161,7 @@ namespace NCDK.Geometries
             return GiveAngleBothMethods(from.Point2D.Value, to1.Point2D.Value, to2.Point2D.Value, flag);
         }
 
-        public static double GiveAngleBothMethods(Vector2 from, Vector2 to1, Vector2 to2, bool bool_)
+        public static double GiveAngleBothMethods(Vector2 from, Vector2 to1, Vector2 to2, bool flag)
         {
             double[] A = new double[2];
             A[0] = from.X;
@@ -183,7 +183,7 @@ namespace NCDK.Geometries
             {
                 angle = -Math.PI + angle2 - Math.PI - angle1;
             }
-            if (bool_ && angle < 0)
+            if (flag && angle < 0)
             {
                 return (2 * Math.PI + angle);
             }
@@ -225,8 +225,8 @@ namespace NCDK.Geometries
             if (container.GetBond(atom, parent) != null)
             {
                 if (container.GetBond(atom, parent).Order == BondOrder.Double
-                        && (lengthAtom == 3 || (lengthAtom == 2 && atom.Symbol.Equals("N")))
-                        && (lengthParent == 3 || (lengthParent == 2 && parent.Symbol.Equals("N"))))
+                        && (lengthAtom == 3 || (lengthAtom == 2 && atom.Symbol.Equals("N", StringComparison.Ordinal)))
+                        && (lengthParent == 3 || (lengthParent == 2 && parent.Symbol.Equals("N", StringComparison.Ordinal))))
                 {
                     var atoms = container.GetConnectedAtoms(atom);
                     IAtom one = null;
@@ -243,10 +243,12 @@ namespace NCDK.Geometries
                         }
                     }
                     string[] morgannumbers = MorganNumbersTools.GetMorganNumbersWithElementSymbol(container);
-                    if ((one != null && two == null && atom.Symbol.Equals("N") && Math.Abs(GiveAngleBothMethods(
-                            parent, atom, one, true)) > Math.PI / 10)
-                            || (!atom.Symbol.Equals("N") && one != null && two != null && !morgannumbers[container
-                                    .Atoms.IndexOf(one)].Equals(morgannumbers[container.Atoms.IndexOf(two)])))
+                    if ((one != null && two == null 
+                      && atom.Symbol.Equals("N", StringComparison.Ordinal) 
+                      && Math.Abs(GiveAngleBothMethods(parent, atom, one, true)) > Math.PI / 10)
+                     || (!atom.Symbol.Equals("N", StringComparison.Ordinal) 
+                      && one != null && two != null 
+                      && !morgannumbers[container.Atoms.IndexOf(one)].Equals(morgannumbers[container.Atoms.IndexOf(two)], StringComparison.Ordinal)))
                     {
                         return (true);
                     }
@@ -269,15 +271,14 @@ namespace NCDK.Geometries
         ///     configurations are specified (this method ensures that there is
         ///     actually the possibility of a double bond configuration)</param>
         /// <returns>false=is not start of configuration, true=is</returns>
-        private static bool IsStartOfDoubleBond(IAtomContainer container, IAtom a, IAtom parent,
-                bool[] doubleBondConfiguration)
+        private static bool IsStartOfDoubleBond(IAtomContainer container, IAtom a, IAtom parent, bool[] doubleBondConfiguration)
         {
             int hcount;
             hcount = a.ImplicitHydrogenCount ?? 0;
 
             int lengthAtom = container.GetConnectedAtoms(a).Count() + hcount;
 
-            if (lengthAtom != 3 && (lengthAtom != 2 && !(a.Symbol.Equals("N"))))
+            if (lengthAtom != 3 && (lengthAtom != 2 && !(a.Symbol.Equals("N", StringComparison.Ordinal))))
             {
                 return (false);
             }
@@ -305,12 +306,12 @@ namespace NCDK.Geometries
             }
             string[] morgannumbers = MorganNumbersTools.GetMorganNumbersWithElementSymbol(container);
             if (one != null
-                    && ((!a.Symbol.Equals("N")
+                    && ((!a.Symbol.Equals("N", StringComparison.Ordinal)
                             && two != null
-                            && !morgannumbers[container.Atoms.IndexOf(one)].Equals(morgannumbers[container.Atoms.IndexOf(two)])
+                            && !morgannumbers[container.Atoms.IndexOf(one)].Equals(morgannumbers[container.Atoms.IndexOf(two)], StringComparison.Ordinal)
                             && doubleBond
                             && doubleBondConfiguration[container.Bonds.IndexOf(container.GetBond(a, nextAtom))])
-                            || (doubleBond && a.Symbol.Equals("N")
+                            || (doubleBond && a.Symbol.Equals("N", StringComparison.Ordinal)
                             && Math.Abs(GiveAngleBothMethods(nextAtom, a, parent, true)) > Math.PI / 10)))
             {
                 return (true);
@@ -462,7 +463,7 @@ namespace NCDK.Geometries
                 bool isDifferent = true;
                 for (int k = 0; k < i; k++)
                 {
-                    if (atoms[i].Symbol.Equals(atoms[k].Symbol))
+                    if (atoms[i].Symbol.Equals(atoms[k].Symbol, StringComparison.Ordinal))
                     {
                         isDifferent = false;
                         break;
@@ -647,7 +648,7 @@ namespace NCDK.Geometries
                         {
                             down++;
                         }
-                        else if (stereo == BondStereo.None && conAtom.Symbol.Equals("H"))
+                        else if (stereo == BondStereo.None && conAtom.Symbol.Equals("H", StringComparison.Ordinal))
                         {
                             h = conAtom;
                             hs++;

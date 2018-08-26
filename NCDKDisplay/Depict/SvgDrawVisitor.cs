@@ -113,12 +113,12 @@ namespace NCDK.Depict
             }
         }
 
-        private string ToString(double num)
+        private static string ToString(double num)
         {
             return FormatDecimal(num);
         }
 
-        private void AppendPoints(StringBuilder sb, Point[] points, int numPoints)
+        private static void AppendPoints(StringBuilder sb, Point[] points, int numPoints)
         {
             switch (numPoints)
             {
@@ -154,7 +154,7 @@ namespace NCDK.Depict
             }
         }
 
-        private void AppendRelativePoints(StringBuilder sb, Point[] points, Point vBase, int numPoints)
+        private static void AppendRelativePoints(StringBuilder sb, Point[] points, Point vBase, int numPoints)
         {
             switch (numPoints)
             {
@@ -190,7 +190,7 @@ namespace NCDK.Depict
             }
         }
 
-        string ToString(Color col)
+        static string ToString(Color col)
         {
             if (col.A == 255)
             {

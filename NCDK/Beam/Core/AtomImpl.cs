@@ -29,6 +29,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace NCDK.Beam
 {
@@ -52,7 +53,7 @@ namespace NCDK.Beam
             public static readonly AliphaticSubset Bromine = new AliphaticSubset(Element.Bromine);
             public static readonly AliphaticSubset Iodine = new AliphaticSubset(Element.Iodine);
 
-            public static IEnumerable<AliphaticSubset> Values = new[]
+            public static IReadOnlyList<AliphaticSubset> Values = new[]
             {
                 Unknown,
                 Boron,
@@ -67,10 +68,7 @@ namespace NCDK.Beam
                 Iodine,
             };
 
-            private Element element;
-            private Generator.AtomToken token;
-
-            private static readonly IDictionary<Element, IAtom> atoms = new Dictionary<Element, IAtom>();
+            private static readonly Dictionary<Element, IAtom> atoms = new Dictionary<Element, IAtom>();
 
             static AliphaticSubset()
             {
@@ -80,15 +78,15 @@ namespace NCDK.Beam
 
             private AliphaticSubset(Element element)
             {
-                this.element = element;
-                this.token = new Generator.SubsetToken(element.Symbol);
+                this.Element = element;
+                this.Token = new Generator.SubsetToken(element.Symbol);
             }
 
             public int Isotope => -1;
 
-            public Element Element => element;
+            public Element Element { get; }
 
-            public string Label => element.Symbol;
+            public string Label => Element.Symbol;
 
             public bool IsAromatic() => false;
 
@@ -103,7 +101,7 @@ namespace NCDK.Beam
 
             public IAtom AsAromaticForm()
             {
-                return element.IsAromatic() ? AromaticSubset.OfElement(element) : this;
+                return Element.IsAromatic() ? AromaticSubset.OfElement(Element) : this;
             }
 
             public IAtom AsAliphaticForm() 
@@ -113,10 +111,10 @@ namespace NCDK.Beam
 
             public int GetNumberOfHydrogens(Graph g, int u)
             {
-                return Element.NumOfImplicitHydrogens(element, g.BondedValence(u));
+                return Element.NumOfImplicitHydrogens(Element, g.BondedValence(u));
             }
 
-            public Generator.AtomToken Token => token;
+            public Generator.AtomToken Token { get; }
 
             public static IAtom OfElement(Element e)
             {
@@ -154,8 +152,7 @@ namespace NCDK.Beam
             private AromaticSubset(Element element)
             {
                 this.element = element;
-                this.token = new Generator.SubsetToken(element.Symbol
-                                                             .ToLowerInvariant());
+                this.token = new Generator.SubsetToken(element.Symbol.ToLowerInvariant());
             }
 
             public string Label => element.Symbol;
@@ -290,7 +287,7 @@ namespace NCDK.Beam
                 if (hCount != that.hCount) return false;
                 if (isotope != that.isotope) return false;
                 if (element != that.element) return false;
-                if (!label.Equals(that.label)) return false;
+                if (!string.Equals(label, that.label, StringComparison.Ordinal)) return false;
 
                 return true;
             }
@@ -308,8 +305,11 @@ namespace NCDK.Beam
 
             public override string ToString()
             {
-                return "[" + isotope + element.Symbol + "H" + hCount + (
-                        charge != 0 ? charge.ToString() : "") + ":" + atomClass + "]" + (!label.Equals(element.Symbol) ? "(" + label + ")" : "");
+                return "[isotope" + element.Symbol + "H"
+                    + hCount.ToString(NumberFormatInfo.InvariantInfo)
+                    + (charge != 0 ? charge.ToString(NumberFormatInfo.InvariantInfo) : "") 
+                    + ":" + atomClass + "]"
+                    + (!string.Equals(label, element.Symbol, StringComparison.Ordinal) ? "(" + label + ")" : "");
             }
         }
 

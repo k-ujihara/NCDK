@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NCDK.Formula.Rules
@@ -56,7 +57,7 @@ namespace NCDK.Formula.Rules
         /// <summary>
         /// The parameters attribute of the <see cref="ChargeRule"/> object.
         /// </summary>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             get
             {
@@ -67,9 +68,11 @@ namespace NCDK.Formula.Rules
             }
             set
             {
-                if (value.Length != 1) throw new CDKException("ChargeRule expects only one parameter");
+                if (value.Count != 1)
+                    throw new CDKException("ChargeRule expects only one parameter");
 
-                if (!(value[0] is double)) throw new CDKException("The parameter must be of type double");
+                if (!(value[0] is double))
+                    throw new CDKException("The parameter must be of type double");
 
                 charge = (double)value[0];
             }

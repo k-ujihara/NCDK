@@ -18,6 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.QSAR.Results;
+using NCDK.Silent;
 using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Atomic
@@ -39,7 +40,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             IAtomicDescriptor descriptor = new IsProtonInAromaticSystemDescriptor();
             descriptor.Parameters = new object[] { true };
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("Oc1cc(OC)c(cc1Br)Br");
             AddExplicitHydrogens(mol);
             Assert.AreEqual("H", mol.Atoms[11].Symbol);

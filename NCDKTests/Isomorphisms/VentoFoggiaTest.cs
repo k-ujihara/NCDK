@@ -26,6 +26,7 @@ using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Templates;
 using System.Linq;
+using System;
 
 namespace NCDK.Isomorphisms
 {
@@ -51,7 +52,7 @@ namespace NCDK.Isomorphisms
         public void BenzeneNonIdentical()
         {
             int[] match = VentoFoggia.FindIdentical(TestMoleculeFactory.MakeBenzene()).Match(TestMoleculeFactory.MakeNaphthalene());
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], match));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), match));
             int count = VentoFoggia.FindIdentical(TestMoleculeFactory.MakeBenzene()).MatchAll(TestMoleculeFactory.MakeNaphthalene()).ToList().Count;
             Assert.AreEqual(0, count);
         }
@@ -72,7 +73,7 @@ namespace NCDK.Isomorphisms
         {
             int[] match = VentoFoggia.FindSubstructure(TestMoleculeFactory.MakeNaphthalene()).Match(
                     TestMoleculeFactory.MakeBenzene());
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], match));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), match));
             int count =
                 VentoFoggia.FindSubstructure(TestMoleculeFactory.MakeNaphthalene()).MatchAll(
                         TestMoleculeFactory.MakeBenzene()).ToList().Count;

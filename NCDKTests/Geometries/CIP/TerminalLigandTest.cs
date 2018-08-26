@@ -33,14 +33,14 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void TestConstructorAndGetMethods()
         {
-            SmilesParser smiles = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer molecule = smiles.ParseSmiles("ClC(Br)(I)[H]");
+            var smiles = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var molecule = smiles.ParseSmiles("ClC(Br)(I)[H]");
 
-            ILigand ligand = new TerminalLigand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[0]);
+            var ligand = new TerminalLigand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[0]);
             Assert.IsNotNull(ligand);
-            Assert.AreEqual(molecule, ligand.GetAtomContainer());
-            Assert.AreEqual(molecule.Atoms[1], ligand.GetCentralAtom());
-            Assert.AreEqual(molecule.Atoms[0], ligand.GetLigandAtom());
+            Assert.AreEqual(molecule, ligand.AtomContainer);
+            Assert.AreEqual(molecule.Atoms[1], ligand.CentralAtom);
+            Assert.AreEqual(molecule.Atoms[0], ligand.LigandAtom);
         }
     }
 }

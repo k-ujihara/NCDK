@@ -25,6 +25,8 @@ using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
 
+#pragma warning disable CA1036 // Override methods on comparable types
+
 namespace NCDK.IO.Formats
 {
     /// <summary>
@@ -43,7 +45,7 @@ namespace NCDK.IO.Formats
         /// </summary>
         /// <param name="lines">lines of the input to be checked</param>
         /// <returns>whether the format matched and when it matched</returns>
-        MatchResult Matches(IList<string> lines);
+        MatchResult Matches(IEnumerable<string> lines);
     }
 
     /// <summary>
@@ -54,29 +56,26 @@ namespace NCDK.IO.Formats
     public sealed class MatchResult : IComparable<MatchResult>
     {
         /// <summary>Convenience method for indicating a format did not match.</summary>
-        public static MatchResult NO_MATCH = new MatchResult(false, null, int.MaxValue);
-
-        /// <summary>Did the format match.</summary>
-        private readonly bool matched;
+        public static MatchResult NoMatch { get; } = new MatchResult(false, null, int.MaxValue);
 
         /// <summary>When did the format match.</summary>
-        private readonly int position;
+        public int Position { get; private set; }
 
         /// <summary>Which format matched.</summary>
         private readonly IChemFormat format;
 
         public MatchResult(bool matched, IChemFormat format, int position)
         {
-            this.matched = matched;
+            this.IsMatched = matched;
             this.format = format;
-            this.position = position;
+            this.Position = position;
         }
 
         /// <summary>
         /// Did the chem format match.
         /// </summary>
         /// <returns>whether the format matched</returns>
-        public bool IsMatched => matched;
+        public bool IsMatched { get; private set; }
 
         /// <summary>
         /// What was the format which matched if there was a match <see cref="IsMatched"/>.
@@ -87,7 +86,8 @@ namespace NCDK.IO.Formats
         {
             get
             {
-                if (!matched) throw new InvalidOperationException("result did not match");
+                if (!IsMatched)
+                    throw new InvalidOperationException("result did not match");
                 return format;
             }
         }
@@ -98,7 +98,7 @@ namespace NCDK.IO.Formats
         /// </summary>
         public int CompareTo(MatchResult that)
         {
-            return Ints.Compare(this.position, that.position);
+            return Ints.Compare(this.Position, that.Position);
         }
     }
 }

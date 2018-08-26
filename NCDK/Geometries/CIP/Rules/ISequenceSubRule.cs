@@ -37,7 +37,7 @@ namespace NCDK.Geometries.CIP.Rules
     /// </remarks>
     // @cdk.module cip
     // @cdk.githash
-    public interface ISequenceSubRule<ILigand> : IComparer<ILigand>
+    public interface ISequenceSubRule<T> : IComparer<T> where T : ILigand
     {
     }
 }

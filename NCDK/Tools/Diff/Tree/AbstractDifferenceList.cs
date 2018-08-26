@@ -29,7 +29,7 @@ namespace NCDK.Tools.Diff.Tree
     // @cdk.githash
     public abstract class AbstractDifferenceList : IDifferenceList
     {
-        protected List<IDifference> differences;
+        private List<IDifference> differences;
 
         protected AbstractDifferenceList()
         {

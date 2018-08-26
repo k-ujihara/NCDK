@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -140,24 +141,24 @@ namespace NCDK.Default
         {
             if (atoms == null)
             {
-				this.atoms = new ObservableChemObjectCollection<IAtom>(2, this);
+                this.atoms = new ObservableChemObjectCollection<IAtom>(2, this);
             }
             else
             {
-				this.atoms = new ObservableChemObjectCollection<IAtom>(this, atoms);
+                this.atoms = new ObservableChemObjectCollection<IAtom>(this, atoms);
             }
         }
 
         /// <inheritdoc/>
         public virtual IList<IAtom> Atoms => atoms;
 
-		/// <inheritdoc/>
-		public virtual int Index => -1;
+        /// <inheritdoc/>
+        public virtual int Index => -1;
 
-		/// <inheritdoc/>
-		public virtual IAtomContainer Container => null;
+        /// <inheritdoc/>
+        public virtual IAtomContainer Container => null;
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
         public IAtom Begin => atoms.Count < 1 ? null : atoms[0];
 
         /// <inheritdoc/>
@@ -184,7 +185,7 @@ namespace NCDK.Default
         {
             if (!atoms.Contains(atom))
                 return null;
-			return atoms.Where(n => n != atom);
+            return atoms.Where(n => n != atom);
         }
 
         /// <summary>
@@ -202,8 +203,8 @@ namespace NCDK.Default
         /// <summary>
         /// Sets the array of atoms making up this bond.
         /// </summary>
-		/// <param name="atoms">An array of atoms that forms this bond</param>
-		/// <seealso cref="Atoms"/>
+        /// <param name="atoms">An array of atoms that forms this bond</param>
+        /// <seealso cref="Atoms"/>
         public virtual void SetAtoms(IEnumerable<IAtom> atoms)
         {
             this.atoms.Clear();
@@ -344,19 +345,19 @@ namespace NCDK.Default
             return clone;
         }
 
-		/// <inheritdoc/>
-		public override int GetHashCode() 
-		{
-			return base.GetHashCode();
-		}
+        /// <inheritdoc/>
+        public override int GetHashCode() 
+        {
+            return base.GetHashCode();
+        }
 
-		/// <inheritdoc/>
-		public override bool Equals(object obj) 
-		{
-			if (obj is BondRef)
-				return base.Equals(((BondRef) obj).Deref());
-			return base.Equals(obj);
-		}
+        /// <inheritdoc/>
+        public override bool Equals(object other) 
+        {
+            if (other is BondRef)
+                return base.Equals(((BondRef)other).Deref());
+            return base.Equals(other);
+        }
 
         public override string ToString()
         {
@@ -380,11 +381,10 @@ namespace NCDK.Default
         /// Compares a bond with this bond.
         /// </summary>
         /// <param name="obj">Object of type Bond</param>
-        /// <returns> true if the bond is equal to this bond</returns>
+        /// <returns><see langword="true"/> if the bond is equal to this bond</returns>
         public override bool Compare(object obj)
         {
-            var bond = obj as Bond;
-            if (bond == null)
+            if (!(obj is Bond bond))
                 return false;
             return !atoms.Any(atom => !bond.Contains(atom));
             // bond order is ignored
@@ -518,27 +518,27 @@ namespace NCDK.Silent
         {
             if (atoms == null)
             {
-				this.atoms = new List<IAtom>(2);
+                this.atoms = new List<IAtom>(2);
             }
             else
             {
-				int n = Math.Min(atoms.Count(), 2);
-				var list = new List<IAtom>(n);
-				list.AddRange(atoms);
-				this.atoms = list;
+                int n = Math.Min(atoms.Count(), 2);
+                var list = new List<IAtom>(n);
+                list.AddRange(atoms);
+                this.atoms = list;
             }
         }
 
         /// <inheritdoc/>
         public virtual IList<IAtom> Atoms => atoms;
 
-		/// <inheritdoc/>
-		public virtual int Index => -1;
+        /// <inheritdoc/>
+        public virtual int Index => -1;
 
-		/// <inheritdoc/>
-		public virtual IAtomContainer Container => null;
+        /// <inheritdoc/>
+        public virtual IAtomContainer Container => null;
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
         public IAtom Begin => atoms.Count < 1 ? null : atoms[0];
 
         /// <inheritdoc/>
@@ -565,7 +565,7 @@ namespace NCDK.Silent
         {
             if (!atoms.Contains(atom))
                 return null;
-			return atoms.Where(n => n != atom);
+            return atoms.Where(n => n != atom);
         }
 
         /// <summary>
@@ -583,8 +583,8 @@ namespace NCDK.Silent
         /// <summary>
         /// Sets the array of atoms making up this bond.
         /// </summary>
-		/// <param name="atoms">An array of atoms that forms this bond</param>
-		/// <seealso cref="Atoms"/>
+        /// <param name="atoms">An array of atoms that forms this bond</param>
+        /// <seealso cref="Atoms"/>
         public virtual void SetAtoms(IEnumerable<IAtom> atoms)
         {
             this.atoms.Clear();
@@ -718,19 +718,19 @@ namespace NCDK.Silent
             return clone;
         }
 
-		/// <inheritdoc/>
-		public override int GetHashCode() 
-		{
-			return base.GetHashCode();
-		}
+        /// <inheritdoc/>
+        public override int GetHashCode() 
+        {
+            return base.GetHashCode();
+        }
 
-		/// <inheritdoc/>
-		public override bool Equals(object obj) 
-		{
-			if (obj is BondRef)
-				return base.Equals(((BondRef) obj).Deref());
-			return base.Equals(obj);
-		}
+        /// <inheritdoc/>
+        public override bool Equals(object other) 
+        {
+            if (other is BondRef)
+                return base.Equals(((BondRef)other).Deref());
+            return base.Equals(other);
+        }
 
         public override string ToString()
         {
@@ -754,11 +754,10 @@ namespace NCDK.Silent
         /// Compares a bond with this bond.
         /// </summary>
         /// <param name="obj">Object of type Bond</param>
-        /// <returns> true if the bond is equal to this bond</returns>
+        /// <returns><see langword="true"/> if the bond is equal to this bond</returns>
         public override bool Compare(object obj)
         {
-            var bond = obj as Bond;
-            if (bond == null)
+            if (!(obj is Bond bond))
                 return false;
             return !atoms.Any(atom => !bond.Contains(atom));
             // bond order is ignored

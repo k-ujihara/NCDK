@@ -23,6 +23,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.RingSearches;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 using System;
@@ -57,12 +58,13 @@ namespace NCDK.Modelings.Builder3D
             Assert.AreEqual(10751, tmphandler3d.TemplateCount);
         }
 
+        [TestCategory("SlowTest")]
         [TestMethod()]
-        public void TestMapTemplates_cyclicMol1()
+        public void TestMapTemplatesCyclicMol1()
         {
             TemplateHandler3D tmphandler3d = TemplateHandler3D.Instance;
             string cyclicMolSmi = "O(CC(O)CN1CCN(CC1)CC(=O)Nc1c(cccc1C)C)c1c(cccc1)OC";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser smiparser = new SmilesParser(builder);
             IAtomContainer molecule = smiparser.ParseSmiles(cyclicMolSmi);
             ForceFieldConfigurator forcefconf = new ForceFieldConfigurator();
@@ -78,12 +80,13 @@ namespace NCDK.Modelings.Builder3D
             }
         }
 
+        [TestCategory("SlowTest")]
         [TestMethod()]
-        public void TestMapTemplates_cyclicMol2()
+        public void TestMapTemplatesCyclicMol2()
         {
             TemplateHandler3D tmphandler3d = TemplateHandler3D.Instance;
             string cyclicMolSmi = "CC(C)(C)NC(=O)C1CN(CCN1CC(CC(Cc1ccccc1)C(=O)NC1c2ccccc2CC1O)O)Cc1cccnc1";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser smiparser = new SmilesParser(builder);
             IAtomContainer molecule = smiparser.ParseSmiles(cyclicMolSmi);
             ForceFieldConfigurator forcefconf = new ForceFieldConfigurator();

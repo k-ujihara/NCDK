@@ -108,7 +108,7 @@ namespace <#= ns.NS #>
         }
 
 <# if (ns.IsSilent) { #> 
-		<#@ include file="TestAbstractChemObjectTest.ttinclude" #>
+        <#@ include file="TestAbstractChemObjectTest.ttinclude" #>
 <# } #>
     }
 }

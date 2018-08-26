@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -20,7 +21,7 @@ namespace NCDK.IO.Iterator
             Trace.TraceInformation("Testing: " + filename);
             Stream ins = ResourceLoader.GetAsStream(filename);
             IEnumerableMDLConformerReader reader = new IEnumerableMDLConformerReader(ins,
-                    Default.ChemObjectBuilder.Instance);
+                    ChemObjectBuilder.Instance);
 
             int molCount = 0;
             int[] nconfs = new int[3];
@@ -46,7 +47,7 @@ namespace NCDK.IO.Iterator
             string filename = "NCDK.Data.MDL.iterconftest.sdf";
             Trace.TraceInformation("Testing: " + filename);
             Stream ins = ResourceLoader.GetAsStream(filename);
-            var reader = new IEnumerableMDLConformerReader(ins, Default.ChemObjectBuilder.Instance).GetEnumerator();
+            var reader = new IEnumerableMDLConformerReader(ins, ChemObjectBuilder.Instance).GetEnumerator();
 
             reader.MoveNext();
             var dummy = reader.Current;

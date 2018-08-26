@@ -45,7 +45,7 @@ namespace NCDK.Hash.Stereo
         [ExpectedException(typeof(ArgumentException))]
         public void TestConstruction_Empty()
         {
-            new BasicPermutationParity(new int[0]);
+            new BasicPermutationParity(Array.Empty<int>());
         }
 
         [TestMethod()]

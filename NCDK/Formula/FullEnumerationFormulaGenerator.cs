@@ -67,7 +67,7 @@ namespace NCDK.Formula
         /// currentCounts that was increased by calling increaseCounter(position)
         /// </summary>
         private readonly IIsotope[] isotopes;
-        private object sync_currentCounts = new object();
+        private readonly object syncCurrentCounts = new object();
         private readonly int[] minCounts, maxCounts, currentCounts;
         private int lastIncreasedPosition = 0;
 
@@ -94,22 +94,14 @@ namespace NCDK.Formula
             Trace.TraceInformation("Initiate MolecularFormulaGenerator, mass range " + minMass + "-" + maxMass);
 
             // Check parameter values
-            if ((minMass < 0.0) || (maxMass < 0.0))
-            {
-                throw (new ArgumentOutOfRangeException("The minimum and maximum mass values must be >=0"));
-            }
+            if (minMass < 0.0) throw (new ArgumentOutOfRangeException(nameof(minMass), "The minimum and maximum mass values must be >=0"));
+            if (maxMass < 0.0) throw (new ArgumentOutOfRangeException(nameof(maxMass), "The minimum and maximum mass values must be >=0"));
 
             if ((minMass > maxMass))
-            {
-                throw (new ArgumentException(
-                        "Minimum mass must be <= maximum mass"));
-            }
+                throw (new ArgumentException("Minimum mass must be <= maximum mass"));
 
             if ((mfRange == null) || (mfRange.GetIsotopes().Count() == 0))
-            {
-                throw (new ArgumentException(
-                        "The MolecularFormulaRange parameter must be non-null and must contain at least one isotope"));
-            }
+                throw (new ArgumentException("The MolecularFormulaRange parameter must be non-null and must contain at least one isotope"));
 
             // Save the parameters
             this.builder = builder;
@@ -170,7 +162,7 @@ namespace NCDK.Formula
                     // Keep a lock on the currentCounts, because
                     // getFinishedPercentage() might be called from another
                     // thread
-                    lock (sync_currentCounts)
+                    lock (syncCurrentCounts)
                     {
                         currentCounts[lastIncreasedPosition] = maxCounts[lastIncreasedPosition];
                         IncreaseCounter(lastIncreasedPosition);
@@ -243,7 +235,7 @@ namespace NCDK.Formula
 
             // Keep a lock on the currentCounts, because
             // getFinishedPercentage() might be called from another thread
-            lock (sync_currentCounts)
+            lock (syncCurrentCounts)
             {
                 if (currentCounts[position] < maxCounts[position])
                 {
@@ -322,7 +314,7 @@ namespace NCDK.Formula
 
             // Keep a lock on currentCounts, otherwise it might change during the
             // calculation
-            lock (sync_currentCounts)
+            lock (syncCurrentCounts)
             {
                 for (int i = currentCounts.Length - 1; i >= 0; i--)
                 {

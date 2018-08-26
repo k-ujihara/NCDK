@@ -55,26 +55,24 @@ namespace NCDK.Renderers.Visitors
         [TestMethod()]
         public void TestGetTextBounds()
         {
-            AbstractWPFDrawVisitor visitor = new NestedAWTDrawVisitor();
             var typeface = new Typeface(
                   new FontFamily("Arial"),
                   WPF::FontStyles.Normal,
                   WPF::FontWeights.Normal,
                   WPF::FontStretches.Normal);
-            var rectangle = visitor.GetTextBounds("Foo", new WPF.Point(3, 5), typeface, 9);
+            var rectangle = AbstractWPFDrawVisitor.GetTextBounds("Foo", new WPF.Point(3, 5), typeface, 9);
             Assert.IsNotNull(rectangle);
         }
 
         [TestMethod()]
         public void TestGetTextBasePoint()
         {
-            AbstractWPFDrawVisitor visitor = new NestedAWTDrawVisitor();
             var typeface = new Typeface(
                   new FontFamily("Arial"),
                   WPF::FontStyles.Normal,
                   WPF::FontWeights.Normal,
                   WPF::FontStretches.Normal);
-            var point = visitor.GetTextBasePoint("Foo", new WPF.Point(3, 5), typeface, 9);
+            var point = AbstractWPFDrawVisitor.GetTextBasePoint("Foo", new WPF.Point(3, 5), typeface, 9);
             Assert.IsNotNull(point);
         }
     }

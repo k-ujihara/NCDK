@@ -25,6 +25,7 @@ using NCDK.Common.Primitives;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Xml.Linq;
 
 namespace NCDK.IO.CML
@@ -59,7 +60,7 @@ namespace NCDK.IO.CML
             if (xpath.ToString().EndsWith("string/", StringComparison.Ordinal))
             {
                 var a_buildin = element.Attribute("buildin");
-                if (a_buildin != null && a_buildin.Value.Equals("order"))
+                if (a_buildin != null && a_buildin.Value.Equals("order", StringComparison.Ordinal))
                 {
                     isBond = true;
                 }
@@ -75,14 +76,14 @@ namespace NCDK.IO.CML
             string s = element.Value;
             if (isBond)
             {
-                Debug.WriteLine("CharData (bond): " + s);
+                Debug.WriteLine($"CharData (bond): {s}");
                 var st = Strings.Tokenize(s);
                 foreach (var border in st)
                 {
                     Debug.WriteLine($"new bond order: {border}");
                     // assume cdk bond object has already started
                     //                cdo.SetObjectProperty("Bond", "order", border);
-                    CurrentBond.Order = BondManipulator.CreateBondOrder(double.Parse(border));
+                    CurrentBond.Order = BondManipulator.CreateBondOrder(double.Parse(border, NumberFormatInfo.InvariantInfo));
                 }
             }
             else

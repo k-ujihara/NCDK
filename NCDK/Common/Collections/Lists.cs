@@ -1,19 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Common.Collections
 {
-    public static class Lists<T>
-    {
-        private static IList<T> empty = new ReadOnlyCollection<T>(new List<T>());
-        public static IList<T> Empty => empty;
-    }
-
     public static class Lists
     {
         public static int GetDeepHashCode(IEnumerable list)

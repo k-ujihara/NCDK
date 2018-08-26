@@ -45,7 +45,9 @@ namespace NCDK.Formula
                                          MolecularFormulaRange mfRange)
         {
             CheckInputParameters(builder, minMass, maxMass, mfRange);
-            this.formulaGenerator = IsIllPosed(minMass, maxMass, mfRange) ? (IFormulaGenerator)new FullEnumerationFormulaGenerator(builder, minMass, maxMass, mfRange) : (IFormulaGenerator)new RoundRobinFormulaGenerator(builder, minMass, maxMass, mfRange);
+            this.formulaGenerator = IsIllPosed(minMass, maxMass, mfRange) 
+                ? new FullEnumerationFormulaGenerator(builder, minMass, maxMass, mfRange)
+                : (IFormulaGenerator)new RoundRobinFormulaGenerator(builder, minMass, maxMass, mfRange);
         }
 
         /// <summary>
@@ -67,13 +69,16 @@ namespace NCDK.Formula
             // when the number of integers to decompose is incredible large
             // we have to adjust the internal settings (e.g. precision!)
             // instead we simply fallback to the full enumeration method
-            if (maxMass - minMass >= 1) return true;
-            if (maxMass > 400000) return true;
+            if (maxMass - minMass >= 1)
+                return true;
+            if (maxMass > 400000)
+                return true;
             // if the number of elements to decompose is very small
             // we fall back to the full enumeration methods as the
             // minimal decomposable mass of a certain residue class might
             // exceed the 32 bit integer space
-            if (mfRange.GetIsotopes().Count() <= 2) return true;
+            if (mfRange.GetIsotopes().Count() <= 2)
+                return true;
 
             // if the mass of the smallest element in alphabet is large
             // it is more efficient to use the full enumeration method
@@ -91,7 +96,7 @@ namespace NCDK.Formula
         /// (search is finished). There is no guaranteed order in which the formulas
         /// are generated.
         /// </summary>
-        public virtual IMolecularFormula GetNextFormula()
+        public IMolecularFormula GetNextFormula()
         {
             return formulaGenerator.GetNextFormula();
         }
@@ -109,7 +114,7 @@ namespace NCDK.Formula
         /// </note>
         /// </remarks> 
         /// <seealso cref="GetNextFormula()"/>
-        public virtual IMolecularFormulaSet GetAllFormulas()
+        public IMolecularFormulaSet GetAllFormulas()
         {
             return formulaGenerator.GetAllFormulas();
         }
@@ -122,7 +127,7 @@ namespace NCDK.Formula
         /// returned value might be slightly off due to rounding errors). This method
         /// can be called from any thread.
         /// </summary>
-        public virtual double GetFinishedPercentage()
+        public double GetFinishedPercentage()
         {
             return formulaGenerator.GetFinishedPercentage();
         }
@@ -136,7 +141,7 @@ namespace NCDK.Formula
         /// moment. The search cannot be restarted once canceled - any subsequent
         /// calls to <see cref="MolecularFormulaGenerator.GetNextFormula()"/> will return null.
         /// </summary>
-        public virtual void Cancel()
+        public void Cancel()
         {
             formulaGenerator.Cancel();
         }
@@ -144,26 +149,20 @@ namespace NCDK.Formula
         /// <summary>
         /// Checks if input parameters are valid and throws an <see cref="ArgumentOutOfRangeException"/> otherwise.
         /// </summary>
-        protected void CheckInputParameters(IChemObjectBuilder builder,
+        private static void CheckInputParameters(IChemObjectBuilder builder,
                                              double minMass, double maxMass,
                                              MolecularFormulaRange mfRange)
         {
-            if ((minMass < 0.0) || (maxMass < 0.0))
-            {
-                throw (new ArgumentOutOfRangeException(
-                        "The minimum and maximum mass values must be >=0"));
-            }
-
+            if (minMass < 0.0)
+                throw new ArgumentOutOfRangeException(nameof(minMass), "The minimum mass values must be >=0");
+            if (maxMass < 0.0)
+                throw new ArgumentOutOfRangeException(nameof(maxMass), "The maximum mass values must be >=0");
             if ((minMass > maxMass))
-            {
-                throw (new ArgumentException(
-                        "Minimum mass must be <= maximum mass"));
-            }
+                throw (new ArgumentException("Minimum mass must be <= maximum mass"));
 
             if ((mfRange == null) || (mfRange.GetIsotopes().Count() == 0))
             {
-                throw (new ArgumentException(
-                        "The MolecularFormulaRange parameter must be non-null and must contain at least one isotope"));
+                throw (new ArgumentException("The MolecularFormulaRange parameter must be non-null and must contain at least one isotope"));
             }
 
             // Sort the elements by mass in ascending order. That speeds up

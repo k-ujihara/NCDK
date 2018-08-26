@@ -1,6 +1,6 @@
 namespace NCDK.FaulonSignatures.EdgeColored
 {
-    public class EdgeColoredGraphFactory
+    public static class EdgeColoredGraphFactory
     {
         public static EdgeColoredGraph MakeHyperGraph()
         {

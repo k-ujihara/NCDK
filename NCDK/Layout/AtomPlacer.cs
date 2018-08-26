@@ -35,9 +35,9 @@ using System.Linq;
 namespace NCDK.Layout
 {
     /// <summary>
-    ///  Methods for generating coordinates for atoms in various situations. They can
-    ///  be used for Automated Structure Diagram Generation or in the interactive
-    ///  buildup of molecules by the user.
+    /// Methods for generating coordinates for atoms in various situations. They can
+    /// be used for Automated Structure Diagram Generation or in the interactive
+    /// buildup of molecules by the user.
     /// </summary>
     // @author      steinbeck
     // @cdk.created 2003-08-29
@@ -72,32 +72,28 @@ namespace NCDK.Layout
         /// <param name="unplacedNeighbours">The partners to be placed</param>
         /// <param name="bondLength">The standard bond length for the newly placed atoms</param>
         /// <param name="sharedAtomsCenter">The 2D centre of the placed atoms</param>
-        public void DistributePartners(IAtom atom, IAtomContainer placedNeighbours, Vector2 sharedAtomsCenter,
-                IAtomContainer unplacedNeighbours, double bondLength)
+        public void DistributePartners(IAtom atom, IAtomContainer placedNeighbours, Vector2 sharedAtomsCenter, IAtomContainer unplacedNeighbours, double bondLength)
         {
             double occupiedAngle = 0;
-            //double smallestDistance = double.MaxValue;
-            //IAtom[] nearestAtoms = new IAtom[2];
             IAtom[] sortedAtoms = null;
             double startAngle = 0.0;
             double addAngle = 0.0;
             double radius = 0.0;
             double remainingAngle = 0.0;
             // calculate the direction away from the already placed partners of atom
-            //Vector2 sharedAtomsCenter = sharedAtoms.Get2DCenter();
-            Vector2 sharedAtomsCenterVector = sharedAtomsCenter;
+            var sharedAtomsCenterVector = sharedAtomsCenter;
 
-            Vector2 newDirection = atom.Point2D.Value;
-            Vector2 occupiedDirection = sharedAtomsCenter;
+            var newDirection = atom.Point2D.Value;
+            var occupiedDirection = sharedAtomsCenter;
             occupiedDirection = Vector2.Subtract(occupiedDirection, newDirection);
             // if the placing on the centre atom we get NaNs just give a arbitrary direction the
             // rest works it's self out
             if (Math.Abs(occupiedDirection.Length()) < 0.001)
                 occupiedDirection = new Vector2(0, 1);
             Debug.WriteLine("distributePartners->occupiedDirection.Lenght(): " + occupiedDirection.Length());
-            List<IAtom> atomsToDraw = new List<IAtom>();
+            var atomsToDraw = new List<IAtom>();
 
-            Debug.WriteLine("Number of shared atoms: ", placedNeighbours.Atoms.Count);
+            Debug.WriteLine($"Number of shared atoms: {placedNeighbours.Atoms.Count}");
 
             // IMPORTANT: This method is not supposed to handle the case of one or
             // no place neighbor. In the case of one placed neighbor, the chain
@@ -114,15 +110,12 @@ namespace NCDK.Layout
                 // IMPORTANT: At this point we need a calculation of the start
                 // angle. Not done yet.
                 IAtom placedAtom = placedNeighbours.Atoms[0];
-                //            double xDiff = atom.GetX2d() - placedAtom.GetX2d();
-                //            double yDiff = atom.GetY2d() - placedAtom.GetY2d();
                 double xDiff = placedAtom.Point2D.Value.X - atom.Point2D.Value.X;
                 double yDiff = placedAtom.Point2D.Value.Y - atom.Point2D.Value.Y;
 
                 Debug.WriteLine("distributePartners->xdiff: " + Vectors.RadianToDegree(xDiff));
                 Debug.WriteLine("distributePartners->ydiff: " + Vectors.RadianToDegree(yDiff));
                 startAngle = GeometryUtil.GetAngle(xDiff, yDiff);
-                //- (Math.PI / 2.0);
                 Debug.WriteLine("distributePartners->angle: " + Vectors.RadianToDegree(startAngle));
 
                 PopulatePolygonCorners(atomsToDraw, atom.Point2D.Value, startAngle, addAngle, bondLength);
@@ -154,11 +147,11 @@ namespace NCDK.Layout
 
                 if (numTerminal == unplacedNeighbours.Atoms.Count)
                 {
-                    Vector2 a = NewVector(placedNeighbours.Atoms[0].Point2D.Value, atom.Point2D.Value);
-                    Vector2 b = NewVector(placedNeighbours.Atoms[1].Point2D.Value, atom.Point2D.Value);
-                    double d1 = GeometryUtil.GetAngle(a.X, a.Y);
-                    double d2 = GeometryUtil.GetAngle(b.X, b.Y);
-                    double sweep = Vectors.Angle(a, b);
+                    var a = NewVector(placedNeighbours.Atoms[0].Point2D.Value, atom.Point2D.Value);
+                    var b = NewVector(placedNeighbours.Atoms[1].Point2D.Value, atom.Point2D.Value);
+                    var d1 = GeometryUtil.GetAngle(a.X, a.Y);
+                    var d2 = GeometryUtil.GetAngle(b.X, b.Y);
+                    var sweep = Vectors.Angle(a, b);
                     if (sweep < Math.PI)
                     {
                         sweep = 2 * Math.PI - sweep;
@@ -189,25 +182,28 @@ namespace NCDK.Layout
             newDirection = newDirection * bondLength;
             newDirection = -newDirection;
             Debug.WriteLine($"distributePartners->newDirection.Lenght(): {newDirection.Length()}");
-            Vector2 distanceMeasure = atom.Point2D.Value;
+            var distanceMeasure = atom.Point2D.Value;
             distanceMeasure += newDirection;
 
             // get the two sharedAtom partners with the smallest distance to the new center
-            sortedAtoms = AtomContainerManipulator.GetAtomArray(placedNeighbours);
+            sortedAtoms = placedNeighbours.Atoms.ToArray();
             GeometryUtil.SortBy2DDistance(sortedAtoms, distanceMeasure);
-            Vector2 closestPoint1 = sortedAtoms[0].Point2D.Value;
-            Vector2 closestPoint2 = sortedAtoms[1].Point2D.Value;
+            var closestPoint1 = sortedAtoms[0].Point2D.Value;
+            var closestPoint2 = sortedAtoms[1].Point2D.Value;
             closestPoint1 -= atom.Point2D.Value;
             closestPoint2 -= atom.Point2D.Value;
             occupiedAngle = Vectors.Angle(closestPoint1, occupiedDirection);
             occupiedAngle += Vectors.Angle(closestPoint2, occupiedDirection);
 
-            double angle1 = GeometryUtil.GetAngle(sortedAtoms[0].Point2D.Value.X - atom.Point2D.Value.X,
-                    sortedAtoms[0].Point2D.Value.Y - atom.Point2D.Value.Y);
-            double angle2 = GeometryUtil.GetAngle(sortedAtoms[1].Point2D.Value.X - atom.Point2D.Value.X,
-                    sortedAtoms[1].Point2D.Value.Y - atom.Point2D.Value.Y);
-            double angle3 = GeometryUtil.GetAngle(distanceMeasure.X - atom.Point2D.Value.X,
-                    distanceMeasure.Y - atom.Point2D.Value.Y);
+            var angle1 = GeometryUtil.GetAngle(
+                sortedAtoms[0].Point2D.Value.X - atom.Point2D.Value.X,
+                sortedAtoms[0].Point2D.Value.Y - atom.Point2D.Value.Y);
+            var angle2 = GeometryUtil.GetAngle(
+                sortedAtoms[1].Point2D.Value.X - atom.Point2D.Value.X,
+                sortedAtoms[1].Point2D.Value.Y - atom.Point2D.Value.Y);
+            var angle3 = GeometryUtil.GetAngle(
+                distanceMeasure.X - atom.Point2D.Value.X,
+                distanceMeasure.Y - atom.Point2D.Value.Y);
             if (debug)
             {
                 try
@@ -269,15 +265,9 @@ namespace NCDK.Layout
                 atomsToDraw.Add(unplacedNeighbours.Atoms[f]);
             }
             radius = bondLength;
-            startAngle = GeometryUtil.GetAngle(startAtom.Point2D.Value.X - atom.Point2D.Value.X, startAtom.Point2D.Value.Y
-                    - atom.Point2D.Value.Y);
+            startAngle = GeometryUtil.GetAngle(startAtom.Point2D.Value.X - atom.Point2D.Value.X, startAtom.Point2D.Value.Y - atom.Point2D.Value.Y);
             Debug.WriteLine($"Before check: distributePartners->startAngle: {startAngle}");
-            //        if (startAngle < (Math.PI + 0.001) && startAngle > (Math.PI
-            //            -0.001))
-            //        {
-            //            startAngle = Math.PI/placedNeighbours.Atoms.Count;
-            //        }
-            Debug.WriteLine("After check: distributePartners->startAngle: " + startAngle);
+            Debug.WriteLine($"After check: distributePartners->startAngle: {startAngle}");
             PopulatePolygonCorners(atomsToDraw, atom.Point2D.Value, startAngle, addAngle, radius);
         }
 
@@ -285,10 +275,10 @@ namespace NCDK.Layout
         {
             if (placedNeighbours.Atoms.Count != 2)
                 return false;
-            IBond b1 = Molecule.GetBond(atom, placedNeighbours.Atoms[0]);
+            var b1 = Molecule.GetBond(atom, placedNeighbours.Atoms[0]);
             if (!b1.IsInRing)
                 return false;
-            IBond b2 = Molecule.GetBond(atom, placedNeighbours.Atoms[1]);
+            var b2 = Molecule.GetBond(atom, placedNeighbours.Atoms[1]);
             if (!b2.IsInRing)
                 return false;
 
@@ -316,33 +306,19 @@ namespace NCDK.Layout
         /// <param name="bondLength">The factor used to scale the initialBondVector</param>
         public void PlaceLinearChain(IAtomContainer atomContainer, Vector2 initialBondVector, double bondLength)
         {
-            IAtomContainer withh = atomContainer.Builder.NewAtomContainer(atomContainer);
+            var withh = atomContainer.Builder.NewAtomContainer(atomContainer);
 
             // BUGFIX - withh does not have cloned cloned atoms, so changes are
             // reflected in our atom container. If we're using implicit hydrogens
             // the correct counts need saving and restoring
-            int[] numh = new int[atomContainer.Atoms.Count];
+            var numh = new int[atomContainer.Atoms.Count];
             for (int i = 0, n = atomContainer.Atoms.Count; i < n; i++)
             {
                 numh[i] = atomContainer.Atoms[i].ImplicitHydrogenCount ?? 0;
             }
 
-            //        SDG should lay out what it gets and not fiddle with molecules
-            //      during layout so this was
-            //      removed during debugging. Before you put this in again, contact
-            //      er@doktor-steinbeck.de
-
-            //        if(GeometryTools.Has2DCoordinatesNew(atomContainer)==2){
-            //            try{
-            //                new HydrogenAdder().AddExplicitHydrogensToSatisfyValency(withh);
-            //            }Catch(Exception ex){
-            //                Trace.TraceWarning("Exception in hydrogen adding. This could mean that cleanup does not respect E/Z: ", ex.Message);
-            //                Debug.WriteLine(ex);
-            //            }
-            //            new HydrogenPlacer().PlaceHydrogens2D(withh, bondLength);
-            //        }
-            Debug.WriteLine("Placing linear chain of length " + atomContainer.Atoms.Count);
-            Vector2 bondVector = initialBondVector;
+            Debug.WriteLine($"Placing linear chain of length {atomContainer.Atoms.Count}");
+            var bondVector = initialBondVector;
             IBond prevBond = null;
             for (int f = 0; f < atomContainer.Atoms.Count - 1; f++)
             {
@@ -364,7 +340,7 @@ namespace NCDK.Layout
                     int charge = atom.FormalCharge.Value;
 
                     // double length of the last bond to determining next placement
-                    Vector2 p = prevBond.GetOther(atom).Point2D.Value;
+                    var p = prevBond.GetOther(atom).Point2D.Value;
                     p = Vector2.Lerp(p, atom.Point2D.Value, 2);
                     nextAtom.Point2D = p;
                 }
@@ -373,12 +349,9 @@ namespace NCDK.Layout
                 {
                     try
                     {
-                        if (f > 2
-                                && BondTools.IsValidDoubleBondConfiguration(withh,
-                                        withh.GetBond(withh.Atoms[f - 2], withh.Atoms[f - 1])))
+                        if (f > 2 && BondTools.IsValidDoubleBondConfiguration(withh, withh.GetBond(withh.Atoms[f - 2], withh.Atoms[f - 1])))
                         {
-                            trans = BondTools.IsCisTrans(withh.Atoms[f - 3], withh.Atoms[f - 2], withh.Atoms[f - 1],
-                                    withh.Atoms[f - 0], withh);
+                            trans = BondTools.IsCisTrans(withh.Atoms[f - 3], withh.Atoms[f - 2], withh.Atoms[f - 1], withh.Atoms[f - 0], withh);
                         }
                     }
                     catch (Exception)
@@ -425,22 +398,23 @@ namespace NCDK.Layout
                 return b.Value - a.Value;
             }
 
-            double angle = GeometryUtil.GetAngle(previousAtom.Point2D.Value.X - atom.Point2D.Value.X,
-                previousAtom.Point2D.Value.Y - atom.Point2D.Value.Y);
-            double addAngle = Vectors.DegreeToRadian(120);
-            if (!trans) addAngle = Vectors.DegreeToRadian(60);
-            if (IsColinear(atom, Molecule.GetConnectedBonds(atom))) addAngle = Vectors.DegreeToRadian(180);
+            var angle = GeometryUtil.GetAngle(previousAtom.Point2D.Value.X - atom.Point2D.Value.X, previousAtom.Point2D.Value.Y - atom.Point2D.Value.Y);
+            var addAngle = Vectors.DegreeToRadian(120);
+            if (!trans)
+                addAngle = Vectors.DegreeToRadian(60);
+            if (IsColinear(atom, Molecule.GetConnectedBonds(atom)))
+                addAngle = Vectors.DegreeToRadian(180);
 
             angle += addAngle;
-            Vector2 vec1 = new Vector2(Math.Cos(angle), Math.Sin(angle));
-            Vector2 point1 = atom.Point2D.Value;
+            var vec1 = new Vector2(Math.Cos(angle), Math.Sin(angle));
+            var point1 = atom.Point2D.Value;
             point1 += vec1;
-            double distance1 = Vector2.Distance(point1, distanceMeasure);
+            var distance1 = Vector2.Distance(point1, distanceMeasure);
             angle += addAngle;
-            Vector2 vec2 = new Vector2(Math.Cos(angle), Math.Sin(angle));
-            Vector2 point2 = atom.Point2D.Value;
+            var vec2 = new Vector2(Math.Cos(angle), Math.Sin(angle));
+            var point2 = atom.Point2D.Value;
             point2 += vec2;
-            double distance2 = Vector2.Distance(point2, distanceMeasure);
+            var distance2 = Vector2.Distance(point2, distanceMeasure);
             if (distance2 > distance1)
             {
                 Debug.WriteLine("Exiting AtomPlacer.GetNextBondVector()");
@@ -451,36 +425,30 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        ///  Populates the corners of a polygon with atoms. Used to place atoms in a
-        ///  geometrically regular way around a ring center or another atom. If this is
-        ///  used to place the bonding partner of an atom (and not to draw a ring) we
-        ///  want to place the atoms such that those with highest "weight" are placed
-        ///  farmost away from the rest of the molecules. The "weight" mentioned here is
-        ///  calculated by a modified morgan number algorithm.
+        /// Populates the corners of a polygon with atoms. Used to place atoms in a
+        /// geometrically regular way around a ring center or another atom. If this is
+        /// used to place the bonding partner of an atom (and not to draw a ring) we
+        /// want to place the atoms such that those with highest "weight" are placed
+        /// far-most away from the rest of the molecules. The "weight" mentioned here is
+        /// calculated by a modified Morgan number algorithm.
         /// </summary>
         /// <param name="atoms">All the atoms to draw</param>
         /// <param name="thetaBeg">A start angle (in radians), giving the angle of the most clockwise                  atom which has already been placed</param>
         /// <param name="thetaStep">An angle (in radians) to be added for each atom from                  atomsToDraw</param>
         /// <param name="center">The center of a ring, or an atom for which the partners are to be placed</param>
         /// <param name="radius">The radius of the polygon to be populated: bond length or ring radius</param>
-        public void PopulatePolygonCorners(IList<IAtom> atoms,
-                                        Vector2 center,
-                                        double thetaBeg,
-                                        double thetaStep,
-                                        double radius)
+        public static void PopulatePolygonCorners(IEnumerable<IAtom> atoms, Vector2 center, double thetaBeg, double thetaStep, double radius)
         {
-             int numAtoms = atoms.Count;
             double theta = thetaBeg;
+            Debug.WriteLine($"populatePolygonCorners(numAtoms={atoms.Count()}, center={center}, thetaBeg={Common.Mathematics.Vectors.RadianToDegree(thetaBeg)}, r={radius}");
 
-            Debug.WriteLine($"populatePolygonCorners(numAtoms={numAtoms}, center={center}, thetaBeg={Common.Mathematics.Vectors.RadianToDegree(thetaBeg)}, r={radius}");
-
-            foreach (IAtom atom in atoms)
+            foreach (var atom in atoms)
             {
                 theta += thetaStep;
-                double x = Math.Cos(theta) * radius;
-                double y = Math.Sin(theta) * radius;
-                double newX = x + center.X;
-                double newY = y + center.Y;
+                var x = Math.Cos(theta) * radius;
+                var y = Math.Sin(theta) * radius;
+                var newX = x + center.X;
+                var newY = y + center.Y;
                 atom.Point2D = new Vector2(newX, newY);
                 atom.IsPlaced = true;
                 Debug.WriteLine($"populatePolygonCorners - angle={Vectors.RadianToDegree(theta)}, newX={newX}, newY={newY}");
@@ -488,7 +456,7 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        ///  Partition the bonding partners of a given atom into placed (coordinates assigned) and not placed.
+        /// Partition the bonding partners of a given atom into placed (coordinates assigned) and not placed.
         /// </summary>
         /// <param name="atom">The atom whose bonding partners are to be partitioned</param>
         /// <param name="unplacedPartners">A vector for the unplaced bonding partners to go in</param>
@@ -510,26 +478,25 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        ///  Search an aliphatic molecule for the longest chain. This is the method to
-        ///  be used if there are no rings in the molecule and you want to layout the
-        ///  longest chain in the molecule as a starting point of the structure diagram
-        ///  generation.
+        /// Search an aliphatic molecule for the longest chain. This is the method to
+        /// be used if there are no rings in the molecule and you want to layout the
+        /// longest chain in the molecule as a starting point of the structure diagram
+        /// generation.
         /// </summary>
         /// <param name="molecule">The molecule to be search for the longest unplaced chain</param>
         /// <returns>An AtomContainer holding the longest chain.</returns>
         /// <exception cref="NoSuchAtomException">Description of the Exception</exception>
-        static public IAtomContainer GetInitialLongestChain(IAtomContainer molecule)
+        public static IAtomContainer GetInitialLongestChain(IAtomContainer molecule)
         {
             Debug.WriteLine("Start of GetInitialLongestChain()");
-            double[][] conMat = ConnectionMatrix.GetMatrix(molecule);
+            var conMat = ConnectionMatrix.GetMatrix(molecule);
             Debug.WriteLine("Computing all-pairs-shortest-paths");
-            int[][] apsp = PathTools.ComputeFloydAPSP(conMat);
+            var apsp = PathTools.ComputeFloydAPSP(conMat);
             int maxPathLength = 0;
             int bestStartAtom = -1;
             int bestEndAtom = -1;
             IAtom atom = null;
             IAtom startAtom = null;
-            //IAtom endAtom = null;
             for (int f = 0; f < apsp.Length; f++)
             {
                 atom = molecule.Atoms[f];
@@ -546,38 +513,34 @@ namespace NCDK.Layout
                     }
                 }
             }
-            Debug.WriteLine("Longest chain in molecule is of length " + maxPathLength + " between atoms "
-                    + (bestStartAtom + 1) + " and " + (bestEndAtom + 1));
+            Debug.WriteLine($"Longest chain in molecule is of length {maxPathLength} between atoms {bestStartAtom + 1} and {bestEndAtom + 1}");
 
             startAtom = molecule.Atoms[bestStartAtom];
-            //endAtom = Molecule.GetAtomAt(bestEndAtom);
-            IAtomContainer path = molecule.Builder.NewAtomContainer();
+            var path = molecule.Builder.NewAtomContainer();
             path.Atoms.Add(startAtom);
             path = GetLongestUnplacedChain(molecule, startAtom);
-            //PathTools.DepthFirstTargetSearch(molecule, startAtom, endAtom, path);
             Debug.WriteLine("End of GetInitialLongestChain()");
             return path;
         }
 
         /// <summary>
-        ///  Search a molecule for the longest unplaced, aliphatic chain in it. If an
-        ///  aliphatic chain encounters an unplaced ring atom, the ring atom is also
-        ///  appended to allow for it to be laid out. This gives us a vector for
-        ///  attaching the unplaced ring later.
+        /// Search a molecule for the longest unplaced, aliphatic chain in it. If an
+        /// aliphatic chain encounters an unplaced ring atom, the ring atom is also
+        /// appended to allow for it to be laid out. This gives us a vector for
+        /// attaching the unplaced ring later.
         /// </summary>
         /// <param name="molecule">The molecule to be search for the longest unplaced chain</param>
         /// <param name="startAtom">A start atom from which the chain search starts</param>
         /// <returns>An AtomContainer holding the longest unplaced chain.</returns>
         /// <exception cref="CDKException">Description of the Exception</exception>
-        static public IAtomContainer GetLongestUnplacedChain(IAtomContainer molecule, IAtom startAtom)
+        public static IAtomContainer GetLongestUnplacedChain(IAtomContainer molecule, IAtom startAtom)
         {
             Debug.WriteLine("Start of getLongestUnplacedChain.");
-            //ConnectivityChecker cc = new ConnectivityChecker();
             int longest = 0;
             int longestPathLength = 0;
             int maxDegreeSum = 0;
             int degreeSum = 0;
-            IAtomContainer[] pathes = new IAtomContainer[molecule.Atoms.Count];
+            var pathes = new IAtomContainer[molecule.Atoms.Count];
             for (int f = 0; f < molecule.Atoms.Count; f++)
             {
                 molecule.Atoms[f].IsVisited = false;
@@ -608,24 +571,24 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        ///  Performs a breadthFirstSearch in an AtomContainer starting with a
-        ///  particular sphere, which usually consists of one start atom, and searches
-        ///  for the longest aliphatic chain which is yet unplaced. If the search
-        ///  encounters an unplaced ring atom, it is also appended to the chain so that
-        ///  this last bond of the chain can also be laid out. This gives us the
-        ///  orientation for the attachment of the ring system.
+        /// Performs a breadthFirstSearch in an AtomContainer starting with a
+        /// particular sphere, which usually consists of one start atom, and searches
+        /// for the longest aliphatic chain which is yet unplaced. If the search
+        /// encounters an unplaced ring atom, it is also appended to the chain so that
+        /// this last bond of the chain can also be laid out. This gives us the
+        /// orientation for the attachment of the ring system.
         /// </summary>
         /// <param name="ac">The AtomContainer to be searched</param>
         /// <param name="sphere">A sphere of atoms to start the search with</param>
         /// <param name="pathes">A vector of N paths (N = no of heavy atoms).</param>
         /// <exception cref="CDKException"> Description of the Exception</exception>
-        static public void BreadthFirstSearch(IAtomContainer ac, IList<IAtom> sphere, IAtomContainer[] pathes)
+        public static void BreadthFirstSearch(IAtomContainer ac, IList<IAtom> sphere, IAtomContainer[] pathes)
         {
             IAtom nextAtom = null;
             int atomNr;
             int nextAtomNr;
             //IAtomContainer path = null;
-            List<IAtom> newSphere = new List<IAtom>();
+            var newSphere = new List<IAtom>();
             Debug.WriteLine("Start of breadthFirstSearch");
 
             foreach (var atom in sphere)
@@ -669,11 +632,11 @@ namespace NCDK.Layout
 
 #if DEBUG
         /// <summary>
-        ///  Returns a string with the numbers of all placed atoms in an AtomContainer
+        /// Returns a string with the numbers of all placed atoms in an AtomContainer
         /// </summary>
         /// <param name="ac">The AtomContainer for which the placed atoms are to be listed</param>
         /// <returns>A string with the numbers of all placed atoms in an AtomContainer</returns>
-        public string ListPlaced(IAtomContainer ac)
+        public static string ListPlaced(IAtomContainer ac)
         {
             string s = "Placed: ";
             for (int f = 0; f < ac.Atoms.Count; f++)
@@ -699,7 +662,7 @@ namespace NCDK.Layout
         /// <param name="ac">The <see cref="IAtomContainer"/> for which the placed atoms are to be listed</param>
         /// <returns>A string with the numbers of all placed atoms in an AtomContainer</returns>
         /// <exception cref="CDKException"></exception>
-        static public string ListNumbers(IAtomContainer mol, IAtomContainer ac)
+        public static string ListNumbers(IAtomContainer mol, IAtomContainer ac)
         {
             string s = "Numbers: ";
             for (int f = 0; f < ac.Atoms.Count; f++)
@@ -717,7 +680,7 @@ namespace NCDK.Layout
         /// <param name="ac">The Vector for which the placed atoms are to be listed</param>
         /// <param name="mol">Description of the Parameter</param>
         /// <returns>A string with the numbers of all placed atoms in an AtomContainer</returns>
-        static public string ListNumbers(IAtomContainer mol, List<IAtom> ac)
+        public static string ListNumbers(IAtomContainer mol, List<IAtom> ac)
         {
             string s = "Numbers: ";
             for (int f = 0; f < ac.Count; f++)
@@ -733,7 +696,7 @@ namespace NCDK.Layout
         /// </summary>
         /// <param name="ac">The AtomContainer to be searched</param>
         /// <returns>True is all the atoms in the given AtomContainer have been placed</returns>
-        static public bool AllPlaced(IAtomContainer ac)
+        public static bool AllPlaced(IAtomContainer ac)
         {
             for (int f = 0; f < ac.Atoms.Count; f++)
             {
@@ -746,37 +709,35 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        ///  Marks all the atoms in the given AtomContainer as not placed
+        /// Marks all the atoms in the given AtomContainer as not placed
         /// </summary>
         /// <param name="ac">The AtomContainer whose atoms are to be marked</param>
-        static public void MarkNotPlaced(IAtomContainer ac)
+        public static void MarkNotPlaced(IAtomContainer ac)
+            => MarkPlaced(ac, false);
+
+        /// <summary>
+        /// Marks all the atoms in the given AtomContainer as placed
+        /// </summary>
+        /// <param name="ac">The <see cref="IAtomContainer"/> whose atoms are to be marked</param>
+        public static void MarkPlaced(IAtomContainer ac)
+            => MarkPlaced(ac, true);
+
+        public static void MarkPlaced(IAtomContainer ac, bool isPlaced)
         {
             for (int f = 0; f < ac.Atoms.Count; f++)
             {
-                ac.Atoms[f].IsPlaced = false;
+                ac.Atoms[f].IsPlaced = isPlaced;
             }
         }
 
         /// <summary>
-        ///  Marks all the atoms in the given AtomContainer as placed
+        /// Get all the placed atoms in an <see cref="IAtomContainer"/>
         /// </summary>
-        /// <param name="ac">The AtomContainer whose atoms are to be marked</param>
-        static public void MarkPlaced(IAtomContainer ac)
-        {
-            for (int f = 0; f < ac.Atoms.Count; f++)
-            {
-                ac.Atoms[f].IsPlaced = true;
-            }
-        }
-
-        /// <summary>
-        ///  Get all the placed atoms in an AtomContainer
-        /// </summary>
-        /// <param name="ac">The AtomContainer to be searched for placed atoms</param>
+        /// <param name="ac">The <see cref="IAtomContainer"/> to be searched for placed atoms</param>
         /// <returns>An AtomContainer containing all the placed atoms</returns>
-        static public IAtomContainer GetPlacedAtoms(IAtomContainer ac)
+        public static IAtomContainer GetPlacedAtoms(IAtomContainer ac)
         {
-            IAtomContainer ret = ac.Builder.NewAtomContainer();
+            var ret = ac.Builder.NewAtomContainer();
             for (int f = 0; f < ac.Atoms.Count; f++)
             {
                 if (ac.Atoms[f].IsPlaced)
@@ -796,8 +757,8 @@ namespace NCDK.Layout
         {
             foreach (IBond bond in src.Bonds)
             {
-                IAtom beg = bond.Begin;
-                IAtom end = bond.End;
+                var beg = bond.Begin;
+                var end = bond.End;
                 if (beg.IsPlaced)
                 {
                     dest.Atoms.Add(beg);
@@ -823,15 +784,12 @@ namespace NCDK.Layout
         static int GetDegreeSum(IAtomContainer ac, IAtomContainer superAC)
         {
             int degreeSum = 0;
-            //string path = "DegreeSum for Path: ";
             for (int f = 0; f < ac.Atoms.Count; f++)
             {
-                //path += ac.Atoms[f].Symbol;
                 degreeSum += superAC.GetConnectedBonds(ac.Atoms[f]).Count();
 
                 degreeSum += ac.Atoms[f].ImplicitHydrogenCount ?? 0;
             }
-            //Console.Out.WriteLine(path + ": " + degreeSum);
             return degreeSum;
         }
 
@@ -853,7 +811,7 @@ namespace NCDK.Layout
         /// <seealso cref="Priority"/>
         static void Prioritise(IAtomContainer mol, int[][] adjList)
         {
-            int[] weights = GetPriority(mol, adjList);
+            var weights = GetPriority(mol, adjList);
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 mol.Atoms[i].SetProperty(Priority, weights[i]);
@@ -871,10 +829,10 @@ namespace NCDK.Layout
         /// <returns>the priority</returns>
         static int[] GetPriority(IAtomContainer mol, int[][] adjList)
         {
-            int n = mol.Atoms.Count;
-            int[] order = new int[n];
-            int[] rank = new int[n];
-            int[] prev = new int[n];
+            var n = mol.Atoms.Count;
+            var order = new int[n];
+            var rank = new int[n];
+            var prev = new int[n];
 
             // init priorities, Helson 99 favours cyclic (init=2)
             for (int f = 0; f < n; f++)
@@ -927,7 +885,7 @@ namespace NCDK.Layout
         /// -N=[N+]=N
         /// </pre>
         /// </summary>
-        bool IsColinear(IAtom atom, IEnumerable<IBond> bonds)
+        private static bool IsColinear(IAtom atom, IEnumerable<IBond> bonds)
         {
             if (bonds.Count() != 2)
                 return false;
@@ -973,7 +931,7 @@ namespace NCDK.Layout
         }
 
         [Obsolete]
-        static public bool ShouldBeLinear(IAtom atom, IAtomContainer molecule)
+        public static bool ShouldBeLinear(IAtom atom, IAtomContainer molecule)
         {
             int sum = 0;
             var bonds = molecule.GetConnectedBonds(atom);

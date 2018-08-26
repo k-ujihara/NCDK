@@ -18,7 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 
 namespace NCDK.Tools
 {
@@ -384,7 +384,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestCalculateNumberOfImplicitHydrogens()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
             IAtomContainer proton = builder.NewAtomContainer();
             IAtom hplus = builder.NewAtom("H");

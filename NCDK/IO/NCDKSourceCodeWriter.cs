@@ -196,30 +196,29 @@ namespace NCDK.IO
             writer.Write('\n');
         }
 
-        public DataFeatures SupportedDataFeatures =>
-                DataFeatures.HAS_2D_COORDINATES | DataFeatures.HAS_3D_COORDINATES
-                    | DataFeatures.HAS_GRAPH_REPRESENTATION | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+        public virtual DataFeatures SupportedDataFeatures =>
+            DataFeatures.Has2DCoordinates | DataFeatures.Has3DCoordinates
+            | DataFeatures.HasGraphRepresentation | DataFeatures.HasAtomElementSymbol;
 
-        public DataFeatures RequiredDataFeatures =>
-                DataFeatures.HAS_GRAPH_REPRESENTATION | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+        public virtual DataFeatures RequiredDataFeatures =>
+            DataFeatures.HasGraphRepresentation | DataFeatures.HasAtomElementSymbol;
 
         private void InitIOSettings()
         {
-            write2DCoordinates = IOSettings.Add(new BooleanIOSetting("write2DCoordinates", IOSetting.Importance.Low,
+            write2DCoordinates = IOSettings.Add(new BooleanIOSetting("write2DCoordinates", Importance.Low,
                     "Should 2D coordinates be added?", "true"));
-
-            write3DCoordinates = IOSettings.Add(new BooleanIOSetting("write3DCoordinates", IOSetting.Importance.Low,
+            write3DCoordinates = IOSettings.Add(new BooleanIOSetting("write3DCoordinates", Importance.Low,
                     "Should 3D coordinates be added?", "true"));
-
-            builder = IOSettings.Add(new StringIOSetting("builder", IOSetting.Importance.Low,
-                    "Which IChemObjectBuilder should be used?", "Default.ChemObjectBuilder"));
+            builder = IOSettings.Add(new StringIOSetting("builder", Importance.Low,
+                    $"Which {nameof(IChemObjectBuilder)} should be used?", 
+                    "NCDK.Silent.ChemObjectBuilder"));
         }
 
         private void CustomizeJob()
         {
-            FireIOSettingQuestion(write2DCoordinates);
-            FireIOSettingQuestion(write3DCoordinates);
-            FireIOSettingQuestion(builder);
+            ProcessIOSettingQuestion(write2DCoordinates);
+            ProcessIOSettingQuestion(write3DCoordinates);
+            ProcessIOSettingQuestion(builder);
         }
     }
 }

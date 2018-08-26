@@ -20,6 +20,8 @@
 using NCDK.Common.Primitives;
 using NCDK.Tools;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace NCDK.IO.Formats
 {
@@ -53,7 +55,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "mol" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "mol" };
 
         /// <inheritdoc/>
         public override string ReaderClassName => typeof(MDLReader).ToString();
@@ -64,8 +66,9 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (lineNumber == 4 && line.Length > 7 && (line.IndexOf("2000") == -1) && // MDL Mol V2000 format
-                    (line.IndexOf("3000") == -1)) // MDL Mol V3000 format
+            if (lineNumber == 4 && line.Length > 7 
+                && !line.Contains("2000") // MDL Mol V2000 format
+                && !line.Contains("3000")) // MDL Mol V3000 format
             {
                 // possibly a MDL mol file
                 try
@@ -73,8 +76,8 @@ namespace NCDK.IO.Formats
                     string atomCountString = Strings.Substring(line, 0, 3).Trim();
                     string bondCountString = Strings.Substring(line, 3, 3).Trim();
 
-                    int.Parse(atomCountString);
-                    int.Parse(bondCountString);
+                    int.Parse(atomCountString, NumberFormatInfo.InvariantInfo);
+                    int.Parse(bondCountString, NumberFormatInfo.InvariantInfo);
                     if (line.Length > 6)
                     {
                         string remainder = Strings.Substring(line, 6).Trim();
@@ -103,11 +106,11 @@ namespace NCDK.IO.Formats
 
         /// <inheritdoc/>
         public override DataFeatures SupportedDataFeatures
-                => RequiredDataFeatures | DataFeatures.HAS_2D_COORDINATES | DataFeatures.HAS_3D_COORDINATES
-                    | DataFeatures.HAS_GRAPH_REPRESENTATION;
+                => RequiredDataFeatures | DataFeatures.Has2DCoordinates | DataFeatures.Has3DCoordinates
+                    | DataFeatures.HasGraphRepresentation;
 
         /// <inheritdoc/>
         public override DataFeatures RequiredDataFeatures
-            => DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+            => DataFeatures.HasAtomElementSymbol;
     }
 }

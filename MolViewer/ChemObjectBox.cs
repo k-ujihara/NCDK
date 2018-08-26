@@ -21,39 +21,25 @@
  */
 
 using NCDK.Depict;
-using System;
 using System.Windows.Media;
 
 namespace NCDK.MolViewer
 {
     public partial class ChemObjectBox : System.Windows.Controls.UserControl
     {
-        public class ChemObjectChangedEventArgs : EventArgs
-        {
-            public IChemObject OldObject { get; set; }
-            public IChemObject NewObject { get; set; }
-
-            public ChemObjectChangedEventArgs(IChemObject oldObject, IChemObject newObject)
-            {
-                this.OldObject = oldObject;
-                this.NewObject = newObject;
-            }
-        }
-
         public delegate void ChemObjectChangedEventHandler(object sender, ChemObjectChangedEventArgs e);
 
         public event ChemObjectChangedEventHandler ChemObjectChanged;
 
-        private readonly DepictionGenerator generator;
         internal Depiction depiction;
         private IChemObject _ChemObject = null;
 
         public ChemObjectBox()
         {
-            generator = new DepictionGenerator();
+            Generator = new DepictionGenerator();
         }
 
-        public DepictionGenerator Generator => generator;
+        public DepictionGenerator Generator { get; }
 
         protected override void OnRender(DrawingContext dc)
         {

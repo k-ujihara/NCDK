@@ -17,7 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.ForceField.MMFF;
+using NCDK.ForceFields;
 using System;
 
 namespace NCDK.Charges
@@ -45,7 +45,7 @@ namespace NCDK.Charges
     // @cdk.githash
     public class MMFF94PartialCharges : IChargeCalculator
     {
-        public const string MMFF_94_CHARGE = "MMFF94charge";
+        public const string Key = "MMFF94charge";
         private readonly Mmff mmff = new Mmff();
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace NCDK.Charges
             mmff.PartialCharges(ac);
             mmff.ClearProps(ac);
             foreach (var atom in ac.Atoms)
-                atom.SetProperty(MMFF_94_CHARGE, atom.Charge);
+                atom.SetProperty(Key, atom.Charge);
             return ac;
         }
 

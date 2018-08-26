@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
+
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
@@ -34,7 +36,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         public override bool Matches(IAtom atom)
         {
-            if (!atom.Symbol.Equals("H"))
+            if (!string.Equals(atom.Symbol, "H", StringComparison.Ordinal))
             {
                 return false;
             }
@@ -48,7 +50,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             var list = Invariants(atom).Target.GetConnectedAtoms(atom);
             foreach (var connAtom in list)
             {
-                if (connAtom.Symbol.Equals("H"))
+                if (string.Equals(connAtom.Symbol, "H", StringComparison.Ordinal))
                 {
                     return true;
                 }

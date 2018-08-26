@@ -60,7 +60,7 @@ namespace NCDK.SMSD
         /// and map.Value for the target molecule
         /// </summary>
         /// <returns>All possible MCS atom Mappings</returns>
-        IList<IDictionary<IAtom, IAtom>> GetAllAtomMapping();
+        IReadOnlyList<IReadOnlyDictionary<IAtom, IAtom>> GetAllAtomMapping();
 
         /// <summary>
         /// Returns all plausible mappings between query and target molecules.
@@ -69,19 +69,19 @@ namespace NCDK.SMSD
         /// and map.Value for the target molecule
         /// </summary>
         /// <returns>All possible MCS Mapping Index</returns>
-        IList<IDictionary<int, int>> GetAllMapping();
+        IReadOnlyList<IReadOnlyDictionary<int, int>> GetAllMapping();
 
         /// <summary>
         /// Returns one of the best matches with atoms mapped.
         /// </summary>
         /// <returns>Best Atom Mapping</returns>
-        IDictionary<IAtom, IAtom> GetFirstAtomMapping();
+        IReadOnlyDictionary<IAtom, IAtom> GetFirstAtomMapping();
 
         /// <summary>
         /// Returns one of the best matches with atom indexes mapped.
         /// </summary>
         /// <returns>Best Mapping Index</returns>
-        IDictionary<int, int> GetFirstMapping();
+        IReadOnlyDictionary<int, int> GetFirstMapping();
     }
 }
 

@@ -22,6 +22,7 @@ using NCDK.Common.Primitives;
 using NCDK.IO.Formats;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -40,7 +41,7 @@ namespace NCDK.IO
     // @author  Bradley A. Smith <bradley@baysmith.com>
     public class FormatFactory
     {
-        private int headerLength;
+        private readonly int headerLength;
 
         private List<IChemFormatMatcher> formats = new List<IChemFormatMatcher>(100);
 
@@ -78,10 +79,9 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        /// Returns the list of recognizable formats.
+        /// The list of recognizable formats.
         /// </summary>
-        /// <returns><see cref="IList{T}"/> of <see cref="IChemFormat"/>s.</returns>
-        public IList<IChemFormatMatcher> Formats => formats;
+        public IReadOnlyList<IChemFormatMatcher> Formats => formats;
 
         /// <summary>
         /// Creates a string of the Class name of the <see cref="IChemObject"/> reader
@@ -100,12 +100,12 @@ namespace NCDK.IO
         {
             if (input == null)
             {
-                throw new ArgumentNullException("input cannot be null");
+                throw new ArgumentNullException(nameof(input));
             }
 
             // make a copy of the header
             /* Search file for a line containing an identifying keyword */
-            List<string> lines = new List<string>();
+            var lines = new List<string>();
             {
                 long nRead = 0;
                 string line;
@@ -144,14 +144,14 @@ namespace NCDK.IO
                     int tokenCount = tokens.Count;
                     if (tokenCount == 1)
                     {
-                        int.Parse(tokens[0]);
+                        int.Parse(tokens[0], NumberFormatInfo.InvariantInfo);
                         // if not failed, then it is a XYZ file
                         return (IChemFormat)XYZFormat.Instance;
                     }
                     else if (tokenCount == 2)
                     {
-                        int.Parse(tokens[0]);
-                        if ("bohr".Equals(tokens[1].ToLowerInvariant(), StringComparison.Ordinal))
+                        int.Parse(tokens[0], NumberFormatInfo.InvariantInfo);
+                        if (string.Equals("BOHR", tokens[1].ToUpperInvariant(), StringComparison.Ordinal))
                         {
                             return (IChemFormat)XYZFormat.Instance;
                         }
@@ -179,7 +179,7 @@ namespace NCDK.IO
             var position = input.Position;
 
             var reader = new StreamReader(input);
-            IChemFormat format = GuessFormat(reader);
+            var format = GuessFormat(reader);
 
             input.Seek(position, SeekOrigin.Begin);
 

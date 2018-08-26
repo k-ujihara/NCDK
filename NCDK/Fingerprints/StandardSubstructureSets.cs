@@ -12,7 +12,7 @@ namespace NCDK.Fingerprints
     // @author egonw
     // @cdk.module fingerprint
     // @cdk.githash
-    public class StandardSubstructureSets
+    public static class StandardSubstructureSets
     {
         private static string[] smarts = null;
 

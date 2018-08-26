@@ -35,14 +35,14 @@ namespace NCDK.Smiles
     /// </summary>
     internal sealed class CxSmilesState
     {
-        public IDictionary<int, string> atomLabels = null;
-        public IDictionary<int, string> atomValues = null;
-        public IList<double[]> AtomCoords { get; set; } = null;
-        public IList<List<int>> fragGroups = null;
-        public IDictionary<int, Radical> atomRads = null;
-        public IDictionary<int, IList<int>> positionVar = null;
-        public IList<PolymerSgroup> sgroups = null;
-        public IList<DataSgroup> dataSgroups = null;
+        public SortedDictionary<int, string> atomLabels = null;
+        public SortedDictionary<int, string> atomValues = null;
+        public List<double[]> atomCoords  = null;
+        public List<List<int>> fragGroups = null;
+        public SortedDictionary<int, Radical> atomRads = null;
+        public SortedDictionary<int, IList<int>> positionVar = null;
+        public List<PolymerSgroup> sgroups = null;
+        public List<DataSgroup> dataSgroups = null;
         public bool coordFlag = false;
 
         public enum Radical
@@ -58,7 +58,7 @@ namespace NCDK.Smiles
 
         public sealed class DataSgroup
         {
-            readonly IList<int> atoms;
+            readonly IReadOnlyList<int> atoms;
             readonly string field;
             readonly string value;
             readonly string operator_;
@@ -67,7 +67,7 @@ namespace NCDK.Smiles
 
             readonly string tag;
 
-            public DataSgroup(IList<int> atoms, string field, string value, string operator_, string unit, string tag)
+            public DataSgroup(IReadOnlyList<int> atoms, string field, string value, string operator_, string unit, string tag)
             {
                 this.atoms = atoms;
                 this.field = field;
@@ -79,17 +79,20 @@ namespace NCDK.Smiles
 
             public override bool Equals(Object o)
             {
-                DataSgroup that = o as DataSgroup;
-                if (that == null)
+                if (!(o is DataSgroup that))
                     return false;
 
-                if (atoms != null ? !Compares.AreEqual(atoms, that.atoms) : that.atoms != null) return false;
-                if (field != null ? !field.Equals(that.field) : that.field != null) return false;
-                if (value != null ? !value.Equals(that.value) : that.value != null) return false;
-                if (operator_ != null ? !operator_.Equals(that.operator_) : that.operator_ != null) return false;
-                if (unit != null ? !unit.Equals(that.unit) : that.unit != null) return false;
-                return tag != null ? tag.Equals(that.tag) : that.tag == null;
-
+                if (atoms != null ? !Compares.AreEqual(atoms, that.atoms) : that.atoms != null)
+                    return false;
+                if (field != null ? !field.Equals(that.field, StringComparison.Ordinal) : that.field != null)
+                    return false;
+                if (value != null ? !value.Equals(that.value, StringComparison.Ordinal) : that.value != null)
+                    return false;
+                if (operator_ != null ? !operator_.Equals(that.operator_, StringComparison.Ordinal) : that.operator_ != null)
+                    return false;
+                if (unit != null ? !unit.Equals(that.unit, StringComparison.Ordinal) : that.unit != null)
+                    return false;
+                return tag != null ? tag.Equals(that.tag, StringComparison.Ordinal) : that.tag == null;
             }
 
 
@@ -138,14 +141,13 @@ namespace NCDK.Smiles
 
             public override bool Equals(Object o)
             {
-                PolymerSgroup that = o as PolymerSgroup;
-                if (that == null)
+                if (!(o is PolymerSgroup that))
                     return false;
 
-                return type.Equals(that.type) &&
+                return type.Equals(that.type, StringComparison.Ordinal) &&
                        Compares.AreEqual(atomset, that.atomset) &&
-                       subscript.Equals(that.subscript) &&
-                       supscript.Equals(that.supscript);
+                       subscript.Equals(that.subscript, StringComparison.Ordinal) &&
+                       supscript.Equals(that.supscript, StringComparison.Ordinal);
             }
 
             public override int GetHashCode()
@@ -169,14 +171,14 @@ namespace NCDK.Smiles
             }
 
             internal string Type => type;
-            internal IList<int> AtomSet => atomset;
+            internal List<int> AtomSet => atomset;
             internal string Subscript => subscript;
             internal string Supscript => supscript;
         }
 
         static string Escape(string str)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             for (int i = 0; i < str.Length; i++)
             {
                 char c = str[i];

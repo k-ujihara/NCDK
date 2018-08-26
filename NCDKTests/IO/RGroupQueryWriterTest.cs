@@ -26,6 +26,7 @@ using NCDK.Isomorphisms.Matchers;
 using System.IO;
 using System.Text.RegularExpressions;
 using System;
+using NCDK.Silent;
 
 namespace NCDK.IO
 {
@@ -41,7 +42,7 @@ namespace NCDK.IO
     public class RGroupQueryWriterTest : ChemObjectIOTest
     {
         protected override Type ChemObjectIOToTestType => typeof(RGroupQueryWriter);
-        private static IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        private static IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
         [TestMethod()]
         public override void TestAcceptsAtLeastOneChemObjectClass()
@@ -143,7 +144,7 @@ namespace NCDK.IO
             RGroupQueryWriter rgw = new RGroupQueryWriter(sw);
             var ins = ResourceLoader.GetAsStream(file);
             RGroupQueryReader reader = new RGroupQueryReader(ins);
-            RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(Default.ChemObjectBuilder.Instance));
+            RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(ChemObjectBuilder.Instance));
             rgw.Write(rGroupQuery);
             string output = sw.ToString();
             return output;

@@ -26,6 +26,7 @@ using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NCDK.Silent;
 
 namespace NCDK.Smiles.SMARTS
 {
@@ -42,15 +43,15 @@ namespace NCDK.Smiles.SMARTS
         [ExpectedException(typeof(ArgumentException))]
         public void TestLexicalError()
         {
-            SMARTSQueryTool sqt = new SMARTSQueryTool("Epoxide", Default.ChemObjectBuilder.Instance);
+            SMARTSQueryTool sqt = new SMARTSQueryTool("Epoxide", ChemObjectBuilder.Instance);
         }
 
         [TestMethod()]
         public void TestQueryTool()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C");
-            SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO", Default.ChemObjectBuilder.Instance);
+            SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO", ChemObjectBuilder.Instance);
 
             bool status = querytool.Matches(atomContainer);
             Assert.IsTrue(status);
@@ -61,7 +62,7 @@ namespace NCDK.Smiles.SMARTS
             List<int> map1 = new List<int> { 1, 2, 3, };
             List<int> map2 = new List<int> { 3, 4, 5, };
 
-            var mappings = querytool.GetMatchingAtoms();
+            var mappings = querytool.GetMatchingAtoms().ToList();
             var ret1 = mappings[0].OrderBy(n => n).ToList();
             for (int i = 0; i < 3; i++)
             {
@@ -78,9 +79,9 @@ namespace NCDK.Smiles.SMARTS
         [TestMethod()]
         public void TestQueryToolSingleAtomCase()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles("C1CCC12CCCC2");
-            SMARTSQueryTool querytool = new SMARTSQueryTool("C", Default.ChemObjectBuilder.Instance);
+            SMARTSQueryTool querytool = new SMARTSQueryTool("C", ChemObjectBuilder.Instance);
 
             bool status = querytool.Matches(atomContainer);
             Assert.IsTrue(status);
@@ -92,9 +93,9 @@ namespace NCDK.Smiles.SMARTS
         [TestMethod()]
         public void TestQueryToolReSetSmarts()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles("C1CCC12CCCC2");
-            SMARTSQueryTool querytool = new SMARTSQueryTool("C", Default.ChemObjectBuilder.Instance);
+            SMARTSQueryTool querytool = new SMARTSQueryTool("C", ChemObjectBuilder.Instance);
 
             bool status = querytool.Matches(atomContainer);
             Assert.IsTrue(status);
@@ -110,17 +111,17 @@ namespace NCDK.Smiles.SMARTS
             Assert.AreEqual(18, nmatch);
 
             var umatch = querytool.GetUniqueMatchingAtoms();
-            Assert.AreEqual(9, umatch.Count);
+            Assert.AreEqual(9, umatch.Count());
         }
 
         [TestMethod()]
         public void TestUniqueQueries()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles("c1ccccc1CCCNCCCc1ccccc1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);
             Aromaticity.CDKLegacy.Apply(atomContainer);
-            SMARTSQueryTool querytool = new SMARTSQueryTool("c1ccccc1", Default.ChemObjectBuilder.Instance);
+            SMARTSQueryTool querytool = new SMARTSQueryTool("c1ccccc1", ChemObjectBuilder.Instance);
 
             bool status = querytool.Matches(atomContainer);
             Assert.IsTrue(status);
@@ -129,17 +130,17 @@ namespace NCDK.Smiles.SMARTS
             Assert.AreEqual(24, nmatch);
 
             var umatch = querytool.GetUniqueMatchingAtoms();
-            Assert.AreEqual(2, umatch.Count);
+            Assert.AreEqual(2, umatch.Count());
         }
 
         [TestMethod()]
         public void TestQuery()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles("c12cc(CCN)ccc1c(COC)ccc2");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);
             Aromaticity.CDKLegacy.Apply(atomContainer);
-            SMARTSQueryTool querytool = new SMARTSQueryTool("c12ccccc1cccc2", Default.ChemObjectBuilder.Instance);
+            SMARTSQueryTool querytool = new SMARTSQueryTool("c12ccccc1cccc2", ChemObjectBuilder.Instance);
 
             bool status = querytool.Matches(atomContainer);
             Assert.IsTrue(status);
@@ -148,7 +149,7 @@ namespace NCDK.Smiles.SMARTS
             Assert.AreEqual(4, nmatch);
 
             var umatch = querytool.GetUniqueMatchingAtoms();
-            Assert.AreEqual(1, umatch.Count);
+            Assert.AreEqual(1, umatch.Count());
         }
 
         /// <summary>
@@ -167,10 +168,10 @@ namespace NCDK.Smiles.SMARTS
             Aromaticity.CDKLegacy.Apply(indole);
             SmilesGenerator generator = new SmilesGenerator().Aromatic();
             string indoleSmiles = generator.Create(indole);
-            SmilesParser smilesParser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
             indole = smilesParser.ParseSmiles(indoleSmiles);
 
-            SMARTSQueryTool querytool = new SMARTSQueryTool(indoleSmiles, Default.ChemObjectBuilder.Instance);
+            SMARTSQueryTool querytool = new SMARTSQueryTool(indoleSmiles, ChemObjectBuilder.Instance);
             Assert.IsTrue(querytool.Matches(indole));
         }
 
@@ -183,7 +184,7 @@ namespace NCDK.Smiles.SMARTS
             carbon.ImplicitHydrogenCount = 4;
             methane.Atoms.Add(carbon);
 
-            SMARTSQueryTool sqt = new SMARTSQueryTool("CC", Default.ChemObjectBuilder.Instance);
+            SMARTSQueryTool sqt = new SMARTSQueryTool("CC", ChemObjectBuilder.Instance);
             bool matches = sqt.Matches(methane);
             Assert.IsFalse(matches);
         }
@@ -192,14 +193,14 @@ namespace NCDK.Smiles.SMARTS
         [ExpectedException(typeof(ArgumentNullException))]
         public void NullAromaticity()
         {
-            SMARTSQueryTool sqt = new SMARTSQueryTool("CC", Default.ChemObjectBuilder.Instance);
+            SMARTSQueryTool sqt = new SMARTSQueryTool("CC", ChemObjectBuilder.Instance);
             sqt.SetAromaticity(null);
         }
 
         [TestMethod()]
         public void SetAromaticity()
         {
-            SMARTSQueryTool sqt = new SMARTSQueryTool("[a]", Default.ChemObjectBuilder.Instance);
+            SMARTSQueryTool sqt = new SMARTSQueryTool("[a]", ChemObjectBuilder.Instance);
 
             IAtomContainer furan = CreateFromSmiles("O1C=CC=C1");
 

@@ -83,7 +83,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
         /// Returns List of Edges.
         /// <returns>edges.</returns>
         /// </summary>
-        IList<IEdge> GetEdges();
+        IReadOnlyList<IEdge> GetEdges();
 
         /// <summary>
         /// Adds edge to the edge list.

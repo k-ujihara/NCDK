@@ -1,12 +1,13 @@
 ﻿
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.Tools
 {
-    class AtomContainerManipulator_Example
+    static class AtomContainerManipulator_Example
     {
-        void Main()
+        static void Main()
         {
             {
                 IAtomContainer container = null;
@@ -17,7 +18,7 @@ namespace NCDK.Tools
                 #endregion
             }
             #region SetSingleOrDoubleFlags
-            SmilesParser parser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
             parser.IsPreservingAromaticity = true;
 
             IAtomContainer biphenyl = parser.ParseSmiles("c1cccc(c1)c1ccccc1");

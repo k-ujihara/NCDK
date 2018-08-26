@@ -23,7 +23,7 @@ using NCDK.Common.Primitives;
 using NCDK.Graphs.Invariant;
 using System;
 
-namespace NCDK.Graphs.Canon
+namespace NCDK.Graphs.Invariant
 {
     /// <summary>
     /// Compute the extended connectivity values (Morgan Numbers) <token>cdk-cite-MOR65</token>.
@@ -68,7 +68,7 @@ namespace NCDK.Graphs.Canon
             int[] nonHydrogens = new int[order];
 
             for (int v = 0; v < order; v++)
-                nonHydrogens[v] = "H".Equals(molecule.Atoms[v].Symbol) ? 0 : 1;
+                nonHydrogens[v] = "H".Equals(molecule.Atoms[v].Symbol, StringComparison.Ordinal) ? 0 : 1;
 
             // build the graph and initialise the current connectivity
             // value to the number of connected non-hydrogens

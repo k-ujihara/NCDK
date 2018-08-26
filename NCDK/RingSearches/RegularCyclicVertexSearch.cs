@@ -38,7 +38,7 @@ namespace NCDK.RingSearches
         : ICyclicVertexSearch
     {
         /// <summary>graph representation</summary>
-        private readonly int[][] g;
+        private readonly IReadOnlyList<IReadOnlyList<int>> g;
 
         /// <summary>set of known cyclic vertices</summary>
         private long cyclic;
@@ -53,21 +53,19 @@ namespace NCDK.RingSearches
         private long visited;
 
         /// <summary>the vertices in our path at a given vertex index</summary>
-        private long[] state;
+        private readonly long[] state;
 
         /// <summary>Vertex colors - which component does each vertex belong.</summary>
         private volatile int[] colors;
-
-        private int numCycles = 0;
 
         /// <summary>
         /// Create a new cyclic vertex search for the provided graph.
         /// </summary>
         /// <param name="graph">adjacency list representation of a graph</param>
-        internal RegularCyclicVertexSearch(int[][] graph)
+        internal RegularCyclicVertexSearch(IReadOnlyList<IReadOnlyList<int>> graph)
         {
             this.g = graph;
-            int n = graph.Length;
+            int n = graph.Count;
 
             // skip search if empty graph
             if (n == 0) return;
@@ -92,7 +90,6 @@ namespace NCDK.RingSearches
 
             // no longer needed for the lifetime of the object
             state = null;
-
         }
 
         /// <summary>
@@ -118,7 +115,7 @@ namespace NCDK.RingSearches
                     // include w - they are adjacent
                     if (IsBitSet(prev, w))
                     {
-                        numCycles++;
+                        NumCycles++;
 
                         // xor the state when we last visited 'w' with our current
                         // state. this set is all the vertices we visited since then
@@ -134,7 +131,7 @@ namespace NCDK.RingSearches
             }
         }
 
-        public int NumCycles => numCycles;
+        public int NumCycles { get; private set; } = 0;
 
         /// <summary>
         /// Returns whether the vertex 'v' has been visited.
@@ -272,13 +269,13 @@ namespace NCDK.RingSearches
         /// <returns>vertex colors</returns>
         private int[] BuildVertexColor()
         {
-            int[] color = new int[g.Length];
+            int[] color = new int[g.Count];
             int n = 1;
             Arrays.Fill(color, -1);
             foreach (var l_cycle in cycles)
             {
                 var cycle = l_cycle;
-                for (int i = 0; i < g.Length; i++)
+                for (int i = 0; i < g.Count; i++)
                 {
                     if ((cycle & 0x1) == 0x1)
                         color[i] = color[i] < 0 ? n : 0;
@@ -298,7 +295,7 @@ namespace NCDK.RingSearches
         /// <inheritdoc/>
         public bool Cyclic(int u, int v)
         {
-            int[] colors = VertexColor();
+            var colors = VertexColor();
 
             // if either vertex has no color then the edge can not
             // be cyclic
@@ -334,7 +331,7 @@ namespace NCDK.RingSearches
         /// <inheritdoc/>
         public int[][] Isolated()
         {
-            List<int[]> isolated = new List<int[]>(cycles.Count());
+            var isolated = new List<int[]>(cycles.Count());
             for (int i = 0; i < cycles.Count(); i++)
             {
                 if (!fused[i]) isolated.Add(ToArray(cycles[i]));
@@ -367,7 +364,8 @@ namespace NCDK.RingSearches
             // fill the cyclic vertices with the bits that have been set
             for (int v = 0; i < vertices.Length; v++)
             {
-                if (IsBitSet(set, v)) vertices[i++] = v;
+                if (IsBitSet(set, v))
+                    vertices[i++] = v;
             }
 
             return vertices;

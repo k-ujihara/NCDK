@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -27,7 +28,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Default;
 using System.Collections.Generic;
 using System.Text;
 
@@ -43,6 +43,7 @@ namespace NCDK.Default
     // @author      Egon Willighagen
     // @cdk.created 2006-04-19
     // @cdk.keyword polymer
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class PDBStrand : Strand
     {
         List<string> sequentialListOfMonomers;
@@ -103,6 +104,7 @@ namespace NCDK.Silent
     // @author      Egon Willighagen
     // @cdk.created 2006-04-19
     // @cdk.keyword polymer
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class PDBStrand : Strand
     {
         List<string> sequentialListOfMonomers;

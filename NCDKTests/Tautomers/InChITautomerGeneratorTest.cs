@@ -22,7 +22,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Smiles;
 using NCDK.Tools;
@@ -188,7 +188,7 @@ namespace NCDK.Tautomers
         [TestMethod()]
         public void TestAdenine()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("N");
             mol.Atoms.Add(a1);

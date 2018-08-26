@@ -46,6 +46,7 @@
  */
 using NCDK.Isomorphisms.Matchers;
 using NCDK.SMSD.Algorithms.VFLib.Builder;
+using System;
 using System.Linq;
 
 namespace NCDK.SMSD.Algorithms.Matchers
@@ -60,7 +61,7 @@ namespace NCDK.SMSD.Algorithms.Matchers
     {
         private int maximumNeighbors;
         private string symbol = null;
-        private IAtom qAtom = null;
+        private readonly IAtom qAtom = null;
         private IQueryAtom smartQueryAtom = null;
         private bool shouldMatchBonds = false;
 
@@ -149,7 +150,7 @@ namespace NCDK.SMSD.Algorithms.Matchers
             {
                 return false;
             }
-            return symbol.Equals(atom.Symbol);
+            return symbol.Equals(atom.Symbol, StringComparison.Ordinal);
         }
 
         private bool MatchMaximumNeighbors(TargetProperties targetContainer, IAtom targetAtom)
@@ -163,7 +164,7 @@ namespace NCDK.SMSD.Algorithms.Matchers
             return maximumTargetNeighbors <= maximumNeighbors;
         }
 
-        private int CountImplicitHydrogens(IAtom atom)
+        private static int CountImplicitHydrogens(IAtom atom)
         {
             return atom.ImplicitHydrogenCount ?? 0;
         }

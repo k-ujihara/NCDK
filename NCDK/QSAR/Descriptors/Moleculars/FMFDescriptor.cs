@@ -85,7 +85,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 result = new Result<double>(double.NaN);
             }
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, result, DescriptorNames);
         }
 
         /// <summary>
@@ -107,8 +107,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public override IDescriptorResult DescriptorResultType { get; } = new Result<double>();
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
              "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fmf",
              typeof(FMFDescriptor).FullName,
@@ -132,7 +132,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters for this descriptor.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         /// <summary>
         /// Returns an array of names for each descriptor value calculated.

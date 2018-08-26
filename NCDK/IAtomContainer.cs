@@ -78,7 +78,7 @@ namespace NCDK
         /// <summary>
         /// A stereo element to this container.
         /// </summary>
-        ICollection<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements { get; }
+        ICollection<IStereoElement<IChemObject, IChemObject>> StereoElements { get; }
 
         /// <summary>
         /// One or several of the bonds have <see cref="IBond.IsSingleOrDouble"/> raised (which may indicate aromaticity).

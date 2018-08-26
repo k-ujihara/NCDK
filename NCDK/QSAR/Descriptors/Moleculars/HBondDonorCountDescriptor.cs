@@ -77,8 +77,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the HBondDonorCountDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondDonors",
                 typeof(HBondDonorCountDescriptor).FullName,
@@ -87,7 +87,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameter of this HBondDonorCountDescriptor instance.
         /// </summary>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
@@ -104,7 +104,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private IDescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
         }
 
         /// <summary>
@@ -119,37 +119,43 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             //IAtom[] atoms = ac.GetAtoms();
             // iterate over all atoms of this AtomContainer; use label atomloop to allow for labelled continue
-        
+
             //atomloop:
             for (int atomIndex = 0; atomIndex < ac.Atoms.Count; atomIndex++)
             {
                 IAtom atom = (IAtom)ac.Atoms[atomIndex];
                 // checking for O and N atoms where the formal charge is >= 0
-                if ((atom.Symbol.Equals("O") || atom.Symbol.Equals("N")) && atom.FormalCharge >= 0)
+                switch (atom.Symbol)
                 {
-                    // implicit hydrogens
-                    int implicitH = atom.ImplicitHydrogenCount ?? 0;
-                    if (implicitH > 0)
-                    {
-                        hBondDonors++;
-                        goto continue_atomloop; // we skip the explicit hydrogens part cause we found implicit hydrogens
-                    }
-                    // explicit hydrogens
-                    var neighbours = ac.GetConnectedAtoms(atom);
-                    foreach (var neighbour in neighbours)
-                    {
-                        if (((IAtom)neighbour).Symbol.Equals("H"))
+                    case "O":
+                    case "N":
+                        if (atom.FormalCharge >= 0)
                         {
-                            hBondDonors++;
-                            goto continue_atomloop;
+                            // implicit hydrogens
+                            int implicitH = atom.ImplicitHydrogenCount ?? 0;
+                            if (implicitH > 0)
+                            {
+                                hBondDonors++;
+                                goto continue_atomloop; // we skip the explicit hydrogens part cause we found implicit hydrogens
+                            }
+                            // explicit hydrogens
+                            var neighbours = ac.GetConnectedAtoms(atom);
+                            foreach (var neighbour in neighbours)
+                            {
+                                if (((IAtom)neighbour).Symbol.Equals("H", StringComparison.Ordinal))
+                                {
+                                    hBondDonors++;
+                                    goto continue_atomloop;
+                                }
+                            }
                         }
-                    }
+                        break;
                 }
-                continue_atomloop:
-                    ;
+            continue_atomloop:
+                ;
             }
 
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(hBondDonors), DescriptorNames);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(hBondDonors), DescriptorNames);
         }
 
         /// <inheritdoc/>

@@ -28,6 +28,8 @@ using System.Diagnostics;
 using NCDK.Numerics;
 using System.Text.RegularExpressions;
 using NCDK.Common.Primitives;
+using System.Globalization;
+using System.Linq;
 
 namespace NCDK.Isomorphisms.Matchers
 {
@@ -65,7 +67,6 @@ namespace NCDK.Isomorphisms.Matchers
     // @cdk.keyword R group
     // @cdk.keyword R-group
     // @author Mark Rijnbeek
-    [Serializable]
     public class RGroupQuery : QueryChemObject, IChemObject, IRGroupQuery
     {
         /// <summary>
@@ -77,13 +78,13 @@ namespace NCDK.Isomorphisms.Matchers
         /// Rgroup definitions, each a list of possible substitutes for the
         /// given R number.
         /// </summary>
-        public IDictionary<int, RGroupList> RGroupDefinitions { get; set; }
+        public IReadOnlyDictionary<int, RGroupList> RGroupDefinitions { get; set; }
 
         /// <summary>
         /// For each Rgroup Atom there may be a map containing (number,bond), 
         /// being the attachment order (1,2) and the bond to attach to.
         /// </summary>
-        public IDictionary<IAtom, IDictionary<int, IBond>> RootAttachmentPoints { get; set; }
+        public IReadOnlyDictionary<IAtom, IReadOnlyDictionary<int, IBond>> RootAttachmentPoints { get; set; }
 
         public RGroupQuery(IChemObjectBuilder builder)
             : base(builder)
@@ -96,9 +97,9 @@ namespace NCDK.Isomorphisms.Matchers
         /// </summary>
         /// <param name="rgroupNumber">R# number, 1..32</param>
         /// <returns>list of (pseudo) atoms with the provided rgroupNumber as label</returns>
-        public IList<IAtom> GetRgroupQueryAtoms(int? rgroupNumber)
+        public IReadOnlyList<IAtom> GetRgroupQueryAtoms(int? rgroupNumber)
         {
-            IList<IAtom> rGroupQueryAtoms = null;
+            List<IAtom> rGroupQueryAtoms = null;
 
             if (RootStructure != null)
             {
@@ -109,11 +110,12 @@ namespace NCDK.Isomorphisms.Matchers
                     IAtom atom = RootStructure.Atoms[i];
                     if (atom is IPseudoAtom rGroup)
                     {
-                        if (!rGroup.Label.Equals("R")
+                        if (!string.Equals(rGroup.Label, "R", StringComparison.Ordinal)
                                 && // just "R" is not a proper query atom
                                 rGroup.Label.StartsWithChar('R')
-                                && (rgroupNumber == null || int.Parse(rGroup.Label.Substring(1)).Equals(
-                                        rgroupNumber))) rGroupQueryAtoms.Add(atom);
+                                && (rgroupNumber == null 
+                                || int.Parse(rGroup.Label.Substring(1), NumberFormatInfo.InvariantInfo).Equals(rgroupNumber)))
+                            rGroupQueryAtoms.Add(atom);
                     }
                 }
             }
@@ -124,12 +126,12 @@ namespace NCDK.Isomorphisms.Matchers
         /// Returns all R# type atoms (pseudo atoms) found in the root structure.
         /// </summary>
         /// <returns>list of (pseudo) R# atoms</returns>
-        public IList<IAtom> GetAllRgroupQueryAtoms()
+        public IReadOnlyList<IAtom> GetAllRgroupQueryAtoms()
         {
             return GetRgroupQueryAtoms(null);
         }
 
-        private static Regex validLabelPattern = new Regex("^R\\d+$", RegexOptions.Compiled);
+        private static readonly Regex validLabelPattern = new Regex("^R\\d+$", RegexOptions.Compiled);
 
         /// <summary>
         /// Validates a Pseudo atom's label to be valid RGroup query label (R1..R32).
@@ -141,7 +143,7 @@ namespace NCDK.Isomorphisms.Matchers
             var match = validLabelPattern.Match(Rxx);
             if (match.Success)
             {
-                int groupNumber = int.Parse(Rxx.Substring(1));
+                int groupNumber = int.Parse(Rxx.Substring(1), NumberFormatInfo.InvariantInfo);
                 if (groupNumber >= 1 && groupNumber <= 32)
                 {
                     return true;
@@ -153,14 +155,14 @@ namespace NCDK.Isomorphisms.Matchers
 
         public bool AreSubstituentsDefined()
         {
-            IList<IAtom> allRgroupAtoms = GetAllRgroupQueryAtoms();
+            var allRgroupAtoms = GetAllRgroupQueryAtoms();
             if (allRgroupAtoms == null) return false;
 
             foreach (var rgp in allRgroupAtoms)
             {
                 if (RGroupQuery.IsValidRgroupQueryLabel(((IPseudoAtom)rgp).Label))
                 {
-                    int groupNum = int.Parse(((IPseudoAtom)rgp).Label.Substring(1));
+                    int groupNum = int.Parse(((IPseudoAtom)rgp).Label.Substring(1), NumberFormatInfo.InvariantInfo);
                     if (RGroupDefinitions == null || !RGroupDefinitions.ContainsKey(groupNum)
                             || RGroupDefinitions[groupNum].RGroups == null
                             || RGroupDefinitions[groupNum].RGroups.Count == 0)
@@ -171,7 +173,6 @@ namespace NCDK.Isomorphisms.Matchers
             }
             return true;
         }
-
 
         public bool AreRootAtomsDefined()
         {
@@ -185,7 +186,7 @@ namespace NCDK.Isomorphisms.Matchers
                         IPseudoAtom pseudo = (IPseudoAtom)rootAtom;
                         if (pseudo.Label.Length > 1)
                         {
-                            int rootAtomRgrpNumber = int.Parse(pseudo.Label.Substring(1));
+                            int rootAtomRgrpNumber = int.Parse(pseudo.Label.Substring(1), NumberFormatInfo.InvariantInfo);
                             if (rootAtomRgrpNumber == rgpNum)
                             {
                                 represented = true;
@@ -203,8 +204,8 @@ namespace NCDK.Isomorphisms.Matchers
             }
             return true;
         }
-        
-        public IList<IAtomContainer> GetAllConfigurations()
+
+        public IEnumerable<IAtomContainer> GetAllConfigurations()
         {
             if (!AreSubstituentsDefined())
             {
@@ -212,38 +213,36 @@ namespace NCDK.Isomorphisms.Matchers
             }
 
             //result = a list of concrete atom containers that are valid interpretations of the RGroup query
-            List<IAtomContainer> result = new List<IAtomContainer>();
+            var result = new List<IAtomContainer>();
 
             //rGroupNumbers = list holding each R# number for this RGroup query
-            List<int> rGroupNumbers = new List<int>();
+            var rGroupNumbers = new List<int>();
 
             //distributions  = a list of valid distributions, that is a one/zero representation
             //                 indicating which atom in an atom series belonging to a particular
             //                 R# group is present (1) or absent (0).
-            List<int[]> distributions = new List<int[]>();
-
-            List<IList<RGroup>> substitutes = new List<IList<RGroup>>();
+            var distributions = new List<int[]>();
+            var substitutes = new List<IList<RGroup>>();
 
             //Valid occurrences for each R# group
-            List<IList<int>> occurrences = new List<IList<int>>();
-            List<int> occurIndexes = new List<int>();
+            var occurrences = new List<IList<int>>();
+            var occurIndexes = new List<int>();
 
             //Build up each R# group data before recursively finding configurations.
-            if (RGroupDefinitions.Keys.Count > 0)
+            foreach (var r in RGroupDefinitions.Keys)
             {
-                foreach (var r in RGroupDefinitions.Keys)
+                rGroupNumbers.Add(r);
+                var validOcc = RGroupDefinitions[r].MatchOccurence(GetRgroupQueryAtoms(r).Count).ToList();
+                if (validOcc.Count == 0)
                 {
-                    rGroupNumbers.Add(r);
-                    IList<int> validOcc = RGroupDefinitions[r].MatchOccurence(GetRgroupQueryAtoms(r).Count);
-                    if (validOcc.Count == 0)
-                    {
-                        throw new CDKException("Occurrence '" + RGroupDefinitions[r].Occurrence
-                                + "' defined for Rgroup " + r + " results in no subsititute options for this R-group.");
-                    }
-                    occurrences.Add(validOcc);
-                    occurIndexes.Add(0);
+                    throw new CDKException($"Occurrence '{RGroupDefinitions[r].Occurrence}' defined for Rgroup {r} results in no subsititute options for this R-group.");
                 }
+                occurrences.Add(validOcc);
+                occurIndexes.Add(0);
+            }
 
+            if (rGroupNumbers.Count > 0)
+            {
                 //Init distributions: empty and with the right list size
                 for (int i = 0; i < rGroupNumbers.Count; i++)
                 {
@@ -309,7 +308,7 @@ namespace NCDK.Isomorphisms.Matchers
                             //root cloned, substitute cloned. These now need to be attached to each other..
                             rootClone.Add(rgrpClone);
 
-                            if (this.RootAttachmentPoints.TryGetValue(rAtom, out IDictionary<int, IBond> rAttachmentPoints))
+                            if (this.RootAttachmentPoints.TryGetValue(rAtom, out IReadOnlyDictionary<int, IBond> rAttachmentPoints))
                             {
                                 // Loop over attachment points of the R# atom
                                 for (int apo = 0; apo < rAttachmentPoints.Count; apo++)
@@ -549,7 +548,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// <param name="atom"></param>
         /// <param name="container"></param>
         /// <returns>the array position of atom in container</returns>
-        private int GetAtomPosition(IAtom atom, IAtomContainer container)
+        private static int GetAtomPosition(IAtom atom, IAtomContainer container)
         {
             for (int i = 0; i < container.Atoms.Count; i++)
             {
@@ -567,7 +566,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// <param name="bond"></param>
         /// <param name="container"></param>
         /// <returns>the array position of the bond in the container</returns>
-        private int GetBondPosition(IBond bond, IAtomContainer container)
+        private static int GetBondPosition(IBond bond, IAtomContainer container)
         {
             for (int i = 0; i < container.Bonds.Count; i++)
             {
@@ -586,7 +585,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// </summary>
         /// <param name="arr"></param>
         /// <returns>true if arr's values are all zero.</returns>
-        private bool AllZeroArray(int[] arr)
+        private static bool AllZeroArray(int[] arr)
         {
             foreach (var flag in arr)
                 if (flag != 0) return false;
@@ -652,18 +651,18 @@ namespace NCDK.Isomorphisms.Matchers
             }
         }
 
-        public IList<IAtomContainer> GetSubstituents()
+        public IEnumerable<IAtomContainer> GetSubstituents()
         {
-            List<IAtomContainer> substitutes = new List<IAtomContainer>();
             foreach (var r in RGroupDefinitions.Keys)
             {
                 foreach (var rgrp in RGroupDefinitions[r].RGroups)
                 {
                     IAtomContainer subst = rgrp.Group;
-                    if (subst != null) substitutes.Add(subst);
+                    if (subst != null)
+                        yield return subst;
                 }
             }
-            return substitutes;
+            yield break;
         }
     }
 }

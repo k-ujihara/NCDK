@@ -144,7 +144,7 @@ namespace NCDK.SMSD
         /// and map.Value for the target molecule.
         /// </summary>
         /// <returns>All possible MCS atom Mappings</returns>
-        public abstract IList<IDictionary<IAtom, IAtom>> GetAllAtomMapping();
+        public abstract IReadOnlyList<IReadOnlyDictionary<IAtom, IAtom>> GetAllAtomMapping();
 
         /// <summary>
         /// Returns all plausible mappings between query and target molecules
@@ -153,19 +153,19 @@ namespace NCDK.SMSD
         /// and map.Value for the target molecule.
         /// </summary>
         /// <returns>All possible MCS Mapping Index</returns>
-        public abstract IList<IDictionary<int, int>> GetAllMapping();
+        public abstract IReadOnlyList<IReadOnlyDictionary<int, int>> GetAllMapping();
 
         /// <summary>
         /// Returns one of the best matches with atoms mapped.
         /// </summary>
         /// <returns>Best Atom Mapping</returns>
-        public abstract IDictionary<IAtom, IAtom> GetFirstAtomMapping();
+        public abstract IReadOnlyDictionary<IAtom, IAtom> GetFirstAtomMapping();
 
         /// <summary>
         /// Returns one of the best matches with atom indexes mapped.
         /// </summary>
         /// <returns>Best Mapping Index</returns>
-        public abstract IDictionary<int, int> GetFirstMapping();
+        public abstract IReadOnlyDictionary<int, int> GetFirstMapping();
 
         /// <summary>
         /// timeout in mins (default 0.10 min) for bond sensitive searches

@@ -15,6 +15,8 @@
  * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
+using System;
+
 namespace NCDK.Smiles.SMARTS.Parser
 {
     /// <summary>
@@ -26,7 +28,7 @@ namespace NCDK.Smiles.SMARTS.Parser
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS AST
-    public class Smarts2MQLVisitor : ISMARTSParserVisitor
+    internal class Smarts2MQLVisitor : ISMARTSParserVisitor
     {
         public object Visit(ASTRingIdentifier node, object data)
         {
@@ -68,7 +70,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             string local = "";
             for (int i = 0; i < node.JjtGetNumChildren(); i++)
             {
-                Node child = node.JjtGetChild(i);
+                INode child = node.JjtGetChild(i);
                 if (child is ASTAtom)
                 {
                     local = (string)child.JjtAccept(this, local);
@@ -76,7 +78,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 else if (child is ASTLowAndBond)
                 {
                     i++;
-                    Node nextChild = node.JjtGetChild(i); // the next child should
+                    INode nextChild = node.JjtGetChild(i); // the next child should
                                                           // be another smarts
                     string bond = (string)child.JjtAccept(this, local);
                     local = local + bond;
@@ -84,12 +86,14 @@ namespace NCDK.Smiles.SMARTS.Parser
                 }
                 else if (child is ASTSmarts)
                 { // implicit single bond
-                    if (!"".Equals(local)) local = local + "-";
+                    if (local.Length != 0)
+                        local = local + "-";
                     local = (string)child.JjtAccept(this, local);
                 }
                 else if (child is ASTExplicitAtom)
                 {
-                    if (!"".Equals(local)) local = local + "-";
+                    if (local.Length != 0)
+                        local = local + "-";
                     local = (string)child.JjtAccept(this, local);
                 }
             }
@@ -179,11 +183,11 @@ namespace NCDK.Smiles.SMARTS.Parser
                 return left;
             }
             string right = (string)node.JjtGetChild(1).JjtAccept(this, data);
-            if ("".Equals(left))
+            if (left.Length == 0)
             {
                 return right;
             }
-            else if ("".Equals(right))
+            else if (right.Length == 0)
             {
                 return left;
             }
@@ -201,11 +205,11 @@ namespace NCDK.Smiles.SMARTS.Parser
                 return left;
             }
             string right = (string)node.JjtGetChild(1).JjtAccept(this, data);
-            if ("".Equals(left))
+            if (left.Length == 0)
             {
                 return right;
             }
-            else if ("".Equals(right))
+            else if (right.Length == 0)
             {
                 return left;
             }
@@ -224,11 +228,11 @@ namespace NCDK.Smiles.SMARTS.Parser
                 return left;
             }
             string right = (string)node.JjtGetChild(1).JjtAccept(this, data);
-            if ("".Equals(left))
+            if (left.Length == 0)
             {
                 return right;
             }
-            else if ("".Equals(right))
+            else if (right.Length == 0)
             {
                 return left;
             }
@@ -247,11 +251,11 @@ namespace NCDK.Smiles.SMARTS.Parser
                 return left;
             }
             string right = (string)node.JjtGetChild(1).JjtAccept(this, data);
-            if ("".Equals(left))
+            if (left.Length == 0)
             {
                 return right;
             }
-            else if ("".Equals(right))
+            else if (right.Length == 0)
             {
                 return left;
             }

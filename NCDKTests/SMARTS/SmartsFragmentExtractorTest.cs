@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Smiles;
 
@@ -28,18 +29,18 @@ namespace NCDK.SMARTS
     [TestClass()]
     public class SmartsFragmentExtractorTest
     {
-        private string Generate(string smi, int mode, int[] idxs)
+        private static string Generate(string smi, SubstructureSelectionMode mode, int[] idxs)
         {
-            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = smipar.ParseSmiles(smi);
-            SmartsFragmentExtractor subsmarts = new SmartsFragmentExtractor(mol);
+            var smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var mol = smipar.ParseSmiles(smi);
+            var subsmarts = new SmartsFragmentExtractor(mol);
             subsmarts.SetMode(mode);
             return subsmarts.Generate(idxs);
         }
 
         private static int[] MakeSeq(int beg, int to)
         {
-            int[] a = new int[to - beg];
+            var a = new int[to - beg];
             for (int i = 0; i < a.Length; i++)
                 a[i] = beg++;
             return a;
@@ -48,57 +49,43 @@ namespace NCDK.SMARTS
         [TestMethod()]
         public void MethylExact()
         {
-            string smarts = Generate("CC(C)CCC",
-                                     SmartsFragmentExtractor.MODE_EXACT,
-                                     MakeSeq(0, 1));
+            var smarts = Generate("CC(C)CCC", SubstructureSelectionMode.ExactSmarts, MakeSeq(0, 1));
             Assert.AreEqual("[CH3v4X4+0]", smarts);
         }
 
         [TestMethod()]
         public void MethylForJCompoundMap()
         {
-            string smarts = Generate("CC(C)CCC",
-                                     SmartsFragmentExtractor.MODE_JCOMPOUNDMAPPER,
-                                     MakeSeq(0, 1));
+            var smarts = Generate("CC(C)CCC", SubstructureSelectionMode.JCompoundMapper, MakeSeq(0, 1));
             Assert.AreEqual("C*", smarts);
         }
 
         [TestMethod()]
         public void Indole()
         {
-            string smarts = Generate("[nH]1ccc2c1cccc2",
-                                     SmartsFragmentExtractor.MODE_EXACT,
-                                     MakeSeq(0, 4));
+            var smarts = Generate("[nH]1ccc2c1cccc2", SubstructureSelectionMode.ExactSmarts, MakeSeq(0, 4));
             Assert.AreEqual("[nH1v3X3+0][cH1v4X3+0][cH1v4X3+0][cH0v4X3+0]", smarts);
         }
 
         [TestMethod()]
         public void IndoleForJCompoundMap()
         {
-            string smarts = Generate("[nH]1ccc2c1cccc2",
-                                     SmartsFragmentExtractor.MODE_JCOMPOUNDMAPPER,
-                                     MakeSeq(0, 4));
+            var smarts = Generate("[nH]1ccc2c1cccc2", SubstructureSelectionMode.JCompoundMapper, MakeSeq(0, 4));
             Assert.AreEqual("n(ccc(a)a)a", smarts);
         }
 
         [TestMethod()]
         public void BiphenylIncludesSingleBond()
         {
-            string smarts = Generate("c1ccccc1-c1ccccc1",
-                                     SmartsFragmentExtractor.MODE_EXACT,
-                                     MakeSeq(0, 12));
+            var smarts = Generate("c1ccccc1-c1ccccc1", SubstructureSelectionMode.ExactSmarts, MakeSeq(0, 12));
             Assert.IsTrue(smarts.Contains("-"));
         }
 
         [TestMethod()]
         public void FullereneC60()
         {
-            string smarts = Generate("c12c3c4c5c1c1c6c7c2c2c8c3c3c9c4c4c%10c5c5c1c1c6c6c%11c7c2c2c7c8c3c3c8c9c4c4c9c%10c5c5c1c1c6c6c%11c2c2c7c3c3c8c4c4c9c5c1c1c6c2c3c41",
-                                     SmartsFragmentExtractor.MODE_EXACT,
-                                     MakeSeq(0, 60));
-            Assert.AreEqual(
-                       "[cH0v4X3+0]12[cH0v4X3+0]3[cH0v4X3+0]4[cH0v4X3+0]5[cH0v4X3+0]1[cH0v4X3+0]1[cH0v4X3+0]6[cH0v4X3+0]7[cH0v4X3+0]2[cH0v4X3+0]2[cH0v4X3+0]8[cH0v4X3+0]3[cH0v4X3+0]3[cH0v4X3+0]9[cH0v4X3+0]4[cH0v4X3+0]4[cH0v4X3+0]%10[cH0v4X3+0]5[cH0v4X3+0]5[cH0v4X3+0]1[cH0v4X3+0]1[cH0v4X3+0]6[cH0v4X3+0]6[cH0v4X3+0]%11[cH0v4X3+0]7[cH0v4X3+0]2[cH0v4X3+0]2[cH0v4X3+0]7[cH0v4X3+0]8[cH0v4X3+0]3[cH0v4X3+0]3[cH0v4X3+0]8[cH0v4X3+0]9[cH0v4X3+0]4[cH0v4X3+0]4[cH0v4X3+0]9[cH0v4X3+0]%10[cH0v4X3+0]5[cH0v4X3+0]5[cH0v4X3+0]1[cH0v4X3+0]1[cH0v4X3+0]6[cH0v4X3+0]6[cH0v4X3+0]%11[cH0v4X3+0]2[cH0v4X3+0]2[cH0v4X3+0]7[cH0v4X3+0]3[cH0v4X3+0]3[cH0v4X3+0]8[cH0v4X3+0]4[cH0v4X3+0]4[cH0v4X3+0]9[cH0v4X3+0]5[cH0v4X3+0]1[cH0v4X3+0]1[cH0v4X3+0]6[cH0v4X3+0]2[cH0v4X3+0]3[cH0v4X3+0]41",
-                       smarts);
+            var smarts = Generate("c12c3c4c5c1c1c6c7c2c2c8c3c3c9c4c4c%10c5c5c1c1c6c6c%11c7c2c2c7c8c3c3c8c9c4c4c9c%10c5c5c1c1c6c6c%11c2c2c7c3c3c8c4c4c9c5c1c1c6c2c3c41", SubstructureSelectionMode.ExactSmarts, MakeSeq(0, 60));
+            Assert.AreEqual("[cH0v4X3+0]12[cH0v4X3+0]3[cH0v4X3+0]4[cH0v4X3+0]5[cH0v4X3+0]1[cH0v4X3+0]1[cH0v4X3+0]6[cH0v4X3+0]7[cH0v4X3+0]2[cH0v4X3+0]2[cH0v4X3+0]8[cH0v4X3+0]3[cH0v4X3+0]3[cH0v4X3+0]9[cH0v4X3+0]4[cH0v4X3+0]4[cH0v4X3+0]%10[cH0v4X3+0]5[cH0v4X3+0]5[cH0v4X3+0]1[cH0v4X3+0]1[cH0v4X3+0]6[cH0v4X3+0]6[cH0v4X3+0]%11[cH0v4X3+0]7[cH0v4X3+0]2[cH0v4X3+0]2[cH0v4X3+0]7[cH0v4X3+0]8[cH0v4X3+0]3[cH0v4X3+0]3[cH0v4X3+0]8[cH0v4X3+0]9[cH0v4X3+0]4[cH0v4X3+0]4[cH0v4X3+0]9[cH0v4X3+0]%10[cH0v4X3+0]5[cH0v4X3+0]5[cH0v4X3+0]1[cH0v4X3+0]1[cH0v4X3+0]6[cH0v4X3+0]6[cH0v4X3+0]%11[cH0v4X3+0]2[cH0v4X3+0]2[cH0v4X3+0]7[cH0v4X3+0]3[cH0v4X3+0]3[cH0v4X3+0]8[cH0v4X3+0]4[cH0v4X3+0]4[cH0v4X3+0]9[cH0v4X3+0]5[cH0v4X3+0]1[cH0v4X3+0]1[cH0v4X3+0]6[cH0v4X3+0]2[cH0v4X3+0]3[cH0v4X3+0]41", smarts);
         }
     }
 }

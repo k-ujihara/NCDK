@@ -139,7 +139,7 @@ namespace NCDK.QSAR
         /// <remarks>
         /// Must be done before callin calculate as the parameters influence the calculation outcome before set.
         /// </remarks>
-        object[] Parameters { get; set; }
+        IReadOnlyList<object> Parameters { get; set; }
 
         /// <summary>
         /// Returns an array of names for each descriptor value calculated.

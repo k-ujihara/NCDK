@@ -22,6 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Collections;
 using NCDK.SMSD.Tools;
 using System.Collections.Generic;
@@ -40,14 +41,14 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     public class BKKCKCF
     {
-        private List<IList<int>> maxCliquesSet = null;
+        private List<IReadOnlyList<int>> maxCliquesSet = null;
 
-        private IList<int> cEdges = null;
-        private IList<int> dEdges = null;
+        private IReadOnlyList<int> cEdges = null;
+        private IReadOnlyList<int> dEdges = null;
         private int bestCliqueSize = 0;
-        private IList<int> compGraphNodes = null;
+        private IReadOnlyList<int> compGraphNodes = null;
         private double dEdgeIterationSize = 0;
-        private double cEdgeIterationSize = 0;
+        private readonly double cEdgeIterationSize = 0;
 
         /// <summary>
         /// Creates index new instance of Bron Kerbosch Cazals Karande Koch Clique Finder
@@ -59,28 +60,25 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         /// <param name="compGraphNodesOrg"></param>
         /// <param name="cEdgesOrg">C-Edges set of allowed edges</param>
         /// <param name="dEdgesOrg">D-Edges set of prohibited edges</param>
-        internal BKKCKCF(IList<int> compGraphNodesOrg, IList<int> cEdgesOrg, IList<int> dEdgesOrg)
+        internal BKKCKCF(IReadOnlyList<int> compGraphNodesOrg, IReadOnlyList<int> cEdgesOrg, IReadOnlyList<int> dEdgesOrg)
         {
             MCSPlus.SetTimeManager(new TimeManager());
             this.compGraphNodes = compGraphNodesOrg;
             this.cEdges = cEdgesOrg;
             this.dEdges = dEdgesOrg;
             bestCliqueSize = 0;
+
             //Orignal assignment as per paper
             dEdgeIterationSize = dEdges.Count / 2;
 
             //Orignal assignment as per paper
             cEdgeIterationSize = cEdges.Count / 2;
 
-            //reset Degdes and Cedges if required
-            //        SetEdges();
-
             //Initialization maxCliquesSet
 
-            maxCliquesSet = new List<IList<int>>();
+            maxCliquesSet = new List<IReadOnlyList<int>>();
 
             Init();
-
         }
 
         /// <summary>
@@ -196,9 +194,9 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             return bestCliqueSize;
         }
 
-         internal Deque<IList<int>> GetMaxCliqueSet()
+         internal Deque<IReadOnlyList<int>> GetMaxCliqueSet()
         {
-            Deque<IList<int>> solution = new Deque<IList<int>>();
+            var solution = new Deque<IReadOnlyList<int>>();
             foreach (var s in maxCliquesSet)
                 solution.Push(s);
             return solution;
@@ -253,7 +251,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             }
         }
 
-        private void CopyVertex(List<int> neighbourVertex, Deque<int> pCopyNIntersec, Deque<int> pCopy,
+        private static void CopyVertex(List<int> neighbourVertex, Deque<int> pCopyNIntersec, Deque<int> pCopy,
                 List<int> qCopyNIntersec, List<int> qCopy, List<int> xCopyNIntersec,
                 List<int> xCopy, List<int> yCopyNIntersec, List<int> yCopy)
         {
@@ -284,7 +282,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             }
         }
 
-        private void GroupNeighbors(int index, Deque<int> pCopy, List<int> qCopy, List<int> xCopy,
+        private static void GroupNeighbors(int index, Deque<int> pCopy, List<int> qCopy, List<int> xCopy,
                 List<int> yCopy, List<int> neighbourVertex, List<int> potentialDVertex,
                 List<int> potentialVertex, List<int> excludedVertex, List<int> excludedCVertex)
         {

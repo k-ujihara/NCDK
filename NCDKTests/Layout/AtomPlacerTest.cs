@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System;
 using System.Collections.Generic;
 using NCDK.Numerics;
@@ -42,7 +42,7 @@ namespace NCDK.Layout
             bool npeThrown = false;
             try
             {
-                placer.PopulatePolygonCorners(atoms, Vector2.Zero, 0, 10, 10);
+                AtomPlacer.PopulatePolygonCorners(atoms, Vector2.Zero, 0, 10, 10);
             }
             catch (NullReferenceException)
             {
@@ -54,12 +54,14 @@ namespace NCDK.Layout
         [TestMethod()]
         public void TriangleTest()
         {
-            List<IAtom> atoms = new List<IAtom>();
-            atoms.Add(new Atom("C"));
-            atoms.Add(new Atom("C"));
-            atoms.Add(new Atom("C"));
+            List<IAtom> atoms = new List<IAtom>
+            {
+                new Atom("C"),
+                new Atom("C"),
+                new Atom("C")
+            };
             AtomPlacer placer = new AtomPlacer();
-            placer.PopulatePolygonCorners(atoms, Vector2.Zero, 0, 10, 10);
+            AtomPlacer.PopulatePolygonCorners(atoms, Vector2.Zero, 0, 10, 10);
             foreach (var atom in atoms)
             {
                 Assert.IsNotNull(atom.Point2D);
@@ -82,8 +84,7 @@ namespace NCDK.Layout
             m.Atoms[0].Point2D = Vector2.Zero;
             m.Atoms[0].IsPlaced = true;
 
-            AtomPlacer atomPlacer = new AtomPlacer();
-            atomPlacer.Molecule = m;
+            AtomPlacer atomPlacer = new AtomPlacer { Molecule = m };
             atomPlacer.PlaceLinearChain(m, new Vector2(0, 1.5), 1.5);
 
             Vector2 p1 = m.Atoms[1].Point2D.Value;
@@ -120,8 +121,7 @@ namespace NCDK.Layout
             m.Atoms[0].Point2D = Vector2.Zero;
             m.Atoms[0].IsPlaced = true;
 
-            AtomPlacer atomPlacer = new AtomPlacer();
-            atomPlacer.Molecule = m;
+            AtomPlacer atomPlacer = new AtomPlacer { Molecule = m };
             atomPlacer.PlaceLinearChain(m, new Vector2(0, 1.5), 1.5);
 
             Vector2 p1 = m.Atoms[1].Point2D.Value;
@@ -147,8 +147,7 @@ namespace NCDK.Layout
 
         static IAtom Atom(string symbol, int hCount)
         {
-            IAtom a = new Atom(symbol);
-            a.ImplicitHydrogenCount = hCount;
+            IAtom a = new Atom(symbol) { ImplicitHydrogenCount = hCount };
             return a;
         }
     }

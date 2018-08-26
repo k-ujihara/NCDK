@@ -22,6 +22,7 @@
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO.Formats;
+using NCDK.Silent;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -42,7 +43,7 @@ namespace NCDK.IO.Iterator
             string filename = "NCDK.Data.Smiles.test.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, Default.ChemObjectBuilder.Instance);
+            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, ChemObjectBuilder.Instance);
 
             int molCount = 0;
             foreach (var obj in reader)
@@ -63,7 +64,7 @@ namespace NCDK.IO.Iterator
             string filename = "NCDK.Data.Smiles.tabs.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, Default.ChemObjectBuilder.Instance);
+            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, ChemObjectBuilder.Instance);
 
             int molCount = 0;
             foreach (var obj in reader)
@@ -84,7 +85,7 @@ namespace NCDK.IO.Iterator
             string filename = "NCDK.Data.Smiles.tabs.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, Default.ChemObjectBuilder.Instance);
+            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, ChemObjectBuilder.Instance);
             foreach (var mol in reader)
             {
                 string title = (string)mol.Title;
@@ -99,7 +100,7 @@ namespace NCDK.IO.Iterator
             string filename = "NCDK.Data.Smiles.test2.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, Default.ChemObjectBuilder.Instance);
+            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, ChemObjectBuilder.Instance);
 
             int molCount = 0;
             foreach (var obj in reader)
@@ -118,7 +119,7 @@ namespace NCDK.IO.Iterator
             string filename = "NCDK.Data.Smiles.test2.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, Default.ChemObjectBuilder.Instance);
+            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, ChemObjectBuilder.Instance);
             IResourceFormat format = reader.Format;
             Assert.IsTrue(format is SMILESFormat);
         }
@@ -128,7 +129,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.Smiles.test2.smi";
             var ins1 = ResourceLoader.GetAsStream(filename);
-            EnumerableSMILESReader reader1 = new EnumerableSMILESReader(ins1, Default.ChemObjectBuilder.Instance);
+            EnumerableSMILESReader reader1 = new EnumerableSMILESReader(ins1, ChemObjectBuilder.Instance);
             int molCount = 0;
             foreach (var mol in reader1)
             {
@@ -136,7 +137,7 @@ namespace NCDK.IO.Iterator
             }
             filename = "NCDK.Data.Smiles.tabs.smi";
             var ins2 = ResourceLoader.GetAsStream(filename);
-            EnumerableSMILESReader reader2 = new EnumerableSMILESReader(ins2, Default.ChemObjectBuilder.Instance);
+            EnumerableSMILESReader reader2 = new EnumerableSMILESReader(ins2, ChemObjectBuilder.Instance);
             molCount = 0;
             foreach (var mol in reader2)
             {
@@ -151,7 +152,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.Smiles.test2.smi";
             var ins1 = ResourceLoader.GetAsStream(filename);
-            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins1, Default.ChemObjectBuilder.Instance);
+            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins1, ChemObjectBuilder.Instance);
             int molCount = 0;
             foreach (var mol in reader)
             {

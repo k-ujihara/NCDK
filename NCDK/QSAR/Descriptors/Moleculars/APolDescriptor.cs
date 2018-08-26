@@ -75,15 +75,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#apol",
                typeof(APolDescriptor).FullName, "The Chemistry Development Kit");
 
         /// <summary>
         /// The parameters attribute of the APolDescriptor object.
         /// </summary>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             get { return null; }
             set
@@ -105,7 +105,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int atomicNumber;
             try
             {
-                IsotopeFactory ifac = Isotopes.Instance;
+                IsotopeFactory ifac = BODRIsotopeFactory.Instance;
                 IElement element;
                 string symbol;
                 foreach (var atom in container.Atoms)
@@ -119,12 +119,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         apol += polarizabilities[1] * atom.ImplicitHydrogenCount.Value;
                     }
                 }
-                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(apol), DescriptorNames);
+                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(apol), DescriptorNames);
             }
             catch (Exception ex1)
             {
                 Debug.WriteLine(ex1);
-                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, 
+                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, 
                     new CDKException($"Problems with IsotopeFactory due to {ex1.ToString()}", ex1));
             }
         }

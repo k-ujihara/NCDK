@@ -21,7 +21,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -32,10 +34,8 @@ namespace NCDK.IO
     /// </summary>
     // @cdk.module extra
     // @cdk.githash
-    public class InChIContentProcessorTool
+    public static class InChIContentProcessorTool
     {
-        public InChIContentProcessorTool() { }
-
         private static readonly Regex pattern1 = new Regex("([A-Z][a-z]?)(\\d+)?(.*)", RegexOptions.Compiled);
         private static readonly Regex pattern2 = new Regex("^(\\d+)-?(.*)", RegexOptions.Compiled);
 
@@ -43,20 +43,20 @@ namespace NCDK.IO
         /// Processes the content from the formula field of the INChI.
         /// Typical values look like C6H6, from INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H.
         /// </summary>
-        public IAtomContainer ProcessFormula(IAtomContainer parsedContent, string atomsEncoding)
+        public static IAtomContainer ProcessFormula(IAtomContainer parsedContent, string atomsEncoding)
         {
-            Debug.WriteLine("Parsing atom data: ", atomsEncoding);
+            Debug.WriteLine($"Parsing atom data: {atomsEncoding}");
 
             string remainder = atomsEncoding;
             while (remainder.Length > 0)
             {
-                Debug.WriteLine("Remaining: ", remainder);
+                Debug.WriteLine($"Remaining: {remainder}");
                 var match = pattern1.Match(remainder);
                 if (match.Success)
                 {
                     string symbol = match.Groups[1].Value;
-                    Debug.WriteLine("Atom symbol: ", symbol);
-                    if (symbol.Equals("H"))
+                    Debug.WriteLine($"Atom symbol: {symbol}");
+                    if (string.Equals(symbol, "H", StringComparison.Ordinal))
                     {
                         // don't add explicit hydrogens
                     }
@@ -66,9 +66,9 @@ namespace NCDK.IO
                         int occurence = 1;
                         if (!string.IsNullOrEmpty(occurenceStr))
                         {
-                            occurence = int.Parse(occurenceStr);
+                            occurence = int.Parse(occurenceStr, NumberFormatInfo.InvariantInfo);
                         }
-                        Debug.WriteLine("  occurence: ", occurence);
+                        Debug.WriteLine($"  occurence: {occurence}");
                         for (int i = 1; i <= occurence; i++)
                         {
                             parsedContent.Atoms.Add(parsedContent.Builder.NewAtom(symbol));
@@ -76,14 +76,14 @@ namespace NCDK.IO
                     }
                     remainder = match.Groups[3].Value;
                     if (remainder == null) remainder = "";
-                    Debug.WriteLine("  Remaining: ", remainder);
+                    Debug.WriteLine($"  Remaining: {remainder}");
                 }
                 else
                 {
                     Trace.TraceError("No match found!");
                     remainder = "";
                 }
-                Debug.WriteLine("NO atoms: ", parsedContent.Atoms.Count);
+                Debug.WriteLine($"NO atoms: {parsedContent.Atoms.Count}");
             }
             return parsedContent;
         }
@@ -96,16 +96,16 @@ namespace NCDK.IO
         /// <param name="container">the atomContainer parsed from the formula field</param>
         /// <param name="source">the atom to build the path upon. If -1, then start new path</param>
         /// <seealso cref="ProcessFormula(IAtomContainer, string)"/>
-        public void ProcessConnections(string bondsEncoding, IAtomContainer container, int source)
+        public static void ProcessConnections(string bondsEncoding, IAtomContainer container, int source)
         {
-            Debug.WriteLine("Parsing bond data: ", bondsEncoding);
+            Debug.WriteLine($"Parsing bond data: {bondsEncoding}");
 
             IBond bondToAdd = null;
             /* Fixme: treatment of branching is too limited! */
             string remainder = bondsEncoding;
             while (remainder.Length > 0)
             {
-                Debug.WriteLine("Bond part: ", remainder);
+                Debug.WriteLine($"Bond part: {remainder}");
                 if (remainder[0] == '(')
                 {
                     string branch = ChopBranch(remainder);
@@ -125,20 +125,19 @@ namespace NCDK.IO
                     if (matcher.Success)
                     {
                         string targetStr = matcher.Groups[1].Value;
-                        int target = int.Parse(targetStr);
-                        Debug.WriteLine("Source atom: ", source);
-                        Debug.WriteLine("Target atom: ", targetStr);
+                        int target = int.Parse(targetStr, NumberFormatInfo.InvariantInfo);
+                        Debug.WriteLine($"Source atom: {source}");
+                        Debug.WriteLine($"Target atom: {targetStr}");
                         IAtom targetAtom = container.Atoms[target - 1];
                         if (source != -1)
                         {
                             IAtom sourceAtom = container.Atoms[source - 1];
-                            bondToAdd = container.Builder.NewBond(sourceAtom, targetAtom,
-                                                                           BondOrder.Single);
+                            bondToAdd = container.Builder.NewBond(sourceAtom, targetAtom, BondOrder.Single);
                             container.Bonds.Add(bondToAdd);
                         }
                         remainder = matcher.Groups[2].Value;
                         source = target;
-                        Debug.WriteLine("  remainder: ", remainder);
+                        Debug.WriteLine($"  remainder: {remainder}");
                     }
                     else
                     {
@@ -153,7 +152,7 @@ namespace NCDK.IO
         /// Extracts the first full branch. It extracts everything between the first
         /// '(' and the corresponding ')' char.
         /// </summary>
-        private string ChopBranch(string remainder)
+        private static string ChopBranch(string remainder)
         {
             bool doChop = false;
             int branchLevel = 0;

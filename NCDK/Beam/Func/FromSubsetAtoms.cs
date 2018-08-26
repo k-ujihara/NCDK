@@ -29,8 +29,7 @@ namespace NCDK.Beam
             return h;
         }
 
-        private int BondOrderSum(IList<Edge> es,
-                                 Graph g)
+        private static int BondOrderSum(IList<Edge> es, Graph g)
         {
             int sum = 0;
             foreach (var e in es)

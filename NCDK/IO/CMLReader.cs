@@ -45,10 +45,10 @@ namespace NCDK.IO
     // @cdk.keyword file format, CML
     // @cdk.bug     1544406
     // @cdk.iooptions
-    public class CMLReader : DefaultChemObjectReader, IDisposable
+    public class CMLReader : DefaultChemObjectReader
     {
         private Stream input;
-        private string url;
+        private readonly string url;
 
         private IDictionary<string, ICMLModule> userConventions = new Dictionary<string, ICMLModule>();
 
@@ -73,6 +73,11 @@ namespace NCDK.IO
         public CMLReader(string url)
         {
             this.url = url;
+        }
+
+        public CMLReader(Uri uri)
+            : this(uri.AbsoluteUri)
+        {
         }
 
         public override IResourceFormat Format => CMLFormat.Instance;
@@ -117,7 +122,7 @@ namespace NCDK.IO
             XmlReader parser;
             if (input == null)
             {
-                Debug.WriteLine("Parsing from URL: ", url);
+                Debug.WriteLine($"Parsing from URL: {url}");
                 parser = XmlReader.Create(url, setting);
             }
             else
@@ -133,16 +138,14 @@ namespace NCDK.IO
                 handler.RegisterConvention(conv, userConventions[conv]);
             }
 
-            var reader = new XReader
-            {
-                Handler = handler
-            };
+            var reader = new XReader { Handler = handler };
             try
             {
                 XDocument doc = XDocument.Load(parser);
                 reader.Read(doc);
             }
-            catch (IOException e) {
+            catch (IOException e)
+            {
                 string error = "Error while reading file: " + e.Message;
                 Trace.TraceError(error);
                 Debug.WriteLine(e);

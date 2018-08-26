@@ -23,6 +23,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Sgroups;
+using NCDK.Silent;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -41,7 +42,7 @@ namespace NCDK.IO
     {
         protected override string TestFile => "NCDK.Data.MDL.molV3000.mol";
         protected override Type ChemObjectIOToTestType => typeof(MDLV3000Reader);
-        private static readonly IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = ChemObjectBuilder.Instance;
         private static readonly Type typeOfAtomContainer = builder.NewAtomContainer().GetType();
 
         [TestMethod()]
@@ -99,7 +100,7 @@ namespace NCDK.IO
             using (Stream ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.pseudoatomsv3000.mol"))
             using (MDLV3000Reader reader = new MDLV3000Reader(ins))
             {
-                IAtomContainer molecule = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+                IAtomContainer molecule = ChemObjectBuilder.Instance.NewAtomContainer();
                 molecule = reader.Read(molecule);
                 reader.Close();
                 Assert.IsTrue(molecule.Atoms[9] is IPseudoAtom);
@@ -129,7 +130,7 @@ namespace NCDK.IO
             {
                 IAtomContainer container = reader.Read(builder.NewAtomContainer());
                 Assert.AreEqual(8, container.Bonds.Count);
-                var sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+                var sgroups = container.GetCtabSgroups();
                 Assert.IsNotNull(sgroups);
                 Assert.AreEqual(1, sgroups.Count);
                 Assert.AreEqual(SgroupType.ExtMulticenter, sgroups[0].Type);

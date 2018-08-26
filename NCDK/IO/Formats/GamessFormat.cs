@@ -18,6 +18,7 @@
  */
 
 using NCDK.Tools;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -51,7 +52,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "gam", "gamin", "inp", "gamout" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "gam", "gamin", "inp", "gamout" };
 
         /// <inheritdoc/>
         public override string ReaderClassName => "NCDK.IO.GamessReader";
@@ -62,7 +63,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.IndexOf("GAMESS execution script") >= 0 || line.IndexOf("GAMESS VERSION") >= 0)
+            if (line.Contains("GAMESS execution script") || line.Contains("GAMESS VERSION"))
             {
                 return true;
             }

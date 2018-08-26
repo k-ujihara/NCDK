@@ -8,7 +8,7 @@ namespace NCDK.Formula
         {
             IChemObjectBuilder builder = null;
             #region
-            IsotopeFactory ifac = Isotopes.Instance;
+            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");

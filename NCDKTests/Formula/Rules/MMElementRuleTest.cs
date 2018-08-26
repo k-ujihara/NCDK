@@ -18,6 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using System;
 
 namespace NCDK.Formula.Rules
@@ -26,7 +27,7 @@ namespace NCDK.Formula.Rules
     [TestClass()]
     public class MMElementRuleTest : FormulaRuleTest
     {
-        private static readonly IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = ChemObjectBuilder.Instance;
         protected override Type RuleClass => typeof(MMElementRule);
 
         [TestMethod()]
@@ -40,7 +41,7 @@ namespace NCDK.Formula.Rules
         public void TestDefault()
         {
             IRule rule = new MMElementRule();
-            object[] objects = rule.Parameters;
+            var objects = rule.Parameters;
 
             Assert.AreSame(MMElementRule.Database.Wiley, objects[0]);
             Assert.AreSame(MMElementRule.RangeMass.Minus500, objects[1]);
@@ -57,7 +58,7 @@ namespace NCDK.Formula.Rules
             params_[1] = MMElementRule.RangeMass.Minus1000;
 
             rule.Parameters = params_;
-            object[] objects = rule.Parameters;
+            var objects = rule.Parameters;
 
             Assert.AreSame(MMElementRule.Database.DictionaryNaturalProductsOnline, objects[0]);
             Assert.AreSame(MMElementRule.RangeMass.Minus1000, objects[1]);

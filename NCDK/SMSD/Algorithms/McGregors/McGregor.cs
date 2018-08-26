@@ -21,11 +21,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Isomorphisms.Matchers;
 using NCDK.SMSD.Helper;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace NCDK.SMSD.Algorithms.McGregors
 {
@@ -48,11 +50,11 @@ namespace NCDK.SMSD.Algorithms.McGregors
         private IAtomContainer target = null;
         private BinaryTree last = null;
         private BinaryTree first = null;
-        private Stack<IList<int>> bestArcs = null;
-        private IList<int> modifiedARCS = null;
+        private Stack<IReadOnlyList<int>> bestArcs = null;
+        private List<int> modifiedARCS = null;
         private int bestarcsleft = 0;
         private int globalMCSSize = 0;
-        private IList<IList<int>> mappings = null;
+        internal List<IReadOnlyList<int>> mappings = null;
         /* This should be more or equal to all the atom types */
         private static readonly string[] SIGNS = {"$1", "$2", "$3", "$4", "$5", "$6", "$7", "$8", "$9", "$10", "$11",
                                                                "$12", "$13", "$15", "$16", "$17", "$18", "$19", "$20", "$21", "$22", "$23", "$24", "$25", "$26", "$27",
@@ -61,31 +63,24 @@ namespace NCDK.SMSD.Algorithms.McGregors
         private bool newMatrix = false;
         private bool bondMatch = false;
 
-        /// <summary>
-        /// Constructor for the McGregor algorithm.
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="target"></param>
-        /// <param name="mappings"></param>
-        /// <param name="shouldMatchBonds"></param>
-        public McGregor(IAtomContainer source, IAtomContainer target, IList<IList<int>> mappings, bool shouldMatchBonds)
+        public McGregor(IAtomContainer source, IAtomContainer target, IEnumerable<IReadOnlyList<int>> mappings, bool shouldMatchBonds)
         {
             IsBondMatch = shouldMatchBonds;
             this.source = source;
             this.target = target;
-            this.mappings = mappings;
+            this.mappings = mappings.ToList();
             this.bestarcsleft = 0;
 
-            if (mappings.Count != 0)
+            if (this.mappings.Count != 0)
             {
-                this.globalMCSSize = mappings[0].Count;
+                this.globalMCSSize = this.mappings[0].Count;
             }
             else
             {
                 this.globalMCSSize = 0;
             }
             this.modifiedARCS = new List<int>();
-            this.bestArcs = new Stack<IList<int>>();
+            this.bestArcs = new Stack<IReadOnlyList<int>>();
             this.newMatrix = false;
         }
 
@@ -95,24 +90,24 @@ namespace NCDK.SMSD.Algorithms.McGregors
         /// <param name="target"></param>
         /// <param name="mappings"></param>
         /// </summary>
-        public McGregor(IQueryAtomContainer source, IAtomContainer target, IList<IList<int>> mappings)
+        public McGregor(IQueryAtomContainer source, IAtomContainer target, IEnumerable<IReadOnlyList<int>> mappings)
         {
             IsBondMatch = true;
             this.source = source;
             this.target = target;
-            this.mappings = mappings;
+            this.mappings = mappings.ToList();
             this.bestarcsleft = 0;
 
-            if (mappings.Count != 0)
+            if (this.mappings.Count != 0)
             {
-                this.globalMCSSize = mappings[0].Count;
+                this.globalMCSSize = this.mappings[0].Count;
             }
             else
             {
                 this.globalMCSSize = 0;
             }
             this.modifiedARCS = new List<int>();
-            this.bestArcs = new Stack<IList<int>>();
+            this.bestArcs = new Stack<IReadOnlyList<int>>();
             this.newMatrix = false;
         }
 
@@ -122,7 +117,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
         /// <param name="largestMappingSize"></param>
         /// <param name="presentMapping"></param>
         /// <exception cref="IOException"></exception>
-        public void StartMcGregorIteration(int largestMappingSize, IDictionary<int, int> presentMapping)
+        public void StartMcGregorIteration(int largestMappingSize, IReadOnlyDictionary<int, int> presentMapping)
         {
             this.globalMCSSize = (largestMappingSize / 2);
             var cTab1Copy = McGregorChecks.GenerateCTabCopy(source);
@@ -218,8 +213,9 @@ namespace NCDK.SMSD.Algorithms.McGregors
         /// <param name="cliqueVector"></param>
         /// <param name="compGraphNodes"></param>
         /// <exception cref="IOException"></exception>
-        public void StartMcGregorIteration(int largestMappingSize, IList<int> cliqueVector,
-                IList<int> compGraphNodes)
+        public void StartMcGregorIteration(int largestMappingSize, 
+            IReadOnlyList<int> cliqueVector,
+            IReadOnlyList<int> compGraphNodes)
         {
             this.globalMCSSize = (largestMappingSize / 2);
             List<string> cTab1Copy = McGregorChecks.GenerateCTabCopy(source);
@@ -354,7 +350,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             bestarcsleft = 0;
 
             Startsearch(mcGregorHelper);
-            Stack<IList<int>> bestArcsCopy = new Stack<IList<int>>();
+            var bestArcsCopy = new Stack<IReadOnlyList<int>>();
 
             foreach (var bestArc in bestArcs)
                 bestArcsCopy.Push(bestArc);
@@ -370,7 +366,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return 0;
         }
 
-        private void SearchAndExtendMappings(Stack<IList<int>> bestarcsCopy, McgregorHelper mcGregorHelper)
+        private void SearchAndExtendMappings(Stack<IReadOnlyList<int>> bestarcsCopy, McgregorHelper mcGregorHelper)
         {
             int mappedAtomCount = mcGregorHelper.MappedAtomCount;
 
@@ -762,7 +758,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
         /// Returns computed mappings.
         /// <returns>mappings</returns>
         /// </summary>
-        public IList<IList<int>> Mappings => mappings;
+        public IReadOnlyList<IReadOnlyList<int>> Mappings => mappings;
 
         /// <summary>
         /// Returns MCS size.
@@ -776,16 +772,12 @@ namespace NCDK.SMSD.Algorithms.McGregors
             {
                 if (mappedAtomCount >= globalMCSSize)
                 {
-                    //                    Console.Out.WriteLine("Hello-1");
                     if (mappedAtomCount > globalMCSSize)
                     {
-                        //                        Console.Out.WriteLine("Hello-2");
                         this.globalMCSSize = mappedAtomCount;
-                        //                        Console.Out.WriteLine("best_MAPPING_size: " + globalMCSSize);
                         mappings.Clear();
                     }
                     mappings.Add(mappedAtoms);
-                    //                    Console.Out.WriteLine("mappings " + mappings);
                 }
             }
             catch (Exception ex)
@@ -893,10 +885,12 @@ namespace NCDK.SMSD.Algorithms.McGregors
             }
         }
 
-        private bool MatchGAtoms(string g1A, string g2A, string g1B, string g2B)
+        private static bool MatchGAtoms(string g1A, string g2A, string g1B, string g2B)
         {
-            return (string.Equals(g1A, g1B, StringComparison.OrdinalIgnoreCase) && string.Equals(g2A, g2B, StringComparison.OrdinalIgnoreCase))
-                    || (string.Equals(g1A, g2B, StringComparison.OrdinalIgnoreCase) && string.Equals(g2A, g1B, StringComparison.OrdinalIgnoreCase));
+            return (string.Equals(g1A, g1B, StringComparison.OrdinalIgnoreCase)
+                 && string.Equals(g2A, g2B, StringComparison.OrdinalIgnoreCase))
+                || (string.Equals(g1A, g2B, StringComparison.OrdinalIgnoreCase) 
+                 && string.Equals(g2A, g1B, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>

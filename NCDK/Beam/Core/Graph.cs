@@ -442,7 +442,7 @@ namespace NCDK.Beam
         public static Graph FromSmiles(string smi)
         {
             if (smi == null)
-                throw new ArgumentNullException("no SMILES provided");
+                throw new ArgumentNullException(nameof(smi), "no SMILES provided");
             return Parser.Parse(smi);
         }
 
@@ -652,7 +652,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="f">  a function which transforms a graph into something</param>.
         /// <returns>the output of the function</returns>
-        T Apply<T>(Function<Graph, T> f)
+        T Apply<T>(IFunction<Graph, T> f)
         {
             return f.Apply(this);
         }

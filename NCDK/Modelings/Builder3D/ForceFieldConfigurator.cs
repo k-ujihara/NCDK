@@ -50,8 +50,8 @@ namespace NCDK.Modelings.Builder3D
     public class ForceFieldConfigurator
     {
         private string ffName = "mmff94";
-        private IList<IAtomType> atomTypes;
-        private IDictionary<string, object> parameterSet = null;
+        private IReadOnlyList<IAtomType> atomTypes;
+        private IReadOnlyDictionary<string, object> parameterSet = null;
         private MM2BasedParameterSetReader mm2 = null;
         private MMFF94BasedParameterSetReader mmff94 = null;
         private Stream ins = null;
@@ -86,7 +86,7 @@ namespace NCDK.Modelings.Builder3D
             bool check = false;
             for (int i = 0; i < fftypes.Length; i++)
             {
-                if (fftypes[i].Equals(ffname))
+                if (fftypes[i].Equals(ffname, StringComparison.Ordinal))
                 {
                     check = true;
                     break;
@@ -116,16 +116,11 @@ namespace NCDK.Modelings.Builder3D
             {
                 check = this.CheckForceFieldType(ffname);
                 ffName = ffname;
-                if (ffName.Equals("mm2"))
+                if (string.Equals(ffName, "mm2", StringComparison.Ordinal))
                 {
-                    //Debug.WriteLine("ForceFieldConfigurator: open Force Field mm2");
-                    //f = new File(mm2File);
-                    //ReadFile(f);
                     ins = ResourceLoader.GetAsStream("NCDK.Modelings.ForceField.Data.mm2.prm");
-                    //Debug.WriteLine("ForceFieldConfigurator: open Force Field mm2 ... READY");
                     mm2 = new MM2BasedParameterSetReader();
                     mm2.SetInputStream(ins);
-                    //Debug.WriteLine("ForceFieldConfigurator: mm2 set input stream ... READY");
                     try
                     {
                         this.SetMM2Parameters(builder);
@@ -135,11 +130,8 @@ namespace NCDK.Modelings.Builder3D
                         throw new CDKException("Problems with set MM2Parameters due to " + ex1.ToString(), ex1);
                     }
                 }
-                else if (ffName.Equals("mmff94") || !check)
+                else if (ffName.Equals("mmff94", StringComparison.Ordinal) || !check)
                 {
-                    //Debug.WriteLine("ForceFieldConfigurator: open Force Field mmff94");
-                    //f = new File(mmff94File);
-                    //ReadFile(f);
                     ins = ResourceLoader.GetAsStream("NCDK.Modelings.ForceField.Data.mmff94.prm");
                     mmff94 = new MMFF94BasedParameterSetReader();
 
@@ -154,7 +146,6 @@ namespace NCDK.Modelings.Builder3D
                     }
                 }
             }
-            //throw new CDKException("Data file for "+ffName+" force field could not be found");
         }
 
         /// <summary>
@@ -170,7 +161,7 @@ namespace NCDK.Modelings.Builder3D
         ///  Sets the parameters attribute of the ForceFieldConfigurator object
         /// </summary>
         /// <param name="parameterset">The new parameter values</param>
-        public void SetParameters(IDictionary<string, object> parameterset)
+        public void SetParameters(IReadOnlyDictionary<string, object> parameterset)
         {
             parameterSet = parameterset;
         }
@@ -180,7 +171,8 @@ namespace NCDK.Modelings.Builder3D
         {
             try
             {
-                if (mm2 == null) mm2 = new MM2BasedParameterSetReader();
+                if (mm2 == null)
+                    mm2 = new MM2BasedParameterSetReader();
                 mm2.ReadParameterSets(builder);
             }
             catch (Exception ex1)
@@ -203,13 +195,13 @@ namespace NCDK.Modelings.Builder3D
         ///  Gets the atomTypes attribute of the ForceFieldConfigurator object
         /// </summary>
         /// <returns>The atomTypes vector</returns>
-        public IList<IAtomType> AtomTypes => atomTypes;
+        public IReadOnlyList<IAtomType> AtomTypes => atomTypes;
 
         /// <summary>
         ///  Gets the parameterSet attribute of the ForceFieldConfigurator object
         /// </summary>
         /// <returns>The parameterSet hashtable</returns>
-        public IDictionary<string, object> GetParameterSet()
+        public IReadOnlyDictionary<string, object> GetParameterSet()
         {
             return this.parameterSet;
         }
@@ -217,21 +209,21 @@ namespace NCDK.Modelings.Builder3D
         /// <summary>
         ///  Find the atomType for a id
         /// </summary>
-        /// <param name="ID">Atomtype id of the forcefield</param>
+        /// <param name="id">Atomtype id of the forcefield</param>
         /// <returns>The atomType</returns>
         /// <exception cref="NoSuchAtomTypeException"> atomType is not known.</exception>
-        private IAtomType GetAtomType(string ID)
+        private IAtomType GetAtomType(string id)
         {
             IAtomType at = null;
             for (int i = 0; i < atomTypes.Count; i++)
             {
                 at = (IAtomType)atomTypes[i];
-                if (at.AtomTypeName.Equals(ID))
+                if (at.AtomTypeName.Equals(id, StringComparison.Ordinal))
                 {
                     return at;
                 }
             }
-            throw new NoSuchAtomTypeException("AtomType " + ID + " could not be found");
+            throw new NoSuchAtomTypeException($"AtomType {id} could not be found");
         }
 
         /// <summary>
@@ -312,22 +304,22 @@ namespace NCDK.Modelings.Builder3D
                 bondType = "0";
                 if (bond.Order == BondOrder.Single)
                 {
-                    if ((bond.Begin.AtomTypeName.Equals("Csp2"))
-                            && ((bond.End.AtomTypeName.Equals("Csp2")) || (bond.End.AtomTypeName
-                                    .Equals("C="))))
+                    if ((bond.Begin.AtomTypeName.Equals("Csp2", StringComparison.Ordinal))
+                        && ((bond.End.AtomTypeName.Equals("Csp2", StringComparison.Ordinal))
+                        || (bond.End.AtomTypeName.Equals("C=", StringComparison.Ordinal))))
                     {
                         bondType = "1";
                     }
 
-                    if ((bond.Begin.AtomTypeName.Equals("C="))
-                            && ((bond.End.AtomTypeName.Equals("Csp2")) || (bond.End.AtomTypeName
-                                    .Equals("C="))))
+                    if ((bond.Begin.AtomTypeName.Equals("C=", StringComparison.Ordinal))
+                        && ((bond.End.AtomTypeName.Equals("Csp2", StringComparison.Ordinal))
+                        || (bond.End.AtomTypeName.Equals("C=", StringComparison.Ordinal))))
                     {
                         bondType = "1";
                     }
 
-                    if ((bond.Begin.AtomTypeName.Equals("Csp"))
-                            && (bond.End.AtomTypeName.Equals("Csp")))
+                    if ((bond.Begin.AtomTypeName.Equals("Csp", StringComparison.Ordinal))
+                        && (bond.End.AtomTypeName.Equals("Csp", StringComparison.Ordinal)))
                     {
                         bondType = "1";
                     }
@@ -345,15 +337,19 @@ namespace NCDK.Modelings.Builder3D
         /// </summary>
         /// <param name="ac">AtomContainer</param>
         /// <returns>true/false</returns>
-        private bool IsHeteroRingSystem(IAtomContainer ac)
+        private static bool IsHeteroRingSystem(IAtomContainer ac)
         {
             if (ac != null)
             {
                 for (int i = 0; i < ac.Atoms.Count; i++)
                 {
-                    if (!(ac.Atoms[i].Symbol).Equals("H") && !(ac.Atoms[i].Symbol).Equals("C"))
+                    switch (ac.Atoms[i].Symbol)
                     {
-                        return true;
+                        case "H":
+                        case "C":
+                            break;
+                        default:
+                            return true;
                     }
                 }
             }
@@ -402,15 +398,15 @@ namespace NCDK.Modelings.Builder3D
             return atom;
         }
 
-        public IAtom ConfigureAtom(IAtom atom, string hoseCode, bool _boolean)
+        public IAtom ConfigureAtom(IAtom atom, string hoseCode, bool flag)
         {
-            if (ffName.Equals("mm2"))
+            if (string.Equals(ffName, "mm2", StringComparison.Ordinal))
             {
-                return ConfigureMM2BasedAtom(atom, hoseCode, _boolean);
+                return ConfigureMM2BasedAtom(atom, hoseCode, flag);
             }
-            else if (ffName.Equals("mmff94"))
+            else if (string.Equals(ffName, "mmff94", StringComparison.Ordinal))
             {
-                return ConfigureMMFF94BasedAtom(atom, hoseCode, _boolean);
+                return ConfigureMMFF94BasedAtom(atom, hoseCode, flag);
             }
             return atom;
         }
@@ -611,7 +607,7 @@ namespace NCDK.Modelings.Builder3D
             }
         }
 
-        public string RemoveAromaticityFlagsFromHoseCode(string hoseCode)
+        public static string RemoveAromaticityFlagsFromHoseCode(string hoseCode)
         {
             string hosecode = "";
             for (int i = 0; i < hoseCode.Length; i++)

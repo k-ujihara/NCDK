@@ -20,6 +20,7 @@ using NCDK.Charges;
 using NCDK.QSAR.Results;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
@@ -65,8 +66,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         ///  Gets the specification attribute of the PiElectronegativityDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#piElectronegativity",
                 typeof(PiElectronegativityDescriptor).FullName, "The Chemistry Development Kit");
@@ -88,22 +89,22 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </list>
         /// </remarks>
         /// <exception cref="CDKException"></exception>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 3) throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
-
+                if (value.Count > 3) throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
                 if (!(value[0] is int)) throw new CDKException("The parameter must be of type int");
+
                 maxIterations = (int)value[0];
 
-                if (value.Length > 1 && value[1] != null)
+                if (value.Count > 1 && value[1] != null)
                 {
                     if (!(value[1] is bool)) throw new CDKException("The parameter must be of type bool");
                     lpeChecker = (bool)value[1];
                 }
 
-                if (value.Length > 2 && value[2] != null)
+                if (value.Count > 2 && value[2] != null)
                 {
                     if (!(value[2] is int)) throw new CDKException("The parameter must be of type int");
                     maxResonStruc = (int)value[2];
@@ -135,14 +136,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(clone);
                 if (lpeChecker)
                 {
-                    LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-                    lpcheck.Saturate(atomContainer);
+                    LonePairElectronChecker.Saturate(atomContainer);
                 }
                 localAtom = clone.Atoms[atomContainer.Atoms.IndexOf(atom)];
             }
             catch (CDKException)
             {
-                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, null);
+                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, null);
             }
 
             if (maxIterations != -1 && maxIterations != 0) electronegativity.MaxIterations = maxIterations;
@@ -150,7 +150,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             double result = electronegativity.CalculatePiElectronegativity(clone, localAtom);
 
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(result),
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(result),
                                        NAMES);
         }
 
@@ -166,9 +166,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>The parameterType value</returns>
         public object GetParameterType(string name)
         {
-            if ("maxIterations".Equals(name)) return int.MaxValue;
-            if ("lpeChecker".Equals(name)) return true;
-            if ("maxResonStruc".Equals(name)) return int.MaxValue;
+            if (string.Equals("maxIterations", name, StringComparison.Ordinal))
+                return int.MaxValue;
+            if (string.Equals("lpeChecker", name, StringComparison.Ordinal))
+                return true;
+            if (string.Equals("maxResonStruc", name, StringComparison.Ordinal))
+                return int.MaxValue;
             return null;
         }
     }

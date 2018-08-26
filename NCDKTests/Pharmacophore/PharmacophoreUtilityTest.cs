@@ -18,6 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO.Iterator;
+using NCDK.Silent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace NCDK.Pharmacophore
         {
             string filename = "NCDK.Data.MDL.pcoretest1.sdf";
             Stream ins = ResourceLoader.GetAsStream(filename);
-            IEnumerableMDLConformerReader reader = new IEnumerableMDLConformerReader(ins, Default.ChemObjectBuilder.Instance);
+            IEnumerableMDLConformerReader reader = new IEnumerableMDLConformerReader(ins, ChemObjectBuilder.Instance);
             conformers = reader.FirstOrDefault();
         }
 
@@ -107,17 +108,17 @@ namespace NCDK.Pharmacophore
 
             foreach (var bond in def1.Bonds)
             {
-                if (bond is PharmacophoreQueryBond)
+                IAtom[] a;
+                switch (bond)
                 {
-                    PharmacophoreQueryBond cons = (PharmacophoreQueryBond)bond;
-                    IAtom[] a = GetAtoms(cons);
-                    Assert.AreEqual(2, a.Length);
-                }
-                else if (bond is PharmacophoreQueryAngleBond)
-                {
-                    PharmacophoreQueryAngleBond cons = (PharmacophoreQueryAngleBond)bond;
-                    IAtom[] a = GetAtoms(cons);
-                    Assert.AreEqual(3, a.Length);
+                    case PharmacophoreQueryBond cons:
+                        a = GetAtoms(cons);
+                        Assert.AreEqual(2, a.Length);
+                        break;
+                    case PharmacophoreQueryAngleBond cons:
+                        a = GetAtoms(cons);
+                        Assert.AreEqual(3, a.Length);
+                        break;
                 }
             }
         }
@@ -168,7 +169,7 @@ namespace NCDK.Pharmacophore
             Assert.AreEqual(0, nangle);
         }
 
-        private IAtom[] GetAtoms(IBond bond)
+        private static IAtom[] GetAtoms(IBond bond)
         {
             var alist = new List<IAtom>();
             foreach (var iAtom in bond.Atoms)

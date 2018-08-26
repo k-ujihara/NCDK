@@ -92,13 +92,13 @@ namespace NCDK.Stereo
         {
         }
 
-        ExtendedTetrahedral(IAtom focus, IEnumerable<IAtom> peripherals, StereoElement.Configuration configure)
-            : base(focus, peripherals.ToList(), new StereoElement(StereoElement.Classes.Allenal, configure))
+        ExtendedTetrahedral(IAtom focus, IEnumerable<IAtom> peripherals, StereoConfigurations configure)
+            : base(focus, peripherals.ToList(), new StereoElement(StereoClass.Allenal, configure))
         {
         }
 
         ExtendedTetrahedral(IAtom focus, IEnumerable<IAtom> peripherals, StereoElement stereo)
-            : this(focus, peripherals, stereo.Configure)
+            : this(focus, peripherals, stereo.Configuration)
         {
         }
 
@@ -107,7 +107,7 @@ namespace NCDK.Stereo
         /// atoms in the cumulated system.
         /// </summary>
         /// <returns>the peripheral atoms</returns>
-        public IAtom[] Peripherals => Carriers.ToArray();
+        public IReadOnlyList<IAtom> Peripherals => Carriers;
 
         /// <summary>
         /// The winding of the peripherals, when viewed from the first atom.
@@ -146,10 +146,11 @@ namespace NCDK.Stereo
         {
             var focusBonds = container.GetConnectedBonds(Focus).ToList();
 
-            if (focusBonds.Count != 2) throw new ArgumentException("focus must have exactly 2 neighbors");
+            if (focusBonds.Count != 2)
+                throw new ArgumentException("focus must have exactly 2 neighbors");
 
-            IAtom left = focusBonds[0].GetOther(Focus);
-            IAtom right = focusBonds[1].GetOther(Focus);
+            var left = focusBonds[0].GetOther(Focus);
+            var right = focusBonds[1].GetOther(Focus);
 
             var leftAtoms = container.GetConnectedAtoms(left);
             var carriers = Carriers;
@@ -164,7 +165,7 @@ namespace NCDK.Stereo
             }
         }
 
-        protected override IStereoElement<IAtom, IAtom> Create(IAtom focus, IList<IAtom> carriers, StereoElement stereo)
+        protected override IStereoElement<IAtom, IAtom> Create(IAtom focus, IReadOnlyList<IAtom> carriers, StereoElement stereo)
         {
             return new ExtendedTetrahedral(focus, carriers, stereo);
         }

@@ -70,8 +70,8 @@ namespace NCDK.Hash
         /// <exception cref="ArgumentNullException">no atom hash generator or pseudorandom number generator provided</exception>
         internal BasicMoleculeHashGenerator(IAtomHashGenerator generator, Pseudorandom pseudorandom)
         {
-            this.generator = generator ?? throw new ArgumentNullException("no AtomHashGenerator provided");
-            this.pseudorandom = pseudorandom ?? throw new ArgumentNullException("no Pseudorandom number generator provided");
+            this.generator = generator ?? throw new ArgumentNullException(nameof(generator), "no AtomHashGenerator provided");
+            this.pseudorandom = pseudorandom ?? throw new ArgumentNullException(nameof(pseudorandom), "no Pseudorandom number generator provided");
         }
 
         public long Generate(IAtomContainer container)

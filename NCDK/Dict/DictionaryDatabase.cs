@@ -44,8 +44,8 @@ namespace NCDK.Dict
 
         public const string DictRefPropertyName = "NCDK.Dict";
 
-        private string[] dictionaryNames = {"chemical", "elements", "descriptor-algorithms", "reaction-processes" };
-        private string[] dictionaryTypes = { "xml", "owl", "owl", "owl_React" };
+        private readonly string[] dictionaryNames = {"chemical", "elements", "descriptor-algorithms", "reaction-processes" };
+        private readonly string[] dictionaryTypes = { "xml", "owl", "owl", "owl_React" };
 
         private IDictionary<string, EntryDictionary> dictionaries;
 
@@ -61,12 +61,12 @@ namespace NCDK.Dict
                 if (dictionary != null)
                 {
                     dictionaries.Add(name.ToLowerInvariant(), dictionary);
-                    Debug.WriteLine("Read dictionary: ", name);
+                    Debug.WriteLine($"Read dictionary: {name}");
                 }
             }
         }
 
-        private EntryDictionary ReadDictionary(string databaseLocator, string type)
+        private static EntryDictionary ReadDictionary(string databaseLocator, string type)
         {
             EntryDictionary dictionary;
             // to distinguish between OWL: QSAR & REACT
@@ -84,17 +84,18 @@ namespace NCDK.Dict
                 try
                 {
                     var reader = new StreamReader(ResourceLoader.GetAsStream(databaseLocator));
-                    if (type.Equals("owl"))
+                    switch (type)
                     {
-                        dictionary = OWLFile.Unmarshal(reader);
-                    }
-                    else if (type.Equals("owl_React"))
-                    {
-                        dictionary = OWLReact.Unmarshal(reader);
-                    }
-                    else
-                    { // assume XML using Castor
-                        dictionary = EntryDictionary.Unmarshal(reader);
+                        case "owl":
+                            dictionary = OWLFile.Unmarshal(reader);
+                            break;
+                        case "owl_React":
+                            dictionary = OWLReact.Unmarshal(reader);
+                            break;
+                        default:
+                            // assume XML using Castor
+                            dictionary = EntryDictionary.Unmarshal(reader);
+                            break;
                     }
                 }
                 catch (Exception exception)

@@ -44,17 +44,17 @@ namespace NCDK.Tools
         {
             DataFeatures features = DataFeatures.None;
             if (MoleculeFeaturesTool.HasElementSymbols(molecule))
-                features = features | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
-            if (GeometryUtil.Has2DCoordinates(molecule)) features = features | DataFeatures.HAS_2D_COORDINATES;
-            if (GeometryUtil.Has3DCoordinates(molecule)) features = features | DataFeatures.HAS_3D_COORDINATES;
+                features = features | DataFeatures.HasAtomElementSymbol;
+            if (GeometryUtil.Has2DCoordinates(molecule)) features = features | DataFeatures.Has2DCoordinates;
+            if (GeometryUtil.Has3DCoordinates(molecule)) features = features | DataFeatures.Has3DCoordinates;
             if (CrystalGeometryTools.HasCrystalCoordinates(molecule))
-                features = features | DataFeatures.HAS_FRACTIONAL_CRYSTAL_COORDINATES;
+                features = features | DataFeatures.HasFractionalCrystalCoordinates;
             if (MoleculeFeaturesTool.HasFormalCharges(molecule))
-                features = features | DataFeatures.HAS_ATOM_FORMAL_CHARGES;
+                features = features | DataFeatures.HasAtomFormalCharges;
             if (MoleculeFeaturesTool.HasPartialCharges(molecule))
-                features = features | DataFeatures.HAS_ATOM_PARTIAL_CHARGES;
+                features = features | DataFeatures.HasAtomPartialCharges;
             if (MoleculeFeaturesTool.HasGraphRepresentation(molecule))
-                features = features | DataFeatures.HAS_GRAPH_REPRESENTATION;
+                features = features | DataFeatures.HasGraphRepresentation;
             return features;
         }
     }

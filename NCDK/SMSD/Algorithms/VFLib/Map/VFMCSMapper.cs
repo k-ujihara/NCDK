@@ -50,7 +50,7 @@ using NCDK.Common.Collections;
 using NCDK.SMSD.Algorithms.VFLib.Builder;
 
 using NCDK.SMSD.Algorithms.VFLib.Query;
-using NCDK.SMSD.Global;
+using NCDK.SMSD.Globals;
 using NCDK.SMSD.Tools;
 using System;
 using System.Collections.Generic;
@@ -68,8 +68,8 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
     [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public class VFMCSMapper : IMapper
     {
-        private IQuery query = null;
-        private List<IDictionary<INode, IAtom>> maps = null;
+        private readonly IQuery query = null;
+        private List<IReadOnlyDictionary<INode, IAtom>> maps = null;
         private int currentMCSSize = -1;
         private static TimeManager timeManager = null;
 
@@ -98,14 +98,14 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
         {
             TimeManager = new TimeManager();
             this.query = query;
-            this.maps = new List<IDictionary<INode, IAtom>>();
+            this.maps = new List<IReadOnlyDictionary<INode, IAtom>>();
         }
 
         public VFMCSMapper(IAtomContainer queryMolecule, bool bondMatcher)
         {
             TimeManager = new TimeManager();
             this.query = new QueryCompiler(queryMolecule, bondMatcher).Compile();
-            this.maps = new List<IDictionary<INode, IAtom>>();
+            this.maps = new List<IReadOnlyDictionary<INode, IAtom>>();
         }
 
         /// <inheritdoc/>
@@ -116,15 +116,15 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             return MapFirst(state);
         }
 
-        public IList<IDictionary<INode, IAtom>> GetMaps(IAtomContainer target)
+        public IReadOnlyList<IReadOnlyDictionary<INode, IAtom>> GetMaps(IAtomContainer target)
         {
             IState state = new VFState(query, new TargetProperties(target));
             maps.Clear();
             MapAll(state);
-            return new List<IDictionary<INode, IAtom>>(maps);
+            return maps;
         }
 
-        public IDictionary<INode, IAtom> GetFirstMap(IAtomContainer target)
+        public IReadOnlyDictionary<INode, IAtom> GetFirstMap(IAtomContainer target)
         {
             IState state = new VFState(query, new TargetProperties(target));
             maps.Clear();
@@ -148,15 +148,15 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             return MapFirst(state);
         }
 
-        public IList<IDictionary<INode, IAtom>> GetMaps(TargetProperties targetMolecule)
+        public IReadOnlyList<IReadOnlyDictionary<INode, IAtom>> GetMaps(TargetProperties targetMolecule)
         {
             IState state = new VFState(query, targetMolecule);
             maps.Clear();
             MapAll(state);
-            return new List<IDictionary<INode, IAtom>>(maps);
+            return maps;
         }
 
-        public IDictionary<INode, IAtom> GetFirstMap(TargetProperties targetMolecule)
+        public IReadOnlyDictionary<INode, IAtom> GetFirstMap(TargetProperties targetMolecule)
         {
             IState state = new VFState(query, targetMolecule);
             maps.Clear();
@@ -174,7 +174,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
 
         private void AddMapping(IState state)
         {
-            IDictionary<INode, IAtom> map = state.GetMap();
+            var map = state.GetMap();
             if (!HasMap(map) && map.Count > currentMCSSize)
             {
                 maps.Add(map);
@@ -195,7 +195,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
 
             if (state.IsGoal)
             {
-                IDictionary<INode, IAtom> map = state.GetMap();
+                var map = state.GetMap();
                 if (!HasMap(map))
                 {
                     maps.Add(state.GetMap());
@@ -249,7 +249,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             return found;
         }
 
-        private bool HasMap(IDictionary<INode, IAtom> map)
+        private bool HasMap(IReadOnlyDictionary<INode, IAtom> map)
         {
             foreach (var storedMap in maps)
             {

@@ -24,6 +24,7 @@
 using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static NCDK.Graphs.InitialCyclesTest;
+using System;
 
 namespace NCDK.Graphs
 {
@@ -53,9 +54,9 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void IsEmpty()
         {
-            TripletShortCycles esssr = new TripletShortCycles(new MinimumCycleBasis(new int[0][]), false);
+            TripletShortCycles esssr = new TripletShortCycles(new MinimumCycleBasis(Array.Empty<int[]>()), false);
             int[][] paths = esssr.GetPaths();
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0][], paths));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int[]>(), paths));
         }
 
         [TestMethod()]

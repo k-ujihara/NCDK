@@ -91,7 +91,7 @@ namespace NCDK.Layout
                 throw new ArgumentException("cannot place hydrogens on atom without coordinates");
 
             Debug.WriteLine("placing hydrogens connected to atom ", atom.Symbol, ": ", atom.Point2D);
-            Debug.WriteLine("bond length", bondLength);
+            Debug.WriteLine($"bond length{bondLength}");
 
             AtomPlacer atomPlacer = new AtomPlacer
             {
@@ -107,7 +107,7 @@ namespace NCDK.Layout
             {
                 if (conAtom.Point2D == null)
                 {
-                    if (conAtom.Symbol.Equals("H"))
+                    if (string.Equals(conAtom.Symbol, "H", StringComparison.Ordinal))
                     {
                         unplaced.Atoms.Add(conAtom);
                     }

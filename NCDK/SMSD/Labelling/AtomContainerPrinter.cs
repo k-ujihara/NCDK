@@ -6,7 +6,7 @@ namespace NCDK.SMSD.Labelling
 {
     // @cdk.module smsd
     // @cdk.githash
-    public class AtomContainerPrinter
+    public static class AtomContainerPrinter
     {
         private class Edge : IComparable<Edge>
         {
@@ -43,7 +43,7 @@ namespace NCDK.SMSD.Labelling
             }
         }
 
-        public string ToString(IAtomContainer atomContainer)
+        public static string ToString(IAtomContainer atomContainer)
         {
             StringBuilder sb = new StringBuilder();
             foreach (var atom in atomContainer.Atoms)

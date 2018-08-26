@@ -23,7 +23,9 @@ using NCDK.Tools.Manipulator;
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace NCDK.QSAR.Descriptors.Atomic
@@ -76,8 +78,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the IPAtomicHOSEDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential",
                 typeof(IPAtomicHOSEDescriptor).FullName, "The Chemistry Development Kit");
@@ -85,7 +87,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the IPAtomicHOSEDescriptor object.
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public IReadOnlyList<string> DescriptorNames => NAMES;
 
@@ -111,13 +113,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 try
                 {
                     AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-                    LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-                    lpcheck.Saturate(container);
+                    LonePairElectronChecker.Saturate(container);
                 }
                 catch (CDKException e)
                 {
-                    return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
-                            double.NaN), NAMES, e);
+                    return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
                 }
 
             }
@@ -130,21 +130,26 @@ namespace NCDK.QSAR.Descriptors.Atomic
             atom.MaxBondOrder = originalMaxBondOrder;
             atom.BondOrderSum = originalBondOrderSum;
 
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(value),
-                                       NAMES);
-
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(value), NAMES);
         }
 
         /// <summary>
         /// Looking if the Atom belongs to the halogen family.
-        ///
+        /// </summary>
         /// <param name="atom">The IAtom</param>
         /// <returns>True, if it belongs</returns>
-        /// </summary>
-        internal bool FamilyHalogen(IAtom atom)
+        internal static bool FamilyHalogen(IAtom atom)
         {
-            string symbol = atom.Symbol;
-            return symbol.Equals("F") || symbol.Equals("Cl") || symbol.Equals("Br") || symbol.Equals("I");
+            switch (atom.Symbol)
+            {
+                case "F":
+                case "Cl":
+                case "Br":
+                case "I":
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         /// <summary>
@@ -168,8 +173,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             IPAtomicHOSEDescriptor parent;
 
-            Dictionary<string, Dictionary<string, double>> listGroup = new Dictionary<string, Dictionary<string, double>>();
-            Dictionary<string, Dictionary<string, double>> listGroupS = new Dictionary<string, Dictionary<string, double>>();
+            private Dictionary<string, Dictionary<string, double>> listGroup = new Dictionary<string, Dictionary<string, double>>();
+            private readonly Dictionary<string, Dictionary<string, double>> listGroupS = new Dictionary<string, Dictionary<string, double>>();
 
             /// <summary>
             /// The constructor of the IPdb.
@@ -193,7 +198,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 string nameS = "";
                 Dictionary<string, double> hoseVSenergy = new Dictionary<string, double>();
                 Dictionary<string, double> hoseVSenergyS = new Dictionary<string, double>();
-                if (parent.FamilyHalogen(atom))
+                if (FamilyHalogen(atom))
                 {
                     name = "X_IP_HOSE.db";
                     nameS = "X_IP_HOSE_S.db";
@@ -228,7 +233,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     {
                         hcg.GetSpheres(container, atom, spheres, true);
                         var atoms = hcg.GetNodesInSphere(spheres);
-                        if (atoms.Count != 0)
+                        if (atoms.Any())
                         {
                             exactSphere = spheres;
                             hoseCode = hcg.GetHOSECode(container, atom, spheres, true);
@@ -296,7 +301,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             /// </summary>
             /// <param name="input">The BufferedReader</param>
             /// <returns>HashMap with the Hose vs energy attributes</returns>
-            private Dictionary<string, double> ExtractAttributes(TextReader input)
+            private static Dictionary<string, double> ExtractAttributes(TextReader input)
             {
                 Dictionary<string, double> hoseVSenergy = new Dictionary<string, double>();
                 string line;
@@ -305,10 +310,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 {
                     while ((line = input.ReadLine()) != null)
                     {
-                        if (line.StartsWithChar('#')) continue;
-                        List<string> values = ExtractInfo(line);
-                        if (values[1].Equals("")) continue;
-                        hoseVSenergy[values[0]] = double.Parse(values[1]);
+                        if (line.StartsWithChar('#'))
+                            continue;
+                        var values = ExtractInfo(line);
+                        if (values[1].Length == 0)
+                            continue;
+                        hoseVSenergy[values[0]] = double.Parse(values[1], NumberFormatInfo.InvariantInfo);
                     }
                 }
                 catch (IOException e)

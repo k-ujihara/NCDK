@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace NCDK.Hash
 {
     public interface IAtomHashGenerator

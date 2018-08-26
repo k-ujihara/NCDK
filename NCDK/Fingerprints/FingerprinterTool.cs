@@ -55,7 +55,7 @@ namespace NCDK.Fingerprints
         {
             BitArray clone = (BitArray)bs1.Clone();
             BitArrays.And(clone, bs2);
-            if (BitArrays.AreEqual(clone, bs2))
+            if (BitArrays.Equals(clone, bs2))
             {
                 return true;
             }
@@ -71,15 +71,15 @@ namespace NCDK.Fingerprints
         /// <param name="bs2">Second bitset</param>
         /// <returns>An arrayList of Integers</returns>
         /// <seealso cref="Differences(BitArray, BitArray)"/>
-        public static IList<int> ListDifferences(BitArray bs1, BitArray bs2)
+        public static IReadOnlyList<int> ListDifferences(BitArray bs1, BitArray bs2)
         {
-            BitArray u = (BitArray)bs1.Clone();
-            BitArray v = (BitArray)bs2.Clone();
+            var u = (BitArray)bs1.Clone();
+            var v = (BitArray)bs2.Clone();
             var len = Math.Max(u.Length, v.Length);
             if (u.Length < len) u.Length = len;
             if (v.Length < len) v.Length = len;
 
-            List<int> l = new List<int>();
+            var l = new List<int>();
             Debug.WriteLine("Listing bit positions set in bs2 but not in bs1");
             for (int f = 0; f < v.Count; f++)
             {
@@ -100,16 +100,16 @@ namespace NCDK.Fingerprints
         /// <param name="s">a bit vector</param>
         /// <param name="t">another bit vector</param>
         /// <returns>all differences between <paramref name="s"/> and <paramref name="t"/></returns>
-        public static ICollection<int> Differences(BitArray s, BitArray t)
+        public static IReadOnlyCollection<int> Differences(BitArray s, BitArray t)
         {
-            BitArray u = (BitArray)s.Clone();
-            BitArray v = (BitArray)t.Clone();
+            var u = (BitArray)s.Clone();
+            var v = (BitArray)t.Clone();
             var len = Math.Max(u.Length, v.Length);
             if (u.Length < len) u.Length = len;
             if (v.Length < len) v.Length = len;
             u.Xor(v);
 
-            ICollection<int> differences = new SortedSet<int>();
+            var differences = new SortedSet<int>();
 
             for (int i = BitArrays.NextSetBit(u, 0); i >= 0; i = BitArrays.NextSetBit(u, i + 1))
             {
@@ -125,8 +125,8 @@ namespace NCDK.Fingerprints
         /// </summary>
         /// <param name="features">features to include</param>
         /// <returns>the continuous fingerprint</returns>
-        /// <seealso cref="MakeBitFingerprint(IDictionary{string, int}, int, int)"/>
-        public static IBitFingerprint MakeBitFingerprint(IDictionary<string, int> features)
+        /// <seealso cref="MakeBitFingerprint(IReadOnlyDictionary{string, int}, int, int)"/>
+        public static IBitFingerprint MakeBitFingerprint(IReadOnlyDictionary<string, int> features)
         {
             return MakeBitFingerprint(features, 1024, 1);
         }
@@ -138,8 +138,8 @@ namespace NCDK.Fingerprints
         /// <param name="features">features to include</param>
         /// <param name="len">fingerprint length</param>
         /// <returns>the continuous fingerprint</returns>
-        /// <seealso cref="MakeBitFingerprint(IDictionary{string, int}, int, int)"/>
-        public static IBitFingerprint MakeBitFingerprint(IDictionary<string, int> features, int len)
+        /// <seealso cref="MakeBitFingerprint(IReadOnlyDictionary{string, int}, int, int)"/>
+        public static IBitFingerprint MakeBitFingerprint(IReadOnlyDictionary<string, int> features, int len)
         {
             return MakeBitFingerprint(features, len, 1);
         }
@@ -152,16 +152,16 @@ namespace NCDK.Fingerprints
         /// <param name="len">fingerprint length</param>
         /// <param name="bits">number of bits to set for each pattern</param>
         /// <returns>the continuous fingerprint</returns>
-        public static IBitFingerprint MakeBitFingerprint(IDictionary<string, int> features, int len, int bits)
+        public static IBitFingerprint MakeBitFingerprint(IReadOnlyDictionary<string, int> features, int len, int bits)
         {
-            BitSetFingerprint fingerprint = new BitSetFingerprint(len);
+            var fingerprint = new BitSetFingerprint(len);
             foreach (var feature in features.Keys)
             {
                 int hash = feature.GetHashCode();
                 fingerprint.Set((int)((uint)hash % (uint)len));
                 for (int i = 1; i < bits; i++)
                 {
-                    Random rand = new Random(hash);
+                    var rand = new Random(hash);
                     fingerprint.Set(hash = rand.Next(len));
                 }
             }
@@ -173,7 +173,7 @@ namespace NCDK.Fingerprints
         /// </summary>
         /// <param name="features">features to include</param>
         /// <returns>the continuous fingerprint</returns>
-        public static ICountFingerprint MakeCountFingerprint(IDictionary<string, int> features)
+        public static ICountFingerprint MakeCountFingerprint(IReadOnlyDictionary<string, int> features)
         {
             return new IntArrayCountFingerprint(features);
         }

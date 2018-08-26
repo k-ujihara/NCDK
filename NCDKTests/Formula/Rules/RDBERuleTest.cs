@@ -18,6 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 
@@ -27,7 +28,7 @@ namespace NCDK.Formula.Rules
     [TestClass()]
     public class RDBERuleTest : FormulaRuleTest
     {
-        private static readonly IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = ChemObjectBuilder.Instance;
         protected override Type RuleClass => typeof(RDBERule);
 
         [TestMethod()]
@@ -42,7 +43,7 @@ namespace NCDK.Formula.Rules
         {
             IRule rule = new RDBERule();
             var objects = rule.Parameters;
-            Assert.AreEqual(2, objects.Length);
+            Assert.AreEqual(2, objects.Count);
 
             double min = (double)objects[0];
             double max = (double)objects[1];
@@ -61,7 +62,7 @@ namespace NCDK.Formula.Rules
             rule.Parameters = parameters;
 
             var objects = rule.Parameters;
-            Assert.AreEqual(2, objects.Length);
+            Assert.AreEqual(2, objects.Count);
 
             double min = (double)objects[0];
             double max = (double)objects[1];

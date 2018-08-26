@@ -20,6 +20,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+using System.Globalization;
+
 namespace NCDK.Groups
 {
     // @author maclean
@@ -51,7 +53,7 @@ namespace NCDK.Groups
 
         public override string ToString()
         {
-            return value.ToString();
+            return value.ToString(NumberFormatInfo.InvariantInfo);
         }
     }
 }

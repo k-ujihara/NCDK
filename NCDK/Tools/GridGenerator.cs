@@ -172,7 +172,7 @@ namespace NCDK.Tools
         /// <summary>
         /// Method initialise the given Grid points with a value.
         /// </summary>
-        public double[][][] InitializeGrid(double[][][] Grid, double value)
+        public static double[][][] InitializeGrid(double[][][] Grid, double value)
         {
             for (int i = 0; i < Grid.Length; i++)
             {

@@ -51,8 +51,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.dictref qsar-descriptors:atomDegree
     public partial class AtomDegreeDescriptor : IAtomicDescriptor
     {
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomDegree",
                 typeof(AtomDegreeDescriptor).FullName, "The Chemistry Development Kit");
@@ -60,7 +60,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the AtomDegreeDescriptor object.
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "aNeg" };
 
@@ -76,9 +76,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
             var neighboors = container.GetConnectedAtoms(atom);
             foreach (var neighboor in neighboors)
             {
-                if (!neighboor.Symbol.Equals("H")) atomDegree += 1;
+                if (!string.Equals(neighboor.Symbol, "H", StringComparison.Ordinal))
+                    atomDegree += 1;
             }
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(atomDegree), DescriptorNames);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(atomDegree), DescriptorNames);
         }
 
         /// <summary>
@@ -92,8 +93,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public object GetParameterType(string name) => null;
-
-        
+        public object GetParameterType(string name) => null;        
     }
 }

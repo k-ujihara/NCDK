@@ -19,7 +19,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Formula;
 using NCDK.IO;
 using NCDK.Templates;
@@ -47,7 +47,7 @@ namespace NCDK.Tools.Manipulator
         {
             try
             {
-                ifac = Isotopes.Instance;
+                ifac = BODRIsotopeFactory.Instance;
             }
             catch (IOException e)
             {
@@ -290,8 +290,8 @@ namespace NCDK.Tools.Manipulator
 
             Assert.AreEqual(28, MolecularFormulaManipulator.GetAtomCount(mf2));
             Assert.AreEqual(2, mf2.Isotopes.Count());
-            IIsotope carbon = Isotopes.Instance.GetMajorIsotope("C");
-            IIsotope hydrogen = Isotopes.Instance.GetMajorIsotope("H");
+            IIsotope carbon = BODRIsotopeFactory.Instance.GetMajorIsotope("C");
+            IIsotope hydrogen = BODRIsotopeFactory.Instance.GetMajorIsotope("H");
             double totalMass = carbon.ExactMass.Value * 11;
             totalMass += hydrogen.ExactMass.Value * 17;
             Assert.AreEqual(totalMass, MolecularFormulaManipulator.GetTotalExactMass(mf2), 0.0000001);
@@ -380,8 +380,8 @@ namespace NCDK.Tools.Manipulator
             formula.Add(builder.NewIsotope("Cl"));
 
             double expectedMass = 0.0;
-            expectedMass += Isotopes.Instance.GetNaturalMass(builder.NewElement("C"));
-            expectedMass += Isotopes.Instance.GetNaturalMass(builder.NewElement("Cl"));
+            expectedMass += BODRIsotopeFactory.Instance.GetNaturalMass(builder.NewElement("C"));
+            expectedMass += BODRIsotopeFactory.Instance.GetNaturalMass(builder.NewElement("Cl"));
 
             double totalExactMass = MolecularFormulaManipulator.GetNaturalExactMass(formula);
             Assert.AreEqual(expectedMass, totalExactMass, 0.000001);
@@ -406,8 +406,8 @@ namespace NCDK.Tools.Manipulator
             formula.Add(builder.NewIsotope("H"), 4);
 
             double expectedMass = 0.0;
-            expectedMass += Isotopes.Instance.GetMajorIsotope("C").ExactMass.Value;
-            expectedMass += 4.0 * Isotopes.Instance.GetMajorIsotope("H").ExactMass.Value;
+            expectedMass += BODRIsotopeFactory.Instance.GetMajorIsotope("C").ExactMass.Value;
+            expectedMass += 4.0 * BODRIsotopeFactory.Instance.GetMajorIsotope("H").ExactMass.Value;
 
             double totalExactMass = MolecularFormulaManipulator.GetMajorIsotopeMass(formula);
             Assert.AreEqual(expectedMass, totalExactMass, 0.000001);
@@ -780,7 +780,7 @@ namespace NCDK.Tools.Manipulator
         {
             string mf = "C2H4";
             IAtomContainer atomContainer = MolecularFormulaManipulator.GetAtomContainer(mf,
-                    Default.ChemObjectBuilder.Instance);
+                    ChemObjectBuilder.Instance);
             Assert.AreEqual(6, atomContainer.Atoms.Count);
         }
 
@@ -797,9 +797,9 @@ namespace NCDK.Tools.Manipulator
             Assert.IsNotNull(ac.Atoms[0].AtomicNumber);
             foreach (var atom in ac.Atoms)
             {
-                if ("C".Equals(atom.Symbol))
+                if (string.Equals("C", atom.Symbol, StringComparison.Ordinal))
                     Assert.AreEqual(6, atom.AtomicNumber.Value);
-                else if ("H".Equals(atom.Symbol))
+                else if (string.Equals("H", atom.Symbol, StringComparison.Ordinal))
                     Assert.AreEqual(1, atom.AtomicNumber.Value);
                 else
                     Assert.Fail("Unexcepted element: " + atom.Symbol);
@@ -950,7 +950,7 @@ namespace NCDK.Tools.Manipulator
                 // The "odd one out": an unspecified R-group
                 "R"};
 
-            string[] arrayGenerated = MolecularFormulaManipulator.OrderEle;
+            var arrayGenerated = MolecularFormulaManipulator.OrderEle;
             var listGenerated = arrayGenerated.ToList();
             Assert.AreEqual(113, listGenerated.Count());
 
@@ -998,7 +998,7 @@ namespace NCDK.Tools.Manipulator
 
             // previously performed inside SmilesParser
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            CDKHydrogenAdder.GetInstance(Default.ChemObjectBuilder.Instance).AddImplicitHydrogens(mol);
+            CDKHydrogenAdder.GetInstance(ChemObjectBuilder.Instance).AddImplicitHydrogens(mol);
 
             IMolecularFormula mf = MolecularFormulaManipulator.GetMolecularFormula(mol);
             double exactMass = MolecularFormulaManipulator.GetTotalExactMass(mf);
@@ -1164,7 +1164,7 @@ namespace NCDK.Tools.Manipulator
             IAtomContainer mol = mols[0];
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            CDKHydrogenAdder ha = CDKHydrogenAdder.GetInstance(Default.ChemObjectBuilder.Instance);
+            CDKHydrogenAdder ha = CDKHydrogenAdder.GetInstance(ChemObjectBuilder.Instance);
             ha.AddImplicitHydrogens(mol);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
 
@@ -1249,7 +1249,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void NoNullPointerForStaticIsotopes()
         {
-            Isotopes isotopes = Isotopes.Instance;
+            BODRIsotopeFactory isotopes = BODRIsotopeFactory.Instance;
             IIsotope carbon = isotopes.GetMajorIsotope("C");
             MolecularFormula mf = new MolecularFormula();
             mf.Add(carbon, 10);
@@ -1333,12 +1333,12 @@ namespace NCDK.Tools.Manipulator
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             IMolecularFormula mf = bldr.NewMolecularFormula();
             // [C6DH4O]- (parser not good enough ATM so need to create like this)
-            IIsotope deuterium = Isotopes.Instance.GetIsotope("H", 2);
-            IIsotope hydrogen = Isotopes.Instance.GetMajorIsotope(1);
+            IIsotope deuterium = BODRIsotopeFactory.Instance.GetIsotope("H", 2);
+            IIsotope hydrogen = BODRIsotopeFactory.Instance.GetMajorIsotope(1);
             mf.Add(deuterium, 1);
             mf.Add(hydrogen, 4);
-            mf.Add(Isotopes.Instance.GetMajorIsotope(6), 6);
-            mf.Add(Isotopes.Instance.GetMajorIsotope(8), 1);
+            mf.Add(BODRIsotopeFactory.Instance.GetMajorIsotope(6), 6);
+            mf.Add(BODRIsotopeFactory.Instance.GetMajorIsotope(8), 1);
             mf.Charge = -1;
             Assert.IsTrue(MolecularFormulaManipulator.AdjustProtonation(mf, +1));
             Assert.AreEqual("C6H6O", MolecularFormulaManipulator.GetString(mf));

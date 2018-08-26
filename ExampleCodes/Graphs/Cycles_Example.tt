@@ -18,7 +18,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region <#= nc.Name #>
-                ICycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -40,13 +40,13 @@ namespace NCDK.Graphs
             {
                 #region Or6
                 // all cycles or all cycles size <= 6
-                ICycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(6));
+                ICycleFinder cf = Cycles.Or(Cycles.AllSimpleFinder, Cycles.GetAllFinder(6));
                 #endregion
             }
             {
                 #region OrARE
                 // all cycles or relevant or essential
-                ICycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.Or(Cycles.RelevantFinder, Cycles.EssentialFinder));
+                ICycleFinder cf = Cycles.Or(Cycles.AllSimpleFinder, Cycles.Or(Cycles.RelevantFinder, Cycles.EssentialFinder));
                 #endregion
             }
 
@@ -116,7 +116,7 @@ namespace NCDK.Graphs
 <#+
     static IList<NameComment> ncs = new List<NameComment>()
     {
-        new NameComment("AllFinder", "handle error - note it is common that finding all simple cycles in chemical graphs is intractable"),
+        new NameComment("AllSimpleFinder", "handle error - note it is common that finding all simple cycles in chemical graphs is intractable"),
         new NameComment("MCB", "ignore error - MCB should never be intractable"),
         new NameComment("Relevant", "ignore error - there may be an exponential number of cycles but this is not currently checked"),
         new NameComment("Essential", "ignore error - essential cycles do not check tractability"),

@@ -12,19 +12,21 @@ namespace NCDK.Modelings.Builder3D
     // @cdk.githash
     public class MMFF94ParametersCall
     {
-        private IDictionary<string, IList> pSet = null;
+        private IReadOnlyDictionary<string, IList> pSet = null;
 
         //private final static double DefaultBondLength = 1.5;
         //private final static double DEFAULT_ANGLE = 90;            // Only to test
         //private final static double DEFAULT_TORSION_ANGLE = 90;
 
-        public MMFF94ParametersCall() { }
+        public MMFF94ParametersCall()
+        {
+        }
 
         /// <summary>
         /// Initialize the AtomOrder class.
         /// </summary>
         /// <param name="parameterSet">Force Field parameter as Map</param>
-        public void Initialize(IDictionary<string, IList> parameterSet)
+        public void Initialize(IReadOnlyDictionary<string, IList> parameterSet)
         {
             pSet = parameterSet;
         }
@@ -52,7 +54,7 @@ namespace NCDK.Modelings.Builder3D
             // + code + ";" + id2 + " ;" + id1+" take default bon length:" +
             // DefaultBondLength); return DefaultBondLength; }
             
-            //Debug.WriteLine("dkey = " + dkey);
+            //Debug.WriteLine($"dkey = {dkey}");
             return (IList)pSet[dkey];
         }
 
@@ -81,7 +83,7 @@ namespace NCDK.Modelings.Builder3D
             // +" take default angle:" + DEFAULT_ANGLE); return
             // (Vector)[DEFAULT_ANGLE,0,0]; }
 
-            //Debug.WriteLine("angle key : " + akey);
+            //Debug.WriteLine($"angle key : {akey}");
             return (IList)pSet[akey];
         }
 
@@ -125,7 +127,7 @@ namespace NCDK.Modelings.Builder3D
             // + " ; " + id2 + " ; " + id3+" take default angle:" +
             // DEFAULT_ANGLE); return (Vector)[DEFAULT_ANGLE,0,0]; }
             
-            //Debug.WriteLine("akey : " + akey);
+            //Debug.WriteLine($"akey : {akey}");
             return (IList)pSet[akey];
         }
 
@@ -148,7 +150,7 @@ namespace NCDK.Modelings.Builder3D
             // "KEYErrorDefaultStretchBend:Unknown default stretch-bend key in pSet: "
             // + iR + " ; " + jR + " ; " + kR); }
 
-            //Debug.WriteLine("dfsbkey : " + dfsbkey);
+            //Debug.WriteLine($"dfsbkey : {dfsbkey}");
             return (IList)pSet[dfsbkey];
         }
 
@@ -192,7 +194,7 @@ namespace NCDK.Modelings.Builder3D
             // " take default torsion angle:" + DEFAULT_TORSION_ANGLES); return
             // DEFAULT_TORSION_ANGLE; }
           
-            //Debug.WriteLine("dkey = " + dkey);
+            //Debug.WriteLine($"dkey = {dkey}");
             return (IList)pSet[dkey];
         }
     }

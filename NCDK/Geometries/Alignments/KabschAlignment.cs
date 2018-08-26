@@ -64,7 +64,9 @@ namespace NCDK.Geometries.Alignments
         /// The rotation matrix (u).
         /// </summary>
         /// <see cref="Align"/>
-        public double[][] RotationMatrix { get; private set; }
+        public IReadOnlyList<IReadOnlyList<double>> RotationMatrix => rotationMatrix;
+
+        private double[][] rotationMatrix;
 
         /// <summary>
         /// The RMSD from the alignment.
@@ -73,13 +75,15 @@ namespace NCDK.Geometries.Alignments
         /// <see cref="Align"/>
         public double RMSD { get; private set; } = -1;
 
-        private Vector3[] p1, p2, rp;  // rp are the rotated coordinates
-        private double[] wts;
-        private int npoint;
-        private Vector3 cm1, cm2;
-        private double[] atwt1, atwt2;
+        private readonly Vector3[] p1, p2;
+        private Vector3[] rp;  // rp are the rotated coordinates
+        private readonly double[] wts;
+        private readonly int npoint;
+        private Vector3 cm1;
+        private Vector3 cm2;
+        private readonly double[] atwt1, atwt2;
 
-        private Vector3[] GetPoint3DArray(IList<IAtom> a)
+        private static Vector3[] GetPoint3DArray(IReadOnlyList<IAtom> a)
         {
             var p = new Vector3[a.Count];
             for (int i = 0; i < a.Count; i++)
@@ -89,7 +93,7 @@ namespace NCDK.Geometries.Alignments
             return p;
         }
 
-        private Vector3[] GetPoint3DArray(IAtomContainer ac)
+        private static Vector3[] GetPoint3DArray(IAtomContainer ac)
         {
             var p = new Vector3[ac.Atoms.Count];
             for (int i = 0; i < ac.Atoms.Count; i++)
@@ -99,13 +103,13 @@ namespace NCDK.Geometries.Alignments
             return p;
         }
 
-        private double[] GetAtomicMasses(IList<IAtom> a)
+        private static double[] GetAtomicMasses(IReadOnlyList<IAtom> a)
         {
             var am = new double[a.Count];
             IsotopeFactory factory = null;
             try
             {
-                factory = Isotopes.Instance;
+                factory = BODRIsotopeFactory.Instance;
             }
             catch (Exception e)
             {
@@ -121,13 +125,13 @@ namespace NCDK.Geometries.Alignments
             return am;
         }
 
-        private double[] GetAtomicMasses(IAtomContainer ac)
+        private static double[] GetAtomicMasses(IAtomContainer ac)
         {
             var am = new double[ac.Atoms.Count];
             IsotopeFactory factory = null;
             try
             {
-                factory = Isotopes.Instance;
+                factory = BODRIsotopeFactory.Instance;
             }
             catch (Exception e)
             {
@@ -143,7 +147,7 @@ namespace NCDK.Geometries.Alignments
             return am;
         }
 
-        private Vector3 GetCenterOfMass(Vector3[] p, double[] atwt)
+        private static Vector3 GetCenterOfMass(Vector3[] p, double[] atwt)
         {
             double x = 0;
             double y = 0;
@@ -166,19 +170,22 @@ namespace NCDK.Geometries.Alignments
         /// <param name="al1">An array of <see cref="IAtom"/> objects</param>
         /// <param name="al2">An array of <see cref="IAtom"/> objects. This array will have its coordinates rotated so that the RMDS is minimized to the coordinates of the first array</param>
         /// <exception cref="CDKException">if the number of Atom's are not the same in the two arrays</exception>
-        public KabschAlignment(IList<IAtom> al1, IList<IAtom> al2)
+        public KabschAlignment(IEnumerable<IAtom> al1, IEnumerable<IAtom> al2)
         {
-            if (al1.Count != al2.Count)
+            var _al1 = al1.ToList();
+            var _al2 = al2.ToList();
+
+            if (_al1.Count != _al2.Count)
             {
                 throw new CDKException("The Atom[]'s being aligned must have the same numebr of atoms");
             }
-            this.npoint = al1.Count;
-            this.p1 = GetPoint3DArray(al1);
-            this.p2 = GetPoint3DArray(al2);
+            this.npoint = _al1.Count;
+            this.p1 = GetPoint3DArray(_al1);
+            this.p2 = GetPoint3DArray(_al2);
             this.wts = new double[this.npoint];
 
-            this.atwt1 = GetAtomicMasses(al1);
-            this.atwt2 = GetAtomicMasses(al2);
+            this.atwt1 = GetAtomicMasses(_al1);
+            this.atwt2 = GetAtomicMasses(_al2);
 
             for (int i = 0; i < this.npoint; i++)
                 this.wts[i] = 1.0;
@@ -193,23 +200,27 @@ namespace NCDK.Geometries.Alignments
         /// <param name="wts">A vector atom weights.</param>
         /// <exception cref="CDKException">if the number of Atom's are not the same in the two arrays or
         ///                         length of the weight vector is not the same as the Atom arrays</exception>
-        public KabschAlignment(IList<IAtom> al1, IList<IAtom> al2, IList<double> wts)
+        public KabschAlignment(IEnumerable<IAtom> al1, IEnumerable<IAtom> al2, IEnumerable<double> wts)
         {
-            if (al1.Count != al2.Count)
+            var _al1 = al1.ToList();
+            var _al2 = al2.ToList();
+            var _wts = wts.ToList();
+
+            if (_al1.Count != _al2.Count)
             {
                 throw new CDKException("The Atom[]'s being aligned must have the same number of atoms");
             }
-            if (al1.Count != wts.Count)
+            if (_al1.Count != _wts.Count)
             {
                 throw new CDKException("Number of weights must equal number of atoms");
             }
-            this.npoint = al1.Count;
-            this.p1 = GetPoint3DArray(al1);
-            this.p2 = GetPoint3DArray(al2);
-            this.wts = wts.Take(this.npoint).ToArray();
+            this.npoint = _al1.Count;
+            this.p1 = GetPoint3DArray(_al1);
+            this.p2 = GetPoint3DArray(_al2);
+            this.wts = _wts.Take(this.npoint).ToArray();
 
-            this.atwt1 = GetAtomicMasses(al1);
-            this.atwt2 = GetAtomicMasses(al2);
+            this.atwt1 = GetAtomicMasses(_al1);
+            this.atwt2 = GetAtomicMasses(_al2);
         }
 
         /// <summary>
@@ -383,7 +394,7 @@ namespace NCDK.Geometries.Alignments
             b[2][2] = (b[0][0] * b[1][1]) - (b[0][1] * b[1][0]);
 
             // get the rotation matrix
-            double[][] tU = Arrays.CreateJagged<double>(3, 3);
+            var tU = Arrays.CreateJagged<double>(3, 3);
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
@@ -396,12 +407,12 @@ namespace NCDK.Geometries.Alignments
             }
 
             // take the transpose
-            RotationMatrix = Arrays.CreateJagged<double>(3, 3);
+            rotationMatrix = Arrays.CreateJagged<double>(3, 3);
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    RotationMatrix[i][j] = tU[j][i];
+                    rotationMatrix[i][j] = tU[j][i];
                 }
             }
 

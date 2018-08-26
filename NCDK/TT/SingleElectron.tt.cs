@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -45,11 +46,12 @@ namespace NCDK.Default
     // @cdk.githash
     // @cdk.keyword radical
     // @cdk.keyword electron, unpaired
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class SingleElectron
         : ElectronContainer, ISingleElectron, ICloneable
     {
-        protected IAtom atom;
+        private IAtom atom;
 
         /// <summary>
         /// Constructs an single electron orbital on an Atom.
@@ -137,11 +139,12 @@ namespace NCDK.Silent
     // @cdk.githash
     // @cdk.keyword radical
     // @cdk.keyword electron, unpaired
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class SingleElectron
         : ElectronContainer, ISingleElectron, ICloneable
     {
-        protected IAtom atom;
+        private IAtom atom;
 
         /// <summary>
         /// Constructs an single electron orbital on an Atom.

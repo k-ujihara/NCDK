@@ -222,7 +222,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="u"></param>
         /// <param name="t">the topology to add</param>
-        void AddTopology(int u, Topology t)
+        private void AddTopology(int u, Topology t)
         {
             g.AddTopology(t);
             if (t != Topology.Unknown)
@@ -364,7 +364,7 @@ namespace NCDK.Beam
             }
         }
 
-        private bool HasDirectional(Graph g, int v)
+        private static bool HasDirectional(Graph g, int v)
         {
             foreach (Edge e in g.GetEdges(v))
             {
@@ -374,7 +374,7 @@ namespace NCDK.Beam
             return false;
         }
 
-        private bool IsRedundantDirectionalEdge(Graph g, Edge edge, BitArray unspecified)
+        private static bool IsRedundantDirectionalEdge(Graph g, Edge edge, BitArray unspecified)
         {
             if (!edge.Bond.IsDirectional)
                 return false;
@@ -474,7 +474,6 @@ namespace NCDK.Beam
 
         private bool CheckDirectionalAssignment(Bond b, int u, int v, BitArray adjToDb)
         {
-
             foreach (var e in g.GetEdges(u))
             {
                 int x = e.Other(u);
@@ -534,7 +533,7 @@ namespace NCDK.Beam
             }
         }
 
-        private IAtom ToSubset(IAtom a)
+        private static IAtom ToSubset(IAtom a)
         {
             if (a.IsAromatic())
                 return AtomImpl.AromaticSubset.OfElement(a.Element);
@@ -542,7 +541,7 @@ namespace NCDK.Beam
                 return AtomImpl.AliphaticSubset.OfElement(a.Element);
         }
 
-        private bool Suppressible(IAtom a, int v)
+        private static bool Suppressible(IAtom a, int v)
         {
             if (!a.Subset
                     && a.Element.IsOrganic()

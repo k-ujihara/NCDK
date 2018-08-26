@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -41,10 +42,10 @@ namespace NCDK.Default
         : ElectronContainer, ILonePair, ICloneable
     {
         /// <summary>Number of electrons in the lone pair.</summary>
-        protected readonly int electronCount = 2;
+        private readonly int electronCount = 2;
 
         /// <summary>The atom with which this lone pair is associated.</summary>
-        protected IAtom atom;
+        private IAtom atom;
 
         /// <summary>
         /// Constructs an unconnected lone pair.
@@ -135,10 +136,10 @@ namespace NCDK.Silent
         : ElectronContainer, ILonePair, ICloneable
     {
         /// <summary>Number of electrons in the lone pair.</summary>
-        protected readonly int electronCount = 2;
+        private readonly int electronCount = 2;
 
         /// <summary>The atom with which this lone pair is associated.</summary>
-        protected IAtom atom;
+        private IAtom atom;
 
         /// <summary>
         /// Constructs an unconnected lone pair.

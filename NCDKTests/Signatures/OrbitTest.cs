@@ -31,7 +31,7 @@ namespace NCDK.Signatures
     [TestClass()]
     public class OrbitTest
     {
-        private string orbitLabel;
+        private readonly string orbitLabel;
         private Orbit orbit;
         private Orbit unsortedOrbit;
 
@@ -63,7 +63,7 @@ namespace NCDK.Signatures
         public void IteratorTest()
         {
             int count = 0;
-            List<int> indices = orbit.AtomIndices;
+            var indices = orbit.AtomIndices;
             foreach (var i in orbit)
             {
                 Assert.AreEqual(i, indices[count]);
@@ -76,8 +76,8 @@ namespace NCDK.Signatures
         public void TestClone()
         {
             Orbit clonedOrbit = (Orbit)orbit.Clone();
-            List<int> indices = orbit.AtomIndices;
-            List<int> clonedIndices = clonedOrbit.AtomIndices;
+            var indices = orbit.AtomIndices;
+            var clonedIndices = clonedOrbit.AtomIndices;
             Assert.IsTrue(Compares.AreDeepEqual(indices, clonedIndices));
             Assert.AreEqual(orbit.Label, clonedOrbit.Label);
         }
@@ -98,7 +98,7 @@ namespace NCDK.Signatures
             Assert.IsTrue(orbit.IsEmpty(), "Orbit should now be empty");
         }
 
-        private bool IsSorted(Orbit orbit)
+        private static bool IsSorted(Orbit orbit)
         {
             int prev = -1;
             foreach (var index in orbit)

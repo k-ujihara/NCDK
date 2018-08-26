@@ -18,7 +18,7 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 
 namespace NCDK.Isomorphisms.Matchers
 {
@@ -33,7 +33,7 @@ namespace NCDK.Isomorphisms.Matchers
 
         static SymbolSetQueryAtomTest()
         {
-            symbolSet = new SymbolSetQueryAtom(Default.ChemObjectBuilder.Instance);
+            symbolSet = new SymbolSetQueryAtom(ChemObjectBuilder.Instance);
             symbolSet.Symbols.Add("C");
             symbolSet.Symbols.Add("Fe");
         }

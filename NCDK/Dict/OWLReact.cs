@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -40,51 +41,38 @@ namespace NCDK.Dict
     // @cdk.githash
     public class OWLReact : EntryDictionary
     {
-        private static XNamespace rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-        private static XNamespace rdfsNS = "http://www.w3.org/2000/01/rdf-schema#";
+        private static readonly XNamespace rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+        private static readonly XNamespace rdfsNS = "http://www.w3.org/2000/01/rdf-schema#";
 
-        /// <summary>
-        /// Constructor of the <see cref="OWLReact"/> object.
-        /// </summary>
-        public OWLReact()
-            : base()
-        { }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="reader">The Reader</param>
-        /// <returns>The Dictionary</returns>
-        public new static EntryDictionary Unmarshal(TextReader reader)
+        public static new EntryDictionary Unmarshal(TextReader reader)
         {
             EntryDictionary dict = new OWLReact();
             try
             {
                 XDocument doc = XDocument.Load(reader);
                 XElement root = doc.Root;
-                Debug.WriteLine("Found root element: ", root.Name);
+                Debug.WriteLine($"Found root element: {root.Name}");
 
                 // Extract ownNS from root element
                 //            final string ownNS = root.GetBaseURI();
                 string ownNS = root.Attribute("xmlns").Value;
                 dict.NS = ownNS;
 
-                Debug.WriteLine("Found ontology namespace: ", ownNS);
+                Debug.WriteLine($"Found ontology namespace: {ownNS}");
 
                 // process the defined facts
                 var entries = root.Elements();
-                //Trace.TraceInformation("Found #elements in OWL dict:", entries.Count());
                 foreach (var entry in entries)
                 {
-                    if (entry.Name.NamespaceName.Equals(ownNS))
+                    if (entry.Name.NamespaceName.Equals(ownNS, StringComparison.Ordinal))
                     {
                         EntryReact dbEntry = Unmarshal(entry, ownNS);
                         dict.AddEntry(dbEntry);
-                        Debug.WriteLine("Added entry: ", dbEntry);
+                        Debug.WriteLine($"Added entry: {dbEntry}");
                     }
                     else
                     {
-                        Debug.WriteLine("Found a non-fact: ", entry.Name.ToString());
+                        Debug.WriteLine($"Found a non-fact: {entry.Name.ToString()}");
                     }
                 }
             }
@@ -96,7 +84,7 @@ namespace NCDK.Dict
             }
             catch (IOException ex)
             {
-                Trace.TraceError("Due to an IOException, the parser could not check:", ex.Message);
+                Trace.TraceError($"Due to an IOException, the parser could not check:{ex.Message}");
                 Debug.WriteLine(ex);
                 dict = null;
             }
@@ -107,28 +95,28 @@ namespace NCDK.Dict
         {
             // create a new entry by ID
             XAttribute id = entry.Attribute(rdfNS + "ID");
-            Debug.WriteLine("ID: ", id.Value);
+            Debug.WriteLine($"ID: {id.Value}");
             EntryReact dbEntry = new EntryReact(id.Value);
 
             // set additional, optional data
             XElement label = entry.Element(rdfsNS + "label");
-            Debug.WriteLine("label: ", label);
+            Debug.WriteLine($"label: {label}");
             if (label != null) dbEntry.Label = label.Value;
 
             dbEntry.ClassName = entry.Name.LocalName;
-            Debug.WriteLine("class name: ", dbEntry.ClassName);
+            Debug.WriteLine($"class name: {dbEntry.ClassName}");
 
             XElement definition = entry.Element(ownNS + "definition");
             if (definition != null)
             {
                 dbEntry.Definition = definition.Value;
-                Debug.WriteLine("definition name: ", definition.Value);
+                Debug.WriteLine($"definition name: {definition.Value}");
             }
             XElement description = entry.Element(ownNS + "description");
             if (description != null)
             {
                 dbEntry.Description = description.Value;
-                Debug.WriteLine("description name: ", description.Value);
+                Debug.WriteLine($"description name: {description.Value}");
             }
             var representations = entry.Elements(ownNS + "representation");
             foreach (var representation in representations)
@@ -156,7 +144,7 @@ namespace NCDK.Dict
                 {
                     string paramClass = p2.FirstAttribute.Value;
                     paramClass = paramClass.Substring(paramClass.IndexOf('#') + 1);
-                    Debug.WriteLine("parameter class: ", paramClass);
+                    Debug.WriteLine($"parameter class: {paramClass}");
 
                     string needsToSet = "";
                     string value = "";
@@ -188,11 +176,10 @@ namespace NCDK.Dict
             {
                 mechanism = md.FirstAttribute.Value;
                 mechanism = mechanism.Substring(mechanism.IndexOf('#') + 1);
-                Debug.WriteLine("mechanism name: ", mechanism);
+                Debug.WriteLine($"mechanism name: {mechanism}");
             }
 
             dbEntry.Mechanism = mechanism;
-            //        Console.Out.WriteLine("mechan: "+mechan);
 
             var exampleReact = entry.Elements(ownNS + "example-Reactions");
             foreach (var er in exampleReact)

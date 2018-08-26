@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Diagnostics;
 using System.Xml.Linq;
 
@@ -50,28 +51,28 @@ namespace NCDK.IO.CML
         public override void StartElement(CMLStack xpath, XElement element)
         {
             string name = element.Name.LocalName;
-            if (name.Equals("list"))
+            if (string.Equals(name, "list", StringComparison.Ordinal))
             {
                 Debug.WriteLine("Oke, JMOLANIMATION seems to be kicked in :)");
                 //            cdo.StartObject("Animation");
                 CurrentChemSequence = CurrentChemFile.Builder.NewChemSequence();
                 base.StartElement(xpath, element);
             }
-            else if (name.Equals("molecule"))
+            else if (string.Equals(name, "molecule", StringComparison.Ordinal))
             {
                 //            cdo.StartObject("Frame");
                 CurrentChemModel = CurrentChemFile.Builder.NewChemModel();
                 Debug.WriteLine("New frame being parsed.");
                 base.StartElement(xpath, element);
             }
-            else if (name.Equals("float"))
+            else if (string.Equals(name, "float", StringComparison.Ordinal))
             {
                 bool isEnergy = false;
                 Debug.WriteLine("FLOAT found!");
                 foreach (var att in element.Attributes())
                 {
-                    Debug.WriteLine(" att: ", att.Name.LocalName, " -> ", att.Value);
-                    if (att.Name.LocalName.Equals("title") && att.Value.Equals("FRAME_ENERGY"))
+                    Debug.WriteLine($" att: {att.Name.LocalName} -> {att.Value}");
+                    if (att.Name.LocalName.Equals("title", StringComparison.Ordinal) && att.Value.Equals("FRAME_ENERGY", StringComparison.Ordinal))
                     {
                         isEnergy = true;
                     }
@@ -103,13 +104,13 @@ namespace NCDK.IO.CML
                 current = Unknown;
                 frame_energy = "";
             }
-            else if (name.Equals("list"))
+            else if (string.Equals(name, "list", StringComparison.Ordinal))
             {
                 base.EndElement(xpath, element);
                 //            cdo.EndObject("Animation");
                 CurrentChemFile.Add(CurrentChemSequence);
             }
-            else if (name.Equals("molecule"))
+            else if (string.Equals(name, "molecule", StringComparison.Ordinal))
             {
                 base.EndElement(xpath, element);
                 //            cdo.EndObject("Frame");

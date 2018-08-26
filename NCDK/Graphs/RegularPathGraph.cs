@@ -49,7 +49,7 @@ namespace NCDK.Graphs
         private static readonly List<PathEdge> EmptyPathEdgeList = new List<PathEdge>();
 
         /// <summary>Path edges, indexed by their end points (incidence list).</summary>
-        private IList<PathEdge>[] graph;
+        private List<PathEdge>[] graph;
 
         /// <summary>Limit on the maximum Length of cycle to be found.</summary>
         private readonly int limit;
@@ -76,11 +76,11 @@ namespace NCDK.Graphs
 
             // check configuration
             if (!(ord > 2)) 
-                throw new ArgumentOutOfRangeException(nameof(graph), "graph was acyclic");
+                throw new ArgumentOutOfRangeException(nameof(mGraph), "graph was acyclic");
             if (!(limit >= 3 && limit <= ord))
                 throw new ArgumentOutOfRangeException(nameof(limit), "limit should be from 3 to |V|");
             if (!(ord < 64))
-                throw new ArgumentOutOfRangeException(nameof(graph), "graph has 64 or more atoms, use JumboPathGraph");
+                throw new ArgumentOutOfRangeException(nameof(mGraph), "graph has 64 or more atoms, use JumboPathGraph");
 
             for (int v = 0; v < ord; v++)
                 graph[v] = new List<PathEdge>();
@@ -120,9 +120,9 @@ namespace NCDK.Graphs
         /// </summary>
         /// <param name="x">a vertex</param>
         /// <returns>vertices incident to <paramref name="x"/></returns>
-        private IList<PathEdge> Remove(int x)
+        private IReadOnlyList<PathEdge> Remove(int x)
         {
-            IList<PathEdge> edges = graph[x];
+            var edges = graph[x];
             graph[x] = EmptyPathEdgeList; 
             return edges;
         }
@@ -133,27 +133,29 @@ namespace NCDK.Graphs
         /// <param name="edges">edges which are currently incident to <paramref name="x"/></param>
         /// <param name="x">a vertex in the graph</param>
         /// <returns>reduced edges</returns>
-        private IList<PathEdge> Combine(IList<PathEdge> edges, int x)
+        private static List<PathEdge> Combine(IReadOnlyList<PathEdge> edges, int x)
         {
             int n = edges.Count;
-            IList<PathEdge> reduced = new List<PathEdge>();
+            var reduced = new List<PathEdge>();
 
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
+            {
                 PathEdge e = edges[i];
-                for (int j = i + 1; j < n; j++) {
+                for (int j = i + 1; j < n; j++)
+                {
                     PathEdge f = edges[j];
-                    if (e.Disjoint(f)) reduced.Add(new ReducedEdge(e, f, x));
+                    if (e.Disjoint(f))
+                        reduced.Add(new ReducedEdge(e, f, x));
                 }
             }
-
             return reduced;
         }
 
         /// <inheritdoc/>
         public override void Remove(int x, IList<int[]> cycles)
         {
-            IList<PathEdge> edges = Remove(x);
-            IList<PathEdge> reduced = Combine(edges, x);
+            var edges = Remove(x);
+            var reduced = Combine(edges, x);
 
             foreach (PathEdge e in reduced)
             {

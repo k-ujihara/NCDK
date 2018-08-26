@@ -1,6 +1,7 @@
 ﻿
 
 
+
 /*
  * Copyright (c) 2017 John Mayfield <jwmay@users.sf.net>
  *
@@ -183,13 +184,13 @@ namespace NCDK.Silent
     }
 
  
-		        [TestMethod()]
+                [TestMethod()]
         public override void TestSetAtoms_RemoveListener()
         {
             ChemObjectTestHelper.TestSetAtoms_RemoveListener(NewChemObject());
         }
 
-		        // Overwrite default methods: no notifications are expected!
+                // Overwrite default methods: no notifications are expected!
 
         [TestMethod()]
         public override void TestNotifyChanged()

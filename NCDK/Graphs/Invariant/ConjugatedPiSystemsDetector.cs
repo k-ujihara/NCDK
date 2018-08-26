@@ -27,7 +27,7 @@ namespace NCDK.Graphs.Invariant
     // @cdk.created  2004-09-17
     // @cdk.module   reaction
     // @cdk.todo add negatively charged atoms (e.g. O-) to the pi system
-    public class ConjugatedPiSystemsDetector
+    public static class ConjugatedPiSystemsDetector
     {
         /// <summary>
         ///  Detect all conjugated pi systems in an AtomContainer. This method returns a AtomContainerSet

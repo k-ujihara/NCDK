@@ -205,8 +205,8 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The maximum bond order found</returns>
         public static BondOrder GetMaximumBondOrder(IBond firstBond, IBond secondBond)
         {
-            if (firstBond == null || secondBond == null)
-                throw new ArgumentNullException("null instance of IBond provided");
+            if (firstBond == null) throw new ArgumentNullException(nameof(firstBond));
+            if (secondBond == null) throw new ArgumentNullException(nameof(secondBond));
             return GetMaximumBondOrder(firstBond.Order, secondBond.Order);
         }
 

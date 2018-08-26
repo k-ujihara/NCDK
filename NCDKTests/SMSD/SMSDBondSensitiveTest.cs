@@ -24,6 +24,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.Isomorphisms.Matchers;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.SMSD.Algorithms.VFLib;
 using NCDK.SMSD.Tools;
@@ -56,7 +57,7 @@ namespace NCDK.SMSD
         public void TestMatchCount()
         {
             Isomorphism smsd = new Isomorphism(Algorithm.VFLibMCS, true);
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer query = sp.ParseSmiles("CC");
             IAtomContainer target = sp.ParseSmiles("C1CCC12CCCC2");
 
@@ -214,7 +215,7 @@ namespace NCDK.SMSD
         //    [TestMethod()]
         //    public void TestSingleMappingTesting() {
         //
-        //        SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+        //        SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
         //        IAtomContainer atomContainer = sp.ParseSmiles("C");
         //        IQueryAtomContainer query = QueryAtomContainerCreator.CreateBasicQueryContainer(atomContainer);
         //
@@ -245,7 +246,7 @@ namespace NCDK.SMSD
         [TestCategory("SlowTest")]
         public void TestSMSDAdpAtpSubgraph()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             string adp = "NC1=NC=NC2=C1N=CN2[C@@H]1O[C@H](COP(O)(=O)OP(O)(O)=O)[C@@H](O)[C@H]1O";
             string atp = "NC1=NC=NC2=C1N=CN2[C@@H]1O[C@H](COP(O)(=O)OP(O)(=O)OP(O)(O)=O)[C@@H](O)[C@H]1O";
             IAtomContainer mol1 = sp.ParseSmiles(adp);
@@ -279,7 +280,7 @@ namespace NCDK.SMSD
         [TestCategory("SlowTest")]
         public void TestSMSDLargeSubgraph()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             string c03374 = "CC1=C(C=C)\\C(NC1=O)=C" + "\\C1=C(C)C(CCC(=O)O[C@@H]2O[C@@H]"
                     + "([C@@H](O)[C@H](O)[C@H]2O)C(O)=O)" + "=C(CC2=C(CCC(O)=O)C(C)=C(N2)" + "\\C=C2NC(=O)C(C=C)=C/2C)N1";
 

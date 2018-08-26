@@ -46,21 +46,21 @@ namespace NCDK.Stereo
         {
         }
 
-        public DoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, StereoElement.Configuration configure)
-            : base(stereoBond, ligandBonds.ToList(), new StereoElement(StereoElement.Classes.CisTrans, configure))
+        public DoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, StereoConfigurations configure)
+            : base(stereoBond, ligandBonds.ToList(), new StereoElement(StereoClass.CisTrans, configure))
         {
         }
 
         public DoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, StereoElement stereo)
-            : this(stereoBond, ligandBonds, stereo.Configure)
+            : this(stereoBond, ligandBonds, stereo.Configuration)
         {
         }
 
-        public virtual IReadOnlyList<IBond> Bonds => new ReadOnlyCollection<IBond>(new List<IBond>(Carriers));
+        public virtual IReadOnlyList<IBond> Bonds => Carriers;
         public virtual IBond StereoBond => Focus;
         public virtual DoubleBondConformation Stereo => Configure.ToConformation();
 
-        protected override IStereoElement<IBond, IBond> Create(IBond focus, IList<IBond> carriers, StereoElement stereo)
+        protected override IStereoElement<IBond, IBond> Create(IBond focus, IReadOnlyList<IBond> carriers, StereoElement stereo)
         {
             return new DoubleBondStereochemistry(focus, carriers, stereo);
         }

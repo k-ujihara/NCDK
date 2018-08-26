@@ -2,14 +2,13 @@
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=true,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 namespace NCDK.Smiles.SMARTS.Parser
 {
-    public
-    class SimpleNode : Node
+    internal class SimpleNode : INode
     {
-        protected Node parent;
-        protected Node[] children;
-        protected int id;
-        protected object value;
-        protected SMARTSParser parser;
+        private INode parent;
+        private INode[] children;
+        private readonly int id;
+        private object value;
+        private readonly SMARTSParser parser;
 
         public SimpleNode(int i)
         {
@@ -30,18 +29,18 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
         }
 
-        public void JjtSetParent(Node n) { parent = n; }
-        public Node JjtGetParent() { return parent; }
+        public void JjtSetParent(INode n) { parent = n; }
+        public INode JjtGetParent() { return parent; }
 
-        public void JjtAddChild(Node n, int i)
+        public void JjtAddChild(INode n, int i)
         {
             if (children == null)
             {
-                children = new Node[i + 1];
+                children = new INode[i + 1];
             }
             else if (i >= children.Length)
             {
-                Node[] c = new Node[i + 1];
+                INode[] c = new INode[i + 1];
                 System.Array.Copy(children, 0, c, 0, children.Length);
                 children = c;
             }
@@ -51,7 +50,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         public void JjtRemoveChild(int i)
         {
             if (i >= children.Length) return;
-            Node[] c = new Node[children.Length - 1];
+            INode[] c = new INode[children.Length - 1];
             System.Array.Copy(children, 0, c, 0, i);
             if (i < c.Length)
             {
@@ -60,7 +59,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             children = c;
         }
 
-        public Node JjtGetChild(int i)
+        public INode JjtGetChild(int i)
         {
             return children[i];
         }

@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -33,8 +34,6 @@ namespace NCDK.QSAR.Descriptors
     {
         protected virtual T Descriptor { get; set; }
 
-        public DescriptorTest() { }
-
         public virtual void SetDescriptor(Type descriptorClass)
         {
             if (Descriptor == null)
@@ -48,20 +47,19 @@ namespace NCDK.QSAR.Descriptors
         /// Makes sure that the extending class has set the <see cref="Descriptor"/>.
         /// Each extending class should have this bit of code:
         /// <code>
-        /// public void TestClassName() {
+        /// public void TestClassName() 
+        /// {
         ///   // Pass a Type, not an Object!
         ///   SetDescriptor(typeof(SomeDescriptor));
         /// }
         /// </code>
-        /// <para>
         /// The unit tests in the extending class may use this instance, but
         /// are not required.
-        /// </para>
         /// </summary>
         [TestMethod()]
         public void TestHasSetSuperDotDescriptor()
         {
-            Assert.IsNotNull(Descriptor, "The extending class must set the super.descriptor in its SetUp() method.");
+            Assert.IsNotNull(Descriptor, $"The extending class must set the super.descriptor in its {nameof(SetDescriptor)}(Type) method.");
         }
 
         /// <summary>
@@ -71,7 +69,7 @@ namespace NCDK.QSAR.Descriptors
         public void TestGetParameterNames()
         {
             var paramNames = Descriptor.ParameterNames;
-            if (paramNames == null) paramNames = new string[0];
+            if (paramNames == null) paramNames = Array.Empty<string>();
             foreach (var paramName in paramNames)
             {
                 Assert.IsNotNull("A parameter name must not be null.", paramName);
@@ -89,7 +87,7 @@ namespace NCDK.QSAR.Descriptors
                 Assert.AreEqual(0,
                         Descriptor.ParameterNames == null ? 0 : Descriptor.ParameterNames.Count,
                         "For all parameters a default or actual value must be returned.");
-                parameters = new object[0];
+                parameters = Array.Empty<object>();
             }
             foreach (var param in parameters)
             {
@@ -99,23 +97,24 @@ namespace NCDK.QSAR.Descriptors
 
         // @cdk.bug 1862137
         [TestMethod()]
-        public void TestGetParameterType_String()
+        public void TestGetParameterTypeString()
         {
             var paramNames = Descriptor.ParameterNames;
-            if (paramNames == null) paramNames = new string[0];
+            if (paramNames == null)
+                paramNames = Array.Empty<string>();
+
             var parameters = Descriptor.Parameters;
-            if (parameters == null) parameters = new object[0];
+            if (parameters == null)
+                parameters = Array.Empty<object>();
 
             for (int i = 0; i < paramNames.Count; i++)
             {
                 object type = Descriptor.GetParameterType(paramNames[i]);
                 Assert.IsNotNull(type,
-                    "The GetParameterType(string) return type is null for the " + "parameter: "
-                        + paramNames[i]);
+                    $"The GetParameterType(string) return type is null for the parameter: {paramNames[i]}");
                 Assert.AreEqual(
                     type.GetType().FullName, parameters[i].GetType().FullName,
-                    "The GetParameterType(string) return type is not consistent "
-                        + "with the Parameters types for parameter " + i);
+                    $"The GetParameterType(string) return type is not consistent with the Parameters types for parameter {i}");
             }
         }
 
@@ -124,13 +123,13 @@ namespace NCDK.QSAR.Descriptors
         {
             var paramNames = Descriptor.ParameterNames;
             //      FIXME: see TestGetParameterNames() comment on the same line
-            if (paramNames == null) paramNames = new string[0];
+            if (paramNames == null) paramNames = Array.Empty<string>();
             var parameters = Descriptor.Parameters;
             //      FIXME: see TestGetParameters() comment on the same line
-            if (parameters == null) parameters = new object[0];
+            if (parameters == null) parameters = Array.Empty<object>();
 
             Assert.AreEqual(
-                paramNames.Count, parameters.Length,
+                paramNames.Count, parameters.Count,
                 "The number of returned parameter names must equate the number of returned parameters");
         }
 
@@ -159,16 +158,16 @@ namespace NCDK.QSAR.Descriptors
         /// but one based on a repository blob or commit.
         /// </summary>
         [TestMethod()]
-        public void TestGetSpecification_IdentifierNonDefault()
+        public void TestGetSpecificationIdentifierNonDefault()
         {
             IImplementationSpecification spec = Descriptor.Specification;
             Assert.AreNotSame("$Id$", spec.ImplementationIdentifier);
         }
 
         [TestMethod()]
-        public void TestSetParameters_arrayObject()
+        public void TestSetParametersArrayObject()
         {
-            Object[] defaultParams = Descriptor.Parameters;
+            var defaultParams = Descriptor.Parameters;
             Descriptor.Parameters = defaultParams;
         }
 

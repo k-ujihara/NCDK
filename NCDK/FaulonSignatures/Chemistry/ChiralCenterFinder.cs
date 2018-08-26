@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.FaulonSignatures.Chemistry
 {
-    public class ChiralCenterFinder
+    public static class ChiralCenterFinder
     {
         public static List<int> FindTetrahedralChiralCenters(Molecule molecule)
         {
@@ -22,12 +23,12 @@ namespace NCDK.FaulonSignatures.Chemistry
                     string s1 = signatureStrings[connected[1]];
                     string s2 = signatureStrings[connected[2]];
                     string s3 = signatureStrings[connected[3]];
-                    if (s0.Equals(s1)
-                     || s0.Equals(s2)
-                     || s0.Equals(s3)
-                     || s1.Equals(s2)
-                     || s1.Equals(s3)
-                     || s2.Equals(s3))
+                    if (string.Equals(s0, s1, StringComparison.Ordinal)
+                     || string.Equals(s0, s2, StringComparison.Ordinal)
+                     || string.Equals(s0, s3, StringComparison.Ordinal)
+                     || string.Equals(s1, s2, StringComparison.Ordinal)
+                     || string.Equals(s1, s3, StringComparison.Ordinal)
+                     || string.Equals(s2, s3, StringComparison.Ordinal))
                     {
                         continue;
                     }

@@ -19,6 +19,7 @@
 
 using NCDK.Tools;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -49,7 +50,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => null;
 
         /// <inheritdoc/>
-        public override string[] NameExtensions => new string[0];
+        public override IReadOnlyList<string> NameExtensions => Array.Empty<string>();
 
         /// <inheritdoc/>
         public override string ReaderClassName { get; } = typeof(InChIPlainTextReader).FullName;

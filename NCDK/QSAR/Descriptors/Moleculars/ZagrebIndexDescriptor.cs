@@ -18,6 +18,7 @@
  */
 
 using NCDK.QSAR.Results;
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -44,8 +45,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the ZagrebIndexDescriptor object.
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#zagrebIndex",
                 typeof(ZagrebIndexDescriptor).FullName,
@@ -54,7 +55,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the ZagrebIndexDescriptor object.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
@@ -68,19 +69,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double zagreb = 0;
             foreach (var atom in atomContainer.Atoms)
             {
-                if (atom.Symbol.Equals("H")) continue;
+                if (string.Equals(atom.Symbol, "H", StringComparison.Ordinal)) continue;
                 int atomDegree = 0;
                 var neighbours = atomContainer.GetConnectedAtoms(atom);
                 foreach (var neighbour in neighbours)
                 {
-                    if (!neighbour.Symbol.Equals("H"))
+                    if (!string.Equals(neighbour.Symbol, "H", StringComparison.Ordinal))
                     {
                         atomDegree += 1;
                     }
                 }
                 zagreb += (atomDegree * atomDegree);
             }
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(zagreb), DescriptorNames);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(zagreb), DescriptorNames);
         }
 
         /// <inheritdoc/>

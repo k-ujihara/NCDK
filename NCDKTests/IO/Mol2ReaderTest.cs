@@ -22,7 +22,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Diagnostics;
@@ -370,7 +370,7 @@ namespace NCDK.IO
             }
         }
 
-        private void CheckMol(StringBuilder buf)
+        private static void CheckMol(StringBuilder buf)
         {
             StringReader sr = new StringReader(buf.ToString());
             Mol2Reader reader = new Mol2Reader(sr);

@@ -21,7 +21,7 @@ namespace NCDK.SMSD.Labelling
             for (int i = 0; i < n; i++)
             {
                 IAtom a = container.Atoms[i];
-                int x = (int)a.GetProperty<long>(InvPair.CanonicalLabelKey);
+                int x = (int)a.GetProperty<long>(InvPair.CanonicalLabelPropertyKey);
                 perm[i] = x - 1;
             }
             return perm;

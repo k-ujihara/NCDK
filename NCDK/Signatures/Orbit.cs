@@ -37,31 +37,18 @@ namespace NCDK.Signatures
     // @cdk.githash
     public class Orbit : IEnumerable<int>, ICloneable
     {
-        /// <summary>
-        /// The atom indices in this orbit
-        /// </summary>
-        private List<int> atomIndices;
-
-        /// <summary>
-        /// The label that all the atoms in the orbit share
-        /// </summary>
-        private string label;
-
-        /// <summary>
-        /// The maximum height of the signature string
-        /// </summary>
-        private int height;
-
+        private readonly List<int> atomIndices;
+        
         public Orbit(string label, int height)
         {
-            this.label = label;
+            this.Label = label;
             this.atomIndices = new List<int>();
-            this.height = height;
+            this.Height = height;
         }
 
         public IEnumerator<int> GetEnumerator()
         {
-            return this.atomIndices.GetEnumerator();
+            return this.AtomIndices.GetEnumerator();
             throw new NotImplementedException();
         }
 
@@ -72,8 +59,8 @@ namespace NCDK.Signatures
 
         public object Clone()
         {
-            Orbit orbit = new Orbit(this.label, this.height);
-            foreach (var i in this.atomIndices)
+            Orbit orbit = new Orbit(this.Label, this.Height);
+            foreach (var i in this.AtomIndices)
             {
                 orbit.atomIndices.Add(i);
             }
@@ -92,12 +79,12 @@ namespace NCDK.Signatures
         /// <summary>
         /// The height of the signature of this orbit.
         /// </summary>
-        public int Height => this.height;
+        public int Height { get; }
 
         /// <summary>
         /// All the atom indices as a list.
         /// </summary>
-        public List<int> AtomIndices => this.atomIndices;
+        public IReadOnlyList<int> AtomIndices => atomIndices;
 
         /// <summary>
         /// Adds an atom index to the orbit.
@@ -115,7 +102,7 @@ namespace NCDK.Signatures
         /// <returns> if it has this label</returns>
         public bool HasLabel(string otherLabel)
         {
-            return this.label.Equals(otherLabel);
+            return this.Label.Equals(otherLabel, StringComparison.Ordinal);
         }
 
         /// <summary>
@@ -124,13 +111,13 @@ namespace NCDK.Signatures
         /// <returns><see langword="true"/> if there are no atom indices in the orbit</returns>
         public bool IsEmpty()
         {
-            return !this.atomIndices.Any();
+            return !this.AtomIndices.Any();
         }
 
         /// <summary>
         /// The first atom index of the orbit.
         /// </summary>
-        public int FirstAtom => this.atomIndices[0];
+        public int FirstAtom => this.AtomIndices[0];
 
         /// <summary>
         /// Removes an atom index from the orbit.
@@ -144,7 +131,7 @@ namespace NCDK.Signatures
         /// <summary>
         /// The label of the orbit.
         /// </summary>
-        public string Label => this.label;
+        public string Label { get; }
 
         /// <summary>
         /// Checks to see if the orbit contains this atom index.
@@ -153,12 +140,12 @@ namespace NCDK.Signatures
         /// <returns><see langword="true"/> if the orbit contains this atom index</returns>
         public bool Contains(int atomIndex)
         {
-            return this.atomIndices.Contains(atomIndex);
+            return this.AtomIndices.Contains(atomIndex);
         }
 
         public override string ToString()
         {
-            return label + " " + Arrays.DeepToString(atomIndices.ToArray());
+            return Label + " " + Arrays.DeepToString(AtomIndices.ToArray());
         }
     }
 }

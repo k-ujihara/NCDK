@@ -1,6 +1,7 @@
 
 
 
+
 /* Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -28,7 +29,7 @@ namespace NCDK.Default
     /// <summary>
     /// Checks the functionality of the <see cref="PDBPolymer"/>.
     /// </summary>
-	[TestClass()]
+    [TestClass()]
     public class PDBPolymerTest : AbstractPDBPolymerTest
     {
         public override IChemObject NewChemObject()
@@ -118,7 +119,7 @@ namespace NCDK.Default
             monomers.MoveNext();
             Assert.AreEqual("CYS280", monomers.Current);
         }
-		
+        
     }
 }
 namespace NCDK.Silent
@@ -126,7 +127,7 @@ namespace NCDK.Silent
     /// <summary>
     /// Checks the functionality of the <see cref="PDBPolymer"/>.
     /// </summary>
-	[TestClass()]
+    [TestClass()]
     public class PDBPolymerTest : AbstractPDBPolymerTest
     {
         public override IChemObject NewChemObject()
@@ -216,15 +217,15 @@ namespace NCDK.Silent
             monomers.MoveNext();
             Assert.AreEqual("CYS280", monomers.Current);
         }
-		
+        
  
-		        [TestMethod()]
+                [TestMethod()]
         public override void TestSetAtoms_RemoveListener()
         {
             ChemObjectTestHelper.TestSetAtoms_RemoveListener(NewChemObject());
         }
 
-		        // Overwrite default methods: no notifications are expected!
+                // Overwrite default methods: no notifications are expected!
 
         [TestMethod()]
         public override void TestNotifyChanged()

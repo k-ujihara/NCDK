@@ -49,7 +49,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "xml" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "xml" };
 
         /// <inheritdoc/>
         public string ReaderClassName { get; } = typeof(PCCompoundXMLReader).FullName;
@@ -66,14 +66,17 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public DataFeatures RequiredDataFeatures => DataFeatures.None;
 
-        public MatchResult Matches(IList<string> lines)
+        public MatchResult Matches(IEnumerable<string> lines)
         {
-            MatchResult result = MatchResult.NO_MATCH;
-            for (int i = 0; i < lines.Count; i++)
+            MatchResult result = MatchResult.NoMatch;
+            int i = 0;
+            foreach (var line in lines)
             {
-                string line = lines[i];
-                if (line.Contains("<PC-Compound") && result == MatchResult.NO_MATCH) result = new MatchResult(true, this, i);
-                if (line.Contains("<PC-Compounds")) return MatchResult.NO_MATCH;
+                if (line.Contains("<PC-Compound") && result == MatchResult.NoMatch)
+                    result = new MatchResult(true, this, i);
+                if (line.Contains("<PC-Compounds"))
+                    return MatchResult.NoMatch;
+                i++;
             }
             return result;
         }

@@ -60,9 +60,9 @@ namespace NCDK.Tools.Diff
             {
                 return null;
             }
-            IAtomContainer firstAC = (IAtomContainer)first;
-            IAtomContainer secondAC = (IAtomContainer)second;
-            ChemObjectDifference totalDiff = new ChemObjectDifference("AtomContainerDiff");
+            var firstAC = (IAtomContainer)first;
+            var secondAC = (IAtomContainer)second;
+            var totalDiff = new ChemObjectDifference("AtomContainerDiff");
             totalDiff.AddChild(IntegerDifference.Construct("atomCount", firstAC.Atoms.Count, secondAC.Atoms.Count));
             if (firstAC.Atoms.Count == secondAC.Atoms.Count)
             {

@@ -16,7 +16,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Reactions.Types.Parameters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,8 +30,6 @@ namespace NCDK.Reactions.Types
     // @cdk.githash
     public abstract class AbstractRadicalSiteInitiationReaction : ReactionEngine, IReactionProcess
     {
-        public AbstractRadicalSiteInitiationReaction() { }
-
         /// <inheritdoc/>
         public abstract ReactionSpecification Specification { get; }
 
@@ -67,7 +67,7 @@ namespace NCDK.Reactions.Types
                                             && bondj.Order == BondOrder.Single)
                                     {
                                         IAtom atomk = bondj.GetOther(atomj);
-                                        if (atomk.IsReactiveCenter && atomk.Symbol.Equals(atomSymbol)
+                                        if (atomk.IsReactiveCenter && atomk.Symbol.Equals(atomSymbol, StringComparison.Ordinal)
                                                 && atomk.FormalCharge == 0)
                                         {
                                             var atomList = new List<IAtom>
@@ -100,7 +100,7 @@ namespace NCDK.Reactions.Types
             return setOfReactions;
         }
         
-        private void SetActiveCenters(IAtomContainer reactant, string atomSymbol, int charge)
+        private static void SetActiveCenters(IAtomContainer reactant, string atomSymbol, int charge)
         {
             foreach (var atomi in reactant.Atoms)
             {
@@ -120,7 +120,7 @@ namespace NCDK.Reactions.Types
                                     if (bondj.Order == BondOrder.Single)
                                     {
                                         IAtom atomk = bondj.GetOther(atomj);
-                                        if (atomk.Symbol.Equals(atomSymbol) && atomk.FormalCharge == 0)
+                                        if (atomk.Symbol.Equals(atomSymbol, StringComparison.Ordinal) && atomk.FormalCharge == 0)
                                         {
                                             atomi.IsReactiveCenter = true;
                                             atomj.IsReactiveCenter = true;

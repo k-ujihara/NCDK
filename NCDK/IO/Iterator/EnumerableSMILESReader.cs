@@ -57,12 +57,10 @@ namespace NCDK.IO.Iterator
         public const string BadSmilesInput = "bad.smiles.input";
 
         /// <summary>
-        /// Constructs a new EnumerableSMILESReader that can read Molecule from a given Reader.
+        /// Constructs a new <see cref="EnumerableSMILESReader"/> that can read molecule from a given reader.
         /// </summary>
         /// <param name="input">The Reader to read from</param>
         /// <param name="builder">The builder to use</param>
-        /// <seealso cref="Default.ChemObjectBuilder"/>
-        /// <seealso cref="Silent.ChemObjectBuilder"/>
         public EnumerableSMILESReader(TextReader input, IChemObjectBuilder builder)
         {
             sp = new SmilesParser(builder);
@@ -119,7 +117,7 @@ namespace NCDK.IO.Iterator
         /// </summary>
         /// <param name="line">input line</param>
         /// <returns>the suffix - or an empty line</returns>
-        private string Suffix(string line)
+        private static string Suffix(string line)
         {
             for (int i = 0; i < line.Length; i++)
             {

@@ -44,12 +44,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword descriptor
     public class SmallRingDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
-        private static readonly string[] NAMES = {"nSmallRings", // total number of small rings (of size 3 through 9)
+        private static readonly string[] NAMES = 
+        {
+            "nSmallRings", // total number of small rings (of size 3 through 9)
             "nAromRings", // total number of small aromatic rings
             "nRingBlocks", // total number of distinct ring blocks
             "nAromBlocks", // total number of "aromatically connected components"
             "nRings3", "nRings4", "nRings5", "nRings6", "nRings7", "nRings8", "nRings9" // individual breakdown of small rings
-                                        };
+        };
 
         private IAtomContainer mol;
         private int[][] atomAdj, bondAdj; // precalculated adjacencies
@@ -60,13 +62,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private bool[] piAtom;            // true for all atoms involved in a double bond
         private int[] implicitH;         // hydrogens in addition to those encoded
 
-        public SmallRingDescriptor() { }
+        public SmallRingDescriptor()
+        {
+        }
 
         /// <summary>
         /// Fetch descriptor specification.
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#smallRings",
                 typeof(SmallRingDescriptor).FullName,
@@ -75,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// parameters: empty array, there are none.
         /// </summary>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set { }
             get { return Array.Empty<object>(); }
@@ -170,7 +174,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 nRings8,
                 nRings9,
             };
-            return new DescriptorValue<ArrayResult<int>>(_Specification, ParameterNames, Parameters, result, NAMES);
+            return new DescriptorValue<ArrayResult<int>>(specification, ParameterNames, Parameters, result, NAMES);
         }
 
         // analyze the molecule graph, and build up the desired properties
@@ -204,7 +208,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             for (int n = 0; n < na; n++)
                 if (atomAdj[n] == null)
                 {
-                    atomAdj[n] = new int[0];
+                    atomAdj[n] = Array.Empty<int>();
                     bondAdj[n] = atomAdj[n];
                 }
 
@@ -218,14 +222,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 string el = atom.Symbol;
                 int hy = 0;
                 for (int i = 0; i < HYVALENCE_EL.Length; i++)
-                    if (el.Equals(HYVALENCE_EL[i]))
+                    if (el.Equals(HYVALENCE_EL[i], StringComparison.Ordinal))
                     {
                         hy = HYVALENCE_VAL[i];
                         break;
                     }
                 if (hy == 0) continue;
                 int ch = atom.FormalCharge.Value;
-                if (el.Equals("C")) ch = -Math.Abs(ch);
+                if (string.Equals(el, "C", StringComparison.Ordinal)) ch = -Math.Abs(ch);
                 int unpaired = 0; // (not current available, maybe introduce later)
                 hy += ch - unpaired;
                 for (int i = 0; i < bondAdj[n].Length; i++)
@@ -512,23 +516,23 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
 
             // figure out which atoms have a lone pair which is considered valid for aromaticity: if electrons[i]>=2, then it qualifies
-            int[] electrons = new int[na];
+            var electrons = new int[na];
             for (int n = 0; n < na; n++)
             {
-                IAtom atom = mol.Atoms[n];
-                int atno = atom.AtomicNumber.Value;
+                var atom = mol.Atoms[n];
+                var atno = atom.AtomicNumber.Value;
                 electrons[n] = (ELEMENT_BLOCKS[atno] == 2 ? ELEMENT_VALENCE[atno] : 0) - atom.FormalCharge.Value - implicitH[n];
             }
             for (int n = 0; n < nb; n++)
                 if (bondOrder[n] > 0)
                 {
-                    IBond bond = mol.Bonds[n];
+                    var bond = mol.Bonds[n];
                     electrons[mol.Atoms.IndexOf(bond.Atoms[0])] -= bondOrder[n];
                     electrons[mol.Atoms.IndexOf(bond.Atoms[1])] -= bondOrder[n];
                 }
 
             // pull out all of the small rings that could be upgraded to aromatic
-            List<int[]> rings = new List<int[]>();
+            var rings = new List<int[]>();
             foreach (var r in smallRings)
                 if (r.Length <= 7)
                 {
@@ -559,7 +563,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
                 for (int n = 0; n < rings.Count; n++)
                 {
-                    int[] r = rings[n];
+                    var r = rings[n];
                     int pairs = 0, maybe = 0;
                     for (int i = 0; i < r.Length; i++)
                     {
@@ -605,15 +609,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         // rebuild the graph using only aromatic bonds, and count the number of non-singleton connected components
         private int CountAromaticComponents()
         {
-            int na = mol.Atoms.Count;
-            int[][] graph = new int[na][];
+            var na = mol.Atoms.Count;
+            var graph = new int[na][];
             for (int n = 0; n < na; n++)
             {
                 for (int i = 0; i < atomAdj[n].Length; i++)
-                    if (bondArom[bondAdj[n][i]]) graph[n] = AppendInteger(graph[n], atomAdj[n][i]);
+                    if (bondArom[bondAdj[n][i]])
+                        graph[n] = AppendInteger(graph[n], atomAdj[n][i]);
             }
 
-            int[] cc = new int[na]; // -1=isolated, so ignore; 0=unassigned; >0=contained in a component
+            var cc = new int[na]; // -1=isolated, so ignore; 0=unassigned; >0=contained in a component
             int first = -1, high = 1;
             for (int n = 0; n < na; n++)
             {
@@ -625,7 +630,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     cc[n] = 1;
                 }
             }
-            if (first < 0) return 0; // all isolated
+            if (first < 0)
+                return 0; // all isolated
 
             while (true)
             {
@@ -633,7 +639,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     first++;
                 }
-                if (first >= na) break;
+                if (first >= na)
+                    break;
 
                 bool anything = false;
                 for (int i = first; i < na; i++)
@@ -648,16 +655,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             }
                         }
                     }
-                if (!anything) cc[first] = ++high;
+                if (!anything)
+                    cc[first] = ++high;
             }
             return high;
         }
 
         // convenience function for concatenating an integer
-        private int[] AppendInteger(int[] a, int v)
+        private static int[] AppendInteger(int[] a, int v)
         {
-            if (a == null || a.Length == 0) return new int[] { v };
-            int[] b = new int[a.Length + 1];
+            if (a == null || a.Length == 0)
+                return new int[] { v };
+            var b = new int[a.Length + 1];
             for (int n = a.Length - 1; n >= 0; n--)
                 b[n] = a[n];
             b[a.Length] = v;
@@ -668,7 +677,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private int FindBond(int a1, int a2)
         {
             for (int n = atomAdj[a1].Length - 1; n >= 0; n--)
-                if (atomAdj[a1][n] == a2) return bondAdj[a1][n];
+                if (atomAdj[a1][n] == a2)
+                    return bondAdj[a1][n];
             return -1;
         }
 

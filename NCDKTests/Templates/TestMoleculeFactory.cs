@@ -23,7 +23,7 @@
  */
 
 using NCDK.Config;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Numerics;
 using System;
 using System.Diagnostics;
@@ -35,11 +35,11 @@ namespace NCDK.Templates
     /// copy of <see cref="FaulonSignatures.Chemistry.MoleculeFactory"/> for use in tests.
     /// </summary>
     // @cdk.module test-data
-    public class TestMoleculeFactory
+    public static class TestMoleculeFactory
     {
         private static IAtomContainer NewAtomContainer()
         {
-            return Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            return ChemObjectBuilder.Instance.NewAtomContainer();
         }
 
         private static void MolAddBond(IAtomContainer mol, int a, int b, BondOrder order)
@@ -1908,7 +1908,7 @@ namespace NCDK.Templates
             {
                 foreach (IAtom atom in mol.Atoms)
                     atom.ImplicitHydrogenCount = null;
-                Isotopes.Instance.ConfigureAtoms(mol);
+                BODRIsotopeFactory.Instance.ConfigureAtoms(mol);
             }
             catch (Exception exc)
             {

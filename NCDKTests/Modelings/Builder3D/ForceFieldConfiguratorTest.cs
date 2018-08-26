@@ -22,6 +22,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Tools;
 
@@ -53,7 +54,7 @@ namespace NCDK.Modelings.Builder3D
         public void TestSetForceFieldConfigurator_String()
         {
             string forceFieldName = "mmff94";
-            forceFieldConfigurator.SetForceFieldConfigurator(forceFieldName, Default.ChemObjectBuilder.Instance);
+            forceFieldConfigurator.SetForceFieldConfigurator(forceFieldName, ChemObjectBuilder.Instance);
             var mmff94AtomTypes = forceFieldConfigurator.AtomTypes;
             Assert.IsNotNull(mmff94AtomTypes);
             IAtomType atomtype0 = mmff94AtomTypes[0];
@@ -62,7 +63,7 @@ namespace NCDK.Modelings.Builder3D
             Assert.AreEqual("Csp2", atomtype1.AtomTypeName);
 
             forceFieldName = "mm2";
-            forceFieldConfigurator.SetForceFieldConfigurator(forceFieldName, Default.ChemObjectBuilder.Instance);
+            forceFieldConfigurator.SetForceFieldConfigurator(forceFieldName, ChemObjectBuilder.Instance);
             var mm2AtomTypes = forceFieldConfigurator.AtomTypes;
             Assert.IsNotNull(mm2AtomTypes);
             IAtomType atomtype2 = mm2AtomTypes[2];
@@ -74,7 +75,7 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestSetMM2Parameters()
         {
-            forceFieldConfigurator.SetMM2Parameters(Default.ChemObjectBuilder.Instance);
+            forceFieldConfigurator.SetMM2Parameters(ChemObjectBuilder.Instance);
             Assert.IsNotNull(forceFieldConfigurator.GetParameterSet());
             var atomtypeList = forceFieldConfigurator.AtomTypes;
             IAtomType atomtype1 = atomtypeList[1];
@@ -86,7 +87,7 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestSetMMFF94Parameters()
         {
-            forceFieldConfigurator.SetMMFF94Parameters(Default.ChemObjectBuilder.Instance);
+            forceFieldConfigurator.SetMMFF94Parameters(ChemObjectBuilder.Instance);
             Assert.IsNotNull(forceFieldConfigurator.GetParameterSet());
             var atomtypeList = forceFieldConfigurator.AtomTypes;
             IAtomType atomtype4 = atomtypeList[4];
@@ -100,10 +101,10 @@ namespace NCDK.Modelings.Builder3D
         public void TestRemoveAromaticityFlagsFromHoseCode_String()
         {
             string hosecode1 = "***HO*SE*CODE***";
-            string cleanHoseCode = forceFieldConfigurator.RemoveAromaticityFlagsFromHoseCode(hosecode1);
+            string cleanHoseCode = ForceFieldConfigurator.RemoveAromaticityFlagsFromHoseCode(hosecode1);
             Assert.AreEqual("HOSECODE", cleanHoseCode);
             string hosecode2 = "HOSECODE";
-            cleanHoseCode = forceFieldConfigurator.RemoveAromaticityFlagsFromHoseCode(hosecode2);
+            cleanHoseCode = ForceFieldConfigurator.RemoveAromaticityFlagsFromHoseCode(hosecode2);
             Assert.AreEqual("HOSECODE", cleanHoseCode);
         }
 
@@ -112,7 +113,7 @@ namespace NCDK.Modelings.Builder3D
         public void TestConfigureMMFF94BasedAtom_IAtom_String_boolean_hydroxyurea()
         {
             string husmi = "NC(=O)NO";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser parser = new SmilesParser(builder);
             IAtomContainer hu = parser.ParseSmiles(husmi);
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
@@ -129,7 +130,7 @@ namespace NCDK.Modelings.Builder3D
         public void TestConfigureMMFF94BasedAtom_IAtom_String_boolean_propanamide()
         {
             string pasmi = "NC(=O)CC";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser parser = new SmilesParser(builder);
             IAtomContainer pa = parser.ParseSmiles(pasmi);
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
@@ -144,7 +145,7 @@ namespace NCDK.Modelings.Builder3D
         public void TestConfigureMMFF94BasedAtom_IAtom_String_boolean_urea()
         {
             string usmi = "NC(N)=O";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser parser = new SmilesParser(builder);
             IAtomContainer urea = parser.ParseSmiles(usmi);
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
@@ -165,7 +166,7 @@ namespace NCDK.Modelings.Builder3D
             IAtomContainer molecule = null;
             string[] ffAtomTypes = null;
 
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser smilesParser = new SmilesParser(builder);
             molecule = smilesParser.ParseSmiles(smiles);
             ffAtomTypes = new string[molecule.Atoms.Count];
@@ -192,7 +193,7 @@ namespace NCDK.Modelings.Builder3D
         public void TestAssignAtomTyps_bug()
         {
             string smiles = "CC(C)C1CCC(CC1)C(=O)NC(Cc1ccccc1)C(=O)O";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser parser = new SmilesParser(builder);
             IAtomContainer bugmol = parser.ParseSmiles(smiles);
             forceFieldConfigurator.SetForceFieldConfigurator("mmff94", builder);
@@ -206,7 +207,7 @@ namespace NCDK.Modelings.Builder3D
         public void TestAssignAtomTyps_bug_no2()
         {
             string smiles = "CC[N+](=O)[O-]";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser parser = new SmilesParser(builder);
             IAtomContainer bugmol = parser.ParseSmiles(smiles);
             forceFieldConfigurator.SetForceFieldConfigurator("mmff94", builder);
@@ -220,7 +221,7 @@ namespace NCDK.Modelings.Builder3D
         public void TestAssignAtomTyps_bug_so2()
         {
             string smiles = "CS(=O)(=O)NC(=O)NN1CC2CCCC2C1";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser parser = new SmilesParser(builder);
             IAtomContainer bugmol = parser.ParseSmiles(smiles);
             forceFieldConfigurator.SetForceFieldConfigurator("mmff94", builder);
@@ -235,7 +236,7 @@ namespace NCDK.Modelings.Builder3D
         public void TestAssignAtomTyps_bug_nitrogenatomType()
         {
             string smiles = "CNC(=O)N(C)N=O";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser parser = new SmilesParser(builder);
             IAtomContainer bugmol = parser.ParseSmiles(smiles);
             forceFieldConfigurator.SetForceFieldConfigurator("mmff94", builder);
@@ -255,7 +256,7 @@ namespace NCDK.Modelings.Builder3D
         public void TestAssignAtomTyps_bug_amideRingAtomType()
         {
             string smiles = "O=C1N(C(=O)C(C(=O)N1)(CC)CC)C";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser parser = new SmilesParser(builder);
             IAtomContainer bugmol = parser.ParseSmiles(smiles);
             forceFieldConfigurator.SetForceFieldConfigurator("mmff94", builder);

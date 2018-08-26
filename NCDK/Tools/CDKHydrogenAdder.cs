@@ -93,7 +93,7 @@ namespace NCDK.Tools
         {
             if (atom.AtomTypeName == null) throw new CDKException("IAtom is not typed! " + atom.Symbol);
 
-            if ("X".Equals(atom.AtomTypeName))
+            if (string.Equals("X", atom.AtomTypeName, StringComparison.Ordinal))
             {
                 if (atom.ImplicitHydrogenCount == null) atom.ImplicitHydrogenCount = 0;
                 return;

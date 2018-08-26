@@ -28,8 +28,9 @@
  */
 
 using NCDK.Common.Collections;
-using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
 
 <#
 foreach (var ns in namespaces) 
@@ -46,11 +47,34 @@ namespace <#= ns.NS #>
     // @author        steinbeck
     // @cdk.githash
     // @cdk.module data
-    [Serializable]
     public class ChemObject
-        : IChemObject
+        : IChemObject, ISerializable
     {
+        private bool isPlaced;
+        private bool isVisited;
+
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue(nameof(isPlaced), isPlaced);
+            info.AddValue(nameof(isVisited), isVisited);
+        }
+
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        protected ChemObject(SerializationInfo info, StreamingContext context)
+        {
+            isPlaced = info.GetBoolean(nameof(isPlaced));
+            isVisited = info.GetBoolean(nameof(isVisited));
+        }
+
+        [System.NonSerialized]
         private ICollection<IChemObjectListener> listeners;
+
+        [System.NonSerialized]
+        private bool notification = true;
+
+        public virtual IChemObjectBuilder Builder => ChemObjectBuilder.Instance;
+
         /// <summary>
         /// List for listener administration.
         /// </summary>
@@ -67,10 +91,13 @@ namespace <#= ns.NS #>
                 return listeners;
             }
         }
-        public bool Notification { get; set; } = true;
-        public virtual IChemObjectBuilder Builder => ChemObjectBuilder.Instance;
 
-        private bool isPlaced;
+        public bool Notification
+        {
+            get => notification;
+            set => notification = value;
+        }
+
         public bool IsPlaced
         {
             get { return isPlaced; }
@@ -83,7 +110,6 @@ namespace <#= ns.NS #>
             }
         }
 
-        private bool isVisited;
         /// <summary>
         /// Flag is set if chemobject has been visited
         /// </summary>

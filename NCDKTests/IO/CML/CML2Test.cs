@@ -22,7 +22,7 @@
  *  */
 using NCDK.Common.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Geometries;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;

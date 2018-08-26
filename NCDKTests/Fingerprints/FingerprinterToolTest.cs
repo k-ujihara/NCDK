@@ -87,11 +87,13 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void MakeBitFingerprint()
         {
-            IDictionary<string, int> features = new Dictionary<string, int>();
-            features.Add("CCO", 1);
-            features.Add("CC", 1);
-            features.Add("C", 1);
-            IBitFingerprint fp = FingerprinterTool.MakeBitFingerprint(features, 1024, 1);
+            var features = new Dictionary<string, int>
+            {
+                { "CCO", 1 },
+                { "CC", 1 },
+                { "C", 1 }
+            };
+            var fp = FingerprinterTool.MakeBitFingerprint(features, 1024, 1);
             Assert.IsTrue(3 >= fp.Cardinality);
             Assert.IsTrue(fp[(int)((uint)"CCO".GetHashCode() % 1024)]);
             Assert.IsTrue(fp[(int)((uint)"CC".GetHashCode() % 1024)]);
@@ -101,11 +103,13 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void MakeCountFingerprint()
         {
-            IDictionary<string, int> features = new Dictionary<string, int>();
-            features.Add("CCO", 1);
-            features.Add("CC", 2);
-            features.Add("C", 2);
-            ICountFingerprint fp = FingerprinterTool.MakeCountFingerprint(features);
+            var features = new Dictionary<string, int>
+            {
+                { "CCO", 1 },
+                { "CC", 2 },
+                { "C", 2 }
+            };
+            var fp = FingerprinterTool.MakeCountFingerprint(features);
             Assert.AreEqual(3, fp.GetNumberOfPopulatedBins());
             Assert.AreEqual(1, fp.GetCountForHash("CCO".GetHashCode()));
             Assert.AreEqual(2, fp.GetCountForHash("CC".GetHashCode()));

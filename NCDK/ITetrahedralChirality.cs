@@ -48,7 +48,7 @@ namespace NCDK
         /// the chiral atom (<see cref="ChiralAtom"/>).
         /// </summary>
         /// <value>an array of four <see cref="IAtom"/>s.</value>
-        IList<IAtom> Ligands { get; }
+        IReadOnlyList<IAtom> Ligands { get; set; }
         IAtom ChiralAtom { get; }
         TetrahedralStereo Stereo { get; set; }
     }

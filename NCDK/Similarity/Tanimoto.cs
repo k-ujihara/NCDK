@@ -85,7 +85,7 @@ namespace NCDK.Similarity
         /// <exception cref="ArgumentException">if bitsets are not of the same length</exception>
         public static double Calculate(IBitFingerprint fingerprint1, IBitFingerprint fingerprint2)
         {
-            if (fingerprint1.Count != fingerprint2.Count)
+            if (fingerprint1.Length != fingerprint2.Length)
             {
                 throw new ArgumentException("Fingerprints must have the same size");
             }
@@ -139,7 +139,7 @@ namespace NCDK.Similarity
         /// <param name="features1">The first feature map</param>
         /// <param name="features2">The second feature map</param>
         /// <returns>The Tanimoto coefficient</returns>
-        public static double Calculate(IDictionary<string, int> features1, IDictionary<string, int> features2)
+        public static double Calculate(IReadOnlyDictionary<string, int> features1, IReadOnlyDictionary<string, int> features2)
         {
             var common = features1.Keys.Intersect(features2.Keys);
             double xy = 0, x = 0, y = 0;

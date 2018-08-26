@@ -30,7 +30,7 @@ namespace NCDK.Graphs.Invariant
     /// molecular graph.
     /// </summary>
     // @cdk.githash
-    public class HuLuIndexTool
+    public static class HuLuIndexTool
     {
         /// <summary>
         /// Calculates the extended adjacency matrix index.
@@ -57,7 +57,7 @@ namespace NCDK.Graphs.Invariant
 
             Debug.WriteLine("final matrix - the sum of the powers of EA matrix: ");
             DisplayMatrix(matrix.ArrayValue);
-            Debug.WriteLine("eaid number: " + eaid);
+            Debug.WriteLine($"eaid number: {eaid}");
 
             return eaid;
         }
@@ -77,7 +77,7 @@ namespace NCDK.Graphs.Invariant
                 {
                     if (i == j)
                     {
-                        if ("O".Equals(atomContainer.Atoms[i].Symbol))
+                        if (string.Equals("O", atomContainer.Atoms[i].Symbol, StringComparison.Ordinal))
                         {
                             adjaMatrix[i][j] = Math.Sqrt(0.74) / 6;
                         }
@@ -138,14 +138,14 @@ namespace NCDK.Graphs.Invariant
                 }
 
                 //weightArray[k] = atom.GetValenceElectronsCount() - atom.GetHydrogenCount(); // method unfinished
-                if ("O".Equals(atom.Symbol))
+                if (string.Equals("O", atom.Symbol, StringComparison.Ordinal))
                     weightArray[i] = 6 - atom.ImplicitHydrogenCount.Value;
                 else
                     weightArray[i] = 4 - atom.ImplicitHydrogenCount.Value;
 
                 for (int j = 0; j < apspMatrix.Length; j++)
                 {
-                    if ("O".Equals(atomContainer.Atoms[j].Symbol))
+                    if (string.Equals("O", atomContainer.Atoms[j].Symbol, StringComparison.Ordinal))
                         valenceSum[apspMatrix[j][i]] += 6 - atomContainer.Atoms[j].ImplicitHydrogenCount.Value;
                     else
                         valenceSum[apspMatrix[j][i]] += 4 - atomContainer.Atoms[j].ImplicitHydrogenCount.Value;

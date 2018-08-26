@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -28,6 +29,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
+#pragma warning disable CA1710 // Identifiers should have correct suffix
+
 namespace NCDK.Default
 {
     /// <summary>
@@ -37,14 +40,14 @@ namespace NCDK.Default
     /// </summary>
     // @author        steinbeck
     // @cdk.githash
-    [Serializable]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class ChemFile
         : ChemObject, IChemFile, IChemObjectListener
     {
         /// <summary>
         /// List of ChemSquences.
         /// </summary>
-        protected IList<IChemSequence> chemSequences = new List<IChemSequence>();
+        private IList<IChemSequence> chemSequences = new List<IChemSequence>();
 
         /// <summary>
         ///  Constructs an empty ChemFile.
@@ -195,14 +198,14 @@ namespace NCDK.Silent
     /// </summary>
     // @author        steinbeck
     // @cdk.githash
-    [Serializable]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class ChemFile
         : ChemObject, IChemFile, IChemObjectListener
     {
         /// <summary>
         /// List of ChemSquences.
         /// </summary>
-        protected IList<IChemSequence> chemSequences = new List<IChemSequence>();
+        private IList<IChemSequence> chemSequences = new List<IChemSequence>();
 
         /// <summary>
         ///  Constructs an empty ChemFile.

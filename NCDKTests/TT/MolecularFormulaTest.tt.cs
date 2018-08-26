@@ -1,6 +1,7 @@
 
 
 
+
 /* Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -56,9 +57,9 @@ namespace NCDK.Default
             anotherCarb.NaturalAbundance = 34.0;
             h.NaturalAbundance = 99.0;
 
-            Assert.IsTrue(mf.IsTheSame(carb, carb));
-            Assert.IsTrue(mf.IsTheSame(carb, anotherCarb));
-            Assert.IsFalse(mf.IsTheSame(carb, h));
+            Assert.IsTrue(MolecularFormula.IsTheSame(carb, carb));
+            Assert.IsTrue(MolecularFormula.IsTheSame(carb, anotherCarb));
+            Assert.IsFalse(MolecularFormula.IsTheSame(carb, h));
         }
     }
 }
@@ -96,9 +97,9 @@ namespace NCDK.Silent
             anotherCarb.NaturalAbundance = 34.0;
             h.NaturalAbundance = 99.0;
 
-            Assert.IsTrue(mf.IsTheSame(carb, carb));
-            Assert.IsTrue(mf.IsTheSame(carb, anotherCarb));
-            Assert.IsFalse(mf.IsTheSame(carb, h));
+            Assert.IsTrue(MolecularFormula.IsTheSame(carb, carb));
+            Assert.IsTrue(MolecularFormula.IsTheSame(carb, anotherCarb));
+            Assert.IsFalse(MolecularFormula.IsTheSame(carb, h));
         }
     }
 }

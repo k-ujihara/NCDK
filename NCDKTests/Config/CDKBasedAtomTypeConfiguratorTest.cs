@@ -18,7 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System.Linq;
 
 namespace NCDK.Config
@@ -43,7 +43,7 @@ namespace NCDK.Config
             var configFile = "NCDK.Config.Data.structgen_atomtypes.xml";
             var ins = ResourceLoader.GetAsStream(typeof(CDKBasedAtomTypeConfigurator), configFile);
             var configurator = new CDKBasedAtomTypeConfigurator();
-            configurator.Stream = ins;
+            configurator.SetStream(ins);
             var atomTypes = configurator.ReadAtomTypes(new ChemObject().Builder);
             Assert.AreNotSame(0, atomTypes.Count());
         }

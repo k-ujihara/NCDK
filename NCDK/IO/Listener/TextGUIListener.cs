@@ -19,6 +19,7 @@
 
 using NCDK.IO.Setting;
 using System;
+using System.Globalization;
 using System.IO;
 using static NCDK.IO.Setting.IOSetting;
 
@@ -106,9 +107,9 @@ namespace NCDK.IO.Listener
                     for (int i = 0; i < settings.Count; i++)
                     {
                         this.output.Write('\n');
-                        string option = (string)settings[i];
+                        string option = settings[i];
                         this.output.Write((i + 1) + ". " + option);
-                        if (option.Equals(setting.Setting))
+                        if (string.Equals(option, setting.Setting, StringComparison.Ordinal))
                         {
                             this.output.Write(" (Default)");
                         }
@@ -144,18 +145,18 @@ namespace NCDK.IO.Listener
                             }
                             else if (setting is OptionIOSetting)
                             {
-                                ((OptionIOSetting)setting).SetSetting(int.Parse(answer));
+                                ((OptionIOSetting)setting).SetSetting(int.Parse(answer, NumberFormatInfo.InvariantInfo));
                             }
                             else if (setting is BooleanIOSetting)
                             {
-                                switch (answer.ToLowerInvariant())
+                                switch (answer.ToUpperInvariant())
                                 {
-                                    case "n":
-                                    case "no":
+                                    case "N":
+                                    case "NO":
                                         answer = "false";
                                         break;
-                                    case "y":
-                                    case "yes":
+                                    case "Y":
+                                    case "YES":
                                         answer = "true";
                                         break;
                                 }

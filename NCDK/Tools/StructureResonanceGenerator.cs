@@ -58,7 +58,7 @@ namespace NCDK.Tools
     public class StructureResonanceGenerator
     {
        /// <summary>Generate resonance structure without looking at the symmetry</summary>
-        private bool lookingSymmetry;
+        private readonly bool lookingSymmetry;
 
         /// <summary>
         /// Construct an instance of StructureResonanceGenerator. Default restrictions
@@ -84,10 +84,10 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        ///  The reactions that must be used in the generation of the resonance.
+        /// The reactions that must be used in the generation of the resonance.
         /// </summary>
         /// <seealso cref="IReactionProcess"/>
-        public IList<IReactionProcess> Reactions { get; set; } = new List<IReactionProcess>();
+        public IReadOnlyList<IReactionProcess> Reactions { get; set; }
 
         /// <summary>
         /// The number maximal of resonance structures to be found. The
@@ -106,11 +106,10 @@ namespace NCDK.Tools
 
         private void CallDefaultReactions()
         {
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter
-            {
-                IsSetParameter = false
-            };
+            var reactions = new List<IReactionProcess>();
+
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter { IsSetParameter = false };
             paramList.Add(param);
 
             IReactionProcess type = new SharingLonePairReaction();
@@ -122,14 +121,11 @@ namespace NCDK.Tools
             {
                 Console.Error.WriteLine(e.StackTrace);
             }
-            Reactions.Add(type);
+            reactions.Add(type);
 
             type = new PiBondingMovementReaction();
-            List<IParameterReaction> paramList2 = new List<IParameterReaction>();
-            IParameterReaction param2 = new SetReactionCenter
-            {
-                IsSetParameter = false
-            };
+            var paramList2 = new List<IParameterReaction>();
+            var param2 = new SetReactionCenter { IsSetParameter = false };
             paramList2.Add(param2);
             try
             {
@@ -139,7 +135,7 @@ namespace NCDK.Tools
             {
                 Console.Error.WriteLine(e.StackTrace);
             }
-            Reactions.Add(type);
+            reactions.Add(type);
 
             type = new RearrangementAnionReaction();
             try
@@ -150,7 +146,7 @@ namespace NCDK.Tools
             {
                 Console.Error.WriteLine(e.StackTrace);
             }
-            Reactions.Add(type);
+            reactions.Add(type);
 
             type = new RearrangementCationReaction();
             try
@@ -161,7 +157,7 @@ namespace NCDK.Tools
             {
                 Console.Error.WriteLine(e.StackTrace);
             }
-            Reactions.Add(type);
+            reactions.Add(type);
 
             type = new RearrangementLonePairReaction();
             try
@@ -172,7 +168,7 @@ namespace NCDK.Tools
             {
                 Console.Error.WriteLine(e.StackTrace);
             }
-            Reactions.Add(type);
+            reactions.Add(type);
 
             type = new RearrangementRadicalReaction();
             try
@@ -183,8 +179,9 @@ namespace NCDK.Tools
             {
                 Console.Error.WriteLine(e.StackTrace);
             }
-            Reactions.Add(type);
+            reactions.Add(type);
 
+            this.Reactions = reactions;
         }
 
         /// <summary>
@@ -200,20 +197,20 @@ namespace NCDK.Tools
 
             for (int i = 0; i < setOfMol.Count; i++)
             {
-                IAtomContainer mol = setOfMol[i];
+                var mol = setOfMol[i];
                 foreach (var aReactionsList in Reactions)
                 {
-                    IReactionProcess reaction = aReactionsList;
+                    var reaction = aReactionsList;
                     var setOfReactants = molecule.Builder.NewAtomContainerSet();
                     setOfReactants.Add(mol);
                     try
                     {
-                        IReactionSet setOfReactions = reaction.Initiate(setOfReactants, null);
+                        var setOfReactions = reaction.Initiate(setOfReactants, null);
                         if (setOfReactions.Count != 0)
                             for (int k = 0; k < setOfReactions.Count; k++)
                                 for (int j = 0; j < setOfReactions[k].Products.Count; j++)
                                 {
-                                    IAtomContainer product = setOfReactions[k].Products[j];
+                                    var product = setOfReactions[k].Products[j];
                                     if (!ExistAC(setOfMol, product))
                                     {
                                         setOfMol.Add(product);
@@ -245,13 +242,13 @@ namespace NCDK.Tools
             if (setOfMol.Count == 0) return setOfCont;
 
             /* extraction of all bonds which has been produced a changes of order */
-            List<IBond> bondList = new List<IBond>();
+            var bondList = new List<IBond>();
             for (int i = 1; i < setOfMol.Count; i++)
             {
-                IAtomContainer mol = setOfMol[i];
+                var mol = setOfMol[i];
                 for (int j = 0; j < mol.Bonds.Count; j++)
                 {
-                    IBond bond = molecule.Bonds[j];
+                    var bond = molecule.Bonds[j];
                     if (!mol.Bonds[j].Order.Equals(bond.Order))
                     {
                         if (!bondList.Contains(bond)) bondList.Add(bond);
@@ -259,7 +256,8 @@ namespace NCDK.Tools
                 }
             }
 
-            if (bondList.Count == 0) return null;
+            if (bondList.Count == 0)
+                return null;
 
             int[] flagBelonging = new int[bondList.Count];
             for (int i = 0; i < flagBelonging.Length; i++)
@@ -287,26 +285,28 @@ namespace NCDK.Tools
                     }
                 }
 
-                IBond bondA = newBondList[i];
+                var bondA = newBondList[i];
                 for (int ato = 0; ato < 2; ato++)
                 {
-                    IAtom atomA1 = bondA.Atoms[ato];
+                    var atomA1 = bondA.Atoms[ato];
                     var bondA1s = molecule.GetConnectedBonds(atomA1);
                     foreach (var bondB in bondA1s)
                     {
-                        if (!newBondList.Contains(bondB)) for (int k = 0; k < bondList.Count; k++)
-                                if (bondList[k].Equals(bondB)) if (flagBelonging[k] == 0)
+                        if (!newBondList.Contains(bondB))
+                            for (int k = 0; k < bondList.Count; k++)
+                                if (bondList[k].Equals(bondB))
+                                    if (flagBelonging[k] == 0)
                                     {
                                         flagBelonging[k] = maxGroup;
                                         pos++;
                                         newBondList.Add(bondB);
                                         position[pos] = k;
-
                                     }
                     }
                 }
                 //if it is final size and not all are added
-                if (newBondList.Count - 1 == i) for (int k = 0; k < bondList.Count; k++)
+                if (newBondList.Count - 1 == i)
+                    for (int k = 0; k < bondList.Count; k++)
                         if (!newBondList.Contains(bondList[k]))
                         {
                             newBondList.Add(bondList[k]);
@@ -317,15 +317,18 @@ namespace NCDK.Tools
             /* creating containers according groups */
             for (int i = 0; i < maxGroup; i++)
             {
-                IAtomContainer container = molecule.Builder.NewAtomContainer();
+                var container = molecule.Builder.NewAtomContainer();
                 for (int j = 0; j < bondList.Count; j++)
                 {
-                    if (flagBelonging[j] != i + 1) continue;
-                    IBond bond = bondList[j];
-                    IAtom atomA1 = bond.Atoms[0];
-                    IAtom atomA2 = bond.Atoms[1];
-                    if (!container.Contains(atomA1)) container.Atoms.Add(atomA1);
-                    if (!container.Contains(atomA2)) container.Atoms.Add(atomA2);
+                    if (flagBelonging[j] != i + 1)
+                        continue;
+                    var bond = bondList[j];
+                    var atomA1 = bond.Atoms[0];
+                    var atomA2 = bond.Atoms[1];
+                    if (!container.Contains(atomA1))
+                        container.Atoms.Add(atomA1);
+                    if (!container.Contains(atomA2))
+                        container.Atoms.Add(atomA2);
                     container.Bonds.Add(bond);
                 }
                 setOfCont.Add(container);
@@ -344,11 +347,13 @@ namespace NCDK.Tools
         public IAtomContainer GetContainer(IAtomContainer molecule, IAtom atom)
         {
             var setOfCont = GetContainers(molecule);
-            if (setOfCont == null) return null;
+            if (setOfCont == null)
+                return null;
 
             foreach (var container in setOfCont)
             {
-                if (container.Contains(atom)) return container;
+                if (container.Contains(atom))
+                    return container;
             }
 
             return null;
@@ -365,11 +370,13 @@ namespace NCDK.Tools
         public IAtomContainer GetContainer(IAtomContainer molecule, IBond bond)
         {
             var setOfCont = GetContainers(molecule);
-            if (setOfCont == null) return null;
+            if (setOfCont == null)
+                return null;
 
             foreach (var container in setOfCont)
             {
-                if (container.Contains(bond)) return container;
+                if (container.Contains(bond))
+                    return container;
             }
 
             return null;
@@ -394,7 +401,6 @@ namespace NCDK.Tools
             }
 
             for (int i = 0; i < acClone.Atoms.Count; i++)
-                //            if(acClone.Atoms[i].Id == null)
                 acClone.Atoms[i].Id = "" + acClone.Atoms.IndexOf(acClone.Atoms[i]);
 
             if (lookingSymmetry)
@@ -420,28 +426,28 @@ namespace NCDK.Tools
             }
             for (int i = 0; i < set.Count; i++)
             {
-                IAtomContainer ss = set[i];
+                var ss = set[i];
                 for (int j = 0; j < ss.Atoms.Count; j++)
-                    //                if(ss.Atoms[j].Id == null)
                     ss.Atoms[j].Id = "" + ss.Atoms.IndexOf(ss.Atoms[j]);
 
                 try
                 {
                     if (!lookingSymmetry)
                     {
-                        QueryAtomContainer qAC = QueryAtomContainerCreator.CreateSymbolChargeIDQueryContainer(acClone);
+                        var qAC = QueryAtomContainerCreator.CreateSymbolChargeIDQueryContainer(acClone);
                         if (new UniversalIsomorphismTester().IsIsomorph(ss, qAC))
                         {
-                            QueryAtomContainer qAC2 = QueryAtomContainerCreator
-                                    .CreateSymbolAndBondOrderQueryContainer(acClone);
-                            if (new UniversalIsomorphismTester().IsIsomorph(ss, qAC2)) return true;
+                            var qAC2 = QueryAtomContainerCreator.CreateSymbolAndBondOrderQueryContainer(acClone);
+                            if (new UniversalIsomorphismTester().IsIsomorph(ss, qAC2))
+                                return true;
                         }
                     }
                     else
                     {
-                        QueryAtomContainer qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(acClone);
+                        var qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(acClone);
                         Aromaticity.CDKLegacy.Apply(ss);
-                        if (new UniversalIsomorphismTester().IsIsomorph(ss, qAC)) return true;
+                        if (new UniversalIsomorphismTester().IsIsomorph(ss, qAC))
+                            return true;
                     }
                 }
                 catch (CDKException e1)

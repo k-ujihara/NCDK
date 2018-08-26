@@ -169,7 +169,7 @@ namespace NCDK.LibIO.CML
             }
         }
 
-        private bool HasContent(string str)
+        private static bool HasContent(string str)
         {
             return !string.IsNullOrEmpty(str);
         }

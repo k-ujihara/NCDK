@@ -28,6 +28,7 @@ using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace NCDK.Charges
 {
@@ -67,10 +68,10 @@ namespace NCDK.Charges
         // Use IsPlaced flag because it has the same mask
 
         /// <summary>Corresponds an empirical influence between the electrostatic potential and the neighbours.</summary>
-        private double fE = 1.1;
+        private const double fE = 1.1;
                                          
         /// <summary>Scale factor which makes same heavy for all structures</summary>
-        private double fS = 0.37;
+        private const double fS = 0.37;
 
         /// <summary>
         ///  Constructor for the GasteigerPEPEPartialCharges object.
@@ -106,18 +107,12 @@ namespace NCDK.Charges
             }
 
             /* 1: detect resonance structure */
-            StructureResonanceGenerator gR1 = new StructureResonanceGenerator(); // according G. should be integrated the breaking bonding
-            var reactionList1 = gR1.Reactions;
+            var gR1 = new StructureResonanceGenerator(); // according G. should be integrated the breaking bonding
+            var reactionList1 = gR1.Reactions.ToList();
             var paramList1 = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter
-            {
-                IsSetParameter = true
-            };
+            var param = new SetReactionCenter { IsSetParameter = true };
             paramList1.Add(param);
-            HeterolyticCleavagePBReaction reactionHCPB = new HeterolyticCleavagePBReaction
-            {
-                ParameterList = paramList1
-            };
+            var reactionHCPB = new HeterolyticCleavagePBReaction { ParameterList = paramList1 };
             reactionList1.Add(new SharingAnionReaction());
             foreach (var reaction in reactionList1)
             {
@@ -125,16 +120,11 @@ namespace NCDK.Charges
             }
             gR1.Reactions = reactionList1;
 
-            StructureResonanceGenerator gR2 = new StructureResonanceGenerator
-            {
-                MaximalStructures = MaxResonanceStructures
-            }; // according G. should be integrated the breaking bonding
-            var reactionList2 = gR2.Reactions;
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction paramA = new SetReactionCenter
-            {
-                IsSetParameter = true
-            };
+            // according G. should be integrated the breaking bonding
+            StructureResonanceGenerator gR2 = new StructureResonanceGenerator { MaximalStructures = MaxResonanceStructures };
+            List<IReactionProcess> reactionList2 = gR2.Reactions.ToList();
+            var paramList = new List<IParameterReaction>();
+            IParameterReaction paramA = new SetReactionCenter { IsSetParameter = true };
             paramList.Add(paramA);
             reactionList2.Add(new HeterolyticCleavagePBReaction());
             reactionList2.Add(new SharingAnionReaction());
@@ -195,7 +185,7 @@ namespace NCDK.Charges
             if (setHI != null)
             {
                 if (setHI.Count != 0) iSet.AddRange(setHI);
-                Debug.WriteLine("setHI: " + iSet.Count);
+                Debug.WriteLine($"setHI: {iSet.Count}");
             }
             if (iSet.Count < 2)
             {
@@ -241,7 +231,7 @@ namespace NCDK.Charges
             for (int i = 1; i < iSet.Count; i++)
             {
                 Wt[i - 1] = GetTopologicalFactors(iSet[i], ac);
-                Debug.WriteLine(", W:" + Wt[i - 1]);
+                Debug.WriteLine($", W:{Wt[i - 1]}");
                 acCloned = (IAtomContainer)iSet[i].Clone();
 
                 acCloned = peoe.AssignGasteigerMarsiliSigmaPartialCharges(acCloned, true);
@@ -404,7 +394,7 @@ namespace NCDK.Charges
         /// </summary>
         /// <param name="ac">The IAtomContainer to remove flags</param>
         /// <returns>The IAtomContainer with the flags removed</returns>
-        private IAtomContainer RemovingFlagsAromaticity(IAtomContainer ac)
+        private static IAtomContainer RemovingFlagsAromaticity(IAtomContainer ac)
         {
             foreach (var atom in ac.Atoms)
                 atom.IsAromatic = false;
@@ -420,7 +410,7 @@ namespace NCDK.Charges
         /// <param name="ac">Container to put the flags</param>
         /// <param name="b"><see langword="true"/>, if the the flag is true</param>
         /// <returns>Container with added flags</returns>
-        private IAtomContainer SetFlags(IAtomContainer container, IAtomContainer ac, bool b)
+        private static IAtomContainer SetFlags(IAtomContainer container, IAtomContainer ac, bool b)
         {
             foreach (var atom in container.Atoms)
             {
@@ -443,7 +433,7 @@ namespace NCDK.Charges
         /// <param name="number"><see langword="true"/>, if the the flag is true</param>
         /// <param name="b">Container with added flags</param>
         /// <returns></returns>
-        private IAtomContainer SetAntiFlags(IAtomContainer container, IAtomContainer ac, int number, bool b)
+        private static IAtomContainer SetAntiFlags(IAtomContainer container, IAtomContainer ac, int number, bool b)
         {
             IBond bond = ac.Bonds[number];
             if (!container.Contains(bond))
@@ -482,13 +472,12 @@ namespace NCDK.Charges
                             {
                                 IAtom a0 = ati.Bonds[k].Atoms[0];
                                 IAtom a1 = ati.Bonds[k].Atoms[1];
-                                if (!a0.Symbol.Equals("H") || !a1.Symbol.Equals("H"))
-                                    if ((a0.Id.Equals(ac.Bonds[i].Atoms[0].Id) && a1.Id.Equals(
-                                            ac.Bonds[i].Atoms[1].Id))
-                                            || (a1.Id.Equals(ac.Bonds[i].Atoms[0].Id) && a0.Id.Equals(
-                                                    ac.Bonds[i].Atoms[1].Id)))
+                                if (!a0.Symbol.Equals("H", StringComparison.Ordinal) || !a1.Symbol.Equals("H", StringComparison.Ordinal))
+                                    if ((a0.Id.Equals(ac.Bonds[i].Atoms[0].Id, StringComparison.Ordinal) && a1.Id.Equals(ac.Bonds[i].Atoms[1].Id, StringComparison.Ordinal))
+                                            || (a1.Id.Equals(ac.Bonds[i].Atoms[0].Id, StringComparison.Ordinal) && a0.Id.Equals(ac.Bonds[i].Atoms[1].Id, StringComparison.Ordinal)))
                                     {
-                                        if (a0.FormalCharge != 0 || a1.FormalCharge != 0) goto continue_out;
+                                        if (a0.FormalCharge != 0 || a1.FormalCharge != 0)
+                                            goto continue_out;
                                     }
                             }
                     }
@@ -589,7 +578,7 @@ namespace NCDK.Charges
         /// <param name="atomContainer">The IAtomContainer to study.</param>
         /// <param name="ac">The IAtomContainer to study.</param>
         /// <returns>The value</returns>
-        private double GetTopologicalFactors(IAtomContainer atomContainer, IAtomContainer ac)
+        private static double GetTopologicalFactors(IAtomContainer atomContainer, IAtomContainer ac)
         {
             /* factor for separation of charge */
             int totalNCharge1 = AtomContainerManipulator.GetTotalNegativeFormalCharge(atomContainer);
@@ -660,13 +649,13 @@ namespace NCDK.Charges
                     factors[1] = 0.0;
                     factors[2] = 0.0;
                     AtomSymbol = ac.Atoms[i].Symbol;
-                    if (AtomSymbol.Equals("H"))
+                    if (string.Equals(AtomSymbol, "H", StringComparison.Ordinal))
                     {
                         factors[0] = 0.0;
                         factors[1] = 0.0;
                         factors[2] = 0.0;
                     }
-                    else if (AtomSymbol.Equals("C"))
+                    else if (string.Equals(AtomSymbol, "C", StringComparison.Ordinal))
                     {
                         // if(ac.Atoms[i].GetFlag(ISCHANGEDFC))
                         {
@@ -675,7 +664,7 @@ namespace NCDK.Charges
                             factors[2] = 2.94;
                         }
                     }
-                    else if (AtomSymbol.Equals("O"))
+                    else if (string.Equals(AtomSymbol, "O", StringComparison.Ordinal))
                     {
                         if (ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Single)
                         {
@@ -690,7 +679,7 @@ namespace NCDK.Charges
                             factors[2] = 6.85;
                         }
                     }
-                    else if (AtomSymbol.Equals("N"))
+                    else if (string.Equals(AtomSymbol, "N", StringComparison.Ordinal))
                     {
                         if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
                         {
@@ -705,7 +694,7 @@ namespace NCDK.Charges
                             factors[2] = 7.32;/* 7.32 *//* 7.99 */
                         }
                     }
-                    else if (AtomSymbol.Equals("S"))
+                    else if (string.Equals(AtomSymbol, "S", StringComparison.Ordinal))
                     {
                         if (ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Single)
                         {
@@ -720,25 +709,25 @@ namespace NCDK.Charges
                             factors[2] = 3.72;
                         }
                     }
-                    else if (AtomSymbol.Equals("F"))
+                    else if (string.Equals(AtomSymbol, "F", StringComparison.Ordinal))
                     {
                         factors[0] = 7.34;
                         factors[1] = 13.86;
                         factors[2] = 9.68;
                     }
-                    else if (AtomSymbol.Equals("Cl"))
+                    else if (string.Equals(AtomSymbol, "Cl", StringComparison.Ordinal))
                     {
                         factors[0] = 6.50;
                         factors[1] = 11.02;
                         factors[2] = 4.52;
                     }
-                    else if (AtomSymbol.Equals("Br"))
+                    else if (string.Equals(AtomSymbol, "Br", StringComparison.Ordinal))
                     {
                         factors[0] = 5.20;
                         factors[1] = 9.68;
                         factors[2] = 4.48;
                     }
-                    else if (AtomSymbol.Equals("I"))
+                    else if (string.Equals(AtomSymbol, "I", StringComparison.Ordinal))
                     {
                         factors[0] = 4.95;
                         factors[1] = 8.81;
@@ -785,19 +774,19 @@ namespace NCDK.Charges
                     factors[1] = 0.0;
                     factors[2] = 0.0;
                     AtomSymbol = ac.Atoms[i].Symbol;
-                    if (AtomSymbol.Equals("H"))
+                    if (string.Equals(AtomSymbol, "H", StringComparison.Ordinal))
                     {
                         factors[0] = 0.0;
                         factors[1] = 0.0;
                         factors[2] = 0.0;
                     }
-                    else if (AtomSymbol.Equals("C"))
+                    else if (string.Equals(AtomSymbol, "C", StringComparison.Ordinal))
                     {
                         factors[0] = 5.98;/* 5.98-5.60 */
                         factors[1] = 7.93;/* 7.93-8.93 */
                         factors[2] = 1.94;
                     }
-                    else if (AtomSymbol.Equals("O"))
+                    else if (string.Equals(AtomSymbol, "O", StringComparison.Ordinal))
                     {
                         if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
                         {
@@ -812,7 +801,7 @@ namespace NCDK.Charges
                             factors[2] = 6.85;
                         }
                     }
-                    else if (AtomSymbol.Equals("N"))
+                    else if (string.Equals(AtomSymbol, "N", StringComparison.Ordinal))
                     {
                         if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
                         {
@@ -828,7 +817,7 @@ namespace NCDK.Charges
                             factors[2] = 7.32;
                         }
                     }
-                    else if (AtomSymbol.Equals("P"))
+                    else if (string.Equals(AtomSymbol, "P", StringComparison.Ordinal))
                     {// <--No correct
                         if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
                         {
@@ -843,7 +832,7 @@ namespace NCDK.Charges
                             factors[2] = 2.72;// <--No correct
                         }
                     }
-                    else if (AtomSymbol.Equals("S"))
+                    else if (string.Equals(AtomSymbol, "S", StringComparison.Ordinal))
                     {
                         if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
                         {
@@ -859,25 +848,25 @@ namespace NCDK.Charges
                             factors[2] = 3.72;
                         }
                     }
-                    else if (AtomSymbol.Equals("F"))
+                    else if (string.Equals(AtomSymbol, "F", StringComparison.Ordinal))
                     {
                         factors[0] = 7.14/* 7.34 */;
                         factors[1] = 13.86;
                         factors[2] = 5.68;
                     }
-                    else if (AtomSymbol.Equals("Cl"))
+                    else if (string.Equals(AtomSymbol, "Cl", StringComparison.Ordinal))
                     {
                         factors[0] = 6.51;/* 6.50 */
                         factors[1] = 11.02;
                         factors[2] = 4.52;
                     }
-                    else if (AtomSymbol.Equals("Br"))
+                    else if (string.Equals(AtomSymbol, "Br", StringComparison.Ordinal))
                     {
                         factors[0] = 5.20;
                         factors[1] = 9.68;
                         factors[2] = 4.48;
                     }
-                    else if (AtomSymbol.Equals("I"))
+                    else if (string.Equals(AtomSymbol, "I", StringComparison.Ordinal))
                     {
                         factors[0] = 4.95;
                         factors[1] = 8.81;
@@ -907,7 +896,7 @@ namespace NCDK.Charges
         /// clean the flags <see cref="IAtomType.IsReactiveCenter"/> from the molecule.
         /// </summary>
         /// <param name="ac"></param>
-        private void CleanFlagReactiveCenter(IAtomContainer ac)
+        private static void CleanFlagReactiveCenter(IAtomContainer ac)
         {
             for (int j = 0; j < ac.Atoms.Count; j++)
                 ac.Atoms[j].IsReactiveCenter = false;

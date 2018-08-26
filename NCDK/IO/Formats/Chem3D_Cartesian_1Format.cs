@@ -17,23 +17,24 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Tools;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
     // @author Miguel Rojas
     // @cdk.module ioformats
     // @cdk.githash
-    public class Chem3D_Cartesian_1Format : AbstractResourceFormat, IChemFormat
+    public class Chem3DCartesian1Format : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;
 
-        public Chem3D_Cartesian_1Format() { }
+        public Chem3DCartesian1Format() { }
 
         public static IResourceFormat Instance
         {
             get
             {
-                if (myself == null) myself = new Chem3D_Cartesian_1Format();
+                if (myself == null) myself = new Chem3DCartesian1Format();
                 return myself;
             }
         }
@@ -48,7 +49,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
         
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "c3d1" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "c3d1" };
         
         /// <inheritdoc/>
         public string ReaderClassName => null;

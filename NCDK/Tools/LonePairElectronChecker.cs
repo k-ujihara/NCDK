@@ -34,23 +34,15 @@ namespace NCDK.Tools
     // @cdk.keyword    saturation
     // @cdk.keyword    atom, valency
     // @cdk.module     standard
-    public class LonePairElectronChecker
+    public static class LonePairElectronChecker
     {
-        private static AtomTypeFactory factory;
-
-        private void CreateAtomTypeFactory(IChemObjectBuilder builder)
-        {
-            if (factory == null)
-            {
-                factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", builder);
-            }
-        }
+        private static AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", Silent.ChemObjectBuilder.Instance);
 
         /// <summary>
         /// Determines of all atoms on the AtomContainer have the
         /// right number the lone pair electrons.
         /// </summary>
-        public bool IsSaturated(IAtomContainer container)
+        public static bool IsSaturated(IAtomContainer container)
         {
             return AllSaturated(container);
         }
@@ -59,12 +51,13 @@ namespace NCDK.Tools
         /// Determines of all atoms on the AtomContainer have
         /// the right number the lone pair electrons.
         /// </summary>
-        public bool AllSaturated(IAtomContainer ac)
+        public static bool AllSaturated(IAtomContainer ac)
         {
             Debug.WriteLine("Are all atoms saturated?");
             for (int f = 0; f < ac.Atoms.Count; f++)
             {
-                if (!IsSaturated(ac.Atoms[f], ac)) return false;
+                if (!IsSaturated(ac.Atoms[f], ac))
+                    return false;
             }
             return true;
         }
@@ -74,9 +67,8 @@ namespace NCDK.Tools
         /// by comparing it with known AtomTypes.
         /// </summary>
         /// <returns>True, if it's right saturated</returns>
-        public bool IsSaturated(IAtom atom, IAtomContainer ac)
+        public static bool IsSaturated(IAtom atom, IAtomContainer ac)
         {
-            CreateAtomTypeFactory(ac.Builder);
             IAtomType atomType = factory.GetAtomType(atom.AtomTypeName);
             int lpCount = atomType.GetProperty<int>(CDKPropertyName.LonePairCount);
             int foundLPCount = ac.GetConnectedLonePairs(atom).Count();
@@ -86,7 +78,7 @@ namespace NCDK.Tools
         /// <summary>
         /// Saturates a molecule by setting appropriate number lone pair electrons.
         /// </summary>
-        public void Saturate(IAtomContainer atomContainer)
+        public static void Saturate(IAtomContainer atomContainer)
         {
             Trace.TraceInformation("Saturating atomContainer by adjusting lone pair electrons...");
             bool allSaturated = AllSaturated(atomContainer);
@@ -102,7 +94,7 @@ namespace NCDK.Tools
         /// <summary>
         /// Saturates an IAtom by adding the appropriate number lone pairs.
         /// </summary>
-        public void Saturate(IAtom atom, IAtomContainer ac)
+        public static void Saturate(IAtom atom, IAtomContainer ac)
         {
             Trace.TraceInformation("Saturating atom by adjusting lone pair electrons...");
             IAtomType atomType = factory.GetAtomType(atom.AtomTypeName);

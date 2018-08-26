@@ -18,23 +18,24 @@
  */
 
 using NCDK.Tools;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
     // @author Miguel Rojas
     // @cdk.module ioformats
     // @cdk.githash
-    public class FenskeHall_ZMatrixFormat : AbstractResourceFormat, IChemFormat
+    public class FenskeHallZMatrixFormat : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;
 
-        public FenskeHall_ZMatrixFormat() { }
+        public FenskeHallZMatrixFormat() { }
 
         public static IResourceFormat Instance
         {
             get
             {
-                if (myself == null) myself = new FenskeHall_ZMatrixFormat();
+                if (myself == null) myself = new FenskeHallZMatrixFormat();
                 return myself;
             }
         }
@@ -49,7 +50,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "fh" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "fh" };
 
         /// <inheritdoc/>
         public string ReaderClassName => null;

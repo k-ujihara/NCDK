@@ -20,13 +20,14 @@
 using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace NCDK.QSAR
 {
     public interface IDescriptorValue
     {
         DescriptorSpecification Specification { get; }
-        object[] Parameters { get; }
+        IReadOnlyList<object> Parameters { get; }
         IReadOnlyList<string> ParameterNames { get; }
         IReadOnlyList<string> Names { get; }
         IDescriptorResult Value { get; }
@@ -39,11 +40,12 @@ namespace NCDK.QSAR
         where TDescriptorResult : IDescriptorResult
     {
         private DescriptorSpecification specification;
-        private IReadOnlyList<string> parameterNames;
-        private object[] parameterSettings;
+        private readonly IReadOnlyList<string> parameterNames;
+        private readonly IReadOnlyList<object> parameterSettings;
         private TDescriptorResult value;
         private IReadOnlyList<string> descriptorNames;
-        private Exception exception;
+        [NonSerialized]
+        private readonly Exception exception;
 
         /// <summary>
         /// Construct a descriptor value object, representing the numeric values as well as parameters and provenance.
@@ -56,10 +58,11 @@ namespace NCDK.QSAR
         /// <param name="parameterSettings">The parameter settings</param>
         /// <param name="value">The actual values</param>
         /// <param name="descriptorNames">The names of the values</param>
-        public DescriptorValue(DescriptorSpecification specification, IReadOnlyList<string> parameterNames, object[] parameterSettings,
+        public DescriptorValue(DescriptorSpecification specification, IReadOnlyList<string> parameterNames, IReadOnlyList<object> parameterSettings,
                 TDescriptorResult value, IReadOnlyList<string> descriptorNames)
             : this(specification, parameterNames, parameterSettings, value, descriptorNames, null)
-        { }
+        {
+        }
 
         /// <summary>
         /// Construct a descriptor value object, representing the numeric values as well as parameters and provenance.
@@ -73,8 +76,8 @@ namespace NCDK.QSAR
         /// <param name="value">The actual values</param>
         /// <param name="descriptorNames">The names of the values</param>
         /// <param name="exception">The exception object that should have been caught if an error occurred during descriptor calculation</param>
-        public DescriptorValue(DescriptorSpecification specification, IReadOnlyList<string> parameterNames, object[] parameterSettings,
-                TDescriptorResult value, IReadOnlyList<string> descriptorNames, Exception exception)
+        public DescriptorValue(DescriptorSpecification specification, IReadOnlyList<string> parameterNames, IReadOnlyList<object> parameterSettings,
+            TDescriptorResult value, IReadOnlyList<string> descriptorNames, Exception exception)
         {
             this.specification = specification;
             this.parameterNames = parameterNames;
@@ -85,7 +88,7 @@ namespace NCDK.QSAR
         }
 
         public DescriptorSpecification Specification => this.specification;
-        public object[] Parameters => this.parameterSettings;
+        public IReadOnlyList<object> Parameters => this.parameterSettings;
         public IReadOnlyList<string> ParameterNames => this.parameterNames;        
         public TDescriptorResult Value => this.value;
         public Exception Exception => exception;
@@ -136,7 +139,7 @@ namespace NCDK.QSAR
                         }
                         var names = new string[ndesc];
                         for (int i = 0; i < ndesc; i++)
-                            names[i] = title + i.ToString();
+                            names[i] = title + i.ToString(NumberFormatInfo.InvariantInfo);
                         descriptorNames = names;
                     }
                 }

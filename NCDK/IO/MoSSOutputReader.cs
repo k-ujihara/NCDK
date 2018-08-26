@@ -147,7 +147,7 @@ namespace NCDK.IO
                 }
                 catch (InvalidSmilesException exception)
                 {
-                    Trace.TraceError("Skipping invalid SMILES: " + cols[1]);
+                    Trace.TraceError($"Skipping invalid SMILES: {cols[1]}");
                     Debug.WriteLine(exception);
                 }
                 line = input.ReadLine();

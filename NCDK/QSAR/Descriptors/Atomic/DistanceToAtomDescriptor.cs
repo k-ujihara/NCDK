@@ -58,8 +58,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the DistanceToAtomDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#distanceToAtom",
                 typeof(DistanceToAtomDescriptor).FullName, "The Chemistry Development Kit");
@@ -68,11 +68,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// The parameters attribute of the DistanceToAtomDescriptor object
         /// </summary>
         /// <exception cref="CDKException"></exception>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
                     throw new CDKException("DistanceToAtomDescriptor only expects two parameters");
                 }
@@ -104,14 +104,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             if (atom.Point3D == null || focus.Point3D == null)
             {
-                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
+                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(
                         double.NaN), DescriptorNames, new CDKException(
                         "Target or focus atom must have 3D coordinates."));
             }
 
             distanceToAtom = CalculateDistanceBetweenTwoAtoms(atom, focus);
 
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(
                     distanceToAtom), DescriptorNames);
         }
 
@@ -121,7 +121,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom1">The IAtom 1</param>
         /// <param name="atom2">The IAtom 2</param>
         /// <returns>distance between atom1 and atom2</returns>
-        private double CalculateDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
+        private static double CalculateDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
         {
             double distance;
             Vector3 firstPoint = atom1.Point3D.Value;

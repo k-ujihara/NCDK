@@ -18,8 +18,8 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.IO;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Diagnostics;
@@ -139,7 +139,7 @@ namespace NCDK.AtomTypes
 
         private TestResults TestFile(string dir, string filename, Type readerType)
         {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(Default.ChemObjectBuilder.Instance);
+            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(ChemObjectBuilder.Instance);
             var ins = ResourceLoader.GetAsStream(dir + filename);
             var reader = (ISimpleChemObjectReader)readerType.GetConstructor(new Type[] { typeof(Stream) }).Invoke(new object[] { ins });
             IAtomContainer mol = null;
@@ -150,7 +150,7 @@ namespace NCDK.AtomTypes
             else if (reader.Accepts(typeof(IChemFile)))
             {
                 IChemFile cf = reader.Read(new ChemFile());
-                mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+                mol = ChemObjectBuilder.Instance.NewAtomContainer();
                 var containers = ChemFileManipulator.GetAllAtomContainers(cf);
                 foreach (var container in containers)
                     mol.Add(container);

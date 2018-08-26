@@ -376,7 +376,7 @@ namespace NCDK.Hash.Stereo
         /// </summary>
         private class BondMap
         {
-            public IDictionary<IAtom, List<IBond>> bonds;
+            public Dictionary<IAtom, List<IBond>> bonds;
 
             /// <summary>
             /// Create new bond map for the specified number of atoms.
@@ -395,7 +395,7 @@ namespace NCDK.Hash.Stereo
             public IEnumerable<IBond> GetBonds(IAtom a)
             {
                 if (!bonds.TryGetValue(a, out List<IBond> bs))
-                    return new IBond[0];
+                    return System.Array.Empty<IBond>();
                 return bs;
             }
 

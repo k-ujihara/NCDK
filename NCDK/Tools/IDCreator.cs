@@ -73,7 +73,9 @@ namespace NCDK.Tools
             /// <summary>
             /// New ID generation policy - to generate IDs unique only in a molecule
             /// </summary>
+#pragma warning disable CA1720 // Identifier contains type name
             Object = 1,
+#pragma warning restore CA1720 // Identifier contains type name
         }
 
         /// <summary>

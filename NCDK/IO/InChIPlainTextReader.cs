@@ -51,7 +51,6 @@ namespace NCDK.IO
     public class InChIPlainTextReader : DefaultChemObjectReader
     {
         private TextReader input;
-        private InChIContentProcessorTool inchiTool;
 
         /// <summary>
         /// Construct a INChI reader from a Reader object.
@@ -59,9 +58,7 @@ namespace NCDK.IO
         /// <param name="input">the Reader with the content</param>
         public InChIPlainTextReader(TextReader input)
         {
-            this.Init();
             this.input = input;
-            inchiTool = new InChIContentProcessorTool();
         }
 
         public InChIPlainTextReader(Stream input)
@@ -69,11 +66,6 @@ namespace NCDK.IO
         { }
 
         public override IResourceFormat Format => InChIPlainTextFormat.Instance;
-
-        /// <summary>
-        /// Initializes this reader.
-        /// </summary>
-        private void Init() { }
 
         public override bool Accepts(Type type)
         {
@@ -129,10 +121,10 @@ namespace NCDK.IO
                             connections = tok[2].Substring(1); // 1-2-4-6-5-3-1
                                                                //final string hydrogens = tokenizer.NextToken().Substring(1); // 1-6H
 
-                        IAtomContainer parsedContent = inchiTool.ProcessFormula(
+                        IAtomContainer parsedContent = InChIContentProcessorTool.ProcessFormula(
                                 cf.Builder.NewAtomContainer(), formula);
                         if (connections != null)
-                            inchiTool.ProcessConnections(connections, parsedContent, -1);
+                            InChIContentProcessorTool.ProcessConnections(connections, parsedContent, -1);
 
                         var moleculeSet = cf.Builder.NewAtomContainerSet();
                         moleculeSet.Add(cf.Builder.NewAtomContainer(parsedContent));

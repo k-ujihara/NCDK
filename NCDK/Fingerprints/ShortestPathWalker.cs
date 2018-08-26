@@ -45,7 +45,7 @@ namespace NCDK.Fingerprints
         private readonly IAtomContainer container;
 
         /* set of encoded atom paths */
-        private readonly IList<string> paths;
+        private readonly List<string> paths;
 
         /* list of encoded pseudo atoms */
         private readonly List<string> pseudoAtoms;
@@ -61,27 +61,27 @@ namespace NCDK.Fingerprints
         {
             this.container = container;
             this.pseudoAtoms = new List<string>(5);
-            this.paths = new ReadOnlyCollection<string>(Traverse());
+            this.paths = Traverse();
         }
 
         /// <summary>
         /// Access a set of all shortest paths.
         /// </summary>
         /// <returns>the paths</returns>
-        public IList<string> GetPaths()
+        public IReadOnlyList<string> GetPaths()
         {
-            return new ReadOnlyCollection<string>(paths);
+            return paths;
         }
 
         /// <summary>
         /// Traverse all-pairs of shortest-paths within a chemical graph.
         /// </summary>
-        private IList<string> Traverse()
+        private List<string> Traverse()
         {
             var paths = new SortedSet<string>();
 
             // All-Pairs Shortest-Paths (APSP)
-            AllPairsShortestPaths apsp = new AllPairsShortestPaths(container);
+            var apsp = new AllPairsShortestPaths(container);
 
             for (int i = 0, n = container.Atoms.Count; i < n; i++)
             {
@@ -112,9 +112,9 @@ namespace NCDK.Fingerprints
         /// </summary>
         /// <param name="src">array to reverse</param>
         /// <returns>reversed copy of <paramref name="src"/></returns>
-        private int[] Reverse(int[] src)
+        private static int[] Reverse(int[] src)
         {
-            int[] dest = Arrays.CopyOf(src, src.Length);
+            var dest = Arrays.CopyOf(src, src.Length);
             int left = 0;
             int right = src.Length - 1;
 
@@ -138,12 +138,11 @@ namespace NCDK.Fingerprints
         /// <returns>encoded path</returns>
         private string Encode(int[] path)
         {
-            StringBuilder sb = new StringBuilder(path.Length * 3);
+            var sb = new StringBuilder(path.Length * 3);
 
             for (int i = 0, n = path.Length - 1; i <= n; i++)
             {
-
-                IAtom atom = container.Atoms[path[i]];
+                var atom = container.Atoms[path[i]];
 
                 sb.Append(ToAtomPattern(atom));
 
@@ -173,7 +172,7 @@ namespace NCDK.Fingerprints
         /// </summary>
         /// <param name="atom">The atom to encode</param>
         /// <returns>encoded atom</returns>
-        private string ToAtomPattern(IAtom atom)
+        private static string ToAtomPattern(IAtom atom)
         {
             return atom.Symbol;
         }
@@ -183,7 +182,7 @@ namespace NCDK.Fingerprints
         /// </summary>
         /// <param name="bond">Description of the Parameter</param>
         /// <returns>The bondSymbol value</returns>
-        private char GetBondSymbol(IBond bond)
+        private static char GetBondSymbol(IBond bond)
         {
             if (IsSP2Bond(bond))
             {
@@ -210,7 +209,7 @@ namespace NCDK.Fingerprints
         /// <summary>
         /// Returns true if the bond binds two atoms, and both atoms are SP2 in a ring system.
         /// </summary>
-        private bool IsSP2Bond(IBond bond)
+        private static bool IsSP2Bond(IBond bond)
         {
             return bond.IsAromatic;
         }
@@ -218,9 +217,9 @@ namespace NCDK.Fingerprints
         /// <inheritdoc/>
         public override string ToString()
         {
-            int n = this.paths.Count();
-            string[] paths = this.paths.ToArray();
-            StringBuilder sb = new StringBuilder(n * 5);
+            var n = this.paths.Count();
+            var paths = this.paths.ToArray();
+            var sb = new StringBuilder(n * 5);
 
             for (int i = 0, last = n - 1; i < n; i++)
             {

@@ -47,11 +47,12 @@ namespace <#= ns.NS #>
     // @cdk.created 2004-12-20
     // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
     // @author      Ola Spjuth <ola.spjuth@farmbio.uu.se>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class Strand 
         : AtomContainer, IStrand
     {
-        private IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();
+        private Dictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();
 
         /// <summary>
         /// The strand name.
@@ -66,7 +67,7 @@ namespace <#= ns.NS #>
         public Strand()
             : base()
         {
-		    Monomer oMonomer = new Monomer
+            Monomer oMonomer = new Monomer
             {
                 MonomerName = "",
                 MonomerType = "Unknown"
@@ -104,12 +105,12 @@ namespace <#= ns.NS #>
             }
         }
 
-        private class  ReadOnlyNonEmptyDictionary<T>
+        private class ReadOnlyNonEmptyDictionary<T>
             : IReadOnlyDictionary<string, T>
         {
-            IDictionary<string, T> dictionary;
+            IReadOnlyDictionary<string, T> dictionary;
 
-            public ReadOnlyNonEmptyDictionary(IDictionary<string, T> dictionary)
+            public ReadOnlyNonEmptyDictionary(IReadOnlyDictionary<string, T> dictionary)
             {
                 this.dictionary = dictionary;
             }
@@ -122,7 +123,7 @@ namespace <#= ns.NS #>
             public IEnumerator<KeyValuePair<string, T>> GetEnumerator() 
             {
                 foreach (var pair in dictionary)
-                    if (pair.Key != "")
+                    if (pair.Key.Length != 0)
                         yield return pair;
                 yield break;
             }

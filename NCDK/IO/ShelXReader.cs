@@ -90,7 +90,7 @@ namespace NCDK.IO
                 }
                 catch (IOException e)
                 {
-                    Trace.TraceError("Input/Output error while reading from input: " + e.Message);
+                    Trace.TraceError($"Input/Output error while reading from input: {e.Message}");
                     throw new CDKException(e.Message, e);
                 }
             }
@@ -102,7 +102,7 @@ namespace NCDK.IO
                 }
                 catch (IOException e)
                 {
-                    Trace.TraceError("Input/Output error while reading from input: " + e.Message);
+                    Trace.TraceError($"Input/Output error while reading from input: {e.Message}");
                     throw new CDKException(e.Message, e);
                 }
             }
@@ -135,7 +135,7 @@ namespace NCDK.IO
             while (line != null && !end_found)
             {
                 /* is line continued? */
-                if (line.Length > 0 && line.Substring(line.Length - 1).Equals("="))
+                if (line.Length > 0 && line.Substring(line.Length - 1).Equals("=", StringComparison.Ordinal))
                 {
                     /* yes, line is continued */
                     line = line + input.ReadLine();
@@ -153,7 +153,7 @@ namespace NCDK.IO
                     break;
                 }
 
-                Debug.WriteLine("command: " + command);
+                Debug.WriteLine($"command: {command}");
                 var u_command = command.ToUpperInvariant();
                 if (u_command.StartsWith("REM", StringComparison.Ordinal))
                 {
@@ -183,12 +183,12 @@ namespace NCDK.IO
                                 string salpha = st[5];
                                 string sbeta = st[6];
                                 string sgamma = st[7];
-                                Debug.WriteLine("a: " + sa);
-                                Debug.WriteLine("b: " + sb);
-                                Debug.WriteLine("c: " + sc);
-                                Debug.WriteLine("alpha: " + salpha);
-                                Debug.WriteLine("beta : " + sbeta);
-                                Debug.WriteLine("gamma: " + sgamma);
+                                Debug.WriteLine($"a: {sa}");
+                                Debug.WriteLine($"b: {sb}");
+                                Debug.WriteLine($"c: {sc}");
+                                Debug.WriteLine($"alpha: {salpha}");
+                                Debug.WriteLine($"beta : {sbeta}");
+                                Debug.WriteLine($"gamma: {sgamma}");
 
                                 double a = FortranFormat.Atof(sa);
                                 double b = FortranFormat.Atof(sb);
@@ -294,14 +294,14 @@ namespace NCDK.IO
                             break;
                         case "    ":
                             {
-                                Debug.WriteLine("Disrgarding line assumed to be added by PLATON: " + line);
+                                Debug.WriteLine($"Disrgarding line assumed to be added by PLATON: {line}");
 
                                 /* All other is atom */
                             }
                             break;
                         default:
                             {
-                                //Debug.WriteLine("Assumed to contain an atom: " + line);
+                                //Debug.WriteLine($"Assumed to contain an atom: {line}");
 
                                 // this line gives an atom, because all lines not starting with
                                 // a ShelX command is an atom (that sucks!)
@@ -341,7 +341,7 @@ namespace NCDK.IO
                                     IAtom atom = crystal.Builder.NewAtom(atype);
                                     atom.FractionalPoint3D = new Vector3(frac[0], frac[1], frac[2]);
                                     crystal.Atoms.Add(atom);
-                                    Debug.WriteLine("Atom added: ", atom);
+                                    Debug.WriteLine($"Atom added: {atom}");
                                 }
                             }
                             break;

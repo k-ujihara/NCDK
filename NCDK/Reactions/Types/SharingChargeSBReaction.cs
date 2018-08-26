@@ -48,8 +48,8 @@ namespace NCDK.Reactions.Types
         /// <returns>The specification value</returns>
         public ReactionSpecification Specification =>
             new ReactionSpecification(
-                    "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#SharingChargeSB", this
-                            .GetType().Name, "$Id$", "The Chemistry Development Kit");
+                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#SharingChargeSB",
+                this.GetType().Name, "$Id$", "The Chemistry Development Kit");
 
         /// <summary>
         ///  Initiate process.
@@ -127,7 +127,7 @@ namespace NCDK.Reactions.Types
         ///  </pre>
         /// </summary>
         /// <param name="reactant">The molecule to set the activity</param>
-        private void SetActiveCenters(IAtomContainer reactant)
+        private static void SetActiveCenters(IAtomContainer reactant)
         {
             foreach (var atomi in reactant.Atoms)
             {

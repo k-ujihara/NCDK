@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -27,10 +28,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Silent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NCDK.Default;
 using System.Text;
 
 namespace NCDK.Default

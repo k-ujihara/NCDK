@@ -31,19 +31,21 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.Collections;
 
+#pragma warning disable CA1710 // Identifiers should have correct suffix
+
 <#
 foreach (var ns in namespaces) 
 {
 #>
 namespace <#= ns.NS #>
 {
-	public class AtomContainerSet
-		: ChemObjectSet<IAtomContainer>, IAtomContainerSet
-	{
-		public AtomContainerSet()
-			: base()
-		{}
-	}
+    public class AtomContainerSet
+        : ChemObjectSet<IAtomContainer>, IAtomContainerSet
+    {
+        public AtomContainerSet()
+            : base()
+        {}
+    }
 
     /// <summary>
     /// A set of AtomContainers.
@@ -57,7 +59,7 @@ namespace <#= ns.NS #>
          where T : IChemObject
     {
         internal IList<T> atomContainers;
-        internal IList<double?> multipliers;
+        internal List<double?> multipliers;
 
          /// <summary> Constructs an empty ChemObjectSet.</summary>
         public ChemObjectSet()
@@ -147,7 +149,7 @@ namespace <#= ns.NS #>
             <# if (!ns.IsSilent) { #> NotifyChanged(); <# } #>
         }
 
-        public IReadOnlyList<double?> GetMultipliers() => new ReadOnlyCollection<double?>(multipliers);
+        public IReadOnlyList<double?> GetMultipliers() => multipliers;
 
         /// <summary>
         /// Sets the multipliers of the AtomContainers.
@@ -309,8 +311,8 @@ namespace <#= ns.NS #>
 
         class CompareRefByIndex : IComparer<int>
         {
-            ChemObjectSet<T> parent;
-            IComparer<T> comparator;
+            private readonly ChemObjectSet<T> parent;
+            private IComparer<T> comparator;
 
             public CompareRefByIndex(ChemObjectSet<T> parent, IComparer<T> comparator)
             {

@@ -19,6 +19,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.AtomTypes;
 using NCDK.Reactions.Types.Parameters;
+using NCDK.Silent;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
@@ -34,7 +35,6 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class ElectronImpactPDBReactionTest : ReactionProcessTest
     {
-        private readonly LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
         public ElectronImpactPDBReactionTest()
@@ -85,7 +85,7 @@ namespace NCDK.Reactions.Types
                 }
             }
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(reactant);
 
             /* initiate */
@@ -133,7 +133,7 @@ namespace NCDK.Reactions.Types
             reactant.AddBond(reactant.Atoms[1], reactant.Atoms[2], BondOrder.Single);
             AddExplicitHydrogens(reactant);
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(reactant);
 
             /* initiate */
@@ -179,7 +179,7 @@ namespace NCDK.Reactions.Types
             reactant.AddBond(reactant.Atoms[5], reactant.Atoms[6], BondOrder.Single);
             AddExplicitHydrogens(reactant);
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(reactant);
 
             /* initiate */
@@ -300,7 +300,7 @@ namespace NCDK.Reactions.Types
         /// </summary>
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
 
             IAtomContainer molecule = builder.NewAtomContainer();//Miles("C=CC")
             molecule.Atoms.Add(builder.NewAtom("C"));
@@ -324,7 +324,7 @@ namespace NCDK.Reactions.Types
             try
             {
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-                lpcheck.Saturate(molecule);
+                LonePairElectronChecker.Saturate(molecule);
             }
             catch (CDKException e)
             {

@@ -32,12 +32,20 @@ namespace NCDK
     public class NoSuchAtomException
         : CDKException
     {
+        public NoSuchAtomException()
+        {
+        }
+
         /// <summary>
         /// Constructs a new <see cref="NoSuchAtomException"/> with the given message.
         /// </summary>
         /// <param name="message">for the constructed exception</param>
         public NoSuchAtomException(string message)
             : base(message)
+        {
+        }
+
+        public NoSuchAtomException(string message, System.Exception innerException) : base(message, innerException)
         {
         }
     }

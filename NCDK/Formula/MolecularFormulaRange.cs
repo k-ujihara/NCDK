@@ -65,7 +65,7 @@ namespace NCDK.Formula
         public void AddIsotope(IIsotope isotope, int countMin, int countMax)
         {
             if (isotope == null)
-                throw new ArgumentNullException("Isotope must not be null");
+                throw new ArgumentNullException(nameof(isotope), "Isotope must not be null");
 
             bool flag = false;
             foreach (var thisIsotope in GetIsotopes())
@@ -205,12 +205,15 @@ namespace NCDK.Formula
         /// <param name="isotopeOne">The first Isotope to compare</param>
         /// <param name="isotopeTwo">The second Isotope to compare</param>
         /// <returns>True, if both isotope are the same</returns>
-        private bool IsTheSame(IIsotope isotopeOne, IIsotope isotopeTwo)
+        private static bool IsTheSame(IIsotope isotopeOne, IIsotope isotopeTwo)
         {
-            if (!isotopeOne.Symbol.Equals(isotopeTwo.Symbol)) return false;
+            if (!isotopeOne.Symbol.Equals(isotopeTwo.Symbol, StringComparison.Ordinal))
+                return false;
             // XXX: floating point comparision!
-            if (isotopeOne.NaturalAbundance != isotopeTwo.NaturalAbundance) return false;
-            if (isotopeOne.ExactMass != isotopeTwo.ExactMass) return false;
+            if (isotopeOne.NaturalAbundance != isotopeTwo.NaturalAbundance)
+                return false;
+            if (isotopeOne.ExactMass != isotopeTwo.ExactMass)
+                return false;
 
             return true;
         }

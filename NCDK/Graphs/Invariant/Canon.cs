@@ -25,6 +25,7 @@
 using NCDK.Common.Collections;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.Graphs.Invariant
@@ -69,7 +70,7 @@ namespace NCDK.Graphs.Invariant
         private readonly long[] labelling, symmetry;
 
         /// <summary>Only compute the symmetry classes.</summary>
-        private bool symOnly = false;
+        private readonly bool symOnly = false;
 
         /// <summary>
         /// Create a canon labelling for the graph (<paramref name="g"/>) with the specified invariants.
@@ -249,7 +250,7 @@ namespace NCDK.Graphs.Invariant
         /// <param name="ranks">invariant ranks</param>
         /// <param name="hydrogens"></param>
         /// <returns>the prime product</returns>
-        private long PrimeProduct(int[] ws, long[] ranks, bool[] hydrogens)
+        private static long PrimeProduct(int[] ws, long[] ranks, bool[] hydrogens)
         {
             long prod = 1;
             foreach (var w in ws)
@@ -403,7 +404,7 @@ namespace NCDK.Graphs.Invariant
                     string line = null;
                     while ((line = br.ReadLine()) != null)
                     {
-                        primes[i++] = int.Parse(line);
+                        primes[i++] = int.Parse(line, NumberFormatInfo.InvariantInfo);
                     }
                     Trace.Assert(i == N_PRIMES);
                 }
@@ -412,7 +413,7 @@ namespace NCDK.Graphs.Invariant
             catch (FormatException)
             {
                 Console.Error.WriteLine("Critical - could not load primes table for canonical labelling!");
-                return new int[0];
+                return Array.Empty<int>();
             }
         }
     }

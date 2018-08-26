@@ -83,7 +83,7 @@ namespace NCDK
         /// <see cref="IMolecularFormula"/>.
         /// </summary>
         /// <value>The the number of different isotopes in this <see cref="IMolecularFormula"/></value>
-        int Count { get; }
+        int IsotopesCount { get; }
 
         /// <summary>
         /// <see langword="true"/>, if the <see cref="IMolecularFormula"/> contains the given <see cref="IIsotope"/> object. Not

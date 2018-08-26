@@ -30,6 +30,7 @@ using NCDK.Sgroups;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -212,8 +213,7 @@ namespace NCDK.Smiles
 
                 // convert the Beam object model to the CDK - note exception thrown
                 // if a kekule structure could not be assigned.
-                IAtomContainer mol = beamToCDK.ToAtomContainer(kekulise ? g.Kekule() : g,
-                                                           kekulise);
+                var mol = beamToCDK.ToAtomContainer(kekulise ? g.Kekule() : g, kekulise);
 
                 if (!isRxnPart)
                 {
@@ -225,18 +225,18 @@ namespace NCDK.Smiles
                     catch (Exception e)
                     {
                         // e.StackTrace
-                        throw new NCDK.InvalidSmilesException("Error parsing CXSMILES:" + e.Message);
+                        throw new InvalidSmilesException($"Error parsing CXSMILES: {e.Message}");
                     }
                 }
                 return mol;
             }
             catch (IOException e)
             {
-                throw new NCDK.InvalidSmilesException("could not parse '" + smiles + "', " + e.Message);
+                throw new InvalidSmilesException($"could not parse '{smiles}', {e.Message}");
             }
             catch (Exception)
             {
-                throw new NCDK.InvalidSmilesException("could not parse '" + smiles + "'");
+                throw new InvalidSmilesException($"could not parse '{smiles}'");
             }
         }
 
@@ -245,11 +245,11 @@ namespace NCDK.Smiles
         /// </summary>
         /// <param name="val">value</param>
         /// <returns>the integer value</returns>
-        private int ParseIntSafe(string val)
+        private static int ParseIntSafe(string val)
         {
             try
             {
-                return int.Parse(val);
+                return int.Parse(val, NumberFormatInfo.InvariantInfo);
             }
             catch (FormatException)
             {
@@ -270,12 +270,11 @@ namespace NCDK.Smiles
             {
                 if ((pos = CxSmilesParser.ProcessCx(title, cxstate = new CxSmilesState())) >= 0)
                 {
-
                     // set the correct title
                     mol.Title = title.Substring(pos);
 
-                    IDictionary<IAtom, IAtomContainer> atomToMol = new Dictionary<IAtom, IAtomContainer>(mol.Atoms.Count);
-                    IList<IAtom> atoms = new List<IAtom>(mol.Atoms.Count);
+                    var atomToMol = new Dictionary<IAtom, IAtomContainer>(mol.Atoms.Count);
+                    var atoms = new List<IAtom>(mol.Atoms.Count);
 
                     foreach (var atom in mol.Atoms)
                     {
@@ -304,8 +303,8 @@ namespace NCDK.Smiles
                     // set the correct title
                     rxn.SetProperty(CDKPropertyName.Title, title.Substring(pos));
 
-                    IDictionary<IAtom, IAtomContainer> atomToMol = new Dictionary<IAtom, IAtomContainer>(100);
-                    IList<IAtom> atoms = new List<IAtom>();
+                    var atomToMol = new Dictionary<IAtom, IAtomContainer>(100);
+                    var atoms = new List<IAtom>();
                     HandleFragmentGrouping(rxn, cxstate);
 
                     // merge all together
@@ -345,7 +344,7 @@ namespace NCDK.Smiles
         /// </summary>
         /// <param name="rxn">reaction</param>
         /// <param name="cxstate">state</param>
-        private void HandleFragmentGrouping(IReaction rxn, CxSmilesState cxstate)
+        private static void HandleFragmentGrouping(IReaction rxn, CxSmilesState cxstate)
         {
             // repartition/merge fragments
             if (cxstate.fragGroups != null)
@@ -355,8 +354,8 @@ namespace NCDK.Smiles
                 int product = 3;
 
                 // note we don't use a list for fragmap as the indexes need to stay consistent
-                IDictionary<int, IAtomContainer> fragMap = new SortedDictionary<int, IAtomContainer>();
-                IDictionary<IAtomContainer, int> roleMap = new Dictionary<IAtomContainer, int>();
+                var fragMap = new SortedDictionary<int, IAtomContainer>();
+                var roleMap = new Dictionary<IAtomContainer, int>();
 
                 foreach (var mol in rxn.Reactants)
                 {
@@ -376,11 +375,11 @@ namespace NCDK.Smiles
 
                 // check validity of group
                 bool invalid = false;
-                ICollection<int> visit = new HashSet<int>();
+                var visit = new HashSet<int>();
 
                 foreach (var grouping in cxstate.fragGroups)
                 {
-                    IAtomContainer dest = fragMap[grouping[0]];
+                    var dest = fragMap[grouping[0]];
                     if (dest == null)
                         continue;
                     if (visit.Contains(grouping[0]))
@@ -393,7 +392,7 @@ namespace NCDK.Smiles
                             invalid = true;
                         else
                             visit.Add(grouping[i]);
-                        IAtomContainer src = fragMap[grouping[i]];
+                        var src = fragMap[grouping[i]];
                         if (src != null)
                         {
                             dest.Add(src);
@@ -436,8 +435,8 @@ namespace NCDK.Smiles
         /// <param name="cxstate">the CXSMILES state to read from</param>
         private void AssignCxSmilesInfo(IChemObjectBuilder bldr,
                                         IChemObject chemObj,
-                                        IList<IAtom> atoms,
-                                        IDictionary<IAtom, IAtomContainer> atomToMol,
+                                        List<IAtom> atoms,
+                                        Dictionary<IAtom, IAtomContainer> atomToMol,
                                         CxSmilesState cxstate)
         {
             // atom-labels - must be done first as we replace atoms
@@ -449,8 +448,8 @@ namespace NCDK.Smiles
                     if (e.Key >= atoms.Count)
                         continue;
 
-                    IAtom old = atoms[e.Key];
-                    IPseudoAtom pseudo = bldr.NewPseudoAtom();
+                    var old = atoms[e.Key];
+                    var pseudo = bldr.NewPseudoAtom();
                     string val = e.Value;
 
                     // specialised label handling
@@ -462,7 +461,7 @@ namespace NCDK.Smiles
                     pseudo.Label = val;
                     pseudo.AtomicNumber = 0;
                     pseudo.ImplicitHydrogenCount = 0;
-                    IAtomContainer mol = atomToMol[old];
+                    var mol = atomToMol[old];
                     AtomContainerManipulator.ReplaceAtomByAtom(mol, old, pseudo);
                     atomToMol.Add(pseudo, mol);
                     atoms[e.Key] = pseudo;
@@ -477,25 +476,25 @@ namespace NCDK.Smiles
             }
 
             // atom-coordinates
-            if (cxstate.AtomCoords != null)
+            if (cxstate.atomCoords != null)
             {
                 int numAtoms = atoms.Count;
-                int numCoords = cxstate.AtomCoords.Count;
+                int numCoords = cxstate.atomCoords.Count;
                 int lim = Math.Min(numAtoms, numCoords);
                 if (cxstate.coordFlag)
                 {
                     for (int i = 0; i < lim; i++)
                         atoms[i].Point3D = new Vector3(
-                            cxstate.AtomCoords[i][0],
-                            cxstate.AtomCoords[i][1],
-                            cxstate.AtomCoords[i][2]);
+                            cxstate.atomCoords[i][0],
+                            cxstate.atomCoords[i][1],
+                            cxstate.atomCoords[i][2]);
                 }
                 else
                 {
                     for (int i = 0; i < lim; i++)
                         atoms[i].Point2D = new Vector2(
-                            cxstate.AtomCoords[i][0],
-                            cxstate.AtomCoords[i][1]);
+                            cxstate.atomCoords[i][0],
+                            cxstate.atomCoords[i][1]);
                 }
             }
 
@@ -528,26 +527,23 @@ namespace NCDK.Smiles
                             count = 3;
                             break;
                     }
-                    IAtom atom = atoms[e.Key];
-                    IAtomContainer mol = atomToMol[atom];
+                    var atom = atoms[e.Key];
+                    var mol = atomToMol[atom];
                     while (count-- > 0)
                         mol.SingleElectrons.Add(bldr.NewSingleElectron(atom));
                 }
             }
 
-            IMultiDictionary<IAtomContainer, Sgroup> sgroupMap = new MultiDictionary<IAtomContainer, Sgroup>();
+            var sgroupMap = new MultiDictionary<IAtomContainer, Sgroup>();
 
             // positional-variation
             if (cxstate.positionVar != null)
             {
                 foreach (var e in cxstate.positionVar)
                 {
-                    Sgroup sgroup = new Sgroup
-                    {
-                        Type = SgroupType.ExtMulticenter
-                    };
-                    IAtom beg = atoms[e.Key];
-                    IAtomContainer mol = atomToMol[beg];
+                    var sgroup = new Sgroup { Type = SgroupType.ExtMulticenter };
+                    var beg = atoms[e.Key];
+                    var mol = atomToMol[beg];
                     var bonds = mol.GetConnectedBonds(beg);
                     if (bonds.Count() == 0)
                         continue; // bad
@@ -576,16 +572,15 @@ namespace NCDK.Smiles
             {
                 foreach (var psgroup in cxstate.sgroups)
                 {
-                    Sgroup sgroup = new Sgroup();
-
-                    ICollection<IAtom> atomset = new HashSet<IAtom>();
+                    var sgroup = new Sgroup();
+                    var atomset = new HashSet<IAtom>();
                     IAtomContainer mol = null;
                     foreach (var idx in psgroup.AtomSet)
                     {
                         if (idx >= atoms.Count)
                             continue;
-                        IAtom atom = atoms[idx];
-                        IAtomContainer amol = atomToMol[atom];
+                        var atom = atoms[idx];
+                        var amol = atomToMol[atom];
 
                         if (mol == null)
                             mol = amol;
@@ -670,7 +665,7 @@ namespace NCDK.Smiles
 
             // assign Sgroups
             foreach (var e in sgroupMap)
-                e.Key.SetProperty(CDKPropertyName.CtabSgroups, new List<Sgroup>(e.Value));
+                e.Key.SetCtabSgroups(new List<Sgroup>(e.Value));
         }
 
         /// <summary>

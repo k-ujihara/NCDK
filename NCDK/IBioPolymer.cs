@@ -69,7 +69,7 @@ namespace NCDK
         /// Map containing the strands in the Polymer.
         /// </summary>
         /// <returns><see cref="IDictionary{TKey, TValue}"/> containing the strands in the Polymer</returns>
-        IDictionary<string, IStrand> GetStrandMap();
+        IReadOnlyDictionary<string, IStrand> GetStrandMap();
 
         /// <summary>
         /// Retrieve a Monomer object by specifying its name.

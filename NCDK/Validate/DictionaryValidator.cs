@@ -63,7 +63,7 @@ namespace NCDK.Validate
                         {
                             report.OKs.Add(noNamespace);
                             string dict = dictRef.Substring(0, index);
-                            Debug.WriteLine("Looking for dictionary:" + dict);
+                            Debug.WriteLine($"Looking for dictionary:{dict}");
                             if (db.HasDictionary(dict))
                             {
                                 report.OKs.Add(noDict);

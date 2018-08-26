@@ -47,13 +47,13 @@ namespace NCDK.Reactions.Types
         /// </summary>
         public ReactionSpecification Specification =>
             new ReactionSpecification(
-                    "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#PiBondingMovement", this
-                            .GetType().Name, "$Id$", "The Chemistry Development Kit");
+                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#PiBondingMovement", 
+                this.GetType().Name, "$Id$", "The Chemistry Development Kit");
 
         /// <summary>
-        ///  Initiate process.
-        ///  It is needed to call the addExplicitHydrogensToSatisfyValency
-        ///  from the class tools.HydrogenAdder.
+        /// Initiate process.
+        /// It is needed to call the addExplicitHydrogensToSatisfyValency
+        /// from the class tools.HydrogenAdder.
         /// </summary>
         /// <exception cref="CDKException"> Description of the Exception</exception>
         /// <param name="reactants">reactants of the reaction.</param>
@@ -62,24 +62,20 @@ namespace NCDK.Reactions.Types
         {
             CheckInitiateParams(reactants, agents);
 
-            IReactionSet setOfReactions = reactants.Builder.NewReactionSet();
-            IAtomContainer reactant = reactants[0];
+            var setOfReactions = reactants.Builder.NewReactionSet();
+            var reactant = reactants[0];
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactant);
 
             // if the parameter hasActiveCenter is not fixed yet, set the active centers
-            IParameterReaction ipr = base.GetParameterClass(typeof(SetReactionCenter));
+            var ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
 
-            //        if((bool)paramsMap["lookingSymmetry"]){
-            //            Aromaticity.CDKLegacy.Apply(reactant);
-            //        }
-
-            AllRingsFinder arf = new AllRingsFinder();
-            IRingSet ringSet = arf.FindAllRings((IAtomContainer)reactant);
+            var arf = new AllRingsFinder();
+            var ringSet = arf.FindAllRings((IAtomContainer)reactant);
             for (int ir = 0; ir < ringSet.Count; ir++)
             {
-                IRing ring = (IRing)ringSet[ir];
+                var ring = ringSet[ir];
 
                 //only rings with even number of atoms
                 int nrAtoms = ring.Atoms.Count;
@@ -118,7 +114,7 @@ namespace NCDK.Reactions.Types
 
                         }
 
-                        reaction.Products.Add((IAtomContainer)reactantCloned);
+                        reaction.Products.Add(reactantCloned);
                         setOfReactions.Add(reaction);
                     }
 
@@ -132,17 +128,16 @@ namespace NCDK.Reactions.Types
         /// Set the active center for this molecule.
         /// The active center will be those which correspond to a ring
         /// with pi electrons with resonance.
-        ///
-        /// FIXME REACT: It could be possible that a ring is a super ring of others small rings
         /// </summary>
+        /// FIXME REACT: It could be possible that a ring is a super ring of others small rings
         /// <param name="reactant">The molecule to set the activity</param>
-        private void SetActiveCenters(IAtomContainer reactant)
+        private static void SetActiveCenters(IAtomContainer reactant)
         {
-            AllRingsFinder arf = new AllRingsFinder();
-            IRingSet ringSet = arf.FindAllRings(reactant);
+            var arf = new AllRingsFinder();
+            var ringSet = arf.FindAllRings(reactant);
             for (int ir = 0; ir < ringSet.Count; ir++)
             {
-                IRing ring = (IRing)ringSet[ir];
+                var ring = ringSet[ir];
                 //only rings with even number of atoms
                 int nrAtoms = ring.Atoms.Count;
                 if (nrAtoms % 2 == 0)

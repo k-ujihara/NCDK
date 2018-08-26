@@ -18,6 +18,7 @@
  */
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.Tools
@@ -31,92 +32,78 @@ namespace NCDK.Tools
     // @cdk.githash
     public class AtomicProperties
     {
-        private static AtomicProperties ap = null;
+        public static AtomicProperties Instance { get; } = new AtomicProperties();
 
-        private IDictionary<string, double> htMass = new Dictionary<string, double>();
-        private IDictionary<string, double> htVdWVolume = new Dictionary<string, double>();
-        private IDictionary<string, double> htElectronegativity = new Dictionary<string, double>();
-        private IDictionary<string, double> htPolarizability = new Dictionary<string, double>();
+        private readonly Dictionary<string, double> htMass = new Dictionary<string, double>();
+        private readonly Dictionary<string, double> htVdWVolume = new Dictionary<string, double>();
+        private readonly Dictionary<string, double> htElectronegativity = new Dictionary<string, double>();
+        private readonly Dictionary<string, double> htPolarizability = new Dictionary<string, double>();
 
         private AtomicProperties()
         {
             string configFile = "NCDK.Config.Data.whim_weights.txt";
 
-            using (var ins = ResourceLoader.GetAsStream(configFile))
-            using (var bufferedReader = new StreamReader(ins))
+            using (var bufferedReader = new StreamReader(ResourceLoader.GetAsStream(configFile)))
             {
                 bufferedReader.ReadLine(); // header
 
-                string Line;
+                string line;
                 while (true)
                 {
-                    Line = bufferedReader.ReadLine();
-                    if (Line == null)
+                    line = bufferedReader.ReadLine();
+                    if (line == null)
                     {
                         break;
                     }
-                    string[] components = Line.Split('\t');
+                    string[] components = line.Split('\t');
 
                     string symbol = components[0];
-                    htMass[symbol] = double.Parse(components[1]);
-                    htVdWVolume[symbol] = double.Parse(components[2]);
-                    htElectronegativity[symbol] = double.Parse(components[3]);
-                    htPolarizability[symbol] = double.Parse(components[4]);
+                    htMass[symbol] = double.Parse(components[1], NumberFormatInfo.InvariantInfo);
+                    htVdWVolume[symbol] = double.Parse(components[2], NumberFormatInfo.InvariantInfo);
+                    htElectronegativity[symbol] = double.Parse(components[3], NumberFormatInfo.InvariantInfo);
+                    htPolarizability[symbol] = double.Parse(components[4], NumberFormatInfo.InvariantInfo);
                 }
             }
         }
 
-        public double GetVdWVolume(string symbol)
+        public virtual double GetVdWVolume(string symbol)
         {
             return htVdWVolume[symbol];
         }
 
-        public double GetNormalizedVdWVolume(string symbol)
+        public virtual double GetNormalizedVdWVolume(string symbol)
         {
             return this.GetVdWVolume(symbol) / this.GetVdWVolume("C");
         }
 
-        public double GetElectronegativity(string symbol)
+        public virtual double GetElectronegativity(string symbol)
         {
             return htElectronegativity[symbol];
         }
 
-        public double GetNormalizedElectronegativity(string symbol)
+        public virtual double GetNormalizedElectronegativity(string symbol)
         {
             return this.GetElectronegativity(symbol) / this.GetElectronegativity("C");
         }
 
-        public double GetPolarizability(string symbol)
+        public virtual double GetPolarizability(string symbol)
         {
             return htPolarizability[symbol];
         }
 
-        public double GetNormalizedPolarizability(string symbol)
+        public virtual double GetNormalizedPolarizability(string symbol)
         {
             return this.GetPolarizability(symbol) / this.GetPolarizability("C");
         }
 
-        public double GetMass(string symbol)
+        public virtual double GetMass(string symbol)
         {
             return htMass[symbol];
         }
 
-        public double GetNormalizedMass(string symbol)
+        public virtual double GetNormalizedMass(string symbol)
         {
             return this.GetMass(symbol) / this.GetMass("C");
         }
-
-        public static AtomicProperties Instance
-        {
-            get
-            {
-                if (ap == null)
-                {
-                    ap = new AtomicProperties();
-                }
-                return ap;
-            }
-        }
     }
 }
-

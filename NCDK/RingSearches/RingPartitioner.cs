@@ -27,9 +27,9 @@ using System.Linq;
 namespace NCDK.RingSearches
 {
     /// <summary>
-    ///  Partitions a RingSet into RingSets of connected rings. Rings which share an
-    ///  Atom, a Bond or three or more atoms with at least on other ring in the
-    ///  RingSet are considered connected.
+    /// Partitions a RingSet into RingSets of connected rings. Rings which share an
+    /// atom, a bond or three or more atoms with at least on other ring in the
+    /// RingSet are considered connected.
     /// </summary>
     // @cdk.module standard
     // @cdk.githash
@@ -43,9 +43,9 @@ namespace NCDK.RingSearches
         // minimum details
 
         /// <summary>
-        ///  Partitions a RingSet into RingSets of connected rings. Rings which share
-        ///  an Atom, a Bond or three or more atoms with at least on other ring in
-        ///  the RingSet are considered connected. Thus molecules such as azulene and
+        /// Partitions a RingSet into RingSets of connected rings. Rings which share
+        /// an Atom, a Bond or three or more atoms with at least on other ring in
+        /// the RingSet are considered connected. Thus molecules such as azulene and
         /// indole will return a List with 1 element.
         /// </summary>
         /// <remarks>
@@ -55,13 +55,15 @@ namespace NCDK.RingSearches
         /// </remarks>
         /// <param name="ringSet">The RingSet to be partitioned</param>
         /// <returns>A <see cref="List{T}"/> of connected RingSets</returns>
-        public static IList<IRingSet> PartitionRings(IEnumerable<IRing> ringSet)
+        public static IReadOnlyList<IRingSet> PartitionRings(IEnumerable<IRing> ringSet)
         {
-           var ringSets = new List<IRingSet>();
-            if (!ringSet.Any()) return ringSets;
+            var ringSets = new List<IRingSet>();
+            if (!ringSet.Any())
+                return ringSets;
             var ring = ringSet.First();
-            if (ring == null) return ringSets;
-            IRingSet rs = ring.Builder.NewRingSet();
+            if (ring == null)
+                return ringSets;
+            var rs = ring.Builder.NewRingSet();
             foreach (var r in ringSet)
                 rs.Add(r);
             do
@@ -76,21 +78,22 @@ namespace NCDK.RingSearches
         }
 
         /// <summary>
-        ///  Converts a RingSet to an AtomContainer.
+        /// Converts a RingSet to an AtomContainer.
         /// </summary>
         /// <param name="ringSet">The RingSet to be converted.</param>
         /// <returns>The AtomContainer containing the bonds and atoms of the ringSet.</returns>
         public static IAtomContainer ConvertToAtomContainer(IRingSet ringSet)
         {
-            IRing ring = (IRing)ringSet[0];
-            if (ring == null) return null;
-            IAtomContainer ac = ring.Builder.NewAtomContainer();
+            var ring = ringSet[0];
+            if (ring == null)
+                return null;
+            var ac = ring.Builder.NewAtomContainer();
             for (int i = 0; i < ringSet.Count; i++)
             {
-                ring = (IRing)ringSet[i];
+                ring = ringSet[i];
                 for (int r = 0; r < ring.Bonds.Count; r++)
                 {
-                    IBond bond = ring.Bonds[r];
+                    var bond = ring.Bonds[r];
                     if (!ac.Contains(bond))
                     {
                         for (int j = 0; j < bond.Atoms.Count; j++)
@@ -105,10 +108,10 @@ namespace NCDK.RingSearches
         }
 
         /// <summary>
-        ///  Perform a walk in the given RingSet, starting at a given Ring and
-        ///  recursively searching for other Rings connected to this ring. By doing
-        ///  this it finds all rings in the RingSet connected to the start ring,
-        ///  putting them in newRs, and removing them from rs.
+        /// Perform a walk in the given RingSet, starting at a given Ring and
+        /// recursively searching for other Rings connected to this ring. By doing
+        /// this it finds all rings in the RingSet connected to the start ring,
+        /// putting them in newRs, and removing them from rs.
         /// </summary>
         /// <param name="rs">The RingSet to be searched</param>
         /// <param name="ring">The ring to start with</param>
@@ -118,7 +121,6 @@ namespace NCDK.RingSearches
         {
             IRing tempRing;
             var tempRings = rs.GetConnectedRings(ring);
-            //        Debug.WriteLine("walkRingSystem -> tempRings.Count: " + tempRings.Count);
             rs.Remove(ring);
             foreach (var container in tempRings)
             {

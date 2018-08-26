@@ -37,15 +37,19 @@ namespace NCDK.IO.CML
         public override object GetEntity(Uri absoluteUri, string role, Type ofObjectToReturn)
         {
             Debug.WriteLine(nameof(CMLResolver) + ": resolving " + absoluteUri);
+#pragma warning disable CA1308 // Normalize strings to uppercase
             var systemId = absoluteUri.AbsolutePath.ToLowerInvariant();
-            if ((systemId.IndexOf("cml-1999-05-15.dtd") != -1) || (systemId.IndexOf("cml.dtd") != -1)
-                    || (systemId.IndexOf("cml1_0.dtd") != -1))
+#pragma warning restore CA1308 // Normalize strings to uppercase
+            if (systemId.Contains("cml-1999-05-15.dtd") 
+             || systemId.Contains("cml.dtd")
+             || systemId.Contains("cml1_0.dtd"))
             {
                 Trace.TraceInformation("File has CML 1.0 DTD");
                 return GetCMLType("cml1_0.dtd");
             }
-            else if ((systemId.IndexOf("cml-2001-04-06.dtd") != -1) || (systemId.IndexOf("cml1_0_1.dtd") != -1)
-                  || (systemId.IndexOf("cml_1_0_1.dtd") != -1))
+            else if (systemId.Contains("cml-2001-04-06.dtd")
+                  || systemId.Contains("cml1_0_1.dtd")
+                  || systemId.Contains("cml_1_0_1.dtd"))
             {
                 Trace.TraceInformation("File has CML 1.0.1 DTD");
                 return GetCMLType("cml1_0_1.dtd");
@@ -64,7 +68,7 @@ namespace NCDK.IO.CML
         /// </summary>
         /// <param name="type">the name of the CML DTD version</param>
         /// <returns>the InputSource to the CML DTD</returns>
-        private Stream GetCMLType(string type)
+        private static Stream GetCMLType(string type)
         {
             try
             {

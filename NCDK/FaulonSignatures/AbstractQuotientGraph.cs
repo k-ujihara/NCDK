@@ -58,7 +58,7 @@ namespace NCDK.FaulonSignatures
         private List<Vertex> vertices;
         private List<Edge> edges;
 
-        public AbstractQuotientGraph()
+        protected AbstractQuotientGraph()
         {
             vertices = new List<Vertex>();
             edges = new List<Edge>();
@@ -143,7 +143,7 @@ namespace NCDK.FaulonSignatures
             }
         }
 
-        private bool InVisitedEdges(int x, int y, List<Edge> visitedEdges)
+        private static bool InVisitedEdges(int x, int y, List<Edge> visitedEdges)
         {
             foreach (var edge in visitedEdges)
             {

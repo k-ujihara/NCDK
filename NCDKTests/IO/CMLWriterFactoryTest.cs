@@ -34,13 +34,13 @@ namespace NCDK.IO
     [TestClass()]
     public class CMLWriterFactoryTest
     {
-        private WriterFactory factory = new WriterFactory();
+        private readonly WriterFactory factory = new WriterFactory();
 
         [TestMethod()]
         public void TestCMLWriter()
         {
             WriterFactory factory = new WriterFactory();
-            factory.RegisterWriter(typeof(CMLWriter));
+            WriterFactory.RegisterWriter(typeof(CMLWriter));
             IChemObjectWriter writer = factory.CreateWriter((IChemFormat)CMLFormat.Instance, new StringWriter());
             Assert.IsNotNull(writer);
             Assert.AreEqual(new CMLWriter(new StringWriter()).GetType().Name, writer.GetType().Name);
