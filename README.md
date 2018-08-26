@@ -23,12 +23,14 @@ Build
 -----
 
 Windows: Open Developer Command Prompt for VS 2017, and launch "BuildAll.bat". Of course, you can build with Visual Studio 2017. Open NCDKDisplay.sln and build it.
+
 Linux (.NET Core): To build NCDK.dll, launch "dotnet build --framework netstandard2.0" in NCDK directory.
 
 Test
 ----
 
 Windows: Launch "vstest.console.exe NCDKTests\bin\Release\netcoreapp2.1\NCDKTests.dll" and "vstest.console.exe NCDKDisplayTests\bin\Release\NCDKDisplayTests.dll".
+
 Linux: Copy libinchi.so.#.## to output directory of NCDKTests, and make a libinchi.so link to it and launch "dotnet test" in NCDKTests directory.
 
 NuGet Packages
