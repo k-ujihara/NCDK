@@ -47,7 +47,7 @@ namespace NCDK.Tautomers
                 : base()
         { }
 
-        private ICollection<IAtomContainer> UnitTestWithInchiProvided(string smiles, string inchi, int tautCountExpected)
+        private ICollection<IAtomContainer> UnitTestWithInChIProvided(string smiles, string inchi, int tautCountExpected)
         {
             IAtomContainer container = smilesParser.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
@@ -56,7 +56,7 @@ namespace NCDK.Tautomers
             return tautomers;
         }
 
-        private ICollection<IAtomContainer> UnitTestWithoutInchiProvided(string smiles, InChITautomerGenerator.Options flags, int tautCountExpected)
+        private ICollection<IAtomContainer> UnitTestWithoutInChIProvided(string smiles, InChITautomerGenerator.Options flags, int tautCountExpected)
         {
             IAtomContainer container = smilesParser.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
@@ -69,31 +69,31 @@ namespace NCDK.Tautomers
         [TestMethod()]
         public void Test1()
         {
-            UnitTestWithInchiProvided("NC1=CC(N)=NC(O)=N1", "InChI=1S/C4H6N4O/c5-2-1-3(6)8-4(9)7-2/h1H,(H5,5,6,7,8,9)", 5);
+            UnitTestWithInChIProvided("NC1=CC(N)=NC(O)=N1", "InChI=1S/C4H6N4O/c5-2-1-3(6)8-4(9)7-2/h1H,(H5,5,6,7,8,9)", 5);
         }
 
         [TestMethod()]
         public void Test2()
         {
-            UnitTestWithInchiProvided("CCCN1C2=C(NC=N2)C(=O)NC1=O", "InChI=1S/C8H10N4O2/c1-2-3-12-6-5(9-4-10-6)7(13)11-8(12)14/h4H,2-3H2,1H3,(H,9,10)(H,11,13,14)", 8);
+            UnitTestWithInChIProvided("CCCN1C2=C(NC=N2)C(=O)NC1=O", "InChI=1S/C8H10N4O2/c1-2-3-12-6-5(9-4-10-6)7(13)11-8(12)14/h4H,2-3H2,1H3,(H,9,10)(H,11,13,14)", 8);
         }
 
         [TestMethod()]
         public void Test3()
         {
-            UnitTestWithInchiProvided("CCNC(=N)NC", "InChI=1S/C4H11N3/c1-3-7-4(5)6-2/h3H2,1-2H3,(H3,5,6,7)", 3);
+            UnitTestWithInChIProvided("CCNC(=N)NC", "InChI=1S/C4H11N3/c1-3-7-4(5)6-2/h3H2,1-2H3,(H3,5,6,7)", 3);
         }
 
         [TestMethod()]
         public void Test4()
         {
-            UnitTestWithInchiProvided("O=C1NC=CC(=O)N1", "InChI=1S/C4H4N2O2/c7-3-1-2-5-4(8)6-3/h1-2H,(H2,5,6,7,8)", 6);
+            UnitTestWithInChIProvided("O=C1NC=CC(=O)N1", "InChI=1S/C4H4N2O2/c7-3-1-2-5-4(8)6-3/h1-2H,(H2,5,6,7,8)", 6);
         }
 
         [TestMethod()]
         public void Test5()
         {
-            UnitTestWithInchiProvided("CCN1CCOC2=CC(NC3=NCCN3)=CC=C12", "InChI=1S/C13H18N4O/c1-2-17-7-8-18-12-9-10(3-4-11(12)17)16-13-14-5-6-15-13/h3-4,9H,2,5-8H2,1H3,(H2,14,15,16)", 2);
+            UnitTestWithInChIProvided("CCN1CCOC2=CC(NC3=NCCN3)=CC=C12", "InChI=1S/C13H18N4O/c1-2-17-7-8-18-12-9-10(3-4-11(12)17)16-13-14-5-6-15-13/h3-4,9H,2,5-8H2,1H3,(H2,14,15,16)", 2);
         }
 
         [TestMethod()]
@@ -101,44 +101,44 @@ namespace NCDK.Tautomers
         public void Test6()
         {
             //Warfarin: not you need to create the InChI with option KET to get the ketone/hydroxyl tautomerism
-            UnitTestWithInchiProvided("CC(=O)CC(C1=CC=CC=C1)C1=C(O)C2=C(OC1=O)C=CC=C2", "InChI=1/C19H16O4/c1-12(20)11-15(13-7-3-2-4-8-13)17-18(21)14-9-5-6-10-16(14)23-19(17)22/h2-10,15H,1H3,(H2,11,20)(H,17,21,22)", 6);
+            UnitTestWithInChIProvided("CC(=O)CC(C1=CC=CC=C1)C1=C(O)C2=C(OC1=O)C=CC=C2", "InChI=1/C19H16O4/c1-12(20)11-15(13-7-3-2-4-8-13)17-18(21)14-9-5-6-10-16(14)23-19(17)22/h2-10,15H,1H3,(H2,11,20)(H,17,21,22)", 6);
         }
 
         [TestMethod()]
         public void Test1_fast()
         {
-            UnitTestWithoutInchiProvided("NC1=CC(N)=NC(O)=N1", 0, 5);
+            UnitTestWithoutInChIProvided("NC1=CC(N)=NC(O)=N1", 0, 5);
         }
 
         [TestMethod()]
         public void Test2_fast()
         {
-            UnitTestWithoutInchiProvided("CCCN1C2=C(NC=N2)C(=O)NC1=O", 0, 8);
+            UnitTestWithoutInChIProvided("CCCN1C2=C(NC=N2)C(=O)NC1=O", 0, 8);
         }
 
         [TestMethod()]
         public void Test3_fast()
         {
-            UnitTestWithoutInchiProvided("CCNC(=N)NC", 0, 3);
+            UnitTestWithoutInChIProvided("CCNC(=N)NC", 0, 3);
         }
 
         [TestMethod()]
         public void Test4_fast()
         {
-            UnitTestWithoutInchiProvided("O=C1NC=CC(=O)N1", 0, 6);
+            UnitTestWithoutInChIProvided("O=C1NC=CC(=O)N1", 0, 6);
         }
 
         [TestMethod()]
         public void Test5_fast()
         {
-            UnitTestWithoutInchiProvided("CCN1CCOC2=CC(NC3=NCCN3)=CC=C12", 0, 2);
+            UnitTestWithoutInChIProvided("CCN1CCOC2=CC(NC3=NCCN3)=CC=C12", 0, 2);
         }
 
         [TestMethod()]
         public void Test6_fast()
         {
             //Warfarin: not you need to create the InChI with option KET to get the ketone/hydroxyl tautomerism
-            UnitTestWithoutInchiProvided("CC(=O)CC(C1=CC=CC=C1)C1=C(O)C2=C(OC1=O)C=CC=C2", InChITautomerGenerator.Options.KetoEnol, 6);
+            UnitTestWithoutInChIProvided("CC(=O)CC(C1=CC=CC=C1)C1=C(O)C2=C(OC1=O)C=CC=C2", InChITautomerGenerator.Options.KetoEnol, 6);
         }
 
         [TestMethod()]
@@ -146,7 +146,7 @@ namespace NCDK.Tautomers
         // bail out on dots in formula
         public void TestFail1()
         {
-            UnitTestWithInchiProvided("[I-].CCN1CCOC2=CC(NC3=NCCN3)=CC=C12", "InChI=1S/C13H18N4O.HI/c1-2-17-7-8-18-12-9-10(3-4-11(12)17)16-13-14-5-6-15-13;/h3-4,9H,2,5-8H2,1H3,(H2,14,15,16);1H/p-1", 2);
+            UnitTestWithInChIProvided("[I-].CCN1CCOC2=CC(NC3=NCCN3)=CC=C12", "InChI=1S/C13H18N4O.HI/c1-2-17-7-8-18-12-9-10(3-4-11(12)17)16-13-14-5-6-15-13;/h3-4,9H,2,5-8H2,1H3,(H2,14,15,16);1H/p-1", 2);
         }
 
         [TestMethod()]
@@ -154,11 +154,11 @@ namespace NCDK.Tautomers
         // bail out on dots in formula
         public void TestFail2()
         {
-            UnitTestWithInchiProvided("CN1C=C(C)C(=O)N2C1O[Pt]([NH3+])([NH3+])OC3N(C)C=C(C)C(=O)N3[Pt]2([NH3+])[NH3+]", "InChI=1S/2C6H9N2O2.4H3N.2Pt/c2*1-4-3-8(2)6(10)7-5(4)9;;;;;;/h2*3,6H,1-2H3,(H,7,9);4*1H3;;/q2*-1;;;;;2*+4/p-2", 10);
+            UnitTestWithInChIProvided("CN1C=C(C)C(=O)N2C1O[Pt]([NH3+])([NH3+])OC3N(C)C=C(C)C(=O)N3[Pt]2([NH3+])[NH3+]", "InChI=1S/2C6H9N2O2.4H3N.2Pt/c2*1-4-3-8(2)6(10)7-5(4)9;;;;;;/h2*3,6H,1-2H3,(H,7,9);4*1H3;;/q2*-1;;;;;2*+4/p-2", 10);
         }
 
         [TestMethod()]
-        public void Test_withJniInchi()
+        public void Test_WithNInChI()
         {
             string mdlInput = // same as NC1=CC(N)=NC(O)=N1
             "\n" + "  Mrv0541 02151109592D\n" + "\n" + "  9  9  0  0  0  0            999 V2000\n"

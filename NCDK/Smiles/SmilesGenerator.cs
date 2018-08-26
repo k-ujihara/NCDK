@@ -564,7 +564,7 @@ namespace NCDK.Smiles
         private static int[] Labels(SmiFlavor flavour, IAtomContainer molecule)
         {
             // FIXME: use SmiOpt.InChiLabelling
-            long[] labels = SmiFlavors.IsSet(flavour, SmiFlavor.Isomeric) ? InchiNumbers(molecule)
+            long[] labels = SmiFlavors.IsSet(flavour, SmiFlavor.Isomeric) ? InChINumbers(molecule)
                                                                          : Canon.Label(molecule, GraphUtil.ToAdjList(molecule));
             int[] cpy = new int[labels.Length];
             for (int i = 0; i < labels.Length; i++)
@@ -581,7 +581,7 @@ namespace NCDK.Smiles
         /// <param name="container">a structure</param>
         /// <returns>the inchi numbers</returns>
         /// <exception cref="CDKException">the inchi numbers could not be obtained</exception>
-        private static long[] InchiNumbers(IAtomContainer container)
+        private static long[] InChINumbers(IAtomContainer container)
         {
             // TODO: create an interface so we don't have to dynamically load the
             // class each time

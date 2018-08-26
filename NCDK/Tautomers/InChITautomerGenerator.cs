@@ -168,7 +168,7 @@ namespace NCDK.Tautomers
             else
             {
                 mol = AtomContainerManipulator.SuppressHydrogens(mol);
-                MapInputMoleculeToInchiMolgraph(inchiMolGraph, mol);
+                MapInputMoleculeToInChIMolgraph(inchiMolGraph, mol);
             }
 
             List<int> mobHydrAttachPositions = new List<int>();
@@ -328,7 +328,7 @@ namespace NCDK.Tautomers
         /// <param name="inchiMolGraph">molecule (bare) as defined in InChI</param>
         /// <param name="mol">user input molecule</param>
         /// <exception cref="CDKException"></exception>
-        private void MapInputMoleculeToInchiMolgraph(IAtomContainer inchiMolGraph, IAtomContainer mol)
+        private void MapInputMoleculeToInChIMolgraph(IAtomContainer inchiMolGraph, IAtomContainer mol)
         {
             var iter = VentoFoggia.FindIdentical(inchiMolGraph, AtomMatcher.CreateElementMatcher(), BondMatcher.CreateAnyMatcher())
                                                                                       .MatchAll(mol)
