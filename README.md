@@ -31,7 +31,7 @@ Test
 
 Windows: Launch "vstest.console.exe NCDKTests\bin\Release\netcoreapp2.1\NCDKTests.dll" and "vstest.console.exe NCDKDisplayTests\bin\Release\NCDKDisplayTests.dll".
 
-Linux: Copy libinchi.so.#.## to output directory of NCDKTests, and make a libinchi.so link to it and launch "dotnet test" in NCDKTests directory.
+Linux: Launch "dotnet build" and copy libinchi.so.#.## to output directory of NCDKTests, and make a libinchi.so link to it and launch "dotnet test" in NCDKTests directory.
 
 NuGet Packages
 --------------
