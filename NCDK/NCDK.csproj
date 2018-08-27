@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
     <RootNamespace>NCDK</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
@@ -36,15 +36,10 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net461|AnyCPU'">
     <DocumentationFile>bin\Release\net461\NCDK.xml</DocumentationFile>
-    <CodeAnalysisRuleSet>NCDK.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard2.0\NCDK.xml</DocumentationFile>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
-    <CodeAnalysisRuleSet>NCDK.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   
   <ItemGroup>

@@ -1,6 +1,7 @@
 pushd NCDK
 dotnet add package MathNet.Numerics.Signed
 dotnet add package dotNetRDF
+dotnet restore
 call :BuildProject NCDK
 popd
 
