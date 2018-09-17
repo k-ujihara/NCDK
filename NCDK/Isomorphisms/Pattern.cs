@@ -150,7 +150,7 @@ namespace NCDK.Isomorphisms
         /// <seealso cref="VentoFoggia"/>
         public static Pattern FindIdentical(IAtomContainer query)
         {
-            return VentoFoggia.FindSubstructure(query);
+            return VentoFoggia.FindIdentical(query);
         }
     }
 }

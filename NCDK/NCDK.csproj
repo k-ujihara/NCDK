@@ -18,8 +18,7 @@
     <RepositoryUrl>https://github.com/kazuyaujihara/NCDK</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>cdk cheminformatics chemistry toolkit</PackageTags>
-    <PackageReleaseNotes>This release is based on https://github.com/cdk/cdk/tree/6fade7b5470669955835046d9fb09c48f658efde snapshot.
-</PackageReleaseNotes>
+    <PackageReleaseNotes>This release is based on https://github.com/cdk/cdk/tree/6fade7b5470669955835046d9fb09c48f658efde snapshot.</PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>NCDK</PackageId>
   </PropertyGroup>
