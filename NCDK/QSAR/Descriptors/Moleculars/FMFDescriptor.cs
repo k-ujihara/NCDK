@@ -63,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             container = Clone(container); // don't mod original
 
-            MurckoFragmenter fragmenter = new MurckoFragmenter(true, 3);
+            var fragmenter = new MurckoFragmenter(true, 3);
             Result<double> result;
             try
             {
@@ -90,7 +90,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// Returns the specific type of the FMF descriptor value.
-        ///
+        /// </summary>
+        /// <remarks>
         /// The FMF descriptor is a single, double value.
         /// 
         /// The return value from this method really indicates what type of result will
@@ -102,22 +103,24 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// length of a descriptor calculated with the current parameters. Typically, the
         /// length of array result types vary with the values of the parameters. See
         /// <see cref="IDescriptor"/> for more details.</para>
-        /// </summary>
+        /// </remarks>
         /// <returns>an instance of the <see cref="Result{Double}"/></returns>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<double>();
 
         /// <inheritdoc/>
         public override IImplementationSpecification Specification => specification;
         private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
+            new DescriptorSpecification(
              "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fmf",
              typeof(FMFDescriptor).FullName,
              "The Chemistry Development Kit");
 
         /// <summary>
         /// Returns the names of the parameters for this descriptor.
-        /// Since this descriptor takes no parameters, <see langword="null"/> is returned
         /// </summary>
+        /// <remarks>
+        /// Since this descriptor takes no parameters, <see langword="null"/> is returned
+        /// </remarks>
         /// <returns><see langword="null"/>, since there are no parameters</returns>
         public override IReadOnlyList<string> ParameterNames => null;
 

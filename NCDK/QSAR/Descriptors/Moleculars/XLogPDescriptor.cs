@@ -37,11 +37,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Prediction of logP based on the atom-type method called XLogP. 
+    /// </summary>
+    /// <remarks>
     /// <b>Requires all hydrogens to be explicit</b>.
     /// <para>For description of the methodology see Ref. <token>cdk-cite-WANG97</token> and <token>cdk-cite-WANG00</token>.
     /// Actually one molecular factor is missing (presence of para Hs donor pair).</para>
-    /// </summary>
-    /// <remarks>
     /// This descriptor uses these parameters:
     /// <list type="table">
     /// <listheader>
@@ -109,9 +109,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private bool salicylFlag = false;
         private static readonly string[] NAMES = { "XLogP" };
 
-        /// <summary>
-        /// Constructor for the XLogPDescriptor object.
-        /// </summary>
         public XLogPDescriptor() { }
 
         /// <summary>
@@ -124,10 +121,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 typeof(XLogPDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the XLogPDescriptor object.
-        /// </summary>
-        /// <exception cref="CDKException"></exception>
+        /// <inheritdoc/>
         public override IReadOnlyList<object> Parameters
         {
             set

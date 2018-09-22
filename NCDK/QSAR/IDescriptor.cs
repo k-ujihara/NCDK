@@ -157,7 +157,7 @@ namespace NCDK.QSAR
         /// </para>
         /// <para>
         /// Note that by default if a descriptor returns a single value
-        /// (such as <see cref="Descriptors.Moleculars.ALOGPDescriptor"/>
+        /// (such as <see cref="Descriptors.Moleculars.ALogPDescriptor"/>
         /// the return array will have a single element
         /// </para>
         /// </remarks>

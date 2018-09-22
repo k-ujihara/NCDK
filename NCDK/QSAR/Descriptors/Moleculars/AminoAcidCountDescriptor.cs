@@ -17,10 +17,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Templates;
-using NCDK.QSAR.Results;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.MCSS;
+using NCDK.QSAR.Results;
+using NCDK.Templates;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// Returns 20 values with names of the form <i>nX</i>, where <i>X</i> is the short versio
     /// of the amino acid name
     /// </para>
-    ///  </remarks>
+    /// </remarks>
     // @author      egonw
     // @cdk.created 2006-01-15
     // @cdk.module  qsarprotein
@@ -51,9 +51,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private static string[] names;
 
-        /// <summary>
-        /// Constructor for the AromaticAtomsCountDescriptor object.
-        /// </summary>
         public AminoAcidCountDescriptor()
         {
             var aas = AminoAcids.Proteinogenics;
@@ -76,10 +73,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 typeof(AminoAcidCountDescriptor).FullName,
                 "The Chemistry Development Kit");
         
-        /// <summary>
-        /// The parameters attribute of the <see cref="AminoAcidCountDescriptor"/> object.
-        /// </summary>
-        /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
         public override IReadOnlyList<object> Parameters
         {
             get { return null; }
@@ -127,13 +120,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// Returns the specific type of the DescriptorResult object.
-        /// <para>
+        /// </summary>
+        /// <remarks>
         /// The return value from this method really indicates what type of result will
         /// be obtained from the <see cref="IDescriptorValue"/> object. Note that the same result
         /// can be achieved by interrogating the <see cref="IDescriptorValue"/> object; this method
         /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </para>
-        /// </summary>
+        /// </remarks>
         public override IDescriptorResult DescriptorResultType => new ArrayResult<int>(20);
 
         /// <summary>
@@ -141,11 +134,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         public override IReadOnlyList<string> ParameterNames => System.Array.Empty<string>();
 
-        /// <summary>
-        /// Gets the parameterType attribute of the AromaticAtomsCountDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
         public override object GetParameterType(string name)
         {
             return null;

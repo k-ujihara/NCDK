@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Silent;
 using NCDK.QSAR.Results;
@@ -29,13 +30,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class ALOGPDescriptorTest : MolecularDescriptorTest
+    public class ALogPDescriptorTest : MolecularDescriptorTest
     {
-        private CDKHydrogenAdder hydrogenAdder;
+        private readonly CDKHydrogenAdder hydrogenAdder;
 
-        public ALOGPDescriptorTest()
+        public ALogPDescriptorTest()
         {
-            SetDescriptor(typeof(ALOGPDescriptor));
+            SetDescriptor(typeof(ALogPDescriptor));
             hydrogenAdder = CDKHydrogenAdder.GetInstance(ChemObjectBuilder.Instance);
         }
 

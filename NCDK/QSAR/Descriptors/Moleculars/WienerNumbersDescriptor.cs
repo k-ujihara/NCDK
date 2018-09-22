@@ -65,11 +65,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         double[][] matr = null;
         ArrayResult<double> wienerNumbers = null;
 
-        /// <summary>
-        ///  Constructor for the WienerNumbersDescriptor object.
-        /// </summary>
         public WienerNumbersDescriptor()
-        { }
+        {
+        }
 
         /// <inheritdoc/>
         public override IImplementationSpecification Specification => specification;
@@ -79,9 +77,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 typeof(WienerNumbersDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the WienerNumbersDescriptor object.
-        /// </summary>
+        /// <inheritdoc/>
         public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "WPATH", "WPOL" };
@@ -132,17 +128,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(2);
 
-        /// <summary>
-        /// The parameterNames attribute of the WienerNumbersDescriptor object.
-        /// This descriptor does not return any parameters
-        /// </summary>
+        /// <inheritdoc/>
         public override IReadOnlyList<string> ParameterNames => null;
 
-        /// <summary>
-        /// Gets the parameterType attribute of the WienerNumbersDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
+        /// <inheritdoc/>
         public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

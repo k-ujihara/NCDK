@@ -37,9 +37,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     {
         private static readonly string[] NAMES = { "Zagreb" };
 
-        /// <summary>
-        ///  Constructor for the ZagrebIndexDescriptor object.
-        /// </summary>
         public ZagrebIndexDescriptor() { }
 
         /// <summary>
@@ -52,15 +49,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 typeof(ZagrebIndexDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the ZagrebIndexDescriptor object.
-        /// </summary>
+        /// <inheritdoc/>
         public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
-        ///  Evaluate the Zagreb Index for a molecule.
+        /// Evaluate the Zagreb Index for a molecule.
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns> zagreb index</returns>
@@ -87,16 +82,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
-        /// <summary>
-        /// The parameterNames attribute of the ZagrebIndexDescriptor object.
-        /// </summary>
+        /// <inheritdoc/>
         public override IReadOnlyList<string> ParameterNames => null;
 
-        /// <summary>
-        /// The parameterType attribute of the ZagrebIndexDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
+        /// <inheritdoc/>
         public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

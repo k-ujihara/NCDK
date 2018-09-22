@@ -128,9 +128,9 @@ namespace NCDK.IO
 
                         var moleculeSet = cf.Builder.NewAtomContainerSet();
                         moleculeSet.Add(cf.Builder.NewAtomContainer(parsedContent));
-                        IChemModel model = cf.Builder.NewChemModel();
+                        var model = cf.Builder.NewChemModel();
                         model.MoleculeSet = moleculeSet;
-                        IChemSequence sequence = cf.Builder.NewChemSequence();
+                        var sequence = cf.Builder.NewChemSequence();
                         sequence.Add(model);
                         cf.Add(sequence);
                     }
@@ -141,7 +141,7 @@ namespace NCDK.IO
                 if (exception is IOException || exception is ArgumentException)
                 {
                     Console.Error.WriteLine(exception.StackTrace);
-                    throw new CDKException("Error while reading INChI file: " + exception.Message, exception);
+                    throw new CDKException($"Error while reading INChI file: {exception.Message}", exception);
                 }
                 else
                     throw;

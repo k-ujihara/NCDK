@@ -71,7 +71,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword lipophilicity
     // @cdk.keyword refractivity
     // @see org.openscience.cdk.tools.CDKHydrogenAdder
-    public class ALOGPDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public class ALogPDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         IAtomContainer atomContainer;
         IRingSet rs;
@@ -105,7 +105,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         readonly static double[] REFRACVAL = new double[121];
 
-        static ALOGPDescriptor()
+        static ALogPDescriptor()
         {
             // fragments for ALOGP from Ghose et al., 1998
             FRAGVAL[1] = -1.5603;
@@ -359,7 +359,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         double alogp2 = 0.0;
         private static readonly string[] STRINGS = new string[] { "ALogP", "ALogp2", "AMR" };
 
-        public ALOGPDescriptor()
+        public ALogPDescriptor()
         {
             try
             {
@@ -400,7 +400,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             for (int i = 0; i <= atomContainer.Atoms.Count - 1; i++)
             {
-
                 alogpfrag[i] = 0;
                 try
                 {
@@ -449,7 +448,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 amr += REFRACVAL[i] * frags[i];
                 if (frags[i] > 0)
                 {
-                    Debug.WriteLine("frag " + i + "  --> " + frags[i]);
+                    Debug.WriteLine($"frag {i}  --> {frags[i]}");
                 }
             }
             alogp2 = alogp * alogp;
@@ -660,25 +659,25 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 if (string.Equals(a.Symbol, "H", StringComparison.Ordinal))
                     continue;
 
-                if (atomContainer.GetBond(ai, a).Order == BondOrder.Single)
+                switch (atomContainer.GetBond(ai, a).Order)
                 {
-                    if (!string.Equals(a.Symbol, "C", StringComparison.Ordinal))
-                    {
-                        haveCsX = true;
-                    }
+                    case BondOrder.Single:
+                        if (!string.Equals(a.Symbol, "C", StringComparison.Ordinal))
+                        {
+                            haveCsX = true;
+                        }
 
-                    if (a.IsAromatic)
-                    {
-                        haveCsAr = true;
-                    }
-
-                }
-                else if (atomContainer.GetBond(ai, a).Order == BondOrder.Double)
-                {
-                    if (!string.Equals(a.Symbol, "C", StringComparison.Ordinal))
-                    {
-                        haveCdX = true;
-                    }
+                        if (a.IsAromatic)
+                        {
+                            haveCsAr = true;
+                        }
+                        break;
+                    case BondOrder.Double:
+                        if (!string.Equals(a.Symbol, "C", StringComparison.Ordinal))
+                        {
+                            haveCdX = true;
+                        }
+                        break;
                 }
             }
 
@@ -2303,12 +2302,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// The AlogP descriptor.
-        ///
-        /// TODO Ideally we should explicit H addition should be cached
-        ///
+        /// </summary>
+        /// <remarks>
+        /// TODO: Ideally we should explicit H addition should be cached
+        /// </remarks>
         /// <param name="atomContainer">the molecule to calculate on</param>
         /// <returns>the result of the calculation</returns>
-        /// </summary>
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer atomContainer)
         {
             IAtomContainer container;
@@ -2316,7 +2315,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 container = (IAtomContainer)atomContainer.Clone();
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-                CDKHydrogenAdder hAdder = CDKHydrogenAdder.GetInstance(container.Builder);
+                var hAdder = CDKHydrogenAdder.GetInstance(container.Builder);
                 hAdder.AddImplicitHydrogens(container);
                 AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
             }
@@ -2336,15 +2335,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(new CDKException("Could not find all rings: " + e.Message));
             }
 
-            string[] fragment = new string[container.Atoms.Count];
-            EStateAtomTypeMatcher eStateMatcher = new EStateAtomTypeMatcher
-            {
-                RingSet = rs
-            };
+            var fragment = new string[container.Atoms.Count];
+            EStateAtomTypeMatcher eStateMatcher = new EStateAtomTypeMatcher { RingSet = rs };
 
             for (int i = 0; i < container.Atoms.Count; i++)
             {
-                IAtomType atomType = eStateMatcher.FindMatchingAtomType(container, container.Atoms[i]);
+                var atomType = eStateMatcher.FindMatchingAtomType(container, container.Atoms[i]);
                 if (atomType == null)
                 {
                     fragment[i] = null;
@@ -2365,12 +2361,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(new CDKException(e.Message));
             }
 
-            ArrayResult<double> results = new ArrayResult<double>
-            {
-                ret[0],
-                ret[1],
-                ret[2]
-            };
+            ArrayResult<double> results = new ArrayResult<double>(ret);
 
             return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results, DescriptorNames);
         }
@@ -2394,7 +2385,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public override IImplementationSpecification Specification => specification;
         private static readonly DescriptorSpecification specification =
             new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ALOGP",
-                typeof(ALOGPDescriptor).FullName, "The Chemistry Development Kit");
+                typeof(ALogPDescriptor).FullName, "The Chemistry Development Kit");
 
         public override IReadOnlyList<string> ParameterNames => Array.Empty<string>();
 

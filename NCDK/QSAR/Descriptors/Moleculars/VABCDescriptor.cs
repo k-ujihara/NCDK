@@ -89,7 +89,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<double>();
 
-
         /// <inheritdoc/>
         public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
@@ -99,3 +98,4 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }
+

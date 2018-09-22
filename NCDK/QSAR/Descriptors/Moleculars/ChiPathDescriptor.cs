@@ -74,7 +74,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public override IReadOnlyList<string> DescriptorNames { get; } = _DescriptorNames();
         private static string[] _DescriptorNames()
         {
-            string[] names = new string[16];
+            var names = new string[16];
             for (int i = 0; i < 8; i++)
             {
                 names[i] = "SP-" + i;
@@ -120,23 +120,23 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 var subgraph6 = Order6(localAtomContainer);
                 var subgraph7 = Order7(localAtomContainer);
 
-                double order0s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph0);
-                double order1s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph1);
-                double order2s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph2);
-                double order3s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph3);
-                double order4s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph4);
-                double order5s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph5);
-                double order6s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph6);
-                double order7s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph7);
+                var order0s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph0);
+                var order1s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph1);
+                var order2s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph2);
+                var order3s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph3);
+                var order4s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph4);
+                var order5s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph5);
+                var order6s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph6);
+                var order7s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph7);
 
-                double order0v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph0);
-                double order1v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph1);
-                double order2v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph2);
-                double order3v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph3);
-                double order4v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph4);
-                double order5v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph5);
-                double order6v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph6);
-                double order7v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph7);
+                var order0v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph0);
+                var order1v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph1);
+                var order2v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph2);
+                var order3v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph3);
+                var order4v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph4);
+                var order5v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph5);
+                var order6v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph6);
+                var order7v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph7);
 
                 var retval = new ArrayResult<double>
                 {

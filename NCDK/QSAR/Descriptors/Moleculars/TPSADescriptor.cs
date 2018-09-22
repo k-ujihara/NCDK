@@ -132,10 +132,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        /// <summary>
-        /// Gets the specification attribute of the TPSADescriptor object.
-        /// </summary>
-        /// <returns>The specification value</returns>
         public override IImplementationSpecification Specification => specification;
         private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
@@ -145,11 +141,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// The parameters attribute of the <see cref="TPSADescriptor"/> object.
-        /// <para>
+        /// </summary>
+        /// <remarks>
         /// The descriptor takes a bool parameter to indicate whether
         /// the descriptor routine should check for aromaticity (<see langword="true"/>) or
-        /// not (<see langword="false"/>).</para>
-        /// </summary>
+        /// not (<see langword="false"/>).
+        /// </remarks>
         public override IReadOnlyList<object> Parameters
         {
             set
@@ -315,17 +312,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
-        /// <summary>
-        /// Gets the parameterNames attribute of the TPSADescriptor object.
-        /// </summary>
-        /// <returns>The parameterNames value</returns>
+        /// <inheritdoc/>
         public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
 
-        /// <summary>
-        /// Gets the parameterType attribute of the TPSADescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
+        /// <inheritdoc/>
         public override object GetParameterType(string name) => true;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

@@ -54,9 +54,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private static readonly List<SMARTSQueryTool> tools = new List<SMARTSQueryTool>();
         private bool checkAromaticity;
 
-        /// <summary>
-        /// Creates a new <see cref="AcidicGroupCountDescriptor"/>.
-        /// </summary>
         public AcidicGroupCountDescriptor()
         {
             this.checkAromaticity = true;
@@ -83,11 +80,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 if (value.Count != 1)
                 {
-                    throw new CDKException("AcidicGroupCountDescriptor requires 1 parameter.");
+                    throw new CDKException(nameof(AcidicGroupCountDescriptor) + " requires 1 parameter.");
                 }
                 if (!(value[0] is bool))
                 {
-                    throw new CDKException("The parameter must be of type bool");
+                    throw new CDKException("The parameter must be of type " + nameof(System.Boolean));
                 }
 
                 // OK, all should be fine
@@ -124,7 +121,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 int count = 0;
                 foreach (var tool in tools)
                 {
-                    if (tool.Matches(atomContainer)) count += tool.MatchesCount;
+                    if (tool.Matches(atomContainer))
+                        count += tool.MatchesCount;
                 }
                 return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(count), DescriptorNames);
             }

@@ -330,10 +330,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 typeof(KierHallSmartsDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the descriptor.
-        /// </summary>
-        /// <exception cref="CDKException">if any parameters are specified</exception>
         public override IReadOnlyList<object> Parameters
         {
             get
@@ -402,17 +398,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<int>(SMARTS.Count);
 
-        /// <summary>
-        /// Gets the parameterNames attribute of the descriptor.
-        /// </summary>
-        /// <returns>The parameterNames value</returns>
         public override IReadOnlyList<string> ParameterNames => null;
-
-        /// <summary>
-        /// Gets the parameterType attribute of the descriptor.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object whose class is that of the parameter requested</returns>
         public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

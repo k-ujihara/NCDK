@@ -43,19 +43,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     {
         /// <summary>
         /// Gets the fragments from a target matching a set of query fragments.
-        /// <para>
+        /// </summary>
+        /// <remarks>
         /// This method returns a list of lists. Each list contains the atoms of the target <see cref="IAtomContainer"/>
         /// that arise in the mapping of bonds in the target molecule to the bonds in the query fragment.
         /// The query fragments should be constructed
         /// using the <see cref="QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(IAtomContainer, bool)"/> method of the <see cref="QueryAtomContainerCreator"/>
-        /// CDK class, since we are only interested in connectivity and not actual atom or bond type information.</para>
-        /// </summary>
+        /// CDK class, since we are only interested in connectivity and not actual atom or bond type information.
+        /// </remarks>
         /// <param name="atomContainer">The target <see cref="IAtomContainer"/></param>
         /// <param name="queries">An array of query fragments</param>
         /// <returns>A list of lists, each list being the atoms that match the query fragments</returns>
         public static IEnumerable<IReadOnlyList<int>> GetFragments(IAtomContainer atomContainer, QueryAtomContainer[] queries)
         {
-            UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
+            var universalIsomorphismTester = new UniversalIsomorphismTester();
             var uniqueSubgraphs = new List<IReadOnlyList<int>>();
             foreach (var query in queries)
             {
@@ -156,33 +157,37 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     var atom = atomContainer.Atoms[atomSerial];
 
                     string sym = atom.Symbol;
-
-                    if (string.Equals(sym, "S", StringComparison.Ordinal))
-                    { // check for some special S environments
-                        double tmp = DeltavSulphur(atom, atomContainer);
-                        if (tmp != -1)
-                        {
-                            prod = prod * tmp;
-                            continue;
-                        }
+                    switch (sym)
+                    {
+                        case "S":
+                            { // check for some special S environments
+                                var tmp = DeltavSulphur(atom, atomContainer);
+                                if (tmp != -1)
+                                {
+                                    prod = prod * tmp;
+                                    continue;
+                                }
+                            }
+                            break;
+                        case "P":
+                            { // check for some special P environments
+                                var tmp = DeltavPhosphorous(atom, atomContainer);
+                                if (tmp != -1)
+                                {
+                                    prod = prod * tmp;
+                                    continue;
+                                }
+                            }
+                            break;
                     }
-                    if (string.Equals(sym, "P", StringComparison.Ordinal))
-                    { // check for some special P environments
-                        double tmp = DeltavPhosphorous(atom, atomContainer);
-                        if (tmp != -1)
-                        {
-                            prod = prod * tmp;
-                            continue;
-                        }
-                    }
 
-                    int z = atom.AtomicNumber.Value;
+                    var z = atom.AtomicNumber.Value;
 
                     // TODO there should be a neater way to get the valence electron count
-                    int zv = GetValenceElectronCount(atom);
+                    var zv = GetValenceElectronCount(atom);
 
-                    int hsupp = atom.ImplicitHydrogenCount.Value;
-                    double deltav = (double)(zv - hsupp) / (double)(z - zv - 1);
+                    var hsupp = atom.ImplicitHydrogenCount.Value;
+                    var deltav = (double)(zv - hsupp) / (double)(z - zv - 1);
 
                     prod = prod * deltav;
                 }
@@ -291,7 +296,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 var ids = new List<int>();
                 foreach (var aCurrent in current)
                 {
-                    RMap rmap = (RMap)aCurrent;
+                    var rmap = aCurrent;
                     ids.Add(rmap.Id1);
                 }
                 ids.Sort();

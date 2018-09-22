@@ -73,7 +73,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public override IImplementationSpecification Specification => specification;
         private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
+            new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiCluster",
                 typeof(ChiClusterDescriptor).FullName,
                 "The Chemistry Development Kit");
@@ -85,12 +85,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
-            int ndesc = DescriptorNames.Count;
-            ArrayResult<double> results = new ArrayResult<double>(ndesc);
+            var ndesc = DescriptorNames.Count;
+            var results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results,
-                    DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results, DescriptorNames, e);
         }
 
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
@@ -99,8 +98,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 sp = new SmilesParser(container.Builder);
 
             // removeHydrogens does a deep copy, so no need to clone
-            IAtomContainer localAtomContainer = AtomContainerManipulator.RemoveHydrogens(container);
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+            var localAtomContainer = AtomContainerManipulator.RemoveHydrogens(container);
+            var matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
             foreach (var atom in localAtomContainer.Atoms)
             {
                 IAtomType type;
@@ -129,10 +128,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var subgraph5 = Order5(localAtomContainer);
             var subgraph6 = Order6(localAtomContainer);
 
-            double order3s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph3);
-            double order4s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph4);
-            double order5s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph5);
-            double order6s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph6);
+            var order3s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph3);
+            var order4s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph4);
+            var order5s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph5);
+            var order6s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph6);
 
             double order3v, order4v, order5v, order6v;
             try

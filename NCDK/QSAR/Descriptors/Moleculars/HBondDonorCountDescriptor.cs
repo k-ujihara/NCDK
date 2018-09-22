@@ -69,9 +69,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     {
         private static readonly string[] NAMES = { "nHBDon" };
 
-        /// <summary>
-        ///  Constructor for the HBondDonorCountDescriptor object
-        /// </summary>
         public HBondDonorCountDescriptor() { }
 
         /// <summary>
@@ -84,9 +81,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 typeof(HBondDonorCountDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameter of this HBondDonorCountDescriptor instance.
-        /// </summary>
         public override IReadOnlyList<object> Parameters
         {
             set
@@ -163,15 +157,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// The parameterNames of the HBondDonorCountDescriptor.
-        /// <see langword="null"/> as this descriptor does not have any parameters.
         /// </summary>
+        /// <remarks>
+        /// <see langword="null"/> as this descriptor does not have any parameters.
+        /// </remarks>
         public override IReadOnlyList<string> ParameterNames => null; // no parameters; thus we return null
 
-        /// <summary>
-        /// Gets the parameterType of the HBondDonorCountDescriptor.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns><see langword="null"/> as this descriptor does not have any parameters</returns>
         public override object GetParameterType(string name) => null; // no parameters; thus we return null
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

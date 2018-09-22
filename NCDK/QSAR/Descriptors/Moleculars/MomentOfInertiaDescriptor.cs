@@ -32,13 +32,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// A descriptor that calculates the moment of inertia and radius of gyration.
+    /// </summary>
+    /// <remarks>
     /// Moment of inertia (MI) values characterize the mass distribution of a molecule.
     /// Related to the MI values, ratios of the MI values along the three principal axes
     /// are also well know modeling variables. This descriptor calculates the MI values
     /// along the X, Y and Z axes as well as the ratio's X/Y, X/Z and Y/Z. Finally it also
     /// calculates the radius of gyration of the molecule.
-    /// </summary>
-    /// <remarks>
     /// <para>
     /// The descriptor generates 7 values in the following order
     /// <list type="bullet"> 
@@ -86,23 +86,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia",
                 typeof(MomentOfInertiaDescriptor).FullName, "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the MomentOfInertiaDescriptor object.
-        /// </summary>
         public override IReadOnlyList<object> Parameters { get { return null; } set { } }
-
         public override IReadOnlyList<string> DescriptorNames => NAMES;
-
-        /// <summary>
-        /// Tthe parameterNames attribute of the MomentOfInertiaDescriptor object.
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames => null;
-
-        /// <summary>
-        /// Gets the parameterType attribute of the MomentOfInertiaDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
         public override object GetParameterType(string name) => null;
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
@@ -117,7 +103,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// Calculates the 3 MI's, 3 ration and the R_gyr value.
-        ///
+        /// 
         /// The molecule should have hydrogens
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>

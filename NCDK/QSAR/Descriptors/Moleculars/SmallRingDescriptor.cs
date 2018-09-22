@@ -76,41 +76,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 typeof(SmallRingDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        /// parameters: empty array, there are none.
-        /// </summary>
         public override IReadOnlyList<object> Parameters
         {
             set { }
             get { return Array.Empty<object>(); }
         }
 
-        /// <summary>
-        /// The names of the descriptors made available by this class.
-        /// </summary>
         public override IReadOnlyList<string> DescriptorNames => NAMES;
-
-        /// <summary>
-        /// A placeholder with the descriptor size and type.
-        /// </summary>
         public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<int>(NAMES.Length);
-
-        /// <summary>
-        /// parameters: empty, there are none.
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames => Array.Empty<string>();
-
-        /// <summary>
-        /// Parameter types: there aren't any.
-        /// </summary>
         public override object GetParameterType(string name) => true;
 
-        /// <summary>
-        /// Performs the calculation: the graph will be analyzed and ring information will be determined and wrapped
-        /// up into descriptors.
-        /// </summary>
-        /// <param name="mol">the atoms and bonds that make up the molecular object</param>
-        /// <returns>the various ring-based descriptors generated</returns>
         public DescriptorValue<ArrayResult<int>> Calculate(IAtomContainer mol)
         {
             this.mol = mol;

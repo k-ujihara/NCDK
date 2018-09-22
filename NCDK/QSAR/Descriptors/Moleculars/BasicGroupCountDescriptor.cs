@@ -16,13 +16,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.QSAR.Results;
 using NCDK.Smiles.SMARTS;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using NCDK.Aromaticities;
-using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -57,9 +55,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private static readonly List<SMARTSQueryTool> tools = new List<SMARTSQueryTool>();
 
-        /// <summary>
-        /// Creates a new <see cref="BasicGroupCountDescriptor"/>.
-        /// </summary>
         public BasicGroupCountDescriptor() 
         { 
         }

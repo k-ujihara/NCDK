@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Aromaticities;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
@@ -53,9 +54,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private bool checkAromaticity = false;
         private static readonly string[] NAMES = { "nAromBond" };
 
-        /// <summary>
-        ///  Constructor for the AromaticBondsCountDescriptor object.
-        /// </summary>
         public AromaticBondsCountDescriptor() { }
 
         /// <inheritdoc/>

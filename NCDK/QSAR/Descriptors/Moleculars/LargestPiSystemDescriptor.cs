@@ -71,10 +71,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// The parameters attribute of the LargestPiSystemDescriptor object.
-        /// <para>
-        /// This descriptor takes one parameter, which should be bool to indicate whether
-        /// aromaticity has been checked (TRUE) or not (FALSE).</para>
         /// </summary>
+        /// <remarks>
+        /// This descriptor takes one parameter, which should be bool to indicate whether
+        /// aromaticity has been checked <see langword="true"/> or not <see langword="false"/>.
+        /// </remarks>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
         public override IReadOnlyList<object> Parameters
         {
@@ -121,7 +122,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <seealso cref="Parameters"/>
         public DescriptorValue<Result<int>> Calculate(IAtomContainer container)
         {
-            bool[] originalFlag4 = new bool[container.Atoms.Count];
+            var originalFlag4 = new bool[container.Atoms.Count];
             for (int i = 0; i < originalFlag4.Length; i++)
             {
                 originalFlag4[i] = container.Atoms[i].IsVisited;
@@ -233,20 +234,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the LargestPiSystemDescriptor object.
-        /// </summary>
-        /// <returns>The parameterNames value</returns>
         public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
-
-        /// <summary>
-        /// Gets the parameterType attribute of the LargestPiSystemDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
         public override object GetParameterType(string name)
         {
-            if (string.Equals("checkAromaticity", name, StringComparison.Ordinal)) return false;
+            if (string.Equals("checkAromaticity", name, StringComparison.Ordinal))
+                return false;
             return null;
         }
 

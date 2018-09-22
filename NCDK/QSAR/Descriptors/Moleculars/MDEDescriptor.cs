@@ -31,11 +31,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Calculates the Molecular Distance Edge descriptor described in <token>cdk-cite-LIU98</token>.
+    /// </summary>
+    /// <remarks>
     /// This class evaluates the 10 MDE descriptors described by Liu et al. and
     /// in addition it calculates variants where O and N are considered (as found in the DEDGE routine
     /// from ADAPT).
-    /// </summary>
-    /// <remarks>
     /// <para>
     /// The variants are described below:
     /// <list type="table">
@@ -118,10 +118,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mde",
                 typeof(MDEDescriptor).FullName, "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the WeightDescriptor object.
-        /// </summary>
-        /// <exception cref="CDKException">if more than 1 parameter is specified or if the parameter is not of type string</exception>
         public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
@@ -306,16 +302,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return n / Math.Pow(Math.Pow(lambda, 1.0 / (2.0 * n)), 2);
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the WeightDescriptor object.
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames => null;
-
-        /// <summary>
-        /// Gets the parameterType attribute of the WeightDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object whose class is that of the parameter requested</returns>
         public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

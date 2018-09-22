@@ -77,16 +77,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private bool checkAromaticity = false;
         private static readonly string[] NAMES = { "nHBAcc" };
 
-        /// <summary>
-        ///  Constructor for the HBondAcceptorCountDescriptor object
-        /// </summary>
         public HBondAcceptorCountDescriptor() { }
 
-        /// <summary>
-        /// Gets the specification attribute of the HBondAcceptorCountDescriptor object.
-        ///
-        /// <returns>   The specification value</returns>
-        /// </summary>
         public override IImplementationSpecification Specification => specification;
         private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
@@ -136,7 +128,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public DescriptorValue<Result<int>> Calculate(IAtomContainer atomContainer)
         {
             int hBondAcceptors = 0;
-            IAtomContainer ac = (IAtomContainer)atomContainer.Clone();
+            var ac = (IAtomContainer)atomContainer.Clone();
 
             // aromaticity is detected prior to descriptor calculation if the respective parameter is set to true
 
@@ -197,17 +189,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
-
-        /// <summary>
-        /// The parameterNames attribute of the HBondAcceptorCountDescriptor object.
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
-
-        /// <summary>
-        /// Gets the parameterType attribute of the HBondAcceptorCountDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
         public override object GetParameterType(string name) => false;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

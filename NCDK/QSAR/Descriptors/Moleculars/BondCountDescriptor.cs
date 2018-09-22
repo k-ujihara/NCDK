@@ -24,7 +24,7 @@ using System.Collections.Generic;
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    ///  IDescriptor based on the number of bonds of a certain bond order.
+    /// <see cref="IDescriptor"/> based on the number of bonds of a certain bond order.
     /// </summary>
     /// <remarks>
     /// <para>This descriptor uses these parameters:
@@ -78,10 +78,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 typeof(BondCountDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the BondCountDescriptor object
-        /// </summary>
-        /// <exception cref="CDKException">Description of the Exception</exception>
         public override IReadOnlyList<object> Parameters
         {
             set
@@ -121,7 +117,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <summary>
-        ///  This method calculate the number of bonds of a given type in an atomContainer
+        /// This method calculate the number of bonds of a given type in an atomContainer
         /// </summary>
         /// <param name="container">AtomContainer</param>
         /// <returns>The number of bonds of a certain type.</returns>
@@ -174,16 +170,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
-        /// <summary>
-        /// The parameterNames attribute of the BondCountDescriptor object
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "order" };
 
-        /// <summary>
-        ///  Gets the parameterType attribute of the BondCountDescriptor object
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
         public override object GetParameterType(string name)
         {
             if (string.Equals("order", name, StringComparison.Ordinal)) return "";

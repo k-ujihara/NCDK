@@ -54,9 +54,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     {
         private string elementName = "*";
 
-        /// <summary>
-        ///  Constructor for the AtomCountDescriptor object.
-        /// </summary>
         public AtomCountDescriptor()
         {
             elementName = "*";
@@ -70,10 +67,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 typeof(AtomCountDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        ///  Sets the parameters attribute of the AtomCountDescriptor object.
-        /// </summary>
-        /// <exception cref="CDKException">if the number of parameters is greater than 1 or else the parameter is not of type string</exception>
         public override IReadOnlyList<object> Parameters
         {
             set
@@ -109,7 +102,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <summary>
-        ///  This method calculate the number of atoms of a given type in an <see cref="IAtomContainer"/>.
+        /// This method calculate the number of atoms of a given type in an <see cref="IAtomContainer"/>.
         /// </summary>
         /// <param name="container">The atom container for which this descriptor is to be calculated</param>
         /// <returns>Number of atoms of a certain type is returned.</returns>
@@ -177,16 +170,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
-        /// <summary>
-        ///  The parameterNames attribute of the AtomCountDescriptor object.
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "elementName" };
 
-        /// <summary>
-        ///  Gets the parameterType attribute of the AtomCountDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object whose class is that of the parameter requested</returns>
         public override object GetParameterType(string name) => "";
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

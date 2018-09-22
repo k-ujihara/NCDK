@@ -27,10 +27,11 @@ using System.Linq;
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    ///  The number of rotatable bonds is given by the SMARTS specified by Daylight on
-    ///  <see href="http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html#EXMPL">SMARTS tutorial</see>
+    /// Evaluates rotatable bonds count.
     /// </summary>
     /// <remarks>
+    /// The number of rotatable bonds is given by the SMARTS specified by Daylight on
+    /// <see href="http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html#EXMPL">SMARTS tutorial</see>
     /// <para>This descriptor uses these parameters:
     /// <list type="table">
     ///   <item>
@@ -64,9 +65,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private bool includeTerminals = false;
         private bool excludeAmides = false;
 
-        /// <summary>
-        ///  Constructor for the RotatableBondsCountDescriptor object
-        /// </summary>
         public RotatableBondsCountDescriptor() { }
 
         /// <summary>
@@ -78,10 +76,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rotatableBondsCount",
                 typeof(RotatableBondsCountDescriptor).FullName, "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the RotatableBondsCountDescriptor object
-        /// </summary>
-        /// <exception cref="CDKException"></exception>
         public override IReadOnlyList<object> Parameters
         {
             set
@@ -108,8 +102,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public override IReadOnlyList<string> DescriptorNames => new string[] { includeTerminals ? "nRotBt" : "nRotB" };
 
         /// <summary>
-        ///  The method calculates the number of rotatable bonds of an atom container.
-        ///  If the bool parameter is set to true, terminal bonds are included.
+        /// The method calculates the number of rotatable bonds of an atom container.
+        /// If the boolean parameter is set to <see langword="true"/>, terminal bonds are included.
         /// </summary>
         /// <param name="ac">AtomContainer</param>
         /// <returns>number of rotatable bonds</returns>
@@ -181,13 +175,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///
         /// Only the most common constitution is considered. Tautomeric, O\C(*)=N\*,
         /// and charged forms, [O-]\C(*)=N\*, are ignored.
-        ///
+        /// </summary>
         /// <param name="atom0">the first bonding partner</param>
         /// <param name="atom1">the second bonding partner</param>
         /// <param name="ac">the parent container</param>
-        ///
         /// <returns>if both partners are involved in an amide C-N bond</returns>
-        /// </summary>
         private static bool IsAmide(IAtom atom0, IAtom atom1, IAtomContainer ac)
         {
             if (atom0.Symbol.Equals("C", StringComparison.Ordinal) && atom1.Symbol.Equals("N", StringComparison.Ordinal))
@@ -216,16 +208,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
-        /// <summary>
-        /// The parameterNames attribute of the RotatableBondsCountDescriptor object
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "includeTerminals", "excludeAmides" };
-
-        /// <summary>
-        ///  Gets the parameterType attribute of the RotatableBondsCountDescriptor object
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
         public override object GetParameterType(string name) => true;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

@@ -224,13 +224,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 typeof(WHIMDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the WHIMDescriptor object.
-        /// <para>The new parameter values. The Object array should have a single element
-        ///               which should be a string. The possible values of this string are: unity,
-        ///               mass, volume, eneg, polar</para>
-        /// </summary>
-        /// <exception cref="CDKException">if the parameters are of the wrong type</exception>
+        /// <inheritdoc/>
         public override IReadOnlyList<object> Parameters
         {
             set
@@ -274,16 +268,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the WHIMDescriptor object.
-        /// </summary>
+        /// <inheritdoc/>
         public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "type" };
 
-        /// <summary>
-        /// Gets the parameterType attribute of the WHIMDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
+        /// <inheritdoc/>
         public override object GetParameterType(string name) => "";
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)

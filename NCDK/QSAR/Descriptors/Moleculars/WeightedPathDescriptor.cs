@@ -79,23 +79,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 typeof(WeightedPathDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the WeightedPathDescriptor object.
-        /// </summary>
+        /// <inheritdoc/>
         public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
+        /// <inheritdoc/>
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
-        /// <summary>
-        /// The parameterNames attribute of the WeightedPathDescriptor object.
-        /// </summary>
+        /// <inheritdoc/>
         public override IReadOnlyList<string> ParameterNames => null;
 
-        /// <summary>
-        /// Gets the parameterType attribute of the WeightedPathDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
+        /// <inheritdoc/>
         public override object GetParameterType(string name) => null;
 
         /// <summary>

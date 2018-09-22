@@ -75,13 +75,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <summary>
-        ///  Calculates the Mannhold LogP for an atom container.
+        /// Calculates the Mannhold LogP for an atom container.
         /// </summary>
         /// <param name="atomContainer"><see cref="IAtomContainer"/> to calculate the descriptor value for.</param>
         /// <returns>A descriptor value wrapping a <see cref="Result{Double}"/>.</returns>
         public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
         {
-            IAtomContainer ac = (IAtomContainer)atomContainer.Clone();
+            var ac = (IAtomContainer)atomContainer.Clone();
 
             int carbonCount = 0;
             int heteroCount = 0;
@@ -117,7 +117,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// Gets the parameterType attribute for a given parameter name. It
-        /// always returns null, as this descriptor does not have any parameters.
+        /// always returns <see langword="null"/>, as this descriptor does not have any parameters.
         /// </summary>
         /// <param name="name">Name of the parameter for which the type is requested.</param>
         /// <returns>The parameterType of the given parameter.</returns>

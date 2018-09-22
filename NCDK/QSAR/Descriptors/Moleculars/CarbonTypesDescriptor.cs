@@ -67,10 +67,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 typeof(CarbonTypesDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        /// Sets the parameters attribute of the GravitationalIndexDescriptor object.
-        /// </summary>
-        /// <exception cref="CDKException"></exception>
         public override IReadOnlyList<object> Parameters
         {
             set
@@ -86,16 +82,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
-        /// <summary>
-        /// The parameterNames attribute of the GravitationalIndexDescriptor object.
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames => null; // no param names to return
 
-        /// <summary>
-        /// Gets the parameterType attribute of the GravitationalIndexDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
         public override object GetParameterType(string name) => null;
 
         /// <summary>

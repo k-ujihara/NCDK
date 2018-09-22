@@ -38,11 +38,13 @@ using System.IO;
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    /// Polar surface area expressed as a ratio to molecular size. Calculates <b>tpsaEfficiency</b>, which is
-    /// to <see cref="TPSADescriptor"/> / <b>molecular weight</b>, in units of square Angstroms per Dalton.
-    ///
-    /// Other related descriptors may also be useful to add, e.g. ratio of polar to hydrophobic surface area.
+    /// Polar surface area expressed as a ratio to molecular size. 
     /// </summary>
+    /// <remarks>
+    /// Calculates <b>tpsaEfficiency</b>, which is
+    /// to <see cref="TPSADescriptor"/> / <b>molecular weight</b>, in units of square Angstroms per Dalton.
+    /// Other related descriptors may also be useful to add, e.g. ratio of polar to hydrophobic surface area.
+    /// </remarks>
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:fractionalPSA

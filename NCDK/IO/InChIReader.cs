@@ -65,7 +65,8 @@ namespace NCDK.IO
 
         public override bool Accepts(Type type)
         {
-            if (typeof(IChemFile).IsAssignableFrom(type)) return true;
+            if (typeof(IChemFile).IsAssignableFrom(type))
+                return true;
             return false;
         }
 

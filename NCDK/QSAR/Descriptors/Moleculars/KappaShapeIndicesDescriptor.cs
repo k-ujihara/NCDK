@@ -52,9 +52,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     {
         private static readonly string[] NAMES = { "Kier1", "Kier2", "Kier3" };
 
-        /// <summary>
-        /// Constructor for the KappaShapeIndicesDescriptor object
-        /// </summary>
         public KappaShapeIndicesDescriptor() { }
 
         /// <summary>
@@ -213,18 +210,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(3);
 
-        /// <summary>
-        /// The parameterNames attribute of the
-        /// KappaShapeIndicesDescriptor object
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames => null; // no param names to return
-
-        /// <summary>
-        /// Gets the parameterType attribute of the
-        /// KappaShapeIndicesDescriptor object
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
         public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

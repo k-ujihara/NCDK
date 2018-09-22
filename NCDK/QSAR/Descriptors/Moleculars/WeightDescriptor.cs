@@ -25,15 +25,15 @@ using System.Collections.Generic;
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    ///  IDescriptor based on the weight of atoms of a certain element type.
+    /// Evaluates the weight of atoms of a certain element type.
     /// </summary>
     /// <remarks>
-    ///  <para>
-    ///  If the wild-card symbol *
-    ///  is specified, the returned value is the molecular weight.
-    ///  If an invalid element symbol is specified, the return value is
-    ///  0 and no exception is thrown
-    ///  </para>
+    /// <para>
+    /// If the wild-card symbol *
+    /// is specified, the returned value is the molecular weight.
+    /// If an invalid element symbol is specified, the return value is
+    /// 0 and no exception is thrown
+    /// </para>
     /// <para>This descriptor uses these parameters:
     /// <list type="table">
     ///   <item>
@@ -74,10 +74,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 typeof(WeightDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the WeightDescriptor object.
-        /// </summary>
-        /// <exception cref="CDKException">if more than 1 parameter is specified or if the parameter is not of type string</exception>
+        /// <inheritdoc/>
         public override IReadOnlyList<object> Parameters
         {
             set
@@ -192,16 +189,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
-        /// <summary>
-        /// The parameterNames attribute of the WeightDescriptor object.
-        /// </summary>
+        /// <inheritdoc/>
         public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "elementSymbol" };
 
-        /// <summary>
-        ///  Gets the parameterType attribute of the WeightDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object whose class is that of the parameter requested</returns>
+        /// <inheritdoc/>
         public override object GetParameterType(string name) => "";
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

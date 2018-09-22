@@ -58,9 +58,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private static readonly string[] NAMES = { "LipinskiFailures" };
 
-        /// <summary>
-        ///  Constructor for the RuleOfFiveDescriptor object.
-        /// </summary>
         public RuleOfFiveDescriptor() { }
 
         /// <inheritdoc/>
@@ -72,12 +69,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 "The Chemistry Development Kit");
 
         /// <summary>
-        ///  The parameters attribute of the RuleOfFiveDescriptor object.
+        /// The parameters attribute of the RuleOfFiveDescriptor object.
         /// </summary>
         /// <remarks>
-        ///  There is only one parameter, which should be a bool indicating whether
-        ///  aromaticity should be checked or has already been checked. The name of the paramete
-        ///  is checkAromaticity.</remarks>
+        /// There is only one parameter, which should be a bool indicating whether
+        /// aromaticity should be checked or has already been checked. The name of the paramete
+        /// is checkAromaticity.</remarks>
         /// <exception cref="CDKException">if more than 1 parameter or a non-bool parameter is specified</exception>
         public override IReadOnlyList<object> Parameters
         {
@@ -104,8 +101,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
-        ///  the method take a bool checkAromaticity: if the bool is true, it means that
-        ///  aromaticity has to be checked.
+        /// the method take a bool checkAromaticity: if the bool is true, it means that
+        /// aromaticity has to be checked.
         /// </summary>
         /// <param name="mol">AtomContainer for which this descriptor is to be calculated</param>
         /// <returns>The number of failures of the Lipinski rule</returns>
@@ -180,16 +177,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
-        /// <summary>
-        ///  Gets the parameterNames attribute of the RuleOfFiveDescriptor object.
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
-
-        /// <summary>
-        ///  Gets the parameterType attribute of the RuleOfFiveDescriptor object.
-        /// </summary>
-        /// <param name="name">The name of the parameter. In this case it is 'checkAromaticity'.</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
         public override object GetParameterType(string name)
         {
             return true;

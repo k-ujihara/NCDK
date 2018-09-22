@@ -104,12 +104,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
-            int ndesc = DescriptorNames.Count;
-            ArrayResult<double> results = new ArrayResult<double>(ndesc);
+            var ndesc = DescriptorNames.Count;
+            var results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results,
-                    DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results, DescriptorNames, e);
         }
 
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
@@ -118,8 +117,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 sp = new SmilesParser(container.Builder);
 
             // we don't make a clone, since removeHydrogens returns a deep copy
-            IAtomContainer localAtomContainer = AtomContainerManipulator.RemoveHydrogens(container);
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+            var localAtomContainer = AtomContainerManipulator.RemoveHydrogens(container);
+            var matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
             foreach (var atom in localAtomContainer.Atoms)
             {
                 IAtomType type;
@@ -133,7 +132,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     return GetDummyDescriptorValue(new CDKException($"Error in atom typing: {atom}"));
                 }
             }
-            CDKHydrogenAdder hAdder = CDKHydrogenAdder.GetInstance(container.Builder);
+            var hAdder = CDKHydrogenAdder.GetInstance(container.Builder);
             try
             {
                 hAdder.AddImplicitHydrogens(localAtomContainer);
@@ -149,11 +148,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var subgraph6 = Order6(localAtomContainer);
             var subgraph7 = Order7(localAtomContainer);
 
-            double order3s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph3);
-            double order4s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph4);
-            double order5s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph5);
-            double order6s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph6);
-            double order7s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph7);
+            var order3s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph3);
+            var order4s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph4);
+            var order5s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph5);
+            var order6s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph6);
+            var order7s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph7);
 
             double order3v, order4v, order5v, order6v, order7v;
             try
@@ -169,7 +168,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(new CDKException("Error in substructure search: " + e.Message));
             }
 
-            ArrayResult<double> retval = new ArrayResult<double>
+            var retval = new ArrayResult<double>
             {
                 order3s,
                 order4s,

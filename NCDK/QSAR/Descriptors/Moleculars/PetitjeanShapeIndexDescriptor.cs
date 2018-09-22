@@ -30,7 +30,7 @@ using System.Collections.Generic;
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    /// Evaluates the Petitjean shape indices,
+    /// Evaluates the Petitjean shape indices.
     /// </summary>
     /// <remarks>
     /// These original Petitjean number was described by Petitjean (<token>cdk-cite-PET92</token>)

@@ -71,7 +71,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public override IImplementationSpecification Specification => specification;
         private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
+            new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiPathCluster",
                 typeof(ChiPathClusterDescriptor).FullName,
                 "The Chemistry Development Kit");
@@ -100,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     return GetDummyDescriptorValue(new CDKException("Error in atom typing: " + e.Message));
                 }
             }
-            CDKHydrogenAdder hAdder = CDKHydrogenAdder.GetInstance(container.Builder);
+            var hAdder = CDKHydrogenAdder.GetInstance(container.Builder);
             try
             {
                 hAdder.AddImplicitHydrogens(localAtomContainer);
@@ -114,9 +114,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var subgraph5 = Order5(localAtomContainer);
             var subgraph6 = Order6(localAtomContainer);
 
-            double order4s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph4);
-            double order5s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph5);
-            double order6s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph6);
+            var order4s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph4);
+            var order5s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph5);
+            var order6s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph6);
 
             double order4v, order5v, order6v;
             try
@@ -145,12 +145,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
-            int ndesc = DescriptorNames.Count;
-            ArrayResult<double> results = new ArrayResult<double>(ndesc);
+            var ndesc = DescriptorNames.Count;
+            var results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results,
-                    DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results, DescriptorNames, e);
         }
 
         /// <inheritdoc/>
@@ -158,7 +157,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private IEnumerable<IReadOnlyList<int>> Order4(IAtomContainer atomContainer)
         {
-            QueryAtomContainer[] queries = new QueryAtomContainer[1];
+            var queries = new QueryAtomContainer[1];
             try
             {
                 queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC(C)CC"), false);
@@ -172,7 +171,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private IEnumerable<IReadOnlyList<int>> Order5(IAtomContainer atomContainer)
         {
-            QueryAtomContainer[] queries = new QueryAtomContainer[3];
+            var queries = new QueryAtomContainer[3];
             try
             {
                 queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC(C)CCC"), false);

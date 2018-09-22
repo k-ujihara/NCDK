@@ -110,7 +110,7 @@ namespace NCDK.QSAR
         /// (e.g., the CPSA descriptor).
         /// </para>
         /// <para>
-        /// Note that by default if a descriptor returns a single value (such as <see cref="NCDK.QSAR.Descriptors.Moleculars.ALOGPDescriptor"/>
+        /// Note that by default if a descriptor returns a single value (such as <see cref="NCDK.QSAR.Descriptors.Moleculars.ALogPDescriptor"/>
         /// the return array will have a single element
         /// </para>
         /// <para>

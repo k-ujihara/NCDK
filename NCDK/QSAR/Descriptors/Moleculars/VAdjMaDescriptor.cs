@@ -24,8 +24,8 @@ using System.Collections.Generic;
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    ///  Vertex adjacency information (magnitude):
-    ///  1 + log2 m where m is the number of heavy-heavy bonds. If m is zero, then zero is returned.
+    /// Vertex adjacency information (magnitude):
+    /// 1 + log2 m where m is the number of heavy-heavy bonds. If m is zero, then zero is returned.
     /// (definition from MOE tutorial on line)
     /// </summary>
     /// <remarks>
@@ -69,18 +69,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 typeof(VAdjMaDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        /// Tthe parameters attribute of the VAdjMaDescriptor object
-        /// </summary>
+        /// <inheritdoc/>
         public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
-        /// <summary>
-        /// Calculates the VAdjMa descriptor for an atom container
-        /// </summary>
-        /// <param name="atomContainer">AtomContainer</param>
-        /// <returns>VAdjMa</returns>
         public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
         {
             int n = 0; // count all heavy atom - heavy atom bonds
@@ -103,16 +96,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
-        /// <summary>
-        /// The parameterNames attribute of the VAdjMaDescriptor object
-        /// </summary>
+        /// <inheritdoc/>
         public override IReadOnlyList<string> ParameterNames => null;
 
-        /// <summary>
-        /// Gets the parameterType attribute of the VAdjMaDescriptor object
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
