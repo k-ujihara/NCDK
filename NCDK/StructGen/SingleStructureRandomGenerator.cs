@@ -119,7 +119,7 @@ namespace NCDK.StructGen
                         }
                     }
                 } while (bondFormed);
-                if (ConnectivityChecker.IsConnected(atomContainer) && satCheck.AllSaturated(atomContainer))
+                if (ConnectivityChecker.IsConnected(atomContainer) && satCheck.IsSaturated(atomContainer))
                 {
                     structureFound = true;
                 }

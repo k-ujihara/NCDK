@@ -54,7 +54,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            LonePairElectronChecker.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             peoe.CalculateCharges(molecule);
             for (int i = 0; i < molecule.Atoms.Count; i++)
@@ -78,7 +78,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            LonePairElectronChecker.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             peoe.AssignGasteigerMarsiliSigmaPartialCharges(molecule, true);
             for (int i = 0; i < molecule.Atoms.Count; i++)
@@ -102,7 +102,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            LonePairElectronChecker.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
             foreach (var atom in molecule.Atoms)
                 atom.Charge = 0.0;
 
@@ -192,7 +192,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(ac);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
-            LonePairElectronChecker.Saturate(ac);
+            CDK.LonePairElectronChecker.Saturate(ac);
 
             GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
             peoe.CalculateCharges(ac);

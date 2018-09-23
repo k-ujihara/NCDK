@@ -39,7 +39,7 @@ namespace NCDK.StructGen.Stochastic
             var pfsm = new PartialFilledStructureMerger();
             var result = pfsm.Generate(acs);
             Assert.IsTrue(ConnectivityChecker.IsConnected(result));
-            Assert.IsTrue(new SaturationChecker().AllSaturated(result));
+            Assert.IsTrue(new SaturationChecker().IsSaturated(result));
         }
 
         [TestMethod()]
@@ -52,7 +52,7 @@ namespace NCDK.StructGen.Stochastic
             PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
             IAtomContainer result = pfsm.Generate(acs);
             Assert.IsTrue(ConnectivityChecker.IsConnected(result));
-            Assert.IsTrue(new SaturationChecker().AllSaturated(result));
+            Assert.IsTrue(new SaturationChecker().IsSaturated(result));
         }
 
         [TestMethod()]
@@ -66,7 +66,7 @@ namespace NCDK.StructGen.Stochastic
             PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
             IAtomContainer result = pfsm.Generate(acs);
             Assert.IsTrue(ConnectivityChecker.IsConnected(result));
-            Assert.IsTrue(new SaturationChecker().AllSaturated(result));
+            Assert.IsTrue(new SaturationChecker().IsSaturated(result));
         }
 
         [TestMethod()]
@@ -80,7 +80,7 @@ namespace NCDK.StructGen.Stochastic
             PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
             IAtomContainer result = pfsm.Generate(acs);
             Assert.IsTrue(ConnectivityChecker.IsConnected(result));
-            Assert.IsTrue(new SaturationChecker().AllSaturated(result));
+            Assert.IsTrue(new SaturationChecker().IsSaturated(result));
         }
 
         [TestMethod()]
@@ -94,7 +94,7 @@ namespace NCDK.StructGen.Stochastic
             PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
             IAtomContainer result = pfsm.Generate(acs);
             Assert.IsTrue(ConnectivityChecker.IsConnected(result));
-            Assert.IsTrue(new SaturationChecker().AllSaturated(result));
+            Assert.IsTrue(new SaturationChecker().IsSaturated(result));
         }
     }
 }

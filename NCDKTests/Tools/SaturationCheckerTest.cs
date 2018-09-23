@@ -50,13 +50,13 @@ namespace NCDK.Tools
             m.Bonds.Add(new Bond(c, h2));
             m.Bonds.Add(new Bond(c, h3));
             m.Bonds.Add(new Bond(c, h4));
-            Assert.IsTrue(satcheck.AllSaturated(m));
+            Assert.IsTrue(satcheck.IsSaturated(m));
 
             // test methane with implicit hydrogen
             m = new AtomContainer();
             c = new Atom("C") { ImplicitHydrogenCount = 4 };
             m.Atoms.Add(c);
-            Assert.IsTrue(satcheck.AllSaturated(m));
+            Assert.IsTrue(satcheck.IsSaturated(m));
         }
 
         [TestMethod()]

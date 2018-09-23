@@ -75,7 +75,7 @@ namespace NCDK.Reactions.Types
             reactant.AddBond(reactant.Atoms[5], reactant.Atoms[6], BondOrder.Single);
             AddExplicitHydrogens(reactant);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactant);
-            LonePairElectronChecker.Saturate(reactant);
+            CDK.LonePairElectronChecker.Saturate(reactant);
 
             foreach (var atom in reactant.Atoms)
             {
@@ -135,7 +135,7 @@ namespace NCDK.Reactions.Types
             reactant.AddBond(reactant.Atoms[5], reactant.Atoms[6], BondOrder.Single);
             AddExplicitHydrogens(reactant);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactant);
-            LonePairElectronChecker.Saturate(reactant);
+            CDK.LonePairElectronChecker.Saturate(reactant);
 
             var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(reactant);
@@ -178,7 +178,7 @@ namespace NCDK.Reactions.Types
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[5], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[6], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            LonePairElectronChecker.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             molecule.Atoms[1].IsReactiveCenter = true;
 
@@ -217,7 +217,7 @@ namespace NCDK.Reactions.Types
             expected1.AddBond(expected1.Atoms[1], expected1.Atoms[5], BondOrder.Single);
             expected1.AddBond(expected1.Atoms[1], expected1.Atoms[6], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
-            LonePairElectronChecker.Saturate(expected1);
+            CDK.LonePairElectronChecker.Saturate(expected1);
 
             IAtomContainer product1 = setOfReactions[0].Products[0];
             QueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
@@ -245,7 +245,7 @@ namespace NCDK.Reactions.Types
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[3], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[4], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            LonePairElectronChecker.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             molecule.Atoms[0].IsReactiveCenter = true;
 
@@ -281,7 +281,7 @@ namespace NCDK.Reactions.Types
             expected1.AddBond(expected1.Atoms[1], expected1.Atoms[3], BondOrder.Single);
             expected1.AddBond(expected1.Atoms[1], expected1.Atoms[4], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
-            LonePairElectronChecker.Saturate(expected1);
+            CDK.LonePairElectronChecker.Saturate(expected1);
 
             IAtomContainer product1 = setOfReactions[0].Products[0];
             QueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
@@ -309,7 +309,7 @@ namespace NCDK.Reactions.Types
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[3], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[4], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            LonePairElectronChecker.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             molecule.Atoms[0].IsReactiveCenter = true;
 
@@ -345,7 +345,7 @@ namespace NCDK.Reactions.Types
             expected1.AddBond(expected1.Atoms[1], expected1.Atoms[3], BondOrder.Single);
             expected1.AddBond(expected1.Atoms[1], expected1.Atoms[4], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
-            LonePairElectronChecker.Saturate(expected1);
+            CDK.LonePairElectronChecker.Saturate(expected1);
 
             IAtomContainer product1 = setOfReactions[0].Products[0];
             QueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
@@ -445,7 +445,7 @@ namespace NCDK.Reactions.Types
             try
             {
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-                LonePairElectronChecker.Saturate(molecule);
+                CDK.LonePairElectronChecker.Saturate(molecule);
                 MakeSureAtomTypesAreRecognized(molecule);
             }
             catch (CDKException e)

@@ -136,7 +136,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(clone);
                 if (lpeChecker)
                 {
-                    LonePairElectronChecker.Saturate(atomContainer);
+                    CDK.LonePairElectronChecker.Saturate(atomContainer);
                 }
                 localAtom = clone.Atoms[atomContainer.Atoms.IndexOf(atom)];
             }

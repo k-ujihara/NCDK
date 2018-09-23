@@ -121,12 +121,12 @@ namespace NCDK.StructGen.Stochastic
                     }
                 } while (bondFormed);
                 if (atomContainers.Count == 1
-                 && satCheck.AllSaturated(atomContainers[0]))
+                 && satCheck.IsSaturated(atomContainers[0]))
                 {
                     structureFound = true;
                 }
             } while (!structureFound && iteration < 5);
-            if (atomContainers.Count == 1 && satCheck.AllSaturated(atomContainers[0]))
+            if (atomContainers.Count == 1 && satCheck.IsSaturated(atomContainers[0]))
             {
                 structureFound = true;
             }

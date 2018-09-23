@@ -140,7 +140,7 @@ namespace NCDK.Reactions.Types
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
-            LonePairElectronChecker.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
@@ -165,7 +165,7 @@ namespace NCDK.Reactions.Types
 
             AddExplicitHydrogens(molecule2);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule2);
-            LonePairElectronChecker.Saturate(molecule2);
+            CDK.LonePairElectronChecker.Saturate(molecule2);
 
             IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
@@ -273,7 +273,7 @@ namespace NCDK.Reactions.Types
                 AddExplicitHydrogens(molecule);
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
-                LonePairElectronChecker.Saturate(molecule);
+                CDK.LonePairElectronChecker.Saturate(molecule);
             }
             catch (Exception e)
             {
@@ -302,7 +302,7 @@ namespace NCDK.Reactions.Types
                 AddExplicitHydrogens(molecule);
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
-                LonePairElectronChecker.Saturate(molecule);
+                CDK.LonePairElectronChecker.Saturate(molecule);
             }
             catch (Exception e)
             {

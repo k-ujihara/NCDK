@@ -172,7 +172,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 {
                     try
                     {
-                        LonePairElectronChecker.Saturate(ac);
+                        CDK.LonePairElectronChecker.Saturate(ac);
                     }
                     catch (CDKException e)
                     {

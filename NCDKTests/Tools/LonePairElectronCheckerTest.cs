@@ -59,7 +59,7 @@ namespace NCDK.Tools
             m.Bonds.Add(new Bond(c, O, BondOrder.Double));
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(m);
 
-            Assert.IsTrue(LonePairElectronChecker.AllSaturated(m));
+            Assert.IsTrue(CDK.LonePairElectronChecker.IsSaturated(m));
         }
 
         [TestMethod()]
@@ -82,7 +82,7 @@ namespace NCDK.Tools
             }
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(m);
 
-            Assert.IsFalse(LonePairElectronChecker.AllSaturated(m));
+            Assert.IsFalse(CDK.LonePairElectronChecker.IsSaturated(m));
         }
 
         [TestMethod()]
@@ -99,7 +99,7 @@ namespace NCDK.Tools
             m.Bonds.Add(b1);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(m);
-            LonePairElectronChecker.Saturate(m);
+            CDK.LonePairElectronChecker.Saturate(m);
             Assert.AreEqual(3, m.GetConnectedLonePairs(cl).Count());
             Assert.AreEqual(0, m.GetConnectedLonePairs(c1).Count());
         }
@@ -118,7 +118,7 @@ namespace NCDK.Tools
             m.Bonds.Add(b1);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(m);
-            LonePairElectronChecker.Saturate(m);
+            CDK.LonePairElectronChecker.Saturate(m);
             Assert.AreEqual(2, m.GetConnectedLonePairs(o).Count());
             Assert.AreEqual(0, m.GetConnectedLonePairs(c1).Count());
         }
@@ -139,7 +139,7 @@ namespace NCDK.Tools
             m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[5], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(m);
-            LonePairElectronChecker.Saturate(m);
+            CDK.LonePairElectronChecker.Saturate(m);
 
             Assert.AreEqual(2, m.GetConnectedLonePairs(m.Atoms[1]).Count());
             Assert.AreEqual(0, m.GetConnectedLonePairs(m.Atoms[0]).Count());
@@ -163,7 +163,7 @@ namespace NCDK.Tools
             m.Bonds.Add(b1);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(m);
-            LonePairElectronChecker.Saturate(m);
+            CDK.LonePairElectronChecker.Saturate(m);
 
             Assert.AreEqual(1, m.GetConnectedLonePairs(o).Count());
         }
@@ -182,7 +182,7 @@ namespace NCDK.Tools
             m.Bonds.Add(b1);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(m);
-            LonePairElectronChecker.Saturate(m);
+            CDK.LonePairElectronChecker.Saturate(m);
 
             Assert.AreEqual(3, m.GetConnectedLonePairs(o).Count());
         }
@@ -197,7 +197,7 @@ namespace NCDK.Tools
             m.Atoms.Add(n);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(m);
-            LonePairElectronChecker.Saturate(m);
+            CDK.LonePairElectronChecker.Saturate(m);
 
             Assert.AreEqual(1, m.GetConnectedLonePairs(n).Count());
         }
@@ -220,7 +220,7 @@ namespace NCDK.Tools
             m.Bonds.Add(b1);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(m);
-            LonePairElectronChecker.Saturate(m);
+            CDK.LonePairElectronChecker.Saturate(m);
 
             Assert.AreEqual(0, m.GetConnectedLonePairs(n).Count());
         }
@@ -235,7 +235,7 @@ namespace NCDK.Tools
             SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            LonePairElectronChecker.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             Assert.AreEqual(2, mol.GetConnectedLonePairs(mol.Atoms[0]).Count());
             Assert.AreEqual(0, mol.GetConnectedLonePairs(mol.Atoms[3]).Count());

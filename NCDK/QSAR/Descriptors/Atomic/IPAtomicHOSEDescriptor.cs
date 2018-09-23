@@ -113,7 +113,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 try
                 {
                     AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-                    LonePairElectronChecker.Saturate(container);
+                    CDK.LonePairElectronChecker.Saturate(container);
                 }
                 catch (CDKException e)
                 {

@@ -100,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 atom = container.Atoms[i];
 
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-                LonePairElectronChecker.Saturate(container);
+                CDK.LonePairElectronChecker.Saturate(container);
             }
             catch (CDKException)
             {
@@ -151,8 +151,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             ProtonAffinityHOSEDescriptor parent;
 
-            Dictionary<string, Dictionary<string, double>> listGroup = new Dictionary<string, Dictionary<string, double>>();
-            Dictionary<string, Dictionary<string, double>> listGroupS = new Dictionary<string, Dictionary<string, double>>();
+            readonly Dictionary<string, Dictionary<string, double>> listGroup = new Dictionary<string, Dictionary<string, double>>();
+            readonly Dictionary<string, Dictionary<string, double>> listGroupS = new Dictionary<string, Dictionary<string, double>>();
 
             /// <summary>
             /// The constructor of the IPdb.

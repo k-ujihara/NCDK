@@ -392,7 +392,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             GasteigerMarsiliPartialCharges peoe;
             try
             {
-                LonePairElectronChecker.Saturate(molecule);
+                CDK.LonePairElectronChecker.Saturate(molecule);
                 var charges = new double[molecule.Atoms.Count];
                 peoe = new GasteigerMarsiliPartialCharges();
                 peoe.AssignGasteigerMarsiliSigmaPartialCharges(molecule, true);

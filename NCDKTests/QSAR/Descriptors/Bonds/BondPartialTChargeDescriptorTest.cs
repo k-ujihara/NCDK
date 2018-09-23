@@ -50,7 +50,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
 
-            LonePairElectronChecker.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             for (int i = 0; i < 2; i++)
             {
@@ -71,7 +71,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             IAtomContainer mol = sp.ParseSmiles("C=CCBr");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
-            LonePairElectronChecker.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             for (int i = 0; i < 8; i++)
             {

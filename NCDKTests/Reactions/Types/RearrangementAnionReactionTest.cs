@@ -263,7 +263,7 @@ namespace NCDK.Reactions.Types
             AddExplicitHydrogens(molecule);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            LonePairElectronChecker.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
@@ -304,7 +304,7 @@ namespace NCDK.Reactions.Types
 
             AddExplicitHydrogens(molecule2);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule2);
-            LonePairElectronChecker.Saturate(molecule2);
+            CDK.LonePairElectronChecker.Saturate(molecule2);
             MakeSureAtomTypesAreRecognized(molecule2);
             IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product1);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
@@ -332,7 +332,7 @@ namespace NCDK.Reactions.Types
 
             AddExplicitHydrogens(molecule3);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule3);
-            LonePairElectronChecker.Saturate(molecule3);
+            CDK.LonePairElectronChecker.Saturate(molecule3);
             MakeSureAtomTypesAreRecognized(molecule3);
             queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product2);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule3, queryAtom));

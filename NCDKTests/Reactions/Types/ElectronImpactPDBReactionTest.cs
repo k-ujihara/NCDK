@@ -324,7 +324,7 @@ namespace NCDK.Reactions.Types
             try
             {
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-                LonePairElectronChecker.Saturate(molecule);
+                CDK.LonePairElectronChecker.Saturate(molecule);
             }
             catch (CDKException e)
             {

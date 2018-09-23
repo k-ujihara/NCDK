@@ -263,7 +263,7 @@ namespace NCDK.Graphs.Invariant
             mol = (new SmilesParser(builder)).ParseSmiles("CC(=O)O");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
-            LonePairElectronChecker.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
             var acSet = ConjugatedPiSystemsDetector.Detect(mol);
@@ -297,7 +297,7 @@ namespace NCDK.Graphs.Invariant
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
-            LonePairElectronChecker.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
             var acSet = ConjugatedPiSystemsDetector.Detect(mol);
@@ -315,7 +315,7 @@ namespace NCDK.Graphs.Invariant
             IAtomContainer mol = (new SmilesParser(builder)).ParseSmiles("FC=CC=C");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
-            LonePairElectronChecker.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
             var acSet = ConjugatedPiSystemsDetector.Detect(mol);
@@ -335,7 +335,7 @@ namespace NCDK.Graphs.Invariant
             mol = (new SmilesParser(builder)).ParseSmiles("FC#CF");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
-            LonePairElectronChecker.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
             var acSet = ConjugatedPiSystemsDetector.Detect(mol);
@@ -375,7 +375,7 @@ namespace NCDK.Graphs.Invariant
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
-            LonePairElectronChecker.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
             var acSet = ConjugatedPiSystemsDetector.Detect(mol);
@@ -420,7 +420,7 @@ namespace NCDK.Graphs.Invariant
             mol = (new SmilesParser(builder)).ParseSmiles("C=C=CC#N");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
-            LonePairElectronChecker.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
             var acSet = ConjugatedPiSystemsDetector.Detect(mol);
@@ -449,7 +449,7 @@ namespace NCDK.Graphs.Invariant
             SmilesParser sp = new SmilesParser(builder);
             IAtomContainer mol = sp.ParseSmiles("[H]C([H])=C([H])[C+]([H])[H]");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            LonePairElectronChecker.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
             var acSet = ConjugatedPiSystemsDetector.Detect(mol);
@@ -477,7 +477,7 @@ namespace NCDK.Graphs.Invariant
             SmilesParser sp = new SmilesParser(builder);
             IAtomContainer mol = sp.ParseSmiles("C=C[C+]");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            LonePairElectronChecker.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
             var acSet = ConjugatedPiSystemsDetector.Detect(mol);

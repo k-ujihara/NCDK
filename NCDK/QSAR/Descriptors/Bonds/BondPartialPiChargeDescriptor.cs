@@ -158,7 +158,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
                     AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
                     if (lpeChecker)
                     {
-                        LonePairElectronChecker.Saturate(ac);
+                        CDK.LonePairElectronChecker.Saturate(ac);
                     }
                 }
                 catch (CDKException e)

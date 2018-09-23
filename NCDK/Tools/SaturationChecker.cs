@@ -49,35 +49,15 @@ namespace NCDK.Tools
     // @cdk.githash
     public class SaturationChecker : IValencyChecker, IDeduceBondOrderTool
     {
-        AtomTypeFactory structgenATF;
-
-        /// <summary>
-        /// </summary>
-        /// <param name="builder">the ChemObjectBuilder implementation used to construct the AtomType's.</param>
-        protected AtomTypeFactory GetAtomTypeFactory(IChemObjectBuilder builder)
-        {
-            if (structgenATF == null)
-            {
-                try
-                {
-                    structgenATF = AtomTypeFactory.GetInstance("NCDK.Config.Data.structgen_atomtypes.xml",
-                            builder);
-                }
-                catch (Exception exception)
-                {
-                    Debug.WriteLine(exception);
-                    throw new CDKException("Could not instantiate AtomTypeFactory!", exception);
-                }
-            }
-            return structgenATF;
-        }
+        private static readonly AtomTypeFactory structgenATF = AtomTypeFactory.GetInstance("NCDK.Config.Data.structgen_atomtypes.xml", Silent.ChemObjectBuilder.Instance);
 
         public bool HasPerfectConfiguration(IAtom atom, IAtomContainer ac)
         {
-            double bondOrderSum = ac.GetBondOrderSum(atom);
-            BondOrder maxBondOrder = ac.GetMaximumBondOrder(atom);
-            var atomTypes = GetAtomTypeFactory(atom.Builder).GetAtomTypes(atom.Symbol);
-            if (!atomTypes.Any()) return true;
+            var bondOrderSum = ac.GetBondOrderSum(atom);
+            var maxBondOrder = ac.GetMaximumBondOrder(atom);
+            var atomTypes = structgenATF.GetAtomTypes(atom.Symbol);
+            if (!atomTypes.Any())
+                return true;
             Debug.WriteLine("*** Checking for perfect configuration ***");
             try
             {
@@ -115,12 +95,7 @@ namespace NCDK.Tools
         /// <summary>
         /// Determines of all atoms on the AtomContainer are saturated.
         /// </summary>
-        public bool IsSaturated(IAtomContainer container)
-        {
-            return AllSaturated(container);
-        }
-
-        public bool AllSaturated(IAtomContainer ac)
+        public bool IsSaturated(IAtomContainer ac)
         {
             Debug.WriteLine("Are all atoms saturated?");
             for (int f = 0; f < ac.Atoms.Count; f++)
@@ -168,7 +143,7 @@ namespace NCDK.Tools
         /// </summary>
         public bool IsSaturated(IAtom atom, IAtomContainer ac)
         {
-            var atomTypes = GetAtomTypeFactory(atom.Builder).GetAtomTypes(atom.Symbol);
+            var atomTypes = structgenATF.GetAtomTypes(atom.Symbol);
             if (!atomTypes.Any())
                 return true;
             double bondOrderSum = 0;
@@ -216,7 +191,7 @@ namespace NCDK.Tools
         /// <returns>oversaturated or not</returns>
         public bool IsOverSaturated(IAtom atom, IAtomContainer ac)
         {
-            var atomTypes = GetAtomTypeFactory(atom.Builder).GetAtomTypes(atom.Symbol);
+            var atomTypes = structgenATF.GetAtomTypes(atom.Symbol);
             if (!atomTypes.Any())
                 return false;
             var bondOrderSum = ac.GetBondOrderSum(atom);
@@ -253,7 +228,7 @@ namespace NCDK.Tools
         /// <returns>the currently maximum bond order for this atom</returns>
         public double GetCurrentMaxBondOrder(IAtom atom, IAtomContainer ac)
         {
-            var atomTypes = GetAtomTypeFactory(atom.Builder).GetAtomTypes(atom.Symbol);
+            var atomTypes = structgenATF.GetAtomTypes(atom.Symbol);
             if (!atomTypes.Any())
                 return 0;
             var bondOrderSum = ac.GetBondOrderSum(atom);
@@ -299,7 +274,7 @@ namespace NCDK.Tools
         public void NewSaturate(IAtomContainer atomContainer)
         {
             Trace.TraceInformation("Saturating atomContainer by adjusting bond orders...");
-            bool allSaturated = AllSaturated(atomContainer);
+            bool allSaturated = IsSaturated(atomContainer);
             if (!allSaturated)
             {
                 var bonds = new IBond[atomContainer.Bonds.Count];
@@ -308,12 +283,14 @@ namespace NCDK.Tools
                 var succeeded = NewSaturate(bonds, atomContainer);
                 for (int i = 0; i < bonds.Length; i++)
                 {
-                    if (bonds[i].Order == BondOrder.Double && bonds[i].IsAromatic
-                     && (bonds[i].Begin.Symbol.Equals("N", StringComparison.Ordinal) 
-                      && bonds[i].End.Symbol.Equals("N", StringComparison.Ordinal)))
+                    if (bonds[i].Order == BondOrder.Double 
+                     && bonds[i].IsAromatic
+                     && bonds[i].Begin.Symbol.Equals("N", StringComparison.Ordinal) 
+                     && bonds[i].End.Symbol.Equals("N", StringComparison.Ordinal))
                     {
                         int atomtohandle = 0;
-                        if (string.Equals(bonds[i].Begin.Symbol, "N", StringComparison.Ordinal)) atomtohandle = 1;
+                        if (string.Equals(bonds[i].Begin.Symbol, "N", StringComparison.Ordinal))
+                            atomtohandle = 1;
                         var bondstohandle = atomContainer.GetConnectedBonds(bonds[i].Atoms[atomtohandle]);
                         foreach (var bond in bondstohandle)
                         {
@@ -437,8 +414,8 @@ namespace NCDK.Tools
             var atom = atoms[0];
             var partner = atoms[1];
             Debug.WriteLine($"  saturating bond: {atom.Symbol}-{partner.Symbol}");
-            var atomTypes1 = GetAtomTypeFactory(bond.Builder).GetAtomTypes(atom.Symbol);
-            var atomTypes2 = GetAtomTypeFactory(bond.Builder).GetAtomTypes(partner.Symbol);
+            var atomTypes1 = structgenATF.GetAtomTypes(atom.Symbol);
+            var atomTypes2 = structgenATF.GetAtomTypes(partner.Symbol);
             bool bondOrderIncreased = true;
             while (bondOrderIncreased && !IsSaturated(bond, atomContainer))
             {
@@ -446,14 +423,16 @@ namespace NCDK.Tools
                 bondOrderIncreased = false;
                 foreach (var aType1 in atomTypes1)
                 {
-                    if (bondOrderIncreased) break;
+                    if (bondOrderIncreased)
+                        break;
                     Debug.WriteLine($"  considering atom type: {aType1}");
                     if (CouldMatchAtomType(atomContainer, atom, aType1))
                     {
                         Debug.WriteLine($"  trying atom type: {aType1}");
                         foreach (var aType2 in atomTypes2)
                         {
-                            if (bondOrderIncreased) break;
+                            if (bondOrderIncreased)
+                                break;
                             Debug.WriteLine($"  considering partner type: {aType1}");
                             if (CouldMatchAtomType(atomContainer, partner, aType2))
                             {
@@ -497,7 +476,7 @@ namespace NCDK.Tools
         /// The method is known to fail for certain compounds. For more information, see
         /// cdk.test.limitations package.
         /// This method is known to fail, especially on pyrrole-like compounds.
-        /// Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
+        /// Consider using <see cref="Smiles.DeduceBondSystemTool"/>, which should work better
         /// </summary>
         public void Saturate(IAtomContainer atomContainer)
         {
@@ -508,7 +487,7 @@ namespace NCDK.Tools
                 {
                     var atom = atomContainer.Atoms[f];
                     Debug.WriteLine($"symbol: {atom.Symbol}");
-                    var atomTypes1 = GetAtomTypeFactory(atom.Builder).GetAtomTypes(atom.Symbol);
+                    var atomTypes1 = structgenATF.GetAtomTypes(atom.Symbol);
                     var atomType1 = atomTypes1.FirstOrDefault();
                     if (atomType1 != null)
                     {
@@ -523,7 +502,7 @@ namespace NCDK.Tools
                                 foreach (var partner in partners)
                                 {
                                     Debug.WriteLine($"Atom has {partners.Count()} partners");
-                                    var atomType2 = GetAtomTypeFactory(atom.Builder).GetAtomTypes(partner.Symbol).FirstOrDefault();
+                                    var atomType2 = structgenATF.GetAtomTypes(partner.Symbol).FirstOrDefault();
                                     if (atomType2 == null)
                                         return;
 
@@ -552,7 +531,7 @@ namespace NCDK.Tools
                                 foreach (var partner in partners)
                                 {
                                     Debug.WriteLine("Atom has " + partners.Count() + " partners");
-                                    var atomType2 = GetAtomTypeFactory(atom.Builder).GetAtomTypes(partner.Symbol).FirstOrDefault();
+                                    var atomType2 = structgenATF.GetAtomTypes(partner.Symbol).FirstOrDefault();
                                     if (atomType2 == null)
                                         return;
 
@@ -651,7 +630,7 @@ namespace NCDK.Tools
             {
                 Trace.TraceInformation("Calculating number of missing hydrogen atoms");
                 // get default atom
-                var defaultAtom = GetAtomTypeFactory(atom.Builder).GetAtomTypes(atom.Symbol).FirstOrDefault();
+                var defaultAtom = structgenATF.GetAtomTypes(atom.Symbol).FirstOrDefault();
                 if (defaultAtom == null && throwExceptionForUnknowAtom)
                     return 0;
                 if (defaultAtom != null)

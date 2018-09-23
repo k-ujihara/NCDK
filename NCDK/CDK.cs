@@ -36,6 +36,27 @@ namespace NCDK
         /// <returns>The library version</returns>
         public static string Version => typeof(CDK).Assembly.GetName().Version.ToString();
 
-        internal static Smiles.SmilesParser SilentSmilesParser { get; } = new Smiles.SmilesParser(Silent.ChemObjectBuilder.Instance);
+        private static Smiles.SmilesParser silentSmilesParser = null;
+        internal static Smiles.SmilesParser SilentSmilesParser
+        {
+            get
+            {
+                if (silentSmilesParser == null)
+                    silentSmilesParser = new Smiles.SmilesParser(Silent.ChemObjectBuilder.Instance);
+                return silentSmilesParser;
+            }
+        }
+
+        private static Tools.ILonePairElectronChecker lonePairElectronChecker;
+
+        internal static Tools.ILonePairElectronChecker LonePairElectronChecker
+        {
+            get
+            {
+                if (lonePairElectronChecker == null)
+                    lonePairElectronChecker = new Tools.LonePairElectronChecker();
+                return lonePairElectronChecker;
+            }
+        }
     }
 }

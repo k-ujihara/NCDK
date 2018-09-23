@@ -53,7 +53,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            LonePairElectronChecker.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             peoe.CalculateCharges(molecule);
             for (int i = 0; i < molecule.Atoms.Count; i++)
@@ -76,7 +76,7 @@ namespace NCDK.Charges
             Aromaticity.CDKLegacy.Apply(mol1);
             AddExplicitHydrogens(mol1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
-            LonePairElectronChecker.Saturate(mol1);
+            CDK.LonePairElectronChecker.Saturate(mol1);
 
             List<bool> oldBondOrders = new List<bool>();
             for (int i = 0; i < mol1.Bonds.Count; i++)
@@ -112,11 +112,11 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(mol1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
-            LonePairElectronChecker.Saturate(mol1);
+            CDK.LonePairElectronChecker.Saturate(mol1);
 
             AddExplicitHydrogens(mol2);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);
-            LonePairElectronChecker.Saturate(mol2);
+            CDK.LonePairElectronChecker.Saturate(mol2);
 
             peoe.CalculateCharges(mol1);
             peoe.CalculateCharges(mol2);
@@ -140,7 +140,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            LonePairElectronChecker.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             peoe.AssignGasteigerPiPartialCharges(molecule, true);
             for (int i = 0; i < molecule.Atoms.Count; i++)
@@ -212,7 +212,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            LonePairElectronChecker.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
             foreach (var atom in molecule.Atoms)
                 atom.Charge = 0;
 
@@ -222,7 +222,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            LonePairElectronChecker.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             Assert.IsNotNull(peoe.AssignrPiMarsilliFactors(set));
         }

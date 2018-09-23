@@ -69,7 +69,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
             AddExplicitHydrogens(mol);
-            LonePairElectronChecker.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             double result = ((Result<double>)descriptor.Calculate(mol.Atoms[6], mol).Value).Value;
             double resultAccordingNIST = 753.1;
@@ -90,7 +90,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AddExplicitHydrogens(mol);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            LonePairElectronChecker.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             double result = ((Result<double>)descriptor.Calculate(mol.Atoms[2], mol).Value).Value;
             double resultAccordingNIST = 693.4;

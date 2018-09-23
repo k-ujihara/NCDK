@@ -240,7 +240,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
 
-            LonePairElectronChecker.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             AssertAtomTypesPerceived(mol);
             for (int i = 0; i < 3; i++)
@@ -272,7 +272,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AssertAtomTypesPerceived(mol);
             AddImplicitHydrogens(mol);
 
-            LonePairElectronChecker.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             AssertAtomTypesPerceived(mol);
             for (int i = 0; i < 3; i++)

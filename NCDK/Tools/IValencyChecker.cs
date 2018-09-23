@@ -33,7 +33,20 @@ namespace NCDK.Tools
     // @cdk.githash
     public interface IValencyChecker
     {
-        bool IsSaturated(IAtomContainer ac);
+        /// <summary>
+        /// Determines of all atoms on <paramref name="container"/> are saturated.
+        /// </summary>
+        /// <param name="container">Atom container to check</param>
+        /// <returns><see langword="true"/>, if it's right saturated</returns>
+        bool IsSaturated(IAtomContainer container);
+
+        /// <summary>
+        /// Checks if <paramref name="atom"/> in <paramref name="container"/> is saturated 
+        /// by comparing it with known atom types.
+        /// </summary>
+        /// <param name="atom">Atom to check</param>
+        /// <param name="container">Atom container to check</param>
+        /// <returns><see langword="true"/>, if it's right saturated</returns>
         bool IsSaturated(IAtom atom, IAtomContainer container);
     }
 }
