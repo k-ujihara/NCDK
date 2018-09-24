@@ -58,7 +58,13 @@ namespace NCDK.IO
     // @cdk.bug     1794439
     public class PDBReader : DefaultChemObjectReader
     {
-        private TextReader oInput;                                                                  // The internal used TextReader
+        private static readonly AtomTypeFactory factory = CDK.JmolAtomTypeFactory;
+        
+        /// <summary>
+        /// The internal used TextReader
+        /// </summary>
+        private TextReader oInput;
+
         private BooleanIOSetting useRebondTool;
         private BooleanIOSetting readConnect;
         private BooleanIOSetting useHetDictionary;
@@ -76,9 +82,8 @@ namespace NCDK.IO
         /// A mapping between HETATM 3-letter codes + atomNames to CDK atom type
         /// names; for example "RFB.N13" maps to "N.planar3".
         /// </summary>
-        private IDictionary<string, string> hetDictionary;
-
-        private AtomTypeFactory cdkAtomTypeFactory;
+        private static readonly Dictionary<string, string> hetDictionary = MakeHetDictionary();
+        private static readonly AtomTypeFactory cdkAtomTypeFactory = CDK.CdkAtomTypeFactory;
         private const string hetDictionaryPath = "type_map.txt";
 
         /// <summary>
@@ -87,7 +92,8 @@ namespace NCDK.IO
         /// <param name="oIn">The Stream to read from</param>
         public PDBReader(Stream oIn)
             : this(new StreamReader(oIn))
-        { }
+        {
+        }
 
         /// <summary>
         /// Constructs a new PDBReader that can read Molecules from a given Reader.
@@ -97,15 +103,14 @@ namespace NCDK.IO
         {
             oInput = oIn;
             InitIOSettings();
-            hetDictionary = null;
-            cdkAtomTypeFactory = null;
         }
 
         public override IResourceFormat Format => PDBFormat.Instance;
 
         public override bool Accepts(Type type)
         {
-            if (typeof(IChemFile).IsAssignableFrom(type)) return true;
+            if (typeof(IChemFile).IsAssignableFrom(type))
+                return true;
             return false;
         }
 
@@ -145,15 +150,15 @@ namespace NCDK.IO
         private IChemFile ReadChemFile(IChemFile oFile)
         {
             // initialize all containers
-            IChemSequence oSeq = oFile.Builder.NewChemSequence();
-            IChemModel oModel = oFile.Builder.NewChemModel();
+            var oSeq = oFile.Builder.NewChemSequence();
+            var oModel = oFile.Builder.NewChemModel();
             var oSet = oFile.Builder.NewAtomContainerSet();
 
             // some variables needed
             string cCol;
             PDBAtom oAtom;
-            PDBPolymer oBP = new PDBPolymer();
-            IAtomContainer molecularStructure = oFile.Builder.NewAtomContainer();
+            var oBP = new PDBPolymer();
+            var molecularStructure = oFile.Builder.NewAtomContainer();
             StringBuilder cResidue;
             string oObj;
             IMonomer oMonomer;
@@ -564,12 +569,12 @@ namespace NCDK.IO
                 Trace.TraceError("Could not find bond start atom in map with serial id: ", bondAtomNo);
             if (!atomNumberMap.TryGetValue(bondedAtomNo, out IAtom secondAtom))
                 Trace.TraceError("Could not find bond target atom in map with serial id: ", bondAtomNo);
-            IBond bond = firstAtom.Builder.NewBond(firstAtom, secondAtom, BondOrder.Single);
+            var bond = firstAtom.Builder.NewBond(firstAtom, secondAtom, BondOrder.Single);
             for (int i = 0; i < bondsFromConnectRecords.Count; i++)
             {
-                IBond existingBond = (IBond)bondsFromConnectRecords[i];
-                IAtom a = existingBond.Begin;
-                IAtom b = existingBond.End;
+                var existingBond = bondsFromConnectRecords[i];
+                var a = existingBond.Begin;
+                var b = existingBond.End;
                 if ((a == firstAtom && b == secondAtom) || (b == firstAtom && a == secondAtom))
                 {
                     // already stored
@@ -582,11 +587,9 @@ namespace NCDK.IO
 
         private static bool CreateBondsWithRebondTool(IAtomContainer molecule)
         {
-            RebondTool tool = new RebondTool(2.0, 0.5, 0.5);
+            var tool = new RebondTool(2.0, 0.5, 0.5);
             try
             {
-                // configure atoms
-                AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt", molecule.Builder);
                 foreach (var atom in molecule.Atoms)
                 {
                     try
@@ -641,7 +644,7 @@ namespace NCDK.IO
 
             int len = str.Length;
 
-            StringBuilder sym = new StringBuilder();
+            var sym = new StringBuilder();
 
             // try grabbing from end of line
 
@@ -725,19 +728,19 @@ namespace NCDK.IO
                 throw new InvalidDataException("PDBReader error during ReadAtom(): line too short");
             }
 
-            bool isHetatm = cLine.StartsWith("HETATM", StringComparison.Ordinal);
-            string atomName = cLine.Substring(12, 4).Trim();
-            string resName = cLine.Substring(17, 3).Trim();
-            string symbol = ParseAtomSymbol(cLine);
+            var isHetatm = cLine.StartsWith("HETATM", StringComparison.Ordinal);
+            var atomName = cLine.Substring(12, 4).Trim();
+            var resName = cLine.Substring(17, 3).Trim();
+            var symbol = ParseAtomSymbol(cLine);
 
             if (symbol == null)
                 HandleError($"Cannot parse symbol from {atomName}");
 
-            PDBAtom oAtom = new PDBAtom(symbol, new Vector3(double.Parse(cLine.Substring(30, 8), NumberFormatInfo.InvariantInfo),
-                        double.Parse(cLine.Substring(38, 8), NumberFormatInfo.InvariantInfo), double.Parse(cLine.Substring(46, 8), NumberFormatInfo.InvariantInfo)));
+            var oAtom = new PDBAtom(symbol, new Vector3(double.Parse(cLine.Substring(30, 8), NumberFormatInfo.InvariantInfo),
+                double.Parse(cLine.Substring(38, 8), NumberFormatInfo.InvariantInfo), double.Parse(cLine.Substring(46, 8), NumberFormatInfo.InvariantInfo)));
             if (useHetDictionary.IsSet && isHetatm)
             {
-                string cdkType = TypeHetatm(resName, atomName);
+                var cdkType = TypeHetatm(resName, atomName);
                 oAtom.AtomTypeName = cdkType;
                 if (cdkType != null)
                 {
@@ -770,7 +773,7 @@ namespace NCDK.IO
             }
             if (lineLength >= 59)
             {
-                string frag = cLine.Substring(54, Math.Min(lineLength - 54, 6)).Trim();
+                var frag = cLine.Substring(54, Math.Min(lineLength - 54, 6)).Trim();
                 if (frag.Length > 0)
                 {
                     oAtom.Occupancy = double.Parse(frag, NumberFormatInfo.InvariantInfo);
@@ -778,7 +781,7 @@ namespace NCDK.IO
             }
             if (lineLength >= 65)
             {
-                string frag = cLine.Substring(60, Math.Min(lineLength - 60, 6)).Trim();
+                var frag = cLine.Substring(60, Math.Min(lineLength - 60, 6)).Trim();
                 if (frag.Length > 0)
                 {
                     oAtom.TempFactor = double.Parse(frag, NumberFormatInfo.InvariantInfo);
@@ -788,9 +791,6 @@ namespace NCDK.IO
             {
                 oAtom.SegID = cLine.Substring(72, Math.Min(lineLength - 72, 4)).Trim();
             }
-            //        if (lineLength >= 78) {
-            //            oAtom.Symbol = (new string(cLine.Substring(76, 78))).Trim();
-            //        }
             if (lineLength >= 79)
             {
                 string frag;
@@ -822,7 +822,7 @@ namespace NCDK.IO
             // It sets a flag in the property content of an atom, which is used when
             // bonds are created to check if the atom is an OXT-record => needs
             // special treatment.
-            string oxt = cLine.Substring(13, 3).Trim();
+            var oxt = cLine.Substring(13, 3).Trim();
 
             if (string.Equals(oxt, "OXT", StringComparison.Ordinal))
             {
@@ -839,12 +839,7 @@ namespace NCDK.IO
 
         private string TypeHetatm(string resName, string atomName)
         {
-            if (hetDictionary == null)
-            {
-                ReadHetDictionary();
-                cdkAtomTypeFactory = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", ChemObjectBuilder.Instance);
-            }
-            string key = resName + "." + atomName;
+            var key = resName + "." + atomName;
             if (hetDictionary.ContainsKey(key))
             {
                 return hetDictionary[key];
@@ -852,35 +847,38 @@ namespace NCDK.IO
             return null;
         }
 
-        private void ReadHetDictionary()
+        private static Dictionary<string, string> MakeHetDictionary()
         {
+            var hetDictionary = new Dictionary<string, string>();
             try
             {
-                Stream ins = ResourceLoader.GetAsStream(GetType(), hetDictionaryPath);
-                TextReader bufferedReader = new StreamReader(ins);
-                hetDictionary = new Dictionary<string, string>();
-                string line;
-                while ((line = bufferedReader.ReadLine()) != null)
+                var ins = ResourceLoader.GetAsStream(typeof(PDBReader), hetDictionaryPath);
+                using (var bufferedReader = new StreamReader(ins))
                 {
-                    int colonIndex = line.IndexOf(':');
-                    if (colonIndex == -1) continue;
-                    string typeKey = line.Substring(0, colonIndex);
-                    string typeValue = line.Substring(colonIndex + 1);
-                    if (string.Equals(typeValue, "null", StringComparison.Ordinal))
+                    string line;
+                    while ((line = bufferedReader.ReadLine()) != null)
                     {
-                        hetDictionary[typeKey] = null;
-                    }
-                    else
-                    {
-                        hetDictionary[typeKey] = typeValue;
+                        var colonIndex = line.IndexOf(':');
+                        if (colonIndex == -1)
+                            continue;
+                        var typeKey = line.Substring(0, colonIndex);
+                        var typeValue = line.Substring(colonIndex + 1);
+                        if (string.Equals(typeValue, "null", StringComparison.Ordinal))
+                        {
+                            hetDictionary[typeKey] = null;
+                        }
+                        else
+                        {
+                            hetDictionary[typeKey] = typeValue;
+                        }
                     }
                 }
-                bufferedReader.Close();
             }
             catch (IOException ioe)
             {
                 Trace.TraceError(ioe.Message);
             }
+            return hetDictionary;
         }
 
         #region IDisposable Support
@@ -906,11 +904,11 @@ namespace NCDK.IO
         private void InitIOSettings()
         {
             useRebondTool = IOSettings.Add(new BooleanIOSetting("UseRebondTool", Importance.Low,
-                    "Should the PDBReader deduce bonding patterns?", "false"));
+                "Should the PDBReader deduce bonding patterns?", "false"));
             readConnect = IOSettings.Add(new BooleanIOSetting("ReadConnectSection", Importance.Low,
-                    "Should the CONECT be read?", "true"));
+                "Should the CONECT be read?", "true"));
             useHetDictionary = IOSettings.Add(new BooleanIOSetting("UseHetDictionary", Importance.Low,
-                    "Should the PDBReader use the HETATM dictionary for atom types?", "false"));
+                "Should the PDBReader use the HETATM dictionary for atom types?", "false"));
         }
 
         public void CustomizeJob()

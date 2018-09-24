@@ -111,21 +111,27 @@ namespace NCDK.Aromaticities
 
         /// <summary>Hydrogens must be present - otherwise the kekulisation is ambiguous.</summary>
         [TestMethod()]
-        [ExpectedException(typeof(CDKException))]
         public void PyrroleWithMissingHydrogen()
         {
-            IAtomContainer m = new AtomContainer();
-            m.Atoms.Add(Atom("N", 0, true));
-            m.Atoms.Add(Atom("C", 1, true));
-            m.Atoms.Add(Atom("C", 1, true));
-            m.Atoms.Add(Atom("C", 1, true));
-            m.Atoms.Add(Atom("C", 1, true));
-            m.Bonds.Add(Bond(m, 0, 1, BondOrder.Unset, true));
-            m.Bonds.Add(Bond(m, 1, 2, BondOrder.Unset, true));
-            m.Bonds.Add(Bond(m, 2, 3, BondOrder.Unset, true));
-            m.Bonds.Add(Bond(m, 3, 4, BondOrder.Unset, true));
-            m.Bonds.Add(Bond(m, 4, 0, BondOrder.Unset, true));
-            AssertBondOrders(m);
+            try
+            {
+                IAtomContainer m = new AtomContainer();
+                m.Atoms.Add(Atom("N", 0, true));
+                m.Atoms.Add(Atom("C", 1, true));
+                m.Atoms.Add(Atom("C", 1, true));
+                m.Atoms.Add(Atom("C", 1, true));
+                m.Atoms.Add(Atom("C", 1, true));
+                m.Bonds.Add(Bond(m, 0, 1, BondOrder.Unset, true));
+                m.Bonds.Add(Bond(m, 1, 2, BondOrder.Unset, true));
+                m.Bonds.Add(Bond(m, 2, 3, BondOrder.Unset, true));
+                m.Bonds.Add(Bond(m, 3, 4, BondOrder.Unset, true));
+                m.Bonds.Add(Bond(m, 4, 0, BondOrder.Unset, true));
+                AssertBondOrders(m);
+                Assert.Fail();
+            }
+            catch (CDKException)
+            {
+            }
         }
 
         /// @cdk.inchi InChI=1S/C10H8/c1-2-5-9-7-4-8-10(9)6-3-1/h1-8H

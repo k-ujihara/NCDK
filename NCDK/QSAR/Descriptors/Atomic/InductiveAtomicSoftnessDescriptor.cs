@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Numerics;
 using NCDK.Config;
 using NCDK.QSAR.Results;
@@ -52,7 +53,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     public partial class InductiveAtomicSoftnessDescriptor : IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "indAtomSoftness" };
-        private AtomTypeFactory factory = null;
+        private static readonly AtomTypeFactory factory = CDK.JmolAtomTypeFactory;
 
         /// <summary>
         ///  Constructor for the InductiveAtomicSoftnessDescriptor object
@@ -89,17 +90,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>a double with polarizability of the heavy atom</returns>
         public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer ac)
         {
-            if (factory == null)
-                try
-                {
-                    factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt",
-                            ac.Builder);
-                }
-                catch (Exception exception)
-                {
-                    return GetDummyDescriptorValue(exception);
-                }
-
             var allAtoms = ac.Atoms;
             double atomicSoftness;
             double radiusTarget;

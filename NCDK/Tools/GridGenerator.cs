@@ -18,10 +18,9 @@
  */
 
 using NCDK.Common.Collections;
-using NCDK.Common.Mathematics;
+using NCDK.Numerics;
 using System;
 using System.IO;
-using NCDK.Numerics;
 
 namespace NCDK.Tools
 {

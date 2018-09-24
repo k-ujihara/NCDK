@@ -66,7 +66,7 @@ namespace NCDK.Tools
         /// </summary>
         /// <seealso cref="SetDefaultReactions"/>
         public StructureResonanceGenerator()
-                : this(false)
+            : this(false)
         {
         }
 
@@ -112,7 +112,9 @@ namespace NCDK.Tools
             var param = new SetReactionCenter { IsSetParameter = false };
             paramList.Add(param);
 
-            IReactionProcess type = new SharingLonePairReaction();
+            IReactionProcess type;
+            
+            type = new SharingLonePairReaction();
             try
             {
                 type.ParameterList = paramList;
@@ -239,7 +241,8 @@ namespace NCDK.Tools
             var setOfCont = molecule.Builder.NewAtomContainerSet();
             var setOfMol = GetStructures(molecule);
 
-            if (setOfMol.Count == 0) return setOfCont;
+            if (setOfMol.Count == 0)
+                return setOfCont;
 
             /* extraction of all bonds which has been produced a changes of order */
             var bondList = new List<IBond>();
@@ -251,7 +254,8 @@ namespace NCDK.Tools
                     var bond = molecule.Bonds[j];
                     if (!mol.Bonds[j].Order.Equals(bond.Order))
                     {
-                        if (!bondList.Contains(bond)) bondList.Add(bond);
+                        if (!bondList.Contains(bond))
+                            bondList.Add(bond);
                     }
                 }
             }

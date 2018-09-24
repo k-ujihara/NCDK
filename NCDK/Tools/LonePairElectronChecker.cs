@@ -50,8 +50,8 @@ namespace NCDK.Tools
     public class LonePairElectronChecker
         : ILonePairElectronChecker
     {
-        private static AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", Silent.ChemObjectBuilder.Instance);
-
+        private static readonly AtomTypeFactory factory = CDK.CdkAtomTypeFactory;
+        
         public LonePairElectronChecker()
         {
         }

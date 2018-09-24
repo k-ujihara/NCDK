@@ -264,7 +264,7 @@ namespace NCDK.Validate
             ValidationTest maxBO = new ValidationTest(bond, "Bond order exceeds the maximum for one of its atoms.");
             try
             {
-                var structgenATF = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", bond.Builder);
+                var structgenATF = CDK.CdkAtomTypeFactory;
                 for (int i = 0; i < bond.Atoms.Count; i++)
                 {
                     IAtom atom = bond.Atoms[i];
@@ -357,7 +357,7 @@ namespace NCDK.Validate
             ValidationTest checkBondSum = new ValidationTest(atom, "The atom's total bond order is too high.");
             try
             {
-                var structgenATF = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", atom.Builder);
+                var structgenATF = CDK.CdkAtomTypeFactory;
                 int bos = (int)molecule.GetBondOrderSum(atom);
                 var atomTypes = structgenATF.GetAtomTypes(atom.Symbol).ToList();
                 if (atomTypes.Count == 0)

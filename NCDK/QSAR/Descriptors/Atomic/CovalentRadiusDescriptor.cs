@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
@@ -49,7 +50,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.dictref qsar-descriptors:covalentradius
     public partial class CovalentRadiusDescriptor : IAtomicDescriptor
     {
-        private AtomTypeFactory factory = null;
+        private static readonly AtomTypeFactory factory = CDK.JmolAtomTypeFactory;
 
         public CovalentRadiusDescriptor() { }
 
@@ -75,17 +76,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>The Covalent radius of the atom</returns>
         public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer container)
         {
-            if (factory == null)
-                try
-                {
-                    factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt",
-                            container.Builder);
-                }
-                catch (Exception exception)
-                {
-                    return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, exception);
-                }
-
             double covalentradius;
             try
             {

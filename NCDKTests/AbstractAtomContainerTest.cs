@@ -3044,43 +3044,64 @@ namespace NCDK
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(NoSuchAtomException))]
         public void TestGetConnectedLongPairsMissingAtom()
         {
-            IAtomContainer container = (IAtomContainer)NewChemObject();
-            IChemObjectBuilder builder = container.Builder;
-            IAtom atom = builder.NewAtom();
-            container.GetConnectedLonePairs(atom);
+            try
+            {
+                IAtomContainer container = (IAtomContainer)NewChemObject();
+                IChemObjectBuilder builder = container.Builder;
+                IAtom atom = builder.NewAtom();
+                container.GetConnectedLonePairs(atom);
+                Assert.Fail();
+            }
+            catch (NoSuchAtomException)
+            {
+            }
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(NoSuchAtomException))]
         public void TestGetConnectedSingleElecsMissingAtom()
         {
-            IAtomContainer container = (IAtomContainer)NewChemObject();
-            IChemObjectBuilder builder = container.Builder;
-            IAtom atom = builder.NewAtom();
-            container.GetConnectedSingleElectrons(atom);
+            try
+            {
+                IAtomContainer container = (IAtomContainer)NewChemObject();
+                IChemObjectBuilder builder = container.Builder;
+                IAtom atom = builder.NewAtom();
+                container.GetConnectedSingleElectrons(atom);
+            }
+            catch (NoSuchAtomException)
+            {
+            }
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(NoSuchAtomException))]
         public void TestGetConnectedLongPairCountMissingAtom()
         {
-            IAtomContainer container = (IAtomContainer)NewChemObject();
-            IChemObjectBuilder builder = container.Builder;
-            IAtom atom = builder.NewAtom();
-            container.GetConnectedLonePairs(atom);
+            try
+            {
+                IAtomContainer container = (IAtomContainer)NewChemObject();
+                IChemObjectBuilder builder = container.Builder;
+                IAtom atom = builder.NewAtom();
+                container.GetConnectedLonePairs(atom);
+            }
+            catch (NoSuchAtomException)
+            {
+            }
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(NoSuchAtomException))]
         public void TestGetConnectedSingleElecCountMissingAtom()
         {
-            IAtomContainer container = (IAtomContainer)NewChemObject();
-            IChemObjectBuilder builder = container.Builder;
-            IAtom atom = builder.NewAtom();
-            container.GetConnectedSingleElectrons(atom);
+            try
+            {
+                IAtomContainer container = (IAtomContainer)NewChemObject();
+                IChemObjectBuilder builder = container.Builder;
+                IAtom atom = builder.NewAtom();
+                container.GetConnectedSingleElectrons(atom);
+            }
+            catch (NoSuchAtomException)
+            {
+            }
         }
 
         [TestMethod()]

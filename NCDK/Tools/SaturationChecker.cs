@@ -49,7 +49,11 @@ namespace NCDK.Tools
     // @cdk.githash
     public class SaturationChecker : IValencyChecker, IDeduceBondOrderTool
     {
-        private static readonly AtomTypeFactory structgenATF = AtomTypeFactory.GetInstance("NCDK.Config.Data.structgen_atomtypes.xml", Silent.ChemObjectBuilder.Instance);
+        private static readonly AtomTypeFactory structgenATF = CDK.StructgenAtomTypeFactory;
+
+        public SaturationChecker()
+        {
+        }
 
         public bool HasPerfectConfiguration(IAtom atom, IAtomContainer ac)
         {

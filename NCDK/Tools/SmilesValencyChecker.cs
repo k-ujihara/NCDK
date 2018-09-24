@@ -41,17 +41,16 @@ namespace NCDK.Tools
     // @cdk.githash
     public class SmilesValencyChecker : IValencyChecker, IDeduceBondOrderTool
     {
-        private readonly string atomTypeList = null;
-        private AtomTypeFactory structgenATF;
+        private readonly AtomTypeFactory structgenATF;
 
         public SmilesValencyChecker()
-            : this("NCDK.Dict.Data.cdk-atom-types.owl")
         {
+            structgenATF = CDK.CdkAtomTypeFactory;
         }
 
         public SmilesValencyChecker(string atomTypeList)
         {
-            this.atomTypeList = atomTypeList;
+            structgenATF = AtomTypeFactory.GetInstance(atomTypeList, Silent.ChemObjectBuilder.Instance);
             Trace.TraceInformation($"Using configuration file: {atomTypeList}");
         }
 
@@ -63,7 +62,7 @@ namespace NCDK.Tools
         public void Saturate(IAtomContainer atomContainer)
         {
             Trace.TraceInformation("Saturating atomContainer by adjusting bond orders...");
-            var allSaturated = AllSaturated(atomContainer);
+            var allSaturated = IsSaturated(atomContainer);
             if (!allSaturated)
             {
                 Trace.TraceInformation("Saturating bond orders is needed...");
@@ -92,7 +91,7 @@ namespace NCDK.Tools
 
                 // determine bonds left
                 var leftBondCount = _bonds.Count - 1;
-                var leftBonds = _bonds.ToList();
+                var leftBonds = _bonds;
 
                 // examine this bond
                 Debug.WriteLine($"Examining this bond: {bond}");
@@ -181,8 +180,8 @@ namespace NCDK.Tools
             var atom = atoms[0];
             var partner = atoms[1];
             Debug.WriteLine("  saturating bond: ", atom.Symbol, "-", partner.Symbol);
-            var atomTypes1 = GetAtomTypeFactory(bond.Builder).GetAtomTypes(atom.Symbol);
-            var atomTypes2 = GetAtomTypeFactory(bond.Builder).GetAtomTypes(partner.Symbol);
+            var atomTypes1 = structgenATF.GetAtomTypes(atom.Symbol);
+            var atomTypes2 = structgenATF.GetAtomTypes(partner.Symbol);
             foreach (var aType1 in atomTypes1)
             {
                 Debug.WriteLine($"  considering atom type: {aType1}");
@@ -228,19 +227,11 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// Determines of all atoms on the AtomContainer are saturated.
-        /// </summary>
-        public bool IsSaturated(IAtomContainer container)
-        {
-            return AllSaturated(container);
-        }
-
-        /// <summary>
         /// Check all atoms are saturated.
         /// </summary>
         /// <param name="ac"><see cref="IAtomContainer"/> to check.</param>
         /// <returns><see langword="true"/> if all atoms are saturated.</returns>
-        public bool AllSaturated(IAtomContainer ac)
+        public bool IsSaturated(IAtomContainer ac)
         {
             Debug.WriteLine("Are all atoms saturated?");
             for (int f = 0; f < ac.Atoms.Count; f++)
@@ -303,7 +294,7 @@ namespace NCDK.Tools
 
             Debug.WriteLine("Calculating number of missing hydrogen atoms");
             // get default atom
-            var atomTypes = GetAtomTypeFactory(atom.Builder).GetAtomTypes(atom.Symbol);
+            var atomTypes = structgenATF.GetAtomTypes(atom.Symbol);
             foreach (var type in atomTypes)
             {
                 if (CouldMatchAtomType(atom, bondOrderSum, maxBondOrder, type))
@@ -348,10 +339,10 @@ namespace NCDK.Tools
                 return true;
             }
 
-            var atomTypes = GetAtomTypeFactory(atom.Builder).GetAtomTypes(atom.Symbol);
+            var atomTypes = structgenATF.GetAtomTypes(atom.Symbol);
             if (atomTypes.Any())
             {
-                Trace.TraceWarning("Missing entry in atom type list for ", atom.Symbol);
+                Trace.TraceWarning($"Missing entry in atom type list for {atom.Symbol}");
                 return true;
             }
             var bondOrderSum = container.GetBondOrderSum(atom);
@@ -393,29 +384,12 @@ namespace NCDK.Tools
 
             // ok, the found atom was not in the list
             Trace.TraceError("Could not find atom type!");
-            throw new CDKException("The atom with element " + atom.Symbol + " and charge " + charge + " is not found.");
+            throw new CDKException($"The atom with element {atom.Symbol} and charge {charge} is not found.");
         }
 
         public int CalculateNumberOfImplicitHydrogens(IAtom atom, IAtomContainer container)
         {
             return this.CalculateNumberOfImplicitHydrogens(atom, container.GetBondOrderSum(atom), container.GetMaximumBondOrder(atom), container.GetConnectedBonds(atom).Count());
-        }
-
-        protected AtomTypeFactory GetAtomTypeFactory(IChemObjectBuilder builder)
-        {
-            if (structgenATF == null)
-            {
-                try
-                {
-                    structgenATF = AtomTypeFactory.GetInstance(atomTypeList, builder);
-                }
-                catch (Exception exception)
-                {
-                    Debug.WriteLine(exception);
-                    throw new CDKException("Could not instantiate AtomTypeFactory!", exception);
-                }
-            }
-            return structgenATF;
         }
 
         /// <summary>

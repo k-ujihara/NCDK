@@ -39,8 +39,8 @@ namespace NCDK.AtomTypes
     // @cdk.githash
     public class StructGenMatcher : IAtomTypeMatcher
     {
-        private static AtomTypeFactory factory = null;
-
+        private static readonly AtomTypeFactory factory = CDK.StructgenAtomTypeFactory;
+        
         /// <summary>
         /// Constructor for the StructGenMatcher object.
         /// </summary>
@@ -67,21 +67,6 @@ namespace NCDK.AtomTypes
         /// <returns>the matching AtomType</returns>
         public IAtomType FindMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
         {
-            if (factory == null)
-            {
-                try
-                {
-                    factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.structgen_atomtypes.xml",
-                            atom.Builder);
-                }
-                catch (Exception ex1)
-                {
-                    Trace.TraceError(ex1.Message);
-                    Debug.WriteLine(ex1);
-                    throw new CDKException("Could not instantiate the AtomType list!", ex1);
-                }
-            }
-
             double bondOrderSum = atomContainer.GetBondOrderSum(atom);
             BondOrder maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
             int charge = atom.FormalCharge.Value;

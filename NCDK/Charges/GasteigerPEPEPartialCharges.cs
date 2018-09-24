@@ -62,10 +62,7 @@ namespace NCDK.Charges
         /// <summary>The StepSize attribute of the GasteigerMarsiliPartialCharges object.</summary>
         public int StepSize { get; set; } = 5;
 
-        private AtomTypeFactory factory;
-        // Flag is set if the formal charge of a chemobject is changed due to resonance.
-        //private static int          ISCHANGEDFC   = 0x1;
-        // Use IsPlaced flag because it has the same mask
+        private static readonly AtomTypeFactory factory = CDK.JmolAtomTypeFactory;
 
         /// <summary>Corresponds an empirical influence between the electrostatic potential and the neighbours.</summary>
         private const double fE = 1.1;
@@ -548,9 +545,6 @@ namespace NCDK.Charges
             double sum = 0.0;
             try
             {
-                if (factory == null)
-                    factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt", ac.Builder);
-
                 var atoms = ac.GetConnectedAtoms(ac.Atoms[atom1]);
                 foreach (var atom in atoms)
                 {

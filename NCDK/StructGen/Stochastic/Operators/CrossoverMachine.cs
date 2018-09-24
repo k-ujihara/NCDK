@@ -164,7 +164,7 @@ namespace NCDK.StructGen.Stochastic.Operators
                 }
                 //if the two fragments of one and only one parent have an uneven number
                 //of attachment points, we need to rearrange them
-                var satCheck = new SaturationChecker();
+                var satCheck = CDK.SaturationChecker;
                 double red1attachpoints = 0;
                 for (int i = 0; i < redChild[0].Atoms.Count; i++)
                 {

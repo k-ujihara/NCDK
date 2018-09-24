@@ -63,8 +63,9 @@ namespace NCDK.StructGen
     // @cdk.githash
     public class SingleStructureRandomGenerator
     {
+        private static readonly SaturationChecker satCheck = CDK.SaturationChecker;
+
         IAtomContainer atomContainer;
-        SaturationChecker satCheck;
         Maths.Random random = null;
 
         /// <summary>
@@ -72,7 +73,6 @@ namespace NCDK.StructGen
         /// </summary>
         public SingleStructureRandomGenerator(long seed)
         {
-            satCheck = new SaturationChecker();
             random = new Maths.Random(seed);
         }
 

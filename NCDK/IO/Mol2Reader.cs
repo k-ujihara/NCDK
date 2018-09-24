@@ -48,8 +48,9 @@ namespace NCDK.IO
     // @cdk.keyword file format, Mol2
     public class Mol2Reader : DefaultChemObjectReader
     {
-        bool firstLineisMolecule = false;
+        private static readonly AtomTypeFactory atFactory = AtomTypeFactory.GetInstance("NCDK.Config.Data.mol2_atomtypes.xml", Silent.ChemObjectBuilder.Instance);
 
+        bool firstLineisMolecule = false;
         TextReader input = null;
 
         /// <summary>
@@ -199,20 +200,7 @@ namespace NCDK.IO
         /// </summary>
         /// <returns>The Reaction that was read from the MDL file.</returns>
         private IAtomContainer ReadMolecule(IAtomContainer molecule)
-        {
-            AtomTypeFactory atFactory = null;
-            try
-            {
-                atFactory = AtomTypeFactory.GetInstance("NCDK.Config.Data.mol2_atomtypes.xml",
-                        molecule.Builder);
-            }
-            catch (Exception exception)
-            {
-                string error = "Could not instantiate an AtomTypeFactory";
-                Trace.TraceError(error);
-                Debug.WriteLine(exception);
-                throw new CDKException(error, exception);
-            }
+        {            
             try
             {
                 int atomCount = 0;
@@ -222,14 +210,15 @@ namespace NCDK.IO
                 while (true)
                 {
                     line = input.ReadLine();
-                    if (line == null) return null;
+                    if (line == null)
+                        return null;
                     if (line.StartsWith("@<TRIPOS>MOLECULE", StringComparison.Ordinal))
                         break;
                     if (!line.StartsWithChar('#') && line.Trim().Length > 0)
                         break;
                 }
 
-                // ok, if we're coming from the chemfile functoion, we've alreay read the molecule RTI
+                // ok, if we're coming from the chemfile function, we've already read the molecule RTI
                 if (firstLineisMolecule)
                     molecule.Title = line;
                 else

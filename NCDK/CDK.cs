@@ -36,6 +36,39 @@ namespace NCDK
         /// <returns>The library version</returns>
         public static string Version => typeof(CDK).Assembly.GetName().Version.ToString();
 
+        private static Config.AtomTypeFactory atomTypeFactory = null;
+        internal static Config.AtomTypeFactory JmolAtomTypeFactory
+        {
+            get
+            {
+                if (atomTypeFactory == null)
+                    atomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt", Silent.ChemObjectBuilder.Instance);
+                return atomTypeFactory;
+            }
+        }
+
+        private static Config.AtomTypeFactory cdkAtomTypeFactory = null;
+        internal static Config.AtomTypeFactory CdkAtomTypeFactory
+        {
+            get
+            {
+                if (cdkAtomTypeFactory == null)
+                    cdkAtomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", Silent.ChemObjectBuilder.Instance);
+                return cdkAtomTypeFactory;
+            }
+        }
+
+        private static Config.AtomTypeFactory structgenAtomTypeFactory = null;
+        internal static Config.AtomTypeFactory StructgenAtomTypeFactory
+        {
+            get
+            {
+                if (structgenAtomTypeFactory == null)
+                    structgenAtomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Config.Data.structgen_atomtypes.xml", Silent.ChemObjectBuilder.Instance);
+                return structgenAtomTypeFactory;
+            }
+        }
+
         private static Smiles.SmilesParser silentSmilesParser = null;
         internal static Smiles.SmilesParser SilentSmilesParser
         {
@@ -44,6 +77,18 @@ namespace NCDK
                 if (silentSmilesParser == null)
                     silentSmilesParser = new Smiles.SmilesParser(Silent.ChemObjectBuilder.Instance);
                 return silentSmilesParser;
+            }
+        }
+
+        private static Tools.SaturationChecker saturationChecker;
+
+        internal static Tools.SaturationChecker SaturationChecker
+        {
+            get
+            {
+                if (saturationChecker == null)
+                    saturationChecker = new Tools.SaturationChecker();
+                return saturationChecker;
             }
         }
 

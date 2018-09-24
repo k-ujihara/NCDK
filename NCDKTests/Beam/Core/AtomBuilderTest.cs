@@ -33,18 +33,21 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Aliphatic_element_null()
         {
-            IAtom a = AtomBuilder.Aliphatic((Element)null)
-                                .Build();
+            try
+            {
+                IAtom a = AtomBuilder.Aliphatic((Element)null).Build();
+                Assert.Fail();
+            }
+            catch (ArgumentNullException)
+            { }
         }
 
         [TestMethod()]
         public void IsAromatic_element_c()
         {
-            IAtom a = AtomBuilder.Aromatic(Carbon)
-                                .Build();
+            IAtom a = AtomBuilder.Aromatic(Carbon).Build();
             Assert.AreEqual(a.Element, Element.Carbon);
             Assert.AreEqual(a.Isotope, -1);
             Assert.AreEqual(a.Charge, 0);
@@ -65,26 +68,33 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentException))]
         public void IsAromatic_element_cl()
         {
-            IAtom a = AtomBuilder.Aromatic(Chlorine)
-                                .Build();
+            try
+            {
+                IAtom a = AtomBuilder.Aromatic(Chlorine).Build();
+                Assert.Fail();
+            }
+            catch (ArgumentException)
+            { }
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void IsAromatic_element_null()
         {
-            IAtom a = AtomBuilder.Aromatic((Element)null)
-                                .Build();
+            try
+            {
+                IAtom a = AtomBuilder.Aromatic((Element)null).Build();
+                Assert.Fail();
+            }
+            catch (ArgumentNullException)
+            { }
         }
 
         [TestMethod()]
         public void Aliphatic_symbol_c()
         {
-            IAtom a = AtomBuilder.Aliphatic("C")
-                                .Build();
+            IAtom a = AtomBuilder.Aliphatic("C").Build();
             Assert.AreEqual(a.Element, Element.Carbon);
             Assert.AreEqual(a.Isotope, -1);
             Assert.AreEqual(a.Charge, 0);
@@ -95,8 +105,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Aliphatic_symbol_n()
         {
-            IAtom a = AtomBuilder.Aliphatic("N")
-                                .Build();
+            IAtom a = AtomBuilder.Aliphatic("N").Build();
             Assert.AreEqual(a.Element, Element.Nitrogen);
             Assert.AreEqual(a.Isotope, -1);
             Assert.AreEqual(a.Charge, 0);
@@ -105,18 +114,21 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Aliphatic_symbol_null()
         {
-            IAtom a = AtomBuilder.Aliphatic((string)null)
-                                .Build();
+            try
+            {
+                IAtom a = AtomBuilder.Aliphatic((string)null).Build();
+                Assert.Fail();
+            }
+            catch (ArgumentNullException)
+            { }
         }
 
         [TestMethod()]
         public void IsAromatic_symbol_c()
         {
-            IAtom a = AtomBuilder.Aromatic("C")
-                                .Build();
+            IAtom a = AtomBuilder.Aromatic("C").Build();
             Assert.AreEqual(a.Element, Element.Carbon);
             Assert.AreEqual(a.Isotope, -1);
             Assert.AreEqual(a.Charge, 0);
@@ -137,26 +149,33 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentException))]
         public void IsAromatic_symbol_cl()
         {
-            IAtom a = AtomBuilder.Aromatic("Cl")
-                                .Build();
+            try
+            {
+                IAtom a = AtomBuilder.Aromatic("Cl").Build();
+                Assert.Fail();
+            }
+            catch (ArgumentException)
+            { }
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void IsAromatic_symbol_null()
         {
-            IAtom a = AtomBuilder.Aromatic((string)null)
-                                .Build();
+            try
+            {
+                IAtom a = AtomBuilder.Aromatic((string)null).Build();
+                Assert.Fail();
+            }
+            catch (ArgumentNullException)
+            { }
         }
 
         [TestMethod()]
         public void Create_symbol_aliphatic_c()
         {
-            IAtom a = AtomBuilder.Create("C")
-                                .Build();
+            IAtom a = AtomBuilder.Create("C").Build();
             Assert.AreEqual(a.Element, Element.Carbon);
             Assert.AreEqual(a.Isotope, -1);
             Assert.AreEqual(a.Charge, 0);
@@ -177,11 +196,15 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentException))]
         public void Create_symbol_non_IsAromatic()
         {
-            IAtom a = AtomBuilder.Create("cl")
-                                .Build();
+            try
+            {
+                IAtom a = AtomBuilder.Create("cl").Build();
+                Assert.Fail();
+            }
+            catch (ArgumentException)
+            { }
         }
 
         [TestMethod()]
@@ -290,28 +313,30 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Aliphatic_carbon_negative_hydrogens()
         {
-            IAtom a = AtomBuilder.Aliphatic(Element.Carbon)
+            try
+            {
+                IAtom a = AtomBuilder.Aliphatic(Element.Carbon)
                                 .NumOfHydrogens(-3)
                                 .Build();
+                Assert.Fail();
+            }
+            catch (ArgumentOutOfRangeException)
+            { }
         }
 
         [TestMethod()]
         public void IsAromatic_Unknown_from_element()
         {
-            Assert.IsNotNull(AtomBuilder.Aromatic(Unknown)
-                                     .Build());
+            Assert.IsNotNull(AtomBuilder.Aromatic(Unknown).Build());
         }
 
         [TestMethod()]
         public void IsAromatic_Unknown_from_symbol()
         {
-            Assert.IsNotNull(AtomBuilder.Aromatic("*")
-                                     .Build());
-            Assert.IsNotNull(AtomBuilder.Aromatic("R")
-                                     .Build());
+            Assert.IsNotNull(AtomBuilder.Aromatic("*").Build());
+            Assert.IsNotNull(AtomBuilder.Aromatic("R").Build());
         }
     }
 }

@@ -41,7 +41,7 @@ namespace NCDK.Charges
     {
         private static double[] pauling;
         private IsotopeFactory ifac = null;
-        private AtomTypeFactory factory = null;
+        private static readonly AtomTypeFactory factory = CDK.JmolAtomTypeFactory;
 
         /// <summary>
         ///  Constructor for the InductivePartialCharges object.
@@ -66,11 +66,6 @@ namespace NCDK.Charges
         /// <returns>AtomContainer</returns>
         public IAtomContainer AssignInductivePartialCharges(IAtomContainer ac)
         {
-            if (factory == null)
-            {
-                factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt", ac.Builder);
-            }
-
             int stepsLimit = 9;
             var atoms = ac.Atoms.ToArray();
             var pChInch = new double[atoms.Length * (stepsLimit + 1)];
@@ -217,10 +212,6 @@ namespace NCDK.Charges
         /// <exception cref="CDKException"></exception>
         public double GetAtomicSoftnessCore(IAtomContainer ac, int atomPosition)
         {
-            if (factory == null)
-            {
-                factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt", ac.Builder);
-            }
             IAtom target = null;
             double core = 0;
             double radiusTarget = 0;

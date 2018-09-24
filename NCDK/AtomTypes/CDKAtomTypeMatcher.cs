@@ -47,7 +47,8 @@ namespace NCDK.AtomTypes
             RequireExplicitHydrogens = 2,
         }
 
-        private AtomTypeFactory factory;
+        private AtomTypeFactory factory = CDK.CdkAtomTypeFactory;
+            
         private readonly Mode mode;
 
         private static readonly object syncLock = new object();
@@ -56,7 +57,6 @@ namespace NCDK.AtomTypes
 
         private CDKAtomTypeMatcher(IChemObjectBuilder builder, Mode mode)
         {
-            factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", builder);
             this.mode = mode;
         }
 

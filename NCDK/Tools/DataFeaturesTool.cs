@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 
 using NCDK.Features;
@@ -45,8 +44,10 @@ namespace NCDK.Tools
             DataFeatures features = DataFeatures.None;
             if (MoleculeFeaturesTool.HasElementSymbols(molecule))
                 features = features | DataFeatures.HasAtomElementSymbol;
-            if (GeometryUtil.Has2DCoordinates(molecule)) features = features | DataFeatures.Has2DCoordinates;
-            if (GeometryUtil.Has3DCoordinates(molecule)) features = features | DataFeatures.Has3DCoordinates;
+            if (GeometryUtil.Has2DCoordinates(molecule))
+                features = features | DataFeatures.Has2DCoordinates;
+            if (GeometryUtil.Has3DCoordinates(molecule))
+                features = features | DataFeatures.Has3DCoordinates;
             if (CrystalGeometryTools.HasCrystalCoordinates(molecule))
                 features = features | DataFeatures.HasFractionalCrystalCoordinates;
             if (MoleculeFeaturesTool.HasFormalCharges(molecule))

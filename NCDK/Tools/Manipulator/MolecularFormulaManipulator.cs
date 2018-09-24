@@ -785,12 +785,12 @@ namespace NCDK.Tools.Manipulator
         {
             var valencies = new int[5];
             var ac = GetAtomContainer(formula);
-            var factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.structgen_atomtypes.xml", ac.Builder);
+            var factory = CDK.StructgenAtomTypeFactory;
 
             for (int f = 0; f < ac.Atoms.Count; f++)
             {
                 var types = factory.GetAtomTypes(ac.Atoms[f].Symbol);
-                if (types.Count() == 0)
+                if (!types.Any())
                     throw new CDKException($"Calculation of double bond equivalents not possible due to problems with element {ac.Atoms[f].Symbol}");
                 valencies[(int)types.First().BondOrderSum.Value]++;
             }

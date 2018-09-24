@@ -35,14 +35,12 @@ namespace NCDK.Tools
     // @cdk.githash
     public class CDKValencyChecker : IValencyChecker
     {
-        private AtomTypeFactory atomTypeList;
-        private const string ATOM_TYPE_LIST = "NCDK.Dict.Data.cdk-atom-types.owl";
-
-        private static IDictionary<string, CDKValencyChecker> tables = new Dictionary<string, CDKValencyChecker>(3);
+        private static readonly AtomTypeFactory atomTypeList = CDK.CdkAtomTypeFactory;
+        
+        private static Dictionary<string, CDKValencyChecker> tables = new Dictionary<string, CDKValencyChecker>(3);
 
         private CDKValencyChecker(IChemObjectBuilder builder)
         {
-            if (atomTypeList == null) atomTypeList = AtomTypeFactory.GetInstance(ATOM_TYPE_LIST, builder);
         }
 
         public static CDKValencyChecker GetInstance(IChemObjectBuilder builder)
@@ -56,14 +54,15 @@ namespace NCDK.Tools
         {
             foreach (var atom in atomContainer.Atoms)
             {
-                if (!IsSaturated(atom, atomContainer)) return false;
+                if (!IsSaturated(atom, atomContainer))
+                    return false;
             }
             return true;
         }
 
         public bool IsSaturated(IAtom atom, IAtomContainer container)
         {
-            IAtomType type = atomTypeList.GetAtomType(atom.AtomTypeName);
+            var type = atomTypeList.GetAtomType(atom.AtomTypeName);
             if (type == null)
                 throw new CDKException($"Atom type is not a recognized CDK atom type: {atom.AtomTypeName}");
 
@@ -73,8 +72,8 @@ namespace NCDK.Tools
             if (type.GetProperty<object>(CDKPropertyName.PiBondCount) == null)
                 throw new CDKException($"Atom type is too general; cannot determine the number of pi bonds for: {atom.AtomTypeName}");
 
-            double bondOrderSum = container.GetBondOrderSum(atom);
-            BondOrder maxBondOrder = container.GetMaximumBondOrder(atom);
+            var bondOrderSum = container.GetBondOrderSum(atom);
+            var maxBondOrder = container.GetMaximumBondOrder(atom);
             int? hcount = atom.ImplicitHydrogenCount == null ? 0 : atom.ImplicitHydrogenCount;
 
             int piBondCount = type.GetProperty<int?>(CDKPropertyName.PiBondCount).Value;

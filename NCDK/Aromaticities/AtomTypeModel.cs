@@ -169,7 +169,7 @@ namespace NCDK.Aromaticities
 
             try
             {
-                var atomType = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", atom.Builder).GetAtomType(atom.AtomTypeName);
+                var atomType = CDK.CdkAtomTypeFactory.GetAtomType(atom.AtomTypeName);
                 var propPiBondCount = atomType.GetProperty<int>(CDKPropertyName.PiBondCount, 0);
                 return propPiBondCount;
             }

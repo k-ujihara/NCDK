@@ -3,7 +3,7 @@ using System;
 
 namespace NCDK.Beam
 {
-   /// <summary> <author>John May </author></summary>
+    /// <summary> <author>John May </author></summary>
     [TestClass()]
     public class AtomTest
     {
@@ -17,10 +17,15 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentException))]
         public void AliphaticSubsetInvalidElement()
         {
-            AtomImpl.AliphaticSubset.OfElement(Element.Californium);
+            try
+            {
+                AtomImpl.AliphaticSubset.OfElement(Element.Californium);
+                Assert.Fail();
+            }
+            catch (ArgumentException)
+            { }
         }
 
         [TestMethod()]
@@ -33,10 +38,15 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentException))]
         public void IsAromaticSubsetInvalidElement()
         {
-            AtomImpl.AromaticSubset.OfElement(Element.Unknown);
+            try
+            {
+                AtomImpl.AromaticSubset.OfElement(Element.Unknown);
+                Assert.Fail();
+            }
+            catch (ArgumentException)
+            { }
         }
     }
 }

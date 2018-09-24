@@ -57,7 +57,7 @@ namespace NCDK.Geometries.Volume
                 { "Si", 38.7923854248 },
             };
 
-        private static readonly AtomTypeFactory atomTypeList = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", Silent.ChemObjectBuilder.Instance);
+        private static readonly AtomTypeFactory atomTypeList = CDK.CdkAtomTypeFactory;
 
         /// <summary>
         /// Calculates the volume for the given <see cref="IAtomContainer"/>. This methods assumes
