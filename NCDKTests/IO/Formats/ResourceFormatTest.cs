@@ -67,7 +67,7 @@ namespace NCDK.IO.Formats
         {
             if (resourceFormat.PreferredNameExtension == null)
             {
-                if (resourceFormat.NameExtensions == null || resourceFormat.NameExtensions.Length == 0)
+                if (resourceFormat.NameExtensions == null || resourceFormat.NameExtensions.Count == 0)
                 {
                     // Seems to be current practice
                     // FIXME: needs to be discussed
@@ -84,11 +84,12 @@ namespace NCDK.IO.Formats
                 Assert.IsNotNull(
                         resourceFormat.NameExtensions,
                         "This format defines a preferred file name extension (PreferredNameExtension), but does not provide a full list of extensions (NameExtensions).");
-                string[] allExtensions = resourceFormat.NameExtensions;
+                var allExtensions = resourceFormat.NameExtensions;
                 bool prefExtInAllExtList = false;
-                for (int i = 0; i < allExtensions.Length; i++)
+                foreach (var allExtension in allExtensions)
                 {
-                    if (allExtensions[i].Equals(prefExtension)) prefExtInAllExtList = true;
+                    if (allExtension == prefExtension)
+                        prefExtInAllExtList = true;
                 }
                 Assert.IsTrue(prefExtInAllExtList, "The preferred extension is not found in the list of all extensions");
             }
@@ -102,17 +103,15 @@ namespace NCDK.IO.Formats
                 // Seems to be current practice
                 // FIXME: needs to be discussed
             }
-            else if (resourceFormat.NameExtensions.Length == 0)
+            else if (resourceFormat.NameExtensions.Count == 0)
             {
                 // Seems to be current practice
                 // FIXME: needs to be discussed
             }
             else
             {
-                string[] exts = resourceFormat.NameExtensions;
-                for (int i = 0; i < exts.Length; i++)
+                foreach (var extension in resourceFormat.NameExtensions)
                 {
-                    string extension = exts[i];
                     Assert.IsNotNull(extension);
                     Assert.AreNotSame(0, extension.Length);
                     Assert.IsFalse(extension.Contains(","), "File name extensions should not contain ',' characters");
@@ -124,23 +123,23 @@ namespace NCDK.IO.Formats
         [TestMethod()]
         public void TestHashCode()
         {
-            IResourceFormat a = (IResourceFormat)resourceFormat.GetType().GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
-            IResourceFormat b = (IResourceFormat)resourceFormat.GetType().GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
+            IResourceFormat a = (IResourceFormat)resourceFormat.GetType().GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());
+            IResourceFormat b = (IResourceFormat)resourceFormat.GetType().GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());
             Assert.AreEqual(b.GetHashCode(), a.GetHashCode());
         }
 
         [TestMethod()]
         public void TestEquals()
         {
-            IResourceFormat a = (IResourceFormat)resourceFormat.GetType().GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
-            IResourceFormat b = (IResourceFormat)resourceFormat.GetType().GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
+            IResourceFormat a = (IResourceFormat)resourceFormat.GetType().GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());
+            IResourceFormat b = (IResourceFormat)resourceFormat.GetType().GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());
             Assert.AreEqual(b, a);
         }
 
         [TestMethod()]
         public void TestEquals_null()
         {
-            IResourceFormat a = (IResourceFormat)resourceFormat.GetType().GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
+            IResourceFormat a = (IResourceFormat)resourceFormat.GetType().GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());
             Assert.IsFalse(a.Equals(null));
         }
 

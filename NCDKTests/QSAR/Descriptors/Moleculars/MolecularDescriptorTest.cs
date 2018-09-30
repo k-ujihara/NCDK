@@ -19,10 +19,10 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Base;
-using NCDK.Default;
 using NCDK.Dict;
 using NCDK.Numerics;
 using NCDK.QSAR.Results;
+using NCDK.Silent;
 using NCDK.Templates;
 using NCDK.Tools.Diff;
 using NCDK.Tools.Manipulator;
@@ -40,66 +40,88 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private static DictionaryDatabase dictDB = new DictionaryDatabase();
         private static EntryDictionary dict = dictDB.GetDictionary("descriptor-algorithms");
 
-        public MolecularDescriptorTest() { }
+        protected MolecularDescriptorTest()
+        {
+        }
 
         private static uint FlagsToInt(IAtomContainer mol)
         {
             uint f = 0;
-            if (mol.IsPlaced) f++;
+            if (mol.IsPlaced)
+                f++;
             f <<= 1;
-            if (mol.IsVisited) f++;
+            if (mol.IsVisited)
+                f++;
             f <<= 1;
-            if (mol.IsAromatic) f++;
+            if (mol.IsAromatic)
+                f++;
             f <<= 1;
-            if (mol.IsSingleOrDouble) f++;
+            if (mol.IsSingleOrDouble)
+                f++;
             return f;
         }
 
         private static uint FlagsToInt(IAtom atom)
         {
             uint f = 0;
-            if (atom.IsPlaced) f++;
+            if (atom.IsPlaced)
+                f++;
             f <<= 1;
-            if (atom.IsVisited) f++;
+            if (atom.IsVisited)
+                f++;
             f <<= 1;
-            if (atom.IsAromatic) f++;
+            if (atom.IsAromatic)
+                f++;
             f <<= 1;
-            if (atom.IsAliphatic) f++;
+            if (atom.IsAliphatic)
+                f++;
             f <<= 1;
-            if (atom.IsInRing) f++;
+            if (atom.IsInRing)
+                f++;
             f <<= 1;
-            if (atom.IsSingleOrDouble) f++;
+            if (atom.IsSingleOrDouble)
+                f++;
             f <<= 1;
-            if (atom.IsHydrogenBondAcceptor) f++;
+            if (atom.IsHydrogenBondAcceptor)
+                f++;
             f <<= 1;
-            if (atom.IsHydrogenBondDonor) f++;
+            if (atom.IsHydrogenBondDonor)
+                f++;
             f <<= 1;
-            if (atom.IsReactiveCenter) f++;
+            if (atom.IsReactiveCenter)
+                f++;
             return f;
         }
 
         private static uint FlagsToInt(IBond bond)
         {
             uint f = 0;
-            if (bond.IsPlaced) f++;
+            if (bond.IsPlaced)
+                f++;
             f <<= 1;
-            if (bond.IsVisited) f++;
+            if (bond.IsVisited)
+                f++;
             f <<= 1;
-            if (bond.IsAromatic) f++;
+            if (bond.IsAromatic)
+                f++;
             f <<= 1;
-            if (bond.IsAliphatic) f++;
+            if (bond.IsAliphatic)
+                f++;
             f <<= 1;
-            if (bond.IsInRing) f++;
+            if (bond.IsInRing)
+                f++;
             f <<= 1;
-            if (bond.IsSingleOrDouble) f++;
+            if (bond.IsSingleOrDouble)
+                f++;
             f <<= 1;
-            if (bond.IsReactiveCenter) f++;
+            if (bond.IsReactiveCenter)
+                f++;
             return f;
         }
 
-        private uint[] GetAtomFlags(IAtomContainer mol)
+        private static uint[] GetAtomFlags(IAtomContainer mol)
         {
-            uint[] flags = new uint[mol.Atoms.Count];
+            var flags = new uint[mol.Atoms.Count];
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 flags[i] = FlagsToInt(mol.Atoms[i]);
@@ -107,9 +129,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return flags;
         }
 
-        private uint[] GetBondFlags(IAtomContainer mol)
+        private static uint[] GetBondFlags(IAtomContainer mol)
         {
-            uint[] flags = new uint[mol.Bonds.Count];
+            var flags = new uint[mol.Bonds.Count];
             for (int i = 0; i < mol.Bonds.Count; i++)
             {
                 flags[i] = FlagsToInt(mol.Bonds[i]);
@@ -120,11 +142,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void DescriptorDoesNotChangeFlags()
         {
-            IAtomContainer mol = TestMoleculeFactory.MakeBenzene();
+            var mol = TestMoleculeFactory.MakeBenzene();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            uint mflags = FlagsToInt(mol);
-            uint[] aflags = GetAtomFlags(mol);
-            uint[] bflags = GetBondFlags(mol);
+            var mflags = FlagsToInt(mol);
+            var aflags = GetAtomFlags(mol);
+            var bflags = GetBondFlags(mol);
             Descriptor.Calculate(mol);
             Assert.AreEqual(mflags, FlagsToInt(mol), "Molecule flags were modified by descriptor!");
             Assert.IsTrue(Compares.AreDeepEqual(aflags, GetAtomFlags(mol)), "Molecule's Atom flags were modified by descriptor!");
@@ -144,7 +166,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer mol = null;
             try
             {
-                mol = SomeoneBringMeSomeWater(Default.ChemObjectBuilder.Instance);
+                mol = SomeoneBringMeSomeWater(ChemObjectBuilder.Instance);
             }
             catch (Exception e)
             {
@@ -168,12 +190,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestCalculate_NoModifications()
         {
-            IAtomContainer mol = SomeoneBringMeSomeWater(Default.ChemObjectBuilder.Instance);
-            IAtomContainer clone = (IAtomContainer)mol.Clone();
+            var mol = SomeoneBringMeSomeWater(ChemObjectBuilder.Instance);
+            var clone = (IAtomContainer)mol.Clone();
             Descriptor.Calculate(mol);
-            string diff = AtomContainerDiff.Diff(clone, mol);
+            var diff = AtomContainerDiff.Diff(clone, mol);
             Assert.AreEqual(0, diff.Length,
-            $"The descriptor must not change the passed molecule in any respect, but found this diff: {diff}");
+                $"The descriptor must not change the passed molecule in any respect, but found this diff: {diff}");
         }
 
         /// <summary>
@@ -183,7 +205,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestLabels()
         {
-            IAtomContainer mol = SomeoneBringMeSomeWater(Default.ChemObjectBuilder.Instance);
+            var mol = SomeoneBringMeSomeWater(ChemObjectBuilder.Instance);
 
             var v = Descriptor.Calculate(mol);
             Assert.IsNotNull(v);
@@ -197,7 +219,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 //            Console.Out.WriteLine("Label: " + names[i]);
             }
             Assert.IsNotNull(v.Value);
-            int valueCount = v.Value.Length;
+            var valueCount = v.Value.Length;
             Assert.AreEqual(names.Count, valueCount, "The number of labels must equals the number of values.");
         }
 
@@ -210,7 +232,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestNamesConsistency()
         {
-            IAtomContainer mol = SomeoneBringMeSomeWater(Default.ChemObjectBuilder.Instance);
+            var mol = SomeoneBringMeSomeWater(ChemObjectBuilder.Instance);
 
             var names1 = Descriptor.DescriptorNames;
             var v = Descriptor.Calculate(mol);
@@ -219,17 +241,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Assert.AreEqual(names1.Count, names2.Count);
             Assert.IsTrue(Compares.AreDeepEqual(names1, names2));
 
-            int valueCount = v.Value.Length;
+            var valueCount = v.Value.Length;
             Assert.AreEqual(valueCount, names1.Count);
         }
 
         [TestMethod()]
         public void TestGetDescriptorResultType()
         {
-            IDescriptorResult result = Descriptor.DescriptorResultType;
+            var result = Descriptor.DescriptorResultType;
             Assert.IsNotNull(result, "The DescriptorResultType must not be null.");
 
-            IAtomContainer mol = SomeoneBringMeSomeWater(Default.ChemObjectBuilder.Instance);
+            var mol = SomeoneBringMeSomeWater(ChemObjectBuilder.Instance);
             var v = Descriptor.Calculate(mol);
 
             Assert.IsTrue(
@@ -242,22 +264,22 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestTakeIntoAccountImplicitHydrogens()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer methane1 = builder.NewAtomContainer();
-            IAtom c1 = builder.NewAtom("C");
+            var builder = ChemObjectBuilder.Instance;
+            var methane1 = builder.NewAtomContainer();
+            var c1 = builder.NewAtom("C");
             c1.ImplicitHydrogenCount = 4;
             methane1.Atoms.Add(c1);
 
-            IAtomContainer methane2 = builder.NewAtomContainer();
-            IAtom c2 = builder.NewAtom("C");
+            var methane2 = builder.NewAtomContainer();
+            var c2 = builder.NewAtom("C");
             methane2.Atoms.Add(c2);
-            IAtom h1 = builder.NewAtom("H");
+            var h1 = builder.NewAtom("H");
             methane2.Atoms.Add(h1);
-            IAtom h2 = builder.NewAtom("H");
+            var h2 = builder.NewAtom("H");
             methane2.Atoms.Add(h2);
-            IAtom h3 = builder.NewAtom("H");
+            var h3 = builder.NewAtom("H");
             methane2.Atoms.Add(h3);
-            IAtom h4 = builder.NewAtom("H");
+            var h4 = builder.NewAtom("H");
             methane2.Atoms.Add(h4);
             methane2.AddBond(methane2.Atoms[0], methane2.Atoms[1], BondOrder.Single);
             methane2.AddBond(methane2.Atoms[0], methane2.Atoms[2], BondOrder.Single);
@@ -269,8 +291,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AddImplicitHydrogens(methane1);
             AddImplicitHydrogens(methane2);
 
-            IDescriptorResult v1 = Descriptor.Calculate(methane1).Value;
-            IDescriptorResult v2 = Descriptor.Calculate(methane2).Value;
+            var v1 = Descriptor.Calculate(methane1).Value;
+            var v2 = Descriptor.Calculate(methane2).Value;
 
             string errorMessage = "("
                     + Descriptor.GetType().ToString()
@@ -281,32 +303,32 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestTakeIntoAccountImplicitHydrogensInEthane()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer ethane1 = builder.NewAtomContainer();
-            IAtom c1 = builder.NewAtom("C");
-            IAtom c2 = builder.NewAtom("C");
+            var builder = ChemObjectBuilder.Instance;
+            var ethane1 = builder.NewAtomContainer();
+            var c1 = builder.NewAtom("C");
+            var c2 = builder.NewAtom("C");
             c1.ImplicitHydrogenCount = 3;
             c2.ImplicitHydrogenCount = 3;
             ethane1.Atoms.Add(c1);
             ethane1.Atoms.Add(c2);
             ethane1.AddBond(ethane1.Atoms[0], ethane1.Atoms[1], BondOrder.Single);
 
-            IAtomContainer ethane2 = builder.NewAtomContainer();
-            IAtom c3 = builder.NewAtom("C");
-            IAtom c4 = builder.NewAtom("C");
+            var ethane2 = builder.NewAtomContainer();
+            var c3 = builder.NewAtom("C");
+            var c4 = builder.NewAtom("C");
             ethane2.Atoms.Add(c3);
             ethane2.Atoms.Add(c4);
 
-            IAtom h1 = builder.NewAtom("H");
+            var h1 = builder.NewAtom("H");
             ethane2.Atoms.Add(h1);
-            IAtom h2 = builder.NewAtom("H");
+            var h2 = builder.NewAtom("H");
             ethane2.Atoms.Add(h2);
-            IAtom h3 = builder.NewAtom("H");
+            var h3 = builder.NewAtom("H");
             ethane2.Atoms.Add(h3);
 
-            IAtom h4 = builder.NewAtom("H");
-            IAtom h5 = builder.NewAtom("H");
-            IAtom h6 = builder.NewAtom("H");
+            var h4 = builder.NewAtom("H");
+            var h5 = builder.NewAtom("H");
+            var h6 = builder.NewAtom("H");
             ethane2.Atoms.Add(h4);
             ethane2.Atoms.Add(h5);
             ethane2.Atoms.Add(h6);
@@ -325,22 +347,22 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AddImplicitHydrogens(ethane1);
             AddImplicitHydrogens(ethane2);
 
-            IDescriptorResult v1 = Descriptor.Calculate(ethane1).Value;
-            IDescriptorResult v2 = Descriptor.Calculate(ethane2).Value;
+            var v1 = Descriptor.Calculate(ethane1).Value;
+            var v2 = Descriptor.Calculate(ethane2).Value;
 
             string errorMessage = "("
                     + Descriptor.GetType().ToString()
                     + ") The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
             AssertEqualOutput(v1, v2, errorMessage);
         }
-        
+
         /// <summary>
         /// Checks that the results of the first and the second descriptor results are identical.
         /// </summary>
         /// <param name="v1">first <see cref="IDescriptorResult"/></param>
         /// <param name="v2">second <see cref="IDescriptorResult"/></param>
         /// <param name="errorMessage">error message to report when the results are not the same</param>
-        private void AssertEqualOutput(IDescriptorResult v1, IDescriptorResult v2, string errorMessage)
+        private static void AssertEqualOutput(IDescriptorResult v1, IDescriptorResult v2, string errorMessage)
         {
             if (v1 is Result<int>)
             {
@@ -369,8 +391,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             else if (v1 is ArrayResult<int>)
             {
-                ArrayResult<int> da1 = (ArrayResult<int>)v1;
-                ArrayResult<int> da2 = (ArrayResult<int>)v2;
+                var da1 = (ArrayResult<int>)v1;
+                var da2 = (ArrayResult<int>)v2;
                 for (int i = 0; i < da1.Length; i++)
                 {
                     Assert.AreEqual(da1[i], da2[i], errorMessage);
@@ -381,32 +403,28 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestImplementationIndependence()
         {
-            IAtomContainer water1 = SomeoneBringMeSomeWater(Default.ChemObjectBuilder.Instance);
-            IAtomContainer water2 = SomeoneBringMeSomeWater(Silent.ChemObjectBuilder.Instance);
+            var water1 = SomeoneBringMeSomeWater(ChemObjectBuilder.Instance);
+            var water2 = SomeoneBringMeSomeWater(Silent.ChemObjectBuilder.Instance);
 
-            IDescriptorResult v1 = Descriptor.Calculate(water1).Value;
-            IDescriptorResult v2 = Descriptor.Calculate(water2).Value;
+            var v1 = Descriptor.Calculate(water1).Value;
+            var v2 = Descriptor.Calculate(water2).Value;
 
-            string errorMessage = "(" + Descriptor.GetType().ToString()
-                    + ") The descriptor does not give the same results depending on "
-                    + "the actual IChemObject implementation set (data, nonotify).";
+            string errorMessage = $"({Descriptor.GetType().ToString()}) The descriptor does not give the same results depending on the actual IChemObject implementation set (data, nonotify).";
             AssertEqualOutput(v1, v2, errorMessage);
         }
 
         [TestMethod()]
         public void TestAtomContainerHandling()
         {
-            IAtomContainer water1 = SomeoneBringMeSomeWater(Default.ChemObjectBuilder.Instance);
+            var water1 = SomeoneBringMeSomeWater(ChemObjectBuilder.Instance);
             // creates an AtomContainer with the atoms / bonds from water1
-            IAtomContainer water2 = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var water2 = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
             water2.Add(water1);
 
-            IDescriptorResult v1 = Descriptor.Calculate(water1).Value;
-            IDescriptorResult v2 = Descriptor.Calculate(water2).Value;
+            var v1 = Descriptor.Calculate(water1).Value;
+            var v2 = Descriptor.Calculate(water2).Value;
 
-            string errorMessage = "(" + Descriptor.GetType().ToString()
-                    + ") The descriptor does not give the same results depending on "
-                    + "it being passed an IAtomContainer or an IAtomContainer.";
+            string errorMessage = $"({Descriptor.GetType().ToString()}) The descriptor does not give the same results depending on it being passed an IAtomContainer or an IAtomContainer.";
             AssertEqualOutput(v1, v2, errorMessage);
         }
 
@@ -416,22 +434,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestDisconnectedStructureHandling()
         {
-            IAtomContainer disconnected = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom chloride = new Atom("Cl")
-            {
-                FormalCharge = -1
-            };
+            var disconnected = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var chloride = new Atom("Cl") { FormalCharge = -1 };
             disconnected.Atoms.Add(chloride);
-            IAtom sodium = new Atom("Na")
-            {
-                FormalCharge = +1
-            };
+            var sodium = new Atom("Na") { FormalCharge = +1 };
             disconnected.Atoms.Add(sodium);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(disconnected);
             AddImplicitHydrogens(disconnected);
 
-            IDescriptorResult v1 = Descriptor.Calculate(disconnected).Value;
+            var v1 = Descriptor.Calculate(disconnected).Value;
         }
 
         [TestMethod(), Ignore()]
@@ -443,25 +455,25 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public void TestTakeIntoAccountBondHybridization()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer ethane1 = builder.NewAtomContainer();
-            IAtom c1 = builder.NewAtom("C");
-            IAtom c2 = builder.NewAtom("C");
+            var builder = ChemObjectBuilder.Instance;
+            var ethane1 = builder.NewAtomContainer();
+            var c1 = builder.NewAtom("C");
+            var c2 = builder.NewAtom("C");
             ethane1.Atoms.Add(c1);
             ethane1.Atoms.Add(c2);
             ethane1.AddBond(ethane1.Atoms[0], ethane1.Atoms[1], BondOrder.Double);
 
-            IAtomContainer ethane2 = builder.NewAtomContainer();
-            IAtom c3 = builder.NewAtom("C");
+            var ethane2 = builder.NewAtomContainer();
+            var c3 = builder.NewAtom("C");
             c3.Hybridization = Hybridization.SP2;
-            IAtom c4 = builder.NewAtom("C");
+            var c4 = builder.NewAtom("C");
             c4.Hybridization = Hybridization.SP2;
             ethane2.Atoms.Add(c3);
             ethane2.Atoms.Add(c4);
             ethane2.AddBond(ethane2.Atoms[0], ethane2.Atoms[1], BondOrder.Single);
 
-            IDescriptorResult v1 = Descriptor.Calculate(ethane1).Value;
-            IDescriptorResult v2 = Descriptor.Calculate(ethane2).Value;
+            var v1 = Descriptor.Calculate(ethane1).Value;
+            var v2 = Descriptor.Calculate(ethane2).Value;
 
             string errorMessage = "("
                     + Descriptor.GetType().ToString()
@@ -471,12 +483,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private IAtomContainer SomeoneBringMeSomeWater(IChemObjectBuilder builder)
         {
-            IAtomContainer mol = builder.NewAtomContainer();
-            IAtom c1 = builder.NewAtom("O");
+            var mol = builder.NewAtomContainer();
+            var c1 = builder.NewAtom("O");
             c1.Point3D = new Vector3(0.0, 0.0, 0.0);
-            IAtom h1 = builder.NewAtom("H");
+            var h1 = builder.NewAtom("H");
             h1.Point3D = new Vector3(1.0, 0.0, 0.0);
-            IAtom h2 = builder.NewAtom("H");
+            var h2 = builder.NewAtom("H");
             h2.Point3D = new Vector3(-1.0, 0.0, 0.0);
             mol.Atoms.Add(c1);
             mol.Atoms.Add(h1);

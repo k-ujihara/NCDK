@@ -21,6 +21,7 @@ using NCDK.Common.Primitives;
 using NCDK.IO.Formats;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -65,8 +66,10 @@ namespace NCDK.IO
 
         public override bool Accepts(Type type)
         {
-            if (typeof(IChemModel).IsAssignableFrom(type)) return true;
-            if (typeof(IReaction).IsAssignableFrom(type)) return true;
+            if (typeof(IChemModel).IsAssignableFrom(type))
+                return true;
+            if (typeof(IReaction).IsAssignableFrom(type))
+                return true;
             return false;
         }
 
@@ -120,7 +123,7 @@ namespace NCDK.IO
             try
             {
                 line = input.ReadLine();
-                Debug.WriteLine("read line: " + line);
+                Debug.WriteLine($"read line: {line}");
             }
             catch (Exception exception)
             {
@@ -151,9 +154,9 @@ namespace NCDK.IO
                     var tokenizer = Strings.Tokenize(command);
                     try
                     {
-                        reactantCount = int.Parse(tokenizer[1]);
+                        reactantCount = int.Parse(tokenizer[1], NumberFormatInfo.InvariantInfo);
                         Trace.TraceInformation($"Expecting {reactantCount} reactants in file");
-                        productCount = int.Parse(tokenizer[2]);
+                        productCount = int.Parse(tokenizer[2], NumberFormatInfo.InvariantInfo);
                         Trace.TraceInformation($"Expecting {productCount } products in file");
                     }
                     catch (Exception exception)
@@ -174,7 +177,7 @@ namespace NCDK.IO
             {
                 StringBuilder molFile = new StringBuilder();
                 string announceMDLFileLine = ReadCommand();
-                if (!announceMDLFileLine.Equals("BEGIN REACTANT"))
+                if (!string.Equals(announceMDLFileLine, "BEGIN REACTANT", StringComparison.Ordinal))
                 {
                     string error = "Excepted start of reactant, but found: " + announceMDLFileLine;
                     Trace.TraceError(error);
@@ -216,7 +219,7 @@ namespace NCDK.IO
             {
                 StringBuilder molFile = new StringBuilder();
                 string announceMDLFileLine = ReadCommand();
-                if (!announceMDLFileLine.Equals("BEGIN PRODUCT"))
+                if (!string.Equals(announceMDLFileLine, "BEGIN PRODUCT", StringComparison.Ordinal))
                 {
                     string error = "Excepted start of product, but found: " + announceMDLFileLine;
                     Trace.TraceError(error);
@@ -256,13 +259,13 @@ namespace NCDK.IO
             return reaction;
         }
 
-        public bool Accepts(IChemObject obj)
+        public virtual bool Accepts(IChemObject o)
         {
-            if (obj is IReaction)
+            if (o is IReaction)
             {
                 return true;
             }
-            else if (obj is IChemModel)
+            else if (o is IChemModel)
             {
                 return true;
             }
@@ -289,6 +292,6 @@ namespace NCDK.IO
         }
         #endregion
 
-        private void InitIOSettings() { }
+        private static void InitIOSettings() { }
     }
 }

@@ -23,6 +23,7 @@
  */
 
 using NCDK.Common.Collections;
+using System;
 using System.Collections;
 
 namespace NCDK.Hash
@@ -59,7 +60,7 @@ namespace NCDK.Hash
         {
             public override bool Contains(int i) => false;
             public override int Count => 0;
-            public override int[] ToArray() => new int[0];
+            public override int[] ToArray() => Array.Empty<int>();
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -40,6 +41,7 @@ namespace NCDK.Default
     /// </remarks>
     // @cdk.githash
     // @cdk.keyword crystal
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class Crystal
         : AtomContainer, ICrystal, ICloneable
@@ -151,6 +153,7 @@ namespace NCDK.Silent
     /// </remarks>
     // @cdk.githash
     // @cdk.keyword crystal
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class Crystal
         : AtomContainer, ICrystal, ICloneable

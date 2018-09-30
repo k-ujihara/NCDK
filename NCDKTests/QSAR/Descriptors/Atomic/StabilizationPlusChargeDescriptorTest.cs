@@ -31,8 +31,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     public class StabilizationPlusChargeDescriptorTest : AtomicDescriptorTest
     {
         private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-
+        
         public StabilizationPlusChargeDescriptorTest()
         {
             descriptor = new StabilizationPlusChargeDescriptor();
@@ -54,7 +53,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
-            lpcheck.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             Result<double> result = ((Result<double>)descriptor.Calculate(mol.Atoms[1], mol).Value);
 
@@ -75,7 +74,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
-            lpcheck.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             Result<double> result = ((Result<double>)descriptor.Calculate(mol.Atoms[0], mol).Value);
 
@@ -97,7 +96,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
-            lpcheck.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             Result<double> result = ((Result<double>)descriptor.Calculate(mol.Atoms[1], mol).Value);
 
@@ -119,7 +118,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             mol1.AddBond(mol1.Atoms[1], mol1.Atoms[3], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             AddExplicitHydrogens(mol1);
-            lpcheck.Saturate(mol1);
+            CDK.LonePairElectronChecker.Saturate(mol1);
 
             Result<double> result1 = ((Result<double>)descriptor.Calculate(mol1.Atoms[1], mol1).Value);
 
@@ -132,7 +131,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             mol2.AddBond(mol2.Atoms[1], mol2.Atoms[2], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);
             AddExplicitHydrogens(mol2);
-            lpcheck.Saturate(mol2);
+            CDK.LonePairElectronChecker.Saturate(mol2);
 
             Result<double> result2 = ((Result<double>)descriptor.Calculate(mol2.Atoms[1], mol2).Value);
 
@@ -145,7 +144,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             mol3.AddBond(mol3.Atoms[1], mol3.Atoms[2], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol3);
             AddExplicitHydrogens(mol3);
-            lpcheck.Saturate(mol3);
+            CDK.LonePairElectronChecker.Saturate(mol3);
 
             Result<double> result3 = ((Result<double>)descriptor.Calculate(mol3.Atoms[1], mol3).Value);
 
@@ -172,7 +171,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molA);
             AddExplicitHydrogens(molA);
-            lpcheck.Saturate(molA);
+            CDK.LonePairElectronChecker.Saturate(molA);
 
             double resultA = ((Result<double>)descriptor.Calculate(molA.Atoms[3], molA).Value).Value;
 
@@ -191,7 +190,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molB);
             AddExplicitHydrogens(molB);
-            lpcheck.Saturate(molB);
+            CDK.LonePairElectronChecker.Saturate(molB);
 
             Assert.AreEqual(1, molB.Atoms[3].FormalCharge.Value, 0.00001);
             Assert.AreEqual(1, molB.SingleElectrons.Count, 0.00001);

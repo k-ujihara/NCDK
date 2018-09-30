@@ -24,9 +24,9 @@
  */
 
 using NCDK.Aromaticities;
-using NCDK.Default;
 using NCDK.Geometries;
 using NCDK.IO;
+using NCDK.Silent;
 using NCDK.SMSD.Labelling;
 using NCDK.Tools;
 using System;

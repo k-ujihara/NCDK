@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using NCDK.Templates;
 using System;
 using System.IO;
@@ -37,7 +38,7 @@ namespace NCDK.IO
     public class GaussianInputWriterTest : ChemObjectIOTest
     {
         protected override Type ChemObjectIOToTestType => typeof(GaussianInputWriter);
-        private static IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
         [TestMethod()]
         public void TestAccepts()

@@ -119,7 +119,7 @@ namespace NCDK.Fingerprints
         /// <summary>
         /// Returns true if the bond binds two atoms, and both atoms are SP2.
         /// </summary>
-        private bool IsSP2Bond(IBond bond)
+        private static bool IsSP2Bond(IBond bond)
         {
             return bond.Atoms.Count == 2 && bond.Begin.Hybridization == Hybridization.SP2
                    && bond.End.Hybridization == Hybridization.SP2;

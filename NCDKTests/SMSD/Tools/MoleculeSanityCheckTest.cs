@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using NCDK.Smiles;
 
 namespace NCDK.SMSD.Tools
@@ -39,7 +40,7 @@ namespace NCDK.SMSD.Tools
         public void TestCheckAndCleanMolecule()
         {
             string fragmentMolSmiles = "C1=CC=CC=C1.C1=CC2=C(C=C1)C=CC=C2";
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer molecule = sp.ParseSmiles(fragmentMolSmiles);
             IAtomContainer expResult = sp.ParseSmiles("C1=CC2=C(C=C1)C=CC=C2");
             IAtomContainer result = MoleculeSanityCheck.CheckAndCleanMolecule(molecule);
@@ -53,7 +54,7 @@ namespace NCDK.SMSD.Tools
         public void TestFixAromaticity()
         {
             string rawMolSmiles = "C1=CC2=C(C=C1)C=CC=C2";
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles(rawMolSmiles);
             MoleculeSanityCheck.CheckAndCleanMolecule(mol);
             int count = 0;

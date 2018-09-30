@@ -203,14 +203,24 @@ namespace NCDK.Beam
 
         public static explicit operator Configuration(int ordinal)
         {
+            return ToConfiguration(ordinal);
+        }
+
+        public static Configuration ToConfiguration(int ordinal)
+        {
             if (!(0 <= ordinal && ordinal < values.Length))
-                throw new System.ArgumentOutOfRangeException();
+                throw new System.ArgumentOutOfRangeException(nameof(ordinal));
             return values[ordinal];
         }
 
-        public static explicit operator int(Configuration obj)
+		public static explicit operator int(Configuration o)
         {
-            return obj.Ordinal;
+            return ToInt32(o);
+        }
+
+        public static int ToInt32(Configuration o)
+        {
+            return o.Ordinal;
         }
 
         /// <summary>
@@ -362,7 +372,7 @@ namespace NCDK.Beam
             OH30, 
     
         };
-        public static Configuration[] Values => values;
+        public static System.Collections.Generic.IReadOnlyList<Configuration> Values => values;
 
 
         public static bool operator==(Configuration a, Configuration b)
@@ -406,7 +416,7 @@ namespace NCDK.Beam
             return (Ordinal).CompareTo(o.Ordinal);
         }   	
         private Configuration(int ordinal, ConfigurationType type, string symbol, Configuration shorthand)
-			: this(ordinal)
+            : this(ordinal)
         {
             this.type = type;
             this.symbol = symbol;
@@ -414,7 +424,7 @@ namespace NCDK.Beam
         }
 
         private Configuration(int ordinal, ConfigurationType type, string symbol)
-			: this(ordinal)
+            : this(ordinal)
         {
             this.type = type;
             this.symbol = symbol;

@@ -19,6 +19,8 @@
 
 using System.Collections.Generic;
 
+#pragma warning disable CA1710 // Identifiers should have correct suffix
+
 namespace NCDK
 {
     /// <summary>
@@ -55,7 +57,7 @@ namespace NCDK
         ///  The partial charge of this Adduct. If the charge
         ///  has not been set the return value is double.NaN.
         /// </summary>
-        int? Charge { get; set; }
+        int? Charge { get; }
 
         /// <summary>
         ///  True, if the AdductFormula contains the given IIsotope object.

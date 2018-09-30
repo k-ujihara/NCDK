@@ -224,7 +224,7 @@ namespace NCDK.Maths
         /// </summary>
         /// <param name="bits">number of random bits to produce</param>
         /// <returns>random bits generated</returns>
-        protected override uint Next(int bits)
+        protected override uint GenerateNext(int bits)
         {
             uint y;
 

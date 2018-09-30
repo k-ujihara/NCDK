@@ -278,6 +278,12 @@ namespace NCDK
         }
 
         /// <inheritdoc/>
+        public bool Equals(IAtom other)
+        {
+            return atom.Equals(other);
+        }
+
+        /// <inheritdoc/>
         public override ICDKObject Clone(CDKObjectMap map)
         {
             return atom.Clone(map);

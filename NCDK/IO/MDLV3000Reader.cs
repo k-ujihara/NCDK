@@ -27,6 +27,7 @@ using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -108,28 +109,28 @@ namespace NCDK.IO
             while (!foundEND)
             {
                 string command = ReadCommand(lastLine);
-                Debug.WriteLine("command found: " + command);
-                if ("END CTAB".Equals(command))
+                Debug.WriteLine($"command found: {command}");
+                if (string.Equals("END CTAB", command, StringComparison.Ordinal))
                 {
                     foundEND = true;
                 }
-                else if ("BEGIN CTAB".Equals(command))
+                else if (string.Equals("BEGIN CTAB", command, StringComparison.Ordinal))
                 {
                     // that's fine
                 }
-                else if (command.Equals("COUNTS"))
+                else if (string.Equals(command, "COUNTS", StringComparison.Ordinal))
                 {
                     // don't think I need to parse this
                 }
-                else if ("BEGIN ATOM".Equals(command))
+                else if (string.Equals("BEGIN ATOM", command, StringComparison.Ordinal))
                 {
                     ReadAtomBlock(readData);
                 }
-                else if ("BEGIN BOND".Equals(command))
+                else if (string.Equals("BEGIN BOND", command, StringComparison.Ordinal))
                 {
                     ReadBondBlock(readData);
                 }
-                else if ("BEGIN SGROUP".Equals(command))
+                else if (string.Equals("BEGIN SGROUP", command, StringComparison.Ordinal))
                 {
                     ReadSgroup(readData);
                 }
@@ -212,7 +213,7 @@ namespace NCDK.IO
             IsotopeFactory isotopeFactory;
             try
             {
-                isotopeFactory = Isotopes.Instance;
+                isotopeFactory = BODRIsotopeFactory.Instance;
             }
             catch (IOException exception)
             {
@@ -227,14 +228,14 @@ namespace NCDK.IO
             while (!foundEND)
             {
                 string command = ReadCommand(ReadLine());
-                if ("END ATOM".Equals(command))
+                if (string.Equals("END ATOM", command, StringComparison.Ordinal))
                 {
                     // FIXME: should check whether 3D is really 2D
                     foundEND = true;
                 }
                 else
                 {
-                    Debug.WriteLine("Parsing atom from: " + command);
+                    Debug.WriteLine($"Parsing atom from: {command}");
                     IAtom atom = readData.Builder.NewAtom();
                     var tokenizer = Strings.Tokenize(command).GetEnumerator();
                     // parse the index
@@ -258,23 +259,23 @@ namespace NCDK.IO
                         atom.Symbol = element;
                         isotopeFactory.Configure(atom); // ?
                     }
-                    else if ("A".Equals(element))
+                    else if (string.Equals("A", element, StringComparison.Ordinal))
                     {
                         atom = readData.Builder.NewPseudoAtom(element);
                     }
-                    else if ("Q".Equals(element))
+                    else if (string.Equals("Q", element, StringComparison.Ordinal))
                     {
                         atom = readData.Builder.NewPseudoAtom(element);
                     }
-                    else if ("*".Equals(element))
+                    else if (string.Equals("*", element, StringComparison.Ordinal))
                     {
                         atom = readData.Builder.NewPseudoAtom(element);
                     }
-                    else if ("LP".Equals(element))
+                    else if (string.Equals("LP", element, StringComparison.Ordinal))
                     {
                         atom = readData.Builder.NewPseudoAtom(element);
                     }
-                    else if ("L".Equals(element))
+                    else if (string.Equals("L", element, StringComparison.Ordinal))
                     {
                         atom = readData.Builder.NewPseudoAtom(element);
                     }
@@ -286,7 +287,7 @@ namespace NCDK.IO
                         {
                             try
                             {
-                                Rnumber = int.Parse(rGroup[(rGroup.Length - 1)]);
+                                Rnumber = int.Parse(rGroup[(rGroup.Length - 1)], NumberFormatInfo.InvariantInfo);
                                 RGroupCounter = Rnumber;
                             }
                             catch (Exception)
@@ -318,9 +319,9 @@ namespace NCDK.IO
                         string yString = tokenizer.Current;
                         tokenizer.MoveNext();
                         string zString = tokenizer.Current;
-                        double x = double.Parse(xString);
-                        double y = double.Parse(yString);
-                        double z = double.Parse(zString);
+                        double x = double.Parse(xString, NumberFormatInfo.InvariantInfo);
+                        double y = double.Parse(yString, NumberFormatInfo.InvariantInfo);
+                        double z = double.Parse(zString, NumberFormatInfo.InvariantInfo);
                         atom.Point3D = new Vector3(x, y, z);
                         atom.Point2D = new Vector2(x, y); // FIXME: dirty!
                     }
@@ -334,7 +335,7 @@ namespace NCDK.IO
                     // atom-atom mapping
                     tokenizer.MoveNext();
                     string mapping = tokenizer.Current;
-                    if (!mapping.Equals("0"))
+                    if (!string.Equals(mapping, "0", StringComparison.Ordinal))
                     {
                         Trace.TraceWarning("Skipping atom-atom mapping: " + mapping);
                     } // else: default 0 is no mapping defined
@@ -352,14 +353,14 @@ namespace NCDK.IO
                                 switch (key)
                                 {
                                     case "CHG":
-                                        int charge = int.Parse(value);
+                                        int charge = int.Parse(value, NumberFormatInfo.InvariantInfo);
                                         if (charge != 0)
                                         { // zero is no charge specified
                                             atom.FormalCharge = charge;
                                         }
                                         break;
                                     case "RAD":
-                                        int numElectons = MDLV2000Writer.SpinMultiplicity.OfValue(int.Parse(value)).SingleElectrons;
+                                        int numElectons = MDLV2000Writer.SpinMultiplicity.OfValue(int.Parse(value, NumberFormatInfo.InvariantInfo)).SingleElectrons;
                                         while (numElectons-- > 0)
                                         {
                                             readData.SingleElectrons.Add(readData.Builder.NewSingleElectron(atom));
@@ -370,7 +371,7 @@ namespace NCDK.IO
                                         {
                                             try
                                             {
-                                                int valence = int.Parse(value);
+                                                int valence = int.Parse(value, NumberFormatInfo.InvariantInfo);
                                                 if (valence != 0)
                                                 {
                                                     //15 is defined as 0 in mol files
@@ -408,7 +409,7 @@ namespace NCDK.IO
 
                     // store atom
                     readData.Atoms.Add(atom);
-                    Debug.WriteLine("Added atom: " + atom);
+                    Debug.WriteLine($"Added atom: {atom}");
                 }
             }
         }
@@ -423,13 +424,13 @@ namespace NCDK.IO
             while (!foundEND)
             {
                 string command = ReadCommand(ReadLine());
-                if ("END BOND".Equals(command))
+                if (string.Equals("END BOND", command, StringComparison.Ordinal))
                 {
                     foundEND = true;
                 }
                 else
                 {
-                    Debug.WriteLine("Parsing bond from: " + command);
+                    Debug.WriteLine($"Parsing bond from: {command}");
                     var tokenizer = Strings.Tokenize(command).GetEnumerator();
                     IBond bond = readData.Builder.NewBond();
                     // parse the index
@@ -451,7 +452,7 @@ namespace NCDK.IO
                     {
                         tokenizer.MoveNext();
                         string orderString = tokenizer.Current;
-                        int order = int.Parse(orderString);
+                        int order = int.Parse(orderString, NumberFormatInfo.InvariantInfo);
                         if (order >= 4)
                         {
                             Trace.TraceWarning("Query order types are not supported (yet). File a bug if you need it");
@@ -473,7 +474,7 @@ namespace NCDK.IO
                     {
                         tokenizer.MoveNext();
                         string indexAtom1String = tokenizer.Current;
-                        int indexAtom1 = int.Parse(indexAtom1String);
+                        int indexAtom1 = int.Parse(indexAtom1String, NumberFormatInfo.InvariantInfo);
                         IAtom atom1 = readData.Atoms[indexAtom1 - 1];
                         bond.Atoms.Add(atom1);  // bond.Atoms[0]
                     }
@@ -489,7 +490,7 @@ namespace NCDK.IO
                     {
                         tokenizer.MoveNext();
                         string indexAtom2String = tokenizer.Current;
-                        int indexAtom2 = int.Parse(indexAtom2String);
+                        int indexAtom2 = int.Parse(indexAtom2String, NumberFormatInfo.InvariantInfo);
                         IAtom atom2 = readData.Atoms[indexAtom2 - 1];
                         bond.Atoms.Add(atom2); // bond.Atoms[1]
                     }
@@ -516,7 +517,7 @@ namespace NCDK.IO
                                 switch (key)
                                 {
                                     case "CFG":
-                                        int configuration = int.Parse(value);
+                                        int configuration = int.Parse(value, NumberFormatInfo.InvariantInfo);
                                         if (configuration == 0)
                                         {
                                             bond.Stereo = BondStereo.None;
@@ -539,7 +540,7 @@ namespace NCDK.IO
                                         // skip first value that is count
                                         for (int i = 1; i < endptStr.Length; i++)
                                         {
-                                            endpts.Add(readData.Atoms[int.Parse(endptStr[i]) - 1]);
+                                            endpts.Add(readData.Atoms[int.Parse(endptStr[i], NumberFormatInfo.InvariantInfo) - 1]);
                                         }
                                         break;
                                     case "ATTACH":
@@ -565,24 +566,21 @@ namespace NCDK.IO
                     readData.Bonds.Add(bond);
 
                     // storing positional variation
-                    if ("ANY".Equals(attach))
+                    if (string.Equals("ANY", attach, StringComparison.Ordinal))
                     {
-                        Sgroup sgroup = new Sgroup
-                        {
-                            Type = SgroupType.ExtMulticenter
-                        };
+                        Sgroup sgroup = new Sgroup { Type = SgroupType.ExtMulticenter };
                         sgroup.Atoms.Add(bond.Begin); // could be other end?
                         sgroup.Bonds.Add(bond);
                         foreach (var endpt in endpts)
                             sgroup.Atoms.Add(endpt);
 
-                        IList<Sgroup> sgroups = readData.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+                        var sgroups = readData.GetCtabSgroups();
                         if (sgroups == null)
-                            readData.SetProperty(CDKPropertyName.CtabSgroups, sgroups = new List<Sgroup>(4));
+                            readData.SetCtabSgroups(sgroups = new List<Sgroup>(4));
                         sgroups.Add(sgroup);
                     }
 
-                    Debug.WriteLine("Added bond: " + bond);
+                    Debug.WriteLine($"Added bond: {bond}");
                 }
             }
         }
@@ -596,13 +594,13 @@ namespace NCDK.IO
             while (!foundEND)
             {
                 string command = ReadCommand(ReadLine());
-                if ("END SGROUP".Equals(command))
+                if (string.Equals("END SGROUP", command, StringComparison.Ordinal))
                 {
                     foundEND = true;
                 }
                 else
                 {
-                    Debug.WriteLine("Parsing Sgroup line: " + command);
+                    Debug.WriteLine($"Parsing Sgroup line: {command}");
                     var tokenizer = Strings.Tokenize(command).GetEnumerator();
                     // parse the index
                     tokenizer.MoveNext();
@@ -634,15 +632,15 @@ namespace NCDK.IO
                             string value = options[key];
                             try
                             {
-                                if (key.Equals("ATOMS"))
+                                if (string.Equals(key, "ATOMS", StringComparison.Ordinal))
                                 {
                                     var atomsTokenizer = Strings.Tokenize(value).GetEnumerator();
                                     atomsTokenizer.MoveNext();
-                                    int.Parse(atomsTokenizer.Current); // should be 1, int atomCount =
+                                    int.Parse(atomsTokenizer.Current, NumberFormatInfo.InvariantInfo); // should be 1, int atomCount =
                                     atomsTokenizer.MoveNext();
-                                    atomID = int.Parse(atomsTokenizer.Current);
+                                    atomID = int.Parse(atomsTokenizer.Current, NumberFormatInfo.InvariantInfo);
                                 }
-                                else if (key.Equals("LABEL"))
+                                else if (string.Equals(key, "LABEL", StringComparison.Ordinal))
                                 {
                                     label = value;
                                 }
@@ -709,15 +707,15 @@ namespace NCDK.IO
             IDictionary<string, string> keyValueTuples = new Dictionary<string, string>();
             while (str.Length >= 3)
             {
-                Debug.WriteLine("Matching remaining option string: " + str);
+                Debug.WriteLine($"Matching remaining option string: {str}");
                 var tuple1Matcher = keyValueTuple2.Match(str);
                 if (tuple1Matcher.Success)
                 {
                     string key = tuple1Matcher.Groups[1].Value;
                     string value = tuple1Matcher.Groups[2].Value;
                     str = tuple1Matcher.Groups[3].Value;
-                    Debug.WriteLine("Found key: " + key);
-                    Debug.WriteLine("Found value: " + value);
+                    Debug.WriteLine($"Found key: {key}");
+                    Debug.WriteLine($"Found value: {value}");
                     keyValueTuples[key] = value;
                 }
                 else
@@ -728,8 +726,8 @@ namespace NCDK.IO
                         string key = tuple2Matcher.Groups[1].Value;
                         string value = tuple2Matcher.Groups[2].Value;
                         str = tuple2Matcher.Groups[3].Value;
-                        Debug.WriteLine("Found key: " + key);
-                        Debug.WriteLine("Found value: " + value);
+                        Debug.WriteLine($"Found key: {key}");
+                        Debug.WriteLine($"Found value: {value}");
                         keyValueTuples[key] = value;
                     }
                     else
@@ -742,7 +740,7 @@ namespace NCDK.IO
             return keyValueTuples;
         }
 
-        public string ExhaustStringTokenizer(IEnumerator<string> tokenizer)
+        public static string ExhaustStringTokenizer(IEnumerator<string> tokenizer)
         {
             StringBuilder buffer = new StringBuilder();
             buffer.Append(' ');
@@ -793,7 +791,7 @@ namespace NCDK.IO
         }
         #endregion
 
-        private void InitIOSettings() { }
+        private static void InitIOSettings() { }
 
         /// <summary>
         /// Applies the MDL valence model to atoms using the explicit valence (bond
@@ -803,7 +801,7 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="atom">the atom to apply the model to</param>
         /// <param name="explicitValence">the explicit valence (bond order sum)</param>
-        private void ApplyMDLValenceModel(IAtom atom, int explicitValence, int unpaired)
+        private static void ApplyMDLValenceModel(IAtom atom, int explicitValence, int unpaired)
         {
 
             if (atom.Valency != null)

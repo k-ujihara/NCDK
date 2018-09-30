@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
@@ -38,34 +39,42 @@ namespace NCDK.SMSD.Filters
         [TestMethod()]
         public void TestFilter()
         {
-            List<int> l1 = new List<int>(6);
-            l1.Add(1);
-            l1.Add(2);
-            l1.Add(3);
-            l1.Add(4);
-            l1.Add(5);
-            l1.Add(6);
+            List<int> l1 = new List<int>(6)
+            {
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+            };
 
-            List<int> l2 = new List<int>(6);
-            l2.Add(1);
-            l2.Add(2);
-            l2.Add(3);
-            l2.Add(4);
-            l2.Add(5);
-            l2.Add(6);
+            List<int> l2 = new List<int>(6)
+            {
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+            };
 
-            List<int> l3 = new List<int>(6);
-            l3.Add(1);
-            l3.Add(2);
-            l3.Add(5);
-            l3.Add(4);
-            l3.Add(3);
-            l3.Add(6);
+            List<int> l3 = new List<int>(6)
+            {
+                1,
+                2,
+                5,
+                4,
+                3,
+                6
+            };
 
-            var mappings = new List<IList<int>>();
-            mappings.Add(l1);
-            mappings.Add(l2);
-            mappings.Add(l3);
+            var mappings = new List<IReadOnlyList<int>>
+            {
+                l1,
+                l2,
+                l3
+            };
 
             Assert.AreEqual(3, mappings.Count);
             var expResult = PostFilter.Filter(mappings);

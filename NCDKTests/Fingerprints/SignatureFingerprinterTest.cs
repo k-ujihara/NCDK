@@ -22,8 +22,8 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using NCDK.Smiles;
-using System.Collections.Generic;
 
 namespace NCDK.Fingerprints
 {
@@ -39,20 +39,20 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestGetSize()
         {
-            IFingerprinter fingerprinter = new SignatureFingerprinter();
+            var fingerprinter = new SignatureFingerprinter();
             Assert.IsNotNull(fingerprinter);
-            Assert.AreEqual(-1, fingerprinter.Count);
+            Assert.AreEqual(-1, fingerprinter.Length);
         }
 
         [TestMethod()]
         public override void TestGetRawFingerprint()
         {
-            SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("O(NC)CC");
-            IDictionary<string, int> map = fingerprinter.GetRawFingerprint(mol);
+            var fingerprinter = new SignatureFingerprinter(0);
+            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var mol = sp.ParseSmiles("O(NC)CC");
+            var map = fingerprinter.GetRawFingerprint(mol);
             Assert.AreEqual(3, map.Count);
-            string[] expectedPrints = { "[O]", "[C]", "[N]" };
+            var expectedPrints = new[] { "[O]", "[C]", "[N]" };
             foreach (var print in expectedPrints)
             {
                 Assert.IsTrue(map.ContainsKey(print));
@@ -62,23 +62,23 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestBitFingerprint()
         {
-            SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("O(NC)CC");
-            IBitFingerprint bitFP = fingerprinter.GetBitFingerprint(mol);
+            var fingerprinter = new SignatureFingerprinter(0);
+            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var mol = sp.ParseSmiles("O(NC)CC");
+            var bitFP = fingerprinter.GetBitFingerprint(mol);
             Assert.IsNotNull(bitFP);
-            Assert.AreNotSame(0, bitFP.Count);
+            Assert.AreNotSame(0, bitFP.Length);
         }
 
         [TestMethod()]
         public override void TestGetCountFingerprint()
         {
-            SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("O(NC)CC");
+            var fingerprinter = new SignatureFingerprinter(0);
+            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var mol = sp.ParseSmiles("O(NC)CC");
             ICountFingerprint bitFP = fingerprinter.GetCountFingerprint(mol);
             Assert.IsNotNull(bitFP);
-            Assert.AreNotSame(0, bitFP.Count);
+            Assert.AreNotSame(0, bitFP.Length);
         }
     }
 }

@@ -47,7 +47,7 @@ namespace NCDK.Hash
         /// <exception cref="ArgumentNullException">the pseudorandom number generator was null</exception>
         public AbstractHashGenerator(Pseudorandom pseudorandom)
         {
-            this.pseudorandom = pseudorandom ?? throw new ArgumentNullException("null pseduorandom number generator provided");
+            this.pseudorandom = pseudorandom ?? throw new ArgumentNullException(nameof(pseudorandom), "null pseduorandom number generator provided");
         }
 
         /// <summary>
@@ -122,13 +122,14 @@ namespace NCDK.Hash
         }
 
         /// <summary>
-        /// Convert an IAtomContainer to an adjacency list.
+        /// Convert an <see cref="IAtomContainer"/> to an adjacency list.
         /// </summary>
         /// <param name="container">the container to convert</param>
         /// <returns>adjacency list representation</returns>
         public static int[][] ToAdjList(IAtomContainer container)
         {
-            if (container == null) throw new ArgumentException("atom container was null");
+            if (container == null)
+                throw new ArgumentNullException(nameof(container), "atom container was null");
 
             int n = container.Atoms.Count;
             int[][] graph = Arrays.CreateJagged<int>(n, 16);
@@ -136,7 +137,6 @@ namespace NCDK.Hash
 
             foreach (var bond in container.Bonds)
             {
-
                 int v = container.Atoms.IndexOf(bond.Begin);
                 int w = container.Atoms.IndexOf(bond.End);
 

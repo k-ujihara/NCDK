@@ -65,7 +65,8 @@ namespace NCDK.IO
 
         public override bool Accepts(Type type)
         {
-            if (typeof(IChemFile).IsAssignableFrom(type)) return true;
+            if (typeof(IChemFile).IsAssignableFrom(type))
+                return true;
             return false;
         }
 
@@ -148,9 +149,6 @@ namespace NCDK.IO
 
         private class InChIHandler : XContentHandler
         {
-            private InChIContentProcessorTool inchiTool;
-
-            private IChemFile chemFile;
             private IChemSequence chemSequence;
             private IChemModel chemModel;
             private IChemObjectSet<IAtomContainer> setOfMolecules;
@@ -163,7 +161,6 @@ namespace NCDK.IO
             public InChIHandler(IChemObjectBuilder builder)
             {
                 this.builder = builder;
-                inchiTool = new InChIContentProcessorTool();
             }
 
             public override void DoctypeDecl(XDocumentType docType)
@@ -177,7 +174,7 @@ namespace NCDK.IO
 
             public override void StartDocument()
             {
-                chemFile = builder.NewChemFile();
+                ChemFile = builder.NewChemFile();
                 chemSequence = builder.NewChemSequence();
                 chemModel = builder.NewChemModel();
                 setOfMolecules = builder.NewChemObjectSet<IAtomContainer>();
@@ -185,13 +182,13 @@ namespace NCDK.IO
 
             public override void EndDocument()
             {
-                chemFile.Add(chemSequence);
+                ChemFile.Add(chemSequence);
             }
 
             public override void EndElement(XElement element)
             {
-                Debug.WriteLine("end element: ", element.ToString());
-                if ("identifier".Equals(element.Name.LocalName))
+                Debug.WriteLine($"end element: {element.ToString()}");
+                if (string.Equals("identifier", element.Name.LocalName, StringComparison.Ordinal))
                 {
                     if (tautomer != null)
                     {
@@ -201,25 +198,25 @@ namespace NCDK.IO
                         chemSequence.Add(chemModel);
                     }
                 }
-                else if ("formula".Equals(element.Name.LocalName))
+                else if (string.Equals("formula", element.Name.LocalName, StringComparison.Ordinal))
                 {
                     if (tautomer != null)
                     {
                         Trace.TraceInformation("Parsing <formula> chars: ", element.Value);
-                        tautomer = builder.NewAtomContainer(inchiTool.ProcessFormula(
-                                setOfMolecules.Builder.NewAtomContainer(), element.Value));
+                        tautomer = builder.NewAtomContainer(
+                            InChIContentProcessorTool.ProcessFormula(setOfMolecules.Builder.NewAtomContainer(), element.Value));
                     }
                     else
                     {
                         Trace.TraceWarning("Cannot set atom info for empty tautomer");
                     }
                 }
-                else if ("connections".Equals(element.Name.LocalName))
+                else if (string.Equals("connections", element.Name.LocalName, StringComparison.Ordinal))
                 {
                     if (tautomer != null)
                     {
                         Trace.TraceInformation("Parsing <connections> chars: ", element.Value);
-                        inchiTool.ProcessConnections(element.Value, tautomer, -1);
+                        InChIContentProcessorTool.ProcessConnections(element.Value, tautomer, -1);
                     }
                     else
                     {
@@ -238,19 +235,19 @@ namespace NCDK.IO
             /// </summary>
             public override void StartElement(XElement element)
             {
-                Debug.WriteLine("startElement: ", element.ToString());
-                Debug.WriteLine("uri: ", element.Name.NamespaceName);
-                Debug.WriteLine("local: ", element.Name.LocalName);
-                Debug.WriteLine("raw: ", element.ToString());
-                if ("INChI".Equals(element.Name.LocalName))
+                Debug.WriteLine($"startElement: {element.ToString()}");
+                Debug.WriteLine($"uri: {element.Name.NamespaceName}");
+                Debug.WriteLine($"local: {element.Name.LocalName}");
+                Debug.WriteLine($"raw: {element.ToString()}");
+                if (string.Equals("INChI", element.Name.LocalName, StringComparison.Ordinal))
                 {
                     // check version
                     foreach (var att in element.Attributes())
                     {
-                        if (att.Name.LocalName.Equals("version")) Trace.TraceInformation("INChI version: ", att.Value);
+                        if (string.Equals(att.Name.LocalName, "version", StringComparison.Ordinal)) Trace.TraceInformation("INChI version: ", att.Value);
                     }
                 }
-                else if ("structure".Equals(element.Name.LocalName))
+                else if (string.Equals("structure", element.Name.LocalName, StringComparison.Ordinal))
                 {
                     tautomer = builder.NewAtomContainer();
                 }
@@ -260,7 +257,7 @@ namespace NCDK.IO
                 }
             }
 
-            public IChemFile ChemFile => chemFile;
+            public IChemFile ChemFile { get; private set; }
         }
     }
 }

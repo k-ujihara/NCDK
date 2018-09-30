@@ -18,6 +18,7 @@
  */
 
 using NCDK.Tools;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -52,7 +53,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "smi" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "smi" };
 
         /// <inheritdoc/>
         public string ReaderClassName { get; } = typeof(SMILESReader).FullName;
@@ -65,10 +66,10 @@ namespace NCDK.IO.Formats
 
         /// <inheritdoc/>
         public DataFeatures SupportedDataFeatures =>
-                RequiredDataFeatures | DataFeatures.HAS_GRAPH_REPRESENTATION;
+                RequiredDataFeatures | DataFeatures.HasGraphRepresentation;
 
         /// <inheritdoc/>
         public DataFeatures RequiredDataFeatures =>
-                DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+                DataFeatures.HasAtomElementSymbol;
     }
 }

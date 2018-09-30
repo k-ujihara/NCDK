@@ -21,6 +21,7 @@ using NCDK.AtomTypes;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
+using NCDK.Silent;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
@@ -37,7 +38,6 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class SharingAnionReactionTest : ReactionProcessTest
     {
-        private readonly LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
         public SharingAnionReactionTest()
@@ -140,9 +140,9 @@ namespace NCDK.Reactions.Types
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
             /* initiate */
@@ -165,7 +165,7 @@ namespace NCDK.Reactions.Types
 
             AddExplicitHydrogens(molecule2);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule2);
-            lpcheck.Saturate(molecule2);
+            CDK.LonePairElectronChecker.Saturate(molecule2);
 
             IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
@@ -259,7 +259,7 @@ namespace NCDK.Reactions.Types
         /// <returns>The IAtomContainerSet</returns>
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
 
             IAtomContainer molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
@@ -273,7 +273,7 @@ namespace NCDK.Reactions.Types
                 AddExplicitHydrogens(molecule);
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
-                lpcheck.Saturate(molecule);
+                CDK.LonePairElectronChecker.Saturate(molecule);
             }
             catch (Exception e)
             {
@@ -302,7 +302,7 @@ namespace NCDK.Reactions.Types
                 AddExplicitHydrogens(molecule);
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
-                lpcheck.Saturate(molecule);
+                CDK.LonePairElectronChecker.Saturate(molecule);
             }
             catch (Exception e)
             {

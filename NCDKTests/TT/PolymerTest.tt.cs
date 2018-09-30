@@ -1,6 +1,7 @@
 
 
 
+
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -41,7 +42,7 @@ namespace NCDK.Default
             Assert.IsNotNull(polymer);
             Assert.IsTrue(polymer is Polymer);
         }
-		 
+         
     }
 }
 namespace NCDK.Silent
@@ -63,15 +64,15 @@ namespace NCDK.Silent
             Assert.IsNotNull(polymer);
             Assert.IsTrue(polymer is Polymer);
         }
-		 
+         
  
-		        [TestMethod()]
+                [TestMethod()]
         public override void TestSetAtoms_RemoveListener()
         {
             ChemObjectTestHelper.TestSetAtoms_RemoveListener(NewChemObject());
         }
 
-		        // Overwrite default methods: no notifications are expected!
+                // Overwrite default methods: no notifications are expected!
 
         [TestMethod()]
         public override void TestNotifyChanged()

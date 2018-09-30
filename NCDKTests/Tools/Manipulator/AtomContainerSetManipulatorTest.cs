@@ -18,7 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System.Linq;
 
 namespace NCDK.Tools.Manipulator
@@ -190,7 +190,7 @@ namespace NCDK.Tools.Manipulator
         public void TestSort_IAtomContainerSet()
         {
             // Create some IAtomContainers
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IRing cycloPentane = builder.NewRing(5, "C");
             IRing cycloHexane = builder.NewRing(6, "C");
             IAtomContainer hexaneNitrogen = builder.NewRing(6, "N");
@@ -221,9 +221,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestContainsByID_IAtomContainerSet_IAtomContainer()
         {
-            IAtomContainer relevantAtomContainer = Default.ChemObjectBuilder.Instance.NewAtomContainer();
-            var atomContainerSet = Default.ChemObjectBuilder.Instance
-                    .NewAtomContainerSet();
+            IAtomContainer relevantAtomContainer = ChemObjectBuilder.Instance.NewAtomContainer();
+            var atomContainerSet = ChemObjectBuilder.Instance.NewAtomContainerSet();
             atomContainerSet.Add(relevantAtomContainer);
             Assert.IsFalse(AtomContainerSetManipulator.ContainsByID(atomContainerSet, relevantAtomContainer.Id));
             relevantAtomContainer.Id = "1";

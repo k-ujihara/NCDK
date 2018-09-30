@@ -40,7 +40,7 @@ namespace NCDK.Normalizers
     // @cdk.module    smiles
     // @cdk.githash
     [Obsolete("The functionality provided by with class is better suited to SMIRKS")]
-    public class Normalizer
+    public static class Normalizer
     {
         /// <summary>
         ///  The method takes an XML files like the following:
@@ -97,11 +97,11 @@ namespace NCDK.Normalizers
                         }
                     }
                     IAtomContainer replaceStructure = sp.ParseSmiles(replacestring);
-                    IList<RMap> l = null;
+                    IReadOnlyList<RMap> l = null;
                     UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
                     while ((l = universalIsomorphismTester.GetSubgraphMap(ac, replaceStructure)) != null)
                     {
-                        IList<RMap> l2 = UniversalIsomorphismTester.MakeAtomsMapOfBondsMap(l, ac, replaceStructure);
+                        var l2 = UniversalIsomorphismTester.MakeAtomsMapOfBondsMap(l, ac, replaceStructure);
                         foreach (var rmap in l)
                         {
                             IBond acbond = ac.Bonds[rmap.Id1];

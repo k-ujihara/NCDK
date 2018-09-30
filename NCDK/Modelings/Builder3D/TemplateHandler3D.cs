@@ -31,6 +31,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -49,12 +50,11 @@ namespace NCDK.Modelings.Builder3D
     public class TemplateHandler3D
     {
         private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-        public const string TEMPLATE_PATH = "Data.ringTemplateStructures.sdf.gz";
+        private const string TemplatePath = "Data.ringTemplateStructures.sdf.gz";
 
         private readonly List<IAtomContainer> templates = new List<IAtomContainer>();
         private readonly List<IQueryAtomContainer> queries = new List<IQueryAtomContainer>();
         private readonly List<Pattern> patterns  = new List<Pattern>();
-        private readonly UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
 
         private TemplateHandler3D()
         {
@@ -82,7 +82,7 @@ namespace NCDK.Modelings.Builder3D
         {
             try
             {
-                using (var gin = GetType().Assembly.GetManifestResourceStream(GetType(), TEMPLATE_PATH))
+                using (var gin = GetType().Assembly.GetManifestResourceStream(GetType(), TemplatePath))
                 using (var ins = new GZipStream(gin, CompressionMode.Decompress))
                 using (EnumerableSDFReader sdfr = new EnumerableSDFReader(ins, builder))
                 {
@@ -102,7 +102,7 @@ namespace NCDK.Modelings.Builder3D
         {
             BitArray bitSet = new BitArray(1024);
             foreach (var s in st)
-                bitSet.Set(int.Parse(s), true);
+                bitSet.Set(int.Parse(s, NumberFormatInfo.InvariantInfo), true);
             return bitSet;
         }
 
@@ -111,24 +111,24 @@ namespace NCDK.Modelings.Builder3D
         /// </summary>
         /// <param name="ringSystems">RingSystems of a molecule</param>
         /// <returns>The largestRingSet</returns>
-        public IRingSet GetLargestRingSet(List<IRingSet> ringSystems)
+        public static IRingSet GetLargestRingSet(IEnumerable<IRingSet> ringSystems)
         {
             IRingSet largestRingSet = null;
             int atomNumber = 0;
             IAtomContainer container = null;
-            for (int i = 0; i < ringSystems.Count; i++)
+            foreach (var ringSystem  in ringSystems)
             {
-                container = GetAllInOneContainer(ringSystems[i]);
+                container = GetAllInOneContainer(ringSystem);
                 if (atomNumber < container.Atoms.Count)
                 {
                     atomNumber = container.Atoms.Count;
-                    largestRingSet = ringSystems[i];
+                    largestRingSet = ringSystem;
                 }
             }
             return largestRingSet;
         }
 
-        private IAtomContainer GetAllInOneContainer(IRingSet ringSet)
+        private static IAtomContainer GetAllInOneContainer(IRingSet ringSet)
         {
             IAtomContainer resultContainer = ringSet.Builder.NewAtomContainer();
             var containers = RingSetManipulator.GetAllAtomContainers(ringSet);
@@ -137,8 +137,7 @@ namespace NCDK.Modelings.Builder3D
             return resultContainer;
         }
 
-        private bool IsExactMatch(IAtomContainer query,
-                                 IDictionary<IChemObject, IChemObject> mapping)
+        private static bool IsExactMatch(IAtomContainer query, IReadOnlyDictionary<IChemObject, IChemObject> mapping)
         {
             foreach (IAtom src in query.Atoms)
             {
@@ -168,9 +167,9 @@ namespace NCDK.Modelings.Builder3D
                 LoadTemplates();
 
             IAtomContainer best = null;
-            IDictionary<IChemObject, IChemObject> bestMap = null;
+            Dictionary<IChemObject, IChemObject> bestMap = null;
             IAtomContainer secondBest = null;
-            IDictionary<IChemObject, IChemObject> secondBestMap = null;
+            Dictionary<IChemObject, IChemObject> secondBestMap = null;
 
             for (int i = 0; i < templates.Count; i++)
             {
@@ -183,7 +182,7 @@ namespace NCDK.Modelings.Builder3D
                 }
 
                 Mappings mappings = patterns[i].MatchAll(mol);
-                foreach (IDictionary<IChemObject, IChemObject> map in mappings.ToAtomBondMap())
+                foreach (var map in mappings.ToAtomBondMap())
                 {
                     if (IsExactMatch(query, map))
                     {
@@ -193,12 +192,16 @@ namespace NCDK.Modelings.Builder3D
                     else if (query.Bonds.Count == mol.Bonds.Count)
                     {
                         best = query;
-                        bestMap = new Dictionary<IChemObject, IChemObject>(map);
+                        bestMap = new Dictionary<IChemObject, IChemObject>();
+                        foreach (var e in map)
+                            bestMap.Add(e.Key, e.Value);
                     }
                     else
                     {
                         secondBest = query;
-                        secondBestMap = new Dictionary<IChemObject, IChemObject>(map);
+                        secondBestMap = new Dictionary<IChemObject, IChemObject>();
+                        foreach (var e in map)
+                            secondBestMap.Add(e.Key, e.Value);
                     }
                 }
             }
@@ -217,8 +220,7 @@ namespace NCDK.Modelings.Builder3D
             }
         }
 
-        private void AssignCoords(IAtomContainer template,
-                                  IDictionary<IChemObject, IChemObject> map)
+        private static void AssignCoords(IAtomContainer template, IReadOnlyDictionary<IChemObject, IChemObject> map)
         {
             foreach (IAtom src in template.Atoms)
             {

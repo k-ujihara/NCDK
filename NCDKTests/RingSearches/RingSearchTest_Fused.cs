@@ -20,9 +20,10 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Templates;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.RingSearches
 {
@@ -39,7 +40,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestCyclic_Int()
         {
-            RingSearch ringSearch = new RingSearch(fusedRings);
+            var ringSearch = new RingSearch(fusedRings);
             for (int i = 0; i < fusedRings.Atoms.Count; i++)
                 Assert.IsTrue(ringSearch.Cyclic(i));
         }
@@ -47,29 +48,29 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestCyclic()
         {
-            RingSearch ringSearch = new RingSearch(fusedRings);
+            var ringSearch = new RingSearch(fusedRings);
             Assert.AreEqual(fusedRings.Atoms.Count, ringSearch.Cyclic().Length);
         }
 
         [TestMethod()]
         public void TestFused()
         {
-            RingSearch ringSearch = new RingSearch(fusedRings);
+            var ringSearch = new RingSearch(fusedRings);
             Assert.AreEqual(1, ringSearch.Fused().Length);
         }
 
         [TestMethod()]
         public void TestIsolated()
         {
-            RingSearch ringSearch = new RingSearch(fusedRings);
+            var ringSearch = new RingSearch(fusedRings);
             Assert.AreEqual(0, ringSearch.Isolated().Length);
         }
 
         [TestMethod()]
         public void TestRingFragments()
         {
-            RingSearch ringSearch = new RingSearch(fusedRings);
-            IAtomContainer fragment = ringSearch.RingFragments();
+            var ringSearch = new RingSearch(fusedRings);
+            var fragment = ringSearch.RingFragments();
             foreach (var atom in fusedRings.Atoms)
             {
                 Assert.IsTrue(fragment.Contains(atom));
@@ -83,8 +84,8 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestFusedRingFragments()
         {
-            RingSearch ringSearch = new RingSearch(fusedRings);
-            IList<IAtomContainer> fragments = ringSearch.FusedRingFragments();
+            var ringSearch = new RingSearch(fusedRings);
+            var fragments = ringSearch.FusedRingFragments().ToList();
             Assert.AreEqual(1, fragments.Count);
             IAtomContainer fragment = fragments[0];
             foreach (var atom in fusedRings.Atoms)
@@ -100,9 +101,9 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestIsolatedRingFragments()
         {
-            RingSearch ringSearch = new RingSearch(fusedRings);
-            IList<IAtomContainer> fragments = ringSearch.IsolatedRingFragments();
-            Assert.AreEqual(0, fragments.Count);
+            var ringSearch = new RingSearch(fusedRings);
+            var fragments = ringSearch.IsolatedRingFragments();
+            Assert.AreEqual(0, fragments.Count());
         }
     }
 }

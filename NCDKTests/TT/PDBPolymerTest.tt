@@ -28,7 +28,7 @@ namespace <#= ns.NS #>
     /// <summary>
     /// Checks the functionality of the <see cref="PDBPolymer"/>.
     /// </summary>
-	[TestClass()]
+    [TestClass()]
     public class PDBPolymerTest : AbstractPDBPolymerTest
     {
         public override IChemObject NewChemObject()
@@ -118,10 +118,10 @@ namespace <#= ns.NS #>
             monomers.MoveNext();
             Assert.AreEqual("CYS280", monomers.Current);
         }
-		
+        
 <# if (ns.IsSilent) { #> 
-		<#@ include file="TestAbstractAtomContainer.ttinclude" #>
-		<#@ include file="TestAbstractChemObjectTest.ttinclude" #>
+        <#@ include file="TestAbstractAtomContainer.ttinclude" #>
+        <#@ include file="TestAbstractChemObjectTest.ttinclude" #>
 <# } #>
     }
 }

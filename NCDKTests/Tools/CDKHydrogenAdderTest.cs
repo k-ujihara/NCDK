@@ -20,7 +20,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.AtomTypes;
 using NCDK.Config;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Numerics;
 using NCDK.Tools.Manipulator;

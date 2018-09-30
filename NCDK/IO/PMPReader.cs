@@ -28,6 +28,7 @@ using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -54,13 +55,13 @@ namespace NCDK.IO
         private IAtomContainer modelStructure;
         private IChemObject chemObject;
         /* Keep an index of PMP id -> AtomCountainer id */
-        private IDictionary<int, int> atomids = new Dictionary<int, int>();
-        private IDictionary<int, int> atomGivenIds = new Dictionary<int, int>();
-        private IDictionary<int, int> atomZOrders = new Dictionary<int, int>();
-        private IDictionary<int, int> bondids = new Dictionary<int, int>();
-        private IDictionary<int, int> bondAtomOnes = new Dictionary<int, int>();
-        private IDictionary<int, int> bondAtomTwos = new Dictionary<int, int>();
-        private IDictionary<int, double> bondOrders = new Dictionary<int, double>();
+        private readonly Dictionary<int, int> atomids = new Dictionary<int, int>();
+        private readonly Dictionary<int, int> atomGivenIds = new Dictionary<int, int>();
+        private readonly Dictionary<int, int> atomZOrders = new Dictionary<int, int>();
+        private Dictionary<int, int> bondids = new Dictionary<int, int>();
+        private Dictionary<int, int> bondAtomOnes = new Dictionary<int, int>();
+        private Dictionary<int, int> bondAtomTwos = new Dictionary<int, int>();
+        private Dictionary<int, double> bondOrders = new Dictionary<int, double>();
 
         /* Often used patterns */
         Regex objHeader;
@@ -155,7 +156,7 @@ namespace NCDK.IO
                             if (line.StartsWith("%%Version Number", StringComparison.Ordinal))
                             {
                                 string version = ReadLine().Trim();
-                                if (!version.Equals("3.00"))
+                                if (!string.Equals(version, "3.00", StringComparison.Ordinal))
                                 {
                                     Trace.TraceError("The PMPReader only supports PMP files with version 3.00");
                                     return null;
@@ -175,10 +176,10 @@ namespace NCDK.IO
                             {
                                 string obj = objHeaderMatcher.Groups[2].Value;
                                 ConstructObject(chemFile.Builder, obj);
-                                int id = int.Parse(objHeaderMatcher.Groups[1].Value);
+                                int id = int.Parse(objHeaderMatcher.Groups[1].Value, NumberFormatInfo.InvariantInfo);
                                 // Debug.WriteLine(object + " id: " + id);
                                 line = ReadLine();
-                                while (line != null && !(line.Trim().Equals(")")))
+                                while (line != null && !(string.Equals(line.Trim(), ")", StringComparison.Ordinal)))
                                 {
                                     // parse object command (or new object header)
                                     var objCommandMatcher = objCommand.Match(line);
@@ -187,7 +188,7 @@ namespace NCDK.IO
                                     {
                                         // ok, forget about nesting and hope for the best
                                         obj = objHeaderMatcher.Groups[2].Value;
-                                        id = int.Parse(objHeaderMatcher.Groups[1].Value);
+                                        id = int.Parse(objHeaderMatcher.Groups[1].Value, NumberFormatInfo.InvariantInfo);
                                         ConstructObject(chemFile.Builder, obj);
                                     }
                                     else if (objCommandMatcher.Success)
@@ -207,18 +208,14 @@ namespace NCDK.IO
                                 if (chemObject is IAtom)
                                 {
                                     atomids[id] = modelStructure.Atoms.Count;
-                                    atomZOrders[int.Parse(chemObject.GetProperty<string>(PMP_ZORDER))] = id;
-                                    atomGivenIds[int.Parse(chemObject.GetProperty<string>(PMP_ID))] = id;
+                                    atomZOrders[int.Parse(chemObject.GetProperty<string>(PMP_ZORDER), NumberFormatInfo.InvariantInfo)] = id;
+                                    atomGivenIds[int.Parse(chemObject.GetProperty<string>(PMP_ID), NumberFormatInfo.InvariantInfo)] = id;
                                     modelStructure.Atoms.Add((IAtom)chemObject);
-                                    //                            } else if (chemObject is IBond) {
-                                    //                                bondids[new int(id)] = new int(molecule.Atoms.Count);
-                                    //                                molecule.Bonds.Add((IBond)chemObject);
                                 }
                                 else
                                 {
                                     Trace.TraceError("chemObject is not initialized or of bad class type");
                                 }
-                                // Debug.WriteLine(molecule.ToString());
                             }
                             line = ReadLine();
                         }
@@ -228,19 +225,17 @@ namespace NCDK.IO
                             // define bonds *before* the involved atoms :(
                             // the next lines dump the cache into the atom container
 
-                            //                      bondids[new int(id)] = new int(molecule.Atoms.Count);
-                            //                      molecule.Bonds.Add((IBond)chemObject);
                             int bondsFound = bondids.Count;
-                            Debug.WriteLine("Found #bonds: ", bondsFound);
-                            Debug.WriteLine("#atom ones: ", bondAtomOnes.Count);
-                            Debug.WriteLine("#atom twos: ", bondAtomTwos.Count);
-                            Debug.WriteLine("#orders: ", bondOrders.Count);
+                            Debug.WriteLine($"Found #bonds: {bondsFound}");
+                            Debug.WriteLine($"#atom ones: {bondAtomOnes.Count}");
+                            Debug.WriteLine($"#atom twos: {bondAtomTwos.Count}");
+                            Debug.WriteLine($"#orders: {bondOrders.Count}");
                             foreach (var index in bondids.Keys)
                             {
                                 if (!bondOrders.TryGetValue(index, out double order))
                                     order = 1;
-                                Debug.WriteLine("index: ", index);
-                                Debug.WriteLine("ones: ", bondAtomOnes[index]);
+                                Debug.WriteLine($"index: {index}");
+                                Debug.WriteLine($"ones: {bondAtomOnes[index]}");
                                 IAtom atom1 = modelStructure.Atoms[atomids[bondAtomOnes[index]]];
                                 IAtom atom2 = modelStructure.Atoms[atomids[bondAtomTwos[index]]];
                                 IBond bond = modelStructure.Builder.NewBond(atom1, atom2);
@@ -286,7 +281,7 @@ namespace NCDK.IO
                                         if (energyFragment != 0.0 && energyTotal != 0.0)
                                         {
                                             Z = (int)Math.Round(energyTotal / energyFragment);
-                                            Debug.WriteLine("Z derived from energies: ", Z);
+                                            Debug.WriteLine($"Z derived from energies: {Z}");
                                         }
                                         // add atomC as atoms to crystal
                                         int expatoms = modelStructure.Atoms.Count;
@@ -298,7 +293,7 @@ namespace NCDK.IO
                                                 line = ReadLine();
                                                 IAtom a = clone.Builder.NewAtom();
                                                 var st = Strings.Tokenize(line, ' ');
-                                                a.Point3D = new Vector3(double.Parse(st[0]), double.Parse(st[1]), double.Parse(st[2]));
+                                                a.Point3D = new Vector3(double.Parse(st[0], NumberFormatInfo.InvariantInfo), double.Parse(st[1], NumberFormatInfo.InvariantInfo), double.Parse(st[2], NumberFormatInfo.InvariantInfo));
                                                 a.CovalentRadius = 0.6;
                                                 IAtom modelAtom = modelStructure.Atoms[atomids[atomGivenIds[i + 1]]];
                                                 a.Symbol = modelAtom.Symbol;
@@ -311,32 +306,32 @@ namespace NCDK.IO
                                     else if (line.StartsWith("%%E/Frag", StringComparison.Ordinal))
                                     {
                                         line = ReadLine().Trim();
-                                        energyFragment = double.Parse(line);
+                                        energyFragment = double.Parse(line, NumberFormatInfo.InvariantInfo);
                                     }
                                     else if (line.StartsWith("%%Tot E", StringComparison.Ordinal))
                                     {
                                         line = ReadLine().Trim();
-                                        energyTotal = double.Parse(line);
+                                        energyTotal = double.Parse(line, NumberFormatInfo.InvariantInfo);
                                     }
                                     else if (line.StartsWith("%%Lat Vects", StringComparison.Ordinal))
                                     {
                                         line = ReadLine();
                                         IList<string> st;
                                         st = Strings.Tokenize(line, ' ');
-                                        crystal.A = new Vector3(double.Parse(st[0]), double.Parse(st[1]), double.Parse(st[2]));
+                                        crystal.A = new Vector3(double.Parse(st[0], NumberFormatInfo.InvariantInfo), double.Parse(st[1], NumberFormatInfo.InvariantInfo), double.Parse(st[2], NumberFormatInfo.InvariantInfo));
                                         line = ReadLine();
                                         st = Strings.Tokenize(line, ' ');
-                                        crystal.B = new Vector3(double.Parse(st[0]), double.Parse(st[1]), double.Parse(st[2]));
+                                        crystal.B = new Vector3(double.Parse(st[0], NumberFormatInfo.InvariantInfo), double.Parse(st[1], NumberFormatInfo.InvariantInfo), double.Parse(st[2], NumberFormatInfo.InvariantInfo));
                                         line = ReadLine();
                                         st = Strings.Tokenize(line, ' ');
-                                        crystal.C = new Vector3(double.Parse(st[0]), double.Parse(st[1]), double.Parse(st[2]));
+                                        crystal.C = new Vector3(double.Parse(st[0], NumberFormatInfo.InvariantInfo), double.Parse(st[1], NumberFormatInfo.InvariantInfo), double.Parse(st[2], NumberFormatInfo.InvariantInfo));
                                     }
                                     else if (line.StartsWith("%%Space Group", StringComparison.Ordinal))
                                     {
                                         line = ReadLine().Trim();
                                         
                                         // standardize space group name. See Crystal.SetSpaceGroup()
-                                        if ("P 21 21 21 (1)".Equals(line))
+                                        if (string.Equals("P 21 21 21 (1)", line, StringComparison.Ordinal))
                                         {
                                             crystal.SpaceGroup = "P 2_1 2_1 2_1";
                                         }
@@ -384,18 +379,18 @@ namespace NCDK.IO
         private void ProcessModelCommand(string obj, string command, string format, string field)
         {
             Debug.WriteLine(obj + "->" + command + " (" + format + "): " + field);
-            if ("Model".Equals(obj))
+            if (string.Equals("Model", obj, StringComparison.Ordinal))
             {
                 Trace.TraceWarning("Unkown PMP Model command: " + command);
             }
-            else if ("Atom".Equals(obj))
+            else if (string.Equals("Atom", obj, StringComparison.Ordinal))
             {
-                if ("ACL".Equals(command))
+                if (string.Equals("ACL", command, StringComparison.Ordinal))
                 {
                     var atomTypeMatcher = atomTypePattern.Match(field);
                     if (atomTypeMatcher.Success)
                     {
-                        int atomicnum = int.Parse(atomTypeMatcher.Groups[1].Value);
+                        int atomicnum = int.Parse(atomTypeMatcher.Groups[1].Value, NumberFormatInfo.InvariantInfo);
                         string type = atomTypeMatcher.Groups[2].Value;
                         ((IAtom)chemObject).AtomicNumber = atomicnum;
                         ((IAtom)chemObject).Symbol = type;
@@ -405,11 +400,11 @@ namespace NCDK.IO
                         Trace.TraceError("Incorrectly formated field value: " + field + ".");
                     }
                 }
-                else if ("Charge".Equals(command))
+                else if (string.Equals("Charge", command, StringComparison.Ordinal))
                 {
                     try
                     {
-                        double charge = double.Parse(field);
+                        double charge = double.Parse(field, NumberFormatInfo.InvariantInfo);
                         ((IAtom)chemObject).Charge = charge;
                     }
                     catch (FormatException)
@@ -417,24 +412,24 @@ namespace NCDK.IO
                         Trace.TraceError("Incorrectly formated float field: " + field + ".");
                     }
                 }
-                else if ("CMAPPINGS".Equals(command))
+                else if (string.Equals("CMAPPINGS", command, StringComparison.Ordinal))
                 {
                 }
-                else if ("FFType".Equals(command))
+                else if (string.Equals("FFType", command, StringComparison.Ordinal))
                 {
                 }
-                else if ("Id".Equals(command))
+                else if (string.Equals("Id", command, StringComparison.Ordinal))
                 {
                     // ok, should take this into account too
                     chemObject.SetProperty(PMP_ID, field);
                 }
-                else if ("Mass".Equals(command))
+                else if (string.Equals("Mass", command, StringComparison.Ordinal))
                 {
                 }
-                else if ("XYZ".Equals(command))
+                else if (string.Equals("XYZ", command, StringComparison.Ordinal))
                 {
                 }
-                else if ("ZOrder".Equals(command))
+                else if (string.Equals("ZOrder", command, StringComparison.Ordinal))
                 {
                     // ok, should take this into account too
                     chemObject.SetProperty(PMP_ZORDER, field);
@@ -444,49 +439,44 @@ namespace NCDK.IO
                     Trace.TraceWarning("Unkown PMP Atom command: " + command);
                 }
             }
-            else if ("Bond".Equals(obj))
+            else if (string.Equals("Bond", obj, StringComparison.Ordinal))
             {
-                if ("Atom1".Equals(command))
+                if (string.Equals("Atom1", command, StringComparison.Ordinal))
                 {
-                    int atomid = int.Parse(field);
+                    int atomid = int.Parse(field, NumberFormatInfo.InvariantInfo);
                     // this assumes that the atoms involved in this bond are
                     // already added, which seems the case in the PMP files
                     bondAtomOnes[bondCounter] = atomid;
-                    //                IAtom a = molecule.Atoms[realatomid];
-                    //                ((IBond)chemObject).SetAtomAt(a, 0);
                 }
-                else if ("Atom2".Equals(command))
+                else if (string.Equals("Atom2", command, StringComparison.Ordinal))
                 {
-                    int atomid = int.Parse(field);
+                    int atomid = int.Parse(field, NumberFormatInfo.InvariantInfo);
                     // this assumes that the atoms involved in this bond are
                     // already added, which seems the case in the PMP files
-                    Debug.WriteLine("atomids: " + atomids);
-                    Debug.WriteLine("atomid: " + atomid);
+                    Debug.WriteLine($"atomids: {atomids}");
+                    Debug.WriteLine($"atomid: {atomid}");
                     bondAtomTwos[bondCounter] = atomid;
-                    //                IAtom a = molecule.Atoms[realatomid];
-                    //                ((IBond)chemObject).SetAtomAt(a, 1);
                 }
-                else if ("Order".Equals(command))
+                else if (string.Equals("Order", command, StringComparison.Ordinal))
                 {
-                    double order = double.Parse(field);
+                    double order = double.Parse(field, NumberFormatInfo.InvariantInfo);
                     bondOrders[bondCounter] = order;
-                    //                ((IBond)chemObject).Order = order;
                 }
-                else if ("Id".Equals(command))
+                else if (string.Equals("Id", command, StringComparison.Ordinal))
                 {
-                    int bondid = int.Parse(field);
+                    int bondid = int.Parse(field, NumberFormatInfo.InvariantInfo);
                     bondids[bondCounter] = bondid;
                 }
-                else if ("Label".Equals(command))
+                else if (string.Equals("Label", command, StringComparison.Ordinal))
                 {
                 }
-                else if ("3DGridOrigin".Equals(command))
+                else if (string.Equals("3DGridOrigin", command, StringComparison.Ordinal))
                 {
                 }
-                else if ("3DGridMatrix".Equals(command))
+                else if (string.Equals("3DGridMatrix", command, StringComparison.Ordinal))
                 {
                 }
-                else if ("3DGridDivision".Equals(command))
+                else if (string.Equals("3DGridDivision", command, StringComparison.Ordinal))
                 {
                 }
                 else
@@ -502,22 +492,22 @@ namespace NCDK.IO
 
         private void ConstructObject(IChemObjectBuilder builder, string obj)
         {
-            if ("Atom".Equals(obj))
+            if (string.Equals("Atom", obj, StringComparison.Ordinal))
             {
                 chemObject = builder.NewAtom("C");
             }
-            else if ("Bond".Equals(obj))
+            else if (string.Equals("Bond", obj, StringComparison.Ordinal))
             {
                 bondCounter++;
                 chemObject = builder.NewBond();
             }
-            else if ("Model".Equals(obj))
+            else if (string.Equals("Model", obj, StringComparison.Ordinal))
             {
                 modelStructure = builder.NewAtomContainer();
             }
             else
             {
-                Trace.TraceError("Cannot construct PMP object type: " + obj);
+                Trace.TraceError($"Cannot construct PMP object type: {obj}");
             }
         }
 

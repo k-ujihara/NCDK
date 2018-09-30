@@ -1,6 +1,7 @@
 
 
 
+
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *                    2012  Egon Willighagen <egonw@users.sf.net>
  *
@@ -188,7 +189,7 @@ namespace NCDK.Silent
         }
 
  
-		        // Overwrite default methods: no notifications are expected!
+                // Overwrite default methods: no notifications are expected!
 
         [TestMethod()]
         public override void TestNotifyChanged()

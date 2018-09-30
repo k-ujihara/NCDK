@@ -408,13 +408,13 @@ namespace NCDK.Fingerprints
         }
 
         /// <inheritdoc/>
-        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
+        public override IReadOnlyDictionary<string, int> GetRawFingerprint(IAtomContainer mol)
         {
             throw new NotSupportedException();
         }
 
         /// <inheritdoc/>
-        public override int Count => smarts.Length;
+        public override int Length => smarts.Length;
 
         /// <summary>
         /// Retrieves the SMARTS representation of a substructure for a given

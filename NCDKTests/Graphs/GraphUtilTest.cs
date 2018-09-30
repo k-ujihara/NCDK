@@ -23,7 +23,7 @@
  */
 using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System;
 
 namespace NCDK.Graphs
@@ -133,7 +133,7 @@ namespace NCDK.Graphs
         {
             IAtomContainer container = Simple;
 
-            GraphUtil.EdgeToBondMap map = new GraphUtil.EdgeToBondMap();
+            EdgeToBondMap map = new EdgeToBondMap();
             int[][] adjacent = GraphUtil.ToAdjList(container, map);
             Assert.AreEqual(5, adjacent.Length, "adjacency list should have 5 vertices");
 

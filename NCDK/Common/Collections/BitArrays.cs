@@ -3,6 +3,7 @@ using NCDK.Common.Primitives;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -54,7 +55,7 @@ namespace NCDK.Common.Collections
             {
                 var ret = new BitArray(0);
                 str = str.Substring(1, str.Length - 2);
-                foreach (var index in str.Split(',').Select(n => n.Trim()).Select(n => int.Parse(n)))
+                foreach (var index in str.Split(',').Select(n => n.Trim()).Select(n => int.Parse(n, NumberFormatInfo.InvariantInfo)))
                 {
                     BitArrays.SetValue(ret, index, true);
                 }
@@ -88,15 +89,19 @@ namespace NCDK.Common.Collections
                 a.Length = length;
         }
 
-        public static void Flip(BitArray a, int bitIndex)
+        public static void Flip(this BitArray a, int bitIndex)
         {
             Flip(a, 0, bitIndex);
         }
 
-        public static void Flip(BitArray a, int fromIndex, int toIndex)
+        public static void Flip(this BitArray a, int fromIndex, int toIndex)
         {
-            if (fromIndex < 0 || toIndex < 0 || fromIndex > toIndex)
-                throw new ArgumentOutOfRangeException();
+            if (fromIndex < 0)
+                throw new ArgumentOutOfRangeException(nameof(fromIndex));
+            if (toIndex < 0)
+                throw new ArgumentOutOfRangeException(nameof(toIndex));
+            if (fromIndex > toIndex)
+                throw new ArgumentException($"{nameof(fromIndex)} is greater than {nameof(toIndex)}.");
             EnsureCapacity(a, toIndex);
             for (int i = fromIndex; i < a.Length; i++)
                 a[i] = !a[i];
@@ -111,7 +116,7 @@ namespace NCDK.Common.Collections
             return false;
         }
 
-        public static bool IsEmpty(BitArray a)
+        public static bool IsEmpty(this BitArray a)
         {
             for (int i = 0; i < a.Length; i++)
                 if (a[i])
@@ -119,7 +124,7 @@ namespace NCDK.Common.Collections
             return true;
         }
 
-        public static int Cardinality(BitArray a)
+        public static int Cardinality(this BitArray a)
         {
             int count = 0;
             for (int i = 0; i < a.Length; i++)
@@ -184,7 +189,7 @@ namespace NCDK.Common.Collections
             return 0;
         }
 
-        public static string ToString(BitArray a)
+        public static string ToString(this BitArray a)
         {
             StringBuilder sb = new StringBuilder();
             var isFirst = true;
@@ -208,7 +213,7 @@ namespace NCDK.Common.Collections
             return sb.ToString();
         }
 
-        public static bool AreEqual(BitArray a, BitArray b)
+        public static bool Equals(this BitArray a, BitArray b)
         {
             var min = Math.Min(a.Length, b.Length);
             int i;
@@ -223,7 +228,7 @@ namespace NCDK.Common.Collections
             return true;
         }
 
-        public static int GetHashCode(BitArray a)
+        public static int GetHashCode(this BitArray a)
         {
             uint c = 0;
             for (int i = 0; i < Math.Min(a.Length, 32); i++)

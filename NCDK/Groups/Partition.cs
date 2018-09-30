@@ -25,6 +25,7 @@ using NCDK.Common.Base;
 using NCDK.Common.Collections;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -492,7 +493,7 @@ namespace NCDK.Groups
                 }
                 else if (c == ',')
                 {
-                    int element = int.Parse(strForm.Substring(numStart, index - numStart));
+                    int element = int.Parse(strForm.Substring(numStart, index - numStart), NumberFormatInfo.InvariantInfo);
                     if (currentCell == -1)
                     {
                         p.AddCell(element);
@@ -506,7 +507,7 @@ namespace NCDK.Groups
                 }
                 else if (c == '|')
                 {
-                    int element = int.Parse(strForm.Substring(numStart, index - numStart));
+                    int element = int.Parse(strForm.Substring(numStart, index - numStart), NumberFormatInfo.InvariantInfo);
                     if (currentCell == -1)
                     {
                         p.AddCell(element);
@@ -522,7 +523,7 @@ namespace NCDK.Groups
                 }
                 index++;
             }
-            int lastElement = int.Parse(strForm.Substring(numStart, endIndex + 1 - numStart));
+            int lastElement = int.Parse(strForm.Substring(numStart, endIndex + 1 - numStart), NumberFormatInfo.InvariantInfo);
             p.AddToCell(currentCell, lastElement);
             return p;
         }

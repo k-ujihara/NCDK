@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.QSAR.Results;
 
@@ -11,7 +11,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     {
         public RDFProtonDescriptor_GHR_topolTest()
         {
-            SetDescriptor(typeof(RDFProtonDescriptor_GHR_topol));
+            SetDescriptor(typeof(RDFProtonDescriptorGHRTopology));
         }
 
         [TestMethod()]
@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 if (mol.Atoms[i].Symbol.Equals("H"))
                 {
                     //secondly perform calculation on it.
-                    RDFProtonDescriptor_GHR_topol descriptor = new RDFProtonDescriptor_GHR_topol();
+                    RDFProtonDescriptorGHRTopology descriptor = new RDFProtonDescriptorGHRTopology();
                     var dv = descriptor.Calculate(mol.Atoms[i], mol);
                     IDescriptorResult result = dv.Value;
                     //                Console.Out.WriteLine("array: " + result.ToString());

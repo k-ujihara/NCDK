@@ -24,7 +24,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace NCDK.Graphs
 {
@@ -105,7 +104,7 @@ namespace NCDK.Graphs
             public IChemObjectBuilder Builder
             { get { throw new InvalidOperationException("not supported"); } }
 
-            public ICollection<IChemObjectListener> Listeners { get; } = new ReadOnlyCollection<IChemObjectListener>(new List<IChemObjectListener>());
+            public ICollection<IChemObjectListener> Listeners { get; } = Array.Empty<IChemObjectListener>();
             public bool Notification { get { return false; } set { } }
             public void NotifyChanged() { }
 
@@ -151,18 +150,6 @@ namespace NCDK.Graphs
 
             public void AddElectronContainer(IElectronContainer electronContainer)
             { throw new InvalidOperationException("not supported"); }
-
-            public void AddBond(IAtom atom1, IAtom atom2, BondOrder order)
-            { }
-
-            public void AddBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo)
-            { }
-
-            public void AddLonePairTo(IAtom atom)
-            { }
-
-            public void AddSingleElectronTo(IAtom atom)
-            { }
 
             public object Clone()
             { throw new InvalidOperationException("not supported"); }
@@ -217,13 +204,13 @@ namespace NCDK.Graphs
 
             public void SetProperties(IEnumerable<KeyValuePair<object, object>> properties) { throw new InvalidOperationException("not supported"); }
             public void AddProperties(IEnumerable<KeyValuePair<object, object>> properties) { throw new InvalidOperationException("not supported"); }
-            public IDictionary<object, object> GetProperties() { throw new InvalidOperationException("not supported"); }
+            public IReadOnlyDictionary<object, object> GetProperties() { throw new InvalidOperationException("not supported"); }
             public T GetProperty<T>(object description, T defautValue) { throw new InvalidOperationException("not supported"); }
             public T GetProperty<T>(object description) => GetProperty(description, default(T));
             public void RemoveProperty(object description) { }
             public void SetProperty(object key, object value) { throw new InvalidOperationException("not supported"); }
 
-            public ICollection<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements => Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+            public ICollection<IStereoElement<IChemObject, IChemObject>> StereoElements => Array.Empty<IStereoElement<IChemObject, IChemObject>>();
 
             public void Remove(IElectronContainer electronContainer)
             { }
@@ -274,6 +261,6 @@ namespace NCDK.Graphs
         /// pseudo shortest-paths - when an invalid atom is given. this will always
         /// return 0 .Length paths and distances.
         /// </summary>
-        private static readonly ShortestPaths EMPTY_SHORTEST_PATHS = new ShortestPaths(new int[0][], EMPTY_CONTAINER, 0);
+        private static readonly ShortestPaths EMPTY_SHORTEST_PATHS = new ShortestPaths(Array.Empty<int[]>(), EMPTY_CONTAINER, 0);
     }
 }

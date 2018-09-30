@@ -33,6 +33,10 @@ namespace NCDK
     // @cdk.githash
     public class InvalidSmilesException : CDKException
     {
+        public InvalidSmilesException()
+        {
+        }
+
         /// <summary>
         /// Constructs a new exception with a custom message.
         /// </summary>

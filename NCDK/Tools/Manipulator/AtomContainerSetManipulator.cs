@@ -22,6 +22,7 @@
  */
 
 using NCDK.Graphs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -248,7 +249,8 @@ namespace NCDK.Tools.Manipulator
         {
             foreach (var ac in atomContainerSet)
             {
-                if (ac.Id != null && ac.Id.Equals(id)) return true;
+                if (id != null && string.Equals(ac.Id, id, StringComparison.Ordinal))
+                    return true;
             }
             return false;
         }

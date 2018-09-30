@@ -35,19 +35,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     public class VABCDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vabc",
                 typeof(VABCDescriptor).FullName,
                 "The Chemistry Development Kit");
 
         /// <inheritdoc/>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length != 0)
+                if (value.Count != 0)
                 {
                     throw new CDKException("The VABCDescriptor expects zero parameters");
                 }
@@ -62,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
@@ -83,15 +83,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(exception);
             }
 
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(volume), DescriptorNames);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(volume), DescriptorNames);
         }
 
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<double>();
 
-
         /// <inheritdoc/>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[0];
+        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         /// <inheritdoc/>
         public override object GetParameterType(string name) => null;
@@ -99,3 +98,4 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }
+

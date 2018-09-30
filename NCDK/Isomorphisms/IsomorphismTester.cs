@@ -17,7 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Graphs.Canon;
+using NCDK.Graphs.Invariant;
 using System;
 
 namespace NCDK.Isomorphisms
@@ -37,7 +37,6 @@ namespace NCDK.Isomorphisms
     // @author     steinbeck
     // @cdk.created    2001-09-10
     // @cdk.keyword    isomorphism
-    [Serializable]
     public class IsomorphismTester
     {
         long[] baseTable;
@@ -102,7 +101,7 @@ namespace NCDK.Isomorphisms
                     {
                         atom1 = base_.Atoms[f];
                         atom2 = compare.Atoms[g];
-                        if (!(atom1.Symbol.Equals(atom2.Symbol))
+                        if (!(atom1.Symbol.Equals(atom2.Symbol, StringComparison.Ordinal))
                                 && atom1.ImplicitHydrogenCount == atom2.ImplicitHydrogenCount)
                         {
                             return false;

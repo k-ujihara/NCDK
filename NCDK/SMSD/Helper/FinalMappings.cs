@@ -36,12 +36,12 @@ namespace NCDK.SMSD.Helper
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     public class FinalMappings : IFinalMapping
     {
-        private static List<IDictionary<int, int>> mappings = null;
+        private static List<IReadOnlyDictionary<int, int>> mappings = null;
         private static FinalMappings instance = null;
 
         protected internal FinalMappings()
         {
-            mappings = new List<IDictionary<int, int>>();
+            mappings = new List<IReadOnlyDictionary<int, int>>();
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace NCDK.SMSD.Helper
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void Add(IDictionary<int, int> mapping)
+        public void Add(IReadOnlyDictionary<int, int> mapping)
         {
             mappings.Add(mapping);
         }
@@ -71,7 +71,7 @@ namespace NCDK.SMSD.Helper
         /// </summary>
         /// <param name="list">list of mappings</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void Set(IList<IDictionary<int, int>> list)
+        public void Set(IList<IReadOnlyDictionary<int, int>> list)
         {
             this.Clear();
             mappings.AddRange(list);
@@ -83,12 +83,12 @@ namespace NCDK.SMSD.Helper
             mappings.Clear();
         }
 
-        public IList<IDictionary<int, int>> GetFinalMapping()
+        public IReadOnlyList<IReadOnlyDictionary<int, int>> GetFinalMapping()
         {
             return mappings;
         }
 
-        public IEnumerator<IDictionary<int, int>> GetEnumerator()
+        public IEnumerator<IReadOnlyDictionary<int, int>> GetEnumerator()
         {
             return mappings.GetEnumerator();
         }

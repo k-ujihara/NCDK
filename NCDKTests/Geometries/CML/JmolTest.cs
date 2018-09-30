@@ -22,9 +22,9 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.Geometries;
 using NCDK.Numerics;
+using NCDK.Silent;
 using System.Diagnostics;
 
 namespace NCDK.IO.CML
@@ -130,11 +130,11 @@ namespace NCDK.IO.CML
             // test the resulting ChemFile content
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            //Debug.WriteLine("NO sequences: " + chemFile.Count);
+            //Debug.WriteLine($"NO sequences: {chemFile.Count}");
             IChemSequence seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
-            //Debug.WriteLine("NO models: " + seq.Count);
+            //Debug.WriteLine($"NO models: {seq.Count}");
             IChemModel model = seq[0];
             Assert.IsNotNull(model);
             Assert.AreEqual(1, model.MoleculeSet.Count);
@@ -162,11 +162,11 @@ namespace NCDK.IO.CML
             // test the resulting ChemFile content
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            //Debug.WriteLine("NO sequences: " + chemFile.Count);
+            //Debug.WriteLine($"NO sequences: {chemFile.Count}");
             IChemSequence seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
-            //Debug.WriteLine("NO models: " + seq.Count);
+            //Debug.WriteLine($"NO models: {seq.Count}");
             IChemModel model = seq[0];
             Assert.IsNotNull(model);
             var som = model.MoleculeSet;

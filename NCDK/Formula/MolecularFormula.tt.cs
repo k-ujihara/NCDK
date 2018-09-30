@@ -1,6 +1,7 @@
 ﻿
 
 
+
 using System.Collections.Generic;
 
 namespace NCDK.Formula
@@ -20,7 +21,7 @@ namespace NCDK.Formula
         /// <summary>
         /// A dictionary for the storage of any kind of properties of this object.
         /// </summary>
-        IDictionary<object, object> properties;
+        private Dictionary<object, object> properties;
 
         private void InitProperties()
         {
@@ -28,7 +29,7 @@ namespace NCDK.Formula
         }
 
         /// <inheritdoc/>
-        public virtual void SetProperty(object description, object property)
+        public virtual void SetProperty(object description, object value)
         {
 #if DEBUG
             if (description != null && !AcceptablePropertyKeyTypes.Contains(description.GetType()))
@@ -36,7 +37,7 @@ namespace NCDK.Formula
 #endif
             if (this.properties == null)
                 InitProperties();
-            properties[description] = property;
+            properties[description] = value;
         }
 
         /// <inheritdoc/>
@@ -75,10 +76,10 @@ namespace NCDK.Formula
             return defaultValue;
         }
 
-        private static readonly IDictionary<object, object> emptyProperties = new System.Collections.ObjectModel.ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
+        private static readonly IReadOnlyDictionary<object, object> emptyProperties = NCDK.Common.Collections.Dictionaries.Empty<object, object>();
 
         /// <inheritdoc/>
-        public virtual IDictionary<object, object> GetProperties() 
+        public virtual IReadOnlyDictionary<object, object> GetProperties() 
         {
             if (this.properties == null)
                 return emptyProperties;

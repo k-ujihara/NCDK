@@ -47,7 +47,7 @@ namespace NCDK.Isomorphisms.Matchers
         {
             RGroupList rgrLst = new RGroupList(1);
             rgrLst.Occurrence = null;
-            Assert.AreEqual(rgrLst.Occurrence, RGroupList.DEFAULT_OCCURRENCE);
+            Assert.AreEqual(rgrLst.Occurrence, RGroupList.DefaultOccurence);
         }
 
         [TestMethod()]

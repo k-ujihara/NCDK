@@ -18,15 +18,16 @@
  */
 
 using NCDK.Config;
-using NCDK.Default;
 using NCDK.IO;
 using NCDK.Numerics;
+using NCDK.Silent;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace NCDK.Proteins
 {
@@ -56,12 +57,9 @@ namespace NCDK.Proteins
         public string VanDerWaalsFile { get; set; } = "NCDK.Config.Data.pdb_atomtypes.xml";
         public double[][][] Grid { get; set; } = null;
         GridGenerator gridGenerator = new GridGenerator();
-        IDictionary<string, int> visited = new Dictionary<string, int>();
-        public IList<IList<Vector3>> Pockets { get; set; } = new List<IList<Vector3>>();
+        Dictionary<string, int> visited = new Dictionary<string, int>();
+        private List<IReadOnlyList<Vector3>> pockets = new List<IReadOnlyList<Vector3>>();
 
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="biopolymerFile">The file name containing the protein</param>
         /// <param name="cubicGrid">if true generate the grid</param>
         public ProteinPocketFinder(string biopolymerFile, bool cubicGrid)
@@ -82,10 +80,6 @@ namespace NCDK.Proteins
             {
                 CreateCubicGrid();
             }
-            else
-            {
-
-            }
         }
 
         public ProteinPocketFinder(string biopolymerFile, double[][][] grid)
@@ -101,6 +95,8 @@ namespace NCDK.Proteins
             this.Grid = grid;
             gridGenerator.Grid = grid;
         }
+
+        public IReadOnlyList<IReadOnlyList<Vector3>> Pockets => pockets;
 
         /// <summary>Creates from a PDB File a BioPolymer.</summary>
         private void ReadBioPolymer(string biopolymerFile)
@@ -135,7 +131,7 @@ namespace NCDK.Proteins
         /// <returns>double[] stores min,max,min,max,min,max</returns>
         public double[] FindGridBoundaries()
         {
-            IAtom[] atoms = AtomContainerManipulator.GetAtomArray(Protein);
+            IAtom[] atoms = Protein.Atoms.ToArray();
             double[] minMax = new double[6];
             minMax[0] = atoms[0].Point3D.Value.X;
             minMax[1] = atoms[0].Point3D.Value.X;
@@ -176,7 +172,6 @@ namespace NCDK.Proteins
         /// <summary>Method creates a cubic grid with the grid generator class.</summary>
         public void CreateCubicGrid()
         {
-            //        Debug.WriteLine("    CREATE CUBIC GRID");
             gridGenerator.SetDimension(FindGridBoundaries(), true);
             gridGenerator.GenerateGrid();
             this.Grid = gridGenerator.Grid;
@@ -192,28 +187,26 @@ namespace NCDK.Proteins
         /// <exception cref="Exception"></exception>
         public void AssignProteinToGrid()
         {
-            //        logger.debug.Print("    ASSIGN PROTEIN TO GRID");
             // 1. Step: Set all grid points to solvent accessible
-            this.Grid = gridGenerator.InitializeGrid(this.Grid, 0);
+            this.Grid = GridGenerator.InitializeGrid(this.Grid, 0);
             // 2. Step Grid points inaccessible to solvent are assigend a value of -1
             // set grid points around (r_atom+r_solv) to -1
-            IAtom[] atoms = AtomContainerManipulator.GetAtomArray(Protein);
             Vector3 gridPoint;
             int checkGridPoints = 0;
             double vdWRadius = 0;
             int[] dim = gridGenerator.Dim;
-            //int proteinAtomCount = 0;//Debugging
             int[] minMax = { 0, 0, 0, 0, 0, 0 };
 
-            for (int i = 0; i < atoms.Length; i++)
+            foreach (var atom in Protein.Atoms)
             {
-                if (((PDBAtom)atoms[i]).HetAtom.Value)
+                var patom = (PDBAtom)atom;
+                if (patom.HetAtom.Value)
                 {
                     continue;
                 }
-                gridPoint = gridGenerator.GetGridPointFrom3dCoordinates(atoms[i].Point3D.Value);
+                gridPoint = gridGenerator.GetGridPointFrom3dCoordinates(patom.Point3D.Value);
                 this.Grid[(int)gridPoint.X][(int)gridPoint.Y][(int)gridPoint.Z] = -1;
-                vdWRadius = PeriodicTable.GetVdwRadius(atoms[i].Symbol).Value;
+                vdWRadius = PeriodicTable.GetVdwRadius(patom.Symbol).Value;
                 if (vdWRadius == 0)
                 {
                     vdWRadius = RAtom;
@@ -237,15 +230,11 @@ namespace NCDK.Proteins
                         for (int z = minMax[4]; z <= minMax[5]; z++)
                         {
                             this.Grid[x][y][z] = this.Grid[x][y][z] - 1;
-                            //proteinAtomCount++;//Debugging
                         }
                     }
 
                 }
             }// for atoms.Length
-
-            //        Debug.WriteLine("- checkGridPoints>" + checkGridPoints
-            //                + " ProteinGridPoints>" + proteinAtomCount);
         }
 
         public void DebuggCheckPSPEvent()
@@ -261,7 +250,6 @@ namespace NCDK.Proteins
                 {
                     for (int z = 0; z <= dim[2]; z++)
                     {
-
                         if (this.Grid[x][y][z] == 0)
                         {
                             pspEvents[0]++;
@@ -316,10 +304,7 @@ namespace NCDK.Proteins
                 }
                 Debug.WriteLine(" " + i + ":" + pspEvents[i]);
             }
-            Debug.WriteLine(" pspAll>" + sum);
-            // Debug.WriteLine(" PSPAll:"+pspAll+" minPSP:"+minPSP+"
-            // #pspMin:"+pspMin+" psp7:"+psp7+" proteinGridPoints:"+proteinGrid
-            // +" solventGridPoints:"+solventGrid);
+            Debug.WriteLine($" pspAll>{sum}");
         }
 
         /// <summary>
@@ -328,7 +313,6 @@ namespace NCDK.Proteins
         /// </summary>
         public void SiteFinder()
         {
-            //Debug.WriteLine("SITEFINDER");
             try
             {
                 AssignProteinToGrid();
@@ -340,9 +324,6 @@ namespace NCDK.Proteins
             // 3. Step scan allong x,y,z axis and the diagonals, if PSP event add +1
             // to grid cell
             int[] dim = gridGenerator.Dim;
-            //        Debug.WriteLine("    SITEFINDER-SCAN - dim:" + dim[0] + " grid:"
-            //                + this.grid[0].Length + " grid point sum:" + this.grid.Length
-            //               /// this.grid[0].Length * this.grid[0][0].Length);
             AxisScanX(dim[2], dim[1], dim[0]);// x-Axis
             AxisScanY(dim[2], dim[0], dim[1]);// y-Axis
             AxisScanZ(dim[0], dim[1], dim[2]);// z-Axis
@@ -351,8 +332,6 @@ namespace NCDK.Proteins
             DiagonalAxisScanYZX(dim[1], dim[2], dim[0]);// diagonal2-Axis
             DiagonalAxisScanYXZ(dim[1], dim[0], dim[2]);// diagonal3-Axis
             DiagonalAxisScanXYZ(dim[0], dim[1], dim[2]);// diagonal4-Axis
-
-            //debuggCheckPSPEvent();
 
             FindPockets();
 
@@ -364,13 +343,12 @@ namespace NCDK.Proteins
         /// </summary>
         private void SortPockets()
         {
-            //        Debug.WriteLine("    SORT POCKETS Start#:" + pockets.Count);
             var hashPockets = new Dictionary<int, IList<int>>();
-            IList<Vector3> pocket;
-            var sortPockets = new List<IList<Vector3>>(Pockets.Count);
-            for (int i = 0; i < Pockets.Count; i++)
+            IReadOnlyList<Vector3> pocket;
+            var sortPockets = new List<IReadOnlyList<Vector3>>(pockets.Count);
+            for (int i = 0; i < pockets.Count; i++)
             {
-                pocket = Pockets[i];
+                pocket = pockets[i];
                 if (hashPockets.ContainsKey(pocket.Count))
                 {
                     var tmp = hashPockets[pocket.Count];
@@ -379,10 +357,7 @@ namespace NCDK.Proteins
                 }
                 else
                 {
-                    List<int> value = new List<int>
-                    {
-                        i
-                    };
+                    var value = new List<int> { i };
                     hashPockets[pocket.Count] = value;
                 }
             }
@@ -392,15 +367,12 @@ namespace NCDK.Proteins
             for (int i = keys.Count - 1; i >= 0; i--)
             {
                 var value = hashPockets[keys[i]];
-                //            Debug.WriteLine("key:" + i + " Value" + keys[i]
-                //                    + " #Pockets:" + value.Count);
                 for (int j = 0; j < value.Count; j++)
                 {
-                    sortPockets.Add(Pockets[value[j]]);
+                    sortPockets.Add(pockets[value[j]]);
                 }
             }
-            //        Debug.WriteLine("    SORT POCKETS End#:" + sortPockets.Count);
-            Pockets = sortPockets;
+            pockets = sortPockets;
         }
 
         /// <summary>
@@ -411,60 +383,30 @@ namespace NCDK.Proteins
         private void FindPockets()
         {
             int[] dim = gridGenerator.Dim;
-            //        Debug.WriteLine("    FIND POCKETS>dimx:" + dim[0] + " dimy:" + dim[1]
-            //                + " dimz:" + dim[2] + " linkageRadius>" + linkageRadius
-            //                + " latticeConstant>" + latticeConstant + " pocketSize:"
-            //                + pocketSize + " minPSPocket:" + minPSPocket + " minPSCluster:"
-            //                + minPSCluster);
-            //int pointsVisited = 0;//Debugging
-            //int significantPointsVisited = 0;//Debugging
             for (int x = 0; x < dim[0]; x++)
             {
                 for (int y = 0; y < dim[1]; y++)
                 {
                     for (int z = 0; z < dim[2]; z++)
                     {
-                        // logger.debug.Print(" x:"+x+" y:"+y+" z:"+z);
                         Vector3 start = new Vector3(x, y, z);
-                        //pointsVisited++;
                         if (this.Grid[x][y][z] >= MinPSPocket & !visited.ContainsKey(x + "." + y + "." + z))
                         {
                             List<Vector3> subPocket = new List<Vector3>();
-                            // logger.debug.Print("new Point: "+grid[x][y][z]);
-                            //significantPointsVisited++;
-                            // Debug.WriteLine("visited:"+pointsVisited);
                             subPocket = this.ClusterPSPPocket(start, subPocket, dim);
                             if (subPocket != null && subPocket.Count >= PocketSize)
                             {
-                                Pockets.Add(subPocket);
+                                pockets.Add(subPocket);
                             }
-                            // Debug.WriteLine(" Points visited:"+pointsVisited+"
-                            // subPocketSize:"+subPocket.Count+"
-                            // pocketsSize:"+pockets.Count
-                            // +" hashtable:"+visited.Count);
-
                         }
                     }
                 }
-
             }
-            //        try {
-            //            Debug.WriteLine("    ->>>> #pockets:" + pockets.Count
-            //                    + " significantPointsVisited:" + significantPointsVisited
-            //                    + " keys:" + visited.Count + " PointsVisited:"
-            //                    + pointsVisited);
-            //        } catch (Exception ex1) {
-            //            logger.debug
-            //                    .Println("Problem in System.out due to " + ex1.ToString());
-            //        }
-
         }
 
         /// <summary>Method performs the clustering, is called by FindPockets().</summary>
         public List<Vector3> ClusterPSPPocket(Vector3 root, List<Vector3> subPocket, int[] dim)
         {
-            // Debug.WriteLine(" ****** New Root ******:"+root.X+" "+root.Y+"
-            // "+root.Z);
             visited[(int)root.X + "." + (int)root.Y + "." + (int)root.Z] = 1;
             int[] minMax = { 0, 0, 0, 0, 0, 0 };
             minMax[0] = (int)(root.X - LinkageRadius);
@@ -474,8 +416,6 @@ namespace NCDK.Proteins
             minMax[4] = (int)(root.Z - LinkageRadius);
             minMax[5] = (int)(root.Z + LinkageRadius);
             minMax = CheckBoundaries(minMax, dim);
-            // Debug.WriteLine("cluster:"+minMax[0]+" "+minMax[1]+" "+minMax[2]+"
-            // "+minMax[3]+" "+minMax[4]+" "+minMax[5]+" ");
             for (int k = minMax[0]; k <= minMax[1]; k++)
             {
                 for (int m = minMax[2]; m <= minMax[3]; m++)
@@ -483,13 +423,8 @@ namespace NCDK.Proteins
                     for (int l = minMax[4]; l <= minMax[5]; l++)
                     {
                         Vector3 node = new Vector3(k, m, l);
-                        // Debug.WriteLine(" clusterPSPPocket:"+root.X+"
-                        // "+root.Y+" "+root.Z+" ->"+k+" "+m+" "+l+"
-                        // #>"+this.grid[k][m][l]+" key:"+visited.ContainsKey(new
-                        // string(k+"."+m+"."+l)));
                         if (this.Grid[k][m][l] >= MinPSCluster && !visited.ContainsKey(k + "." + m + "." + l))
                         {
-                            // Debug.WriteLine(" ---->FOUND");
                             subPocket.Add(node);
                             this.ClusterPSPPocket(node, subPocket, dim);
                         }
@@ -506,7 +441,7 @@ namespace NCDK.Proteins
         /// <param name="minMax">with minMax values</param>
         /// <param name="dim">dimension</param>
         /// <returns>new minMax values between 0 and dim</returns>
-        private int[] CheckBoundaries(int[] minMax, int[] dim)
+        private static int[] CheckBoundaries(int[] minMax, int[] dim)
         {
             if (minMax[0] < 0)
             {
@@ -555,12 +490,10 @@ namespace NCDK.Proteins
         public void DiagonalAxisScanXZY(int dimK, int dimL, int dimM)
         {
             // x min ->x max;left upper corner z+y max->min//1
-            //Debug.WriteLine("    diagonalAxisScanXZY");
             if (dimM < dimL)
             {
                 dimL = dimM;
             }
-            //int gridPoints = 0;//Debugging
             List<Vector3> line = new List<Vector3>();
             int pspEvent = 0;
             int m = 0;
@@ -603,7 +536,6 @@ namespace NCDK.Proteins
                 }
                 dimL = j;
             }
-            //Debug.WriteLine(" #gridPoints>" + gridPoints);
         }
 
         /// <summary>
@@ -615,8 +547,6 @@ namespace NCDK.Proteins
         public void DiagonalAxisScanYZX(int dimK, int dimL, int dimM)
         {
             // y min -> y max; right lower corner zmax->zmin, xmax ->min//4
-            // logger.debug.Print(" diagonalAxisScanYZX");
-            //int gridPoints = 0;//Debugging
             if (dimM < dimL)
             {
                 dimL = dimM;
@@ -663,7 +593,6 @@ namespace NCDK.Proteins
                 }
                 dimL = j;
             }
-            // Debug.WriteLine(" #gridPoints>"+gridPoints);
         }
 
         /// <summary>
@@ -675,8 +604,6 @@ namespace NCDK.Proteins
         public void DiagonalAxisScanYXZ(int dimK, int dimL, int dimM)
         {
             // y min -> y max; left lower corner z max->min, x min->max//2
-            // logger.debug.Print(" diagonalAxisScanYXZ");
-            //int gridPoints = 0;//Debugging
             if (dimM < dimL)
             {
                 dimL = dimM;
@@ -699,7 +626,6 @@ namespace NCDK.Proteins
                     l = 0;// x
                     for (int m = dimM; m >= 0; m--)
                     {// z
-                     //gridPoints++;
                         if (Grid[l][k][m] < 0)
                         {
                             if (pspEvent < 2)
@@ -727,7 +653,6 @@ namespace NCDK.Proteins
                 }// for k;y
                 dimM = j;
             }
-            // Debug.WriteLine(" #gridPoints>"+gridPoints);
         }
 
         /// <summary>
@@ -739,8 +664,6 @@ namespace NCDK.Proteins
         public void DiagonalAxisScanXYZ(int dimK, int dimL, int dimM)
         {
             // x min -> xmax;left lower corner z max->min, y min->max//3
-            // logger.debug.Print(" diagonalAxisScanXYZ");
-            //int gridPoints = 0;//Debugging
             if (dimM < dimL)
             {
                 dimL = dimM;
@@ -791,7 +714,6 @@ namespace NCDK.Proteins
                 }// for k;x
                 dimM = j;
             }
-            // Debug.WriteLine(" #gridPoints>"+gridPoints);
         }
 
         /// <summary>
@@ -803,8 +725,6 @@ namespace NCDK.Proteins
         public void AxisScanX(int dimK, int dimL, int dimM)
         {
             // z,y,x
-            //        logger.debug.Print("    diagonalAxisScanX");
-            //int gridPoints = 0;//Debugging
             List<Vector3> line = new List<Vector3>();
             int pspEvent = 0;
             for (int k = 0; k <= dimK; k++)
@@ -843,7 +763,6 @@ namespace NCDK.Proteins
                     }
                 }
             }
-            //        Debug.WriteLine(" #gridPoints>" + gridPoints);
         }
 
         /// <summary>
@@ -952,7 +871,7 @@ namespace NCDK.Proteins
         public void AssignVdWRadiiToProtein()
         {
             AtomTypeFactory atf = null;
-            IAtom[] atoms = AtomContainerManipulator.GetAtomArray(Protein);
+            IAtom[] atoms = Protein.Atoms.ToArray();
             try
             {
                 atf = AtomTypeFactory.GetInstance(VanDerWaalsFile, atoms[0].Builder);
@@ -1019,19 +938,19 @@ namespace NCDK.Proteins
         {
             try
             {
-                for (int i = 0; i < Pockets.Count; i++)
+                for (int i = 0; i < pockets.Count; i++)
                 {// go through every
                  // pocket
-                    var writer = new StreamWriter(outPutFileName + "-" + i + ".pmesh");
-                    var pocket = Pockets[i];
-                    writer.Write(pocket.Count + "\n");
+                    var writer = new StreamWriter($"{outPutFileName}-{i}.pmesh");
+                    var pocket = pockets[i];
+                    writer.Write($"{pocket.Count}\\n");
                     for (int j = 0; j < pocket.Count; j++)
                     {// go through every
                      // grid point of the
                      // actual pocket
-                        Vector3 actualGridPoint = (Vector3)pocket[j];
-                        Vector3 coords = gridGenerator.GetCoordinatesFromGridPoint(actualGridPoint);
-                        writer.Write(coords.X + "\t" + coords.Y + "\t" + coords.Z + "\n");
+                        var actualGridPoint = pocket[j];
+                        var coords = gridGenerator.GetCoordinatesFromGridPoint(actualGridPoint);
+                        writer.Write($"{coords.X}\\t{coords.Y}\\t{coords.Z}\\n");
                     }
                     writer.Close();
                 }

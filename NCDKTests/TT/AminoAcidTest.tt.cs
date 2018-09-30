@@ -1,6 +1,7 @@
 
 
 
+
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -65,13 +66,13 @@ namespace NCDK.Silent
         }
 
  
-		        [TestMethod()]
+                [TestMethod()]
         public override void TestSetAtoms_RemoveListener()
         {
             ChemObjectTestHelper.TestSetAtoms_RemoveListener(NewChemObject());
         }
 
-		        // Overwrite default methods: no notifications are expected!
+                // Overwrite default methods: no notifications are expected!
 
         [TestMethod()]
         public override void TestNotifyChanged()

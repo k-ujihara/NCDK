@@ -17,6 +17,8 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Silent;
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.Formula
@@ -39,7 +41,7 @@ namespace NCDK.Formula
     // @cdk.githash
     public partial class MolecularFormula : IMolecularFormula
     {
-        private IDictionary<IIsotope, int?> isotopes;
+        private Dictionary<IIsotope, int?> isotopes;
 
         /// <inheritdoc/>
         public int? Charge { get; set; } = null;
@@ -49,21 +51,14 @@ namespace NCDK.Formula
         /// </summary>
         public MolecularFormula()
         {
-            isotopes = new Dictionary<IIsotope, int?>(new IsotopeComparer(this));
+            isotopes = new Dictionary<IIsotope, int?>(new IsotopeComparer());
         }
 
         internal class IsotopeComparer : IEqualityComparer<IIsotope>
         {
-            public MolecularFormula parent;
-
-            public IsotopeComparer(MolecularFormula parent)
-            {
-                this.parent = parent;
-            }
-
             public bool Equals(IIsotope isotopeOne, IIsotope isotopeTwo)
             {
-                return parent.IsTheSame(isotopeOne, isotopeTwo);
+                return IsTheSame(isotopeOne, isotopeTwo);
             }
 
             public int GetHashCode(IIsotope obj)
@@ -141,9 +136,9 @@ namespace NCDK.Formula
             => !Contains(isotope) ? 0 : isotopes[isotope] ?? 0;
 
         /// <summary>
-        /// The the number of different isotopes in this IMolecularFormula.
+        /// The number of different isotopes in this IMolecularFormula.
         /// </summary>
-        public int Count => isotopes.Count;
+        public int IsotopesCount => isotopes.Count;
 
         /// <summary>
         /// An IEnumerator with the isotopes in this IMolecularFormula.
@@ -173,17 +168,6 @@ namespace NCDK.Formula
         /// <returns>The cloned object</returns>
         public object Clone()
         {
-            //        /* it is not a super class of chemObject */
-            //        MolecularFormula clone = (MolecularFormula) base.Clone();
-            //        // start from scratch
-            //        clone.Clear();
-            //        // clone all isotopes
-            //        IEnumerator<IIsotope> iterIso = this.Isotopes;
-            //        while(iterIso.MoveNext()){
-            //            IIsotope isotope = iterIso.Next();
-            //            clone.Isotopes.Add((IIsotope) isotope.Clone(),Isotopes.Count(isotope));
-            //        }
-
             MolecularFormula clone = new MolecularFormula();
             foreach (var isotope_count in isotopes)
             {
@@ -202,7 +186,7 @@ namespace NCDK.Formula
         /// <param name="isotopeOne">The first Isotope to compare</param>
         /// <param name="isotopeTwo">The second Isotope to compare</param>
         /// <returns>True, if both isotope are the same</returns>
-        internal protected bool IsTheSame(IIsotope isotopeOne, IIsotope isotopeTwo)
+        internal static bool IsTheSame(IIsotope isotopeOne, IIsotope isotopeTwo)
         {
             double? natAbund1 = isotopeOne.NaturalAbundance;
             double? natAbund2 = isotopeTwo.NaturalAbundance;
@@ -210,16 +194,22 @@ namespace NCDK.Formula
             double? exactMass1 = isotopeOne.ExactMass;
             double? exactMass2 = isotopeTwo.ExactMass;
 
-            if (natAbund1 == null) natAbund1 = -1.0;
-            if (natAbund2 == null) natAbund2 = -1.0;
-            if (exactMass1 == null) exactMass1 = -1.0;
-            if (exactMass2 == null) exactMass2 = -1.0;
+            if (natAbund1 == null)
+                natAbund1 = -1.0;
+            if (natAbund2 == null)
+                natAbund2 = -1.0;
+            if (exactMass1 == null)
+                exactMass1 = -1.0;
+            if (exactMass2 == null)
+                exactMass2 = -1.0;
 
-            if (!isotopeOne.Symbol.Equals(isotopeTwo.Symbol)) return false;
-            if (natAbund1.Value != natAbund2) return false;
+            if (!isotopeOne.Symbol.Equals(isotopeTwo.Symbol, StringComparison.Ordinal))
+                return false;
+            if (natAbund1.Value != natAbund2)
+                return false;
             return exactMass1.Value == exactMass2;
         }
 
-        public virtual IChemObjectBuilder Builder => Default.ChemObjectBuilder.Instance;
+        public virtual IChemObjectBuilder Builder => ChemObjectBuilder.Instance;
     }
 }

@@ -18,7 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -322,7 +322,7 @@ namespace NCDK.Config
             AssertValidCML("NCDK.Config.Data.structgen_atomtypes.xml", "StructGen");
         }
 
-        private void AssertValidCML(string atomTypeList, string shortcut)
+        private static void AssertValidCML(string atomTypeList, string shortcut)
         {
             using (var ins = ResourceLoader.GetAsStream(typeof(AtomTypeFactory).Assembly, atomTypeList))
             {

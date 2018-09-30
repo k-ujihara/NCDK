@@ -23,7 +23,7 @@
  */
 using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System.Collections.Generic;
 using System.IO;
 using NCDK.Numerics;

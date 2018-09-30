@@ -141,7 +141,7 @@ namespace NCDK.IO
             try
             {
                 smiles = sg.Create(molecule);
-                Debug.WriteLine("Generated SMILES: " + smiles);
+                Debug.WriteLine($"Generated SMILES: {smiles}");
                 writer.Write(smiles);
                 writer.Write('\n');
                 writer.Flush();
@@ -161,13 +161,13 @@ namespace NCDK.IO
 
         private void InitIOSettings()
         {
-            useAromaticityFlag = Add(new BooleanIOSetting("UseAromaticity", IOSetting.Importance.Low,
+            useAromaticityFlag = Add(new BooleanIOSetting("UseAromaticity", Importance.Low,
                     "Should aromaticity information be stored in the SMILES?", "false"));
         }
 
         public void CustomizeJob()
         {
-            FireIOSettingQuestion(useAromaticityFlag);
+            ProcessIOSettingQuestion(useAromaticityFlag);
         }
     }
 }

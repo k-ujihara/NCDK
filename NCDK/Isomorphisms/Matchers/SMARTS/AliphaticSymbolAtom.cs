@@ -16,6 +16,8 @@
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
 
+using System;
+
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
@@ -40,7 +42,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         public override bool Matches(IAtom atom)
         {
-            return !atom.IsAromatic && atom.Symbol.Equals(this.Symbol);
+            return !atom.IsAromatic && atom.Symbol.Equals(this.Symbol, StringComparison.Ordinal);
         }
 
        public override string ToString()

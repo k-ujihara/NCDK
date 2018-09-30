@@ -40,7 +40,7 @@ namespace NCDK.Stereo
         /// Fischer projections are used for linear chain-form carbohydrates. 
         /// They are drawn vertically with all atoms at right angles around stereocenters.
         /// </summary>
-		Fischer,
+        Fischer,
 
         /// <summary>
         /// Haworth projection are used to depict ring-form carbohydrates. 

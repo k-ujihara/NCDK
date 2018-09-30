@@ -21,11 +21,11 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.Events;
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Generators;
 using NCDK.Renderers.Selection;
+using NCDK.Silent;
 using System.Collections.Generic;
 
 namespace NCDK.Renderers

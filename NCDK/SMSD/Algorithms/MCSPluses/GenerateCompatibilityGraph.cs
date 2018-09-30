@@ -22,12 +22,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Base;
 using NCDK.SMSD.Algorithms.Matchers;
 using NCDK.SMSD.Helper;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace NCDK.SMSD.Algorithms.MCSPluses
 {
@@ -89,7 +89,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             }
         }
 
-        private List<List<int>> LabelAtoms(IAtomContainer atomCont)
+        private static List<List<int>> LabelAtoms(IAtomContainer atomCont)
         {
             List<List<int>> labelList = new List<List<int>>();
 
@@ -125,7 +125,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             return labelList;
         }
 
-        private void BubbleSort(List<int> label)
+        private static void BubbleSort(List<int> label)
         {
 
             bool flag = true; // set flag to 1 to begin initial pass
@@ -150,7 +150,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             }
         }
 
-        private List<IAtom> ReduceAtomSet(IAtomContainer atomCont)
+        private static List<IAtom> ReduceAtomSet(IAtomContainer atomCont)
         {
 
             List<IAtom> basicAtoms = new List<IAtom>();
@@ -373,19 +373,19 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             return false;
         }
 
-        public IList<int> GetCEgdes()
+        public IReadOnlyList<int> GetCEgdes()
         {
-            return new ReadOnlyCollection<int>(cEdges);
+            return cEdges;
         }
 
-        internal IList<int> GetDEgdes()
+        internal IReadOnlyList<int> GetDEgdes()
         {
-            return new ReadOnlyCollection<int>(dEdges);
+            return dEdges;
         }
 
-        internal IList<int> GetCompGraphNodes()
+        internal IReadOnlyList<int> GetCompGraphNodes()
         {
-            return new ReadOnlyCollection<int>(compGraphNodes);
+            return compGraphNodes;
         }
 
         internal int CEdgesSize => cEdgesSize;

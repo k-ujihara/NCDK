@@ -44,8 +44,8 @@ namespace <#= ns.NS #>
             IAtomContainer ac = new AtomContainer();
 
             Assert.AreEqual(0, ac.Atoms.Count);
-			Assert.AreEqual(0, ac.Bonds.Count);
-			Assert.AreEqual(0, ac.LonePairs.Count);
+            Assert.AreEqual(0, ac.Bonds.Count);
+            Assert.AreEqual(0, ac.LonePairs.Count);
             Assert.AreEqual(0, ac.SingleElectrons.Count);
             Assert.AreEqual(0, ac.GetElectronContainers().Count());
 
@@ -95,8 +95,8 @@ namespace <#= ns.NS #>
         }
 
 <# if (ns.IsSilent) { #> 
-		<#@ include file="TestAbstractAtomContainer.ttinclude" #>
-		<#@ include file="TestAbstractChemObjectTest.ttinclude" #>
+        <#@ include file="TestAbstractAtomContainer.ttinclude" #>
+        <#@ include file="TestAbstractChemObjectTest.ttinclude" #>
 <# } #>
     }
 }

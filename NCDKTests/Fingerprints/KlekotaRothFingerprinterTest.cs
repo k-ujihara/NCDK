@@ -41,7 +41,7 @@ namespace NCDK.Fingerprints
         public void TestGetSize()
         {
             IFingerprinter printer = GetBitFingerprinter();
-            Assert.AreEqual(4860, printer.Count);
+            Assert.AreEqual(4860, printer.Length);
         }
 
         [TestMethod()]
@@ -53,7 +53,7 @@ namespace NCDK.Fingerprints
             BitArray bs1 = printer.GetBitFingerprint(parser.ParseSmiles("C=C-C#N")).AsBitSet();
             BitArray bs2 = printer.GetBitFingerprint(parser.ParseSmiles("C=CCC(O)CC#N")).AsBitSet();
 
-            Assert.AreEqual(4860, printer.Count);
+            Assert.AreEqual(4860, printer.Length);
 
             Assert.IsTrue(FingerprinterTool.IsSubset(bs2, bs1));
         }

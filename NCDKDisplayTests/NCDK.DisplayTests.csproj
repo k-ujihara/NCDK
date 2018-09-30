@@ -76,16 +76,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NCDKDisplay\NCDK.Display.csproj">
-      <Project>{60b8bebc-9968-44a7-ab0b-11c03116579d}</Project>
-      <Name>NCDK.Display</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NCDK\NCDK.csproj">
-      <Project>{b0b5eacf-5f39-42d0-bacd-1ff559ccc8b2}</Project>
-      <Name>NCDK</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Depict\AbbreviationsTest.cs" />
     <Compile Include="Depict\SvgDrawVisitorTest.cs" />
     <Compile Include="Renderers\AtomContainerRendererTest.cs" />
@@ -157,6 +147,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Renderers\Generators\Parameters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NCDKDisplay\NCDK.Display.csproj">
+      <Project>{60b8bebc-9968-44a7-ab0b-11c03116579d}</Project>
+      <Name>NCDK.Display</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NCDK\NCDK.csproj">
+      <Project>{b0b5eacf-5f39-42d0-bacd-1ff559ccc8b2}</Project>
+      <Name>NCDK</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

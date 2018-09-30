@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -29,8 +30,9 @@
  */
 
 using NCDK.Common.Collections;
-using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
 
 namespace NCDK.Default
 {
@@ -42,11 +44,34 @@ namespace NCDK.Default
     // @author        steinbeck
     // @cdk.githash
     // @cdk.module data
-    [Serializable]
     public class ChemObject
-        : IChemObject
+        : IChemObject, ISerializable
     {
+        private bool isPlaced;
+        private bool isVisited;
+
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue(nameof(isPlaced), isPlaced);
+            info.AddValue(nameof(isVisited), isVisited);
+        }
+
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        protected ChemObject(SerializationInfo info, StreamingContext context)
+        {
+            isPlaced = info.GetBoolean(nameof(isPlaced));
+            isVisited = info.GetBoolean(nameof(isVisited));
+        }
+
+        [System.NonSerialized]
         private ICollection<IChemObjectListener> listeners;
+
+        [System.NonSerialized]
+        private bool notification = true;
+
+        public virtual IChemObjectBuilder Builder => ChemObjectBuilder.Instance;
+
         /// <summary>
         /// List for listener administration.
         /// </summary>
@@ -59,10 +84,13 @@ namespace NCDK.Default
                 return listeners;
             }
         }
-        public bool Notification { get; set; } = true;
-        public virtual IChemObjectBuilder Builder => ChemObjectBuilder.Instance;
 
-        private bool isPlaced;
+        public bool Notification
+        {
+            get => notification;
+            set => notification = value;
+        }
+
         public bool IsPlaced
         {
             get { return isPlaced; }
@@ -73,7 +101,6 @@ namespace NCDK.Default
             }
         }
 
-        private bool isVisited;
         /// <summary>
         /// Flag is set if chemobject has been visited
         /// </summary>
@@ -152,7 +179,7 @@ namespace NCDK.Default
         /// <summary>
         /// A dictionary for the storage of any kind of properties of this object.
         /// </summary>
-        IDictionary<object, object> properties;
+        private Dictionary<object, object> properties;
 
         private void InitProperties()
         {
@@ -160,7 +187,7 @@ namespace NCDK.Default
         }
 
         /// <inheritdoc/>
-        public virtual void SetProperty(object description, object property)
+        public virtual void SetProperty(object description, object value)
         {
 #if DEBUG
             if (description != null && !AcceptablePropertyKeyTypes.Contains(description.GetType()))
@@ -168,7 +195,7 @@ namespace NCDK.Default
 #endif
             if (this.properties == null)
                 InitProperties();
-            properties[description] = property;
+            properties[description] = value;
             NotifyChanged();
         }
 
@@ -210,10 +237,10 @@ namespace NCDK.Default
             return defaultValue;
         }
 
-        private static readonly IDictionary<object, object> emptyProperties = new System.Collections.ObjectModel.ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
+        private static readonly IReadOnlyDictionary<object, object> emptyProperties = NCDK.Common.Collections.Dictionaries.Empty<object, object>();
 
         /// <inheritdoc/>
-        public virtual IDictionary<object, object> GetProperties() 
+        public virtual IReadOnlyDictionary<object, object> GetProperties() 
         {
             if (this.properties == null)
                 return emptyProperties;
@@ -294,11 +321,34 @@ namespace NCDK.Silent
     // @author        steinbeck
     // @cdk.githash
     // @cdk.module data
-    [Serializable]
     public class ChemObject
-        : IChemObject
+        : IChemObject, ISerializable
     {
+        private bool isPlaced;
+        private bool isVisited;
+
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue(nameof(isPlaced), isPlaced);
+            info.AddValue(nameof(isVisited), isVisited);
+        }
+
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        protected ChemObject(SerializationInfo info, StreamingContext context)
+        {
+            isPlaced = info.GetBoolean(nameof(isPlaced));
+            isVisited = info.GetBoolean(nameof(isVisited));
+        }
+
+        [System.NonSerialized]
         private ICollection<IChemObjectListener> listeners;
+
+        [System.NonSerialized]
+        private bool notification = true;
+
+        public virtual IChemObjectBuilder Builder => ChemObjectBuilder.Instance;
+
         /// <summary>
         /// List for listener administration.
         /// </summary>
@@ -311,10 +361,13 @@ namespace NCDK.Silent
                 return listeners;
             }
         }
-        public bool Notification { get; set; } = true;
-        public virtual IChemObjectBuilder Builder => ChemObjectBuilder.Instance;
 
-        private bool isPlaced;
+        public bool Notification
+        {
+            get => notification;
+            set => notification = value;
+        }
+
         public bool IsPlaced
         {
             get { return isPlaced; }
@@ -324,7 +377,6 @@ namespace NCDK.Silent
             }
         }
 
-        private bool isVisited;
         /// <summary>
         /// Flag is set if chemobject has been visited
         /// </summary>
@@ -393,7 +445,7 @@ namespace NCDK.Silent
         /// <summary>
         /// A dictionary for the storage of any kind of properties of this object.
         /// </summary>
-        IDictionary<object, object> properties;
+        private Dictionary<object, object> properties;
 
         private void InitProperties()
         {
@@ -401,7 +453,7 @@ namespace NCDK.Silent
         }
 
         /// <inheritdoc/>
-        public virtual void SetProperty(object description, object property)
+        public virtual void SetProperty(object description, object value)
         {
 #if DEBUG
             if (description != null && !AcceptablePropertyKeyTypes.Contains(description.GetType()))
@@ -409,7 +461,7 @@ namespace NCDK.Silent
 #endif
             if (this.properties == null)
                 InitProperties();
-            properties[description] = property;
+            properties[description] = value;
         }
 
         /// <inheritdoc/>
@@ -448,10 +500,10 @@ namespace NCDK.Silent
             return defaultValue;
         }
 
-        private static readonly IDictionary<object, object> emptyProperties = new System.Collections.ObjectModel.ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
+        private static readonly IReadOnlyDictionary<object, object> emptyProperties = NCDK.Common.Collections.Dictionaries.Empty<object, object>();
 
         /// <inheritdoc/>
-        public virtual IDictionary<object, object> GetProperties() 
+        public virtual IReadOnlyDictionary<object, object> GetProperties() 
         {
             if (this.properties == null)
                 return emptyProperties;

@@ -99,7 +99,7 @@ namespace NCDK.Smiles.SMARTS
         /// </summary>
         /// <param name="atom">atom</param>
         /// <returns>mapidx, 0 if undefined</returns>
-        private int Mapidx(IAtom atom)
+        private static int Mapidx(IAtom atom)
         {
             int mapidx = atom.GetProperty<int>(CDKPropertyName.AtomAtomMapping, 0);
             return mapidx;
@@ -110,7 +110,7 @@ namespace NCDK.Smiles.SMARTS
         /// </summary>
         /// <param name="atom">atom</param>
         /// <returns>mapidx, None if undefined</returns>
-        private ReactionRole Role(IAtom atom)
+        private static ReactionRole Role(IAtom atom)
         {
             ReactionRole role = atom.GetProperty<ReactionRole>(CDKPropertyName.ReactionRole, ReactionRole.None);
             return role;

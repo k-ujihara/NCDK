@@ -35,19 +35,13 @@ namespace NCDK.Fragments
     [TestClass()]
     public class MurckoFragmenterTest : CDKTestCase
     {
-        static MurckoFragmenter fragmenter;
-        static SmilesParser smilesParser;
-
-        static MurckoFragmenterTest()
-        {
-            fragmenter = new MurckoFragmenter();
-            smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-        }
+        static MurckoFragmenter fragmenter = new MurckoFragmenter();
+        static SmilesParser smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
 
         [TestMethod()]
         public void TestNoFramework()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("CCO[C@@H](C)C(=O)C(O)O");
+            var mol = smilesParser.ParseSmiles("CCO[C@@H](C)C(=O)C(O)O");
             fragmenter.GenerateFragments(mol);
             var frameworks = fragmenter.GetFrameworks();
             Assert.AreEqual(0, frameworks.Count());
@@ -56,7 +50,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestOnlyRingSystem()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("c1ccccc1CCCCC");
+            var mol = smilesParser.ParseSmiles("c1ccccc1CCCCC");
             fragmenter.GenerateFragments(mol);
             var frameworks = fragmenter.GetFrameworks();
             Assert.AreEqual(0, frameworks.Count());
@@ -67,7 +61,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestMF3()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("C(CC1=C2C=CC=CC2=CC2=C1C=CC=C2)C1CCCCC1");
+            var mol = smilesParser.ParseSmiles("C(CC1=C2C=CC=CC2=CC2=C1C=CC=C2)C1CCCCC1");
             fragmenter.GenerateFragments(mol);
             var frameworks = fragmenter.GetFrameworks();
             Assert.AreEqual(1, frameworks.Count());
@@ -76,7 +70,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestMF3_Container()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("C(CC1=C2C=CC=CC2=CC2=C1C=CC=C2)C1CCCCC1");
+            var mol = smilesParser.ParseSmiles("C(CC1=C2C=CC=CC2=CC2=C1C=CC=C2)C1CCCCC1");
             fragmenter.GenerateFragments(mol);
             var frameworks = fragmenter.GetFrameworksAsContainers();
             Assert.AreEqual(1, frameworks.Count());
@@ -85,8 +79,8 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestMF1()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("c1ccccc1PP(B)c1cccc(N(N)N)c1SC1CCC1");
-            MurckoFragmenter fragmenter = new MurckoFragmenter(false, 2);
+            var mol = smilesParser.ParseSmiles("c1ccccc1PP(B)c1cccc(N(N)N)c1SC1CCC1");
+            var fragmenter = new MurckoFragmenter(false, 2);
 
             fragmenter.GenerateFragments(mol);
             var frameworks = fragmenter.GetFrameworks();
@@ -99,8 +93,8 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestMF1_Container()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("c1ccccc1PP(B)c1cccc(N(N)N)c1SC1CCC1");
-            MurckoFragmenter fragmenter = new MurckoFragmenter(false, 2);
+            var mol = smilesParser.ParseSmiles("c1ccccc1PP(B)c1cccc(N(N)N)c1SC1CCC1");
+            var fragmenter = new MurckoFragmenter(false, 2);
 
             fragmenter.GenerateFragments(mol);
             var frameworks = fragmenter.GetFrameworksAsContainers();
@@ -113,7 +107,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestMF2()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1");
+            var mol = smilesParser.ParseSmiles("C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
             fragmenter.GenerateFragments(mol);
@@ -134,19 +128,18 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestSingleFramework()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1");
-            MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
+            var mol = smilesParser.ParseSmiles("C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1");
+            var fragmenter = new MurckoFragmenter(true, 6);
             fragmenter.GenerateFragments(mol);
 
             var frameworks = fragmenter.GetFrameworks();
             Assert.AreEqual(1, frameworks.Count());
-
         }
 
         [TestMethod()]
         public void TestMF4()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("c1ccc(cc1)c2c(oc(n2)N(CCO)CCO)c3ccccc3");
+            var mol = smilesParser.ParseSmiles("c1ccc(cc1)c2c(oc(n2)N(CCO)CCO)c3ccccc3");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             fragmenter.GenerateFragments(mol);
 
@@ -160,7 +153,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestMF5()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("c1cc(ccc1C(=O)Nc2ccc3c(c2)nc(o3)c4ccncc4)F");
+            var mol = smilesParser.ParseSmiles("c1cc(ccc1C(=O)Nc2ccc3c(c2)nc(o3)c4ccncc4)F");
             fragmenter.GenerateFragments(mol);
             var frameworks = fragmenter.GetFrameworks();
             Assert.AreEqual(3, frameworks.Count());
@@ -172,7 +165,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestMF6()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("COc1ccc(cc1OCc2ccccc2)C(=S)N3CCOCC3");
+            var mol = smilesParser.ParseSmiles("COc1ccc(cc1OCc2ccccc2)C(=S)N3CCOCC3");
             fragmenter.GenerateFragments(mol);
 
             var frameworks = fragmenter.GetFrameworks();
@@ -185,7 +178,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestMF7()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("Cc1nnc(s1)N[C@H](C(=O)c2ccccc2)NC(=O)c3ccco3");
+            var mol = smilesParser.ParseSmiles("Cc1nnc(s1)N[C@H](C(=O)c2ccccc2)NC(=O)c3ccco3");
             fragmenter.GenerateFragments(mol);
 
             var frameworks = fragmenter.GetFrameworks();
@@ -199,8 +192,8 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestBug1848591()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("c1(ccc(cc1C)CCC(C(CCC)C2C(C2)CC)C3C=C(C=C3)CC)C");
-            MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
+            var mol = smilesParser.ParseSmiles("c1(ccc(cc1C)CCC(C(CCC)C2C(C2)CC)C3C=C(C=C3)CC)C");
+            var fragmenter = new MurckoFragmenter(true, 6);
             fragmenter.GenerateFragments(mol);
 
             var frameworks = fragmenter.GetFrameworks();
@@ -212,10 +205,10 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestCarbinoxamine_Bug3088164()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("CN(C)CCOC(C1=CC=C(Cl)C=C1)C1=CC=CC=N1");
+            var mol = smilesParser.ParseSmiles("CN(C)CCOC(C1=CC=C(Cl)C=C1)C1=CC=CC=N1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
-            MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
+            var fragmenter = new MurckoFragmenter(true, 6);
             fragmenter.GenerateFragments(mol);
 
             var f = fragmenter.GetFrameworks().ToList();
@@ -224,7 +217,7 @@ namespace NCDK.Fragments
             Assert.AreEqual(f.Count, fc.Count);
             Assert.AreEqual("n1ccccc1Cc2ccccc2", f[0]);
 
-            SmilesGenerator sg = SmilesGenerator.Unique().Aromatic();
+            var sg = SmilesGenerator.Unique().Aromatic();
             for (int i = 0; i < f.Count; i++)
             {
                 Aromaticity.CDKLegacy.Apply(fc[i]);
@@ -237,13 +230,13 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestPirenperone_Bug3088164()
         {
-            SmilesGenerator sg = SmilesGenerator.Unique().Aromatic();
+            var sg = SmilesGenerator.Unique().Aromatic();
 
-            IAtomContainer mol = smilesParser.ParseSmiles("Fc1ccc(cc1)C(=O)C4CCN(CCC\\3=C(\\N=C2\\C=C/C=C\\N2C/3=O)C)CC4");
+            var mol = smilesParser.ParseSmiles("Fc1ccc(cc1)C(=O)C4CCN(CCC\\3=C(\\N=C2\\C=C/C=C\\N2C/3=O)C)CC4");
             AtomContainerManipulator.ClearAtomConfigurations(mol);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
-            MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
+            var fragmenter = new MurckoFragmenter(true, 6);
             fragmenter.GenerateFragments(mol);
 
             var f = fragmenter.GetFrameworks().ToList();
@@ -270,12 +263,12 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestIsomoltane_Bug3088164()
         {
-            SmilesGenerator sg = SmilesGenerator.Unique().Aromatic();
+            var sg = SmilesGenerator.Unique().Aromatic();
 
-            IAtomContainer mol = smilesParser.ParseSmiles("CC(C)NCC(O)COC1=C(C=CC=C1)N1C=CC=C1");
+            var mol = smilesParser.ParseSmiles("CC(C)NCC(O)COC1=C(C=CC=C1)N1C=CC=C1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
-            MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
+            var fragmenter = new MurckoFragmenter(true, 6);
             fragmenter.GenerateFragments(mol);
 
             var f = fragmenter.GetFrameworks().ToList();
@@ -295,11 +288,11 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestGetFragmentsAsContainers()
         {
-            IAtomContainer biphenyl = TestMoleculeFactory.MakeBiphenyl();
+            var biphenyl = TestMoleculeFactory.MakeBiphenyl();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(biphenyl);
             Aromaticity.CDKLegacy.Apply(biphenyl);
 
-            MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
+            var fragmenter = new MurckoFragmenter(true, 6);
             fragmenter.GenerateFragments(biphenyl);
             var fragments = fragmenter.GetFragmentsAsContainers().ToList();
 
@@ -316,11 +309,10 @@ namespace NCDK.Fragments
         [TestCategory("SlowTest")]
         public void TestMacrocycle()
         {
-            IAtomContainer mol = smilesParser
-                    .ParseSmiles("C1=C(C=C(C(=C1O)O)O)C(=O)OC2=CC(=CC(=C2O)O)C(=O)OCC3C(C(C(C(O3)OC(=O)C4=CC(=C(C(=C4)OC(=O)C5=CC(=C(C(=C5)O)O)O)O)O)OC(=O)C6=CC(=C(C(=C6)OC(=O)C7=CC(=C(C(=C7)O)O)O)O)O)OC(=O)C8=CC(=C(C(=C8)OC(=O)C9=CC(=C(C(=C9)O)O)O)O)O)OC(=O)C1=CC(=C(C(=C1)OC(=O)C1=CC(=C(C(=C1)O)O)O)O)O");
+            var mol = smilesParser.ParseSmiles("C1=C(C=C(C(=C1O)O)O)C(=O)OC2=CC(=CC(=C2O)O)C(=O)OCC3C(C(C(C(O3)OC(=O)C4=CC(=C(C(=C4)OC(=O)C5=CC(=C(C(=C5)O)O)O)O)O)OC(=O)C6=CC(=C(C(=C6)OC(=O)C7=CC(=C(C(=C7)O)O)O)O)O)OC(=O)C8=CC(=C(C(=C8)OC(=O)C9=CC(=C(C(=C9)O)O)O)O)O)OC(=O)C1=CC(=C(C(=C1)OC(=O)C1=CC(=C(C(=C1)O)O)O)O)O");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
-            MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
+            var fragmenter = new MurckoFragmenter(true, 6);
             fragmenter.GenerateFragments(mol);
 
             var f = fragmenter.GetFrameworks();

@@ -26,6 +26,7 @@ using NCDK.Geometries;
 using NCDK.IO.Formats;
 using NCDK.IO.Listener;
 using NCDK.IO.Setting;
+using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
@@ -280,7 +281,7 @@ namespace NCDK.IO.Iterator
         {
             public void ProcessIOSettingQuestion(IOSetting setting)
             {
-                if ("ForceReadAs3DCoordinates".Equals(setting.Name))
+                if (string.Equals("ForceReadAs3DCoordinates", setting.Name, StringComparison.Ordinal))
                 {
                     try
                     {

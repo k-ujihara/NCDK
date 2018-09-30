@@ -32,7 +32,7 @@ namespace NCDK.FaulonSignatures.Chemistry
             public bool Equals(Atom other)
             {
                 return this.index == other.index
-                    && this.symbol.Equals(other.symbol);
+                    && string.Equals(this.symbol, other.symbol, StringComparison.Ordinal);
             }
 
             public override string ToString()
@@ -256,7 +256,7 @@ namespace NCDK.FaulonSignatures.Chemistry
             return BondOrder.None;
         }
 
-        public int ConvertBondOrderToInt(BondOrder bondOrder)
+        public static int ConvertBondOrderToInt(BondOrder bondOrder)
         {
             switch (bondOrder)
             {

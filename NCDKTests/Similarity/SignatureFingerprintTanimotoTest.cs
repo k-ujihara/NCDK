@@ -38,13 +38,12 @@ namespace NCDK.Similarity
         [TestMethod()]
         public void TestRawTanimotoBetween0and1()
         {
-            SmilesParser smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol1 = smilesParser.ParseSmiles("Cc1nc(C(=O)NC23CC4CC(CC(C4)C2)C3)c(C)n1C5CCCCC5");
-            IAtomContainer mol2 = smilesParser
-                    .ParseSmiles("CS(=O)(=O)Nc1ccc(Cc2onc(n2)c3ccc(cc3)S(=O)(=O)Nc4ccc(CCNC[C@H](O)c5cccnc5)cc4)cc1");
-            SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
-            IDictionary<string, int> fp1 = fingerprinter.GetRawFingerprint(mol1);
-            IDictionary<string, int> fp2 = fingerprinter.GetRawFingerprint(mol2);
+            var smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var mol1 = smilesParser.ParseSmiles("Cc1nc(C(=O)NC23CC4CC(CC(C4)C2)C3)c(C)n1C5CCCCC5");
+            var mol2 = smilesParser.ParseSmiles("CS(=O)(=O)Nc1ccc(Cc2onc(n2)c3ccc(cc3)S(=O)(=O)Nc4ccc(CCNC[C@H](O)c5cccnc5)cc4)cc1");
+            var fingerprinter = new SignatureFingerprinter(0);
+            var fp1 = fingerprinter.GetRawFingerprint(mol1);
+            var fp2 = fingerprinter.GetRawFingerprint(mol2);
             var tanimoto = Tanimoto.Calculate(fp1, fp2);
             Assert.IsTrue(tanimoto > 0 && tanimoto < 1, $"Tanimoto expected to be between 0 and 1, was:{tanimoto}");
         }
@@ -52,43 +51,41 @@ namespace NCDK.Similarity
         [TestMethod()]
         public void TestICountFingerprintComparison()
         {
-            IAtomContainer mol1 = TestMoleculeFactory.MakeIndole();
-            IAtomContainer mol2 = TestMoleculeFactory.MakeIndole();
-            SignatureFingerprinter fingerprinter = new SignatureFingerprinter();
-            ICountFingerprint fp1 = fingerprinter.GetCountFingerprint(mol1);
-            ICountFingerprint fp2 = fingerprinter.GetCountFingerprint(mol2);
-            double tanimoto = Tanimoto.Calculate(fp1, fp2);
+            var mol1 = TestMoleculeFactory.MakeIndole();
+            var mol2 = TestMoleculeFactory.MakeIndole();
+            var fingerprinter = new SignatureFingerprinter();
+            var fp1 = fingerprinter.GetCountFingerprint(mol1);
+            var fp2 = fingerprinter.GetCountFingerprint(mol2);
+            var tanimoto = Tanimoto.Calculate(fp1, fp2);
             Assert.AreEqual(1.0, tanimoto, 0.001);
         }
 
         [TestMethod()]
         public void CompareCountFingerprintAndRawFingerprintTanimoto()
         {
-            IAtomContainer mol1 = TestMoleculeFactory.Make123Triazole();
-            IAtomContainer mol2 = TestMoleculeFactory.MakeImidazole();
-            SignatureFingerprinter fingerprinter = new SignatureFingerprinter(1);
-            ICountFingerprint countFp1 = fingerprinter.GetCountFingerprint(mol1);
-            ICountFingerprint countFp2 = fingerprinter.GetCountFingerprint(mol2);
-            IDictionary<string, int> feat1 = fingerprinter.GetRawFingerprint(mol1);
-            IDictionary<string, int> feat2 = fingerprinter.GetRawFingerprint(mol2);
+            var mol1 = TestMoleculeFactory.Make123Triazole();
+            var mol2 = TestMoleculeFactory.MakeImidazole();
+            var fingerprinter = new SignatureFingerprinter(1);
+            var countFp1 = fingerprinter.GetCountFingerprint(mol1);
+            var countFp2 = fingerprinter.GetCountFingerprint(mol2);
+            var feat1 = fingerprinter.GetRawFingerprint(mol1);
+            var feat2 = fingerprinter.GetRawFingerprint(mol2);
             var rawTanimoto = Tanimoto.Calculate(feat1, feat2);
-            double countTanimoto = Tanimoto.Method1(countFp1, countFp2);
+            var countTanimoto = Tanimoto.Method1(countFp1, countFp2);
             Assert.AreEqual(rawTanimoto, countTanimoto, 0.001);
         }
 
         [TestMethod()]
         public void TestCountMethod1and2()
         {
-            ICountFingerprint fp1 = new IntArrayCountFingerprint(new Dictionary<string, int>()
-                { { "A", 3 } });
-            ICountFingerprint fp2 = new IntArrayCountFingerprint(new Dictionary<string, int>()
-                { { "A", 4 } });
+            ICountFingerprint fp1 = new IntArrayCountFingerprint(new Dictionary<string, int>() { { "A", 3 } });
+            ICountFingerprint fp2 = new IntArrayCountFingerprint(new Dictionary<string, int>() { { "A", 4 } });
             Assert.AreEqual(0.923, Tanimoto.Method1(fp1, fp2), 0.001);
             Assert.AreEqual(0.75, Tanimoto.Method2(fp1, fp2), 0.001);
 
-            IAtomContainer mol1 = TestMoleculeFactory.MakeIndole();
-            IAtomContainer mol2 = TestMoleculeFactory.MakeIndole();
-            SignatureFingerprinter fingerprinter = new SignatureFingerprinter();
+            var mol1 = TestMoleculeFactory.MakeIndole();
+            var mol2 = TestMoleculeFactory.MakeIndole();
+            var fingerprinter = new SignatureFingerprinter();
             fp1 = fingerprinter.GetCountFingerprint(mol1);
             fp2 = fingerprinter.GetCountFingerprint(mol2);
             Assert.AreEqual(1.0, Tanimoto.Method1(fp1, fp2), 0.001);
@@ -98,19 +95,19 @@ namespace NCDK.Similarity
         [TestMethod()]
         public void TestCompaRingBitFingerprintAndCountBehavingAsBit()
         {
-            IAtomContainer mol1 = TestMoleculeFactory.Make123Triazole();
-            IAtomContainer mol2 = TestMoleculeFactory.MakeImidazole();
+            var mol1 = TestMoleculeFactory.Make123Triazole();
+            var mol2 = TestMoleculeFactory.MakeImidazole();
 
-            SignatureFingerprinter fingerprinter = new SignatureFingerprinter(1);
+            var fingerprinter = new SignatureFingerprinter(1);
             ICountFingerprint countFp1 = fingerprinter.GetCountFingerprint(mol1);
             ICountFingerprint countFp2 = fingerprinter.GetCountFingerprint(mol2);
             countFp1.SetBehaveAsBitFingerprint(true);
             countFp2.SetBehaveAsBitFingerprint(true);
-            IBitFingerprint bitFp1 = fingerprinter.GetBitFingerprint(mol1);
-            IBitFingerprint bitFp2 = fingerprinter.GetBitFingerprint(mol2);
-            double bitTanimoto = Tanimoto.Calculate(bitFp1, bitFp2);
-            double countTanimoto1 = Tanimoto.Method1(countFp1, countFp2);
-            double countTanimoto2 = Tanimoto.Method2(countFp1, countFp2);
+            var bitFp1 = fingerprinter.GetBitFingerprint(mol1);
+            var bitFp2 = fingerprinter.GetBitFingerprint(mol2);
+            var bitTanimoto = Tanimoto.Calculate(bitFp1, bitFp2);
+            var countTanimoto1 = Tanimoto.Method1(countFp1, countFp2);
+            var countTanimoto2 = Tanimoto.Method2(countFp1, countFp2);
 
             Assert.AreEqual(countTanimoto1, countTanimoto2, 0.001);
             Assert.AreEqual(bitTanimoto, countTanimoto1, 0.001);

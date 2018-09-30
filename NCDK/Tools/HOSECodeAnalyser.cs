@@ -42,9 +42,9 @@ namespace NCDK.Tools
     // @cdk.githash
     public static class HOSECodeAnalyser
     {
-        public static IList<string> GetElements(string code)
+        public static IReadOnlyList<string> GetElements(string code)
         {
-            List<string> elementList = new List<string>();
+            var elementList = new List<string>();
 
             if (code.Length == 0)
             {
@@ -76,17 +76,17 @@ namespace NCDK.Tools
                     if (!elementList.Contains(currentSymbol))
                     {
                         // reverse HOSECodeGenerator.getElementSymbol translations
-                        if (currentSymbol.Equals("Y"))
+                        switch (currentSymbol)
                         {
-                            currentSymbol = "Br";
-                        }
-                        else if (currentSymbol.Equals("X"))
-                        {
-                            currentSymbol = "Cl";
-                        }
-                        else if (currentSymbol.Equals("Q"))
-                        {
-                            currentSymbol = "Si";
+                            case "Y":
+                                currentSymbol = "Br";
+                                break;
+                            case "X":
+                                currentSymbol = "Cl";
+                                break;
+                            case "Q":
+                                currentSymbol = "Si";
+                                break;
                         }
                         elementList.Add(currentSymbol);
                     }

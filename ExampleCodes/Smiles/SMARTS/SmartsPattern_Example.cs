@@ -1,15 +1,16 @@
 ﻿using NCDK.Isomorphisms;
+using NCDK.Silent;
 
 namespace NCDK.Smiles.SMARTS
 {
     class SmartsPattern_Example
     {
-        void Main()
+        static void Main()
         {
             IChemObjectSet<IAtomContainer> acs = null;
             {
                 #region 1
-                Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC", Default.ChemObjectBuilder.Instance);
+                Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC", ChemObjectBuilder.Instance);
 
                 foreach (var ac in acs)
                 {
@@ -23,7 +24,7 @@ namespace NCDK.Smiles.SMARTS
             {
                 int nUniqueHits = 0;
                 #region 2
-                Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC", Default.ChemObjectBuilder.Instance);
+                Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC", ChemObjectBuilder.Instance);
 
                 foreach (var ac in acs)
                 {
@@ -33,7 +34,7 @@ namespace NCDK.Smiles.SMARTS
             }
             {
                 #region MatchAll
-                 Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC", Default.ChemObjectBuilder.Instance);
+                 Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC", ChemObjectBuilder.Instance);
                  int nUniqueHits = 0;
                 
                  foreach (var ac in acs) {

@@ -22,7 +22,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Stereo;
 using System.Collections.Generic;
 
@@ -32,12 +32,12 @@ namespace NCDK.Geometries.CIP
     [TestClass()]
     public class LigancyFourChiralityTest : CDKTestCase
     {
-        private static IAtomContainer molecule;
-        private static ILigand[] ligands;
+        private static IAtomContainer molecule = MoleculeMaker();
+        private static ILigand[] ligands = LigandsMaker();
 
-        static LigancyFourChiralityTest()
+        private static IAtomContainer MoleculeMaker()
         {
-            molecule = new AtomContainer();
+            var molecule = new AtomContainer();
             molecule.Atoms.Add(new Atom("Cl"));
             molecule.Atoms.Add(new Atom("C"));
             molecule.Atoms.Add(new Atom("Br"));
@@ -47,17 +47,23 @@ namespace NCDK.Geometries.CIP
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[3], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[4], BondOrder.Single);
-            ILigand ligand1 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[4]);
-            ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[3]);
-            ILigand ligand3 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[2]);
-            ILigand ligand4 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[0]);
+            return molecule;
+        }
+
+        private static ILigand[] LigandsMaker()
+        {           
+            var ligand1 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[4]);
+            var ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[3]);
+            var ligand3 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[2]);
+            var ligand4 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[0]);
             ligands = new ILigand[] { ligand1, ligand2, ligand3, ligand4 };
+            return ligands;
         }
 
         [TestMethod()]
         public void TestConstructor()
         {
-            LigancyFourChirality chirality = new LigancyFourChirality(molecule.Atoms[1], ligands, TetrahedralStereo.Clockwise);
+            var chirality = new LigancyFourChirality(molecule.Atoms[1], ligands, TetrahedralStereo.Clockwise);
             Assert.IsNotNull(chirality);
             Assert.AreEqual(molecule.Atoms[1], chirality.ChiralAtom);
             for (int i = 0; i < ligands.Length; i++)
@@ -68,50 +74,50 @@ namespace NCDK.Geometries.CIP
         }
 
         [TestMethod()]
-        public void TestConstructor_ILigancyFourChirality()
+        public void TestConstructorILigancyFourChirality()
         {
-            List<IAtom> ligandAtoms = new List<IAtom>();
+            var ligandAtoms = new List<IAtom>();
             foreach (var ligand in ligands)
-                ligandAtoms.Add(ligand.GetLigandAtom());
-            ITetrahedralChirality cdkChiral = new TetrahedralChirality(molecule.Atoms[1],
+                ligandAtoms.Add(ligand.LigandAtom);
+            var cdkChiral = new TetrahedralChirality(molecule.Atoms[1],
                  ligandAtoms, TetrahedralStereo.Clockwise);
-            LigancyFourChirality chirality = new LigancyFourChirality(molecule, cdkChiral);
+            var chirality = new LigancyFourChirality(molecule, cdkChiral);
             Assert.IsNotNull(chirality);
             Assert.AreEqual(molecule.Atoms[1], chirality.ChiralAtom);
             for (int i = 0; i < ligands.Length; i++)
             {
-                Assert.AreEqual(ligands[i].GetLigandAtom(), chirality.Ligands[i].GetLigandAtom());
-                Assert.AreEqual(ligands[i].GetCentralAtom(), chirality.Ligands[i].GetCentralAtom());
-                Assert.AreEqual(ligands[i].GetAtomContainer(), chirality.Ligands[i].GetAtomContainer());
+                Assert.AreEqual(ligands[i].LigandAtom, chirality.Ligands[i].LigandAtom);
+                Assert.AreEqual(ligands[i].CentralAtom, chirality.Ligands[i].CentralAtom);
+                Assert.AreEqual(ligands[i].AtomContainer, chirality.Ligands[i].AtomContainer);
             }
             Assert.AreEqual(TetrahedralStereo.Clockwise, chirality.Stereo);
         }
 
-        /**
-         * Checks if projecting onto itself does not change the stereochemistry.
-         */
+        /// <summary>
+        /// Checks if projecting onto itself does not change the stereochemistry.
+        /// </summary>
         [TestMethod()]
         public void TestProject()
         {
-            LigancyFourChirality chirality = new LigancyFourChirality(molecule.Atoms[1], ligands, TetrahedralStereo.Clockwise);
+            var chirality = new LigancyFourChirality(molecule.Atoms[1], ligands, TetrahedralStereo.Clockwise);
             chirality.Project(ligands);
             Assert.AreEqual(TetrahedralStereo.Clockwise, chirality.Stereo);
         }
 
         [TestMethod()]
-        public void TestProject_OneChange()
+        public void TestProjectOneChange()
         {
-            LigancyFourChirality chirality = new LigancyFourChirality(molecule.Atoms[1], ligands, TetrahedralStereo.Clockwise);
-            ILigand[] newLigands = new ILigand[] { ligands[0], ligands[1], ligands[3], ligands[2] };
+            var chirality = new LigancyFourChirality(molecule.Atoms[1], ligands, TetrahedralStereo.Clockwise);
+            var newLigands = new ILigand[] { ligands[0], ligands[1], ligands[3], ligands[2] };
             chirality = chirality.Project(newLigands);
             Assert.AreEqual(TetrahedralStereo.AntiClockwise, chirality.Stereo);
         }
 
         [TestMethod()]
-        public void TestProject_TwoChanges()
+        public void TestProjectTwoChanges()
         {
-            LigancyFourChirality chirality = new LigancyFourChirality(molecule.Atoms[1], ligands, TetrahedralStereo.Clockwise);
-            ILigand[] newLigands = new ILigand[] { ligands[1], ligands[0], ligands[3], ligands[2] };
+            var chirality = new LigancyFourChirality(molecule.Atoms[1], ligands, TetrahedralStereo.Clockwise);
+            var newLigands = new ILigand[] { ligands[1], ligands[0], ligands[3], ligands[2] };
             chirality = chirality.Project(newLigands);
             Assert.AreEqual(TetrahedralStereo.Clockwise, chirality.Stereo);
         }

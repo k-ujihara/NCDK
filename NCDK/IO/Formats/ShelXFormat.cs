@@ -19,6 +19,7 @@
 
 using NCDK.Tools;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -52,7 +53,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
         
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "ins", "res" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "ins", "res" };
         
         /// <inheritdoc/>
         public override string ReaderClassName { get; } = typeof(ShelXReader).FullName;
@@ -78,7 +79,7 @@ namespace NCDK.IO.Formats
         
         /// <inheritdoc/>
         public override DataFeatures RequiredDataFeatures =>
-                DataFeatures.HAS_3D_COORDINATES | DataFeatures.HAS_UNITCELL_PARAMETERS
-                    | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+                DataFeatures.Has3DCoordinates | DataFeatures.HasUnitcellParameters
+                    | DataFeatures.HasAtomElementSymbol;
     }
 }

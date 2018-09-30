@@ -17,11 +17,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Templates;
-using NCDK.QSAR.Results;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.MCSS;
+using NCDK.QSAR.Results;
+using NCDK.Templates;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -38,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// Returns 20 values with names of the form <i>nX</i>, where <i>X</i> is the short versio
     /// of the amino acid name
     /// </para>
-    ///  </remarks>
+    /// </remarks>
     // @author      egonw
     // @cdk.created 2006-01-15
     // @cdk.module  qsarprotein
@@ -50,9 +51,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private static string[] names;
 
-        /// <summary>
-        /// Constructor for the AromaticAtomsCountDescriptor object.
-        /// </summary>
         public AminoAcidCountDescriptor()
         {
             var aas = AminoAcids.Proteinogenics;
@@ -68,18 +66,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
-        public DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aminoAcidsCount",
                 typeof(AminoAcidCountDescriptor).FullName,
                 "The Chemistry Development Kit");
         
-        /// <summary>
-        /// The parameters attribute of the <see cref="AminoAcidCountDescriptor"/> object.
-        /// </summary>
-        /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             get { return null; }
             set { } // no parameters exist
@@ -96,15 +90,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public DescriptorValue<ArrayResult<int>> Calculate(IAtomContainer ac)
         {
             ac = Clone(ac); // don't modify input
-            int resultLength = substructureSet.Count;
-            ArrayResult<int> results = new ArrayResult<int>(resultLength);
+            var resultLength = substructureSet.Count;
+            var results = new ArrayResult<int>(resultLength);
 
-            UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
+            var universalIsomorphismTester = new UniversalIsomorphismTester();
             IAtomContainer substructure;
             for (int i = 0; i < resultLength; i++)
             {
                 substructure = substructureSet[i];
-                IList<IList<RMap>> maps;
+                IEnumerable<IReadOnlyList<RMap>> maps = null;
                 try
                 {
                     maps = universalIsomorphismTester.GetSubgraphMaps(ac, substructure);
@@ -113,38 +107,33 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     for (int j = 0; j < resultLength; j++)
                         results.Add(0);    // TODO: original code is (int)double.NaN.
-                    return new DescriptorValue<ArrayResult<int>>(_Specification, ParameterNames, Parameters, results, DescriptorNames, new CDKException("Error in substructure search: " + e.Message));
+                    return new DescriptorValue<ArrayResult<int>>(specification, ParameterNames, Parameters, results, DescriptorNames, new CDKException("Error in substructure search: " + e.Message));
                 }
                 if (maps != null)
                 {
-                    results.Add(maps.Count);
+                    results.Add(maps.Count());
                 }
             }
 
-            return new DescriptorValue<ArrayResult<int>>(_Specification, ParameterNames, Parameters, results, DescriptorNames);
+            return new DescriptorValue<ArrayResult<int>>(specification, ParameterNames, Parameters, results, DescriptorNames);
         }
 
         /// <summary>
         /// Returns the specific type of the DescriptorResult object.
-        /// <para>
+        /// </summary>
+        /// <remarks>
         /// The return value from this method really indicates what type of result will
         /// be obtained from the <see cref="IDescriptorValue"/> object. Note that the same result
         /// can be achieved by interrogating the <see cref="IDescriptorValue"/> object; this method
         /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </para>
-        /// </summary>
+        /// </remarks>
         public override IDescriptorResult DescriptorResultType => new ArrayResult<int>(20);
 
         /// <summary>
         /// Gets the parameterNames attribute of the AromaticAtomsCountDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => new string[0];
+        public override IReadOnlyList<string> ParameterNames => System.Array.Empty<string>();
 
-        /// <summary>
-        /// Gets the parameterType attribute of the AromaticAtomsCountDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
         public override object GetParameterType(string name)
         {
             return null;

@@ -18,7 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 
@@ -29,25 +29,16 @@ namespace NCDK.Charges
     public class StabilizationChargesTest : CDKTestCase
     {
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-        private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
         public StabilizationChargesTest()
                 : base()
         { }
-
-        [TestMethod()]
-        public void TestStabilizationCharges()
-        {
-            Assert.IsNotNull(new StabilizationCharges());
-        }
 
         //  @cdk.inchi InChI=1/C4H8/c1-3-4-2/h3H,1,4H2,2H3
         [TestMethod()]
         [TestCategory("SlowTest")]
         public void TestCalculatePositive_IAtomContainer_IAtom()
         {
-            StabilizationCharges sc = new StabilizationCharges();
-
             IAtomContainer molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molecule.Atoms.Add(new Atom("C"));
@@ -60,14 +51,14 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             for (int i = 0; i < molecule.Atoms.Count; i++)
             {
                 if (i == 1)
-                    Assert.AreNotSame(0.0, sc.CalculatePositive(molecule, molecule.Atoms[i]));
+                    Assert.AreNotSame(0.0, StabilizationCharges.CalculatePositive(molecule, molecule.Atoms[i]));
                 else
-                    Assert.AreEqual(0.0, sc.CalculatePositive(molecule, molecule.Atoms[i]), 0.001);
+                    Assert.AreEqual(0.0, StabilizationCharges.CalculatePositive(molecule, molecule.Atoms[i]), 0.001);
             }
         }
     }

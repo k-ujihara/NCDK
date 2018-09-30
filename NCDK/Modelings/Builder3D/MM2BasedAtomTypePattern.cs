@@ -49,7 +49,7 @@ namespace NCDK.Modelings.Builder3D
         /// Gets the atomTypePatterns attribute of the MM2BasedAtomTypePattern object
         /// </summary>
         /// <returns>The atomTypePatterns as a vector</returns>
-        public IList<Regex> AtomTypePatterns => atomTypePatterns;
+        public IReadOnlyList<Regex> AtomTypePatterns => atomTypePatterns;
 
         /// <summary>
         ///  Creates the atom type pattern

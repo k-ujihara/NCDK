@@ -33,7 +33,7 @@ namespace NCDK
         /// Method to test the SetFractional3D() methods.
         /// </summary>
         [TestMethod()]
-        public override void TestSetFractionalPoint3d_Point3d()
+        public override void TestSetFractionalPoint3dPoint3d()
         {
             IPDBAtom a = (IPDBAtom)NewChemObject();
             a.Symbol = "C";
@@ -48,7 +48,7 @@ namespace NCDK
         [TestMethod()]
         public override void TestGetFractionalPoint3d()
         {
-            TestSetFractionalPoint3d_Point3d();
+            TestSetFractionalPoint3dPoint3d();
         }
 
         [TestMethod()]
@@ -63,7 +63,7 @@ namespace NCDK
         }
 
         [TestMethod()]
-        public override void TestSetPoint3d_Point3d()
+        public override void TestSetPoint3dPoint3d()
         {
             Vector3 point3d = new Vector3(1, 2, 3);
 
@@ -89,7 +89,7 @@ namespace NCDK
         /// Method to test the Clone() method
         /// </summary>
         [TestMethod()]
-        public override void TestClone_Point3d()
+        public override void TestClonePoint3d()
         {
             IPDBAtom atom = (IPDBAtom)NewChemObject();
             atom.Symbol = "C";
@@ -102,7 +102,7 @@ namespace NCDK
         /// Method to test the Clone() method
         /// </summary>
         [TestMethod()]
-        public override void TestClone_FractionalPoint3d()
+        public override void TestCloneFractionalPoint3d()
         {
             IPDBAtom atom = (IPDBAtom)NewChemObject();
             atom.Symbol = "C";

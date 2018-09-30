@@ -132,7 +132,7 @@ namespace NCDK.IO
                 // Find first set of coordinates
                 while (line != null)
                 {
-                    if (line.IndexOf("Standard orientation:") >= 0)
+                    if (line.Contains("Standard orientation:"))
                     {
 
                         // Found a set of coordinates
@@ -155,46 +155,35 @@ namespace NCDK.IO
                     line = input.ReadLine();
                     while (line != null)
                     {
-                        if (line.IndexOf("Standard orientation:") >= 0)
+                        if (line.Contains("Standard orientation:"))
                         {
                             // Found a set of coordinates
                             // Add current frame to file and create a new one.
                             sequence.Add(model);
-                            FireFrameRead();
+                            FrameRead();
                             model = sequence.Builder.NewChemModel();
                             ReadCoordinates(model);
                         }
-                        else if (line.IndexOf("SCF Done:") >= 0)
+                        else if (line.Contains("SCF Done:"))
                         {
                             // Found an energy
                             model.SetProperty("NCDK.IO.Gaussian03Reaer:SCF Done", line.Trim());
                         }
-                        else if (line.IndexOf("Harmonic frequencies") >= 0)
+                        else if (line.Contains("Harmonic frequencies"))
                         {
                             // Found a set of vibrations
-                            //                        try {
-                            //                            ReadFrequencies(model);
-                            //                        } catch (IOException exception) {
-                            //                            throw new CDKException("Error while reading frequencies: " + exception.ToString(), exception);
-                            //                        }
                         }
-                        else if (line.IndexOf("Mulliken atomic charges") >= 0)
+                        else if (line.Contains("Mulliken atomic charges"))
                         {
                             ReadPartialCharges(model);
                         }
-                        else if (line.IndexOf("Magnetic shielding") >= 0)
+                        else if (line.Contains("Magnetic shielding"))
                         {
                             // Found NMR data
-                            //                        try {
-                            //                            ReadNMRData(model, line);
-                            //                        } catch (IOException exception) {
-                            //                            throw new CDKException("Error while reading NMR data: " + exception.ToString(), exception);
-                            //                        }
                         }
-                        else if (line.IndexOf("GINC") >= 0)
+                        else if (line.Contains("GINC"))
                         {
                             // Found calculation level of theory
-                            //levelOfTheory = ParseLevelOfTheory(line);
                             // FIXME: is doing anything with it?
                         }
                         line = input.ReadLine();
@@ -202,7 +191,7 @@ namespace NCDK.IO
 
                     // Add current frame to file
                     sequence.Add(model);
-                    FireFrameRead();
+                    FrameRead();
                 }
             }
             catch (IOException exception)
@@ -227,7 +216,7 @@ namespace NCDK.IO
             while (true)
             {
                 line = input.ReadLine();
-                if ((line == null) || (line.IndexOf("-----") >= 0))
+                if ((line == null) || (line.Contains("-----")))
                 {
                     break;
                 }
@@ -237,12 +226,11 @@ namespace NCDK.IO
                 token.NextToken();
 
                 // ignore first token
-                if (token.NextToken() == StreamTokenizer.TT_NUMBER)
+                if (token.NextToken() == StreamTokenizer.TTypeNumber)
                 {
                     atomicNumber = (int)token.NumberValue;
                     if (atomicNumber == 0)
                     {
-
                         // Skip dummy atoms. Dummy atoms must be skipped
                         // if frequencies are to be read because Gaussian
                         // does not report dummy atoms in frequencies, and
@@ -260,7 +248,7 @@ namespace NCDK.IO
                 double x = 0.0;
                 double y = 0.0;
                 double z = 0.0;
-                if (token.NextToken() == StreamTokenizer.TT_NUMBER)
+                if (token.NextToken() == StreamTokenizer.TTypeNumber)
                 {
                     x = token.NumberValue;
                 }
@@ -268,7 +256,7 @@ namespace NCDK.IO
                 {
                     throw new IOException("Error reading coordinates");
                 }
-                if (token.NextToken() == StreamTokenizer.TT_NUMBER)
+                if (token.NextToken() == StreamTokenizer.TTypeNumber)
                 {
                     y = token.NumberValue;
                 }
@@ -276,7 +264,7 @@ namespace NCDK.IO
                 {
                     throw new IOException("Error reading coordinates");
                 }
-                if (token.NextToken() == StreamTokenizer.TT_NUMBER)
+                if (token.NextToken() == StreamTokenizer.TTypeNumber)
                 {
                     z = token.NumberValue;
                 }
@@ -307,22 +295,22 @@ namespace NCDK.IO
             while (true)
             {
                 line = input.ReadLine();
-                Debug.WriteLine("Read charge block line: " + line);
-                if ((line == null) || (line.IndexOf("Sum of Mulliken charges") >= 0))
+                Debug.WriteLine($"Read charge block line: {line}");
+                if ((line == null) || line.Contains("Sum of Mulliken charges"))
                 {
                     Debug.WriteLine("End of charge block found");
                     break;
                 }
                 StringReader sr = new StringReader(line);
                 StreamTokenizer tokenizer = new StreamTokenizer(sr);
-                if (tokenizer.NextToken() == StreamTokenizer.TT_NUMBER)
+                if (tokenizer.NextToken() == StreamTokenizer.TTypeNumber)
                 {
                     int atomCounter = (int)tokenizer.NumberValue;
 
                     tokenizer.NextToken(); // ignore the symbol
 
                     double charge = 0.0;
-                    if (tokenizer.NextToken() == StreamTokenizer.TT_NUMBER)
+                    if (tokenizer.NextToken() == StreamTokenizer.TTypeNumber)
                     {
                         charge = (double)tokenizer.NumberValue;
                         Debug.WriteLine("Found charge for atom " + atomCounter + ": " + charge);

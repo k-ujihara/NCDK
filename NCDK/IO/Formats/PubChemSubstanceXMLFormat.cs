@@ -34,7 +34,8 @@ namespace NCDK.IO.Formats
         {
             get
             {
-                if (myself == null) myself = new PubChemSubstanceXMLFormat();
+                if (myself == null)
+                    myself = new PubChemSubstanceXMLFormat();
                 return myself;
             }
         }
@@ -50,7 +51,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "xml" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "xml" };
 
         /// <inheritdoc/>
         public string ReaderClassName { get; } = typeof(PCSubstanceXMLReader).FullName;
@@ -68,14 +69,17 @@ namespace NCDK.IO.Formats
         public DataFeatures RequiredDataFeatures => DataFeatures.None;
 
         /// <inheritdoc/>
-        public MatchResult Matches(IList<string> lines)
+        public MatchResult Matches(IEnumerable<string> lines)
         {
-            MatchResult result = MatchResult.NO_MATCH;
-            for (int i = 0; i < lines.Count; i++)
+            MatchResult result = MatchResult.NoMatch;
+            int i = 0;
+            foreach (var line in lines)
             {
-                var line = lines[i];
-                if (line.Contains("<PC-Substance") && result == MatchResult.NO_MATCH) result = new MatchResult(true, this, i);
-                if (line.Contains("<PC-Substances")) return MatchResult.NO_MATCH;
+                if (line.Contains("<PC-Substance") && result == MatchResult.NoMatch)
+                    result = new MatchResult(true, this, i);
+                if (line.Contains("<PC-Substances"))
+                    return MatchResult.NoMatch;
+                i++;
             }
             return result;
         }

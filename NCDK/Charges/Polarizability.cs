@@ -40,14 +40,9 @@ namespace NCDK.Charges
     // @cdk.created    2004-11-03
     // @cdk.keyword polarizability
     // @cdk.module     charges
-    public class Polarizability
+    public static class Polarizability
     {
-        /// <summary>
-        /// Constructor for the Polarizability object.
-        /// </summary>
-        public Polarizability() { }
-
-        private void AddExplicitHydrogens(IAtomContainer container)
+        private static void AddExplicitHydrogens(IAtomContainer container)
         {
             try
             {
@@ -68,12 +63,12 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        /// Gets the polarizabilitiyFactorForAtom.
+        /// Gets the polarizabilitiy factor for atom.
         /// </summary>
-        /// <param name="atomContainer">AtomContainer</param>
+        /// <param name="atomContainer">atom container</param>
         /// <param name="atom">atom for which the factor should become known</param>
-        /// <returns>The polarizabilitiyFactorForAtom value</returns>
-        public double GetPolarizabilitiyFactorForAtom(IAtomContainer atomContainer, IAtom atom)
+        /// <returns>The polarizabilitiy factor for atom</returns>
+        public static double GetPolarizabilitiyFactorForAtom(IAtomContainer atomContainer, IAtom atom)
         {
             IAtomContainer acH = atomContainer.Builder.NewAtomContainer(atomContainer);
             AddExplicitHydrogens(acH);
@@ -85,7 +80,7 @@ namespace NCDK.Charges
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns>polarizabilitiy</returns>
-        public double CalculateKJMeanMolecularPolarizability(IAtomContainer atomContainer)
+        public static double CalculateKJMeanMolecularPolarizability(IAtomContainer atomContainer)
         {
             double polarizabilitiy = 0;
             IAtomContainer acH = atomContainer.Builder.NewAtomContainer(atomContainer);
@@ -106,8 +101,7 @@ namespace NCDK.Charges
         /// <param name="addExplicitH">if set to true, then explicit H's will be added, otherwise it assumes that they have
         ///  been added to the molecule before being called</param>
         /// <returns>polarizabilitiy</returns>
-        public double CalculateGHEffectiveAtomPolarizability(IAtomContainer atomContainer, IAtom atom,
-                int influenceSphereCutOff, bool addExplicitH)
+        public static double CalculateGHEffectiveAtomPolarizability(IAtomContainer atomContainer, IAtom atom, int influenceSphereCutOff, bool addExplicitH)
         {
             double polarizabilitiy = 0;
 
@@ -156,8 +150,7 @@ namespace NCDK.Charges
         ///                              if this argument is non-null, then BFS will not be used and instead path lengths will be looked up. This
         ///                              form of the method is useful, if it is being called for multiple atoms in the same molecule</param>
         /// <returns>polarizabilitiy</returns>
-        public double CalculateGHEffectiveAtomPolarizability(IAtomContainer atomContainer, IAtom atom,
-                bool addExplicitH, int[][] distanceMatrix)
+        public static double CalculateGHEffectiveAtomPolarizability(IAtomContainer atomContainer, IAtom atom, bool addExplicitH, int[][] distanceMatrix)
         {
             double polarizabilitiy = 0;
 
@@ -202,7 +195,7 @@ namespace NCDK.Charges
         /// <param name="atomContainer">AtomContainer</param>
         /// <param name="bond">Bond bond for which the polarizabilitiy should be calculated</param>
         /// <returns>polarizabilitiy</returns>
-        public double CalculateBondPolarizability(IAtomContainer atomContainer, IBond bond)
+        public static double CalculateBondPolarizability(IAtomContainer atomContainer, IBond bond)
         {
             double polarizabilitiy = 0;
             IAtomContainer acH = atomContainer.Builder.NewAtomContainer(atomContainer);
@@ -221,16 +214,16 @@ namespace NCDK.Charges
         /// <param name="atomContainer">AtomContainer</param>
         /// <param name="atom">Atom</param>
         /// <returns>double polarizabilitiyFactor</returns>
-        private double GetKJPolarizabilityFactor(IAtomContainer atomContainer, IAtom atom)
+        private static double GetKJPolarizabilityFactor(IAtomContainer atomContainer, IAtom atom)
         {
             double polarizabilitiyFactor = 0;
             string AtomSymbol;
             AtomSymbol = atom.Symbol;
-            if (AtomSymbol.Equals("H"))
+            if (string.Equals(AtomSymbol, "H", StringComparison.Ordinal))
             {
                 polarizabilitiyFactor = 0.387;
             }
-            else if (AtomSymbol.Equals("C"))
+            else if (string.Equals(AtomSymbol, "C", StringComparison.Ordinal))
             {
                 if (atom.IsAromatic)
                 {
@@ -257,7 +250,7 @@ namespace NCDK.Charges
                     polarizabilitiyFactor = 1.279;
                 }
             }
-            else if (AtomSymbol.Equals("N"))
+            else if (string.Equals(AtomSymbol, "N", StringComparison.Ordinal))
             {
                 if (atom.Charge != null && atom.Charge < 0)
                 {
@@ -276,7 +269,7 @@ namespace NCDK.Charges
                     polarizabilitiyFactor = 0.852;
                 }
             }
-            else if (AtomSymbol.Equals("O"))
+            else if (string.Equals(AtomSymbol, "O", StringComparison.Ordinal))
             {
                 if (atom.Charge != null && atom.Charge == -1)
                 {
@@ -295,7 +288,7 @@ namespace NCDK.Charges
                     polarizabilitiyFactor = 0.460;
                 }
             }
-            else if (AtomSymbol.Equals("P"))
+            else if (string.Equals(AtomSymbol, "P", StringComparison.Ordinal))
             {
                 if (atomContainer.GetConnectedBonds(atom).Count() == 4
                         && atomContainer.GetMaximumBondOrder(atom) == BondOrder.Double)
@@ -303,7 +296,7 @@ namespace NCDK.Charges
                     polarizabilitiyFactor = 0;
                 }
             }
-            else if (AtomSymbol.Equals("S"))
+            else if (string.Equals(AtomSymbol, "S", StringComparison.Ordinal))
             {
                 if (atom.IsAromatic)
                 {
@@ -329,19 +322,19 @@ namespace NCDK.Charges
                     polarizabilitiyFactor = 3.42;
                 }
             }
-            else if (AtomSymbol.Equals("F"))
+            else if (string.Equals(AtomSymbol, "F", StringComparison.Ordinal))
             {
                 polarizabilitiyFactor = 0.296;
             }
-            else if (AtomSymbol.Equals("Cl"))
+            else if (string.Equals(AtomSymbol, "Cl", StringComparison.Ordinal))
             {
                 polarizabilitiyFactor = 2.343;
             }
-            else if (AtomSymbol.Equals("Br"))
+            else if (string.Equals(AtomSymbol, "Br", StringComparison.Ordinal))
             {
                 polarizabilitiyFactor = 3.5;
             }
-            else if (AtomSymbol.Equals("I"))
+            else if (string.Equals(AtomSymbol, "I", StringComparison.Ordinal))
             {
                 polarizabilitiyFactor = 5.79;
             }
@@ -354,7 +347,7 @@ namespace NCDK.Charges
         /// <param name="atomContainer">Description of the Parameter</param>
         /// <param name="atom">Description of the Parameter</param>
         /// <returns>The numberOfHydrogen value</returns>
-        private int GetNumberOfHydrogen(IAtomContainer atomContainer, IAtom atom)
+        private static int GetNumberOfHydrogen(IAtomContainer atomContainer, IAtom atom)
         {
             var bonds = atomContainer.GetConnectedBonds(atom);
             IAtom connectedAtom;
@@ -362,7 +355,7 @@ namespace NCDK.Charges
             foreach (var bond in bonds)
             {
                 connectedAtom = bond.GetOther(atom);
-                if (connectedAtom.Symbol.Equals("H"))
+                if (string.Equals(connectedAtom.Symbol, "H", StringComparison.Ordinal))
                 {
                     hCounter += 1;
                 }

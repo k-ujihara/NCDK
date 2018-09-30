@@ -44,10 +44,10 @@ namespace <#= ns.NS #>
         : ElectronContainer, ILonePair, ICloneable
     {
         /// <summary>Number of electrons in the lone pair.</summary>
-        protected readonly int electronCount = 2;
+        private readonly int electronCount = 2;
 
         /// <summary>The atom with which this lone pair is associated.</summary>
-        protected IAtom atom;
+        private IAtom atom;
 
         /// <summary>
         /// Constructs an unconnected lone pair.

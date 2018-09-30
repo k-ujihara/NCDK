@@ -32,7 +32,7 @@ namespace NCDK.Validate
         /// <summary>
         /// IChemObject which has the error.
         /// </summary>
-        public IChemObject Object { get; private set; }
+        public IChemObject ChemObject { get; private set; }
 
         /// <summary>
         /// string representation of the found error.
@@ -44,13 +44,13 @@ namespace NCDK.Validate
         /// </summary>
         public string Details { get; set; }
 
-        public ValidationTest(IChemObject obj, string error) :
-                this(obj, error, "")
+        public ValidationTest(IChemObject o, string error) :
+                this(o, error, "")
         { }
 
-        public ValidationTest(IChemObject obj, string error, string details)
+        public ValidationTest(IChemObject o, string error, string details)
         {
-            Object = obj;
+            ChemObject = o;
             Error = error;
             Details = details;
         }

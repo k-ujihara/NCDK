@@ -48,9 +48,9 @@ namespace NCDK.IO
         /// of the actual implementation may take a Reader as input to get
         /// a very flexible reader that can read from string, files, etc.
         /// </summary>
-        /// <param name="obj">the type of object to return</param>
+        /// <param name="o">the type of object to return</param>
         /// <returns>returns an object of that contains the content (or part) of the input content</returns>
         /// <exception cref="CDKException">it is thrown if the type of information is not available from the input</exception>
-        T Read<T>(T obj) where T : IChemObject;
+        T Read<T>(T o) where T : IChemObject;
     }
 }

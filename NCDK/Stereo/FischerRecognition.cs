@@ -21,12 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using NCDK.Config;
+using NCDK.Graphs;
 using NCDK.RingSearches;
 using System;
 using System.Collections.Generic;
-using NCDK.Numerics;
-using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.Stereo
 {
@@ -82,12 +82,11 @@ namespace NCDK.Stereo
 
         /// <summary>
         /// Required information to recognise stereochemistry.
-        ///
+        /// </summary>
         /// <param name="container">input structure</param>
         /// <param name="graph">adjacency list representation</param>
         /// <param name="bonds">edge to bond index</param>
         /// <param name="stereocenters">location and type of asymmetries</param>
-        /// </summary>
         public FischerRecognition(IAtomContainer container,
                            int[][] graph,
                            EdgeToBondMap bonds,
@@ -99,55 +98,51 @@ namespace NCDK.Stereo
             this.stereocenters = stereocenters;
         }
 
-
-
         /// <summary>
         /// Recognise the tetrahedral stereochemistry in the provided structure.
-        ///
+        /// </summary>
         /// <param name="projections">allowed projection types</param>
         /// <returns>zero of more stereo elements</returns>
-        /// </summary>
-        public IList<IReadOnlyStereoElement<IChemObject, IChemObject>> Recognise(ICollection<Projection> projections)
+        public IEnumerable<IStereoElement<IChemObject, IChemObject>> Recognise(ICollection<Projection> projections)
         {
             if (!projections.Contains(Projection.Fischer))
-                return Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+                return Array.Empty<IStereoElement<IChemObject, IChemObject>>();
 
             // build atom index and only recognize 2D depictions
-            IDictionary<IAtom, int> atomToIndex = new Dictionary<IAtom, int>();
+            var atomToIndex = new Dictionary<IAtom, int>();
             foreach (var atom in container.Atoms)
             {
                 if (atom.Point2D == null)
-                    return Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+                    return Array.Empty<IStereoElement<IChemObject, IChemObject>>();
                 atomToIndex.Add(atom, atomToIndex.Count);
             }
 
-            RingSearch ringSearch = new RingSearch(container, graph);
+            var ringSearch = new RingSearch(container, graph);
 
-            var elements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(5);
+            var elements = new List<IStereoElement<IChemObject, IChemObject>>(5);
 
             for (int v = 0; v < container.Atoms.Count; v++)
             {
-                IAtom focus = container.Atoms[v];
-                ChemicalElement elem = ChemicalElement.OfNumber(focus.AtomicNumber.Value);
+                var focus = container.Atoms[v];
+                var elem = ChemicalElement.OfNumber(focus.AtomicNumber.Value);
 
                 if (elem != ChemicalElements.Carbon)
                     continue;
                 if (ringSearch.Cyclic(v))
                     continue;
-                if (stereocenters.ElementType(v) != Stereocenters.CoordinateType.Tetracoordinate)
+                if (stereocenters.ElementType(v) != CoordinateType.Tetracoordinate)
                     continue;
                 if (!stereocenters.IsStereocenter(v))
                     continue;
 
-                ITetrahedralChirality element = NewTetrahedralCenter(focus,
-                                                                     Neighbors(v, graph, bonds));
+                var element = NewTetrahedralCenter(focus, Neighbors(v, graph, bonds));
 
                 if (element == null)
                     continue;
 
                 // east/west bonds must be to terminal atoms
-                IAtom east = element.Ligands[EAST];
-                IAtom west = element.Ligands[WEST];
+                var east = element.Ligands[EAST];
+                var west = element.Ligands[WEST];
 
                 if (east != focus && !IsTerminal(east, atomToIndex))
                     continue;
@@ -165,18 +160,18 @@ namespace NCDK.Stereo
         /// Create a new tetrahedral stereocenter of the given focus and neighboring
         /// bonds. This is an internal method and is presumed the atom can support
         /// tetrahedral stereochemistry and it has three or four explicit neighbors. 
-        /// 
+        /// </summary>
+        /// <remarks>
         /// The stereo element is only created if the local arrangement looks like
         /// a Fischer projection. 
-        /// 
+        /// </remarks>
         /// <param name="focus">central atom</param>
         /// <param name="bonds">adjacent bonds</param>
         /// <returns>a stereo element, or null if one could not be created</returns>
-        /// </summary>
         public static ITetrahedralChirality NewTetrahedralCenter(IAtom focus, IBond[] bonds)
         {
             // obtain the bonds of a centre arranged by cardinal direction 
-            IBond[] cardinalBonds = CardinalBonds(focus, bonds);
+            var cardinalBonds = CardinalBonds(focus, bonds);
 
             if (cardinalBonds == null)
                 return null;
@@ -191,7 +186,7 @@ namespace NCDK.Stereo
 
             // the neighbors of our tetrahedral centre, the EAST or WEST may
             // be missing so we initialise these with the implicit (focus)
-            IAtom[] neighbors = new IAtom[]{cardinalBonds[NORTH].GetOther(focus),
+            var neighbors = new IAtom[]{cardinalBonds[NORTH].GetOther(focus),
                                             focus,
                                             cardinalBonds[SOUTH].GetOther(focus),
                                             focus};
@@ -224,23 +219,21 @@ namespace NCDK.Stereo
         /// Arrange the bonds adjacent to an atom (focus) in cardinal direction. The
         /// cardinal directions are that of a compass. Bonds are checked as to
         /// whether they are horizontal or vertical within a predefined threshold.
-        ///
+        /// </summary>
         /// <param name="focus">an atom</param>
         /// <param name="bonds">bonds adjacent to the atom</param>
-        /// <returns>array of bonds organised (N,E,S,W), or null if a bond was found</returns>
-        /// that exceeded the threshold
-        /// </summary>
+        /// <returns>array of bonds organised (N,E,S,W), or null if a bond was found
+        /// that exceeded the threshold</returns>
         public static IBond[] CardinalBonds(IAtom focus, IBond[] bonds)
         {
-
-            Vector2 centerXy = focus.Point2D.Value;
-            IBond[] cardinal = new IBond[4];
+            var centerXy = focus.Point2D.Value;
+            var cardinal = new IBond[4];
 
             foreach (var bond in bonds)
             {
 
-                IAtom other = bond.GetOther(focus);
-                Vector2 otherXy = other.Point2D.Value;
+                var other = bond.GetOther(focus);
+                var otherXy = other.Point2D.Value;
 
                 double deltaX = otherXy.X - centerXy.X;
                 double deltaY = otherXy.Y - centerXy.Y;
@@ -275,11 +268,10 @@ namespace NCDK.Stereo
 
         /// <summary>
         /// Is the atom terminal having only one connection.
-        ///
+        /// </summary>
         /// <param name="atom">an atom</param>
         /// <param name="atomToIndex">a map of atoms to index</param>
         /// <returns>the atom is terminal</returns>
-        /// </summary>
         private bool IsTerminal(IAtom atom, IDictionary<IAtom, int> atomToIndex)
         {
             return graph[atomToIndex[atom]].Length == 1;
@@ -288,10 +280,9 @@ namespace NCDK.Stereo
         /// <summary>
         /// Helper method determines if a bond is defined (not null) and whether
         /// it is a sigma (single) bond with no stereo attribute (wedge/hatch).
-        /// 
+        /// </summary>
         /// <param name="bond">the bond to test</param>
         /// <returns>the bond is a planar sigma bond</returns>
-        /// </summary>
         private static bool IsPlanarSigmaBond(IBond bond)
         {
             return bond != null &&
@@ -302,16 +293,15 @@ namespace NCDK.Stereo
         /// <summary>
         /// Helper method to obtain the neighbouring bonds from an adjacency list
         /// graph and edge->bond map.
-        ///
+        /// </summary>
         /// <param name="v">vertex</param>
         /// <param name="g">graph (adj list)</param>
         /// <param name="bondMap">map of edges to bonds</param>
         /// <returns>neighboring bonds</returns>
-        /// </summary>
         private static IBond[] Neighbors(int v, int[][] g, EdgeToBondMap bondMap)
         {
-            int[] ws = g[v];
-            IBond[] bonds = new IBond[ws.Length];
+            var ws = g[v];
+            var bonds = new IBond[ws.Length];
             for (int i = 0; i < ws.Length; i++)
             {
                 bonds[i] = bondMap[v, ws[i]];

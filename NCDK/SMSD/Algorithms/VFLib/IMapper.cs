@@ -78,14 +78,14 @@ namespace NCDK.SMSD.Algorithms.VFLib
         /// </summary>
         /// <param name="target">molecule.</param>
         /// <returns>get maps.</returns>
-        IList<IDictionary<INode, IAtom>> GetMaps(IAtomContainer target);
+        IReadOnlyList<IReadOnlyDictionary<INode, IAtom>> GetMaps(IAtomContainer target);
 
         /// <summary>
         /// Returns first solution map.
         /// </summary>
         /// <param name="target">molecule.</param>
         /// <returns>get first map.</returns>
-        IDictionary<INode, IAtom> GetFirstMap(IAtomContainer target);
+        IReadOnlyDictionary<INode, IAtom> GetFirstMap(IAtomContainer target);
 
         /// <summary>
         /// checks if a map exits for a molecule.
@@ -106,14 +106,14 @@ namespace NCDK.SMSD.Algorithms.VFLib
         /// </summary>
         /// <param name="target">molecule.</param>
         /// <returns>get maps.</returns>
-        IList<IDictionary<INode, IAtom>> GetMaps(TargetProperties target);
+        IReadOnlyList<IReadOnlyDictionary<INode, IAtom>> GetMaps(TargetProperties target);
 
         /// <summary>
         /// Returns first solution map.
         /// </summary>
         /// <param name="target">molecule.</param>
         /// <returns>get first map.</returns>
-        IDictionary<INode, IAtom> GetFirstMap(TargetProperties target);
+        IReadOnlyDictionary<INode, IAtom> GetFirstMap(TargetProperties target);
     }
 }
 

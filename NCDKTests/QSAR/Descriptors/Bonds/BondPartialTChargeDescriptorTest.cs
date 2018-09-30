@@ -19,6 +19,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.QSAR.Results;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
@@ -43,14 +44,13 @@ namespace NCDK.QSAR.Descriptors.Bonds
         {
             double[] testResult = { 0.3323, 0.0218 }; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CF");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
 
-            LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-            lpcheck.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             for (int i = 0; i < 2; i++)
             {
@@ -67,12 +67,11 @@ namespace NCDK.QSAR.Descriptors.Bonds
         {
             double[] testResult = { 0.0243, 0.1279, 0.1872, 0.1553, 0.1553, 0.1358, 0.0013, 0.0013 };  // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("C=CCBr");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
-            LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-            lpcheck.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             for (int i = 0; i < 8; i++)
             {
@@ -89,7 +88,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         {
             double testResult = 0.0165; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("C(C)(C)CCI");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
@@ -105,7 +104,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         {
             double[] testResult = { 0.0197, 0.0924, 0.1835, 0.1566, 0.1566, 0.1412, 0.0323, 0.0323, 0.2761 }; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("C=CCS");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);

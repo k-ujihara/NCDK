@@ -51,8 +51,7 @@ namespace NCDK.AtomTypes
 
         public override void AssertAtomTypes(IDictionary<string, int> testedAtomTypes, string[] expectedTypes, IAtomContainer mol)
         {
-            Assert.AreEqual(expectedTypes.Length, mol.Atoms.Count,
-                "The number of expected atom types is unequal to the number of atoms");
+            Assert.AreEqual(expectedTypes.Length, mol.Atoms.Count, "The number of expected atom types is unequal to the number of atoms");
             IAtomTypeMatcher atm = GetAtomTypeMatcher(mol.Builder);
             for (int i = 0; i < expectedTypes.Length; i++)
             {

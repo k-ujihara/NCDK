@@ -61,16 +61,16 @@ namespace NCDK.Stereo
         /// </summary>
         /// <param name="focus">the focus bond</param>
         /// <param name="carriers">the carriers</param>
-        /// <param name="value">the configuration <see cref="StereoElement.Configuration.Left"/> or <see cref="StereoElement.Configuration.Right"/></param>
-        public Atropisomeric(IBond focus, IEnumerable<IAtom> carriers, StereoElement.Configuration value)
-                : base(focus, carriers.ToList(), new StereoElement(StereoElement.Classes.Atropisomeric, value))
+        /// <param name="value">the configuration <see cref="StereoConfigurations.Left"/> or <see cref="StereoConfigurations.Right"/></param>
+        public Atropisomeric(IBond focus, IEnumerable<IAtom> carriers, StereoConfigurations value)
+            : base(focus, carriers.ToList(), new StereoElement(StereoClass.Atropisomeric, value))
         {
         }
 
         /// <inheritdoc/>
-        protected override IStereoElement<IBond, IAtom> Create(IBond focus, IList<IAtom> carriers, StereoElement stereo)
+        protected override IStereoElement<IBond, IAtom> Create(IBond focus, IReadOnlyList<IAtom> carriers, StereoElement stereo)
         {
-            return new Atropisomeric(focus, carriers.ToArray(), stereo.Configure);
+            return new Atropisomeric(focus, carriers.ToArray(), stereo.Configuration);
         }
     }
 }

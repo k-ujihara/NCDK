@@ -27,6 +27,7 @@ using NCDK.Tools;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.Modelings.Builder3D
@@ -42,19 +43,19 @@ namespace NCDK.Modelings.Builder3D
     // @cdk.keyword atom type, mmff94
     public class MMFF94BasedParameterSetReader
     {
-        private string configFile = "NCDK.Modelings.ForceField.Data.mmff94.prm";
+        private const string configFile = "NCDK.Modelings.ForceField.Data.mmff94.prm";
         private Stream ins = null;
-        private IDictionary<string, object> parameterSet;
+        private Dictionary<string, object> parameterSet;
         private List<IAtomType> atomTypes;
         private IEnumerator<string> st;
         private string sid;
 
-        private string configFilevdW = "NCDK.Modelings.ForceField.Data.mmffvdw.prm";
+        private const string configFilevdW = "NCDK.Modelings.ForceField.Data.mmffvdw.prm";
         private Stream insvdW = null;
         private IEnumerator<string> stvdW;
         private string sidvdW;
 
-        private string configFileDFSB = "NCDK.Modelings.ForceField.Data.mmffdfsb.par";
+        private const string configFileDFSB = "NCDK.Modelings.ForceField.Data.mmffdfsb.par";
         private Stream insDFSB;
         private IEnumerator<string> stDFSB;
 
@@ -67,12 +68,12 @@ namespace NCDK.Modelings.Builder3D
             atomTypes = new List<IAtomType>();
         }
 
-        public IDictionary<string, object> GetParamterSet()
+        public IReadOnlyDictionary<string, object> GetParamterSet()
         {
             return parameterSet;
         }
 
-        public List<IAtomType> AtomTypes => atomTypes;
+        public IReadOnlyList<IAtomType> AtomTypes => atomTypes;
 
         /// <summary>
         /// Sets the file containing the config data
@@ -111,13 +112,13 @@ namespace NCDK.Modelings.Builder3D
 
                 try
                 {
-                    double well = double.Parse(swell);
-                    double apol = double.Parse(sapol);
-                    double Neff = double.Parse(sNeff);
-                    double fcadj = double.Parse(sfcadj);
-                    //double pbci = double.Parse(spbci);
-                    double a = double.Parse(sA);
-                    double g = double.Parse(sG);
+                    double well = double.Parse(swell, NumberFormatInfo.InvariantInfo);
+                    double apol = double.Parse(sapol, NumberFormatInfo.InvariantInfo);
+                    double Neff = double.Parse(sNeff, NumberFormatInfo.InvariantInfo);
+                    double fcadj = double.Parse(sfcadj, NumberFormatInfo.InvariantInfo);
+                    //double pbci = double.Parse(spbci, NumberFormatInfo.InvariantInfo);
+                    double a = double.Parse(sA, NumberFormatInfo.InvariantInfo);
+                    double g = double.Parse(sG, NumberFormatInfo.InvariantInfo);
 
                     data.Add(well);
                     data.Add(apol);
@@ -133,7 +134,7 @@ namespace NCDK.Modelings.Builder3D
                     throw new IOException("Data: Malformed Number due to:" + nfe);
                 }
 
-                Debug.WriteLine("data : well,apol,Neff,sDA,fcadj,spbci,a,g " + data);
+                Debug.WriteLine($"data : well,apol,Neff,sDA,fcadj,spbci,a,g {data}");
                 parameterSet[key] = data;
             }
 
@@ -142,12 +143,12 @@ namespace NCDK.Modelings.Builder3D
                 var data = new List<double>();
                 try
                 {
-                    double radius = double.Parse(sradius);
+                    double radius = double.Parse(sradius, NumberFormatInfo.InvariantInfo);
                     data.Add(radius);
                 }
                 catch (FormatException nfe2)
                 {
-                    Debug.WriteLine("vdwError: Malformed Number due to:" + nfe2);
+                    Debug.WriteLine($"vdwError: Malformed Number due to:{nfe2}");
                 }
                 parameterSet[key] = data;
 
@@ -155,7 +156,7 @@ namespace NCDK.Modelings.Builder3D
                 data = new List<double>();
                 try
                 {
-                    double q0 = double.Parse(sq0);
+                    double q0 = double.Parse(sq0, NumberFormatInfo.InvariantInfo);
                     data.Add(q0);
                 }
                 catch (FormatException nfe3)
@@ -192,9 +193,9 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                maxbond = int.Parse(smaxbond);
-                mass = double.Parse(smass);
-                atomNr = int.Parse(satomNr);
+                maxbond = int.Parse(smaxbond, NumberFormatInfo.InvariantInfo);
+                mass = double.Parse(smass, NumberFormatInfo.InvariantInfo);
+                atomNr = int.Parse(satomNr, NumberFormatInfo.InvariantInfo);
 
             }
             catch (FormatException)
@@ -233,11 +234,11 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double len = double.Parse(slen);
-                double k2 = double.Parse(sk2);
-                double k3 = double.Parse(sk3);
-                double k4 = double.Parse(sk4);
-                double bci = double.Parse(sbci);
+                double len = double.Parse(slen, NumberFormatInfo.InvariantInfo);
+                double k2 = double.Parse(sk2, NumberFormatInfo.InvariantInfo);
+                double k3 = double.Parse(sk3, NumberFormatInfo.InvariantInfo);
+                double k4 = double.Parse(sk4, NumberFormatInfo.InvariantInfo);
+                double bci = double.Parse(sbci, NumberFormatInfo.InvariantInfo);
                 data.Add(len);
                 data.Add(k2);
                 data.Add(k3);
@@ -274,10 +275,10 @@ namespace NCDK.Modelings.Builder3D
             try
             {
                 //int code=new Integer(scode).Value;
-                double va1 = double.Parse(value1);
-                double va2 = double.Parse(value2);
-                double va3 = double.Parse(value3);
-                double va4 = double.Parse(value4);
+                double va1 = double.Parse(value1, NumberFormatInfo.InvariantInfo);
+                double va2 = double.Parse(value2, NumberFormatInfo.InvariantInfo);
+                double va3 = double.Parse(value3, NumberFormatInfo.InvariantInfo);
+                double va4 = double.Parse(value4, NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
                 data.Add(va2);
                 data.Add(va3);
@@ -319,8 +320,8 @@ namespace NCDK.Modelings.Builder3D
             try
             {
                 //int code=new Integer(scode).Value;
-                double va1 = double.Parse(value1);
-                double va2 = double.Parse(value2);
+                double va1 = double.Parse(value1, NumberFormatInfo.InvariantInfo);
+                double va2 = double.Parse(value2, NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
                 data.Add(va2);
 
@@ -330,7 +331,7 @@ namespace NCDK.Modelings.Builder3D
                 throw new IOException("setStrBnd: Malformed Number due to:" + nfe);
             }
             var key = "strbnd" + scode + ";" + sid1 + ";" + sid2 + ";" + sid3;
-            Debug.WriteLine("key =" + key);
+            Debug.WriteLine($"key ={key}");
             parameterSet[key] = data;
         }
 
@@ -355,14 +356,14 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double va1 = double.Parse(value1);
-                double va2 = double.Parse(value2);
-                double va3 = double.Parse(value3);
-                double va4 = double.Parse(value4);
-                double va5 = double.Parse(value5);
+                double va1 = double.Parse(value1, NumberFormatInfo.InvariantInfo);
+                double va2 = double.Parse(value2, NumberFormatInfo.InvariantInfo);
+                double va3 = double.Parse(value3, NumberFormatInfo.InvariantInfo);
+                double va4 = double.Parse(value4, NumberFormatInfo.InvariantInfo);
+                double va5 = double.Parse(value5, NumberFormatInfo.InvariantInfo);
 
                 var key = "torsion" + scode + ";" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
-                Debug.WriteLine("key = " + key);
+                Debug.WriteLine($"key = {key}");
                 if (parameterSet.ContainsKey(key))
                 {
                     data = (IList<double>)parameterSet[key];
@@ -371,7 +372,7 @@ namespace NCDK.Modelings.Builder3D
                     data.Add(va3);
                     data.Add(va4);
                     data.Add(va5);
-                    Debug.WriteLine("data = " + data);
+                    Debug.WriteLine($"data = {data}");
                 }
                 else
                 {
@@ -383,7 +384,7 @@ namespace NCDK.Modelings.Builder3D
                         va4,
                         va5
                     };
-                    Debug.WriteLine("data = " + data);
+                    Debug.WriteLine($"data = {data}");
                 }
                 parameterSet[key] = data;
             }
@@ -409,7 +410,7 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double va1 = double.Parse(value1);
+                double va1 = double.Parse(value1, NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
                 var key = "opbend" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
                 if (parameterSet.ContainsKey(key))
@@ -443,8 +444,8 @@ namespace NCDK.Modelings.Builder3D
             try
             {
                 var key = "DFSB" + sIR + ";" + sJR + ";" + sKR;
-                double kbaIJK = double.Parse(skbaIJK);
-                double kbaKJI = double.Parse(skbaKJI);
+                double kbaIJK = double.Parse(skbaIJK, NumberFormatInfo.InvariantInfo);
+                double kbaKJI = double.Parse(skbaKJI, NumberFormatInfo.InvariantInfo);
                 data.Add(kbaIJK);
                 data.Add(kbaKJI);
                 parameterSet[key] = data;
@@ -514,37 +515,37 @@ namespace NCDK.Modelings.Builder3D
                     }
                     var e_st = Strings.Tokenize(s, '\t', ';', ' '); st = e_st.GetEnumerator(); st.MoveNext();
                     int nt = e_st.Count;
-                    if (s.StartsWith("atom", StringComparison.Ordinal) & nt <= 8)
+                    if (s.StartsWith("atom", StringComparison.Ordinal) && nt <= 8)
                     {
                         SetAtomTypes(builder);
                         a[0]++;
                     }
-                    else if (s.StartsWith("bond", StringComparison.Ordinal) & nt == 9)
+                    else if (s.StartsWith("bond", StringComparison.Ordinal) && nt == 9)
                     {
                         SetBond();
                         a[1]++;
                     }
-                    else if (s.StartsWith("angle", StringComparison.Ordinal) & nt <= 10)
+                    else if (s.StartsWith("angle", StringComparison.Ordinal) && nt <= 10)
                     {
                         SetAngle();
                         a[2]++;
                     }
-                    else if (s.StartsWith("strbnd", StringComparison.Ordinal) & nt == 7)
+                    else if (s.StartsWith("strbnd", StringComparison.Ordinal) && nt == 7)
                     {
                         SetStrBnd();
                         a[3]++;
                     }
-                    else if (s.StartsWith("torsion", StringComparison.Ordinal) & nt == 11)
+                    else if (s.StartsWith("torsion", StringComparison.Ordinal) && nt == 11)
                     {
                         SetTorsion();
                         a[4]++;
                     }
-                    else if (s.StartsWith("opbend", StringComparison.Ordinal) & nt == 6)
+                    else if (s.StartsWith("opbend", StringComparison.Ordinal) && nt == 6)
                     {
                         SetOpBend();
                         a[5]++;
                     }
-                    else if (s.StartsWith("data", StringComparison.Ordinal) & nt == 10)
+                    else if (s.StartsWith("data", StringComparison.Ordinal) && nt == 10)
                     {
                         while (true)
                         {
@@ -555,14 +556,14 @@ namespace NCDK.Modelings.Builder3D
                             }
                             var e_stvdW = Strings.Tokenize(svdW, '\t', ';', ' '); stvdW = e_stvdW.GetEnumerator(); stvdW.MoveNext();
                             ntvdW = e_stvdW.Count;
-                            Debug.WriteLine("ntvdW : " + ntvdW);
-                            if (svdW.StartsWith("vdw", StringComparison.Ordinal) & ntvdW == 9)
+                            Debug.WriteLine($"ntvdW : {ntvdW}");
+                            if (svdW.StartsWith("vdw", StringComparison.Ordinal) && ntvdW == 9)
                             {
                                 st.MoveNext();
                                 sid = st.Current; st.MoveNext();
                                 stvdW.MoveNext();
                                 sidvdW = stvdW.Current; stvdW.MoveNext();
-                                if (sid.Equals(sidvdW))
+                                if (sid.Equals(sidvdW, StringComparison.Ordinal))
                                 {
                                     SetAtomTypeData();
                                     a[6]++;
@@ -589,7 +590,7 @@ namespace NCDK.Modelings.Builder3D
                 while (true)
                 {
                     sDFSB = rDFSB.ReadLine();
-                    Debug.WriteLine("sDFSB = " + sDFSB);
+                    Debug.WriteLine($"sDFSB = {sDFSB}");
                     if (sDFSB == null)
                     {
                         Debug.WriteLine("sDFSB == null, break");
@@ -597,8 +598,8 @@ namespace NCDK.Modelings.Builder3D
                     }
                     var e_stDFSB = Strings.Tokenize(sDFSB, '\t', ';', ' '); stDFSB = e_stDFSB.GetEnumerator(); stDFSB.MoveNext();
                     ntDFSB = e_stDFSB.Count;
-                    Debug.WriteLine("ntDFSB : " + ntDFSB);
-                    if (sDFSB.StartsWith("DFSB", StringComparison.Ordinal) & ntDFSB == 6)
+                    Debug.WriteLine($"ntDFSB : {ntDFSB}");
+                    if (sDFSB.StartsWith("DFSB", StringComparison.Ordinal) && ntDFSB == 6)
                     {
                         SetDefaultStrBnd();
                     }
@@ -619,11 +620,11 @@ namespace NCDK.Modelings.Builder3D
         /// <param name="exactMass">exact mass</param>
         /// <returns>the mass number (or null) if no mass number was found</returns>
         /// <exception cref="IOException">isotope configuration could not be loaded</exception>
-        private int? MassNumber(int atomicNumber, double exactMass)
+        private static int? MassNumber(int atomicNumber, double exactMass)
         {
             string symbol = PeriodicTable.GetSymbol(atomicNumber);
-            IIsotope isotope = Isotopes.Instance.GetIsotope(symbol, exactMass, 0.001);
-            return isotope != null ? isotope.MassNumber : null;
+            IIsotope isotope = BODRIsotopeFactory.Instance.GetIsotope(symbol, exactMass, 0.001);
+            return isotope?.MassNumber;
         }
     }
 }

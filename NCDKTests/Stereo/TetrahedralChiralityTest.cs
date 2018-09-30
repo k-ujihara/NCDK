@@ -22,7 +22,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Base;
-using NCDK.Default;
+using NCDK.Silent;
 using System;
 
 namespace NCDK.Stereo
@@ -60,8 +60,8 @@ namespace NCDK.Stereo
         public void TestBuilder()
         {
             TetrahedralChirality chirality = new TetrahedralChirality(molecule.Atoms[1], ligands, TetrahedralStereo.Clockwise);
-            chirality.Builder = Default.ChemObjectBuilder.Instance;
-            Assert.AreEqual(Default.ChemObjectBuilder.Instance, chirality.Builder);
+            chirality.Builder = ChemObjectBuilder.Instance;
+            Assert.AreEqual(ChemObjectBuilder.Instance, chirality.Builder);
         }
 
         [TestMethod()]
@@ -99,7 +99,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void TestMap_Map_Map()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
             IAtom c1 = builder.NewAtom("C");
             IAtom o2 = builder.NewAtom("O");
@@ -148,7 +148,7 @@ namespace NCDK.Stereo
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestMap_Null_Map()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
             IAtom c1 = builder.NewAtom("C");
             IAtom o2 = builder.NewAtom("O");
@@ -166,7 +166,7 @@ namespace NCDK.Stereo
         [TestMethod()] 
         public void TestMap_Map_Map_EmptyMapping()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
             IAtom c1 = builder.NewAtom("C");
             IAtom o2 = builder.NewAtom("O");
@@ -187,7 +187,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Contains()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
             IAtom c1 = builder.NewAtom("C");
             IAtom o2 = builder.NewAtom("O");

@@ -25,7 +25,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.SMARTS;
 using NCDK.Smiles;
 using System.Collections.Generic;
-using static NCDK.Fingerprints.CircularFingerprinter;
 
 namespace NCDK.Fingerprints
 {
@@ -33,13 +32,13 @@ namespace NCDK.Fingerprints
     [TestClass()]
     public class CircularFingerprintSmartsTest : CDKTestCase
     {
-        public static SmilesParser parser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+        private static SmilesParser parser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
 
         [TestMethod()]
         public void TestMol1()
         {
-            string molSmiles = "CC";
-            string[][] expectedFPSmarts = new[] { new[] { "C*" }, new[] { "CC" } };
+            var molSmiles = "CC";
+            var expectedFPSmarts = new[] { new[] { "C*" }, new[] { "CC" } };
 
             CheckFPSmartsForMolecule(molSmiles, expectedFPSmarts);
         }
@@ -47,8 +46,8 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestMol2()
         {
-            string molSmiles = "CCC";
-            string[][] expectedFPSmarts = new[] { new[] { "C*" }, new[] { "C(*)*" },
+            var molSmiles = "CCC";
+            var expectedFPSmarts = new[] { new[] { "C*" }, new[] { "C(*)*" },
                 new[] { "CC*", "C(*)C" }, new[] { "CCC" }, };
 
             CheckFPSmartsForMolecule(molSmiles, expectedFPSmarts);
@@ -57,8 +56,8 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestMol3()
         {
-            string molSmiles = "CCN";
-            string[][] expectedFPSmarts = new[] { new[] { "C*" }, new[] { "C(*)*" }, new[] { "N*" },
+            var molSmiles = "CCN";
+            var expectedFPSmarts = new[] { new[] { "C*" }, new[] { "C(*)*" }, new[] { "N*" },
                 new[] { "CC*", "C(*)C" }, new[] { "C(*)N", "NC*" },
                 new[] { "CCN", "NCC", "C(C)N", "C(N)C" }, };
 
@@ -68,8 +67,8 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestMol4()
         {
-            string molSmiles = "C1CC1";
-            string[][] expectedFPSmarts = new[]
+            var molSmiles = "C1CC1";
+            var expectedFPSmarts = new[]
             { new[] { "C(*)*" }, new[] { "C1CC1", "C(C1)C1" } };
 
             CheckFPSmartsForMolecule(molSmiles, expectedFPSmarts);
@@ -78,8 +77,8 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestMol5()
         {
-            string molSmiles = "C1CCC1";
-            string[][] expectedFPSmarts = new[] {
+            var molSmiles = "C1CCC1";
+            var expectedFPSmarts = new[] {
                 new[] { "C(*)*" }, new[] { "C(C*)C*", "C(CC*)*", "C(*)CC*" },
                 new[] { "C1CCC1", "C(CC1)C1", "C(C1)CC1" } };
 
@@ -89,8 +88,8 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestMol6()
         {
-            string molSmiles = "CC[C-]";
-            string[][] expectedFPSmarts = new[] {
+            var molSmiles = "CC[C-]";
+            var expectedFPSmarts = new[] {
                 new[] { "C*" }, new[] { "C(*)*" }, new[] { "[C-]*" }, new[] { "CC*", "C(*)C" },
                 new[] { "[C-]C*", "C(*)[C-]" },
                 new[] { "CC[C-]", "C(C)[C-]", "[C-]CC", "C([C-])C" } };
@@ -101,8 +100,8 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestMol7()
         {
-            string molSmiles = "c1ccccc1";
-            string[][] expectedFPSmarts = new[] {
+            var molSmiles = "c1ccccc1";
+            var expectedFPSmarts = new[] {
                 new[] { "c(a)a" },
                 new[] { "c(a)cca", "c(ca)ca", "c(cca)a" },
                 new[] { "c(a)cccca", "c(ca)ccca", "c(cca)cca", "c(ccca)ca", "c(cccca)a" },
@@ -111,28 +110,28 @@ namespace NCDK.Fingerprints
             CheckFPSmartsForMolecule(molSmiles, expectedFPSmarts);
         }
 
-        private void CheckFPSmartsForMolecule(string moleculeSmiles, string[][] expectedFPSmarts)
+        private static void CheckFPSmartsForMolecule(string moleculeSmiles, string[][] expectedFPSmarts)
         {
             var expected = new HashSet<string>();
-            foreach (string[] strs in expectedFPSmarts)
+            foreach (var strs in expectedFPSmarts)
                 foreach (var str in strs)
                     expected.Add(str);
 
             // expectedFPSmarts[][] is a double array because for each smarts
             // several equivalent variants
             // of the smarts are given e.g. CCC C(C)C
-            IAtomContainer mol = parser.ParseSmiles(moleculeSmiles);
+            var mol = parser.ParseSmiles(moleculeSmiles);
 
             CircularFingerprinter circ = new CircularFingerprinter();
             circ.Calculate(mol);
-            SmartsFragmentExtractor subsmarts = new SmartsFragmentExtractor(mol);
-            subsmarts.SetMode(SmartsFragmentExtractor.MODE_JCOMPOUNDMAPPER);
-            int numFP = circ.FPCount;
+            var subsmarts = new SmartsFragmentExtractor(mol);
+            subsmarts.SetMode(SubstructureSelectionMode.JCompoundMapper);
+            var numFP = circ.FPCount;
 
             var actual = new HashSet<string>();
             for (int i = 0; i < numFP; i++)
             {
-                FP fp = circ.GetFP(i);
+                var fp = circ.GetFP(i);
                 actual.Add(subsmarts.Generate(fp.Atoms));
             }
 

@@ -7,8 +7,8 @@ namespace NCDK.Graphs
         {
             {
                 IChemObjectSet<IAtomContainer> containers = null;
-                #region AllFinder
-                ICycleFinder cf = Cycles.AllFinder;
+                #region AllSimpleFinder
+                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -26,7 +26,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region MCB
-                ICycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -44,7 +44,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region Relevant
-                ICycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -62,7 +62,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region Essential
-                ICycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -80,7 +80,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region TripletShort
-                ICycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -98,7 +98,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region VertexShort
-                ICycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -116,7 +116,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region EdgeShort
-                ICycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -134,7 +134,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region CDKAromaticSetFinder
-                ICycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -152,7 +152,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region AllOrVertexShortFinder
-                ICycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -171,13 +171,13 @@ namespace NCDK.Graphs
             {
                 #region Or6
                 // all cycles or all cycles size <= 6
-                ICycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(6));
+                ICycleFinder cf = Cycles.Or(Cycles.AllSimpleFinder, Cycles.GetAllFinder(6));
                 #endregion
             }
             {
                 #region OrARE
                 // all cycles or relevant or essential
-                ICycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.Or(Cycles.RelevantFinder, Cycles.EssentialFinder));
+                ICycleFinder cf = Cycles.Or(Cycles.AllSimpleFinder, Cycles.Or(Cycles.RelevantFinder, Cycles.EssentialFinder));
                 #endregion
             }
 

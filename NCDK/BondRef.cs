@@ -202,6 +202,12 @@ namespace NCDK
         }
 
         /// <inheritdoc/>
+        public bool Equals(IBond other)
+        {
+            return bond.Equals(other);
+        }
+
+        /// <inheritdoc/>
         public override ICDKObject Clone(CDKObjectMap map)
         {
             return bond.Clone(map);

@@ -5,14 +5,14 @@
 // retrieved one by one.
 // @cdk.module qsar
 // @cdk.githash
-	
+    
 using NCDK.QSAR.Results;
 using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Bonds
 {
-	public partial class BondSigmaElectronegativityDescriptor
-	{
+    public partial class BondSigmaElectronegativityDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
 
         private IDictionary<object, object> cachedDescriptorValues = null;
@@ -51,9 +51,9 @@ namespace NCDK.QSAR.Descriptors.Bonds
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -65,9 +65,9 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
         IDescriptorValue IBondDescriptor.Calculate(IBond bond, IAtomContainer atomContainer)
             => Calculate(bond, atomContainer);
-	}
-	public partial class BondPartialTChargeDescriptor
-	{
+    }
+    public partial class BondPartialTChargeDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
 
         private IDictionary<object, object> cachedDescriptorValues = null;
@@ -106,9 +106,9 @@ namespace NCDK.QSAR.Descriptors.Bonds
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -120,9 +120,9 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
         IDescriptorValue IBondDescriptor.Calculate(IBond bond, IAtomContainer atomContainer)
             => Calculate(bond, atomContainer);
-	}
-	public partial class BondPartialSigmaChargeDescriptor
-	{
+    }
+    public partial class BondPartialSigmaChargeDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
 
         private IDictionary<object, object> cachedDescriptorValues = null;
@@ -161,9 +161,9 @@ namespace NCDK.QSAR.Descriptors.Bonds
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -175,9 +175,9 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
         IDescriptorValue IBondDescriptor.Calculate(IBond bond, IAtomContainer atomContainer)
             => Calculate(bond, atomContainer);
-	}
-	public partial class BondPartialPiChargeDescriptor
-	{
+    }
+    public partial class BondPartialPiChargeDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
 
         private IDictionary<object, object> cachedDescriptorValues = null;
@@ -216,9 +216,9 @@ namespace NCDK.QSAR.Descriptors.Bonds
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -230,9 +230,9 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
         IDescriptorValue IBondDescriptor.Calculate(IBond bond, IAtomContainer atomContainer)
             => Calculate(bond, atomContainer);
-	}
-	public partial class AtomicNumberDifferenceDescriptor
-	{
+    }
+    public partial class AtomicNumberDifferenceDescriptor
+    {
         private const string PreviousAtomContainer = "previousAtomContainer";
 
         private IDictionary<object, object> cachedDescriptorValues = null;
@@ -271,9 +271,9 @@ namespace NCDK.QSAR.Descriptors.Bonds
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>()
-				{
-					[PreviousAtomContainer] = container,
-				};
+                {
+                    [PreviousAtomContainer] = container,
+                };
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -285,5 +285,5 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
         IDescriptorValue IBondDescriptor.Calculate(IBond bond, IAtomContainer atomContainer)
             => Calculate(bond, atomContainer);
-	}
+    }
 }

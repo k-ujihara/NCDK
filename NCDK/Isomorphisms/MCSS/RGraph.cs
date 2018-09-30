@@ -110,7 +110,7 @@ namespace NCDK.Isomorphisms.MCSS
         // an RGraph is a list of RGraph nodes
         // each node keeping track of its
         // neighbors.
-        IList<RNode> graph = null;
+        private List<RNode> graph = null;
 
         // maximal number of iterations before
         // search break
@@ -126,14 +126,14 @@ namespace NCDK.Isomorphisms.MCSS
         /// <summary>
         /// The size of the second of the two compared graphs
         /// </summary>
-        public int SecondGraphSize = 0;
+        public int SecondGraphSize { get; set; } = 0;
 
         // constrains
         BitArray c1 = null;
         BitArray c2 = null;
 
         // current solution list
-        IList<BitArray> solutionList = null;
+        List<BitArray> solutionList = null;
 
         // flag to define if we want to get all possible 'mappings'
         bool findAllMap = false;
@@ -180,7 +180,7 @@ namespace NCDK.Isomorphisms.MCSS
         ///  Returns the graph object of this RGraph.
         /// </summary>
         /// <returns>The graph object, a list</returns>
-        public IList<RNode> Graph => this.graph;
+        public IReadOnlyList<RNode> Graph => this.graph;
 
         /// <summary>
         ///  Adds a new node to the RGraph.
@@ -340,11 +340,11 @@ namespace NCDK.Isomorphisms.MCSS
                         break;
                     BitArray sol = solutionList[pp];
 
-                    if (!BitArrays.AreEqual(sol, traversed))
+                    if (!BitArrays.Equals(sol, traversed))
                     {
                         // if we asked to save all 'mappings' then keep this mapping
                         if (findAllMap 
-                            && (BitArrays.AreEqual(projG1, ProjectG1(sol)) || BitArrays.AreEqual(projG2, ProjectG2(sol))))
+                            && (BitArrays.Equals(projG1, ProjectG1(sol)) || BitArrays.Equals(projG2, ProjectG2(sol))))
                         {
                             // do nothing
                         }
@@ -419,7 +419,7 @@ namespace NCDK.Isomorphisms.MCSS
                     break;
 
                 // if we want every 'mappings' do not stop
-                if (findAllMap && (BitArrays.AreEqual(projG1, ProjectG1(sol)) || BitArrays.AreEqual(projG2, ProjectG2(sol))))
+                if (findAllMap && (BitArrays.Equals(projG1, ProjectG1(sol)) || BitArrays.Equals(projG2, ProjectG2(sol))))
                 {
                     // do nothing
                 }
@@ -466,7 +466,7 @@ namespace NCDK.Isomorphisms.MCSS
         ///  Returns the list of solutions.
         /// </summary>
         /// <returns>The solution list</returns>
-        public IList<BitArray> Solutions => solutionList;
+        public IReadOnlyList<BitArray> Solutions => solutionList;
 
         /// <summary>
         ///  Converts a RGraph bitset (set of RNode)
@@ -477,9 +477,9 @@ namespace NCDK.Isomorphisms.MCSS
         /// </summary>
         /// <param name="set">the BitArray</param>
         /// <returns>the RMap list</returns>
-        public IList<RMap> BitSetToRMap(BitArray set)
+        public IReadOnlyList<RMap> BitSetToRMap(BitArray set)
         {
-            IList<RMap> rMapList = new List<RMap>();
+            var rMapList = new List<RMap>();
 
             for (int x = BitArrays.NextSetBit(set, 0); x >= 0; x = BitArrays.NextSetBit(set, x + 1))
             {
@@ -585,7 +585,7 @@ namespace NCDK.Isomorphisms.MCSS
         /// <param name="A">a bitSet</param>
         /// <param name="B">a bitSet</param>
         /// <returns>true if A is contained in B</returns>
-        private bool IsContainedIn(BitArray A, BitArray B)
+        private static bool IsContainedIn(BitArray A, BitArray B)
         {
             bool result = false;
 
@@ -597,7 +597,7 @@ namespace NCDK.Isomorphisms.MCSS
             BitArray setA = (BitArray)A.Clone();
             setA.And(B);
 
-            if (BitArrays.AreEqual(setA, A))
+            if (BitArrays.Equals(setA, A))
             {
                 result = true;
             }

@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config.AtomType;
+using NCDK.Config.AtomTypes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,8 +32,19 @@ namespace NCDK.Config
     public class OWLBasedAtomTypeConfigurator
         : IAtomTypeConfigurator
     {
+        private Stream stream;
+
         /// <inheritdoc/>
-        public Stream Stream { get; set; }
+        public Stream GetStream()
+        {
+            return stream;
+        }
+
+        /// <inheritdoc/>
+        public void SetStream(Stream value)
+        {
+            stream = value;
+        }
 
         public OWLBasedAtomTypeConfigurator() { }
 
@@ -42,13 +53,13 @@ namespace NCDK.Config
         /// </summary>
         /// <param name="builder">used to construct the <see cref="IAtomType"/>'s.</param>
         /// <returns>A <see cref="IEnumerable{IAtomType}"/> with read <see cref="IAtomType"/>'s.</returns>
-        /// <exception cref="IOException">when a problem occurred with reading from the <see cref="Stream"/></exception>
+        /// <exception cref="IOException">when a problem occurred with reading from the <see cref="GetStream()"/></exception>
         public IEnumerable<IAtomType> ReadAtomTypes(IChemObjectBuilder builder)
         {
-            if (Stream == null)
+            if (GetStream() == null)
                 throw new Exception("There was a problem getting an input stream");
 
-            return new OWLAtomTypeReader(Stream).ReadAtomTypes(builder);
+            return new OWLAtomTypeReader(GetStream()).ReadAtomTypes(builder);
         }
     }
 }

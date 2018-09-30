@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -33,6 +34,7 @@ namespace NCDK.Default
     /// some way but without hard coded semantics.
     /// </summary>
     // @author      miguelrojasch <miguelrojasch@yahoo.es>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class ReactionScheme : ReactionSet, IReactionScheme
     {
         /// <summary>
@@ -88,6 +90,7 @@ namespace NCDK.Silent
     /// some way but without hard coded semantics.
     /// </summary>
     // @author      miguelrojasch <miguelrojasch@yahoo.es>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class ReactionScheme : ReactionSet, IReactionScheme
     {
         /// <summary>

@@ -20,8 +20,10 @@
  */
 
 using NCDK.Isomorphisms.Matchers;
+using NCDK.Isomorphisms.Matchers.SMARTS;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using static NCDK.Smiles.SMARTS.Parser.SMARTSParserConstants;
@@ -51,7 +53,7 @@ namespace NCDK.Smiles.SMARTS.Parser
     // @cdk.module  smarts
     // @cdk.keyword SMARTS
     // @cdk.keyword substructure search
-    public class SMARTSParser/*@bgen(jjtree)*/
+    internal class SMARTSParser/*@bgen(jjtree)*/
     {/*@bgen(jjtree)*/
         protected JJTSMARTSParserState jjtree = new JJTSMARTSParserState();
         private int componentId = 0;
@@ -213,7 +215,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                     case 147:
                         Jj_consume_token(147);
                         if (jjtree.NodeArity() > 0)
-                            ((ASTGroup)jjtree.PeekNode()).SetRole(ASTGroup.ROLE_REACTANT);
+                            ((ASTGroup)jjtree.PeekNode()).Role = ReactionRoles.Reactant;
                         switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                         {
                             case c:
@@ -239,7 +241,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                             case L_BRACKET:
                             case L_PAREN:
                                 GroupExpression();
-                                ((ASTGroup)jjtree.PeekNode()).SetRole(ASTGroup.ROLE_AGENT);
+                                ((ASTGroup)jjtree.PeekNode()).Role = ReactionRoles.Agent;
                                 break;
                             default:
                                 jj_la1[2] = jj_gen;
@@ -271,7 +273,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                             case L_BRACKET:
                             case L_PAREN:
                                 GroupExpression();
-                                ((ASTGroup)jjtree.PeekNode()).SetRole(ASTGroup.ROLE_PRODUCT);
+                                ((ASTGroup)jjtree.PeekNode()).Role = ReactionRoles.Product;
                                 break;
                             default:
                                 jj_la1[3] = jj_gen;
@@ -767,7 +769,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                                     }
                                 }
                                 break_label_5:
-                                ((ASTLowAndExpression)jjtree.PeekNode()).SetMapIdx(int.Parse(mapidx.ToString()));
+                                ((ASTLowAndExpression)jjtree.PeekNode()).SetMapIdx(int.Parse(mapidx.ToString(), NumberFormatInfo.InvariantInfo));
                                 break;
                             default:
                                 jj_la1[18] = jj_gen;
@@ -777,11 +779,11 @@ namespace NCDK.Smiles.SMARTS.Parser
                         token_source.SwitchTo(SMARTSParserConstants.Default); rightBracket = token;
                         Token HToken = null;
                         // If the LowAndExpression is "[H]", change it to an ExplicitAtom
-                        if (firstToken.image.Equals("H"))
+                        if (string.Equals(firstToken.image, "H", StringComparison.Ordinal))
                         {
                             HToken = firstToken;
                         }
-                        else if (massNode != null && massNode.Mass <= 3 && secondToken != null && secondToken.image.Equals("H"))
+                        else if (massNode != null && massNode.Mass <= 3 && secondToken != null && string.Equals(secondToken.image, "H", StringComparison.Ordinal))
                         {
                             HToken = secondToken;
                         }
@@ -2046,7 +2048,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                             }
                         }
                         break_label_6:
-                        jjtn000.Count = int.Parse(digits.ToString());
+                        jjtn000.Count = int.Parse(digits.ToString(), NumberFormatInfo.InvariantInfo);
                         break;
                     default:
                         jj_la1[35] = jj_gen;
@@ -2091,7 +2093,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                             }
                         }
                         break_label_7:
-                        jjtn000.Count = int.Parse(digits.ToString());
+                        jjtn000.Count = int.Parse(digits.ToString(), NumberFormatInfo.InvariantInfo);
                         break;
                     default:
                         jj_la1[37] = jj_gen;
@@ -2136,7 +2138,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                             }
                         }
                         break_label_8:
-                        jjtn000.NumOfConnection = int.Parse(digits.ToString());
+                        jjtn000.NumOfConnection = int.Parse(digits.ToString(), NumberFormatInfo.InvariantInfo);
                         break;
                     default:
                         jj_la1[39] = jj_gen;
@@ -2179,7 +2181,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 break_label_9:
                 jjtree.CloseNodeScope(jjtn000, true);
                 jjtc000 = false;
-                jjtn000.Number = int.Parse(digits.ToString());
+                jjtn000.Number = int.Parse(digits.ToString(), NumberFormatInfo.InvariantInfo);
             }
             finally
             {
@@ -2202,7 +2204,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 Jj_consume_token(DIGIT);
                 jjtree.CloseNodeScope(jjtn000, true);
                 jjtc000 = false;
-                int tmp = int.Parse(token.image);
+                int tmp = int.Parse(token.image, NumberFormatInfo.InvariantInfo);
                 if (tmp < 1 || tmp > 8) { if (true) throw new ParseException("Hybridization number must be between 1 & 8"); }
                 jjtn000.HybridizationNumber = tmp;
             }
@@ -2246,7 +2248,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                                 }
                             }
                             break_label_10:
-                            jjtn000.Charge = int.Parse(digits.ToString());
+                            jjtn000.Charge = int.Parse(digits.ToString(), NumberFormatInfo.InvariantInfo);
                             break;
                         default:
                             jj_la1[42] = jj_gen;
@@ -2279,7 +2281,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                                         }
                                     }
                                     break_label_11:
-                                    jjtn000.Charge = int.Parse(digits.ToString());
+                                    jjtn000.Charge = int.Parse(digits.ToString(), NumberFormatInfo.InvariantInfo);
                                     break;
                                 default:
                                     jj_la1[44] = jj_gen;
@@ -2414,7 +2416,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                             }
                         }
                         break_label_12:
-                        jjtn000.NumOfConnection = int.Parse(token.image);
+                        jjtn000.NumOfConnection = int.Parse(token.image, NumberFormatInfo.InvariantInfo);
                         break;
                     default:
                         jj_la1[47] = jj_gen;
@@ -2458,9 +2460,9 @@ namespace NCDK.Smiles.SMARTS.Parser
                 break_label_13:
                 jjtree.CloseNodeScope(jjtn000, true);
                 jjtc000 = false;
-                int tmpInt = int.Parse(digits.ToString());
+                int tmpInt = int.Parse(digits.ToString(), NumberFormatInfo.InvariantInfo);
                 if (tmpInt < 1 || tmpInt > 18) { if (true) throw new ParseException("Invalid group number"); }
-                jjtn000.GroupNumber = int.Parse(digits.ToString());
+                jjtn000.GroupNumber = int.Parse(digits.ToString(), NumberFormatInfo.InvariantInfo);
             }
             finally
             {
@@ -2500,7 +2502,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                             }
                         }
                         break_label_14:
-                        jjtn000.NumOfConnection = int.Parse(digits.ToString());
+                        jjtn000.NumOfConnection = int.Parse(digits.ToString(), NumberFormatInfo.InvariantInfo);
                         break;
                     default:
                         jj_la1[50] = jj_gen;
@@ -2545,7 +2547,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                             }
                         }
                         break_label_15:
-                        jjtn000.Order = int.Parse(digits.ToString());
+                        jjtn000.Order = int.Parse(digits.ToString(), NumberFormatInfo.InvariantInfo);
                         break;
                     default:
                         jj_la1[52] = jj_gen;
@@ -2590,7 +2592,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                             }
                         }
                         break_label_16:
-                        jjtn000.NumOfMembership = int.Parse(digits.ToString());
+                        jjtn000.NumOfMembership = int.Parse(digits.ToString(), NumberFormatInfo.InvariantInfo);
                         break;
                     default:
                         jj_la1[54] = jj_gen;
@@ -2635,7 +2637,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                             }
                         }
                         break_label_17:
-                        jjtn000.Size = int.Parse(digits.ToString());
+                        jjtn000.Size = int.Parse(digits.ToString(), NumberFormatInfo.InvariantInfo);
                         break;
                     default:
                         jj_la1[56] = jj_gen;
@@ -2753,7 +2755,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 break_label_18:
                 jjtree.CloseNodeScope(jjtn000, true);
                 jjtc000 = false;
-                jjtn000.Mass = int.Parse(digits.ToString());
+                jjtn000.Mass = int.Parse(digits.ToString(), NumberFormatInfo.InvariantInfo);
             }
             finally
             {
@@ -3357,7 +3359,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         /// <summary>Constructor with InputStream and supplied encoding</summary>
         public SMARTSParser(Stream stream, string encoding)
         {
-            try { jj_input_stream = new SimpleCharStream(stream, encoding, 1, 1); } catch (ArgumentException e) { throw e; }
+            try { jj_input_stream = new SimpleCharStream(stream, encoding, 1, 1); } catch (ArgumentException) { throw; }
             token_source = new SMARTSParserTokenManager(jj_input_stream);
             token = new Token();
             jj_ntk = -1;
@@ -3374,7 +3376,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         /// <summary>Reinitialise.</summary>
         public void ReInit(Stream stream, string encoding)
         {
-            try { jj_input_stream.ReInit(stream, encoding, 1, 1); } catch (ArgumentException e) { throw e; }
+            try { jj_input_stream.ReInit(stream, encoding, 1, 1); } catch (ArgumentException) { throw; }
             token_source.ReInit(jj_input_stream);
             token = new Token();
             jj_ntk = -1;
@@ -3461,7 +3463,9 @@ namespace NCDK.Smiles.SMARTS.Parser
             throw GenerateParseException();
         }
 
-        sealed class LookaheadSuccess : Exception { }
+#pragma warning disable CA1064
+        private sealed class LookaheadSuccess : Exception { }
+#pragma warning restore CA1064
         readonly private LookaheadSuccess jj_ls = new LookaheadSuccess();
         private bool Jj_scan_token(int kind)
         {
@@ -3491,7 +3495,6 @@ namespace NCDK.Smiles.SMARTS.Parser
             if (jj_la == 0 && jj_scanpos == jj_lastpos) throw jj_ls;
             return false;
         }
-
 
         /// <summary>Get the next Token.</summary>
         public Token GetNextToken()
@@ -3526,7 +3529,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         private IList<int[]> jj_expentries = new List<int[]>();
         private int[] jj_expentry;
         private int jj_kind = -1;
-        private int[] jj_lasttokens = new int[100];
+        private readonly int[] jj_lasttokens = new int[100];
         private int jj_endpos;
 
         private void Jj_add_error_token(int kind, int pos)
@@ -3626,17 +3629,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 exptokseq[i] = jj_expentries[i];
             }
-            return new ParseException(token, exptokseq, tokenImage);
-        }
-
-        /// <summary>Enable tracing.</summary>
-        public void Enable_tracing()
-        {
-        }
-
-        /// <summary>Disable tracing.</summary>
-        public void Disable_tracing()
-        {
+            return new ParseException(token, exptokseq, TokenImage);
         }
 
         private void Jj_rescan_token()

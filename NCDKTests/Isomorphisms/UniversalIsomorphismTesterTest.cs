@@ -24,6 +24,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.AtomTypes;
+using NCDK.Common.Base;
 using NCDK.Graphs;
 using NCDK.IO;
 using NCDK.Isomorphisms.Matchers;
@@ -42,14 +43,14 @@ namespace NCDK.Isomorphisms
     [TestClass()]
     public class UniversalIsomorphismTesterTest : CDKTestCase
     {
-        bool standAlone = false;
+        readonly bool standAlone = false;
         private UniversalIsomorphismTester uiTester = new UniversalIsomorphismTester();
 
         [TestMethod()]
-        public void TestIsSubgraph_IAtomContainer_IAtomContainer()
+        public void TestIsSubgraphIAtomContainerIAtomContainer()
         {
-            IAtomContainer mol = TestMoleculeFactory.MakeAlphaPinene();
-            IAtomContainer frag1 = TestMoleculeFactory.MakeCyclohexene(); //one double bond in ring
+            var mol = TestMoleculeFactory.MakeAlphaPinene();
+            var frag1 = TestMoleculeFactory.MakeCyclohexene(); //one double bond in ring
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(frag1);
             Aromaticity.CDKLegacy.Apply(mol);
@@ -57,7 +58,7 @@ namespace NCDK.Isomorphisms
 
             if (standAlone)
             {
-                Console.Out.WriteLine("Cyclohexene is a subgraph of alpha-Pinen: " + uiTester.IsSubgraph(mol, frag1));
+                Console.Out.WriteLine("Cyclohexene is a subgraph of alpha-Pinene: " + uiTester.IsSubgraph(mol, frag1));
             }
             else
             {
@@ -70,29 +71,20 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSFBug1708336()
         {
-            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
-            IAtomContainer atomContainer = builder.NewAtomContainer();
+            var builder = ChemObjectBuilder.Instance;
+            var atomContainer = builder.NewAtomContainer();
             atomContainer.Atoms.Add(builder.NewAtom("C"));
             atomContainer.Atoms.Add(builder.NewAtom("C"));
             atomContainer.Atoms.Add(builder.NewAtom("N"));
             atomContainer.AddBond(atomContainer.Atoms[0], atomContainer.Atoms[1], BondOrder.Single);
             atomContainer.AddBond(atomContainer.Atoms[1], atomContainer.Atoms[2], BondOrder.Single);
-            IQueryAtomContainer query = new QueryAtomContainer(ChemObjectBuilder.Instance);
-            IQueryAtom a1 = new SymbolQueryAtom(ChemObjectBuilder.Instance)
-            {
-                Symbol = "C"
-            };
-
+            var a1 = new SymbolQueryAtom(ChemObjectBuilder.Instance) { Symbol = "C" };
             var a2 = new Matchers.SMARTS.AnyAtom(ChemObjectBuilder.Instance);
+            var b1 = new OrderQueryBond(a1, a2, BondOrder.Single, ChemObjectBuilder.Instance);
+            var a3 = new SymbolQueryAtom(ChemObjectBuilder.Instance) { Symbol = "C" };
+            var b2 = new OrderQueryBond(a2, a3, BondOrder.Single, ChemObjectBuilder.Instance);
 
-            IBond b1 = new OrderQueryBond(a1, a2, BondOrder.Single, ChemObjectBuilder.Instance);
-
-            IQueryAtom a3 = new SymbolQueryAtom(ChemObjectBuilder.Instance)
-            {
-                Symbol = "C"
-            };
-
-            IBond b2 = new OrderQueryBond(a2, a3, BondOrder.Single, ChemObjectBuilder.Instance);
+            var query = new QueryAtomContainer(ChemObjectBuilder.Instance);
             query.Atoms.Add(a1);
             query.Atoms.Add(a2);
             query.Atoms.Add(a3);
@@ -102,14 +94,14 @@ namespace NCDK.Isomorphisms
 
             var list = uiTester.GetSubgraphMaps(atomContainer, query);
 
-            Assert.IsTrue(list.Count == 0);
+            Assert.IsTrue(list.Count() == 0);
         }
 
         [TestMethod()]
         public void Test2()
         {
-            IAtomContainer mol = TestMoleculeFactory.MakeAlphaPinene();
-            IAtomContainer frag1 = TestMoleculeFactory.MakeCyclohexane(); // no double bond in ring
+            var mol = TestMoleculeFactory.MakeAlphaPinene();
+            var frag1 = TestMoleculeFactory.MakeCyclohexane(); // no double bond in ring
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(frag1);
             Aromaticity.CDKLegacy.Apply(mol);
@@ -117,7 +109,7 @@ namespace NCDK.Isomorphisms
 
             if (standAlone)
             {
-                Console.Out.WriteLine("Cyclohexane is a subgraph of alpha-Pinen: " + uiTester.IsSubgraph(mol, frag1));
+                Console.Out.WriteLine($"Cyclohexane is a subgraph of alpha-Pinene: {uiTester.IsSubgraph(mol, frag1)}");
             }
             else
             {
@@ -128,8 +120,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Test3()
         {
-            IAtomContainer mol = TestMoleculeFactory.MakeIndole();
-            IAtomContainer frag1 = TestMoleculeFactory.MakePyrrole();
+            var mol = TestMoleculeFactory.MakeIndole();
+            var frag1 = TestMoleculeFactory.MakePyrrole();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(frag1);
             Aromaticity.CDKLegacy.Apply(mol);
@@ -148,28 +140,28 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestBasicQueryAtomContainer()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
-            IAtomContainer SMILESquery = sp.ParseSmiles("CC"); // acetic acid anhydride
+            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
+            var SMILESquery = sp.ParseSmiles("CC"); // acetic acid anhydride
             var query = QueryAtomContainerCreator.CreateBasicQueryContainer(SMILESquery);
 
             Assert.IsTrue(uiTester.IsSubgraph(atomContainer, query));
         }
 
         [TestMethod()]
-        public void TestGetSubgraphAtomsMaps_IAtomContainer()
+        public void TestGetSubgraphAtomsMapsIAtomContainer()
         {
             int[] result1 = { 6, 5, 7, 8, 0 };
             int[] result2 = { 3, 4, 2, 1, 0 };
 
-            IAtomContainer mol = TestMoleculeFactory.MakeIndole();
-            IAtomContainer frag1 = TestMoleculeFactory.MakePyrrole();
+            var mol = TestMoleculeFactory.MakeIndole();
+            var frag1 = TestMoleculeFactory.MakePyrrole();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(frag1);
             Aromaticity.CDKLegacy.Apply(mol);
             Aromaticity.CDKLegacy.Apply(frag1);
 
-            var list = uiTester.GetSubgraphAtomsMaps(mol, frag1);
+            var list = uiTester.GetSubgraphAtomsMaps(mol, frag1).ToList();
             var first = list[0];
             for (int i = 0; i < first.Count; i++)
             {
@@ -180,25 +172,25 @@ namespace NCDK.Isomorphisms
         }
 
         [TestMethod()]
-        public void TestGetSubgraphMap_IAtomContainer_IAtomContainer()
+        public void TestGetSubgraphMapIAtomContainerIAtomContainer()
         {
-            string molfile = "NCDK.Data.MDL.decalin.mol";
-            string queryfile = "NCDK.Data.MDL.decalin.mol";
-            IAtomContainer mol = new AtomContainer();
-            IAtomContainer temp = new AtomContainer();
+            var molfile = "NCDK.Data.MDL.decalin.mol";
+            var queryfile = "NCDK.Data.MDL.decalin.mol";
+            var mol = new AtomContainer();
+            var temp = new AtomContainer();
             QueryAtomContainer query1 = null;
             QueryAtomContainer query2 = null;
 
             var ins = ResourceLoader.GetAsStream(molfile);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
+            var reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             reader.Read(mol);
             ins = ResourceLoader.GetAsStream(queryfile);
             reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             reader.Read(temp);
             query1 = QueryAtomContainerCreator.CreateBasicQueryContainer(temp);
 
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer atomContainer = sp.ParseSmiles("C1CCCCC1");
+            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var atomContainer = sp.ParseSmiles("C1CCCCC1");
             query2 = QueryAtomContainerCreator.CreateBasicQueryContainer(atomContainer);
 
             var list = uiTester.GetSubgraphMap(mol, query1);
@@ -206,17 +198,16 @@ namespace NCDK.Isomorphisms
 
             list = uiTester.GetSubgraphMap(mol, query2);
             Assert.AreEqual(6, list.Count);
-
         }
 
         // @cdk.bug 1110537
         [TestMethod()]
-        public void TestGetOverlaps_IAtomContainer_IAtomContainer()
+        public void TestGetOverlapsIAtomContainerIAtomContainer()
         {
-            string file1 = "NCDK.Data.MDL.5SD.mol";
-            string file2 = "NCDK.Data.MDL.ADN.mol";
-            IAtomContainer mol1 = new AtomContainer();
-            IAtomContainer mol2 = new AtomContainer();
+            var file1 = "NCDK.Data.MDL.5SD.mol";
+            var file2 = "NCDK.Data.MDL.ADN.mol";
+            var mol1 = new AtomContainer();
+            var mol2 = new AtomContainer();
 
             var ins1 = ResourceLoader.GetAsStream(file1);
             new MDLV2000Reader(ins1, ChemObjectReaderMode.Strict).Read(mol1);
@@ -236,9 +227,9 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestBug2944080()
         {
-            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
-            IAtomContainer mol2 = smilesParser.ParseSmiles("CCC(=CC)C(=O)NC(N)=O");
+            var smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
+            var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+            var mol2 = smilesParser.ParseSmiles("CCC(=CC)C(=O)NC(N)=O");
 
             var list = uiTester.GetOverlaps(mol1, mol2);
             Assert.AreEqual(1, list.Count);
@@ -251,11 +242,11 @@ namespace NCDK.Isomorphisms
 
         // @cdk.bug 2944080
         [TestMethod()]
-        public void TestGetSubgraphAtomsMap_2944080()
+        public void TestGetSubgraphAtomsMap2944080()
         {
-            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
-            IAtomContainer mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
+            var smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
+            var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+            var mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
 
             //Test for atom mapping between the mols
             var maplist = uiTester.GetSubgraphAtomsMap(mol1, mol2);
@@ -265,11 +256,11 @@ namespace NCDK.Isomorphisms
 
         // @cdk.bug 2944080
         [TestMethod()]
-        public void TestGetSubgraphMap_2944080()
+        public void TestGetSubgraphMap2944080()
         {
-            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
-            IAtomContainer mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
+            var smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
+            var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+            var mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
 
             //Test for atom mapping between the mols
             var maplist = uiTester.GetSubgraphMap(mol1, mol2);
@@ -279,29 +270,28 @@ namespace NCDK.Isomorphisms
 
         // @cdk.bug 2944080
         [TestMethod()]
-        public void TestSearchNoConditions_2944080()
+        public void TestSearchNoConditions2944080()
         {
-            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
-            IAtomContainer mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
+            var smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
+            var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+            var mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
 
             //Test for atom mapping between the mols
-            var maplist = uiTester.Search(mol1, mol2, new BitArray(mol1.Atoms.Count),
-                            UniversalIsomorphismTester.GetBitSet(mol2), false, false);
+            var maplist = uiTester.Search(mol1, mol2, new BitArray(mol1.Atoms.Count), UniversalIsomorphismTester.GetBitSet(mol2), false, false);
             Assert.IsNotNull(maplist);
-            Assert.AreEqual(1, maplist.Count);
+            Assert.AreEqual(1, maplist.Count());
         }
 
         // @cdk.bug 2944080
         [TestMethod()]
-        public void TestSearch_2944080()
+        public void TestSearch2944080()
         {
-            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
-            IAtomContainer mol2 = smilesParser.ParseSmiles("CCC(=CC)C(=O)NC(N)=O");
+            var smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
+            var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+            var mol2 = smilesParser.ParseSmiles("CCC(=CC)C(=O)NC(N)=O");
 
             //Test for atom mapping between the mols
-            var list = uiTester.Search(mol1, mol2, new BitArray(mol1.Atoms.Count), new BitArray(mol2.Atoms.Count), true, true);
+            var list = uiTester.Search(mol1, mol2, new BitArray(mol1.Atoms.Count), new BitArray(mol2.Atoms.Count), true, true).ToList();
             Assert.AreEqual(3, list.Count);
             for (int i = 0; i < list.Count; i++)
             {
@@ -309,7 +299,7 @@ namespace NCDK.Isomorphisms
                 Assert.AreNotSame(0, first.Count);
             }
 
-            list = uiTester.Search(mol1, mol2, new BitArray(mol1.Atoms.Count), new BitArray(mol2.Atoms.Count), false, false);
+            list = uiTester.Search(mol1, mol2, new BitArray(mol1.Atoms.Count), new BitArray(mol2.Atoms.Count), false, false).ToList();
             Assert.AreEqual(1, list.Count);
             for (int i = 0; i < list.Count; i++)
             {
@@ -320,13 +310,13 @@ namespace NCDK.Isomorphisms
 
         // @cdk.bug 2944080
         [TestMethod()]
-        public void TestGetSubgraphAtomsMaps_2944080()
+        public void TestGetSubgraphAtomsMaps2944080()
         {
-            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
-            IAtomContainer mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
+            var smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
+            var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
+            var mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
 
-            var list = uiTester.GetSubgraphAtomsMaps(mol1, mol2);
+            var list = uiTester.GetSubgraphAtomsMaps(mol1, mol2).ToList();
             Assert.IsNotNull(list);
             Assert.AreNotSame(0, list.Count);
             for (int i = 0; i < list.Count; i++)
@@ -338,10 +328,10 @@ namespace NCDK.Isomorphisms
         }
 
         [TestMethod()]
-        public void TestGetSubgraphAtomsMap_Butane()
+        public void TestGetSubgraphAtomsMapButane()
         {
-            IAtomContainer mol1 = TestMoleculeFactory.MakeAlkane(4);
-            IAtomContainer mol2 = TestMoleculeFactory.MakeAlkane(4);
+            var mol1 = TestMoleculeFactory.MakeAlkane(4);
+            var mol2 = TestMoleculeFactory.MakeAlkane(4);
 
             // Test for atom mapping between the mols
             var maplist = uiTester.GetSubgraphAtomsMap(mol2, mol1);
@@ -354,12 +344,12 @@ namespace NCDK.Isomorphisms
         }
 
         [TestMethod()]
-        public void TestGetSubgraphAtomsMaps_Butane()
+        public void TestGetSubgraphAtomsMapsButane()
         {
-            IAtomContainer mol1 = TestMoleculeFactory.MakeAlkane(4);
-            IAtomContainer mol2 = TestMoleculeFactory.MakeAlkane(4);
+            var mol1 = TestMoleculeFactory.MakeAlkane(4);
+            var mol2 = TestMoleculeFactory.MakeAlkane(4);
 
-            var list = uiTester.GetSubgraphAtomsMaps(mol1, mol2);
+            var list = uiTester.GetSubgraphAtomsMaps(mol1, mol2).ToList();
             Assert.IsNotNull(list);
             Assert.AreEqual(2, list.Count);
             for (int i = 0; i < list.Count; i++)
@@ -374,16 +364,16 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSFBug999330()
         {
-            string file1 = "NCDK.Data.MDL.5SD.mol";
-            string file2 = "NCDK.Data.MDL.ADN.mol";
-            IAtomContainer mol1 = new AtomContainer();
-            IAtomContainer mol2 = new AtomContainer();
+            var file1 = "NCDK.Data.MDL.5SD.mol";
+            var file2 = "NCDK.Data.MDL.ADN.mol";
+            var mol1 = new AtomContainer();
+            var mol2 = new AtomContainer();
 
             var ins1 = ResourceLoader.GetAsStream(file1);
             new MDLV2000Reader(ins1, ChemObjectReaderMode.Strict).Read(mol1);
             var ins2 = ResourceLoader.GetAsStream(file2);
             new MDLV2000Reader(ins2, ChemObjectReaderMode.Strict).Read(mol2);
-            AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
+            var permutor = new AtomContainerAtomPermutor(mol2);
             permutor.MoveNext();
             mol2 = new AtomContainer((AtomContainer)permutor.Current);
 
@@ -397,28 +387,28 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestItself()
         {
-            string smiles = "C1CCCCCCC1CC";
-            var query = QueryAtomContainerCreator.CreateAnyAtomContainer(new SmilesParser(
-                    ChemObjectBuilder.Instance).ParseSmiles(smiles), true);
-            IAtomContainer ac = new SmilesParser(ChemObjectBuilder.Instance).ParseSmiles(smiles);
+            var smiles = "C1CCCCCCC1CC";
+            var query = QueryAtomContainerCreator.CreateAnyAtomContainer(new SmilesParser(ChemObjectBuilder.Instance).ParseSmiles(smiles), true);
+            var ac = new SmilesParser(ChemObjectBuilder.Instance).ParseSmiles(smiles);
             if (standAlone)
             {
                 Console.Out.WriteLine("AtomCount of query: " + query.Atoms.Count);
                 Console.Out.WriteLine("AtomCount of target: " + ac.Atoms.Count);
-
             }
 
             bool matched = uiTester.IsSubgraph(ac, query);
-            if (standAlone) Console.Out.WriteLine("QueryAtomContainer matched: " + matched);
-            if (!standAlone) Assert.IsTrue(matched);
+            if (standAlone)
+                Console.Out.WriteLine("QueryAtomContainer matched: " + matched);
+            if (!standAlone)
+                Assert.IsTrue(matched);
         }
 
         [TestMethod()]
-        public void TestIsIsomorph_IAtomContainer_IAtomContainer()
+        public void TestIsIsomorphIAtomContainerIAtomContainer()
         {
-            AtomContainer ac1 = new AtomContainer();
+            var ac1 = new AtomContainer();
             ac1.Atoms.Add(new Atom("C"));
-            AtomContainer ac2 = new AtomContainer();
+            var ac2 = new AtomContainer();
             ac2.Atoms.Add(new Atom("C"));
             Assert.IsTrue(uiTester.IsIsomorph(ac1, ac2));
             Assert.IsTrue(uiTester.IsSubgraph(ac1, ac2));
@@ -427,9 +417,9 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestAnyAtomAnyBondCase()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer target = sp.ParseSmiles("O1C=CC=C1");
-            IAtomContainer queryac = sp.ParseSmiles("C1CCCC1");
+            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var target = sp.ParseSmiles("O1C=CC=C1");
+            var queryac = sp.ParseSmiles("C1CCCC1");
             var query = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(queryac, false);
 
             Assert.IsTrue(uiTester.IsSubgraph(target, query), "C1CCCC1 should be a subgraph of O1C=CC=C1");
@@ -440,9 +430,9 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestFirstArgumentMustNotBeAnQueryAtomContainer()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer target = sp.ParseSmiles("O1C=CC=C1");
-            IAtomContainer queryac = sp.ParseSmiles("C1CCCC1");
+            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var target = sp.ParseSmiles("O1C=CC=C1");
+            var queryac = sp.ParseSmiles("C1CCCC1");
             var query = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(queryac, false);
 
             try
@@ -459,13 +449,11 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSingleAtomMatching()
         {
+            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var target = sp.ParseSmiles("C");
+            var query = sp.ParseSmiles("C");
 
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-
-            IAtomContainer target = sp.ParseSmiles("C");
-            IAtomContainer query = sp.ParseSmiles("C");
-
-            UniversalIsomorphismTester tester = new UniversalIsomorphismTester();
+            var tester = new UniversalIsomorphismTester();
             Assert.IsTrue(tester.IsIsomorph(target, query));
             Assert.IsTrue(tester.IsIsomorph(query, target));
         }
@@ -473,13 +461,11 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSingleAtomMismatching()
         {
+            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var target = sp.ParseSmiles("C");
+            var query = sp.ParseSmiles("N");
 
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-
-            IAtomContainer target = sp.ParseSmiles("C");
-            IAtomContainer query = sp.ParseSmiles("N");
-
-            UniversalIsomorphismTester tester = new UniversalIsomorphismTester();
+            var tester = new UniversalIsomorphismTester();
             Assert.IsFalse(tester.IsIsomorph(target, query), "Single carbon and nitrogen should not match");
             Assert.IsFalse(tester.IsIsomorph(query, target), "Single nitrogen and carbon should not match");
         }
@@ -488,31 +474,31 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSingleAtomMatching1()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer target = sp.ParseSmiles("[H]");
-            IAtomContainer queryac = sp.ParseSmiles("[H]");
+            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var target = sp.ParseSmiles("[H]");
+            var queryac = sp.ParseSmiles("[H]");
             var query = QueryAtomContainerCreator.CreateSymbolAndBondOrderQueryContainer(queryac);
 
-            var matches = uiTester.GetIsomorphMaps(target, query);
+            var matches = uiTester.GetIsomorphMaps(target, query).ToList();
             Assert.AreEqual(1, matches.Count);
             Assert.AreEqual(1, matches[0].Count);
             var mapping = matches[0][0];
             Assert.AreEqual(0, mapping.Id1);
             Assert.AreEqual(0, mapping.Id2);
             var atomMappings = UniversalIsomorphismTester.MakeAtomsMapsOfBondsMaps(matches, target, query);
-            Assert.AreEqual(matches, atomMappings);
+            Assert.IsTrue(Compares.AreDeepEqual(matches, atomMappings));
         }
 
         // @cdk.bug 2888845
         [TestMethod()]
         public void TestSingleAtomMatching2()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer target = sp.ParseSmiles("CNC");
-            IAtomContainer queryac = sp.ParseSmiles("C");
+            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var target = sp.ParseSmiles("CNC");
+            var queryac = sp.ParseSmiles("C");
             var query = QueryAtomContainerCreator.CreateSymbolAndBondOrderQueryContainer(queryac);
 
-            var matches = uiTester.GetIsomorphMaps(target, query);
+            var matches = uiTester.GetIsomorphMaps(target, query).ToList();
             Assert.AreEqual(2, matches.Count);
             Assert.AreEqual(1, matches[0].Count);
             Assert.AreEqual(1, matches[1].Count);
@@ -526,18 +512,18 @@ namespace NCDK.Isomorphisms
             Assert.AreEqual(0, map2.Id2);
 
             var atomMappings = UniversalIsomorphismTester.MakeAtomsMapsOfBondsMaps(matches, target, query);
-            Assert.AreEqual(matches, atomMappings);
+            Assert.IsTrue(Compares.AreDeepEqual(matches, atomMappings));
         }
 
         // @cdk.bug 2912627
         [TestMethod()]
         public void TestSingleAtomMatching3()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer target = sp.ParseSmiles("CNC");
-            IAtomContainer queryac = sp.ParseSmiles("C");
+            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var target = sp.ParseSmiles("CNC");
+            var queryac = sp.ParseSmiles("C");
 
-            var matches = uiTester.GetIsomorphMaps(target, queryac);
+            var matches = uiTester.GetIsomorphMaps(target, queryac).ToList();
             Assert.AreEqual(2, matches.Count);
             Assert.AreEqual(1, matches[0].Count);
             Assert.AreEqual(1, matches[1].Count);
@@ -551,28 +537,28 @@ namespace NCDK.Isomorphisms
             Assert.AreEqual(0, map2.Id2);
 
             var atomMappings = UniversalIsomorphismTester.MakeAtomsMapsOfBondsMaps(matches, target, queryac);
-            Assert.AreEqual(matches, atomMappings);
+            Assert.IsTrue(Compares.AreDeepEqual(matches, atomMappings));
         }
 
         [TestMethod()]
         public void TestUITTimeoutFix()
         {
             // Load molecules
-            string filename = "NCDK.Data.MDL.UITTimeout.sdf";
+            var filename = "NCDK.Data.MDL.UITTimeout.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-            ChemFile content = (ChemFile)reader.Read(new ChemFile());
+            var reader = new MDLV2000Reader(ins);
+            var content = (ChemFile)reader.Read(new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
-            IAtomContainer[] molecules = new IAtomContainer[2];
+            var molecules = new IAtomContainer[2];
             for (int j = 0; j < 2; j++)
             {
-                IAtomContainer aAtomContainer = (IAtomContainer)cList[j];
-                CDKAtomTypeMatcher tmpMatcher = CDKAtomTypeMatcher.GetInstance(aAtomContainer.Builder);
-                CDKHydrogenAdder tmpAdder = CDKHydrogenAdder.GetInstance(aAtomContainer.Builder);
+                var aAtomContainer = (IAtomContainer)cList[j];
+                var tmpMatcher = CDKAtomTypeMatcher.GetInstance(aAtomContainer.Builder);
+                var tmpAdder = CDKHydrogenAdder.GetInstance(aAtomContainer.Builder);
                 for (int i = 0; i < aAtomContainer.Atoms.Count; i++)
                 {
-                    IAtom tmpAtom = aAtomContainer.Atoms[i];
-                    IAtomType tmpType = tmpMatcher.FindMatchingAtomType(aAtomContainer, tmpAtom);
+                    var tmpAtom = aAtomContainer.Atoms[i];
+                    var tmpType = tmpMatcher.FindMatchingAtomType(aAtomContainer, tmpAtom);
                     AtomTypeManipulator.Configure(tmpAtom, tmpType);
                     tmpAdder.AddImplicitHydrogens(aAtomContainer, tmpAtom);
                 }
@@ -581,10 +567,10 @@ namespace NCDK.Isomorphisms
             }
             var query = QueryAtomContainerCreator.CreateAnyAtomForPseudoAtomQueryContainer(molecules[1]);
             // test
-            long starttime = System.DateTime.Now.Ticks;
+            var starttime = System.DateTime.Now.Ticks;
             uiTester.Timeout = 200;
             uiTester.GetSubgraphAtomsMaps(molecules[0], query);
-            long duration = System.DateTime.Now.Ticks - starttime;
+            var duration = System.DateTime.Now.Ticks - starttime;
             // The search must last much longer then two seconds if the timeout not works
             Assert.IsTrue(duration < 2000 * 10000);  // 1 msec = 10000 ticks
         }
@@ -593,59 +579,56 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestUITSymmetricMatch()
         {
-            QueryAtomContainer q = new QueryAtomContainer(ChemObjectBuilder.Instance);
+            var q = new QueryAtomContainer(ChemObjectBuilder.Instance);
             //setting atoms
-            IQueryAtom a0 = new Matchers.SMARTS.AliphaticSymbolAtom("C", ChemObjectBuilder.Instance);
+            var a0 = new Matchers.SMARTS.AliphaticSymbolAtom("C", ChemObjectBuilder.Instance);
             q.Atoms.Add(a0);
-            IQueryAtom a1 = new Matchers.SMARTS.AnyAtom(ChemObjectBuilder.Instance);
+            var a1 = new Matchers.SMARTS.AnyAtom(ChemObjectBuilder.Instance);
             q.Atoms.Add(a1);
-            IQueryAtom a2 = new Matchers.SMARTS.AnyAtom(ChemObjectBuilder.Instance);
+            var a2 = new Matchers.SMARTS.AnyAtom(ChemObjectBuilder.Instance);
             q.Atoms.Add(a2);
-            IQueryAtom a3 = new Matchers.SMARTS.AliphaticSymbolAtom("C", ChemObjectBuilder.Instance);
+            var a3 = new Matchers.SMARTS.AliphaticSymbolAtom("C", ChemObjectBuilder.Instance);
             q.Atoms.Add(a3);
             //setting bonds
-            var b0 = new Matchers.SMARTS.OrderQueryBond(
-                            BondOrder.Single, ChemObjectBuilder.Instance);
+            var b0 = new Matchers.SMARTS.OrderQueryBond(BondOrder.Single, ChemObjectBuilder.Instance);
             b0.SetAtoms(new IAtom[] { a0, a1 });
             q.Bonds.Add(b0);
-            var b1 = new Matchers.SMARTS.OrderQueryBond(
-                            BondOrder.Single, ChemObjectBuilder.Instance);
+            var b1 = new Matchers.SMARTS.OrderQueryBond(BondOrder.Single, ChemObjectBuilder.Instance);
             b1.SetAtoms(new IAtom[] { a1, a2 });
             q.Bonds.Add(b1);
-            var b2 = new Matchers.SMARTS.OrderQueryBond(
-                            BondOrder.Single, ChemObjectBuilder.Instance);
+            var b2 = new Matchers.SMARTS.OrderQueryBond(BondOrder.Single, ChemObjectBuilder.Instance);
             b2.SetAtoms(new IAtom[] { a2, a3 });
             q.Bonds.Add(b2);
 
             //Creating 'SCCS' target molecule
-            AtomContainer target = new AtomContainer();
+            var target = new AtomContainer();
             //atoms
-            IAtom ta0 = new Atom("S");
+            var ta0 = new Atom("S");
             target.Atoms.Add(ta0);
-            IAtom ta1 = new Atom("C");
+            var ta1 = new Atom("C");
             target.Atoms.Add(ta1);
-            IAtom ta2 = new Atom("C");
+            var ta2 = new Atom("C");
             target.Atoms.Add(ta2);
-            IAtom ta3 = new Atom("S");
+            var ta3 = new Atom("S");
             target.Atoms.Add(ta3);
             //bonds
-            IBond tb0 = new Bond();
+            var tb0 = new Bond();
             tb0.SetAtoms(new IAtom[] { ta0, ta1 });
             tb0.Order = BondOrder.Single;
             target.Bonds.Add(tb0);
 
-            IBond tb1 = new Bond();
+            var tb1 = new Bond();
             tb1.SetAtoms(new IAtom[] { ta1, ta2 });
             tb1.Order = BondOrder.Single;
             target.Bonds.Add(tb1);
 
-            IBond tb2 = new Bond();
+            var tb2 = new Bond();
             tb2.SetAtoms(new IAtom[] { ta2, ta3 });
             tb2.Order = BondOrder.Single;
             target.Bonds.Add(tb2);
 
             //Isomorphism check
-            bool res = uiTester.IsSubgraph(target, q);
+            var res = uiTester.IsSubgraph(target, q);
             Assert.IsFalse(res, "C**C should not match SCCS");
         }
     }

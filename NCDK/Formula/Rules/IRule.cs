@@ -17,6 +17,8 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System.Collections.Generic;
+
 namespace NCDK.Formula.Rules
 {
     /// <summary>
@@ -28,7 +30,7 @@ namespace NCDK.Formula.Rules
     // @cdk.githash
     public interface IRule
     {
-        object[] Parameters { get; set; }
+        IReadOnlyList<object> Parameters { get; set; }
 
         /// <summary>
         /// Analyze the validity for the given IMolecularFormula.

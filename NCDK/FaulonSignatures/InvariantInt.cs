@@ -5,7 +5,6 @@ namespace NCDK.FaulonSignatures
     public class InvariantInt : IComparable<InvariantInt>
     {
         public int invariant;
-
         public int index;
 
         public InvariantInt(int invariant, int index)

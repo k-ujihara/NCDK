@@ -23,6 +23,7 @@ using NCDK.Maths;
 using NCDK.Numerics;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.IO
@@ -129,7 +130,7 @@ namespace NCDK.IO
                         Debug.WriteLine($"{lineNumber++}: {line}");
                         axis.Z = FortranFormat.Atof(line);
                         crystal.C = axis;
-                        Debug.WriteLine("Crystal: ", crystal);
+                        Debug.WriteLine($"Crystal: {crystal}");
                         a = crystal.A;
                         b = crystal.B;
                         c = crystal.C;
@@ -137,12 +138,12 @@ namespace NCDK.IO
                         Debug.WriteLine("Reading number of atoms");
                         line = input.ReadLine();
                         Debug.WriteLine($"{lineNumber++}: {line}");
-                        int atomsToRead = int.Parse(line);
+                        int atomsToRead = int.Parse(line, NumberFormatInfo.InvariantInfo);
 
                         Debug.WriteLine("Reading no molecules in assym unit cell");
                         line = input.ReadLine();
                         Debug.WriteLine($"{lineNumber++}: {line}");
-                        int Z = int.Parse(line);
+                        int Z = int.Parse(line, NumberFormatInfo.InvariantInfo);
                         crystal.Z = Z;
 
                         string symbol;
@@ -154,23 +155,23 @@ namespace NCDK.IO
                             line = input.ReadLine();
                             Debug.WriteLine($"{lineNumber++}: {line}");
                             symbol = line.Substring(0, line.IndexOf(':'));
-                            charge = double.Parse(line.Substring(line.IndexOf(':') + 1));
+                            charge = double.Parse(line.Substring(line.IndexOf(':') + 1), NumberFormatInfo.InvariantInfo);
                             line = input.ReadLine();
                             Debug.WriteLine($"{lineNumber++}: {line}");
-                            cart.X = double.Parse(line); // x
+                            cart.X = double.Parse(line, NumberFormatInfo.InvariantInfo); // x
                             line = input.ReadLine();
                             Debug.WriteLine($"{lineNumber++}: {line}");
-                            cart.Y = double.Parse(line); // y
+                            cart.Y = double.Parse(line, NumberFormatInfo.InvariantInfo); // y
                             line = input.ReadLine();
                             Debug.WriteLine($"{lineNumber++}: {line}");
-                            cart.Z = double.Parse(line); // z
+                            cart.Z = double.Parse(line, NumberFormatInfo.InvariantInfo); // z
                             IAtom atom = file.Builder.NewAtom(symbol);
                             atom.Charge = charge;
-                            // convert cartesian coords to fractional
+                            // convert Cartesian coords to fractional
                             Vector3 frac = CrystalGeometryTools.CartesianToFractional(a, b, c, cart);
                             atom.FractionalPoint3D = frac;
                             crystal.Atoms.Add(atom);
-                            Debug.WriteLine("Added atom: ", atom);
+                            Debug.WriteLine($"Added atom: {atom}");
                         }
 
                         model.Crystal = crystal;

@@ -23,6 +23,7 @@
 
 using NCDK.Signatures;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace NCDK.Fingerprints
 {
@@ -54,7 +55,7 @@ namespace NCDK.Fingerprints
 
         protected override IEnumerable<KeyValuePair<string, string>> GetParameters()
         {
-            yield return new KeyValuePair<string, string>("signatureDepth", signatureDepth.ToString());
+            yield return new KeyValuePair<string, string>("signatureDepth", signatureDepth.ToString(NumberFormatInfo.InvariantInfo));
             yield break;
         }
 
@@ -63,7 +64,7 @@ namespace NCDK.Fingerprints
             return new IntArrayFingerprint(GetRawFingerprint(atomContainer));
         }
 
-        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer atomContainer)
+        public override IReadOnlyDictionary<string, int> GetRawFingerprint(IAtomContainer atomContainer)
         {
             var map = new Dictionary<string, int>();
             foreach (var atom in atomContainer.Atoms)
@@ -81,7 +82,7 @@ namespace NCDK.Fingerprints
             return map;
         }
 
-        public override int Count => -1;
+        public override int Length => -1;
 
         public override ICountFingerprint GetCountFingerprint(IAtomContainer container)
         {

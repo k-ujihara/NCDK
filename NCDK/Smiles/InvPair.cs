@@ -41,9 +41,15 @@ namespace NCDK.Smiles
     [Serializable]
     public class InvPair
     {
-       /// <summary> The description used to set the invariance numbers in the atom's property</summary>
-        public const string InvariancePairKey = "InvariancePair";
-        public const string CanonicalLabelKey = "CanonicalLabel";
+        /// <summary>
+        /// The description used to set the invariance numbers in the atom's property
+        /// </summary>
+        public const string InvariancePairPropertyKey = "InvariancePair";
+
+        /// <summary>
+        /// The description used to set the canonical numbers in the atom's property
+        /// </summary>
+        public const string CanonicalLabelPropertyKey = "CanonicalLabel";
 
         public long Last { get; set; } = 0;
 
@@ -60,23 +66,19 @@ namespace NCDK.Smiles
 
         public IAtom Atom { get; set; }
 
-        private int prime;
-
         public InvPair() { }
 
         public InvPair(long current, IAtom atom)
         {
             Curr = current;
             Atom = atom;
-            atom.SetProperty(InvariancePairKey, this);
+            atom.SetProperty(InvariancePairPropertyKey, this);
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is InvPair)
+            if (obj is InvPair o)
             {
-                InvPair o = (InvPair)obj;
-                //      Debug.WriteLine("Last " + last + "o.last " + o.Last + " curr " + curr + " o.curr " + o.Curr + " equals " +(last == o.Last && curr == o.Curr));
                 return (Last == o.Last && Curr == o.Curr);
             }
             else
@@ -92,7 +94,7 @@ namespace NCDK.Smiles
 
         public void Commit()
         {
-            Atom.SetProperty(CanonicalLabelKey, Curr);
+            Atom.SetProperty(CanonicalLabelPropertyKey, Curr);
         }
 
         /// <inheritdoc/>
@@ -107,7 +109,7 @@ namespace NCDK.Smiles
         /// <summary>
         /// The prime number based on the current seed.
         /// </summary>
-        public int Prime => prime;
+        public int Prime { get; private set; }
 
         /// <summary>
         /// Sets the prime number based on the current seed.
@@ -121,7 +123,7 @@ namespace NCDK.Smiles
         /// <seealso cref="Prime"/>
         public void SetPrime()
         {
-            prime = Primes.GetPrimeAt((int)Curr - 1);
+            Prime = Primes.GetPrimeAt((int)Curr - 1);
         }
     }
 }

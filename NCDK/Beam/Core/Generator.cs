@@ -529,7 +529,7 @@ namespace NCDK.Beam
 
         sealed class RingNumberToken : TokenAdapter
         {
-            int rnum;
+            readonly int rnum;
 
             public RingNumberToken(AtomToken p, int rnum)
                 : base(p)
@@ -548,7 +548,7 @@ namespace NCDK.Beam
 
         sealed class RingBondToken : TokenAdapter
         {
-            Bond bond;
+            readonly Bond bond;
 
             public RingBondToken(AtomToken p, Bond bond)
             : base(p)
@@ -594,9 +594,8 @@ namespace NCDK.Beam
         /// <summary>Labelling of ring opening/closures always using the lowest ring number.</summary>
         public sealed class ReuseRingNumbering : IRingNumbering
         {
-
             private bool[] used = new bool[100];
-            private int offset;
+            private readonly int offset;
 
             public ReuseRingNumbering(int first)
             {
@@ -637,8 +636,8 @@ namespace NCDK.Beam
         /// </summary>
         public sealed class IterativeRingNumbering : IRingNumbering
         {
-            private bool[] used = new bool[100];
-            private int offset;
+            private readonly bool[] used = new bool[100];
+            private readonly int offset;
             private int pos;
 
             public IterativeRingNumbering(int first)

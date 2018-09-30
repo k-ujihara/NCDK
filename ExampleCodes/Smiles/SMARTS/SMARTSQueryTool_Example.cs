@@ -1,31 +1,28 @@
 ﻿using NCDK.Aromaticities;
 using NCDK.Graphs;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Smiles.SMARTS
 {
-    class SMARTSQueryTool_Example
+    static class SMARTSQueryTool_Example
     {
-        void Main()
+        static void Main()
         {
             {
                 #region
-                SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+                SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
                 IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C");
-                SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO", Silent.ChemObjectBuilder.Instance);
+                SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO", ChemObjectBuilder.Instance);
                 bool status = querytool.Matches(atomContainer);
                 if (status)
                 {
                     int nmatch = querytool.MatchesCount;
-                    IList<IList<int>> mappings = querytool.GetMatchingAtoms();
-                    for (int i = 0; i < nmatch; i++)
+                    var mappings = querytool.GetMatchingAtoms();
+                    foreach (var atomIndices in mappings)
                     {
-                        IList<int> atomIndices = mappings[i];
+                        // do something
                     }
                 }
                 #endregion
@@ -34,7 +31,7 @@ namespace NCDK.Smiles.SMARTS
                 string someSmartsPattern = null;
                 IChemObjectSet<IAtomContainer> molecules = null;
                 #region SetAromaticity
-                SMARTSQueryTool sqt = new SMARTSQueryTool(someSmartsPattern, Default.ChemObjectBuilder.Instance);
+                SMARTSQueryTool sqt = new SMARTSQueryTool(someSmartsPattern, ChemObjectBuilder.Instance);
                 sqt.SetAromaticity(new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder));
                 foreach (var molecule in molecules)
                 {

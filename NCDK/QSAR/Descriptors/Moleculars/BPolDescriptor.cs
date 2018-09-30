@@ -27,7 +27,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Sum of the absolute value of the difference between atomic polarizabilities
-    ///  of all bonded atoms in the molecule (including implicit hydrogens) with polarizabilities taken from
+    /// of all bonded atoms in the molecule (including implicit hydrogens) with polarizabilities taken from
     /// http://www.sunysccc.edu/academic/mst/ptable/p-table2.htm
     /// 
     /// This descriptor assumes 2-centered bonds.
@@ -52,9 +52,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private static double[] polarizabilities;
         private static readonly string[] NAMES = { "bpol" };
 
-        /// <summary>
-        ///  Constructor for the APolDescriptor object
-        /// </summary>
         public BPolDescriptor()
         {
             // atomic polarizabilities ordered by atomic number from 1 to 102
@@ -70,18 +67,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
              "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bpol",
              typeof(BPolDescriptor).FullName,
              "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the BPolDescriptor object
-        /// </summary>
-        /// <exception cref="CDKException">Description of the Exception</exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
@@ -97,8 +90,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
-        ///  This method calculate the sum of the absolute value of
-        ///  the difference between atomic polarizabilities of all bonded atoms in the molecule
+        /// This method calculate the sum of the absolute value of
+        /// the difference between atomic polarizabilities of all bonded atoms in the molecule
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>
         /// <returns>The sum of atomic polarizabilities</returns>
@@ -110,7 +103,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double difference;
             try
             {
-                IsotopeFactory ifac = Isotopes.Instance;
+                IsotopeFactory ifac = BODRIsotopeFactory.Instance;
                 IElement element0;
                 IElement element1;
 
@@ -142,13 +135,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     difference = Math.Abs(polarizabilities[atnum] - polarizabilities[1]) * impH;
                     bpol += difference;
                 }
-                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters,
+                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters,
                         new Result<double>(bpol), DescriptorNames);
             }
             catch (Exception ex1)
             {
                 Debug.WriteLine(ex1);
-                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
+                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(
                         double.NaN), DescriptorNames, new CDKException("Problems with IsotopeFactory due to "
                         + ex1.ToString(), ex1));
             }
@@ -156,27 +149,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// Returns the specific type of the DescriptorResult object.
-        /// <para>
+        /// </summary>
+        /// <remarks>
         /// The return value from this method really indicates what type of result will
         /// be obtained from the <see cref="IDescriptorValue"/> object. Note that the same result
         /// can be achieved by interrogating the <see cref="IDescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.</para>
-        /// </summary>
+        /// allows you to do the same thing, without actually calculating the descriptor.
+        /// </remarks>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
-        /// <summary>
-        ///  The parameterNames attribute of the BPolDescriptor object
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames => null; // no param names to return
 
-        /// <summary>
-        ///  Gets the parameterType attribute of the BPolDescriptor object
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
         public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }
-

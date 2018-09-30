@@ -17,9 +17,9 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Numerics;
 using NCDK.Config;
 using NCDK.Geometries;
+using NCDK.Numerics;
 using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
@@ -29,12 +29,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// IDescriptor characterizing the mass distribution of the molecule.
+    /// </summary>
+    /// <remarks>
     /// Described by Katritzky et al. <token>cdk-cite-KAT96</token>.
     /// For modelling purposes the value of the descriptor is calculated
     /// both with and without H atoms. Furthermore the square and cube roots
     /// of the descriptor are also generated as described by Wessel et al. <token>cdk-cite-WES98</token>.
-    /// </summary>
-    /// <remarks>
     /// <para>
     /// The descriptor routine generates 9 descriptors:
     /// <list type="bullet"> 
@@ -83,40 +83,25 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public GravitationalIndexDescriptor() { }
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
-         new DescriptorSpecification(
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
+            new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#gravitationalIndex",
                 typeof(GravitationalIndexDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the GravitationalIndexDescriptor object.
-        /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
-
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
         public override IReadOnlyList<string> DescriptorNames => NAMES;
-
-        /// <summary>
-        /// The parameterNames attribute of the GravitationalIndexDescriptor object.
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames => null;
-
-        /// <summary>
-        /// Gets the parameterType attribute of the GravitationalIndexDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
         public override object GetParameterType(string name) => null;
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
-            int ndesc = DescriptorNames.Count;
-            ArrayResult<double> results = new ArrayResult<double>(ndesc);
+            var ndesc = DescriptorNames.Count;
+            var results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
-                    DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results, DescriptorNames, e);
         }
 
         /// <summary>
@@ -134,7 +119,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double mass2;
             try
             {
-                factory = Isotopes.Instance;
+                factory = BODRIsotopeFactory.Instance;
             }
             catch (Exception e)
             {
@@ -155,14 +140,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 Vector3 p1 = bond.Atoms[0].Point3D.Value;
                 Vector3 p2 = bond.Atoms[1].Point3D.Value;
 
-                double x1 = p1.X;
-                double y1 = p1.Y;
-                double z1 = p1.Z;
-                double x2 = p2.X;
-                double y2 = p2.Y;
-                double z2 = p2.Z;
+                var x1 = p1.X;
+                var y1 = p1.Y;
+                var z1 = p1.Z;
+                var x2 = p2.X;
+                var y2 = p2.Y;
+                var z2 = p2.Z;
 
-                double dist = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) + (z1 - z2) * (z1 - z2);
+                var dist = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) + (z1 - z2) * (z1 - z2);
                 sum += (mass1 * mass2) / dist;
             }
 
@@ -175,7 +160,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     return GetDummyDescriptorValue(new CDKException("GravitationalIndex: Only handles 2 center bonds"));
                 }
 
-                if (b.Atoms[0].Symbol.Equals("H") || b.Atoms[1].Symbol.Equals("H")) continue;
+                if (b.Atoms[0].Symbol.Equals("H", StringComparison.Ordinal) || b.Atoms[1].Symbol.Equals("H", StringComparison.Ordinal))
+                    continue;
 
                 mass1 = factory.GetMajorIsotope(b.Atoms[0].Symbol).MassNumber.Value;
                 mass2 = factory.GetMajorIsotope(b.Atoms[1].Symbol).MassNumber.Value;
@@ -183,14 +169,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 Vector3 point0 = b.Atoms[0].Point3D.Value;
                 Vector3 point1 = b.Atoms[1].Point3D.Value;
 
-                double x1 = point0.X;
-                double y1 = point0.Y;
-                double z1 = point0.Z;
-                double x2 = point1.X;
-                double y2 = point1.Y;
-                double z2 = point1.Z;
+                var x1 = point0.X;
+                var y1 = point0.Y;
+                var z1 = point0.Z;
+                var x2 = point1.X;
+                var y2 = point1.Y;
+                var z2 = point1.Z;
 
-                double dist = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) + (z1 - z2) * (z1 - z2);
+                var dist = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) + (z1 - z2) * (z1 - z2);
                 heavysum += (mass1 * mass2) / dist;
             }
 
@@ -198,7 +184,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var x = new List<int>();
             for (int i = 0; i < container.Atoms.Count; i++)
             {
-                if (!container.Atoms[i].Symbol.Equals("H")) x.Add(i);
+                if (!string.Equals(container.Atoms[i].Symbol, "H", StringComparison.Ordinal)) x.Add(i);
             }
             int npair = x.Count * (x.Count - 1) / 2;
             var p = new Pair[npair];
@@ -210,13 +196,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 for (int j = i + 1; j < x.Count; j++)
                 {
                     int present = 0;
-                    int a = x[i];
-                    int b = x[j];
+                    var a = x[i];
+                    var b = x[j];
                     for (int k = 0; k < pcount; k++)
                     {
-                        if ((p[k].X == a && p[k].Y == b) || (p[k].Y == a && p[k].X == b)) present = 1;
+                        if ((p[k].X == a && p[k].Y == b) || (p[k].Y == a && p[k].X == b))
+                            present = 1;
                     }
-                    if (present == 1) continue;
+                    if (present == 1)
+                        continue;
                     p[pcount].X = a;
                     p[pcount].Y = b;
                     pcount += 1;
@@ -225,24 +213,24 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double allheavysum = 0;
             foreach (var aP in p)
             {
-                int atomNumber1 = aP.X;
-                int atomNumber2 = aP.Y;
+                var atomNumber1 = aP.X;
+                var atomNumber2 = aP.Y;
 
                 mass1 = factory.GetMajorIsotope(container.Atoms[atomNumber1].Symbol).MassNumber.Value;
                 mass2 = factory.GetMajorIsotope(container.Atoms[atomNumber2].Symbol).MassNumber.Value;
 
-                double x1 = container.Atoms[atomNumber1].Point3D.Value.X;
-                double y1 = container.Atoms[atomNumber1].Point3D.Value.Y;
-                double z1 = container.Atoms[atomNumber1].Point3D.Value.Z;
-                double x2 = container.Atoms[atomNumber2].Point3D.Value.X;
-                double y2 = container.Atoms[atomNumber2].Point3D.Value.Y;
-                double z2 = container.Atoms[atomNumber2].Point3D.Value.Z;
+                var x1 = container.Atoms[atomNumber1].Point3D.Value.X;
+                var y1 = container.Atoms[atomNumber1].Point3D.Value.Y;
+                var z1 = container.Atoms[atomNumber1].Point3D.Value.Z;
+                var x2 = container.Atoms[atomNumber2].Point3D.Value.X;
+                var y2 = container.Atoms[atomNumber2].Point3D.Value.Y;
+                var z2 = container.Atoms[atomNumber2].Point3D.Value.Z;
 
-                double dist = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) + (z1 - z2) * (z1 - z2);
+                var dist = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) + (z1 - z2) * (z1 - z2);
                 allheavysum += (mass1 * mass2) / dist;
             }
 
-            ArrayResult<double> retval = new ArrayResult<double>(9)
+            var retval = new ArrayResult<double>(9)
             {
                 heavysum,
                 Math.Sqrt(heavysum),
@@ -257,8 +245,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 Math.Pow(allheavysum, 1.0 / 3.0)
             };
 
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
-                    DescriptorNames);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval, DescriptorNames);
         }
 
         /// <inheritdoc/>

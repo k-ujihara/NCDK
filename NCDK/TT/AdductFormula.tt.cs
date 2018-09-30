@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -27,6 +28,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+
+#pragma warning disable CA1710 // Identifiers should have correct suffix
 
 namespace NCDK.Default
 {
@@ -114,7 +117,6 @@ namespace NCDK.Default
         public virtual int? Charge
         {
             get { return components.Select(n => n.Charge ?? 0).Sum(); }
-            set { new FieldAccessException(); }
         }
 
         /// <summary>
@@ -129,12 +131,12 @@ namespace NCDK.Default
         }
 
         /// <summary>
-        /// The the number of different isotopes in this adduct formula
+        /// The number of different isotopes in this adduct formula
         /// </summary>
         public virtual int IsotopeCount => IsotopesList().Count;
 
         /// <summary>
-        /// An IEnumerator for looping over all isotopes in this adduct formula.
+        /// An <see cref="IEnumerator{IIsotope}"/> for looping over all isotopes in this adduct formula.
         /// </summary>
         public virtual IEnumerable<IIsotope> GetIsotopes() => IsotopesList();
 
@@ -144,7 +146,7 @@ namespace NCDK.Default
         /// <returns>A List with the isotopes in this adduct formula</returns>
         private List<IIsotope> IsotopesList()
         {
-            List<IIsotope> isotopes = new List<IIsotope>();
+            var isotopes = new List<IIsotope>();
             foreach (var component in components)
             {
                 foreach (var isotope in component.Isotopes)
@@ -155,30 +157,31 @@ namespace NCDK.Default
         }
 
         /// <summary>
-        /// Returns an Iterable for looping over all IMolecularFormula
+        /// Returns an enumerator for looping over all <see cref="IMolecularFormula"/>
         /// in this adduct formula.
         /// </summary>
-        /// <returns>An Iterable with the IMolecularFormula in this adduct formula</returns>
+        /// <returns>An enumerator with the <see cref="IMolecularFormula"/> in this adduct formula</returns>
         public virtual IEnumerator<IMolecularFormula> GetEnumerator() => components.GetEnumerator();
 
         /// <summary>
-        /// The number of MolecularFormulas in this AdductFormula.
+        /// The number of <see cref="IMolecularFormula"/>s in this AdductFormula.
         /// </summary>
+#pragma warning disable CA1721 // Property names should not match get methods
         public virtual int Count => components.Count;
+#pragma warning restore CA1721 // Property names should not match get methods
 
         /// <summary>
-        /// True, if the AdductFormula contains the given IMolecularFormula object.
-        ///
-        /// <param name="formula">The IMolecularFormula this AdductFormula is searched for</param>
-        /// <returns>True, if the AdductFormula contains the given IMolecularFormula object</returns>
+        /// <see langword="true"/> if the <see cref="AdductFormula"/> contains the given <see cref="IMolecularFormula"/> object.
         /// </summary>
+        /// <param name="formula">The <see cref="IMolecularFormula"/> this <see cref="AdductFormula"/> is searched for</param>
+        /// <returns><see langword="true"/> if the <see cref="AdductFormula"/> contains the given <see cref="IMolecularFormula"/> object</returns>
         public virtual bool Contains(IMolecularFormula formula)
         {
             return components.Contains(formula);
         }
 
         /// <summary>
-        /// The MolecularFormula at position <paramref name="position"/> in the hemObject.
+        /// The <see cref="IMolecularFormula"/> at position <paramref name="position"/> in the hemObject.
         /// </summary>
         /// <param name="position">The position of the IMolecularFormula to be returned.</param>
         /// <returns>The IMolecularFormula at position <paramref name="position"/>.</returns>
@@ -189,7 +192,7 @@ namespace NCDK.Default
         }
 
         /// <summary>
-        /// Removes all IMolecularFormula from this chemObject.
+        /// Removes all <see cref="IMolecularFormula"/> from this object.
         /// </summary>
         public virtual void Clear()
         {
@@ -197,9 +200,9 @@ namespace NCDK.Default
         }
 
         /// <summary>
-        /// Removes an IMolecularFormula from this chemObject.
+        /// Removes an <see cref="IMolecularFormula"/> from this object.
         /// </summary>
-        /// <param name="formula">The IMolecularFormula to be removed from this chemObject</param>
+        /// <param name="formula">The <see cref="IMolecularFormula"/> to be removed from this object</param>
         public virtual bool Remove(IMolecularFormula formula)
         {
             return components.Remove(formula);
@@ -220,15 +223,6 @@ namespace NCDK.Default
         /// <returns> The cloned object</returns>
         public virtual object Clone()
         {
-            //        /* it is not a super class of chemObject */
-            //        AdductFormula clone = (AdductFormula) base.Clone();
-            //        // start from scratch
-            //        clone.Clear();
-            //        // clone all molecularFormulas
-            //        IEnumerator<IMolecularFormula> iterForm = this;
-            //        while(iterForm.MoveNext()){
-            //            clone.AddMolecularFormula((IMolecularFormula) iterForm.Next().Clone());
-            //        }
             AdductFormula clone = new AdductFormula();
             foreach (var form in this)
             {
@@ -249,7 +243,7 @@ namespace NCDK.Default
         /// <param name="isotopeOne">The first Isotope to compare</param>
         /// <param name="isotopeTwo">The second Isotope to compare</param>
         /// <returns>True, if both isotope are the same</returns>
-        private bool IsTheSame(IIsotope isotopeOne, IIsotope isotopeTwo)
+        private static bool IsTheSame(IIsotope isotopeOne, IIsotope isotopeTwo)
         {
             // XXX - floating point equality!
             if (isotopeOne.Symbol != isotopeTwo.Symbol) return false;
@@ -287,7 +281,7 @@ namespace NCDK.Default
         public bool IsReadOnly => ((IList<IMolecularFormula>)(components)).IsReadOnly;
 
         public IChemObjectBuilder Builder
-            => NCDK.Default.ChemObjectBuilder.Instance;
+            => ChemObjectBuilder.Instance;
     }
 }
 namespace NCDK.Silent
@@ -376,7 +370,6 @@ namespace NCDK.Silent
         public virtual int? Charge
         {
             get { return components.Select(n => n.Charge ?? 0).Sum(); }
-            set { new FieldAccessException(); }
         }
 
         /// <summary>
@@ -391,12 +384,12 @@ namespace NCDK.Silent
         }
 
         /// <summary>
-        /// The the number of different isotopes in this adduct formula
+        /// The number of different isotopes in this adduct formula
         /// </summary>
         public virtual int IsotopeCount => IsotopesList().Count;
 
         /// <summary>
-        /// An IEnumerator for looping over all isotopes in this adduct formula.
+        /// An <see cref="IEnumerator{IIsotope}"/> for looping over all isotopes in this adduct formula.
         /// </summary>
         public virtual IEnumerable<IIsotope> GetIsotopes() => IsotopesList();
 
@@ -406,7 +399,7 @@ namespace NCDK.Silent
         /// <returns>A List with the isotopes in this adduct formula</returns>
         private List<IIsotope> IsotopesList()
         {
-            List<IIsotope> isotopes = new List<IIsotope>();
+            var isotopes = new List<IIsotope>();
             foreach (var component in components)
             {
                 foreach (var isotope in component.Isotopes)
@@ -417,30 +410,31 @@ namespace NCDK.Silent
         }
 
         /// <summary>
-        /// Returns an Iterable for looping over all IMolecularFormula
+        /// Returns an enumerator for looping over all <see cref="IMolecularFormula"/>
         /// in this adduct formula.
         /// </summary>
-        /// <returns>An Iterable with the IMolecularFormula in this adduct formula</returns>
+        /// <returns>An enumerator with the <see cref="IMolecularFormula"/> in this adduct formula</returns>
         public virtual IEnumerator<IMolecularFormula> GetEnumerator() => components.GetEnumerator();
 
         /// <summary>
-        /// The number of MolecularFormulas in this AdductFormula.
+        /// The number of <see cref="IMolecularFormula"/>s in this AdductFormula.
         /// </summary>
+#pragma warning disable CA1721 // Property names should not match get methods
         public virtual int Count => components.Count;
+#pragma warning restore CA1721 // Property names should not match get methods
 
         /// <summary>
-        /// True, if the AdductFormula contains the given IMolecularFormula object.
-        ///
-        /// <param name="formula">The IMolecularFormula this AdductFormula is searched for</param>
-        /// <returns>True, if the AdductFormula contains the given IMolecularFormula object</returns>
+        /// <see langword="true"/> if the <see cref="AdductFormula"/> contains the given <see cref="IMolecularFormula"/> object.
         /// </summary>
+        /// <param name="formula">The <see cref="IMolecularFormula"/> this <see cref="AdductFormula"/> is searched for</param>
+        /// <returns><see langword="true"/> if the <see cref="AdductFormula"/> contains the given <see cref="IMolecularFormula"/> object</returns>
         public virtual bool Contains(IMolecularFormula formula)
         {
             return components.Contains(formula);
         }
 
         /// <summary>
-        /// The MolecularFormula at position <paramref name="position"/> in the hemObject.
+        /// The <see cref="IMolecularFormula"/> at position <paramref name="position"/> in the hemObject.
         /// </summary>
         /// <param name="position">The position of the IMolecularFormula to be returned.</param>
         /// <returns>The IMolecularFormula at position <paramref name="position"/>.</returns>
@@ -451,7 +445,7 @@ namespace NCDK.Silent
         }
 
         /// <summary>
-        /// Removes all IMolecularFormula from this chemObject.
+        /// Removes all <see cref="IMolecularFormula"/> from this object.
         /// </summary>
         public virtual void Clear()
         {
@@ -459,9 +453,9 @@ namespace NCDK.Silent
         }
 
         /// <summary>
-        /// Removes an IMolecularFormula from this chemObject.
+        /// Removes an <see cref="IMolecularFormula"/> from this object.
         /// </summary>
-        /// <param name="formula">The IMolecularFormula to be removed from this chemObject</param>
+        /// <param name="formula">The <see cref="IMolecularFormula"/> to be removed from this object</param>
         public virtual bool Remove(IMolecularFormula formula)
         {
             return components.Remove(formula);
@@ -482,15 +476,6 @@ namespace NCDK.Silent
         /// <returns> The cloned object</returns>
         public virtual object Clone()
         {
-            //        /* it is not a super class of chemObject */
-            //        AdductFormula clone = (AdductFormula) base.Clone();
-            //        // start from scratch
-            //        clone.Clear();
-            //        // clone all molecularFormulas
-            //        IEnumerator<IMolecularFormula> iterForm = this;
-            //        while(iterForm.MoveNext()){
-            //            clone.AddMolecularFormula((IMolecularFormula) iterForm.Next().Clone());
-            //        }
             AdductFormula clone = new AdductFormula();
             foreach (var form in this)
             {
@@ -511,7 +496,7 @@ namespace NCDK.Silent
         /// <param name="isotopeOne">The first Isotope to compare</param>
         /// <param name="isotopeTwo">The second Isotope to compare</param>
         /// <returns>True, if both isotope are the same</returns>
-        private bool IsTheSame(IIsotope isotopeOne, IIsotope isotopeTwo)
+        private static bool IsTheSame(IIsotope isotopeOne, IIsotope isotopeTwo)
         {
             // XXX - floating point equality!
             if (isotopeOne.Symbol != isotopeTwo.Symbol) return false;
@@ -549,6 +534,6 @@ namespace NCDK.Silent
         public bool IsReadOnly => ((IList<IMolecularFormula>)(components)).IsReadOnly;
 
         public IChemObjectBuilder Builder
-            => NCDK.Silent.ChemObjectBuilder.Instance;
+            => ChemObjectBuilder.Instance;
     }
 }

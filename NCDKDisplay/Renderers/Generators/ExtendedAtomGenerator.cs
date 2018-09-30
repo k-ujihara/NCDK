@@ -115,7 +115,7 @@ namespace NCDK.Renderers.Generators
             {
                 try
                 {
-                    IsotopeFactory factory = Isotopes.Instance;
+                    IsotopeFactory factory = BODRIsotopeFactory.Instance;
                     int majorMass = factory.GetMajorIsotope(atom.Symbol).MassNumber.Value;
                     if (massNumber.Value != majorMass)
                     {

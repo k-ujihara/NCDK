@@ -31,6 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.IO
@@ -47,8 +48,9 @@ namespace NCDK.IO
     // @cdk.keyword file format, Mol2
     public class Mol2Reader : DefaultChemObjectReader
     {
-        bool firstLineisMolecule = false;
+        private static readonly AtomTypeFactory atFactory = AtomTypeFactory.GetInstance("NCDK.Config.Data.mol2_atomtypes.xml", Silent.ChemObjectBuilder.Instance);
 
+        bool firstLineisMolecule = false;
         TextReader input = null;
 
         /// <summary>
@@ -185,11 +187,11 @@ namespace NCDK.IO
             return chemFile;
         }
 
-        public bool Accepts(IChemObject obj)
+        public virtual bool Accepts(IChemObject o)
         {
-            if (obj is IChemFile) return true;
-            if (obj is IChemModel) return true;
-            if (obj is IAtomContainer) return true;
+            if (o is IChemFile) return true;
+            if (o is IChemModel) return true;
+            if (o is IAtomContainer) return true;
             return false;
         }
 
@@ -198,20 +200,7 @@ namespace NCDK.IO
         /// </summary>
         /// <returns>The Reaction that was read from the MDL file.</returns>
         private IAtomContainer ReadMolecule(IAtomContainer molecule)
-        {
-            AtomTypeFactory atFactory = null;
-            try
-            {
-                atFactory = AtomTypeFactory.GetInstance("NCDK.Config.Data.mol2_atomtypes.xml",
-                        molecule.Builder);
-            }
-            catch (Exception exception)
-            {
-                string error = "Could not instantiate an AtomTypeFactory";
-                Trace.TraceError(error);
-                Debug.WriteLine(exception);
-                throw new CDKException(error, exception);
-            }
+        {            
             try
             {
                 int atomCount = 0;
@@ -221,14 +210,15 @@ namespace NCDK.IO
                 while (true)
                 {
                     line = input.ReadLine();
-                    if (line == null) return null;
+                    if (line == null)
+                        return null;
                     if (line.StartsWith("@<TRIPOS>MOLECULE", StringComparison.Ordinal))
                         break;
                     if (!line.StartsWithChar('#') && line.Trim().Length > 0)
                         break;
                 }
 
-                // ok, if we're coming from the chemfile functoion, we've alreay read the molecule RTI
+                // ok, if we're coming from the chemfile function, we've already read the molecule RTI
                 if (firstLineisMolecule)
                     molecule.Title = line;
                 else
@@ -242,7 +232,7 @@ namespace NCDK.IO
                 var tokenizer = Strings.Tokenize(counts);
                 try
                 {
-                    atomCount = int.Parse(tokenizer[0]);
+                    atomCount = int.Parse(tokenizer[0], NumberFormatInfo.InvariantInfo);
                 }
                 catch (FormatException nfExc)
                 {
@@ -255,7 +245,7 @@ namespace NCDK.IO
                 {
                     try
                     {
-                        bondCount = int.Parse(tokenizer[1]);
+                        bondCount = int.Parse(tokenizer[1], NumberFormatInfo.InvariantInfo);
                     }
                     catch (FormatException nfExc)
                     {
@@ -338,9 +328,9 @@ namespace NCDK.IO
                             atom.AtomTypeName = atomTypeStr;
                             try
                             {
-                                double x = double.Parse(xStr);
-                                double y = double.Parse(yStr);
-                                double z = double.Parse(zStr);
+                                double x = double.Parse(xStr, NumberFormatInfo.InvariantInfo);
+                                double y = double.Parse(yStr, NumberFormatInfo.InvariantInfo);
+                                double z = double.Parse(zStr, NumberFormatInfo.InvariantInfo);
                                 atom.Point3D = new Vector3(x, y, z);
                             }
                             catch (FormatException nfExc)
@@ -371,42 +361,41 @@ namespace NCDK.IO
                             string orderStr = tokenizer[3];
                             try
                             {
-                                int atom1 = int.Parse(atom1Str);
-                                int atom2 = int.Parse(atom2Str);
-                                if ("nc".Equals(orderStr))
+                                int atom1 = int.Parse(atom1Str, NumberFormatInfo.InvariantInfo);
+                                int atom2 = int.Parse(atom2Str, NumberFormatInfo.InvariantInfo);
+                                if (string.Equals("nc", orderStr, StringComparison.Ordinal))
                                 {
                                     // do not connect the atoms
                                 }
                                 else
                                 {
-                                    IBond bond = molecule.Builder.NewBond(
-                                        molecule.Atoms[atom1 - 1], molecule.Atoms[atom2 - 1]);
-                                    if ("1".Equals(orderStr))
+                                    IBond bond = molecule.Builder.NewBond(molecule.Atoms[atom1 - 1], molecule.Atoms[atom2 - 1]);
+                                    switch (orderStr)
                                     {
-                                        bond.Order = BondOrder.Single;
-                                    }
-                                    else if ("2".Equals(orderStr))
-                                    {
-                                        bond.Order = BondOrder.Double;
-                                    }
-                                    else if ("3".Equals(orderStr))
-                                    {
-                                        bond.Order = BondOrder.Triple;
-                                    }
-                                    else if ("am".Equals(orderStr) || "ar".Equals(orderStr))
-                                    {
-                                        bond.Order = BondOrder.Single;
-                                        bond.IsAromatic = true;
-                                        bond.Begin.IsAromatic = true;
-                                        bond.End.IsAromatic = true;
-                                    }
-                                    else if ("du".Equals(orderStr))
-                                    {
-                                        bond.Order = BondOrder.Single;
-                                    }
-                                    else if ("un".Equals(orderStr))
-                                    {
-                                        bond.Order = BondOrder.Single;
+                                        case "1":
+                                            bond.Order = BondOrder.Single;
+                                            break;
+                                        case "2":
+                                            bond.Order = BondOrder.Double;
+                                            break;
+                                        case "3":
+                                            bond.Order = BondOrder.Triple;
+                                            break;
+                                        case "am":
+                                        case "ar": 
+                                            bond.Order = BondOrder.Single;
+                                            bond.IsAromatic = true;
+                                            bond.Begin.IsAromatic = true;
+                                            bond.End.IsAromatic = true;
+                                            break;
+                                        case "du":
+                                            bond.Order = BondOrder.Single;
+                                            break;
+                                        case "un":
+                                            bond.Order = BondOrder.Single;
+                                            break;
+                                        default:
+                                            break;
                                     }
                                     molecule.Bonds.Add(bond);
                                 }
@@ -434,11 +423,12 @@ namespace NCDK.IO
             return molecule;
         }
 
-        private bool IsElementSymbol(string atomTypeStr)
+        private static bool IsElementSymbol(string atomTypeStr)
         {
             for (int i = 1; i < PeriodicTable.ElementCount; i++)
             {
-                if (PeriodicTable.GetSymbol(i).Equals(atomTypeStr)) return true;
+                if (string.Equals(PeriodicTable.GetSymbol(i), atomTypeStr, StringComparison.Ordinal))
+                    return true;
             }
             return false;
         }

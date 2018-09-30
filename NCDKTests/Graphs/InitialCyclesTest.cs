@@ -27,6 +27,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace NCDK.Graphs
 {
@@ -36,19 +37,19 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void Lengths_empty()
         {
-            Assert.IsFalse(new InitialCycles(new int[0][]).Lengths.Count() > 0);
+            Assert.IsFalse(new InitialCycles(Array.Empty<int[]>()).Lengths.Count() > 0);
         }
 
         [TestMethod()]
         public virtual void CyclesOfLength_empty()
         {
-            Assert.IsTrue(new InitialCycles(new int[0][]).GetCyclesOfLength(0).Count() == 0);
+            Assert.IsTrue(new InitialCycles(Array.Empty<int[]>()).GetCyclesOfLength(0).Count() == 0);
         }
 
         [TestMethod()]
         public virtual void Graph()
         {
-            int[][] g = new int[0][];
+            int[][] g = Array.Empty<int[]>();
             Assert.AreSame(g, new InitialCycles(g).Graph);
         }
 
@@ -387,7 +388,7 @@ namespace NCDK.Graphs
         }
 
         internal static int[][] K1
-            => new int[][] { new int[] { } };
+            => new int[][] { Array.Empty<int>() };
 
         /// <summary>
         /// Simple undirected graph where every pair of of the four vertices is

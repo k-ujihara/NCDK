@@ -1,6 +1,7 @@
 ﻿using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -13,31 +14,33 @@ namespace NCDK.LibIO.CML
             base.Add(atom);
         }
 
-        public string[] ElementType
+        public IReadOnlyList<string> ElementType
         {
             get
             {
                 var v = Attribute(Attribute_elementType)?.Value;
-                if (v == null) return Array.Empty<string>();
+                if (v == null)
+                    return Array.Empty<string>();
                 return Strings.Tokenize(v, ' ').ToArray();
             }
+
             set
             {
-                SetAttributeValue(Attribute_elementType, value?.Length == 0 ? null : Concat(value));
+                SetAttributeValue(Attribute_elementType, value?.Count == 0 ? null : Concat(value));
             }
         }
 
-        public double[] Count
+        public IReadOnlyList<double> Count
         {
             get
             {
                 var v = Attribute(Attribute_count)?.Value;
                 if (v == null) return Array.Empty<double>();
-                return Strings.Tokenize(v, ' ').Select(n => double.Parse(n)).ToArray();
+                return Strings.Tokenize(v, ' ').Select(n => double.Parse(n, NumberFormatInfo.InvariantInfo)).ToArray();
             }
             set
             {
-                SetAttributeValue(Attribute_count, value?.Length == 0 ? null : Concat(value));
+                SetAttributeValue(Attribute_count, value?.Count == 0 ? null : Concat(value));
             }
         }
 
@@ -52,15 +55,15 @@ namespace NCDK.LibIO.CML
             var counts = Count;
             var sortS = new List<string>();
             {
-                for (var i = 0; i < elems.Length; i++)
-                    sortS.Add(elems[i] + " " + counts[i]);
+                for (var i = 0; i < elems.Count; i++)
+                    sortS.Add($"{elems[i]} {counts[i]}");
             }
             sortS.Sort();
-            if (sort == CMLFormula.SortType.ALPHABETIC_ELEMENTS)
+            if (sort == CMLFormula.SortType.AlphabeticElements)
             {
                 ; // already done
             }
-            else if (sort == CMLFormula.SortType.CHFIRST)
+            else if (sort == CMLFormula.SortType.CHFirst)
             {
                 var temp = new List<string>();
                 foreach (var s in sortS)
@@ -81,7 +84,7 @@ namespace NCDK.LibIO.CML
                 {
                     var ss = sortS[i].Split(' ');
                     el[i] = ss[0];
-                    cl[i] = double.Parse(ss[1]);
+                    cl[i] = double.Parse(ss[1], NumberFormatInfo.InvariantInfo);
                 }
             }
             this.ElementType = el;
@@ -99,12 +102,12 @@ namespace NCDK.LibIO.CML
         {
             var elems = ElementType ?? Array.Empty<string>();
             var counts = Count ?? Array.Empty<double>();
-            if (counts.Length != elems.Length)
+            if (counts.Count != elems.Count)
             {
-                throw new ApplicationException($"atomArray has inconsistent counts/elems {counts.Length} {elems.Length}");
+                throw new ApplicationException($"atomArray has inconsistent counts/elems {counts.Count} {elems.Count}");
             }
             var sb = new StringBuilder();
-            for (int i = 0; i < elems.Length; i++)
+            for (int i = 0; i < elems.Count; i++)
             {
                 sb.Append(' ').Append(elems[i]).Append(' ');
                 sb.Append(Strings.JavaFormat(counts[i], 4, true));

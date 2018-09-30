@@ -18,6 +18,7 @@
  */
 using NCDK.AtomTypes;
 using NCDK.Tools.Manipulator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -80,7 +81,8 @@ namespace NCDK.Reactions.Mechanisms
             reactantCloned.Atoms[posAtom].Hybridization = Hybridization.Unset;
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactantCloned);
             IAtomType type = atMatcher.FindMatchingAtomType(reactantCloned, reactantCloned.Atoms[posAtom]);
-            if (type == null || type.AtomTypeName.Equals("X")) return null;
+            if (type == null || type.AtomTypeName.Equals("X", StringComparison.Ordinal))
+                return null;
 
             IReaction reaction = molecule.Builder.NewReaction();
             reaction.Reactants.Add(molecule);

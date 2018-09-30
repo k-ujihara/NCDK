@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using VDS.RDF;
@@ -293,7 +294,7 @@ namespace NCDK.LibIO.DotNetRDF
             var symbol = g.GetTriplesWithSubjectPredicate(rdfObject, P_SYMBOL).FirstOrDefault();
             if (symbol != null) element.Symbol = symbol.Object.ToString();
             var atomicNumber = g.GetTriplesWithSubjectPredicate(rdfObject, P_HASATOMICNUMBER).FirstOrDefault();
-            if (atomicNumber != null) element.AtomicNumber = int.Parse(atomicNumber.Object.ToString());
+            if (atomicNumber != null) element.AtomicNumber = int.Parse(atomicNumber.Object.ToString(), NumberFormatInfo.InvariantInfo);
         }
 
         private void SerializeAtomTypeFields(INode rdfObject, IAtomType type)
@@ -361,7 +362,7 @@ namespace NCDK.LibIO.DotNetRDF
             }
             var formalCharge = g.GetTriplesWithSubjectPredicate(rdfObject, P_HASFORMALCHARGE).FirstOrDefault();
             if (formalCharge != null)
-                element.FormalCharge = int.Parse(formalCharge.Object.ToString());
+                element.FormalCharge = int.Parse(formalCharge.Object.ToString(), NumberFormatInfo.InvariantInfo);
         }
 
 
@@ -369,11 +370,11 @@ namespace NCDK.LibIO.DotNetRDF
         {
             DeserializeElementFields(rdfObject, isotope);
             var massNumber = g.GetTriplesWithSubjectPredicate(rdfObject, P_HASMASSNUMBER).FirstOrDefault();
-            if (massNumber != null) isotope.MassNumber = int.Parse(massNumber.Object.ToString());
+            if (massNumber != null) isotope.MassNumber = int.Parse(massNumber.Object.ToString(), NumberFormatInfo.InvariantInfo);
             var exactMass = g.GetTriplesWithSubjectPredicate(rdfObject, P_HASEXACTMASS).FirstOrDefault();
-            if (exactMass != null) isotope.ExactMass = double.Parse(exactMass.Object.ToString());
+            if (exactMass != null) isotope.ExactMass = double.Parse(exactMass.Object.ToString(), NumberFormatInfo.InvariantInfo);
             var naturalAbundance = g.GetTriplesWithSubjectPredicate(rdfObject, P_HASNATURALABUNDANCE).FirstOrDefault();
-            if (naturalAbundance != null) isotope.NaturalAbundance = double.Parse(naturalAbundance.Object.ToString());
+            if (naturalAbundance != null) isotope.NaturalAbundance = double.Parse(naturalAbundance.Object.ToString(), NumberFormatInfo.InvariantInfo);
         }
 
         /// <summary>
@@ -381,7 +382,7 @@ namespace NCDK.LibIO.DotNetRDF
         /// </summary>
         /// <param name="rdfOrder">Resource for which the matching <see cref="BondOrder"/> should be given.</param>
         /// <returns>the matching <see cref="BondOrder"/>.</returns>
-        public BondOrder Resource2Order(INode rdfOrder)
+        public static BondOrder Resource2Order(INode rdfOrder)
         {
             switch (rdfOrder?.ToString())
             {
@@ -434,7 +435,7 @@ namespace NCDK.LibIO.DotNetRDF
         {
             DeserializeChemObjectFields(rdfObject, bond);
             var count = g.GetTriplesWithSubjectPredicate(rdfObject, P_HASELECTRONCOUNT).Select(n => n.Object).FirstOrDefault();
-            if (count != null) bond.ElectronCount = int.Parse(count.ToString());
+            if (count != null) bond.ElectronCount = int.Parse(count.ToString(), NumberFormatInfo.InvariantInfo);
         }
 
         /// <summary>

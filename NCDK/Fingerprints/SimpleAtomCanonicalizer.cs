@@ -36,16 +36,14 @@ namespace NCDK.Fingerprints
     // @cdk.keyword similarity
     // @cdk.module fingerprint
     // @cdk.githash
-    public class SimpleAtomCanonicalizer
+    public static class SimpleAtomCanonicalizer
     {
-        /// <summary>
-        /// <param name="container">the container</param>
+        /// <param name="atoms">the container</param>
         /// <returns>canonicalized atoms</returns>
-        /// </summary>
-        public IList<IAtom> CanonicalizeAtoms(IAtomContainer container)
+        public static IReadOnlyList<IAtom> CanonicalizeAtoms(IEnumerable<IAtom> atoms)
         {
-            List<IAtom> canonicalizedVertexList = new List<IAtom>();
-            foreach (var atom in container.Atoms)
+            var canonicalizedVertexList = new List<IAtom>();
+            foreach (var atom in atoms)
             {
                 canonicalizedVertexList.Add(atom);
             }

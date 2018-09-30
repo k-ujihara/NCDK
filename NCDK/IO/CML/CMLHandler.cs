@@ -75,7 +75,7 @@ namespace NCDK.IO.CML
             conv.CharacterData(xpath, element);
         }
 
-        public void DoctypeDecl(string name, string publicId, string systemId) { }
+        public static void DoctypeDecl(string name, string publicId, string systemId) { }
 
         /// <summary>
         /// Calling this procedure signals the end of the XML document.
@@ -114,7 +114,7 @@ namespace NCDK.IO.CML
             {
                 // e.g. reactionList, reaction -> CRML module
                 Trace.TraceInformation("Detected CRML module");
-                if (!conventionStack.Peek().Equals("CMLR"))
+                if (!string.Equals(conventionStack.Peek(), "CMLR", StringComparison.Ordinal))
                 {
                     conv = new CMLReactionModule(conv);
                 }
@@ -130,7 +130,7 @@ namespace NCDK.IO.CML
                 {
                     convName = element.Attribute(Attribute_convention).Value;
                 }
-                if (convName == "")
+                if (convName.Length == 0)
                 {
                     // no convention set/reset: take convention of parent
                     conventionStack.Push(conventionStack.Peek());
@@ -138,51 +138,50 @@ namespace NCDK.IO.CML
                 else
                 if (convName.Length > 0)
                 {
-                    if (convName.Equals(conventionStack.Peek()))
+                    if (convName.Equals(conventionStack.Peek(), StringComparison.Ordinal))
                     {
                         Debug.WriteLine("Same convention as parent");
                     }
                     else
                     {
                         Trace.TraceInformation("New Convention: ", convName);
-                        if (convName.Equals("CML"))
+                        switch (convName)
                         {
-                            // Don't reset the convention handler to CMLCore,
-                            // becuase all handlers should extend this handler, and
-                            // use it for any content other then specifically put
-                            // into the specific convention
-                        }
-                        else if (convName.Equals("PDB"))
-                        {
-                            conv = new PDBConvention(conv);
-                        }
-                        else if (convName.Equals("PMP"))
-                        {
-                            conv = new PMPConvention(conv);
-                        }
-                        else if (convName.Equals("MDLMol"))
-                        {
-                            Debug.WriteLine("MDLMolConvention instantiated...");
-                            conv = new MDLMolConvention(conv);
-                        }
-                        else if (convName.Equals("JMOL-ANIMATION"))
-                        {
-                            conv = new JMOLANIMATIONConvention(conv);
-                        }
-                        else if (convName.Equals("qsar:DescriptorValue"))
-                        {
-                            conv = new QSARConvention(conv);
-                        }
-                        else if (userConventions.ContainsKey(convName))
-                        {
-                            //unknown convention. userConvention?
-                            ICMLModule newconv = (ICMLModule)userConventions[convName];
-                            newconv.Inherit(conv);
-                            conv = newconv;
-                        }
-                        else
-                        {
-                            Trace.TraceWarning($"Detected unknown convention: {convName}");
+                            case "CML":
+                                // Don't reset the convention handler to CMLCore,
+                                // becuase all handlers should extend this handler, and
+                                // use it for any content other then specifically put
+                                // into the specific convention
+                                break;
+                            case "PDB":
+                                conv = new PDBConvention(conv);
+                                break;
+                            case "PMP":
+                                conv = new PMPConvention(conv);
+                                break;
+                            case "MDLMol":
+                                Debug.WriteLine("MDLMolConvention instantiated...");
+                                conv = new MDLMolConvention(conv);
+                                break;
+                            case "JMOL-ANIMATION":
+                                conv = new JMOLANIMATIONConvention(conv);
+                                break;
+                            case "qsar:DescriptorValue":
+                                conv = new QSARConvention(conv);
+                                break;
+                            default:
+                                if (userConventions.ContainsKey(convName))
+                                {
+                                    //unknown convention. userConvention?
+                                    ICMLModule newconv = (ICMLModule)userConventions[convName];
+                                    newconv.Inherit(conv);
+                                    conv = newconv;
+                                }
+                                else
+                                {
+                                    Trace.TraceWarning($"Detected unknown convention: {convName}");
+                                }
+                                break;
                         }
                     }
                     conventionStack.Push(convName);

@@ -23,6 +23,8 @@
 using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Globalization;
+using NCDK.Silent;
 
 namespace NCDK.Modelings.Builder3D
 {
@@ -39,21 +41,20 @@ namespace NCDK.Modelings.Builder3D
         public void TestReadParameterSets()
         {
             MMFF94BasedParameterSetReader mmff94bpsr = new MMFF94BasedParameterSetReader();
-            mmff94bpsr.ReadParameterSets(Default.ChemObjectBuilder.Instance);
-            IDictionary<string, object> parameterSet = new Dictionary<string, object>();
-            parameterSet = mmff94bpsr.GetParamterSet();
+            mmff94bpsr.ReadParameterSets(ChemObjectBuilder.Instance);
+            var parameterSet = mmff94bpsr.GetParamterSet();
 
             //test atom type
-            List<IAtomType> atomtypes = mmff94bpsr.AtomTypes;
+            var atomtypes = mmff94bpsr.AtomTypes;
             IAtomType atomtype = atomtypes[0];
             string sid = "C";
             Assert.AreEqual(sid, atomtype.AtomTypeName);
             string rootType = "C";
             Assert.AreEqual(rootType, atomtype.Symbol);
             string smaxbond = "4";
-            Assert.AreEqual(int.Parse(smaxbond), (int)atomtype.FormalNeighbourCount);
+            Assert.AreEqual(int.Parse(smaxbond, NumberFormatInfo.InvariantInfo), (int)atomtype.FormalNeighbourCount);
             string satomNr = "6";
-            Assert.AreEqual(int.Parse(satomNr), (int)atomtype.AtomicNumber);
+            Assert.AreEqual(int.Parse(satomNr, NumberFormatInfo.InvariantInfo), (int)atomtype.AtomicNumber);
 
             //atom
             //TODO testing
@@ -68,12 +69,14 @@ namespace NCDK.Modelings.Builder3D
             string sk4 = "715.009";
             string sbci = "0.0000";
             string bondkey = "bond" + sid1 + ";" + sid2;
-            var bonddata = new List<double>();
-            bonddata.Add((double)(double.Parse(slen)));
-            bonddata.Add((double)(double.Parse(sk2)));
-            bonddata.Add((double)(double.Parse(sk3)));
-            bonddata.Add((double)(double.Parse(sk4)));
-            bonddata.Add((double)(double.Parse(sbci)));
+            var bonddata = new List<double>
+            {
+                (double)(double.Parse(slen, NumberFormatInfo.InvariantInfo)),
+                (double)(double.Parse(sk2, NumberFormatInfo.InvariantInfo)),
+                (double)(double.Parse(sk3, NumberFormatInfo.InvariantInfo)),
+                (double)(double.Parse(sk4, NumberFormatInfo.InvariantInfo)),
+                (double)(double.Parse(sbci, NumberFormatInfo.InvariantInfo))
+            };
 
             //strbnd
             //        scode = "0";
@@ -83,9 +86,11 @@ namespace NCDK.Modelings.Builder3D
             string value1 = "14.82507";
             string value2 = "14.82507";
             string strbndkey = "strbnd" + sid1 + ";" + sid2 + ";" + sid3;
-            var strbnddata = new List<double>();
-            strbnddata.Add((double)(double.Parse(value1)));
-            strbnddata.Add((double)(double.Parse(value2)));
+            var strbnddata = new List<double>
+            {
+                (double)(double.Parse(value1, NumberFormatInfo.InvariantInfo)),
+                (double)(double.Parse(value2, NumberFormatInfo.InvariantInfo))
+            };
 
             //angle
             //      scode = "0";
@@ -97,11 +102,13 @@ namespace NCDK.Modelings.Builder3D
             string value3 = "-34.5494";
             string value4 = "0";
             string anglekey = "angle" + sid1 + ";" + sid2 + ";" + sid3;
-            var angledata = new List<double>();
-            angledata.Add((double)(double.Parse(value1)));
-            angledata.Add((double)(double.Parse(value2)));
-            angledata.Add((double)(double.Parse(value3)));
-            angledata.Add((double)(double.Parse(value4)));
+            var angledata = new List<double>
+            {
+                (double)(double.Parse(value1, NumberFormatInfo.InvariantInfo)),
+                (double)(double.Parse(value2, NumberFormatInfo.InvariantInfo)),
+                (double)(double.Parse(value3, NumberFormatInfo.InvariantInfo)),
+                (double)(double.Parse(value4, NumberFormatInfo.InvariantInfo))
+            };
 
             //torsion
             //        scode = "0";
@@ -115,12 +122,14 @@ namespace NCDK.Modelings.Builder3D
             value4 = "0.000";
             string value5 = "0.000";
             string torsionkey = "torsion" + ";" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
-            var torsiondata = new List<double>();
-            torsiondata.Add((double)(double.Parse(value1)));
-            torsiondata.Add((double)(double.Parse(value2)));
-            torsiondata.Add((double)(double.Parse(value3)));
-            torsiondata.Add((double)(double.Parse(value4)));
-            torsiondata.Add((double)(double.Parse(value5)));
+            var torsiondata = new List<double>
+            {
+                (double)(double.Parse(value1, NumberFormatInfo.InvariantInfo)),
+                (double)(double.Parse(value2, NumberFormatInfo.InvariantInfo)),
+                (double)(double.Parse(value3, NumberFormatInfo.InvariantInfo)),
+                (double)(double.Parse(value4, NumberFormatInfo.InvariantInfo)),
+                (double)(double.Parse(value5, NumberFormatInfo.InvariantInfo))
+            };
 
             //opbend
             //      scode = "0";
@@ -130,8 +139,10 @@ namespace NCDK.Modelings.Builder3D
             sid4 = "CR4R";
             value1 = "10.86681780";
             string opbendkey = "opbend" + ";" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
-            var opbenddata = new List<double>();
-            opbenddata.Add((double)(double.Parse(value1)));
+            var opbenddata = new List<double>
+            {
+                (double)(double.Parse(value1, NumberFormatInfo.InvariantInfo))
+            };
 
             //TODO data lines testing
 

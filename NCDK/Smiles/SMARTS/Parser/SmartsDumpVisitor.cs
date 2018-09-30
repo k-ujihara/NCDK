@@ -27,7 +27,7 @@ namespace NCDK.Smiles.SMARTS.Parser
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS AST
-    public class SmartsDumpVisitor : ISMARTSParserVisitor
+    internal class SmartsDumpVisitor : ISMARTSParserVisitor
     {
         public object Visit(ASTRingIdentifier node, object data)
         {

@@ -28,8 +28,8 @@ using NCDK.Numerics;
 using NCDK.Smiles;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -223,7 +223,8 @@ namespace NCDK.Layout
         public static KeyValuePair<string, Vector2[]> DecodeEntry(string str)
         {
             int i = str.IndexOf(' ');
-            if (i < 0) throw new ArgumentException();
+            if (i < 0)
+                throw new ArgumentException($"{nameof(str)} is not containing space.", nameof(str));
             return new KeyValuePair<string, Vector2[]>(str.Substring(0, i), DecodeCoordinates(str.Substring(i + 1)));
         }
 
@@ -238,7 +239,7 @@ namespace NCDK.Layout
             {
                 int end = str.IndexOf(')', 2);
                 if (end < 0)
-                    return new Vector2[0];
+                    return Array.Empty<Vector2>();
                 var strs = Strings.Tokenize(str.Substring(2, end - 2), ';');
                 Vector2[] points = new Vector2[strs.Count];
                 for (int i = 0; i < strs.Count; i++)
@@ -247,8 +248,8 @@ namespace NCDK.Layout
                     int first = coord.IndexOf(',');
                     int second = coord.IndexOf(',', first + 1);
                     points[i] = new Vector2(
-                        double.Parse(coord.Substring(0, first)),
-                        double.Parse(coord.Substring(first + 1, second - (first + 1))));
+                        double.Parse(coord.Substring(0, first), NumberFormatInfo.InvariantInfo),
+                        double.Parse(coord.Substring(first + 1, second - (first + 1)), NumberFormatInfo.InvariantInfo));
                 }
                 return points;
             }
@@ -258,7 +259,7 @@ namespace NCDK.Layout
                 Vector2[] points = new Vector2[strs.Count / 2];
                 for (int i = 0; i < strs.Count; i += 2)
                 {
-                    points[i / 2] = new Vector2(double.Parse(strs[i]), double.Parse(strs[i + 1]));
+                    points[i / 2] = new Vector2(double.Parse(strs[i], NumberFormatInfo.InvariantInfo), double.Parse(strs[i + 1], NumberFormatInfo.InvariantInfo));
                 }
                 return points;
             }
@@ -359,7 +360,7 @@ namespace NCDK.Layout
         /// </summary>
         /// <param name="mol">molecule (or fragment) to lookup</param>
         /// <returns>the coordinates</returns>
-        public ICollection<Vector2[]> GetCoordinates(IAtomContainer mol)
+        public IReadOnlyList<Vector2[]> GetCoordinates(IAtomContainer mol)
         {
             try
             {
@@ -381,7 +382,7 @@ namespace NCDK.Layout
                     }
                     orderedCoordSet.Add(orderedCoords);
                 }
-                return new ReadOnlyCollection<Vector2[]>(orderedCoordSet);
+                return orderedCoordSet;
             }
             catch (CDKException)
             {

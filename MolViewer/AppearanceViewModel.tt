@@ -24,19 +24,19 @@
 <#@ output extension=".tt.cs" #>
 
 <#
-	string className = "ChemObjectBox";
+    string className = "ChemObjectBox";
 
-	void P(string name, string type, string defaultValue)
-	{
+    void P(string name, string type, string defaultValue)
+    {
 #>
-		private <#= type #> _<#= name #> = <#= defaultValue #>;
+        private <#= type #> _<#= name #> = <#= defaultValue #>;
         public <#= type #> <#= name #>
         {
             get { return _<#= name #>; }
             set { this.SetProperty(ref this._<#= name #>, value); }
         }
 <#
-	}
+    }
 #>
 
 using NCDK.Renderers;
@@ -49,12 +49,12 @@ namespace NCDK.MolViewer
     partial class AppearanceViewModel : BindableBase
     {
 <#
-		P("Zoom", "double", "1");
-		P("AlignMappedReaction", "bool", "true");
-		P("BackgroundColor", "WPF.Media.Color", "WPF.Media.Colors.Transparent");
-		P("AtomColorer", "IAtomColorer", "new UniColor(WPF.Media.Colors.Black)");
-		P("Highlighting", "HighlightStyle", "HighlightStyle.None");
-		P("OuterGlowWidth", "double", "RendererModelTools.DefaultOuterGlowWidth");
+        P("Zoom", "double", "1");
+        P("AlignMappedReaction", "bool", "true");
+        P("BackgroundColor", "WPF.Media.Color", "WPF.Media.Colors.Transparent");
+        P("AtomColorer", "IAtomColorer", "new UniColor(WPF.Media.Colors.Black)");
+        P("Highlighting", "HighlightStyle", "HighlightStyle.None");
+        P("OuterGlowWidth", "double", "RendererModelTools.DefaultOuterGlowWidth");
 #>
-	}
+    }
 }

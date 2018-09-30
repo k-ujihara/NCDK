@@ -22,6 +22,7 @@
  */
 
 using NCDK.Isomorphisms.MCSS;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -42,23 +43,20 @@ namespace NCDK.Isomorphisms
         /// <param name="mappedAtoms"></param>
         /// <returns>a IDictionary of the mapped atoms</returns>
         /// <exception cref="CDKException">if there is an error in the UniversalIsomorphismTester</exception>
-        public static IDictionary<int, int> MapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer,
+        public static void MapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer,
                 IAtomContainer secondAtomContainer, IDictionary<int, int> mappedAtoms)
         {
-            //Debug.WriteLine("**** GT MAP ATOMS ****");
             //IDictionary atoms onto each other
             if (firstAtomContainer.Atoms.Count < 1 & secondAtomContainer.Atoms.Count < 1)
             {
-                return mappedAtoms;
+                return;
             }
             RMap map;
             IAtom atom1;
             IAtom atom2;
-            IList<RMap> list;
             try
             {
-                list = new UniversalIsomorphismTester().GetSubgraphAtomsMap(firstAtomContainer, secondAtomContainer);
-                //Debug.WriteLine("ListSize:"+list.Count);
+                var list = new UniversalIsomorphismTester().GetSubgraphAtomsMap(firstAtomContainer, secondAtomContainer);
                 for (int i = 0; i < list.Count; i++)
                 {
                     map = list[i];
@@ -67,9 +65,7 @@ namespace NCDK.Isomorphisms
                     if (CheckAtomMapping(firstAtomContainer, secondAtomContainer, firstAtomContainer.Atoms.IndexOf(atom1),
                             secondAtomContainer.Atoms.IndexOf(atom2)))
                     {
-                        mappedAtoms.Add(firstAtomContainer.Atoms.IndexOf(atom1),
-                                secondAtomContainer.Atoms.IndexOf(atom2));
-                        //                    Debug.WriteLine("#:"+countMappedAtoms+" Atom:"+firstAtomContainer.Atoms.IndexOf(atom1)+" is mapped to Atom:"+secondAtomContainer.Atoms.IndexOf(atom2));
+                        mappedAtoms.Add(firstAtomContainer.Atoms.IndexOf(atom1), secondAtomContainer.Atoms.IndexOf(atom2));
                     }
                     else
                     {
@@ -79,20 +75,19 @@ namespace NCDK.Isomorphisms
             }
             catch (CDKException e)
             {
-                throw new CDKException("Error in UniversalIsomorphismTester due to:" + e.ToString(), e);
+                throw new CDKException($"Error in UniversalIsomorphismTester due to: {e.Message}", e);
             }
-            return mappedAtoms;
         }
 
         private static bool CheckAtomMapping(IAtomContainer firstAC, IAtomContainer secondAC, int posFirstAtom, int posSecondAtom)
         {
-            IAtom firstAtom = firstAC.Atoms[posFirstAtom];
-            IAtom secondAtom = secondAC.Atoms[posSecondAtom];
-            // XXX: floating point comparision!
-            if (firstAtom.Symbol.Equals(secondAtom.Symbol)
-                    && firstAC.GetConnectedAtoms(firstAtom).Count() == secondAC.GetConnectedAtoms(secondAtom).Count()
-                    && firstAtom.BondOrderSum == secondAtom.BondOrderSum
-                    && firstAtom.MaxBondOrder == secondAtom.MaxBondOrder)
+            var firstAtom = firstAC.Atoms[posFirstAtom];
+            var secondAtom = secondAC.Atoms[posSecondAtom];
+            // XXX: floating point comparison!
+            if (firstAtom.Symbol.Equals(secondAtom.Symbol, StringComparison.Ordinal)
+             && firstAC.GetConnectedAtoms(firstAtom).Count() == secondAC.GetConnectedAtoms(secondAtom).Count()
+             && firstAtom.BondOrderSum == secondAtom.BondOrderSum
+             && firstAtom.MaxBondOrder == secondAtom.MaxBondOrder)
             {
                 return true;
             }

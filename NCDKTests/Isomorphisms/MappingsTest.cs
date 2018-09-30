@@ -52,14 +52,14 @@ namespace NCDK.Isomorphisms
 
             Mappings ms = new Mappings(new Mock<IAtomContainer>().Object, new Mock<IAtomContainer>().Object, iterable);
 
-            System.Predicate<int[]> f = n =>
-                {
-                    if (n == p1) return false;
-                    if (n == p2) return true;
-                    if (n == p3) return false;
-                    if (n == p4) return true;
-                    throw new InvalidOperationException();
-                };
+            bool f(int[] n)
+            {
+                if (n == p1) return false;
+                if (n == p2) return true;
+                if (n == p3) return false;
+                if (n == p4) return true;
+                throw new InvalidOperationException();
+            }
 
             Assert.IsTrue(Compares.AreDeepEqual(new int[][] { p2, p4 }, ms.Filter(f).ToArray()));
         }
@@ -116,7 +116,7 @@ namespace NCDK.Isomorphisms
             var m_iterator = new Mock<IEnumerator<int[]>>(); var iterator = m_iterator.Object;
             m_iterable.Setup(n => n.GetEnumerator()).Returns(iterator);
             m_iterator.SetupSequence(n => n.MoveNext()).Returns(true).Returns(true).Returns(true).Returns(true).Returns(true).Returns(false);
-            m_iterator.SetupGet(n => n.Current).Returns(new int[0]);
+            m_iterator.SetupGet(n => n.Current).Returns(Array.Empty<int>());
 
             Mappings ms = new Mappings(new Mock<IAtomContainer>().Object, new Mock<IAtomContainer>().Object, iterable);
             Assert.AreEqual(2, ms.Limit(2).Count());
@@ -170,11 +170,11 @@ namespace NCDK.Isomorphisms
             var iterator = iterable.GetEnumerator();
 
             Assert.IsTrue(iterator.MoveNext());
-            IDictionary<IAtom, IAtom> m1 = iterator.Current;
+            var m1 = iterator.Current;
             Assert.AreEqual(m1[query.Atoms[0]], target.Atoms[0]);
             Assert.AreEqual(m1[query.Atoms[1]], target.Atoms[1]);
             Assert.IsTrue(iterator.MoveNext());
-            IDictionary<IAtom, IAtom> m2 = iterator.Current;
+            var m2 = iterator.Current;
             Assert.AreEqual(m2[query.Atoms[0]], target.Atoms[1]);
             Assert.AreEqual(m2[query.Atoms[1]], target.Atoms[0]);
             Assert.IsFalse(iterator.MoveNext());
@@ -190,11 +190,11 @@ namespace NCDK.Isomorphisms
             var iterator = iterable.GetEnumerator();
 
             Assert.IsTrue(iterator.MoveNext());
-            IDictionary<IBond, IBond> m1 = iterator.Current;
+            var m1 = iterator.Current;
             Assert.AreEqual(m1[query.Bonds[0]], target.Bonds[0]);
             Assert.AreEqual(m1[query.Bonds[1]], target.Bonds[1]);
             Assert.IsTrue(iterator.MoveNext());
-            IDictionary<IBond, IBond> m2 = iterator.Current;
+            var m2 = iterator.Current;
             Assert.AreEqual(m2[query.Bonds[0]], target.Bonds[1]);
             Assert.AreEqual(m2[query.Bonds[1]], target.Bonds[0]);
             Assert.IsFalse(iterator.MoveNext());
@@ -210,14 +210,14 @@ namespace NCDK.Isomorphisms
             var iterator = iterable.GetEnumerator();
 
             Assert.IsTrue(iterator.MoveNext());
-            IDictionary<IChemObject, IChemObject> m1 = iterator.Current;
+            var m1 = iterator.Current;
             Assert.AreEqual(m1[query.Atoms[0]], (IChemObject)target.Atoms[0]);
             Assert.AreEqual(m1[query.Atoms[1]], (IChemObject)target.Atoms[1]);
             Assert.AreEqual(m1[query.Atoms[2]], (IChemObject)target.Atoms[2]);
             Assert.AreEqual(m1[query.Bonds[0]], (IChemObject)target.Bonds[0]);
             Assert.AreEqual(m1[query.Bonds[1]], (IChemObject)target.Bonds[1]);
             Assert.IsTrue(iterator.MoveNext());
-            IDictionary<IChemObject, IChemObject> m2 = iterator.Current;
+            var m2 = iterator.Current;
             Assert.AreEqual(m2[query.Atoms[0]], (IChemObject)target.Atoms[2]);
             Assert.AreEqual(m2[query.Atoms[1]], (IChemObject)target.Atoms[1]);
             Assert.AreEqual(m2[query.Atoms[2]], (IChemObject)target.Atoms[0]);
@@ -258,7 +258,7 @@ namespace NCDK.Isomorphisms
             var m_iterator = new Mock<IEnumerator<int[]>>(); var iterator = m_iterator.Object;
             m_iterable.Setup(n => n.GetEnumerator()).Returns(iterator);
             m_iterator.SetupSequence(n => n.MoveNext()).Returns(true).Returns(true).Returns(true).Returns(true).Returns(true).Returns(false);
-            m_iterator.SetupGet(n => n.Current).Returns(new int[0]);
+            m_iterator.SetupGet(n => n.Current).Returns(Array.Empty<int>());
 
             Mappings ms = new Mappings(new Mock<IAtomContainer>().Object, new Mock<IAtomContainer>().Object, iterable);
 
@@ -274,8 +274,8 @@ namespace NCDK.Isomorphisms
             m_iterable.Setup(n => n.GetEnumerator()).Returns(iterator);
             m_iterator.SetupSequence(n => n.MoveNext()).Returns(true).Returns(true).Returns(false);
 
-            int[] p1 = new int[0];
-            int[] p2 = new int[0];
+            int[] p1 = Array.Empty<int>();
+            int[] p2 = Array.Empty<int>();
 
             m_iterator.SetupSequence(n => n.Current).Returns(p1).Returns(p2);
 
@@ -290,7 +290,7 @@ namespace NCDK.Isomorphisms
             var m_iterator = new Mock<IEnumerator<int[]>>(); var iterator = m_iterator.Object;
             m_iterable.Setup(n => n.GetEnumerator()).Returns(iterator);
             m_iterator.SetupSequence(n => n.MoveNext()).Returns(true).Returns(true).Returns(true).Returns(true).Returns(true).Returns(false);
-            m_iterator.SetupSequence(n => n.Current).Returns(new int[0]);
+            m_iterator.SetupSequence(n => n.Current).Returns(Array.Empty<int>());
 
             Mappings ms = new Mappings(new Mock<IAtomContainer>().Object, new Mock<IAtomContainer>().Object, iterable);
             Assert.AreEqual(5, ms.Count());

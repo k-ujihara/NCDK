@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System.Globalization;
+
 namespace NCDK.IO.Setting
 {
     /// <summary>
@@ -52,7 +54,7 @@ namespace NCDK.IO.Setting
 
         public virtual int GetSettingValue()
         {
-            return int.Parse(this.Setting);
+            return int.Parse(this.Setting, NumberFormatInfo.InvariantInfo);
         }
     }
 }

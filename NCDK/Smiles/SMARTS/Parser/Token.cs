@@ -17,15 +17,13 @@
  * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
-using System;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
     /// <summary>
     /// Describes the input token stream.
     /// </summary>
-    [Serializable]
-    public class Token
+    internal class Token
     {
         /// <summary>
         /// An integer that describes the kind of this token.  This numbering
@@ -80,7 +78,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         /// Any subclass of Token that actually wants to return a non-null value can
         /// override this method as appropriate.
         /// </summary>
-        public object Value => null;
+        public object value = null;
 
         /// <summary>
         /// No-argument constructor

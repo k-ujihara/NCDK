@@ -16,7 +16,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -24,11 +26,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [TestClass()]
     public class ChiIndexUtilsTest : CDKTestCase
     {
-        Default.ChemObjectBuilder builder;
+        ChemObjectBuilder builder;
 
         public ChiIndexUtilsTest()
         {
-            builder = (Default.ChemObjectBuilder)Default.ChemObjectBuilder.Instance;
+            builder = (ChemObjectBuilder)ChemObjectBuilder.Instance;
         }
 
         [TestMethod()]

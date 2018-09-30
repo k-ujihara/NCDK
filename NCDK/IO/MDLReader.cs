@@ -29,6 +29,7 @@ using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -185,9 +186,9 @@ namespace NCDK.IO
                     // apparently, this is a SDF file, continue with
                     // reading mol files
                     str = line;
-                    if (line.Equals("M  END"))
+                    if (string.Equals(line, "M  END", StringComparison.Ordinal))
                         continue;
-                    if (str.Equals("$$$$"))
+                    if (string.Equals(str, "$$$$", StringComparison.Ordinal))
                     {
                         m = ReadMolecule(chemFile.Builder.NewAtomContainer());
 
@@ -213,8 +214,7 @@ namespace NCDK.IO
                             if (str.StartsWith("> ", StringComparison.Ordinal))
                             {
                                 // ok, should extract the field name
-                                str.Substring(2); // string content =
-                                int index = str.IndexOf('<');
+                                int index = str.IndexOf('<', 2);
                                 if (index != -1)
                                 {
                                     int index2 = str.Substring(index).IndexOf('>');
@@ -236,7 +236,7 @@ namespace NCDK.IO
                             string data = line;
                             while ((line = input.ReadLine()) != null && line.Trim().Length > 0)
                             {
-                                if (line.Equals("$$$$"))
+                                if (string.Equals(line, "$$$$", StringComparison.Ordinal))
                                 {
                                     Trace.TraceError($"Expecting data line here, but found end of molecule: {line}");
                                     break;
@@ -306,14 +306,14 @@ namespace NCDK.IO
             double totalX = 0.0;
             double totalY = 0.0;
             double totalZ = 0.0;
-            //int[][] conMat = new int[0][0];
+            //int[][] conMat = Array.Empty<int>()[0];
             //string help;
             IAtom atom;
             string line = "";
 
             try
             {
-                IsotopeFactory isotopeFactory = Isotopes.Instance;
+                IsotopeFactory isotopeFactory = BODRIsotopeFactory.Instance;
 
                 Trace.TraceInformation("Reading header");
                 line = input.ReadLine();
@@ -359,10 +359,10 @@ namespace NCDK.IO
                         throw new CDKException("This file must be read with the MDLV3000Reader.");
                     }
                 }
-                atoms = int.Parse(Strings.Substring(line, 0, 3).Trim());
-                Debug.WriteLine("Atomcount: " + atoms);
-                bonds = int.Parse(Strings.Substring(line, 3, 3).Trim());
-                Debug.WriteLine("Bondcount: " + bonds);
+                atoms = int.Parse(Strings.Substring(line, 0, 3).Trim(), NumberFormatInfo.InvariantInfo);
+                Debug.WriteLine($"Atomcount: {atoms}");
+                bonds = int.Parse(Strings.Substring(line, 3, 3).Trim(), NumberFormatInfo.InvariantInfo);
+                Debug.WriteLine($"Bondcount: {bonds}");
 
                 // read ATOM block
                 Trace.TraceInformation("Reading atom block");
@@ -376,9 +376,9 @@ namespace NCDK.IO
                         HandleError("Trailing space found", linecount, trailingSpaceMatcher.Index, trailingSpaceMatcher.Index + trailingSpaceMatcher.Length);
                         line = Strings.Substring(line, 0, trailingSpaceMatcher.Index);
                     }
-                    x = double.Parse(Strings.Substring(line, 0, 10).Trim());
-                    y = double.Parse(Strings.Substring(line, 10, 10).Trim());
-                    z = double.Parse(Strings.Substring(line, 20, 10).Trim());
+                    x = double.Parse(Strings.Substring(line, 0, 10).Trim(), NumberFormatInfo.InvariantInfo);
+                    y = double.Parse(Strings.Substring(line, 10, 10).Trim(), NumberFormatInfo.InvariantInfo);
+                    z = double.Parse(Strings.Substring(line, 20, 10).Trim(), NumberFormatInfo.InvariantInfo);
                     // *all* values should be zero, not just the sum
                     totalX += Math.Abs(x);
                     totalY += Math.Abs(y);
@@ -391,28 +391,28 @@ namespace NCDK.IO
                                 + " and padded with space if required", linecount, 31, 34);
                     }
 
-                    Debug.WriteLine("Atom type: ", element);
+                    Debug.WriteLine($"Atom type: {element}");
                     if (isotopeFactory.IsElement(element))
                     {
                         atom = isotopeFactory.Configure(molecule.Builder.NewAtom(element));
                     }
-                    else if ("A".Equals(element))
+                    else if (string.Equals("A", element, StringComparison.Ordinal))
                     {
                         atom = molecule.Builder.NewPseudoAtom(element);
                     }
-                    else if ("Q".Equals(element))
+                    else if (string.Equals("Q", element, StringComparison.Ordinal))
                     {
                         atom = molecule.Builder.NewPseudoAtom(element);
                     }
-                    else if ("*".Equals(element))
+                    else if (string.Equals("*", element, StringComparison.Ordinal))
                     {
                         atom = molecule.Builder.NewPseudoAtom(element);
                     }
-                    else if ("LP".Equals(element))
+                    else if (string.Equals("LP", element, StringComparison.Ordinal))
                     {
                         atom = molecule.Builder.NewPseudoAtom(element);
                     }
-                    else if ("L".Equals(element))
+                    else if (string.Equals("L", element, StringComparison.Ordinal))
                     {
                         atom = molecule.Builder.NewPseudoAtom(element);
                     }
@@ -450,15 +450,15 @@ namespace NCDK.IO
                     if (line.Length >= 36)
                     {
                         string massDiffString = Strings.Substring(line, 34, 2).Trim();
-                        Debug.WriteLine("Mass difference: ", massDiffString);
+                        Debug.WriteLine($"Mass difference: {massDiffString}");
                         if (!(atom is IPseudoAtom))
                         {
                             try
                             {
-                                int massDiff = int.Parse(massDiffString);
+                                int massDiff = int.Parse(massDiffString, NumberFormatInfo.InvariantInfo);
                                 if (massDiff != 0)
                                 {
-                                    IIsotope major = Isotopes.Instance.GetMajorIsotope(element);
+                                    IIsotope major = BODRIsotopeFactory.Instance.GetMajorIsotope(element);
                                     atom.AtomicNumber = major.AtomicNumber + massDiff;
                                 }
                             }
@@ -482,8 +482,8 @@ namespace NCDK.IO
                     if (line.Length >= 39)
                     {
                         string chargeCodeString = Strings.Substring(line, 36, 3).Trim();
-                        Debug.WriteLine("Atom charge code: ", chargeCodeString);
-                        int chargeCode = int.Parse(chargeCodeString);
+                        Debug.WriteLine($"Atom charge code: {chargeCodeString}");
+                        int chargeCode = int.Parse(chargeCodeString, NumberFormatInfo.InvariantInfo);
                         if (chargeCode == 0)
                         {
                             // uncharged species
@@ -525,10 +525,10 @@ namespace NCDK.IO
                     {
                         // read the mmm field as position 61-63
                         string reactionAtomIDString = Strings.Substring(line, 60, 3).Trim();
-                        Debug.WriteLine("Parsing mapping id: ", reactionAtomIDString);
+                        Debug.WriteLine($"Parsing mapping id: {reactionAtomIDString}");
                         try
                         {
-                            int reactionAtomID = int.Parse(reactionAtomIDString);
+                            int reactionAtomID = int.Parse(reactionAtomIDString, NumberFormatInfo.InvariantInfo);
                             if (reactionAtomID != 0)
                             {
                                 atom.SetProperty(CDKPropertyName.AtomAtomMapping, reactionAtomID);
@@ -549,12 +549,12 @@ namespace NCDK.IO
                     //shk3: This reads shifts from after the molecule. I don't think this is an official format, but I saw it frequently 80=>78 for alk
                     if (line.Length >= 78)
                     {
-                        double shift = double.Parse(Strings.Substring(line, 69, 11).Trim());
+                        double shift = double.Parse(Strings.Substring(line, 69, 11).Trim(), NumberFormatInfo.InvariantInfo);
                         atom.SetProperty("first shift", shift);
                     }
                     if (line.Length >= 87)
                     {
-                        double shift = double.Parse(Strings.Substring(line, 79, 8).Trim());
+                        double shift = double.Parse(Strings.Substring(line, 79, 8).Trim(), NumberFormatInfo.InvariantInfo);
                         atom.SetProperty("second shift", shift);
                     }
 
@@ -589,12 +589,12 @@ namespace NCDK.IO
                 {
                     line = input.ReadLine();
                     linecount++;
-                    atom1 = int.Parse(Strings.Substring(line, 0, 3).Trim());
-                    atom2 = int.Parse(Strings.Substring(line, 3, 3).Trim());
-                    order = int.Parse(Strings.Substring(line, 6, 3).Trim());
+                    atom1 = int.Parse(Strings.Substring(line, 0, 3).Trim(), NumberFormatInfo.InvariantInfo);
+                    atom2 = int.Parse(Strings.Substring(line, 3, 3).Trim(), NumberFormatInfo.InvariantInfo);
+                    order = int.Parse(Strings.Substring(line, 6, 3).Trim(), NumberFormatInfo.InvariantInfo);
                     if (line.Length > 12)
                     {
-                        int mdlStereo = int.Parse(Strings.Substring(line, 9, 3).Trim());
+                        int mdlStereo = int.Parse(Strings.Substring(line, 9, 3).Trim(), NumberFormatInfo.InvariantInfo);
                         if (mdlStereo == 1)
                         {
                             // MDL up bond
@@ -700,13 +700,13 @@ namespace NCDK.IO
 
         private void InitIOSettings()
         {
-            forceReadAs3DCoords = IOSettings.Add(new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.Low,
-                    "Should coordinates always be read as 3D?", "false"));
+            forceReadAs3DCoords = IOSettings.Add(new BooleanIOSetting("ForceReadAs3DCoordinates", Importance.Low,
+                "Should coordinates always be read as 3D?", "false"));
         }
 
         public void CustomizeJob()
         {
-            FireIOSettingQuestion(forceReadAs3DCoords);
+            ProcessIOSettingQuestion(forceReadAs3DCoords);
         }
     }
 }

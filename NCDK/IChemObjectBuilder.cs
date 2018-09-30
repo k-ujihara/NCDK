@@ -106,6 +106,6 @@ namespace NCDK
         ISingleElectron NewSingleElectron();
         ISingleElectron NewSingleElectron(IAtom atom);
         IStrand NewStrand();
-        ITetrahedralChirality NewTetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligandAtoms, TetrahedralStereo chirality);
+        ITetrahedralChirality NewTetrahedralChirality(IAtom chiralAtom, IReadOnlyList<IAtom> ligandAtoms, TetrahedralStereo chirality);
     }
 }

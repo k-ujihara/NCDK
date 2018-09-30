@@ -21,6 +21,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System.Collections.Generic;
+
 namespace NCDK.IO.Formats
 {
     /// <summary>
@@ -47,7 +49,7 @@ namespace NCDK.IO.Formats
         /// <summary>
         /// Returns an array of common resource name extensions.
         /// </summary>
-        string[] NameExtensions { get; }
+        IReadOnlyList<string> NameExtensions { get; }
 
         /// <summary>
         /// Returns the accepted MIME type for this format.

@@ -5,9 +5,7 @@ namespace NCDK.FaulonSignatures
     public class InvariantIntIntPair : IComparable<InvariantIntIntPair>
     {
         public int label;
-
         public int value;
-
         public int originalIndex;
 
         public InvariantIntIntPair(int label, int value, int originalIndex)

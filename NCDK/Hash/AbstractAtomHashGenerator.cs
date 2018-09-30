@@ -24,6 +24,7 @@
 
 using NCDK.Hash.Stereo;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace NCDK.Hash
 {
@@ -36,14 +37,10 @@ namespace NCDK.Hash
     // @cdk.module hash
     internal abstract class AbstractAtomHashGenerator : AbstractHashGenerator, IAtomHashGenerator
     {
-        /// <summary>
-        /// Empty BitArray for use when the 'suppressed' atoms are ignored.
-        /// </summary>
-        readonly BitArray EmptyBitSet = new BitArray(0);
-
         public AbstractAtomHashGenerator(Pseudorandom pseudorandom)
-                : base(pseudorandom)
-        { }
+            : base(pseudorandom)
+        {
+        }
 
         public abstract long[] Generate(IAtomContainer container);
 

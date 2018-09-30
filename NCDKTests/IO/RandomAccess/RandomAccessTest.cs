@@ -21,6 +21,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -55,7 +56,7 @@ namespace NCDK.IO.RandomAccess
 
 
                     //System.Console.Out.WriteLine(System.GetProperty("user.dir"));
-                    RandomAccessReader rf = new RandomAccessSDFReader(f, Default.ChemObjectBuilder.Instance);
+                    RandomAccessReader rf = new RandomAccessSDFReader(f, ChemObjectBuilder.Instance);
                     try
                     {
                         Assert.AreEqual(6, rf.Count);

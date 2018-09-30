@@ -64,8 +64,8 @@ namespace NCDK.QSAR.Descriptors.Bonds
         /// <summary>
         /// The specification attribute of the BondPartialSigmaChargeDescriptor object.
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondPartialSigmaCharge",
                 typeof(BondPartialSigmaChargeDescriptor).FullName, "The Chemistry Development Kit");
@@ -73,11 +73,11 @@ namespace NCDK.QSAR.Descriptors.Bonds
         /// <summary>
         /// The parameters attribute of the BondPartialSigmaChargeDescriptor object
         /// </summary>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
                     throw new CDKException("PartialSigmaChargeDescriptor only expects one parameter");
                 }
@@ -98,7 +98,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
         private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             }
             bond.Atoms[0].Charge = originalCharge1;
             bond.Atoms[1].Charge = originalCharge2;
-            return GetCachedDescriptorValue(bond) != null ? new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, (Result<double>)GetCachedDescriptorValue(bond), NAMES) : null;
+            return GetCachedDescriptorValue(bond) != null ? new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, (Result<double>)GetCachedDescriptorValue(bond), NAMES) : null;
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
         public object GetParameterType(string name)
         {
-            if ("maxIterations".Equals(name)) return int.MaxValue;
+            if (string.Equals("maxIterations", name, StringComparison.Ordinal)) return int.MaxValue;
             return null;
         }
     }

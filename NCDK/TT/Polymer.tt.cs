@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -45,6 +46,7 @@ namespace NCDK.Default
     // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
     // @cdk.created 2001-08-06
     // @cdk.keyword polymer
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class Polymer
         : AtomContainer, IPolymer
@@ -84,7 +86,7 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public virtual IEnumerable<KeyValuePair<string, IMonomer>> GetMonomerMap()
         {
-            return monomers.Where(n => n.Key != "");
+            return monomers.Where(n => n.Key.Length != 0);
         }
 
         /// <inheritdoc/>
@@ -133,12 +135,11 @@ namespace NCDK.Default
                 clone.monomers.Add(name, cloned);
             }
 
-			// update sgroups
-			var sgroups = GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            // update sgroups
+            var sgroups = this.GetCtabSgroups();
             if (sgroups != null)
             {
-                clone.SetProperty(CDKPropertyName.CtabSgroups,
-                    SgroupManipulator.Copy(sgroups, map));
+                clone.SetCtabSgroups(SgroupManipulator.Copy(sgroups, map));
             }
 
             return clone;
@@ -156,6 +157,7 @@ namespace NCDK.Silent
     // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
     // @cdk.created 2001-08-06
     // @cdk.keyword polymer
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class Polymer
         : AtomContainer, IPolymer
@@ -195,7 +197,7 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public virtual IEnumerable<KeyValuePair<string, IMonomer>> GetMonomerMap()
         {
-            return monomers.Where(n => n.Key != "");
+            return monomers.Where(n => n.Key.Length != 0);
         }
 
         /// <inheritdoc/>
@@ -244,12 +246,11 @@ namespace NCDK.Silent
                 clone.monomers.Add(name, cloned);
             }
 
-			// update sgroups
-			var sgroups = GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            // update sgroups
+            var sgroups = this.GetCtabSgroups();
             if (sgroups != null)
             {
-                clone.SetProperty(CDKPropertyName.CtabSgroups,
-                    SgroupManipulator.Copy(sgroups, map));
+                clone.SetCtabSgroups(SgroupManipulator.Copy(sgroups, map));
             }
 
             return clone;

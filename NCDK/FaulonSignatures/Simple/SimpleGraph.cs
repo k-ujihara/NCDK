@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace NCDK.FaulonSignatures.Simple
 {
@@ -55,9 +56,7 @@ namespace NCDK.FaulonSignatures.Simple
         }
 
         public List<Edge> edges;
-
         public int maxVertexIndex;
-
         public string name;
 
         public SimpleGraph()
@@ -71,8 +70,8 @@ namespace NCDK.FaulonSignatures.Simple
             foreach (var edgeString in graphString.Split(','))
             {
                 string[] vertexStrings = edgeString.Split(':');
-                int a = int.Parse(vertexStrings[0]);
-                int b = int.Parse(vertexStrings[1]);
+                int a = int.Parse(vertexStrings[0], NumberFormatInfo.InvariantInfo);
+                int b = int.Parse(vertexStrings[1], NumberFormatInfo.InvariantInfo);
                 MakeEdge(a, b);
             }
         }

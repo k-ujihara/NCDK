@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.QSAR.Results;
 using NCDK.Smiles;
@@ -44,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestMOIFromSmiles()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCCC");
             var value = Descriptor.Calculate(mol);
             Assert.IsNotNull(value.Exception, "The Exception should be non-null since we don't have 3D coords");

@@ -33,9 +33,9 @@ namespace NCDK
         /// <summary>
         /// Deep comparator of <see cref="IChemObject"/>.  
         /// </summary>
-        /// <param name="obj">Object to compare with.</param>
-        /// <returns><see langword="true"/> if all properties of this object equals to <paramref name="obj"/>.</returns>
-        bool Compare(object obj);
+        /// <param name="o">Object to compare with.</param>
+        /// <returns><see langword="true"/> if all properties of this object equals to <paramref name="o"/>.</returns>
+        bool Compare(object o);
         
         /// <summary>
         /// Identifier (ID) of this object.

@@ -8,7 +8,7 @@ namespace NCDK.SMSD.Labelling
     // @cdk.githash
     public class AtomContainerAtomPermutor : Permutor, IEnumerable<IAtomContainer>
     {
-        private IAtomContainer original;
+        private readonly IAtomContainer original;
 
         public AtomContainerAtomPermutor(IAtomContainer atomContainer)
             : base(atomContainer.Atoms.Count)

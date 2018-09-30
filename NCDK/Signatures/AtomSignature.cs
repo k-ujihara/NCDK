@@ -209,27 +209,21 @@ namespace NCDK.Signatures
         /// <inheritdoc/>
         public override int ConvertEdgeLabelToColor(string edgeLabel)
         {
-            if (edgeLabel.Equals(""))
+            switch (edgeLabel)
             {
-                return 1;
+                case "":
+                    return 1;
+                case "=":
+                    return 2;
+                case "#":
+                    return 3;
+                case "$":
+                    return 4;
+                case "p":
+                    return 5;
+                default:
+                    return 0;
             }
-            else if (edgeLabel.Equals("="))
-            {
-                return 2;
-            }
-            else if (edgeLabel.Equals("#"))
-            {
-                return 3;
-            }
-            else if (edgeLabel.Equals("$"))
-            {
-                return 4;
-            }
-            else if (edgeLabel.Equals("p"))
-            {
-                return 5;
-            }
-            return 0;
         }
     }
 }

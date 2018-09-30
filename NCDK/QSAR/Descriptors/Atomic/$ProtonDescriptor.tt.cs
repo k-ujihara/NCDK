@@ -13,9 +13,9 @@ using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-	public partial class RDFProtonDescriptor_G3R
-	{
-        private bool checkAromaticity { get; set; } = false;
+    public partial class RDFProtonDescriptorG3R
+    {
+        private bool CheckAromaticity { get; set; } = false;
         private IAtomContainer acold = null;
         private IRingSet varRingSet = null;
         private IChemObjectSet<IAtomContainer> varAtomContainerSet = null;
@@ -25,24 +25,24 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         /// <value>Parameters are the proton position and a boolean (<see langword="true"/> if you need to detect aromaticity)</value>
         /// <exception cref="CDKException"></exception>
-        public virtual object[] Parameters
+        public virtual IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
-                    throw new CDKException("RDFProtonDescriptor only expects one parameters");
+                    throw new CDKException($"{nameof(RDFProtonDescriptorG3R)} only expects one parameters");
                 }
                 if (!(value[0] is bool))
                 {
-                    throw new CDKException("The second parameter must be of type bool");
+                    throw new CDKException($"The second parameter must be of type {nameof(System.Boolean)}");
                 }
-                checkAromaticity = (bool)value[0];
+                CheckAromaticity = (bool)value[0];
             }
             get
             {
                 // return the parameters as used for the descriptor calculation
-                return new object[] { checkAromaticity };
+                return new object[] { CheckAromaticity };
             }
         }
 
@@ -51,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             ArrayResult<double> result = new ArrayResult<double>(desc_length);
             for (int i = 0; i < desc_length; i++)
                 result.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, DescriptorNames, e);
         }
 
         public virtual IDescriptorValue Calculate(IAtom atom, IAtomContainer varAtomContainerSet)
@@ -66,7 +66,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int atomPosition = atomContainer.Atoms.IndexOf(atom);
             IAtom clonedAtom = varAtomContainer.Atoms[atomPosition];
             ArrayResult<double> rdfProtonCalculatedValues = new ArrayResult<double>(desc_length);
-            if (!atom.Symbol.Equals("H"))
+            if (!string.Equals(atom.Symbol, "H", StringComparison.Ordinal))
             {
                 return GetDummyDescriptorValue(new CDKException("Invalid atom specified"));
             }
@@ -101,7 +101,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     return GetDummyDescriptorValue(ex1);
                 }
             }
-            if (checkAromaticity)
+            if (CheckAromaticity)
             {
                 try
                 {
@@ -288,7 +288,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 atoms, 
                 bondsInCycloex))
             {
-                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, rdfProtonCalculatedValues, DescriptorNames);
+                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, rdfProtonCalculatedValues, DescriptorNames);
             }
             else
             {
@@ -298,7 +298,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // Others definitions
 
-        private bool GetIfBondIsNotRotatable(IAtomContainer mol, IBond bond, IAtomContainer detected)
+        private static bool GetIfBondIsNotRotatable(IAtomContainer mol, IBond bond, IAtomContainer detected)
         {
             bool isBondNotRotatable = false;
             int counter = 0;
@@ -316,7 +316,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 else
                 {
-                    if (atom1.Symbol.Equals("H"))
+                    if (string.Equals(atom1.Symbol, "H", StringComparison.Ordinal))
                         counter += 1;
                     else
                         counter += 0;
@@ -334,7 +334,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             return isBondNotRotatable;
         }
 
-        private bool GetIfACarbonIsDoubleBondedToAnOxygen(IAtomContainer mol, IAtom carbonAtom)
+        private static bool GetIfACarbonIsDoubleBondedToAnOxygen(IAtomContainer mol, IAtom carbonAtom)
         {
             bool isDoubleBondedToOxygen = false;
             var neighToCarbon = mol.GetConnectedAtoms(carbonAtom);
@@ -342,7 +342,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int counter = 0;
             foreach (var neighbour in neighToCarbon)
             {
-                if (neighbour.Symbol.Equals("O"))
+                if (string.Equals(neighbour.Symbol, "O", StringComparison.Ordinal))
                 {
                     tmpBond = mol.GetBond(neighbour, carbonAtom);
                     if (tmpBond.Order == BondOrder.Double) counter += 1;
@@ -354,7 +354,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // this method calculates the angle between two bonds given coordinates of their atoms
 
-        internal double CalculateAngleBetweenTwoLines(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
+        internal static double CalculateAngleBetweenTwoLines(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
         {
             Vector3 firstLine = a - b;
             Vector3 secondLine = c - d;
@@ -364,7 +364,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         // this method store atoms and bonds in proper lists:
-        private void CheckAndStore(int bondToStore, BondOrder bondOrder, List<int> singleVec,
+        private static void CheckAndStore(int bondToStore, BondOrder bondOrder, List<int> singleVec,
                 List<int> doubleVec, List<int> cycloexVec, int a1, List<int> atomVec,
                 int sphere, bool isBondInCycloex)
         {
@@ -390,7 +390,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         // generic method for calculation of distance btw 2 atoms
-        internal double CalculateDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
+        internal static double CalculateDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
         {
             double distance;
             Vector3 firstPoint = atom1.Point3D.Value;
@@ -401,7 +401,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // given a double bond
         // this method returns a bond bonded to this double bond
-        internal int GetNearestBondtoAGivenAtom(IAtomContainer mol, IAtom atom, IBond bond)
+        internal static int GetNearestBondtoAGivenAtom(IAtomContainer mol, IAtom atom, IBond bond)
         {
             int nearestBond = -1;
             double distance = 0;
@@ -429,7 +429,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // method which calculated distance btw an atom and the middle point of a bond
         // and returns distance and coordinates of middle point
-        internal double[] CalculateDistanceBetweenAtomAndBond(IAtom proton, IBond theBond)
+        internal static double[] CalculateDistanceBetweenAtomAndBond(IAtom proton, IBond theBond)
         {
             Vector3 middlePoint = theBond.Geometric3DCenter;
             Vector3 protonPoint = proton.Point3D.Value;
@@ -453,13 +453,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>The parameterType value</returns>
         public virtual object GetParameterType(string name)
         {
-            if (name.Equals("checkAromaticity")) return true;
+            if (string.Equals(name, "checkAromaticity", StringComparison.Ordinal)) return true;
             return null;
         }
-	}
-	public partial class RDFProtonDescriptor_GDR
-	{
-        private bool checkAromaticity { get; set; } = false;
+    }
+    public partial class RDFProtonDescriptorGDR
+    {
+        private bool CheckAromaticity { get; set; } = false;
         private IAtomContainer acold = null;
         private IRingSet varRingSet = null;
         private IChemObjectSet<IAtomContainer> varAtomContainerSet = null;
@@ -469,24 +469,24 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         /// <value>Parameters are the proton position and a boolean (<see langword="true"/> if you need to detect aromaticity)</value>
         /// <exception cref="CDKException"></exception>
-        public virtual object[] Parameters
+        public virtual IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
-                    throw new CDKException("RDFProtonDescriptor only expects one parameters");
+                    throw new CDKException($"{nameof(RDFProtonDescriptorGDR)} only expects one parameters");
                 }
                 if (!(value[0] is bool))
                 {
-                    throw new CDKException("The second parameter must be of type bool");
+                    throw new CDKException($"The second parameter must be of type {nameof(System.Boolean)}");
                 }
-                checkAromaticity = (bool)value[0];
+                CheckAromaticity = (bool)value[0];
             }
             get
             {
                 // return the parameters as used for the descriptor calculation
-                return new object[] { checkAromaticity };
+                return new object[] { CheckAromaticity };
             }
         }
 
@@ -495,7 +495,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             ArrayResult<double> result = new ArrayResult<double>(desc_length);
             for (int i = 0; i < desc_length; i++)
                 result.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, DescriptorNames, e);
         }
 
         public virtual IDescriptorValue Calculate(IAtom atom, IAtomContainer varAtomContainerSet)
@@ -510,7 +510,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int atomPosition = atomContainer.Atoms.IndexOf(atom);
             IAtom clonedAtom = varAtomContainer.Atoms[atomPosition];
             ArrayResult<double> rdfProtonCalculatedValues = new ArrayResult<double>(desc_length);
-            if (!atom.Symbol.Equals("H"))
+            if (!string.Equals(atom.Symbol, "H", StringComparison.Ordinal))
             {
                 return GetDummyDescriptorValue(new CDKException("Invalid atom specified"));
             }
@@ -545,7 +545,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     return GetDummyDescriptorValue(ex1);
                 }
             }
-            if (checkAromaticity)
+            if (CheckAromaticity)
             {
                 try
                 {
@@ -732,7 +732,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 atoms, 
                 bondsInCycloex))
             {
-                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, rdfProtonCalculatedValues, DescriptorNames);
+                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, rdfProtonCalculatedValues, DescriptorNames);
             }
             else
             {
@@ -742,7 +742,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // Others definitions
 
-        private bool GetIfBondIsNotRotatable(IAtomContainer mol, IBond bond, IAtomContainer detected)
+        private static bool GetIfBondIsNotRotatable(IAtomContainer mol, IBond bond, IAtomContainer detected)
         {
             bool isBondNotRotatable = false;
             int counter = 0;
@@ -760,7 +760,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 else
                 {
-                    if (atom1.Symbol.Equals("H"))
+                    if (string.Equals(atom1.Symbol, "H", StringComparison.Ordinal))
                         counter += 1;
                     else
                         counter += 0;
@@ -778,7 +778,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             return isBondNotRotatable;
         }
 
-        private bool GetIfACarbonIsDoubleBondedToAnOxygen(IAtomContainer mol, IAtom carbonAtom)
+        private static bool GetIfACarbonIsDoubleBondedToAnOxygen(IAtomContainer mol, IAtom carbonAtom)
         {
             bool isDoubleBondedToOxygen = false;
             var neighToCarbon = mol.GetConnectedAtoms(carbonAtom);
@@ -786,7 +786,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int counter = 0;
             foreach (var neighbour in neighToCarbon)
             {
-                if (neighbour.Symbol.Equals("O"))
+                if (string.Equals(neighbour.Symbol, "O", StringComparison.Ordinal))
                 {
                     tmpBond = mol.GetBond(neighbour, carbonAtom);
                     if (tmpBond.Order == BondOrder.Double) counter += 1;
@@ -798,7 +798,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // this method calculates the angle between two bonds given coordinates of their atoms
 
-        internal double CalculateAngleBetweenTwoLines(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
+        internal static double CalculateAngleBetweenTwoLines(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
         {
             Vector3 firstLine = a - b;
             Vector3 secondLine = c - d;
@@ -808,7 +808,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         // this method store atoms and bonds in proper lists:
-        private void CheckAndStore(int bondToStore, BondOrder bondOrder, List<int> singleVec,
+        private static void CheckAndStore(int bondToStore, BondOrder bondOrder, List<int> singleVec,
                 List<int> doubleVec, List<int> cycloexVec, int a1, List<int> atomVec,
                 int sphere, bool isBondInCycloex)
         {
@@ -834,7 +834,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         // generic method for calculation of distance btw 2 atoms
-        internal double CalculateDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
+        internal static double CalculateDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
         {
             double distance;
             Vector3 firstPoint = atom1.Point3D.Value;
@@ -845,7 +845,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // given a double bond
         // this method returns a bond bonded to this double bond
-        internal int GetNearestBondtoAGivenAtom(IAtomContainer mol, IAtom atom, IBond bond)
+        internal static int GetNearestBondtoAGivenAtom(IAtomContainer mol, IAtom atom, IBond bond)
         {
             int nearestBond = -1;
             double distance = 0;
@@ -873,7 +873,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // method which calculated distance btw an atom and the middle point of a bond
         // and returns distance and coordinates of middle point
-        internal double[] CalculateDistanceBetweenAtomAndBond(IAtom proton, IBond theBond)
+        internal static double[] CalculateDistanceBetweenAtomAndBond(IAtom proton, IBond theBond)
         {
             Vector3 middlePoint = theBond.Geometric3DCenter;
             Vector3 protonPoint = proton.Point3D.Value;
@@ -897,13 +897,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>The parameterType value</returns>
         public virtual object GetParameterType(string name)
         {
-            if (name.Equals("checkAromaticity")) return true;
+            if (string.Equals(name, "checkAromaticity", StringComparison.Ordinal)) return true;
             return null;
         }
-	}
-	public partial class RDFProtonDescriptor_GHR
-	{
-        private bool checkAromaticity { get; set; } = false;
+    }
+    public partial class RDFProtonDescriptorGHR
+    {
+        private bool CheckAromaticity { get; set; } = false;
         private IAtomContainer acold = null;
         private IRingSet varRingSet = null;
         private IChemObjectSet<IAtomContainer> varAtomContainerSet = null;
@@ -913,24 +913,24 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         /// <value>Parameters are the proton position and a boolean (<see langword="true"/> if you need to detect aromaticity)</value>
         /// <exception cref="CDKException"></exception>
-        public virtual object[] Parameters
+        public virtual IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
-                    throw new CDKException("RDFProtonDescriptor only expects one parameters");
+                    throw new CDKException($"{nameof(RDFProtonDescriptorGHR)} only expects one parameters");
                 }
                 if (!(value[0] is bool))
                 {
-                    throw new CDKException("The second parameter must be of type bool");
+                    throw new CDKException($"The second parameter must be of type {nameof(System.Boolean)}");
                 }
-                checkAromaticity = (bool)value[0];
+                CheckAromaticity = (bool)value[0];
             }
             get
             {
                 // return the parameters as used for the descriptor calculation
-                return new object[] { checkAromaticity };
+                return new object[] { CheckAromaticity };
             }
         }
 
@@ -939,7 +939,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             ArrayResult<double> result = new ArrayResult<double>(desc_length);
             for (int i = 0; i < desc_length; i++)
                 result.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, DescriptorNames, e);
         }
 
         public virtual IDescriptorValue Calculate(IAtom atom, IAtomContainer varAtomContainerSet)
@@ -954,7 +954,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int atomPosition = atomContainer.Atoms.IndexOf(atom);
             IAtom clonedAtom = varAtomContainer.Atoms[atomPosition];
             ArrayResult<double> rdfProtonCalculatedValues = new ArrayResult<double>(desc_length);
-            if (!atom.Symbol.Equals("H"))
+            if (!string.Equals(atom.Symbol, "H", StringComparison.Ordinal))
             {
                 return GetDummyDescriptorValue(new CDKException("Invalid atom specified"));
             }
@@ -989,7 +989,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     return GetDummyDescriptorValue(ex1);
                 }
             }
-            if (checkAromaticity)
+            if (CheckAromaticity)
             {
                 try
                 {
@@ -1176,7 +1176,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 atoms, 
                 bondsInCycloex))
             {
-                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, rdfProtonCalculatedValues, DescriptorNames);
+                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, rdfProtonCalculatedValues, DescriptorNames);
             }
             else
             {
@@ -1186,7 +1186,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // Others definitions
 
-        private bool GetIfBondIsNotRotatable(IAtomContainer mol, IBond bond, IAtomContainer detected)
+        private static bool GetIfBondIsNotRotatable(IAtomContainer mol, IBond bond, IAtomContainer detected)
         {
             bool isBondNotRotatable = false;
             int counter = 0;
@@ -1204,7 +1204,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 else
                 {
-                    if (atom1.Symbol.Equals("H"))
+                    if (string.Equals(atom1.Symbol, "H", StringComparison.Ordinal))
                         counter += 1;
                     else
                         counter += 0;
@@ -1222,7 +1222,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             return isBondNotRotatable;
         }
 
-        private bool GetIfACarbonIsDoubleBondedToAnOxygen(IAtomContainer mol, IAtom carbonAtom)
+        private static bool GetIfACarbonIsDoubleBondedToAnOxygen(IAtomContainer mol, IAtom carbonAtom)
         {
             bool isDoubleBondedToOxygen = false;
             var neighToCarbon = mol.GetConnectedAtoms(carbonAtom);
@@ -1230,7 +1230,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int counter = 0;
             foreach (var neighbour in neighToCarbon)
             {
-                if (neighbour.Symbol.Equals("O"))
+                if (string.Equals(neighbour.Symbol, "O", StringComparison.Ordinal))
                 {
                     tmpBond = mol.GetBond(neighbour, carbonAtom);
                     if (tmpBond.Order == BondOrder.Double) counter += 1;
@@ -1242,7 +1242,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // this method calculates the angle between two bonds given coordinates of their atoms
 
-        internal double CalculateAngleBetweenTwoLines(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
+        internal static double CalculateAngleBetweenTwoLines(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
         {
             Vector3 firstLine = a - b;
             Vector3 secondLine = c - d;
@@ -1252,7 +1252,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         // this method store atoms and bonds in proper lists:
-        private void CheckAndStore(int bondToStore, BondOrder bondOrder, List<int> singleVec,
+        private static void CheckAndStore(int bondToStore, BondOrder bondOrder, List<int> singleVec,
                 List<int> doubleVec, List<int> cycloexVec, int a1, List<int> atomVec,
                 int sphere, bool isBondInCycloex)
         {
@@ -1278,7 +1278,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         // generic method for calculation of distance btw 2 atoms
-        internal double CalculateDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
+        internal static double CalculateDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
         {
             double distance;
             Vector3 firstPoint = atom1.Point3D.Value;
@@ -1289,7 +1289,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // given a double bond
         // this method returns a bond bonded to this double bond
-        internal int GetNearestBondtoAGivenAtom(IAtomContainer mol, IAtom atom, IBond bond)
+        internal static int GetNearestBondtoAGivenAtom(IAtomContainer mol, IAtom atom, IBond bond)
         {
             int nearestBond = -1;
             double distance = 0;
@@ -1317,7 +1317,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // method which calculated distance btw an atom and the middle point of a bond
         // and returns distance and coordinates of middle point
-        internal double[] CalculateDistanceBetweenAtomAndBond(IAtom proton, IBond theBond)
+        internal static double[] CalculateDistanceBetweenAtomAndBond(IAtom proton, IBond theBond)
         {
             Vector3 middlePoint = theBond.Geometric3DCenter;
             Vector3 protonPoint = proton.Point3D.Value;
@@ -1341,13 +1341,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>The parameterType value</returns>
         public virtual object GetParameterType(string name)
         {
-            if (name.Equals("checkAromaticity")) return true;
+            if (string.Equals(name, "checkAromaticity", StringComparison.Ordinal)) return true;
             return null;
         }
-	}
-	public partial class RDFProtonDescriptor_GHR_topol
-	{
-        private bool checkAromaticity { get; set; } = false;
+    }
+    public partial class RDFProtonDescriptorGHRTopology
+    {
+        private bool CheckAromaticity { get; set; } = false;
         private IAtomContainer acold = null;
         private IRingSet varRingSet = null;
         private IChemObjectSet<IAtomContainer> varAtomContainerSet = null;
@@ -1357,24 +1357,24 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         /// <value>Parameters are the proton position and a boolean (<see langword="true"/> if you need to detect aromaticity)</value>
         /// <exception cref="CDKException"></exception>
-        public virtual object[] Parameters
+        public virtual IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
-                    throw new CDKException("RDFProtonDescriptor only expects one parameters");
+                    throw new CDKException($"{nameof(RDFProtonDescriptorGHRTopology)} only expects one parameters");
                 }
                 if (!(value[0] is bool))
                 {
-                    throw new CDKException("The second parameter must be of type bool");
+                    throw new CDKException($"The second parameter must be of type {nameof(System.Boolean)}");
                 }
-                checkAromaticity = (bool)value[0];
+                CheckAromaticity = (bool)value[0];
             }
             get
             {
                 // return the parameters as used for the descriptor calculation
-                return new object[] { checkAromaticity };
+                return new object[] { CheckAromaticity };
             }
         }
 
@@ -1383,7 +1383,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             ArrayResult<double> result = new ArrayResult<double>(desc_length);
             for (int i = 0; i < desc_length; i++)
                 result.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, DescriptorNames, e);
         }
 
         public virtual IDescriptorValue Calculate(IAtom atom, IAtomContainer varAtomContainerSet)
@@ -1398,7 +1398,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int atomPosition = atomContainer.Atoms.IndexOf(atom);
             IAtom clonedAtom = varAtomContainer.Atoms[atomPosition];
             ArrayResult<double> rdfProtonCalculatedValues = new ArrayResult<double>(desc_length);
-            if (!atom.Symbol.Equals("H"))
+            if (!string.Equals(atom.Symbol, "H", StringComparison.Ordinal))
             {
                 return GetDummyDescriptorValue(new CDKException("Invalid atom specified"));
             }
@@ -1433,7 +1433,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     return GetDummyDescriptorValue(ex1);
                 }
             }
-            if (checkAromaticity)
+            if (CheckAromaticity)
             {
                 try
                 {
@@ -1620,7 +1620,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 atoms, 
                 bondsInCycloex))
             {
-                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, rdfProtonCalculatedValues, DescriptorNames);
+                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, rdfProtonCalculatedValues, DescriptorNames);
             }
             else
             {
@@ -1630,7 +1630,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // Others definitions
 
-        private bool GetIfBondIsNotRotatable(IAtomContainer mol, IBond bond, IAtomContainer detected)
+        private static bool GetIfBondIsNotRotatable(IAtomContainer mol, IBond bond, IAtomContainer detected)
         {
             bool isBondNotRotatable = false;
             int counter = 0;
@@ -1648,7 +1648,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 else
                 {
-                    if (atom1.Symbol.Equals("H"))
+                    if (string.Equals(atom1.Symbol, "H", StringComparison.Ordinal))
                         counter += 1;
                     else
                         counter += 0;
@@ -1666,7 +1666,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             return isBondNotRotatable;
         }
 
-        private bool GetIfACarbonIsDoubleBondedToAnOxygen(IAtomContainer mol, IAtom carbonAtom)
+        private static bool GetIfACarbonIsDoubleBondedToAnOxygen(IAtomContainer mol, IAtom carbonAtom)
         {
             bool isDoubleBondedToOxygen = false;
             var neighToCarbon = mol.GetConnectedAtoms(carbonAtom);
@@ -1674,7 +1674,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int counter = 0;
             foreach (var neighbour in neighToCarbon)
             {
-                if (neighbour.Symbol.Equals("O"))
+                if (string.Equals(neighbour.Symbol, "O", StringComparison.Ordinal))
                 {
                     tmpBond = mol.GetBond(neighbour, carbonAtom);
                     if (tmpBond.Order == BondOrder.Double) counter += 1;
@@ -1686,7 +1686,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // this method calculates the angle between two bonds given coordinates of their atoms
 
-        internal double CalculateAngleBetweenTwoLines(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
+        internal static double CalculateAngleBetweenTwoLines(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
         {
             Vector3 firstLine = a - b;
             Vector3 secondLine = c - d;
@@ -1696,7 +1696,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         // this method store atoms and bonds in proper lists:
-        private void CheckAndStore(int bondToStore, BondOrder bondOrder, List<int> singleVec,
+        private static void CheckAndStore(int bondToStore, BondOrder bondOrder, List<int> singleVec,
                 List<int> doubleVec, List<int> cycloexVec, int a1, List<int> atomVec,
                 int sphere, bool isBondInCycloex)
         {
@@ -1722,7 +1722,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         // generic method for calculation of distance btw 2 atoms
-        internal double CalculateDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
+        internal static double CalculateDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
         {
             double distance;
             Vector3 firstPoint = atom1.Point3D.Value;
@@ -1733,7 +1733,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // given a double bond
         // this method returns a bond bonded to this double bond
-        internal int GetNearestBondtoAGivenAtom(IAtomContainer mol, IAtom atom, IBond bond)
+        internal static int GetNearestBondtoAGivenAtom(IAtomContainer mol, IAtom atom, IBond bond)
         {
             int nearestBond = -1;
             double distance = 0;
@@ -1761,7 +1761,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // method which calculated distance btw an atom and the middle point of a bond
         // and returns distance and coordinates of middle point
-        internal double[] CalculateDistanceBetweenAtomAndBond(IAtom proton, IBond theBond)
+        internal static double[] CalculateDistanceBetweenAtomAndBond(IAtom proton, IBond theBond)
         {
             Vector3 middlePoint = theBond.Geometric3DCenter;
             Vector3 protonPoint = proton.Point3D.Value;
@@ -1785,13 +1785,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>The parameterType value</returns>
         public virtual object GetParameterType(string name)
         {
-            if (name.Equals("checkAromaticity")) return true;
+            if (string.Equals(name, "checkAromaticity", StringComparison.Ordinal)) return true;
             return null;
         }
-	}
-	public partial class RDFProtonDescriptor_GSR
-	{
-        private bool checkAromaticity { get; set; } = false;
+    }
+    public partial class RDFProtonDescriptorGSR
+    {
+        private bool CheckAromaticity { get; set; } = false;
         private IAtomContainer acold = null;
         private IRingSet varRingSet = null;
         private IChemObjectSet<IAtomContainer> varAtomContainerSet = null;
@@ -1801,24 +1801,24 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         /// <value>Parameters are the proton position and a boolean (<see langword="true"/> if you need to detect aromaticity)</value>
         /// <exception cref="CDKException"></exception>
-        public virtual object[] Parameters
+        public virtual IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
-                    throw new CDKException("RDFProtonDescriptor only expects one parameters");
+                    throw new CDKException($"{nameof(RDFProtonDescriptorGSR)} only expects one parameters");
                 }
                 if (!(value[0] is bool))
                 {
-                    throw new CDKException("The second parameter must be of type bool");
+                    throw new CDKException($"The second parameter must be of type {nameof(System.Boolean)}");
                 }
-                checkAromaticity = (bool)value[0];
+                CheckAromaticity = (bool)value[0];
             }
             get
             {
                 // return the parameters as used for the descriptor calculation
-                return new object[] { checkAromaticity };
+                return new object[] { CheckAromaticity };
             }
         }
 
@@ -1827,7 +1827,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             ArrayResult<double> result = new ArrayResult<double>(desc_length);
             for (int i = 0; i < desc_length; i++)
                 result.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, DescriptorNames, e);
         }
 
         public virtual IDescriptorValue Calculate(IAtom atom, IAtomContainer varAtomContainerSet)
@@ -1842,7 +1842,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int atomPosition = atomContainer.Atoms.IndexOf(atom);
             IAtom clonedAtom = varAtomContainer.Atoms[atomPosition];
             ArrayResult<double> rdfProtonCalculatedValues = new ArrayResult<double>(desc_length);
-            if (!atom.Symbol.Equals("H"))
+            if (!string.Equals(atom.Symbol, "H", StringComparison.Ordinal))
             {
                 return GetDummyDescriptorValue(new CDKException("Invalid atom specified"));
             }
@@ -1877,7 +1877,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     return GetDummyDescriptorValue(ex1);
                 }
             }
-            if (checkAromaticity)
+            if (CheckAromaticity)
             {
                 try
                 {
@@ -2064,7 +2064,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 atoms, 
                 bondsInCycloex))
             {
-                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, rdfProtonCalculatedValues, DescriptorNames);
+                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, rdfProtonCalculatedValues, DescriptorNames);
             }
             else
             {
@@ -2074,7 +2074,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // Others definitions
 
-        private bool GetIfBondIsNotRotatable(IAtomContainer mol, IBond bond, IAtomContainer detected)
+        private static bool GetIfBondIsNotRotatable(IAtomContainer mol, IBond bond, IAtomContainer detected)
         {
             bool isBondNotRotatable = false;
             int counter = 0;
@@ -2092,7 +2092,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 else
                 {
-                    if (atom1.Symbol.Equals("H"))
+                    if (string.Equals(atom1.Symbol, "H", StringComparison.Ordinal))
                         counter += 1;
                     else
                         counter += 0;
@@ -2110,7 +2110,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             return isBondNotRotatable;
         }
 
-        private bool GetIfACarbonIsDoubleBondedToAnOxygen(IAtomContainer mol, IAtom carbonAtom)
+        private static bool GetIfACarbonIsDoubleBondedToAnOxygen(IAtomContainer mol, IAtom carbonAtom)
         {
             bool isDoubleBondedToOxygen = false;
             var neighToCarbon = mol.GetConnectedAtoms(carbonAtom);
@@ -2118,7 +2118,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int counter = 0;
             foreach (var neighbour in neighToCarbon)
             {
-                if (neighbour.Symbol.Equals("O"))
+                if (string.Equals(neighbour.Symbol, "O", StringComparison.Ordinal))
                 {
                     tmpBond = mol.GetBond(neighbour, carbonAtom);
                     if (tmpBond.Order == BondOrder.Double) counter += 1;
@@ -2130,7 +2130,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // this method calculates the angle between two bonds given coordinates of their atoms
 
-        internal double CalculateAngleBetweenTwoLines(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
+        internal static double CalculateAngleBetweenTwoLines(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
         {
             Vector3 firstLine = a - b;
             Vector3 secondLine = c - d;
@@ -2140,7 +2140,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         // this method store atoms and bonds in proper lists:
-        private void CheckAndStore(int bondToStore, BondOrder bondOrder, List<int> singleVec,
+        private static void CheckAndStore(int bondToStore, BondOrder bondOrder, List<int> singleVec,
                 List<int> doubleVec, List<int> cycloexVec, int a1, List<int> atomVec,
                 int sphere, bool isBondInCycloex)
         {
@@ -2166,7 +2166,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         // generic method for calculation of distance btw 2 atoms
-        internal double CalculateDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
+        internal static double CalculateDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
         {
             double distance;
             Vector3 firstPoint = atom1.Point3D.Value;
@@ -2177,7 +2177,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // given a double bond
         // this method returns a bond bonded to this double bond
-        internal int GetNearestBondtoAGivenAtom(IAtomContainer mol, IAtom atom, IBond bond)
+        internal static int GetNearestBondtoAGivenAtom(IAtomContainer mol, IAtom atom, IBond bond)
         {
             int nearestBond = -1;
             double distance = 0;
@@ -2205,7 +2205,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         // method which calculated distance btw an atom and the middle point of a bond
         // and returns distance and coordinates of middle point
-        internal double[] CalculateDistanceBetweenAtomAndBond(IAtom proton, IBond theBond)
+        internal static double[] CalculateDistanceBetweenAtomAndBond(IAtom proton, IBond theBond)
         {
             Vector3 middlePoint = theBond.Geometric3DCenter;
             Vector3 protonPoint = proton.Point3D.Value;
@@ -2229,8 +2229,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>The parameterType value</returns>
         public virtual object GetParameterType(string name)
         {
-            if (name.Equals("checkAromaticity")) return true;
+            if (string.Equals(name, "checkAromaticity", StringComparison.Ordinal)) return true;
             return null;
         }
-	}
+    }
 }

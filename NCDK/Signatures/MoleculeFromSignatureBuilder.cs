@@ -22,6 +22,7 @@
  */
 
 using NCDK.FaulonSignatures;
+using System;
 
 namespace NCDK.Signatures
 {
@@ -53,27 +54,26 @@ namespace NCDK.Signatures
         }
 
         /// <inheritdoc/>
-        public override void MakeEdge(int vertexIndex1, int vertexIndex2, string vertexSymbol1, string vertexSymbol2,
-                string edgeLabel)
+        public override void MakeEdge(int vertexIndex1, int vertexIndex2, string vertexSymbol1, string vertexSymbol2, string edgeLabel)
         {
-            if (edgeLabel.Equals(""))
+            switch (edgeLabel)
             {
-                container.AddBond(container.Atoms[vertexIndex1], container.Atoms[vertexIndex2], BondOrder.Single);
-            }
-            else if (edgeLabel.Equals("="))
-            {
-                container.AddBond(container.Atoms[vertexIndex1], container.Atoms[vertexIndex2], BondOrder.Double);
-            }
-            else if (edgeLabel.Equals("#"))
-            {
-                container.AddBond(container.Atoms[vertexIndex1], container.Atoms[vertexIndex2], BondOrder.Triple);
-            }
-            else if (edgeLabel.Equals("p"))
-            {
-                IBond bond = builder.NewBond(container.Atoms[vertexIndex1],
-                        container.Atoms[vertexIndex2], BondOrder.Single);
-                bond.IsAromatic = true;
-                container.Bonds.Add(bond);
+                case "":
+                    container.AddBond(container.Atoms[vertexIndex1], container.Atoms[vertexIndex2], BondOrder.Single);
+                    break;
+                case "=":
+                    container.AddBond(container.Atoms[vertexIndex1], container.Atoms[vertexIndex2], BondOrder.Double);
+                    break;
+                case "#":
+                    container.AddBond(container.Atoms[vertexIndex1], container.Atoms[vertexIndex2], BondOrder.Triple);
+                    break;
+                case "p":
+                    IBond bond = builder.NewBond(container.Atoms[vertexIndex1], container.Atoms[vertexIndex2], BondOrder.Single);
+                    bond.IsAromatic = true;
+                    container.Bonds.Add(bond);
+                    break;
+                default:
+                    break;
             }
         }
 

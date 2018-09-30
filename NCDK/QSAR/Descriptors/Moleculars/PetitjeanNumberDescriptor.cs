@@ -25,14 +25,15 @@ using System.Collections.Generic;
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    ///  According to the Petitjean definition, the eccentricity of a vertex corresponds to
-    ///  the distance from that vertex to the most remote vertex in the graph.
-    ///  The distance is obtained from the distance matrix as the count of edges between the two vertices.
-    ///  If r(i) is the largest matrix entry in row i of the distance matrix D, then the radius is defined as the smallest of the r(i).
-    ///  The graph diameter D is defined as the largest vertex eccentricity in the graph.
-    ///  (http://www.edusoft-lc.com/molconn/manuals/400/chaptwo.html)
+    /// Evaluates Petitjean number.
     /// </summary>
     /// <remarks>
+    /// According to the Petitjean definition, the eccentricity of a vertex corresponds to
+    /// the distance from that vertex to the most remote vertex in the graph.
+    /// The distance is obtained from the distance matrix as the count of edges between the two vertices.
+    /// If r(i) is the largest matrix entry in row i of the distance matrix D, then the radius is defined as the smallest of the r(i).
+    /// The graph diameter D is defined as the largest vertex eccentricity in the graph.
+    /// (http://www.edusoft-lc.com/molconn/manuals/400/chaptwo.html)
     /// <para>This descriptor uses these parameters:
     /// <list type="table">
     ///   <item>
@@ -61,25 +62,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     {
         private static readonly string[] NAMES = { "PetitjeanNumber" };
 
-        /// <summary>
-        ///  Constructor for the PetitjeanNumberDescriptor object
-        /// </summary>
         public PetitjeanNumberDescriptor() { }
 
-        /// <summary>
-        /// The specification attribute of the PetitjeanNumberDescriptor object
-        /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanNumber",
                 typeof(PetitjeanNumberDescriptor).FullName, "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the PetitjeanNumberDescriptor object
-        /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
-
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
@@ -98,22 +89,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 petitjeanNumber = 0;
             else
                 petitjeanNumber = (diameter - radius) / (double)diameter;
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(petitjeanNumber), DescriptorNames);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(petitjeanNumber), DescriptorNames);
         }
 
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
-        /// <summary>
-        /// The parameterNames attribute of the PetitjeanNumberDescriptor object
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames => null;
-
-        /// <summary>
-        /// The parameterType attribute of the PetitjeanNumberDescriptor object
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
         public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

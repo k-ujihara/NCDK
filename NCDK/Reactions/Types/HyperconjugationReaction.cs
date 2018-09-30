@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Reactions.Types.Parameters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -97,7 +98,7 @@ namespace NCDK.Reactions.Types
                                         if (atomk.IsReactiveCenter
                                                 && (atomk.FormalCharge ?? 0) == 0
                                                 && !reactant.GetConnectedSingleElectrons(atomk).Any()
-                                                && atomk.Symbol.Equals("H")
+                                                && atomk.Symbol.Equals("H", StringComparison.Ordinal)
                                         )
                                         {
                                             var atomList = new List<IAtom>
@@ -140,7 +141,7 @@ namespace NCDK.Reactions.Types
         ///  </pre>
         /// </summary>
         /// <param name="reactant">The molecule to set the activity</param>
-        private void SetActiveCenters(IAtomContainer reactant)
+        private static void SetActiveCenters(IAtomContainer reactant)
         {
             foreach (var atomi in reactant.Atoms)
             {
@@ -163,7 +164,7 @@ namespace NCDK.Reactions.Types
                                         IAtom atomk = bondj.GetOther(atomj);
                                         if ((atomk.FormalCharge ?? 0) == 0
                                                 && !reactant.GetConnectedSingleElectrons(atomk).Any()
-                                                && atomk.Symbol.Equals("H")
+                                                && atomk.Symbol.Equals("H", StringComparison.Ordinal)
                                         )
                                         {
                                             atomi.IsReactiveCenter = true;

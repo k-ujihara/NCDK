@@ -21,14 +21,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using NCDK.Aromaticities;
 using NCDK.Graphs;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers.SMARTS;
 using NCDK.Smiles.SMARTS.Parser;
-using System;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 
 namespace NCDK.Smiles.SMARTS
@@ -59,14 +58,14 @@ namespace NCDK.Smiles.SMARTS
         private readonly bool ringInfo, hasStereo, hasCompGrp, hasRxnMap;
 
         /// <summary>Aromaticity model.</summary>
-        private readonly Aromaticity arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.Or(Cycles.AllFinder, Cycles.RelevantFinder));
+        private readonly Aromaticity arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.Or(Cycles.AllSimpleFinder, Cycles.RelevantFinder));
 
         /// <summary>
         /// Internal constructor.
         /// </summary>
         /// <param name="smarts">pattern</param>
         /// <param name="builder">the builder</param>
-        /// <exception cref="IOException">the pattern could not be parsed</exception>
+        /// <exception cref="System.IO.IOException">the pattern could not be parsed</exception>
         private SmartsPattern(string smarts, IChemObjectBuilder builder)
         {
 #if !DEBUG
@@ -76,9 +75,9 @@ namespace NCDK.Smiles.SMARTS
                 this.query = SMARTSParser.Parse(smarts, builder);
             }
 #if !DEBUG
-            catch (Exception e)
+            catch (System.Exception e)
             {
-                throw new IOException(e.Message);
+                throw new System.IO.IOException(e.Message);
             }
 #endif
             this.pattern = Pattern.FindSubstructure(query);
@@ -163,7 +162,7 @@ namespace NCDK.Smiles.SMARTS
         /// <param name="smarts">SMARTS pattern string</param>
         /// <param name="builder">chem object builder used to create objects</param>
         /// <returns>a new pattern</returns>
-        /// <exception cref="IOException">the smarts could not be parsed</exception> 
+        /// <exception cref="System.IO.IOException">the smarts could not be parsed</exception> 
         public static SmartsPattern Create(string smarts, IChemObjectBuilder builder)
         {
             return new SmartsPattern(smarts, builder);
@@ -174,7 +173,7 @@ namespace NCDK.Smiles.SMARTS
         /// </summary>
         /// <param name="smarts">SMARTS pattern string</param>
         /// <returns>a SMARTS pattern</returns>
-        /// <exception cref="IOException">problem with SMARTS string syntax/semantics</exception>
+        /// <exception cref="System.IO.IOException">problem with SMARTS string syntax/semantics</exception>
         public static SmartsPattern Create(string smarts)
         {
             return new SmartsPattern(smarts, null);

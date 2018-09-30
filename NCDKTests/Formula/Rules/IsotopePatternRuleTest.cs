@@ -19,6 +19,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
+using NCDK.Silent;
 using System;
 using System.Collections.Generic;
 
@@ -28,8 +29,8 @@ namespace NCDK.Formula.Rules
     [TestClass()]
     public class IsotopePatternRuleTest : FormulaRuleTest
     {
-        private static readonly IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-        private static readonly IsotopeFactory ifac = Isotopes.Instance;
+        private static readonly IChemObjectBuilder builder = ChemObjectBuilder.Instance;
+        private static readonly IsotopeFactory ifac = BODRIsotopeFactory.Instance;
         protected override Type RuleClass => typeof(IsotopePatternRule);
 
         protected override IRule GetRule()
@@ -77,11 +78,11 @@ namespace NCDK.Formula.Rules
             var objects = rule.Parameters;
 
             Assert.IsNotNull(objects[0]);
-            Assert.AreEqual(2, objects.Length);
+            Assert.AreEqual(2, objects.Count);
         }
 
         [TestMethod()]
-        public void TestValid_Bromine()
+        public void TestValidBromine()
         {
             List<double[]> spectrum = new List<double[]>
             {

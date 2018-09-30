@@ -30,7 +30,7 @@ using System.Collections.Generic;
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    /// Evaluates the Petitjean shape indices,
+    /// Evaluates the Petitjean shape indices.
     /// </summary>
     /// <remarks>
     /// These original Petitjean number was described by Petitjean (<token>cdk-cite-PET92</token>)
@@ -70,8 +70,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public PetitjeanShapeIndexDescriptor() { }
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanShapeIndex",
                 typeof(PetitjeanShapeIndexDescriptor).FullName, "The Chemistry Development Kit");
@@ -79,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// Sets the parameters attribute of the PetitjeanShapeIndexDescriptor object.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
@@ -157,7 +157,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 retval.Add(double.NaN);
             }
 
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval,
                     DescriptorNames);
         }
 

@@ -27,6 +27,7 @@ using NCDK.Tools;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.Fingerprints
 {
@@ -120,7 +121,7 @@ namespace NCDK.Fingerprints
         }
 
         /// <inheritdoc/>
-        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
+        public override IReadOnlyDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
         {
             throw new NotSupportedException();
         }
@@ -128,11 +129,11 @@ namespace NCDK.Fingerprints
         /// <summary>
         /// the size of the fingerprint.
         /// </summary>
-        public override int Count => FPSize;
+        public override int Length => FPSize;
 
         class ElementsCounter
         {
-            int[] counts = new int[120];
+            private readonly int[] counts = new int[120];
 
             public ElementsCounter(IAtomContainer m)
             {
@@ -153,8 +154,7 @@ namespace NCDK.Fingerprints
 
         class RingsCounter
         {
-            int[][] sssr = { };
-            IRingSet ringSet;
+            readonly IRingSet ringSet;
 
             public RingsCounter(IAtomContainer m)
             {
@@ -171,16 +171,17 @@ namespace NCDK.Fingerprints
                 return c;
             }
 
-            private bool IsCarbonOnlyRing(IAtomContainer ring)
+            private static bool IsCarbonOnlyRing(IAtomContainer ring)
             {
                 foreach (var ringAtom in ring.Atoms)
                 {
-                    if (!ringAtom.Symbol.Equals("C")) return false;
+                    if (!string.Equals(ringAtom.Symbol, "C", StringComparison.Ordinal))
+                        return false;
                 }
                 return true;
             }
 
-            private bool IsRingSaturated(IAtomContainer ring)
+            private static bool IsRingSaturated(IAtomContainer ring)
             {
                 foreach (var ringBond in ring.Bonds)
                 {
@@ -190,35 +191,44 @@ namespace NCDK.Fingerprints
                 return true;
             }
 
-            private bool IsRingUnsaturated(IAtomContainer ring)
+            private static bool IsRingUnsaturated(IAtomContainer ring)
             {
                 return !IsRingSaturated(ring);
             }
 
-            private int CountNitrogenInRing(IAtomContainer ring)
+            private static int CountNitrogenInRing(IAtomContainer ring)
             {
                 int c = 0;
                 foreach (var ringAtom in ring.Atoms)
                 {
-                    if (ringAtom.Symbol.Equals("N")) c++;
+                    if (string.Equals(ringAtom.Symbol, "N", StringComparison.Ordinal)) c++;
                 }
                 return c;
             }
 
-            private int CountHeteroInRing(IAtomContainer ring)
+            private static int CountHeteroInRing(IAtomContainer ring)
             {
                 int c = 0;
                 foreach (var ringAtom in ring.Atoms)
                 {
-                    if (!ringAtom.Symbol.Equals("C") && !ringAtom.Symbol.Equals("H")) c++;
+                    switch (ringAtom.Symbol)
+                    {
+                        case "C":
+                        case "H":
+                            break;
+                        default:
+                            c++;
+                            break;
+                    }
                 }
                 return c;
             }
 
-            private bool IsAromaticRing(IAtomContainer ring)
+            private static bool IsAromaticRing(IAtomContainer ring)
             {
                 foreach (var bond in ring.Bonds)
-                    if (!bond.IsAromatic) return false;
+                    if (!bond.IsAromatic)
+                        return false;
                 return true;
             }
 
@@ -312,7 +322,7 @@ namespace NCDK.Fingerprints
         class SubstructuresCounter
         {
             PubchemFingerprinter parent;
-            private IAtomContainer mol;
+            private readonly IAtomContainer mol;
 
             public SubstructuresCounter(PubchemFingerprinter parent, IAtomContainer m)
             {
@@ -326,7 +336,7 @@ namespace NCDK.Fingerprints
                 bool status = parent.sqt.Matches(mol);
                 if (status)
                 {
-                    return parent.sqt.GetUniqueMatchingAtoms().Count;
+                    return parent.sqt.GetUniqueMatchingAtoms().Count();
                 }
                 else
                     return 0;
@@ -422,7 +432,7 @@ namespace NCDK.Fingerprints
             return Base64Encode(pack);
         }
 
-        private static string BASE64_LUT = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz0123456789+/=";
+        private const string BASE64_LUT = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz0123456789+/=";
 
         /// based on NCBI C implementation
         private static string Base64Encode(byte[] data)

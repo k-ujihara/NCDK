@@ -18,7 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 
 namespace NCDK.Tools
 {
@@ -29,7 +29,7 @@ namespace NCDK.Tools
     public class SaturationCheckerTest
         : CDKTestCase
     {
-        SaturationChecker satcheck = new SaturationChecker();
+        private static readonly SaturationChecker satcheck = CDK.SaturationChecker;
 
         [TestMethod()]
         public void TestAllSaturated()
@@ -50,13 +50,13 @@ namespace NCDK.Tools
             m.Bonds.Add(new Bond(c, h2));
             m.Bonds.Add(new Bond(c, h3));
             m.Bonds.Add(new Bond(c, h4));
-            Assert.IsTrue(satcheck.AllSaturated(m));
+            Assert.IsTrue(satcheck.IsSaturated(m));
 
             // test methane with implicit hydrogen
             m = new AtomContainer();
             c = new Atom("C") { ImplicitHydrogenCount = 4 };
             m.Atoms.Add(c);
-            Assert.IsTrue(satcheck.AllSaturated(m));
+            Assert.IsTrue(satcheck.IsSaturated(m));
         }
 
         [TestMethod()]
@@ -384,7 +384,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestCalculateNumberOfImplicitHydrogens()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
             IAtomContainer proton = builder.NewAtomContainer();
             IAtom hplus = builder.NewAtom("H");

@@ -1,6 +1,7 @@
 
 
 
+
 /* Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  *
  * Contact: cdk-devel@lists.sourceforge.net

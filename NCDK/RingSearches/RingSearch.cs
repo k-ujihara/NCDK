@@ -100,7 +100,7 @@ namespace NCDK.RingSearches
         /// <param name="container">non-null input structure</param>
         /// <param name="graph">non-null adjacency list representation of the container</param>
         /// <exception cref="ArgumentNullException">if the container or graph was null</exception>
-        public RingSearch(IAtomContainer container, int[][] graph)
+        public RingSearch(IAtomContainer container, IReadOnlyList<IReadOnlyList<int>> graph)
             : this(container, MakeSearcher(graph))
         { }
 
@@ -124,14 +124,14 @@ namespace NCDK.RingSearches
         /// <param name="graph">non-null graph</param>
         /// <returns>a new cyclic vertex search for the given graph</returns>
         /// <exception cref="ArgumentNullException">if the graph was null</exception>
-        private static ICyclicVertexSearch MakeSearcher(int[][] graph)
+        private static ICyclicVertexSearch MakeSearcher(IReadOnlyList<IReadOnlyList<int>> graph)
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph), "graph[][] must not be null");
 
             // if the molecule has 64 or less atoms we can use single 64 bit long
             // values to represent our sets of vertices
-            if (graph.Length <= 64)
+            if (graph.Count <= 64)
             {
                 return new RegularCyclicVertexSearch(graph);
             }
@@ -188,7 +188,8 @@ namespace NCDK.RingSearches
             // XXX: linear search - but okay for now
             int u = container.Atoms.IndexOf(bond.Begin);
             int v = container.Atoms.IndexOf(bond.End);
-            if (u < 0 || v < 0) throw new NoSuchAtomException("atoms of the bond are not found in the container");
+            if (u < 0 || v < 0)
+                throw new NoSuchAtomException("atoms of the bond are not found in the container");
             return searcher.Cyclic(u, v);
         }
 
@@ -247,9 +248,9 @@ namespace NCDK.RingSearches
         /// <seealso cref="SpanningTree.GetCyclicFragmentsContainer"/>>
         public IAtomContainer RingFragments()
         {
-            int[] vertices = Cyclic();
+            var vertices = Cyclic();
             int n = vertices.Length;
-            IAtom[] atoms = new IAtom[n];
+            var atoms = new IAtom[n];
             List<IBond> bonds = new List<IBond>();
 
             for (int i = 0; i < vertices.Length; i++)
@@ -300,7 +301,7 @@ namespace NCDK.RingSearches
         /// </summary>
         /// <returns>list of isolated ring fragments</returns>
         /// <seealso cref="Isolated"/>
-        public IList<IAtomContainer> IsolatedRingFragments()
+        public IEnumerable<IAtomContainer> IsolatedRingFragments()
         {
             return ToFragments(Isolated());
         }
@@ -313,7 +314,7 @@ namespace NCDK.RingSearches
         /// </summary>
         /// <returns>list of fused ring fragments</returns>
         /// <seealso cref="Fused"/>
-        public IList<IAtomContainer> FusedRingFragments()
+        public IEnumerable<IAtomContainer> FusedRingFragments()
         {
             return ToFragments(Fused());
         }
@@ -323,17 +324,16 @@ namespace NCDK.RingSearches
         /// </summary>
         /// <param name="verticesList">2D array of vertices (rows=n fragments)</param>
         /// <returns>the vertices converted to an atom container</returns>
-        /// <seealso cref="ToFragment(int[])"/>
+        /// <seealso cref="ToFragment(IReadOnlyList{System.Int32})"/>
         /// <seealso cref="FusedRingFragments"/>
         /// <seealso cref="IsolatedRingFragments"/>
-        private IList<IAtomContainer> ToFragments(int[][] verticesList)
+        private IEnumerable<IAtomContainer> ToFragments(IReadOnlyList<IReadOnlyList<int>> verticesList)
         {
-            List<IAtomContainer> fragments = new List<IAtomContainer>();
             foreach (var vertices in verticesList)
             {
-                fragments.Add(ToFragment(vertices));
+                yield return ToFragment(vertices);
             }
-            return fragments;
+            yield break;
         }
 
         /// <summary>
@@ -341,9 +341,9 @@ namespace NCDK.RingSearches
         /// </summary>
         /// <param name="vertices">array of vertices. Length=cycle weight, values 0 ... nAtoms</param>
         /// <returns>atom container only containing the specified atoms (and bonds)</returns>
-        private IAtomContainer ToFragment(int[] vertices)
+        private IAtomContainer ToFragment(IReadOnlyList<int> vertices)
         {
-            int n = vertices.Length;
+            int n = vertices.Count;
 
             ICollection<IAtom> atoms = new HashSet<IAtom>();
             IList<IBond> bonds = new List<IBond>();

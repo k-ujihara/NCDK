@@ -43,7 +43,7 @@ namespace NCDK.Fingerprints
         public void TestGetSize()
         {
             IFingerprinter printer = new EStateFingerprinter();
-            Assert.AreEqual(79, printer.Count);
+            Assert.AreEqual(79, printer.Length);
         }
 
         [TestMethod()]
@@ -55,7 +55,7 @@ namespace NCDK.Fingerprints
             IBitFingerprint bs1 = printer.GetBitFingerprint(parser.ParseSmiles("C=C-C#N"));
             IBitFingerprint bs2 = printer.GetBitFingerprint(parser.ParseSmiles("C=CCC(O)CC#N"));
 
-            Assert.AreEqual(79, printer.Count);
+            Assert.AreEqual(79, printer.Length);
 
             Assert.IsTrue(bs1[7]);
             Assert.IsTrue(bs1[10]);
@@ -83,8 +83,8 @@ namespace NCDK.Fingerprints
             IBitFingerprint superBits = fpr.GetBitFingerprint(superStructure);
             IBitFingerprint subBits = fpr.GetBitFingerprint(subStructure);
 
-            Assert.IsTrue(BitArrays.AreEqual(AsBitSet(6, 11, 12, 15, 16, 18, 33, 34, 35), superBits.AsBitSet()));
-            Assert.IsTrue(BitArrays.AreEqual(AsBitSet(8, 11, 16, 35), subBits.AsBitSet()));
+            Assert.IsTrue(BitArrays.Equals(AsBitSet(6, 11, 12, 15, 16, 18, 33, 34, 35), superBits.AsBitSet()));
+            Assert.IsTrue(BitArrays.Equals(AsBitSet(8, 11, 16, 35), subBits.AsBitSet()));
         }
     }
 }

@@ -65,8 +65,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the SigmaElectronegativityDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#sigmaElectronegativity",
                 typeof(SigmaElectronegativityDescriptor).FullName,
@@ -82,11 +82,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </list>
         /// </summary>
         /// <exception cref="CDKException"></exception>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
                     throw new CDKException("SigmaElectronegativityDescriptor only expects one parameter");
                 }
@@ -94,7 +94,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 {
                     throw new CDKException("The parameter must be of type int");
                 }
-                if (value.Length == 0) return;
+                if (value.Count == 0)
+                    return;
+
                 maxIterations = (int)value[0];
             }
             get
@@ -125,14 +127,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
             catch (CDKException e)
             {
-                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
             }
 
             if (maxIterations != -1 && maxIterations != 0) electronegativity.MaxIterations = maxIterations;
 
             double result = electronegativity.CalculateSigmaElectronegativity(clone, localAtom);
 
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(result), NAMES);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(result), NAMES);
         }
 
         /// <summary>

@@ -36,6 +36,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -94,23 +95,26 @@ namespace NCDK.IO
         private const string RECORD_DELIMITER = "$$$$";
 
         /// <summary>Valid pseudo labels.</summary>
-        private static readonly ICollection<string> PseudoLabels =
-                new ReadOnlyCollection<string>(new[] {
-                    "*", "A", "Q",
-                    "L", "LP", "R", // XXX: not in spec
-                    "R#"});
+        private static readonly string[] PseudoLabels = new[]
+        {
+            "*", "A", "Q",
+            "L", "LP", "R", // XXX: not in spec
+            "R#"
+        };
 
         /// <summary>
         /// Constructs a new <see cref="MDLReader"/> that can read Molecule from a given <see cref="Stream"/>.
         /// </summary>
         /// <param name="input">The Stream to read from</param>
-        public MDLV2000Reader(Stream input)
+        public MDLV2000Reader(Stream input) 
             : this(new StreamReader(input))
-        { }
+        {
+        }
 
         public MDLV2000Reader(Stream input, ChemObjectReaderMode mode)
             : this(new StreamReader(input), mode)
-        { }
+        {
+        }
 
         /// <summary>
         /// Constructs a new <see cref="MDLReader"/> that can read Molecule from a given <see cref="TextReader"/>.
@@ -118,7 +122,8 @@ namespace NCDK.IO
         /// <param name="input">The Reader to read from</param>
         public MDLV2000Reader(TextReader input)
             : this(input, ChemObjectReaderMode.Relaxed)
-        { }
+        {
+        }
 
         public MDLV2000Reader(TextReader input, ChemObjectReaderMode mode)
         {
@@ -372,7 +377,7 @@ namespace NCDK.IO
                 {
                     //'  CDK     09251712073D'
                     // 0123456789012345678901
-                    if (!(program.Length >= 22 && program.Substring(20, 2).Equals("3D"))
+                    if (!(program.Length >= 22 && program.Substring(20, 2).Equals("3D", StringComparison.Ordinal))
                         && !forceReadAs3DCoords.IsSet)
                     {
                         foreach (var atomToUpdate in atoms)
@@ -533,7 +538,7 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="atom">the atom to apply the model to</param>
         /// <param name="explicitValence">the explicit valence (bond order sum)</param>
-        private void ApplyMDLValenceModel(IAtom atom, int explicitValence, int unpaired)
+        private static void ApplyMDLValenceModel(IAtom atom, int explicitValence, int unpaired)
         {
             if (atom.Valency != null)
             {
@@ -562,27 +567,34 @@ namespace NCDK.IO
             }
         }
 
-        private void FixHydrogenIsotopes(IAtomContainer molecule, IsotopeFactory isotopeFactory)
+        private static void FixHydrogenIsotopes(IAtomContainer molecule, IsotopeFactory isotopeFactory)
         {
-            foreach (var atom in AtomContainerManipulator.GetAtomArray(molecule))
+            foreach (var atom in molecule.Atoms)
             {
                 if (atom is IPseudoAtom pseudo)
                 {
-                    if ("D".Equals(pseudo.Label))
+                    switch (pseudo.Label)
                     {
-                        IAtom newAtom = molecule.Builder.NewAtom(atom);
-                        newAtom.Symbol = "H";
-                        newAtom.AtomicNumber = 1;
-                        isotopeFactory.Configure(newAtom, isotopeFactory.GetIsotope("H", 2));
-                        AtomContainerManipulator.ReplaceAtomByAtom(molecule, atom, newAtom);
-                    }
-                    else if ("T".Equals(pseudo.Label))
-                    {
-                        IAtom newAtom = molecule.Builder.NewAtom(atom);
-                        newAtom.Symbol = "H";
-                        newAtom.AtomicNumber = 1;
-                        isotopeFactory.Configure(newAtom, isotopeFactory.GetIsotope("H", 3));
-                        AtomContainerManipulator.ReplaceAtomByAtom(molecule, atom, newAtom);
+                        case "D":
+                            {
+                                IAtom newAtom = molecule.Builder.NewAtom(atom);
+                                newAtom.Symbol = "H";
+                                newAtom.AtomicNumber = 1;
+                                isotopeFactory.Configure(newAtom, isotopeFactory.GetIsotope("H", 2));
+                                AtomContainerManipulator.ReplaceAtomByAtom(molecule, atom, newAtom);
+                            }
+                            break;
+                        case "T":
+                            {
+                                IAtom newAtom = molecule.Builder.NewAtom(atom);
+                                newAtom.Symbol = "H";
+                                newAtom.AtomicNumber = 1;
+                                isotopeFactory.Configure(newAtom, isotopeFactory.GetIsotope("H", 3));
+                                AtomContainerManipulator.ReplaceAtomByAtom(molecule, atom, newAtom);
+                            }
+                            break;
+                        default:
+                            break;
                     }
                 }
             }
@@ -610,23 +622,23 @@ namespace NCDK.IO
 
         private void InitIOSettings()
         {
-            forceReadAs3DCoords = IOSettings.Add(new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.Low,
-                    "Should coordinates always be read as 3D?", "false"));
-            interpretHydrogenIsotopes = IOSettings.Add((new BooleanIOSetting("InterpretHydrogenIsotopes",
-                    IOSetting.Importance.Low, "Should D and T be interpreted as hydrogen isotopes?", "true")));
-            addStereoElements = IOSettings.Add((new BooleanIOSetting("AddStereoElements", IOSetting.Importance.Low,
-                    "Detect and create IStereoElements for the input.", "true")));
+            forceReadAs3DCoords = IOSettings.Add(new BooleanIOSetting("ForceReadAs3DCoordinates", Importance.Low,
+                "Should coordinates always be read as 3D?", "false"));
+            interpretHydrogenIsotopes = IOSettings.Add((new BooleanIOSetting("InterpretHydrogenIsotopes", Importance.Low,
+                "Should D and T be interpreted as hydrogen isotopes?", "true")));
+            addStereoElements = IOSettings.Add((new BooleanIOSetting("AddStereoElements", Importance.Low,
+                "Detect and create IStereoElements for the input.", "true")));
         }
 
         public void CustomizeJob()
         {
             foreach (var setting in IOSettings.Settings)
             {
-                FireIOSettingQuestion(setting);
+                ProcessIOSettingQuestion(setting);
             }
         }
 
-        private string RemoveNonDigits(string input)
+        private static string RemoveNonDigits(string input)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < input.Length; i++)
@@ -732,7 +744,7 @@ namespace NCDK.IO
             // if there was a mass difference, set the mass number
             if (massDiff != 0 && atom.AtomicNumber > 0)
             {
-                IIsotope majorIsotope = Isotopes.Instance.GetMajorIsotope(atom.AtomicNumber.Value);
+                IIsotope majorIsotope = BODRIsotopeFactory.Instance.GetMajorIsotope(atom.AtomicNumber.Value);
                 if (majorIsotope == null)
                     atom.MassNumber = -1; // checked after M ISO is processed
                 else
@@ -858,7 +870,7 @@ namespace NCDK.IO
             // already had atoms present before reading the file
             int offset = container.Atoms.Count - nAtoms;
 
-            IDictionary<int, Sgroup> sgroups = new SortedDictionary<int, Sgroup>();
+            var sgroups = new SortedDictionary<int, Sgroup>();
 
             while ((line = input.ReadLine()) != null)
             {
@@ -1045,7 +1057,7 @@ namespace NCDK.IO
                         sgroup = new Sgroup();
                         sgroups[index] = sgroup;
 
-                        SgroupType type = SgroupTypeTools.Parse(Strings.Substring(line, lnOffset + 4, 3));
+                        var type = SgroupTool.ToSgroupType(Strings.Substring(line, lnOffset + 4, 3));
                         if (type != SgroupType.Nil)
                             sgroup.Type = type;
                     }
@@ -1065,9 +1077,19 @@ namespace NCDK.IO
 
                         string sst = Strings.Substring(line, st + 4, 3);
 
-                        if (ReaderMode == ChemObjectReaderMode.Strict && !("ALT".Equals(sst) || "RAN".Equals(sst) || "BLO".Equals(sst)))
-                            HandleError("Invalid sgroup subtype: " + sst + " expected (ALT, RAN, or BLO)");
-
+                        if (ReaderMode == ChemObjectReaderMode.Strict)
+                        {
+                            switch (sst)
+                            {
+                                case "ALT":
+                                case "RAN":
+                                case "BLO":
+                                    break;
+                                default:
+                                    HandleError("Invalid sgroup subtype: " + sst + " expected (ALT, RAN, or BLO)");
+                                    break;
+                            }
+                        }
                         sgroup.PutValue(SgroupKey.CtabSubType, sst);
                     }
                 }
@@ -1125,10 +1147,20 @@ namespace NCDK.IO
                         sgroup = EnsureSgroup(sgroups,
                                               ReadMolfileInt(line, st));
                         string con = Strings.Substring(line, st + 4, 3).Trim();
-                        if (ReaderMode == ChemObjectReaderMode.Strict && !("HH".Equals(con) || "HT".Equals(con) || "EU".Equals(con)))
-                            HandleError("Unknown SCN type (expected: HH, HT, or EU) was " + con);
-                        sgroup.PutValue(SgroupKey.CtabConnectivity,
-                                        con);
+                        if (ReaderMode == ChemObjectReaderMode.Strict)
+                        {
+                            switch (con)
+                            {
+                                case "HH":
+                                case "HT":
+                                case "EU":
+                                    break;
+                                default:
+                                    HandleError($"Unknown SCN type (expected: HH, HT, or EU) was {con}");
+                                    break;
+                            }
+                        }
+                        sgroup.PutValue(SgroupKey.CtabConnectivity, con);
                     }
                 }
                 else if (key == PropertyKey.M_SDI)
@@ -1179,7 +1211,7 @@ namespace NCDK.IO
                     // Sgroup Expansion
                     // M  SDS EXPn15 sss ...
                     // sss: Sgroup index of expanded abbreviation Sgroups
-                    if ("EXP".Equals(Strings.Substring(line, 7, 3)))
+                    if (string.Equals("EXP", Strings.Substring(line, 7, 3), StringComparison.Ordinal))
                     {
                         count = ReadMolfileInt(line, 10);
                         for (int i = 0, st = 14; i < count && st + 3 <= length; i++, st += 4)
@@ -1255,8 +1287,8 @@ namespace NCDK.IO
             if (sgroups.Any())
             {
                 // load Sgroups into molecule, first we downcast
-                List<Sgroup> sgroupOrgList = new List<Sgroup>(sgroups.Values);
-                List<Sgroup> sgroupCpyList = new List<Sgroup>(sgroupOrgList.Count);
+                var sgroupOrgList = new List<Sgroup>(sgroups.Values);
+                var sgroupCpyList = new List<Sgroup>(sgroupOrgList.Count);
                 for (int i = 0; i < sgroupOrgList.Count; i++)
                 {
                     Sgroup cpy = sgroupOrgList[i].Downcast<Sgroup>();
@@ -1273,7 +1305,7 @@ namespace NCDK.IO
                         newSgroup.AddParent(sgroupCpyList[sgroupOrgList.IndexOf(parent)]);
                     }
                 }
-                container.SetProperty(CDKPropertyName.CtabSgroups, sgroupCpyList);
+                container.SetCtabSgroups(sgroupCpyList);
             }
         }
 
@@ -1360,21 +1392,27 @@ namespace NCDK.IO
                 atom.AtomicNumber = elem.AtomicNumber;
                 return atom;
             }
-            if (symbol.Equals("D") && interpretHydrogenIsotopes.IsSet)
+            switch (symbol)
             {
-                if (ReaderMode == ChemObjectReaderMode.Strict) throw new CDKException("invalid symbol: " + symbol);
-                IAtom atom = builder.NewAtom("H");
-                atom.MassNumber = 2;
-                return atom;
+                case "D":
+                    if (interpretHydrogenIsotopes.IsSet)
+                    {
+                        if (ReaderMode == ChemObjectReaderMode.Strict) throw new CDKException("invalid symbol: " + symbol);
+                        IAtom atom = builder.NewAtom("H");
+                        atom.MassNumber = 2;
+                        return atom;
+                    }
+                    break;
+                case "T":
+                    if (interpretHydrogenIsotopes.IsSet)
+                    {
+                        if (ReaderMode == ChemObjectReaderMode.Strict) throw new CDKException("invalid symbol: " + symbol);
+                        IAtom atom = builder.NewAtom("H");
+                        atom.MassNumber = 3;
+                        return atom;
+                    }
+                    break;
             }
-            if (symbol.Equals("T") && interpretHydrogenIsotopes.IsSet)
-            {
-                if (ReaderMode == ChemObjectReaderMode.Strict) throw new CDKException("invalid symbol: " + symbol);
-                IAtom atom = builder.NewAtom("H");
-                atom.MassNumber = 3;
-                return atom;
-            }
-
             if (!IsPseudoElement(symbol))
             {
                 HandleError("invalid symbol: " + symbol, lineNum, 31, 34);
@@ -1384,7 +1422,8 @@ namespace NCDK.IO
             {
                 // will be renumbered later by RGP if R1, R2 etc. if not renumbered then
                 // 'R' is a better label than 'R#' if now RGP is specified
-                if (symbol.Equals("R#")) symbol = "R";
+                if (string.Equals(symbol, "R#", StringComparison.Ordinal))
+                    symbol = "R";
 
                 IAtom atom = builder.NewPseudoAtom(symbol);
                 atom.Symbol = symbol;
@@ -1421,7 +1460,7 @@ namespace NCDK.IO
             // to be valid the decimal should be at the fifth index (4 sig fig)
             if (line[offset + 5] != '.')
             {
-                HandleError("Bad coordinate format specified, expected 4 decimal places: " + line.Substring(offset));
+                HandleError($"Bad coordinate format specified, expected 4 decimal places: {line.Substring(offset)}");
                 int start = offset;
                 while (line[start] == ' ' && start < offset + 9)
                     start++;
@@ -1440,14 +1479,15 @@ namespace NCDK.IO
                 else if (dot != -1)
                 {
                     int sign = Sign(line[start]);
-                    if (sign < 0) start++;
+                    if (sign < 0)
+                        start++;
                     int integral = ReadUInt(line, start, dot - start - 1);
                     int fraction = ReadUInt(line, dot, end - dot);
                     return sign * (integral * 10000L + fraction) / 10000d;
                 }
                 else
                 {
-                    return double.Parse(line.Substring(start, end - start));
+                    return double.Parse(line.Substring(start, end - start), NumberFormatInfo.InvariantInfo);
                 }
             }
             else
@@ -1457,7 +1497,8 @@ namespace NCDK.IO
                     start++;
 
                 int sign = Sign(line[start]);
-                if (sign < 0) start++;
+                if (sign < 0)
+                    start++;
 
                 int integral = ReadUInt(line, start, (offset + 5) - start);
                 int fraction = ReadUInt(line, offset + 6, 4);
@@ -1671,9 +1712,9 @@ namespace NCDK.IO
                 HandleError("Trailing space found", linecount, match.Index, match.Index + match.Length);
                 return "";
             });
-            double x = double.Parse(Strings.Substring(line, 0, 10).Trim());
-            double y = double.Parse(Strings.Substring(line, 10, 10).Trim());
-            double z = double.Parse(Strings.Substring(line, 20, 10).Trim());
+            double x = double.Parse(Strings.Substring(line, 0, 10).Trim(), NumberFormatInfo.InvariantInfo);
+            double y = double.Parse(Strings.Substring(line, 10, 10).Trim(), NumberFormatInfo.InvariantInfo);
+            double z = double.Parse(Strings.Substring(line, 20, 10).Trim(), NumberFormatInfo.InvariantInfo);
 
             string element = Strings.Substring(line, 31, 3).Trim();
             if (line.Length < 34)
@@ -1682,33 +1723,33 @@ namespace NCDK.IO
                         + " and padded with space if required", linecount, 31, 34);
             }
 
-            Debug.WriteLine("Atom type: ", element);
-            IsotopeFactory isotopeFactory = Isotopes.Instance;
+            Debug.WriteLine($"Atom type: {element}");
+            IsotopeFactory isotopeFactory = BODRIsotopeFactory.Instance;
             if (isotopeFactory.IsElement(element))
             {
                 atom = isotopeFactory.Configure(builder.NewAtom(element));
             }
-            else if ("A".Equals(element))
+            else if (string.Equals("A", element, StringComparison.Ordinal))
             {
                 atom = builder.NewPseudoAtom(element);
             }
-            else if ("Q".Equals(element))
+            else if (string.Equals("Q", element, StringComparison.Ordinal))
             {
                 atom = builder.NewPseudoAtom(element);
             }
-            else if ("*".Equals(element))
+            else if (string.Equals("*", element, StringComparison.Ordinal))
             {
                 atom = builder.NewPseudoAtom(element);
             }
-            else if ("LP".Equals(element))
+            else if (string.Equals("LP", element, StringComparison.Ordinal))
             {
                 atom = builder.NewPseudoAtom(element);
             }
-            else if ("L".Equals(element))
+            else if (string.Equals("L", element, StringComparison.Ordinal))
             {
                 atom = builder.NewPseudoAtom(element);
             }
-            else if (element.Equals("R") || (element.Length > 0 && element[0] == 'R'))
+            else if (string.Equals(element, "R", StringComparison.Ordinal) || (element.Length > 0 && element[0] == 'R'))
             {
                 Debug.WriteLine("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
                 //check if the element is R
@@ -1716,7 +1757,7 @@ namespace NCDK.IO
                 {
                     try
                     {
-                        element = "R" + int.Parse(element.Substring(1));
+                        element = "R" + int.Parse(element.Substring(1), NumberFormatInfo.InvariantInfo);
                         atom = builder.NewPseudoAtom(element);
                     }
                     catch (Exception)
@@ -1746,15 +1787,15 @@ namespace NCDK.IO
             if (line.Length >= 36)
             {
                 string massDiffString = Strings.Substring(line, 34, 2).Trim();
-                Debug.WriteLine("Mass difference: ", massDiffString);
+                Debug.WriteLine($"Mass difference: {massDiffString}");
                 if (!(atom is IPseudoAtom))
                 {
                     try
                     {
-                        int massDiff = int.Parse(massDiffString);
+                        int massDiff = int.Parse(massDiffString, NumberFormatInfo.InvariantInfo);
                         if (massDiff != 0)
                         {
-                            IIsotope major = Isotopes.Instance.GetMajorIsotope(element);
+                            IIsotope major = BODRIsotopeFactory.Instance.GetMajorIsotope(element);
                             atom.MassNumber = major.MassNumber + massDiff;
                         }
                     }
@@ -1778,18 +1819,18 @@ namespace NCDK.IO
             }
 
             // set the stereo partiy
-            var parity = line.Length > 41 ? int.Parse(line[41].ToString()) : 0;
+            var parity = line.Length > 41 ? int.Parse(new string(new[] { line[41] }), NumberFormatInfo.InvariantInfo) : 0;
             atom.StereoParity = parity;
 
             if (line.Length >= 51)
             {
                 string valenceString = RemoveNonDigits(Strings.Substring(line, 48, 3));
-                Debug.WriteLine("Valence: ", valenceString);
+                Debug.WriteLine($"Valence: {valenceString}");
                 if (!(atom is IPseudoAtom))
                 {
                     try
                     {
-                        int valence = int.Parse(valenceString);
+                        int valence = int.Parse(valenceString, NumberFormatInfo.InvariantInfo);
                         if (valence != 0)
                         {
                             //15 is defined as 0 in mol files
@@ -1813,8 +1854,8 @@ namespace NCDK.IO
             if (line.Length >= 39)
             {
                 string chargeCodeString = Strings.Substring(line, 36, 3).Trim();
-                Debug.WriteLine("Atom charge code: ", chargeCodeString);
-                int chargeCode = int.Parse(chargeCodeString);
+                Debug.WriteLine($"Atom charge code: {chargeCodeString}");
+                int chargeCode = int.Parse(chargeCodeString, NumberFormatInfo.InvariantInfo);
                 if (chargeCode == 0)
                 {
                     // uncharged species
@@ -1856,10 +1897,10 @@ namespace NCDK.IO
             {
                 // read the mmm field as position 61-63
                 string reactionAtomIDString = Strings.Substring(line, 60, 3).Trim();
-                Debug.WriteLine("Parsing mapping id: ", reactionAtomIDString);
+                Debug.WriteLine($"Parsing mapping id: {reactionAtomIDString}");
                 try
                 {
-                    int reactionAtomID = int.Parse(reactionAtomIDString);
+                    int reactionAtomID = int.Parse(reactionAtomIDString, NumberFormatInfo.InvariantInfo);
                     if (reactionAtomID != 0)
                     {
                         atom.SetProperty(CDKPropertyName.AtomAtomMapping, reactionAtomID);
@@ -1880,12 +1921,12 @@ namespace NCDK.IO
             //shk3: This reads shifts from after the molecule. I don't think this is an official format, but I saw it frequently 80=>78 for alk
             if (line.Length >= 78)
             {
-                double shift = double.Parse(Strings.Substring(line, 69, 11).Trim());
+                double shift = double.Parse(Strings.Substring(line, 69, 11).Trim(), NumberFormatInfo.InvariantInfo);
                 atom.SetProperty("first shift", shift);
             }
             if (line.Length >= 87)
             {
-                double shift = double.Parse(Strings.Substring(line, 79, 8).Trim());
+                double shift = double.Parse(Strings.Substring(line, 79, 8).Trim(), NumberFormatInfo.InvariantInfo);
                 atom.SetProperty("second shift", shift);
             }
 
@@ -1905,14 +1946,15 @@ namespace NCDK.IO
         /// <exception cref="CDKException">the bond line could not be parsed</exception>
         private IBond ReadBondSlow(string line, IChemObjectBuilder builder, IAtom[] atoms, int[] explicitValence, int linecount)
         {
-            int atom1 = int.Parse(Strings.Substring(line, 0, 3).Trim());
-            int atom2 = int.Parse(Strings.Substring(line, 3, 3).Trim());
-            int order = int.Parse(Strings.Substring(line, 6, 3).Trim());
+            int atom1 = int.Parse(Strings.Substring(line, 0, 3).Trim(), NumberFormatInfo.InvariantInfo);
+            int atom2 = int.Parse(Strings.Substring(line, 3, 3).Trim(), NumberFormatInfo.InvariantInfo);
+            int order = int.Parse(Strings.Substring(line, 6, 3).Trim(), NumberFormatInfo.InvariantInfo);
             BondStereo stereo = BondStereo.None;
             if (line.Length >= 12)
             {
-                int mdlStereo = line.Length > 12 ? int.Parse(Strings.Substring(line, 9, 3).Trim()) : int.Parse(line
-                        .Substring(9).Trim());
+                int mdlStereo = line.Length > 12 
+                    ? int.Parse(Strings.Substring(line, 9, 3).Trim(), NumberFormatInfo.InvariantInfo) 
+                    : int.Parse(line.Substring(9).Trim(), NumberFormatInfo.InvariantInfo);
                 if (mdlStereo == 1)
                 {
                     // MDL up bond
@@ -2021,7 +2063,6 @@ namespace NCDK.IO
         }
 
         private static readonly Regex Regex_A_d = new Regex("A\\s{1,4}\\d+", RegexOptions.Compiled);
-        private static readonly Regex Regex_A_ = new Regex("A\\s{1,4}", RegexOptions.Compiled);
 
         /// <summary>
         /// Read the properties from the V2000 block (slow).
@@ -2051,17 +2092,17 @@ namespace NCDK.IO
                 {
                     // FIXME: if this is encountered for the first time, all
                     // atom charges should be set to zero first!
-                    int infoCount = int.Parse(Strings.Substring(line, 6, 3).Trim());
+                    int infoCount = int.Parse(Strings.Substring(line, 6, 3).Trim(), NumberFormatInfo.InvariantInfo);
 
                     var st = ((IEnumerable<string>)Strings.Substring(line, 9).Split(' ', '\t')).GetEnumerator();
                     for (int i = 1; i <= infoCount; i++)
                     {
                         st.MoveNext();
                         string token = st.Current;
-                        int atomNumber = int.Parse(token.Trim());
+                        int atomNumber = int.Parse(token.Trim(), NumberFormatInfo.InvariantInfo);
                         st.MoveNext();
                         token = st.Current;
-                        int charge = int.Parse(token.Trim());
+                        int charge = int.Parse(token.Trim(), NumberFormatInfo.InvariantInfo);
                         container.Atoms[atomNumber - 1].FormalCharge = charge;
                     }
                 }
@@ -2070,7 +2111,7 @@ namespace NCDK.IO
                     // Reads the pseudo atom property from the mol file
 
                     // The atom number of the to replaced atom
-                    int aliasAtomNumber = int.Parse(Regex_A_d.Replace(line, "", 1));
+                    int aliasAtomNumber = int.Parse(Regex_A_d.Replace(line, "", 1), NumberFormatInfo.InvariantInfo);
                     string alias = input.ReadLine();
                     linecount++;
                     IAtom aliasAtom = container.Atoms[aliasAtomNumber - 1];
@@ -2092,14 +2133,14 @@ namespace NCDK.IO
                     try
                     {
                         string countString = Strings.Substring(line, 6, 4).Trim();
-                        int infoCount = int.Parse(countString);
+                        int infoCount = int.Parse(countString, NumberFormatInfo.InvariantInfo);
                         var st = ((IEnumerable<string>)Strings.Substring(line, 10).Split(' ', '\t')).GetEnumerator();
                         for (int i = 1; i <= infoCount; i++)
                         {
                             st.MoveNext();
-                            int atomNumber = int.Parse(st.Current.Trim());
+                            int atomNumber = int.Parse(st.Current.Trim(), NumberFormatInfo.InvariantInfo);
                             st.MoveNext();
-                            int absMass = int.Parse(st.Current.Trim());
+                            int absMass = int.Parse(st.Current.Trim(), NumberFormatInfo.InvariantInfo);
                             if (absMass != 0)
                             {
                                 IAtom isotope = container.Atoms[atomNumber - 1];
@@ -2120,14 +2161,14 @@ namespace NCDK.IO
                     try
                     {
                         string countString = Strings.Substring(line, 6, 3).Trim();
-                        int infoCount = int.Parse(countString);
+                        int infoCount = int.Parse(countString, NumberFormatInfo.InvariantInfo);
                         var st = ((IEnumerable<string>)Strings.Substring(line, 9).Split(' ', '\t')).GetEnumerator();
                         for (int i = 1; i <= infoCount; i++)
                         {
                             st.MoveNext();
-                            int atomNumber = int.Parse(st.Current.Trim());
+                            int atomNumber = int.Parse(st.Current.Trim(), NumberFormatInfo.InvariantInfo);
                             st.MoveNext();
-                            int rad = int.Parse(st.Current.Trim());
+                            int rad = int.Parse(st.Current.Trim(), NumberFormatInfo.InvariantInfo);
                             MDLV2000Writer.SpinMultiplicity spin = MDLV2000Writer.SpinMultiplicity.None;
                             if (rad > 0)
                             {
@@ -2153,7 +2194,7 @@ namespace NCDK.IO
                     try
                     {
                         string atomNumberString = Strings.Substring(line, 3, 3).Trim();
-                        int atomNumber = int.Parse(atomNumberString);
+                        int atomNumber = int.Parse(atomNumberString, NumberFormatInfo.InvariantInfo);
                         //string whatIsThisString = line.Substring(6,9).Trim();
 
                         string atomName = input.ReadLine();
@@ -2189,9 +2230,9 @@ namespace NCDK.IO
                     //Process the R group numbers as defined in RGP line.
                     while (st.MoveNext())
                     {
-                        int position = int.Parse(st.Current);
+                        int position = int.Parse(st.Current, NumberFormatInfo.InvariantInfo);
                         st.MoveNext();
-                        int rNumber = int.Parse(st.Current);
+                        int rNumber = int.Parse(st.Current, NumberFormatInfo.InvariantInfo);
                         // the container may have already had atoms before the new atoms were read
                         int index = container.Atoms.Count - nAtoms + position - 1;
                         IPseudoAtom pseudoAtom = (IPseudoAtom)container.Atoms[index];
@@ -2203,7 +2244,7 @@ namespace NCDK.IO
                 }
                 if (line.StartsWith("V  ", StringComparison.Ordinal))
                 {
-                    int atomNumber = int.Parse(Strings.Substring(line, 3, 3).Trim());
+                    int atomNumber = int.Parse(Strings.Substring(line, 3, 3).Trim(), NumberFormatInfo.InvariantInfo);
                     IAtom atomWithComment = container.Atoms[atomNumber - 1];
                     atomWithComment.SetProperty(CDKPropertyName.Comment, Strings.Substring(line, 7));
                 }
@@ -2264,18 +2305,22 @@ namespace NCDK.IO
                 }
                 else
                 {
-                    if (data.Length > 0 || !line.Equals(" ")) line = line.Trim();
+                    if (data.Length > 0 || !line.Equals(" ", StringComparison.Ordinal))
+                        line = line.Trim();
 
-                    if (string.IsNullOrEmpty(line)) continue;
+                    if (string.IsNullOrEmpty(line))
+                        continue;
 
-                    if (!wrap && data.Length > 0) data.Append('\n');
+                    if (!wrap && data.Length > 0)
+                        data.Append('\n');
                     data.Append(line);
 
                     wrap = line.Length == 80;
                 }
             }
 
-            if (header != null) container.SetProperty(header, data.ToString());
+            if (header != null)
+                container.SetProperty(header, data.ToString());
         }
 
         /// <summary>
@@ -2287,7 +2332,8 @@ namespace NCDK.IO
         /// <returns>the field name</returns>
         internal static string DataHeader(string line)
         {
-            if (line.Length > 2 && line[0] != '>' && line[1] != ' ') return null;
+            if (line.Length > 2 && line[0] != '>' && line[1] != ' ')
+                return null;
             if (line.Length < 2)
                 return null;
             int i = line.IndexOf('<', 2);
@@ -2305,7 +2351,7 @@ namespace NCDK.IO
         /// <returns>the line indicates the end of a record was reached</returns>
         private static bool EndOfRecord(string line)
         {
-            return line == null || line.Equals(RECORD_DELIMITER);
+            return line == null || line.Equals(RECORD_DELIMITER, StringComparison.Ordinal);
         }
 
         /// <summary>

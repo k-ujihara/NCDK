@@ -30,7 +30,7 @@ namespace NCDK.IO.Listener
         /// <summary>
         /// Indicates that a new frame has been read.
         /// </summary>
-        /// <param name="event">information about the event.</param>
-        void FrameRead(ReaderEvent @event);
+        /// <param name="readerEvent">information about the event.</param>
+        void FrameRead(ReaderEvent readerEvent);
     }
 }

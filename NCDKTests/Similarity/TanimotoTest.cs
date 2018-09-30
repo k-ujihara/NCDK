@@ -23,6 +23,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Fingerprints;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
@@ -35,7 +36,7 @@ namespace NCDK.Similarity
     [TestClass()]
     public class TanimotoTest : CDKTestCase
     {
-        bool standAlone = false;
+        readonly bool standAlone = false;
 
         [TestMethod()]
         public void TestTanimoto1()
@@ -80,11 +81,11 @@ namespace NCDK.Similarity
             IAtomContainer mol2 = TestMoleculeFactory.MakeIndole();
             AddImplicitHydrogens(mol1);
             AddImplicitHydrogens(mol2);
-            LingoFingerprinter fingerprinter = new LingoFingerprinter();
+            var fingerprinter = new LingoFingerprinter();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);
-            IDictionary<string, int> feat1 = fingerprinter.GetRawFingerprint(mol1);
-            IDictionary<string, int> feat2 = fingerprinter.GetRawFingerprint(mol2);
+            var feat1 = fingerprinter.GetRawFingerprint(mol1);
+            var feat2 = fingerprinter.GetRawFingerprint(mol2);
             var tanimoto = Tanimoto.Calculate(feat1, feat2);
             Assert.AreEqual(1.0, tanimoto, 0.001);
 
@@ -103,7 +104,7 @@ namespace NCDK.Similarity
         [TestMethod()]
         public void KeggR00258()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             string smiles1 = "O=C(O)CCC(=O)C(=O)O";
             string smiles2 = "O=C(O)C(N)CCC(=O)O";
             string smiles3 = "O=C(O)C(N)C";

@@ -1,5 +1,4 @@
 using NCDK.Common.Collections;
-using NCDK.Common.Primitives;
 using System;
 
 namespace NCDK.FaulonSignatures
@@ -7,7 +6,6 @@ namespace NCDK.FaulonSignatures
     public class InvariantArray : IComparable<InvariantArray>
     {
         public readonly int[] invariants;
-
         public readonly int originalIndex;
 
         public InvariantArray(int[] invariants, int originalIndex)

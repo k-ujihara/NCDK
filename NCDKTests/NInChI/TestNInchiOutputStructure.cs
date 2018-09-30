@@ -62,7 +62,7 @@ namespace NCDK.Graphs.InChI
         public void TestGetWarningFlags()
         {
             NInchiOutputStructure output = new NInchiOutputStructure(InChIReturnCode.Ok);
-            ulong[,] flags = new ulong[,] { { 1, 2 }, { 3, 4 } };
+            var flags = new ulong[] { 1, 2, 3, 4, };
             output.WarningFlags = flags;
             Assert.AreEqual(flags, output.WarningFlags);
         }

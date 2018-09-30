@@ -24,11 +24,11 @@ namespace NCDK.Common.Hash
         public const UInt32 DefaultPolynomial = 0xedb88320u;
         public const UInt32 DefaultSeed = 0xffffffffu;
 
-        static UInt32[] defaultTable;
+        private static UInt32[] defaultTable;
 
-        readonly UInt32 seed;
-        readonly UInt32[] table;
-        UInt32 hash;
+        private readonly UInt32 seed;
+        private readonly UInt32[] table;
+        private UInt32 hash;
 
         public Crc32()
             : this(DefaultPolynomial, DefaultSeed)

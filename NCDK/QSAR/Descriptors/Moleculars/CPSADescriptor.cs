@@ -129,8 +129,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public CPSADescriptor() { }
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
              "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#CPSA",
              typeof(CPSADescriptor).FullName,
@@ -144,7 +144,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the CPSADescriptor object.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         /// <summary>
         /// Gets the parameterType attribute of the CPSADescriptor object.
@@ -160,25 +160,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>An ArrayList containing 29 elements in the order described above</returns>
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer atomContainer)
         {
-            ArrayResult<double> retval = new ArrayResult<double>();
+            var retval = new ArrayResult<double>();
 
             if (!GeometryUtil.Has3DCoordinates(atomContainer))
             {
                 for (int i = 0; i < 29; i++)
                     retval.Add(double.NaN);
-                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
-                        DescriptorNames, new CDKException("Molecule must have 3D coordinates"));
+                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval, DescriptorNames, new CDKException("Molecule must have 3D coordinates"));
             }
 
-            IAtomContainer container;
-            container = (IAtomContainer)atomContainer.Clone();
-
-            //        IsotopeFactory factory = null;
-            //        try {
-            //            factory = IsotopeFactory.GetInstance(container.GetNewBuilder());
-            //        } catch (Exception e) {
-            //            Debug.WriteLine(e);
-            //        }
+            var container = (IAtomContainer)atomContainer.Clone();
 
             GasteigerMarsiliPartialCharges peoe;
             try
@@ -191,8 +182,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 Debug.WriteLine("Error in assigning Gasteiger-Marsilli charges");
                 for (int i = 0; i < 29; i++)
                     retval.Add(double.NaN);
-                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
-                        DescriptorNames, new CDKException("Error in getting G-M charges"));
+                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval, 
+                    DescriptorNames, new CDKException("Error in getting G-M charges"));
             }
 
             NumericalSurface surface;
@@ -206,8 +197,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 Debug.WriteLine("Error in surface area calculation");
                 for (int i = 0; i < 29; i++)
                     retval.Add(double.NaN);
-                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
-                        DescriptorNames, new CDKException("Error in surface area calculation"));
+                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval,
+                    DescriptorNames, new CDKException("Error in surface area calculation"));
             }
 
             //double molecularWeight = mfa.GetMass();
@@ -340,7 +331,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             retval.Add(rhsa);
             retval.Add(rpsa);
 
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval, DescriptorNames);
         }
 
         /// <inheritdoc/>

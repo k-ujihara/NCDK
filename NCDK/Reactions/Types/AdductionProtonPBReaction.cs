@@ -38,9 +38,6 @@ namespace NCDK.Reactions.Types
     // @cdk.githash
     public partial class AdductionProtonPBReaction : ReactionEngine, IReactionProcess
     {
-        /// <summary>
-        /// Constructor of the AdductionProtonPBReaction object.
-        /// </summary>
         public AdductionProtonPBReaction() { }
 
         /// <summary>
@@ -142,7 +139,7 @@ namespace NCDK.Reactions.Types
         /// The active center will be those which correspond with X=Y.
         /// </summary>
         /// <param name="reactant">The molecule to set the activity</param>
-        private void SetActiveCenters(IAtomContainer reactant)
+        private static void SetActiveCenters(IAtomContainer reactant)
         {
             if (AtomContainerManipulator.GetTotalCharge(reactant) != 0) return;
 

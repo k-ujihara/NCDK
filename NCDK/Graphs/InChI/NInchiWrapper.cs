@@ -269,8 +269,8 @@ namespace NCDK.Graphs.InChI
             internal static extern int CheckINCHIKey([MarshalAs(UnmanagedType.LPStr)] string szINCHIKey);
         }
 
-        private const string ID = "NInChI";
-        private const string VERSION = "1.05_0";
+        public const string Id = "NInChI";
+        public const string Version = "1.05_0";
 
         /// <summary>
         /// Flag indicating windows or linux.

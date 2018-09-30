@@ -18,6 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.QSAR.Results;
+using NCDK.Silent;
 using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -33,7 +34,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public TPSADescriptorTest()
         {
-            sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            sp = new SmilesParser(ChemObjectBuilder.Instance);
             SetDescriptor(typeof(TPSADescriptor));
             Descriptor.Parameters = new object[] { true };
         }

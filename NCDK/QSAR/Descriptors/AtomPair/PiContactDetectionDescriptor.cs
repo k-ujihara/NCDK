@@ -75,8 +75,8 @@ namespace NCDK.QSAR.Descriptors.AtomPair
         /// <summary>
         /// The specification attribute of the PiContactDetectionDescriptor object.
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#piContact",
                 typeof(PiContactDetectionDescriptor).FullName, "The Chemistry Development Kit");
@@ -86,11 +86,11 @@ namespace NCDK.QSAR.Descriptors.AtomPair
         /// <para>Parameters contains a bool (true if is needed a checkAromaticity)Parameters contains a bool (true if is needed a checkAromaticity)</para>
         /// </summary>
         /// <exception cref="CDKException">Description of the Exception</exception>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length != 1)
+                if (value.Count != 1)
                 {
                     throw new CDKException("PiContactDetectionDescriptor expects 1 parameters");
                 }
@@ -111,7 +111,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
 
         private DescriptorValue<Result<bool>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<bool>>(_Specification, ParameterNames, Parameters, new Result<bool>(false), NAMES, e);
+            return new DescriptorValue<Result<bool>>(specification, ParameterNames, Parameters, new Result<bool>(false), NAMES, e);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
             {
                 piContact = true;
             }
-            return new DescriptorValue<Result<bool>>(_Specification, ParameterNames, Parameters, new Result<bool>(
+            return new DescriptorValue<Result<bool>>(specification, ParameterNames, Parameters, new Result<bool>(
                     piContact), DescriptorNames);
         }
 
@@ -181,7 +181,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
         /// <param name="ac">AtomContainer</param>
         /// <returns>The bool result</returns>
         /// </summary>
-        private bool IsANeighboorsInAnAtomContainer(IEnumerable<IAtom> neighs, IAtomContainer ac)
+        private static bool IsANeighboorsInAnAtomContainer(IEnumerable<IAtom> neighs, IAtomContainer ac)
         {
             bool isIn = false;
             int count = 0;
@@ -211,7 +211,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
         /// <returns>The parameterType value</returns>
         public object GetParameterType(string name)
         {
-            if (name.Equals("checkAromaticity")) return true;
+            if (string.Equals(name, "checkAromaticity", StringComparison.Ordinal)) return true;
             return null;
         }
 

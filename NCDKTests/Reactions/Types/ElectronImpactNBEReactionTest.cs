@@ -21,6 +21,7 @@ using NCDK.AtomTypes;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
+using NCDK.Silent;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
@@ -36,7 +37,6 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class ElectronImpactNBEReactionTest : ReactionProcessTest
     {
-        private readonly LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
         public ElectronImpactNBEReactionTest()
@@ -75,7 +75,7 @@ namespace NCDK.Reactions.Types
             reactant.AddBond(reactant.Atoms[5], reactant.Atoms[6], BondOrder.Single);
             AddExplicitHydrogens(reactant);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactant);
-            lpcheck.Saturate(reactant);
+            CDK.LonePairElectronChecker.Saturate(reactant);
 
             foreach (var atom in reactant.Atoms)
             {
@@ -85,7 +85,7 @@ namespace NCDK.Reactions.Types
                 }
             }
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(reactant);
 
             /* initiate */
@@ -135,9 +135,9 @@ namespace NCDK.Reactions.Types
             reactant.AddBond(reactant.Atoms[5], reactant.Atoms[6], BondOrder.Single);
             AddExplicitHydrogens(reactant);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactant);
-            lpcheck.Saturate(reactant);
+            CDK.LonePairElectronChecker.Saturate(reactant);
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(reactant);
 
             /* initiate */
@@ -178,11 +178,11 @@ namespace NCDK.Reactions.Types
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[5], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[6], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             molecule.Atoms[1].IsReactiveCenter = true;
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new ElectronImpactNBEReaction();
@@ -217,7 +217,7 @@ namespace NCDK.Reactions.Types
             expected1.AddBond(expected1.Atoms[1], expected1.Atoms[5], BondOrder.Single);
             expected1.AddBond(expected1.Atoms[1], expected1.Atoms[6], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
-            lpcheck.Saturate(expected1);
+            CDK.LonePairElectronChecker.Saturate(expected1);
 
             IAtomContainer product1 = setOfReactions[0].Products[0];
             QueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
@@ -245,11 +245,11 @@ namespace NCDK.Reactions.Types
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[3], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[4], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             molecule.Atoms[0].IsReactiveCenter = true;
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new ElectronImpactNBEReaction();
@@ -281,7 +281,7 @@ namespace NCDK.Reactions.Types
             expected1.AddBond(expected1.Atoms[1], expected1.Atoms[3], BondOrder.Single);
             expected1.AddBond(expected1.Atoms[1], expected1.Atoms[4], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
-            lpcheck.Saturate(expected1);
+            CDK.LonePairElectronChecker.Saturate(expected1);
 
             IAtomContainer product1 = setOfReactions[0].Products[0];
             QueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
@@ -309,11 +309,11 @@ namespace NCDK.Reactions.Types
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[3], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[4], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             molecule.Atoms[0].IsReactiveCenter = true;
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new ElectronImpactNBEReaction();
@@ -345,7 +345,7 @@ namespace NCDK.Reactions.Types
             expected1.AddBond(expected1.Atoms[1], expected1.Atoms[3], BondOrder.Single);
             expected1.AddBond(expected1.Atoms[1], expected1.Atoms[4], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
-            lpcheck.Saturate(expected1);
+            CDK.LonePairElectronChecker.Saturate(expected1);
 
             IAtomContainer product1 = setOfReactions[0].Products[0];
             QueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
@@ -432,7 +432,7 @@ namespace NCDK.Reactions.Types
         /// </summary>
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             IAtomContainer molecule = builder.NewAtomContainer();//CreateFromSmiles("C=O")
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("O"));
@@ -445,7 +445,7 @@ namespace NCDK.Reactions.Types
             try
             {
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-                lpcheck.Saturate(molecule);
+                CDK.LonePairElectronChecker.Saturate(molecule);
                 MakeSureAtomTypesAreRecognized(molecule);
             }
             catch (CDKException e)

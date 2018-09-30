@@ -23,7 +23,7 @@
  */
 
 using NCDK.Common.Collections;
-using static NCDK.Graphs.GraphUtil;
+using NCDK.Graphs;
 
 namespace NCDK.Isomorphisms
 {

@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.QSAR.Results;
 using NCDK.Smiles;
 using NCDK.Tools;
@@ -233,15 +233,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("F-C=C");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
 
-            LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-            lpcheck.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             AssertAtomTypesPerceived(mol);
             for (int i = 0; i < 3; i++)
@@ -266,15 +265,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("[F+]=C-[C-]");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AssertAtomTypesPerceived(mol);
             AddImplicitHydrogens(mol);
 
-            LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-            lpcheck.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             AssertAtomTypesPerceived(mol);
             for (int i = 0; i < 3; i++)

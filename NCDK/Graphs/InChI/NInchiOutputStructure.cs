@@ -59,18 +59,18 @@ namespace NCDK.Graphs.InChI
         /// </list> 
         /// </para>
         /// </summary>
-        public ulong[,] WarningFlags
+        public ulong[] WarningFlags
         {
             get;
             protected internal set;
-        } = new ulong[2, 2];
+        } = new ulong[4];
         
         public NInchiOutputStructure(int ret, string message, string log, ulong w00, ulong w01, ulong w10, ulong w11)
             : this((InChIReturnCode)ret)
         {
             Message = message;
             Log = log;
-            WarningFlags = new[,] { { w00, w01, }, { w10, w11 } };
+            WarningFlags = new[] { w00, w01, w10, w11, };
         }
 
         public NInchiOutputStructure(InChIReturnCode value)
@@ -80,7 +80,7 @@ namespace NCDK.Graphs.InChI
 
         protected void SetWarningFlags(ulong f00, ulong f01, ulong f10, ulong f11)
         {
-            this.WarningFlags = new[,] { { f00, f01 }, { f10, f11 } };
+            this.WarningFlags = new[] { f00, f01, f10, f11, };
         }
     }
 }

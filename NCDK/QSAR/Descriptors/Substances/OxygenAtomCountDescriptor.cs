@@ -38,15 +38,15 @@ namespace NCDK.QSAR.Descriptors.Substances
         public object GetParameterType(string substance) => null;
 
         /// <inheritdoc/>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             get { return Array.Empty<object>(); }
             set { }
         }
 
         /// <inheritdoc/>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://egonw.github.com/resource/NM_001002",
                 typeof(OxygenAtomCountDescriptor).FullName,
@@ -62,14 +62,14 @@ namespace NCDK.QSAR.Descriptors.Substances
                 {
                     foreach (var atom in container.Atoms)
                     {
-                        if ("O".Equals(atom.Symbol) || 8 == atom.AtomicNumber)
+                        if (string.Equals("O", atom.Symbol, StringComparison.Ordinal) || 8 == atom.AtomicNumber)
                             count++;
                     }
                 }
             }
 
             return new DescriptorValue<Result<int>>(
-                _Specification, ParameterNames, Parameters,
+                specification, ParameterNames, Parameters,
                 new Result<int>(count), DescriptorNames
             );
         }
@@ -78,6 +78,6 @@ namespace NCDK.QSAR.Descriptors.Substances
             => Calculate(substance);
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = Result<int>.Instance;
+        public IDescriptorResult DescriptorResultType { get; } = Result.Instance<int>();
     }
 }

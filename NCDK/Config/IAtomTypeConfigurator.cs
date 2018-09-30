@@ -32,8 +32,8 @@ namespace NCDK.Config
         /// <summary>
         /// the file containing the configuration data.
         /// </summary>
-        /// <value>from which the atom type definitions are to be read</value>
-        Stream Stream { set; }
+        /// <param name="value">from which the atom type definitions are to be read</param>
+        void SetStream(Stream value);
 
         /// <summary>
         /// Reads a set of configured <see cref="IAtomType"/>'s into a <see cref="IEnumerable{IAtomType}"/>.

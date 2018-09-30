@@ -20,6 +20,7 @@
 using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.Config
@@ -38,9 +39,19 @@ namespace NCDK.Config
         : IAtomTypeConfigurator
     {
         private const string configFile = "NCDK.Config.Data.jmol_atomtypes.txt";
+        private Stream stream;
 
         /// <inheritdoc/>
-        public Stream Stream { get; set; }
+        public Stream GetStream()
+        {
+            return stream;
+        }
+
+        /// <inheritdoc/>
+        public void SetStream(Stream value)
+        {
+            stream = value;
+        }
 
         public TXTBasedAtomTypeConfigurator() { }
 
@@ -49,15 +60,15 @@ namespace NCDK.Config
         /// </summary>
         /// <param name="builder">used to construct the <see cref="IAtomType"/>'s.</param>
         /// <returns>A <see cref="IEnumerable{IAtomType}"/> with read <see cref="IAtomType"/>'s.</returns>
-        /// <exception cref="IOException">when a problem occurred with reading from the <see cref="Stream"/></exception>
+        /// <exception cref="IOException">when a problem occurred with reading from the <see cref="GetStream()"/></exception>
         public IEnumerable<IAtomType> ReadAtomTypes(IChemObjectBuilder builder)
         {
-            if (Stream == null)
+            if (GetStream() == null)
             {
-                Stream = ResourceLoader.GetAsStream(configFile);
+                SetStream(ResourceLoader.GetAsStream(configFile));
             }
 
-            using (var reader = new StreamReader(Stream))
+            using (var reader = new StreamReader(GetStream()))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
@@ -81,12 +92,12 @@ namespace NCDK.Config
                         var sColorG = tokens[7];
                         var sColorB = tokens[8];
 
-                        var mass = double.Parse(sam);
-                        var covalent = double.Parse(scovalent);
-                        var atomicNumber = int.Parse(san);
-                        var colorR = int.Parse(sColorR);
-                        var colorG = int.Parse(sColorG);
-                        var colorB = int.Parse(sColorB);
+                        var mass = double.Parse(sam, NumberFormatInfo.InvariantInfo);
+                        var covalent = double.Parse(scovalent, NumberFormatInfo.InvariantInfo);
+                        var atomicNumber = int.Parse(san, NumberFormatInfo.InvariantInfo);
+                        var colorR = int.Parse(sColorR, NumberFormatInfo.InvariantInfo);
+                        var colorG = int.Parse(sColorG, NumberFormatInfo.InvariantInfo);
+                        var colorB = int.Parse(sColorB, NumberFormatInfo.InvariantInfo);
 
                         atomType = builder.NewAtomType(name, rootType);
                         atomType.AtomicNumber = atomicNumber;

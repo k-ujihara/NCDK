@@ -18,7 +18,7 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Smiles;
 using NCDK.Templates;
@@ -161,7 +161,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public void TestIsConnectedArtemisinin1()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer container = sp.ParseSmiles("C1CN2CCN(CCCN(CCN(C1)Cc1ccccn1)CC2)C");
             Assert.IsTrue(ConnectivityChecker.IsConnected(container));
         }

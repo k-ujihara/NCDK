@@ -18,6 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 
 namespace NCDK.Formula
 {
@@ -29,7 +30,7 @@ namespace NCDK.Formula
     [TestClass()]
     public class MolecularFormulaSetTest : AbstractMolecularFormulaSetTest
     {
-        protected override IChemObjectBuilder Builder => Default.ChemObjectBuilder.Instance;
+        protected override IChemObjectBuilder Builder => ChemObjectBuilder.Instance;
 
         [TestMethod()]
         public void TestMolecularFormulaSet() {

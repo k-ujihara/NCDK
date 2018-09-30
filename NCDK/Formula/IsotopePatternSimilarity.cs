@@ -13,7 +13,9 @@ namespace NCDK.Formula
         private double chargeToAdd;
         private const double massE = 0.0005485;
 
-        public IsotopePatternSimilarity() { }
+        public IsotopePatternSimilarity()
+        {
+        }
 
         /// <summary>
         /// the tolerance of the mass accuracy in ppm.
@@ -54,7 +56,7 @@ namespace NCDK.Formula
 
             for (int i = 0; i < length; i++)
             {
-                IsotopeContainer isoContainer = iso1.Isotopes[i];
+                var isoContainer = iso1.Isotopes[i];
                 factor = isoContainer.Intensity;
                 totalFactor += factor;
 

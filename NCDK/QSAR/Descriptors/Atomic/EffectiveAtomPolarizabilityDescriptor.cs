@@ -49,21 +49,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.dictref qsar-descriptors:effectivePolarizability
     public partial class EffectiveAtomPolarizabilityDescriptor : IAtomicDescriptor
     {
-        private Polarizability pol;
-
-        /// <summary>
-        ///  Constructor for the EffectiveAtomPolarizabilityDescriptor object
-        /// </summary>
-        public EffectiveAtomPolarizabilityDescriptor()
-        {
-            pol = new Polarizability();
-        }
-
         /// <summary>
         /// The specification attribute of the EffectiveAtomPolarizabilityDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#effectivePolarizability",
                 typeof(EffectiveAtomPolarizabilityDescriptor).FullName, "The Chemistry Development Kit");
@@ -71,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the EffectiveAtomPolarizabilityDescriptor object
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "effAtomPol" };
 
@@ -96,7 +86,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 var originalFlag = atom.IsVisited;
                 var originalBondOrderSum = atom.BondOrderSum;
                 var originalMaxBondOrder = atom.MaxBondOrder;
-                polarizability = pol.CalculateGHEffectiveAtomPolarizability(ac, atom, 100, true);
+                polarizability = Polarizability.CalculateGHEffectiveAtomPolarizability(ac, atom, 100, true);
                 // restore original props
                 atom.AtomTypeName = originalAtomtypeName;
                 atom.FormalNeighbourCount = originalNeighborCount;
@@ -106,11 +96,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 atom.Hybridization = originalHybridization;
                 atom.MaxBondOrder = originalMaxBondOrder;
                 atom.BondOrderSum = originalBondOrderSum;
-                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(polarizability), DescriptorNames);
+                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(polarizability), DescriptorNames);
             }
             catch (Exception ex1)
             {
-                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, ex1);
+                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, ex1);
             }
         }
 

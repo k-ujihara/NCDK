@@ -190,8 +190,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <param name="container">the container to configure</param>
         public static void ConfigureDaylightWithoutRingInfo(IAtomContainer container)
         {
-            EdgeToBondMap map = EdgeToBondMap.WithSpaceFor(container);
-            int[][] graph = GraphUtil.ToAdjList(container, map);
+            var map = EdgeToBondMap.WithSpaceFor(container);
+            var graph = GraphUtil.ToAdjList(container, map);
             ConfigureDaylight(container, graph, map, false);
         }
 
@@ -215,8 +215,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <param name="container">the container to configure</param>
         public static void ConfigureDaylightWithRingInfo(IAtomContainer container)
         {
-            EdgeToBondMap map = EdgeToBondMap.WithSpaceFor(container);
-            int[][] graph = GraphUtil.ToAdjList(container, map);
+            var map = EdgeToBondMap.WithSpaceFor(container);
+            var graph = GraphUtil.ToAdjList(container, map);
             ConfigureDaylight(container, graph, map, true);
         }
 
@@ -230,10 +230,10 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <param name="ringInfo">logical condition as whether ring info should be included</param>
         private static void ConfigureDaylight(IAtomContainer container, int[][] graph, EdgeToBondMap bondMap, bool ringInfo)
         {
-            int nAtoms = container.Atoms.Count;
+            var nAtoms = container.Atoms.Count;
 
-            int[] ringNumber = new int[nAtoms];
-            int[] ringSize = new int[nAtoms];
+            var ringNumber = new int[nAtoms];
+            var ringSize = new int[nAtoms];
 
             Arrays.Fill(ringSize, nAtoms + 1);
 
@@ -242,10 +242,10 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
                 // non-unique but used by daylight
                 foreach (var cycle in Cycles.FindSSSR(container).GetPaths())
                 {
-                    int size = cycle.Length - 1;
+                    var size = cycle.Length - 1;
                     for (int i = 1; i < cycle.Length; i++)
                     {
-                        int v = cycle[i];
+                        var v = cycle[i];
                         if (size < ringSize[v]) ringSize[v] = size;
                         ringNumber[v]++;
                         bondMap[cycle[i], cycle[i - 1]].IsInRing = true;
@@ -263,7 +263,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
             for (int v = 0; v < nAtoms; v++)
             {
-                IAtom atom = container.Atoms[v];
+                var atom = container.Atoms[v];
 
                 int implHCount = CheckNotNull(atom.ImplicitHydrogenCount, "Implicit hydrogen count was not set.");
 
@@ -275,8 +275,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
                 // traverse bonds
                 foreach (var w in graph[v])
                 {
-                    IBond bond = bondMap[v, w];
-                    BondOrder order = bond.Order;
+                    var bond = bondMap[v, w];
+                    var order = bond.Order;
 
                     if (order.IsUnset())
                         throw new NullReferenceException("Bond order was not set.");
@@ -297,8 +297,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
                 }
 
-                SMARTSAtomInvariants inv = new SMARTSAtomInvariants(container, valence, ringNumber[v],
-                        ringSize[v] <= nAtoms ? new int[] { ringSize[v] } : new int[0],
+                var inv = new SMARTSAtomInvariants(container, valence, ringNumber[v],
+                        ringSize[v] <= nAtoms ? new int[] { ringSize[v] } : Array.Empty<int>(),
                         ringConnections, degree, degree + implHCount, totalHCount);
 
                 // if there was no properties a default size LinkedHashMap is created

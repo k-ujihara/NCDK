@@ -38,14 +38,14 @@ namespace NCDK.Fingerprints
 
         public IntArrayCountFingerprint()
         {
-            hitHashes = new int[0];
-            numOfHits = new int[0];
+            hitHashes = Array.Empty<int>();
+            numOfHits = Array.Empty<int>();
             behaveAsBitFingerprint = false;
         }
 
-        public IntArrayCountFingerprint(IDictionary<string, int> rawFingerprint)
+        public IntArrayCountFingerprint(IReadOnlyDictionary<string, int> rawFingerprint)
         {
-            IDictionary<int, int> hashedFP = new Dictionary<int, int>();
+            var hashedFP = new Dictionary<int, int>();
             foreach (var key in rawFingerprint.Keys)
             {
                 int hashedKey = key.GetHashCode();
@@ -53,7 +53,7 @@ namespace NCDK.Fingerprints
                     count = 0;
                 hashedFP.Add(hashedKey, count + rawFingerprint[key]);
             }
-            List<int> keys = new List<int>(hashedFP.Keys);
+            var keys = new List<int>(hashedFP.Keys);
             keys.Sort();
             hitHashes = new int[keys.Count];
             numOfHits = new int[keys.Count];
@@ -73,13 +73,13 @@ namespace NCDK.Fingerprints
         /// </summary>
         /// <param name="rawFingerprint"></param>
         /// <param name="behaveAsBitFingerprint"></param>
-        public IntArrayCountFingerprint(IDictionary<string, int> rawFingerprint, bool behaveAsBitFingerprint)
+        public IntArrayCountFingerprint(IReadOnlyDictionary<string, int> rawFingerprint, bool behaveAsBitFingerprint)
             : this(rawFingerprint)
         {
             this.behaveAsBitFingerprint = behaveAsBitFingerprint;
         }
 
-        public long Count => 4294967296L;
+        public long Length => 4294967296L;
 
         public int GetCount(int index)
         {

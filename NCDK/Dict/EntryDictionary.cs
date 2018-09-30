@@ -43,12 +43,12 @@ namespace NCDK.Dict
     public class EntryDictionary : IReadOnlyDictionary<string, Entry>
     {
         private IDictionary<string, Entry> entries;
-        private XNamespace ownNS = null;
 
         public EntryDictionary()
         {
             entries = new Dictionary<string, Entry>();
         }
+
         public static EntryDictionary Unmarshal(TextReader reader)
         {
             DictionaryHandler handler = new DictionaryHandler();
@@ -82,10 +82,6 @@ namespace NCDK.Dict
             return entries.TryGetValue(key, out value);
         }
 
-        public XNamespace NS
-        {
-            get { return ownNS; }
-            set { ownNS = value; }
-        }
+        public XNamespace NS { get; set; } = null;
     }
 }

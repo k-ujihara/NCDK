@@ -45,14 +45,14 @@ namespace NCDK.Formula
         }
 
         [TestMethod()]
-        public void TestIsotopePatternGenerator_Double()
+        public void TestIsotopePatternGeneratorDouble()
         {
             IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator();
             Assert.IsNotNull(isotopeGe);
         }
 
         [TestMethod()]
-        public void TestGetIsotopes_IMolecularFormula()
+        public void TestGetIsotopesIMolecularFormula()
         {
             IMolecularFormula molFor = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C41H79N8O3P1", builder);
             IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
@@ -61,7 +61,7 @@ namespace NCDK.Formula
         }
 
         [TestMethod()]
-        public void TestGetIsotopes_IMolecularFormula_withoutONE()
+        public void TestGetIsotopesIMolecularFormulaWithoutONE()
         {
             IMolecularFormula molFor = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C41H79N8O3P", builder);
             IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.01);
@@ -75,15 +75,14 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestGetIsotopes1()
         {
-            IMolecularFormula molFor = new MolecularFormula();
+            var molFor = new MolecularFormula();
             molFor.Add(builder.NewIsotope("Br"));
             molFor.Add(builder.NewIsotope("Br"));
 
-            IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
-            IsotopePattern isoPattern = isotopeGe.GetIsotopes(molFor);
+            var isotopeGe = new IsotopePatternGenerator(0.1);
+            var isoPattern = isotopeGe.GetIsotopes(molFor);
 
             Assert.AreEqual(3, isoPattern.Isotopes.Count);
-
         }
 
         /// <summary>
@@ -121,17 +120,17 @@ namespace NCDK.Formula
         public void TestCalculateIsotopesIodemethylidyne()
         {
             // RESULTS ACCORDING PAGE: http://www2.sisweb.com/mstools/isotope.htm
-            double[] massResults = { 138.904480, 139.907839 };
-            double[] abundResults = { 1.00, .011 };
+            var massResults = new[] { 138.904480, 139.907839 };
+            var abundResults = new[] { 1.00, .011 };
 
-            IMolecularFormula molFor = new MolecularFormula();
+            var molFor = new MolecularFormula();
             molFor.Add(builder.NewIsotope("C"));
             molFor.Add(builder.NewIsotope("I"));
 
-            Assert.AreEqual(2, molFor.Count);
+            Assert.AreEqual(2, molFor.IsotopesCount);
 
-            IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.01);
-            IsotopePattern isoPattern = isotopeGe.GetIsotopes(molFor);
+            var isotopeGe = new IsotopePatternGenerator(.01);
+            var isoPattern = isotopeGe.GetIsotopes(molFor);
 
             Assert.AreEqual(2, isoPattern.Isotopes.Count);
 
@@ -258,7 +257,7 @@ namespace NCDK.Formula
         }
 
         [TestMethod()]
-        public void TestGetIsotopes_IMolecularFormula_Charged()
+        public void TestGetIsotopesIMolecularFormulaCharged()
         {
             IsotopePatternGenerator isogen = new IsotopePatternGenerator(.1);
 
@@ -277,7 +276,7 @@ namespace NCDK.Formula
         }
 
         [TestMethod()]
-        public void TestGetIsotopes_IMolecularFormula_deprotonate()
+        public void TestGetIsotopesIMolecularFormulaDeprotonate()
         {
             IsotopePatternGenerator isogen = new IsotopePatternGenerator(.1);
 

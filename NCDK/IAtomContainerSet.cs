@@ -26,7 +26,7 @@ namespace NCDK
     { }
 
     public interface IEnumerableChemObject<out T>
-        : IEnumerable<T>, IChemObject
+        : IEnumerable<T>, IChemObject where T: IChemObject
     {
     }
 

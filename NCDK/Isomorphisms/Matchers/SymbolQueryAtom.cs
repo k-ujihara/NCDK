@@ -27,7 +27,7 @@ namespace NCDK.Isomorphisms.Matchers
     public class SymbolQueryAtom : QueryAtom, IQueryAtom
     {
         private string ID;
-        private int HCount = 0;
+        public int HCount { get; set; } = 0;
 
         public SymbolQueryAtom(IChemObjectBuilder builder)
             : base(builder)
@@ -36,11 +36,6 @@ namespace NCDK.Isomorphisms.Matchers
         public SymbolQueryAtom(IAtom atom)
             : base(atom.Symbol, atom.Builder)
         { }
-
-        public void SetHCount(int m_HCount)
-        {
-            HCount = m_HCount;
-        }
 
         public override bool Matches(IAtom atom)
         {
@@ -51,7 +46,7 @@ namespace NCDK.Isomorphisms.Matchers
                 return (this.ImplicitHydrogenCount == HCount);
             }
             else
-                return this.Symbol.Equals(atom.Symbol);
+                return this.Symbol.Equals(atom.Symbol, StringComparison.Ordinal);
         }
 
         public void SetOperator(string str)

@@ -32,7 +32,7 @@ namespace NCDK.Tools.Diff.Tree
     public class Point2DDifference
         : AbstractDifferenceList, IDifferenceList
     {
-        private string name;
+        private readonly string name;
 
         private Point2DDifference(string name)
         {
@@ -66,7 +66,8 @@ namespace NCDK.Tools.Diff.Tree
         /// <returns>a <see cref="string"/></returns>
         public override string ToString()
         {
-            if (differences.Count() == 0) return "";
+            if (ChildCount() == 0)
+                return "";
 
             StringBuilder diffBuffer = new StringBuilder();
             diffBuffer.Append(this.name).Append('{');

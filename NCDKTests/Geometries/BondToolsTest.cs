@@ -19,8 +19,8 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
-using NCDK.Default;
 using NCDK.IO;
+using NCDK.Silent;
 
 namespace NCDK.Geometries
 {

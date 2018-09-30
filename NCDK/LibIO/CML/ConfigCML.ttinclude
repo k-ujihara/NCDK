@@ -67,7 +67,7 @@
     public void MakeStrsAtt(string name)
     {
 #>
-        public string[] <#= ToFirstCapital(name) #>
+        public System.Collections.Generic.IReadOnlyList<string> <#= ToFirstCapital(name) #>
         {
             get
             {
@@ -89,7 +89,7 @@
             get
             {
                 var v = Attribute(<#= ToAttName(name) #>).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(<#= ToAttName(name) #>, value); }
         }
@@ -105,7 +105,7 @@
         public int <#= ToFirstCapital(name) #>
         {
             get { return GetAttributeValueAsInt(<#= ToAttName(name) #>, 0); }
-            set { SetAttributeValue(<#= ToAttName(name) #>, value.ToString()); }
+            set { SetAttributeValue(<#= ToAttName(name) #>, value.ToString(System.Globalization.NumberFormatInfo.InvariantInfo)); }
         }
 <#+ 
     }

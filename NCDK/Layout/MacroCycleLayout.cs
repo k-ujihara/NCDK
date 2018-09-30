@@ -69,7 +69,7 @@ namespace NCDK.Layout
         /// <param name="macrocycle">the macrocycle</param>
         /// <param name="ringset">the ring set the macrocycle belongs to (may only be it's self)</param>
         /// <returns>layout was successfully, if false caller fall-back to regular polygons</returns>
-        public bool Layout(IRing macrocycle, IRingSet ringset)
+        public static bool Layout(IRing macrocycle, IRingSet ringset)
         {
             IAtomContainer anon = RoundUpIfNeeded(AtomContainerManipulator.Anonymise(macrocycle));
             var coords = TEMPLATES.GetCoordinates(anon);
@@ -99,7 +99,7 @@ namespace NCDK.Layout
         /// <param name="wind">winding of ring CW/CCW</param>
         /// <param name="winding">winding of each turn in the ring</param>
         /// <returns>the best scoring configuration</returns>
-        private MacroScore BestScore(IRing macrocycle, IRingSet ringset, int wind, int[] winding)
+        private static MacroScore BestScore(IRing macrocycle, IRingSet ringset, int wind, int[] winding)
         {
 
             int numAtoms = macrocycle.Atoms.Count;
@@ -194,20 +194,20 @@ namespace NCDK.Layout
                 int nIncorrectStereo = 0;
                 foreach (var se in macrocycle.StereoElements)
                 {
-                    if (se.Class == StereoElement.Classes.CisTrans)
+                    if (se.Class == StereoClass.CisTrans)
                     {
                         IBond bond = (IBond)se.Focus;
                         IAtom beg = bond.Begin;
                         IAtom end = bond.End;
-                        StereoElement.Configuration cfg;
+                        StereoConfigurations cfg;
                         if (winding[(macrocycle.Atoms.IndexOf(beg) + i) % numAtoms] ==
                             winding[(macrocycle.Atoms.IndexOf(end) + i) % numAtoms])
                         {
-                            cfg = StereoElement.Configuration.Together;
+                            cfg = StereoConfigurations.Together;
                         }
                         else
                         {
-                            cfg = StereoElement.Configuration.Opposite;
+                            cfg = StereoConfigurations.Opposite;
                         }
                         if (cfg == se.Configure)
                         {
@@ -239,7 +239,7 @@ namespace NCDK.Layout
         /// <param name="macrocycle">macrocycle ring</param>
         /// <param name="shared">shared atoms</param>
         /// <returns>the integers</returns>
-        private List<int> GetAttachedInOrder(IRing macrocycle, IAtomContainer shared)
+        private static List<int> GetAttachedInOrder(IRing macrocycle, IAtomContainer shared)
         {
             var ringAttach = new List<int>();
             var visit = new HashSet<IAtom>();
@@ -270,7 +270,7 @@ namespace NCDK.Layout
         /// <param name="macrocycle">the macrocycle</param>
         /// <param name="ringset">rest of the ring system</param>
         /// <returns>offset into the coordinates</returns>
-        private int SelectCoords(IEnumerable<Vector2[]> ps, Vector2[] coords, IRing macrocycle, IRingSet ringset)
+        private static int SelectCoords(IEnumerable<Vector2[]> ps, Vector2[] coords, IRing macrocycle, IRingSet ringset)
         {
             Debug.Assert(ps.Any());
             int[] winding = new int[coords.Length];

@@ -22,8 +22,9 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.Smiles
@@ -34,51 +35,60 @@ namespace NCDK.Smiles
         public void EmptyCXSMILES()
         {
             CxSmilesState state = new CxSmilesState();
-            Assert.AreEqual("", CxSmilesGenerator.Generate(state, SmiFlavor.CxSmiles, new int[0], new int[0]));
+            Assert.AreEqual("", CxSmilesGenerator.Generate(state, SmiFlavors.CxSmiles, Array.Empty<int>(), Array.Empty<int>()));
         }
 
         [TestMethod()]
         public void Multicenter()
         {
-            CxSmilesState state = new CxSmilesState();
-            state.positionVar = new Dictionary<int, IList<int>>();
+            var state = new CxSmilesState { positionVar = new SortedDictionary<int, IList<int>>() };
             state.positionVar[0] = new[] { 4, 5, 6, 7 };
             state.positionVar[2] = new[] { 4, 6, 5, 7 };
-            Assert.AreEqual(" |m:5:0.1.2.3,7:0.1.2.3|", CxSmilesGenerator.Generate(state, SmiFlavor.CxMulticenter, new int[0], new int[] { 7, 6, 5, 4, 3, 2, 1, 0 }));
+            Assert.AreEqual(" |m:5:0.1.2.3,7:0.1.2.3|", CxSmilesGenerator.Generate(state, SmiFlavors.CxMulticenter, Array.Empty<int>(), new int[] { 7, 6, 5, 4, 3, 2, 1, 0 }));
         }
 
         [TestMethod()]
         public void Coords2d()
         {
-            CxSmilesState state = new CxSmilesState();
-            state.AtomCoords = new[]
+            CxSmilesState state = new CxSmilesState
             {
-                new double[] { 0, 1.5, 0 },
-                new double[] { 0, 3, 0 },
-                new double[] { 1.5, 1.5, 0 },
+                atomCoords = new List<double[]>
+                {
+                    new double[] { 0, 1.5, 0 },
+                    new double[] { 0, 3, 0 },
+                    new double[] { 1.5, 1.5, 0 },
+                }
             };
-            Assert.AreEqual(" |(1.5,1.5,;,1.5,;,3,)|", CxSmilesGenerator.Generate(state, SmiFlavor.CxCoordinates, new int[0], new int[] { 1, 2, 0 }));
+            Assert.AreEqual(" |(1.5,1.5,;,1.5,;,3,)|", CxSmilesGenerator.Generate(state, SmiFlavors.CxCoordinates, Array.Empty<int>(), new int[] { 1, 2, 0 }));
         }
 
         [TestMethod()]
         public void Sgroups()
         {
-            CxSmilesState state = new CxSmilesState();
-            state.sgroups = new List<CxSmilesState.PolymerSgroup>(1);
-            state.sgroups.Add(new CxSmilesState.PolymerSgroup("n", new[] { 2, 3 }, "n", "ht"));
-            state.sgroups.Add(new CxSmilesState.PolymerSgroup("n", new[] { 5 }, "m", "ht"));
-            Assert.AreEqual(" |Sg:n:2:m:ht,Sg:n:4,5:n:ht|", CxSmilesGenerator.Generate(state, SmiFlavor.CxPolymer, new int[0], new int[] { 7, 6, 5, 4, 3, 2, 1, 0 }));
+            CxSmilesState state = new CxSmilesState
+            {
+                sgroups = new List<CxSmilesState.PolymerSgroup>(1)
+                {
+                    new CxSmilesState.PolymerSgroup("n", new[] { 2, 3 }, "n", "ht"),
+                    new CxSmilesState.PolymerSgroup("n", new[] { 5 }, "m", "ht")
+                }
+            };
+            Assert.AreEqual(" |Sg:n:2:m:ht,Sg:n:4,5:n:ht|", CxSmilesGenerator.Generate(state, SmiFlavors.CxPolymer, Array.Empty<int>(), new int[] { 7, 6, 5, 4, 3, 2, 1, 0 }));
         }
 
         [TestMethod()]
         public void Radicals()
         {
-            CxSmilesState state = new CxSmilesState();
-            state.atomRads = new Dictionary<int, CxSmilesState.Radical>();
-            state.atomRads[2] = CxSmilesState.Radical.Monovalent;
-            state.atomRads[6] = CxSmilesState.Radical.Monovalent;
-            state.atomRads[4] = CxSmilesState.Radical.Divalent;
-            Assert.AreEqual(" |^1:1,5,^2:3|", CxSmilesGenerator.Generate(state, SmiFlavor.CxSmiles, new int[0], new int[] { 7, 6, 5, 4, 3, 2, 1, 0 }));
+            CxSmilesState state = new CxSmilesState
+            {
+                atomRads = new SortedDictionary<int, CxSmilesState.Radical>
+                {
+                    [2] = CxSmilesState.Radical.Monovalent,
+                    [6] = CxSmilesState.Radical.Monovalent,
+                    [4] = CxSmilesState.Radical.Divalent
+                }
+            };
+            Assert.AreEqual(" |^1:1,5,^2:3|", CxSmilesGenerator.Generate(state, SmiFlavors.CxSmiles, Array.Empty<int>(), new int[] { 7, 6, 5, 4, 3, 2, 1, 0 }));
         }
 
         /// <summary>
@@ -92,7 +102,7 @@ namespace NCDK.Smiles
             using (var mdlr = new MDLV2000Reader(ins))
             {
                 IAtomContainer mol = mdlr.Read(Silent.ChemObjectBuilder.Instance.NewAtomContainer());
-                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles | SmiFlavor.AtomicMassStrict);
+                SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.CxSmiles | SmiFlavors.AtomicMassStrict);
                 Assert.AreEqual("C(C(=O)OC)(C*)*C(C(C1=C(C(=C(C(=C1[2H])[2H])[2H])[2H])[2H])(*)[2H])([2H])[2H] |Sg:n:0,1,2,3,4,5:n:ht,Sg:n:8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24:m:ht|", smigen.Create(mol));
             }
         }
@@ -103,7 +113,7 @@ namespace NCDK.Smiles
             using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream(GetType(), "CHEMBL367774.mol")))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
-                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles);
+                SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.CxSmiles);
                 Assert.AreEqual("OC(=O)C1=CC(F)=CC=2NC(=NC12)C3=CC=C(C=C3F)C4=CC=CC=C4", smigen.Create(container));
             }
         }
@@ -131,7 +141,7 @@ namespace NCDK.Smiles
 
             SmilesParser smipar = new SmilesParser(builder);
             IAtomContainer molb = smipar.ParseSmiles("CC(CCC[CH2])C |^1:5|");
-            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.CxRadical);
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Canonical | SmiFlavors.CxRadical);
             Assert.AreEqual(smigen.Create(molb), smigen.Create(mola));
         }
     }

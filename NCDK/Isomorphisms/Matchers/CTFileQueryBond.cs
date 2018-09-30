@@ -38,8 +38,10 @@ namespace NCDK.Isomorphisms.Matchers
         public enum BondType
         {
             Unset = 0,
+#pragma warning disable CA1720 // Identifier contains type name
             Single = 1,
             Double = 2,
+#pragma warning restore CA1720 // Identifier contains type name
             Triple = 3,
             Aromatic = 4,
             SingleOrDouble = 5,
@@ -48,7 +50,7 @@ namespace NCDK.Isomorphisms.Matchers
             Any = 8,
         }
 
-        private IChemObjectBuilder builder;
+        private readonly IChemObjectBuilder builder;
         /// <inheritdoc/>
         public override IChemObjectBuilder Builder => builder;
 

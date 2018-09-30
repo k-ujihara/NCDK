@@ -31,21 +31,16 @@ namespace NCDK.FaulonSignatures.Chemistry
             string symbol = GetVertexSymbol(vertexIndex);
 
             // not exactly comprehensive...
-            if (symbol.Equals("H"))
+            switch (symbol)
             {
-                return 1;
-            }
-            else if (symbol.Equals("C"))
-            {
-                return 12;
-            }
-            else if (symbol.Equals("O"))
-            {
-                return 16;
-            }
-            else
-            {
-                return -1;
+                case "H":
+                    return 1;
+                case "C":
+                    return 12;
+                case "O":
+                    return 16;
+                default:
+                    return -1;
             }
         }
 
@@ -74,19 +69,17 @@ namespace NCDK.FaulonSignatures.Chemistry
 
         public override int ConvertEdgeLabelToColor(string label)
         {
-            if (label.Equals("-"))
+            switch (label)
             {
-                return 1;
+                case "-":
+                    return 1;
+                case "=":
+                    return 2;
+                case "#":
+                    return 3;
+                default:
+                    return 1;
             }
-            else if (label.Equals("="))
-            {
-                return 2;
-            }
-            else if (label.Equals("#"))
-            {
-                return 3;
-            }
-            return 1;
         }
     }
 }

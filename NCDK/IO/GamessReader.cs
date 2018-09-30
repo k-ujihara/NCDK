@@ -170,7 +170,7 @@ namespace NCDK.IO
             while (currentReadLine != null)
             {
                 // There are 2 types of coordinate sets: - bohr coordinates sets (if statement) - angstr???m coordinates sets (else statement)
-                if (currentReadLine.IndexOf("COORDINATES (BOHR)") >= 0)
+                if (currentReadLine.Contains("COORDINATES (BOHR)"))
                 {
                     // The following line do no contain data, so it is ignored.
                     this.input.ReadLine();
@@ -178,7 +178,7 @@ namespace NCDK.IO
                             GamessReader.BohrUnit));
                     //break; //<- stops when the first set of coordinates is found.
                 }
-                else if (currentReadLine.IndexOf(" COORDINATES OF ALL ATOMS ARE (ANGS)") >= 0)
+                else if (currentReadLine.Contains(" COORDINATES OF ALL ATOMS ARE (ANGS)"))
                 {
                     // The following 2 lines do no contain data, so it are ignored.
                     this.input.ReadLine();
@@ -237,10 +237,10 @@ namespace NCDK.IO
                 // be concatenated with a number.
                 token.NextToken();
 
-                if (token.NextToken() == StreamTokenizer.TT_NUMBER)
+                if (token.NextToken() == StreamTokenizer.TTypeNumber)
                 {
                     atomicNumber = (int)token.NumberValue;
-                    atomicSymbol = this.IdentifyAtomicSymbol(atomicNumber);
+                    atomicSymbol = IdentifyAtomicSymbol(atomicNumber);
 
                     // Dummy atoms are assumed to be given with an atomic number set
                     // to zero. We will do not add them to the molecule.
@@ -258,7 +258,7 @@ namespace NCDK.IO
                 double[] coordinates = new double[3];
                 for (int i = 0; i < coordinates.Length; i++)
                 {
-                    if (token.NextToken() == StreamTokenizer.TT_NUMBER)
+                    if (token.NextToken() == StreamTokenizer.TTypeNumber)
                     {
                         coordinates[i] = token.NumberValue * unitScaling;
                     }
@@ -286,7 +286,7 @@ namespace NCDK.IO
         /// <param name="atomicNumber">The atomic number of an atom.</param>
         /// <returns>The Symbol corresponding to the atom or "null" is the atom was not recognised.</returns>
         //TODO Update method comments with appropriate information.
-        private string IdentifyAtomicSymbol(int atomicNumber)
+        private static string IdentifyAtomicSymbol(int atomicNumber)
         {
             string symbol;
             switch (atomicNumber)

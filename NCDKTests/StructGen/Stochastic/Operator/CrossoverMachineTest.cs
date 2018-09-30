@@ -24,7 +24,7 @@ using NCDK.Maths;
 using NCDK.Tools.Manipulator;
 using System.IO;
 
-namespace NCDK.StructGen.Stochastic.Operator
+namespace NCDK.StructGen.Stochastic.Operators
 {
     // @cdk.module test-structgen
     [TestClass()]

@@ -24,6 +24,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.RingSearches;
+using NCDK.Silent;
 using NCDK.Templates;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +48,7 @@ namespace NCDK.Tools.Manipulator
         [TestInitialize()]
         public void SetUp()
         {
-            builder = Default.ChemObjectBuilder.Instance;
+            builder = ChemObjectBuilder.Instance;
             ringset = builder.NewRingSet();
             ring1Atom1 = builder.NewAtom("C"); // rather artificial molecule
             IAtom ring1Atom2 = builder.NewAtom("C");
@@ -237,13 +238,13 @@ namespace NCDK.Tools.Manipulator
         }
 
         [TestMethod()]
-        public void TestGetLargestRingSet_List_IRingSet()
+        public void TestGetLargestRingSetListIRingSet()
         {
-            IList<IRingSet> list = new List<IRingSet> { ringset };
-            IAtomContainer mol = TestMoleculeFactory.MakeBiphenyl();
+            var list = new List<IRingSet> { ringset };
+            var mol = TestMoleculeFactory.MakeBiphenyl();
 
-            AllRingsFinder arf = new AllRingsFinder();
-            IRingSet ringSet = arf.FindAllRings(mol);
+            var arf = new AllRingsFinder();
+            var ringSet = arf.FindAllRings(mol);
             list.Add(ringSet);
             Assert.AreEqual(2, RingSetManipulator.GetLargestRingSet(list).Count);
         }

@@ -27,6 +27,7 @@ using NCDK.Config;
 using NCDK.Tools;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.Modelings.Builder3D
@@ -43,10 +44,10 @@ namespace NCDK.Modelings.Builder3D
     // @cdk.keyword    atom type, MM2
     public class MM2BasedParameterSetReader
     {
-        private string configFile = "NCDK.Modelings.ForceField.Data.mm2.prm";
+        private const string configFile = "NCDK.Modelings.ForceField.Data.mm2.prm";
         private Stream ins = null;
-        private IDictionary<string, object> parameterSet;
-        public IList<IAtomType> AtomTypes { get; private set; }
+        private Dictionary<string, object> parameterSet;
+        private readonly List<IAtomType> atomTypes;
         private IEnumerator<string> st;
         private string key = "";
 
@@ -56,10 +57,12 @@ namespace NCDK.Modelings.Builder3D
         public MM2BasedParameterSetReader()
         {
             parameterSet = new Dictionary<string, object>();
-            AtomTypes = new List<IAtomType>();
+            atomTypes = new List<IAtomType>();
         }
 
-        public IDictionary<string, object> GetParamterSet()
+        public IReadOnlyList<IAtomType> AtomTypes => atomTypes;
+
+        public IReadOnlyDictionary<string, object> GetParamterSet()
         {
             return parameterSet;
         }
@@ -81,238 +84,258 @@ namespace NCDK.Modelings.Builder3D
         {
             string sid = st.Current; st.MoveNext();
             string svalue = st.Current; st.MoveNext();
-            if (sid.Equals(">bontunit"))
+            switch (sid)
             {
-                try
-                {
-                    double value1 = double.Parse(svalue);
-                    key = sid.Substring(1);
-                    parameterSet[key] = value1;
-                }
-                catch (FormatException)
-                {
-                    throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
-                }
-            }
-            else if (sid.Equals(">bond-cubic"))
-            {
-                try
-                {
-                    double value1 = double.Parse(svalue);
-                    key = sid.Substring(1);
-                    //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                    parameterSet[key] = value1;
-                }
-                catch (FormatException)
-                {
-                    throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
-                }
-            }
-            else if (sid.Equals(">bond-quartic"))
-            {
-                try
-                {
-                    double value1 = double.Parse(svalue);
-                    key = sid.Substring(1);
-                    //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                    parameterSet[key] = value1;
-                }
-                catch (FormatException)
-                {
-                    throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
-                }
-            }
-            else if (sid.Equals(">angleunit"))
-            {
-                try
-                {
-                    double value1 = double.Parse(svalue);
-                    key = sid.Substring(1);
-                    //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                    parameterSet[key] = value1;
-                }
-                catch (FormatException)
-                {
-                    throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
-                }
-            }
-            else if (sid.Equals(">angle-sextic"))
-            {
-                try
-                {
-                    double value1 = double.Parse(svalue);
-                    key = sid.Substring(1);
-                    //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                    parameterSet[key] = value1;
-                }
-                catch (FormatException)
-                {
-                    throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
-                }
-            }
-            else if (sid.Equals(">strbndunit"))
-            {
-                try
-                {
-                    double value1 = double.Parse(svalue);
-                    key = sid.Substring(1);
-                    //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                    parameterSet[key] = value1;
-                }
-                catch (FormatException)
-                {
-                    throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
-                }
-            }
-            else if (sid.Equals(">opbendunit"))
-            {
-                try
-                {
-                    double value1 = double.Parse(svalue);
-                    key = sid.Substring(1);
-                    //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                    parameterSet[key] = value1;
-                }
-                catch (FormatException)
-                {
-                    throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
-                }
-            }
-            else if (sid.Equals(">torsionunit"))
-            {
-                try
-                {
-                    double value1 = double.Parse(svalue);
-                    key = sid.Substring(1);
-                    //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                    parameterSet[key] = value1;
-                }
-                catch (FormatException)
-                {
-                    throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
-                }
-            }
-            else if (sid.Equals(">vdwtype"))
-            {
-                key = sid.Substring(1);
-                //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                parameterSet[key] = svalue;
-            }
-            else if (sid.Equals(">radiusrule"))
-            {
-                key = sid.Substring(1);
-                //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                parameterSet[key] = svalue;
-            }
-            else if (sid.Equals(">radiustype"))
-            {
-                key = sid.Substring(1);
-                //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                parameterSet[key] = svalue;
-            }
-            else if (sid.Equals(">radiussize"))
-            {
-                key = sid.Substring(1);
-                //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                parameterSet[key] = svalue;
-            }
-            else if (sid.Equals(">epsilonrule"))
-            {
-                key = sid.Substring(1);
-                //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                parameterSet[key] = svalue;
-            }
-            else if (sid.Equals(">a-expterm"))
-            {
-                try
-                {
-                    key = sid.Substring(1);
-                    //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                    parameterSet[key] = svalue;
-                }
-                catch (FormatException)
-                {
-                    throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
-                }
-            }
-            else if (sid.Equals("b-expterm"))
-            {
-                try
-                {
-                    key = sid.Substring(1);
-                    //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                    parameterSet[key] = svalue;
-                }
-                catch (FormatException)
-                {
-                    throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
-                }
-            }
-            else if (sid.Equals(">c-expterm"))
-            {
-                try
-                {
-                    double value1 = double.Parse(svalue);
-                    key = sid.Substring(1);
-                    //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                    parameterSet[key] = value1;
-                }
-                catch (FormatException)
-                {
-                    throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
-                }
-            }
-            else if (sid.Equals(">vdw-14-scale"))
-            {
-                try
-                {
-                    double value1 = double.Parse(svalue);
-                    key = sid.Substring(1);
-                    //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                    parameterSet[key] = value1;
-                }
-                catch (FormatException)
-                {
-                    throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
-                }
-            }
-            else if (sid.Equals(">chg-14-scale"))
-            {
-                try
-                {
-                    double value1 = double.Parse(svalue);
-                    key = sid.Substring(1);
-                    //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                    parameterSet[key] = value1;
-                }
-                catch (FormatException)
-                {
-                    throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
-                }
-            }
-            else if (sid.Equals(">dielectric"))
-            {
-                try
-                {
-                    double value1 = double.Parse(svalue);
-                    key = sid.Substring(1);
-                    //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
-                    parameterSet[key] = value1;
-                }
-                catch (FormatException)
-                {
-                    throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
-                }
-            }
-            else
-            {
+                case ">bontunit":
+                    {
+                        try
+                        {
+                            double value1 = double.Parse(svalue, System.Globalization.NumberFormatInfo.InvariantInfo);
+                            key = sid.Substring(1);
+                            parameterSet[key] = value1;
+                        }
+                        catch (FormatException)
+                        {
+                            throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
+                        }
+                    }
+                    break;
+                case ">bond-cubic":
+                    {
+                        try
+                        {
+                            double value1 = double.Parse(svalue, System.Globalization.NumberFormatInfo.InvariantInfo);
+                            key = sid.Substring(1);
+                            //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                            parameterSet[key] = value1;
+                        }
+                        catch (FormatException)
+                        {
+                            throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
+                        }
+                    }
+                    break;
+                case ">bond-quartic":
+                    {
+                        try
+                        {
+                            double value1 = double.Parse(svalue, System.Globalization.NumberFormatInfo.InvariantInfo);
+                            key = sid.Substring(1);
+                            //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                            parameterSet[key] = value1;
+                        }
+                        catch (FormatException)
+                        {
+                            throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
+                        }
+                    }
+                    break;
+                case ">angleunit":
+                    {
+                        try
+                        {
+                            double value1 = double.Parse(svalue, System.Globalization.NumberFormatInfo.InvariantInfo);
+                            key = sid.Substring(1);
+                            //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                            parameterSet[key] = value1;
+                        }
+                        catch (FormatException)
+                        {
+                            throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
+                        }
+                    }
+                    break;
+                case ">angle-sextic":
+                    {
+                        try
+                        {
+                            double value1 = double.Parse(svalue, System.Globalization.NumberFormatInfo.InvariantInfo);
+                            key = sid.Substring(1);
+                            //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                            parameterSet[key] = value1;
+                        }
+                        catch (FormatException)
+                        {
+                            throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
+                        }
+                    }
+                    break;
+                case ">strbndunit":
+                    {
+                        try
+                        {
+                            double value1 = double.Parse(svalue, System.Globalization.NumberFormatInfo.InvariantInfo);
+                            key = sid.Substring(1);
+                            //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                            parameterSet[key] = value1;
+                        }
+                        catch (FormatException)
+                        {
+                            throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
+                        }
+                    }
+                    break;
+                case ">opbendunit":
+                    {
+                        try
+                        {
+                            double value1 = double.Parse(svalue, System.Globalization.NumberFormatInfo.InvariantInfo);
+                            key = sid.Substring(1);
+                            //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                            parameterSet[key] = value1;
+                        }
+                        catch (FormatException)
+                        {
+                            throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
+                        }
+                    }
+                    break;
+                case ">torsionunit":
+                    {
+                        try
+                        {
+                            double value1 = double.Parse(svalue, System.Globalization.NumberFormatInfo.InvariantInfo);
+                            key = sid.Substring(1);
+                            //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                            parameterSet[key] = value1;
+                        }
+                        catch (FormatException)
+                        {
+                            throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
+                        }
+                    }
+                    break;
+                case ">vdwtype":
+                    {
+                        key = sid.Substring(1);
+                        //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                        parameterSet[key] = svalue;
+                    }
+                    break;
+                case ">radiusrule":
+                    {
+                        key = sid.Substring(1);
+                        //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                        parameterSet[key] = svalue;
+                    }
+                    break;
+                case ">radiustype":
+                    {
+                        key = sid.Substring(1);
+                        //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                        parameterSet[key] = svalue;
+                    }
+                    break;
+                case ">radiussize":
+                    {
+                        key = sid.Substring(1);
+                        //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                        parameterSet[key] = svalue;
+                    }
+                    break;
+                case ">epsilonrule":
+                    {
+                        key = sid.Substring(1);
+                        //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                        parameterSet[key] = svalue;
+                    }
+                    break;
+                case ">a-expterm":
+                    {
+                        try
+                        {
+                            key = sid.Substring(1);
+                            //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                            parameterSet[key] = svalue;
+                        }
+                        catch (FormatException)
+                        {
+                            throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
+                        }
+                    }
+                    break;
+                case "b-expterm":
+                    {
+                        try
+                        {
+                            key = sid.Substring(1);
+                            //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                            parameterSet[key] = svalue;
+                        }
+                        catch (FormatException)
+                        {
+                            throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
+                        }
+                    }
+                    break;
+                case ">c-expterm":
+                    {
+                        try
+                        {
+                            double value1 = double.Parse(svalue, System.Globalization.NumberFormatInfo.InvariantInfo);
+                            key = sid.Substring(1);
+                            //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                            parameterSet[key] = value1;
+                        }
+                        catch (FormatException)
+                        {
+                            throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
+                        }
+                    }
+                    break;
+                case ">vdw-14-scale":
+                    {
+                        try
+                        {
+                            double value1 = double.Parse(svalue, System.Globalization.NumberFormatInfo.InvariantInfo);
+                            key = sid.Substring(1);
+                            //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                            parameterSet[key] = value1;
+                        }
+                        catch (FormatException)
+                        {
+                            throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
+                        }
+                    }
+                    break;
+                case ">chg-14-scale":
+                    {
+                        try
+                        {
+                            double value1 = double.Parse(svalue, System.Globalization.NumberFormatInfo.InvariantInfo);
+                            key = sid.Substring(1);
+                            //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                            parameterSet[key] = value1;
+                        }
+                        catch (FormatException)
+                        {
+                            throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
+                        }
+                    }
+                    break;
+                case ">dielectric":
+                    {
+                        try
+                        {
+                            double value1 = double.Parse(svalue, System.Globalization.NumberFormatInfo.InvariantInfo);
+                            key = sid.Substring(1);
+                            //if (parameterSet.ContainsKey(key)){Debug.WriteLine("KeyError: hasKey "+key);}
+                            parameterSet[key] = value1;
+                        }
+                        catch (FormatException)
+                        {
+                            throw new IOException("VdWaalsTable.ReadvdWaals: " + "Malformed Number");
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
         /// <summary>
-        ///  Read and stores the atom types in a vector
+        /// Read and stores the atom types in a vector
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetAtomTypes(IChemObjectBuilder builder)
         {
             string name = "";
@@ -334,9 +357,9 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                mass = double.Parse(sam);
-                an = int.Parse(san);
-                maxbond = int.Parse(smaxbond);
+                mass = double.Parse(sam, System.Globalization.NumberFormatInfo.InvariantInfo);
+                an = int.Parse(san, System.Globalization.NumberFormatInfo.InvariantInfo);
+                maxbond = int.Parse(smaxbond, System.Globalization.NumberFormatInfo.InvariantInfo);
 
             }
             catch (FormatException)
@@ -353,13 +376,12 @@ namespace NCDK.Modelings.Builder3D
             var co = CDKPropertyName.RGB2Int(rl, gl, bl);
             atomType.SetProperty(CDKPropertyName.Color, co);
             atomType.AtomTypeName = sid;
-            AtomTypes.Add(atomType);
+            atomTypes.Add(atomType);
         }
 
         /// <summary>
-        ///  Read vdw radius, stored into the parameter set
+        /// Read vdw radius, stored into the parameter set
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetvdWaals()
         {
             IList<double> data = new List<double>();
@@ -369,8 +391,8 @@ namespace NCDK.Modelings.Builder3D
             string sepsi = st.Current; st.MoveNext();
             try
             {
-                double epsi = double.Parse(sepsi);
-                double radius = double.Parse(sradius);
+                double epsi = double.Parse(sepsi, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double radius = double.Parse(sradius, System.Globalization.NumberFormatInfo.InvariantInfo);
                 data.Add(radius);
                 data.Add(epsi);
             }
@@ -384,9 +406,8 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Read vdW pair radius,stored into the parameter set
+        /// Read vdW pair radius, stored into the parameter set
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetvdWaalpr()
         {
             IList<double> data = new List<double>();
@@ -397,8 +418,8 @@ namespace NCDK.Modelings.Builder3D
             string value2 = st.Current; st.MoveNext();
             try
             {
-                double va1 = double.Parse(value1);
-                double va2 = double.Parse(value2);
+                double va1 = double.Parse(value1, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va2 = double.Parse(value2, System.Globalization.NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
                 data.Add(va2);
             }
@@ -411,9 +432,8 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Sets the bond attribute stored into the parameter set
+        /// Sets the bond attribute stored into the parameter set
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetBond()
         {
             IList<double> data = new List<double>();
@@ -425,8 +445,8 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double va1 = double.Parse(value1);
-                double va2 = double.Parse(value2);
+                double va1 = double.Parse(value1, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va2 = double.Parse(value2, System.Globalization.NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
                 data.Add(va2);
             }
@@ -439,9 +459,8 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Sets the bond3 attribute stored into the parameter set
+        /// Sets the bond3 attribute stored into the parameter set
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetBond3()
         {
             IList<double> data = new List<double>();
@@ -453,11 +472,10 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double va1 = double.Parse(value1);
-                double va2 = double.Parse(value2);
+                double va1 = double.Parse(value1, System.Globalization.NumberFormatInfo.InvariantInfo); 
+                double va2 = double.Parse(value2, System.Globalization.NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
                 data.Add(va2);
-
             }
             catch (FormatException)
             {
@@ -468,9 +486,8 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Sets the bond4 attribute stored into the parameter set
+        /// Sets the bond4 attribute stored into the parameter set
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetBond4()
         {
             IList<double> data = new List<double>();
@@ -482,8 +499,8 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double va1 = double.Parse(value1);
-                double va2 = double.Parse(value2);
+                double va1 = double.Parse(value1, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va2 = double.Parse(value2, System.Globalization.NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
                 data.Add(va2);
             }
@@ -496,9 +513,8 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Sets the angle attribute stored into the parameter set
+        /// Sets the angle attribute stored into the parameter set
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetAngle()
         {
             IList<double> data = new List<double>();
@@ -513,10 +529,10 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double va1 = double.Parse(value1);
-                double va2 = double.Parse(value2);
-                double va3 = double.Parse(value3);
-                double va4 = double.Parse(value4);
+                double va1 = double.Parse(value1, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va2 = double.Parse(value2, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va3 = double.Parse(value3, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va4 = double.Parse(value4, System.Globalization.NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
                 data.Add(va2);
                 data.Add(va3);
@@ -541,9 +557,8 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Sets the angle3 attribute stored into the parameter set
+        /// Sets the angle3 attribute stored into the parameter set
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetAngle3()
         {
             IList<double> data = new List<double>();
@@ -558,10 +573,10 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double va1 = double.Parse(value1);
-                double va2 = double.Parse(value2);
-                double va3 = double.Parse(value3);
-                double va4 = double.Parse(value4);
+                double va1 = double.Parse(value1, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va2 = double.Parse(value2, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va3 = double.Parse(value3, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va4 = double.Parse(value4, System.Globalization.NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
                 data.Add(va2);
                 data.Add(va3);
@@ -576,9 +591,8 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Sets the angle4 attribute stored into the parameter set
+        /// Sets the angle4 attribute stored into the parameter set
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetAngle4()
         {
             IList<double> data = new List<double>();
@@ -593,10 +607,10 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double va1 = double.Parse(value1);
-                double va2 = double.Parse(value2);
-                double va3 = double.Parse(value3);
-                double va4 = double.Parse(value4);
+                double va1 = double.Parse(value1, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va2 = double.Parse(value2, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va3 = double.Parse(value3, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va4 = double.Parse(value4, System.Globalization.NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
                 data.Add(va2);
                 data.Add(va3);
@@ -612,9 +626,8 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Sets the strBnd attribute stored into the parameter set
+        /// Sets the strBnd attribute stored into the parameter set
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetStrBnd()
         {
             IList<double> data = new List<double>();
@@ -624,7 +637,7 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double va1 = double.Parse(value1);
+                double va1 = double.Parse(value1, NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
             }
             catch (FormatException)
@@ -636,9 +649,8 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Sets the opBend attribute stored into the parameter set
+        /// Sets the opBend attribute stored into the parameter set
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetOpBend()
         {
             IList<double> data = new List<double>();
@@ -649,7 +661,7 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double va1 = double.Parse(value1);
+                double va1 = double.Parse(value1, NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
                 key = "opbend" + sid1 + ";" + sid2;
                 if (parameterSet.ContainsKey(key))
@@ -668,9 +680,8 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Sets the torsion attribute stored into the parameter set
+        /// Sets the torsion attribute stored into the parameter set
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetTorsion()
         {
             IList<double> data = new List<double>();
@@ -691,9 +702,9 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double va1 = double.Parse(value1);
-                double va2 = double.Parse(value2);
-                double va3 = double.Parse(value3);
+                double va1 = double.Parse(value1, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va2 = double.Parse(value2, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va3 = double.Parse(value3, System.Globalization.NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
                 data.Add(va2);
                 data.Add(va3);
@@ -715,9 +726,8 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Sets the torsion4 attribute stored into the parameter set
+        /// Sets the torsion4 attribute stored into the parameter set
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetTorsion4()
         {
             IList<double> data = new List<double>();
@@ -738,9 +748,9 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double va1 = double.Parse(value1);
-                double va2 = double.Parse(value2);
-                double va3 = double.Parse(value3);
+                double va1 = double.Parse(value1, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va2 = double.Parse(value2, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va3 = double.Parse(value3, System.Globalization.NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
                 data.Add(va2);
                 data.Add(va3);
@@ -754,9 +764,8 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Sets the charge attribute stored into the parameter set
+        /// Sets the charge attribute stored into the parameter set
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetCharge()
         {
             IList<double> data = new List<double>();
@@ -766,7 +775,7 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double va1 = double.Parse(value1);
+                double va1 = double.Parse(value1, System.Globalization.NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
             }
             catch (FormatException nfe)
@@ -778,9 +787,8 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Sets the dipole attribute stored into the parameter set
+        /// Sets the dipole attribute stored into the parameter set
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetDipole()
         {
             IList<double> data = new List<double>();
@@ -792,8 +800,8 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double va1 = double.Parse(value1);
-                double va2 = double.Parse(value2);
+                double va1 = double.Parse(value1, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va2 = double.Parse(value2, System.Globalization.NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
                 data.Add(va2);
 
@@ -807,9 +815,8 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Sets the dipole3 attribute stored into the parameter set
+        /// Sets the dipole3 attribute stored into the parameter set
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetDipole3()
         {
             IList<double> data = new List<double>();
@@ -821,8 +828,8 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double va1 = double.Parse(value1);
-                double va2 = double.Parse(value2);
+                double va1 = double.Parse(value1, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va2 = double.Parse(value2, System.Globalization.NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
                 data.Add(va2);
 
@@ -836,9 +843,8 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Sets the piAtom attribute stored into the parameter set
+        /// Sets the piAtom attribute stored into the parameter set
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetPiAtom()
         {
             IList<double> data = new List<double>();
@@ -850,9 +856,9 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double va1 = double.Parse(value1);
-                double va2 = double.Parse(value2);
-                double va3 = double.Parse(value3);
+                double va1 = double.Parse(value1, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va2 = double.Parse(value2, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va3 = double.Parse(value3, System.Globalization.NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
                 data.Add(va2);
                 data.Add(va3);
@@ -866,9 +872,8 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>
-        ///  Sets the piBond attribute stored into the parameter set
+        /// Sets the piBond attribute stored into the parameter set
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         private void SetPiBond()
         {
             IList<double> data = new List<double>();
@@ -880,8 +885,8 @@ namespace NCDK.Modelings.Builder3D
 
             try
             {
-                double va1 = double.Parse(value1);
-                double va2 = double.Parse(value2);
+                double va1 = double.Parse(value1, System.Globalization.NumberFormatInfo.InvariantInfo);
+                double va2 = double.Parse(value2, System.Globalization.NumberFormatInfo.InvariantInfo);
                 data.Add(va1);
                 data.Add(va2);
             }
@@ -896,7 +901,6 @@ namespace NCDK.Modelings.Builder3D
         /// <summary>
         /// The main method which parses through the force field configuration file
         /// </summary>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         public void ReadParameterSets(IChemObjectBuilder builder)
         {
             //vdW,vdWp,bond,bond4,bond3,angle,angle4,angle3,
@@ -928,107 +932,110 @@ namespace NCDK.Modelings.Builder3D
                     }
                     var e_st = Strings.Tokenize(s, '\t', ' ', ';'); st = e_st.GetEnumerator(); st.MoveNext();
                     int nt = e_st.Count;
-                    if (s.StartsWithChar('>') & nt > 1)
+                    if (s.StartsWithChar('>') && nt > 1)
                     {
                         SetForceFieldDefinitions();
                         a[0]++;
                     }
-                    else if (s.StartsWith("atom", StringComparison.Ordinal) & nt <= 8)
+                    else if (s.StartsWith("atom", StringComparison.Ordinal) && nt <= 8)
                     {
                         a[0]++;
                         SetAtomTypes(builder);
                     }
-                    else if (s.StartsWith("vdw ", StringComparison.Ordinal) & nt <= 5)
+                    else if (s.StartsWith("vdw ", StringComparison.Ordinal) && nt <= 5)
                     {
                         SetvdWaals();
                         a[1]++;
                     }
-                    else if (s.StartsWith("vdwpr ", StringComparison.Ordinal) & nt <= 6)
+                    else if (s.StartsWith("vdwpr ", StringComparison.Ordinal) && nt <= 6)
                     {
                         SetvdWaalpr();
                         a[2]++;
                     }
-                    else if (s.StartsWith("bond ", StringComparison.Ordinal) & nt <= 7)
+                    else if (s.StartsWith("bond ", StringComparison.Ordinal) && nt <= 7)
                     {
                         SetBond();
                         a[3]++;
                     }
-                    else if (s.StartsWith("bond4 ", StringComparison.Ordinal) & nt == 5)
+                    else if (s.StartsWith("bond4 ", StringComparison.Ordinal) && nt == 5)
                     {
                         SetBond4();
                         a[4]++;
                     }
-                    else if (s.StartsWith("bond3 ", StringComparison.Ordinal) & nt == 5)
+                    else if (s.StartsWith("bond3 ", StringComparison.Ordinal) && nt == 5)
                     {
                         SetBond3();
                         a[5]++;
                     }
-                    else if (s.StartsWith("angle ", StringComparison.Ordinal) & nt == 8)
+                    else if (s.StartsWith("angle ", StringComparison.Ordinal) && nt == 8)
                     {
                         SetAngle();
                         a[6]++;
                     }
-                    else if (s.StartsWith("angle4 ", StringComparison.Ordinal) & nt == 8)
+                    else if (s.StartsWith("angle4 ", StringComparison.Ordinal) && nt == 8)
                     {
                         SetAngle4();
                         a[17]++;
                     }
-                    else if (s.StartsWith("angle3 ", StringComparison.Ordinal) & nt == 8)
+                    else if (s.StartsWith("angle3 ", StringComparison.Ordinal) && nt == 8)
                     {
                         SetAngle3();
                         a[7]++;
                     }
-                    else if (s.StartsWith("strbnd ", StringComparison.Ordinal) & nt == 5)
+                    else if (s.StartsWith("strbnd ", StringComparison.Ordinal) && nt == 5)
                     {
                         SetStrBnd();
                         a[8]++;
                     }
-                    else if (s.StartsWith("opbend ", StringComparison.Ordinal) & nt == 4)
+                    else if (s.StartsWith("opbend ", StringComparison.Ordinal) && nt == 4)
                     {
                         SetOpBend();
                         a[9]++;
                     }
-                    else if (s.StartsWith("torsion ", StringComparison.Ordinal) & nt == 14)
+                    else if (s.StartsWith("torsion ", StringComparison.Ordinal) && nt == 14)
                     {
                         SetTorsion();
                         a[10]++;
                     }
-                    else if (s.StartsWith("torsion4 ", StringComparison.Ordinal) & nt == 14)
+                    else if (s.StartsWith("torsion4 ", StringComparison.Ordinal) && nt == 14)
                     {
                         SetTorsion4();
                         a[11]++;
                     }
-                    else if (s.StartsWith("charge ", StringComparison.Ordinal) & nt == 3)
+                    else if (s.StartsWith("charge ", StringComparison.Ordinal) && nt == 3)
                     {
                         SetCharge();
                         a[12]++;
                     }
-                    else if (s.StartsWith("dipole ", StringComparison.Ordinal) & nt == 5)
+                    else if (s.StartsWith("dipole ", StringComparison.Ordinal) && nt == 5)
                     {
                         SetDipole();
                         a[13]++;
                     }
-                    else if (s.StartsWith("dipole3 ", StringComparison.Ordinal) & nt == 5)
+                    else if (s.StartsWith("dipole3 ", StringComparison.Ordinal) && nt == 5)
                     {
                         SetDipole3();
                         a[14]++;
                     }
-                    else if (s.StartsWith("piatom ", StringComparison.Ordinal) & nt == 5)
+                    else if (s.StartsWith("piatom ", StringComparison.Ordinal) && nt == 5)
                     {
                         SetPiAtom();
                         a[15]++;
                     }
-                    else if (s.StartsWith("pibond ", StringComparison.Ordinal) & nt == 5)
+                    else if (s.StartsWith("pibond ", StringComparison.Ordinal) && nt == 5)
                     {
                         SetPiBond();
                         a[16]++;
                     }
                 }// end while
-                ins.Close();
             }
             catch (IOException e)
             {
                 throw new IOException("There was a problem parsing the mm2 forcefield due to:" + e.ToString());
+            }
+            finally
+            {
+                ins.Close();
             }
         }
 
@@ -1037,13 +1044,13 @@ namespace NCDK.Modelings.Builder3D
         /// </summary>
         /// <param name="atomicNumber">atomic number</param>
         /// <param name="exactMass">exact mass</param>
-        /// <returns>the mass number (or null) if no mass number was found</returns>
+        /// <returns>the mass number (or <see langword="null"/>>) if no mass number was found</returns>
         /// <exception cref="IOException">isotope configuration could not be loaded</exception>
-        private int? MassNumber(int atomicNumber, double exactMass)
+        private static int? MassNumber(int atomicNumber, double exactMass)
         {
             string symbol = PeriodicTable.GetSymbol(atomicNumber);
-            IIsotope isotope = Isotopes.Instance.GetIsotope(symbol, exactMass, 0.001);
-            return isotope != null ? isotope.MassNumber : null;
+            IIsotope isotope = BODRIsotopeFactory.Instance.GetIsotope(symbol, exactMass, 0.001);
+            return isotope?.MassNumber;
         }
     }
 }

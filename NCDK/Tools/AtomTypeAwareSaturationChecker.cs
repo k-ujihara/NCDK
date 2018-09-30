@@ -49,7 +49,8 @@ namespace NCDK.Tools
     // @cdk.module  valencycheck
     public class AtomTypeAwareSaturationChecker : IValencyChecker, IDeduceBondOrderTool
     {
-        SaturationChecker staturationChecker;
+        private static readonly SaturationChecker staturationChecker = CDK.SaturationChecker;
+
         private BondOrder oldBondOrder;
         private int startBond;
 
@@ -58,7 +59,6 @@ namespace NCDK.Tools
         /// </summary>
         public AtomTypeAwareSaturationChecker()
         {
-            staturationChecker = new SaturationChecker();
         }
 
         /// <summary>
@@ -88,10 +88,7 @@ namespace NCDK.Tools
                             DecideBondOrder(atomContainer, bestGuess[0]);
                             double satAtoms = ((bestGuess[1] * 1.0) / atomContainer.Atoms.Count) * 10000;
                             satAtoms = Math.Round(satAtoms) / 100;
-                            //                        Console.Out.WriteLine("Staring on bond "+bestGuess[0]+
-                            //                                " gives "+satAtoms+"% saturated atoms.");
-                            Trace.TraceWarning("Can't find any solution where all atoms " + "are saturated. A best guess gives "
-                                    + satAtoms + "% Saturated atoms.");
+                            Trace.TraceWarning($"Can't find any solution where all atoms are saturated. A best guess gives {satAtoms}% Saturated atoms.");
                             return;
                         }
                     }
@@ -163,7 +160,7 @@ namespace NCDK.Tools
         /// <exception cref="CDKException">when no suitable solution can be found</exception>
         private void CheckBond(IAtomContainer atomContainer, int index)
         {
-            IBond bond = atomContainer.Bonds[index];
+            var bond = atomContainer.Bonds[index];
 
             if (bond != null && bond.IsSingleOrDouble)
             {
@@ -206,9 +203,10 @@ namespace NCDK.Tools
         /// <param name="bond">The bond to check</param>
         /// <param name="atomContainer">The <see cref="IAtomContainer"/> that the bond belongs to</param>
         /// <returns>True if it is possibly to increase the bond order</returns>
-        public bool BondOrderCanBeIncreased(IBond bond, IAtomContainer atomContainer)
+        public virtual bool BondOrderCanBeIncreased(IBond bond, IAtomContainer atomContainer)
         {
-            bool atom0isUnsaturated = false, atom1isUnsaturated = false;
+            bool atom0isUnsaturated = false;
+            bool atom1isUnsaturated = false;
             double sum;
             if (bond.Begin.BondOrderSum == null)
             {
@@ -216,7 +214,8 @@ namespace NCDK.Tools
             }
             else
                 sum = bond.Begin.BondOrderSum.Value;
-            if (BondsUsed(bond.Begin, atomContainer) < sum) atom0isUnsaturated = true;
+            if (BondsUsed(bond.Begin, atomContainer) < sum)
+                atom0isUnsaturated = true;
 
             if (bond.End.BondOrderSum == null)
             {
@@ -224,7 +223,8 @@ namespace NCDK.Tools
             }
             else
                 sum = bond.End.BondOrderSum.Value;
-            if (BondsUsed(bond.End, atomContainer) < sum) atom1isUnsaturated = true;
+            if (BondsUsed(bond.End, atomContainer) < sum)
+                atom1isUnsaturated = true;
 
             if (atom0isUnsaturated == atom1isUnsaturated)
                 return atom0isUnsaturated;
@@ -232,13 +232,15 @@ namespace NCDK.Tools
             {
                 // If one of the atoms is saturated and the other isn't, what do we
                 // do then? Look at the bonds on each side and decide from that...
-                int myIndex = atomContainer.Bonds.IndexOf(bond);
+                var myIndex = atomContainer.Bonds.IndexOf(bond);
                 // If it's the first bond, then just move on.
-                if (myIndex == 0) return false;
+                if (myIndex == 0)
+                    return false;
                 // If the previous bond is the reason it's no problem, so just move on...
 
                 // TODO instead check if the atom that are in both bonds are saturated...?
-                if (atomContainer.Bonds[myIndex - 1].Order == BondOrder.Double) return false;
+                if (atomContainer.Bonds[myIndex - 1].Order == BondOrder.Double)
+                    return false;
 
                 // The only reason for trouble should now be that the next bond make
                 // one of the atoms saturated, so lets throw an exception and
@@ -260,12 +262,13 @@ namespace NCDK.Tools
         /// <param name="atom">The atom in question</param>
         /// <param name="mol">The molecule that the atom belongs to</param>
         /// <returns>The bond order sum</returns>
-        private double GetAtomBondOrderSum(IAtom atom, IAtomContainer mol)
+        private static double GetAtomBondOrderSum(IAtom atom, IAtomContainer mol)
         {
             double sum = 0;
 
             foreach (var bond in mol.Bonds)
-                if (bond.Contains(atom)) sum += BondManipulator.DestroyBondOrder(bond.Order);
+                if (bond.Contains(atom))
+                    sum += BondManipulator.DestroyBondOrder(bond.Order);
 
             return sum;
         }
@@ -277,10 +280,11 @@ namespace NCDK.Tools
         /// <param name="bond1">The first bond</param>
         /// <param name="bond2">The other bond</param>
         /// <returns>True if any of the atoms in <paramref name="bond1"/> also are in <paramref name="bond2"/></returns>
-        private bool IsConnected(IBond bond1, IBond bond2)
+        private static bool IsConnected(IBond bond1, IBond bond2)
         {
             foreach (var atom in bond1.Atoms)
-                if (bond2.Contains(atom)) return true;
+                if (bond2.Contains(atom))
+                    return true;
             return false;
         }
 
@@ -291,7 +295,7 @@ namespace NCDK.Tools
         /// <param name="atom">The <see cref="IAtom"/> to be investigated</param>
         /// <returns>The max number of bonds the <see cref="IAtom"/> can have</returns>
         /// <exception cref="CDKException">when the atom's valency is not set</exception>
-        public double GetMaxNoOfBonds(IAtom atom)
+        public virtual double GetMaxNoOfBonds(IAtom atom)
         {
             double noValenceElectrons = atom.Valency ?? -1;
             if (noValenceElectrons == -1)
@@ -309,24 +313,22 @@ namespace NCDK.Tools
         /// <param name="atom">The atom to check</param>
         /// <param name="atomContainer">The atomContainer containing the atom</param>
         /// <returns>The number of bonds that the atom has</returns>
-        private double BondsUsed(IAtom atom, IAtomContainer atomContainer)
+        private static double BondsUsed(IAtom atom, IAtomContainer atomContainer)
         {
             int bondsToAtom = 0;
             foreach (var bond in atomContainer.Bonds)
-                if (bond.Contains(atom)) bondsToAtom += (int)BondManipulator.DestroyBondOrder(bond.Order);
+                if (bond.Contains(atom))
+                    bondsToAtom += (int)BondManipulator.DestroyBondOrder(bond.Order);
             int implicitHydrogens;
             if (atom.ImplicitHydrogenCount == null || atom.ImplicitHydrogenCount == null)
             {
                 // Will probably only work with group 13-18, and not for helium...
                 if (atom.Valency == null || atom.Valency == null)
-                    throw new CDKException("Atom " + atom.AtomTypeName + " has not got the valency set.");
+                    throw new CDKException($"Atom {atom.AtomTypeName} has not got the valency set.");
                 if (atom.FormalNeighbourCount == null || atom.FormalNeighbourCount == null)
-                    throw new CDKException("Atom " + atom.AtomTypeName
-                            + " has not got the formal neighbour count set.");
+                    throw new CDKException($"Atom {atom.AtomTypeName} has not got the formal neighbour count set.");
                 implicitHydrogens = (8 - atom.Valency.Value) - atom.FormalNeighbourCount.Value;
-                string warningMessage = "Number of implicite hydrogens not set for atom " + atom.AtomTypeName
-                        + ". Estimated it to: " + implicitHydrogens;
-                Trace.TraceWarning(warningMessage);
+                Trace.TraceWarning($"Number of implicit hydrogens not set for atom {atom.AtomTypeName}. Estimated it to: {implicitHydrogens}");
             }
             else
                 implicitHydrogens = atom.ImplicitHydrogenCount.Value;
@@ -336,9 +338,7 @@ namespace NCDK.Tools
                 if (atom.FormalCharge == null)
                 {
                     charge = 0;
-                    string warningMessage = "Neither charge nor formal charge is set for atom " + atom.AtomTypeName
-                            + ". Estimate it to: 0";
-                    Trace.TraceWarning(warningMessage);
+                    Trace.TraceWarning($"Neither charge nor formal charge is set for atom {atom.AtomTypeName}. Estimate it to: 0");
                 }
                 else
                     charge = atom.FormalCharge.Value;
@@ -372,13 +372,21 @@ namespace NCDK.Tools
         // @author Klas Jönsson
         private class CantDecideBondOrderException : CDKException
         {
+            public CantDecideBondOrderException()
+            {
+            }
+
             /// <summary>
             /// Creates a new <see cref="CantDecideBondOrderException"/> with a given message.
             /// </summary>
             /// <param name="message">Explanation about why the decision could not be made.</param>
-            public CantDecideBondOrderException(string message)
-                : base(message)
-            { }
+            public CantDecideBondOrderException(string message) : base(message)
+            {
+            }
+
+            public CantDecideBondOrderException(string message, Exception innerException) : base(message, innerException)
+            {
+            }
         }
     }
 }

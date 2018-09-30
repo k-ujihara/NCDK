@@ -178,7 +178,7 @@ namespace NCDK.FaulonSignatures
             {
                 string o1s = this.vertexLabels[o1.vertexIndex];
                 string o2s = this.vertexLabels[o2.vertexIndex];
-                int c = o1s.CompareTo(o2s);
+                int c = string.Compare(o1s, o2s, StringComparison.Ordinal);
                 if (c == 0)
                 {
                     if (o1.invariant < o2.invariant)
@@ -206,7 +206,6 @@ namespace NCDK.FaulonSignatures
         /// </summary>
         public class NodeIntegerLabelComparator : IComparer<Node>
         {
-
             /// <summary>
             /// The labels for vertices.
             /// </summary>
@@ -258,12 +257,12 @@ namespace NCDK.FaulonSignatures
         /// <summary>
         /// The counts of parents for vertices  
         /// </summary>
-        private int[] parentCounts;
+        private readonly int[] parentCounts;
 
         /// <summary>
         /// The counts of children for vertices  
         /// </summary>
-        private int[] childCounts;
+        private readonly int[] childCounts;
 
         private Invariants invariants;
 
@@ -662,12 +661,7 @@ namespace NCDK.FaulonSignatures
                 UpdateNodeInvariants(Direction.Down); // From the root to the leaves
                 ComputeVertexInvariants();
 
-                invariantSame =
-                    CheckInvariantChange(
-                            oldInvariants, invariants.GetVertexInvariants());
-                //            Console.Out.WriteLine(
-                //                   "invs\t" +
-                //                   java.util.Arrays.ToString(invariants.GetVertexInvariants()));
+                invariantSame = CheckInvariantChange(oldInvariants, invariants.GetVertexInvariants());
             }
 
             // finally, copy the node invariants into the nodes, for easy sorting
@@ -715,8 +709,7 @@ namespace NCDK.FaulonSignatures
 
         public void UpdateLayer(List<DAG.Node> layer, DAG.Direction direction)
         {
-            List<InvariantList> nodeInvariantList =
-                new List<InvariantList>();
+            List<InvariantList> nodeInvariantList = new List<InvariantList>();
             for (int i = 0; i < layer.Count; i++)
             {
                 DAG.Node layerNode = layer[i];
@@ -735,7 +728,6 @@ namespace NCDK.FaulonSignatures
                 {
                     int j = this.nodes.IndexOf(relative);
                     int inv = this.invariants.GetNodeInvariant(j);
-                    //                Console.Out.WriteLine(layerNode.edgeColors + " getting " + relative.vertexIndex);
                     int edgeColor;
                     if (direction == Direction.Up)
                     {
@@ -745,8 +737,6 @@ namespace NCDK.FaulonSignatures
                     {
                         edgeColor = layerNode.edgeColors[relative.vertexIndex];
                     }
-                    //                relativeInvariants.Add(inv * edgeColor);
-                    //                relativeInvariants.Add(inv * (edgeColor + 1));
 
                     relativeInvariants.Add(inv);
                     relativeInvariants.Add(vertexCount + 1 + edgeColor);
@@ -757,7 +747,6 @@ namespace NCDK.FaulonSignatures
             }
 
             nodeInvariantList.Sort();
-            //        Console.Out.WriteLine(nodeInvariantList + " for layer " + layer + " " + direction);
 
             int order = 1;
             int first = nodeInvariantList[0].originalIndex;

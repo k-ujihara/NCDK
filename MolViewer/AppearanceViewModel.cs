@@ -43,8 +43,7 @@ namespace NCDK.MolViewer
         private static StructureDiagramGenerator sdg = new StructureDiagramGenerator();
         private static IChemObjectBuilder builder = ChemObjectBuilder.Instance;
         private static SmilesParser parser = new SmilesParser(builder);
-        private static SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavor.Default);
-        private static InChIGeneratorFactory inChIGeneratorFactory = InChIGeneratorFactory.Instance;
+        private static SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavors.Default);
 
         private string _Smiles = null;
         private IChemObject _ChemObject = null;
@@ -235,7 +234,7 @@ namespace NCDK.MolViewer
                 try
                 {
                     // Get InChIToStructure
-                    InChIToStructure converter = inChIGeneratorFactory.GetInChIToStructure(text, builder);
+                    InChIToStructure converter =  InChIToStructure.FromInChI(text, builder);
                     mol = converter.AtomContainer;
                 }
                 catch (Exception)
@@ -353,7 +352,7 @@ namespace NCDK.MolViewer
             return ToEnum(value);
         }
 
-        private ColoringStyle ToEnum(object parameter)
+        private static ColoringStyle ToEnum(object parameter)
         {
             if (parameter is string p)
                 return (ColoringStyle)Enum.Parse(typeof(ColoringStyle), p);

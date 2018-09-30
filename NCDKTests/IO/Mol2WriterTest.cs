@@ -23,7 +23,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NCDK.Aromaticities;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 using System.IO;
@@ -41,7 +41,7 @@ namespace NCDK.IO
     public class Mol2WriterTest : ChemObjectIOTest
     {
         protected override Type ChemObjectIOToTestType => typeof(Mol2Writer);
-        private static IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        private static IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
         [TestMethod()]
         public void TestAccepts()

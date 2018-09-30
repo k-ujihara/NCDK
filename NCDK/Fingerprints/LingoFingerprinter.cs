@@ -26,6 +26,7 @@ using NCDK.Aromaticities;
 using NCDK.Graphs;
 using NCDK.Smiles;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace NCDK.Fingerprints
@@ -48,7 +49,7 @@ namespace NCDK.Fingerprints
         private readonly int n;
         private readonly SmilesGenerator gen = SmilesGenerator.Unique().Aromatic();
         private readonly Regex DIGITS = new Regex("[0-9]+", RegexOptions.Compiled);
-        private readonly Aromaticity aromaticity = new Aromaticity(ElectronDonation.DaylightModel, Cycles.Or(Cycles.AllFinder, Cycles.RelevantFinder));
+        private readonly Aromaticity aromaticity = new Aromaticity(ElectronDonation.DaylightModel, Cycles.Or(Cycles.AllSimpleFinder, Cycles.RelevantFinder));
 
         /// <summary>
         /// Initialize the fingerprinter with a default substring length of 4.
@@ -68,7 +69,7 @@ namespace NCDK.Fingerprints
 
         protected override IEnumerable<KeyValuePair<string, string>> GetParameters()
         {
-            yield return new KeyValuePair<string, string>("ngramLength", n.ToString());
+            yield return new KeyValuePair<string, string>("ngramLength", n.ToString(NumberFormatInfo.InvariantInfo));
             yield break;
         }
 
@@ -77,11 +78,11 @@ namespace NCDK.Fingerprints
             return FingerprinterTool.MakeBitFingerprint(GetRawFingerprint(iAtomContainer));
         }
 
-        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer atomContainer)
+        public override IReadOnlyDictionary<string, int> GetRawFingerprint(IAtomContainer atomContainer)
         {
             aromaticity.Apply(atomContainer);
             string smiles = ReplaceDigits(gen.Create(atomContainer));
-            IDictionary<string, int> map = new Dictionary<string, int>();
+            var map = new Dictionary<string, int>();
             for (int i = 0, l = smiles.Length - n + 1; i < l; i++)
             {
                 string subsmi = smiles.Substring(i, n);
@@ -93,7 +94,7 @@ namespace NCDK.Fingerprints
             return map;
         }
 
-        public override int Count => -1; // 1L << 32
+        public override int Length => -1; // 1L << 32
 
         private string ReplaceDigits(string smiles)
         {

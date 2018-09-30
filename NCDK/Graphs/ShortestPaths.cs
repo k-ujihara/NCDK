@@ -50,10 +50,10 @@ namespace NCDK.Graphs
     public sealed class ShortestPaths
     {
         /* empty path when no valid path was found */
-        private static readonly int[] EmptyPath = new int[0];
+        private static readonly int[] EmptyPath = Array.Empty<int>();
 
         /* empty paths when no valid path was found */
-        private static readonly int[][] EmptyPaths = new int[0][] { };
+        private static readonly int[][] EmptyPaths = Array.Empty<int[]>();
 
         /* route to each vertex */
         private readonly IRoute[] routeTo;
@@ -307,7 +307,7 @@ namespace NCDK.Graphs
         /// <returns>whether the path to the <paramref name="end"/> only passed through vertices preceding the <see cref="start"/></returns>
         public bool IsPrecedingPathTo(int end)
         {
-            return (end >= 0 || end < routeTo.Length) && precedes[end];
+            return (end >= 0 && end < routeTo.Length) && precedes[end];
         }
 
         /// <summary>

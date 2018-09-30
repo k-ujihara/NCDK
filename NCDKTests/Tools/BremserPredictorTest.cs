@@ -22,7 +22,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using System;
 
@@ -84,7 +84,7 @@ namespace NCDK.Tools
             for (int f = 0; f < molecule.Atoms.Count; f++)
             {
                 s = hcg.GetHOSECode(molecule, molecule.Atoms[f], 1);
-                prediction = bp.GetConfidenceLimit(hcg.MakeBremserCompliant(s));
+                prediction = bp.GetConfidenceLimit(HOSECodeGenerator.MakeBremserCompliant(s));
                 //logger.debug("\"" + prediction + "\",");
                 Assert.AreEqual(result[f], prediction, 0.001);
             }
@@ -148,7 +148,7 @@ namespace NCDK.Tools
             Assert.IsTrue(correct);
         }
 
-        private void RemoveHydrogens(IAtomContainer ac)
+        private static void RemoveHydrogens(IAtomContainer ac)
         {
             IAtom atom = null;
             int f = ac.Atoms.Count - 1;
@@ -156,9 +156,11 @@ namespace NCDK.Tools
             do
             {
                 atom = ac.Atoms[f];
-                if (atom.Symbol.Equals("H"))
+                switch (atom.Symbol)
                 {
-                    ac.RemoveAtom(atom);
+                    case "H":
+                        ac.RemoveAtom(atom);
+                        break;
                 }
                 f--;
             } while (f >= 0);

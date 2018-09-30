@@ -146,7 +146,7 @@ namespace NCDK.Fragments
             return fragments;
         }
 
-        private List<IBond> GetSplitableBonds(IAtomContainer atomContainer)
+        private static List<IBond> GetSplitableBonds(IAtomContainer atomContainer)
         {
             // do ring detection
             SpanningTree spanningTree = new SpanningTree(atomContainer);

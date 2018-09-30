@@ -43,20 +43,10 @@ namespace NCDK
     // @author      Egon Willighagen
     // @author      John Mayfield
     // @cdk.keyword stereochemistry
-    public interface IStereoElement<out TFocus, TCarriers>
-        : IReadOnlyStereoElement<TFocus, TCarriers>
-        where TFocus : IChemObject
-        where TCarriers : IChemObject
-    {
-        /// <summary>
-        /// The carriers of the stereochemistry
-        /// </summary>
-        IList<TCarriers> Carriers { get; }
-    }
-
-    public interface IReadOnlyStereoElement<out TFocus, out TCarriers>
+    public interface IStereoElement<out TFocus, out TCarriers>
         : ICDKObject
         where TFocus : IChemObject
+        where TCarriers : IChemObject
     {
         /// <summary>
         /// Does the stereo element contain the provided atom.
@@ -73,16 +63,16 @@ namespace NCDK
         /// <summary>
         /// The carriers of the stereochemistry
         /// </summary>
-        IReadOnlyList<TCarriers> ReadOnlyCarriers { get; }
+        IReadOnlyList<TCarriers> Carriers { get; }
 
         /// <summary>
         /// The configuration class of the stereochemistry.
         /// </summary>
-        StereoElement.Classes Class { get; }
+        StereoClass Class { get; }
 
         /// <summary>
         /// The configuration of the stereochemistry.
         /// </summary>
-        StereoElement.Configuration Configure { get; set; }
+        StereoConfigurations Configure { get; set; }
     }
 }

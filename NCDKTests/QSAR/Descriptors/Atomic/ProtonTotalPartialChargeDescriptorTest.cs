@@ -18,6 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.QSAR.Results;
+using NCDK.Silent;
 using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Atomic
@@ -37,7 +38,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { 0.07915, 0.05783, 0.05783, 0.05783 };
             IAtomicDescriptor descriptor = new ProtonTotalPartialChargeDescriptor();
 
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CF");
             AddExplicitHydrogens(mol);
             ArrayResult<double> retval = (ArrayResult<double>)descriptor.Calculate(mol.Atoms[0], mol).Value;
@@ -52,7 +53,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         public void TestNaNs()
         {
             IAtomicDescriptor descriptor = new ProtonTotalPartialChargeDescriptor();
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("C(F)(F)");
             AddExplicitHydrogens(mol);
             ArrayResult<double> retval = (ArrayResult<double>)descriptor.Calculate(mol.Atoms[0], mol).Value;

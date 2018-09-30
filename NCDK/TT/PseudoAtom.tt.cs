@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -35,6 +36,7 @@ namespace NCDK.Default
 {
     /// <inheritdoc cref="IPseudoAtom"/>
     // @cdk.githash
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class PseudoAtom
         : Atom, ICloneable, IPseudoAtom
@@ -147,6 +149,7 @@ namespace NCDK.Silent
 {
     /// <inheritdoc cref="IPseudoAtom"/>
     // @cdk.githash
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class PseudoAtom
         : Atom, ICloneable, IPseudoAtom

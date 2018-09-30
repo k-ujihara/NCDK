@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace NCDK.Geometries.Surface
 {
@@ -75,7 +76,7 @@ namespace NCDK.Geometries.Surface
             k2 = (int)(Math.Floor(y / boxSize));
             k3 = (int)(Math.Floor(z / boxSize));
 
-            string key = k1.ToString() + " " + k2.ToString() + " " + k3.ToString() + " ";
+            string key = k1.ToString(NumberFormatInfo.InvariantInfo) + " " + k2.ToString(NumberFormatInfo.InvariantInfo) + " " + k3.ToString(NumberFormatInfo.InvariantInfo) + " ";
             return (key);
         }
 
@@ -118,7 +119,7 @@ namespace NCDK.Geometries.Surface
                     {
                         int z = bval[k];
 
-                        string keyj = (key[0] + x).ToString() + " " + (key[1] + y).ToString() + " " + (key[2] + z).ToString() + " ";
+                        string keyj = (key[0] + x).ToString(NumberFormatInfo.InvariantInfo) + " " + (key[1] + y).ToString(NumberFormatInfo.InvariantInfo) + " " + (key[2] + z).ToString(NumberFormatInfo.InvariantInfo) + " ";
                         if (boxes.ContainsKey(keyj))
                         {
                             var nbrs = boxes[keyj];

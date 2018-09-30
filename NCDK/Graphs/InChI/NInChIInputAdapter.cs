@@ -99,12 +99,12 @@ namespace NCDK.Graphs.InChI
                         return FLAG_CHAR + op;
                     }
                     // 1,5 tautomer option
-                    else if ("15T".Equals(op))
+                    else if (string.Equals("15T", op, StringComparison.Ordinal))
                     {
                         return FLAG_CHAR + "15T";
                     }
                     // keto-enol tautomer option
-                    else if ("KET".Equals(op))
+                    else if (string.Equals("KET", op, StringComparison.Ordinal))
                     {
                         return FLAG_CHAR + "KET";
                     }

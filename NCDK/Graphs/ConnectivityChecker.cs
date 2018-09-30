@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 
 using System;
@@ -37,7 +36,7 @@ namespace NCDK.Graphs
     // @cdk.module standard
     // @cdk.githash
     // @cdk.keyword connectivity
-    public class ConnectivityChecker
+    public static class ConnectivityChecker
     {
         /// <summary>
         /// Check whether a set of atoms in an <see cref="IAtomContainer"/> is connected.
@@ -51,7 +50,7 @@ namespace NCDK.Graphs
             if (atomContainer.Atoms.Count < 2)
                 return true;
 
-            ConnectedComponents cc = new ConnectedComponents(GraphUtil.ToAdjList(atomContainer));
+            var cc = new ConnectedComponents(GraphUtil.ToAdjList(atomContainer));
             return cc.NComponents == 1;
         }
 
@@ -63,7 +62,7 @@ namespace NCDK.Graphs
         // @cdk.dictref   blue-obelisk:graphPartitioning
         public static IChemObjectSet<IAtomContainer> PartitionIntoMolecules(IAtomContainer container)
         {
-            ConnectedComponents cc = new ConnectedComponents(GraphUtil.ToAdjList(container));
+            var cc = new ConnectedComponents(GraphUtil.ToAdjList(container));
             return PartitionIntoMolecules(container, cc.Components());
         }
 
@@ -74,13 +73,13 @@ namespace NCDK.Graphs
                 if (component > maxComponentIndex)
                     maxComponentIndex = component;
 
-            IAtomContainer[] containers = new IAtomContainer[maxComponentIndex + 1];
-            IDictionary<IAtom, IAtomContainer> componentsMap = new Dictionary<IAtom, IAtomContainer>(2 * container.Atoms.Count);
+            var containers = new IAtomContainer[maxComponentIndex + 1];
+            var componentsMap = new Dictionary<IAtom, IAtomContainer>(2 * container.Atoms.Count);
 
             for (int i = 1; i < containers.Length; i++)
                 containers[i] = container.Builder.NewAtomContainer();
 
-            IChemObjectSet<IAtomContainer> containerSet = container.Builder.NewAtomContainerSet();
+            var containerSet = container.Builder.NewAtomContainerSet();
 
             for (int i = 0; i < container.Atoms.Count; i++)
             {
@@ -88,10 +87,10 @@ namespace NCDK.Graphs
                 containers[components[i]].Atoms.Add(container.Atoms[i]);
             }
 
-            foreach (IBond bond in container.Bonds)
+            foreach (var bond in container.Bonds)
             {
-                IAtomContainer begComp = componentsMap[bond.Begin];
-                IAtomContainer endComp = componentsMap[bond.End];
+                var begComp = componentsMap[bond.Begin];
+                var endComp = componentsMap[bond.End];
                 if (begComp == endComp)
                     begComp.Bonds.Add(bond);
             }
@@ -104,20 +103,19 @@ namespace NCDK.Graphs
 
             foreach (var stereo in container.StereoElements)
             {
-                IChemObject focus = stereo.Focus;
-                if (focus is IAtom)
+                var focus = stereo.Focus;
+                switch (focus)
                 {
-                    if (componentsMap.ContainsKey((IAtom)focus))
-                        componentsMap[(IAtom)focus].StereoElements.Add(stereo);
-                }
-                else if (focus is IBond)
-                {
-                    if (componentsMap.ContainsKey(((IBond)focus).Begin))
-                        componentsMap[((IBond)focus).Begin].StereoElements.Add(stereo);
-                }
-                else
-                {
-                    throw new InvalidOperationException("New stereo element not using an atom/bond for focus?");
+                    case IAtom atom:
+                        if (componentsMap.ContainsKey(atom))
+                            componentsMap[atom].StereoElements.Add(stereo);
+                        break;
+                    case IBond bond:
+                        if (componentsMap.ContainsKey(bond.Begin))
+                            componentsMap[bond.Begin].StereoElements.Add(stereo);
+                        break;
+                    default:
+                        throw new InvalidOperationException("New stereo element not using an atom/bond for focus?");
                 }
             }
 

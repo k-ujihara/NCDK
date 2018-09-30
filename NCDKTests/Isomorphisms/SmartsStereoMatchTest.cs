@@ -23,7 +23,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Smiles.SMARTS.Parser;
 using NCDK.Stereo;
 using System.Collections.Generic;

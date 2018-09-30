@@ -45,14 +45,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
     // @cdk.bug     1632419
-    public partial class RDFProtonDescriptor_GDR : IAtomicDescriptor
+    public partial class RDFProtonDescriptorGDR : IAtomicDescriptor
     {
         private const int desc_length = 7;
 
         /// <summary>
         /// Constructor for the RDFProtonDescriptor object
         /// </summary>
-        public RDFProtonDescriptor_GDR()
+        public RDFProtonDescriptorGDR()
         {
             names = new string[desc_length];
             for (int i = 0; i < desc_length; i++)
@@ -65,16 +65,15 @@ namespace NCDK.QSAR.Descriptors.Atomic
         public IReadOnlyList<string> DescriptorNames => names;
 
         /// <summary>
-        /// The specification attribute of the RDFProtonDescriptor_GDR object
+        /// The specification attribute of the RDFProtonDescriptorGDR object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification __Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues",
-                typeof(RDFProtonDescriptor_GDR).FullName, "The Chemistry Development Kit");
-        private DescriptorSpecification _Specification => __Specification;
+                typeof(RDFProtonDescriptorGDR).FullName, "The Chemistry Development Kit");
 
-        private bool MakeDescriptorLastStage(
+        private static bool MakeDescriptorLastStage(
             ArrayResult<double> rdfProtonCalculatedValues,
             IAtom atom,
             IAtom clonedAtom,

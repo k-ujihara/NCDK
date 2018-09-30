@@ -37,7 +37,7 @@ namespace NCDK
         {
             IMolecularFormula mf = Builder.NewMolecularFormula();
 
-            Assert.AreEqual(0, mf.Count);
+            Assert.AreEqual(0, mf.IsotopesCount);
         }
 
         [TestMethod()]
@@ -50,7 +50,7 @@ namespace NCDK
             mf.Add(Builder.NewIsotope("H"));
             mf.Add(Builder.NewIsotope("H"));
 
-            Assert.AreEqual(2, mf.Count);
+            Assert.AreEqual(2, mf.IsotopesCount);
         }
 
         [TestMethod()]
@@ -64,7 +64,7 @@ namespace NCDK
             hy.NaturalAbundance = 2.00342342;
             mf.Add(hy);
 
-            Assert.AreEqual(3, mf.Count);
+            Assert.AreEqual(3, mf.IsotopesCount);
         }
 
         [TestMethod()]
@@ -83,7 +83,7 @@ namespace NCDK
             mf.Add(h2);
             mf.Add(h3);
 
-            Assert.AreEqual(3, mf.Count);
+            Assert.AreEqual(3, mf.IsotopesCount);
             Assert.AreEqual(1, mf.GetCount(carb));
             Assert.AreEqual(1, mf.GetCount(flu));
             Assert.AreEqual(3, mf.GetCount(h1));
@@ -103,7 +103,7 @@ namespace NCDK
             mf.Add(h1);
             mf.Add(h1);
 
-            Assert.AreEqual(3, mf.Count);
+            Assert.AreEqual(3, mf.IsotopesCount);
             Assert.AreEqual(1, mf.GetCount(carb));
             Assert.AreEqual(1, mf.GetCount(flu));
             Assert.AreEqual(3, mf.GetCount(h1));
@@ -121,7 +121,7 @@ namespace NCDK
             mf.Add(flu);
             mf.Add(h1, 3);
 
-            Assert.AreEqual(3, mf.Count);
+            Assert.AreEqual(3, mf.IsotopesCount);
             Assert.AreEqual(1, mf.GetCount(carb));
             Assert.AreEqual(1, mf.GetCount(flu));
             Assert.AreEqual(3, mf.GetCount(h1));
@@ -169,7 +169,7 @@ namespace NCDK
             mf.Add(flu);
             mf.Add(h1, 3);
 
-            Assert.AreEqual(3, mf.Count);
+            Assert.AreEqual(3, mf.IsotopesCount);
             Assert.AreEqual(1, mf.GetCount(carb));
             Assert.AreEqual(1, mf.GetCount(flu));
             Assert.AreEqual(3, mf.GetCount(h1));
@@ -183,14 +183,14 @@ namespace NCDK
             IIsotope oxig = Builder.NewIsotope("O");
             acetone.Add(oxig);
 
-            Assert.AreEqual(2, acetone.Count);
+            Assert.AreEqual(2, acetone.IsotopesCount);
 
             IMolecularFormula water = Builder.NewMolecularFormula();
             water.Add(Builder.NewIsotope("H"), 2);
             water.Add(oxig);
             acetone.Add(water);
 
-            Assert.AreEqual(3, acetone.Count);
+            Assert.AreEqual(3, acetone.IsotopesCount);
         }
 
         [TestMethod()]
@@ -278,7 +278,7 @@ namespace NCDK
             mf.Add(Builder.NewAtom("F"));
             mf.Add(Builder.NewAtom("H"), 3);
 
-            Assert.AreEqual(3, mf.Count);
+            Assert.AreEqual(3, mf.IsotopesCount);
             Assert.AreEqual(1.0, mf.Charge.Value, 0.001);
         }
 
@@ -336,7 +336,7 @@ namespace NCDK
             // remove the Fluorine
             mf.Remove(flu);
 
-            Assert.AreEqual(2, mf.Count);
+            Assert.AreEqual(2, mf.IsotopesCount);
         }
 
         [TestMethod()]
@@ -353,7 +353,7 @@ namespace NCDK
             // remove the Fluorine
             mf.Clear();
 
-            Assert.AreEqual(0, mf.Count);
+            Assert.AreEqual(0, mf.IsotopesCount);
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace NCDK
             mf.Charge = 1;
             object clone = mf.Clone();
             Assert.IsTrue(clone is IMolecularFormula);
-            Assert.AreEqual(mf.Count, ((IMolecularFormula)clone).Count);
+            Assert.AreEqual(mf.IsotopesCount, ((IMolecularFormula)clone).IsotopesCount);
             Assert.AreEqual(mf.Charge, ((IMolecularFormula)clone).Charge);
         }
 
@@ -384,16 +384,16 @@ namespace NCDK
             mf.Add(flu);
             mf.Add(h1, 3);
 
-            Assert.AreEqual(3, mf.Count);
+            Assert.AreEqual(3, mf.IsotopesCount);
             Assert.AreEqual(1, mf.GetCount(carb));
             Assert.AreEqual(1, mf.GetCount(flu));
             Assert.AreEqual(3, mf.GetCount(h1));
 
             object clone = mf.Clone();
             Assert.IsTrue(clone is IMolecularFormula);
-            Assert.AreEqual(mf.Count, ((IMolecularFormula)clone).Count);
+            Assert.AreEqual(mf.IsotopesCount, ((IMolecularFormula)clone).IsotopesCount);
 
-            Assert.AreEqual(3, ((IMolecularFormula)clone).Count);
+            Assert.AreEqual(3, ((IMolecularFormula)clone).IsotopesCount);
         }
 
         [TestMethod()]

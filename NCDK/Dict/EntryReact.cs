@@ -22,6 +22,7 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.Dict
 {
@@ -36,12 +37,12 @@ namespace NCDK.Dict
     // @cdk.githash
     public class EntryReact : Entry
     {
-        private List<string> reactionInfo;
-        private List<string> representations;
-        private Dictionary<string, string> parameters;
-        private List<string> parametersValue;
-        private List<string> reactionExample;
-        private List<IList<string>> parameterClass;
+        private readonly List<string> reactionInfo;
+        private readonly List<string> representations;
+        private readonly Dictionary<string, string> parameters;
+        private readonly List<string> parametersValue;
+        private readonly List<string> reactionExample;
+        private readonly List<IReadOnlyList<string>> parameterClass;
 
         /// <summary>
         /// Constructor of the EntryReact.
@@ -55,7 +56,7 @@ namespace NCDK.Dict
             this.parameters = new Dictionary<string, string>();
             this.parametersValue = new List<string>();
             this.reactionExample = new List<string>();
-            this.parameterClass = new List<IList<string>>();
+            this.parameterClass = new List<IReadOnlyList<string>>();
             this.reactionInfo = new List<string>();
         }
 
@@ -73,7 +74,7 @@ namespace NCDK.Dict
             this.reactionInfo.Add(metadata);
         }
 
-        public IList<string> ReactionMetadata => this.reactionInfo;
+        public IReadOnlyList<string> ReactionMetadata => this.reactionInfo;
 
         /// <summary>
         /// Set the representation of the reaction.
@@ -87,7 +88,7 @@ namespace NCDK.Dict
         /// <summary>
         /// The Representation of the reaction.
         /// </summary>
-        public List<string> Representations => this.representations;
+        public IReadOnlyList<string> Representations => this.representations;
 
         /// <summary>
         /// Set the parameters of the reaction.
@@ -104,26 +105,26 @@ namespace NCDK.Dict
         /// <summary>
         /// The parameters of the reaction.
         /// </summary>
-        public IDictionary<string, string> Parameters => this.parameters;
+        public IReadOnlyDictionary<string, string> Parameters => this.parameters;
 
         /// <summary>
         /// The IParameterReact's of the reaction.
         /// </summary>
-        public List<IList<string>> ParameterClass=> this.parameterClass;
+        public IReadOnlyList<IReadOnlyList<string>> ParameterClass=> this.parameterClass;
 
         /// <summary>
         /// Add a IParameterReact's of the reaction.
         /// </summary>
-        /// <param name="param">A string List containing the information about this parameter.</param>
-        public void AddParameter(IList<string> param)
+        /// <param name="param">Strings containing the information about this parameter.</param>
+        public void AddParameter(IEnumerable<string> param)
         {
-            this.parameterClass.Add(param);
+            this.parameterClass.Add(param.ToList());
         }
 
         /// <summary>
         /// The parameter value of the reaction.
         /// </summary>
-        public IList<string> ParameterValue => this.parametersValue;
+        public IReadOnlyList<string> ParameterValue => this.parametersValue;
 
         /// <summary>
         /// The mechanism of this reaction.
@@ -142,6 +143,6 @@ namespace NCDK.Dict
         /// <summary>
         /// A List of reactions in XML schema.
         /// </summary>
-        public IList<string> ExampleReactions => this.reactionExample;
+        public IReadOnlyList<string> ExampleReactions => this.reactionExample;
     }
 }

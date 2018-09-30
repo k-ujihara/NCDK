@@ -4,18 +4,18 @@ using NCDK.Templates;
 
 namespace NCDK.Smiles
 {
-    class SmilesGenerator_Example
+    static class SmilesGenerator_Example
     {
-        void Main()
+        static void Main()
         {
             {
-                #region SmiFlavor
-                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Isomeric);
+                #region SmiFlavors
+                SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Isomeric);
                 #endregion
             }
             {
                 #region SmiFlavor_Isomeric
-                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo | SmiFlavor.AtomicMass);
+                SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Stereo | SmiFlavors.AtomicMass);
                 #endregion
             }
             {
@@ -24,7 +24,7 @@ namespace NCDK.Smiles
                 {
                     #region 1
                     IAtomContainer ethanol = TestMoleculeFactory.MakeEthanol();
-                    sg = new SmilesGenerator(SmiFlavor.Generic);
+                    sg = new SmilesGenerator(SmiFlavors.Generic);
                     smi = sg.Create(ethanol); // CCO, C(C)O, C(O)C, or OCC
 
                     sg = SmilesGenerator.Unique();
@@ -35,10 +35,10 @@ namespace NCDK.Smiles
                     IAtomContainer benzene = TestMoleculeFactory.MakeBenzene();
 
                     // 'benzene' molecule has no arom flags, we always get Kekulé output
-                    sg = new SmilesGenerator(SmiFlavor.Generic);
+                    sg = new SmilesGenerator(SmiFlavors.Generic);
                     smi = sg.Create(benzene); // C1=CC=CC=C1
 
-                    sg = new SmilesGenerator(SmiFlavor.Generic | SmiFlavor.UseAromaticSymbols);
+                    sg = new SmilesGenerator(SmiFlavors.Generic | SmiFlavors.UseAromaticSymbols);
                     smi = sg.Create(benzene); // C1=CC=CC=C1 flags not set!
 
                     // Note, in practice we'd use an aromaticity algorithm
@@ -48,10 +48,10 @@ namespace NCDK.Smiles
                         b.IsAromatic = true;
 
                     // 'benzene' molecule now has arom flags, we always get aromatic SMILES if we request it
-                    sg = new SmilesGenerator(SmiFlavor.Generic);
+                    sg = new SmilesGenerator(SmiFlavors.Generic);
                     smi = sg.Create(benzene); // C1=CC=CC=C1
 
-                    sg = new SmilesGenerator(SmiFlavor.Generic | SmiFlavor.UseAromaticSymbols);
+                    sg = new SmilesGenerator(SmiFlavors.Generic | SmiFlavors.UseAromaticSymbols);
                     smi = sg.Create(benzene); // c1ccccc1
                     #endregion
                 }
@@ -59,7 +59,7 @@ namespace NCDK.Smiles
             {
                 #region 4
                 IAtomContainer mol = TestMoleculeFactory.MakeAlphaPinene();
-                SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Generic);
+                SmilesGenerator sg = new SmilesGenerator(SmiFlavors.Generic);
 
                 int n = mol.Atoms.Count;
                 int[] order = new int[n];
@@ -79,19 +79,19 @@ namespace NCDK.Smiles
             }
             {
                 #region 5 ctor_SmiFlavor
-                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo | SmiFlavor.Canonical);
+                SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Stereo | SmiFlavors.Canonical);
                 #endregion
             }
             {
                 #region Aromatic
-                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.UseAromaticSymbols);
+                SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.UseAromaticSymbols);
                 #endregion
             }
 
             {
                 IAtomContainer container = null;
                 #region WithAtomClasses
-                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.AtomAtomMap);
+                SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.AtomAtomMap);
                 smigen.CreateSMILES(container); // C[CH2:4]O second atom has class = 4
                 #endregion
             }

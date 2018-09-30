@@ -41,7 +41,8 @@ namespace <#= ns.NS #>
     // @cdk.githash
     // @cdk.keyword animation
     // @cdk.keyword reaction
-     [Serializable]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
+    [Serializable]
     public class ChemSequence
         : ChemObject, IChemSequence, IChemObjectListener, ICloneable
     {

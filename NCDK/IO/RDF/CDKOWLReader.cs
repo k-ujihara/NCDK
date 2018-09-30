@@ -71,9 +71,9 @@ namespace NCDK.IO.RDF
             return (T)Read((IAtomContainer)obj);
         }
 
-        public IAtomContainer Read(IAtomContainer obj)
+        public IAtomContainer Read(IAtomContainer o)
         { 
-            IAtomContainer result = obj;
+            IAtomContainer result = o;
 
             // do the actual parsing
 
@@ -82,7 +82,7 @@ namespace NCDK.IO.RDF
             parser.Load(model, input);
 
             var convertor = new Convertor(model);
-            IAtomContainer mol = convertor.Model2Molecule(obj.Builder);
+            IAtomContainer mol = convertor.Model2Molecule(o.Builder);
             result.Add(mol);
             return result;
         }

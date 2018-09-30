@@ -23,8 +23,8 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.Numerics;
+using NCDK.Silent;
 using System;
 
 namespace NCDK.Renderers

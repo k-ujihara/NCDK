@@ -70,12 +70,14 @@ namespace NCDK.Hash
         /// <exception cref="ArgumentException">depth was less then 0</exception>
         /// <exception cref="ArgumentNullException">    seed generator or pseudo random was null</exception>
         /// <seealso cref="SeedGenerator"/>
-        public SuppressedAtomHashGenerator(IAtomHashGenerator seedGenerator, Pseudorandom pseudorandom,
-                IStereoEncoderFactory factory, AtomSuppression suppression, int depth)
-                : base(pseudorandom)
+        public SuppressedAtomHashGenerator(
+            IAtomHashGenerator seedGenerator, Pseudorandom pseudorandom,
+            IStereoEncoderFactory factory, AtomSuppression suppression, int depth)
+            : base(pseudorandom)
         {
-            if (depth < 0) throw new ArgumentOutOfRangeException("depth cannot be less then 0");
-            this.seedGenerator = seedGenerator ?? throw new ArgumentNullException("seed generator cannot be null");
+            if (depth < 0)
+                throw new ArgumentOutOfRangeException(nameof(depth), "depth cannot be less then 0");
+            this.seedGenerator = seedGenerator ?? throw new ArgumentNullException(nameof(seedGenerator), "seed generator cannot be null");
             this.factory = factory;
             this.suppression = suppression;
             this.depth = depth;
@@ -95,7 +97,8 @@ namespace NCDK.Hash
         public SuppressedAtomHashGenerator(IAtomHashGenerator seedGenerator, Pseudorandom pseudorandom,
                 AtomSuppression suppression, int depth)
                 : this(seedGenerator, pseudorandom, StereoEncoderFactory.Empty, suppression, depth)
-        { }
+        {
+        }
 
         public override long[] Generate(IAtomContainer container)
         {

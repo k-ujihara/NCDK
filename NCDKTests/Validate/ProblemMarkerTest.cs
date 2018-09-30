@@ -18,7 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 
 namespace NCDK.Validate
 {
@@ -37,7 +37,7 @@ namespace NCDK.Validate
             Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.ErrorMarker));
             ProblemMarker.MarkWithError(obj);
             Assert.IsNotNull(obj.GetProperty<bool?>(ProblemMarker.ErrorMarker));
-            ProblemMarker.UnMarkWithError(obj);
+            ProblemMarker.UnmarkWithError(obj);
             Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.ErrorMarker));
         }
 
@@ -48,7 +48,7 @@ namespace NCDK.Validate
             Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.WarningMarker));
             ProblemMarker.MarkWithWarning(obj);
             Assert.IsNotNull(obj.GetProperty<bool?>(ProblemMarker.WarningMarker));
-            ProblemMarker.UnMarkWithWarning(obj);
+            ProblemMarker.UnmarkWithWarning(obj);
             Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.WarningMarker));
         }
 

@@ -1,8 +1,6 @@
 using NCDK.Common.Collections;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace NCDK.Beam
 {
@@ -12,19 +10,19 @@ namespace NCDK.Beam
     // @author John May
     internal class BiconnectedComponents
     {
-        private int[] depth;
+        private readonly int[] depth;
 
         private readonly Graph g;
         private readonly Edge[] stack;
         private int nstack = 0;
 
-        private readonly IList<IList<Edge>> components = new List<IList<Edge>>(2);
+        private readonly List<IReadOnlyList<Edge>> components = new List<IReadOnlyList<Edge>>(2);
 
         private readonly BitArray cyclic;
         private readonly BitArray simple;
 
         int count = 0;
-        int numfrags = 0;
+        readonly int numfrags = 0;
 
         public BiconnectedComponents(Graph g)
             : this(g, true)
@@ -159,10 +157,10 @@ namespace NCDK.Beam
             if (!spiro && BitArrays.Cardinality(tmp) == numEdges)
                 simple.Or(tmp);
 
-            components.Add(new ReadOnlyCollection<Edge>(component));
+            components.Add(component);
         }
 
-        public IList<IList<Edge>> Components => new ReadOnlyCollection<IList<Edge>>(components);
+        public IReadOnlyList<IReadOnlyList<Edge>> Components => components;
 
         public BitArray Cyclic => cyclic;
 

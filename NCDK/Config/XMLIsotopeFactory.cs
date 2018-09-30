@@ -17,10 +17,10 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config.Isotope;
 using System;
 using System.Diagnostics;
 using System.IO;
+using NCDK.Config.Isotopes;
 
 namespace NCDK.Config
 {
@@ -64,7 +64,7 @@ namespace NCDK.Config
             try
             {
                 string configFile = "NCDK.Config.Data.isotopes.xml";
-                Debug.WriteLine("Getting stream for ", configFile);
+                Debug.WriteLine($"Getting stream for {configFile}");
                 ins = ResourceLoader.GetAsStream(configFile);
             }
             catch (Exception exception)

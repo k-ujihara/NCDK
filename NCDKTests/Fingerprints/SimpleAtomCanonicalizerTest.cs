@@ -16,7 +16,7 @@ namespace NCDK.Fingerprints
             IAtomContainer container = TestMoleculeFactory.MakeAdenine();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
 
-            var atoms = new SimpleAtomCanonicalizer().CanonicalizeAtoms(container);
+            var atoms = SimpleAtomCanonicalizer.CanonicalizeAtoms(container.Atoms);
 
             List<IAtom> mutable = new List<IAtom>(atoms);
             foreach (var atom in mutable.GetRange(0, 5))

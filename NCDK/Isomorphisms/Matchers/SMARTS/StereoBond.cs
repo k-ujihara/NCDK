@@ -59,7 +59,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             throw new ArgumentException("atom is not a memeber of this bond");
         }
 
-        private Direction Inv(Direction direction)
+        private static Direction Inv(Direction direction)
         {
             return direction == Direction.Up ? Direction.Down : Direction.Up;
         }

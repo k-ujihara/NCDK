@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Aromaticities;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
@@ -59,8 +60,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public AromaticAtomsCountDescriptor() { }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticAtomsCount",
                 typeof(AromaticAtomsCountDescriptor).FullName, "The Chemistry Development Kit");
@@ -69,11 +70,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the AromaticAtomsCountDescriptor object.
         /// </summary>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length != 1)
+                if (value.Count != 1)
                 {
                     throw new CDKException("AromaticAtomsCountDescriptor expects one parameter");
                 }
@@ -105,7 +106,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <seealso cref="Parameters"/>
         public DescriptorValue<Result<int>> Calculate(IAtomContainer atomContainer)
         {
-            IAtomContainer ac = (IAtomContainer)atomContainer.Clone();
+            var ac = (IAtomContainer)atomContainer.Clone();
 
             int aromaticAtomsCount = 0;
             if (checkAromaticity)
@@ -116,7 +117,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
                 catch (CDKException)
                 {
-                    return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters,
+                    return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters,
                         new Result<int>(0), DescriptorNames,
                         new CDKException("Error during atom type perception"));
                 }
@@ -126,7 +127,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
                 catch (CDKException e)
                 {
-                    return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters,
+                    return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters,
                         new Result<int>(0), DescriptorNames,
                         new CDKException($"Error during aromaticity detection: {e.Message}"));
                 }
@@ -138,34 +139,24 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     aromaticAtomsCount += 1;
                 }
             }
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(aromaticAtomsCount), DescriptorNames);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(aromaticAtomsCount), DescriptorNames);
         }
 
         /// <summary>
         /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
+        /// </summary>
+        /// <remarks>
         /// The return value from this method really indicates what type of result will
         /// be obtained from the <see cref="IDescriptorValue"/> object. Note that the same result
         /// can be achieved by interrogating the <see cref="IDescriptorValue"/> object; this method
         /// allows you to do the same thing, without actually calculating the descriptor.
-        ///
-        /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating</returns>
-        ///         the actual type of values returned by the descriptor in the <see cref="IDescriptorValue"/> object
-        /// </summary>
+        /// </remarks>
+        /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating
+        ///         the actual type of values returned by the descriptor in the <see cref="IDescriptorValue"/> object</returns>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
-        /// <summary>
-        ///  Gets the parameterNames attribute of the AromaticAtomsCountDescriptor object.
-        ///
-        /// <returns>The parameterNames value</returns>
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
 
-        /// <summary>
-        ///  Gets the parameterType attribute of the AromaticAtomsCountDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
         public override object GetParameterType(string name) => true;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

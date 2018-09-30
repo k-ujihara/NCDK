@@ -41,10 +41,10 @@ namespace <#= ns.NS #>
     public class BioPolymer
         : Polymer, IBioPolymer
     {
-        private IDictionary<string, IStrand> strands;
+        private Dictionary<string, IStrand> strands;
 
         public BioPolymer()
-                : base()
+            : base()
         {
             strands = new Dictionary<string, IStrand>();
         }
@@ -167,7 +167,7 @@ namespace <#= ns.NS #>
             }
         }
 
-        public IDictionary<string, IStrand> GetStrandMap()
+        public IReadOnlyDictionary<string, IStrand> GetStrandMap()
         {
             return strands;
         }

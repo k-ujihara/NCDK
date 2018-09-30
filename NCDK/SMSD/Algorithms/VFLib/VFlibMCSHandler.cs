@@ -52,13 +52,13 @@ namespace NCDK.SMSD.Algorithms.VFLib
     [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd .")]
     public class VFlibMCSHandler : AbstractMCSAlgorithm, IMCSBase
     {
-        private static List<IDictionary<IAtom, IAtom>> allAtomMCS = null;
-        private static IDictionary<IAtom, IAtom> atomsMCS = null;
-        private static List<IDictionary<IAtom, IAtom>> allAtomMCSCopy = null;
-        private static IDictionary<int, int> firstMCS = null;
-        private static List<IDictionary<int, int>> allMCS = null;
-        private static List<IDictionary<int, int>> allMCSCopy = null;
-        private List<IDictionary<INode, IAtom>> vfLibSolutions = null;
+        private static List<IReadOnlyDictionary<IAtom, IAtom>> allAtomMCS = null;
+        private static Dictionary<IAtom, IAtom> atomsMCS = null;
+        private static List<IReadOnlyDictionary<IAtom, IAtom>> allAtomMCSCopy = null;
+        private static SortedDictionary<int, int> firstMCS = null;
+        private static List<IReadOnlyDictionary<int, int>> allMCS = null;
+        private static List<IReadOnlyDictionary<int, int>> allMCSCopy = null;
+        private List<IReadOnlyDictionary<INode, IAtom>> vfLibSolutions = null;
         private IQueryAtomContainer queryMol = null;
         private IAtomContainer mol1 = null;
         private IAtomContainer mol2 = null;
@@ -72,12 +72,12 @@ namespace NCDK.SMSD.Algorithms.VFLib
         /// </summary>
         public VFlibMCSHandler()
         {
-            allAtomMCS = new List<IDictionary<IAtom, IAtom>>();
-            allAtomMCSCopy = new List<IDictionary<IAtom, IAtom>>();
+            allAtomMCS = new List<IReadOnlyDictionary<IAtom, IAtom>>();
+            allAtomMCSCopy = new List<IReadOnlyDictionary<IAtom, IAtom>>();
             atomsMCS = new Dictionary<IAtom, IAtom>();
             firstMCS = new SortedDictionary<int, int>();
-            allMCS = new List<IDictionary<int, int>>();
-            allMCSCopy = new List<IDictionary<int, int>>();
+            allMCS = new List<IReadOnlyDictionary<int, int>>();
+            allMCSCopy = new List<IReadOnlyDictionary<int, int>>();
         }
 
         public override void SearchMCS(bool bondTypeMatch)
@@ -108,7 +108,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             SetFirstMappings();
         }
 
-        private void SetFirstMappings()
+        private static void SetFirstMappings()
         {
             if (allAtomMCS.Count != 0)
             {
@@ -145,7 +145,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             mol2 = target;
         }
 
-        private bool HasMap(IDictionary<int, int> maps, List<IDictionary<int, int>> mapGlobal)
+        private static bool HasMap(IReadOnlyDictionary<int, int> maps, List<IReadOnlyDictionary<int, int>> mapGlobal)
         {
             foreach (var test in mapGlobal)
             {
@@ -157,27 +157,27 @@ namespace NCDK.SMSD.Algorithms.VFLib
             return false;
         }
 
-        public IList<IDictionary<IAtom, IAtom>> GetAllAtomMapping()
+        public IReadOnlyList<IReadOnlyDictionary<IAtom, IAtom>> GetAllAtomMapping()
         {
-            return new ReadOnlyCollection<IDictionary<IAtom, IAtom>>(allAtomMCS);
+            return allAtomMCS;
         }
 
-        public IList<IDictionary<int, int>> GetAllMapping()
+        public IReadOnlyList<IReadOnlyDictionary<int, int>> GetAllMapping()
         {
-            return new ReadOnlyCollection<IDictionary<int, int>>(allMCS);
+            return allMCS;
         }
 
-        public IDictionary<IAtom, IAtom> GetFirstAtomMapping()
+        public IReadOnlyDictionary<IAtom, IAtom> GetFirstAtomMapping()
         {
-            return new ReadOnlyDictionary<IAtom, IAtom>(atomsMCS);
+            return atomsMCS;
         }
 
-        public IDictionary<int, int> GetFirstMapping()
+        public IReadOnlyDictionary<int, int> GetFirstMapping()
         {
-            return new ReadOnlyDictionary<int, int>(firstMCS);
+            return firstMCS;
         }
 
-        private int CheckCommonAtomCount(IAtomContainer reactantMolecule, IAtomContainer productMolecule)
+        private static int CheckCommonAtomCount(IAtomContainer reactantMolecule, IAtomContainer productMolecule)
         {
             List<string> atoms = new List<string>();
             for (int i = 0; i < reactantMolecule.Atoms.Count; i++)
@@ -211,7 +211,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
                 countP = GetProductMol().Atoms.Count
                         + AtomContainerManipulator.GetSingleBondEquivalentSum(GetProductMol());
             }
-            vfLibSolutions = new List<IDictionary<INode, IAtom>>();
+            vfLibSolutions = new List<IReadOnlyDictionary<INode, IAtom>>();
             if (queryMol != null)
             {
                 query = new QueryCompiler(queryMol).Compile();
@@ -246,20 +246,18 @@ namespace NCDK.SMSD.Algorithms.VFLib
                 SetVFMappings(false, query);
             }
             SetVFMappings(false, query);
-            //        Console.Out.WriteLine("Sol count " + vfLibSolutions.Count);
-            //        Console.Out.WriteLine("Sol size " + vfLibSolutions.Iterator().Next().Count);
-            //        Console.Out.WriteLine("MCSSize " + vfMCSSize);
-            //        Console.Out.WriteLine("After Sol count " + allMCSCopy.Count);
-
         }
 
         private void SearchMcGregorMapping()
         {
-            IList<IList<int>> mappings = new List<IList<int>>();
+            var mappings = new List<IReadOnlyList<int>>();
             bool ropFlag = true;
             foreach (var firstPassMappings in allMCSCopy)
             {
-                IDictionary<int, int> tMapping = new SortedDictionary<int, int>(firstPassMappings);
+                var tMapping = new SortedDictionary<int, int>();
+                foreach (var e in firstPassMappings)
+                    tMapping.Add(e.Key, e.Value);
+
                 McGregor mgit = null;
                 if (queryMol != null)
                 {
@@ -283,14 +281,11 @@ namespace NCDK.SMSD.Algorithms.VFLib
                     }
                 }
                 mgit.StartMcGregorIteration(mgit.MCSSize, tMapping); //Start McGregor search
-                mappings = mgit.Mappings;
+                mappings = mgit.mappings;
                 mgit = null;
             }
-            //        Console.Out.WriteLine("\nSol count after MG" + mappings.Count);
             SetMcGregorMappings(ropFlag, mappings);
             vfMCSSize = vfMCSSize / 2;
-            //        Console.Out.WriteLine("After set Sol count MG" + allMCS.Count);
-            //        Console.Out.WriteLine("MCSSize " + vfMCSSize + "\n");
         }
 
         private void SetVFMappings(bool rONP, IQuery query)
@@ -298,8 +293,8 @@ namespace NCDK.SMSD.Algorithms.VFLib
             int counter = 0;
             foreach (var solution in vfLibSolutions)
             {
-                IDictionary<IAtom, IAtom> atomatomMapping = new Dictionary<IAtom, IAtom>();
-                IDictionary<int, int> indexindexMapping = new SortedDictionary<int, int>();
+                var atomatomMapping = new Dictionary<IAtom, IAtom>();
+                var indexindexMapping = new SortedDictionary<int, int>();
                 if (solution.Count > vfMCSSize)
                 {
                     this.vfMCSSize = solution.Count;
@@ -356,7 +351,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             }
         }
 
-        private void SetMcGregorMappings(bool ronp, IList<IList<int>> mappings)
+        private void SetMcGregorMappings(bool ronp, List<IReadOnlyList<int>> mappings)
         {
             int counter = 0;
             foreach (var mapping in mappings)
@@ -368,8 +363,8 @@ namespace NCDK.SMSD.Algorithms.VFLib
                     allMCS.Clear();
                     counter = 0;
                 }
-                IDictionary<IAtom, IAtom> atomatomMapping = new Dictionary<IAtom, IAtom>();
-                IDictionary<int, int> indexindexMapping = new SortedDictionary<int, int>();
+                var atomatomMapping = new Dictionary<IAtom, IAtom>();
+                var indexindexMapping = new SortedDictionary<int, int>();
                 for (int index = 0; index < mapping.Count; index += 2)
                 {
                     IAtom qAtom = null;

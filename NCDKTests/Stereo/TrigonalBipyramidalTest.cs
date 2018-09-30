@@ -66,12 +66,11 @@ namespace NCDK.Stereo
             IAtom a4 = new Mock<IAtom>().Object;
             IAtom a5 = new Mock<IAtom>().Object;
             IAtom a6 = new Mock<IAtom>().Object;
-            new TrigonalBipyramidal(a0, new IAtom[] { a1, a2, a3, a4, a5, a6 }, 1);
+            var dummy = new TrigonalBipyramidal(a0, new IAtom[] { a1, a2, a3, a4, a5, a6 }, 1);
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentException), AllowDerivedTypes = true)]
-
+        [ExpectedException(typeof(ArgumentOutOfRangeException), AllowDerivedTypes = true)]
         public void BadConfigurationOrder()
         {
             IAtom a0 = new Mock<IAtom>().Object;
@@ -80,7 +79,7 @@ namespace NCDK.Stereo
             IAtom a3 = new Mock<IAtom>().Object;
             IAtom a4 = new Mock<IAtom>().Object;
             IAtom a5 = new Mock<IAtom>().Object;
-            new TrigonalBipyramidal(a0, new IAtom[] { a1, a2, a3, a4, a5 }, 32);
+            var dummy = new TrigonalBipyramidal(a0, new IAtom[] { a1, a2, a3, a4, a5 }, 32);
         }
     }
 }

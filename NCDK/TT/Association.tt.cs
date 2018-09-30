@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -41,10 +42,12 @@ namespace NCDK.Default
     [Serializable]
     public class Association : ElectronContainer, IChemObjectListener
     {
+        private readonly ObservableChemObjectCollection<IAtom> associatedAtoms;
+
         /// <summary>
         /// The atoms which take part in the association.
         /// </summary>
-        public IList<IAtom> AssociatedAtoms { get; protected set; }
+        public IList<IAtom> AssociatedAtoms => associatedAtoms;
 
         /// <summary>
         /// Constructs an association between two Atom's.
@@ -54,7 +57,8 @@ namespace NCDK.Default
         /// <seealso cref="Atom"/>
         public Association(IAtom atom1, IAtom atom2)
             : this(new[] { atom1, atom2 })
-        { }
+        {
+        }
 
         /// <summary>
         /// Constructs an empty association.
@@ -62,11 +66,12 @@ namespace NCDK.Default
         /// <seealso cref="Atom"/>
         public Association()
             : this(Array.Empty<IAtom>())
-        { }
+        {
+        }
 
         public Association(IEnumerable<IAtom> atoms)
         {
-            AssociatedAtoms = CreateObservableChemObjectCollection(atoms);
+            associatedAtoms = CreateObservableChemObjectCollection(atoms);
         }
 
         private ObservableChemObjectCollection<IAtom> CreateObservableChemObjectCollection(IEnumerable<IAtom> objs)
@@ -113,10 +118,12 @@ namespace NCDK.Silent
     [Serializable]
     public class Association : ElectronContainer, IChemObjectListener
     {
+        private readonly ObservableChemObjectCollection<IAtom> associatedAtoms;
+
         /// <summary>
         /// The atoms which take part in the association.
         /// </summary>
-        public IList<IAtom> AssociatedAtoms { get; protected set; }
+        public IList<IAtom> AssociatedAtoms => associatedAtoms;
 
         /// <summary>
         /// Constructs an association between two Atom's.
@@ -126,7 +133,8 @@ namespace NCDK.Silent
         /// <seealso cref="Atom"/>
         public Association(IAtom atom1, IAtom atom2)
             : this(new[] { atom1, atom2 })
-        { }
+        {
+        }
 
         /// <summary>
         /// Constructs an empty association.
@@ -134,11 +142,12 @@ namespace NCDK.Silent
         /// <seealso cref="Atom"/>
         public Association()
             : this(Array.Empty<IAtom>())
-        { }
+        {
+        }
 
         public Association(IEnumerable<IAtom> atoms)
         {
-            AssociatedAtoms = CreateObservableChemObjectCollection(atoms);
+            associatedAtoms = CreateObservableChemObjectCollection(atoms);
         }
 
         private ObservableChemObjectCollection<IAtom> CreateObservableChemObjectCollection(IEnumerable<IAtom> objs)

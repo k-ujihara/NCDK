@@ -32,13 +32,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// A descriptor that calculates the moment of inertia and radius of gyration.
+    /// </summary>
+    /// <remarks>
     /// Moment of inertia (MI) values characterize the mass distribution of a molecule.
     /// Related to the MI values, ratios of the MI values along the three principal axes
     /// are also well know modeling variables. This descriptor calculates the MI values
     /// along the X, Y and Z axes as well as the ratio's X/Y, X/Z and Y/Z. Finally it also
     /// calculates the radius of gyration of the molecule.
-    /// </summary>
-    /// <remarks>
     /// <para>
     /// The descriptor generates 7 values in the following order
     /// <list type="bullet"> 
@@ -80,29 +80,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     {
         private static readonly string[] NAMES = { "MOMI-X", "MOMI-Y", "MOMI-Z", "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R" };
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia",
                 typeof(MomentOfInertiaDescriptor).FullName, "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the MomentOfInertiaDescriptor object.
-        /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
-
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
         public override IReadOnlyList<string> DescriptorNames => NAMES;
-
-        /// <summary>
-        /// Tthe parameterNames attribute of the MomentOfInertiaDescriptor object.
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames => null;
-
-        /// <summary>
-        /// Gets the parameterType attribute of the MomentOfInertiaDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
         public override object GetParameterType(string name) => null;
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
@@ -111,13 +97,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results,
                     DescriptorNames, e);
         }
 
         /// <summary>
         /// Calculates the 3 MI's, 3 ration and the R_gyr value.
-        ///
+        /// 
         /// The molecule should have hydrogens
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>
@@ -130,7 +116,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer clone;
             IsotopeFactory factory;
             clone = (IAtomContainer)container.Clone();
-            factory = Isotopes.Instance;
+            factory = BODRIsotopeFactory.Instance;
             factory.ConfigureAtoms(clone);
 
             ArrayResult<double> retval = new ArrayResult<double>(7);
@@ -214,7 +200,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 pri = Math.Sqrt(eval[0] * ccf / MolecularFormulaManipulator.GetTotalExactMass(formula));
             retval.Add(Math.Sqrt(Math.PI * 2 * pri * ccf / MolecularFormulaManipulator.GetTotalExactMass(formula)));
 
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval,
                     DescriptorNames);
         }
 

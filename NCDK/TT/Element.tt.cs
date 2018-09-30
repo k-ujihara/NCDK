@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -23,9 +24,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Serialization;
 using NCDK.Config;
 using System;
-using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
 using System.Text;
 
 namespace NCDK.Default
@@ -40,15 +43,30 @@ namespace NCDK.Default
     /// </example>
     // @cdk.githash 
     // @cdk.keyword element 
-    [Serializable]
     public class Element
-        : ChemObject, IElement, ICloneable
+        : ChemObject, IElement, ICloneable, ISerializable
     {
         /// <summary>The element symbol for this element as listed in the periodic table.</summary>
         internal string symbol;
 
         /// <summary>The atomic number for this element giving their position in the periodic table.</summary>
         internal int? atomicNumber;
+
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue(nameof(symbol), symbol);
+            info.AddNullableValue(nameof(atomicNumber), atomicNumber);
+        }
+
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        protected Element(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+            symbol = info.GetString(nameof(symbol));
+            atomicNumber = info.GetNullable<int>(nameof(atomicNumber));
+        }
 
         /// <summary>
         /// Constructs an empty Element.
@@ -99,7 +117,7 @@ namespace NCDK.Default
         /// Once instantiated all field not filled by passing parameters
         /// to the constructor are null. Elements can be configured by using
         /// the <see cref="IsotopeFactory.Configure(IAtom)"/> method:
-	    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Element_Example.cs+AtomicNumber"]/*' />
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Element_Example.cs+AtomicNumber"]/*' />
         /// </example>
         public virtual int? AtomicNumber
         {
@@ -148,8 +166,7 @@ namespace NCDK.Default
         /// <returns>true if the atom types are equal</returns>
         public override bool Compare(object obj)
         {
-            var elem = obj as Element;
-            if (elem == null)
+            if (!(obj is Element elem))
                 return false;
             if (!base.Compare(obj))
                 return false;
@@ -169,15 +186,30 @@ namespace NCDK.Silent
     /// </example>
     // @cdk.githash 
     // @cdk.keyword element 
-    [Serializable]
     public class Element
-        : ChemObject, IElement, ICloneable
+        : ChemObject, IElement, ICloneable, ISerializable
     {
         /// <summary>The element symbol for this element as listed in the periodic table.</summary>
         internal string symbol;
 
         /// <summary>The atomic number for this element giving their position in the periodic table.</summary>
         internal int? atomicNumber;
+
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue(nameof(symbol), symbol);
+            info.AddNullableValue(nameof(atomicNumber), atomicNumber);
+        }
+
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        protected Element(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+            symbol = info.GetString(nameof(symbol));
+            atomicNumber = info.GetNullable<int>(nameof(atomicNumber));
+        }
 
         /// <summary>
         /// Constructs an empty Element.
@@ -228,7 +260,7 @@ namespace NCDK.Silent
         /// Once instantiated all field not filled by passing parameters
         /// to the constructor are null. Elements can be configured by using
         /// the <see cref="IsotopeFactory.Configure(IAtom)"/> method:
-	    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Element_Example.cs+AtomicNumber"]/*' />
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Element_Example.cs+AtomicNumber"]/*' />
         /// </example>
         public virtual int? AtomicNumber
         {
@@ -275,8 +307,7 @@ namespace NCDK.Silent
         /// <returns>true if the atom types are equal</returns>
         public override bool Compare(object obj)
         {
-            var elem = obj as Element;
-            if (elem == null)
+            if (!(obj is Element elem))
                 return false;
             if (!base.Compare(obj))
                 return false;

@@ -44,7 +44,7 @@ namespace NCDK.Hash
     // @author John May
     // @cdk.module hash
     // @cdk.githash
-	public
+    public
     partial class BasicAtomEncoder : System.IComparable<BasicAtomEncoder>, System.IComparable
 			 , IAtomEncoder 
     {
@@ -96,14 +96,24 @@ namespace NCDK.Hash
 
         public static explicit operator BasicAtomEncoder(int ordinal)
         {
+            return ToBasicAtomEncoder(ordinal);
+        }
+
+        public static BasicAtomEncoder ToBasicAtomEncoder(int ordinal)
+        {
             if (!(0 <= ordinal && ordinal < values.Length))
-                throw new System.ArgumentOutOfRangeException();
+                throw new System.ArgumentOutOfRangeException(nameof(ordinal));
             return values[ordinal];
         }
 
-        public static explicit operator int(BasicAtomEncoder obj)
+		public static explicit operator int(BasicAtomEncoder o)
         {
-            return obj.Ordinal;
+            return ToInt32(o);
+        }
+
+        public static int ToInt32(BasicAtomEncoder o)
+        {
+            return o.Ordinal;
         }
 
         /// <summary>
@@ -142,7 +152,7 @@ namespace NCDK.Hash
             FreeRadicals, 
     
         };
-        public static BasicAtomEncoder[] Values => values;
+        public static System.Collections.Generic.IReadOnlyList<BasicAtomEncoder> Values => values;
 
 
         public static bool operator==(BasicAtomEncoder a, BasicAtomEncoder b)
@@ -186,16 +196,16 @@ namespace NCDK.Hash
             return (Ordinal).CompareTo(o.Ordinal);
         }   	
         private delegate int EncodeDelegate(IAtom atom, IAtomContainer container);
-        private static EncodeDelegate[] listOnEncode;
+        private static EncodeDelegate[] listOnEncode = MakeListOnEncode();
 
         public int Encode(IAtom atom, IAtomContainer container)
         {
             return listOnEncode[Ordinal](atom, container);
         }
 
-        static BasicAtomEncoder()
+        private static EncodeDelegate[] MakeListOnEncode()
         {
-            listOnEncode = new EncodeDelegate[values.Length];
+            var listOnEncode = new EncodeDelegate[values.Length];
             listOnEncode[O.AtomicNumber] = (atom, container) => atom.AtomicNumber ?? 32451169;
             listOnEncode[O.MassNumber] = (atom, container) => atom.MassNumber ?? 32451179;
             listOnEncode[O.FormalCharge] = (atom, container) => atom.FormalCharge ?? 32451193;
@@ -207,6 +217,7 @@ namespace NCDK.Hash
                     return !hybridization.IsUnset() ? (int)hybridization : 32451301;
                 };
             listOnEncode[O.FreeRadicals] = (atom, container) => container.GetConnectedSingleElectrons(atom).Count();
+            return listOnEncode;
         }
 	}
 }

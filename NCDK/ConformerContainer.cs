@@ -48,10 +48,9 @@ namespace NCDK
     public class ConformerContainer : IList<IAtomContainer>
     {
         private IAtomContainer atomContainer = null;
-        private string title = null;
         private IList<Vector3[]> coordinates;
 
-        private Vector3[] GetCoordinateList(IAtomContainer atomContainer)
+        private static Vector3[] GetCoordinateList(IAtomContainer atomContainer)
         {
             Vector3[] tmp = new Vector3[atomContainer.Atoms.Count];
             for (int i = 0; i < atomContainer.Atoms.Count; i++)
@@ -87,7 +86,7 @@ namespace NCDK
         public ConformerContainer(IAtomContainer atomContainer)
         {
             this.atomContainer = atomContainer;
-            title = atomContainer.Title;
+            Title = atomContainer.Title;
             coordinates = new List<Vector3[]>
             {
                 GetCoordinateList(atomContainer)
@@ -108,11 +107,11 @@ namespace NCDK
             if (atomContainers.Length == 0) throw new ArgumentException("Can't use a zero-length molecule array");
 
             // lets check that the titles match
-            title = atomContainers[0].Title;
+            Title = atomContainers[0].Title;
             foreach (var atomContainer in atomContainers)
             {
                 string nextTitle = atomContainer.Title;
-                if (title != null && !nextTitle.Equals(title))
+                if (Title != null && !nextTitle.Equals(Title, StringComparison.Ordinal))
                     throw new ArgumentException("Titles of all molecules must match");
             }
 
@@ -130,7 +129,7 @@ namespace NCDK
         /// <remarks>
         /// <note type="note">All conformers for a given molecule will have the same title.</note>
         /// </remarks>
-        public string Title => title;
+        public string Title { get; private set; } = null;
 
         /// <summary>
         /// The number of conformers stored.
@@ -203,14 +202,14 @@ namespace NCDK
             if (this.atomContainer == null)
             {
                 this.atomContainer = atomContainer;
-                title = atomContainer.Title;
+                Title = atomContainer.Title;
             }
-            if (title == null)
+            if (Title == null)
             {
                 throw new ArgumentException("At least one of the input molecules does not have a title");
             }
-            if (!title.Equals(atomContainer.Title))
-                throw new ArgumentException("The input molecules does not have the same title ('" + title
+            if (!Title.Equals(atomContainer.Title, StringComparison.Ordinal))
+                throw new ArgumentException("The input molecules does not have the same title ('" + Title
                         + "') as the other conformers ('" + atomContainer.Title + "')");
 
             if (atomContainer.Atoms.Count != this.atomContainer.Atoms.Count)
@@ -270,7 +269,7 @@ namespace NCDK
 
         public IAtomContainer Set(int i, IAtomContainer atomContainer)
         {
-            if (!title.Equals(atomContainer.Title))
+            if (!Title.Equals(atomContainer.Title, StringComparison.Ordinal))
                 throw new ArgumentException(
                         "The input molecules does not have the same title as the other conformers");
             Vector3[] tmp = GetCoordinateList(atomContainer);
@@ -284,10 +283,10 @@ namespace NCDK
             if (this.atomContainer == null)
             {
                 this.atomContainer = atomContainer;
-                title = (string)atomContainer.Title;
+                Title = (string)atomContainer.Title;
             }
 
-            if (!title.Equals(atomContainer.Title))
+            if (!Title.Equals(atomContainer.Title, StringComparison.Ordinal))
                 throw new ArgumentException(
                         "The input molecules does not have the same title as the other conformers");
 
@@ -319,9 +318,11 @@ namespace NCDK
         /// <returns>The index where o was found</returns>
         public int IndexOf(IAtomContainer atomContainer)
         {
-            if (!atomContainer.Title.Equals(title)) return -1;
+            if (!atomContainer.Title.Equals(Title, StringComparison.Ordinal))
+                return -1;
 
-            if (atomContainer.Atoms.Count != this.atomContainer.Atoms.Count) return -1;
+            if (atomContainer.Atoms.Count != this.atomContainer.Atoms.Count)
+                return -1;
 
             bool coordsMatch;
             int index = 0;
@@ -356,9 +357,11 @@ namespace NCDK
         /// <returns>The index where o was found</returns>
         public int LastIndexOf(IAtomContainer o)
         {
-            if (!atomContainer.Title.Equals(title)) return -1;
+            if (!atomContainer.Title.Equals(Title, StringComparison.Ordinal))
+                return -1;
 
-            if (atomContainer.Atoms.Count != coordinates[0].Length) return -1;
+            if (atomContainer.Atoms.Count != coordinates[0].Length)
+                return -1;
 
             bool coordsMatch;
             for (int j = coordinates.Count - 1; j >= 0; j--)

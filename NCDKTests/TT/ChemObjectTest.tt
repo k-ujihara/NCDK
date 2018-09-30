@@ -71,9 +71,9 @@ namespace <#= ns.NS #>
             co2.Id = "a2";
             Assert.IsFalse(co1.Compare(co2));
         }
-		
+        
 <# if (ns.IsSilent) { #> 
-		<#@ include file="TestAbstractChemObjectTest.ttinclude" #>
+        <#@ include file="TestAbstractChemObjectTest.ttinclude" #>
 <# } #>
     }
 }

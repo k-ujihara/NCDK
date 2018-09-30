@@ -17,7 +17,9 @@
  * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
+
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace NCDK.Smiles.SMARTS.Parser
@@ -32,7 +34,7 @@ namespace NCDK.Smiles.SMARTS.Parser
     /// You can modify this class to customize your error reporting
     /// mechanisms so long as you retain the public fields.
     /// </remarks>
-    public class ParseException : System.Exception
+    public class ParseException : Exception
     {
         /// <summary>
         /// This constructor is used by the method "generateParseException"
@@ -40,56 +42,51 @@ namespace NCDK.Smiles.SMARTS.Parser
         /// a new object of this type with the fields "currentToken",
         /// "expectedTokenSequences", and "tokenImage" set.
         /// </summary>
-        public ParseException(Token currentTokenVal,
+        internal ParseException(Token currentTokenVal,
                               int[][] expectedTokenSequencesVal,
-                              string[] tokenImageVal
+                              IReadOnlyList<string> tokenImageVal
                              )
           : base(Initialise(currentTokenVal, expectedTokenSequencesVal, tokenImageVal))
         {
-            currentToken = currentTokenVal;
-            expectedTokenSequences = expectedTokenSequencesVal;
-            tokenImage = tokenImageVal;
+            CurrentToken = currentTokenVal;
+            ExpectedTokenSequences = expectedTokenSequencesVal;
+            TokenImage = tokenImageVal;
         }
-
-        /// <summary>
-        /// The following constructors are for use by you for whatever
-        /// purpose you can think of.  Constructing the exception in this
-        /// manner makes the exception behave in the normal way - i.e., as
-        /// documented in the class "Throwable".  The fields "errorToken",
-        /// "expectedTokenSequences", and "tokenImage" do not contain
-        /// relevant information.  The JavaCC generated code does not use
-        /// these constructors.
-        /// </summary>
 
         public ParseException()
                   : base()
-        { }
+        {
+        }
 
-        /// <summary>Constructor with message.</summary>
         public ParseException(string message)
               : base(message)
-        { }
+        {
+        }
+
+        public ParseException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
 
         /// <summary>
         /// This is the last token that has been consumed successfully.  If
         /// this object has been created due to a parse error, the token
-        /// followng this token will (therefore) be the first error token.
+        /// following this token will (therefore) be the first error token.
         /// </summary>
-        public Token currentToken;
+        internal Token CurrentToken { get; set; }
 
         /// <summary>
         /// Each entry in this array is an array of integers.  Each array
         /// of integers represents a sequence of tokens (by their ordinal
         /// values) that is expected at this point of the parse.
         /// </summary>
-        public int[][] expectedTokenSequences;
+        public IReadOnlyList<IReadOnlyList<int>> ExpectedTokenSequences { get; set; }
 
         /// <summary>
         /// This is a reference to the "tokenImage" array of the generated
         /// parser within which the parse error occurred.  This array is
         /// defined in the generated ...Constants interface.
         /// </summary>
-        public string[] tokenImage;
+        public IReadOnlyList<string> TokenImage { get; set; }
 
         /// <summary>
         /// It uses "currentToken" and "expectedTokenSequences" to generate a parse
@@ -99,23 +96,23 @@ namespace NCDK.Smiles.SMARTS.Parser
         /// gets displayed.
         /// </summary>
         private static string Initialise(Token currentToken,
-                                 int[][] expectedTokenSequences,
-                                 string[] tokenImage)
+                                 IReadOnlyList<IReadOnlyList<int>> expectedTokenSequences,
+                                 IReadOnlyList<string> tokenImage)
         {
             string eol = System.Environment.NewLine;
             StringBuilder expected = new StringBuilder();
             int maxSize = 0;
-            for (int i = 0; i < expectedTokenSequences.Length; i++)
+            for (int i = 0; i < expectedTokenSequences.Count; i++)
             {
-                if (maxSize < expectedTokenSequences[i].Length)
+                if (maxSize < expectedTokenSequences[i].Count)
                 {
-                    maxSize = expectedTokenSequences[i].Length;
+                    maxSize = expectedTokenSequences[i].Count;
                 }
-                for (int j = 0; j < expectedTokenSequences[i].Length; j++)
+                for (int j = 0; j < expectedTokenSequences[i].Count; j++)
                 {
                     expected.Append(tokenImage[expectedTokenSequences[i][j]]).Append(' ');
                 }
-                if (expectedTokenSequences[i][expectedTokenSequences[i].Length - 1] != 0)
+                if (expectedTokenSequences[i][expectedTokenSequences[i].Count - 1] != 0)
                 {
                     expected.Append("...");
                 }
@@ -133,13 +130,13 @@ namespace NCDK.Smiles.SMARTS.Parser
                 }
                 retval += " " + tokenImage[tok.kind];
                 retval += " \"";
-                retval += Add_escapes(tok.image);
+                retval += AddEscapes(tok.image);
                 retval += " \"";
                 tok = tok.next;
             }
             retval += "\" at line " + currentToken.next.beginLine + ", column " + currentToken.next.beginColumn;
             retval += "." + eol;
-            if (expectedTokenSequences.Length == 1)
+            if (expectedTokenSequences.Count == 1)
             {
                 retval += "Was expecting:" + eol + "    ";
             }
@@ -152,16 +149,11 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         /// <summary>
-        /// The end of line string for this machine.
-        /// </summary>
-        protected string eol = System.Environment.NewLine;
-
-        /// <summary>
         /// Used to convert raw characters to their escaped version
         /// when these raw version cannot be used as part of an ASCII
         /// string literal.
         /// </summary>
-        static string Add_escapes(string str)
+        static string AddEscapes(string str)
         {
             StringBuilder retval = new StringBuilder();
             char ch;

@@ -36,9 +36,9 @@ namespace NCDK.Aromaticities
     [TestClass()]
     public class AromaticityTest
     {
-        private readonly Aromaticity cdk = new Aromaticity(ElectronDonation.CDKModel, Cycles.AllFinder);
-        private readonly Aromaticity cdkExo = new Aromaticity(ElectronDonation.CDKAllowingExocyclicModel, Cycles.AllFinder);
-        private readonly Aromaticity daylight = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllFinder);
+        private readonly Aromaticity cdk = new Aromaticity(ElectronDonation.CDKModel, Cycles.AllSimpleFinder);
+        private readonly Aromaticity cdkExo = new Aromaticity(ElectronDonation.CDKAllowingExocyclicModel, Cycles.AllSimpleFinder);
+        private readonly Aromaticity daylight = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllSimpleFinder);
 
         [TestMethod()]
         public void Benzene()
@@ -156,7 +156,7 @@ namespace NCDK.Aromaticities
         {
             IAtomContainer a = CreateFromSmiles("C1=CC2=CC3=CC4=C(C=CC=C4)C=C3C=C2C=C1");
             IAtomContainer b = CreateFromSmiles("c1cc2cc3cc4c(cccc4)cc3cc2cc1");
-            Aromaticity arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllFinder);
+            Aromaticity arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllSimpleFinder);
             arom.Apply(a);
             arom.Apply(b);
             Assert.IsTrue(AtomContainerDiff.Diff(a, b).Count() == 0);

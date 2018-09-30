@@ -25,14 +25,14 @@ using NCDK.Common.Collections;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace NCDK.Fingerprints
 {
     // @author jonalv
     // @cdk.module     standard
     // @cdk.githash
-    [Serializable]
-    public class BitSetFingerprint : IBitFingerprint
+    public class BitSetFingerprint : IBitFingerprint, ISerializable
     {
         private BitArray bitset;
 
@@ -59,8 +59,8 @@ namespace NCDK.Fingerprints
             }
             else
             {
-                BitArray bitSet = new BitArray((int)fingerprint.Count);
-                for (int i = 0; i < fingerprint.Count; i++)
+                BitArray bitSet = new BitArray((int)fingerprint.Length);
+                for (int i = 0; i < fingerprint.Length; i++)
                 {
                     bitSet.Set(i, fingerprint[i]);
                 }
@@ -70,11 +70,11 @@ namespace NCDK.Fingerprints
 
         public int Cardinality => BitArrays.Cardinality(bitset);
 
-        public long Count => bitset.Count;
+        public long Length => bitset.Count;
 
         public void And(IBitFingerprint fingerprint)
         {
-            if (bitset.Count != fingerprint.Count)
+            if (bitset.Count != fingerprint.Length)
             {
                 throw new ArgumentException("Fingerprints must have same size");
             }
@@ -91,10 +91,9 @@ namespace NCDK.Fingerprints
             }
         }
 
-
         public void Or(IBitFingerprint fingerprint)
         {
-            if (bitset.Count != fingerprint.Count)
+            if (bitset.Count != fingerprint.Length)
             {
                 throw new ArgumentException("Fingerprints must have same size");
             }
@@ -143,9 +142,10 @@ namespace NCDK.Fingerprints
             BitSetFingerprint other = (BitSetFingerprint)obj;
             if (bitset == null)
             {
-                if (other.bitset != null) return false;
+                if (other.bitset != null)
+                    return false;
             }
-            else if (!BitArrays.AreEqual(bitset, other.bitset))
+            else if (!BitArrays.Equals(bitset, other.bitset))
                 return false;
             return true;
         }
@@ -158,6 +158,16 @@ namespace NCDK.Fingerprints
                     yield return i;
             }
             yield break;
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue(nameof(bitset), BitArrays.AsBitString(bitset));
+        }
+
+        protected BitSetFingerprint(SerializationInfo info, StreamingContext context)
+        {
+            bitset = BitArrays.FromString((string)info.GetValue(nameof(bitset), typeof(string)));
         }
     }
 }

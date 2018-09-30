@@ -36,7 +36,8 @@ namespace NCDK.Renderers.Generators
             var totalBoundsReactants = BoundsCalculator.CalculateBounds(reaction.Reactants);
             var totalBoundsProducts = BoundsCalculator.CalculateBounds(reaction.Products);
 
-            if (totalBoundsReactants == null || totalBoundsProducts == null) return null;
+            if (totalBoundsReactants == null || totalBoundsProducts == null)
+                return null;
 
             double separation = model.GetBondLength() / model.GetScale();
             var foregroundColor = model.GetForegroundColor();

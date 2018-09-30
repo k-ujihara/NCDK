@@ -2,9 +2,7 @@
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=true,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 namespace NCDK.Smiles.SMARTS.Parser
 {
-
-    public
-    class ASTExplicitHighAndExpression : SimpleNode
+    internal class ASTExplicitHighAndExpression : SimpleNode
     {
         public ASTExplicitHighAndExpression(int id)
           : base(id)
@@ -15,7 +13,6 @@ namespace NCDK.Smiles.SMARTS.Parser
           : base(p, id)
         {
         }
-
 
         /// <summary>Accept the visitor. </summary>
         public override object JjtAccept(ISMARTSParserVisitor visitor, object data)

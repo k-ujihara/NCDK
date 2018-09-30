@@ -75,8 +75,8 @@ namespace NCDK.IO.Iterator
         /// Constructs a new EnumerablePCCompoundXLReader that can read Molecule from a given Stream and IChemObjectBuilder.
         /// </summary>
         /// <param name="ins">The input stream</param>
-        /// <param name="builder">The builder. In general, use <see cref="Default.ChemObjectBuilder"/></param>
-        /// <exception cref="Exception">if there is a problem creating an InputStreamReader</exception>
+        /// <param name="builder">The builder</param>
+        /// <exception cref="Exception">if there is a problem creating a <see cref="StreamReader"/></exception>
         public EnumerablePCCompoundXMLReader(Stream ins, IChemObjectBuilder builder)
             : this(new StreamReader(ins), builder)
         { }

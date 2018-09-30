@@ -38,7 +38,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public virtual void TestEmpty()
         {
-            ICyclicVertexSearch search = new RegularCyclicVertexSearch(new int[0][] { });
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(Array.Empty<int[]>());
             Assert.IsNotNull(search);
         }
 
@@ -105,14 +105,14 @@ namespace NCDK.RingSearches
         {
             int[][] g = new int[][] { new[] { 1 }, new[] { 0, 2 }, new[] { 1, 3 }, new[] { 2, 4 }, new[] { 3 } };
             ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], search.Cyclic()));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), search.Cyclic()));
         }
 
         [TestMethod()]
         public virtual void TestIsolated_Empty()
         {
             ICyclicVertexSearch search = new RegularCyclicVertexSearch(Arrays.CreateJagged<int>(0, 0));
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], search.Cyclic()));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), search.Cyclic()));
             Assert.IsTrue(Compares.AreDeepEqual(Arrays.CreateJagged<int>(0, 0), search.Isolated()));
             Assert.IsTrue(Compares.AreDeepEqual(Arrays.CreateJagged<int>(0, 0), search.Fused()));
         }
@@ -343,7 +343,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public virtual void TestToArray_Empty()
         {
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], RegularCyclicVertexSearch.ToArray(0L)));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), RegularCyclicVertexSearch.ToArray(0L)));
         }
 
         [TestMethod()]

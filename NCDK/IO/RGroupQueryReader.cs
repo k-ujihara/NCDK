@@ -28,6 +28,7 @@ using NCDK.Isomorphisms.Matchers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -152,7 +153,7 @@ namespace NCDK.IO
             // atom (Rgroup) - map with (integer,bond) meaning "bond" has attachment
             // order "integer" (1,2,3) for the Rgroup The order is based on the atom
             // block, unless there is an AAL line for the pseudo atom.
-            IDictionary<IAtom, IDictionary<int, IBond>> attachmentPoints = new Dictionary<IAtom, IDictionary<int, IBond>>();
+            var attachmentPoints = new Dictionary<IAtom, IReadOnlyDictionary<int, IBond>>();
 
             try
             {
@@ -184,7 +185,7 @@ namespace NCDK.IO
                     StringBuilder sb = new StringBuilder(RGroup.RootLabelKey + "\n\n\n");
                     line = input.ReadLine();
                     ++lineCount;
-                    while (line != null && !line.Equals("$END CTAB"))
+                    while (line != null && !string.Equals(line, "$END CTAB", StringComparison.Ordinal))
                     {
                         sb.Append(line).Append('\n');
 
@@ -195,10 +196,10 @@ namespace NCDK.IO
                             RGroupLogic log = null;
 
                             log = new RGroupLogic();
-                            int rgroupNumber = int.Parse(tokens[3]);
+                            int rgroupNumber = int.Parse(tokens[3], NumberFormatInfo.InvariantInfo);
                             string tok = tokens[4];
-                            log.rgoupNumberRequired = tok.Equals("0") ? 0 : int.Parse(tok);
-                            log.restH = tokens[5].Equals("1") ? true : false;
+                            log.rgoupNumberRequired = string.Equals(tok, "0", StringComparison.Ordinal) ? 0 : int.Parse(tok, NumberFormatInfo.InvariantInfo);
+                            log.restH = string.Equals(tokens[5], "1", StringComparison.Ordinal) ? true : false;
                             tok = "";
                             for (int i = 6; i < tokens.Count; i++)
                             {
@@ -227,18 +228,17 @@ namespace NCDK.IO
                         if (line.StartsWith("M  AAL", StringComparison.Ordinal))
                         {
                             var stAAL = Strings.Tokenize(line);
-                            int pos = int.Parse(stAAL[2]);
+                            int pos = int.Parse(stAAL[2], NumberFormatInfo.InvariantInfo);
                             IAtom rGroup = root.Atoms[pos - 1];
-                            IDictionary<int, IBond> bondMap = new Dictionary<int, IBond>();
+                            var bondMap = new Dictionary<int, IBond>();
                             for (int i = 4; i < stAAL.Count; i += 2)
                             {
-                                pos = int.Parse(stAAL[i]);
+                                pos = int.Parse(stAAL[i], NumberFormatInfo.InvariantInfo);
                                 IAtom partner = root.Atoms[pos - 1];
                                 IBond bond = root.GetBond(rGroup, partner);
-                                int order = int.Parse(stAAL[i + 1]);
+                                int order = int.Parse(stAAL[i + 1], NumberFormatInfo.InvariantInfo);
                                 bondMap[order] = bond;
-                                Trace.TraceInformation("AAL " + order + " " + ((IPseudoAtom)rGroup).Label + "-"
-                                        + partner.Symbol);
+                                Trace.TraceInformation($"AAL {order} {((IPseudoAtom)rGroup).Label}-{partner.Symbol}");
                             }
                             if (bondMap.Count != 0)
                             {
@@ -252,12 +252,12 @@ namespace NCDK.IO
                 {
                     if (atom is IPseudoAtom rGroup)
                     {
-                        if (rGroup.Label.StartsWithChar('R') && !rGroup.Label.Equals("R") && // only numbered ones
+                        if (rGroup.Label.StartsWithChar('R') && !string.Equals(rGroup.Label, "R", StringComparison.Ordinal) && // only numbered ones
                                 !attachmentPoints.ContainsKey(rGroup))
                         {
                             //Order reflects the order of atoms in the Atom Block
                             int order = 0;
-                            IDictionary<int, IBond> bondMap = new Dictionary<int, IBond>();
+                            var bondMap = new Dictionary<int, IBond>();
                             foreach (var atom2 in root.Atoms)
                             {
                                 if (!atom.Equals(atom2))
@@ -288,7 +288,7 @@ namespace NCDK.IO
                 //__________________________________________________________________
 
                 //Set up the RgroupLists, one for each unique R# (# = 1..32 max)
-                IDictionary<int, RGroupList> rGroupDefinitions = new Dictionary<int, RGroupList>();
+                var rGroupDefinitions = new Dictionary<int, RGroupList>();
 
                 foreach (var atom in root.Atoms)
                 {
@@ -296,7 +296,7 @@ namespace NCDK.IO
                     {
                         if (RGroupQuery.IsValidRgroupQueryLabel(rGroup.Label))
                         {
-                            int rgroupNum = int.Parse(rGroup.Label.Substring(1));
+                            int rgroupNum = int.Parse(rGroup.Label.Substring(1), NumberFormatInfo.InvariantInfo);
                             RGroupList rgroupList = new RGroupList(rgroupNum);
                             if (!rGroupDefinitions.ContainsKey(rgroupNum))
                             {
@@ -332,7 +332,7 @@ namespace NCDK.IO
                     line = input.ReadLine();
                     ++lineCount;
                     Trace.TraceInformation("line for num is " + line);
-                    int rgroupNum = int.Parse(line.Trim());
+                    int rgroupNum = int.Parse(line.Trim(), NumberFormatInfo.InvariantInfo);
                     line = input.ReadLine();
                     ++lineCount;
 
@@ -367,8 +367,8 @@ namespace NCDK.IO
                                     var stAPO = Strings.Tokenize(line);
                                     for (int i = 3; i < stAPO.Count; i += 2)
                                     {
-                                        int pos = int.Parse(stAPO[i]);
-                                        int apo = int.Parse(stAPO[i + 1]);
+                                        var pos = int.Parse(stAPO[i], NumberFormatInfo.InvariantInfo);
+                                        var apo = int.Parse(stAPO[i + 1], NumberFormatInfo.InvariantInfo);
                                         IAtom at = group.Atoms[pos - 1];
                                         switch (apo)
                                         {
@@ -389,7 +389,7 @@ namespace NCDK.IO
                                 }
                             }
                         }
-                        RGroupList rList = rGroupDefinitions[rgroupNum];
+                        var rList = rGroupDefinitions[rgroupNum];
                         if (rList == null)
                         {
                             throw new CDKException("R" + rgroupNum + " not defined but referenced in $RGP.");
@@ -445,7 +445,7 @@ namespace NCDK.IO
         /// <param name="line"></param>
         /// <param name="expect"></param>
         /// <param name="lineCount"></param>
-        private void CheckLineBeginsWith(string line, string expect, int lineCount)
+        private static void CheckLineBeginsWith(string line, string expect, int lineCount)
         {
             if (line == null)
             {

@@ -70,7 +70,7 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         public static List<IAtomContainer> GetAllAtomContainers(IChemSequence sequence)
         {
-            List<IAtomContainer> acList = new List<IAtomContainer>();
+            var acList = new List<IAtomContainer>();
             foreach (var model in sequence)
             {
                 acList.AddRange(ChemModelManipulator.GetAllAtomContainers(model));

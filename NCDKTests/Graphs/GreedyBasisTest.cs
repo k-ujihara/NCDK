@@ -25,8 +25,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NCDK.Common.Collections;
-using System;
 using System.Collections;
+using System.Linq;
 using static NCDK.Graphs.InitialCycles;
 
 namespace NCDK.Graphs
@@ -43,7 +43,7 @@ namespace NCDK.Graphs
             var c2 = new Mock<Cycle>((InitialCycles)null, (ShortestPaths)null, (int[])null);
             c1.SetupGet(c => c.EdgeVector).Returns(new BitArray(0));
             c2.SetupGet(c => c.EdgeVector).Returns(new BitArray(0));
-            GreedyBasis basis = new GreedyBasis(2, 0);
+            var basis = new GreedyBasis(2, 0);
             Assert.IsTrue(basis.Members.Count == 0);
             basis.Add(c1.Object);
             Assert.IsTrue(basis.Members.Contains(c1.Object));
@@ -60,21 +60,11 @@ namespace NCDK.Graphs
             c1.SetupGet(c => c.EdgeVector).Returns(new BitArray(0));
             c1.SetupGet(c => c.EdgeVector).Returns(new BitArray(0));
             c2.SetupGet(c => c.EdgeVector).Returns(new BitArray(0));
-            GreedyBasis basis = new GreedyBasis(2, 0);
+            var basis = new GreedyBasis(2, 0);
             Assert.IsTrue(basis.Members.Count == 0);
             basis.AddAll(new[] { c1.Object, c2.Object });
             Assert.IsTrue(basis.Members.Contains(c1.Object));
             Assert.IsTrue(basis.Members.Contains(c2.Object));
-        }
-
-        [TestMethod()]
-        [ExpectedException(typeof(NotSupportedException))]
-        public virtual void UnmodifiableMembers()
-        {
-            var c1 = new Mock<Cycle>((InitialCycles)null, (ShortestPaths)null, (int[])null);
-            c1.SetupGet(c => c.EdgeVector).Returns(new BitArray(0));
-            GreedyBasis basis = new GreedyBasis(2, 0);
-            basis.Members.Add(c1.Object);
         }
 
         [TestMethod()]
@@ -89,7 +79,7 @@ namespace NCDK.Graphs
             c1.SetupGet(c => c.Length).Returns(3);
             c2.SetupGet(c => c.Length).Returns(3);
             c3.SetupGet(c => c.Length).Returns(4);
-            GreedyBasis basis = new GreedyBasis(3, 12);
+            var basis = new GreedyBasis(3, 12);
             Assert.IsFalse(basis.IsSubsetOfBasis(c3.Object));
             basis.Add(c1.Object);
             Assert.IsFalse(basis.IsSubsetOfBasis(c3.Object));
@@ -110,7 +100,7 @@ namespace NCDK.Graphs
             c1.SetupGet(c => c.Length).Returns(3);
             c2.SetupGet(c => c.Length).Returns(3);
             c3.SetupGet(c => c.Length).Returns(6);
-            GreedyBasis basis = new GreedyBasis(3, 12);
+            var basis = new GreedyBasis(3, 12);
             Assert.IsTrue(basis.IsIndependent(c1.Object));
             Assert.IsTrue(basis.IsIndependent(c2.Object));
             Assert.IsTrue(basis.IsIndependent(c3.Object));
@@ -124,7 +114,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void Size()
         {
-            GreedyBasis basis = new GreedyBasis(3, 12);
+            var basis = new GreedyBasis(3, 12);
             Assert.AreEqual(0, basis.Count);
             var c1 = new Mock<Cycle>((InitialCycles)null, (ShortestPaths)null, (int[])null);
             var c2 = new Mock<Cycle>((InitialCycles)null, (ShortestPaths)null, (int[])null);

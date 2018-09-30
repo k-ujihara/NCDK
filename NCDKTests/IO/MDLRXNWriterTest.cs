@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System;
 using System.IO;
 
@@ -36,7 +36,7 @@ namespace NCDK.IO
     public class MDLRXNWriterTest : ChemObjectIOTest
     {
         protected override Type ChemObjectIOToTestType => typeof(MDLRXNWriter);
-        private static IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        private static IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
         [TestMethod()]
         public void TestAccepts()

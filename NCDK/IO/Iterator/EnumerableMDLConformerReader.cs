@@ -59,7 +59,7 @@ namespace NCDK.IO.Iterator
                     container = new ConformerContainer(mol);
                 else
                 {
-                    if (container.Title.Equals(mol.Title))
+                    if (container.Title.Equals(mol.Title, StringComparison.Ordinal))
                         container.Add(mol);
                     else
                     {

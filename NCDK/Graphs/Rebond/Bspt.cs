@@ -132,7 +132,7 @@ namespace NCDK.Graphs.Rebond
             {
                 if (i == leaf.count)
                 {
-                    //        Debug.WriteLine("-->" + stack[sp-1].splitValue);
+                    //        Debug.WriteLine($"-->{stack[sp-1].splitValue}");
                     ele = stack[--sp].eleGE;
                     while (ele is Node)
                     {
@@ -322,7 +322,7 @@ namespace NCDK.Graphs.Rebond
             public double splitValue;
             public IElement eleGE;
 
-            private Bspt<T> parent;
+            private readonly Bspt<T> parent;
 
             public Node(Bspt<T> parent, int dim, int dimMax, Leaf leafLE)
             {
@@ -464,7 +464,7 @@ namespace NCDK.Graphs.Rebond
 
     public interface ITuple
     {
-        double GetDimValue(int dim);
+        double GetDimValue(int dimension);
         double Distance2 { get; set; } // the dist squared of a found Element;
     }
 }

@@ -18,7 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
@@ -56,7 +56,7 @@ namespace NCDK.Tools.Manipulator
             atomInMol2 = new Atom("O");
             atomInMol2.ImplicitHydrogenCount = 2;
             molecule2.Atoms.Add(atomInMol2);
-            moleculeSet = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            moleculeSet = ChemObjectBuilder.Instance.NewAtomContainerSet();
             moleculeSet.Add(molecule1);
             moleculeSet.Add(molecule2);
             reaction = new Reaction();

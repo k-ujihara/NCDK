@@ -21,6 +21,7 @@ using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace NCDK.Formula.Rules
 {
@@ -70,7 +71,7 @@ namespace NCDK.Formula.Rules
         /// <summary>
         /// The parameters attribute of the <see cref="RDBERule"/> object.
         /// </summary>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             get
             {
@@ -82,7 +83,7 @@ namespace NCDK.Formula.Rules
             }
             set
             {
-                if (value.Length != 2) throw new CDKException("RDBERule expects two parameters");
+                if (value.Count != 2) throw new CDKException("RDBERule expects two parameters");
                 if (!(value[0] is double)) throw new CDKException("The 1 parameter must be of type Double");
                 if (!(value[1] is double)) throw new CDKException("The 2 parameter must be of type Double");
 
@@ -96,7 +97,7 @@ namespace NCDK.Formula.Rules
         /// </summary>
         /// <param name="formula">Parameter is the IMolecularFormula</param>
         /// <returns>A double value meaning 1.0 True, 0.0 False</returns>
-        public double Validate(IMolecularFormula formula)
+        public virtual double Validate(IMolecularFormula formula)
         {
             Trace.TraceInformation("Start validation of ", formula);
 
@@ -119,14 +120,15 @@ namespace NCDK.Formula.Rules
         /// <param name="formula">Parameter is the IMolecularFormula</param>
         /// <param name="value">The RDBE value</param>
         /// <returns>True, if corresponds with</returns>
-        public bool Validate(IMolecularFormula formula, double value)
+        public virtual bool Validate(IMolecularFormula formula, double value)
         {
             double charge = formula.Charge ?? 0;
 
             long iPart = (long)value;
             double fPart = value - iPart;
 
-            if (fPart == 0.0 && charge == 0) return true;
+            if (fPart == 0.0 && charge == 0)
+                return true;
             if (fPart != 0.0 && charge != 0)
                 return true;
             else
@@ -140,7 +142,7 @@ namespace NCDK.Formula.Rules
         /// <param name="formula">The IMolecularFormula object</param>
         /// <returns>The RDBE value</returns>
         /// <seealso cref="CreateTable"/>
-        public List<double> GetRDBEValue(IMolecularFormula formula)
+        public virtual IReadOnlyList<double> GetRDBEValue(IMolecularFormula formula)
         {
             var RDBEList = new List<double>();
             // The number of combinations with repetition
@@ -184,7 +186,7 @@ namespace NCDK.Formula.Rules
                 }
                 string[] valences = new string[nV.Count];
                 for (int i = 0; i < valences.Length; i++)
-                    valences[i] = nV[i].ToString();
+                    valences[i] = nV[i].ToString(NumberFormatInfo.InvariantInfo);
 
                 Combinations c = new Combinations(valences, nE);
                 while (c.HasMoreElements())
@@ -193,7 +195,7 @@ namespace NCDK.Formula.Rules
                     object[] combo = (object[])c.NextElement();
                     for (int i = 0; i < combo.Length; i++)
                     {
-                        int value = (int.Parse((string)combo[i]) - 2) / 2;
+                        int value = (int.Parse((string)combo[i], NumberFormatInfo.InvariantInfo) - 2) / 2;
                         RDBE_int += value;
                     }
                     RDBE = 1 + RDBE_1 + RDBE_int;
@@ -208,7 +210,7 @@ namespace NCDK.Formula.Rules
         /// </summary>
         /// <param name="newAtom">The IAtom</param>
         /// <returns>The oxidation state value</returns>
-        private int[] GetOxidationState(IAtom newAtom)
+        private static int[] GetOxidationState(IAtom newAtom)
         {
             return oxidationStateTable[newAtom.Symbol];
         }
@@ -267,11 +269,12 @@ namespace NCDK.Formula.Rules
             }
         }
 
-        public class Combinations
+        private sealed class Combinations
         {
-            private object[] inArray;
-            private int n, m;
-            private int[] index;
+            private readonly object[] inArray;
+            private readonly int n;
+            private readonly int m;
+            private readonly int[] index;
             private bool hasMore = true;
 
             /// <summary>

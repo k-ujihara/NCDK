@@ -18,20 +18,21 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Config.Isotopes;
+using NCDK.Silent;
 using System.IO;
 using System.Text;
 
 namespace NCDK.Config.Isotope
 {
-   // @cdk.module test-extra
+    // @cdk.module test-extra
     [TestClass()]
     public class IsotopeReaderTest : CDKTestCase
     {
         [TestMethod()]
         public void TestIsotopeReader_InputStream_IChemObjectBuilder()
         {
-            IsotopeReader reader = new IsotopeReader(new MemoryStream(new byte[0]), new ChemObject().Builder);
+            IsotopeReader reader = new IsotopeReader(new MemoryStream(System.Array.Empty<byte>()), new ChemObject().Builder);
             Assert.IsNotNull(reader);
         }
 

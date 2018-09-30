@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System.IO;
 using System;
 
@@ -35,7 +35,7 @@ namespace NCDK.IO.RDF
     public class CDKOWLWriterTest : ChemObjectWriterTest
     {
         protected override Type ChemObjectIOToTestType => typeof(CDKOWLWriter);
-        private static IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        private static IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
         [TestMethod()]
         public void TestWriteMolecule()
@@ -43,7 +43,7 @@ namespace NCDK.IO.RDF
             StringWriter output = new StringWriter();
             CDKOWLWriter writer = new CDKOWLWriter(output);
 
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);

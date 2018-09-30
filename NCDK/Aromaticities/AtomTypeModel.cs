@@ -23,11 +23,11 @@
  */
 
 using NCDK.Common.Collections;
+using NCDK.Config;
 using NCDK.RingSearches;
 using System;
 using System.Collections.Generic;
 using static NCDK.Common.Base.Preconditions;
-using NCDK.Config;
 
 namespace NCDK.Aromaticities
 {
@@ -73,24 +73,25 @@ namespace NCDK.Aromaticities
         }
 
         /// <inheritdoc/>
-        public override int[] Contribution(IAtomContainer container, RingSearch ringSearch)
+        public override IReadOnlyList<int> Contribution(IAtomContainer container, RingSearch ringSearch)
         {
-            int nAtoms = container.Atoms.Count;
-            int[] electrons = new int[nAtoms];
+            var nAtoms = container.Atoms.Count;
+            var electrons = new int[nAtoms];
 
             Arrays.Fill(electrons, -1);
 
-            IDictionary<IAtom, int> indexMap = new Dictionary<IAtom, int>();
+            var indexMap = new Dictionary<IAtom, int>();
 
             for (int i = 0; i < nAtoms; i++)
             {
-                IAtom atom = container.Atoms[i];
+                var atom = container.Atoms[i];
                 indexMap.Add(atom, i);
 
                 // acyclic atom skipped
-                if (!ringSearch.Cyclic(i)) continue;
+                if (!ringSearch.Cyclic(i))
+                    continue;
 
-                Hybridization hyb = atom.Hybridization;
+                var hyb = atom.Hybridization;
 
                 CheckNotNull(atom.AtomTypeName, "atom has unset atom type");
 
@@ -109,29 +110,44 @@ namespace NCDK.Aromaticities
             }
 
             // exocyclic double bonds are allowed no further processing
-            if (exocyclic) return electrons;
+            if (exocyclic)
+                return electrons;
 
             // check for exocyclic double/triple bonds and disallow their contribution
             foreach (var bond in container.Bonds)
             {
                 if (bond.Order == BondOrder.Double || bond.Order == BondOrder.Triple)
                 {
-                    IAtom a1 = bond.Begin;
-                    IAtom a2 = bond.End;
+                    var a1 = bond.Begin;
+                    var a2 = bond.End;
 
-                    string a1Type = a1.AtomTypeName;
-                    string a2Type = a2.AtomTypeName;
+                    var a1Type = a1.AtomTypeName;
+                    var a2Type = a2.AtomTypeName;
 
-                    int u = indexMap[a1];
-                    int v = indexMap[a2];
+                    var u = indexMap[a1];
+                    var v = indexMap[a2];
 
                     if (!ringSearch.Cyclic(u, v))
                     {
-
                         // XXX: single exception - we could make this more general but
                         // for now this mirrors the existing behavior
-                        if (a1Type.Equals("N.sp2.3") && a2Type.Equals("O.sp2") || a1Type.Equals("O.sp2")
-                                && a2Type.Equals("N.sp2.3")) continue;
+                        switch (a1Type)
+                        {
+                            case "N.sp2.3":
+                                switch (a2Type)
+                                {
+                                    case "O.sp2":
+                                        continue;
+                                }
+                                break;
+                            case "O.sp2":
+                                switch (a2Type)
+                                {
+                                    case "N.sp2.3":
+                                        continue;
+                                }
+                                break;
+                        }
 
                         electrons[u] = electrons[v] = -1;
                     }
@@ -153,8 +169,7 @@ namespace NCDK.Aromaticities
 
             try
             {
-                IAtomType atomType = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl",
-                        atom.Builder).GetAtomType(atom.AtomTypeName);
+                var atomType = CDK.CdkAtomTypeFactory.GetAtomType(atom.AtomTypeName);
                 var propPiBondCount = atomType.GetProperty<int>(CDKPropertyName.PiBondCount, 0);
                 return propPiBondCount;
             }

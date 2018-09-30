@@ -29,7 +29,7 @@ namespace NCDK.Common.Mathematics
         private double nextGaussian;
 
         /// <summary> Creates a new random number generator.</summary>
-        public BitsStreamGenerator()
+        protected BitsStreamGenerator()
         {
             nextGaussian = double.NaN;
         }
@@ -50,16 +50,16 @@ namespace NCDK.Common.Mathematics
         /// public generation methods for the various primitive types <see cref="NextBool()"/>,
         /// <see cref="NextBytes(byte[])"/>, <see cref="NextDouble()"/>,
         /// <see cref="NextFloat()"/>, <see cref="NextGaussian()"/>, <see cref="Next()"/>,
-        /// <see cref="Next(int)"/> and <see cref="NextLong()"/>.</para>
+        /// <see cref="GetNext(int)"/> and <see cref="NextLong()"/>.</para>
         /// </remarks>
         /// <param name="bits">number of random bits to produce</param>
         /// <returns>random bits generated</returns>
-        protected abstract uint Next(int bits);
+        protected abstract uint GetNext(int bits);
 
         /// <inheritdoc/>
         public bool NextBool()
         {
-            return Next(1) != 0;
+            return GetNext(1) != 0;
         }
 
         /// <inheritdoc/>
@@ -69,7 +69,7 @@ namespace NCDK.Common.Mathematics
             int iEnd = bytes.Length - 3;
             while (i < iEnd)
             {
-                uint random = Next(32);
+                uint random = GetNext(32);
                 bytes[i] = (byte)(random & 0xff);
                 bytes[i + 1] = (byte)((random >> 8) & 0xff);
                 bytes[i + 2] = (byte)((random >> 16) & 0xff);
@@ -77,7 +77,7 @@ namespace NCDK.Common.Mathematics
                 i += 4;
             }
             {
-                uint random = Next(32);
+                uint random = GetNext(32);
                 while (i < bytes.Length)
                 {
                     bytes[i++] = (byte)(random & 0xff);
@@ -91,8 +91,8 @@ namespace NCDK.Common.Mathematics
         /// <inheritdoc/>
         public double NextDouble()
         {
-            ulong high = ((ulong)Next(26)) << 26;
-            ulong low = (ulong)Next(26);
+            ulong high = ((ulong)GetNext(26)) << 26;
+            ulong low = (ulong)GetNext(26);
             ulong s = high | low;
             return Double_1_40000000000000 * s;
         }
@@ -102,7 +102,7 @@ namespace NCDK.Common.Mathematics
         /// <inheritdoc/>
         public float NextFloat()
         {
-            return (float)(Next(23) * Double_1_2000000);
+            return (float)(GetNext(23) * Double_1_2000000);
         }
 
         /// <inheritdoc/>
@@ -132,7 +132,7 @@ namespace NCDK.Common.Mathematics
         /// <inheritdoc/>
         public int Next()
         {
-            return (int)Next(32);
+            return (int)GetNext(32);
         }
 
         /// <summary>
@@ -154,14 +154,14 @@ namespace NCDK.Common.Mathematics
             {
                 if ((n & -n) == n)
                 {
-                    var nn = (ulong)Next(31);
+                    var nn = (ulong)GetNext(31);
                     return (int)(((ulong)n * nn) >> 31);
                 }
                 int bits;
                 int val;
                 do
                 {
-                    bits = (int)Next(31);
+                    bits = (int)GetNext(31);
                     val = bits % n;
                 } while (bits - val + (n - 1) < 0);
                 return val;
@@ -172,8 +172,8 @@ namespace NCDK.Common.Mathematics
         /// <inheritdoc/>
         public long NextLong()
         {
-            long high = ((long)Next(32)) << 32;
-            long low = ((long)Next(32)) & 0xffffffffL;
+            long high = ((long)GetNext(32)) << 32;
+            long low = ((long)GetNext(32)) & 0xffffffffL;
             return high | low;
         }
 

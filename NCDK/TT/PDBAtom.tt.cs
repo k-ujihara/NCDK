@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -90,7 +91,7 @@ namespace NCDK.Default
             Oxt = false;
             HetAtom = false;
 
-			base.ImplicitHydrogenCount = null;
+            base.ImplicitHydrogenCount = null;
             base.Charge = 0.0;
             base.FormalCharge = 0;
         }
@@ -244,7 +245,7 @@ namespace NCDK.Silent
             Oxt = false;
             HetAtom = false;
 
-			base.ImplicitHydrogenCount = null;
+            base.ImplicitHydrogenCount = null;
             base.Charge = 0.0;
             base.FormalCharge = 0;
         }

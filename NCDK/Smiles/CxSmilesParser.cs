@@ -165,11 +165,10 @@ namespace NCDK.Smiles
         /// <returns>parse was a success (or not)</returns>
         private static bool ProcessCoords(CharIter iter, CxSmilesState state)
         {
-            if (state.AtomCoords == null)
-                state.AtomCoords = new List<double[]>();
+            if (state.atomCoords == null)
+                state.atomCoords = new List<double[]>();
             while (iter.HasNext())
             {
-
                 // end of coordinate list
                 if (iter.Curr() == ')')
                 {
@@ -188,7 +187,7 @@ namespace NCDK.Smiles
                 iter.NextIf(';');
 
                 state.coordFlag = state.coordFlag || z != 0;
-                state.AtomCoords.Add(new double[] { x, y, z });
+                state.atomCoords.Add(new double[] { x, y, z });
             }
             return false;
         }
@@ -204,7 +203,7 @@ namespace NCDK.Smiles
         {
             if (state.fragGroups == null)
                 state.fragGroups = new List<List<int>>();
-            IList<int> dest = new List<int>();
+            var dest = new List<int>();
             while (iter.HasNext())
             {
                 dest.Clear();
@@ -231,17 +230,16 @@ namespace NCDK.Smiles
 
         private static bool ProcessDataSgroups(CharIter iter, CxSmilesState state)
         {
-
             if (state.dataSgroups == null)
                 state.dataSgroups = new List<DataSgroup>(4);
 
-            IList<int> atomset = new List<int>();
+            var atomset = new List<int>();
             if (!ProcessIntList(iter, CommaSeparatorChar, atomset))
                 return false;
 
             if (!iter.NextIf(':'))
                 return false;
-            int beg = iter.pos;
+            var beg = iter.pos;
             while (iter.HasNext() && !IsSgroupDelim(iter.Curr()))
                 iter.Next();
             string field = Unescape(iter.Substr(beg, iter.pos));
@@ -262,7 +260,7 @@ namespace NCDK.Smiles
             beg = iter.pos;
             while (iter.HasNext() && !IsSgroupDelim(iter.Curr()))
                 iter.Next();
-            string operator_ = Unescape(iter.Substr(beg, iter.pos));
+            var operator_ = Unescape(iter.Substr(beg, iter.pos));
 
             if (!iter.NextIf(':'))
             {
@@ -273,7 +271,7 @@ namespace NCDK.Smiles
             beg = iter.pos;
             while (iter.HasNext() && !IsSgroupDelim(iter.Curr()))
                 iter.Next();
-            string unit = Unescape(iter.Substr(beg, iter.pos));
+            var unit = Unescape(iter.Substr(beg, iter.pos));
 
             if (!iter.NextIf(':'))
             {
@@ -301,13 +299,13 @@ namespace NCDK.Smiles
         {
             if (state.sgroups == null)
                 state.sgroups = new List<PolymerSgroup>();
-            int beg = iter.pos;
+            var beg = iter.pos;
             while (iter.HasNext() && !IsSgroupDelim(iter.Curr()))
                 iter.Next();
-            string keyword = iter.Substr(beg, iter.pos);
+            var keyword = iter.Substr(beg, iter.pos);
             if (!iter.NextIf(':'))
                 return false;
-            IList<int> atomset = new List<int>();
+            var atomset = new List<int>();
             if (!ProcessIntList(iter, CommaSeparatorChar, atomset))
                 return false;
 
@@ -365,7 +363,7 @@ namespace NCDK.Smiles
                     int beg = ProcessUnsignedInt(iter);
                     if (!iter.NextIf(':'))
                         return false;
-                    IList<int> endpoints = new List<int>(6);
+                    var endpoints = new List<int>(6);
                     if (!ProcessIntList(iter, DotSeparatorChar, endpoints))
                         return false;
                     iter.NextIf(',');
@@ -418,7 +416,7 @@ namespace NCDK.Smiles
             }
             if (!iter.NextIf(':'))
                 return false;
-            IList<int> dest = new List<int>(4);
+            var dest = new List<int>(4);
             if (!ProcessIntList(iter, CommaSeparatorChar, dest))
                 return false;
             foreach (var atomidx in dest)
@@ -604,7 +602,7 @@ namespace NCDK.Smiles
         /// <param name="sep">the separator</param>
         /// <param name="dest">output</param>
         /// <returns>int-list was successfully processed</returns>
-        private static bool ProcessIntList(CharIter iter, char sep, IList<int> dest)
+        private static bool ProcessIntList(CharIter iter, char sep, List<int> dest)
         {
             while (iter.HasNext())
             {

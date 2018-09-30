@@ -31,7 +31,7 @@ namespace NCDK.Tools
     [Serializable]
     public class BremserOneSphereHOSECodePredictor
     {
-        Dictionary<string, HOSECodeShiftRange> ht;
+        private Dictionary<string, HOSECodeShiftRange> ht;
 
         public BremserOneSphereHOSECodePredictor()
         {
@@ -99,15 +99,12 @@ namespace NCDK.Tools
 
         }
 
-        public string GetBibData()
-        {
-            string s = "The carbon NMR chemical shift prediction of this module \n";
-            s += "is based on the 651 1-sphere HOSE-Code table published by W. Bremser in:\n";
-            s += "W. Bremser, \"Expectation Ranges of 13C NMR Chemical Shifts\", \n";
-            s += "Mag. Res. Chem., Vol. 23, No. 4, 1985, 271-275.\n";
-            s += "It is important to understand, that these values are indeed not more than expectation ranges.\n";
-            return s;
-        }
+        public static string BibData { get; } 
+            = "The carbon NMR chemical shift prediction of this module \n"
+            + "is based on the 651 1-sphere HOSE-Code table published by W. Bremser in:\n"
+            + "W. Bremser, \"Expectation Ranges of 13C NMR Chemical Shifts\", \n"
+            + "Mag. Res. Chem., Vol. 23, No. 4, 1985, 271-275.\n"
+            + "It is important to understand, that these values are indeed not more than expectation ranges.\n";
 
         private void PrepareHashTable()
         {

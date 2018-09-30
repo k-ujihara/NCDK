@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Silent;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -186,7 +187,7 @@ namespace NCDK.Formula
             return GetEnumerator();
         }
 
-        public IChemObjectBuilder Builder => Default.ChemObjectBuilder.Instance;
+        public IChemObjectBuilder Builder => ChemObjectBuilder.Instance;
 
         public bool IsReadOnly => components.IsReadOnly;
     }

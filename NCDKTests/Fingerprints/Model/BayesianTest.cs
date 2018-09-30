@@ -30,9 +30,11 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO.Iterator;
+using NCDK.Silent;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -45,7 +47,7 @@ namespace NCDK.Fingerprints.Model
     [TestClass()]
     public class BayesianTest
     {
-        private static readonly string REF_MOLECULE = "\n\n\n"
+        private const string REF_MOLECULE = "\n\n\n"
             + " 18 19  0  0  0  0  0  0  0  0999 V2000\n"
             + "   -2.5317   -1.1272    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
             + "   -1.5912    0.1672    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
@@ -109,8 +111,8 @@ namespace NCDK.Fingerprints.Model
         {
             Trace.TraceInformation("Bayesian/Fingerprints test: verifying circular fingerprints for a single molecule");
 
-            CheckFP(REF_MOLECULE, CircularFingerprinter.CFPClass.ECFP6, 0, REF_ECFP6_0);
-            CheckFP(REF_MOLECULE, CircularFingerprinter.CFPClass.ECFP6, 1024, REF_ECFP6_1024);
+            CheckFP(REF_MOLECULE, CircularFingerprinterClass.ECFP6, 0, REF_ECFP6_0);
+            CheckFP(REF_MOLECULE, CircularFingerprinterClass.ECFP6, 1024, REF_ECFP6_1024);
         }
 
         [TestMethod()]
@@ -135,10 +137,10 @@ namespace NCDK.Fingerprints.Model
         {
             Trace.TraceInformation("Bayesian/Fingerprints test: comparing folded fingerprints to reference set");
 
-            CompareFolding("FoldedProbes.sdf", "ECFP6/0", CircularFingerprinter.CFPClass.ECFP6, 0);
-            CompareFolding("FoldedProbes.sdf", "ECFP6/1024", CircularFingerprinter.CFPClass.ECFP6, 1024);
-            CompareFolding("FoldedProbes.sdf", "ECFP6/32768", CircularFingerprinter.CFPClass.ECFP6, 32768);
-            CompareFolding("FoldedProbes.sdf", "FCFP6/0", CircularFingerprinter.CFPClass.FCFP6, 0);
+            CompareFolding("FoldedProbes.sdf", "ECFP6/0", CircularFingerprinterClass.ECFP6, 0);
+            CompareFolding("FoldedProbes.sdf", "ECFP6/1024", CircularFingerprinterClass.ECFP6, 1024);
+            CompareFolding("FoldedProbes.sdf", "ECFP6/32768", CircularFingerprinterClass.ECFP6, 32768);
+            CompareFolding("FoldedProbes.sdf", "FCFP6/0", CircularFingerprinterClass.FCFP6, 0);
         }
 
         [TestMethod()]
@@ -147,10 +149,9 @@ namespace NCDK.Fingerprints.Model
         {
             Trace.TraceInformation("Bayesian/Fingerprints test: using dataset of binding data to compare to reference data");
 
-            RunTest("Binders.sdf", "active", CircularFingerprinter.CFPClass.ECFP6, 1024, 0, "Binders-ECFP6-1024-loo.bayesian", true);
-            RunTest("Binders.sdf", "active", CircularFingerprinter.CFPClass.ECFP6, 32768, 5,
-                "Binders-ECFP6-32768-xv5.bayesian", true);
-            RunTest("Binders.sdf", "active", CircularFingerprinter.CFPClass.FCFP6, 0, 0, "Binders-FCFP6-0-loo.bayesian", true);
+            RunTest("Binders.sdf", "active", CircularFingerprinterClass.ECFP6, 1024, 0, "Binders-ECFP6-1024-loo.bayesian", true);
+            RunTest("Binders.sdf", "active", CircularFingerprinterClass.ECFP6, 32768, 5, "Binders-ECFP6-32768-xv5.bayesian", true);
+            RunTest("Binders.sdf", "active", CircularFingerprinterClass.FCFP6, 0, 0, "Binders-FCFP6-0-loo.bayesian", true);
         }
 
         [TestMethod()]
@@ -159,25 +160,25 @@ namespace NCDK.Fingerprints.Model
         {
             Trace.TraceInformation("Bayesian/Fingerprints test: using dataset of molecular probes to compare to reference data");
 
-            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CFPClass.ECFP6, 1024, 0,
+            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinterClass.ECFP6, 1024, 0,
                 "MLProbes-ECFP6-1024-loo.bayesian");
-            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CFPClass.ECFP6, 32768, 5,
+            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinterClass.ECFP6, 32768, 5,
                 "MLProbes-ECFP6-32768-xv5.bayesian");
-            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CFPClass.FCFP6, 0, 0,
+            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinterClass.FCFP6, 0, 0,
                 "MLProbes-FCFP6-0-loo.bayesian");
-            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CFPClass.FCFP6, 256, 3,
+            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinterClass.FCFP6, 256, 3,
                 "MLProbes-FCFP6-256-xv3.bayesian");
         }
 
         // ----------------- private methods -----------------
 
         // make sure that for a single molecule, the way that the hashes are created & folded is consistent with a reference
-        private void CheckFP(string molstr, CircularFingerprinter.CFPClass classType, int folding, int[] refHash)
+        private static void CheckFP(string molstr, CircularFingerprinterClass classType, int folding, int[] refHash)
         {
-            string strType = classType == CircularFingerprinter.CFPClass.ECFP6 ? "ECFP6" : "FCFP6";
+            string strType = classType == CircularFingerprinterClass.ECFP6 ? "ECFP6" : "FCFP6";
             WriteLine("Comparing hash codes for " + strType + "/folding=" + folding);
 
-            IAtomContainer mol = new EnumerableSDFReader(new StringReader(molstr), Default.ChemObjectBuilder.Instance).First();
+            IAtomContainer mol = new EnumerableSDFReader(new StringReader(molstr), ChemObjectBuilder.Instance).First();
             Bayesian model = new Bayesian(classType, folding);
             model.AddMolecule(mol, false);
 
@@ -205,7 +206,7 @@ namespace NCDK.Fingerprints.Model
             string dummyTitle = "some title", dummyOrigin = "some origin";
             string[] dummyComments = new string[] { "comment1", "comment2" };
 
-            Bayesian model1 = new Bayesian(CircularFingerprinter.CFPClass.ECFP6)
+            Bayesian model1 = new Bayesian(CircularFingerprinterClass.ECFP6)
             {
                 NoteTitle = dummyTitle,
                 NoteOrigin = dummyOrigin,
@@ -222,44 +223,50 @@ namespace NCDK.Fingerprints.Model
                 throw new CDKException("Reserialisation failed", ex);
             }
 
-            if (!dummyTitle.Equals(model1.NoteTitle) || !dummyTitle.Equals(model2.NoteTitle)
-                    || !dummyOrigin.Equals(model1.NoteOrigin) || !dummyOrigin.Equals(model2.NoteOrigin))
+            if (!dummyTitle.Equals(model1.NoteTitle, StringComparison.Ordinal)
+             || !dummyTitle.Equals(model2.NoteTitle, StringComparison.Ordinal)
+             || !dummyOrigin.Equals(model1.NoteOrigin, StringComparison.Ordinal)
+             || !dummyOrigin.Equals(model2.NoteOrigin, StringComparison.Ordinal))
                 throw new CDKException("Note integrity failure for origin");
 
-            string[] comments1 = model1.NoteComments, comments2 = model2.NoteComments;
-            if (comments1.Length != dummyComments.Length || comments2.Length != dummyComments.Length
-                    || !comments1[0].Equals(dummyComments[0]) || !comments2[0].Equals(dummyComments[0])
-                    || !comments1[1].Equals(dummyComments[1]) || !comments2[1].Equals(dummyComments[1]))
+            var comments1 = model1.NoteComments;
+            var comments2 = model2.NoteComments;
+            if (comments1.Count != dummyComments.Length
+             || comments2.Count != dummyComments.Length
+             || !comments1[0].Equals(dummyComments[0], StringComparison.Ordinal) 
+             || !comments2[0].Equals(dummyComments[0], StringComparison.Ordinal)
+             || !comments1[1].Equals(dummyComments[1], StringComparison.Ordinal)
+             || !comments2[1].Equals(dummyComments[1], StringComparison.Ordinal))
                 throw new CDKException("Note integrity failure for origin");
         }
 
         // builds a model and uses the scaled predictions to rack up a confusion matrix, for comparison
-        private void ConfirmPredictions(string sdfile, int truePos, int trueNeg, int falsePos, int falseNeg)
+        private static void ConfirmPredictions(string sdfile, int truePos, int trueNeg, int falsePos, int falseNeg)
         {
             WriteLine("[" + sdfile + "] comparing confusion matrix");
 
             List<IAtomContainer> molecules = new List<IAtomContainer>();
             List<bool> activities = new List<bool>();
-            Bayesian model = new Bayesian(CircularFingerprinter.CFPClass.ECFP6, 1024);
+            Bayesian model = new Bayesian(CircularFingerprinterClass.ECFP6, 1024);
 
             try
             {
                 using (Stream ins = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile))
                 {
-                    EnumerableSDFReader rdr = new EnumerableSDFReader(ins, Default.ChemObjectBuilder.Instance);
+                    EnumerableSDFReader rdr = new EnumerableSDFReader(ins, ChemObjectBuilder.Instance);
 
                     foreach (var mol in rdr)
                     {
-                        bool actv = "true".Equals((string)mol.GetProperties()["Active"]);
+                        bool actv = "true" == (string)mol.GetProperties()["Active"];
                         molecules.Add(mol);
                         activities.Add(actv);
                         model.AddMolecule(mol, actv);
                     }
                 }
             }
-            catch (CDKException ex)
+            catch (CDKException)
             {
-                throw ex;
+                throw;
             }
             catch (Exception ex)
             {
@@ -301,7 +308,7 @@ namespace NCDK.Fingerprints.Model
         }
 
         // compares a series of molecules for folding fingerprints being literally identical
-        private void CompareFolding(string sdfile, string fpField, CircularFingerprinter.CFPClass classType, int folding)
+        private static void CompareFolding(string sdfile, string fpField, CircularFingerprinterClass classType, int folding)
         {
             WriteLine("[" + sdfile + "] calculation of: " + fpField);
 
@@ -310,7 +317,7 @@ namespace NCDK.Fingerprints.Model
             {
                 using (Stream ins = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile))
                 {
-                    EnumerableSDFReader rdr = new EnumerableSDFReader(ins, Default.ChemObjectBuilder.Instance);
+                    EnumerableSDFReader rdr = new EnumerableSDFReader(ins, ChemObjectBuilder.Instance);
 
                     int row = 0;
                     foreach (var mol in rdr)
@@ -324,20 +331,20 @@ namespace NCDK.Fingerprints.Model
                         string gotHashes = ArrayStr(hashes);
                         string reqHashes = (string)mol.GetProperties()[fpField];
 
-                        if (!gotHashes.Equals(reqHashes))
+                        if (gotHashes != reqHashes)
                         {
-                            WriteLine("    ///* mismatch at row " + row);
-                            WriteLine("    ///* calc: " + gotHashes);
-                            WriteLine("    ///* want: " + reqHashes);
+                            WriteLine($"    ///* mismatch at row {row}");
+                            WriteLine($"    ///* calc: {gotHashes}");
+                            WriteLine($"    ///* want: {reqHashes}");
                             failed = true;
                         }
                     }
 
                 }
             }
-            catch (CDKException ex)
+            catch (CDKException)
             {
-                throw ex;
+                throw;
             }
             catch (Exception ex)
             {
@@ -349,12 +356,12 @@ namespace NCDK.Fingerprints.Model
 
         // performs a bulk test: loads an SDfile, builds a model with the given parameters, and compares it to a reference model
         // that has been previously serialised
-        private void RunTest(string sdfile, string actvField, CircularFingerprinter.CFPClass classType, int folding, int xval, string modelFN)
+        private void RunTest(string sdfile, string actvField, CircularFingerprinterClass classType, int folding, int xval, string modelFN)
         { 
             RunTest(sdfile, actvField, classType, folding, xval, modelFN, false);
         }
 
-        private void RunTest(string sdfile, string actvField, CircularFingerprinter.CFPClass classType, int folding, int xval, string modelFN, bool perceiveStereo)
+        private void RunTest(string sdfile, string actvField, CircularFingerprinterClass classType, int folding, int xval, string modelFN, bool perceiveStereo)
         {
             WriteLine("[" + modelFN + "]");
             WriteLine("    Loading " + sdfile);
@@ -369,15 +376,16 @@ namespace NCDK.Fingerprints.Model
                 int row = 0, numActives = 0;
                 using (
                     EnumerableSDFReader rdr = new EnumerableSDFReader(
-                        ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile), Default.ChemObjectBuilder.Instance))
+                        ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile), ChemObjectBuilder.Instance))
                 {
                     foreach (var mol in rdr)
                     {
                         row++;
 
                         string stractv = (string)mol.GetProperties()[actvField];
-                        int active = stractv.Equals("true") ? 1 : stractv.Equals("false") ? 0 : int.Parse(stractv);
-                        if (active != 0 && active != 1) throw new CDKException("Activity field not found or invalid");
+                        int active = stractv.Equals("true", StringComparison.Ordinal) ? 1 : stractv.Equals("false", StringComparison.Ordinal) ? 0 : int.Parse(stractv, NumberFormatInfo.InvariantInfo);
+                        if (active != 0 && active != 1)
+                            throw new CDKException("Activity field not found or invalid");
 
                         model.AddMolecule(mol, active == 1);
                         numActives += active;
@@ -423,7 +431,7 @@ namespace NCDK.Fingerprints.Model
                     WriteLine("    ** reference training actives=" + reference.TrainingActives);
                     failed = true;
                 }
-                if (!model.RocType.Equals(reference.RocType))
+                if (model.RocType != reference.RocType)
                 {
                     WriteLine("    ** reference ROC type=" + reference.RocType);
                     failed = true;
@@ -440,13 +448,13 @@ namespace NCDK.Fingerprints.Model
                 }
                 if (Math.Abs(model.HighThreshold - reference.HighThreshold) > 0.00000000000001)
                 {
-                    WriteLine("    ** reference highThresh=" + reference.HighThreshold + " different to calculated "
-                            + model.HighThreshold);
+                    WriteLine("    ** reference highThresh=" + reference.HighThreshold + " different to calculated " + model.HighThreshold);
                     failed = true;
                 }
 
                 // make sure individual hash bit contributions match
-                IDictionary<int, double> mbits = model.Contributions, rbits = reference.Contributions;
+                var mbits = model.Contributions;
+                var rbits = reference.Contributions;
                 if (mbits.Count != rbits.Count)
                 {
                     WriteLine("    ///* model has " + mbits.Count + " contribution bits, reference has " + rbits.Count);
@@ -478,11 +486,12 @@ namespace NCDK.Fingerprints.Model
                         }
                     }
 
-                if (failed) throw new CDKException("Comparison to reference failed");
+                if (failed)
+                    throw new CDKException("Comparison to reference failed");
             }
-            catch (CDKException ex)
+            catch (CDKException)
             {
-                throw ex;
+                throw;
             }
             catch (Exception ex)
             {
@@ -491,19 +500,18 @@ namespace NCDK.Fingerprints.Model
         }
 
         // convenience functions
-        private void WriteLine(string str)
+        private static void WriteLine(string str)
         {
-            //Console.Out.WriteLine(str);
             Trace.TraceInformation(str);
         }
 
-        private bool DblEqual(double v1, double v2)
+        private static bool DblEqual(double v1, double v2)
         {
             return v1 == v2 || Math.Abs(v1 - v2) <= 1E-7 * Math.Max(Math.Abs(v1), Math.Abs(v2));   
                 // 1E-14 to 1E-7 because of precision difference between double and float.
         }
 
-        private string ArrayStr(int[] A)
+        private static string ArrayStr(int[] A)
         {
             if (A == null) return "{null}";
             string str = "";

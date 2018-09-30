@@ -18,7 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System;
 
 namespace NCDK.Formula.Rules
@@ -27,7 +27,7 @@ namespace NCDK.Formula.Rules
     [TestClass()]
     public class ElementRuleTest : FormulaRuleTest
     {
-        private static readonly IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = ChemObjectBuilder.Instance;
         protected override Type RuleClass => typeof(ElementRule);
 
         [TestMethod()]
@@ -44,7 +44,7 @@ namespace NCDK.Formula.Rules
             var objects = rule.Parameters;
 
             // MolecularFormulaRange needs a build to create isotopes
-            Assert.AreEqual(1, objects.Length);
+            Assert.AreEqual(1, objects.Count);
             Assert.IsNull(objects[0]);
 
             // when we do a validation...
@@ -52,7 +52,7 @@ namespace NCDK.Formula.Rules
 
             // a default option is created
             objects = rule.Parameters;
-            Assert.AreEqual(1, objects.Length);
+            Assert.AreEqual(1, objects.Count);
             Assert.IsNotNull(objects[0]);
 
             MolecularFormulaRange mfRange = (MolecularFormulaRange)objects[0];
@@ -73,7 +73,7 @@ namespace NCDK.Formula.Rules
             rule.Parameters = new object[] { mfRange };
 
             var objects = rule.Parameters;
-            Assert.AreEqual(1, objects.Length);
+            Assert.AreEqual(1, objects.Count);
 
             MolecularFormulaRange mfRange2 = (MolecularFormulaRange)objects[0];
             Assert.AreEqual(mfRange.Count, mfRange2.Count);
@@ -94,7 +94,7 @@ namespace NCDK.Formula.Rules
         }
 
         [TestMethod()]
-        public void TestDefaultValidFalse_SetParam()
+        public void TestDefaultValidFalseSetParam()
         {
             IRule rule = new ElementRule();
 

@@ -21,8 +21,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace NCDK.Config
 {
@@ -35,14 +35,13 @@ namespace NCDK.Config
     internal sealed class BODRIsotope
         : IIsotope
     {
-        private string element;
+        private readonly string element;
         private int? atomicNumber;
         private double? naturalAbundance;
         private double? exactMass;
         private int? massNumber;
 
-        public BODRIsotope(string element, int? atomicNumber, int? massNumber, double? exactMass,
-                double? naturalAbundance)
+        public BODRIsotope(string element, int? atomicNumber, int? massNumber, double? exactMass, double? naturalAbundance)
         {
             this.element = element;
             this.atomicNumber = atomicNumber;
@@ -54,7 +53,7 @@ namespace NCDK.Config
         public bool Compare(object obj) => this == obj;
 
         // ignored event
-        public ICollection<IChemObjectListener> Listeners { get; } = new ReadOnlyCollection<IChemObjectListener>(new List<IChemObjectListener>());
+        public ICollection<IChemObjectListener> Listeners { get; } = Array.Empty<IChemObjectListener>();
         public bool Notification { get { return false; } set { } }
         public void NotifyChanged() { }
 
@@ -65,7 +64,7 @@ namespace NCDK.Config
         public void RemoveProperty(object description) { }
         public T GetProperty<T>(object description) => default(T);
         public T GetProperty<T>(object description, T defaultValue) => default(T);
-        public IDictionary<object, object> GetProperties() => null;
+        public IReadOnlyDictionary<object, object> GetProperties() => null;
 
         public bool IsPlaced { get { return false; } set { } }
         public bool IsVisited { get { return false; } set { } }
@@ -112,4 +111,3 @@ namespace NCDK.Config
         public ICDKObject Clone(CDKObjectMap map)  => this;
     }
 }
-

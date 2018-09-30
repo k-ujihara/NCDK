@@ -43,23 +43,24 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     {
         /// <summary>
         /// Gets the fragments from a target matching a set of query fragments.
-        /// <para>
+        /// </summary>
+        /// <remarks>
         /// This method returns a list of lists. Each list contains the atoms of the target <see cref="IAtomContainer"/>
         /// that arise in the mapping of bonds in the target molecule to the bonds in the query fragment.
         /// The query fragments should be constructed
         /// using the <see cref="QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(IAtomContainer, bool)"/> method of the <see cref="QueryAtomContainerCreator"/>
-        /// CDK class, since we are only interested in connectivity and not actual atom or bond type information.</para>
-        /// </summary>
+        /// CDK class, since we are only interested in connectivity and not actual atom or bond type information.
+        /// </remarks>
         /// <param name="atomContainer">The target <see cref="IAtomContainer"/></param>
         /// <param name="queries">An array of query fragments</param>
         /// <returns>A list of lists, each list being the atoms that match the query fragments</returns>
-        public static IList<IList<int>> GetFragments(IAtomContainer atomContainer, QueryAtomContainer[] queries)
+        public static IEnumerable<IReadOnlyList<int>> GetFragments(IAtomContainer atomContainer, QueryAtomContainer[] queries)
         {
-            UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
-            var uniqueSubgraphs = new List<IList<int>>();
+            var universalIsomorphismTester = new UniversalIsomorphismTester();
+            var uniqueSubgraphs = new List<IReadOnlyList<int>>();
             foreach (var query in queries)
             {
-                IList<IList<RMap>> subgraphMaps = null;
+                IEnumerable<IReadOnlyList<RMap>> subgraphMaps = null;
                 try
                 {
                     // we get the list of bond mappings
@@ -69,8 +70,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     Console.Error.WriteLine(e.StackTrace);
                 }
-                if (subgraphMaps == null) continue;
-                if (!subgraphMaps.Any()) continue;
+                if (subgraphMaps == null)
+                    continue;
+                if (!subgraphMaps.Any())
+                    continue;
 
                 // get the atom paths in the unique set of bond maps
                 uniqueSubgraphs.AddRange(GetUniqueBondSubgraphs(subgraphMaps, atomContainer));
@@ -83,19 +86,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             // will have number of atoms equal to the number of bonds+1. So we need to check
             // fragment size against all unique query sizes - I get lazy and don't check
             // unique query sizes, but the size of each query
-            var retValue = new List<IList<int>>();
             foreach (var fragment in uniqueSubgraphs)
             {
                 foreach (var query in queries)
                 {
                     if (fragment.Count == query.Atoms.Count)
                     {
-                        retValue.Add(fragment);
+                        yield return fragment;
                         break;
                     }
                 }
             }
-            return retValue;
+            yield break;
         }
 
         /// <summary>
@@ -104,7 +106,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="atomContainer">The target <see cref="IAtomContainer"/></param>
         /// <param name="fragLists">A list of fragments</param>
         /// <returns>The simple chi index</returns>
-        public static double EvalSimpleIndex(IAtomContainer atomContainer, IList<IList<int>> fragLists)
+        public static double EvalSimpleIndex(IAtomContainer atomContainer, IEnumerable<IReadOnlyList<int>> fragLists)
         {
             double sum = 0;
             foreach (var fragList in fragLists)
@@ -112,11 +114,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 double prod = 1.0;
                 foreach (var atomSerial in fragList)
                 {
-                    IAtom atom = atomContainer.Atoms[atomSerial];
-                    int nconnected = atomContainer.GetConnectedAtoms(atom).Count();
+                    var atom = atomContainer.Atoms[atomSerial];
+                    var nconnected = atomContainer.GetConnectedAtoms(atom).Count();
                     prod = prod * nconnected;
                 }
-                if (prod != 0) sum += 1.0 / Math.Sqrt(prod);
+                if (prod != 0)
+                    sum += 1.0 / Math.Sqrt(prod);
             }
             return sum;
         }
@@ -132,11 +135,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="fragList">A list of fragments</param>
         /// <returns>The valence corrected chi index</returns>
         /// <exception cref="CDKException"> if the <see cref="IsotopeFactory"/> cannot be created</exception>
-        public static double EvalValenceIndex(IAtomContainer atomContainer, IList<IList<int>> fragList)
+        public static double EvalValenceIndex(IAtomContainer atomContainer, IEnumerable<IReadOnlyList<int>> fragList)
         {
             try
             {
-                IsotopeFactory ifac = Isotopes.Instance;
+                var ifac = BODRIsotopeFactory.Instance;
                 ifac.ConfigureAtoms(atomContainer);
             }
             catch (IOException e)
@@ -150,41 +153,46 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 double prod = 1.0;
                 foreach (var aFrag in frag)
                 {
-                    int atomSerial = (int)aFrag;
-                    IAtom atom = atomContainer.Atoms[atomSerial];
+                    var atomSerial = aFrag;
+                    var atom = atomContainer.Atoms[atomSerial];
 
                     string sym = atom.Symbol;
-
-                    if (sym.Equals("S"))
-                    { // check for some special S environments
-                        double tmp = DeltavSulphur(atom, atomContainer);
-                        if (tmp != -1)
-                        {
-                            prod = prod * tmp;
-                            continue;
-                        }
+                    switch (sym)
+                    {
+                        case "S":
+                            { // check for some special S environments
+                                var tmp = DeltavSulphur(atom, atomContainer);
+                                if (tmp != -1)
+                                {
+                                    prod = prod * tmp;
+                                    continue;
+                                }
+                            }
+                            break;
+                        case "P":
+                            { // check for some special P environments
+                                var tmp = DeltavPhosphorous(atom, atomContainer);
+                                if (tmp != -1)
+                                {
+                                    prod = prod * tmp;
+                                    continue;
+                                }
+                            }
+                            break;
                     }
-                    if (sym.Equals("P"))
-                    { // check for some special P environments
-                        double tmp = DeltavPhosphorous(atom, atomContainer);
-                        if (tmp != -1)
-                        {
-                            prod = prod * tmp;
-                            continue;
-                        }
-                    }
 
-                    int z = atom.AtomicNumber.Value;
+                    var z = atom.AtomicNumber.Value;
 
                     // TODO there should be a neater way to get the valence electron count
-                    int zv = GetValenceElectronCount(atom);
+                    var zv = GetValenceElectronCount(atom);
 
-                    int hsupp = atom.ImplicitHydrogenCount.Value;
-                    double deltav = (double)(zv - hsupp) / (double)(z - zv - 1);
+                    var hsupp = atom.ImplicitHydrogenCount.Value;
+                    var deltav = (double)(zv - hsupp) / (double)(z - zv - 1);
 
                     prod = prod * deltav;
                 }
-                if (prod != 0) sum += 1.0 / Math.Sqrt(prod);
+                if (prod != 0)
+                    sum += 1.0 / Math.Sqrt(prod);
             }
             return sum;
         }
@@ -208,25 +216,29 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>The empirical delta V if it is present in one of the above environments, -1 otherwise</returns>
         protected internal static double DeltavSulphur(IAtom atom, IAtomContainer atomContainer)
         {
-            if (!atom.Symbol.Equals("S")) return -1;
+            if (!string.Equals(atom.Symbol, "S", StringComparison.Ordinal))
+                return -1;
 
             // check whether it's a S in S-S
             var connected = atomContainer.GetConnectedAtoms(atom);
             foreach (var connectedAtom in connected)
             {
-                if (connectedAtom.Symbol.Equals("S")
-                        && atomContainer.GetBond(atom, connectedAtom).Order == BondOrder.Single) return .89;
+                if (connectedAtom.Symbol.Equals("S", StringComparison.Ordinal)
+                 && atomContainer.GetBond(atom, connectedAtom).Order == BondOrder.Single)
+                    return 0.89;
             }
 
             int count = 0;
             foreach (var connectedAtom in connected)
             {
-                if (connectedAtom.Symbol.Equals("O")
-                        && atomContainer.GetBond(atom, connectedAtom).Order == BondOrder.Double) count++;
+                if (connectedAtom.Symbol.Equals("O", StringComparison.Ordinal)
+                 && atomContainer.GetBond(atom, connectedAtom).Order == BondOrder.Double)
+                    count++;
             }
             if (count == 1)
                 return 1.33; // check whether it's a S in -SO-
-            else if (count == 2) return 2.67; // check whether it's a S in -SO2-
+            else if (count == 2)
+                return 2.67; // check whether it's a S in -SO2-
 
             return -1;
         }
@@ -242,20 +254,25 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>The empirical delta V if present in the above environment, -1 otherwise</returns>
         private static double DeltavPhosphorous(IAtom atom, IAtomContainer atomContainer)
         {
-            if (!atom.Symbol.Equals("P")) return -1;
+            if (!string.Equals(atom.Symbol, "P", StringComparison.Ordinal))
+                return -1;
 
             var connected = atomContainer.GetConnectedAtoms(atom);
             int conditions = 0;
 
-            if (connected.Count() == 4) conditions++;
+            if (connected.Count() == 4)
+                conditions++;
 
             foreach (var connectedAtom in connected)
             {
-                if (connectedAtom.Symbol.Equals("O")
-                        && atomContainer.GetBond(atom, connectedAtom).Order == BondOrder.Double) conditions++;
-                if (atomContainer.GetBond(atom, connectedAtom).Order == BondOrder.Single) conditions++;
+                if (connectedAtom.Symbol.Equals("O", StringComparison.Ordinal)
+                 && atomContainer.GetBond(atom, connectedAtom).Order == BondOrder.Double)
+                    conditions++;
+                if (atomContainer.GetBond(atom, connectedAtom).Order == BondOrder.Single)
+                    conditions++;
             }
-            if (conditions == 5) return 2.22;
+            if (conditions == 5)
+                return 2.22;
             return -1;
         }
 
@@ -270,16 +287,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="subgraphs">A <see cref="IList{T}"/> of bon mappings</param>
         /// <param name="ac">The molecule we are examining</param>
         /// <returns>A unique <see cref="IList{T}"/> of atom paths</returns>
-        private static IList<IList<int>> GetUniqueBondSubgraphs(IList<IList<RMap>> subgraphs, IAtomContainer ac)
+        private static List<IReadOnlyList<int>> GetUniqueBondSubgraphs(IEnumerable<IReadOnlyList<RMap>> subgraphs, IAtomContainer ac)
         {
-            List<List<int>> bondList = new List<List<int>>();
+            var bondList = new List<List<int>>();
             foreach (var subgraph in subgraphs)
             {
                 var current = subgraph;
                 var ids = new List<int>();
                 foreach (var aCurrent in current)
                 {
-                    RMap rmap = (RMap)aCurrent;
+                    var rmap = aCurrent;
                     ids.Add(rmap.Id1);
                 }
                 ids.Sort();
@@ -287,21 +304,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 foreach (var bl in bondList)
                 {
                     if (Compares.AreEqual(bl, ids))
-                        goto GO_NO_REGISTER; ;
+                        goto GO_NO_REGISTER;
                 }
-            bondList.Add(ids);
-                GO_NO_REGISTER:
+                bondList.Add(ids);
+            GO_NO_REGISTER:
                 ;
             }
 
-            var paths = new List<IList<int>>();
+            var paths = new List<IReadOnlyList<int>>();
             foreach (var aBondList1 in bondList)
             {
                 var aBondList = aBondList1;
                 var tmp = new List<int>();
-                foreach (var anABondList in aBondList)
+                foreach (var bondNumber in aBondList)
                 {
-                    int bondNumber = (int)anABondList;
                     foreach (var atom in ac.Bonds[bondNumber].Atoms)
                     {
                         int atomInt = ac.Atoms.IndexOf(atom);

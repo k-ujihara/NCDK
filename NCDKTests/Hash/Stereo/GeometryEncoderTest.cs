@@ -39,7 +39,7 @@ namespace NCDK.Hash.Stereo
         [ExpectedException(typeof(ArgumentException))]
         public void TestConstruction_Empty()
         {
-            new GeometryEncoder(new int[0], new Mock<PermutationParity>().Object, new Mock<GeometricParity>().Object);
+            new GeometryEncoder(Array.Empty<int>(), new Mock<PermutationParity>().Object, new Mock<GeometricParity>().Object);
         }
 
         [TestMethod()]

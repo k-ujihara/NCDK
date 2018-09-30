@@ -7,7 +7,7 @@ namespace NCDK.Beam
     [TestClass()]
     public class DaylightDelocalisationTest
     {
-        void Assert_AreEqual(object expected, object actual)
+        static void Assert_AreEqual(object expected, object actual)
         {
             Assert.IsTrue(Compares.AreDeepEqual(expected, actual));
         }

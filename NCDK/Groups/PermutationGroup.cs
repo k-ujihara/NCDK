@@ -69,25 +69,6 @@ namespace NCDK.Groups
     public class PermutationGroup
     {
         /// <summary>
-        /// An interface for use with the apply method, which runs through all the
-        /// permutations in this group.
-        /// </summary>
-        public interface IBacktracker
-        {
-            /// <summary>
-            /// Do something to the permutation
-            /// </summary>
-            /// <param name="p">a permutation in the full group</param>
-            void ApplyTo(Permutation p);
-
-            /// <summary>
-            /// Check to see if the backtracker is finished.
-            /// </summary>
-            /// <returns>true if complete</returns>
-            bool IsFinished();
-        }
-
-        /// <summary>
         /// The compact list of permutations that make up this group
         /// </summary>
         private Permutation[][] permutations;
@@ -222,9 +203,9 @@ namespace NCDK.Groups
         /// </summary>
         /// <param name="index">the index of the transversal</param>
         /// <returns>a list of permutations</returns>
-        public IList<Permutation> GetLeftTransversal(int index)
+        public IReadOnlyCollection<Permutation> GetLeftTransversal(int index)
         {
-            List<Permutation> traversal = new List<Permutation>();
+            var traversal = new List<Permutation>();
             for (int subIndex = 0; subIndex < size; subIndex++)
             {
                 if (permutations[index][subIndex] != null)
@@ -240,11 +221,11 @@ namespace NCDK.Groups
         /// </summary>
         /// <param name="subgroup">the subgroup to use for the transversal</param>
         /// <returns>a list of permutations</returns>
-        public IList<Permutation> Transversal(PermutationGroup subgroup)
+        public IReadOnlyCollection<Permutation> Transversal(PermutationGroup subgroup)
         {
             long m = this.Order() / subgroup.Order();
             var results = new List<Permutation>();
-            IBacktracker transversalBacktracker = new TransversalBacktracker(this, subgroup, m, results);
+            var transversalBacktracker = new TransversalBacktracker(this, subgroup, m, results);
             this.Apply(transversalBacktracker);
             return results;
         }
@@ -253,7 +234,7 @@ namespace NCDK.Groups
         {
             PermutationGroup parent;
             PermutationGroup subgroup;
-            long m;
+            private readonly long m;
             IList<Permutation> results;
             private bool finished = false;
 
@@ -311,7 +292,7 @@ namespace NCDK.Groups
             {
                 for (int i = 0; i < size; i++)
                 {
-                    Permutation h = this.permutations[l][i];
+                    var h = this.permutations[l][i];
                     if (h != null)
                     {
                         Backtrack(l + 1, g.Multiply(h), backtracker);
@@ -324,10 +305,10 @@ namespace NCDK.Groups
         /// Generate the whole group from the compact list of permutations.
         /// </summary>
         /// <returns>a list of permutations</returns>
-        public IList<Permutation> GenerateAll()
+        public IReadOnlyCollection<Permutation> GenerateAll()
         {
             var permutations = new List<Permutation>();
-            IBacktracker counter = new CounterBacktracker(permutations);
+            var counter = new CounterBacktracker(permutations);
             this.Apply(counter);
             return permutations;
         }
@@ -358,7 +339,7 @@ namespace NCDK.Groups
         /// <param name="newBase">the new base for the group</param>
         public void ChangeBase(Permutation newBase)
         {
-            PermutationGroup h = new PermutationGroup(newBase);
+            var h = new PermutationGroup(newBase);
 
             int firstDiffIndex = basePermutation.FirstIndexOfDifference(newBase);
 
@@ -448,7 +429,7 @@ namespace NCDK.Groups
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("Base = ").Append(basePermutation).Append('\n');
             for (int i = 0; i < size; i++)
             {
@@ -461,5 +442,24 @@ namespace NCDK.Groups
             }
             return sb.ToString();
         }
+    }
+
+    /// <summary>
+    /// An interface for use with the apply method, which runs through all the
+    /// permutations in this group.
+    /// </summary>
+    public interface IBacktracker
+    {
+        /// <summary>
+        /// Do something to the permutation
+        /// </summary>
+        /// <param name="p">a permutation in the full group</param>
+        void ApplyTo(Permutation p);
+
+        /// <summary>
+        /// Check to see if the backtracker is finished.
+        /// </summary>
+        /// <returns>true if complete</returns>
+        bool IsFinished();
     }
 }

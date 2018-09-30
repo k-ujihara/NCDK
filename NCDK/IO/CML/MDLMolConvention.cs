@@ -59,18 +59,19 @@ namespace NCDK.IO.CML
         public override void CharacterData(CMLStack xpath, XElement element)
         {
             string s = element.Value.Trim();
-            if (xpath.ToString().EndsWith("string/", StringComparison.Ordinal) && BUILTIN.Equals("stereo"))
+            if (xpath.ToString().EndsWith("string/", StringComparison.Ordinal) && Builtin.Equals("stereo", StringComparison.Ordinal))
             {
                 StereoGiven = true;
-                if (s.Trim().Equals("W"))
+                switch (s.Trim())
                 {
-                    Debug.WriteLine("CML W stereo found");
-                    BondStereo.Add("1");
-                }
-                else if (s.Trim().Equals("H"))
-                {
-                    Debug.WriteLine("CML H stereo found");
-                    BondStereo.Add("6");
+                    case "W":
+                        Debug.WriteLine("CML W stereo found");
+                        BondStereo.Add("1");
+                        break;
+                    case "H":
+                        Debug.WriteLine("CML H stereo found");
+                        BondStereo.Add("6");
+                        break;
                 }
             }
             else

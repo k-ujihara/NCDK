@@ -30,6 +30,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.Fingerprints
@@ -70,7 +71,7 @@ namespace NCDK.Fingerprints
     {
         private const string KeyDefinitions = "Data.maccs.txt";
 
-        private volatile IList<MaccsKey> keys = null;
+        private volatile List<MaccsKey> keys = null;
 
         public MACCSFingerprinter() { }
 
@@ -94,20 +95,20 @@ namespace NCDK.Fingerprints
         public override IBitFingerprint GetBitFingerprint(IAtomContainer container)
         {
             var keys = GetKeys(container.Builder);
-            BitArray fp = new BitArray(keys.Count);
+            var fp = new BitArray(keys.Count);
 
             // init SMARTS invariants (connectivity, degree, etc)
             SmartsMatchers.Prepare(container, false);
 
             int numAtoms = container.Atoms.Count;
 
-            GraphUtil.EdgeToBondMap bmap = GraphUtil.EdgeToBondMap.WithSpaceFor(container);
-            int[][] adjlist = GraphUtil.ToAdjList(container, bmap);
+            var bmap = EdgeToBondMap.WithSpaceFor(container);
+            var adjlist = GraphUtil.ToAdjList(container, bmap);
 
             for (int i = 0; i < keys.Count; i++)
             {
-                MaccsKey key = keys[i];
-                Pattern pattern = key.Pattern;
+                var key = keys[i];
+                var pattern = key.Pattern;
 
                 switch (key.Smarts)
                 {
@@ -227,7 +228,7 @@ namespace NCDK.Fingerprints
             return visited;
         }
 
-        private static bool IsAromPath(int[] path, GraphUtil.EdgeToBondMap bmap)
+        private static bool IsAromPath(int[] path, EdgeToBondMap bmap)
         {
             int end = path.Length - 1;
             for (int i = 0; i < end; i++)
@@ -239,17 +240,17 @@ namespace NCDK.Fingerprints
         }
 
         /// <inheritdoc/>
-        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
+        public override IReadOnlyDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
         {
             throw new NotSupportedException();
         }
 
         /// <inheritdoc/>
-        public override int Count => 166;
+        public override int Length => 166;
 
-        private IList<MaccsKey> ReadKeyDef(IChemObjectBuilder builder)
+        private List<MaccsKey> ReadKeyDef(IChemObjectBuilder builder)
         {
-            List<MaccsKey> keys = new List<MaccsKey>(166);
+            var keys = new List<MaccsKey>(166);
             var reader = new StreamReader(ResourceLoader.GetAsStream(GetType(), KeyDefinitions));
 
             // now process the keys
@@ -260,30 +261,26 @@ namespace NCDK.Fingerprints
                 string data = line.Substring(0, line.IndexOf('|')).Trim();
                 var toks = Strings.Tokenize(data);
 
-                keys.Add(new MaccsKey(toks[1], CreatePattern(toks[1], builder), int.Parse(toks[2])));
+                keys.Add(new MaccsKey(toks[1], CreatePattern(toks[1], builder), int.Parse(toks[2], NumberFormatInfo.InvariantInfo)));
             }
-            if (keys.Count != 166) throw new CDKException("Found " + keys.Count + " keys during setup. Should be 166");
+            if (keys.Count != 166)
+                throw new CDKException($"Found {keys.Count} keys during setup. Should be 166");
             return keys;
         }
 
         private class MaccsKey
         {
-            private string smarts;
-            private int count;
-            private Pattern pattern;
-
             public MaccsKey(string smarts, Pattern pattern, int count)
             {
-                this.smarts = smarts;
-                this.pattern = pattern;
-                this.count = count;
+                this.Smarts = smarts;
+                this.Pattern = pattern;
+                this.Count = count;
             }
 
-            public string Smarts => smarts;
+            public string Smarts { get; }
 
-            public int Count => count;
-
-            public Pattern Pattern => pattern;
+            public int Count { get; }
+            public Pattern Pattern { get; }
         }
 
         /// <inheritdoc/>
@@ -330,9 +327,9 @@ namespace NCDK.Fingerprints
         /// <param name="smarts">a smarts pattern</param>
         /// <param name="builder">chem object builder</param>
         /// <returns>the pattern to match</returns>
-        private Pattern CreatePattern(string smarts, IChemObjectBuilder builder)
+        private static Pattern CreatePattern(string smarts, IChemObjectBuilder builder)
         {
-            if (smarts.Equals("[!0]")) return null; // FIXME can't be parsed by our SMARTS Grammar ATM
+            if (string.Equals(smarts, "[!0]", StringComparison.Ordinal)) return null; // FIXME can't be parsed by our SMARTS Grammar ATM
             return VentoFoggia.FindSubstructure(SMARTSParser.Parse(smarts, builder));
         }
     }

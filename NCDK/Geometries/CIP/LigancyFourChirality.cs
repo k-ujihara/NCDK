@@ -22,6 +22,8 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.Geometries.CIP
 {
@@ -40,9 +42,7 @@ namespace NCDK.Geometries.CIP
     // @cdk.githash
     public class LigancyFourChirality
     {
-        private IAtom chiralAtom;
-        private ILigand[] ligands;
-        private TetrahedralStereo stereo;
+        internal readonly List<ILigand> ligands;
 
         /// <summary>
         /// Creates a new data model for chirality for the CIP rules.
@@ -51,11 +51,14 @@ namespace NCDK.Geometries.CIP
         /// <param name="ligands">An array with exactly four <see cref="ILigand"/>s.</param>
         /// <param name="stereo">A indication of clockwise or anticlockwise orientation of the atoms.</param>
         /// <seealso cref="TetrahedralStereo"/>
-        public LigancyFourChirality(IAtom chiralAtom, ILigand[] ligands, TetrahedralStereo stereo)
+        public LigancyFourChirality(IAtom chiralAtom, IEnumerable<ILigand> ligands, TetrahedralStereo stereo)
         {
-            this.chiralAtom = chiralAtom;
-            this.ligands = ligands;
-            this.stereo = stereo;
+            var _ligands = ligands.ToList();
+            if (_ligands.Count != 4)
+                throw new ArgumentException($"Count of {nameof(ligands)} should be 4.", nameof(ligands));
+            this.ChiralAtom = chiralAtom;
+            this.ligands = _ligands;
+            this.Stereo = stereo;
         }
 
         /// <summary>
@@ -66,65 +69,67 @@ namespace NCDK.Geometries.CIP
         /// <param name="cdkChirality"><see cref="ITetrahedralChirality"/> object specifying the chirality.</param>
         public LigancyFourChirality(IAtomContainer container, ITetrahedralChirality cdkChirality)
         {
-            this.chiralAtom = cdkChirality.ChiralAtom;
+            this.ChiralAtom = cdkChirality.ChiralAtom;
             var ligandAtoms = cdkChirality.Ligands;
-            this.ligands = new ILigand[ligandAtoms.Count];
-            VisitedAtoms visitedAtoms = new VisitedAtoms();
-            for (int i = 0; i < ligandAtoms.Count; i++)
+            this.ligands = new List<ILigand>(ligandAtoms.Count);
+            var visitedAtoms = new VisitedAtoms();
+            foreach (var ligandAtom in ligandAtoms)
             {
-                // ITetrahedralChirality stores a impl hydrogen as the central atom
-                if (ligandAtoms[i] == chiralAtom)
+                // ITetrahedralChirality stores a implicit hydrogen as the central atom
+                if (ligandAtom == ChiralAtom)
                 {
-                    this.ligands[i] = new ImplicitHydrogenLigand(container, visitedAtoms, chiralAtom);
+                    this.ligands.Add(new ImplicitHydrogenLigand(container, visitedAtoms, ChiralAtom));
                 }
                 else
                 {
-                    this.ligands[i] = new Ligand(container, visitedAtoms, chiralAtom, ligandAtoms[i]);
+                    this.ligands.Add(new Ligand(container, visitedAtoms, ChiralAtom, ligandAtom));
                 }
             }
-            this.stereo = cdkChirality.Stereo;
+            this.Stereo = cdkChirality.Stereo;
         }
 
         /// <summary>
-        /// Returns the four ligands for this chirality.
+        /// The four ligands for this chirality.
         /// </summary>
-        /// <returns>An array of four <see cref="ILigand"/>s.</returns>
-        public ILigand[] Ligands => ligands;
+        public IReadOnlyList<ILigand> Ligands => ligands;
 
         /// <summary>
         /// Returns the chiral <see cref="IAtom"/> to which the four ligands are connected..
         /// </summary>
         /// <returns>The chiral <see cref="IAtom"/>.</returns>
-        public IAtom ChiralAtom => chiralAtom;
+        public IAtom ChiralAtom { get; }
 
         /// <summary>
         /// Returns the chirality value for this stereochemistry object.
         /// </summary>
         /// <returns>A <see cref="TetrahedralStereo"/> value.</returns>
-        public TetrahedralStereo Stereo => stereo;
+        public TetrahedralStereo Stereo { get; }
 
         /// <summary>
         /// Recalculates the <see cref="LigancyFourChirality"/> based on the new, given atom ordering.
         /// </summary>
         /// <param name="newOrder">new order of atoms</param>
         /// <returns>the chirality following the new atom order</returns>
-        public LigancyFourChirality Project(ILigand[] newOrder)
+        public LigancyFourChirality Project(IEnumerable<ILigand> newOrder)
         {
-            TetrahedralStereo newStereo = this.stereo;
+            var _newOrder = newOrder.ToList();
+            if (_newOrder.Count != 4)
+                throw new ArgumentException($"Count of {nameof(newOrder)} should be 4.", nameof(newOrder));
+
+            var newStereo = this.Stereo;
             // copy the current ordering, and work with that
-            ILigand[] newAtoms = new ILigand[4];
-            Array.Copy(this.ligands, 0, newAtoms, 0, 4);
+            var newAtoms = this.ligands.ToArray();
 
             // now move atoms around to match the newOrder
             for (int i = 0; i < 3; i++)
             {
-                if (newAtoms[i].GetLigandAtom() != newOrder[i].GetLigandAtom())
+                if (newAtoms[i].LigandAtom != _newOrder[i].LigandAtom)
                 {
                     // OK, not in the right position
                     // find the incorrect, old position
                     for (int j = i; j < 4; j++)
                     {
-                        if (newAtoms[j].GetLigandAtom() == newOrder[i].GetLigandAtom())
+                        if (newAtoms[j].LigandAtom == _newOrder[i].LigandAtom)
                         {
                             // found the incorrect position
                             Swap(newAtoms, i, j);
@@ -141,12 +146,12 @@ namespace NCDK.Geometries.CIP
                     }
                 }
             }
-            return new LigancyFourChirality(chiralAtom, newAtoms, newStereo);
+            return new LigancyFourChirality(ChiralAtom, newAtoms, newStereo);
         }
 
-        private void Swap(ILigand[] ligands, int first, int second)
+        private static void Swap(ILigand[] ligands, int first, int second)
         {
-            ILigand tmpLigand = ligands[first];
+            var tmpLigand = ligands[first];
             ligands[first] = ligands[second];
             ligands[second] = tmpLigand;
         }

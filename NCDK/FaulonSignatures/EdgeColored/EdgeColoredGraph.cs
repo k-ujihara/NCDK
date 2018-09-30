@@ -9,7 +9,7 @@ namespace NCDK.FaulonSignatures.EdgeColored
     // @author maclean
     public class EdgeColoredGraph
     {
-        public class Edge : IComparable<Edge>
+        internal class Edge : IComparable<Edge>
         {
             public int a;
             public int b;
@@ -56,29 +56,27 @@ namespace NCDK.FaulonSignatures.EdgeColored
 
         }
 
-        public List<Edge> edges;
-
-        public int maxVertexIndex;
-
-        public string name;
+        internal List<Edge> Edges { get; set; }
+        public int MaxVertexIndex { get; set; }
+        public string Name { get; set; }
 
         public EdgeColoredGraph()
         {
-            this.edges = new List<Edge>();
+            this.Edges = new List<Edge>();
         }
 
         public EdgeColoredGraph(EdgeColoredGraph graph, int[] permutation)
-                : this()
+            : this()
         {
-            foreach (var e in graph.edges)
+            foreach (var e in graph.Edges)
             {
                 MakeEdge(permutation[e.a], permutation[e.b], e.edgeLabel);
             }
         }
 
-        public Edge GetEdge(int a, int b)
+        internal Edge GetEdge(int a, int b)
         {
-            foreach (var edge in edges)
+            foreach (var edge in Edges)
             {
                 if ((edge.a == a && edge.b == b) || (edge.a == b && edge.b == a))
                 {
@@ -90,19 +88,19 @@ namespace NCDK.FaulonSignatures.EdgeColored
 
         public void MakeEdge(int a, int b, string edgeLabel)
         {
-            if (a > maxVertexIndex) maxVertexIndex = a;
-            if (b > maxVertexIndex) maxVertexIndex = b;
-            this.edges.Add(new Edge(a, b, edgeLabel));
+            if (a > MaxVertexIndex) MaxVertexIndex = a;
+            if (b > MaxVertexIndex) MaxVertexIndex = b;
+            this.Edges.Add(new Edge(a, b, edgeLabel));
         }
 
         public int GetVertexCount()
         {
-            return this.maxVertexIndex + 1;
+            return this.MaxVertexIndex + 1;
         }
 
         public bool IsConnected(int i, int j)
         {
-            foreach (var e in edges)
+            foreach (var e in Edges)
             {
                 if ((e.a == i && e.b == j) || (e.b == i && e.a == j))
                 {
@@ -115,7 +113,7 @@ namespace NCDK.FaulonSignatures.EdgeColored
         public int[] GetConnected(int vertexIndex)
         {
             List<int> connected = new List<int>();
-            foreach (var edge in this.edges)
+            foreach (var edge in this.Edges)
             {
                 if (edge.a == vertexIndex)
                 {
@@ -143,7 +141,7 @@ namespace NCDK.FaulonSignatures.EdgeColored
         public int Degree(int vertexIndex)
         {
             int degreeCount = 0;
-            foreach (var e in edges)
+            foreach (var e in Edges)
             {
                 if (e.a == vertexIndex || e.b == vertexIndex)
                 {
@@ -155,8 +153,8 @@ namespace NCDK.FaulonSignatures.EdgeColored
 
         public override string ToString()
         {
-            edges.Sort();
-            return edges.ToString();
+            Edges.Sort();
+            return Edges.ToString();
         }
     }
 }

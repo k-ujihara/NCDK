@@ -19,7 +19,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
-using NCDK.Default;
+using NCDK.Silent;
 
 namespace NCDK.Tools
 {
@@ -35,7 +35,7 @@ namespace NCDK.Tools
     [TestClass()]
     public class DeduceBondOrderTestFromExplicitHydrogens : CDKTestCase
     {
-        private IDeduceBondOrderTool dboTool = new SaturationChecker();
+        private static readonly IDeduceBondOrderTool dboTool = CDK.SaturationChecker;
 
         /// <summary>
         /// Test <div class="inchi">InChI=1/C2H2/c1-2/h1-2H</div>.

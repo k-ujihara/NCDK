@@ -16,10 +16,12 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.QSAR.Descriptors.Proteins
@@ -103,7 +105,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
 
         private Dictionary<string, string> nametrans = new Dictionary<string, string>();
 
-        private List<IMonomer> GetMonomers(IBioPolymer iBioPolymer)
+        private static List<IMonomer> GetMonomers(IBioPolymer iBioPolymer)
         {
             List<IMonomer> monomList = new List<IMonomer>();
 
@@ -147,7 +149,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
 
                     double[] data = new double[ndesc];
                     for (int j = 1; j < components.Length; j++)
-                        data[j - 1] = double.Parse(components[j]);
+                        data[j - 1] = double.Parse(components[j], NumberFormatInfo.InvariantInfo);
 
                     taeParams[key] = data;
                 }
@@ -194,8 +196,8 @@ namespace NCDK.QSAR.Descriptors.Proteins
             LoadTAEParams();
         }
 
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#taeAminoAcid",
                 typeof(TaeAminoAcidDescriptor).FullName, "The Chemistry Development Kit");
@@ -203,7 +205,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
         /// <summary>
         /// The parameters attribute of the TaeAminoAcidDescriptor object.
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public IReadOnlyList<string> DescriptorNames
         {
@@ -234,7 +236,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results, DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results, DescriptorNames, e);
         }
 
         /// <summary>
@@ -265,10 +267,10 @@ namespace NCDK.QSAR.Descriptors.Proteins
 
                 if (o.Length == 0) continue;
 
-                string olc = o.ToLowerInvariant()[0].ToString();
+                string olc = new string(new char[] { o.ToLowerInvariant()[0] });
                 string tlc = (string)nametrans[olc];
 
-                Debug.WriteLine("Converted " + olc + " to " + tlc);
+                Debug.WriteLine($"Converted {olc} to {tlc}");
 
                 // get the params for this AA
                 Double[] parameters = (Double[])taeParams[tlc];
@@ -281,7 +283,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
             for (int i = 0; i < ndesc; i++)
                 retval.Add(desc[i]);
 
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval, DescriptorNames);
         }
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container)

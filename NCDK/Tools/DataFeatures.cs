@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 
 using System;
@@ -52,40 +51,40 @@ namespace NCDK.Tools
         // COORDINATE SYSTEMS
 
         /// <summary>@cdk.dictref bodf:coordinates2D</summary>
-        HAS_2D_COORDINATES = 1 << 0,
+        Has2DCoordinates = 1 << 0,
         /// <summary>@cdk.dictref bodf:coordinates3D</summary>
-        HAS_3D_COORDINATES = 1 << 1,
+        Has3DCoordinates = 1 << 1,
         /// <summary>@cdk.dictref bodf:fractionalUnitCellCoordinatesCoordinates</summary>
-        HAS_FRACTIONAL_CRYSTAL_COORDINATES = 1 << 2,
+        HasFractionalCrystalCoordinates = 1 << 2,
 
         // ATOMIC FEATURES
         //                      HAS_ATOMS ??
 
         /// <summary>@cdk.dictref bodf:hasAtomElementSymbol</summary>
-        HAS_ATOM_ELEMENT_SYMBOL = 1 << 3,
+        HasAtomElementSymbol = 1 << 3,
         /// <summary>@cdk.dictref bodf:partialAtomicCharges</summary>
-        HAS_ATOM_PARTIAL_CHARGES = 1 << 4,
+        HasAtomPartialCharges = 1 << 4,
         /// <summary>@cdk.dictref bodf:formalAtomicCharges</summary>
-        HAS_ATOM_FORMAL_CHARGES = 1 << 5,
+        HasAtomFormalCharges = 1 << 5,
         /// <summary>FIXME: NOT YET IN BODF !!! </summary>
-        HAS_ATOM_HYBRIDIZATIONS = 1 << 6,
+        HasAtomHybridizations = 1 << 6,
         /// <summary>@cdk.dictref bodf:massNumbers</summary>
-        HAS_ATOM_MASS_NUMBERS = 1 << 7,
+        HasAtomMassNumbers = 1 << 7,
         /// <summary>@cdk.dictref bodf:isotopeNumbers</summary>
-        HAS_ATOM_ISOTOPE_NUMBERS = 1 << 8,
+        HasAtomIsotopeNumbers = 1 << 8,
 
         // GRAPH FEATURES
 
         /// <summary>@cdk.dictref bodf:graphRepresentation</summary>
-        HAS_GRAPH_REPRESENTATION = 1 << 9,
+        HasGraphRepresentation = 1 << 9,
         /// <summary>@cdk.dictref bodf:dietzRepresentation</summary>
-        HAS_DIETZ_REPRESENTATION = 1 << 10,
+        HasDietzRepresentation = 1 << 10,
 
         // MODEL FEATURES
 
         /// <summary>FIXME: NOT YET IN BODF !!! </summary>
-        HAS_UNITCELL_PARAMETERS = 1 << 11,
+        HasUnitcellParameters = 1 << 11,
         /// <summary>FIXME: NOT YET IN BODF !!! </summary>
-        HAS_REACTIONS = 1 << 12,
+        HasReactions = 1 << 12,
     }
 }

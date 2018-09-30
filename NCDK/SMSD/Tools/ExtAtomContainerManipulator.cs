@@ -42,7 +42,7 @@ namespace NCDK.SMSD.Tools
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    public class ExtAtomContainerManipulator
+    public static class ExtAtomContainerManipulator
     {
         private static void PrintAtoms(IAtomContainer mol)
         {
@@ -155,7 +155,7 @@ namespace NCDK.SMSD.Tools
             foreach (var iAtom in atomContainer.GetConnectedAtoms(atom))
             {
                 IAtom connectedAtom = iAtom;
-                if (connectedAtom.Symbol.Equals("H"))
+                if (string.Equals(connectedAtom.Symbol, "H", StringComparison.Ordinal))
                 {
                     hCount++;
                 }
@@ -199,7 +199,7 @@ namespace NCDK.SMSD.Tools
                 List<IAtom> remove = new List<IAtom>(); // lists removed Hs.
                 foreach (var atom in atomContainer.Atoms)
                 {
-                    if (atom.Symbol.Equals("H"))
+                    if (string.Equals(atom.Symbol, "H", StringComparison.Ordinal))
                         remove.Add(atom);
                 }
                 foreach (var a in remove)

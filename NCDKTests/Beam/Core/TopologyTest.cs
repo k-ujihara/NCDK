@@ -26,13 +26,13 @@ namespace NCDK.Beam
         [TestMethod()]
         public void UnknownTransform()
         {
-            Assert.AreSame(Topology.Unknown, Topology.Unknown.Transform(new int[0]));
+            Assert.AreSame(Topology.Unknown, Topology.Unknown.Transform(Array.Empty<int>()));
         }
 
         [TestMethod()]
         public void UnknownOrderBy()
         {
-            Assert.AreSame(Topology.Unknown, Topology.Unknown.OrderBy(new int[0]));
+            Assert.AreSame(Topology.Unknown, Topology.Unknown.OrderBy(Array.Empty<int>()));
         }
 
         [TestMethod()]
@@ -314,14 +314,14 @@ namespace NCDK.Beam
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Create_AntiClockwise()
         {
-            Topology.Create(0, new int[0], new List<Edge>(), Configuration.AntiClockwise);
+            Topology.Create(0, Array.Empty<int>(), new List<Edge>(), Configuration.AntiClockwise);
         }
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Create_Clockwise()
         {
-            Topology.Create(0, new int[0], new List<Edge>(), Configuration.Clockwise);
+            Topology.Create(0, Array.Empty<int>(), new List<Edge>(), Configuration.Clockwise);
         }
 
         [TestMethod()]
@@ -379,7 +379,7 @@ namespace NCDK.Beam
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Create_al()
         {
-            Assert.AreEqual(Topology.Unknown, Topology.Create(0, new int[0], new List<Edge>(), Configuration.AL1));
+            Assert.AreEqual(Topology.Unknown, Topology.Create(0, Array.Empty<int>(), new List<Edge>(), Configuration.AL1));
         }
 
         [TestMethod()]

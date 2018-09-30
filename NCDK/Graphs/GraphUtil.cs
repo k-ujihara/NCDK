@@ -67,7 +67,7 @@ namespace NCDK.Graphs
 
             int n = container.Atoms.Count;
 
-            List<int>[] graph = new List<int>[n];
+            var graph = new List<int>[n];
             for (var i = 0; i < n; i++)
                 graph[i] = new List<int>();
 
@@ -77,7 +77,7 @@ namespace NCDK.Graphs
                 int w = container.Atoms.IndexOf(bond.End);
 
                 if (v < 0 || w < 0)
-                    throw new ArgumentException($"bond at index {container.Bonds.IndexOf(bond)} contained an atom not pressent in molecule");
+                    throw new ArgumentException($"bond at index {container.Bonds.IndexOf(bond)} contained an atom not present in molecule");
 
                 graph[v].Add(w);
                 graph[w].Add(v);
@@ -85,7 +85,7 @@ namespace NCDK.Graphs
                 bondMap?.Add(v, w, bond);
             }
 
-            int[][] agraph = new int[n][];
+            var agraph = new int[n][];
             for (int v = 0; v < n; v++)
             {
                 agraph[v] = graph[v].ToArray();
@@ -104,7 +104,8 @@ namespace NCDK.Graphs
         /// <exception cref="ArgumentException">a bond was found which contained atoms not in the molecule</exception>
         public static int[][] ToAdjListSubgraph(IAtomContainer container, ISet<IBond> include)
         {
-            if (container == null) throw new ArgumentNullException("atom container was null");
+            if (container == null)
+                throw new ArgumentNullException(nameof(container), "atom container was null");
 
             int n = container.Atoms.Count;
 
@@ -121,7 +122,7 @@ namespace NCDK.Graphs
                 int w = container.Atoms.IndexOf(bond.End);
 
                 if (v < 0 || w < 0)
-                    throw new ArgumentException($"bond at index {container.Bonds.IndexOf(bond)} contained an atom not pressent in molecule");
+                    throw new ArgumentException($"bond at index {container.Bonds.IndexOf(bond)} contained an atom not present in molecule");
 
                 graph[v].Add(w);
                 graph[w].Add(v);
@@ -154,12 +155,12 @@ namespace NCDK.Graphs
             int m = include.Length;
 
             // mapping from vertex in 'graph' to 'subgraph'
-            int[] mapping = new int[n];
+            var mapping = new int[n];
             for (int i = 0; i < m; i++)
                 mapping[include[i]] = i + 1;
 
             // initialise the subgraph
-            List<int>[] subgraph = new List<int>[m];
+            var subgraph = new List<int>[m];
             for (var i = 0; i < m; i++)
                 subgraph[i] = new List<int>();
 
@@ -243,86 +244,94 @@ namespace NCDK.Graphs
                     return x;
             return -1;
         }
+    }
 
-        /// <summary>Utility for storing <see cref="IBond"/>s indexed by vertex end points.</summary>
-        public class EdgeToBondMap
+    /// <summary>
+    /// Utility for storing <see cref="IBond"/>s indexed by vertex end points.
+    /// </summary>
+    public class EdgeToBondMap
+    {
+        Dictionary<Tuple, IBond> lookup = new Dictionary<Tuple, IBond>();
+
+        public EdgeToBondMap()
         {
-            Dictionary<Tuple, IBond> lookup = new Dictionary<Tuple, IBond>();
+        }
 
-            internal EdgeToBondMap()
-            { }
+        /// <summary>
+        /// Index a bond by the endpoints.
+        /// </summary>
+        /// <param name="v">an endpoint</param>
+        /// <param name="w">another endpoint</param>
+        /// <param name="bond">the bond value</param>
+        public void Add(int v, int w, IBond bond)
+        {
+            lookup[new Tuple(v, w)] = bond;
+        }
+
+        /// <summary>
+        /// Access the bond store at the end points v and w. If no bond is
+        /// store, null is returned.
+        /// </summary>
+        /// <param name="v">an endpoint</param>
+        /// <param name="w">another endpoint</param>
+        /// <returns>the bond stored for the endpoints</returns>
+        public IBond this[int v, int w]
+        {
+            get
+            {
+                if (lookup.TryGetValue(new Tuple(v, w), out IBond bond))
+                    return bond;
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Create a map with enough space for all the bonds in the molecule,
+        /// <paramref name="container"/>. Note - the map is not filled by this method.
+        /// </summary>
+        /// <param name="container">the container</param>
+        /// <returns>a map with enough space for the container</returns>
+        public static EdgeToBondMap WithSpaceFor(IAtomContainer container)
+        {
+            return new EdgeToBondMap();
+        }
+
+        /// <summary>
+        /// Unordered storage of two int values. Mainly useful to index bonds by
+        /// it's vertex end points.
+        /// </summary>
+        struct Tuple : IEquatable<Tuple>
+        {
+            private readonly int u, v;
 
             /// <summary>
-            /// Index a bond by the endpoints.
+            /// Create a new tuple with the specified values.
             /// </summary>
-            /// <param name="v">an endpoint</param>
-            /// <param name="w">another endpoint</param>
-            /// <param name="bond">the bond value</param>
-            public void Add(int v, int w, IBond bond)
+            /// <param name="u">a value</param>
+            /// <param name="v">another value</param>
+            public Tuple(int u, int v)
             {
-                lookup[new Tuple(v, w)] = bond;
+                this.u = u;
+                this.v = v;
             }
 
-            /// <summary>
-            /// Access the bond store at the end points v and w. If no bond is
-            /// store, null is returned.
-            /// </summary>
-            /// <param name="v">an endpoint</param>
-            /// <param name="w">another endpoint</param>
-            /// <returns>the bond stored for the endpoints</returns>
-            public IBond this[int v, int w]
+            public override bool Equals(object o)
             {
-                get
+                if (o is Tuple other)
                 {
-                    if (lookup.TryGetValue(new Tuple(v, w), out IBond bond))
-                        return bond;
-                    return null;
+                    return this.Equals(other);
                 }
+                return false;
             }
 
-            /// <summary>
-            /// Create a map with enough space for all the bonds in the molecule,
-            /// <paramref name="container"/>. Note - the map is not filled by this method.
-            /// </summary>
-            /// <param name="container">the container</param>
-            /// <returns>a map with enough space for the container</returns>
-            public static EdgeToBondMap WithSpaceFor(IAtomContainer container)
+            public bool Equals(Tuple other)
             {
-                return new EdgeToBondMap();
+                return this.u == other.u && this.v == other.v || this.u == other.v && this.v == other.u;
             }
 
-            /// <summary>
-            /// Unordered storage of two int values. Mainly useful to index bonds by
-            /// it's vertex end points.
-            /// </summary>
-            struct Tuple
+            public override int GetHashCode()
             {
-                private readonly int u, v;
-
-                /// <summary>
-                /// Create a new tuple with the specified values.
-                /// </summary>
-                /// <param name="u">a value</param>
-                /// <param name="v">another value</param>
-                public Tuple(int u, int v)
-                {
-                    this.u = u;
-                    this.v = v;
-                }
-
-                public override bool Equals(object o)
-                {
-                    if (o is Tuple that)
-                    {
-                        return this.u == that.u && this.v == that.v || this.u == that.v && this.v == that.u;
-                    }
-                    return false;
-                }
-
-                public override int GetHashCode()
-                {
-                    return u ^ v;
-                }
+                return u ^ v;
             }
         }
     }

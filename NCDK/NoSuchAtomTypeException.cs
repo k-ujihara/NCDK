@@ -31,8 +31,16 @@ namespace NCDK
     public class NoSuchAtomTypeException
         : CDKException
     {
+        public NoSuchAtomTypeException()
+        {
+        }
+
         public NoSuchAtomTypeException(string message)
             : base(message)
+        {
+        }
+
+        public NoSuchAtomTypeException(string message, System.Exception innerException) : base(message, innerException)
         {
         }
     }

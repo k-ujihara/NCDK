@@ -9,7 +9,7 @@ namespace NCDK.FaulonSignatures.Chemistry
     // @author maclean
     public class AtomPermutor : Permutor, IEnumerable<Molecule>
     {
-        private Molecule molecule;
+        private readonly Molecule molecule;
 
         /// <summary>
         /// Make a permutor for the specified molecule.

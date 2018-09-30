@@ -40,8 +40,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the MannholdLogPDescriptor object.
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/" + "chemoinformatics-algorithms/#mannholdLogP",
                 typeof(MannholdLogPDescriptor).FullName,
@@ -52,11 +52,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// would have been the method to set them.
         /// </summary>
         /// <exception cref="CDKException">Exception throw when invalid parameter values are passed</exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value != null && value.Length > 0)
+                if (value != null && value.Count > 0)
                 {
                     throw new CDKException("MannholdLogPDescriptor has no parameters.");
                 }
@@ -71,25 +71,25 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private IDescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
-        ///  Calculates the Mannhold LogP for an atom container.
+        /// Calculates the Mannhold LogP for an atom container.
         /// </summary>
         /// <param name="atomContainer"><see cref="IAtomContainer"/> to calculate the descriptor value for.</param>
         /// <returns>A descriptor value wrapping a <see cref="Result{Double}"/>.</returns>
         public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
         {
-            IAtomContainer ac = (IAtomContainer)atomContainer.Clone();
+            var ac = (IAtomContainer)atomContainer.Clone();
 
             int carbonCount = 0;
             int heteroCount = 0;
             foreach (var atom in ac.Atoms)
             {
-                if (!ChemicalElements.Hydrogen.ToIElement().Symbol.Equals(atom.Symbol))
+                if (!ChemicalElements.Hydrogen.ToIElement().Symbol.Equals(atom.Symbol, StringComparison.Ordinal))
                 {
-                    if (ChemicalElements.Carbon.ToIElement().Symbol.Equals(atom.Symbol))
+                    if (ChemicalElements.Carbon.ToIElement().Symbol.Equals(atom.Symbol, StringComparison.Ordinal))
                     {
                         carbonCount++;
                     }
@@ -101,7 +101,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             double mLogP = 1.46 + 0.11 * carbonCount - 0.11 * heteroCount;
 
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(mLogP), DescriptorNames);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(mLogP), DescriptorNames);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// Gets the parameterType attribute for a given parameter name. It
-        /// always returns null, as this descriptor does not have any parameters.
+        /// always returns <see langword="null"/>, as this descriptor does not have any parameters.
         /// </summary>
         /// <param name="name">Name of the parameter for which the type is requested.</param>
         /// <returns>The parameterType of the given parameter.</returns>

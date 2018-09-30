@@ -19,6 +19,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Graphs;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Tools;
 
@@ -31,69 +32,69 @@ namespace NCDK.StructGen.Stochastic
         [TestMethod()]
         public void TestGenerate_IAtomContainerSet()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            var acs = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var acs = ChemObjectBuilder.Instance.NewAtomContainerSet();
             acs.Add(sp.ParseSmiles("[CH2]CCC[CH2]"));
             acs.Add(sp.ParseSmiles("[C]1=C(C1)C[CH2]"));
-            PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
-            IAtomContainer result = pfsm.Generate(acs);
+            var pfsm = new PartialFilledStructureMerger();
+            var result = pfsm.Generate(acs);
             Assert.IsTrue(ConnectivityChecker.IsConnected(result));
-            Assert.IsTrue(new SaturationChecker().AllSaturated(result));
+            Assert.IsTrue(CDK.SaturationChecker.IsSaturated(result));
         }
 
         [TestMethod()]
         public void TestPartialFilledStructureMerger2()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            var acs = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var acs = ChemObjectBuilder.Instance.NewAtomContainerSet();
             acs.Add(sp.ParseSmiles("[C]=[C]CC[CH2]"));
             acs.Add(sp.ParseSmiles("[C]([CH2])=C1CC1"));
             PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
             IAtomContainer result = pfsm.Generate(acs);
             Assert.IsTrue(ConnectivityChecker.IsConnected(result));
-            Assert.IsTrue(new SaturationChecker().AllSaturated(result));
+            Assert.IsTrue(CDK.SaturationChecker.IsSaturated(result));
         }
 
         [TestMethod()]
         public void TestPartialFilledStructureMerger3()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            var acs = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var acs = ChemObjectBuilder.Instance.NewAtomContainerSet();
             acs.Add(sp.ParseSmiles("[CH2]CCC[CH2]"));
             acs.Add(sp.ParseSmiles("[CH2]C[CH2]"));
             acs.Add(sp.ParseSmiles("[CH2][CH2]"));
             PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
             IAtomContainer result = pfsm.Generate(acs);
             Assert.IsTrue(ConnectivityChecker.IsConnected(result));
-            Assert.IsTrue(new SaturationChecker().AllSaturated(result));
+            Assert.IsTrue(CDK.SaturationChecker.IsSaturated(result));
         }
 
         [TestMethod()]
         public void TestPartialFilledStructureMerger4()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            var acs = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var acs = ChemObjectBuilder.Instance.NewAtomContainerSet();
             acs.Add(sp.ParseSmiles("[C]CCC[CH2]"));
             acs.Add(sp.ParseSmiles("[C]CC[CH2]"));
             acs.Add(sp.ParseSmiles("[CH2]"));
             PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
             IAtomContainer result = pfsm.Generate(acs);
             Assert.IsTrue(ConnectivityChecker.IsConnected(result));
-            Assert.IsTrue(new SaturationChecker().AllSaturated(result));
+            Assert.IsTrue(CDK.SaturationChecker.IsSaturated(result));
         }
 
         [TestMethod()]
         public void TestPartialFilledStructureMerger5()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            var acs = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var acs = ChemObjectBuilder.Instance.NewAtomContainerSet();
             acs.Add(sp.ParseSmiles("[C]1CCC1"));
             acs.Add(sp.ParseSmiles("[C]([CH2])CC[CH2]"));
             acs.Add(sp.ParseSmiles("[CH2]"));
             PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
             IAtomContainer result = pfsm.Generate(acs);
             Assert.IsTrue(ConnectivityChecker.IsConnected(result));
-            Assert.IsTrue(new SaturationChecker().AllSaturated(result));
+            Assert.IsTrue(CDK.SaturationChecker.IsSaturated(result));
         }
     }
 }

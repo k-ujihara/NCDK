@@ -24,7 +24,6 @@ namespace NCDK.FaulonSignatures.Chemistry
                 }
                 catch (Exception) { }
             }
-            //Console.Out.WriteLine("Total number of molecules: " + molCount);
         }
     }
 }

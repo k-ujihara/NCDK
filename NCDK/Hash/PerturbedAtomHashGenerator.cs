@@ -95,14 +95,14 @@ namespace NCDK.Hash
         {
             this.finder = finder;
             this.factory = factory;
-            this.simple = simple ?? throw new ArgumentNullException("no simple generator provided");
-            this.seeds = seeds ?? throw new ArgumentNullException("no seed generator provided");
-            this.suppression = suppression ?? throw new ArgumentNullException("no suppression provided, use AtomSuppression.None()");
+            this.simple = simple ?? throw new ArgumentNullException(nameof(simple), "no simple generator provided");
+            this.seeds = seeds ?? throw new ArgumentNullException(nameof(seeds), "no seed generator provided");
+            this.suppression = suppression ?? throw new ArgumentNullException(nameof(suppression), "no suppression provided, use AtomSuppression.None()");
         }
 
         public long[] Generate(IAtomContainer container)
         {
-            int[][] graph = ToAdjList(container);
+            var graph = ToAdjList(container);
             return Generate(container, seeds.Generate(container), factory.Create(container, graph), graph);
         }
 

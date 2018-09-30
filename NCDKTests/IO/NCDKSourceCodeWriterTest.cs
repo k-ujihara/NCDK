@@ -22,7 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System;
 using System.IO;
 
@@ -49,8 +49,7 @@ namespace NCDK.IO
         {
             StringWriter writer = new StringWriter();
             IAtomContainer molecule = new AtomContainer();
-            Atom atom = new Atom("C");
-            atom.MassNumber = 14;
+            Atom atom = new Atom("C") { MassNumber = 14 };
             molecule.Atoms.Add(atom);
 
             var sourceWriter = new NCDKSourceCodeWriter(writer);
@@ -59,7 +58,7 @@ namespace NCDK.IO
             string output = writer.ToString();
             const string newline = "\n";
             Assert.AreEqual("{" + newline +
-                    "  IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;" + newline +
+                    "  IChemObjectBuilder builder = NCDK.Silent.ChemObjectBuilder.Instance;" + newline +
                     "  IAtomContainer mol = builder.NewAtomContainer();" + newline +
                     "  IAtom a1 = builder.NewAtom(\"C\");" + newline +
                     "  a1.FormalCharge = 0;" + newline +

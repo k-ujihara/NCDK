@@ -31,6 +31,7 @@ using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.Modelings.Builder3D
@@ -41,15 +42,11 @@ namespace NCDK.Modelings.Builder3D
     // @author      Christian Hoppe
     // @cdk.module  builder3dtools
     // @cdk.githash
-    public class TemplateExtractor
+    public static class TemplateExtractor
     {
-        const string usage = "Usage: TemplateExtractor SDFinfile outfile anyAtom=true/false anyBondAnyAtom=true/false";
-
         private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        public TemplateExtractor() { }
-
-        public void CleanDataSet(string dataFile)
+        public static void CleanDataSet(string dataFile)
         {
             var som = builder.NewAtomContainerSet();
             try
@@ -80,13 +77,13 @@ namespace NCDK.Modelings.Builder3D
             }
             catch (Exception exc)
             {
-                Console.Out.WriteLine("Could not read Molecules from file " + dataFile + " due to: " + exc.Message);
+                Console.Out.WriteLine($"Could not read Molecules from file {dataFile} due to: {exc.Message}");
             }
-            Console.Out.WriteLine(som.Count + " Templates are read in");
+            Console.Out.WriteLine($"{som.Count} Templates are read in");
             WriteChemModel(som, dataFile, "_CLEAN");
         }
 
-        public void ReadNCISdfFileAsTemplate(string dataFile)
+        public static void ReadNCISdfFileAsTemplate(string dataFile)
         {
             var som = builder.NewAtomContainerSet();
             try
@@ -105,12 +102,12 @@ namespace NCDK.Modelings.Builder3D
             }
             catch (Exception exc)
             {
-                Console.Out.WriteLine("Could not read Molecules from file " + dataFile + " due to: " + exc.Message);
+                Console.Out.WriteLine($"Could not read Molecules from file {dataFile} due to: {exc.Message}");
             }
             Console.Out.WriteLine(som.Count + " Templates are read in");
         }
 
-        public void PartitionRingsFromComplexRing(string dataFile)
+        public static void PartitionRingsFromComplexRing(string dataFile)
         {
             var som = builder.NewAtomContainerSet();
             try
@@ -123,7 +120,7 @@ namespace NCDK.Modelings.Builder3D
                     Console.Out.WriteLine("READY");
                     foreach (var m in imdl)
                     {
-                        Console.Out.WriteLine("Atoms:" + m.Atoms.Count);
+                        Console.Out.WriteLine($"Atoms: {m.Atoms.Count}");
                         IRingSet ringSetM = Cycles.FindSSSR(m).ToRingSet();
                         // som.Add(m);
                         for (int i = 0; i < ringSetM.Count; i++)
@@ -135,17 +132,16 @@ namespace NCDK.Modelings.Builder3D
             }
             catch (Exception exc)
             {
-                Console.Out.WriteLine("Could not read Molecules from file " + dataFile + " due to: " + exc.Message);
+                Console.Out.WriteLine($"Could not read Molecules from file {dataFile} due to: {exc.Message}");
             }
-            Console.Out.WriteLine(som.Count + " Templates are read in");
+            Console.Out.WriteLine($"{som.Count} Templates are read in");
             WriteChemModel(som, dataFile, "_VERSUCH");
         }
 
-        public void ExtractUniqueRingSystemsFromFile(string dataFile)
+        public static void ExtractUniqueRingSystemsFromFile(string dataFile)
         {
             Console.Out.WriteLine("****** EXTRACT UNIQUE RING SYSTEMS ******");
-            Console.Out.WriteLine("From file:" + dataFile);
-            // RingPartitioner ringPartitioner=new RingPartitioner();
+            Console.Out.WriteLine($"From file: {dataFile}");
 
             Dictionary<string, string> hashRingSystems = new Dictionary<string, string>();
             SmilesGenerator smilesGenerator = new SmilesGenerator();
@@ -159,7 +155,6 @@ namespace NCDK.Modelings.Builder3D
 
             string molfile = dataFile + "_UniqueRings";
 
-            // FileOutputStream fout=null;
             try
             {
                 using (var fout = new FileStream(molfile, FileMode.Create))
@@ -177,9 +172,6 @@ namespace NCDK.Modelings.Builder3D
                             {
                                 counterMolecules = counterMolecules + 1;
                                 
-                                // try{ HueckelAromaticityDetector.DetectAromaticity(m);
-                                // }Catch(Exception ex1){ Console.Out.WriteLine("Could not find
-                                // aromaticity due to:"+ex1); }
                                 IRingSet ringSetM = Cycles.FindSSSR(m).ToRingSet();
 
                                 if (counterMolecules % 1000 == 0)
@@ -217,29 +209,14 @@ namespace NCDK.Modelings.Builder3D
                                             return;
                                         }
 
-                                        // Console.Out.WriteLine("OrgKey:"+key+" For
-                                        // Molecule:"+counter);
                                         if (hashRingSystems.ContainsKey(key))
                                         {
-                                            // Console.Out.WriteLine("HAS KEY:ADD");
-                                            // Vector tmp=(Vector)HashRingSystems[key];
-                                            // tmp.Add((AtomContainer)ringSet.GetRingSetInAtomContainer());
-                                            // HashRingSystems.Put(key,tmp);
-                                            // int
-                                            // tmp=((int)HashRingSystems[key]).Value;
-                                            // tmp=tmp+1;
-                                            // HashRingSystems.Put(key,new int(tmp));
                                         }
                                         else
                                         {
-                                            counterUniqueRings = counterUniqueRings + 1;
-                                            // Vector rings2=new Vector();
-                                            // rings2.Add((AtomContainer)RingSetManipulator.GetAllInOneContainer(ringSet));
-                                            hashRingSystems[key] = "1";
+                                            counterUniqueRings = counterUniqueRings + 1;hashRingSystems[key] = "1";
                                             try
                                             {
-                                                // mdlw.Write(new Molecule
-                                                // ((AtomContainer)RingSetManipulator.GetAllInOneContainer(ringSet)));
                                                 mdlw.Write(builder.NewAtomContainer(ac));
                                             }
                                             catch (Exception emdl)
@@ -255,39 +232,25 @@ namespace NCDK.Modelings.Builder3D
                     }
                     catch (Exception exc)
                     {
-                        Console.Out.WriteLine("Could not read Molecules from file " + dataFile + " due to: " + exc.Message);
+                        Console.Out.WriteLine($"Could not read Molecules from file {dataFile} due to: {exc.Message}");
                     }
                 }
             }
             catch (Exception ex2)
             {
-                Console.Out.WriteLine("IOError:cannot write file due to:" + ex2.ToString());
+                Console.Out.WriteLine($"IOError:cannot write file due to: {ex2.ToString()}");
             }
-            // Console.Out.WriteLine("READY Molecules:"+counterMolecules);
             Console.Out.WriteLine($"READY Molecules:{counterMolecules} RingSystems:{counterRings} UniqueRingsSystem:{counterUniqueRings}");
             Console.Out.WriteLine($"HashtableKeys:{hashRingSystems.Count}");
-
-            // int c=0; Set keyset = HashRingSystems.Keys; Iterator
-            // it=keyset.Iterator(); IAtomContainerSet som=new AtomContainerSet();
-            // SmilesParser smileParser=new SmilesParser(); string ringSmile="";
-            // while (it.HasNext()) { key=(string)it.Next();
-            // ringSmile=(string)HashRingSystems[key];
-            // Console.Out.WriteLine("HashtableSmile:"+ringSmile+" key:"+key); try{
-            // som.Add(smileParser.ParseSmiles(ringSmile)); }catch
-            // (Exception ex5){ Console.Out.WriteLine("Error in som.addmolecule due
-            // to:"+ex5); } }
-
-            // WriteChemModel(som,dataFile,"_TESTTESTTESTTESTTEST");
         }
 
-        public void WriteChemModel(IChemObjectSet<IAtomContainer> som, string file, string endFix)
+        public static void WriteChemModel(IChemObjectSet<IAtomContainer> som, string file, string endFix)
         {
             Console.Out.WriteLine($"WRITE Molecules:{som.Count}");
             string molfile = file + endFix;
             try
             {
-                using (var fout = new FileStream(molfile, FileMode.Create))
-                using (var mdlw = new MDLV2000Writer(fout))
+                using (var mdlw = new MDLV2000Writer(new FileStream(molfile, FileMode.Create)))
                 {
                     mdlw.Write(som);
                 }
@@ -300,29 +263,20 @@ namespace NCDK.Modelings.Builder3D
             }
         }
 
-        public void MakeCanonicalSmileFromRingSystems(string dataFileIn, string dataFileOut)
+        public static void MakeCanonicalSmileFromRingSystems(string dataFileIn, string dataFileOut)
         {
             Console.Out.WriteLine("Start make SMILES...");
-            // QueryAtomContainer query=null;
-            List<string> data = new List<string>();
-            SmilesGenerator smiles = new SmilesGenerator();
+            var data = new List<string>();
+            var smiles = new SmilesGenerator();
             try
             {
                 Console.Out.WriteLine("Start...");
-                using (var fin = new StreamReader(dataFileIn))
-                using (var imdl = new EnumerableSDFReader(fin, builder))
+                using (var imdl = new EnumerableSDFReader(new StreamReader(dataFileIn), builder))
                 {
                     Console.Out.WriteLine("Read File in..");
 
                     foreach (var m in imdl)
                     {
-                        // try{ HueckelAromaticityDetector.DetectAromaticity(m);
-                        // }Catch(Exception ex1){ Console.Out.WriteLine("Could not find
-                        // aromaticity due to:"+ex1); }
-
-                        // query=QueryAtomContainerCreator.CreateAnyAtomContainer(m,true);
-                        // Console.Out.WriteLine("string:"+smiles.CreateSMILES(new
-                        // Molecule(m)));
                         try
                         {
                             data.Add((string)smiles.Create(builder.NewAtomContainer(m)));
@@ -348,7 +302,6 @@ namespace NCDK.Modelings.Builder3D
                 {
                     for (int i = 0; i < data.Count; i++)
                     {
-                        // Console.Out.WriteLine("write:"+(string)data[i]);
                         try
                         {
                             fout.Write(((string)data[i]));
@@ -358,23 +311,22 @@ namespace NCDK.Modelings.Builder3D
                         {
                         }
                     }
-                    Console.Out.WriteLine("number of smiles:" + data.Count);
+                    Console.Out.WriteLine($"number of smiles: {data.Count}");
                 }
             }
             catch (Exception exc3)
             {
-                Console.Out.WriteLine("Could not write smile in file " + dataFileOut + " due to: " + exc3.Message);
+                Console.Out.WriteLine($"Could not write smile in file {dataFileOut} due to: {exc3.Message}");
             }
             Console.Out.WriteLine("...ready");
         }
 
-        public IList<IBitFingerprint> MakeFingerprintsFromSdf(bool anyAtom, bool anyAtomAnyBond, IDictionary<string, int> timings, TextReader fin, int limit)
+        public static IReadOnlyList<IBitFingerprint> MakeFingerprintsFromSdf(bool anyAtom, bool anyAtomAnyBond, IDictionary<string, int> timings, TextReader fin, int limit)
         {
-            HybridizationFingerprinter fingerPrinter = new HybridizationFingerprinter(HybridizationFingerprinter.DefaultSize, HybridizationFingerprinter.DefaultSearchDepth);
+            var fingerPrinter = new HybridizationFingerprinter(HybridizationFingerprinter.DefaultSize, HybridizationFingerprinter.DefaultSearchDepth);
             fingerPrinter.SetHashPseudoAtoms(true);
-            //QueryAtomContainer query=null;
             IAtomContainer query = null;
-            List<IBitFingerprint> data = new List<IBitFingerprint>();
+            var data = new List<IBitFingerprint>();
             try
             {
                 Trace.TraceInformation("Read data file in ...");
@@ -384,7 +336,7 @@ namespace NCDK.Modelings.Builder3D
 
                     int moleculeCounter = 0;
                     int fingerprintCounter = 0;
-                    Trace.TraceInformation("Generated Fingerprints: " + fingerprintCounter + "    ");
+                    Trace.TraceInformation($"Generated Fingerprints: {fingerprintCounter}    ");
                     foreach (var m in imdl)
                     {
                         if (!(moleculeCounter < limit || limit == -1))
@@ -400,7 +352,7 @@ namespace NCDK.Modelings.Builder3D
                         }
                         try
                         {
-                            long time = -DateTime.Now.Ticks / 10000;
+                            var time = -DateTime.Now.Ticks / 10000;
                             if (anyAtom || anyAtomAnyBond)
                             {
                                 data.Add(fingerPrinter.GetBitFingerprint(query));
@@ -413,7 +365,7 @@ namespace NCDK.Modelings.Builder3D
                             }
                             time += (DateTime.Now.Ticks / 10000);
                             // store the time
-                            string bin = ((int)Math.Floor(time / 10.0)).ToString();
+                            var bin = ((int)Math.Floor(time / 10.0)).ToString(NumberFormatInfo.InvariantInfo);
                             if (timings.ContainsKey(bin))
                             {
                                 timings[bin] = (timings[bin]) + 1;
@@ -430,8 +382,8 @@ namespace NCDK.Modelings.Builder3D
                             // OK, just adds a fingerprint with all ones, so that any
                             // structure will match this template, and leave it up
                             // to substructure match to figure things out
-                            IBitFingerprint allOnesFingerprint = new BitSetFingerprint(fingerPrinter.Count);
-                            for (int i = 0; i < fingerPrinter.Count; i++)
+                            var allOnesFingerprint = new BitSetFingerprint(fingerPrinter.Length);
+                            for (int i = 0; i < fingerPrinter.Length; i++)
                             {
                                 allOnesFingerprint.Set(i);
                             }
@@ -459,11 +411,11 @@ namespace NCDK.Modelings.Builder3D
             return data;
         }
 
-        public void MakeFingerprintFromRingSystems(string dataFileIn, string dataFileOut, bool anyAtom, bool anyAtomAnyBond)
+        public static void MakeFingerprintFromRingSystems(string dataFileIn, string dataFileOut, bool anyAtom, bool anyAtomAnyBond)
         {
-            IDictionary<string, int> timings = new Dictionary<string, int>();
+            var timings = new Dictionary<string, int>();
 
-            Console.Out.WriteLine("Start make fingerprint from file:" + dataFileIn + " ...");
+            Console.Out.WriteLine($"Start make fingerprint from file: {dataFileIn} ...");
             using (var fin = new StreamReader(dataFileIn))
             {
                 var data = MakeFingerprintsFromSdf(anyAtom, anyAtomAnyBond, timings, fin, -1);
@@ -494,14 +446,14 @@ namespace NCDK.Modelings.Builder3D
             }
         }
 
-        public IAtomContainer RemoveLoopBonds(IAtomContainer molecule, int position)
+        public static IAtomContainer RemoveLoopBonds(IAtomContainer molecule, int position)
         {
             for (int i = 0; i < molecule.Bonds.Count; i++)
             {
-                IBond bond = molecule.Bonds[i];
+                var bond = molecule.Bonds[i];
                 if (bond.Begin== bond.End)
                 {
-                    Console.Out.WriteLine("Loop found! Molecule:" + position);
+                    Console.Out.WriteLine($"Loop found! Molecule: {position}");
                     molecule.Bonds.Remove(bond);
                 }
             }
@@ -509,19 +461,17 @@ namespace NCDK.Modelings.Builder3D
             return molecule;
         }
 
-        public IAtomContainer CreateAnyAtomAtomContainer(IAtomContainer atomContainer)
+        public static IAtomContainer CreateAnyAtomAtomContainer(IAtomContainer atomContainer)
         {
-            IAtomContainer query = (IAtomContainer)atomContainer.Clone();
-            // Console.Out.WriteLine("createAnyAtomAtomContainer");
+            var query = (IAtomContainer)atomContainer.Clone();
             for (int i = 0; i < query.Atoms.Count; i++)
             {
-                // Console.Out.Write(" "+i);
                 query.Atoms[i].Symbol = "C";
             }
             return query;
         }
 
-        public IAtomContainer ResetFlags(IAtomContainer ac)
+        public static IAtomContainer ResetFlags(IAtomContainer ac)
         {
             for (int f = 0; f < ac.Atoms.Count; f++)
             {
@@ -532,24 +482,6 @@ namespace NCDK.Modelings.Builder3D
                 ec.IsVisited = false;
             }
             return ac;
-        }
-
-        public static void Main(string[] args)
-        {
-            if (args.Length < 4)
-            {
-                Console.Out.WriteLine(usage);
-            }
-            try
-            {
-                new TemplateExtractor().MakeFingerprintFromRingSystems(args[0], args[1], bool.Parse(args[2]), bool.Parse(args[3]));
-            }
-            catch (Exception e)
-            {
-                Console.Out.WriteLine(usage);
-                // TODO Auto-generated catch block
-                Console.Out.WriteLine(e.StackTrace);
-            }
         }
     }
 }

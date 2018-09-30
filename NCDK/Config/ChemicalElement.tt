@@ -37,47 +37,49 @@ namespace NCDK.Config
     public static class ChemicalElements
     {
 <#
-		var name_and_numbers = new List<NameAndNumber>();
+        var name_and_numbers = new List<NameAndNumber>();
         var fn = Path.Combine(new FileInfo(this.Host.TemplateFile).Directory.FullName, "Element.txt");
         string prevLine = null;
-		using (var reader = new StreamReader(fn))
+        using (var reader = new StreamReader(fn))
         {
             string line;
             while ((line = reader.ReadLine()) != null)
             {
                 var match = re.Match(line);
                 if (!match.Success)
-				{
-					line = line.Trim();
+                {
+                    line = line.Trim();
 #>
         <#= line #>
 <#
-					prevLine = line;
+                    prevLine = line;
                     continue;
-				}
-				else
-				{
-					var name = match.Groups["name"].Value;
-					var inner = match.Groups["inner"].Value;
-					var number = int.Parse(match.Groups["number"].Value);
-					var symbol = match.Groups["symbol"].Value;
-					var isObsolete = prevLine != null && prevLine.StartsWith("[Obsolete", StringComparison.Ordinal);
-					name_and_numbers.Add(new NameAndNumber(name, number, symbol, isObsolete));
-					line = "public static readonly ChemicalElement " + name + " = new ChemicalElement(\"" + name + "\", " + inner + ");";
+                }
+                else
+                {
+                    var name = match.Groups["name"].Value;
+                    var inner = match.Groups["inner"].Value;
+                    var number = int.Parse(match.Groups["number"].Value);
+                    var symbol = match.Groups["symbol"].Value;
+                    var isObsolete = prevLine != null && prevLine.StartsWith("[Obsolete", StringComparison.Ordinal);
+                    name_and_numbers.Add(new NameAndNumber(name, number, symbol, isObsolete));
+                    line = "public static readonly ChemicalElement " + name + " = new ChemicalElement(\"" + name + "\", " + inner + ");";
 #>
         <#= line #>
 <#
-					prevLine = line;
-				}
+                    prevLine = line;
+                }
             }
 #>
-	}
+    }
 <#
     }
 #>
     public sealed partial class ChemicalElement
-	{
+    {
+#pragma warning disable CA1034 // Nested types should not be visible
         public static class AtomicNumbers
+#pragma warning restore CA1034 // Nested types should not be visible
         {
 <#
         foreach (var nn in name_and_numbers)
@@ -89,9 +91,9 @@ namespace NCDK.Config
 #>
         }
 
-		private static IReadOnlyDictionary<string, ChemicalElement> symbolMap;
-		
-		/// <summary>
+        private static IReadOnlyDictionary<string, ChemicalElement> symbolMap;
+        
+        /// <summary>
         /// Lookup elements by symbol / name.
         /// </summary>
         internal static IReadOnlyDictionary<string, ChemicalElement> SymbolMap
@@ -104,7 +106,7 @@ namespace NCDK.Config
                     {
 <#
         foreach (var nn in name_and_numbers)
-		{
+        {
 #>
                         ["<#= nn.Name.ToLowerInvariant() #>"] = ChemicalElements.<#= nn.Name #>,
                         ["<#= nn.Symbol.ToLowerInvariant() #>"] = ChemicalElements.<#= nn.Name #>,
@@ -113,35 +115,30 @@ namespace NCDK.Config
 #>
                         // recently named elements
                         ["uub"] = ChemicalElements.Copernicium, // 2009
-						["ununbium"] = ChemicalElements.Copernicium,
-						["uuq"] = ChemicalElements.Flerovium, // 2012
-						["ununquadium"] = ChemicalElements.Flerovium,
-						["uuh"] = ChemicalElements.Livermorium, // 2012
-						["ununhexium"] = ChemicalElements.Livermorium,
-						// 2016
-						["uut"] = ChemicalElements.Nihonium,
-						["uup"] = ChemicalElements.Moscovium,
-						["uus"] = ChemicalElements.Tennessine,
-						["uuo"] = ChemicalElements.Oganesson,
-						// alternative spellings
-						["sulphur"] = ChemicalElements.Sulfur,
-						["cesium"] = ChemicalElements.Caesium,
-						["aluminum"] = ChemicalElements.Aluminium,
+                        ["ununbium"] = ChemicalElements.Copernicium,
+                        ["uuq"] = ChemicalElements.Flerovium, // 2012
+                        ["ununquadium"] = ChemicalElements.Flerovium,
+                        ["uuh"] = ChemicalElements.Livermorium, // 2012
+                        ["ununhexium"] = ChemicalElements.Livermorium,
+                        // alternative spellings
+                        ["sulphur"] = ChemicalElements.Sulfur,
+                        ["cesium"] = ChemicalElements.Caesium,
+                        ["aluminum"] = ChemicalElements.Aluminium,
                     };
                 }
                 return symbolMap;
             }
         }
 <#
-		int maxAtomicNumber = name_and_numbers.Select(n => n.Number).Max();
-		string[] uniq_atoms = new string[maxAtomicNumber + 1];
-		foreach (var nn in name_and_numbers)
+        int maxAtomicNumber = name_and_numbers.Select(n => n.Number).Max();
+        string[] uniq_atoms = new string[maxAtomicNumber + 1];
+        foreach (var nn in name_and_numbers)
         {
-			if (uniq_atoms[nn.Number] == null && !nn.IsObsolete)
-			{
-				uniq_atoms[nn.Number] = nn.Name;
-			}
-		}
+            if (uniq_atoms[nn.Number] == null && !nn.IsObsolete)
+            {
+                uniq_atoms[nn.Number] = nn.Name;
+            }
+        }
 #>
 
         private static IReadOnlyList<ChemicalElement> values;
@@ -151,25 +148,25 @@ namespace NCDK.Config
         /// </summary>
         public static IReadOnlyList<ChemicalElement> Values
         {
-			get
-			{
-				if (values == null)
-				{
-					values = new ChemicalElement[] 
-					{
+            get
+            {
+                if (values == null)
+                {
+                    values = new ChemicalElement[] 
+                    {
 <#
         foreach (var name in uniq_atoms)
         {
 #>
-			        <#= name == null ? "null" : "ChemicalElements." + name #>,
+                    <#= name == null ? "null" : "ChemicalElements." + name #>,
 <#
         }
 #>
-					};
-				}
-				return values;
-			}
-		}
+                    };
+                }
+                return values;
+            }
+        }
     }
 }
 
@@ -177,19 +174,19 @@ namespace NCDK.Config
     static Regex re = new Regex(@"(?<name>\w+)\((?<inner>(?<number>\d+)\, " + "\"" + @"(?<symbol>|[A-Z][a-z]{0,2})" + "\"" + @"\, .*)\)", RegexOptions.Compiled);
     // Magnesium(12, "Mg", 3, 2, 1.30, 2.20, 1.31)
 
-	public class NameAndNumber
-	{
-		public NameAndNumber(string name, int number, string symbol, bool isObsolete)
-		{
-			this.Name = name;
-			this.Number = number;
-			this.Symbol = symbol;
-			this.IsObsolete = isObsolete;
-		}
+    public class NameAndNumber
+    {
+        public NameAndNumber(string name, int number, string symbol, bool isObsolete)
+        {
+            this.Name = name;
+            this.Number = number;
+            this.Symbol = symbol;
+            this.IsObsolete = isObsolete;
+        }
 
-		public string Name { get; set; }
-		public int Number { get; set; }
-		public string Symbol　{ get; set; }
-		public bool IsObsolete { get; set; } 
-	}
+        public string Name { get; set; }
+        public int Number { get; set; }
+        public string Symbol　{ get; set; }
+        public bool IsObsolete { get; set; } 
+    }
 #>

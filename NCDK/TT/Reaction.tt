@@ -29,7 +29,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Collections.ObjectModel;
 
 <#
 foreach (var ns in namespaces) 
@@ -39,6 +38,7 @@ namespace <#= ns.NS #>
 {
     /// <inheritdoc cref="IReaction"/>
     // @cdk.githash
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class Reaction
         : ChemObject, IReaction, ICloneable
@@ -55,7 +55,7 @@ namespace <#= ns.NS #>
         /// <inheritdoc/>
         public IChemObjectSet<IAtomContainer> Agents => agents;
 
-        private IList<IMapping> mappings;
+        private List<IMapping> mappings;
         /// <inheritdoc/>
         public IList<IMapping> Mappings => mappings;
 
@@ -103,11 +103,11 @@ namespace <#= ns.NS #>
             var clone_agents = (IChemObjectSet<IAtomContainer>)agents.Clone(map);
             var clone_products = (IChemObjectSet<IAtomContainer>)products.Clone(map);
 
-            var clone_mappings = new ObservableCollection<IMapping>();
+            var clone_mappings = new List<IMapping>();
             foreach (var mapping in mappings)
                 clone_mappings.Add((IMapping)mapping.Clone(map));
 
-            Reaction clone = (Reaction)base.Clone(map);
+            var clone = (Reaction)base.Clone(map);
             clone.reactants = clone_reactants;
             clone.agents = clone_agents;
             clone.products = clone_products;

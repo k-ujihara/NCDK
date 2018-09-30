@@ -27,7 +27,7 @@ using System;
 
 namespace NCDK
 {
-    [Obsolete]
+    [Obsolete("Use " + nameof(IStereoElement<IChemObject, IChemObject>))]
     public static class StereoAtomParities
     {
         /// <summary>A positive atom parity.</summary>
@@ -47,43 +47,36 @@ namespace NCDK
         /// <see cref="IChemObject"/>.physicalProperties hashtable.
         /// </summary>
         /// <seealso cref="NCDK.Default.ChemObject"/>
-        public const string NMRShift_Carbon = "carbon nmr shift";
+        public const string NMRShiftCarbon = "carbon nmr shift";
 
         /// <summary>
         /// Hydrogen NMR shift constant for use as a key in the
         /// <see cref="IChemObject"/>.physicalProperties hashtable.
         /// </summary>
         /// <seealso cref="NCDK.Default.ChemObject"/>
-        public const string NMRShift_Hydrogen = "hydrogen nmr shift";
+        public const string NMRShiftHydrogen = "hydrogen nmr shift";
 
         /// <summary>
         /// Nitrogen NMR shift constant for use as a key in the
         /// <see cref="IChemObject"/>.physicalProperties hashtable.
         /// </summary>
         /// <seealso cref="NCDK.Default.ChemObject"/>
-        public const string NMRShift_Nitrogen = "nitrogen nmr shift";
+        public const string NMRShiftNitrogen = "nitrogen nmr shift";
 
         /// <summary>Phosphorus NMR shift constant for use as a key in the
         /// <see cref="IChemObject"/>.physicalProperties hashtable.</summary>
         /// <seealso cref="NCDK.Default.ChemObject"/>
-        public const string NMRShift_Phosphorus = "phosphorus nmr shift";
+        public const string NMRShiftPhosphorus = "phosphorus nmr shift";
 
         /// <summary> Fluorine NMR shift constant for use as a key in the
         /// <see cref="IChemObject"/>.physicalProperties hashtable.</summary>
         /// <seealso cref="NCDK.Default.ChemObject"/>
-        public const string NMRShift_Fluorine = "fluorine nmr shift";
+        public const string NMRShiftFluorine = "fluorine nmr shift";
 
         /// <summary>Deuterium NMR shift constant for use as a key in the
         /// <see cref="IChemObject"/>.physicalProperties hashtable.</summary>
         /// <seealso cref="NCDK.Default.ChemObject"/>
-
-        public const string NMRShift_Deuterium = "deuterium nmr shift";
-
-        /// <summary> 
-        /// Property key to store the CIP descriptor label for an atom / bond. The
-        /// label is a string.
-        /// </summary>
-        public const string CIP_Descriptor = "cip.label";
+        public const string NMRShiftDeuterium = "deuterium nmr shift";
 
         // **************************************
         // Some predefined property names for * ChemObjects *
@@ -211,12 +204,6 @@ namespace NCDK
         /// Tool in ACD/ChemSketch.
         /// </summary>
         public const string ACDLabsAtomLabel = "cdk:ACDLabsAtomLabel";
-
-        /// <summary>
-        /// Key to store/fetch CTab Sgroups from Molfiles. Important! - Use at your own risk,
-        /// property is transitive and may be removed in future with a more specific accessor.
-        /// </summary>
-        public const string CtabSgroups = "cdk:CtabSgroups";
 
         /// <summary>
         /// Property for reaction objects where the conditions of reactions can be placed.

@@ -24,7 +24,7 @@ namespace NCDK.Formula
         }
 
         [TestMethod()]
-        public void TestSeTolerance_Double()
+        public void TestSeToleranceDouble()
         {
             IsotopePatternSimilarity is_ = new IsotopePatternSimilarity { Tolerance = 0.001 };
             Assert.IsNotNull(is_);
@@ -41,21 +41,24 @@ namespace NCDK.Formula
         /// Histidine example
         /// </summary>
         [TestMethod()]
-        public void TestCompare_IsotopePattern_IsotopePattern()
+        public void TestCompareIsotopePatternIsotopePattern()
         {
             var is_ = new IsotopePatternSimilarity();
 
-            IsotopePattern spExp = new IsotopePattern();
-            spExp.SetMonoIsotope(new IsotopeContainer(156.07770, 1));
-            spExp.Isotopes.Add(new IsotopeContainer(157.07503, 0.0004));
-            spExp.Isotopes.Add(new IsotopeContainer(157.08059, 0.0003));
-            spExp.Isotopes.Add(new IsotopeContainer(158.08135, 0.002));
-
-            IMolecularFormula formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C6H10N3O2", builder);
-            IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.1);
-            IsotopePattern patternIsoPredicted = isotopeGe.GetIsotopes(formula);
-            IsotopePattern patternIsoNormalize = IsotopePatternManipulator.Normalize(patternIsoPredicted);
-            double score = is_.Compare(spExp, patternIsoNormalize);
+            IsotopePattern spExp = new IsotopePattern(new[]
+                {
+                    new IsotopeContainer(156.07770, 1),
+                    new IsotopeContainer(157.07503, 0.0004),
+                    new IsotopeContainer(157.08059, 0.0003),
+                    new IsotopeContainer(158.08135, 0.002),
+                });
+            spExp.MonoIsotope = spExp.Isotopes[0];
+            
+            var formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C6H10N3O2", builder);
+            var isotopeGe = new IsotopePatternGenerator(0.1);
+            var patternIsoPredicted = isotopeGe.GetIsotopes(formula);
+            var patternIsoNormalize = IsotopePatternManipulator.Normalize(patternIsoPredicted);
+            var score = is_.Compare(spExp, patternIsoNormalize);
             Assert.AreNotSame(0.0, score);
         }
 
@@ -67,11 +70,15 @@ namespace NCDK.Formula
         {
             var is_ = new IsotopePatternSimilarity();
 
-            IsotopePattern spExp = new IsotopePattern { Charge = 1 };
-            spExp.SetMonoIsotope(new IsotopeContainer(156.07770, 1));
-            spExp.Isotopes.Add(new IsotopeContainer(157.07503, 0.0101));
-            spExp.Isotopes.Add(new IsotopeContainer(157.08059, 0.074));
-            spExp.Isotopes.Add(new IsotopeContainer(158.08135, 0.0024));
+            IsotopePattern spExp = new IsotopePattern(new[]
+                {
+                    new IsotopeContainer(156.07770, 1),
+                    new IsotopeContainer(157.07503, 0.0101),
+                    new IsotopeContainer(157.08059, 0.074),
+                    new IsotopeContainer(158.08135, 0.0024),
+                });
+            spExp.MonoIsotope = spExp.Isotopes[0];
+            spExp.Charge = 1;
 
             double score = 0;
             string mfString = "";
@@ -100,20 +107,20 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestExperiment()
         {
-            IsotopePattern spExp = new IsotopePattern();
-            spExp.SetMonoIsotope(new IsotopeContainer(762.6006, 124118304));
-            spExp.Isotopes.Add(new IsotopeContainer(763.6033, 57558840));
-            spExp.Isotopes.Add(new IsotopeContainer(764.6064, 15432262));
+            var spExp = new IsotopePattern(new[]
+                {
+                    new IsotopeContainer(762.6006, 124118304),
+                    new IsotopeContainer(763.6033, 57558840),
+                    new IsotopeContainer(764.6064, 15432262),
+                });
+            spExp.MonoIsotope = spExp.Isotopes[0];
             spExp.Charge = 1.0;
 
-            IMolecularFormula formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C42H85NO8P",
-                    Silent.ChemObjectBuilder.Instance);
-
-            IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.01);
-            IsotopePattern patternIsoPredicted = isotopeGe.GetIsotopes(formula);
-
+            var formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C42H85NO8P", Silent.ChemObjectBuilder.Instance);
+            var isotopeGe = new IsotopePatternGenerator(0.01);
+            var patternIsoPredicted = isotopeGe.GetIsotopes(formula);
             var is_ = new IsotopePatternSimilarity();
-            double score = is_.Compare(spExp, patternIsoPredicted);
+            var score = is_.Compare(spExp, patternIsoPredicted);
 
             Assert.AreEqual(0.97, score, .01);
         }

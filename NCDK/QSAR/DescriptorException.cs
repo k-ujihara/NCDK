@@ -31,6 +31,10 @@ namespace NCDK.QSAR
     // @cdk.githash
     public class DescriptorException : CDKException
     {
+        public DescriptorException()
+        {
+        }
+
         /// <summary>
         /// Constructs a new DescriptorException with the given message.
         /// </summary>
@@ -47,5 +51,9 @@ namespace NCDK.QSAR
         public DescriptorException(string name, string message)
             : base(name + ": " + message)
         { }
+
+        public DescriptorException(string message, System.Exception innerException) : base(message, innerException)
+        {
+        }
     }
 }

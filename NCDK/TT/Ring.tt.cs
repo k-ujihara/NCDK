@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -30,16 +31,17 @@ using System.Collections.Generic;
 
 namespace NCDK.Default
 {
-	/// <summary>
-	/// Class representing a ring structure in a molecule.
-	/// A ring is a linear sequence of
-	/// N atoms interconnected to each other by covalent bonds,
-	/// such that atom i (1 &lt; i &lt; N) is bonded to
-	/// atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
-	/// </summary>
-	// @cdk.module  data
-	// @cdk.githash
-	// @cdk.keyword ring 
+    /// <summary>
+    /// Class representing a ring structure in a molecule.
+    /// A ring is a linear sequence of
+    /// N atoms interconnected to each other by covalent bonds,
+    /// such that atom i (1 &lt; i &lt; N) is bonded to
+    /// atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
+    /// </summary>
+    // @cdk.module  data
+    // @cdk.githash
+    // @cdk.keyword ring 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class Ring
         : AtomContainer, IRing
@@ -109,7 +111,7 @@ namespace NCDK.Default
         /// <summary>
         /// The sum of all bond orders in the ring.
         /// </summary>
-        public int BondOrderSum
+        public int GetBondOrderSum()
             => bonds.Where(n => !n.Order.IsUnset()).Select(n => n.Order.Numeric()).Sum();
 
         public override string ToString()
@@ -129,16 +131,17 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
-	/// <summary>
-	/// Class representing a ring structure in a molecule.
-	/// A ring is a linear sequence of
-	/// N atoms interconnected to each other by covalent bonds,
-	/// such that atom i (1 &lt; i &lt; N) is bonded to
-	/// atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
-	/// </summary>
-	// @cdk.module  data
-	// @cdk.githash
-	// @cdk.keyword ring 
+    /// <summary>
+    /// Class representing a ring structure in a molecule.
+    /// A ring is a linear sequence of
+    /// N atoms interconnected to each other by covalent bonds,
+    /// such that atom i (1 &lt; i &lt; N) is bonded to
+    /// atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
+    /// </summary>
+    // @cdk.module  data
+    // @cdk.githash
+    // @cdk.keyword ring 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class Ring
         : AtomContainer, IRing
@@ -208,7 +211,7 @@ namespace NCDK.Silent
         /// <summary>
         /// The sum of all bond orders in the ring.
         /// </summary>
-        public int BondOrderSum
+        public int GetBondOrderSum()
             => bonds.Where(n => !n.Order.IsUnset()).Select(n => n.Order.Numeric()).Sum();
 
         public override string ToString()

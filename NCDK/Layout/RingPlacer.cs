@@ -47,8 +47,7 @@ namespace NCDK.Layout
         // indicate we want to snap to regular polygons for bridges, not generally applicable
         // but useful for macro cycles
         internal const string SnapHint = "sdg.snap.bridged";
-        public static readonly double RAD_30 = Vectors.DegreeToRadian(-30);
-        const bool debug = false;
+        private static readonly double RAD_30 = Vectors.DegreeToRadian(-30);
 
         public IAtomContainer Molecule { get; set; }
         public AtomPlacer AtomPlacer { get; set; } = new AtomPlacer();
@@ -60,7 +59,9 @@ namespace NCDK.Layout
         /// <summary>
         /// Default ring start angles. Map contains pairs: ring size with start angle.
         /// </summary>
-        public static IDictionary<int, double> DefaultAngles { get; } = new Dictionary<int, double>()
+        public static IReadOnlyDictionary<int, double> DefaultAngles => defaultAngles;
+
+        private static readonly Dictionary<int, double> defaultAngles = new Dictionary<int, double>()
         {
             {3, Math.PI* (0.1666667)},
             {4, Math.PI * (0.25)},
@@ -72,7 +73,7 @@ namespace NCDK.Layout
         /// <summary>
         /// Suggested ring start angles for JChempaint, different due to Y inversion of canvas.
         /// </summary>
-        public static IDictionary<int, double> JCPAngles { get; } = new Dictionary<int, double>()
+        public static IReadOnlyDictionary<int, double> JCPAngles { get; } = new Dictionary<int, double>()
         {
             {3, Math.PI * (0.5)},
             {4, Math.PI * (0.25)},
@@ -94,10 +95,10 @@ namespace NCDK.Layout
         /// <param name="sharedAtomsCenter">The geometric center of these atoms</param>
         /// <param name="ringCenterVector">A vector pointing the the center of the new ring</param>
         /// <param name="bondLength">The standard bondlength</param>
-        public void PlaceRing(IRing ring, IAtomContainer sharedAtoms, Vector2 sharedAtomsCenter, Vector2 ringCenterVector, double bondLength)
+        public virtual void PlaceRing(IRing ring, IAtomContainer sharedAtoms, Vector2 sharedAtomsCenter, Vector2 ringCenterVector, double bondLength)
         {
             int sharedAtomCount = sharedAtoms.Atoms.Count;
-            Debug.WriteLine("placeRing -> sharedAtomCount: " + sharedAtomCount);
+            Debug.WriteLine($"placeRing -> sharedAtomCount: {sharedAtomCount}");
             if (sharedAtomCount > 2)
             {
                 PlaceBridgedRing(ring, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
@@ -118,7 +119,7 @@ namespace NCDK.Layout
         /// <param name="ring">the ring to place.</param>
         /// <param name="ringCenter">center coordinates of the ring.</param>
         /// <param name="bondLength">given bond length.</param>
-        public void PlaceRing(IRing ring, Vector2 ringCenter, double bondLength)
+        public virtual void PlaceRing(IRing ring, Vector2 ringCenter, double bondLength)
         {
             PlaceRing(ring, ringCenter, bondLength, DefaultAngles);
         }
@@ -130,9 +131,9 @@ namespace NCDK.Layout
         /// <param name="ringCenter">center coordinates of the ring.</param>
         /// <param name="bondLength">given bond length.</param>
         /// <param name="startAngles">a map with start angles when drawing the ring.</param>
-        public void PlaceRing(IRing ring, Vector2 ringCenter, double bondLength, IDictionary<int, double> startAngles)
+        public virtual void PlaceRing(IRing ring, Vector2 ringCenter, double bondLength, IReadOnlyDictionary<int, double> startAngles)
         {
-            var radius = this.GetNativeRingRadius(ring, bondLength);
+            var radius = GetNativeRingRadius(ring, bondLength);
             double addAngle = 2 * Math.PI / ring.RingSize;
 
             IAtom startAtom = ring.Atoms[0];
@@ -228,6 +229,9 @@ namespace NCDK.Layout
         /// <param name="sharedAtomsCenter">The geometric center of these atoms</param>
         /// <param name="ringCenterVector">A vector pointing the the center of the new ring</param>
         /// <param name="bondLength">The standard bondlength</param>
+#if !DEBUG
+        static
+#endif
         private void PlaceBridgedRing(IRing ring, IAtomContainer sharedAtoms, Vector2 sharedAtomsCenter, Vector2 ringCenterVector, double bondLength)
         {
             IAtom[] bridgeAtoms = GetBridgeAtoms(sharedAtoms);
@@ -315,9 +319,9 @@ namespace NCDK.Layout
             }
 
 #if DEBUG
-            Debug.WriteLine($"placeBridgedRing->atomsToPlace: {AtomPlacer.ListNumbers(Molecule, atoms)}");
-            Debug.WriteLine($"placeBridgedRing->startAngle: {Vectors.RadianToDegree(startAngle)}");
-            Debug.WriteLine($"placeBridgedRing->tStep: {Vectors.RadianToDegree(tStep)}");
+            Debug.WriteLine($"{nameof(PlaceBridgedRing)}->atomsToPlace: {AtomPlacer.ListNumbers(Molecule, atoms)}");
+            Debug.WriteLine($"{nameof(PlaceBridgedRing)}->startAngle: {Vectors.RadianToDegree(startAngle)}");
+            Debug.WriteLine($"{nameof(PlaceBridgedRing)}->tStep: {Vectors.RadianToDegree(tStep)}");
 #endif
             AtomPlacer.PopulatePolygonCorners(atoms, ringCenter, startAngle, -tStep, radius);
         }
@@ -329,11 +333,11 @@ namespace NCDK.Layout
         /// <param name="ring">The ring to be placed</param>
         /// <param name="sharedAtoms">The atoms of this ring, also members of another ring, which are already placed</param>
         /// <param name="sharedAtomsCenter">The geometric center of these atoms</param>
-        /// <param name="ringCenterVector">A vector pointing the the center of the new ring</param>
-        /// <param name="bondLength">The standard bondlength</param>
-        public void PlaceSpiroRing(IRing ring, IAtomContainer sharedAtoms, Vector2 sharedAtomsCenter, Vector2 ringCenterVector, double bondLength)
+        /// <param name="ringCenterVector">A vector pointing the center of the new ring</param>
+        /// <param name="bondLength">The standard bond length</param>
+        public virtual void PlaceSpiroRing(IRing ring, IAtomContainer sharedAtoms, Vector2 sharedAtomsCenter, Vector2 ringCenterVector, double bondLength)
         {
-            Debug.WriteLine("placeSpiroRing");
+            Debug.WriteLine(nameof(PlaceSpiroRing));
             double radius = GetNativeRingRadius(ring, bondLength);
             Vector2 ringCenter = sharedAtomsCenter;
             ringCenterVector = Vector2.Normalize(ringCenterVector);
@@ -364,8 +368,8 @@ namespace NCDK.Layout
                 currentAtom = currentBond.GetOther(currentAtom);
                 atomsToDraw.Add(currentAtom);
             }
-            Debug.WriteLine("currentAtom  " + currentAtom);
-            Debug.WriteLine("startAtom  " + startAtom);
+            Debug.WriteLine($"currentAtom  {currentAtom}");
+            Debug.WriteLine($"startAtom  {startAtom}");
 
             AtomPlacer.PopulatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
         }
@@ -378,7 +382,7 @@ namespace NCDK.Layout
         /// <param name="sharedAtoms">The atoms of this ring, also members of another ring, which are already placed</param>
         /// <param name="ringCenterVector">A vector pointing the the center of the new ring</param>
         /// <param name="bondLength">The standard bondlength</param>
-        public void PlaceFusedRing(IRing ring,
+        public virtual void PlaceFusedRing(IRing ring,
                                    IAtomContainer sharedAtoms,
                                    Vector2 ringCenterVector,
                                    double bondLength)
@@ -573,7 +577,7 @@ namespace NCDK.Layout
         /// </summary>
         /// <param name="rs">The ringset to be checked</param>
         /// <returns>True if coordinates have been assigned to all atoms in all rings.</returns>
-        public bool AllPlaced(IRingSet rs)
+        public static bool AllPlaced(IRingSet rs)
         {
             for (int i = 0; i < rs.Count; i++)
             {
@@ -586,11 +590,11 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Walks throught the atoms of each ring in a ring set and marks
-        /// a ring as PLACED if all of its atoms have been placed.
+        /// Walks through the atoms of each ring in a ring set and marks
+        /// a ring as <see cref="IChemObject.IsPlaced"/> if all of its atoms have been placed.
         /// </summary>
         /// <param name="rs">The ringset to be checked</param>
-        public void CheckAndMarkPlaced(IRingSet rs)
+        public static void CheckAndMarkPlaced(IRingSet rs)
         {
             bool allPlaced = true;
             bool ringsetPlaced = true;
@@ -617,7 +621,7 @@ namespace NCDK.Layout
         /// </summary>
         /// <param name="sharedAtoms">The atoms (n > 2) which are shared by two rings</param>
         /// <returns>The bridge atoms, i.e. the outermost atoms in the chain of more than two atoms which are shared by two rings</returns>
-        private IAtom[] GetBridgeAtoms(IAtomContainer sharedAtoms)
+        private static IAtom[] GetBridgeAtoms(IAtomContainer sharedAtoms)
         {
             IAtom[] bridgeAtoms = new IAtom[2];
             IAtom atom;
@@ -659,12 +663,12 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Returns the ring radius of a perfect polygons of size ring.Atoms.Count
-        /// The ring radius is the distance of each atom to the ringcenter.
+        /// The ring radius is the distance of each atom to the ring center.
         /// </summary>
         /// <param name="ring">The ring for which the radius is to calculated</param>
         /// <param name="bondLength">The bond length for each bond in the ring</param>
         /// <returns>The radius of the ring.</returns>
-        public double GetNativeRingRadius(IRing ring, double bondLength)
+        public static double GetNativeRingRadius(IRing ring, double bondLength)
         {
             int size = ring.Atoms.Count;
             double radius = bondLength / (2 * Math.Sin((Math.PI) / size));
@@ -677,8 +681,8 @@ namespace NCDK.Layout
         /// coordinates relative to it.
         /// </summary>
         /// <param name="ring">The ring for which the center is to be calculated</param>
-        /// <returns>A Vector2 pointing to the new ringcenter</returns>
-        public Vector2 GetRingCenterOfFirstRing(IRing ring, Vector2 bondVector, double bondLength)
+        /// <returns>A Vector2 pointing to the new ring center</returns>
+        public virtual Vector2 GetRingCenterOfFirstRing(IRing ring, Vector2 bondVector, double bondLength)
         {
             int size = ring.Atoms.Count;
             double radius = bondLength / (2 * Math.Sin((Math.PI) / size));
@@ -690,7 +694,7 @@ namespace NCDK.Layout
             return new Vector2((Math.Cos(rotangle) * newRingPerpendicular), (Math.Sin(rotangle) * newRingPerpendicular));
         }
 
-        private void Rotate(Vector2 vec, double rad)
+        private static void Rotate(Vector2 vec, double rad)
         {
             double rx = (vec.X * Math.Cos(rad)) - (vec.Y * Math.Sin(rad));
             double ry = (vec.X * Math.Sin(rad)) + (vec.Y * Math.Cos(rad));

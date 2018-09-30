@@ -18,6 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.QSAR.Results;
+using NCDK.Silent;
 using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Atomic
@@ -38,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         public void TestAtomDegreeDescriptor()
         {
             IAtomicDescriptor descriptor = new AtomDegreeDescriptor();
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CC(C)CCCC"); //
             Assert.AreEqual(3, ((Result<int>)descriptor.Calculate(mol.Atoms[1], mol).Value).Value);
         }

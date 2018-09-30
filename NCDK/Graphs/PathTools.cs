@@ -37,9 +37,6 @@ namespace NCDK.Graphs
     // @cdk.created 2001-06-17
     public static class PathTools
     {
-        /// <summary>flag with which debugging can be turned on.</summary>
-        private const bool CanDebug = false;
-
         /// <summary>
         /// Sums up the columns in a 2D int matrix.
         /// </summary>
@@ -72,7 +69,7 @@ namespace NCDK.Graphs
         {
             int nrow = costMatrix.Length;
             int[][] distMatrix = Arrays.CreateJagged<int>(nrow, nrow);
-            //Debug.WriteLine("Matrix size: " + n);
+            //Debug.WriteLine($"Matrix size: {n}");
             for (int i = 0; i < nrow; i++)
             {
                 for (int j = 0; j < nrow; j++)
@@ -121,7 +118,7 @@ namespace NCDK.Graphs
         {
             int nrow = costMatrix.Length;
             int[][] distMatrix = Arrays.CreateJagged<int>(nrow, nrow);
-            //Debug.WriteLine("Matrix size: " + n);
+            //Debug.WriteLine($"Matrix size: {n}");
             for (int i = 0; i < nrow; i++)
             {
                 for (int j = 0; j < nrow; j++)
@@ -219,7 +216,7 @@ namespace NCDK.Graphs
         /// <param name="molecule">A molecule into which all the atoms and bonds are stored that are found during search</param>
         public static void BreadthFirstSearch(IAtomContainer atomContainer, IEnumerable<IAtom> sphere, IAtomContainer molecule)
         {
-            // Debug.WriteLine("Staring partitioning with this ac: " + ac);
+            // Debug.WriteLine($"Staring partitioning with this ac: {ac}");
             BreadthFirstSearch(atomContainer, sphere, molecule, -1);
         }
 
@@ -436,7 +433,7 @@ namespace NCDK.Graphs
         
         /// <summary>
         /// Returns the number of vertices that are a distance 'd' apart.
-        /// <para>In this method, d is the topological distance (ie edge count).</para>
+        /// <para>In this method, d is the topological distance (i.e. edge count).</para>
         /// </summary>
         /// <param name="atomContainer">The molecule to consider</param>
         /// <param name="distance">The distance to consider</param>
@@ -468,7 +465,7 @@ namespace NCDK.Graphs
         /// </summary>
         /// <remarks>This implementation recalculates all shortest paths from the start atom
         /// for each method call and does not indicate if there are equally short paths
-        /// from the start to the end. Replaced by <see cref="ShortestPaths.GetAtomsTo(IAtom)"/></remarks>
+        /// from the start to the end.</remarks>
         /// <param name="atomContainer">The molecule to search in</param>
         /// <param name="start">The starting atom</param>
         /// <param name="end">The ending atom</param>
@@ -477,8 +474,8 @@ namespace NCDK.Graphs
         /// <seealso cref="ShortestPaths"/>
         /// <seealso cref="ShortestPaths.GetAtomsTo(IAtom)"/>
         /// <seealso cref="AllPairsShortestPaths"/>
-        [Obsolete]
-        public static IList<IAtom> GetShortestPath(IAtomContainer atomContainer, IAtom start, IAtom end)
+        [Obsolete("Use " + nameof(ShortestPaths) + "." + nameof(ShortestPaths.GetPathsTo) + "(" + nameof(IAtom) + ")")]
+        public static IReadOnlyList<IAtom> GetShortestPath(IAtomContainer atomContainer, IAtom start, IAtom end)
         {
             int natom = atomContainer.Atoms.Count;
             int endNumber = atomContainer.Atoms.IndexOf(end);
@@ -581,7 +578,7 @@ namespace NCDK.Graphs
 
         /// <summary>
         /// Get the paths starting from an atom of specified length.
-        /// <para>This method returns a set of paths. Each path is a <see cref="IList{IAtom}"/> that make up the path (ie they are sequentially connected).</para>
+        /// <para>This method returns a set of paths. Each path is a <see cref="IList{IAtom}"/> that make up the path (i.e. they are sequentially connected).</para>
         /// </summary>
         /// <param name="atomContainer">The molecule to consider</param>
         /// <param name="start">The starting atom</param>
@@ -617,7 +614,7 @@ namespace NCDK.Graphs
 
         /// <summary>
         /// Get all the paths starting from an atom of length 0 up to the specified length.
-        /// <para>This method returns a set of paths. Each path is a <see cref="IList{IAtom}"/> of atoms that make up the path (ie they are sequentially connected).</para>
+        /// <para>This method returns a set of paths. Each path is a <see cref="IList{IAtom}"/> of atoms that make up the path (i.e. they are sequentially connected).</para>
         /// </summary>
         /// <param name="atomContainer">The molecule to consider</param>
         /// <param name="start">The starting atom</param>
@@ -658,7 +655,7 @@ namespace NCDK.Graphs
         /// Get all the paths starting from an atom of length 0 up to the specified
         /// length. If the number of paths exceeds the set <paramref name="limit"/> then an
         /// exception is thrown. <p/> This method returns a set of paths. Each path
-        /// is a <see cref="IList{T}"/> of <see cref="IAtom"/> that make up the path (ie they are
+        /// is a <see cref="IList{T}"/> of <see cref="IAtom"/> that make up the path (i.e. they are
         /// sequentially connected).
         /// </summary>
         /// <param name="atomContainer">The molecule to consider</param>

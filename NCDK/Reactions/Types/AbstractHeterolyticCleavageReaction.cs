@@ -28,8 +28,6 @@ namespace NCDK.Reactions.Types
     // @cdk.githash
     public abstract class AbstractHeterolyticCleavageReaction : ReactionEngine, IReactionProcess
     {
-        public AbstractHeterolyticCleavageReaction() { }
-
         /// <inheritdoc/>
         public abstract ReactionSpecification Specification { get; }
 
@@ -92,7 +90,7 @@ namespace NCDK.Reactions.Types
             return setOfReactions;
         }
         
-        private void SetActiveCenters(IAtomContainer reactant, BondCheck bondCheck)
+        private static void SetActiveCenters(IAtomContainer reactant, BondCheck bondCheck)
         {
             foreach (var bond in reactant.Bonds)
             {

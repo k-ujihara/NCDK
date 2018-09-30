@@ -20,6 +20,7 @@ using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.QSAR.Results;
 using NCDK.Smiles;
+using NCDK.Silent;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -39,7 +40,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestHBondAcceptorCountDescriptor()
         {
             Descriptor.Parameters = new object[] { true };
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             // original molecule O=N(=O)c1cccc2cn[nH]c12 - correct kekulisation will give
             // the same result. this test though should depend on kekulisation working
             IAtomContainer mol = sp.ParseSmiles("O=N(=O)C1=C2NN=CC2=CC=C1");
@@ -51,7 +52,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestCID9257()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("N");
             a1.FormalCharge = 0;

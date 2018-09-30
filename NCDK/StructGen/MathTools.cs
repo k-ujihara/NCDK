@@ -35,7 +35,8 @@ namespace NCDK.StructGen
         {
             double max = values[0];
             foreach (var value in values)
-                if (value > max) max = value;
+                if (value > max)
+                    max = value;
             return max;
         }
 
@@ -48,7 +49,8 @@ namespace NCDK.StructGen
         {
             double min = values[0];
             foreach (var value in values)
-                if (value < min) min = value;
+                if (value < min)
+                    min = value;
             return min;
         }
 

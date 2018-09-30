@@ -22,6 +22,8 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.Geometries.CIP.Rules
 {
@@ -41,40 +43,47 @@ namespace NCDK.Geometries.CIP.Rules
         public int Compare(ILigand ligand1, ILigand ligand2)
         {
             int numberComp = numberRule.Compare(ligand1, ligand2);
-            if (numberComp != 0) return numberComp;
+            if (numberComp != 0)
+                return numberComp;
 
             // OK, now I need to recurse...
-            ILigand[] ligand1Ligands = CIPTool.GetLigandLigands(ligand1);
-            ILigand[] ligand2Ligands = CIPTool.GetLigandLigands(ligand2);
+            var ligand1Ligands = CIPTool.GetLigandLigands(ligand1);
+            var ligand2Ligands = CIPTool.GetLigandLigands(ligand2);
             // if neither have ligands:
-            if (ligand1Ligands.Length == 0 && ligand2Ligands.Length == 0) return 0;
+            if (ligand1Ligands.Count == 0 && ligand2Ligands.Count == 0) return 0;
             // else if one has no ligands
-            if (ligand1Ligands.Length == 0) return -1;
-            if (ligand2Ligands.Length == 0) return 1;
+            if (ligand1Ligands.Count == 0)
+                return -1;
+            if (ligand2Ligands.Count == 0)
+                return 1;
             // ok, both have at least one ligand
-            int minLigandCount = Math.Min(ligand1Ligands.Length, ligand2Ligands.Length);
-            if (ligand1Ligands.Length > 1) ligand1Ligands = Order(ligand1Ligands);
-            if (ligand2Ligands.Length > 1) ligand2Ligands = Order(ligand2Ligands);
+            int minLigandCount = Math.Min(ligand1Ligands.Count, ligand2Ligands.Count);
+            if (ligand1Ligands.Count > 1)
+                ligand1Ligands = Order(ligand1Ligands);
+            if (ligand2Ligands.Count > 1)
+                ligand2Ligands = Order(ligand2Ligands);
             // first do a basic number rule
             for (int i = 0; i < minLigandCount; i++)
             {
                 int comparison = numberRule.Compare(ligand1Ligands[i], ligand2Ligands[i]);
-                if (comparison != 0) return comparison;
+                if (comparison != 0)
+                    return comparison;
             }
-            if (ligand1Ligands.Length == ligand2Ligands.Length)
+            if (ligand1Ligands.Count == ligand2Ligands.Count)
             {
                 // it that does not resolve it, do a full, recursive compare
                 for (int i = 0; i < minLigandCount; i++)
                 {
                     int comparison = Compare(ligand1Ligands[i], ligand2Ligands[i]);
-                    if (comparison != 0) return comparison;
+                    if (comparison != 0)
+                        return comparison;
                 }
             }
             // OK, if we reached this point, then the ligands they 'share' are all equals, so the one
             // with more ligands wins
-            if (ligand1Ligands.Length > ligand2Ligands.Length)
+            if (ligand1Ligands.Count > ligand2Ligands.Count)
                 return 1;
-            else if (ligand1Ligands.Length < ligand2Ligands.Length)
+            else if (ligand1Ligands.Count < ligand2Ligands.Count)
                 return -1;
             else
                 return 0;
@@ -83,11 +92,10 @@ namespace NCDK.Geometries.CIP.Rules
         /// <summary>
         /// Order the ligands from high to low precedence according to atomic and mass numbers.
         /// </summary>
-        private ILigand[] Order(ILigand[] ligands)
+        private ILigand[] Order(IReadOnlyList<ILigand> ligands)
         {
-            ILigand[] newLigands = new ILigand[ligands.Length];
-            Array.Copy(ligands, 0, newLigands, 0, ligands.Length);
-
+            var newLigands = ligands.ToArray();
+            
             Array.Sort(newLigands, numberRule);
             // this above list is from low to high precendence, so we need to revert the array
             ILigand[] reverseLigands = new ILigand[newLigands.Length];

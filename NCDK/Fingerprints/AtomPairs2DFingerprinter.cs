@@ -9,6 +9,7 @@
  */
 
 using NCDK.Graphs;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -49,7 +50,7 @@ namespace NCDK.Fingerprints
             }
         }
 
-        public override int Count => pathToBit.Count;
+        public override int Length => pathToBit.Count;
 
         /// <summary>
         /// Checks if an atom is a halogen
@@ -126,7 +127,7 @@ namespace NCDK.Fingerprints
         /// </summary>
         /// <param name="paths"></param>
         /// <param name="mol"></param>
-        private void Calculate(IList<string> paths, IAtomContainer mol)
+        private static void Calculate(IList<string> paths, IAtomContainer mol)
         {
             AllPairsShortestPaths apsp = new AllPairsShortestPaths(mol);
             int numAtoms = mol.Atoms.Count;
@@ -164,10 +165,10 @@ namespace NCDK.Fingerprints
             return new BitSetFingerprint(fp);
         }
 
-        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer mol)
+        public override IReadOnlyDictionary<string, int> GetRawFingerprint(IAtomContainer mol)
         {
-            Dictionary<string, int> raw = new Dictionary<string, int>();
-            List<string> paths = new List<string>();
+            var raw = new Dictionary<string, int>();
+            var paths = new List<string>();
             Calculate(paths, mol);
 
             paths.Sort();
@@ -175,7 +176,7 @@ namespace NCDK.Fingerprints
             string prev = null;
             foreach (string path in paths)
             {
-                if (prev == null || !path.Equals(prev))
+                if (prev == null || !string.Equals(path, prev, StringComparison.Ordinal))
                 {
                     if (count > 0)
                         raw[prev] = count;
@@ -195,13 +196,13 @@ namespace NCDK.Fingerprints
 
         class CountFingerprintImpl : ICountFingerprint
         {
-            AtomPairs2DFingerprinter parent;
-            IDictionary<string, int> raw;
-            List<string> keys;
+            readonly AtomPairs2DFingerprinter parent;
+            readonly IReadOnlyDictionary<string, int> raw;
+            readonly List<string> keys;
 
             public CountFingerprintImpl(
                 AtomPairs2DFingerprinter parent,
-                IDictionary<string, int> raw,
+                IReadOnlyDictionary<string, int> raw,
                 List<string> keys)
             {
                 this.parent = parent;
@@ -209,7 +210,7 @@ namespace NCDK.Fingerprints
                 this.keys = keys;
             }
 
-            public long Count => parent.pathToBit.Count;
+            public long Length => parent.pathToBit.Count;
             public int GetNumberOfPopulatedBins() => keys.Count;
             public int GetCount(int index) => raw[keys[index]];
             public int GetHash(int index) => parent.pathToBit[keys[index]];
@@ -222,7 +223,7 @@ namespace NCDK.Fingerprints
         public override ICountFingerprint GetCountFingerprint(IAtomContainer mol)
         {
             var raw = GetRawFingerprint(mol);
-            List<string> keys = new List<string>(raw.Keys);
+            var keys = new List<string>(raw.Keys);
             return new CountFingerprintImpl(this, raw, keys);
         }
     }

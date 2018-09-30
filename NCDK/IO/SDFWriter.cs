@@ -29,6 +29,7 @@ using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -233,7 +234,7 @@ namespace NCDK.IO
                                 if (writeAllProperties || propertiesToWrite.Contains(headerKey))
                                 {
                                     string cleanHeaderKey = ReplaceInvalidHeaderChars(headerKey);
-                                    if (!cleanHeaderKey.Equals(headerKey))
+                                    if (!cleanHeaderKey.Equals(headerKey, StringComparison.Ordinal))
                                         Trace.TraceInformation("Replaced characters in SDfile data header: ", headerKey, " written as: ", cleanHeaderKey);
 
                                     Object val = sdFields[propKey];
@@ -279,7 +280,7 @@ namespace NCDK.IO
             if (container.Bonds.Count > 999)
                 return true;
             // check for positional variation, this can be output in base V3000 and not V2000
-            var sgroups = container.GetProperty<IEnumerable<Sgroup>>(CDKPropertyName.CtabSgroups);
+            var sgroups = container.GetCtabSgroups();
             if (sgroups != null)
             {
                 foreach (Sgroup sgroup in sgroups)
@@ -293,35 +294,30 @@ namespace NCDK.IO
         /// A list of properties used by CDK algorithms which must never be
         /// serialized into the SD file format.
         /// </summary>
-        private static List<string> cdkInternalProperties = new List<string>();
+        private static List<string> cdkInternalProperties = new List<string>()
+            {
+                InvPair.CanonicalLabelPropertyKey,
+                InvPair.InvariancePairPropertyKey,
+                SgroupTool.CtabSgroupsPropertyKey,
+                // TITLE/REMARK written in Molfile header
+                CDKPropertyName.Remark,
+                CDKPropertyName.Title,
+                // I think there are a few more, but cannot find them right now
+            };
 
-        static SDFWriter()
+        private static bool IsCDKInternalProperty(object propKey)
         {
-            cdkInternalProperties.Add(InvPair.CanonicalLabelKey);
-            cdkInternalProperties.Add(InvPair.InvariancePairKey);
-            cdkInternalProperties.Add(CDKPropertyName.CtabSgroups);
-            // TITLE/REMARK written in Molfile header
-            cdkInternalProperties.Add(CDKPropertyName.Remark);
-            cdkInternalProperties.Add(CDKPropertyName.Title);
-            // I think there are a few more, but cannot find them right now
-        }
-
-        private bool IsCDKInternalProperty(object propKey)
-        {
-            var stringKey = propKey as string;
-            if (stringKey == null)
+            if (!(propKey is string stringKey))
                 return false;
             return cdkInternalProperties.Contains(stringKey);
         }
         
         private void InitIOSettings()
         {
-            paramWriteData = Add(new BooleanIOSetting("writeProperties",
-                                                             IOSetting.Importance.Low,
-                                                             "Should molecule properties be written as non-structural data", "true"));
-            paramWriteV3000 = Add(new BooleanIOSetting("writeV3000",
-                                                              IOSetting.Importance.Low,
-                                                              "Write all records as V3000", "false"));
+            paramWriteData = Add(new BooleanIOSetting("writeProperties", Importance.Low,
+                "Should molecule properties be written as non-structural data", "true"));
+            paramWriteV3000 = Add(new BooleanIOSetting("writeV3000", Importance.Low, 
+                "Write all records as V3000", "false"));
             AddSettings(new MDLV2000Writer().IOSettings.Settings);
             AddSettings(new MDLV3000Writer().IOSettings.Settings);
         }
@@ -330,7 +326,7 @@ namespace NCDK.IO
         {
             try
             {
-                paramWriteV3000.Setting = val.ToString();
+                paramWriteV3000.Setting = val.ToString(NumberFormatInfo.InvariantInfo);
             }
             catch (CDKException e)
             {
@@ -343,7 +339,7 @@ namespace NCDK.IO
         {
             foreach (var setting in IOSettings.Settings)
             {
-                FireIOSettingQuestion(setting);
+                ProcessIOSettingQuestion(setting);
             }
         }
     }

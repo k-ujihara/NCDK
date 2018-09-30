@@ -129,7 +129,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Query
             return result;
         }
 
-        private IQuery Build(IQueryAtomContainer queryMolecule)
+        private static IQuery Build(IQueryAtomContainer queryMolecule)
         {
             VFQueryBuilder result = new VFQueryBuilder();
             foreach (var atoms in queryMolecule.Atoms)
@@ -161,12 +161,12 @@ namespace NCDK.SMSD.Algorithms.VFLib.Query
             return new DefaultVFBondMatcher(mol, bond, IsBondMatchFlag);
         }
 
-        private IVFAtomMatcher CreateAtomMatcher(IQueryAtom atom, IQueryAtomContainer container)
+        private static IVFAtomMatcher CreateAtomMatcher(IQueryAtom atom, IQueryAtomContainer container)
         {
             return new DefaultVFAtomMatcher(atom, container);
         }
 
-        private IVFBondMatcher CreateBondMatcher(IQueryBond bond)
+        private static IVFBondMatcher CreateBondMatcher(IQueryBond bond)
         {
             return new DefaultVFBondMatcher(bond);
         }

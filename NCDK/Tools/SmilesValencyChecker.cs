@@ -24,13 +24,14 @@
 using NCDK.Config;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
 namespace NCDK.Tools
 {
     /// <summary>
-    /// Small customization of ValencyHybridChecker suggested by Todd Martin
+    /// Small customization of <see cref="SmilesValencyChecker"/> suggested by Todd Martin
     /// specially tuned for SMILES parsing.
     /// </summary>
     // @author       Egon Willighagen
@@ -40,17 +41,17 @@ namespace NCDK.Tools
     // @cdk.githash
     public class SmilesValencyChecker : IValencyChecker, IDeduceBondOrderTool
     {
-        private string atomTypeList = null;
-        protected AtomTypeFactory structgenATF;
+        private readonly AtomTypeFactory structgenATF;
 
         public SmilesValencyChecker()
-            : this("NCDK.Dict.Data.cdk-atom-types.owl")
-        { }
+        {
+            structgenATF = CDK.CdkAtomTypeFactory;
+        }
 
         public SmilesValencyChecker(string atomTypeList)
         {
-            this.atomTypeList = atomTypeList;
-            Trace.TraceInformation("Using configuration file: ", atomTypeList);
+            structgenATF = AtomTypeFactory.GetInstance(atomTypeList, Silent.ChemObjectBuilder.Instance);
+            Trace.TraceInformation($"Using configuration file: {atomTypeList}");
         }
 
         /// <summary>
@@ -61,14 +62,14 @@ namespace NCDK.Tools
         public void Saturate(IAtomContainer atomContainer)
         {
             Trace.TraceInformation("Saturating atomContainer by adjusting bond orders...");
-            bool allSaturated = AllSaturated(atomContainer);
+            var allSaturated = IsSaturated(atomContainer);
             if (!allSaturated)
             {
                 Trace.TraceInformation("Saturating bond orders is needed...");
-                IBond[] bonds = new IBond[atomContainer.Bonds.Count];
+                var bonds = new IBond[atomContainer.Bonds.Count];
                 for (int i = 0; i < bonds.Length; i++)
                     bonds[i] = atomContainer.Bonds[i];
-                bool succeeded = Saturate(bonds, atomContainer);
+                var succeeded = Saturate(bonds, atomContainer);
                 if (!succeeded)
                 {
                     throw new CDKException("Could not saturate this atomContainer!");
@@ -79,21 +80,21 @@ namespace NCDK.Tools
         /// <summary>
         /// Saturates a set of Bonds in an AtomContainer.
         /// </summary>
-        public bool Saturate(IBond[] bonds, IAtomContainer atomContainer)
+        public bool Saturate(IEnumerable<IBond> bonds, IAtomContainer atomContainer)
         {
-            Debug.WriteLine("Saturating bond set of size: ", bonds.Length);
-            bool bondsAreFullySaturated = false;
-            if (bonds.Length > 0)
+            var _bonds = bonds.ToList();
+            Debug.WriteLine($"Saturating bond set of size: {_bonds.Count}");
+            var bondsAreFullySaturated = false;
+            if (_bonds.Count > 0)
             {
-                IBond bond = bonds[0];
+                var bond = _bonds[0];
 
                 // determine bonds left
-                int leftBondCount = bonds.Length - 1;
-                IBond[] leftBonds = new IBond[leftBondCount];
-                Array.Copy(bonds, 1, leftBonds, 0, leftBondCount);
+                var leftBondCount = _bonds.Count - 1;
+                var leftBonds = _bonds;
 
                 // examine this bond
-                Debug.WriteLine("Examining this bond: ", bond);
+                Debug.WriteLine($"Examining this bond: {bond}");
                 if (IsSaturated(bond, atomContainer))
                 {
                     Debug.WriteLine("OK, bond is saturated, now try to saturate remaining bonds (if needed)");
@@ -107,8 +108,8 @@ namespace NCDK.Tools
                     // 2. saturate this one by saturating the rest
                     Debug.WriteLine("Option 1: Saturating this bond directly, then trying to saturate rest");
                     // considering organic bonds, the max order is 3, so increase twice
-                    bool bondOrderIncreased = SaturateByIncreasingBondOrder(bond, atomContainer);
-                    bondsAreFullySaturated = bondOrderIncreased && Saturate(bonds, atomContainer);
+                    var bondOrderIncreased = SaturateByIncreasingBondOrder(bond, atomContainer);
+                    bondsAreFullySaturated = bondOrderIncreased && Saturate(_bonds, atomContainer);
                     if (bondsAreFullySaturated)
                     {
                         Debug.WriteLine("Option 1: worked");
@@ -116,11 +117,13 @@ namespace NCDK.Tools
                     else
                     {
                         Debug.WriteLine("Option 1: failed. Trying option 2.");
-                        Debug.WriteLine("Option 2: Saturing this bond by saturating the rest");
+                        Debug.WriteLine("Option 2: Saturating this bond by saturating the rest");
                         // revert the increase (if succeeded), then saturate the rest
-                        if (bondOrderIncreased) UnsaturateByDecreasingBondOrder(bond);
+                        if (bondOrderIncreased)
+                            UnsaturateByDecreasingBondOrder(bond);
                         bondsAreFullySaturated = Saturate(leftBonds, atomContainer) && IsSaturated(bond, atomContainer);
-                        if (!bondsAreFullySaturated) Debug.WriteLine("Option 2: failed");
+                        if (!bondsAreFullySaturated)
+                            Debug.WriteLine("Option 2: failed");
                     }
                 }
                 else
@@ -137,7 +140,7 @@ namespace NCDK.Tools
             return bondsAreFullySaturated;
         }
 
-        public bool UnsaturateByDecreasingBondOrder(IBond bond)
+        private static bool UnsaturateByDecreasingBondOrder(IBond bond)
         {
             if (bond.Order != BondOrder.Single)
             {
@@ -156,14 +159,14 @@ namespace NCDK.Tools
         /// </summary>
         public bool IsUnsaturated(IBond bond, IAtomContainer atomContainer)
         {
-            Debug.WriteLine("isBondUnsaturated?: ", bond);
-            IAtom[] atoms = BondManipulator.GetAtomArray(bond);
-            bool isUnsaturated = true;
+            Debug.WriteLine($"isBondUnsaturated?: {bond}");
+            var atoms = BondManipulator.GetAtomArray(bond);
+            var isUnsaturated = true;
             for (int i = 0; i < atoms.Length && isUnsaturated; i++)
             {
                 isUnsaturated = isUnsaturated && !IsSaturated(atoms[i], atomContainer);
             }
-            Debug.WriteLine("Bond is unsaturated?: ", isUnsaturated);
+            Debug.WriteLine($"Bond is unsaturated?: {isUnsaturated}");
             return isUnsaturated;
         }
 
@@ -173,29 +176,29 @@ namespace NCDK.Tools
         /// <returns>true if the bond could be increased</returns>
         public bool SaturateByIncreasingBondOrder(IBond bond, IAtomContainer atomContainer)
         {
-            IAtom[] atoms = BondManipulator.GetAtomArray(bond);
-            IAtom atom = atoms[0];
-            IAtom partner = atoms[1];
+            var atoms = BondManipulator.GetAtomArray(bond);
+            var atom = atoms[0];
+            var partner = atoms[1];
             Debug.WriteLine("  saturating bond: ", atom.Symbol, "-", partner.Symbol);
-            var atomTypes1 = GetAtomTypeFactory(bond.Builder).GetAtomTypes(atom.Symbol);
-            var atomTypes2 = GetAtomTypeFactory(bond.Builder).GetAtomTypes(partner.Symbol);
+            var atomTypes1 = structgenATF.GetAtomTypes(atom.Symbol);
+            var atomTypes2 = structgenATF.GetAtomTypes(partner.Symbol);
             foreach (var aType1 in atomTypes1)
             {
-                Debug.WriteLine("  condidering atom type: ", aType1);
+                Debug.WriteLine($"  considering atom type: {aType1}");
                 if (CouldMatchAtomType(atomContainer, atom, aType1))
                 {
-                    Debug.WriteLine("  trying atom type: ", aType1);
+                    Debug.WriteLine($"  trying atom type: {aType1}");
                     foreach (var aType2 in atomTypes2)
                     {
-                        Debug.WriteLine("  condidering partner type: ", aType1);
+                        Debug.WriteLine($"  considering partner type: {aType1}");
                         if (CouldMatchAtomType(atomContainer, partner, aType2))
                         {
-                            Debug.WriteLine("    with atom type: ", aType2);
+                            Debug.WriteLine($"    with atom type: {aType2}");
                             if (BondManipulator.IsLowerOrder(bond.Order, aType2.MaxBondOrder)
                                     && BondManipulator.IsLowerOrder(bond.Order, aType1.MaxBondOrder))
                             {
                                 bond.Order = BondManipulator.IncreaseBondOrder(bond.Order);
-                                Debug.WriteLine("Bond order now ", bond.Order);
+                                Debug.WriteLine($"Bond order now {bond.Order}");
                                 return true;
                             }
                         }
@@ -211,27 +214,24 @@ namespace NCDK.Tools
         /// </summary>
         public bool IsSaturated(IBond bond, IAtomContainer atomContainer)
         {
-            Debug.WriteLine("isBondSaturated?: ", bond);
-            IAtom[] atoms = BondManipulator.GetAtomArray(bond);
+            Debug.WriteLine($"isBondSaturated?: {bond}");
+            var atoms = BondManipulator.GetAtomArray(bond);
             bool isSaturated = true;
             for (int i = 0; i < atoms.Length; i++)
             {
-                Debug.WriteLine("IsSaturated(Bond, AC): atom I=", i);
+                Debug.WriteLine($"IsSaturated(Bond, AC): atom I={i}");
                 isSaturated = isSaturated && IsSaturated(atoms[i], atomContainer);
             }
-            Debug.WriteLine("IsSaturated(Bond, AC): result=", isSaturated);
+            Debug.WriteLine($"IsSaturated(Bond, AC): result={isSaturated}");
             return isSaturated;
         }
 
         /// <summary>
-        /// Determines of all atoms on the AtomContainer are saturated.
+        /// Check all atoms are saturated.
         /// </summary>
-        public bool IsSaturated(IAtomContainer container)
-        {
-            return AllSaturated(container);
-        }
-
-        public bool AllSaturated(IAtomContainer ac)
+        /// <param name="ac"><see cref="IAtomContainer"/> to check.</param>
+        /// <returns><see langword="true"/> if all atoms are saturated.</returns>
+        public bool IsSaturated(IAtomContainer ac)
         {
             Debug.WriteLine("Are all atoms saturated?");
             for (int f = 0; f < ac.Atoms.Count; f++)
@@ -245,50 +245,45 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// Determines if the atom can be of type AtomType. That is, it sees if this
-        /// AtomType only differs in bond orders, or implicit hydrogen count.
+        /// Determines if the atom can be of atom type. That is, it sees if this
+        /// atom type only differs in bond orders, or implicit hydrogen count.
         /// </summary>
-        public bool CouldMatchAtomType(IAtom atom, double bondOrderSum, BondOrder maxBondOrder, IAtomType type)
+        private static bool CouldMatchAtomType(IAtom atom, double bondOrderSum, BondOrder maxBondOrder, IAtomType type)
         {
-            Debug.WriteLine("couldMatchAtomType:   ... matching atom ", atom, " vs ", type);
-            int hcount = atom.ImplicitHydrogenCount.Value;
-            int charge = atom.FormalCharge.Value;
+            Debug.WriteLine($"{nameof(CouldMatchAtomType)}:   ... matching atom {atom} vs {type}");
+            var hcount = atom.ImplicitHydrogenCount.Value;
+            var charge = atom.FormalCharge.Value;
             if (charge == type.FormalCharge)
             {
-                Debug.WriteLine("couldMatchAtomType:     formal charge matches...");
-                //            if (atom.Hybridization == type.Hybridization) {
-                //                Debug.WriteLine("couldMatchAtomType:     hybridization is OK...");
+                Debug.WriteLine($"{nameof(CouldMatchAtomType)}e:     formal charge matches...");
                 if (bondOrderSum + hcount <= type.BondOrderSum)
                 {
-                    Debug.WriteLine("couldMatchAtomType:     bond order sum is OK...");
+                    Debug.WriteLine($"{nameof(CouldMatchAtomType)}:     bond order sum is OK...");
                     if (!BondManipulator.IsHigherOrder(maxBondOrder, type.MaxBondOrder))
                     {
-                        Debug.WriteLine("couldMatchAtomType:     max bond order is OK... We have a match!");
+                        Debug.WriteLine($"{nameof(CouldMatchAtomType)}:     max bond order is OK... We have a match!");
                         return true;
                     }
                 }
                 else
                 {
-                    Debug.WriteLine("couldMatchAtomType:      no match", "" + (bondOrderSum + hcount), " > ",
-                            "" + type.BondOrderSum);
+                    Debug.WriteLine($"{nameof(CouldMatchAtomType)}:      no match {(bondOrderSum + hcount)} > {type.BondOrderSum}");
                 }
-                //            }
             }
             else
             {
-                Debug.WriteLine("couldMatchAtomType:     formal charge does NOT match...");
+                Debug.WriteLine($"{nameof(CouldMatchAtomType)}:     formal charge does NOT match...");
             }
-            Debug.WriteLine("couldMatchAtomType:    No Match");
+            Debug.WriteLine($"{nameof(CouldMatchAtomType)}e:    No Match");
             return false;
         }
 
         /// <summary>
-        /// Calculates the number of hydrogens that can be added to the given atom to fullfil
+        /// Calculates the number of hydrogens that can be added to the given atom to fulfil
         /// the atom's valency. It will return 0 for PseudoAtoms, and for atoms for which it
         /// does not have an entry in the configuration file.
         /// </summary>
-        public int CalculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, BondOrder maxBondOrder,
-                int neighbourCount)
+        public int CalculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, BondOrder maxBondOrder, int neighbourCount)
         {
             int missingHydrogens = 0;
             if (atom is IPseudoAtom)
@@ -299,12 +294,12 @@ namespace NCDK.Tools
 
             Debug.WriteLine("Calculating number of missing hydrogen atoms");
             // get default atom
-            var atomTypes = GetAtomTypeFactory(atom.Builder).GetAtomTypes(atom.Symbol);
+            var atomTypes = structgenATF.GetAtomTypes(atom.Symbol);
             foreach (var type in atomTypes)
             {
                 if (CouldMatchAtomType(atom, bondOrderSum, maxBondOrder, type))
                 {
-                    Debug.WriteLine("This type matches: ", type);
+                    Debug.WriteLine($"This type matches: {type}");
                     int formalNeighbourCount = type.FormalNeighbourCount.Value;
                     switch (type.Hybridization)
                     {
@@ -328,14 +323,14 @@ namespace NCDK.Tools
                 }
             }
 
-            Debug.WriteLine("missing hydrogens: ", missingHydrogens);
+            Debug.WriteLine($"missing hydrogens: {missingHydrogens}");
             return missingHydrogens;
         }
 
         /// <summary>
-        /// Checks whether an Atom is saturated by comparing it with known AtomTypes.
-        /// It returns true if the atom is an PseudoAtom and when the element is not in the list.
+        /// Checks whether an atom is saturated by comparing it with known atom types.
         /// </summary>
+        /// <returns><see langword="true"/> if the atom is an pseudo atom and when the element is not in the list.</returns>
         public bool IsSaturated(IAtom atom, IAtomContainer container)
         {
             if (atom is IPseudoAtom)
@@ -344,22 +339,22 @@ namespace NCDK.Tools
                 return true;
             }
 
-            var atomTypes = GetAtomTypeFactory(atom.Builder).GetAtomTypes(atom.Symbol);
+            var atomTypes = structgenATF.GetAtomTypes(atom.Symbol);
             if (atomTypes.Any())
             {
-                Trace.TraceWarning("Missing entry in atom type list for ", atom.Symbol);
+                Trace.TraceWarning($"Missing entry in atom type list for {atom.Symbol}");
                 return true;
             }
-            double bondOrderSum = container.GetBondOrderSum(atom);
-            BondOrder maxBondOrder = container.GetMaximumBondOrder(atom);
-            int hcount = atom.ImplicitHydrogenCount.Value;
-            int charge = atom.FormalCharge.Value;
+            var bondOrderSum = container.GetBondOrderSum(atom);
+            var maxBondOrder = container.GetMaximumBondOrder(atom);
+            var hcount = atom.ImplicitHydrogenCount.Value;
+            var charge = atom.FormalCharge.Value;
 
-            Debug.WriteLine("Checking saturation of atom ", atom.Symbol);
-            Debug.WriteLine("bondOrderSum: ", bondOrderSum);
-            Debug.WriteLine("maxBondOrder: ", maxBondOrder);
-            Debug.WriteLine("hcount: ", hcount);
-            Debug.WriteLine("charge: ", charge);
+            Debug.WriteLine($"Checking saturation of atom {atom.Symbol}");
+            Debug.WriteLine($"bondOrderSum: {bondOrderSum}");
+            Debug.WriteLine($"maxBondOrder: {maxBondOrder}");
+            Debug.WriteLine($"hcount: {hcount}");
+            Debug.WriteLine($"charge: {charge}");
 
             bool elementPlusChargeMatches = false;
             foreach (var type in atomTypes)
@@ -369,8 +364,8 @@ namespace NCDK.Tools
                     if (bondOrderSum + hcount == type.BondOrderSum
                             && !BondManipulator.IsHigherOrder(maxBondOrder, type.MaxBondOrder))
                     {
-                        Debug.WriteLine("We have a match: ", type);
-                        Debug.WriteLine("Atom is saturated: ", atom.Symbol);
+                        Debug.WriteLine($"We have a match: {type}");
+                        Debug.WriteLine($"Atom is saturated: {atom.Symbol}");
                         return true;
                     }
                     else
@@ -389,39 +384,22 @@ namespace NCDK.Tools
 
             // ok, the found atom was not in the list
             Trace.TraceError("Could not find atom type!");
-            throw new CDKException("The atom with element " + atom.Symbol + " and charge " + charge + " is not found.");
+            throw new CDKException($"The atom with element {atom.Symbol} and charge {charge} is not found.");
         }
 
         public int CalculateNumberOfImplicitHydrogens(IAtom atom, IAtomContainer container)
         {
-            return this.CalculateNumberOfImplicitHydrogens(atom, container.GetBondOrderSum(atom),
-                    container.GetMaximumBondOrder(atom), container.GetConnectedBonds(atom).Count());
-        }
-
-        protected AtomTypeFactory GetAtomTypeFactory(IChemObjectBuilder builder)
-        {
-            if (structgenATF == null)
-            {
-                try
-                {
-                    structgenATF = AtomTypeFactory.GetInstance(atomTypeList, builder);
-                }
-                catch (Exception exception)
-                {
-                    Debug.WriteLine(exception);
-                    throw new CDKException("Could not instantiate AtomTypeFactory!", exception);
-                }
-            }
-            return structgenATF;
+            return this.CalculateNumberOfImplicitHydrogens(atom, container.GetBondOrderSum(atom), container.GetMaximumBondOrder(atom), container.GetConnectedBonds(atom).Count());
         }
 
         /// <summary>
-        /// Determines if the atom can be of type AtomType.
+        /// Determines if the atom can be of type <see cref="IAtomType"/>. That is, it sees if this
+        /// <see cref="IAtomType"/> only differs in bond orders, or implicit hydrogen count.
         /// </summary>
-        public bool CouldMatchAtomType(IAtomContainer container, IAtom atom, IAtomType type)
+        private static bool CouldMatchAtomType(IAtomContainer container, IAtom atom, IAtomType type)
         {
-            double bondOrderSum = container.GetBondOrderSum(atom);
-            BondOrder maxBondOrder = container.GetMaximumBondOrder(atom);
+            var bondOrderSum = container.GetBondOrderSum(atom);
+            var maxBondOrder = container.GetMaximumBondOrder(atom);
             return CouldMatchAtomType(atom, bondOrderSum, maxBondOrder, type);
         }
     }

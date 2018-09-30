@@ -1,10 +1,12 @@
-﻿using NCDK.Templates;
+﻿using NCDK.Silent;
+using NCDK.Templates;
+using System.Linq;
 
 namespace NCDK.QSAR
 {
     class DescriptorEngine_Example
     {
-        void Main()
+        static void Main()
         {
             {
                 #region
@@ -18,9 +20,9 @@ namespace NCDK.QSAR
                 IAtomContainer someAtomContainer = null;
                 #region ctor
                 var classNames = DescriptorEngine.GetDescriptorClassNameByPackage("NCDK.QSRA.Descriptors.Moleculars", null);
-                DescriptorEngine engine = new DescriptorEngine(classNames, Default.ChemObjectBuilder.Instance);
-                var instances = engine.InstantiateDescriptors(classNames);
-                var specs = engine.InitializeSpecifications(instances);
+                DescriptorEngine engine = new DescriptorEngine(classNames, ChemObjectBuilder.Instance);
+                var instances = DescriptorEngine.InstantiateDescriptors(classNames);
+                var specs = instances.Select(n => n.Specification).ToList();
                 engine.SetDescriptorInstances(instances);
                 engine.SetDescriptorSpecifications(specs);
 

@@ -18,6 +18,7 @@
  */
 
 using NCDK.Tools.Manipulator;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NCDK.Formula.Rules
@@ -58,7 +59,7 @@ namespace NCDK.Formula.Rules
         /// <summary>
         /// The parameters attribute of the ElementRule object.
         /// </summary>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             get
             {
@@ -70,7 +71,7 @@ namespace NCDK.Formula.Rules
 
             set
             {
-                if (value.Length != 1)
+                if (value.Count != 1)
                     throw new CDKException("ElementRule expects one parameters");
 
                 if (!(value[0] is null || value[0] is MolecularFormulaRange))

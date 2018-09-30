@@ -22,6 +22,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Tools.Diff;
 using System;
 using System.Diagnostics;
+using NCDK.Silent;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
@@ -43,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             if (descriptor == null)
             {
-                object descriptor = descriptorClass.GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
+                object descriptor = descriptorClass.GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());
                 if (!(descriptor is IAtomicDescriptor))
                 {
                     throw new CDKException("The passed descriptor class must be a IAtomicDescriptor");
@@ -137,12 +138,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         private IAtomContainer SomeoneBringMeSomeWater()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom c1 = Default.ChemObjectBuilder.Instance.NewAtom("O");
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom c1 = ChemObjectBuilder.Instance.NewAtom("O");
             c1.Point3D = new Vector3(0.0, 0.0, 0.0);
-            IAtom h1 = Default.ChemObjectBuilder.Instance.NewAtom("H");
+            IAtom h1 = ChemObjectBuilder.Instance.NewAtom("H");
             h1.Point3D = new Vector3(1.0, 0.0, 0.0);
-            IAtom h2 = Default.ChemObjectBuilder.Instance.NewAtom("H");
+            IAtom h2 = ChemObjectBuilder.Instance.NewAtom("H");
             h2.Point3D = new Vector3(-1.0, 0.0, 0.0);
             mol.Atoms.Add(c1);
             mol.Atoms.Add(h1);

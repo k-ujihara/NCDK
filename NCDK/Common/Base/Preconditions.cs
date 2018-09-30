@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace NCDK.Common.Base
 {
@@ -21,7 +22,7 @@ namespace NCDK.Common.Base
         public static T CheckNotNull<T>(T arg)
         {
             if (arg == null)
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(arg));
             return arg;
         }
 
@@ -37,7 +38,9 @@ namespace NCDK.Common.Base
             if (!condition)
             {
                 if (!(parameters == null || parameters.Length == 0))
-                    message = string.Format(message, parameters);
+                {
+                    message = string.Format(NumberFormatInfo.InvariantInfo, message, parameters);
+                }
                 throw new ArgumentException(message);
             }
         }

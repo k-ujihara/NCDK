@@ -18,6 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 
@@ -27,7 +28,7 @@ namespace NCDK.Formula.Rules
     [TestClass()]
     public class NitrogenRuleTest : FormulaRuleTest
     {
-        private static readonly IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = ChemObjectBuilder.Instance;
         protected override Type RuleClass => typeof(NitrogenRule);
 
         [TestMethod()]

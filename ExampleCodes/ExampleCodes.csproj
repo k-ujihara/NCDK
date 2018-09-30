@@ -72,8 +72,8 @@
     <Compile Include="Fingerprints\PubchemFingerprinter_Example.cs" />
     <Compile Include="Fingerprints\HybridizationFingerprinter_Example.cs" />
     <Compile Include="Fingerprints\Fingerprinter_Example.cs" />
-    <Compile Include="ForceField\MMFF\MmffAtomTypeMatcher_Example.cs" />
-    <Compile Include="ForceField\MMFF\Mmff_Example.cs" />
+    <Compile Include="ForceFields\MmffAtomTypeMatcher_Example.cs" />
+    <Compile Include="ForceFields\Mmff_Example.cs" />
     <Compile Include="Formula\FullEnumerationFormulaGenerator_Example.cs" />
     <Compile Include="Formula\MolecularFormulaGenerator_Example.cs" />
     <Compile Include="Geometries\Alignments\KabschAlignment_Example.cs" />
@@ -135,11 +135,12 @@
     <Compile Include="Smiles\CDKToBeam_Example.cs" />
     <Compile Include="Smiles\SMARTS\Parser\SMARTSParser_Example.cs" />
     <Compile Include="Smiles\SMARTS\Parser\SmartsQueryVisitor_Example.cs" />
+    <Compile Include="SMARTS\SmartsFragmentExtractor_Example.cs" />
     <Compile Include="Smiles\SMARTS\SmartsPattern_Example.cs" />
     <Compile Include="Smiles\SMARTS\SMARTSQueryTool_Example.cs" />
     <Compile Include="Smiles\SmilesGenerator_Example.cs" />
     <Compile Include="Smiles\SmilesParser_Example.cs" />
-    <Compile Include="SMSD\Algorithms\RGraph\CDKMCS_Example.cs" />
+    <Compile Include="SMSD\Algorithms\RGraphs\CDKMCS_Example.cs" />
     <Compile Include="SMSD\Isomorphism_Example.cs" />
     <Compile Include="Stereo\Stereocenters_Example.cs" />
     <Compile Include="Stereo\StereoElementFactory_Example.cs" />
@@ -174,7 +175,6 @@
       <Name>NCDK</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

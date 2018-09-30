@@ -19,24 +19,28 @@ using System.Collections.Generic;
 
 namespace NCDK.Common.Primitives
 {
-    public static class Primitive<T> where T : IComparable
+    public static class Primitive
+        //where T : IComparable
     {
-        public static IComparer<T[]> LexicographicalComparator = new LexicographicalComparatorImpl<T>();
+        public static IComparer<IReadOnlyList<T>> GetLexicographicalComparator<T>() where T : IComparable 
+            => LexicographicalComparatorImpl<T>.Instance;
+    }
 
-        private class LexicographicalComparatorImpl<TT> 
-            : IComparer<TT[]> where TT : IComparable
+    internal class LexicographicalComparatorImpl<T>
+        : IComparer<IReadOnlyList<T>> where T : IComparable
+    {
+        public static LexicographicalComparatorImpl<T> Instance { get; } = new LexicographicalComparatorImpl<T>();
+
+        public int Compare(IReadOnlyList<T> left, IReadOnlyList<T> right)
         {
-            public int Compare(TT[] left, TT[] right)
+            var minLength = Math.Min(left.Count, right.Count);
+            for (int i = 0; i < minLength; i++)
             {
-                int minLength = Math.Min(left.Length, right.Length);
-                for (int i = 0; i < minLength; i++)
-                {
-                    int result = left[i].CompareTo(right[i]);
-                    if (result != 0)
-                        return result;
-                }
-                return left.Length - right.Length;
+                var result = left[i].CompareTo(right[i]);
+                if (result != 0)
+                    return result;
             }
+            return left.Count - right.Count;
         }
     }
 }

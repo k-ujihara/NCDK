@@ -1,5 +1,4 @@
 using NCDK.Common.Collections;
-using System;
 
 namespace NCDK.FaulonSignatures
 {

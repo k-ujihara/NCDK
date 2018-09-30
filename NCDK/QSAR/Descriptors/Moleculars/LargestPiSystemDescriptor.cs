@@ -62,8 +62,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public LargestPiSystemDescriptor() { }
 
         /// <inheritdoc/> 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestPiSystem",
                 typeof(LargestPiSystemDescriptor).FullName,
@@ -71,16 +71,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// The parameters attribute of the LargestPiSystemDescriptor object.
-        /// <para>
-        /// This descriptor takes one parameter, which should be bool to indicate whether
-        /// aromaticity has been checked (TRUE) or not (FALSE).</para>
         /// </summary>
+        /// <remarks>
+        /// This descriptor takes one parameter, which should be bool to indicate whether
+        /// aromaticity has been checked <see langword="true"/> or not <see langword="false"/>.
+        /// </remarks>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
                     throw new CDKException("LargestPiSystemDescriptor only expects one parameter");
                 }
@@ -102,7 +103,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
         }
 
         /// <summary>
@@ -121,7 +122,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <seealso cref="Parameters"/>
         public DescriptorValue<Result<int>> Calculate(IAtomContainer container)
         {
-            bool[] originalFlag4 = new bool[container.Atoms.Count];
+            var originalFlag4 = new bool[container.Atoms.Count];
             for (int i = 0; i < originalFlag4.Length; i++)
             {
                 originalFlag4[i] = container.Atoms[i].IsVisited;
@@ -148,11 +149,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             for (int i = 0; i < container.Atoms.Count; i++)
             {
                 //Possible pi System double bond or triple bond, charge, N or O (free electron pair)
-                //Debug.WriteLine("atom:"+i+" maxBondOrder:"+container.GetMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].IsAromatic+" FormalCharge:"+atoms[i].FormalCharge+" Charge:"+atoms[i].Charge+" Flag:"+atoms[i].IsVisited);
                 if ((container.GetMaximumBondOrder(container.Atoms[i]) != BondOrder.Single
                         || Math.Abs(container.Atoms[i].FormalCharge.Value) >= 1
                         || container.Atoms[i].IsAromatic
-                        || container.Atoms[i].Symbol.Equals("N") || container.Atoms[i].Symbol.Equals("O"))
+                        || container.Atoms[i].Symbol.Equals("N", StringComparison.Ordinal) || container.Atoms[i].Symbol.Equals("O", StringComparison.Ordinal))
                         & !container.Atoms[i].IsVisited)
                 {
                     //Debug.WriteLine("...... -> Accepted");
@@ -180,7 +180,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 container.Atoms[i].IsVisited = originalFlag4[i];
             }
 
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(
                     largestPiSystemAtomsCount), DescriptorNames);
         }
 
@@ -210,7 +210,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     nextAtom = ((IBond)bond).GetConnectedAtom(atom);
                     if ((container.GetMaximumBondOrder(nextAtom) != BondOrder.Single
                             || Math.Abs(nextAtom.FormalCharge.Value) >= 1 || nextAtom.IsAromatic
-                            || nextAtom.Symbol.Equals("N") || nextAtom.Symbol.Equals("O"))
+                            || nextAtom.Symbol.Equals("N", StringComparison.Ordinal) || nextAtom.Symbol.Equals("O", StringComparison.Ordinal))
                             & !nextAtom.IsVisited)
                     {
                         //Debug.WriteLine("BDS> AtomNr:"+container.Atoms.IndexOf(nextAtom)+" maxBondOrder:"+container.GetMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.IsAromatic+" FormalCharge:"+nextAtom.FormalCharge+" Charge:"+nextAtom.Charge+" Flag:"+nextAtom.IsVisited);
@@ -234,20 +234,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the LargestPiSystemDescriptor object.
-        /// </summary>
-        /// <returns>The parameterNames value</returns>
         public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
-
-        /// <summary>
-        /// Gets the parameterType attribute of the LargestPiSystemDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
         public override object GetParameterType(string name)
         {
-            if ("checkAromaticity".Equals(name)) return false;
+            if (string.Equals("checkAromaticity", name, StringComparison.Ordinal))
+                return false;
             return null;
         }
 

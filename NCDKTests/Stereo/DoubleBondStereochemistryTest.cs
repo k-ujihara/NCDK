@@ -22,7 +22,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System;
 
 namespace NCDK.Stereo
@@ -61,7 +61,7 @@ namespace NCDK.Stereo
         [ExpectedException(typeof(ArgumentException))]
         public void TestConstructor_TooManyBonds()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IBond b1 = builder.NewBond();
             IBond b2 = builder.NewBond();
             IBond b3 = builder.NewBond();
@@ -81,8 +81,8 @@ namespace NCDK.Stereo
         {
             DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.Bonds[1], ligands,
                     DoubleBondConformation.Opposite);
-            stereo.Builder = Default.ChemObjectBuilder.Instance;
-            Assert.AreEqual(Default.ChemObjectBuilder.Instance, stereo.Builder);
+            stereo.Builder = ChemObjectBuilder.Instance;
+            Assert.AreEqual(ChemObjectBuilder.Instance, stereo.Builder);
         }
 
         [TestMethod()]
@@ -118,7 +118,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Contains()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
             IAtom c1 = builder.NewAtom("C");
             IAtom c2 = builder.NewAtom("C");
@@ -145,7 +145,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void TestMap_Map_Map_EmptyMapping()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
             IAtom c1 = builder.NewAtom("C");
             IAtom c2 = builder.NewAtom("C");

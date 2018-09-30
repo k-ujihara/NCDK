@@ -7,19 +7,18 @@
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
     <Company>Kazuya Ujihara</Company>
     <Copyright>Copyright © 2016-2018 Kazuya Ujihara</Copyright>
-    <AssemblyVersion>1.3.1.0</AssemblyVersion>
-    <FileVersion>1.3.1.0</FileVersion>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
+    <FileVersion>1.4.0.0</FileVersion>
     <Product>NCDK: Chemistry Development Kit for .NET Framework</Product>
     <PackageProjectUrl>https://github.com/kazuyaujihara/NCDK</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/kazuyaujihara/NCDK/blob/master/LICENSE</PackageLicenseUrl>
     <Description>NCDK is C# implementation of The Chemistry Development Kit (CDK), which is an open-source library of algorithms for structural chemo- and bioinformatics.</Description>
-    <Version>1.3.1-alpha</Version>
+    <Version>1.4.0-alpha</Version>
     <Authors>Kazuya Ujihara</Authors>
     <RepositoryUrl>https://github.com/kazuyaujihara/NCDK</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>cdk cheminformatics chemistry toolkit</PackageTags>
-    <PackageReleaseNotes>This release is based on https://github.com/cdk/cdk/tree/6fade7b5470669955835046d9fb09c48f658efde snapshot.
-</PackageReleaseNotes>
+    <PackageReleaseNotes>This release is based on https://github.com/cdk/cdk/tree/6fade7b5470669955835046d9fb09c48f658efde snapshot.</PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>NCDK</PackageId>
   </PropertyGroup>
@@ -72,12 +71,6 @@
     <None Remove="Dict\Data\sybyl-atom-types.owl" />
     <None Remove="Fingerprints\Data\maccs.txt" />
     <None Remove="Fingerprints\Data\SMARTS_InteLigand.txt" />
-    <None Remove="ForceField\MMFF\mmff-symb-mapping.tsv" />
-    <None Remove="ForceField\MMFF\MMFFCHG.PAR" />
-    <None Remove="ForceField\MMFF\MMFFFORMCHG.PAR" />
-    <None Remove="ForceField\MMFF\MMFFPBCI.PAR" />
-    <None Remove="ForceField\MMFF\MMFFPROP.PAR" />
-    <None Remove="ForceField\MMFF\MMFFSYMB.sma" />
     <None Remove="Graphs\Invariant\primes.dat" />
     <None Remove="io-formats.set" />
     <None Remove="IO\CML\Data\cml1_0.dtd" />
@@ -151,12 +144,12 @@
     <EmbeddedResource Include="Dict\Data\sybyl-atom-types.owl" />
     <EmbeddedResource Include="Fingerprints\Data\maccs.txt" />
     <EmbeddedResource Include="Fingerprints\Data\SMARTS_InteLigand.txt" />
-    <EmbeddedResource Include="ForceField\MMFF\mmff-symb-mapping.tsv" />
-    <EmbeddedResource Include="ForceField\MMFF\MMFFCHG.PAR" />
-    <EmbeddedResource Include="ForceField\MMFF\MMFFFORMCHG.PAR" />
-    <EmbeddedResource Include="ForceField\MMFF\MMFFPBCI.PAR" />
-    <EmbeddedResource Include="ForceField\MMFF\MMFFPROP.PAR" />
-    <EmbeddedResource Include="ForceField\MMFF\MMFFSYMB.sma" />
+    <EmbeddedResource Include="ForceFields\mmff-symb-mapping.tsv" />
+    <EmbeddedResource Include="ForceFields\MMFFCHG.PAR" />
+    <EmbeddedResource Include="ForceFields\MMFFFORMCHG.PAR" />
+    <EmbeddedResource Include="ForceFields\MMFFPBCI.PAR" />
+    <EmbeddedResource Include="ForceFields\MMFFPROP.PAR" />
+    <EmbeddedResource Include="ForceFields\MMFFSYMB.sma" />
     <EmbeddedResource Include="Graphs\Invariant\primes.dat" />
     <EmbeddedResource Include="io-formats.set" />
     <EmbeddedResource Include="IO\CML\Data\cml1_0.dtd" />
@@ -199,15 +192,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\ChemObjectConfig.ttinclude" Link="ChemObjectConfig.ttinclude" />
+    <None Include="..\Config.ttinclude" Link="Config.ttinclude" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="dotNetRDF" Version="2.1.0" />
     <PackageReference Include="MathNet.Numerics.Signed" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Beam\Core\Configuration.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Configuration.tt.cs</LastGenOutput>
-    </None>
     <None Update="cheminf.tokens">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -217,9 +211,18 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>cheminf.tokens</LastGenOutput>
     </None>
-    <None Update="Common\Collections\EmptyCollections.tt">
+    <None Update="IncludeExamples.xml">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IncludeExamples.tt</DependentUpon>
+    </None>
+    <None Update="IncludeExamples.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EmptyCollections.tt.cs</LastGenOutput>
+      <LastGenOutput>IncludeExamples.xml</LastGenOutput>
+    </None>
+    <None Update="Beam\Core\Configuration.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Configuration.tt.cs</LastGenOutput>
     </None>
     <None Update="Config\ChemicalElement.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -236,15 +239,6 @@
     <None Update="IHasProperties.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IHasProperties.tt.cs</LastGenOutput>
-    </None>
-    <None Update="IncludeExamples.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>IncludeExamples.xml</LastGenOutput>
-    </None>
-    <None Update="IncludeExamples.xml">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>IncludeExamples.tt</DependentUpon>
     </None>
     <None Update="LibIO\CML\CMLElementBodies.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -449,21 +443,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
+  
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <Compile Update="Beam\Core\Configuration.tt.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Configuration.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Common\Collections\EmptyCollections.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EmptyCollections.tt</DependentUpon>
     </Compile>
     <Compile Update="Config\ChemicalElement.tt.cs">
       <DesignTime>True</DesignTime>

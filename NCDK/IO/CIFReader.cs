@@ -29,6 +29,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Globalization;
 
 namespace NCDK.IO
 {
@@ -188,17 +189,17 @@ namespace NCDK.IO
                         command = line;
                     }
 
-                    Debug.WriteLine("command: " + command);
+                    Debug.WriteLine($"command: {command}");
                     if (command.StartsWith("_cell", StringComparison.Ordinal))
                     {
                         ProcessCellParameter(command, line);
                     }
-                    else if (command.Equals("loop_"))
+                    else if (string.Equals(command, "loop_", StringComparison.Ordinal))
                     {
                         line = ProcessLoopBlock();
                         continue;
                     }
-                    else if (command.Equals("_symmetry_space_group_name_H-M"))
+                    else if (string.Equals(command, "_symmetry_space_group_name_H-M", StringComparison.Ordinal))
                     {
                         string value = line.Substring(29).Trim();
                         crystal.SpaceGroup = value;
@@ -213,11 +214,11 @@ namespace NCDK.IO
                             Debug.WriteLine("Skipping block content");
                             line = input.ReadLine();
                             if (line != null) line = line.Trim();
-                            while (!line.Equals(";"))
+                            while (!string.Equals(line, ";", StringComparison.Ordinal))
                             {
                                 line = input.ReadLine();
                                 if (line != null) line = line.Trim();
-                                Debug.WriteLine("Skipping block line: " + line);
+                                Debug.WriteLine($"Skipping block line: {line}");
                             }
                             line = input.ReadLine();
                         }
@@ -235,37 +236,37 @@ namespace NCDK.IO
         private void ProcessCellParameter(string command, string line)
         {
             command = command.Substring(6); // skip the "_cell." part
-            if (command.Equals("length_a"))
+            if (string.Equals(command, "length_a", StringComparison.Ordinal))
             {
                 string value = line.Substring(14).Trim();
                 a = ParseIntoDouble(value);
                 PossiblySetCellParams(a, b, c, alpha, beta, gamma);
             }
-            else if (command.Equals("length_b"))
+            else if (string.Equals(command, "length_b", StringComparison.Ordinal))
             {
                 string value = line.Substring(14).Trim();
                 b = ParseIntoDouble(value);
                 PossiblySetCellParams(a, b, c, alpha, beta, gamma);
             }
-            else if (command.Equals("length_c"))
+            else if (string.Equals(command, "length_c", StringComparison.Ordinal))
             {
                 string value = line.Substring(14).Trim();
                 c = ParseIntoDouble(value);
                 PossiblySetCellParams(a, b, c, alpha, beta, gamma);
             }
-            else if (command.Equals("angle_alpha"))
+            else if (string.Equals(command, "angle_alpha", StringComparison.Ordinal))
             {
                 string value = line.Substring(17).Trim();
                 alpha = ParseIntoDouble(value);
                 PossiblySetCellParams(a, b, c, alpha, beta, gamma);
             }
-            else if (command.Equals("angle_beta"))
+            else if (string.Equals(command, "angle_beta", StringComparison.Ordinal))
             {
                 string value = line.Substring(16).Trim();
                 beta = ParseIntoDouble(value);
                 PossiblySetCellParams(a, b, c, alpha, beta, gamma);
             }
-            else if (command.Equals("angle_gamma"))
+            else if (string.Equals(command, "angle_gamma", StringComparison.Ordinal))
             {
                 string value = line.Substring(17).Trim();
                 gamma = ParseIntoDouble(value);
@@ -322,8 +323,8 @@ namespace NCDK.IO
             while (line != null && line.Length > 0 &&
                     line[0] != '#' &&
                     line[0] != '_' &&
-                    !line.StartsWith("loop_") &&
-                    !line.StartsWith("data_"))
+                    !line.StartsWith("loop_", StringComparison.Ordinal) &&
+                    !line.StartsWith("data_", StringComparison.Ordinal))
             {
                 line = input.ReadLine();
                 if (line != null)
@@ -348,11 +349,11 @@ namespace NCDK.IO
             while (line != null && line[0] == '_')
             {
                 headerCount++;
-                if (line.Equals("_atom_site_label") || line.Equals("_atom_site_label_atom_id"))
+                if (line.Equals("_atom_site_label", StringComparison.Ordinal) || line.Equals("_atom_site_label_atom_id", StringComparison.Ordinal))
                 {
                     atomLabel = headerCount;
                     hasParsableInformation = true;
-                    Trace.TraceInformation("label found in col: " + atomLabel);
+                    Trace.TraceInformation($"label found in col: {atomLabel}");
                 }
                 else if (line.StartsWith("_atom_site_fract_x", StringComparison.Ordinal))
                 {
@@ -372,25 +373,25 @@ namespace NCDK.IO
                     hasParsableInformation = true;
                     Trace.TraceInformation("frac z found in col: " + atomFractZ);
                 }
-                else if (line.Equals("_atom_site.Cartn_x"))
+                else if (string.Equals(line, "_atom_site.Cartn_x", StringComparison.Ordinal))
                 {
                     atomRealX = headerCount;
                     hasParsableInformation = true;
                     Trace.TraceInformation("cart x found in col: " + atomRealX);
                 }
-                else if (line.Equals("_atom_site.Cartn_y"))
+                else if (string.Equals(line, "_atom_site.Cartn_y", StringComparison.Ordinal))
                 {
                     atomRealY = headerCount;
                     hasParsableInformation = true;
                     Trace.TraceInformation("cart y found in col: " + atomRealY);
                 }
-                else if (line.Equals("_atom_site.Cartn_z"))
+                else if (string.Equals(line, "_atom_site.Cartn_z", StringComparison.Ordinal))
                 {
                     atomRealZ = headerCount;
                     hasParsableInformation = true;
                     Trace.TraceInformation("cart z found in col: " + atomRealZ);
                 }
-                else if (line.Equals("_atom_site.type_symbol"))
+                else if (string.Equals(line, "_atom_site.type_symbol", StringComparison.Ordinal))
                 {
                     atomSymbol = headerCount;
                     hasParsableInformation = true;
@@ -413,8 +414,8 @@ namespace NCDK.IO
                 while (line != null && line.Length > 0 &&
                     line[0] != '#' &&
                     line[0] != '_' &&
-                    !line.StartsWith("loop_") &&
-                    !line.StartsWith("data_"))
+                    !line.StartsWith("loop_", StringComparison.Ordinal) &&
+                    !line.StartsWith("data_", StringComparison.Ordinal))
                 {
                     Debug.WriteLine("new row");
                     var tokenizer = Strings.Tokenize(line);
@@ -495,7 +496,7 @@ namespace NCDK.IO
                     {
                         atom.FractionalPoint3D = frac;
                     }
-                    Debug.WriteLine("Adding atom: " + atom);
+                    Debug.WriteLine($"Adding atom: {atom}");
                     crystal.Atoms.Add(atom);
 
                     // look up next row
@@ -509,7 +510,7 @@ namespace NCDK.IO
         /// <summary>
         /// Process double in the format: '.071(1)'.
         /// </summary>
-        private double ParseIntoDouble(string value)
+        private static double ParseIntoDouble(string value)
         {
             double returnVal = 0.0;
             if (value[0] == '.') value = "0" + value;
@@ -520,7 +521,7 @@ namespace NCDK.IO
             }
             try
             {
-                returnVal = double.Parse(value);
+                returnVal = double.Parse(value, NumberFormatInfo.InvariantInfo);
             }
             catch (Exception)
             {
@@ -529,7 +530,7 @@ namespace NCDK.IO
             return returnVal;
         }
 
-        private string ExtractFirstLetters(string value)
+        private static string ExtractFirstLetters(string value)
         {
             StringBuilder result = new StringBuilder();
             for (int i = 0; i < value.Length; i++)

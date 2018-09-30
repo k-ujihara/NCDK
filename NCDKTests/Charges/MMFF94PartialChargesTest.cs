@@ -18,6 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using NCDK.Smiles;
 
 namespace NCDK.Charges
@@ -38,7 +39,7 @@ namespace NCDK.Charges
         public void TestMMFF94PartialCharges()
         {
             double[] testResult = { -0.99, 0.314, 0.66, -0.57, -0.65, 0.36, 0.36, 0, 0, 0.5 };
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer ac = sp.ParseSmiles("NCC(=O)O");
             AddExplicitHydrogens(ac);
             MMFF94PartialCharges mmff = new MMFF94PartialCharges();

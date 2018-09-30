@@ -35,19 +35,19 @@ namespace NCDK.Geometries.CIP.Rules
         static IAtomContainer molecule = smiles.ParseSmiles("CC(Br)([13C])[H]");
 
         [TestMethod()]
-        public void TestCompare_Identity()
+        public void TestCompareIdentity()
         {
-            ILigand ligand = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[0]);
-            ISequenceSubRule<ILigand> rule = new CombinedAtomicMassNumberRule();
+            var ligand = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[0]);
+            var rule = new CombinedAtomicMassNumberRule();
             Assert.AreEqual(0, rule.Compare(ligand, ligand));
         }
 
         [TestMethod()]
         public void TestCompare()
         {
-            ILigand ligand1 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[0]);
-            ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[2]);
-            ISequenceSubRule<ILigand> rule = new CombinedAtomicMassNumberRule();
+            var ligand1 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[0]);
+            var ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[2]);
+            var rule = new CombinedAtomicMassNumberRule();
             Assert.AreEqual(-1, rule.Compare(ligand1, ligand2));
             Assert.AreEqual(1, rule.Compare(ligand2, ligand1));
         }
@@ -55,22 +55,24 @@ namespace NCDK.Geometries.CIP.Rules
         [TestMethod()]
         public void TestOrder()
         {
-            ILigand ligand1 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[4]);
-            ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[3]);
-            ILigand ligand3 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[2]);
-            ILigand ligand4 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[0]);
-            List<ILigand> ligands = new List<ILigand>();
-            ligands.Add(ligand1);
-            ligands.Add(ligand2);
-            ligands.Add(ligand3);
-            ligands.Add(ligand4);
+            var ligand1 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[4]);
+            var ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[3]);
+            var ligand3 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[2]);
+            var ligand4 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[0]);
+            var ligands = new List<ILigand>
+            {
+                ligand1,
+                ligand2,
+                ligand3,
+                ligand4
+            };
 
             ligands.Sort(new CombinedAtomicMassNumberRule());
-            Assert.AreEqual("H", ligands[0].GetLigandAtom().Symbol);
-            Assert.AreEqual("C", ligands[1].GetLigandAtom().Symbol);
-            Assert.AreEqual("C", ligands[2].GetLigandAtom().Symbol);
-            Assert.AreEqual(13, ligands[2].GetLigandAtom().MassNumber.Value);
-            Assert.AreEqual("Br", ligands[3].GetLigandAtom().Symbol);
+            Assert.AreEqual("H", ligands[0].LigandAtom.Symbol);
+            Assert.AreEqual("C", ligands[1].LigandAtom.Symbol);
+            Assert.AreEqual("C", ligands[2].LigandAtom.Symbol);
+            Assert.AreEqual(13, ligands[2].LigandAtom.MassNumber.Value);
+            Assert.AreEqual("Br", ligands[3].LigandAtom.Symbol);
         }
     }
 }

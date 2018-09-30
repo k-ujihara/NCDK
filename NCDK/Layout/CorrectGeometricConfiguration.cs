@@ -79,7 +79,9 @@ namespace NCDK.Layout
         public static IAtomContainer Correct(IAtomContainer container)
         {
             if (container.StereoElements.Any())
+#pragma warning disable CA1806 // Do not ignore method results
                 new CorrectGeometricConfiguration(container);
+#pragma warning restore CA1806 // Do not ignore method results
             return container;
         }
 
@@ -252,7 +254,7 @@ namespace NCDK.Layout
         /// <param name="p">the point to reflect</param>
         /// <param name="bond">bond</param>
         /// <returns>the reflected point</returns>
-        private Vector2 Reflect(Vector2 p, IBond bond)
+        private static Vector2 Reflect(Vector2 p, IBond bond)
         {
             IAtom a = bond.Begin;
             IAtom b = bond.End;
@@ -269,7 +271,7 @@ namespace NCDK.Layout
         /// <param name="x1">plane x start</param>
         /// <param name="y1">plane y end</param>
         /// <returns>the reflected point</returns>
-        private Vector2 Reflect(Vector2 p, double x0, double y0, double x1, double y1)
+        private static Vector2 Reflect(Vector2 p, double x0, double y0, double x1, double y1)
         {
             double dx, dy, a, b;
 

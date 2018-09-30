@@ -35,19 +35,19 @@ namespace NCDK.Geometries.CIP.Rules
         static IAtomContainer molecule = smiles.ParseSmiles("CC([13C])([2H])[H]");
 
         [TestMethod()]
-        public void TestCompare_Identity()
+        public void TestCompareIdentity()
         {
-            ILigand ligand = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[0]);
-            ISequenceSubRule<ILigand> rule = new MassNumberRule();
+            var ligand = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[0]);
+            var rule = new MassNumberRule();
             Assert.AreEqual(0, rule.Compare(ligand, ligand));
         }
 
         [TestMethod()]
         public void TestCompare()
         {
-            ILigand ligand1 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[0]);
-            ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[2]);
-            ISequenceSubRule<ILigand> rule = new MassNumberRule();
+            var ligand1 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[0]);
+            var ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[2]);
+            var rule = new MassNumberRule();
             Assert.AreEqual(-1, rule.Compare(ligand1, ligand2));
             Assert.AreEqual(1, rule.Compare(ligand2, ligand1));
         }
@@ -55,33 +55,35 @@ namespace NCDK.Geometries.CIP.Rules
         [TestMethod()]
         public void TestOrder()
         {
-            VisitedAtoms visitedAtoms = new VisitedAtoms();
-            ILigand ligand1 = new Ligand(molecule, visitedAtoms, molecule.Atoms[1], molecule.Atoms[4]);
-            ILigand ligand2 = new Ligand(molecule, visitedAtoms, molecule.Atoms[1], molecule.Atoms[3]);
-            ILigand ligand3 = new Ligand(molecule, visitedAtoms, molecule.Atoms[1], molecule.Atoms[2]);
-            ILigand ligand4 = new Ligand(molecule, visitedAtoms, molecule.Atoms[1], molecule.Atoms[0]);
-            List<ILigand> ligands = new List<ILigand>();
-            ligands.Add(ligand1);
-            ligands.Add(ligand2);
-            ligands.Add(ligand3);
-            ligands.Add(ligand4);
+            var visitedAtoms = new VisitedAtoms();
+            var ligand1 = new Ligand(molecule, visitedAtoms, molecule.Atoms[1], molecule.Atoms[4]);
+            var ligand2 = new Ligand(molecule, visitedAtoms, molecule.Atoms[1], molecule.Atoms[3]);
+            var ligand3 = new Ligand(molecule, visitedAtoms, molecule.Atoms[1], molecule.Atoms[2]);
+            var ligand4 = new Ligand(molecule, visitedAtoms, molecule.Atoms[1], molecule.Atoms[0]);
+            var ligands = new List<ILigand>
+            {
+                ligand1,
+                ligand2,
+                ligand3,
+                ligand4
+            };
 
             ligands.Sort(new MassNumberRule());
             Assert.IsNotNull(ligands[0]);
-            Assert.AreEqual("H", ligands[0].GetLigandAtom().Symbol);
-            Assert.AreEqual("H", ligands[1].GetLigandAtom().Symbol);
-            Assert.AreEqual(2, ligands[1].GetLigandAtom().MassNumber.Value);
-            Assert.AreEqual("C", ligands[2].GetLigandAtom().Symbol);
-            Assert.AreEqual("C", ligands[3].GetLigandAtom().Symbol);
-            Assert.AreEqual(13, ligands[3].GetLigandAtom().MassNumber.Value);
+            Assert.AreEqual("H", ligands[0].LigandAtom.Symbol);
+            Assert.AreEqual("H", ligands[1].LigandAtom.Symbol);
+            Assert.AreEqual(2, ligands[1].LigandAtom.MassNumber.Value);
+            Assert.AreEqual("C", ligands[2].LigandAtom.Symbol);
+            Assert.AreEqual("C", ligands[3].LigandAtom.Symbol);
+            Assert.AreEqual(13, ligands[3].LigandAtom.MassNumber.Value);
         }
 
         [TestMethod()]
-        public void TestImplicitHydrogen_Same()
+        public void TestImplicitHydrogenSame()
         {
-            ILigand ligand1 = new ImplicitHydrogenLigand(molecule, new VisitedAtoms(), molecule.Atoms[1]);
-            ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[4]);
-            ISequenceSubRule<ILigand> rule = new MassNumberRule();
+            var ligand1 = new ImplicitHydrogenLigand(molecule, new VisitedAtoms(), molecule.Atoms[1]);
+            var ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[4]);
+            var rule = new MassNumberRule();
             Assert.AreEqual(0, rule.Compare(ligand1, ligand2));
             Assert.AreEqual(0, rule.Compare(ligand2, ligand1));
         }
@@ -89,9 +91,9 @@ namespace NCDK.Geometries.CIP.Rules
         [TestMethod()]
         public void TestImplicitHydrogen()
         {
-            ILigand ligand1 = new ImplicitHydrogenLigand(molecule, new VisitedAtoms(), molecule.Atoms[1]);
-            ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[3]);
-            ISequenceSubRule<ILigand> rule = new MassNumberRule();
+            var ligand1 = new ImplicitHydrogenLigand(molecule, new VisitedAtoms(), molecule.Atoms[1]);
+            var ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[3]);
+            var rule = new MassNumberRule();
             Assert.AreEqual(-1, rule.Compare(ligand1, ligand2));
             Assert.AreEqual(1, rule.Compare(ligand2, ligand1));
         }

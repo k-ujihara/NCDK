@@ -18,6 +18,7 @@
  */
 
 using NCDK.Tools;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -51,7 +52,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "cml", "xml" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "cml", "xml" };
 
         /// <inheritdoc/>
         public override string ReaderClassName { get; } = typeof(CMLReader).FullName;
@@ -62,9 +63,12 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if ((line.IndexOf("http://www.xml-cml.org/schema") != -1) || (line.IndexOf("<atom") != -1)
-                    || (line.IndexOf("<molecule") != -1) || (line.IndexOf("<reaction") != -1)
-                    || (line.IndexOf("<cml") != -1) || (line.IndexOf("<bond") != -1))
+            if (line.Contains("http://www.xml-cml.org/schema")
+             || line.Contains("<atom")
+             || line.Contains("<molecule")
+             || line.Contains("<reaction") 
+             || line.Contains("<cml")
+             || line.Contains("<bond") )
             {
                 return true;
             }
@@ -75,10 +79,10 @@ namespace NCDK.IO.Formats
         public override bool IsXmlBased => true;
 
         /// <inheritdoc/>
-        public override DataFeatures SupportedDataFeatures => DataFeatures.HAS_2D_COORDINATES | DataFeatures.HAS_3D_COORDINATES
-                    | DataFeatures.HAS_ATOM_PARTIAL_CHARGES | DataFeatures.HAS_ATOM_FORMAL_CHARGES
-                    | DataFeatures.HAS_ATOM_MASS_NUMBERS | DataFeatures.HAS_ATOM_ISOTOPE_NUMBERS
-                    | DataFeatures.HAS_GRAPH_REPRESENTATION | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+        public override DataFeatures SupportedDataFeatures => DataFeatures.Has2DCoordinates | DataFeatures.Has3DCoordinates
+                    | DataFeatures.HasAtomPartialCharges | DataFeatures.HasAtomFormalCharges
+                    | DataFeatures.HasAtomMassNumbers | DataFeatures.HasAtomIsotopeNumbers
+                    | DataFeatures.HasGraphRepresentation | DataFeatures.HasAtomElementSymbol;
 
         /// <inheritdoc/>
         public override DataFeatures RequiredDataFeatures => DataFeatures.None;

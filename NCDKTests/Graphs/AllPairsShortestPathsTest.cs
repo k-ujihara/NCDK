@@ -23,7 +23,7 @@
  */
 using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Templates;
 using System;
 
@@ -52,9 +52,9 @@ namespace NCDK.Graphs
                 for (int j = -10; j < 10; j++)
                 {
 
-                    Assert.IsTrue(Compares.AreEqual(new int[0][], asp.From(i).GetPathsTo(0)));
-                    Assert.IsTrue(Compares.AreEqual(new int[0], asp.From(i).GetPathTo(0)));
-                    Assert.IsTrue(Compares.AreEqual(new IAtom[0], asp.From(i).GetAtomsTo(0)));
+                    Assert.IsTrue(Compares.AreEqual(Array.Empty<int[]>(), asp.From(i).GetPathsTo(0)));
+                    Assert.IsTrue(Compares.AreEqual(Array.Empty<int>(), asp.From(i).GetPathTo(0)));
+                    Assert.IsTrue(Compares.AreEqual(Array.Empty<IAtom>(), asp.From(i).GetAtomsTo(0)));
 
                     Assert.AreEqual(0, asp.From(i).GetNPathsTo(j));
                     Assert.AreEqual(int.MaxValue, asp.From(i).GetDistanceTo(j));

@@ -24,6 +24,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.FaulonSignatures;
 using NCDK.Graphs;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Templates;
 using System.Collections.Generic;
@@ -42,8 +43,8 @@ namespace NCDK.Signatures
 
         public MoleculeSignatureTest()
         {
-            this.parser = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            this.builder = Default.ChemObjectBuilder.Instance;
+            this.parser = new SmilesParser(ChemObjectBuilder.Instance);
+            this.builder = ChemObjectBuilder.Instance;
             mol = builder.NewAtomContainer();
             mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms.Add(builder.NewAtom("C"));
@@ -148,7 +149,7 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void TestEmpty()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
             MoleculeSignature signature = new MoleculeSignature(mol);
             string signatureString = signature.ToCanonicalString();
             string expected = "";

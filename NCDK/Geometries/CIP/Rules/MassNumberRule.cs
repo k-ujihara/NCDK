@@ -49,7 +49,7 @@ namespace NCDK.Geometries.CIP.Rules
             {
                 try
                 {
-                    factory = Isotopes.Instance;
+                    factory = BODRIsotopeFactory.Instance;
                 }
                 catch (IOException exception)
                 {
@@ -60,10 +60,11 @@ namespace NCDK.Geometries.CIP.Rules
 
         private int GetMassNumber(ILigand ligand)
         {
-            var massNumber = ligand.GetLigandAtom().MassNumber;
-            if (massNumber != null) return massNumber.Value;
+            var massNumber = ligand.LigandAtom.MassNumber;
+            if (massNumber != null)
+                return massNumber.Value;
             if (factory == null) return 0;
-            return factory.GetMajorIsotope(ligand.GetLigandAtom().Symbol).MassNumber.Value;
+            return factory.GetMajorIsotope(ligand.LigandAtom.Symbol).MassNumber.Value;
         }
     }
 }

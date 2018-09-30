@@ -18,6 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace NCDK.Tools
 {
@@ -26,7 +27,7 @@ namespace NCDK.Tools
     public class HOSECodeAnalyserTest : CDKTestCase
     {
         [TestMethod()]
-        public void TestGetElements_String()
+        public void TestGetElementsString()
         {
             var elements = HOSECodeAnalyser.GetElements("CCY(CF,C,/C,,&/&)//");
             Assert.AreEqual(3, elements.Count);

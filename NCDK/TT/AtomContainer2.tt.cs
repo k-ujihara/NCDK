@@ -1,6 +1,7 @@
 ﻿
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -38,6 +39,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
+#pragma warning disable CA1710 // Identifiers should have correct suffix
+
 namespace NCDK.Default
 {
     /// <summary>
@@ -46,18 +49,16 @@ namespace NCDK.Default
     // @author John Mayfield
     internal sealed class AtomContainer2 : ChemObject, IAtomContainer
     {
-		private static readonly IChemObjectBuilder builder = new ChemObjectBuilder(false);
+        private static readonly IChemObjectBuilder builder = new ChemObjectBuilder(false);
 
-		/// <inheritdoc/>
-		public override IChemObjectBuilder Builder => builder;
-
-        private const int DEFAULT_CAPACITY = 20;
+        /// <inheritdoc/>
+        public override IChemObjectBuilder Builder => builder;
 
         internal List<BaseAtomRef> atoms;
         internal List<BaseBondRef> bonds;
         internal ObservableChemObjectCollection<ILonePair> lonepairs;
         internal ObservableChemObjectCollection<ISingleElectron> electrons;
-        internal List<IReadOnlyStereoElement<IChemObject, IChemObject>> stereo;
+        internal List<IStereoElement<IChemObject, IChemObject>> stereo;
 
         internal bool isAromatic;
         internal bool isSingleOrDouble;
@@ -69,7 +70,7 @@ namespace NCDK.Default
         public IList<ILonePair> LonePairs { get; private set; }
         public IList<ISingleElectron> SingleElectrons { get; private set; }
         // TODO: handle notification
-        public ICollection<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements { get; private set; }
+        public ICollection<IStereoElement<IChemObject, IChemObject>> StereoElements { get; private set; }
 
         /// <summary>
         /// Create a new container with the specified capacities.
@@ -87,7 +88,7 @@ namespace NCDK.Default
             this.bonds = new List<BaseBondRef>(numBonds);
             this.lonepairs = new ObservableChemObjectCollection<ILonePair>(numLonePairs, this);
             this.electrons = new ObservableChemObjectCollection<ISingleElectron>(numSingleElectrons, this);
-            this.stereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+            this.stereo = new List<IStereoElement<IChemObject, IChemObject>>();
 
             this.Atoms = new BaseAtomRef_Collection(this);
             this.Bonds = new BaseBondRef_Collection(this);
@@ -236,18 +237,18 @@ namespace NCDK.Default
             internal BaseAtomRef GetBegin() => beg;
             internal BaseAtomRef GetEnd() => end;
 
-			private IList<IAtom> internalAtoms;
+            private IList<IAtom> internalAtoms;
 
-			/// <inheritdoc/>
-			public override IList<IAtom> Atoms
-			{
-				get
-				{
-					if (internalAtoms == null)
-						internalAtoms = new InternalAtoms(this, base.Atoms);
-					return internalAtoms;
-				}
-			}
+            /// <inheritdoc/>
+            public override IList<IAtom> Atoms
+            {
+                get
+                {
+                    if (internalAtoms == null)
+                        internalAtoms = new InternalAtoms(this, base.Atoms);
+                    return internalAtoms;
+                }
+            }
 
             internal class InternalAtoms : IList<IAtom>
             {
@@ -466,13 +467,13 @@ namespace NCDK.Default
             public int Count => list.Count;
             public bool IsReadOnly => false;
             public abstract void Add(TInterface item);
-			public abstract void Clear();
+            public abstract void Clear();
             public bool Contains(TInterface item) => list.Contains((TRef)item);
             public void CopyTo(TInterface[] array, int arrayIndex)
             {
                 for (int i = 0; i < list.Count; i++)
                     array[arrayIndex + i] = list[i];
-            }			
+            }            
             public IEnumerator<TInterface> GetEnumerator() => list.Cast<TInterface>().GetEnumerator();
             public abstract int IndexOf(TInterface atom);
             public void Insert(int index, TInterface item)
@@ -480,7 +481,7 @@ namespace NCDK.Default
                 list.Insert(index, default(TRef));
                 this[index] = item;
             }
-			public abstract bool Remove(TInterface item);
+            public abstract bool Remove(TInterface item);
             public abstract void RemoveAt(int index);
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
@@ -500,7 +501,7 @@ namespace NCDK.Default
                 get
                 {
                     if (index >= this.parent.atoms.Count)
-                        throw new ArgumentOutOfRangeException("No atom at index: " + index);
+                        throw new ArgumentOutOfRangeException(nameof(index), $"No atom at index: {index}");
                     return parent.atoms[index];
                 }
 
@@ -510,9 +511,9 @@ namespace NCDK.Default
                     if (atom == null)
                         throw new NullReferenceException("Null atom provided");
                     if (parent.atoms.Contains(atom))
-                        throw new ArgumentException(nameof(value), "Atom already in container at index: " + this.IndexOf(atom));
+                        throw new InvalidOperationException($"Atom already in container at index: {this.IndexOf(atom)}");
                     if (index < 0 || index >= parent.atoms.Count)
-                        throw new IndexOutOfRangeException("No current atom at index: " + index);
+                        throw new ArgumentOutOfRangeException(nameof(index), $"No current atom at index: {index}");
                     BaseAtomRef rep = parent.NewAtomRef(atom);
                     BaseAtomRef org = parent.atoms[index];
                     parent.atoms[index] = rep;
@@ -545,7 +546,7 @@ namespace NCDK.Default
                         {
                             var map = new CDKObjectMap();
                             map.Add(org, rep);
-                            parent.stereo[i] = (IReadOnlyStereoElement<IChemObject, IChemObject>)se.Clone(map);
+                            parent.stereo[i] = (IStereoElement<IChemObject, IChemObject>)se.Clone(map);
                         }
                     }
                     org.Listeners.Remove(parent);
@@ -574,7 +575,7 @@ namespace NCDK.Default
             public override void RemoveAt(int index)
             {
                 parent.atoms[index].Listeners.Remove(parent);
-				parent.atoms[index].SetIndex(-1);
+                parent.atoms[index].SetIndex(-1);
                 for (int i = index; i < parent.atoms.Count - 1; i++)
                 {
                     parent.atoms[i] = parent.atoms[i + 1];
@@ -595,13 +596,13 @@ namespace NCDK.Default
                 return false;
             }
 
-			public override void Clear()
-			{
+            public override void Clear()
+            {
                 foreach (var item in parent.atoms)
                     item.Listeners.Remove(parent);
                 parent.atoms.Clear();
-				parent.OnStateChanged(new ChemObjectChangeEventArgs(this));
-			}
+                parent.OnStateChanged(new ChemObjectChangeEventArgs(this));
+            }
         }
 
         internal class BaseBondRef_Collection : A_Collection<IBond, BaseBondRef>
@@ -619,7 +620,7 @@ namespace NCDK.Default
                 get
                 {
                     if (index >= parent.bonds.Count)
-                        throw new ArgumentOutOfRangeException("No bond at index: " + index);
+                        throw new ArgumentOutOfRangeException(nameof(index), "No bond at index: " + index);
                     return parent.bonds[index];
                 }
 
@@ -642,14 +643,14 @@ namespace NCDK.Default
                 parent.AddToEndpoints(bref);
                 parent.bonds.Add(bref);
                 bref.Listeners.Add(parent);
-				parent.NotifyChanged();
+                parent.NotifyChanged();
             }
 
             public override void RemoveAt(int index)
             {
                 BondRef bond = null;
                 bond = parent.bonds[index];
-				parent.bonds[index].SetIndex(-1);
+                parent.bonds[index].SetIndex(-1);
                 for (int i = index; i < parent.bonds.Count - 1; i++)
                 {
                     parent.bonds[i] = parent.bonds[i + 1];
@@ -658,7 +659,7 @@ namespace NCDK.Default
                 parent.bonds.RemoveAt(parent.bonds.Count - 1);
                 parent.DelFromEndpoints(bond);
                 bond.Listeners.Remove(parent);
-				parent.NotifyChanged();
+                parent.NotifyChanged();
             }
 
             public override bool Remove(IBond item)
@@ -672,15 +673,15 @@ namespace NCDK.Default
                 return false;
             }
 
-			public override void Clear()
-			{
+            public override void Clear()
+            {
                 foreach (var item in parent.bonds)
                     item.Listeners.Remove(parent);
                 parent.bonds.Clear();
-				parent.ClearAdjacency();
-				parent.OnStateChanged(new ChemObjectChangeEventArgs(this));
-			}
-		}
+                parent.ClearAdjacency();
+                parent.OnStateChanged(new ChemObjectChangeEventArgs(this));
+            }
+        }
 
         internal static IAtom Unbox(IAtom atom)
         {
@@ -699,7 +700,7 @@ namespace NCDK.Default
         internal BaseAtomRef GetAtomRefUnsafe(IAtom atom)
         {
             if (atom.Container == this &&
-				atom.Index != -1 &&
+                atom.Index != -1 &&
                 atoms[atom.Index] == atom)
                 return (BaseAtomRef)atom;
             atom = Unbox(atom);
@@ -749,7 +750,7 @@ namespace NCDK.Default
         private BondRef GetBondRefUnsafe(IBond bond)
         {
             if (bond.Container == this &&
-				bond.Index != -1 &&
+                bond.Index != -1 &&
                 bonds[bond.Index] == bond)
                 return (BondRef)bond;
             bond = Unbox(bond);
@@ -815,7 +816,7 @@ namespace NCDK.Default
 
             for (int i = 0; i < newatoms.Count; i++)
             {
-			    if (i >= atoms.Count)
+                if (i >= atoms.Count)
                     atoms.Add(null);
 
                 if (newatoms[i].Container == this)
@@ -825,8 +826,8 @@ namespace NCDK.Default
                 }
                 else
                 {
-					if (atoms[i] != null)
-						atoms[i].Listeners.Remove(this);
+                    if (atoms[i] != null)
+                        atoms[i].Listeners.Remove(this);
                     atoms[i] = NewAtomRef(newatoms[i]);
                     atoms[i].SetIndex(i);
                     atoms[i].Listeners.Add(this);
@@ -834,14 +835,14 @@ namespace NCDK.Default
                 }
             }
 
-			// delete rest of the array
-			{
-				for (int i = atoms.Count - 1; i >= newatoms.Count; i--)
-				{
-					atoms[i].Listeners.Remove(this);
-					atoms.RemoveAt(i);
-				}
-			}
+            // delete rest of the array
+            {
+                for (int i = atoms.Count - 1; i >= newatoms.Count; i--)
+                {
+                    atoms[i].Listeners.Remove(this);
+                    atoms.RemoveAt(i);
+                }
+            }
 
             // ensure adjacency information is in sync, this code is only
             // called if the bonds are non-empty and 'external' atoms have been
@@ -853,36 +854,36 @@ namespace NCDK.Default
                     AddToEndpoints(bonds[i]);
             }
 
-			NotifyChanged();
+            NotifyChanged();
         }
 
         public void SetBonds(IEnumerable<IBond> newbonds_)
         {
             var newbonds = newbonds_.ToList();
 
-			// replace existing bonds to clear their adjacency
-			if (bonds.Count > 0) 
-			{
-				ClearAdjacency();
-			}
+            // replace existing bonds to clear their adjacency
+            if (bonds.Count > 0) 
+            {
+                ClearAdjacency();
+            }
 
-			for (int i = 0; i < newbonds.Count; i++) 
-			{
-				if (i >= bonds.Count)
+            for (int i = 0; i < newbonds.Count; i++) 
+            {
+                if (i >= bonds.Count)
                     bonds.Add(null);
 
-				BaseBondRef bondRef = NewBondRef(newbonds[i]);
-				bondRef.SetIndex(i);
-				AddToEndpoints(bondRef);
-				if (bonds[i] != null)
-					bonds[i].Listeners.Remove(this);
-				bonds[i] = bondRef;
-				bondRef.Listeners.Add(this);
-			}
-			for (int i = bonds.Count - 1; i >= newbonds.Count; i--)
-				bonds.RemoveAt(i);
+                BaseBondRef bondRef = NewBondRef(newbonds[i]);
+                bondRef.SetIndex(i);
+                AddToEndpoints(bondRef);
+                if (bonds[i] != null)
+                    bonds[i].Listeners.Remove(this);
+                bonds[i] = bondRef;
+                bondRef.Listeners.Add(this);
+            }
+            for (int i = bonds.Count - 1; i >= newbonds.Count; i--)
+                bonds.RemoveAt(i);
 
-			NotifyChanged();
+            NotifyChanged();
         }
 
         public int IndexOf(ISingleElectron electron)
@@ -915,8 +916,8 @@ namespace NCDK.Default
 
         public IBond GetBond(IAtom beg, IAtom end)
         {
-			AtomRef begref = GetAtomRefUnsafe(beg);
-			return begref?.GetBond(end);
+            AtomRef begref = GetAtomRefUnsafe(beg);
+            return begref?.GetBond(end);
         }
 
         public int GetAtomCount()
@@ -1087,7 +1088,7 @@ namespace NCDK.Default
             foreach (var singleElectron in that.SingleElectrons.Where(singleElectron => !Contains(singleElectron)))
                 SingleElectrons.Add(singleElectron);
 
-			NotifyChanged();
+            NotifyChanged();
         }
 
         /// <inheritdoc/>
@@ -1109,7 +1110,7 @@ namespace NCDK.Default
                 return;
             }
 
-			NotifyChanged();
+            NotifyChanged();
         }
 
         /// <inheritdoc/>
@@ -1124,7 +1125,7 @@ namespace NCDK.Default
             foreach (var atom in atomContainer.Atoms)
                 Atoms.Remove(atom);
 
-			NotifyChanged();
+            NotifyChanged();
         }
 
         public IBond RemoveBond(IAtom beg, IAtom end)
@@ -1186,11 +1187,11 @@ namespace NCDK.Default
                             DelFromEndpoints(bonds[i]);
                         }
                     }
-					{
-						for (int j = bonds.Count - 1; j >= newNumBonds; j--)
-							bonds.RemoveAt(j);
-					}
-				}
+                    {
+                        for (int j = bonds.Count - 1; j >= newNumBonds; j--)
+                            bonds.RemoveAt(j);
+                    }
+                }
 
                 // update single electrons
                 int newNumSingleElectrons = 0;
@@ -1230,7 +1231,7 @@ namespace NCDK.Default
                         lonepairs.RemoveAt(j);
                 }
 
-                var atomElements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+                var atomElements = new List<IStereoElement<IChemObject, IChemObject>>();
                 foreach (var element in stereo)
                 {
                     if (element.Contains(atom)) atomElements.Add(element);
@@ -1238,7 +1239,7 @@ namespace NCDK.Default
                 foreach (var ae in atomElements)
                     stereo.Remove(ae);
 
-				Atoms.RemoveAt(atomref.Index);
+                Atoms.RemoveAt(atomref.Index);
             }
         }
 
@@ -1256,7 +1257,7 @@ namespace NCDK.Default
                 atom.Listeners?.Remove(this);
             atoms.Clear();
             stereo.Clear();
-			NotifyChanged();
+            NotifyChanged();
         }
 
         public void RemoveAllElectronContainers()
@@ -1269,14 +1270,14 @@ namespace NCDK.Default
             lonepairs.Clear();
             electrons.Clear();
 
-			NotifyChanged();
+            NotifyChanged();
         }
 
         public void RemoveAllBonds()
         {
             bonds.Clear();
             ClearAdjacency();
-			NotifyChanged();
+            NotifyChanged();
         }
 
         /// <inheritdoc/>
@@ -1339,7 +1340,7 @@ namespace NCDK.Default
             return sb.ToString();
         }
 
-        private void Append<T>(StringBuilder sb, ICollection<T> os, string tag)
+        private static void Append<T>(StringBuilder sb, ICollection<T> os, string tag)
         {
             if (os.Count > 0)
             {
@@ -1352,7 +1353,7 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public override ICDKObject Clone(CDKObjectMap map)
         {
-			CDKObjectMap refmap = new CDKObjectMap();
+            CDKObjectMap refmap = new CDKObjectMap();
 
             // this is pretty wasteful as we need to delete most the data
             // we can't simply create an empty instance as the sub classes (e.g. AminoAcid)
@@ -1365,7 +1366,7 @@ namespace NCDK.Default
             clone.bonds = new List<BaseBondRef>();
             clone.lonepairs = new ObservableChemObjectCollection<ILonePair>(clone);
             clone.electrons = new ObservableChemObjectCollection<ISingleElectron>(clone);
-            clone.stereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+            clone.stereo = new List<IStereoElement<IChemObject, IChemObject>>();
             clone.Atoms = new BaseAtomRef_Collection(clone);
             clone.Bonds = new BaseBondRef_Collection(clone);
             clone.LonePairs = clone.lonepairs;
@@ -1430,15 +1431,14 @@ namespace NCDK.Default
             // map each stereo element to a new instance in the clone
             foreach (var element in stereo)
             {
-                clone.StereoElements.Add((IReadOnlyStereoElement<IChemObject, IChemObject>)element.Clone(refmap));
+                clone.StereoElements.Add((IStereoElement<IChemObject, IChemObject>)element.Clone(refmap));
             }
 
-			// update sgroups
-			var sgroups = GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            // update sgroups
+            var sgroups = this.GetCtabSgroups();
             if (sgroups != null)
             {
-                clone.SetProperty(CDKPropertyName.CtabSgroups,
-                    SgroupManipulator.Copy(sgroups, refmap));
+                clone.SetCtabSgroups(SgroupManipulator.Copy(sgroups, refmap));
             }
 
             return clone;
@@ -1447,7 +1447,7 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
-			NotifyChanged(evt);
+            NotifyChanged(evt);
         }
 
         /// <inheritdoc/>
@@ -1462,18 +1462,16 @@ namespace NCDK.Silent
     // @author John Mayfield
     internal sealed class AtomContainer2 : ChemObject, IAtomContainer
     {
-		private static readonly IChemObjectBuilder builder = new ChemObjectBuilder(false);
+        private static readonly IChemObjectBuilder builder = new ChemObjectBuilder(false);
 
-		/// <inheritdoc/>
-		public override IChemObjectBuilder Builder => builder;
-
-        private const int DEFAULT_CAPACITY = 20;
+        /// <inheritdoc/>
+        public override IChemObjectBuilder Builder => builder;
 
         internal List<BaseAtomRef> atoms;
         internal List<BaseBondRef> bonds;
         internal ObservableChemObjectCollection<ILonePair> lonepairs;
         internal ObservableChemObjectCollection<ISingleElectron> electrons;
-        internal List<IReadOnlyStereoElement<IChemObject, IChemObject>> stereo;
+        internal List<IStereoElement<IChemObject, IChemObject>> stereo;
 
         internal bool isAromatic;
         internal bool isSingleOrDouble;
@@ -1485,7 +1483,7 @@ namespace NCDK.Silent
         public IList<ILonePair> LonePairs { get; private set; }
         public IList<ISingleElectron> SingleElectrons { get; private set; }
         // TODO: handle notification
-        public ICollection<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements { get; private set; }
+        public ICollection<IStereoElement<IChemObject, IChemObject>> StereoElements { get; private set; }
 
         /// <summary>
         /// Create a new container with the specified capacities.
@@ -1503,7 +1501,7 @@ namespace NCDK.Silent
             this.bonds = new List<BaseBondRef>(numBonds);
             this.lonepairs = new ObservableChemObjectCollection<ILonePair>(numLonePairs, this);
             this.electrons = new ObservableChemObjectCollection<ISingleElectron>(numSingleElectrons, this);
-            this.stereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+            this.stereo = new List<IStereoElement<IChemObject, IChemObject>>();
 
             this.Atoms = new BaseAtomRef_Collection(this);
             this.Bonds = new BaseBondRef_Collection(this);
@@ -1650,18 +1648,18 @@ namespace NCDK.Silent
             internal BaseAtomRef GetBegin() => beg;
             internal BaseAtomRef GetEnd() => end;
 
-			private IList<IAtom> internalAtoms;
+            private IList<IAtom> internalAtoms;
 
-			/// <inheritdoc/>
-			public override IList<IAtom> Atoms
-			{
-				get
-				{
-					if (internalAtoms == null)
-						internalAtoms = new InternalAtoms(this, base.Atoms);
-					return internalAtoms;
-				}
-			}
+            /// <inheritdoc/>
+            public override IList<IAtom> Atoms
+            {
+                get
+                {
+                    if (internalAtoms == null)
+                        internalAtoms = new InternalAtoms(this, base.Atoms);
+                    return internalAtoms;
+                }
+            }
 
             internal class InternalAtoms : IList<IAtom>
             {
@@ -1880,13 +1878,13 @@ namespace NCDK.Silent
             public int Count => list.Count;
             public bool IsReadOnly => false;
             public abstract void Add(TInterface item);
-			public abstract void Clear();
+            public abstract void Clear();
             public bool Contains(TInterface item) => list.Contains((TRef)item);
             public void CopyTo(TInterface[] array, int arrayIndex)
             {
                 for (int i = 0; i < list.Count; i++)
                     array[arrayIndex + i] = list[i];
-            }			
+            }            
             public IEnumerator<TInterface> GetEnumerator() => list.Cast<TInterface>().GetEnumerator();
             public abstract int IndexOf(TInterface atom);
             public void Insert(int index, TInterface item)
@@ -1894,7 +1892,7 @@ namespace NCDK.Silent
                 list.Insert(index, default(TRef));
                 this[index] = item;
             }
-			public abstract bool Remove(TInterface item);
+            public abstract bool Remove(TInterface item);
             public abstract void RemoveAt(int index);
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
@@ -1914,7 +1912,7 @@ namespace NCDK.Silent
                 get
                 {
                     if (index >= this.parent.atoms.Count)
-                        throw new ArgumentOutOfRangeException("No atom at index: " + index);
+                        throw new ArgumentOutOfRangeException(nameof(index), $"No atom at index: {index}");
                     return parent.atoms[index];
                 }
 
@@ -1924,9 +1922,9 @@ namespace NCDK.Silent
                     if (atom == null)
                         throw new NullReferenceException("Null atom provided");
                     if (parent.atoms.Contains(atom))
-                        throw new ArgumentException(nameof(value), "Atom already in container at index: " + this.IndexOf(atom));
+                        throw new InvalidOperationException($"Atom already in container at index: {this.IndexOf(atom)}");
                     if (index < 0 || index >= parent.atoms.Count)
-                        throw new IndexOutOfRangeException("No current atom at index: " + index);
+                        throw new ArgumentOutOfRangeException(nameof(index), $"No current atom at index: {index}");
                     BaseAtomRef rep = parent.NewAtomRef(atom);
                     BaseAtomRef org = parent.atoms[index];
                     parent.atoms[index] = rep;
@@ -1959,7 +1957,7 @@ namespace NCDK.Silent
                         {
                             var map = new CDKObjectMap();
                             map.Add(org, rep);
-                            parent.stereo[i] = (IReadOnlyStereoElement<IChemObject, IChemObject>)se.Clone(map);
+                            parent.stereo[i] = (IStereoElement<IChemObject, IChemObject>)se.Clone(map);
                         }
                     }
                 }
@@ -1982,7 +1980,7 @@ namespace NCDK.Silent
 
             public override void RemoveAt(int index)
             {
-				parent.atoms[index].SetIndex(-1);
+                parent.atoms[index].SetIndex(-1);
                 for (int i = index; i < parent.atoms.Count - 1; i++)
                 {
                     parent.atoms[i] = parent.atoms[i + 1];
@@ -2002,10 +2000,10 @@ namespace NCDK.Silent
                 return false;
             }
 
-			public override void Clear()
-			{
+            public override void Clear()
+            {
                 parent.atoms.Clear();
-			}
+            }
         }
 
         internal class BaseBondRef_Collection : A_Collection<IBond, BaseBondRef>
@@ -2023,7 +2021,7 @@ namespace NCDK.Silent
                 get
                 {
                     if (index >= parent.bonds.Count)
-                        throw new ArgumentOutOfRangeException("No bond at index: " + index);
+                        throw new ArgumentOutOfRangeException(nameof(index), "No bond at index: " + index);
                     return parent.bonds[index];
                 }
 
@@ -2052,7 +2050,7 @@ namespace NCDK.Silent
             {
                 BondRef bond = null;
                 bond = parent.bonds[index];
-				parent.bonds[index].SetIndex(-1);
+                parent.bonds[index].SetIndex(-1);
                 for (int i = index; i < parent.bonds.Count - 1; i++)
                 {
                     parent.bonds[i] = parent.bonds[i + 1];
@@ -2073,12 +2071,12 @@ namespace NCDK.Silent
                 return false;
             }
 
-			public override void Clear()
-			{
+            public override void Clear()
+            {
                 parent.bonds.Clear();
-				parent.ClearAdjacency();
-			}
-		}
+                parent.ClearAdjacency();
+            }
+        }
 
         internal static IAtom Unbox(IAtom atom)
         {
@@ -2097,7 +2095,7 @@ namespace NCDK.Silent
         internal BaseAtomRef GetAtomRefUnsafe(IAtom atom)
         {
             if (atom.Container == this &&
-				atom.Index != -1 &&
+                atom.Index != -1 &&
                 atoms[atom.Index] == atom)
                 return (BaseAtomRef)atom;
             atom = Unbox(atom);
@@ -2147,7 +2145,7 @@ namespace NCDK.Silent
         private BondRef GetBondRefUnsafe(IBond bond)
         {
             if (bond.Container == this &&
-				bond.Index != -1 &&
+                bond.Index != -1 &&
                 bonds[bond.Index] == bond)
                 return (BondRef)bond;
             bond = Unbox(bond);
@@ -2213,7 +2211,7 @@ namespace NCDK.Silent
 
             for (int i = 0; i < newatoms.Count; i++)
             {
-			    if (i >= atoms.Count)
+                if (i >= atoms.Count)
                     atoms.Add(null);
 
                 if (newatoms[i].Container == this)
@@ -2229,13 +2227,13 @@ namespace NCDK.Silent
                 }
             }
 
-			// delete rest of the array
-			{
-				for (int i = atoms.Count - 1; i >= newatoms.Count; i--)
-				{
-					atoms.RemoveAt(i);
-				}
-			}
+            // delete rest of the array
+            {
+                for (int i = atoms.Count - 1; i >= newatoms.Count; i--)
+                {
+                    atoms.RemoveAt(i);
+                }
+            }
 
             // ensure adjacency information is in sync, this code is only
             // called if the bonds are non-empty and 'external' atoms have been
@@ -2253,24 +2251,24 @@ namespace NCDK.Silent
         {
             var newbonds = newbonds_.ToList();
 
-			// replace existing bonds to clear their adjacency
-			if (bonds.Count > 0) 
-			{
-				ClearAdjacency();
-			}
+            // replace existing bonds to clear their adjacency
+            if (bonds.Count > 0) 
+            {
+                ClearAdjacency();
+            }
 
-			for (int i = 0; i < newbonds.Count; i++) 
-			{
-				if (i >= bonds.Count)
+            for (int i = 0; i < newbonds.Count; i++) 
+            {
+                if (i >= bonds.Count)
                     bonds.Add(null);
 
-				BaseBondRef bondRef = NewBondRef(newbonds[i]);
-				bondRef.SetIndex(i);
-				AddToEndpoints(bondRef);
-				bonds[i] = bondRef;
-			}
-			for (int i = bonds.Count - 1; i >= newbonds.Count; i--)
-				bonds.RemoveAt(i);
+                BaseBondRef bondRef = NewBondRef(newbonds[i]);
+                bondRef.SetIndex(i);
+                AddToEndpoints(bondRef);
+                bonds[i] = bondRef;
+            }
+            for (int i = bonds.Count - 1; i >= newbonds.Count; i--)
+                bonds.RemoveAt(i);
 
         }
 
@@ -2304,8 +2302,8 @@ namespace NCDK.Silent
 
         public IBond GetBond(IAtom beg, IAtom end)
         {
-			AtomRef begref = GetAtomRefUnsafe(beg);
-			return begref?.GetBond(end);
+            AtomRef begref = GetAtomRefUnsafe(beg);
+            return begref?.GetBond(end);
         }
 
         public int GetAtomCount()
@@ -2572,11 +2570,11 @@ namespace NCDK.Silent
                             DelFromEndpoints(bonds[i]);
                         }
                     }
-					{
-						for (int j = bonds.Count - 1; j >= newNumBonds; j--)
-							bonds.RemoveAt(j);
-					}
-				}
+                    {
+                        for (int j = bonds.Count - 1; j >= newNumBonds; j--)
+                            bonds.RemoveAt(j);
+                    }
+                }
 
                 // update single electrons
                 int newNumSingleElectrons = 0;
@@ -2616,7 +2614,7 @@ namespace NCDK.Silent
                         lonepairs.RemoveAt(j);
                 }
 
-                var atomElements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+                var atomElements = new List<IStereoElement<IChemObject, IChemObject>>();
                 foreach (var element in stereo)
                 {
                     if (element.Contains(atom)) atomElements.Add(element);
@@ -2624,7 +2622,7 @@ namespace NCDK.Silent
                 foreach (var ae in atomElements)
                     stereo.Remove(ae);
 
-				Atoms.RemoveAt(atomref.Index);
+                Atoms.RemoveAt(atomref.Index);
             }
         }
 
@@ -2718,7 +2716,7 @@ namespace NCDK.Silent
             return sb.ToString();
         }
 
-        private void Append<T>(StringBuilder sb, ICollection<T> os, string tag)
+        private static void Append<T>(StringBuilder sb, ICollection<T> os, string tag)
         {
             if (os.Count > 0)
             {
@@ -2731,7 +2729,7 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public override ICDKObject Clone(CDKObjectMap map)
         {
-			CDKObjectMap refmap = new CDKObjectMap();
+            CDKObjectMap refmap = new CDKObjectMap();
 
             // this is pretty wasteful as we need to delete most the data
             // we can't simply create an empty instance as the sub classes (e.g. AminoAcid)
@@ -2744,7 +2742,7 @@ namespace NCDK.Silent
             clone.bonds = new List<BaseBondRef>();
             clone.lonepairs = new ObservableChemObjectCollection<ILonePair>(clone);
             clone.electrons = new ObservableChemObjectCollection<ISingleElectron>(clone);
-            clone.stereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+            clone.stereo = new List<IStereoElement<IChemObject, IChemObject>>();
             clone.Atoms = new BaseAtomRef_Collection(clone);
             clone.Bonds = new BaseBondRef_Collection(clone);
             clone.LonePairs = clone.lonepairs;
@@ -2809,15 +2807,14 @@ namespace NCDK.Silent
             // map each stereo element to a new instance in the clone
             foreach (var element in stereo)
             {
-                clone.StereoElements.Add((IReadOnlyStereoElement<IChemObject, IChemObject>)element.Clone(refmap));
+                clone.StereoElements.Add((IStereoElement<IChemObject, IChemObject>)element.Clone(refmap));
             }
 
-			// update sgroups
-			var sgroups = GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            // update sgroups
+            var sgroups = this.GetCtabSgroups();
             if (sgroups != null)
             {
-                clone.SetProperty(CDKPropertyName.CtabSgroups,
-                    SgroupManipulator.Copy(sgroups, refmap));
+                clone.SetCtabSgroups(SgroupManipulator.Copy(sgroups, refmap));
             }
 
             return clone;

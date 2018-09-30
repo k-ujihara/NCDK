@@ -94,9 +94,11 @@ namespace NCDK.Isomorphisms
     // @cdk.githash
     public class UniversalIsomorphismTester
     {
-        const int ID1 = 0;
-        const int ID2 = 1;
-        private long start;
+        private enum IdType
+        {
+            Id1 = 0,
+            Id2 = 1,
+        };
 
         /// <summary>
         /// Sets the time in milliseconds until the substructure search will be breaked.
@@ -131,59 +133,57 @@ namespace NCDK.Isomorphisms
             if (g1 is IQueryAtomContainer)
                 throw new CDKException("The first IAtomContainer must not be an IQueryAtomContainer");
 
-            if (g2.Atoms.Count != g1.Atoms.Count) return false;
+            if (g2.Atoms.Count != g1.Atoms.Count)
+                return false;
             // check single atom case
             if (g2.Atoms.Count == 1)
             {
-                IAtom atom = g1.Atoms[0];
-                IAtom atom2 = g2.Atoms[0];
+                var atom = g1.Atoms[0];
+                var atom2 = g2.Atoms[0];
                 if (atom is IQueryAtom qAtom)
                     return qAtom.Matches(g2.Atoms[0]);
                 else if (atom2 is IQueryAtom qAtom2)
                     return qAtom2.Matches(g1.Atoms[0]);
                 else
                 {
-                    string atomSymbol = atom2.Symbol;
-                    return g1.Atoms[0].Symbol.Equals(atomSymbol);
+                    var atomSymbol = atom2.Symbol;
+                    return g1.Atoms[0].Symbol.Equals(atomSymbol, StringComparison.Ordinal);
                 }
             }
             return (GetIsomorphMap(g1, g2) != null);
         }
 
         /// <summary>
-        /// Returns the first isomorph mapping found or null.
+        /// Returns the first isomorph mapping found or <see langword="null"/>.
         /// </summary>
         /// <param name="g1">first molecule. Must not be an <see cref="IQueryAtomContainer"/>.</param>
         /// <param name="g2">second molecule. May be an <see cref="IQueryAtomContainer"/>.</param>
-        /// <returns>the first isomorph mapping found projected of g1. This is a List of RMap objects containing Ids of matching bonds.</returns>
-        public IList<RMap> GetIsomorphMap(IAtomContainer g1, IAtomContainer g2)
+        /// <returns>
+        /// the first isomorph mapping found projected of <paramref name="g1"/>. 
+        /// This is a enumerable of <see cref="RMap"/> objects containing Ids of matching bonds.
+        /// </returns>
+        public IReadOnlyList<RMap> GetIsomorphMap(IAtomContainer g1, IAtomContainer g2)
         {
             if (g1 is IQueryAtomContainer)
                 throw new CDKException("The first IAtomContainer must not be an IQueryAtomContainer");
 
-            IList<RMap> result = null;
-
-            IList<IList<RMap>> rMapsList = Search(g1, g2, GetBitSet(g1), GetBitSet(g2), false, false);
-
-            if (!(rMapsList.Count == 0))
-                result = rMapsList[0];
-
-            return result;
+            var rMapsList = Search(g1, g2, GetBitSet(g1), GetBitSet(g2), false, false);
+            return rMapsList.FirstOrDefault();
         }
 
         /// <summary>
-        /// Returns the first isomorph 'atom mapping' found for g2 in g1.
+        /// Returns the first isomorph 'atom mapping' found for <paramref name="g2"/> in <paramref name="g1"/>.
         /// </summary>
         /// <param name="g1">first molecule. Must not be an <see cref="IQueryAtomContainer"/>.</param>
         /// <param name="g2">second molecule. May be an <see cref="IQueryAtomContainer"/>.</param>
         /// <returns>the first isomorph atom mapping found projected on g1. This is a List of RMap objects containing Ids of matching atoms.</returns>
         /// <exception cref="CDKException">if the first molecules is not an instance of <see cref="IQueryAtomContainer"/></exception>
-        public IList<RMap> GetIsomorphAtomsMap(IAtomContainer g1, IAtomContainer g2)
+        public IReadOnlyList<RMap> GetIsomorphAtomsMap(IAtomContainer g1, IAtomContainer g2)
         {
             if (g1 is IQueryAtomContainer)
                 throw new CDKException("The first IAtomContainer must not be an IQueryAtomContainer");
 
-            IList<RMap> list = CheckSingleAtomCases(g1, g2);
+            var list = CheckSingleAtomCases(g1, g2);
             if (list == null)
             {
                 return MakeAtomsMapOfBondsMap(GetIsomorphMap(g1, g2), g1, g2);
@@ -204,8 +204,8 @@ namespace NCDK.Isomorphisms
         /// </summary>
         /// <param name="g1">first molecule. Must not be an <see cref="IQueryAtomContainer"/>.</param>
         /// <param name="g2">second molecule. May be an <see cref="IQueryAtomContainer"/>.</param>
-        /// <returns>the list of all the 'mappings'</returns>
-        public IList<IList<RMap>> GetIsomorphMaps(IAtomContainer g1, IAtomContainer g2)
+        /// <returns>the enumerable of all the 'mappings'</returns>
+        public IEnumerable<IReadOnlyList<RMap>> GetIsomorphMaps(IAtomContainer g1, IAtomContainer g2)
         {
             return Search(g1, g2, GetBitSet(g1), GetBitSet(g2), true, true);
         }
@@ -223,15 +223,15 @@ namespace NCDK.Isomorphisms
         /// atom - atom mappings. Thus RMap.id1 is the index of the target atom
         /// and RMap.id2 is the index of the matching query atom (in this case,
         /// it will always be 0). Note that in such a case, there is no need
-        /// to call <see cref="MakeAtomsMapOfBondsMap(IList{RMap}, IAtomContainer, IAtomContainer)"/> ,
+        /// to call <see cref="MakeAtomsMapOfBondsMap(IReadOnlyList{RMap}, IAtomContainer, IAtomContainer)"/> ,
         /// though if it is called, then the
         /// return value is simply the same as the return value of this method.
         /// </remarks>
         /// <param name="g1">first molecule. Must not be an <see cref="IQueryAtomContainer"/>.</param>
         /// <param name="g2">second molecule. May be an <see cref="IQueryAtomContainer"/>.</param>
         /// <returns>the list of all the 'mappings' found projected of g1</returns>
-        /// <seealso cref="MakeAtomsMapsOfBondsMaps(IList{IList{RMap}}, IAtomContainer, IAtomContainer)"/>
-        public IList<IList<RMap>> GetSubgraphMaps(IAtomContainer g1, IAtomContainer g2)
+        /// <seealso cref="MakeAtomsMapsOfBondsMaps(IEnumerable{IReadOnlyList{RMap}}, IAtomContainer, IAtomContainer)"/>
+        public IEnumerable<IReadOnlyList<RMap>> GetSubgraphMaps(IAtomContainer g1, IAtomContainer g2)
         {
             return Search(g1, g2, new BitArray(g1.Bonds.Count), GetBitSet(g2), true, true);
         }
@@ -241,18 +241,11 @@ namespace NCDK.Isomorphisms
         /// </summary>
         /// <param name="g1">first molecule. Must not be an <see cref="IQueryAtomContainer"/>.</param>
         /// <param name="g2">second molecule. May be an <see cref="IQueryAtomContainer"/>.</param>
-        /// <returns>the first subgraph bond mapping found projected on g1. This is a <see cref="IList{T}"/> of <see cref="RMap"/> objects containing Ids of matching bonds.</returns>
-        public IList<RMap> GetSubgraphMap(IAtomContainer g1, IAtomContainer g2)
+        /// <returns>the first subgraph bond mapping found projected on g1. This is a <see cref="IReadOnlyList{T}"/> of <see cref="RMap"/> objects containing Ids of matching bonds.</returns>
+        public IReadOnlyList<RMap> GetSubgraphMap(IAtomContainer g1, IAtomContainer g2)
         {
-            IList<RMap> result = null;
-            IList<IList<RMap>> rMapsList = Search(g1, g2, new BitArray(g1.Bonds.Count), GetBitSet(g2), false, false);
-
-            if (!(rMapsList.Count == 0))
-            {
-                result = rMapsList[0];
-            }
-
-            return result;
+            var rMapsList = Search(g1, g2, new BitArray(g1.Bonds.Count), GetBitSet(g2), false, false);
+            return rMapsList.FirstOrDefault();
         }
 
         /// <summary>
@@ -263,19 +256,16 @@ namespace NCDK.Isomorphisms
         /// <param name="g1">first molecule. Must not be an <see cref="IQueryAtomContainer"/>.</param>
         /// <param name="g2">substructure to be mapped. May be an <see cref="IQueryAtomContainer"/>.</param>
         /// <returns>all subgraph atom mappings found projected on g1. This is a <see cref="IList{T}"/> of <see cref="RMap"/> objects containing Ids of matching atoms.</returns>
-        public IList<IList<RMap>> GetSubgraphAtomsMaps(IAtomContainer g1, IAtomContainer g2)
+        public IEnumerable<IReadOnlyList<RMap>> GetSubgraphAtomsMaps(IAtomContainer g1, IAtomContainer g2)
         {
-            IList<RMap> list = CheckSingleAtomCases(g1, g2);
+            var list = CheckSingleAtomCases(g1, g2);
             if (list == null)
             {
                 return MakeAtomsMapsOfBondsMaps(GetSubgraphMaps(g1, g2), g1, g2);
             }
             else
             {
-                IList<IList<RMap>> atomsMap = new List<IList<RMap>>
-                {
-                    list
-                };
+                var atomsMap = new[] { list };
                 return atomsMap;
             }
         }
@@ -287,9 +277,9 @@ namespace NCDK.Isomorphisms
         /// <param name="g1">first molecule. Must not be an <see cref="IQueryAtomContainer"/>.</param>
         /// <param name="g2">substructure to be mapped. May be an <see cref="IQueryAtomContainer"/>.</param>
         /// <returns>the first subgraph atom mapping found projected on g1. This is a <see cref="IList{T}"/> of <see cref="RMap"/> objects containing Ids of matching atoms.</returns>
-        public IList<RMap> GetSubgraphAtomsMap(IAtomContainer g1, IAtomContainer g2)
+        public IReadOnlyList<RMap> GetSubgraphAtomsMap(IAtomContainer g1, IAtomContainer g2)
         {
-            IList<RMap> list = CheckSingleAtomCases(g1, g2);
+            var list = CheckSingleAtomCases(g1, g2);
             if (list == null)
             {
                 return MakeAtomsMapOfBondsMap(GetSubgraphMap(g1, g2), g1, g2);
@@ -337,7 +327,7 @@ namespace NCDK.Isomorphisms
                     }
                     else
                     {
-                        if (atom2.Symbol.Equals(atom.Symbol))
+                        if (atom2.Symbol.Equals(atom.Symbol, StringComparison.Ordinal))
                             return true;
                     }
                 }
@@ -357,13 +347,12 @@ namespace NCDK.Isomorphisms
         /// <param name="g1">first molecule. Must not be an <see cref="IQueryAtomContainer"/>.</param>
         /// <param name="g2">second molecule. May be an <see cref="IQueryAtomContainer"/>.</param>
         /// <returns>the list of all the maximal common substructure found projected of g1 (list of <see cref="IAtomContainer"/>)</returns>
-        public IList<IAtomContainer> GetOverlaps(IAtomContainer g1, IAtomContainer g2)
+        public IReadOnlyList<IAtomContainer> GetOverlaps(IAtomContainer g1, IAtomContainer g2)
         {
-            start = DateTime.Now.Ticks / 10000;
-            IList<IList<RMap>> rMapsList = Search(g1, g2, new BitArray(g1.Bonds.Count), new BitArray(g2.Bonds.Count), true, false);
+            var rMapsList = Search(g1, g2, new BitArray(g1.Bonds.Count), new BitArray(g2.Bonds.Count), true, false);
 
             // projection on G1
-            IList<IAtomContainer> graphList = ProjectList(rMapsList, g1, ID1);
+            var graphList = ProjectList(rMapsList, g1, IdType.Id1);
 
             // reduction of set of solution (isomorphism and substructure
             // with different 'mappings'
@@ -426,16 +415,15 @@ namespace NCDK.Isomorphisms
         /// <param name="findAllStructure">if false stop at the first structure found</param>
         /// <param name="findAllMap">if true search all the 'mappings' for one same structure</param>
         /// <returns>a List of Lists of <see cref="RMap"/> objects that represent the search solutions</returns>
-        public IList<IList<RMap>> Search(IAtomContainer g1, IAtomContainer g2, BitArray c1, BitArray c2, bool findAllStructure, bool findAllMap)
+        public IEnumerable<IReadOnlyList<RMap>> Search(IAtomContainer g1, IAtomContainer g2, BitArray c1, BitArray c2, bool findAllStructure, bool findAllMap)
         {
             // remember start time
-            start = DateTime.Now.Ticks /10000;
+            var start = DateTime.Now.Ticks / 10000;
 
             // handle single query atom case separately
             if (g2.Atoms.Count == 1)
             {
-                List<IList<RMap>> matches = new List<IList<RMap>>();
-                IAtom queryAtom = g2.Atoms[0];
+                var queryAtom = g2.Atoms[0];
 
                 // we can have a IQueryAtomContainer *or* an IAtomContainer
                 if (queryAtom is IQueryAtom qAtom)
@@ -444,11 +432,8 @@ namespace NCDK.Isomorphisms
                     {
                         if (qAtom.Matches(atom))
                         {
-                            List<RMap> lmap = new List<RMap>
-                            {
-                                new RMap(g1.Atoms.IndexOf(atom), 0)
-                            };
-                            matches.Add(lmap);
+                            var lmap = new[] { new RMap(g1.Atoms.IndexOf(atom), 0) };
+                            yield return lmap;
                         }
                     }
                 }
@@ -456,39 +441,34 @@ namespace NCDK.Isomorphisms
                 {
                     foreach (var atom in g1.Atoms)
                     {
-                        if (queryAtom.Symbol.Equals(atom.Symbol))
+                        if (queryAtom.Symbol.Equals(atom.Symbol, StringComparison.Ordinal))
                         {
-                            List<RMap> lmap = new List<RMap>
-                            {
-                                new RMap(g1.Atoms.IndexOf(atom), 0)
-                            };
-                            matches.Add(lmap);
+                            var lmap = new[] { new RMap(g1.Atoms.IndexOf(atom), 0) };
+                            yield return lmap;
                         }
                     }
                 }
-                return matches;
             }
-
-            // reset result
-            List<IList<RMap>> rMapsList = new List<IList<RMap>>();
-
-            // build the RGraph corresponding to this problem
-            RGraph rGraph = BuildRGraph(g1, g2);
-            // Set time data
-            rGraph.Timeout = Timeout;
-            rGraph.Start = start;
-            // parse the RGraph with the given constrains and options
-            rGraph.Parse(c1, c2, findAllStructure, findAllMap);
-            IList<BitArray> solutionList = rGraph.Solutions;
-
-            // conversions of RGraph's internal solutions to G1/G2 mappings
-            foreach (var set in solutionList)
+            else
             {
-                IList<RMap> rmap = rGraph.BitSetToRMap(set);
-                if (CheckQueryAtoms(rmap, g1, g2)) rMapsList.Add(rmap);
-            }
+                // build the RGraph corresponding to this problem
+                var rGraph = BuildRGraph(g1, g2);
+                // Set time data
+                rGraph.Timeout = Timeout;
+                rGraph.Start = start;
+                // parse the RGraph with the given constrains and options
+                rGraph.Parse(c1, c2, findAllStructure, findAllMap);
+                var solutionList = rGraph.Solutions;
 
-            return rMapsList;
+                // conversions of RGraph's internal solutions to G1/G2 mappings
+                foreach (var set in solutionList)
+                {
+                    var rmap = rGraph.BitSetToRMap(set);
+                    if (CheckQueryAtoms(rmap, g1, g2))
+                        yield return rmap;
+                }
+            }
+            yield break;
         }
 
         /// <summary>
@@ -498,17 +478,19 @@ namespace NCDK.Isomorphisms
         /// <param name="g1">target graph</param>
         /// <param name="g2">query graph</param>
         /// <returns>the atom matches are consistent</returns>
-        private bool CheckQueryAtoms(IList<RMap> bondmap, IAtomContainer g1, IAtomContainer g2)
+        private static bool CheckQueryAtoms(IReadOnlyList<RMap> bondmap, IAtomContainer g1, IAtomContainer g2)
         {
-            if (!(g2 is IQueryAtomContainer)) return true;
-            IList<RMap> atommap = MakeAtomsMapOfBondsMap(bondmap, g1, g2);
+            if (!(g2 is IQueryAtomContainer))
+                return true;
+            var atommap = MakeAtomsMapOfBondsMap(bondmap, g1, g2);
             foreach (var rmap in atommap)
             {
-                IAtom a1 = g1.Atoms[rmap.Id1];
-                IAtom a2 = g2.Atoms[rmap.Id2];
-                if (a2 is IQueryAtom)
+                var a1 = g1.Atoms[rmap.Id1];
+                var a2 = g2.Atoms[rmap.Id2];
+                if (a2 is IQueryAtom qa)
                 {
-                    if (!((IQueryAtom)a2).Matches(a1)) return false;
+                    if (!qa.Matches(a1))
+                        return false;
                 }
             }
             return true;
@@ -522,19 +504,19 @@ namespace NCDK.Isomorphisms
         /// </summary>
         /// <param name="rMapList">the list to project</param>
         /// <param name="g">the molecule on which project</param>
-        /// <param name="id">the id in the <see cref="RMap"/> of the molecule g</param>
+        /// <param name="id">the id in the <see cref="RMap"/> of the molecule <paramref name="g"/></param>
         /// <returns>an AtomContainer</returns>
-        public static IAtomContainer Project(IList<RMap> rMapList, IAtomContainer g, int id)
+        private static IAtomContainer Project(IReadOnlyList<RMap> rMapList, IAtomContainer g, IdType id)
         {
-            IAtomContainer ac = g.Builder.NewAtomContainer();
+            var ac = g.Builder.NewAtomContainer();
 
-            IDictionary<IAtom, IAtom> table = new Dictionary<IAtom, IAtom>();
+            var table = new Dictionary<IAtom, IAtom>();
             IAtom a;
             IBond bond;
 
             foreach (var rMap in rMapList)
             {
-                if (id == UniversalIsomorphismTester.ID1)
+                if (id == IdType.Id1)
                 {
                     bond = g.Bonds[rMap.Id1];
                 }
@@ -558,7 +540,7 @@ namespace NCDK.Isomorphisms
                     ac.Atoms.Add(a2);
                     table.Add(a, a2);
                 }
-                IBond newBond = g.Builder.NewBond(a1, a2, bond.Order);
+                var newBond = g.Builder.NewBond(a1, a2, bond.Order);
                 newBond.IsAromatic = bond.IsAromatic;
                 ac.Bonds.Add(newBond);
             }
@@ -568,17 +550,17 @@ namespace NCDK.Isomorphisms
         /// <summary>
         /// Projects a list of RMapsList on a molecule.
         /// </summary>
-        /// <param name="rMapsList">list of RMapsList to project</param>
+        /// <param name="rMapsList">lists of <see cref="RMap"/> to project</param>
         /// <param name="g">the molecule on which project</param>
-        /// <param name="id">the id in the RMap of the molecule g</param>
-        /// <returns>a list of AtomContainer</returns>
-        public static IList<IAtomContainer> ProjectList(IList<IList<RMap>> rMapsList, IAtomContainer g, int id)
+        /// <param name="id">the id in the <see cref="RMap"/> of the molecule <paramref name="g"/></param>
+        /// <returns><see cref="IAtomContainer"/>s</returns>
+        private static IReadOnlyList<IAtomContainer> ProjectList(IEnumerable<IReadOnlyList<RMap>> rMapsList, IAtomContainer g, IdType id)
         {
-            List<IAtomContainer> graphList = new List<IAtomContainer>();
+            var graphList = new List<IAtomContainer>();
 
             foreach (var rMapList in rMapsList)
             {
-                IAtomContainer ac = Project(rMapList, g, id);
+                var ac = Project(rMapList, g, id);
                 graphList.Add(ac);
             }
             return graphList;
@@ -590,18 +572,18 @@ namespace NCDK.Isomorphisms
         /// <param name="graphList">the list of structure to clean</param>
         /// <returns>the list cleaned</returns>
         /// <exception cref="CDKException">if there is a problem in obtaining subgraphs</exception>
-        private IList<IAtomContainer> GetMaximum(IList<IAtomContainer> graphList)
+        private List<IAtomContainer> GetMaximum(IReadOnlyList<IAtomContainer> graphList)
         {
-            List<IAtomContainer> reducedGraphList = new List<IAtomContainer>();
+            var reducedGraphList = new List<IAtomContainer>();
             reducedGraphList.AddRange(graphList);
 
             for (int i = 0; i < graphList.Count; i++)
             {
-                IAtomContainer gi = graphList[i];
+                var gi = graphList[i];
 
                 for (int j = i + 1; j < graphList.Count; j++)
                 {
-                    IAtomContainer gj = graphList[j];
+                    var gj = graphList[j];
 
                     // Gi included in Gj or Gj included in Gi then
                     // reduce the irrelevant solution
@@ -625,15 +607,15 @@ namespace NCDK.Isomorphisms
         /// <param name="g2">AtomContainer as query. May be an <see cref="IQueryAtomContainer"/>.</param>
         /// <returns><see cref="IList{T}"/> of <see cref="IList{T}"/> of <see cref="RMap"/> objects for the Atoms (not Bonds!), null if no single atom case</returns>
         /// <exception cref="CDKException">if the first molecule is an instance of IQueryAtomContainer</exception>
-        public static IList<RMap> CheckSingleAtomCases(IAtomContainer g1, IAtomContainer g2)
+        public static IReadOnlyList<RMap> CheckSingleAtomCases(IAtomContainer g1, IAtomContainer g2)
         {
             if (g1 is IQueryAtomContainer)
                 throw new CDKException("The first IAtomContainer must not be an IQueryAtomContainer");
 
             if (g2.Atoms.Count == 1)
             {
-                List<RMap> arrayList = new List<RMap>();
-                IAtom atom = g2.Atoms[0];
+                var arrayList = new List<RMap>();
+                var atom = g2.Atoms[0];
                 if (atom is IQueryAtom qAtom)
                 {
                     for (int i = 0; i < g1.Atoms.Count; i++)
@@ -644,10 +626,10 @@ namespace NCDK.Isomorphisms
                 }
                 else
                 {
-                    string atomSymbol = atom.Symbol;
+                    var atomSymbol = atom.Symbol;
                     for (int i = 0; i < g1.Atoms.Count; i++)
                     {
-                        if (g1.Atoms[i].Symbol.Equals(atomSymbol))
+                        if (g1.Atoms[i].Symbol.Equals(atomSymbol, StringComparison.Ordinal))
                             arrayList.Add(new RMap(i, 0));
                     }
                 }
@@ -655,11 +637,11 @@ namespace NCDK.Isomorphisms
             }
             else if (g1.Atoms.Count == 1)
             {
-                List<RMap> arrayList = new List<RMap>();
-                IAtom atom = g1.Atoms[0];
+                var arrayList = new List<RMap>();
+                var atom = g1.Atoms[0];
                 for (int i = 0; i < g2.Atoms.Count; i++)
                 {
-                    IAtom atom2 = g2.Atoms[i];
+                    var atom2 = g2.Atoms[i];
                     if (atom2 is IQueryAtom qAtom)
                     {
                         if (qAtom.Matches(atom))
@@ -669,7 +651,7 @@ namespace NCDK.Isomorphisms
                     }
                     else
                     {
-                        if (atom2.Symbol.Equals(atom.Symbol))
+                        if (atom2.Symbol.Equals(atom.Symbol, StringComparison.Ordinal))
                             arrayList.Add(new RMap(0, i));
                     }
                 }
@@ -685,23 +667,20 @@ namespace NCDK.Isomorphisms
         ///  This makes maps of matching atoms out of a maps of matching bonds as produced by the
         ///  Get(Subgraph|Ismorphism)Maps methods.
         /// </summary>
-        /// <param name="l">The list produced by the getMap method.</param>
+        /// <param name="l">The list produced by <see cref="GetSubgraphMaps"/> method.</param>
         /// <param name="g1">The first atom container. Must not be a <see cref="IQueryAtomContainer"/>.</param>
         /// <param name="g2">The second one (first and second as in getMap). May be an <see cref="IQueryAtomContainer"/>.</param>
         /// <returns>A List of <see cref="IList{T}"/>s of <see cref="RMap"/> objects of matching Atoms.</returns>
-        public static IList<IList<RMap>> MakeAtomsMapsOfBondsMaps(IList<IList<RMap>> l, IAtomContainer g1, IAtomContainer g2)
+        public static IEnumerable<IReadOnlyList<RMap>> MakeAtomsMapsOfBondsMaps(IEnumerable<IReadOnlyList<RMap>> l, IAtomContainer g1, IAtomContainer g2)
         {
-            if (l == null)
-            {
-                return l;
-            }
-            if (g2.Atoms.Count == 1) return l; // since the RMap is already an atom-atom mapping
-            IList<IList<RMap>> result = new List<IList<RMap>>();
             foreach (var l2 in l)
             {
-                result.Add(MakeAtomsMapOfBondsMap(l2, g1, g2));
+                if (g2.Atoms.Count == 1)
+                    yield return l2; // since the RMap is already an atom-atom mapping
+                else
+                    yield return MakeAtomsMapOfBondsMap(l2, g1, g2);
             }
-            return result;
+            yield break;
         }
 
         /// <summary>
@@ -712,16 +691,17 @@ namespace NCDK.Isomorphisms
         /// <param name="g1">first molecule. Must not be an <see cref="IQueryAtomContainer"/>.</param>
         /// <param name="g2">second molecule. May be an <see cref="IQueryAtomContainer"/>.</param>
         /// <returns>The mapping found projected on g1. This is a <see cref="List{T}"/> of <see cref="RMap"/> objects containing Ids of matching atoms.</returns>
-        public static IList<RMap> MakeAtomsMapOfBondsMap(IList<RMap> l, IAtomContainer g1, IAtomContainer g2)
+        public static IReadOnlyList<RMap> MakeAtomsMapOfBondsMap(IReadOnlyList<RMap> l, IAtomContainer g1, IAtomContainer g2)
         {
-            if (l == null) return (l);
-            List<RMap> result = new List<RMap>();
+            if (l == null)
+                return l;
+            var result = new List<RMap>();
             for (int i = 0; i < l.Count; i++)
             {
-                IBond bond1 = g1.Bonds[l[i].Id1];
-                IBond bond2 = g2.Bonds[l[i].Id2];
-                IAtom[] atom1 = BondManipulator.GetAtomArray(bond1);
-                IAtom[] atom2 = BondManipulator.GetAtomArray(bond2);
+                var bond1 = g1.Bonds[l[i].Id1];
+                var bond2 = g2.Bonds[l[i].Id2];
+                var atom1 = BondManipulator.GetAtomArray(bond1);
+                var atom2 = BondManipulator.GetAtomArray(bond2);
                 for (int j = 0; j < 2; j++)
                 {
                     var bondsConnectedToAtom1j = g1.GetConnectedBonds(atom1[j]);
@@ -729,40 +709,27 @@ namespace NCDK.Isomorphisms
                     {
                         if (kbond != bond1)
                         {
-                            IBond testBond = kbond;
+                            var testBond = kbond;
                             for (int m = 0; m < l.Count; m++)
                             {
-                                IBond testBond2;
                                 if ((l[m]).Id1 == g1.Bonds.IndexOf(testBond))
                                 {
-                                    testBond2 = g2.Bonds[(l[m]).Id2];
+                                    var testBond2 = g2.Bonds[(l[m]).Id2];
                                     for (int n = 0; n < 2; n++)
                                     {
                                         var bondsToTest = g2.GetConnectedBonds(atom2[n]);
                                         if (bondsToTest.Contains(testBond2))
                                         {
-                                            RMap map;
-                                            if (j == n)
-                                            {
-                                                map = new RMap(g1.Atoms.IndexOf(atom1[0]), g2.Atoms.IndexOf(atom2[0]));
-                                            }
-                                            else
-                                            {
-                                                map = new RMap(g1.Atoms.IndexOf(atom1[1]), g2.Atoms.IndexOf(atom2[0]));
-                                            }
+                                            var map = j == n 
+                                                ? new RMap(g1.Atoms.IndexOf(atom1[0]), g2.Atoms.IndexOf(atom2[0]))
+                                                : new RMap(g1.Atoms.IndexOf(atom1[1]), g2.Atoms.IndexOf(atom2[0]));
                                             if (!result.Contains(map))
                                             {
                                                 result.Add(map);
                                             }
-                                            RMap map2;
-                                            if (j == n)
-                                            {
-                                                map2 = new RMap(g1.Atoms.IndexOf(atom1[1]), g2.Atoms.IndexOf(atom2[1]));
-                                            }
-                                            else
-                                            {
-                                                map2 = new RMap(g1.Atoms.IndexOf(atom1[0]), g2.Atoms.IndexOf(atom2[1]));
-                                            }
+                                            var map2 = j == n
+                                                ? new RMap(g1.Atoms.IndexOf(atom1[1]), g2.Atoms.IndexOf(atom2[1]))
+                                                : new RMap(g1.Atoms.IndexOf(atom1[0]), g2.Atoms.IndexOf(atom2[1]));
                                             if (!result.Contains(map2))
                                             {
                                                 result.Add(map2);
@@ -779,8 +746,8 @@ namespace NCDK.Isomorphisms
         }
 
         /// <summary>
-        ///  Builds the nodes of the <see cref="RGraph"/> ( resolution graph ), from
-        ///  two atom containers (description of the two molecules to compare)
+        /// Builds the nodes of the <see cref="RGraph"/> ( resolution graph ), from
+        /// two atom containers (description of the two molecules to compare)
         /// </summary>
         /// <param name="gr">the target RGraph</param>
         /// <param name="ac1">first molecule. Must not be an <see cref="IQueryAtomContainer"/>.</param>
@@ -799,19 +766,19 @@ namespace NCDK.Isomorphisms
             {
                 for (int j = 0; j < ac2.Bonds.Count; j++)
                 {
-                    IBond bondA2 = ac2.Bonds[j];
+                    var bondA2 = ac2.Bonds[j];
                     if (bondA2 is IQueryBond queryBond)
                     {
-                        IQueryAtom atom1 = (IQueryAtom)(bondA2.Begin);
-                        IQueryAtom atom2 = (IQueryAtom)(bondA2.End);
-                        IBond bond = ac1.Bonds[i];
+                        var atom1 = (IQueryAtom)(bondA2.Begin);
+                        var atom2 = (IQueryAtom)(bondA2.End);
+                        var bond = ac1.Bonds[i];
                         if (queryBond.Matches(bond))
                         {
                             var bondAtom0 = bond.Begin;
                             var bondAtom1 = bond.End;
                             // ok, bonds match
                             if (atom1.Matches(bondAtom0) && atom2.Matches(bondAtom1)
-                                    || atom1.Matches(bondAtom1) && atom2.Matches(bondAtom0))
+                             || atom1.Matches(bondAtom1) && atom2.Matches(bondAtom0))
                             {
                                 // ok, atoms match in either order
                                 gr.AddNode(new RNode(i, j));
@@ -826,7 +793,8 @@ namespace NCDK.Isomorphisms
                         var ac2Bondj = ac2.Bonds[j];
                         // bond type conditions
                         if (( // same bond order and same aromaticity flag (either both on or off)
-                                ac1Bondi.Order == ac2Bondj.Order && ac1Bondi.IsAromatic == ac2Bondj.IsAromatic) || ( // both bond are aromatic
+                                ac1Bondi.Order == ac2Bondj.Order && ac1Bondi.IsAromatic == ac2Bondj.IsAromatic) 
+                         || ( // both bond are aromatic
                                 ac1Bondi.IsAromatic && ac2Bondj.IsAromatic))
                         {
                             var ac1Bondi0 = ac1Bondi.Begin;
@@ -836,9 +804,9 @@ namespace NCDK.Isomorphisms
                             // atom type conditions
                             if (
                                 // a1 = a2 && b1 = b2
-                                (ac1Bondi0.Symbol.Equals(ac2Bondj0.Symbol) && ac1Bondi1.Symbol.Equals(ac2Bondj1.Symbol)) ||
+                                (ac1Bondi0.Symbol.Equals(ac2Bondj0.Symbol, StringComparison.Ordinal) && ac1Bondi1.Symbol.Equals(ac2Bondj1.Symbol, StringComparison.Ordinal)) 
                                 // a1 = b2 && b1 = a2
-                                (ac1Bondi0.Symbol.Equals(ac2Bondj1.Symbol) && ac1Bondi1.Symbol.Equals(ac2Bondj0.Symbol)))
+                             || (ac1Bondi0.Symbol.Equals(ac2Bondj1.Symbol, StringComparison.Ordinal) && ac1Bondi1.Symbol.Equals(ac2Bondj0.Symbol, StringComparison.Ordinal)))
                             {
                                 gr.AddNode(new RNode(i, j));
                             }
@@ -851,10 +819,10 @@ namespace NCDK.Isomorphisms
         }
 
         /// <summary>
-        ///  Build edges of the <see cref="RGraph"/>s.
-        ///  This method create the edge of the RGraph and
-        ///  calculates the incompatibility and neighborhood
-        ///  relationships between RGraph nodes.
+        /// Build edges of the <see cref="RGraph"/>s.
+        /// This method create the edge of the RGraph and
+        /// calculates the incompatibility and neighborhood
+        /// relationships between RGraph nodes.
         /// </summary>
         /// <param name="gr">the rGraph</param>
         /// <param name="ac1">first molecule. Must not be an <see cref="IQueryAtomContainer"/>.</param>
@@ -865,38 +833,34 @@ namespace NCDK.Isomorphisms
             // each node is incompatible with himself
             for (int i = 0; i < gr.Graph.Count; i++)
             {
-                RNode x = (RNode)gr.Graph[i];
+                var x = gr.Graph[i];
                 x.Forbidden.Set(i, true);
             }
-
-            IBond a1;
-            IBond a2;
-            IBond b1;
-            IBond b2;
 
             gr.FirstGraphSize = ac1.Bonds.Count;
             gr.SecondGraphSize = ac2.Bonds.Count;
 
             for (int i = 0; i < gr.Graph.Count; i++)
             {
-                RNode x = gr.Graph[i];
+                var x = gr.Graph[i];
 
                 // two nodes are neighbors if their adjacency
                 // relationship in are equivalent in G1 and G2
                 // else they are incompatible.
                 for (int j = i + 1; j < gr.Graph.Count; j++)
                 {
-                    RNode y = gr.Graph[j];
+                    var y = gr.Graph[j];
 
-                    a1 = ac1.Bonds[x.RMap.Id1];
-                    a2 = ac2.Bonds[x.RMap.Id2];
+                    var a1 = ac1.Bonds[x.RMap.Id1];
+                    var a2 = ac2.Bonds[x.RMap.Id2];
 
-                    b1 = ac1.Bonds[y.RMap.Id1];
-                    b2 = ac2.Bonds[y.RMap.Id2];
+                    var b1 = ac1.Bonds[y.RMap.Id1];
+                    var b2 = ac2.Bonds[y.RMap.Id2];
 
                     if (a2 is IQueryBond)
                     {
-                        if (a1.Equals(b1) || a2.Equals(b2) || !QueryAdjacencyAndOrder(a1, b1, a2, b2))
+                        if (a1.Equals(b1) || a2.Equals(b2)
+                         || !QueryAdjacencyAndOrder(a1, b1, a2, b2))
                         {
                             x.Forbidden.Set(j, true);
                             y.Forbidden.Set(i, true);
@@ -909,7 +873,8 @@ namespace NCDK.Isomorphisms
                     }
                     else
                     {
-                        if (a1.Equals(b1) || a2.Equals(b2) || (!GetCommonSymbol(a1, b1).Equals(GetCommonSymbol(a2, b2))))
+                        if (a1.Equals(b1) || a2.Equals(b2) 
+                         || (!GetCommonSymbol(a1, b1).Equals(GetCommonSymbol(a2, b2), StringComparison.Ordinal)))
                         {
                             x.Forbidden.Set(j, true);
                             y.Forbidden.Set(i, true);
@@ -1029,14 +994,15 @@ namespace NCDK.Isomorphisms
                 centralQueryAtom = queryBond2.End;
             }
 
-            if (centralAtom != null && centralQueryAtom != null && ((IQueryAtom)centralQueryAtom).Matches(centralAtom))
+            if (centralAtom != null && centralQueryAtom != null 
+             && ((IQueryAtom)centralQueryAtom).Matches(centralAtom))
             {
-                IQueryAtom queryAtom1 = (IQueryAtom)queryBond1.GetConnectedAtom(centralQueryAtom);
-                IQueryAtom queryAtom2 = (IQueryAtom)queryBond2.GetConnectedAtom(centralQueryAtom);
-                IAtom atom1 = bond1.GetConnectedAtom(centralAtom);
-                IAtom atom2 = bond2.GetConnectedAtom(centralAtom);
-                if (queryAtom1.Matches(atom1) && queryAtom2.Matches(atom2) || queryAtom1.Matches(atom2)
-                        && queryAtom2.Matches(atom1))
+                var queryAtom1 = (IQueryAtom)queryBond1.GetConnectedAtom(centralQueryAtom);
+                var queryAtom2 = (IQueryAtom)queryBond2.GetConnectedAtom(centralQueryAtom);
+                var atom1 = bond1.GetConnectedAtom(centralAtom);
+                var atom2 = bond2.GetConnectedAtom(centralAtom);
+                if (queryAtom1.Matches(atom1) && queryAtom2.Matches(atom2)
+                 || queryAtom1.Matches(atom2) && queryAtom2.Matches(atom1))
                 {
                     return true;
                 }
@@ -1100,19 +1066,22 @@ namespace NCDK.Isomorphisms
                     ac1SingleBondCount++;
                 else if (bond.Order == BondOrder.Double)
                     ac1DoubleBondCount++;
-                else if (bond.Order == BondOrder.Triple) ac1TripleBondCount++;
+                else if (bond.Order == BondOrder.Triple)
+                    ac1TripleBondCount++;
             }
             for (int i = 0; i < ac2.Bonds.Count; i++)
             {
                 bond = ac2.Bonds[i];
-                if (bond is IQueryBond) continue;
+                if (bond is IQueryBond)
+                    continue;
                 if (bond.IsAromatic)
                     ac2AromaticBondCount++;
                 else if (bond.Order == BondOrder.Single)
                     ac2SingleBondCount++;
                 else if (bond.Order == BondOrder.Double)
                     ac2DoubleBondCount++;
-                else if (bond.Order == BondOrder.Triple) ac2TripleBondCount++;
+                else if (bond.Order == BondOrder.Triple)
+                    ac2TripleBondCount++;
             }
 
             if (ac2SingleBondCount > ac1SingleBondCount) return false;
@@ -1123,41 +1092,43 @@ namespace NCDK.Isomorphisms
             for (int i = 0; i < ac1.Atoms.Count; i++)
             {
                 atom = ac1.Atoms[i];
-                if (atom.Symbol.Equals("S"))
+                if (string.Equals(atom.Symbol, "S", StringComparison.Ordinal))
                     ac1SCount++;
-                else if (atom.Symbol.Equals("N"))
+                else if (string.Equals(atom.Symbol, "N", StringComparison.Ordinal))
                     ac1NCount++;
-                else if (atom.Symbol.Equals("O"))
+                else if (string.Equals(atom.Symbol, "O", StringComparison.Ordinal))
                     ac1OCount++;
-                else if (atom.Symbol.Equals("F"))
+                else if (string.Equals(atom.Symbol, "F", StringComparison.Ordinal))
                     ac1FCount++;
-                else if (atom.Symbol.Equals("Cl"))
+                else if (string.Equals(atom.Symbol, "Cl", StringComparison.Ordinal))
                     ac1ClCount++;
-                else if (atom.Symbol.Equals("Br"))
+                else if (string.Equals(atom.Symbol, "Br", StringComparison.Ordinal))
                     ac1BrCount++;
-                else if (atom.Symbol.Equals("I"))
+                else if (string.Equals(atom.Symbol, "I", StringComparison.Ordinal))
                     ac1ICount++;
-                else if (atom.Symbol.Equals("C")) ac1CCount++;
+                else if (string.Equals(atom.Symbol, "C", StringComparison.Ordinal))
+                    ac1CCount++;
             }
             for (int i = 0; i < ac2.Atoms.Count; i++)
             {
                 atom = ac2.Atoms[i];
                 if (atom is IQueryAtom) continue;
-                if (atom.Symbol.Equals("S"))
+                if (string.Equals(atom.Symbol, "S", StringComparison.Ordinal))
                     ac2SCount++;
-                else if (atom.Symbol.Equals("N"))
+                else if (string.Equals(atom.Symbol, "N", StringComparison.Ordinal))
                     ac2NCount++;
-                else if (atom.Symbol.Equals("O"))
+                else if (string.Equals(atom.Symbol, "O", StringComparison.Ordinal))
                     ac2OCount++;
-                else if (atom.Symbol.Equals("F"))
+                else if (string.Equals(atom.Symbol, "F", StringComparison.Ordinal))
                     ac2FCount++;
-                else if (atom.Symbol.Equals("Cl"))
+                else if (string.Equals(atom.Symbol, "Cl", StringComparison.Ordinal))
                     ac2ClCount++;
-                else if (atom.Symbol.Equals("Br"))
+                else if (string.Equals(atom.Symbol, "Br", StringComparison.Ordinal))
                     ac2BrCount++;
-                else if (atom.Symbol.Equals("I"))
+                else if (string.Equals(atom.Symbol, "I", StringComparison.Ordinal))
                     ac2ICount++;
-                else if (atom.Symbol.Equals("C")) ac2CCount++;
+                else if (string.Equals(atom.Symbol, "C", StringComparison.Ordinal))
+                    ac2CCount++;
             }
 
             if (ac1SCount < ac2SCount) return false;

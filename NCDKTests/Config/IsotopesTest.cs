@@ -19,7 +19,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System;
 using System.Linq;
 
@@ -33,32 +33,32 @@ namespace NCDK.Config
     public class IsotopesTest : CDKTestCase
     {
         [TestMethod()]
-        public void TestGetInstance_IChemObjectBuilder()
+        public void TestGetInstanceIChemObjectBuilder()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             Assert.IsNotNull(isofac);
         }
 
         [TestMethod()]
         public void TestGetSize()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             Assert.IsTrue(isofac.Count > 0);
         }
 
         [TestMethod()]
-        public void TestConfigure_IAtom()
+        public void TestConfigureIAtom()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             Atom atom = new Atom("H");
             isofac.Configure(atom);
             Assert.AreEqual(1, atom.AtomicNumber.Value);
         }
 
         [TestMethod()]
-        public void TestConfigure_IAtom_IIsotope()
+        public void TestConfigureIAtomIIsotope()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             Atom atom = new Atom("H");
             IIsotope isotope = new Default.Isotope("H", 2);
             isofac.Configure(atom, isotope);
@@ -66,49 +66,49 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestGetMajorIsotope_String()
+        public void TestGetMajorIsotopeString()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             IIsotope isotope = isofac.GetMajorIsotope("Te");
             Assert.AreEqual(129.9062244, isotope.ExactMass.Value, 0.0001);
         }
 
         [TestMethod()]
-        public void TestGetMajorIsotope_int()
+        public void TestGetMajorIsotopeInt()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             IIsotope isotope = isofac.GetMajorIsotope(17);
             Assert.AreEqual("Cl", isotope.Symbol);
         }
 
         [TestMethod()]
-        public void TestGetElement_String()
+        public void TestGetElementString()
         {
-            IsotopeFactory elfac = Isotopes.Instance;
+            IsotopeFactory elfac = BODRIsotopeFactory.Instance;
             IElement element = elfac.GetElement("Br");
             Assert.AreEqual(35, element.AtomicNumber.Value);
         }
 
         [TestMethod()]
-        public void TestGetElement_int()
+        public void TestGetElementInt()
         {
-            IsotopeFactory elfac = Isotopes.Instance;
+            IsotopeFactory elfac = BODRIsotopeFactory.Instance;
             IElement element = elfac.GetElement(6);
             Assert.AreEqual("C", element.Symbol);
         }
 
         [TestMethod()]
-        public void TestGetElementSymbol_int()
+        public void TestGetElementSymbolInt()
         {
-            IsotopeFactory elfac = Isotopes.Instance;
+            IsotopeFactory elfac = BODRIsotopeFactory.Instance;
             string symbol = elfac.GetElementSymbol(8);
             Assert.AreEqual("O", symbol);
         }
 
         [TestMethod()]
-        public void TestGetIsotopes_String()
+        public void TestGetIsotopesString()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             var list = isofac.GetIsotopes("He");
             Assert.AreEqual(8, list.Count());
         }
@@ -116,15 +116,15 @@ namespace NCDK.Config
         [TestMethod()]
         public void TestGetIsotopes()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             var list = isofac.GetIsotopes();
             Assert.IsTrue(list.Count() > 200);
         }
 
         [TestMethod()]
-        public void TestGetIsotopes_Double_double()
+        public void TestGetIsotopesDoubleDouble()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             var list = isofac.GetIsotopes(87.90, 0.01).ToList();
             //        should return:
             //        Isotope match: 88Sr has mass 87.9056121
@@ -135,14 +135,14 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestIsElement_String()
+        public void TestIsElementString()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             Assert.IsTrue(isofac.IsElement("C"));
         }
 
         [TestMethod()]
-        public void TestConfigureAtoms_IAtomContainer()
+        public void TestConfigureAtomsIAtomContainer()
         {
             AtomContainer container = new AtomContainer();
             container.Atoms.Add(new Atom("C"));
@@ -151,7 +151,7 @@ namespace NCDK.Config
             container.Atoms.Add(new Atom("O"));
             container.Atoms.Add(new Atom("F"));
             container.Atoms.Add(new Atom("Cl"));
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             isofac.ConfigureAtoms(container);
             for (int i = 0; i < container.Atoms.Count; i++)
             {
@@ -160,16 +160,16 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestGetNaturalMass_IElement()
+        public void TestGetNaturalMassIElement()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             Assert.AreEqual(1.0079760, isofac.GetNaturalMass(new Default.Element("H")), 0.1);
         }
 
         [TestMethod()]
         public void TestGetIsotope()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             Assert.AreEqual(13.00335484, isofac.GetIsotope("C", 13).ExactMass.Value, 0.0000001);
         }
 
@@ -179,21 +179,21 @@ namespace NCDK.Config
         [TestMethod()]
         public void TestMajorUnstableIsotope()
         {
-            Isotopes isotopes = Isotopes.Instance;
+            var isotopes = BODRIsotopeFactory.Instance;
             Assert.IsNull(isotopes.GetMajorIsotope("Es"));
         }
 
         [TestMethod()]
-        public void TestGetIsotope_NonElement()
+        public void TestGetIsotopeNonElement()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             Assert.IsNull(isofac.GetIsotope("R", 13));
         }
 
         [TestMethod()]
         public void TestGetIsotopeFromExactMass()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             IIsotope carbon13 = isofac.GetIsotope("C", 13);
             IIsotope match = isofac.GetIsotope(carbon13.Symbol, carbon13.ExactMass.Value, 0.0001);
             Assert.IsNotNull(match);
@@ -201,9 +201,9 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestGetIsotopeFromExactMass_NonElement()
+        public void TestGetIsotopeFromExactMassNonElement()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             IIsotope match = isofac.GetIsotope("R", 13.00001, 0.0001);
             Assert.IsNull(match);
         }
@@ -211,15 +211,15 @@ namespace NCDK.Config
         [TestMethod()]
         public void TestYeahSure()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             IIsotope match = isofac.GetIsotope("H", 13.00001, 0.0001);
             Assert.IsNull(match);
         }
 
         [TestMethod()]
-        public void TestGetIsotopeFromExactMass_LargeTolerance()
+        public void TestGetIsotopeFromExactMassLargeTolerance()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             IIsotope carbon13 = isofac.GetIsotope("C", 13);
             IIsotope match = isofac.GetIsotope(carbon13.Symbol, carbon13.ExactMass.Value, 2.0);
             Assert.IsNotNull(match);
@@ -230,7 +230,7 @@ namespace NCDK.Config
         public void ConfigureDoesNotSetMajorIsotope()
         {
             IAtom atom = new Atom("CH4");
-            Isotopes isotopes = Isotopes.Instance;
+            var isotopes = BODRIsotopeFactory.Instance;
             IIsotope major = isotopes.GetMajorIsotope(atom.Symbol);
             Assert.IsNotNull(major);
             Assert.AreEqual(12, major.MassNumber);
@@ -243,32 +243,32 @@ namespace NCDK.Config
         [ExpectedException(typeof(ArgumentException))]
         public void TestNonexistingElement()
         {
-            Isotopes isofac = Isotopes.Instance;
+            var isofac = BODRIsotopeFactory.Instance;
             IAtom xxAtom = new Atom("Xx");
             isofac.Configure(xxAtom);
         }
 
         [TestMethod()]
-        public void TestGetIsotopes_Nonelement()
+        public void TestGetIsotopesNonelement()
         {
-            IsotopeFactory isofac = Isotopes.Instance;
+            IsotopeFactory isofac = BODRIsotopeFactory.Instance;
             var list = isofac.GetIsotopes("E");
             Assert.IsNotNull(list);
             Assert.AreEqual(0, list.Count());
         }
 
         [TestMethod()]
-        public void TestGetElement_Nonelement()
+        public void TestGetElementNonelement()
         {
-            IsotopeFactory isofac = Isotopes.Instance;
+            IsotopeFactory isofac = BODRIsotopeFactory.Instance;
             IElement element = isofac.GetElement("E");
             Assert.IsNull(element);
         }
 
         [TestMethod()]
-        public void TestGetMajorIsotope_Nonelement()
+        public void TestGetMajorIsotopeNonelement()
         {
-            IsotopeFactory isofac = Isotopes.Instance;
+            IsotopeFactory isofac = BODRIsotopeFactory.Instance;
             IIsotope isotope = isofac.GetMajorIsotope("E");
             Assert.IsNull(isotope);
         }

@@ -69,10 +69,10 @@ namespace NCDK.Geometries.CIP.Rules
             };
 
             ligands.Sort(new AtomicNumberRule());
-            Assert.AreEqual("H", ligands[0].GetLigandAtom().Symbol);
-            Assert.AreEqual("Cl", ligands[1].GetLigandAtom().Symbol);
-            Assert.AreEqual("Br", ligands[2].GetLigandAtom().Symbol);
-            Assert.AreEqual("I", ligands[3].GetLigandAtom().Symbol);
+            Assert.AreEqual("H", ligands[0].LigandAtom.Symbol);
+            Assert.AreEqual("Cl", ligands[1].LigandAtom.Symbol);
+            Assert.AreEqual("Br", ligands[2].LigandAtom.Symbol);
+            Assert.AreEqual("I", ligands[3].LigandAtom.Symbol);
         }
 
         [TestMethod()]

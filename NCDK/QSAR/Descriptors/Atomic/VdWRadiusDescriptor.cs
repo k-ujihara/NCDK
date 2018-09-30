@@ -73,8 +73,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </list>
         /// </remarks>
         /// <returns>An object containing the descriptor specification</returns>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vdwradius",
                 typeof(VdWRadiusDescriptor).FullName, "The Chemistry Development Kit");
@@ -82,7 +82,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the VdWRadiusDescriptor object.
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public IReadOnlyList<string> DescriptorNames => NAMES;
 
@@ -95,7 +95,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             string symbol = atom.Symbol;
             double vdwradius = PeriodicTable.GetVdwRadius(symbol).Value;
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(vdwradius), NAMES);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(vdwradius), NAMES);
         }
 
         /// <summary>

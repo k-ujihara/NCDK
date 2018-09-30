@@ -52,7 +52,7 @@ namespace NCDK.Graphs.InChI
         /// <summary>
         /// AtomContainer instance refers to.
         /// </summary>
-        protected IAtomContainer ReferringAtomContainer;
+        protected IAtomContainer ReferringAtomContainer { get; set; }
 
         /// <summary>
         /// Constructor. Generates InChI from CDK AtomContainer.
@@ -402,8 +402,8 @@ namespace NCDK.Graphs.InChI
                     //     t0 = f = t1
                     //    /         \
                     //   p1         p3
-                    IAtom[] terminals = extendedTetrahedral.FindTerminalAtoms(atomContainer);
-                    IAtom[] peripherals = extendedTetrahedral.Peripherals;
+                    var terminals = extendedTetrahedral.FindTerminalAtoms(atomContainer);
+                    var peripherals = extendedTetrahedral.Peripherals.ToArray();
 
                     // InChI API is particular about the input, each terminal atom
                     // needs to be present in the list of neighbors and they must
@@ -423,7 +423,8 @@ namespace NCDK.Graphs.InChI
                         t0Bonds.RemoveAt(0);
                         IAtom replace = orgBond.GetOther(terminals[0]);
                         for (int i = 0; i < peripherals.Length; i++)
-                            if (replace == peripherals[i]) peripherals[i] = terminals[0];
+                            if (replace == peripherals[i])
+                                peripherals[i] = terminals[0];
                     }
 
                     if (t1Bonds.Count == 2)
@@ -432,7 +433,8 @@ namespace NCDK.Graphs.InChI
                         t1Bonds.RemoveAt(0);
                         IAtom replace = orgBond.GetOther(terminals[1]);
                         for (int i = 0; i < peripherals.Length; i++)
-                            if (replace == peripherals[i]) peripherals[i] = terminals[1];
+                            if (replace == peripherals[i])
+                                peripherals[i] = terminals[1];
                     }
 
                     // the neighbor attached to each terminal atom that we will

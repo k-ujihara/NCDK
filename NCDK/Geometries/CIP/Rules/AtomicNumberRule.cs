@@ -37,11 +37,12 @@ namespace NCDK.Geometries.CIP.Rules
             return GetAtomicNumber(ligand1).CompareTo(GetAtomicNumber(ligand2));
         }
 
-        private int GetAtomicNumber(ILigand ligand)
+        private static int GetAtomicNumber(ILigand ligand)
         {
-            var atomNumber = ligand.GetLigandAtom().AtomicNumber;
-            if (atomNumber != null) return atomNumber.Value;
-            return PeriodicTable.GetAtomicNumber(ligand.GetLigandAtom().Symbol);
+            var atomNumber = ligand.LigandAtom.AtomicNumber;
+            if (atomNumber != null)
+                return atomNumber.Value;
+            return PeriodicTable.GetAtomicNumber(ligand.LigandAtom.Symbol);
         }
     }
 }

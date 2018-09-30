@@ -19,6 +19,7 @@
 
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -59,18 +60,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public CarbonTypesDescriptor() { }
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes",
                 typeof(CarbonTypesDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        /// Sets the parameters attribute of the GravitationalIndexDescriptor object.
-        /// </summary>
-        /// <exception cref="CDKException"></exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
@@ -85,16 +82,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
-        /// <summary>
-        /// The parameterNames attribute of the GravitationalIndexDescriptor object.
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames => null; // no param names to return
 
-        /// <summary>
-        /// Gets the parameterType attribute of the GravitationalIndexDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
         public override object GetParameterType(string name) => null;
 
         /// <summary>
@@ -116,13 +105,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             foreach (var atom in container.Atoms)
             {
-                if (!atom.Symbol.Equals("C") && !atom.Symbol.Equals("c")) continue;
+                if (!atom.Symbol.Equals("C", StringComparison.Ordinal) && !atom.Symbol.Equals("c", StringComparison.Ordinal))
+                    continue;
                 var connectedAtoms = container.GetConnectedAtoms(atom);
 
                 int cc = 0;
                 foreach (var connectedAtom in connectedAtoms)
                 {
-                    if (connectedAtom.Symbol.Equals("C") || connectedAtom.Symbol.Equals("c")) cc++;
+                    if (connectedAtom.Symbol.Equals("C", StringComparison.Ordinal) || connectedAtom.Symbol.Equals("c", StringComparison.Ordinal))
+                        cc++;
                 }
 
                 BondOrder maxBondOrder = GetHighestBondOrder(container, atom);
@@ -159,10 +150,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 c4sp3
             };
 
-            return new DescriptorValue<ArrayResult<int>>(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
+            return new DescriptorValue<ArrayResult<int>>(specification, ParameterNames, Parameters, retval, DescriptorNames);
         }
 
-        private BondOrder GetHighestBondOrder(IAtomContainer container, IAtom atom)
+        private static BondOrder GetHighestBondOrder(IAtomContainer container, IAtom atom)
         {
             var bonds = container.GetConnectedBonds(atom);
             BondOrder maxOrder = BondOrder.Single;

@@ -1,6 +1,4 @@
 /*
- *
- *
  * Copyright (C) 2009-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -46,8 +44,8 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
+
 using NCDK.SMSD.Algorithms.VFLib.Builder;
 using System;
 using System.Collections.Generic;
@@ -69,7 +67,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
         private TargetProperties target;
         private List<INode> queryPath;
         private List<IAtom> targetPath;
-        private IDictionary<INode, IAtom> map;
+        private Dictionary<INode, IAtom> map;
 
         /// <summary>
         /// Initialise the VFState with query and target
@@ -84,6 +82,8 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             this.target = target;
             this.candidates = new List<Match>();
             LoadRootCandidates();
+
+            Console.WriteLine(map.Count);
         }
 
         private VFState(VFState state, Match match)
@@ -98,6 +98,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
 
             map[match.QueryNode] = match.TargetAtom;
             queryPath.Add(match.QueryNode);
+
             targetPath.Add(match.TargetAtom);
             LoadCandidates(match);
         }
@@ -120,7 +121,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             }
         }
 
-        public IDictionary<INode, IAtom> GetMap()
+        public IReadOnlyDictionary<INode, IAtom> GetMap()
         {
             return new Dictionary<INode, IAtom>(map);
         }
@@ -132,11 +133,17 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
 
         public bool IsDead => query.CountNodes() > target.AtomCount;
 
-        public bool IsGoal => map.Count == query.CountNodes();
+        public bool IsGoal
+        {
+            get
+            {
+                return map.Count == query.CountNodes();
+            }
+        }
 
         public bool IsMatchFeasible(Match match)
         {
-            if (map.ContainsKey(match.QueryNode) || map.Values.Contains(match.TargetAtom))
+            if (map.ContainsKey(match.QueryNode) || map.ContainsValue(match.TargetAtom))
             {
                 return false;
             }

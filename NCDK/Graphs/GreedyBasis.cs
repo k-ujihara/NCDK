@@ -25,7 +25,6 @@
 using NCDK.Common.Collections;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using static NCDK.Graphs.InitialCycles;
 
 namespace NCDK.Graphs
@@ -69,7 +68,7 @@ namespace NCDK.Graphs
         /// Access the members of the basis.
         /// </summary>
         /// <returns>cycles ordered by length</returns>
-        public IList<Cycle> Members => new ReadOnlyCollection<Cycle>(basis);
+        public IReadOnlyList<Cycle> Members => basis;
 
         /// <summary>
         /// The size of the basis.

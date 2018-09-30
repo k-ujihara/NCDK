@@ -39,7 +39,7 @@ namespace NCDK.Groups
         /// <summary>
         /// Specialised option to allow generating automorphisms that ignore the bond order.
         /// </summary>
-        private bool ignoreBondOrders;
+        private readonly bool ignoreBondOrders;
 
         /// <summary>
         /// Make a bond partition refiner that takes bond-orders into account.

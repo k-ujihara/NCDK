@@ -20,7 +20,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Tools.Manipulator;
 using System.Diagnostics;
@@ -81,7 +81,7 @@ namespace NCDK.Modelings.Builder3D
             mol.AddBond(mol.Atoms[7], mol.Atoms[9], BondOrder.Single);
             try
             {
-                Isotopes.Instance.ConfigureAtoms(mol);
+                BODRIsotopeFactory.Instance.ConfigureAtoms(mol);
             }
             catch (IOException ex)
             {

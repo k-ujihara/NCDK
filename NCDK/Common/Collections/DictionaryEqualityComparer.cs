@@ -7,9 +7,9 @@ namespace NCDK.Common.Collections
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="V"></typeparam>
-    public class DictionaryEqualityComparer<T, V> : IEqualityComparer<IDictionary<T, V>>
+    public class DictionaryEqualityComparer<T, V> : IEqualityComparer<IReadOnlyDictionary<T, V>>
     {
-        public bool Equals(IDictionary<T, V> x, IDictionary<T, V> y)
+        public bool Equals(IReadOnlyDictionary<T, V> x, IReadOnlyDictionary<T, V> y)
         {
             if (x.Count != y.Count)
                 return false;
@@ -23,15 +23,15 @@ namespace NCDK.Common.Collections
             return true;
         }
 
-        public int GetHashCode(IDictionary<T, V> obj)
+        public int GetHashCode(IReadOnlyDictionary<T, V> o)
         {
-            int hash = obj.Count;
-            foreach (var key in obj.Keys)
+            int hash = o.Count;
+            foreach (var key in o.Keys)
             {
                 hash *= 17;
                 hash += key.GetHashCode();
                 hash *= 17;
-                hash += obj[key].GetHashCode();
+                hash += o[key].GetHashCode();
             }
             return hash;
         }

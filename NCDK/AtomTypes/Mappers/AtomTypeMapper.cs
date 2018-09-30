@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config.AtomType;
+using NCDK.Config.AtomTypes;
 using System.Collections.Generic;
 using System.IO;
 
@@ -32,15 +32,12 @@ namespace NCDK.AtomTypes.Mappers
     // @cdk.githash
     public class AtomTypeMapper
     {
-        private static IDictionary<string, AtomTypeMapper> mappers = new Dictionary<string, AtomTypeMapper>();
-
-        private string mappingFile;
-
-        private IDictionary<string, string> mappings;
+        private static Dictionary<string, AtomTypeMapper> mappers = new Dictionary<string, AtomTypeMapper>();
+        private readonly IReadOnlyDictionary<string, string> mappings;
 
         private AtomTypeMapper(string mappingFile)
         {
-            this.mappingFile = mappingFile;
+            this.Mapping = mappingFile;
             Stream stream = ResourceLoader.GetAsStream(mappingFile);
             OWLAtomTypeMappingReader reader = new OWLAtomTypeMappingReader(new StreamReader(stream));
             mappings = reader.ReadAtomTypeMappings();
@@ -48,8 +45,8 @@ namespace NCDK.AtomTypes.Mappers
 
         private AtomTypeMapper(string mappingFile, Stream stream)
         {
-            this.mappingFile = mappingFile;
-            OWLAtomTypeMappingReader reader = new OWLAtomTypeMappingReader(new StreamReader(stream));
+            this.Mapping = mappingFile;
+            var reader = new OWLAtomTypeMappingReader(new StreamReader(stream));
             mappings = reader.ReadAtomTypeMappings();
         }
 
@@ -101,6 +98,6 @@ namespace NCDK.AtomTypes.Mappers
         /// but when the input was an <see cref="Stream"/> then the name is less well defined.
         /// </summary>
         /// <returns>the name of the mapping represented by this <see cref="AtomTypeMapper"/>.</returns>
-        public string Mapping => mappingFile;
+        public string Mapping { get; }
     }
 }

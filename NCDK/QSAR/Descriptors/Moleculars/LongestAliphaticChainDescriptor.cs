@@ -25,7 +25,7 @@ using System.Collections.Generic;
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    ///  Counts the number of atoms in the longest aliphatic chain.
+    /// Counts the number of atoms in the longest aliphatic chain.
     /// </summary>
     /// <remarks>
     /// <para>This descriptor uses these parameters:
@@ -52,34 +52,32 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:largestAliphaticChain
     public class LongestAliphaticChainDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
-        public const string CHECK_RING_SYSTEM = "checkRingSystem";
+        private const string CHECK_RING_SYSTEM = "checkRingSystem";
         private bool checkRingSystem = false;
         private static readonly string[] NAMES = { "nAtomLAC" };
 
-        /// <summary>
-        ///  Constructor for the LongestAliphaticChainDescriptor object.
-        /// </summary>
         public LongestAliphaticChainDescriptor() { }
 
         /// <inheritdoc/> 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#longestAliphaticChain",
                 typeof(LongestAliphaticChainDescriptor).FullName, "The Chemistry Development Kit");
 
         /// <summary>
-        ///  Sets the parameters attribute of the LongestAliphaticChainDescriptor object.
-        /// <para>
-        /// This descriptor takes one parameter, which should be bool to indicate whether
-        /// aromaticity has been checked (TRUE) or not (FALSE).</para>
+        /// Sets the parameters attribute of the LongestAliphaticChainDescriptor object.
         /// </summary>
+        /// <remarks>
+        /// This descriptor takes one parameter, which should be bool to indicate whether
+        /// aromaticity has been checked <see langword="true"/> or not <see langword="false"/>.
+        /// </remarks>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
                     throw new CDKException("LongestAliphaticChainDescriptor only expects one parameter");
                 }
@@ -102,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception e)
         {
             return new DescriptorValue<Result<int>>(
-                _Specification,
+                specification,
                 ParameterNames,
                 Parameters,
                 new Result<int>(0),
@@ -141,9 +139,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculate the count of atoms of the longest aliphatic chain in the supplied <see cref="IAtomContainer"/>.
         /// </summary>
         /// <remarks>
-        ///  The method require one parameter:
-        ///  if checkRingSyste is true the <see cref="IMolecularEntity.IsInRing"/> will be set
-        ///  </remarks>
+        /// The method require one parameter:
+        /// if checkRingSyste is true the <see cref="IMolecularEntity.IsInRing"/> will be set
+        /// </remarks>
         /// <param name="mol">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated</param>
         /// <returns>the number of atoms in the longest aliphatic chain of this AtomContainer</returns>
         /// <seealso cref="Parameters"/>
@@ -166,7 +164,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
 
             int longest = 0;
-            int[][] adjlist = GraphUtil.ToAdjList(aliphaticParts);
+            var adjlist = GraphUtil.ToAdjList(aliphaticParts);
             for (int i = 0; i < adjlist.Length; i++)
             {
                 // atom deg > 1 can't find the longest chain
@@ -178,7 +176,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
 
             return new DescriptorValue<Result<int>>(
-                _Specification,
+                specification,
                 ParameterNames,
                 Parameters,
                 new Result<int>(longest),
@@ -187,20 +185,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
-
-        /// <summary>
-        /// The parameterNames attribute of the LongestAliphaticChainDescriptor object.
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames { get; } = new string[] { CHECK_RING_SYSTEM };
-
-        /// <summary>
-        ///  Gets the parameterType attribute of the LongestAliphaticChainDescriptor object.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
         public override object GetParameterType(string name)
         {
-            if (name.Equals(CHECK_RING_SYSTEM))
+            if (name.Equals(CHECK_RING_SYSTEM, StringComparison.Ordinal))
                 return true;
             else
                 throw new ArgumentException("No parameter for name", nameof(name));

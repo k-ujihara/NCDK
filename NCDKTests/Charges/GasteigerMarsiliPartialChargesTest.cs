@@ -19,8 +19,8 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Default;
 using NCDK.IO;
+using NCDK.Silent;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System.IO;
@@ -35,7 +35,6 @@ namespace NCDK.Charges
     public class GasteigerMarsiliPartialChargesTest : CDKTestCase
     {
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-        private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
         /// <summary>
         /// A unit test with methylenfluoride
@@ -55,7 +54,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             peoe.CalculateCharges(molecule);
             for (int i = 0; i < molecule.Atoms.Count; i++)
@@ -79,7 +78,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             peoe.AssignGasteigerMarsiliSigmaPartialCharges(molecule, true);
             for (int i = 0; i < molecule.Atoms.Count; i++)
@@ -103,7 +102,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
             foreach (var atom in molecule.Atoms)
                 atom.Charge = 0.0;
 
@@ -193,7 +192,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(ac);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
-            lpcheck.Saturate(ac);
+            CDK.LonePairElectronChecker.Saturate(ac);
 
             GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
             peoe.CalculateCharges(ac);

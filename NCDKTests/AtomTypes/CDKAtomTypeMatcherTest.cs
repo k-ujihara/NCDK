@@ -23,7 +23,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Templates;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
@@ -42,19 +42,19 @@ namespace NCDK.AtomTypes
     [TestClass()]
     public class CDKAtomTypeMatcherTest : AbstractCDKAtomTypeTest
     {
-        private static IDictionary<string, int> testedAtomTypes = new Dictionary<string, int>();
+        private static readonly Dictionary<string, int> testedAtomTypes = new Dictionary<string, int>();
 
         [TestMethod()]
         public void TestGetInstance_IChemObjectBuilder()
         {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(Default.ChemObjectBuilder.Instance);
+            var matcher = CDKAtomTypeMatcher.GetInstance(ChemObjectBuilder.Instance);
             Assert.IsNotNull(matcher);
         }
 
         [TestMethod()]
         public void TestGetInstance_IChemObjectBuilder_int()
         {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(Default.ChemObjectBuilder.Instance,
+            var matcher = CDKAtomTypeMatcher.GetInstance(ChemObjectBuilder.Instance,
                     CDKAtomTypeMatcher.Mode.RequireExplicitHydrogens);
             Assert.IsNotNull(matcher);
         }
@@ -64,7 +64,7 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
             IAtom atom = new Atom("C");
-            Hybridization thisHybridization = Hybridization.SP3;
+            var thisHybridization = Hybridization.SP3;
             atom.Hybridization = thisHybridization;
             mol.Atoms.Add(atom);
 
@@ -77,16 +77,16 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
             IAtom atom = new Atom("C");
-            Hybridization thisHybridization = Hybridization.SP3;
+            var thisHybridization = Hybridization.SP3;
             atom.Hybridization = thisHybridization;
             mol.Atoms.Add(atom);
 
             // just check consistency; other methods do perception testing
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(Default.ChemObjectBuilder.Instance);
-            IAtomType[] types = matcher.FindMatchingAtomTypes(mol);
-            for (int i = 0; i < types.Length; i++)
+            var matcher = CDKAtomTypeMatcher.GetInstance(ChemObjectBuilder.Instance);
+            var types = matcher.FindMatchingAtomTypes(mol).ToList();
+            for (int i = 0; i < types.Count; i++)
             {
-                IAtomType type = matcher.FindMatchingAtomType(mol, mol.Atoms[i]);
+                var type = matcher.FindMatchingAtomType(mol, mol.Atoms[i]);
                 Assert.AreEqual(type.AtomTypeName, types[i].AtomTypeName);
             }
         }
@@ -109,8 +109,8 @@ namespace NCDK.AtomTypes
             IAtomContainer mol = new AtomContainer();
             IAtom atom = new Atom();
             mol.Atoms.Add(atom);
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(Default.ChemObjectBuilder.Instance);
-            IAtomType type = matcher.FindMatchingAtomType(mol, atom);
+            var matcher = CDKAtomTypeMatcher.GetInstance(ChemObjectBuilder.Instance);
+            var type = matcher.FindMatchingAtomType(mol, atom);
             Assert.IsNotNull(type);
             Assert.AreEqual("X", type.AtomTypeName);
         }
@@ -509,13 +509,13 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestS3()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom s = Default.ChemObjectBuilder.Instance.NewAtom("S");
-            IAtom o1 = Default.ChemObjectBuilder.Instance.NewAtom("O");
-            IAtom o2 = Default.ChemObjectBuilder.Instance.NewAtom("O");
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom s = ChemObjectBuilder.Instance.NewAtom("S");
+            IAtom o1 = ChemObjectBuilder.Instance.NewAtom("O");
+            IAtom o2 = ChemObjectBuilder.Instance.NewAtom("O");
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(s, o1, BondOrder.Double);
-            IBond b2 = Default.ChemObjectBuilder.Instance.NewBond(s, o2, BondOrder.Double);
+            IBond b1 = ChemObjectBuilder.Instance.NewBond(s, o1, BondOrder.Double);
+            IBond b2 = ChemObjectBuilder.Instance.NewBond(s, o2, BondOrder.Double);
 
             mol.Atoms.Add(s);
             mol.Atoms.Add(o1);
@@ -531,13 +531,13 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestH2S()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom s = Default.ChemObjectBuilder.Instance.NewAtom("S");
-            IAtom h1 = Default.ChemObjectBuilder.Instance.NewAtom("H");
-            IAtom h2 = Default.ChemObjectBuilder.Instance.NewAtom("H");
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom s = ChemObjectBuilder.Instance.NewAtom("S");
+            IAtom h1 = ChemObjectBuilder.Instance.NewAtom("H");
+            IAtom h2 = ChemObjectBuilder.Instance.NewAtom("H");
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(s, h1, BondOrder.Single);
-            IBond b2 = Default.ChemObjectBuilder.Instance.NewBond(s, h2, BondOrder.Single);
+            IBond b1 = ChemObjectBuilder.Instance.NewBond(s, h1, BondOrder.Single);
+            IBond b2 = ChemObjectBuilder.Instance.NewBond(s, h2, BondOrder.Single);
 
             mol.Atoms.Add(s);
             mol.Atoms.Add(h1);
@@ -554,13 +554,13 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestH2Se()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom se = Default.ChemObjectBuilder.Instance.NewAtom("Se");
-            IAtom h1 = Default.ChemObjectBuilder.Instance.NewAtom("H");
-            IAtom h2 = Default.ChemObjectBuilder.Instance.NewAtom("H");
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom se = ChemObjectBuilder.Instance.NewAtom("Se");
+            IAtom h1 = ChemObjectBuilder.Instance.NewAtom("H");
+            IAtom h2 = ChemObjectBuilder.Instance.NewAtom("H");
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(se, h1, BondOrder.Single);
-            IBond b2 = Default.ChemObjectBuilder.Instance.NewBond(se, h2, BondOrder.Single);
+            IBond b1 = ChemObjectBuilder.Instance.NewBond(se, h1, BondOrder.Single);
+            IBond b2 = ChemObjectBuilder.Instance.NewBond(se, h2, BondOrder.Single);
 
             mol.Atoms.Add(se);
             mol.Atoms.Add(h1);
@@ -577,12 +577,12 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestH2Se_oneImplH()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom se = Default.ChemObjectBuilder.Instance.NewAtom("Se");
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom se = ChemObjectBuilder.Instance.NewAtom("Se");
             se.ImplicitHydrogenCount = 1;
-            IAtom h1 = Default.ChemObjectBuilder.Instance.NewAtom("H");
+            IAtom h1 = ChemObjectBuilder.Instance.NewAtom("H");
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(se, h1, BondOrder.Single);
+            IBond b1 = ChemObjectBuilder.Instance.NewBond(se, h1, BondOrder.Single);
 
             mol.Atoms.Add(se);
             mol.Atoms.Add(h1);
@@ -596,8 +596,8 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestH2Se_twoImplH()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom se = Default.ChemObjectBuilder.Instance.NewAtom("Se");
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom se = ChemObjectBuilder.Instance.NewAtom("Se");
             se.ImplicitHydrogenCount = 2;
             mol.Atoms.Add(se);
 
@@ -608,8 +608,8 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSelenide()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom se = Default.ChemObjectBuilder.Instance.NewAtom("Se");
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom se = ChemObjectBuilder.Instance.NewAtom("Se");
             se.ImplicitHydrogenCount = 0;
             se.FormalCharge = -2;
             mol.Atoms.Add(se);
@@ -621,8 +621,8 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestH2S_Hybridization()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom s = Default.ChemObjectBuilder.Instance.NewAtom("S");
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom s = ChemObjectBuilder.Instance.NewAtom("S");
             s.Hybridization = Hybridization.SP3;
             mol.Atoms.Add(s);
             string[] expectedTypes = { "S.3" };
@@ -632,12 +632,12 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHS()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom s = Default.ChemObjectBuilder.Instance.NewAtom("S");
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom s = ChemObjectBuilder.Instance.NewAtom("S");
             s.FormalCharge = -1;
-            IAtom h1 = Default.ChemObjectBuilder.Instance.NewAtom("H");
+            IAtom h1 = ChemObjectBuilder.Instance.NewAtom("H");
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(s, h1, BondOrder.Single);
+            IBond b1 = ChemObjectBuilder.Instance.NewBond(s, h1, BondOrder.Single);
 
             mol.Atoms.Add(s);
             mol.Atoms.Add(h1);
@@ -913,7 +913,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestThioSulphonate()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("S");
             mol.Atoms.Add(a1);
@@ -1715,7 +1715,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Hg_2plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Hg");
             a1.FormalCharge = 2;
@@ -1728,7 +1728,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Hg_plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Hg");
             a1.FormalCharge = 1;
@@ -1746,7 +1746,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Hg_metallic()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Hg");
             a1.FormalCharge = 0;
@@ -1759,7 +1759,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Hg_1()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Hg");
             a1.FormalCharge = 0;
@@ -1777,7 +1777,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Hg_2()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Hg");
             a1.FormalCharge = 0;
@@ -1925,7 +1925,7 @@ namespace NCDK.AtomTypes
         public void Fix_Ca_2()
         {
             //string molName = "Ca_2";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Ca");
             a1.FormalCharge = 0;
@@ -1949,7 +1949,7 @@ namespace NCDK.AtomTypes
         public void Fix_Ca_1()
         {
             //string molName1 = "Ca_1";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Ca");
             a1.FormalCharge = 0;
@@ -3143,7 +3143,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestStructGenMatcher()
         {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(Default.ChemObjectBuilder.Instance);
+            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(ChemObjectBuilder.Instance);
             Assert.IsNotNull(matcher);
         }
 
@@ -3765,7 +3765,7 @@ namespace NCDK.AtomTypes
             mol.Atoms.Add(atom);
             string[] expectedTypes = { "O.minus" };
 
-            // option one: int.Parse()
+            // option one: int.Parse(, NumberFormatInfo.InvariantInfo)
             atom.FormalCharge = -1;
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
@@ -3811,7 +3811,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_S_sp3d1()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("S");
             a1.FormalCharge = 0;
@@ -3849,7 +3849,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_S_inyl_2()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("S");
             a1.FormalCharge = 0;
@@ -3872,7 +3872,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_S_2minus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("S");
             a1.FormalCharge = -2;
@@ -3885,7 +3885,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_S_sp3()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("S");
             a1.FormalCharge = 0;
@@ -3908,7 +3908,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_S_sp3_4()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("S");
             a1.FormalCharge = 0;
@@ -3941,7 +3941,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Co_3plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 3;
@@ -3954,7 +3954,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Co_metallic()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 0;
@@ -3967,7 +3967,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Co_plus_6()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 1;
@@ -4010,7 +4010,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Co_2plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 2;
@@ -4023,7 +4023,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Co_plus_2()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 1;
@@ -4046,7 +4046,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Co_2()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
@@ -4069,7 +4069,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Co_6()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 0;
@@ -4112,7 +4112,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Co_plus_4()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 1;
@@ -4145,7 +4145,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Co_4()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 0;
@@ -4178,7 +4178,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Co_plus_5()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 1;
@@ -4217,7 +4217,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Co_plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a2 = builder.NewAtom("Co");
             a2.FormalCharge = 1;
@@ -4230,7 +4230,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Co_plus_1()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
@@ -4248,7 +4248,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Co_1()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 0;
@@ -4270,7 +4270,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Br_3()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Br");
             a1.FormalCharge = 0;
@@ -4298,7 +4298,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Zn_metallic()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Zn");
             a1.FormalCharge = 0;
@@ -4311,7 +4311,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Zn_1()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Zn");
             a1.FormalCharge = 0;
@@ -4333,7 +4333,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_V_3minus_4()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("V");
             a1.FormalCharge = -3;
@@ -4370,7 +4370,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Al_3minus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Al");
             a1.FormalCharge = -3;
@@ -4413,7 +4413,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSe_sp3d1_4()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Se");
             a1.FormalCharge = 0;
@@ -4446,7 +4446,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSe_sp3_4()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Se");
             a1.FormalCharge = 0;
@@ -4479,7 +4479,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSe_sp2_2()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Se");
             a1.FormalCharge = 0;
@@ -4502,7 +4502,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSe_1()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
@@ -4520,7 +4520,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSe_3()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Se");
             a1.FormalCharge = 0;
@@ -4543,7 +4543,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSe_sp3_3()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
@@ -4571,7 +4571,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSe_4plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Se");
             a1.FormalCharge = 4;
@@ -4584,7 +4584,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSe_plus_3()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
@@ -4612,7 +4612,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSe_5()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Se");
             a1.FormalCharge = 0;
@@ -4650,7 +4650,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Se_2()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Se");
             a1.ImplicitHydrogenCount = 0;
@@ -4665,7 +4665,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestTellane()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Te");
             a1.FormalCharge = 0;
@@ -4689,7 +4689,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPhosphanium()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("P");
             a1.FormalCharge = 1;
@@ -4718,7 +4718,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPhosphide()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("P");
             a1.FormalCharge = 0;
@@ -4741,7 +4741,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPentaMethylPhosphane()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("P");
             a1.FormalCharge = 0;
@@ -4779,7 +4779,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Sb_4()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
@@ -4812,7 +4812,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Sb_3()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Sb");
             a1.FormalCharge = 0;
@@ -4840,7 +4840,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_B_3plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("B");
             a1.FormalCharge = 3;
@@ -4873,7 +4873,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Sr_2plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Sr");
             a1.FormalCharge = 2;
@@ -4886,7 +4886,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Te_4plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Te");
             a1.FormalCharge = 4;
@@ -4899,7 +4899,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Be_neutral()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Be");
             a1.FormalCharge = 0;
@@ -4912,7 +4912,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Cl_2()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Cl");
             a1.FormalCharge = 0;
@@ -4935,7 +4935,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_K_neutral()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("K");
             a1.FormalCharge = 0;
@@ -4953,7 +4953,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Li_neutral()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Li");
             a1.FormalCharge = 0;
@@ -4966,7 +4966,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Li_plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Li");
             a1.FormalCharge = 1;
@@ -4979,7 +4979,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_I_sp3d2_3()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("I");
             a1.FormalCharge = 0;
@@ -5048,7 +5048,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethylphosphinicAcid()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("P");
             a1.FormalCharge = 0;
@@ -5101,7 +5101,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Ti_2()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Ti");
             a1.FormalCharge = 0;
@@ -5124,7 +5124,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Ni_metallic()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Ni");
             a1.FormalCharge = 0;
@@ -5137,7 +5137,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Ni_plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
@@ -5155,7 +5155,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Pb_1()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Pb");
             a1.FormalCharge = 0;
@@ -5173,7 +5173,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Pb_2plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Pb");
             a1.FormalCharge = 2;
@@ -5186,7 +5186,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Pb_neutral()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Pb");
             a1.FormalCharge = 0;
@@ -5199,7 +5199,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Tl_neutral()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Tl");
             a1.FormalCharge = 0;
@@ -5212,7 +5212,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Tl_1()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
@@ -5230,7 +5230,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Tl_plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Tl");
             a1.FormalCharge = 1;
@@ -5243,7 +5243,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Mg_neutral_2()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
@@ -5266,7 +5266,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Mg_neutral_4()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
@@ -5299,7 +5299,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Mg_neutral_1()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Mg");
             a1.FormalCharge = 0;
@@ -5317,7 +5317,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Gd_3plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Gd");
             a1.FormalCharge = 3;
@@ -5330,7 +5330,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Mo_4()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Mo");
             a1.FormalCharge = 0;
@@ -5363,7 +5363,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Mo_metallic()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Mo");
             a1.FormalCharge = 0;
@@ -5376,7 +5376,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Pt_2()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Pt");
             a1.FormalCharge = 0;
@@ -5399,7 +5399,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Pt_2plus_4()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Pt");
             a1.FormalCharge = 2;
@@ -5432,7 +5432,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Cu_metallic()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Cu");
             a1.FormalCharge = 0;
@@ -5445,7 +5445,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Cu_plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Cu");
             a1.FormalCharge = 1;
@@ -5458,7 +5458,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Cu_1()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Cu");
             a1.FormalCharge = 0;
@@ -5476,7 +5476,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Ra()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Ra");
             a1.FormalCharge = 0;
@@ -5489,7 +5489,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Cr_neutral()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Cr");
             a1.FormalCharge = 0;
@@ -5502,7 +5502,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Rb_neutral()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Rb");
             a1.FormalCharge = 0;
@@ -5515,7 +5515,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Rb_plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Rb");
             a1.FormalCharge = 1;
@@ -5528,7 +5528,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Cr_4()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Cr");
             a1.FormalCharge = 0;
@@ -5561,7 +5561,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Cr_3plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Cr");
             a1.FormalCharge = 3;
@@ -5574,7 +5574,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Cr_6plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Cr");
             a1.FormalCharge = 6;
@@ -5587,7 +5587,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Ba_2plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Ba");
             a1.FormalCharge = 2;
@@ -5600,7 +5600,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Au_1()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
@@ -5618,7 +5618,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Ag_neutral()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Ag");
             a1.FormalCharge = 0;
@@ -5634,7 +5634,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Ag_plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Ag");
             a1.FormalCharge = 1;
@@ -5650,7 +5650,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Ag_covalent()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Ag");
             mol.Atoms.Add(a1);
@@ -5665,7 +5665,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_In_3plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("In");
             a1.FormalCharge = 3;
@@ -5678,7 +5678,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_In_3()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("In");
             a1.FormalCharge = 0;
@@ -5706,7 +5706,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_In_1()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("In");
             a1.FormalCharge = 0;
@@ -5724,7 +5724,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_In()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("In");
             a1.FormalCharge = 0;
@@ -5737,7 +5737,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Cd_2plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Cd");
             a1.FormalCharge = 2;
@@ -5750,7 +5750,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Cd_2()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Cd");
             a1.FormalCharge = 0;
@@ -5773,7 +5773,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Cd_metallic()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Cd");
             a1.FormalCharge = 0;
@@ -5786,7 +5786,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Pu()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Pu");
             a1.FormalCharge = 0;
@@ -5799,7 +5799,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Th()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Th");
             a1.FormalCharge = 0;
@@ -5812,7 +5812,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Ge_3()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
@@ -5840,7 +5840,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Na_neutral()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Na");
             a1.FormalCharge = 0;
@@ -5853,7 +5853,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Mn_3plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Mn");
             a1.FormalCharge = 3;
@@ -5866,7 +5866,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Mn_2()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Mn");
             a1.FormalCharge = 0;
@@ -5889,7 +5889,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Mn_metallic()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Mn");
             a1.FormalCharge = 0;
@@ -5902,7 +5902,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Si_2minus_6()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Si");
             a1.FormalCharge = -2;
@@ -5945,7 +5945,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Si_3()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Si");
             a1.FormalCharge = 0;
@@ -5973,7 +5973,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Si_2()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Si");
             a1.FormalCharge = 0;
@@ -5996,7 +5996,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_As_minus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("As");
             a1.FormalCharge = -1;
@@ -6039,7 +6039,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_As_3plus()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("As");
             a1.FormalCharge = 3;
@@ -6052,7 +6052,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_As_2()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
@@ -6075,7 +6075,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_As_5()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("As");
             a1.FormalCharge = 0;
@@ -6109,7 +6109,7 @@ namespace NCDK.AtomTypes
         public void Test_Fe_metallic()
         {
             //string molName = "Fe_metallic";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = 0;
@@ -6122,7 +6122,7 @@ namespace NCDK.AtomTypes
         public void Test_Fe_plus()
         {
             //string molName1 = "Fe_plus";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
@@ -6146,7 +6146,7 @@ namespace NCDK.AtomTypes
         public void Test_Fe_4()
         {
             //string molName2 = "Fe_4";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
@@ -6179,7 +6179,7 @@ namespace NCDK.AtomTypes
         public void Test_Fe_3minus()
         {
             //string molName3 = "Fe_3minus";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = -3;
@@ -6222,7 +6222,7 @@ namespace NCDK.AtomTypes
         public void Test_Fe_2plus()
         {
             //string molName4 = "Fe_2plus";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = 2;
@@ -6235,7 +6235,7 @@ namespace NCDK.AtomTypes
         public void Test_Fe_4minus()
         {
             //string molName5 = "Fe_4minus";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = -4;
@@ -6279,7 +6279,7 @@ namespace NCDK.AtomTypes
         public void Test_Fe_5()
         {
             //string molNameFe5 = "Fe_5";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = 0;
@@ -6317,7 +6317,7 @@ namespace NCDK.AtomTypes
         public void Test_Fe_6()
         {
             //string molName7 = "Fe_6";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = 0;
@@ -6360,7 +6360,7 @@ namespace NCDK.AtomTypes
         public void Test_Fe_2minus()
         {
             //string molName8 = "Fe_2minus";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = -2;
@@ -6403,7 +6403,7 @@ namespace NCDK.AtomTypes
         public void Test_Fe_3plus()
         {
             //string molName9 = "Fe_3plus";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = 3;
@@ -6416,7 +6416,7 @@ namespace NCDK.AtomTypes
         public void Test_Fe_2()
         {
             //string molNameA = "Fe_2";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
@@ -6439,7 +6439,7 @@ namespace NCDK.AtomTypes
         public void Test_Fe_3()
         {
             //string molNameB = "Fe_3";
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = 0;
@@ -6469,7 +6469,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSulphur4()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("S");
             mol.Atoms.Add(a1);
@@ -6520,7 +6520,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Ru_3minus_6()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Ru");
             a1.FormalCharge = -3;
@@ -6566,7 +6566,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Ru_2minus_6()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Ru");
             a1.FormalCharge = -2;
@@ -6609,7 +6609,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Ru_10plus_6()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Ru");
             a1.FormalCharge = 0;
@@ -6652,7 +6652,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Ru_6()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("Ru");
             a1.FormalCharge = 0;

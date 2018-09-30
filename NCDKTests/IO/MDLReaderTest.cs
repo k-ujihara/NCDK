@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -221,7 +221,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug3485634.mol");
             MDLReader reader = new MDLReader(ins);
-            IAtomContainer molecule = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer molecule = ChemObjectBuilder.Instance.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
             Assert.AreEqual(9, molecule.Atoms.Count);
@@ -233,7 +233,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug1356.sdf");
             MDLReader reader = new MDLReader(ins);
-            IChemFile chemfile = Default.ChemObjectBuilder.Instance.NewChemFile();
+            IChemFile chemfile = ChemObjectBuilder.Instance.NewChemFile();
             chemfile = reader.Read(chemfile);
             IAtomContainer container = ChemFileManipulator.GetAllAtomContainers(chemfile).First();
             Assert.IsNotNull(container.GetProperty<object>("first"));
@@ -247,7 +247,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug1356.sdf");
             MDLReader reader = new MDLReader(ins, ChemObjectReaderMode.Strict);
-            IChemFile chemfile = Default.ChemObjectBuilder.Instance.NewChemFile();
+            IChemFile chemfile = ChemObjectBuilder.Instance.NewChemFile();
             chemfile = reader.Read(chemfile);
         }
     }

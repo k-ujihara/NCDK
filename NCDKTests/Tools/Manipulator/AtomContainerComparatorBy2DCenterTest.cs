@@ -19,7 +19,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Numerics;
 using System.Collections.Generic;
 

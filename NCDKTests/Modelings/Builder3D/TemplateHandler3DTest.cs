@@ -28,6 +28,7 @@ using NCDK.Tools.Manipulator;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using NCDK.Silent;
 
 namespace NCDK.Modelings.Builder3D
 {
@@ -69,8 +70,8 @@ namespace NCDK.Modelings.Builder3D
 
             string filename = "NCDK.Data.MDL.fingerprints_from_modelbuilder3d.sdf";
             Stream ins = ResourceLoader.GetAsStream(filename);
-            var data = new TemplateExtractor().MakeFingerprintsFromSdf(true, false, new Dictionary<string, int>(), new StreamReader(ins), 10);
-            QueryChemObject obj = new QueryChemObject(Default.ChemObjectBuilder.Instance);
+            var data = TemplateExtractor.MakeFingerprintsFromSdf(true, false, new Dictionary<string, int>(), new StreamReader(ins), 10);
+            QueryChemObject obj = new QueryChemObject(ChemObjectBuilder.Instance);
             var dummy = obj.Builder;
             for (int i = 0; i < data.Count; i++)
             {
@@ -96,9 +97,9 @@ namespace NCDK.Modelings.Builder3D
 
             string filename = "NCDK.Data.MDL.fingerprints_from_modelbuilder3d.sdf";
             var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
-            var data = new TemplateExtractor().MakeFingerprintsFromSdf(true, true,
+            var data = TemplateExtractor.MakeFingerprintsFromSdf(true, true,
                 new Dictionary<string, int>(), new StreamReader(ins), 10);
-            QueryChemObject obj = new QueryChemObject(Default.ChemObjectBuilder.Instance);
+            QueryChemObject obj = new QueryChemObject(ChemObjectBuilder.Instance);
             var dummy = obj.Builder;
             for (int i = 0; i < data.Count; i++)
             {

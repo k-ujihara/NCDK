@@ -46,7 +46,7 @@ namespace NCDK.Smiles.SMARTS.Parser
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS AST
-    public class SmartsQueryVisitor : ISMARTSParserVisitor
+    internal class SmartsQueryVisitor : ISMARTSParserVisitor
     {
         // current atoms with a ring identifier
         private RingIdentifierAtom[] ringAtoms;
@@ -65,7 +65,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         /// <summary>
         /// Lookup of atom indices.
         /// </summary>
-        private BitArray tetrahedral = new BitArray(0);
+        private readonly BitArray tetrahedral = new BitArray(0);
 
         /// <summary>
         /// Stores the directional '/' or '\' bonds. Speeds up looking for double
@@ -205,23 +205,23 @@ namespace NCDK.Smiles.SMARTS.Parser
                 group.JjtAccept(this, query);
 
                 // fill in the roles for newly create atoms
-                if (group.GetRole() != ASTGroup.ROLE_ANY)
+                if (group.Role != ReactionRoles.Any)
                 {
                     IQueryAtom roleQueryAtom = null;
                     ReactionRole? role = null;
 
                     // use single instances
-                    switch (group.GetRole())
+                    switch (group.Role)
                     {
-                        case ASTGroup.ROLE_REACTANT:
+                        case ReactionRoles.Reactant:
                             roleQueryAtom = ReactionRoleQueryAtom.RoleReactant;
                             role = ReactionRole.Reactant;
                             break;
-                        case ASTGroup.ROLE_AGENT:
+                        case ReactionRoles.Agent:
                             roleQueryAtom = ReactionRoleQueryAtom.RoleAgent;
                             role = ReactionRole.Agent;
                             break;
-                        case ASTGroup.ROLE_PRODUCT:
+                        case ReactionRoles.Product:
                             roleQueryAtom = ReactionRoleQueryAtom.RoleProduct;
                             role = ReactionRole.Product;
                             break;
@@ -253,7 +253,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 fullQuery = new QueryAtomContainer(builder);
 
             // keeps track of component grouping
-            int[] components = fullQuery.GetProperty<int[]>(ComponentGrouping.Key, new int[0]);
+            int[] components = fullQuery.GetProperty<int[]>(ComponentGrouping.Key, Array.Empty<int>());
             int maxId = 0;
             if (components.Length > 0)
             {
@@ -377,7 +377,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             // now process the rest of the bonds/atoms
             for (int i = 1; i < node.JjtGetNumChildren(); i++)
             {
-                Node child = node.JjtGetChild(i);
+                INode child = node.JjtGetChild(i);
                 if (child is ASTLowAndBond)
                 {
                     bond = (SMARTSBond)child.JjtAccept(this, data);
@@ -573,7 +573,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             return new RecursiveSmartsAtom((IQueryAtomContainer)node.JjtGetChild(0).JjtAccept(recursiveVisitor, null));
         }
 
-        public ASTStart GetRoot(Node node)
+        public ASTStart GetRoot(INode node)
         {
             if (node is ASTStart)
             {
@@ -586,15 +586,21 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             string symbol = node.Symbol;
             SMARTSAtom atom;
-            if ("o".Equals(symbol) || "n".Equals(symbol) || "c".Equals(symbol) || "s".Equals(symbol) || "p".Equals(symbol)
-                    || "as".Equals(symbol) || "se".Equals(symbol))
+            switch (symbol)
             {
-                string atomSymbol = symbol.Substring(0, 1).ToUpperInvariant() + symbol.Substring(1);
-                atom = new AromaticSymbolAtom(atomSymbol, builder);
-            }
-            else
-            {
-                atom = new AliphaticSymbolAtom(symbol, builder);
+                case "o":
+                case "n":
+                case "c":
+                case "s":
+                case "p":
+                case "as":
+                case "se":
+                    string atomSymbol = symbol.Substring(0, 1).ToUpperInvariant() + symbol.Substring(1);
+                    atom = new AromaticSymbolAtom(atomSymbol, builder);
+                    break;
+                default:
+                    atom = new AliphaticSymbolAtom(symbol, builder);
+                    break;
             }
             return atom;
         }
@@ -762,51 +768,51 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             IQueryAtom atom = null;
             string symbol = node.Symbol;
-            if ("*".Equals(symbol))
+            switch (symbol)
             {
-                atom = new AnyAtom(builder);
-            }
-            else if ("A".Equals(symbol))
-            {
-                atom = new AliphaticAtom(builder);
-            }
-            else if ("a".Equals(symbol))
-            {
-                atom = new AromaticAtom(builder);
-            }
-            else if ("o".Equals(symbol) || "n".Equals(symbol) || "c".Equals(symbol) || "s".Equals(symbol)
-                  || "p".Equals(symbol) || "as".Equals(symbol) || "se".Equals(symbol))
-            {
-                string atomSymbol = symbol.Substring(0, 1).ToUpperInvariant() + symbol.Substring(1);
-                atom = new AromaticSymbolAtom(atomSymbol, builder);
-            }
-            else if ("H".Equals(symbol))
-            {
-                atom = new HydrogenAtom(builder)
-                {
-                    Symbol = symbol.ToUpperInvariant(),
-                    MassNumber = 1
-                };
-            }
-            else if ("D".Equals(symbol))
-            {
-                atom = new HydrogenAtom(builder)
-                {
-                    Symbol = symbol.ToUpperInvariant(),
-                    MassNumber = 2
-                };
-            }
-            else if ("T".Equals(symbol))
-            {
-                atom = new HydrogenAtom(builder)
-                {
-                    Symbol = symbol.ToUpperInvariant(),
-                    MassNumber = 3
-                };
-            }
-            else
-            {
-                atom = new AliphaticSymbolAtom(symbol, builder);
+                case "*":
+                    atom = new AnyAtom(builder);
+                    break;
+                case "A":
+                    atom = new AliphaticAtom(builder);
+                    break;
+                case "a":
+                    atom = new AromaticAtom(builder);
+                    break;
+                case "o":
+                case "n":
+                case "c":
+                case "s":
+                case "p":
+                case "as":
+                case "se":
+                    string atomSymbol = symbol.Substring(0, 1).ToUpperInvariant() + symbol.Substring(1);
+                    atom = new AromaticSymbolAtom(atomSymbol, builder);
+                    break;
+                case "H":
+                    atom = new HydrogenAtom(builder)
+                    {
+                        Symbol = symbol.ToUpperInvariant(),
+                        MassNumber = 1
+                    };
+                    break;
+                case "D":
+                    atom = new HydrogenAtom(builder)
+                    {
+                        Symbol = symbol.ToUpperInvariant(),
+                        MassNumber = 2
+                    };
+                    break;
+                case "T":
+                    atom = new HydrogenAtom(builder)
+                    {
+                        Symbol = symbol.ToUpperInvariant(),
+                        MassNumber = 3
+                    };
+                    break;
+                default:
+                    atom = new AliphaticSymbolAtom(symbol, builder);
+                    break;
             }
             return atom;
         }

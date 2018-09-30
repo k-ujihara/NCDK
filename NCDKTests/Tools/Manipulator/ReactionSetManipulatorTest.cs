@@ -18,7 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using System.Linq;
 
@@ -38,7 +38,7 @@ namespace NCDK.Tools.Manipulator
         [TestInitialize()]
         public void SetUp()
         {
-            builder = Default.ChemObjectBuilder.Instance;
+            builder = ChemObjectBuilder.Instance;
             string filename1 = "NCDK.Data.MDL.reaction-1.rxn";
             var ins1 = ResourceLoader.GetAsStream(filename1);
             MDLRXNReader reader1 = new MDLRXNReader(ins1);

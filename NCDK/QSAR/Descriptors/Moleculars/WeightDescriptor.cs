@@ -25,15 +25,15 @@ using System.Collections.Generic;
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    ///  IDescriptor based on the weight of atoms of a certain element type.
+    /// Evaluates the weight of atoms of a certain element type.
     /// </summary>
     /// <remarks>
-    ///  <para>
-    ///  If the wild-card symbol *
-    ///  is specified, the returned value is the molecular weight.
-    ///  If an invalid element symbol is specified, the return value is
-    ///  0 and no exception is thrown
-    ///  </para>
+    /// <para>
+    /// If the wild-card symbol *
+    /// is specified, the returned value is the molecular weight.
+    /// If an invalid element symbol is specified, the return value is
+    /// 0 and no exception is thrown
+    /// </para>
     /// <para>This descriptor uses these parameters:
     /// <list type="table">
     ///   <item>
@@ -68,21 +68,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public WeightDescriptor() { }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weight",
                 typeof(WeightDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the WeightDescriptor object.
-        /// </summary>
-        /// <exception cref="CDKException">if more than 1 parameter is specified or if the parameter is not of type string</exception>
-        public override object[] Parameters
+        /// <inheritdoc/>
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
                     throw new CDKException("weight only expects one parameter");
                 }
@@ -105,7 +102,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             get
             {
                 string name = "w";
-                if (elementName.Equals("*"))
+                if (string.Equals(elementName, "*", StringComparison.Ordinal))
                     name = "MW";
                 else
                     name += elementName;
@@ -115,7 +112,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
@@ -127,14 +124,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public DescriptorValue<Result<double>> Calculate(IAtomContainer container)
         {
             double weight = 0;
-            if (elementName.Equals("*"))
+            if (string.Equals(elementName, "*", StringComparison.Ordinal))
             {
                 try
                 {
                     for (int i = 0; i < container.Atoms.Count; i++)
                     {
                         //Debug.WriteLine("WEIGHT: "+container.GetAtomAt(i).Symbol +" " +IsotopeFactory.Instance.GetMajorIsotope( container.GetAtomAt(i).Symbol ).ExactMass);
-                        weight += Isotopes.Instance.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
+                        weight += BODRIsotopeFactory.Instance.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
                         int hcount = container.Atoms[i].ImplicitHydrogenCount ?? 0;
                         weight += (hcount * 1.00782504);
                     }
@@ -144,16 +141,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     return GetDummyDescriptorValue(e);
                 }
             }
-            else if (elementName.Equals("H"))
+            else if (string.Equals(elementName, "H", StringComparison.Ordinal))
             {
                 try
                 {
-                    IIsotope h = Isotopes.Instance.GetMajorIsotope("H");
+                    IIsotope h = BODRIsotopeFactory.Instance.GetMajorIsotope("H");
                     for (int i = 0; i < container.Atoms.Count; i++)
                     {
-                        if (container.Atoms[i].Symbol.Equals(elementName))
+                        if (container.Atoms[i].Symbol.Equals(elementName, StringComparison.Ordinal))
                         {
-                            weight += Isotopes.Instance.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
+                            weight += BODRIsotopeFactory.Instance.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
                         }
                         else
                         {
@@ -172,9 +169,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     for (int i = 0; i < container.Atoms.Count; i++)
                     {
-                        if (container.Atoms[i].Symbol.Equals(elementName))
+                        if (container.Atoms[i].Symbol.Equals(elementName, StringComparison.Ordinal))
                         {
-                            weight += Isotopes.Instance.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
+                            weight += BODRIsotopeFactory.Instance.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
                         }
                     }
                 }
@@ -184,7 +181,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(weight),
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(weight),
                     DescriptorNames);
 
         }
@@ -192,16 +189,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
-        /// <summary>
-        /// The parameterNames attribute of the WeightDescriptor object.
-        /// </summary>
+        /// <inheritdoc/>
         public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "elementSymbol" };
 
-        /// <summary>
-        ///  Gets the parameterType attribute of the WeightDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object whose class is that of the parameter requested</returns>
+        /// <inheritdoc/>
         public override object GetParameterType(string name) => "";
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

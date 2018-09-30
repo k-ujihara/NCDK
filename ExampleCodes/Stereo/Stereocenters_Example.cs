@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace NCDK.Stereo
 {
-    class Stereocenters_Example
+    static class Stereocenters_Example
     {
-        void Main()
+        static void Main()
         {
             IAtomContainer someContainer = null;
             #region Of

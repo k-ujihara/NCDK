@@ -155,7 +155,7 @@ namespace NCDK.Config
             ReadConfiguration(ins, format, builder);
         }
 
-        private IAtomTypeConfigurator ConstructConfigurator(string format)
+        private static IAtomTypeConfigurator ConstructConfigurator(string format)
         {
             if (!format.StartsWithChar('.'))
                 format = "." + format;
@@ -177,7 +177,7 @@ namespace NCDK.Config
             IAtomTypeConfigurator atc = ConstructConfigurator(format);
             if (atc != null)
             {
-                atc.Stream = ins;
+                atc.SetStream(ins);
                 try
                 {
                     foreach (var type in atc.ReadAtomTypes(builder))

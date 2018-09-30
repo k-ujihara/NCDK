@@ -39,14 +39,14 @@ namespace NCDK.Maths
                 Primes.GetPrimeAt(2229);
                 Assert.Fail("Should fail her, because it contains only X primes.");
             }
-            catch (IndexOutOfRangeException)
+            catch (ArgumentOutOfRangeException)
             {
                 // OK, that should happen
             }
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestArrayIndexOutOfBounds()
         {
             Primes.GetPrimeAt(-1);

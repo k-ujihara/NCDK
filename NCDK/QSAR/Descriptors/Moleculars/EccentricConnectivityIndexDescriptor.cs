@@ -29,11 +29,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// A topological descriptor combining distance and adjacency information.
+    /// </summary>
+    /// <remarks>
     /// This descriptor is described by Sharma et al. <token>cdk-cite-SHA97</token> and has been shown
     /// to correlate well with a number of physical properties. The descriptor is also reported to
     /// have good discriminatory ability.
-    /// </summary>
-    /// <remarks>
     /// <para>
     /// The eccentric connectivity index for a hydrogen supressed molecular graph is given by the
     /// expression
@@ -71,44 +71,30 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public EccentricConnectivityIndexDescriptor() { }
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
-         new DescriptorSpecification(
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
+            new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#eccentricConnectivityIndex",
                 typeof(EccentricConnectivityIndexDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        /// the parameterNames attribute of the EccentricConnectivityIndexDescriptor object
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames => null;
-
-        /// <summary>
-        ///  The parameterType attribute of the EccentricConnectivityIndexDescriptor object
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
         public override object GetParameterType(string name) => null;
-
         public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         /// <summary>
-        /// the parameters attribute of the EccentricConnectivityIndexDescriptor object
-        /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
-
-        /// <summary>
-        ///  Calculates the eccentric connectivity
+        /// Calculates the eccentric connectivity
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>
         /// <returns>A <see cref="Result{Int32}"/> value representing the eccentric connectivity index</returns>
         public DescriptorValue<Result<int>> Calculate(IAtomContainer container)
         {
-            IAtomContainer local = AtomContainerManipulator.RemoveHydrogens(container);
+            var local = AtomContainerManipulator.RemoveHydrogens(container);
 
             int natom = local.Atoms.Count;
-            int[][] admat = AdjacencyMatrix.GetMatrix(local);
-            int[][] distmat = PathTools.ComputeFloydAPSP(admat);
+            var admat = AdjacencyMatrix.GetMatrix(local);
+            var distmat = PathTools.ComputeFloydAPSP(admat);
 
             int eccenindex = 0;
             for (int i = 0; i < natom; i++)
@@ -116,14 +102,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 int max = -1;
                 for (int j = 0; j < natom; j++)
                 {
-                    if (distmat[i][j] > max) max = distmat[i][j];
+                    if (distmat[i][j] > max)
+                        max = distmat[i][j];
                 }
-                int degree = local.GetConnectedBonds(local.Atoms[i]).Count();
+                var degree = local.GetConnectedBonds(local.Atoms[i]).Count();
                 eccenindex += max * degree;
             }
-            Result<int> retval = new Result<int>(eccenindex);
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, retval,
-                    DescriptorNames, null);
+            var retval = new Result<int>(eccenindex);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, retval, DescriptorNames, null);
         }
 
         /// <inheritdoc/>

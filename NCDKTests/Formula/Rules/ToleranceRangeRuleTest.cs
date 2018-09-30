@@ -18,6 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using System;
 
 namespace NCDK.Formula.Rules
@@ -26,7 +27,7 @@ namespace NCDK.Formula.Rules
     [TestClass()]
     public class ToleranceRangeRuleTest : FormulaRuleTest
     {
-        private static readonly IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = ChemObjectBuilder.Instance;
         protected override Type RuleClass => typeof(ToleranceRangeRule);
 
         [TestMethod()]
@@ -41,7 +42,7 @@ namespace NCDK.Formula.Rules
         {
             IRule rule = new ToleranceRangeRule();
             var objects = rule.Parameters;
-            Assert.AreEqual(2, objects.Length);
+            Assert.AreEqual(2, objects.Count);
 
             double mass = (double)objects[0];
             Assert.AreEqual(0.0, mass, 0.00001);
@@ -61,7 +62,7 @@ namespace NCDK.Formula.Rules
 
             var objects = rule.Parameters;
 
-            Assert.AreEqual(2, objects.Length);
+            Assert.AreEqual(2, objects.Count);
 
             double mass = (double)objects[0];
             Assert.AreEqual(133.0, mass, 0.00001);

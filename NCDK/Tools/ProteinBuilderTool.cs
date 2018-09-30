@@ -22,9 +22,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Silent;
 using NCDK.Templates;
-using NCDK.Tools.Manipulator;
-using System.Collections.Generic;
+using System;
 using System.Diagnostics;
 using System.Linq;
 
@@ -88,7 +88,7 @@ namespace NCDK.Tools
 
         /// <summary>
         /// Creates a BioPolymer from a sequence of amino acid as identified by a
-        /// the sequence of their one letter codes. It uses the <see cref="Default.ChemObjectBuilder"/> 
+        /// the sequence of their one letter codes. It uses the <see cref="ChemObjectBuilder"/> 
         /// to create a data model.
         /// </summary>
         /// <example>
@@ -100,7 +100,7 @@ namespace NCDK.Tools
         /// <seealso cref="CreateProtein(string)"/>
         public static IBioPolymer CreateProtein(string sequence)
         {
-            return CreateProtein(sequence, Default.ChemObjectBuilder.Instance);
+            return CreateProtein(sequence, ChemObjectBuilder.Instance);
         }
 
         /// <summary>
@@ -111,23 +111,21 @@ namespace NCDK.Tools
         /// <example>
         /// For example:
         /// <code>
-        /// IBioPolymer protein = ProteinBuilderTool.CreateProtein(
-        ///     "GAGA", Silent.ChemObjectBuilder.Instance
-        /// );
+        /// IBioPolymer protein = ProteinBuilderTool.CreateProtein("GAGA", Silent.ChemObjectBuilder.Instance);
         /// </code>
         /// </example>
         /// <seealso cref="CreateProtein(string)"/>
         public static IBioPolymer CreateProtein(string sequence, IChemObjectBuilder builder)
         {
             var templates = AminoAcids.MapBySingleCharCode;
-            IBioPolymer protein = builder.NewBioPolymer();
-            IStrand strand = builder.NewStrand();
+            var protein = builder.NewBioPolymer();
+            var strand = builder.NewStrand();
             IAminoAcid previousAA = null;
             for (int i = 0; i < sequence.Length; i++)
             {
                 string aminoAcidCode = "" + sequence[i];
-                Debug.WriteLine("Adding AA: " + aminoAcidCode);
-                if (aminoAcidCode.Equals(" "))
+                Debug.WriteLine($"Adding AA: {aminoAcidCode}");
+                if (string.Equals(aminoAcidCode, " ", StringComparison.Ordinal))
                 {
                     // fine, just skip spaces
                 }
@@ -140,17 +138,17 @@ namespace NCDK.Tools
                     }
                     aminoAcid = (IAminoAcid)aminoAcid.Clone();
                     aminoAcid.MonomerName = aminoAcidCode + i;
-                    Debug.WriteLine("protein: ", protein);
-                    Debug.WriteLine("strand: ", strand);
+                    Debug.WriteLine($"protein: {protein}");
+                    Debug.WriteLine($"strand: {strand}");
                     AddAminoAcidAtCTerminus(protein, aminoAcid, strand, previousAA);
                     previousAA = aminoAcid;
                 }
             }
             // add the last oxygen of the protein
-            IAtom oxygen = builder.NewAtom("O");
+            var oxygen = builder.NewAtom("O");
             // ... to amino acid
             previousAA.Atoms.Add(oxygen);
-            IBond bond = builder.NewBond(oxygen, previousAA.CTerminus, BondOrder.Single);
+            var bond = builder.NewBond(oxygen, previousAA.CTerminus, BondOrder.Single);
             previousAA.Bonds.Add(bond);
             // ... and to protein
             protein.AddAtom(oxygen, previousAA, strand);
@@ -160,9 +158,9 @@ namespace NCDK.Tools
 
         private static IBioPolymer AddAminoAcid(IBioPolymer protein, IAminoAcid aaToAdd, IStrand strand)
         {
-            foreach (var atom in AtomContainerManipulator.GetAtomArray(aaToAdd))
+            foreach (var atom in aaToAdd.Atoms)
                 protein.AddAtom(atom, aaToAdd, strand);
-            foreach (var bond in AtomContainerManipulator.GetBondArray(aaToAdd))
+            foreach (var bond in aaToAdd.Bonds)
                 protein.Bonds.Add(bond);
             return protein;
         }

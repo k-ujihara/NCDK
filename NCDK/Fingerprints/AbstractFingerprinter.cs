@@ -7,7 +7,7 @@ namespace NCDK.Fingerprints
 {
     public abstract class AbstractFingerprinter : IFingerprinter
     {
-        public abstract int Count { get; }
+        public abstract int Length { get; }
 
         /// <summary>
         /// Base classes should override this method to report the parameters they
@@ -25,7 +25,7 @@ namespace NCDK.Fingerprints
             sb.Append("CDK-")
               .Append(GetType().Name)
               .Append("/")
-              .Append(CDK.Version); // could version fingerprints separetely
+              .Append(CDK.Version); // could version fingerprints separately
             foreach (var param in GetParameters())
             {
                 sb.Append(' ').Append(param.Key).Append('=').Append(param.Value);
@@ -41,6 +41,6 @@ namespace NCDK.Fingerprints
 
         public abstract IBitFingerprint GetBitFingerprint(IAtomContainer container);
         public abstract ICountFingerprint GetCountFingerprint(IAtomContainer container);
-        public abstract IDictionary<string, int> GetRawFingerprint(IAtomContainer container);
+        public abstract IReadOnlyDictionary<string, int> GetRawFingerprint(IAtomContainer container);
     }
 }

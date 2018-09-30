@@ -47,7 +47,7 @@ namespace NCDK.Tools.Manipulator
             {
                 throw new ArgumentException("The IAtomType was null.");
             }
-            if ("X".Equals(atomType.AtomTypeName))
+            if (string.Equals("X", atomType.AtomTypeName, StringComparison.Ordinal))
             {
                 atom.AtomTypeName = "X";
                 return;
@@ -110,7 +110,7 @@ namespace NCDK.Tools.Manipulator
             {
                 throw new ArgumentException("The IAtomType was null.");
             }
-            if ("X".Equals(atomType.AtomTypeName))
+            if (string.Equals("X", atomType.AtomTypeName, StringComparison.Ordinal))
             {
                 if (atom.AtomTypeName == null) atom.AtomTypeName = "X";
                 return;

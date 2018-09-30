@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
+
 namespace NCDK.Tools.Diff.Tree
 {
     /// <summary>
@@ -27,9 +29,9 @@ namespace NCDK.Tools.Diff.Tree
     // @cdk.githash
     public class StringDifference : IDifference
     {
-        private string name;
-        private string first;
-        private string second;
+        private readonly string name;
+        private readonly string first;
+        private readonly string second;
 
         private StringDifference(string name, string first, string second)
         {
@@ -55,7 +57,7 @@ namespace NCDK.Tools.Diff.Tree
             {
                 return new StringDifference(name, first, second);
             }
-            if (first.Equals(second))
+            if (first.Equals(second, StringComparison.Ordinal))
             {
                 return null; // no difference
             }

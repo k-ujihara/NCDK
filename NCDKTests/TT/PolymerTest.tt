@@ -41,10 +41,10 @@ namespace <#= ns.NS #>
             Assert.IsNotNull(polymer);
             Assert.IsTrue(polymer is Polymer);
         }
-		 
+         
 <# if (ns.IsSilent) { #> 
-		<#@ include file="TestAbstractAtomContainer.ttinclude" #>
-		<#@ include file="TestAbstractChemObjectTest.ttinclude" #>
+        <#@ include file="TestAbstractAtomContainer.ttinclude" #>
+        <#@ include file="TestAbstractChemObjectTest.ttinclude" #>
 <# } #>
     }
 }

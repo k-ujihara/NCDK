@@ -9,8 +9,8 @@ NCDK.IO.Formats.CacaoInternalFormat
 NCDK.IO.Formats.CACheFormat
 NCDK.IO.Formats.CDKOWLFormat
 NCDK.IO.Formats.CDKSourceCodeFormat
-NCDK.IO.Formats.Chem3D_Cartesian_1Format
-NCDK.IO.Formats.Chem3D_Cartesian_2Format
+NCDK.IO.Formats.Chem3DCartesian1Format
+NCDK.IO.Formats.Chem3DCartesian2Format
 NCDK.IO.Formats.ChemDrawFormat
 NCDK.IO.Formats.ChemtoolFormat
 NCDK.IO.Formats.CIFFormat
@@ -23,7 +23,7 @@ NCDK.IO.Formats.CTXFormat
 NCDK.IO.Formats.DaltonFormat
 NCDK.IO.Formats.DMol3Format
 NCDK.IO.Formats.DOCK5Format
-NCDK.IO.Formats.FenskeHall_ZMatrixFormat
+NCDK.IO.Formats.FenskeHallZMatrixFormat
 NCDK.IO.Formats.FingerprintFormat
 NCDK.IO.Formats.GamessFormat
 NCDK.IO.Formats.Gaussian03Format

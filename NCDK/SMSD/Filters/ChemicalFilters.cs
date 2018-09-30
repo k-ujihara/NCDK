@@ -22,10 +22,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Aromaticities;
 using NCDK.Graphs;
 using NCDK.Isomorphisms.Matchers;
-using NCDK.SMSD.Ring;
+using NCDK.Silent;
+using NCDK.SMSD.Rings;
 using NCDK.SMSD.Tools;
 using NCDK.Tools.Manipulator;
 using System;
@@ -34,6 +36,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+
 namespace NCDK.SMSD.Filters
 {
     /// <summary>
@@ -44,9 +47,9 @@ namespace NCDK.SMSD.Filters
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     public class ChemicalFilters
     {
-        private List<IDictionary<int, int>> allMCS = null;
+        private IList<IReadOnlyDictionary<int, int>> allMCS = null;
         private IDictionary<int, int> firstSolution = null;
-        private List<IDictionary<IAtom, IAtom>> allAtomMCS = null;
+        private IList<IReadOnlyDictionary<IAtom, IAtom>> allAtomMCS = null;
         private IDictionary<IAtom, IAtom> firstAtomMCS = null;
         private List<double> stereoScore = null;
         private List<int> fragmentSize = null;
@@ -64,7 +67,7 @@ namespace NCDK.SMSD.Filters
         /// <item>c: Stereo matches</item>
         /// </list> 
         /// </summary>
-        public ChemicalFilters(List<IDictionary<int, int>> allMCS, List<IDictionary<IAtom, IAtom>> allAtomMCS,
+        public ChemicalFilters(IList<IReadOnlyDictionary<int, int>> allMCS, IList<IReadOnlyDictionary<IAtom, IAtom>> allAtomMCS,
                 IDictionary<int, int> firstSolution, IDictionary<IAtom, IAtom> firstAtomMCS, IAtomContainer sourceMol,
                 IAtomContainer targetMol)
         {
@@ -91,9 +94,12 @@ namespace NCDK.SMSD.Filters
             bEnergies.Clear();
         }
 
-        private void Clear(IDictionary<int, IDictionary<int, int>> sortedAllMCS,
-                IDictionary<int, IDictionary<IAtom, IAtom>> sortedAllAtomMCS, IDictionary<int, double> stereoScoreMap,
-                IDictionary<int, int> fragmentScoreMap, IDictionary<int, double> energySelectionMap)
+        private static void Clear(
+            IDictionary<int, IReadOnlyDictionary<int, int>> sortedAllMCS,
+            IDictionary<int, IReadOnlyDictionary<IAtom, IAtom>> sortedAllAtomMCS,
+            IDictionary<int, double> stereoScoreMap,
+            IDictionary<int, int> fragmentScoreMap,
+            IDictionary<int, double> energySelectionMap)
         {
             sortedAllMCS.Clear();
             sortedAllAtomMCS.Clear();
@@ -102,9 +108,12 @@ namespace NCDK.SMSD.Filters
             energySelectionMap.Clear();
         }
 
-        private void AddSolution(int counter, int key, IDictionary<int, IDictionary<IAtom, IAtom>> allFragmentAtomMCS,
-                IDictionary<int, IDictionary<int, int>> allFragmentMCS, IDictionary<int, double> stereoScoreMap,
-                IDictionary<int, double> energyScoreMap, IDictionary<int, int> fragmentScoreMap)
+        private void AddSolution(int counter, int key,
+            IReadOnlyDictionary<int, IReadOnlyDictionary<IAtom, IAtom>> allFragmentAtomMCS,
+            IReadOnlyDictionary<int, IReadOnlyDictionary<int, int>> allFragmentMCS,
+            IReadOnlyDictionary<int, double> stereoScoreMap,
+            IReadOnlyDictionary<int, double> energyScoreMap,
+            IReadOnlyDictionary<int, int> fragmentScoreMap)
         {
             allAtomMCS.Insert(counter, allFragmentAtomMCS[key]);
             allMCS.Insert(counter, allFragmentMCS[key]);
@@ -113,9 +122,12 @@ namespace NCDK.SMSD.Filters
             bEnergies.Insert(counter, energyScoreMap[key]);
         }
 
-        private void InitializeMaps(IDictionary<int, IDictionary<int, int>> sortedAllMCS,
-                IDictionary<int, IDictionary<IAtom, IAtom>> sortedAllAtomMCS, IDictionary<int, double> stereoScoreMap,
-                IDictionary<int, int> fragmentScoreMap, IDictionary<int, double> energySelectionMap)
+        private void InitializeMaps(
+            IDictionary<int, IReadOnlyDictionary<int, int>> sortedAllMCS,
+            IDictionary<int, IReadOnlyDictionary<IAtom, IAtom>> sortedAllAtomMCS,
+            IDictionary<int, double> stereoScoreMap,
+            IDictionary<int, int> fragmentScoreMap,
+            IDictionary<int, double> energySelectionMap)
         {
             int index = 0;
             foreach (var atomsMCS in allAtomMCS)
@@ -163,12 +175,12 @@ namespace NCDK.SMSD.Filters
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void SortResultsByStereoAndBondMatch()
         {
-            IDictionary<int, IDictionary<int, int>> allStereoMCS = new Dictionary<int, IDictionary<int, int>>();
-            IDictionary<int, IDictionary<IAtom, IAtom>> allStereoAtomMCS = new Dictionary<int, IDictionary<IAtom, IAtom>>();
+            var allStereoMCS = new Dictionary<int, IReadOnlyDictionary<int, int>>();
+            var allStereoAtomMCS = new Dictionary<int, IReadOnlyDictionary<IAtom, IAtom>>();
 
-            IDictionary<int, int> fragmentScoreMap = new SortedDictionary<int, int>();
-            IDictionary<int, double> energyScoreMap = new SortedDictionary<int, double>();
-            IDictionary<int, double> aStereoScoreMap = new Dictionary<int, double>();
+            var fragmentScoreMap = new SortedDictionary<int, int>();
+            var energyScoreMap = new SortedDictionary<int, double>();
+            var aStereoScoreMap = new Dictionary<int, double>();
 
             InitializeMaps(allStereoMCS, allStereoAtomMCS, aStereoScoreMap, fragmentScoreMap, energyScoreMap);
 
@@ -230,19 +242,19 @@ namespace NCDK.SMSD.Filters
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void SortResultsByFragments()
         {
-            IDictionary<int, IDictionary<int, int>> allFragmentMCS = new SortedDictionary<int, IDictionary<int, int>>();
-            IDictionary<int, IDictionary<IAtom, IAtom>> allFragmentAtomMCS = new SortedDictionary<int, IDictionary<IAtom, IAtom>>();
+            var allFragmentMCS = new SortedDictionary<int, IReadOnlyDictionary<int, int>>();
+            var allFragmentAtomMCS = new SortedDictionary<int, IReadOnlyDictionary<IAtom, IAtom>>();
 
-            IDictionary<int, double> stereoScoreMap = new SortedDictionary<int, double>();
-            IDictionary<int, double> energyScoreMap = new SortedDictionary<int, double>();
-            IDictionary<int, int> fragmentScoreMap = new SortedDictionary<int, int>();
+            var stereoScoreMap = new SortedDictionary<int, double>();
+            var energyScoreMap = new SortedDictionary<int, double>();
+            var fragmentScoreMap = new SortedDictionary<int, int>();
 
             InitializeMaps(allFragmentMCS, allFragmentAtomMCS, stereoScoreMap, fragmentScoreMap, energyScoreMap);
 
             int minFragmentScore = 9999;
             foreach (var key in allFragmentAtomMCS.Keys)
             {
-                IDictionary<IAtom, IAtom> mcsAtom = allFragmentAtomMCS[key];
+                var mcsAtom = allFragmentAtomMCS[key];
                 int fragmentCount = GetMappedMoleculeFragmentSize(mcsAtom);
                 fragmentScoreMap[key] = fragmentCount;
                 if (minFragmentScore > fragmentCount)
@@ -287,18 +299,18 @@ namespace NCDK.SMSD.Filters
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void SortResultsByEnergies()
         {
-            IDictionary<int, IDictionary<int, int>> allEnergyMCS = new SortedDictionary<int, IDictionary<int, int>>();
-            IDictionary<int, IDictionary<IAtom, IAtom>> allEnergyAtomMCS = new SortedDictionary<int, IDictionary<IAtom, IAtom>>();
+            var allEnergyMCS = new SortedDictionary<int, IReadOnlyDictionary<int, int>>();
+            var allEnergyAtomMCS = new SortedDictionary<int, IReadOnlyDictionary<IAtom, IAtom>>();
 
-            IDictionary<int, double> stereoScoreMap = new SortedDictionary<int, double>();
-            IDictionary<int, int> fragmentScoreMap = new SortedDictionary<int, int>();
-            IDictionary<int, double> aEnergySelectionMap = new SortedDictionary<int, double>();
+            var stereoScoreMap = new SortedDictionary<int, double>();
+            var fragmentScoreMap = new SortedDictionary<int, int>();
+            var aEnergySelectionMap = new SortedDictionary<int, double>();
 
             InitializeMaps(allEnergyMCS, allEnergyAtomMCS, stereoScoreMap, fragmentScoreMap, aEnergySelectionMap);
 
             foreach (var key in allEnergyMCS.Keys)
             {
-                IDictionary<int, int> mcsAtom = allEnergyMCS[key];
+                var mcsAtom = allEnergyMCS[key];
                 double energies = GetMappedMoleculeEnergies(mcsAtom);
                 aEnergySelectionMap[key] = energies;
             }
@@ -336,19 +348,16 @@ namespace NCDK.SMSD.Filters
             }
         }
 
-        private IDictionary<IBond, IBond> MakeBondMapsOfAtomMaps(IAtomContainer ac1, IAtomContainer ac2,
-                IDictionary<int, int> mappings)
+        private static IReadOnlyDictionary<IBond, IBond> MakeBondMapsOfAtomMaps(IAtomContainer ac1, IAtomContainer ac2, IReadOnlyDictionary<int, int> mappings)
         {
-            IDictionary<IBond, IBond> maps = new Dictionary<IBond, IBond>();
+            var maps = new Dictionary<IBond, IBond>();
 
             foreach (var atoms in ac1.Atoms)
             {
-
                 int ac1AtomNumber = ac1.Atoms.IndexOf(atoms);
 
                 if (mappings.ContainsKey(ac1AtomNumber))
                 {
-
                     int ac2AtomNumber = mappings[ac1AtomNumber];
 
                     var connectedAtoms = ac1.GetConnectedAtoms(atoms);
@@ -363,8 +372,7 @@ namespace NCDK.SMSD.Filters
                                 int ac2ConnectedAtomNumber = mappings[ac1ConnectedAtomNumber];
 
                                 IBond ac1Bond = ac1.GetBond(atoms, cAtoms);
-                                IBond ac2Bond = ac2
-                                        .GetBond(ac2.Atoms[ac2AtomNumber], ac2.Atoms[ac2ConnectedAtomNumber]);
+                                IBond ac2Bond = ac2.GetBond(ac2.Atoms[ac2AtomNumber], ac2.Atoms[ac2ConnectedAtomNumber]);
 
                                 if (ac2Bond == null)
                                 {
@@ -384,10 +392,10 @@ namespace NCDK.SMSD.Filters
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private int GetMappedMoleculeFragmentSize(IDictionary<IAtom, IAtom> mcsAtomSolution)
+        private int GetMappedMoleculeFragmentSize(IReadOnlyDictionary<IAtom, IAtom> mcsAtomSolution)
         {
-            IAtomContainer educt = Default.ChemObjectBuilder.Instance.NewAtomContainer(rMol);
-            IAtomContainer product = Default.ChemObjectBuilder.Instance.NewAtomContainer(pMol);
+            IAtomContainer educt = ChemObjectBuilder.Instance.NewAtomContainer(rMol);
+            IAtomContainer product = ChemObjectBuilder.Instance.NewAtomContainer(pMol);
 
             if (mcsAtomSolution != null)
             {
@@ -403,12 +411,12 @@ namespace NCDK.SMSD.Filters
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private double GetMappedMoleculeEnergies(IDictionary<int, int> mcsAtomSolution)
+        private double GetMappedMoleculeEnergies(IReadOnlyDictionary<int, int> mcsAtomSolution)
         {
             double totalBondEnergy = -9999.0;
 
-            IAtomContainer educt = Default.ChemObjectBuilder.Instance.NewAtomContainer(rMol);
-            IAtomContainer product = Default.ChemObjectBuilder.Instance.NewAtomContainer(pMol);
+            IAtomContainer educt = ChemObjectBuilder.Instance.NewAtomContainer(rMol);
+            IAtomContainer product = ChemObjectBuilder.Instance.NewAtomContainer(pMol);
 
             foreach (var eAtom in educt.Atoms)
             {
@@ -456,37 +464,36 @@ namespace NCDK.SMSD.Filters
         /// Return sorted energy in ascending order.
         /// <returns>sorted bond breaking energy</returns>
         /// </summary>
-        public IList<double> GetSortedEnergy()
+        public IReadOnlyList<double> GetSortedEnergy()
         {
-            return new ReadOnlyCollection<double>(bEnergies);
+            return bEnergies;
         }
 
         /// <summary>
         /// Return sorted fragment in ascending order of the size.
         /// <returns>sorted fragment count</returns>
         /// </summary>
-        public IList<int> GetSortedFragment()
+        public IReadOnlyList<int> GetSortedFragment()
         {
-            return new ReadOnlyCollection<int>(fragmentSize);
+            return fragmentSize;
         }
 
         /// <summary>
         /// Return Stereo matches in descending order.
         /// <returns>sorted stereo matches</returns>
         /// </summary>
-        public IList<double> GetStereoMatches()
+        public IReadOnlyList<double> GetStereoMatches()
         {
-            return new ReadOnlyCollection<double>(stereoScore);
+            return stereoScore;
         }
 
-        private List<object> GetMappedFragment(IAtomContainer molecule, ICollection<IAtom> atomsMCS)
+        private static List<object> GetMappedFragment(IAtomContainer molecule, IEnumerable<IAtom> atomsMCS)
         {
             IAtomContainer subgraphContainer = molecule.Builder.NewAtomContainer(molecule);
-            List<IAtom> list = new List<IAtom>(atomsMCS.Count);
+            var list = new List<IAtom>();
             foreach (var atom in atomsMCS)
             {
                 int post = molecule.Atoms.IndexOf(atom);
-                //            Console.Out.WriteLine("Atom to be removed " + post);
                 list.Add(subgraphContainer.Atoms[post]);
             }
 
@@ -511,8 +518,7 @@ namespace NCDK.SMSD.Filters
             return l;
         }
 
-        private double GetAtomScore(double score, IDictionary<IAtom, IAtom> atomMapMCS, IAtomContainer reactant,
-                IAtomContainer product)
+        private static double GetAtomScore(double score, IReadOnlyDictionary<IAtom, IAtom> atomMapMCS, IAtomContainer reactant, IAtomContainer product)
         {
             foreach (var mappings in atomMapMCS)
             {
@@ -557,11 +563,10 @@ namespace NCDK.SMSD.Filters
             return score;
         }
 
-        private double GetBondScore(double score, IDictionary<IBond, IBond> bondMaps)
+        private static double GetBondScore(double score, IReadOnlyDictionary<IBond, IBond> bondMaps)
         {
             foreach (var matchedBonds in bondMaps)
             {
-
                 IBond rBond = matchedBonds.Key;
                 IBond pBond = matchedBonds.Value;
 
@@ -571,7 +576,7 @@ namespace NCDK.SMSD.Filters
             return score;
         }
 
-        private double GetBondFormalChargeMatches(IBond rBond, IBond pBond)
+        private static double GetBondFormalChargeMatches(IBond rBond, IBond pBond)
         {
             double score = 0.0;
             if (rBond != null && pBond != null)
@@ -581,7 +586,7 @@ namespace NCDK.SMSD.Filters
                 IAtom patom1 = pBond.Atoms[0];
                 IAtom patom2 = pBond.Atoms[1];
 
-                if (ratom1.Symbol.Equals(patom1.Symbol) && ratom1.Symbol.Equals(patom1.Symbol))
+                if (ratom1.Symbol.Equals(patom1.Symbol, StringComparison.Ordinal) && ratom1.Symbol.Equals(patom1.Symbol, StringComparison.Ordinal))
                 {
                     if ((ratom1.FormalCharge != patom1.FormalCharge)
                             || ratom2.FormalCharge != patom2.FormalCharge)
@@ -602,7 +607,7 @@ namespace NCDK.SMSD.Filters
                         score += 100;
                     }
                 }
-                else if (ratom1.Symbol.Equals(patom2.Symbol) && ratom2.Symbol.Equals(patom1.Symbol))
+                else if (ratom1.Symbol.Equals(patom2.Symbol, StringComparison.Ordinal) && ratom2.Symbol.Equals(patom1.Symbol, StringComparison.Ordinal))
                 {
                     if ((ratom1.FormalCharge != patom2.FormalCharge)
                             || ratom2.FormalCharge != patom1.FormalCharge)
@@ -628,7 +633,7 @@ namespace NCDK.SMSD.Filters
             return score;
         }
 
-        private double GetBondTypeMatches(IBond queryBond, IBond targetBond)
+        private static double GetBondTypeMatches(IBond queryBond, IBond targetBond)
         {
             double score = 0;
 
@@ -714,7 +719,7 @@ namespace NCDK.SMSD.Filters
             return score;
         }
 
-        private double GetRingMatchScore(IList<Object> list)
+        private static double GetRingMatchScore(IList<Object> list)
         {
             double lScore = 0;
             List<IAtom> listMap = (List<IAtom>)list[0];
@@ -736,7 +741,7 @@ namespace NCDK.SMSD.Filters
             return lScore;
         }
 
-        private double GetEnergy(IAtomContainer educt, IAtomContainer product)
+        private static double GetEnergy(IAtomContainer educt, IAtomContainer product)
         {
             double eEnergy = 0.0;
             BondEnergies bondEnergy = BondEnergies.Instance;
@@ -754,7 +759,7 @@ namespace NCDK.SMSD.Filters
             return (eEnergy + pEnergy);
         }
 
-        private double GetBondEnergy(IBond bond, BondEnergies bondEnergy)
+        private static double GetBondEnergy(IBond bond, BondEnergies bondEnergy)
         {
             double energy = 0.0;
             if ((bond.Atoms[0].IsPlaced == true && bond.Atoms[1].IsPlaced == false)
@@ -766,7 +771,7 @@ namespace NCDK.SMSD.Filters
             return energy;
         }
 
-        private double GetRingMatch(IRingSet rings, List<IAtom> atoms)
+        private static double GetRingMatch(IRingSet rings, List<IAtom> atoms)
         {
             double score = 0.0;
             foreach (var a in atoms)
@@ -782,8 +787,7 @@ namespace NCDK.SMSD.Filters
             return score;
         }
 
-        private bool GetStereoBondChargeMatch(IDictionary<int, double> stereoScoreMap,
-                IDictionary<int, IDictionary<int, int>> allStereoMCS, IDictionary<int, IDictionary<IAtom, IAtom>> allStereoAtomMCS)
+        private bool GetStereoBondChargeMatch(IDictionary<int, double> stereoScoreMap, IReadOnlyDictionary<int, IReadOnlyDictionary<int, int>> allStereoMCS, IReadOnlyDictionary<int, IReadOnlyDictionary<IAtom, IAtom>> allStereoAtomMCS)
         {
             bool stereoMatchFlag = false;
             IAtomContainer reactant = rMol;
@@ -797,10 +801,10 @@ namespace NCDK.SMSD.Filters
             {
                 double score = 0.0;
                 //            Console.Out.WriteLine("\nStart score " + score);
-                IDictionary<int, int> atomsMCS = allStereoMCS[key];
-                IDictionary<IAtom, IAtom> atomMapMCS = allStereoAtomMCS[key];
+                var atomsMCS = allStereoMCS[key];
+                var atomMapMCS = allStereoAtomMCS[key];
                 score = GetAtomScore(score, atomMapMCS, reactant, product);
-                IDictionary<IBond, IBond> bondMaps = MakeBondMapsOfAtomMaps(rMol, pMol, atomsMCS);
+                var bondMaps = MakeBondMapsOfAtomMaps(rMol, pMol, atomsMCS);
 
                 if (rMol.Bonds.Count > 1 && pMol.Bonds.Count > 1)
                 {
@@ -822,10 +826,10 @@ namespace NCDK.SMSD.Filters
             return stereoMatchFlag;
         }
 
-        private int GetFragmentCount(IAtomContainer molecule)
+        private static int GetFragmentCount(IAtomContainer molecule)
         {
             bool fragmentFlag = true;
-            var fragmentMolSet = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var fragmentMolSet = ChemObjectBuilder.Instance.NewAtomContainerSet();
             int countFrag = 0;
             if (molecule.Atoms.Count > 0)
             {
@@ -915,33 +919,26 @@ namespace NCDK.SMSD.Filters
         /// </summary>
         public static BondStereo ConvertStereo(int stereoValue)
         {
-            BondStereo stereo = BondStereo.None;
-            if (stereoValue == 1)
+            switch (stereoValue)
             {
-                // up bond
-                stereo = BondStereo.Up;
+                case 1:
+                    // up bond
+                    return BondStereo.Up;
+                case 6:
+                    // down bond
+                    return BondStereo.Down;
+                case 0:
+                    // bond has no stereochemistry
+                    return BondStereo.None;
+                case 4:
+                    //up or down bond
+                    return BondStereo.UpOrDown;
+                case 3:
+                    //e or z undefined
+                    return BondStereo.EOrZ;
+                default:
+                    return BondStereo.None;
             }
-            else if (stereoValue == 6)
-            {
-                // down bond
-                stereo = BondStereo.Down;
-            }
-            else if (stereoValue == 0)
-            {
-                // bond has no stereochemistry
-                stereo = BondStereo.None;
-            }
-            else if (stereoValue == 4)
-            {
-                //up or down bond
-                stereo = BondStereo.UpOrDown;
-            }
-            else if (stereoValue == 3)
-            {
-                //e or z undefined
-                stereo = BondStereo.EOrZ;
-            }
-            return stereo;
         }
     }
 }

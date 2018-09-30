@@ -177,7 +177,8 @@ namespace NCDK.Maths
         /// </summary>
         public static int GetPrimeAt(int index)
         {
-            if (index < 0 || index > PRIMES.Length - 1) throw new IndexOutOfRangeException("out of range " + index);
+            if (index < 0 || index > PRIMES.Length - 1)
+                throw new ArgumentOutOfRangeException(nameof(index), "out of range {index}");
             return PRIMES[index];
         }
     }

@@ -17,8 +17,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
+using System;
 
 namespace NCDK.Formula.Rules
 {
@@ -26,7 +27,7 @@ namespace NCDK.Formula.Rules
     [TestClass()]
     public class ChargeRuleTest : FormulaRuleTest
     {
-        private static readonly IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = ChemObjectBuilder.Instance;
         protected override Type RuleClass => typeof(ChargeRule);
 
         [TestMethod()]
@@ -40,8 +41,8 @@ namespace NCDK.Formula.Rules
         public void TestDefault()
         {
             IRule rule = new ChargeRule();
-            object[] objects = rule.Parameters;
-            Assert.AreEqual(1, objects.Length);
+            var objects = rule.Parameters;
+            Assert.AreEqual(1, objects.Count);
 
             double charge = (double)objects[0];
             Assert.AreEqual(0.0, charge, 0.00001);
@@ -52,8 +53,8 @@ namespace NCDK.Formula.Rules
         {
             IRule rule = new ChargeRule { Parameters = new object[] { -1.0 } };
 
-            object[] objects = rule.Parameters;
-            Assert.AreEqual(1, objects.Length);
+            var objects = rule.Parameters;
+            Assert.AreEqual(1, objects.Count);
 
             double charge = (double)objects[0];
             Assert.AreEqual(-1.0, charge, 0.00001);
@@ -73,7 +74,7 @@ namespace NCDK.Formula.Rules
         }
 
         [TestMethod()]
-        public void TestDefaultValidFalse_SetParam()
+        public void TestDefaultValidFalseSetParam()
         {
             IRule rule = new ChargeRule();
             IMolecularFormula formula = new MolecularFormula();

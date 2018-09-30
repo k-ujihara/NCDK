@@ -40,7 +40,7 @@ namespace NCDK.Graphs
         {
             try
             {
-                new RegularPathGraph(null, new int[0], 0);
+                new RegularPathGraph(null, Array.Empty<int>(), 0);
             }
             catch (TargetInvocationException e)
             {
@@ -54,7 +54,7 @@ namespace NCDK.Graphs
         {
             try
             {
-                new RegularPathGraph(new int[4][], new int[0], -1);
+                new RegularPathGraph(new int[4][], Array.Empty<int>(), -1);
             }
             catch (TargetInvocationException e)
             {
@@ -68,7 +68,7 @@ namespace NCDK.Graphs
         {
             try
             {
-                new RegularPathGraph(new int[4][], new int[0], 5);
+                new RegularPathGraph(new int[4][], Array.Empty<int>(), 5);
             }
             catch (TargetInvocationException e)
             {

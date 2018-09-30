@@ -26,19 +26,21 @@ namespace NCDK
     /// <summary>
     /// A list of permissible bond orders.
     /// </summary>
-	[Obfuscation(ApplyToMembers = true, Exclude = true)]
+    [Obfuscation(ApplyToMembers = true, Exclude = true)]
     public enum BondOrder
     {
         Unset = 0,
+#pragma warning disable CA1720 // Identifier contains type name
         Single = 1,
         Double = 2,
+#pragma warning restore CA1720 // Identifier contains type name
         Triple = 3,
         Quadruple = 4,
         Quintuple = 5,
         Sextuple = 6,
     }
 
-	public static class BondOrderTools
+    public static class BondOrderTools
     {
         internal static IReadOnlyList<BondOrder> Values { get; } = new[]
         {
@@ -55,7 +57,7 @@ namespace NCDK
         /// A numeric value for the number of bonded electron pairs.
         /// </summary>
         public static int Numeric(this BondOrder value)
-			=> (int)value;
+            => (int)value;
 
         public static bool IsUnset(this BondOrder value)
             => value == Unset;

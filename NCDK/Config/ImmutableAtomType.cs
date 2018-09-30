@@ -22,10 +22,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Silent;
 using System;
 using System.Collections.Generic;
-using NCDK.Default;
-using System.Collections.ObjectModel;
 using System.Text;
 
 namespace NCDK.Config
@@ -41,7 +40,7 @@ namespace NCDK.Config
 
         internal IAtomType baseAtomType;
 
-        internal IDictionary<string, object> properties = new Dictionary<string, object>();
+        internal readonly IReadOnlyDictionary<string, object> properties = NCDK.Common.Collections.Dictionaries.Empty<string, object>();
 
         internal int? atomicNumber;
         internal string symbol;
@@ -73,7 +72,7 @@ namespace NCDK.Config
         public void SetProperty(object key, object value) { throw new InvalidOperationException("Immutable atom type cannot be modified"); }
         public void SetProperties(IEnumerable<KeyValuePair<object, object>> properties) { throw new InvalidOperationException("Immutable atom type cannot be modified"); }
         public void AddProperties(IEnumerable<KeyValuePair<object, object>> properties) { throw new InvalidOperationException("Immutable atom type cannot be modified"); }
-        public IDictionary<object, object> GetProperties() => baseAtomType.GetProperties();
+        public IReadOnlyDictionary<object, object> GetProperties() => baseAtomType.GetProperties();
 
         private static void ThrowModifyException()
         {
@@ -241,7 +240,7 @@ namespace NCDK.Config
             }
         }
 
-        public ICollection<IChemObjectListener> Listeners { get; } = new ReadOnlyCollection<IChemObjectListener>(new List<IChemObjectListener>());
+        public ICollection<IChemObjectListener> Listeners { get; } = Array.Empty<IChemObjectListener>();
         public bool Notification { get { return false; } set { } }
         public void NotifyChanged() { }
 

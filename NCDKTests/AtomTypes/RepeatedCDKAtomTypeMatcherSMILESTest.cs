@@ -20,6 +20,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
+using System.Linq;
 
 namespace NCDK.AtomTypes
 {
@@ -100,27 +101,25 @@ namespace NCDK.AtomTypes
             TypeAndRetype("CCCN1CC(CSC)CC2C1Cc3c[nH]c4cccc2c34");
         }
 
-        private void TypeAndRetype(string smiles)
+        private static void TypeAndRetype(string smiles)
         {
-            IAtomContainer mol = smilesParser.ParseSmiles(smiles);
-            IAtomType[] types = atomTypeMatcher.FindMatchingAtomTypes(mol);
-            for (int i = 0; i < types.Length; i++)
+            var mol = smilesParser.ParseSmiles(smiles);
+            var types = atomTypeMatcher.FindMatchingAtomTypes(mol).ToList();
+            for (int i = 0; i < types.Count; i++)
             {
                 AtomTypeManipulator.Configure(mol.Atoms[i], types[i]);
             }
-            IAtomType[] retyped = atomTypeMatcher.FindMatchingAtomTypes(mol);
-            for (int i = 0; i < types.Length; i++)
+            var retyped = atomTypeMatcher.FindMatchingAtomTypes(mol).ToList();
+            for (int i = 0; i < types.Count; i++)
             {
                 Assert.AreEqual(types[i], retyped[i],
-                    "First perception resulted in " + types[i] + " but the second perception " + "gave "
-                        + retyped[i]);
+                    $"First perception resulted in {types[i]} but the second perception gave {retyped[i]}");
             }
-            retyped = atomTypeMatcher.FindMatchingAtomTypes(mol);
-            for (int i = 0; i < types.Length; i++)
+            retyped = atomTypeMatcher.FindMatchingAtomTypes(mol).ToList();
+            for (int i = 0; i < types.Count; i++)
             {
                 Assert.AreEqual(types[i], retyped[i],
-                    "First perception resulted in " + types[i] + " but the third perception " + "gave "
-                        + retyped[i]);
+                    $"First perception resulted in {types[i]} but the third perception gave {retyped[i]}");
             }
         }
     }

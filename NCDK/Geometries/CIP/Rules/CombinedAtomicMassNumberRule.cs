@@ -21,6 +21,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
+
 namespace NCDK.Geometries.CIP.Rules
 {
     /// <summary>
@@ -43,12 +45,14 @@ namespace NCDK.Geometries.CIP.Rules
         public int Compare(ILigand ligand1, ILigand ligand2)
         {
             int atomicNumberComp = atomicNumberRule.Compare(ligand1, ligand2);
-            if (atomicNumberComp != 0) return atomicNumberComp;
+            if (atomicNumberComp != 0)
+                return atomicNumberComp;
 
             int massNumberComp = massNumberRule.Compare(ligand1, ligand2);
-            if (massNumberComp != 0) return massNumberComp;
+            if (massNumberComp != 0)
+                return massNumberComp;
 
-            if ("H".Equals(ligand1.GetLigandAtom().Symbol))
+            if (string.Equals("H", ligand1.LigandAtom.Symbol, StringComparison.Ordinal))
             {
                 // both atoms are hydrogens
                 return 0;

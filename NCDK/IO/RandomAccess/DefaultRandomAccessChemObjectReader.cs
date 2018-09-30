@@ -52,7 +52,7 @@ namespace NCDK.IO.RandomAccess
 
         /* Extra convenience methods */
 
-        protected void FireIOSettingQuestion(IOSetting setting)
+        protected void ProcessIOSettingQuestion(IOSetting setting)
         {
             for (int i = 0; i < listenerList.Count; ++i)
             {
@@ -61,7 +61,7 @@ namespace NCDK.IO.RandomAccess
             }
         }
 
-        public IOSetting[] IOSettings { get; } = Array.Empty<IOSetting>();
+        public IReadOnlyList<IOSetting> IOSettings { get; } = Array.Empty<IOSetting>();
         public abstract int Count { get; }
         public abstract bool IsReadOnly { get; }
 

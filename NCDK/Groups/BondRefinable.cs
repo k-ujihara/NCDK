@@ -22,6 +22,7 @@
  */
 
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace NCDK.Groups
 {
@@ -119,10 +120,10 @@ namespace NCDK.Groups
                 {
                     bool isArom = bond.IsAromatic;
                     int orderNumber = isArom ? 5 : bond.Order.Numeric();
-                    boS = orderNumber.ToString();
+                    boS = orderNumber.ToString(NumberFormatInfo.InvariantInfo);
                 }
                 string bondString;
-                if (el0.CompareTo(el1) < 0)
+                if (string.CompareOrdinal(el0, el1) < 0)
                 {
                     bondString = el0 + boS + el1;
                 }
@@ -180,7 +181,7 @@ namespace NCDK.Groups
                 {
                     bool isArom = bond.IsAromatic;
                     int orderNumber = isArom ? 5 : bond.Order.Numeric();
-                    boS = orderNumber.ToString();
+                    boS = orderNumber.ToString(NumberFormatInfo.InvariantInfo);
                 }
                 string bondString;
                 if (a0 < a1)

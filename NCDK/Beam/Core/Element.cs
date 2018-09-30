@@ -30,6 +30,7 @@
 using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -667,7 +668,7 @@ namespace NCDK.Beam
         {
             var data = Strings.Tokenize(line);
             string symbol = data[0];
-            int electrons = int.Parse(data[3]);
+            int electrons = int.Parse(data[3], NumberFormatInfo.InvariantInfo);
             ValenceCheck valenceCheck = ValenceCheck.Parse(data[1], electrons);
             ChargeCheck chargeCheck = ChargeCheck.Parse(data[2]);
             return new KeyValuePair<string, ElementCheck>(symbol, new ElementCheck(valenceCheck, chargeCheck));
@@ -706,21 +707,21 @@ namespace NCDK.Beam
                 string[] vs = line.Split(',');
                 if (vs.Length == 1)
                 {
-                    if (vs[0].Equals("n/a"))
+                    if (string.Equals(vs[0], "n/a", StringComparison.Ordinal))
                     {
                         return NoValenceCheck.Instance;
                     }
                     else if (vs[0][0] == '(')
                     {
-                        return new FixedValence(int.Parse(vs[0].Substring(1, vs[0].Length - 2)));
+                        return new FixedValence(int.Parse(vs[0].Substring(1, vs[0].Length - 2), NumberFormatInfo.InvariantInfo));
                     }
                     else if (vs[0][0] == '[')
                     {
-                        return new NeutralValence(int.Parse(vs[0].Substring(1, vs[0].Length - 2)));
+                        return new NeutralValence(int.Parse(vs[0].Substring(1, vs[0].Length - 2), NumberFormatInfo.InvariantInfo));
                     }
                     else
                     {
-                        return new ChargeAdjustedValence(int.Parse(vs[0]), nElectrons);
+                        return new ChargeAdjustedValence(int.Parse(vs[0], NumberFormatInfo.InvariantInfo), nElectrons);
                     }
                 }
                 ValenceCheck[] valences = new ValenceCheck[vs.Length];
@@ -842,8 +843,8 @@ namespace NCDK.Beam
 
         private sealed class ChargeCheck
         {
-
-            private int lo, hi;
+            private readonly int lo;
+            private readonly int hi;
 
             private ChargeCheck(int lo, int hi)
             {
@@ -858,11 +859,11 @@ namespace NCDK.Beam
 
             public static ChargeCheck Parse(string range)
             {
-                if (range.Equals("n/a"))
+                if (string.Equals(range, "n/a", StringComparison.Ordinal))
                     return None;
                 string[] data = range.Split(',');
-                int lo = int.Parse(data[0]);
-                int hi = int.Parse(data[1]);
+                int lo = int.Parse(data[0], NumberFormatInfo.InvariantInfo);
+                int hi = int.Parse(data[1], NumberFormatInfo.InvariantInfo);
                 return new ChargeCheck(lo, hi);
             }
 

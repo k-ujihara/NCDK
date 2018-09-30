@@ -48,10 +48,10 @@ namespace NCDK.Isomorphisms
         private readonly IAtomContainer query, target;
 
         /// <summary>Atom to atom index lookup.</summary>
-        private readonly IDictionary<IAtom, int> queryMap, targetMap;
+        private readonly Dictionary<IAtom, int> queryMap, targetMap;
 
         /// <summary>Indexed array of stereo elements.</summary>
-        private readonly IReadOnlyStereoElement<IChemObject, IChemObject>[] queryElements, targetElements;
+        private readonly IStereoElement<IChemObject, IChemObject>[] queryElements, targetElements;
 
         /// <summary>Indexed array of stereo element types.</summary>
         private readonly StereoType[] queryTypes, targetTypes;
@@ -77,8 +77,8 @@ namespace NCDK.Isomorphisms
 
             this.queryMap = IndexAtoms(query);
             this.targetMap = IndexAtoms(target);
-            this.queryElements = new IReadOnlyStereoElement<IChemObject, IChemObject>[query.Atoms.Count];
-            this.targetElements = new IReadOnlyStereoElement<IChemObject, IChemObject>[target.Atoms.Count];
+            this.queryElements = new IStereoElement<IChemObject, IChemObject>[query.Atoms.Count];
+            this.targetElements = new IStereoElement<IChemObject, IChemObject>[target.Atoms.Count];
             this.queryTypes = new StereoType[query.Atoms.Count];
             this.targetTypes = new StereoType[target.Atoms.Count];
 
@@ -156,7 +156,7 @@ namespace NCDK.Isomorphisms
         /// <param name="us">neighboring vertices of <paramref name="u"/> (<paramref name="u"/> plural)</param>
         /// <param name="mapping">mapping from the query to the target</param>
         /// <returns>the neighbors us, transformed into the neighbors around v</returns>
-        private int[] Map(int u, int v, int[] us, int[] mapping)
+        private static int[] Map(int u, int v, int[] us, int[] mapping)
         {
             for (int i = 0; i < us.Length; i++)
                 us[i] = mapping[us[i]];
@@ -239,7 +239,7 @@ namespace NCDK.Isomorphisms
         /// <param name="element">tetrahedral element</param>
         /// <param name="map">atom index lookup</param>
         /// <returns>the neighbors</returns>
-        private int[] Neighbors(ITetrahedralChirality element, IDictionary<IAtom, int> map)
+        private static int[] Neighbors(ITetrahedralChirality element, IDictionary<IAtom, int> map)
         {
             var atoms = element.Ligands;
             int[] vs = new int[atoms.Count];
@@ -255,7 +255,7 @@ namespace NCDK.Isomorphisms
         /// </summary>
         /// <param name="vs">values</param>
         /// <returns>parity of the permutation (odd = -1, even = +1)</returns>
-        private int PermutationParity(int[] vs)
+        private static int PermutationParity(int[] vs)
         {
             int n = 0;
             for (int i = 0; i < vs.Length; i++)
@@ -281,9 +281,9 @@ namespace NCDK.Isomorphisms
         /// </summary>
         /// <param name="container">the container to index the atoms of</param>
         /// <returns>the index/lookup of atoms to the index they appear</returns>
-        private static IDictionary<IAtom, int> IndexAtoms(IAtomContainer container)
+        private static Dictionary<IAtom, int> IndexAtoms(IAtomContainer container)
         {
-            IDictionary<IAtom, int> map = new Dictionary<IAtom, int>(container.Atoms.Count);
+            var map = new Dictionary<IAtom, int>(container.Atoms.Count);
             for (int i = 0; i < container.Atoms.Count; i++)
                 map[container.Atoms[i]] = i;
             return map;
@@ -299,9 +299,9 @@ namespace NCDK.Isomorphisms
         /// <param name="types">type of stereo element indexed</param>
         /// <param name="container">the container to index the elements of</param>
         /// <returns>indices of atoms involved in stereo configurations</returns>
-        private static int[] IndexElements(IDictionary<IAtom, int> map, IReadOnlyStereoElement<IChemObject, IChemObject>[] elements, StereoType[] types, IAtomContainer container)
+        private static int[] IndexElements(Dictionary<IAtom, int> map, IStereoElement<IChemObject, IChemObject>[] elements, StereoType[] types, IAtomContainer container)
         {
-            int[] indices = new int[container.Atoms.Count];
+            var indices = new int[container.Atoms.Count];
             int nElements = 0;
             foreach (var element in container.StereoElements)
             {
@@ -329,7 +329,7 @@ namespace NCDK.Isomorphisms
         /// </summary>
         /// <param name="stereo">configuration</param>
         /// <returns>the parity</returns>
-        private int Parity(TetrahedralStereo stereo)
+        private static int Parity(TetrahedralStereo stereo)
         {
             return stereo == TetrahedralStereo.Clockwise ? 1 : -1;
         }
@@ -339,7 +339,7 @@ namespace NCDK.Isomorphisms
         /// </summary>
         /// <param name="conformation">configuration</param>
         /// <returns>the parity</returns>
-        private int Parity(DoubleBondConformation conformation)
+        private static int Parity(DoubleBondConformation conformation)
         {
             return conformation == DoubleBondConformation.Together ? 1 : -1;
         }

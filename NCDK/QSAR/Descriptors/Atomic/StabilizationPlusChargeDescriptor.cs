@@ -48,21 +48,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
     {
         private static readonly string[] NAMES = { "stabilPlusC" };
 
-        private StabilizationCharges stabil;
-
-        /// <summary>
-        ///  Constructor for the StabilizationPlusChargeDescriptor object
-        /// </summary>
-        public StabilizationPlusChargeDescriptor()
-        {
-            stabil = new StabilizationCharges();
-        }
-
         /// <summary>
         /// The specification attribute of the StabilizationPlusChargeDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#stabilizationPlusCharge",
                 typeof(StabilizationPlusChargeDescriptor).FullName, "The Chemistry Development Kit");
@@ -78,7 +68,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </item>
         /// </list>       
         /// </value>
-        public object[] Parameters { get { return null; } set { } }
+        public IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public IReadOnlyList<string> DescriptorNames => NAMES;
 
@@ -101,12 +91,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
             catch (CDKException e)
             {
-                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
             }
 
-            double result = stabil.CalculatePositive(clone, localAtom);
+            double result = StabilizationCharges.CalculatePositive(clone, localAtom);
 
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(result), NAMES);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(result), NAMES);
         }
 
         /// <summary>

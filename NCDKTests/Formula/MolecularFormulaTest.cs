@@ -18,6 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 
 namespace NCDK.Formula
 {
@@ -30,18 +31,19 @@ namespace NCDK.Formula
     public class MolecularFormulaTest : AbstractMolecularFormulaTest
     {
         protected override IChemObjectBuilder Builder
-            => Default.ChemObjectBuilder.Instance;
+            => ChemObjectBuilder.Instance;
 
         [TestMethod()]
-        public void TestMolecularFormula() {
+        public void TestMolecularFormula()
+        {
 
             IMolecularFormula mf = Builder.NewMolecularFormula();
             Assert.IsNotNull(mf);
         }
 
         [TestMethod()]
-        public void TestIsTheSame_IIsotope_IIsotope()  {
-            MolecularFormula mf = new MolecularFormula();
+        public void TestIsTheSame_IIsotope_IIsotope()
+        {
             IIsotope carb = Builder.NewIsotope("C");
             IIsotope anotherCarb = Builder.NewIsotope("C");
             IIsotope h = Builder.NewIsotope("H");
@@ -54,9 +56,9 @@ namespace NCDK.Formula
             anotherCarb.NaturalAbundance = 34.0;
             h.NaturalAbundance = 99.0;
 
-            Assert.IsTrue(mf.IsTheSame(carb, carb));
-            Assert.IsTrue(mf.IsTheSame(carb, anotherCarb));
-            Assert.IsFalse(mf.IsTheSame(carb, h));
+            Assert.IsTrue(MolecularFormula.IsTheSame(carb, carb));
+            Assert.IsTrue(MolecularFormula.IsTheSame(carb, anotherCarb));
+            Assert.IsFalse(MolecularFormula.IsTheSame(carb, h));
         }
     }
 }

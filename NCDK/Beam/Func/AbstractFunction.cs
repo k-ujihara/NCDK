@@ -35,22 +35,22 @@ namespace NCDK.Beam
     /// <typeparam name="S"></typeparam>
     /// <typeparam name="T"></typeparam>
     // @author John May 
-    internal abstract class AbstractFunction<S, T> : Function<S, T>
+    internal abstract class AbstractFunction<S, T> : IFunction<S, T>
     {
         public abstract T Apply(S s);
 
         /// <inheritdoc/>
-        public Function<S, U> With<U>(Function<T, U> g)
+        public IFunction<S, U> With<U>(IFunction<T, U> g)
         {
             return new Composition<S, T, U>(this, g);
         }
 
-        sealed class Composition<SS, TT, UU> : Function<SS, UU>
+        sealed class Composition<SS, TT, UU> : IFunction<SS, UU>
         {
-            readonly Function<SS, TT> f;
-            readonly Function<TT, UU> g;
+            readonly IFunction<SS, TT> f;
+            readonly IFunction<TT, UU> g;
 
-            public Composition(Function<SS, TT> f, Function<TT, UU> g)
+            public Composition(IFunction<SS, TT> f, IFunction<TT, UU> g)
             {
                 this.f = f;
                 this.g = g;
@@ -61,7 +61,7 @@ namespace NCDK.Beam
                 return g.Apply(f.Apply(s));
             }
 
-            public Function<SS, P> With<P>(Function<UU, P> g)
+            public IFunction<SS, P> With<P>(IFunction<UU, P> g)
             {
                 return new Composition<SS, UU, P>(this, g);
             }

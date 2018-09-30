@@ -18,8 +18,8 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using System.Linq;
-using NCDK.Default;
 
 namespace NCDK.Config
 {
@@ -43,7 +43,7 @@ namespace NCDK.Config
             var configFile = "NCDK.Config.Data.jmol_atomtypes.txt";
             var ins = ResourceLoader.GetAsStream(typeof(TXTBasedAtomTypeConfigurator), configFile);
             var configurator = new TXTBasedAtomTypeConfigurator();
-            configurator.Stream = ins;
+            configurator.SetStream(ins);
             var atomTypes = configurator.ReadAtomTypes(new ChemObject().Builder);
             Assert.AreNotSame(0, atomTypes.Count());
         }

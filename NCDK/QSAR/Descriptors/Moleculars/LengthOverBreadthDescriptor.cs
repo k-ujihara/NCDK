@@ -21,10 +21,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Common.Collections;
-using NCDK.Numerics;
 using MathNet.Numerics.LinearAlgebra;
+using NCDK.Common.Collections;
 using NCDK.Geometries;
+using NCDK.Numerics;
 using NCDK.QSAR.Results;
 using NCDK.Tools;
 using System;
@@ -58,25 +58,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     {
         private static readonly string[] NAMES = { "LOBMAX", "LOBMIN" };
 
-        /// <summary>
-        /// Constructor for the LengthOverBreadthDescriptor object.
-        /// </summary>
         public LengthOverBreadthDescriptor() { }
 
         /// <summary>
         /// The specification attribute of the PetitjeanNumberDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lengthOverBreadth",
                 typeof(LengthOverBreadthDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        /// Sets the parameters attribute of the PetitjeanNumberDescriptor object
-        /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
@@ -87,7 +81,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 double.NaN,
                 double.NaN
             };
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, DescriptorNames, e);
         }
 
         /// <summary>
@@ -108,7 +102,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double lob, bol, area;
             double[] xyzRanges;
 
-            double[][] coords = Arrays.CreateJagged<double>(atomContainer.Atoms.Count, 3);
+            var coords = Arrays.CreateJagged<double>(atomContainer.Atoms.Count, 3);
             for (int i = 0; i < atomContainer.Atoms.Count; i++)
             {
                 var p = atomContainer.Atoms[i].Point3D.Value;
@@ -118,7 +112,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
 
             // get the com
-            Vector3? acom = GeometryUtil.Get3DCentreOfMass(atomContainer);
+            var acom = GeometryUtil.Get3DCentreOfMass(atomContainer);
             if (acom == null)
                 return GetDummyDescriptorValue(new CDKException("Error in center of mass calculation, has exact mass been set on all atoms?"));
             var com = acom.Value;
@@ -166,13 +160,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 mmLOB
             };
 
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, DescriptorNames);
         }
 
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(2);
 
-        private void RotateZ(double[][] coords, double theta)
+        private static void RotateZ(double[][] coords, double theta)
         {
             int natom = coords.Length;
             double[][] m;
@@ -202,7 +196,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        private double[] Extents(IAtomContainer atomContainer, double[][] coords, bool withRadii)
+        private static double[] Extents(IAtomContainer atomContainer, double[][] coords, bool withRadii)
         {
             double xmax = -1e30;
             double ymax = -1e30;
@@ -247,16 +241,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ranges;
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the PetitjeanNumberDescriptor object
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames => null;
-
-        /// <summary>
-        /// Gets the parameterType attribute of the PetitjeanNumberDescriptor object
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
         public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

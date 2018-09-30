@@ -18,7 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System;
 
 namespace NCDK.Formula.Rules
@@ -34,7 +34,7 @@ namespace NCDK.Formula.Rules
 
         protected virtual IRule GetRule()
         {
-            object rule = (object)RuleClass.GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
+            object rule = (object)RuleClass.GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());
             if (!(rule is IRule))
             {
                 throw new CDKException("The passed rule class must be a IRule");

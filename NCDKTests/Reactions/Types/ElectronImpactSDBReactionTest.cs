@@ -16,9 +16,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.AtomTypes;
 using NCDK.Reactions.Types.Parameters;
+using NCDK.Silent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +34,7 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class ElectronImpactSDBReactionTest : ReactionProcessTest
     {
-        private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
         public ElectronImpactSDBReactionTest()
         {
@@ -125,7 +127,7 @@ namespace NCDK.Reactions.Types
         /// </summary>
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
 
             IAtomContainer reactant = builder.NewAtomContainer();//CreateFromSmiles("C=CC")
             reactant.Atoms.Add(builder.NewAtom("C"));

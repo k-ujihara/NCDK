@@ -63,7 +63,7 @@ namespace NCDK.Charges
             return atomContainer;
         }
 
-        private string RemoveAromaticityFlagsFromHoseCode(string hoseCode)
+        private static string RemoveAromaticityFlagsFromHoseCode(string hoseCode)
         {
             //clean hosecode
             string hosecode = "";

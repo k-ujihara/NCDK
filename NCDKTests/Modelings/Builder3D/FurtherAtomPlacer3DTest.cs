@@ -24,6 +24,7 @@ using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Smiles;
 using NCDK.Templates;
+using NCDK.Silent;
 
 namespace NCDK.Modelings.Builder3D
 {
@@ -307,14 +308,13 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestGetAngleValue_String_String_String()
         {
-            SmilesParser parser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
             string smiles = "CCCCCC";
             IAtomContainer molecule = parser.ParseSmiles(smiles);
             Assert.IsNotNull(molecule);
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
-            ffc.SetForceFieldConfigurator("mmff94", Default.ChemObjectBuilder.Instance);
-            AtomPlacer3D atomPlacer3d = new AtomPlacer3D();
-            atomPlacer3d.Initilize(ffc.GetParameterSet());
+            ffc.SetForceFieldConfigurator("mmff94", ChemObjectBuilder.Instance);
+            AtomPlacer3D atomPlacer3d = new AtomPlacer3D(ffc.GetParameterSet());
             ffc.AssignAtomTyps(molecule);
 
             string id1 = molecule.Atoms[1].AtomTypeName;
@@ -330,14 +330,13 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestGetBondLengthValue_String_String()
         {
-            SmilesParser parser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
             string smiles = "CCCCCC";
             IAtomContainer molecule = parser.ParseSmiles(smiles);
             Assert.IsNotNull(molecule);
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
-            ffc.SetForceFieldConfigurator("mmff94", Default.ChemObjectBuilder.Instance);
-            AtomPlacer3D atomPlacer3d = new AtomPlacer3D();
-            atomPlacer3d.Initilize(ffc.GetParameterSet());
+            ffc.SetForceFieldConfigurator("mmff94", ChemObjectBuilder.Instance);
+            AtomPlacer3D atomPlacer3d = new AtomPlacer3D(ffc.GetParameterSet());
             ffc.AssignAtomTyps(molecule);
 
             string id1 = molecule.Atoms[1].AtomTypeName;
@@ -355,14 +354,13 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestGetBondLengthValue_bug_CNBond()
         {
-            SmilesParser parser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
             string smiles = "CCCN";
             IAtomContainer molecule = parser.ParseSmiles(smiles);
             Assert.IsNotNull(molecule);
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
-            ffc.SetForceFieldConfigurator("mmff94", Default.ChemObjectBuilder.Instance);
-            AtomPlacer3D atomPlacer3d = new AtomPlacer3D();
-            atomPlacer3d.Initilize(ffc.GetParameterSet());
+            ffc.SetForceFieldConfigurator("mmff94", ChemObjectBuilder.Instance);
+            AtomPlacer3D atomPlacer3d = new AtomPlacer3D(ffc.GetParameterSet());
             ffc.AssignAtomTyps(molecule);
 
             string id1 = molecule.Atoms[2].AtomTypeName;
@@ -370,18 +368,6 @@ namespace NCDK.Modelings.Builder3D
             double bondlength = atomPlacer3d.GetBondLengthValue(id1, id2);
             Assert.AreEqual(1.451, bondlength, 0.001);
 
-        }
-
-        [TestMethod()]
-        public void TestMarkPlaced_IAtomContainer()
-        {
-            AtomPlacer3D atmplacer = new AtomPlacer3D();
-            IAtomContainer molecule = TestMoleculeFactory.MakeAlkane(5);
-            IAtomContainer placedMolecule = atmplacer.MarkPlaced(molecule);
-            foreach (var atom in placedMolecule.Atoms)
-            {
-                Assert.IsTrue(atom.IsPlaced);
-            }
         }
 
         /// <summary>
@@ -393,15 +379,14 @@ namespace NCDK.Modelings.Builder3D
         public void InvalidChain()
         {
             string input = "CCCCCC(CCCC)CCCC";
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer m = sp.ParseSmiles(input);
 
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
-            ffc.SetForceFieldConfigurator("mmff92", Default.ChemObjectBuilder.Instance);
+            ffc.SetForceFieldConfigurator("mmff92", ChemObjectBuilder.Instance);
             ffc.AssignAtomTyps(m);
 
-            AtomPlacer3D ap3d = new AtomPlacer3D();
-            ap3d.Initilize(ffc.GetParameterSet());
+            AtomPlacer3D ap3d = new AtomPlacer3D(ffc.GetParameterSet());
             ap3d.PlaceAliphaticHeavyChain(m, m);
         }
     }

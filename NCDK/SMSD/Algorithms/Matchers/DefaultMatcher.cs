@@ -44,6 +44,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace NCDK.SMSD.Algorithms.Matchers
 {
     /// <summary>
@@ -52,13 +53,10 @@ namespace NCDK.SMSD.Algorithms.Matchers
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    public class DefaultMatcher
+    public static class DefaultMatcher
     {
-
-        public static bool IsBondMatch(IBondMatcher bondMatcher, IAtomContainer ac2, IBond bondA2,
-                bool shouldMatchBonds)
+        public static bool IsBondMatch(IBondMatcher bondMatcher, IAtomContainer ac2, IBond bondA2, bool shouldMatchBonds)
         {
-
             // ok, bonds match
             if (bondMatcher.Matches(ac2, bondA2))
             {
@@ -66,23 +64,18 @@ namespace NCDK.SMSD.Algorithms.Matchers
                 return true;
             }
             return false;
-
         }
 
-        public static bool IsAtomMatch(IAtomMatcher atomMatcher1, IAtomMatcher atomMatcher2, IAtomContainer ac2,
-                IBond bondA2, bool shouldMatchBonds)
+        public static bool IsAtomMatch(IAtomMatcher atomMatcher1, IAtomMatcher atomMatcher2, IAtomContainer ac2, IBond bondA2, bool shouldMatchBonds)
         {
-
             // ok, atoms match
             if (atomMatcher1.Matches(ac2, bondA2.Atoms[0]) && atomMatcher2.Matches(ac2, bondA2.Atoms[1]))
             {
-                //            Console.Out.WriteLine("Atom Matched");
                 return true;
             }
             // ok, atoms match
             if (atomMatcher1.Matches(ac2, bondA2.Atoms[1]) && atomMatcher2.Matches(ac2, bondA2.Atoms[0]))
             {
-                //            Console.Out.WriteLine("Atom Matched");
                 return true;
             }
             return false;

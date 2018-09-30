@@ -23,7 +23,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Base;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Hash.Stereo;
 
 namespace NCDK.Hash

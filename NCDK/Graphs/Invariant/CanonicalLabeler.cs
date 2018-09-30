@@ -25,6 +25,7 @@ using NCDK.Smiles;
 using NCDK.Tools;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -45,7 +46,9 @@ namespace NCDK.Graphs.Invariant
     [Obsolete("this labeller uses slow data structures and has been replaced - " + nameof(Canon))]
     public class CanonicalLabeler
     {
-        public CanonicalLabeler() { }
+        public CanonicalLabeler()
+        {
+        }
 
         /// <summary>
         /// Canonically label the fragment.  The labels are set as atom property InvPair.CANONICAL_LABEL of type int, indicating the canonical order.
@@ -64,13 +67,14 @@ namespace NCDK.Graphs.Invariant
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void CanonLabel(IAtomContainer atomContainer)
         {
-            if (atomContainer.Atoms.Count == 0) return;
+            if (atomContainer.Atoms.Count == 0)
+                return;
             if (atomContainer.Atoms.Count == 1)
             {
-                atomContainer.Atoms[0].SetProperty(InvPair.CanonicalLabelKey, 1);
+                atomContainer.Atoms[0].SetProperty(InvPair.CanonicalLabelPropertyKey, 1);
             }
 
-            List<InvPair> vect = CreateInvarLabel(atomContainer);
+            var vect = CreateInvarLabel(atomContainer);
             Step3(vect, atomContainer);
         }
 
@@ -116,7 +120,7 @@ namespace NCDK.Graphs.Invariant
         /// Create initial invariant labeling corresponds to step 1
         /// </summary>
         /// <returns>List containing the</returns>
-        private List<InvPair> CreateInvarLabel(IAtomContainer atomContainer)
+        private static List<InvPair> CreateInvarLabel(IAtomContainer atomContainer)
         {
             var atoms = atomContainer.Atoms;
             StringBuilder inv;
@@ -137,7 +141,7 @@ namespace NCDK.Graphs.Invariant
                     inv.Append(0); //Absolute charge
                 inv.Append((int)Math.Abs((a.FormalCharge ?? 0))); //Hydrogen count
                 inv.Append((a.ImplicitHydrogenCount ?? 0));
-                vect.Add(new InvPair(long.Parse(inv.ToString()), a));
+                vect.Add(new InvPair(long.Parse(inv.ToString(), NumberFormatInfo.InvariantInfo), a));
             }
             return vect;
         }
@@ -147,7 +151,7 @@ namespace NCDK.Graphs.Invariant
         /// </summary>
         /// <param name="v">the invariance pair vector</param>
         /// <param name="atomContainer"></param>
-        private void PrimeProduct(List<InvPair> v, IAtomContainer atomContainer)
+        private static void PrimeProduct(List<InvPair> v, IAtomContainer atomContainer)
         {
             long summ;
             foreach (var inv in v)
@@ -156,7 +160,7 @@ namespace NCDK.Graphs.Invariant
                 summ = 1;
                 foreach (var a in neighbour)
                 {
-                    int next = a.GetProperty<InvPair>(InvPair.InvariancePairKey).Prime;
+                    int next = a.GetProperty<InvPair>(InvPair.InvariancePairPropertyKey).Prime;
                     summ = summ * next;
                 }
                 inv.Last = inv.Curr;
@@ -169,14 +173,14 @@ namespace NCDK.Graphs.Invariant
         /// </summary>
         /// <param name="v">the invariance pair vector</param>
         // @cdk.todo    can this be done in one loop?
-        private void SortArrayList(List<InvPair> v)
+        private static void SortArrayList(List<InvPair> v)
         {
-            v.Sort(ASortArrayListCompareComparer);
+            v.Sort(aSortArrayListCompareComparer);
             //v.Sort(SortArrayListCompareComparerCurr);
             //v.Sort(SortArrayListCompareComparerLast);
         }
 
-        static SortArrayListCompareComparer ASortArrayListCompareComparer = new SortArrayListCompareComparer();
+        static readonly SortArrayListCompareComparer aSortArrayListCompareComparer = new SortArrayListCompareComparer();
         class SortArrayListCompareComparer : IComparer<InvPair>
         {
             public int Compare(InvPair o1, InvPair o2)
@@ -193,7 +197,7 @@ namespace NCDK.Graphs.Invariant
         /// Rank atomic vector, corresponds to step 4.
         /// </summary>
         /// <param name="v">the invariance pair vector</param>
-        private void RankArrayList(List<InvPair> v)
+        private static void RankArrayList(List<InvPair> v)
         {
             int num = 1;
             var temp = new int[v.Count];
@@ -222,7 +226,7 @@ namespace NCDK.Graphs.Invariant
         /// </summary>
         /// <param name="v">the invariance pair vector</param>
         /// <returns>true if the vector is invariantly partitioned, false otherwise</returns>
-        private bool IsInvPart(List<InvPair> v)
+        private static bool IsInvPart(List<InvPair> v)
         {
             if (v[v.Count - 1].Curr == v.Count) return true;
             foreach (var curr in v)
@@ -236,7 +240,7 @@ namespace NCDK.Graphs.Invariant
         /// Break ties. Corresponds to step 7
         /// </summary>
         /// <param name="v">the invariance pair vector</param>
-        private void BreakTies(List<InvPair> v)
+        private static void BreakTies(List<InvPair> v)
         {
             InvPair last = null;
             int tie = 0;

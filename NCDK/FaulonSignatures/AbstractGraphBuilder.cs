@@ -12,7 +12,7 @@ namespace NCDK.FaulonSignatures
 
         private int vertexCount;
 
-        public AbstractGraphBuilder()
+        protected AbstractGraphBuilder()
         {
             this.colorToVertexIndexMap = new Dictionary<int, int>();
             this.vertexCount = 0;

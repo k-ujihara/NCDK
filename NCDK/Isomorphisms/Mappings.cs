@@ -198,7 +198,7 @@ namespace NCDK.Isomorphisms
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+ToAtomMap"]/*' />
         /// </example>
         /// <returns>iterable of atom-atom mappings</returns>
-        public IEnumerable<IDictionary<IAtom, IAtom>> ToAtomMap()
+        public IEnumerable<IReadOnlyDictionary<IAtom, IAtom>> ToAtomMap()
         {
             var mapper = new AtomMaper(query, target);
             return GetMapping(n => mapper.Apply(n));
@@ -211,7 +211,7 @@ namespace NCDK.Isomorphisms
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+ToBondMap"]/*' />
         /// </example>
         /// <returns>iterable of bond-bond mappings</returns>
-        public IEnumerable<IDictionary<IBond, IBond>> ToBondMap()
+        public IEnumerable<IReadOnlyDictionary<IBond, IBond>> ToBondMap()
         {
             var mapper = new BondMaper(query, target);
             return GetMapping(n => mapper.Apply(n));
@@ -224,7 +224,7 @@ namespace NCDK.Isomorphisms
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+ToAtomBondMap"]/*' />
         /// </example>
         /// <returns>iterable of atom-atom and bond-bond mappings</returns>
-        public IEnumerable<IDictionary<IChemObject, IChemObject>> ToAtomBondMap()
+        public IEnumerable<IReadOnlyDictionary<IChemObject, IChemObject>> ToAtomBondMap()
         {
             var map = new AtomBondMaper(query, target);
             return GetMapping(n => map.Apply(n));
@@ -289,7 +289,7 @@ namespace NCDK.Isomorphisms
         public int[] First()
         {
             var f = iterable.FirstOrDefault();
-            return f ?? new int[0];
+            return f ?? Array.Empty<int>();
         }
 
         /// <summary>
@@ -348,23 +348,23 @@ namespace NCDK.Isomorphisms
             }
 
             /// <inheritdoc/>
-            public IDictionary<IAtom, IAtom> Apply(int[] mapping)
+            public IReadOnlyDictionary<IAtom, IAtom> Apply(int[] mapping)
             {
                 var map = new Dictionary<IAtom, IAtom>();
                 for (int i = 0; i < mapping.Length; i++)
                     map.Add(query.Atoms[i], target.Atoms[mapping[i]]);
-                return new ReadOnlyDictionary<IAtom, IAtom>(map);
+                return map;
             }
         }
 
         /// <summary>Utility to transform a permutation into the bond-bond map.</summary>
-        public sealed class BondMaper
+        private sealed class BondMaper
         {
             /// <summary>The query graph - indicates a presence of edges.</summary>
             private readonly int[][] g1;
 
             /// <summary>Bond look ups for the query and target.</summary>
-            private readonly GraphUtil.EdgeToBondMap bonds1, bonds2;
+            private readonly EdgeToBondMap bonds1, bonds2;
 
             /// <summary>
             /// Use the provided query and target to obtain the bond instances.
@@ -373,14 +373,14 @@ namespace NCDK.Isomorphisms
             /// <param name="target">the structure being searched</param>
             public BondMaper(IAtomContainer query, IAtomContainer target)
             {
-                this.bonds1 = GraphUtil.EdgeToBondMap.WithSpaceFor(query);
-                this.bonds2 = GraphUtil.EdgeToBondMap.WithSpaceFor(target);
+                this.bonds1 = EdgeToBondMap.WithSpaceFor(query);
+                this.bonds2 = EdgeToBondMap.WithSpaceFor(target);
                 this.g1 = GraphUtil.ToAdjList(query, bonds1);
                 GraphUtil.ToAdjList(target, bonds2);
             }
 
             /// <inheritdoc/>
-            public IDictionary<IBond, IBond> Apply(int[] mapping)
+            public IReadOnlyDictionary<IBond, IBond> Apply(int[] mapping)
             {
                 var map = new Dictionary<IBond, IBond>();
                 for (int u = 0; u < g1.Length; u++)
@@ -393,7 +393,7 @@ namespace NCDK.Isomorphisms
                         }
                     }
                 }
-                return new ReadOnlyDictionary<IBond, IBond>(map);
+                return map;
             }
         }
 
@@ -404,7 +404,7 @@ namespace NCDK.Isomorphisms
             private readonly int[][] g1;
 
             /// <summary>Bond look ups for the query and target.</summary>
-            private readonly GraphUtil.EdgeToBondMap bonds1, bonds2;
+            private readonly EdgeToBondMap bonds1, bonds2;
 
             private IAtomContainer query;
             private IAtomContainer target;
@@ -418,14 +418,14 @@ namespace NCDK.Isomorphisms
             {
                 this.query = query;
                 this.target = target;
-                this.bonds1 = GraphUtil.EdgeToBondMap.WithSpaceFor(query);
-                this.bonds2 = GraphUtil.EdgeToBondMap.WithSpaceFor(target);
+                this.bonds1 = EdgeToBondMap.WithSpaceFor(query);
+                this.bonds2 = EdgeToBondMap.WithSpaceFor(target);
                 this.g1 = GraphUtil.ToAdjList(query, bonds1);
                 GraphUtil.ToAdjList(target, bonds2);
             }
 
             /// <inheritdoc/>
-            public IDictionary<IChemObject, IChemObject> Apply(int[] mapping)
+            public IReadOnlyDictionary<IChemObject, IChemObject> Apply(int[] mapping)
             {
                 var map = new Dictionary<IChemObject, IChemObject>();
                 for (int u = 0; u < g1.Length; u++)

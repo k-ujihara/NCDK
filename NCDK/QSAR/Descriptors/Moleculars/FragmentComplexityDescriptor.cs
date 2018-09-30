@@ -25,15 +25,15 @@ using System.Collections.Generic;
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    ///  Class that returns the complexity of a system.
+    /// Class that returns the complexity of a system.
     /// </summary>
     /// <remarks>
     /// <para>
     /// The complexity is defined as <token>cdk-cite-Nilakantan06</token>:
-    ///  <pre>
-    ///  C=Abs(B^2-A^2+A)+H/100
-    ///  </pre>
-    ///  where C=complexity, A=number of non-hydrogen atoms, B=number of bonds and H=number of heteroatoms
+    /// <pre>
+    /// C=Abs(B^2-A^2+A)+H/100
+    /// </pre>
+    /// where C=complexity, A=number of non-hydrogen atoms, B=number of bonds and H=number of heteroatoms
     /// </para>
     /// <para>This descriptor uses no parameters.</para>
     /// </remarks>
@@ -46,28 +46,27 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     {
         private static readonly string[] NAMES = { "fragC" };
 
-        /// <summary>
-        ///  Constructor for the FragmentComplexityDescriptor object.
-        /// </summary>
         public FragmentComplexityDescriptor() { }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
-         new DescriptorSpecification(
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
+            new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#NilaComplexity",
                 typeof(FragmentComplexityDescriptor).FullName,
                 "The Chemistry Development Kit");
 
         /// <summary>
         /// The parameters attribute of the FragmentComplexityDescriptor object.
-        /// This descriptor takes no parameter.
         /// </summary>
-        public override object[] Parameters
+        /// <remarks>
+        /// This descriptor takes no parameter.
+        /// </remarks>
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 0)
+                if (value.Count > 0)
                 {
                     throw new CDKException("FragmentComplexityDescriptor expects no parameter");
                 }
@@ -93,18 +92,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double h = 0;
             for (int i = 0; i < container.Atoms.Count; i++)
             {
-                if (!container.Atoms[i].Symbol.Equals("H"))
+                if (!string.Equals(container.Atoms[i].Symbol, "H", StringComparison.Ordinal))
                 {
                     a++;
                 }
-                if (!container.Atoms[i].Symbol.Equals("H") & !container.Atoms[i].Symbol.Equals("C"))
+                if (!container.Atoms[i].Symbol.Equals("H", StringComparison.Ordinal) & !container.Atoms[i].Symbol.Equals("C", StringComparison.Ordinal))
                 {
                     h++;
                 }
             }
             int b = container.Bonds.Count + AtomContainerManipulator.GetImplicitHydrogenCount(container);
             double c = Math.Abs(b * b - a * a + a) + (h / 100);
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(c), DescriptorNames);
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(c), DescriptorNames);
         }
 
         /// <inheritdoc/>
@@ -115,11 +114,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         public override IReadOnlyList<string> ParameterNames => null;
 
-        /// <summary>
-        /// Gets the parameterType attribute of the FragmentComplexityDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
         public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

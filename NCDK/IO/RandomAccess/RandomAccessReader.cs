@@ -27,6 +27,7 @@ using NCDK.IO.Listener;
 using NCDK.IO.Setting;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -46,19 +47,16 @@ namespace NCDK.IO.RandomAccess
     public abstract class RandomAccessReader
         : DefaultRandomAccessChemObjectReader, IDisposable
     {
-        protected Stream raFile;
-        protected IOSetting[] headerOptions = null;
+        private Stream raFile;
         private readonly string filename;
-        protected ISimpleChemObjectReader chemObjectReader = null;
-        protected int indexVersion = 1;
+        private int indexVersion = 1;
         // index[record][0] - record offset in file index[record][1] - record length
         // index[record][2] - number of atoms (if available)
-        protected long[][] index = null;
-        protected int records;
-        protected int currentRecord = 0;
-        protected byte[] b;
-        protected IChemObjectBuilder builder;
-        protected bool indexCreated = false;
+        private long[][] index = null;
+        private int records;
+        private int currentRecord = 0;
+        private byte[] b;
+        private bool indexCreated = false;
 
         /// <summary>
         /// Reads the file and builds an index file, if the index file doesn't already exist.
@@ -66,7 +64,7 @@ namespace NCDK.IO.RandomAccess
         /// <param name="file">the file object containing the molecules to be indexed</param>
         /// <param name="builder">a chem object builder</param>
         /// <exception cref="System.IO.IOException">if there is an error during reading</exception>
-        public RandomAccessReader(string file, IChemObjectBuilder builder)
+        protected RandomAccessReader(string file, IChemObjectBuilder builder)
             : this(file, builder, null)
         { }
 
@@ -77,11 +75,11 @@ namespace NCDK.IO.RandomAccess
         /// <param name="builder">builder a chem object builder</param>
         /// <param name="listener">listen for read event</param>
         /// <exception cref="System.IO.IOException">if there is an error during reading</exception>
-        public RandomAccessReader(string file, IChemObjectBuilder builder, IReaderListener listener)
+        protected RandomAccessReader(string file, IChemObjectBuilder builder, IReaderListener listener)
             : base()
         {
             this.filename = Path.GetFullPath(file);
-            this.builder = builder;
+            this.Builder = builder;
             if (listener != null) AddChemObjectIOListener(listener);
             raFile = new FileStream(filename, FileMode.Open, FileAccess.Read);
             records = 0;
@@ -98,28 +96,26 @@ namespace NCDK.IO.RandomAccess
         public IChemObject ReadRecord(int record)
         {
             string buffer = ReadContent(record);
-            chemObjectReader = CreateChemObjectReader(new StringReader(buffer));
+            ChemObjectReader = CreateChemObjectReader(new StringReader(buffer));
             currentRecord = record;
             return ProcessContent();
         }
 
         /// <summary>
         /// Reads the record text content into a string.
-        ///
+        /// </summary>
         /// <param name="record">The record number</param>
         /// <returns>A string representation of the record</returns>
         /// <exception cref="IOException">if error occurs during reading</exception>
         /// <exception cref="CDKException">if the record number is invalid</exception>
-        /// </summary>
         protected string ReadContent(int record)
         {
-            Debug.WriteLine("Current record ", record);
+            Debug.WriteLine($"Current record {record}");
 
             if ((record < 0) || (record >= records))
             {
-                throw new CDKException("No such record " + record);
+                throw new CDKException($"No such record {record}");
             }
-            //FireFrameRead();
 
             raFile.Seek(index[record][0], SeekOrigin.Begin);
             int length = (int)index[record][1];
@@ -134,10 +130,10 @@ namespace NCDK.IO.RandomAccess
         /// <exception cref="System.IO.IOException">an error occurred whilst reading the file</exception>
         protected virtual IChemObject ProcessContent()
         {
-            return chemObjectReader.Read(builder.NewChemFile());
+            return ChemObjectReader.Read(Builder.NewChemFile());
         }
 
-        protected long[][] Resize(long[][] index, int newLength)
+        internal static long[][] Resize(long[][] index, int newLength)
         {
             long[][] newIndex = Arrays.CreateJagged<long>(newLength, 3);
             for (int i = 0; i < index.Length; i++)
@@ -161,24 +157,24 @@ namespace NCDK.IO.RandomAccess
             }
             using (var o = new StreamWriter(file))
             {
-                o.Write(indexVersion.ToString());
+                o.Write(indexVersion.ToString(NumberFormatInfo.InvariantInfo));
                 o.Write('\n');
                 o.Write(filename);
                 o.Write('\n');
-                o.Write(raFile.Length.ToString());
+                o.Write(raFile.Length.ToString(NumberFormatInfo.InvariantInfo));
                 o.Write('\n');
-                o.Write(records.ToString());
+                o.Write(records.ToString(NumberFormatInfo.InvariantInfo));
                 o.Write('\n');
                 for (int i = 0; i < records; i++)
                 {
-                    o.Write(index[i][0].ToString());
+                    o.Write(index[i][0].ToString(NumberFormatInfo.InvariantInfo));
                     o.Write("\t");
-                    o.Write(index[i][1].ToString());
+                    o.Write(index[i][1].ToString(NumberFormatInfo.InvariantInfo));
                     o.Write("\t");
-                    o.Write(index[i][2].ToString());
+                    o.Write(index[i][2].ToString(NumberFormatInfo.InvariantInfo));
                     o.Write("\t");
                 }
-                o.Write(records.ToString());
+                o.Write(records.ToString(NumberFormatInfo.InvariantInfo));
                 o.Write('\n');
                 o.Write(filename);
                 o.Write('\n');
@@ -193,20 +189,20 @@ namespace NCDK.IO.RandomAccess
                 string version = ins.ReadLine();
                 if (!int.TryParse(version, out int iv))
                     throw new Exception($"Invalid index version {version}");
-                if (int.Parse(version) != indexVersion)
+                if (int.Parse(version, NumberFormatInfo.InvariantInfo) != indexVersion)
                     throw new Exception($"Expected index version {indexVersion} instead of {version}");
 
                 string fileIndexed = ins.ReadLine();
-                if (!filename.Equals(fileIndexed))
+                if (!string.Equals(filename, fileIndexed, StringComparison.Ordinal))
                     throw new Exception($"Index for {fileIndexed} found instead of {filename}. Creating new index.");
 
                 string line = ins.ReadLine();
-                int fileLength = int.Parse(line);
+                int fileLength = int.Parse(line, NumberFormatInfo.InvariantInfo);
                 if (fileLength != raFile.Length)
                     throw new Exception($"Index for file of size {fileLength} found instead of {raFile.Length}");
 
                 line = ins.ReadLine();
-                int indexLength = int.Parse(line);
+                int indexLength = int.Parse(line, NumberFormatInfo.InvariantInfo);
                 if (indexLength <= 0)
                     throw new Exception($"Index of zero length! {Path.GetFullPath(file)}");
                 index = Arrays.CreateJagged<long>(indexLength, 3);
@@ -219,7 +215,7 @@ namespace NCDK.IO.RandomAccess
                     for (int j = 0; j < 3; j++)
                         try
                         {
-                            index[i][j] = long.Parse(result[j]);
+                            index[i][j] = long.Parse(result[j], NumberFormatInfo.InvariantInfo);
                         }
                         catch (Exception x)
                         {
@@ -231,7 +227,7 @@ namespace NCDK.IO.RandomAccess
                 }
 
                 line = ins.ReadLine();
-                int indexLength2 = int.Parse(line);
+                int indexLength2 = int.Parse(line, NumberFormatInfo.InvariantInfo);
                 if (indexLength2 <= 0)
                 {
                     throw new Exception("Index of zero length!");
@@ -241,9 +237,9 @@ namespace NCDK.IO.RandomAccess
                     throw new Exception("Wrong index length!");
                 }
                 line = ins.ReadLine();
-                if (!line.Equals(filename))
+                if (!string.Equals(line, filename, StringComparison.Ordinal))
                 {
-                    throw new Exception("Index for " + line + " found instead of " + filename);
+                    throw new Exception($"Index for {line} found instead of {filename}");
                 }
                 b = new byte[maxRecordLength];
             }
@@ -288,19 +284,17 @@ namespace NCDK.IO.RandomAccess
                 if (start == -1) start = raFile.Position;
                 if (IsRecordEnd(s))
                 {
-                    //FireFrameRead();
                     if (records >= maxRecords)
                     {
                         index = Resize(index,
-                                records
-                                        + (int)(records + (raFile.Length - records * raFile.Position)
-                                                / recordLength));
+                                records + (int)(records + (raFile.Length - records * raFile.Position) / recordLength));
                     }
                     end += 4;
                     index[records][0] = start;
                     index[records][1] = end - start;
                     index[records][2] = -1;
-                    if (maxRecordLength < index[records][1]) maxRecordLength = (int)index[records][1];
+                    if (maxRecordLength < index[records][1])
+                        maxRecordLength = (int)index[records][1];
                     records++;
                     recordLength += (int)(end - start);
 
@@ -312,7 +306,7 @@ namespace NCDK.IO.RandomAccess
                 }
             }
             b = new byte[maxRecordLength];
-            //FireFrameRead();
+
             Trace.TraceInformation($"Index created in {(DateTime.Now.Ticks - now) / 10000} ms.");
             try
             {
@@ -356,12 +350,6 @@ namespace NCDK.IO.RandomAccess
             var tmpDir = Path.GetTempPath();
             var indexFile = Path.Combine(tmpDir, filename + "_cdk.index");
             return indexFile;
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public IChemObjectReader GetChemObjectReader()
-        {
-            return chemObjectReader;
         }
 
         public abstract ISimpleChemObjectReader CreateChemObjectReader(TextReader reader);
@@ -428,34 +416,34 @@ namespace NCDK.IO.RandomAccess
             }
         }
 
-        public void Set(IChemObject arg0)
-        { }
-
         public override void Add(IChemObject arg0)
         { }
 
-        public int PreviousIndex()
+        public virtual int PreviousIndex()
         {
             return currentRecord - 1;
         }
 
-        public int NextIndex()
+        public virtual int NextIndex()
         {
             return currentRecord + 1;
         }
 
         public override int Count => records;
 
+        protected ISimpleChemObjectReader ChemObjectReader { get; set; } = null;
+        protected IChemObjectBuilder Builder { get; set; }
+
         public override void AddChemObjectIOListener(IChemObjectIOListener listener)
         {
             AddChemObjectIOListener(listener);
-            if (chemObjectReader != null) chemObjectReader.Listeners.Add(listener);
+            if (ChemObjectReader != null) ChemObjectReader.Listeners.Add(listener);
         }
 
         public override void RemoveChemObjectIOListener(IChemObjectIOListener listener)
         {
             base.RemoveChemObjectIOListener(listener);
-            if (chemObjectReader != null) chemObjectReader.Listeners.Remove(listener);
+            if (ChemObjectReader != null) ChemObjectReader.Listeners.Remove(listener);
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public int GetCurrentRecord()

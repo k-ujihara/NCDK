@@ -21,11 +21,11 @@ namespace NCDK.Isomorphisms.Matchers
 {
     // @cdk.module   isomorphism
     // @cdk.githash
-    public class QueryAtomContainerCreator
+    public static class QueryAtomContainerCreator
     {
         /// <summary>
         /// Creates a <see cref="QueryAtomContainer"/> with <see cref="SymbolQueryAtom"/>'s, <see cref="AromaticQueryBond"/>'s and
-        /// <see cref="OrderQueryBond"/>'s. If a IBond of the input <paramref name="container"/> is flagged
+        /// <see cref="OrderQueryBond"/>'s. If a <see cref="IBond"/> of the input <paramref name="container"/> is flagged
         /// aromatic, then it disregards bond order information and only match against
         /// an aromatic target atom instead.
         /// </summary>
@@ -33,7 +33,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// <returns>The new <see cref="QueryAtomContainer"/> created from container.</returns>
         public static QueryAtomContainer CreateBasicQueryContainer(IAtomContainer container)
         {
-            QueryAtomContainer queryContainer = new QueryAtomContainer(container.Builder);
+            var queryContainer = new QueryAtomContainer(container.Builder);
             for (int i = 0; i < container.Atoms.Count; i++)
             {
                 queryContainer.Atoms.Add(new SymbolQueryAtom(container.Atoms[i]));
@@ -50,7 +50,7 @@ namespace NCDK.Isomorphisms.Matchers
                 else
                 {
                     queryContainer.Bonds.Add(new OrderQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                            (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
+                        (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
                 }
             }
             return queryContainer;
@@ -64,7 +64,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// <returns>The new QueryAtomContainer created from container.</returns>
         public static QueryAtomContainer CreateSymbolAndBondOrderQueryContainer(IAtomContainer container)
         {
-            QueryAtomContainer queryContainer = new QueryAtomContainer(container.Builder);
+            var queryContainer = new QueryAtomContainer(container.Builder);
             for (int i = 0; i < container.Atoms.Count; i++)
             {
                 queryContainer.Atoms.Add(new SymbolQueryAtom(container.Atoms[i]));
@@ -74,20 +74,20 @@ namespace NCDK.Isomorphisms.Matchers
                 int index1 = container.Atoms.IndexOf(bond.Begin);
                 int index2 = container.Atoms.IndexOf(bond.End);
                 queryContainer.Bonds.Add(new OrderQueryBondOrderOnly((IQueryAtom)queryContainer.Atoms[index1],
-                        (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
+                    (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
             }
             return queryContainer;
         }
 
         /// <summary>
-        ///  Creates a <see cref="QueryAtomContainer"/> with <see cref="SymbolAndChargeQueryAtom"/>'s and
-        ///  <see cref="OrderQueryBond"/>'s.
+        /// Creates a <see cref="QueryAtomContainer"/> with <see cref="SymbolAndChargeQueryAtom"/>'s and
+        /// <see cref="OrderQueryBond"/>'s.
         /// </summary>
         /// <param name="container">The <see cref="IAtomContainer"/> that stands as model</param>
         /// <returns>The new <see cref="QueryAtomContainer"/> created from container.</returns>
         public static QueryAtomContainer CreateSymbolAndChargeQueryContainer(IAtomContainer container)
         {
-            QueryAtomContainer queryContainer = new QueryAtomContainer(container.Builder);
+            var queryContainer = new QueryAtomContainer(container.Builder);
             for (int i = 0; i < container.Atoms.Count; i++)
             {
                 queryContainer.Atoms.Add(new SymbolAndChargeQueryAtom(container.Atoms[i]));
@@ -99,12 +99,12 @@ namespace NCDK.Isomorphisms.Matchers
                 if (bond.IsAromatic)
                 {
                     queryContainer.Bonds.Add(new AromaticQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                            (IQueryAtom)queryContainer.Atoms[index2], container.Builder));
+                        (IQueryAtom)queryContainer.Atoms[index2], container.Builder));
                 }
                 else
                 {
                     queryContainer.Bonds.Add(new OrderQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                            (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
+                        (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
                 }
             }
             return queryContainer;
@@ -112,7 +112,7 @@ namespace NCDK.Isomorphisms.Matchers
 
         public static QueryAtomContainer CreateSymbolChargeIDQueryContainer(IAtomContainer container)
         {
-            QueryAtomContainer queryContainer = new QueryAtomContainer(container.Builder);
+            var queryContainer = new QueryAtomContainer(container.Builder);
             for (int i = 0; i < container.Atoms.Count; i++)
             {
                 queryContainer.Atoms.Add(new SymbolChargeIDQueryAtom(container.Atoms[i]));
@@ -124,27 +124,27 @@ namespace NCDK.Isomorphisms.Matchers
                 if (bond.IsAromatic)
                 {
                     queryContainer.Bonds.Add(new AromaticQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                            (IQueryAtom)queryContainer.Atoms[index2], container.Builder));
+                        (IQueryAtom)queryContainer.Atoms[index2], container.Builder));
                 }
                 else
                 {
                     queryContainer.Bonds.Add(new OrderQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                            (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
+                        (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
                 }
             }
             return queryContainer;
         }
 
         /// <summary>
-        ///  Creates a QueryAtomContainer with AnyAtoms / Aromatic Atoms and OrderQueryBonds / AromaticQueryBonds.
-        ///  It uses the CDKConstants.ISAROMATIC flag to determine the aromaticity of container.
+        /// Creates a <see cref="QueryAtomContainer"/> with AnyAtoms / Aromatic Atoms and OrderQueryBonds / AromaticQueryBonds.
+        /// It uses the CDKConstants.ISAROMATIC flag to determine the aromaticity of container.
         /// </summary>
-        /// <param name="container">The AtomContainer that stands as model</param>
+        /// <param name="container">The <see cref="IAtomContainer"/> that stands as model</param>
         /// <param name="aromaticity">True = use aromaticity flags to create AtomaticAtoms and AromaticQueryBonds</param>
-        /// <returns>The new QueryAtomContainer created from container</returns>
+        /// <returns>The new <see cref="QueryAtomContainer"/> created from container</returns>
         public static QueryAtomContainer CreateAnyAtomContainer(IAtomContainer container, bool aromaticity)
         {
-            QueryAtomContainer queryContainer = new QueryAtomContainer(container.Builder);
+            var queryContainer = new QueryAtomContainer(container.Builder);
 
             for (int i = 0; i < container.Atoms.Count; i++)
             {
@@ -165,12 +165,12 @@ namespace NCDK.Isomorphisms.Matchers
                 if (aromaticity && bond.IsAromatic)
                 {
                     queryContainer.Bonds.Add(new AromaticQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                            (IQueryAtom)queryContainer.Atoms[index2], container.Builder));
+                        (IQueryAtom)queryContainer.Atoms[index2], container.Builder));
                 }
                 else
                 {
                     queryContainer.Bonds.Add(new OrderQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                            (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
+                        (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
                 }
             }
             return queryContainer;
@@ -178,15 +178,16 @@ namespace NCDK.Isomorphisms.Matchers
 
         /// <summary>
         /// Creates a <see cref="QueryAtomContainer"/> with wildcard atoms and wildcard bonds.
-        /// <para>
-        /// This method thus allows the user to search based only on connectivity.</para>
         /// </summary>
+        /// <remarks>
+        /// This method thus allows the user to search based only on connectivity.
+        /// </remarks>
         /// <param name="container">The AtomContainer that stands as the model</param>
         /// <param name="aromaticity">If True, aromaticity flags are checked to create AromaticAtoms and AromaticQueryBonds</param>
         /// <returns>The new QueryAtomContainer</returns>
         public static QueryAtomContainer CreateAnyAtomAnyBondContainer(IAtomContainer container, bool aromaticity)
         {
-            QueryAtomContainer queryContainer = new QueryAtomContainer(container.Builder);
+            var queryContainer = new QueryAtomContainer(container.Builder);
 
             for (int i = 0; i < container.Atoms.Count; i++)
             {
@@ -204,8 +205,7 @@ namespace NCDK.Isomorphisms.Matchers
             {
                 int index1 = container.Atoms.IndexOf(bond.Begin);
                 int index2 = container.Atoms.IndexOf(bond.End);
-                queryContainer.Bonds.Add(new AnyOrderBond(queryContainer.Atoms[index1], queryContainer.Atoms[index2],
-                        container.Builder));
+                queryContainer.Bonds.Add(new AnyOrderBond(queryContainer.Atoms[index1], queryContainer.Atoms[index2], container.Builder));
             }
             return queryContainer;
         }
@@ -219,7 +219,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// <returns>The new QueryAtomContainer created from container.</returns>
         public static QueryAtomContainer CreateAnyAtomForPseudoAtomQueryContainer(IAtomContainer container)
         {
-            QueryAtomContainer queryContainer = new QueryAtomContainer(container.Builder);
+            var queryContainer = new QueryAtomContainer(container.Builder);
             for (int i = 0; i < container.Atoms.Count; i++)
             {
                 if (container.Atoms[i] is IPseudoAtom)
@@ -230,7 +230,6 @@ namespace NCDK.Isomorphisms.Matchers
                 {
                     queryContainer.Atoms.Add(new SymbolQueryAtom(container.Atoms[i]));
                 }
-
             }
             foreach (var bond in container.Bonds)
             {
@@ -239,12 +238,12 @@ namespace NCDK.Isomorphisms.Matchers
                 if (bond.IsAromatic)
                 {
                     queryContainer.Bonds.Add(new AromaticQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                            (IQueryAtom)queryContainer.Atoms[index2], container.Builder));
+                        (IQueryAtom)queryContainer.Atoms[index2], container.Builder));
                 }
                 else
                 {
                     queryContainer.Bonds.Add(new OrderQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                            (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
+                        (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
                 }
             }
             return queryContainer;
@@ -268,8 +267,9 @@ namespace NCDK.Isomorphisms.Matchers
         private sealed class AromaticAtom : QueryAtom
         {
             public AromaticAtom(IChemObjectBuilder builder)
-                    : base(builder)
-            { }
+                : base(builder)
+            {
+            }
 
             /// <inheritdoc/>
 
@@ -298,7 +298,8 @@ namespace NCDK.Isomorphisms.Matchers
         {
             public AromaticQueryBond(IAtom either, IAtom other, IChemObjectBuilder builder)
                 : base(either, other, BondOrder.Unset, builder)
-            { }
+            {
+            }
 
             /// <inheritdoc/>
             public override bool Matches(IBond bond)

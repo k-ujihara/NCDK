@@ -40,11 +40,11 @@ namespace NCDK.Graphs.Invariant
         private double[][] nodeMatrix;
         private double[][] bondMatrix;
         private double[] weight;
-        private double[][] adjaMatrix;
-        private int[][] apspMatrix;
-        private int layerNumber;
-        private int nodeNumber;
-        private static double LOST = 0.000000000001;
+        private readonly double[][] adjaMatrix;
+        private readonly int[][] apspMatrix;
+        private readonly int layerNumber;
+        private readonly int nodeNumber;
+        private const double LOST = 0.000000000001;
 
         /// <summary>
         /// Constructor for the TopologicalEquivalentClass object.
@@ -108,7 +108,7 @@ namespace NCDK.Graphs.Invariant
         /// </summary>
         /// <param name="atomContainer">atoms and bonds of the molecule</param>
         /// <returns>an array of node identifier</returns>
-        public double[] PrepareNode(IAtomContainer atomContainer)
+        public static double[] PrepareNode(IAtomContainer atomContainer)
         {
             double[] nodeSequence = new double[atomContainer.Atoms.Count];
             int i = 0;
@@ -121,7 +121,7 @@ namespace NCDK.Graphs.Invariant
                 {
                     IBond bond0 = bonds[0];
                     BondOrder order = bond0.Order;
-                    if (symbol.Equals("C"))
+                    if (string.Equals(symbol, "C", StringComparison.Ordinal))
                     {
                         if (order == BondOrder.Single)
                             nodeSequence[i] = 1;// CH3-
@@ -129,14 +129,14 @@ namespace NCDK.Graphs.Invariant
                             nodeSequence[i] = 3;// CH2=
                         else if (order == BondOrder.Triple) nodeSequence[i] = 6;// CH#
                     }
-                    else if (symbol.Equals("O"))
+                    else if (string.Equals(symbol, "O", StringComparison.Ordinal))
                     {
                         if (order == BondOrder.Single)
                             nodeSequence[i] = 14;// HO-
                         else if (order == BondOrder.Double) nodeSequence[i] = 16;// O=
                                                                                  // missing the case of an aromatic double bond
                     }
-                    else if (symbol.Equals("N"))
+                    else if (string.Equals(symbol, "N", StringComparison.Ordinal))
                     {
                         if (order == BondOrder.Single)
                             nodeSequence[i] = 18;// NH2-
@@ -149,21 +149,21 @@ namespace NCDK.Graphs.Invariant
                         }
                         else if (order == BondOrder.Triple) nodeSequence[i] = 23;// N#
                     }
-                    else if (symbol.Equals("S"))
+                    else if (string.Equals(symbol, "S", StringComparison.Ordinal))
                     {
                         if (order == BondOrder.Single)
                             nodeSequence[i] = 31;// HS-
                         else if (order == BondOrder.Double) nodeSequence[i] = 33;// S=
                     }
-                    else if (symbol.Equals("P"))
+                    else if (string.Equals(symbol, "P", StringComparison.Ordinal))
                         nodeSequence[i] = 38;// PH2-
-                    else if (symbol.Equals("F"))
+                    else if (string.Equals(symbol, "F", StringComparison.Ordinal))
                         nodeSequence[i] = 42;// F-
-                    else if (symbol.Equals("Cl"))
+                    else if (string.Equals(symbol, "Cl", StringComparison.Ordinal))
                         nodeSequence[i] = 43;// Cl-
-                    else if (symbol.Equals("Br"))
+                    else if (string.Equals(symbol, "Br", StringComparison.Ordinal))
                         nodeSequence[i] = 44;// Br-
-                    else if (symbol.Equals("I"))
+                    else if (string.Equals(symbol, "I", StringComparison.Ordinal))
                         nodeSequence[i] = 45;// I-
                     else
                     {
@@ -176,7 +176,7 @@ namespace NCDK.Graphs.Invariant
                     IBond bond1 = (IBond)bonds[1];
                     BondOrder order0 = bond0.Order;
                     BondOrder order1 = bond1.Order;
-                    if (symbol.Equals("C"))
+                    if (string.Equals(symbol, "C", StringComparison.Ordinal))
                     {
                         if (order0 == BondOrder.Single && order1 == BondOrder.Single)
                             nodeSequence[i] = 2;// -CH2-
@@ -193,7 +193,7 @@ namespace NCDK.Graphs.Invariant
                         if (bond0.IsAromatic && bond1.IsAromatic)
                             nodeSequence[i] = 11;// ArCH
                     }
-                    else if (symbol.Equals("N"))
+                    else if (string.Equals(symbol, "N", StringComparison.Ordinal))
                     {
                         if (order0 == BondOrder.Single && order1 == BondOrder.Single)
                             nodeSequence[i] = 19;// -NH-
@@ -215,14 +215,14 @@ namespace NCDK.Graphs.Invariant
                                                  // there is no way to distinguish between ArNH and ArN as
                                                  // bonds to protons are not considered
                     }
-                    else if (symbol.Equals("O"))
+                    else if (string.Equals(symbol, "O", StringComparison.Ordinal))
                     {
                         if (order0 == BondOrder.Single && order1 == BondOrder.Single)
                             nodeSequence[i] = 15;// -O-
                         else if (bond0.IsAromatic && bond1.IsAromatic)
                             nodeSequence[i] = 17;// ArO
                     }
-                    else if (symbol.Equals("S"))
+                    else if (string.Equals(symbol, "S", StringComparison.Ordinal))
                     {
                         if (order0 == BondOrder.Single && order1 == BondOrder.Single)
                             nodeSequence[i] = 32;// -S-
@@ -231,7 +231,7 @@ namespace NCDK.Graphs.Invariant
                         else if (bond0.IsAromatic && bond1.IsAromatic)
                             nodeSequence[i] = 37;// ArS
                     }
-                    else if (symbol.Equals("P"))
+                    else if (string.Equals(symbol, "P", StringComparison.Ordinal))
                     {
                         if (order0 == BondOrder.Single && order1 == BondOrder.Single) nodeSequence[i] = 39;// -PH-
                     }
@@ -249,7 +249,7 @@ namespace NCDK.Graphs.Invariant
                     BondOrder order1 = bond1.Order;
                     BondOrder order2 = bond2.Order;
 
-                    if (symbol.Equals("C"))
+                    if (string.Equals(symbol, "C", StringComparison.Ordinal))
                     {
                         if (order0 == BondOrder.Single && order1 == BondOrder.Single && order2 == BondOrder.Single)
                             nodeSequence[i] = 4;// >C-
@@ -266,19 +266,19 @@ namespace NCDK.Graphs.Invariant
                         if (bond0.IsAromatic && bond1.IsAromatic
                                 && bond2.IsAromatic) nodeSequence[i] = 13;// ArC
                     }
-                    else if (symbol.Equals("N"))
+                    else if (string.Equals(symbol, "N", StringComparison.Ordinal))
                     {
                         if (order0 == BondOrder.Single && order1 == BondOrder.Single && order2 == BondOrder.Single)
                             nodeSequence[i] = 21;// >N-
                         else if (order0 == BondOrder.Single || order1 == BondOrder.Single
                                 || order2 == BondOrder.Single) nodeSequence[i] = 25;// -N(=)=
                     }
-                    else if (symbol.Equals("S"))
+                    else if (string.Equals(symbol, "S", StringComparison.Ordinal))
                     {
                         if (order0 == BondOrder.Double || order1 == BondOrder.Double || order2 == BondOrder.Double)
                             nodeSequence[i] = 34;// >S=
                     }
-                    else if (symbol.Equals("P"))
+                    else if (string.Equals(symbol, "P", StringComparison.Ordinal))
                     {
                         if (order0 == BondOrder.Single && order1 == BondOrder.Single && order2 == BondOrder.Single)
                             nodeSequence[i] = 40;// >P-
@@ -290,13 +290,13 @@ namespace NCDK.Graphs.Invariant
                 }
                 else if (bonds.Count == 4)
                 {
-                    if (atom.Symbol.Equals("C"))
+                    if (string.Equals(atom.Symbol, "C", StringComparison.Ordinal))
                         nodeSequence[i] = 7;// >C<
-                    else if (atom.Symbol.Equals("N"))
+                    else if (string.Equals(atom.Symbol, "N", StringComparison.Ordinal))
                         nodeSequence[i] = 24;// >N(=)-
-                    else if (atom.Symbol.Equals("S"))
+                    else if (string.Equals(atom.Symbol, "S", StringComparison.Ordinal))
                         nodeSequence[i] = 36;// >S(=)=
-                    else if (atom.Symbol.Equals("P"))
+                    else if (string.Equals(atom.Symbol, "P", StringComparison.Ordinal))
                         nodeSequence[i] = 41;// =P<-
                     else
                     {
@@ -425,7 +425,7 @@ namespace NCDK.Graphs.Invariant
         /// </summary>
         /// <param name="weight">array contains weight of the nodes</param>
         /// <returns>number of different weight</returns>
-        public int CheckDiffNumber(double[] weight)
+        private static int CheckDiffNumber(double[] weight)
         {
             // Count the number of different weight
             var category = new double[weight.Length];
@@ -455,7 +455,7 @@ namespace NCDK.Graphs.Invariant
         /// </summary>
         /// <param name="weight">array contains weight of the nodes</param>
         /// <returns>an array contains the automorphism partition</returns>
-        public int[] GetEquivalentClass(double[] weight)
+        public static int[] GetEquivalentClass(double[] weight)
         {
             var category = new double[weight.Length];
             var equivalentClass = new int[weight.Length];

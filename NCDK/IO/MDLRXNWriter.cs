@@ -49,7 +49,7 @@ namespace NCDK.IO
     {
         private TextWriter writer;
         private int reactionNumber;
-        public IDictionary<string, object> rdFields = null;
+        private IReadOnlyDictionary<string, object> rdFields = null;
 
         /// <summary>
         /// Constructs a new MDLWriter that can write an array of
@@ -83,7 +83,7 @@ namespace NCDK.IO
         /// </pre>
         /// </summary>
         /// <param name="map">The map to be used, map of string-string pairs</param>
-        public void SetRdFields(IDictionary<string, object> map)
+        public void SetRdFields(IReadOnlyDictionary<string, object> map)
         {
             rdFields = map;
         }
@@ -208,7 +208,7 @@ namespace NCDK.IO
                 //write sdfields, if any
                 if (rdFields != null)
                 {
-                    ICollection<string> set = rdFields.Keys;
+                    var set = rdFields.Keys;
                     foreach (var element in set)
                     {
                         writer.Write("> <" + (string)element + ">");
@@ -274,7 +274,7 @@ namespace NCDK.IO
         /// <param name="i">The int to be formated</param>
         /// <param name="l">Length of the string</param>
         /// <returns>The string to be written into the connectiontable</returns>
-        private string FormatMDLInt(int i, int l)
+        private static string FormatMDLInt(int i, int l)
         {
             var s = i.ToString(CultureInfo.InvariantCulture.NumberFormat);
             l = Math.Max(s.Length, l);

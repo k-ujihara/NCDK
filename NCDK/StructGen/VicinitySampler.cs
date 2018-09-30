@@ -39,7 +39,7 @@ namespace NCDK.StructGen
     // @cdk.module   structgen
     // @cdk.githash
     // @cdk.bug      1632610
-    public class VicinitySampler
+    public static class VicinitySampler
     {
         /// <summary>
         /// Choose any possible quadruple of the set of atoms

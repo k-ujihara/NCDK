@@ -16,6 +16,7 @@
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
 
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
@@ -72,11 +73,11 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             if (right != null)
             {
                 bool matchesRight = right.Matches(bond);
-                if ("and".Equals(operator_))
+                if (string.Equals("and", operator_, StringComparison.Ordinal))
                 {
                     return matchesLeft && matchesRight;
                 }
-                else if ("or".Equals(operator_))
+                else if (string.Equals("or", operator_, StringComparison.Ordinal))
                 {
                     return matchesLeft || matchesRight;
                 }
@@ -87,7 +88,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             }
             else
             {
-                if ("not".Equals(operator_))
+                if (string.Equals("not", operator_, StringComparison.Ordinal))
                 {
                     return (!matchesLeft);
                 }

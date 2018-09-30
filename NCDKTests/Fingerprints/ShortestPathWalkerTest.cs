@@ -13,11 +13,11 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestPaths()
         {
-            IAtomContainer triazole = TestMoleculeFactory.Make123Triazole();
-            ShortestPathWalker walker = new ShortestPathWalker(triazole);
-            ICollection<string> expected = new SortedSet<string>(new[] {"C", "N2N1N", "N", "N1N1C", "N1C2C", "C1N", "N2N1C",
+            var triazole = TestMoleculeFactory.Make123Triazole();
+            var walker = new ShortestPathWalker(triazole);
+            var expected = new SortedSet<string>(new[] {"C", "N2N1N", "N", "N1N1C", "N1C2C", "C1N", "N2N1C",
                 "C1N2N", "C1N1N", "N1C", "C2C1N", "C2C", "N2N", "N1N2N", "N1N"});
-            ICollection<string> actual = walker.GetPaths();
+            var actual = walker.GetPaths();
             Assert.IsTrue(Compares.AreDeepEqual(expected, actual));
         }
 

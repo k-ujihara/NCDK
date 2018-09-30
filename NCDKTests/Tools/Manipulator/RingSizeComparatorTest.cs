@@ -18,6 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 
 namespace NCDK.Tools.Manipulator
 {
@@ -32,24 +33,24 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRingSizeComparator_int()
         {
-            RingSizeComparator comp = new RingSizeComparator(RingSizeComparator.LARGE_FIRST);
+            RingSizeComparator comp = new RingSizeComparator(SortMode.LargeFirst);
             Assert.IsNotNull(comp);
         }
 
         [TestMethod()]
         public void TestCompare()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IRing cycloPentane = builder.NewRing(5, "C");
             IRing cycloHexane = builder.NewRing(6, "C");
             IRing cycloHexane2 = builder.NewRing(6, "C");
 
-            RingSizeComparator ringSizeComparator = new RingSizeComparator(RingSizeComparator.LARGE_FIRST);
+            RingSizeComparator ringSizeComparator = new RingSizeComparator(SortMode.LargeFirst);
             Assert.IsTrue(ringSizeComparator.Compare(cycloHexane, cycloPentane) == -1);
             Assert.IsTrue(ringSizeComparator.Compare(cycloPentane, cycloHexane) == 1);
             Assert.IsTrue(ringSizeComparator.Compare(cycloHexane, cycloHexane2) == 0);
 
-            ringSizeComparator = new RingSizeComparator(RingSizeComparator.SMALL_FIRST);
+            ringSizeComparator = new RingSizeComparator(SortMode.SmallFirst);
             Assert.IsTrue(ringSizeComparator.Compare(cycloHexane, cycloPentane) == 1);
             Assert.IsTrue(ringSizeComparator.Compare(cycloPentane, cycloHexane) == -1);
             Assert.IsTrue(ringSizeComparator.Compare(cycloHexane, cycloHexane2) == 0);

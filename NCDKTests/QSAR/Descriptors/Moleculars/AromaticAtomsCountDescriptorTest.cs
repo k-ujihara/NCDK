@@ -18,6 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.QSAR.Results;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Templates;
 
@@ -40,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             object[] parameters = new object[] { true };
             Descriptor.Parameters = parameters;
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCOc1ccccc1"); // ethanol
             Assert.AreEqual(6, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }

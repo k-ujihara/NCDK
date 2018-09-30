@@ -84,49 +84,48 @@ namespace NCDK.Stereo
         /// </summary>
         /// <param name="projections">the types of projections to recognise</param>
         /// <returns>recognised stereocenters</returns>
-        public IList<IReadOnlyStereoElement<IChemObject, IChemObject>> Recognise(ICollection<Projection> projections)
+        public IEnumerable<IStereoElement<IChemObject, IChemObject>> Recognise(ICollection<Projection> projections)
         {
             if (!projections.Contains(Projection.Haworth) && !projections.Contains(Projection.Chair))
-                return Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+                yield break;
 
-            var elements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
-
-            RingSearch ringSearch = new RingSearch(container, graph);
+            var ringSearch = new RingSearch(container, graph);
             foreach (var isolated in ringSearch.Isolated())
             {
                 if (isolated.Length < 5 || isolated.Length > 7)
                     continue;
 
-                int[] cycle = Arrays.CopyOf(GraphUtil.Cycle(graph, isolated),
+                var cycle = Arrays.CopyOf(GraphUtil.Cycle(graph, isolated),
                                             isolated.Length);
 
-                Vector2[] points = CoordinatesOfCycle(cycle, container);
-                Turn[] turns = GetTurns(points);
-                WoundProjection projection = WoundProjection.OfTurns(turns);
+                var points = CoordinatesOfCycle(cycle, container);
+                var turns = GetTurns(points);
+                var projection = WoundProjection.OfTurns(turns);
 
                 if (!projections.Contains(projection.Projection))
                     continue;
 
-                // ring is not aligned correctly for haworth
+                // ring is not aligned correctly for Haworth
                 if (projection.Projection == Projection.Haworth && !CheckHaworthAlignment(points))
                     continue;
 
-                Vector2 horizontalXy = HorizontalOffset(points, turns, projection.Projection);
+                var horizontalXy = HorizontalOffset(points, turns, projection.Projection);
 
                 // near vertical, should also flag as potentially ambiguous 
                 if (1 - Math.Abs(horizontalXy.Y) < QuartCardinalityThreshold)
                     continue;
 
-                int[] above = (int[])cycle.Clone();
-                int[] below = (int[])cycle.Clone();
+                var above = (int[])cycle.Clone();
+                var below = (int[])cycle.Clone();
 
                 if (!AssignSubstituents(cycle, above, below, projection, horizontalXy))
                     continue;
 
-                elements.AddRange(NewTetrahedralCenters(cycle, above, below, projection));
+                foreach (var center in NewTetrahedralCenters(cycle, above, below, projection))
+                    yield return center;
             }
 
-            return elements;
+            yield break;
         }
 
         /// <summary>
@@ -136,18 +135,19 @@ namespace NCDK.Stereo
         /// <returns>array of turns (left, right) or null if a parallel line was found</returns>
         public static Turn[] GetTurns(Vector2[] points)
         {
-            Turn[] turns = new Turn[points.Length];
+            var turns = new Turn[points.Length];
 
             // cycle of size 6 is [1,2,3,4,5,6] not closed
             for (int i = 1; i <= points.Length; i++)
             {
-                Vector2 prevXy = points[i - 1];
-                Vector2 currXy = points[i % points.Length];
-                Vector2 nextXy = points[(i + 1) % points.Length];
-                int parity = (int)Math.Sign(Det(prevXy.X, prevXy.Y,
+                var prevXy = points[i - 1];
+                var currXy = points[i % points.Length];
+                var nextXy = points[(i + 1) % points.Length];
+                var parity = (int)Math.Sign(Det(prevXy.X, prevXy.Y,
                                                    currXy.X, currXy.Y,
                                                    nextXy.X, nextXy.Y));
-                if (parity == 0) return null;
+                if (parity == 0)
+                    return null;
                 turns[i % points.Length] = parity < 0 ? Turn.Right : Turn.Left;
             }
 
@@ -166,10 +166,10 @@ namespace NCDK.Stereo
         /// <param name="horizontalXy">offset from the horizontal axis</param>
         /// <returns>assignment okay (true), not okay (false)</returns>
         private bool AssignSubstituents(int[] cycle,
-                                           int[] above,
-                                           int[] below,
-                                           WoundProjection projection,
-                                           Vector2 horizontalXy)
+                                        int[] above,
+                                        int[] below,
+                                        WoundProjection projection,
+                                        Vector2 horizontalXy)
         {
             bool haworth = projection.Projection == Projection.Haworth;
 
@@ -177,7 +177,6 @@ namespace NCDK.Stereo
 
             for (int i = 1; i <= cycle.Length; i++)
             {
-
                 int j = i % cycle.Length;
 
                 int prev = cycle[i - 1];
@@ -190,22 +189,24 @@ namespace NCDK.Stereo
                 if (ws.Length > 2 || ws.Length < 1)
                     continue;
 
-                Vector2 centerXy = container.Atoms[curr].Point2D.Value;
+                var centerXy = container.Atoms[curr].Point2D.Value;
 
                 // determine the direction of each substituent 
                 foreach (var w in ws)
                 {
-                    Vector2 otherXy = container.Atoms[w].Point2D.Value;
-                    Direction direction = ObtainDirection(centerXy, otherXy, horizontalXy, haworth);
+                    var otherXy = container.Atoms[w].Point2D.Value;
+                    var direction = ObtainDirection(centerXy, otherXy, horizontalXy, haworth);
 
                     switch (direction)
                     {
                         case Direction.Up:
-                            if (above[j] != curr) return false;
+                            if (above[j] != curr)
+                                return false;
                             above[j] = w;
                             break;
                         case Direction.Down:
-                            if (below[j] != curr) return false;
+                            if (below[j] != curr)
+                                return false;
                             below[j] = w;
                             break;
                         case Direction.Other:
@@ -229,9 +230,9 @@ namespace NCDK.Stereo
         /// <param name="below">vertices below the cycle</param>
         /// <param name="type">type of projection</param>
         /// <returns>zero of more stereocenters</returns>
-        private IList<ITetrahedralChirality> NewTetrahedralCenters(int[] cycle, int[] above, int[] below, WoundProjection type)
+        private IReadOnlyList<ITetrahedralChirality> NewTetrahedralCenters(int[] cycle, int[] above, int[] below, WoundProjection type)
         {
-            List<ITetrahedralChirality> centers = new List<ITetrahedralChirality>(cycle.Length);
+            var centers = new List<ITetrahedralChirality>(cycle.Length);
 
             for (int i = 1; i <= cycle.Length; i++)
             {
@@ -274,7 +275,7 @@ namespace NCDK.Stereo
         /// <returns>coordinates of the cycle</returns>
         private static Vector2[] CoordinatesOfCycle(int[] cycle, IAtomContainer container)
         {
-            Vector2[] points = new Vector2[cycle.Length];
+            var points = new Vector2[cycle.Length];
             for (int i = 0; i < cycle.Length; i++)
             {
                 points[i] = container.Atoms[cycle[i]].Point2D.Value;
@@ -293,7 +294,7 @@ namespace NCDK.Stereo
         private static int[] Filter(int[] org, int skip1, int skip2)
         {
             int n = 0;
-            int[] dest = new int[org.Length - 2];
+            var dest = new int[org.Length - 2];
             foreach (var w in org)
             {
                 if (w != skip1 && w != skip2) dest[n++] = w;
@@ -313,11 +314,11 @@ namespace NCDK.Stereo
         /// <returns>the direction (up, down, other)</returns>
         private static Direction ObtainDirection(Vector2 centerXy, Vector2 substituentXy, Vector2 horizontalXy, bool haworth)
         {
-            double deltaX = substituentXy.X - centerXy.X;
-            double deltaY = substituentXy.Y - centerXy.Y;
+            var deltaX = substituentXy.X - centerXy.X;
+            var deltaY = substituentXy.Y - centerXy.Y;
 
             // normalise vector length so threshold is independent of length 
-            double mag = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+            var mag = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
             deltaX /= mag;
             deltaY /= mag;
 
@@ -349,14 +350,14 @@ namespace NCDK.Stereo
         /// </summary>
         /// <param name="points">the points of atoms in the ring</param>
         /// <returns>whether the Haworth alignment is correct</returns>
-        private bool CheckHaworthAlignment(Vector2[] points)
+        private static bool CheckHaworthAlignment(Vector2[] points)
         {
             for (int i = 0; i < points.Length; i++)
             {
-                Vector2 curr = points[i];
-                Vector2 next = points[(i + 1) % points.Length];
+                var curr = points[i];
+                var next = points[(i + 1) % points.Length];
 
-                double deltaY = curr.Y - next.Y;
+                var deltaY = curr.Y - next.Y;
 
                 if (Math.Abs(deltaY) < CardinalityThreshold)
                     return true;
@@ -374,7 +375,7 @@ namespace NCDK.Stereo
         /// <param name="turns">the turns in the cycle (left/right)</param>
         /// <param name="projection">the type of projection</param>
         /// <returns>the horizontal offset</returns>
-        private Vector2 HorizontalOffset(Vector2[] points, Turn[] turns, Projection projection)
+        private static Vector2 HorizontalOffset(Vector2[] points, Turn[] turns, Projection projection)
         {
             // Haworth must currently be drawn vertically, I have seen them drawn
             // slanted but it's difficult to determine which way the projection
@@ -383,15 +384,15 @@ namespace NCDK.Stereo
                 return Vector2.Zero;
 
             // the atoms either side of a central atom are our reference
-            int offset = ChairCenterOffset(turns);
-            int prev = (offset + 5) % 6;
-            int next = (offset + 7) % 6;
+            var offset = ChairCenterOffset(turns);
+            var prev = (offset + 5) % 6;
+            var next = (offset + 7) % 6;
 
             // and the axis formed by these atoms is our horizontal reference which
             // we normalise
-            double deltaX = points[prev].X - points[next].X;
-            double deltaY = points[prev].Y - points[next].Y;
-            double mag = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+            var deltaX = points[prev].X - points[next].X;
+            var deltaY = points[prev].Y - points[next].Y;
+            var mag = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
             deltaX /= mag;
             deltaY /= mag;
 
@@ -444,9 +445,9 @@ namespace NCDK.Stereo
         /// <returns>the bond is a planar sigma bond</returns>
         private static bool IsPlanarSigmaBond(IBond bond)
         {
-            return bond != null &&
-                    BondOrder.Single.Equals(bond.Order) &&
-                    BondStereo.None.Equals(bond.Stereo);
+            return bond != null
+                && BondOrder.Single.Equals(bond.Order) 
+                && BondStereo.None.Equals(bond.Stereo);
         }
 
         /// <summary>
@@ -484,11 +485,11 @@ namespace NCDK.Stereo
 
             public Projection Projection { get; private set; }
             public TetrahedralStereo Winding { get; private set; }
-            private readonly static IDictionary<Key, WoundProjection> map;
+            private readonly static Dictionary<Key, WoundProjection> map = MakeMap();
 
-            static WoundProjection()
+            private static Dictionary<Key, WoundProjection> MakeMap()
             {
-                map = new Dictionary<Key, WoundProjection>
+                var map = new Dictionary<Key, WoundProjection>
                 {
                     // Haworth |V| = 5
                     { new Key(Turn.Left, Turn.Left, Turn.Left, Turn.Left, Turn.Left), HaworthAnticlockwise },
@@ -524,6 +525,7 @@ namespace NCDK.Stereo
                     { new Key(Turn.Right, Turn.Right, Turn.Left, Turn.Left, Turn.Right, Turn.Right), BoatClockwise },
                     { new Key(Turn.Right, Turn.Left, Turn.Left, Turn.Right, Turn.Right, Turn.Right), BoatClockwise }
                 };
+                return map;
             }
 
             public WoundProjection(Projection projection, TetrahedralStereo winding)
@@ -553,8 +555,8 @@ namespace NCDK.Stereo
 
                 public override bool Equals(object o)
                 {
-                    Key key = o as Key;
-                    if (key == null) return false;
+                    if (!(o is Key key))
+                        return false;
                     return Arrays.AreEqual(turns, key.turns);
                 }
 

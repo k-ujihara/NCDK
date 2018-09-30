@@ -1,6 +1,7 @@
 
 
 
+
 /* Copyright (C) 2014  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -61,7 +62,7 @@ namespace NCDK.Silent
         }
         
  
-		        // Overwrite default methods: no notifications are expected!
+                // Overwrite default methods: no notifications are expected!
 
         [TestMethod()]
         public override void TestNotifyChanged()

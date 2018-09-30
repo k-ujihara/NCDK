@@ -14,7 +14,7 @@ namespace NCDK.Fingerprints
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
                 var fingerprinter = new ShortestPathFingerprinter();
                 var fingerprint = fingerprinter.GetBitFingerprint(molecule);
-                Console.WriteLine(fingerprint.Count); // returns 1024 by default
+                Console.WriteLine(fingerprint.Length); // returns 1024 by default
                 #endregion
             }
         }

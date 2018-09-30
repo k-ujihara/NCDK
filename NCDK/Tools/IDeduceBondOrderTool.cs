@@ -34,6 +34,10 @@ namespace NCDK.Tools
     // @cdk.githash
     public interface IDeduceBondOrderTool
     {
-        void Saturate(IAtomContainer ac);
+        /// <summary>
+        /// Saturates a molecule by setting.
+        /// </summary>
+        /// <param name="container">Atom container to saturate</param>
+        void Saturate(IAtomContainer container);
     }
 }

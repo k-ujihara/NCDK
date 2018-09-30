@@ -19,6 +19,7 @@
 using NCDK.AtomTypes;
 using NCDK.Graphs;
 using NCDK.Tools.Manipulator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -86,18 +87,21 @@ namespace NCDK.Reactions.Mechanisms
             atom1C.Hybridization = Hybridization.Unset;
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactantCloned);
             IAtomType type = atMatcher.FindMatchingAtomType(reactantCloned, atom1C);
-            if (type == null || type.AtomTypeName.Equals("X")) return null;
+            if (type == null || type.AtomTypeName.Equals("X", StringComparison.Ordinal))
+                return null;
 
             atom2C.Hybridization = Hybridization.Unset;
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactantCloned);
             type = atMatcher.FindMatchingAtomType(reactantCloned, atom2C);
-            if (type == null || type.AtomTypeName.Equals("X")) return null;
+            if (type == null || type.AtomTypeName.Equals("X", StringComparison.Ordinal))
+                return null;
 
             reactantCloned.SingleElectrons.Add(atom2C.Builder.NewSingleElectron(atom3C));
             atom3C.Hybridization = Hybridization.Unset;
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactantCloned);
             type = atMatcher.FindMatchingAtomType(reactantCloned, atom3C);
-            if (type == null || type.AtomTypeName.Equals("X")) return null;
+            if (type == null || type.AtomTypeName.Equals("X", StringComparison.Ordinal))
+                return null;
 
             IReaction reaction = atom2C.Builder.NewReaction();
             reaction.Reactants.Add(molecule);

@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace NCDK.Indexes
@@ -67,7 +68,7 @@ namespace NCDK.Indexes
                 string part1 = matcher.Groups[1].Value;
                 string part2 = matcher.Groups[2].Value;
                 string part3 = matcher.Groups[3].Value;
-                int part1value = int.Parse(part1);
+                int part1value = int.Parse(part1, NumberFormatInfo.InvariantInfo);
                 if (part1value < 50)
                 {
                     overall = false;
@@ -76,7 +77,7 @@ namespace NCDK.Indexes
                 else
                 {
                     int digit = CASNumber.CalculateCheckDigit(part1, part2);
-                    overall = overall && (digit == int.Parse(part3));
+                    overall = overall && (digit == int.Parse(part3, NumberFormatInfo.InvariantInfo));
                 }
             }
 
@@ -86,12 +87,12 @@ namespace NCDK.Indexes
         private static int CalculateCheckDigit(string part1, string part2)
         {
             int total = 0;
-            total = total + 1 * int.Parse(part2.Substring(1, 1));
-            total = total + 2 * int.Parse(part2.Substring(0, 1));
+            total = total + 1 * int.Parse(part2.Substring(1, 1), NumberFormatInfo.InvariantInfo);
+            total = total + 2 * int.Parse(part2.Substring(0, 1), NumberFormatInfo.InvariantInfo);
             int length = part1.Length;
             for (int i = 0; i < length; i++)
             {
-                total = total + (3 + i) * int.Parse(part1.Substring(length - 1 - i, 1));
+                total = total + (3 + i) * int.Parse(part1.Substring(length - 1 - i, 1), NumberFormatInfo.InvariantInfo);
             }
             return total % 10;
         }

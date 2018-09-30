@@ -19,6 +19,7 @@
 
 using NCDK.Tools;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.IO.Formats
 {
@@ -52,7 +53,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions => new string[] { "rxn" };
+        public override IReadOnlyList<string> NameExtensions => new string[] { "rxn" };
 
         /// <inheritdoc/>
         public string ReaderClassName { get; } = typeof(MDLRXNV2000Reader).FullName;
@@ -61,19 +62,23 @@ namespace NCDK.IO.Formats
         public string WriterClassName => null;
 
         /// <inheritdoc/>
-        public MatchResult Matches(IList<string> lines)
+        public MatchResult Matches(IEnumerable<string> lines)
         {
+            var _lines = lines.ToList();
+
             // if the first line doesn't have '$RXN' then it can't match
-            if (lines.Count < 1 || lines[0].Trim() != "$RXN")
-                return MatchResult.NO_MATCH;
+            if (_lines.Count < 1 || _lines[0].Trim() != "$RXN")
+                return MatchResult.NoMatch;
 
             // check the header (fifth line)
-            string header = lines.Count > 4 ? lines[4] : "";
+            string header = _lines.Count > 4 ? _lines[4] : "";
 
             // atom count
-            if (header.Length < 3 || !char.IsDigit(header[2])) return MatchResult.NO_MATCH;
+            if (header.Length < 3 || !char.IsDigit(header[2]))
+                return MatchResult.NoMatch;
             // bond count
-            if (header.Length < 6 || !char.IsDigit(header[5])) return MatchResult.NO_MATCH;
+            if (header.Length < 6 || !char.IsDigit(header[5]))
+                return MatchResult.NoMatch;
 
             // check the rest of the header is only spaces and digits
             if (header.Length > 6)
@@ -84,7 +89,7 @@ namespace NCDK.IO.Formats
                     char c = remainder[i];
                     if (!(char.IsDigit(c) || char.IsWhiteSpace(c)))
                     {
-                        return MatchResult.NO_MATCH;
+                        return MatchResult.NoMatch;
                     }
                 }
             }

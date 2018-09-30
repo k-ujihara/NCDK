@@ -21,6 +21,7 @@ using NCDK.AtomTypes;
 using NCDK.IO.Formats;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.IO
@@ -159,14 +160,14 @@ namespace NCDK.IO
                     writer.Write((i + 1) + " " + atom.Symbol + (mol.Atoms.IndexOf(atom) + 1) + " ");
                     if (atom.Point3D != null)
                     {
-                        writer.Write(atom.Point3D.Value.X.ToString("F3") + " ");
-                        writer.Write(atom.Point3D.Value.Y.ToString("F3") + " ");
-                        writer.Write(atom.Point3D.Value.Z.ToString("F3") + " ");
+                        writer.Write(atom.Point3D.Value.X.ToString("F3", NumberFormatInfo.InvariantInfo) + " ");
+                        writer.Write(atom.Point3D.Value.Y.ToString("F3", NumberFormatInfo.InvariantInfo) + " ");
+                        writer.Write(atom.Point3D.Value.Z.ToString("F3", NumberFormatInfo.InvariantInfo) + " ");
                     }
                     else if (atom.Point2D != null)
                     {
-                        writer.Write(atom.Point2D.Value.X.ToString("F3") + " ");
-                        writer.Write(atom.Point2D.Value.Y.ToString("F3") + " ");
+                        writer.Write(atom.Point2D.Value.X.ToString("F3", NumberFormatInfo.InvariantInfo) + " ");
+                        writer.Write(atom.Point2D.Value.Y.ToString("F3", NumberFormatInfo.InvariantInfo) + " ");
                         writer.Write(" 0.000 ");
                     }
                     else
@@ -205,12 +206,20 @@ namespace NCDK.IO
                 foreach (var bond in mol.Bonds)
                 {
                     string sybylBondOrder = "-1";
-                    if (bond.Order.Equals(BondOrder.Single))
-                        sybylBondOrder = "1";
-                    else if (bond.Order.Equals(BondOrder.Double))
-                        sybylBondOrder = "2";
-                    else if (bond.Order.Equals(BondOrder.Triple)) sybylBondOrder = "3";
-                    if (bond.IsAromatic) sybylBondOrder = "ar";
+                    switch (bond.Order)
+                    {
+                        case BondOrder.Single:
+                            sybylBondOrder = "1";
+                            break;
+                        case BondOrder.Double:
+                            sybylBondOrder = "2";
+                            break;
+                        case BondOrder.Triple:
+                            sybylBondOrder = "3";
+                            break;
+                    }
+                    if (bond.IsAromatic)
+                        sybylBondOrder = "ar";
 
                     // we need to check the atom types to see if we have an amide bond
                     // and we're assuming a 2-centered bond
@@ -220,9 +229,9 @@ namespace NCDK.IO
                     {
                         IAtomType bondAtom1Type = matcher.FindMatchingAtomType(mol, bondAtom1);
                         IAtomType bondAtom2Type = matcher.FindMatchingAtomType(mol, bondAtom2);
-                        if (bondAtom1Type != null && bondAtom2Type != null &&
-                                ((bondAtom1Type.AtomTypeName.Equals("N.am") && bondAtom2Type.AtomTypeName.Equals("C.2"))
-                                || (bondAtom2Type.AtomTypeName.Equals("N.am") && bondAtom1Type.AtomTypeName.Equals("C.2"))))
+                        if (bondAtom1Type != null && bondAtom2Type != null
+                         && ((bondAtom1Type.AtomTypeName.Equals("N.am", StringComparison.Ordinal) && bondAtom2Type.AtomTypeName.Equals("C.2", StringComparison.Ordinal))
+                          || (bondAtom2Type.AtomTypeName.Equals("N.am", StringComparison.Ordinal) && bondAtom1Type.AtomTypeName.Equals("C.2", StringComparison.Ordinal))))
                         {
                             sybylBondOrder = "am";
                         }
@@ -232,8 +241,7 @@ namespace NCDK.IO
                         Console.Error.WriteLine(e.StackTrace);
                     }
 
-                    writer.Write((counter + 1) + " " + (mol.Atoms.IndexOf(bond.Begin) + 1) + " "
-                            + (mol.Atoms.IndexOf(bond.End) + 1) + " " + sybylBondOrder);
+                    writer.Write($"{counter + 1} {mol.Atoms.IndexOf(bond.Begin) + 1} {mol.Atoms.IndexOf(bond.End) + 1} {sybylBondOrder}");
                     writer.Write('\n');
                     counter++;
                 }

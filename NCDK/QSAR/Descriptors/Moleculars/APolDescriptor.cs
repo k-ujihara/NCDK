@@ -57,33 +57,28 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private static double[] polarizabilities;
         private static readonly string[] NAMES = { "apol" };
 
-        /// <summary>
-        /// Constructor for the APolDescriptor object.
-        /// </summary>
         public APolDescriptor()
         {
             if (polarizabilities == null)
             {
-                polarizabilities = new double[]{0, 0.666793, 0.204956, 24.3, 5.6, 3.03, 1.76, 1.1, 0.802, 0.557, 0.3956,
+                polarizabilities = new double[] {
+                    0, 0.666793, 0.204956, 24.3, 5.6, 3.03, 1.76, 1.1, 0.802, 0.557, 0.3956,
                     23.6, 10.6, 6.8, 5.38, 3.63, 2.9, 2.18, 1.6411, 43.4, 22.8, 17.8, 14.6, 12.4, 11.6, 9.4, 8.4, 7.5,
                     6.8, 6.1, 7.1, 8.12, 6.07, 4.31, 3.77, 3.05, 2.4844, 47.3, 27.6, 22.7, 17.9, 15.7, 12.8, 11.4, 9.6,
                     8.6, 4.8, 7.2, 7.2, 10.2, 7.7, 6.6, 5.5, 5.35, 4.044, 59.6, 39.7, 31.1, 29.6, 28.2, 31.4, 30.1,
                     28.8, 27.7, 23.5, 25.5, 24.5, 23.6, 22.7, 21.8, 21, 21.9, 16.2, 13.1, 11.1, 9.7, 8.5, 7.6, 6.5,
                     5.8, 5.7, 7.6, 6.8, 7.4, 6.8, 6, 5.3, 48.7, 38.3, 32.1, 32.1, 25.4, 27.4, 24.8, 24.5, 23.3, 23,
-                    22.7, 20.5, 19.7, 23.8, 18.2, 17.5};
+                    22.7, 20.5, 19.7, 23.8, 18.2, 17.5 };
             }
         }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#apol",
                typeof(APolDescriptor).FullName, "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the APolDescriptor object.
-        /// </summary>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             get { return null; }
             set
@@ -105,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int atomicNumber;
             try
             {
-                IsotopeFactory ifac = Isotopes.Instance;
+                var ifac = BODRIsotopeFactory.Instance;
                 IElement element;
                 string symbol;
                 foreach (var atom in container.Atoms)
@@ -119,12 +114,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         apol += polarizabilities[1] * atom.ImplicitHydrogenCount.Value;
                     }
                 }
-                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(apol), DescriptorNames);
+                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(apol), DescriptorNames);
             }
             catch (Exception ex1)
             {
                 Debug.WriteLine(ex1);
-                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, 
+                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, 
                     new CDKException($"Problems with IsotopeFactory due to {ex1.ToString()}", ex1));
             }
         }

@@ -48,6 +48,7 @@ namespace <#= ns.NS #>
     // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
     // @cdk.created 2001-08-06
     // @cdk.keyword polymer
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class Polymer
         : AtomContainer, IPolymer
@@ -87,7 +88,7 @@ namespace <#= ns.NS #>
         /// <inheritdoc/>
         public virtual IEnumerable<KeyValuePair<string, IMonomer>> GetMonomerMap()
         {
-            return monomers.Where(n => n.Key != "");
+            return monomers.Where(n => n.Key.Length != 0);
         }
 
         /// <inheritdoc/>
@@ -136,12 +137,11 @@ namespace <#= ns.NS #>
                 clone.monomers.Add(name, cloned);
             }
 
-			// update sgroups
-			var sgroups = GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            // update sgroups
+            var sgroups = this.GetCtabSgroups();
             if (sgroups != null)
             {
-                clone.SetProperty(CDKPropertyName.CtabSgroups,
-                    SgroupManipulator.Copy(sgroups, map));
+                clone.SetCtabSgroups(SgroupManipulator.Copy(sgroups, map));
             }
 
             return clone;

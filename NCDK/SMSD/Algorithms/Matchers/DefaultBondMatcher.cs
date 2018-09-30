@@ -59,8 +59,7 @@ namespace NCDK.SMSD.Algorithms.Matchers
     {
         private IBond queryBond = null;
         private IQueryBond smartQueryBond = null;
-        private int unsaturation = 0;
-        private bool shouldMatchBonds = false;
+        private readonly int unsaturation = 0;
 
         /// <summary>
         /// Constructor
@@ -70,7 +69,7 @@ namespace NCDK.SMSD.Algorithms.Matchers
             this.queryBond = null;
             this.smartQueryBond = null;
             this.unsaturation = -1;
-            shouldMatchBonds = false;
+            IsBondMatchFlag = false;
         }
 
         /// <summary>
@@ -144,41 +143,31 @@ namespace NCDK.SMSD.Algorithms.Matchers
             return false;
         }
 
-        private int GetValency(IAtom atom)
+        private static int GetValency(IAtom atom)
         {
             return atom.Valency ?? 0;
         }
 
-        private int GetUnsaturation(IAtomContainer container, IBond bond)
+        private static int GetUnsaturation(IAtomContainer container, IBond bond)
         {
             return GetUnsaturation(container, bond.Begin) + GetUnsaturation(container, bond.End);
         }
 
-        private int GetUnsaturation(IAtomContainer container, IAtom atom)
+        private static int GetUnsaturation(IAtomContainer container, IAtom atom)
         {
             return GetValency(atom) - (CountNeighbors(container, atom) + CountImplicitHydrogens(atom));
         }
 
-        private int CountNeighbors(IAtomContainer container, IAtom atom)
+        private static int CountNeighbors(IAtomContainer container, IAtom atom)
         {
             return container.GetConnectedBonds(atom).Count();
         }
 
-        private int CountImplicitHydrogens(IAtom atom)
+        private static int CountImplicitHydrogens(IAtom atom)
         {
             return atom.ImplicitHydrogenCount ?? 0;
         }
 
-        public bool IsBondMatchFlag
-        {
-            get
-            {
-                return shouldMatchBonds;
-            }
-            set
-            {
-                this.shouldMatchBonds = value;
-            }
-        }
+        public bool IsBondMatchFlag { get; set; } = false;
     }
 }

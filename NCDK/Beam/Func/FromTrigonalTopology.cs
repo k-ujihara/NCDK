@@ -14,7 +14,7 @@ namespace NCDK.Beam
     {
         public override Graph Apply(Graph g)
         {
-            Graph h = new Graph(g.Order);
+            var h = new Graph(g.Order);
 
             // copy atom/topology information this is unchanged
             for (int u = 0; u < g.Order; u++)
@@ -30,8 +30,7 @@ namespace NCDK.Beam
                 }
             }
 
-            IDictionary<Edge, Edge> replacements = new Traversal(g).replacement;
-
+            var replacements = new Traversal(g).replacement;
 
             // append the edges, replacing any which need to be changed
             for (int u = 0; u < g.Order; u++)
@@ -40,7 +39,7 @@ namespace NCDK.Beam
                 {
                     if (e.Other(u) > u)
                     {
-                        Edge ee = e;
+                        var ee = e;
                         if (replacements.TryGetValue(e, out Edge replacement))
                             ee = replacement;
                         h.AddEdge(ee);
@@ -51,9 +50,9 @@ namespace NCDK.Beam
             return h;
         }
 
-        private IAtom ReducedAtom(Graph g, int u)
+        private static IAtom ReducedAtom(Graph g, int u)
         {
-            IAtom a = g.GetAtom(u);
+            var a = g.GetAtom(u);
 
             int sum = 0;
             foreach (var e in g.GetEdges(u))
@@ -69,7 +68,7 @@ namespace NCDK.Beam
             private readonly Graph g;
             private readonly bool[] visited;
             private readonly int[] ordering;
-            public IDictionary<Edge, Edge> replacement = new Dictionary<Edge, Edge>();
+            public Dictionary<Edge, Edge> replacement = new Dictionary<Edge, Edge>();
 
             private static readonly Bond[] labels = new Bond[] { Bond.Down, Bond.Up };
 
@@ -88,16 +87,15 @@ namespace NCDK.Beam
 
             private void Visit(int p, int u)
             {
-
                 visited[u] = true;
 
                 // offset - the index of the edge with a double bond label
                 int offset = -1;
 
-                IList<Edge> es = g.GetEdges(u);
+                var es = g.GetEdges(u);
                 for (int i = 0; i < es.Count; i++)
                 {
-                    Edge e = es[i];
+                    var e = es[i];
                     int v = e.Other(u);
                     if (!visited[v])
                         Visit(u, v);
@@ -109,32 +107,24 @@ namespace NCDK.Beam
                 ordering[p] = 0;
                 ordering[u] = 1;
 
-
-                Topology t = g.TopologyOf(u);
+                var t = g.TopologyOf(u);
 
                 if (t.Type == Configuration.ConfigurationType.DoubleBond)
                 {
-
                     if (offset < 0)
-                        throw new ArgumentException("found atom-centric double bond" +
-                                                                   "specifiation but no double bond label.");
+                        throw new ArgumentException("found atom-centric double bond specifiation but no double bond label.");
 
                     // Order the topology to ensure it matches the traversal Order
                     Topology topology = t.OrderBy(ordering);
 
                     // labelling start depends on configuration ...
-                    int j = topology.Configuration
-                                    .Shorthand == Configuration.AntiClockwise ? 0
-                                                                                 : 1;
+                    int j = topology.Configuration.Shorthand == Configuration.AntiClockwise ? 0 : 1;
 
                     // ... and which end of the double bond we're looking from
                     if (ordering[es[offset].Other(u)] < ordering[u])
                     {
-
                     }
-                    else if (es.Count == 2 &&
-                          ordering[u] < ordering[es[(offset + 1) % es.Count]
-                                                   .Other(u)])
+                    else if (es.Count == 2 && ordering[u] < ordering[es[(offset + 1) % es.Count].Other(u)])
                     {
                         j++;
                     }
@@ -142,18 +132,16 @@ namespace NCDK.Beam
                     // now create the new labels for the non-double bond atoms
                     for (int i = 1; i < es.Count; i++)
                     {
-                        Edge e = es[(offset + i) % es.Count];
-                        Bond label = labels[j++ % 2];
+                        var e = es[(offset + i) % es.Count];
+                        var label = labels[j++ % 2];
 
-                        Edge f = new Edge(u,
-                                          e.Other(u),
-                                          label);
+                        var f = new Edge(u, e.Other(u), label);
                         if (replacement.TryGetValue(e, out Edge existing))
                         {
                             // check for conflict - need to rewrite existing labels
                             if (existing.GetBond(u) != label)
                             {
-                                BitArray visited = new BitArray(g.Order);
+                                var visited = new BitArray(g.Order);
                                 visited.Set(u, true);
                                 InvertExistingDirectionalLabels(visited, e.Other(u));
                             }
@@ -170,7 +158,7 @@ namespace NCDK.Beam
                     return;
                 foreach (var e in g.GetEdges(u))
                 {
-                    int v = e.Other(u);
+                    var v = e.Other(u);
                     if (!visited[v])
                     {
                         if (replacement.TryGetValue(e, out Edge f))

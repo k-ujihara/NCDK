@@ -27,6 +27,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using NCDK.Tools;
+using System;
+using System.Linq;
 
 namespace NCDK.IO
 {
@@ -207,7 +209,7 @@ namespace NCDK.IO
             ExpectFormat("NCDK.Data.ASN.PubChem.cid1145.xml", PubChemCompoundXMLFormat.Instance);
         }
 
-        private void ExpectFormat(string filename, IResourceFormat expectedFormat)
+        private static void ExpectFormat(string filename, IResourceFormat expectedFormat)
         {
             var ins = ResourceLoader.GetAsStream(filename);
             Assert.IsNotNull(ins, $"Cannot find file: {filename}");
@@ -298,15 +300,16 @@ namespace NCDK.IO
             public string MIMEType => null;
             public bool IsXmlBased => false;
             public string PreferredNameExtension => "dummy";
-            public string[] NameExtensions { get; } = new string[] { "dummy", "dum" };
+            public IReadOnlyList<string> NameExtensions { get; } = new string[] { "dummy", "dum" };
 
-            public MatchResult Matches(IList<string> lines)
+            public MatchResult Matches(IEnumerable<string> lines)
             {
-                if (lines.Count > 0 && lines[0].StartsWith("DummyFormat:"))
+                var first = lines.FirstOrDefault();
+                if (first != null && first.StartsWith("DummyFormat:", StringComparison.Ordinal))
                 {
                     return new MatchResult(true, this, 0);
                 }
-                return MatchResult.NO_MATCH;
+                return MatchResult.NoMatch;
             }
         }
 

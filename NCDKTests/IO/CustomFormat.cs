@@ -22,6 +22,7 @@
  */
 using NCDK.IO.Formats;
 using NCDK.Tools;
+using System.Collections.Generic;
 
 namespace NCDK.IO
 {
@@ -38,7 +39,7 @@ namespace NCDK.IO
         public string WriterClassName => "NCDK.IO.CustomWriter";
         public string FormatName => null;
         public string MIMEType => null;
-        public string[] NameExtensions => null;
+        public IReadOnlyList<string> NameExtensions => null;
         public string PreferredNameExtension => null;
         public bool IsXmlBased => false;
     }

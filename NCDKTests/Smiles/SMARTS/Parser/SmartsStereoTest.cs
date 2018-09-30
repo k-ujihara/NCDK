@@ -22,6 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using System.Linq;
 
 namespace NCDK.Smiles.SMARTS.Parser
@@ -190,7 +191,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         static SMARTSQueryTool CreateFromSmarts(string smarts)
         {
-            return new SMARTSQueryTool(smarts, Default.ChemObjectBuilder.Instance);
+            return new SMARTSQueryTool(smarts, ChemObjectBuilder.Instance);
         }
 
         private static readonly SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);

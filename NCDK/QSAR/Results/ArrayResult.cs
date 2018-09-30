@@ -33,8 +33,8 @@ namespace NCDK.QSAR.Results
     public class ArrayResult<T>
         : IArrayResult, IReadOnlyList<T>
     {
-        int size;
-        List<T> array;
+        readonly int size;
+        readonly List<T> array;
 
         public ArrayResult()
             : this(0)

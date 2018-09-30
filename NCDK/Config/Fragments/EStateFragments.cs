@@ -29,6 +29,8 @@
  * OF THIS SOFTWARE, Even IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+using System.Collections.Generic;
+
 namespace NCDK.Config.Fragments
 {
     /// <summary>
@@ -44,15 +46,13 @@ namespace NCDK.Config.Fragments
     // @cdk.keyword estate
     // @cdk.keyword fragment
     // @cdk.githash
-    public class EStateFragments
+    public static class EStateFragments
     {
+
         /// <summary>
-        /// The names of the fragments.
+        /// The fragment names.
         /// </summary>
-        /// <remarks>
-        /// See <see href="http://www.edusoft-lc.com/molconn/manuals/350/appV.html">here</see> for the corresponding chemical groups
-        /// </remarks>
-        private static readonly string[] NAMES = new[] {"sLi", "ssBe", "ssssBe", "ssBH", "sssB", "ssssB", "sCH3", "dCH2", "ssCH2",
+        public static IReadOnlyList<string> Names { get; } = new[] {"sLi", "ssBe", "ssssBe", "ssBH", "sssB", "ssssB", "sCH3", "dCH2", "ssCH2",
             "tCH", "dsCH", "aaCH", "sssCH", "ddC", "tsC", "dssC", "aasC", "aaaC", "ssssC", "sNH3", "sNH2", "ssNH2",
             "dNH", "ssNH", "aaNH", "tN", "sssNH", "dsN", "aaN", "sssN", "ddsN", "aasN", "ssssN", "sOH", "dO", "ssO",
             "aaO", "sF", "sSiH3", "ssSiH2", "sssSiH", "ssssSi", "sPH2", "ssPH", "sssP", "dsssP", "sssssP", "sSH", "dS",
@@ -63,7 +63,7 @@ namespace NCDK.Config.Fragments
         /// <summary>
         /// The SMARTS patterns.
         /// </summary>
-        private static readonly string[] SMARTS = new[] {"[LiD1]-*", "[BeD2](-*)-*", "[BeD4](-*)(-*)(-*)-*", "[BD2H](-*)-*",
+        public static IReadOnlyList<string> Smarts { get; } = new[] {"[LiD1]-*", "[BeD2](-*)-*", "[BeD4](-*)(-*)(-*)-*", "[BD2H](-*)-*",
             "[BD3](-*)(-*)-*", "[BD4](-*)(-*)(-*)-*", "[CD1H3]-*", "[CD1H2]=*", "[CD2H2](-*)-*", "[CD1H]#*",
             "[CD2H](=*)-*", "[C,c;D2H](:*):*", "[CD3H](-*)(-*)-*", "[CD2H0](=*)=*", "[CD2H0](#*)-*",
             "[CD3H0](=*)(-*)-*", "[C,c;D3H0](:*)(:*)-*", "[C,c;D3H0](:*)(:*):*", "[CD4H0](-*)(-*)(-*)-*", "[ND1H3]-*",
@@ -79,15 +79,5 @@ namespace NCDK.Config.Fragments
             "[SeD2H0](-*)-*", "[SeD2H0](:*):*", "[SeD3H0](=*)(-*)-*", "[SeD4H0](=*)(=*)(-*)-*", "[BrD1]-*",
             "[SnD1H3]-*", "[SnD2H2](-*)-*", "[SnD3H1](-*)(-*)-*", "[SnD4H0](-*)(-*)(-*)-*", "[ID1]-*", "[PbD1H3]-*",
             "[PbD2H2](-*)-*", "[PbD3H1](-*)(-*)-*", "[PbD4H0](-*)(-*)(-*)-*",};
-
-        /// <summary>
-        /// The fragment names.
-        /// </summary>
-        public static string[] Names => NAMES;
-
-        /// <summary>
-        /// The SMARTS patterns.
-        /// </summary>
-        public static string[] Smarts => SMARTS;
     }
 }

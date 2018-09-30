@@ -18,6 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.QSAR.Results;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 
@@ -38,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestAtomHybridizationDescriptorTest()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("C#CC=CC"); //
             AddExplicitHydrogens(mol);
             var expectedStates = new Hybridization[]
@@ -63,7 +64,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 "C(#CN1CCCCC1)[Sn](C)(C)C", "c1([As+](c2ccccc2)(c2ccccc2)C)ccccc1.[I-]",
                 "c1(noc(n1)CCC(=O)N(CC)CC)c1ccc(cc1)C", "c1c(c(ccc1)O)/C=N/CCCC", "c1(ccc(cc1)C#Cc1ccc(cc1)C#C)OC"};
 
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol;
 
             foreach (var smile in smiles)

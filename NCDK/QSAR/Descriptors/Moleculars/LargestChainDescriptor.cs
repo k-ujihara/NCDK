@@ -61,14 +61,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private bool checkRingSystem = false;
         private static readonly string[] NAMES = { "nAtomLC" };
 
-        /// <summary>
-        /// Constructor for the LargestChain object.
-        /// </summary>
         public LargestChainDescriptor() { }
 
         /// <inheritdoc/> 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestChain",
                 typeof(LargestChainDescriptor).FullName,
@@ -76,18 +73,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// The parameters attribute of the LargestChain object.
-        /// <para>
+        /// </summary>
+        /// <remarks>
         /// This descriptor takes two parameters, which should be Booleans to indicate whether
         /// aromaticity and ring member ship needs been checked (TRUE) or not (FALSE). The first
         /// parameter (aromaticity) is deprecated and ignored.
-        /// </para>
-        /// </summary>
+        /// </remarks>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 2)
+                if (value.Count > 2)
                 {
                     throw new CDKException("LargestChainDescriptor only expects two parameter");
                 }
@@ -110,7 +107,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private IDescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
         }
 
         /// <summary>
@@ -131,9 +128,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 if (!atom.IsInRing && atom.AtomicNumber != 1)
                     included.Add(atom);
             }
-            IAtomContainer subset = SubsetMol(atomContainer, included);
+            var subset = SubsetMol(atomContainer, included);
 
-            AllPairsShortestPaths apsp = new AllPairsShortestPaths(subset);
+            var apsp = new AllPairsShortestPaths(subset);
 
             int max = 0;
             int numAtoms = subset.Atoms.Count;
@@ -147,28 +144,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(max), DescriptorNames);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(max), DescriptorNames);
         }
 
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
-
-        /// <summary>
-        /// Gets the parameterNames attribute of the LargestPiSystemDescriptor object.
-        /// </summary>
-        /// <returns>The parameterNames value</returns>
         public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity", "checkRingSystem" };
-
-        /// <summary>
-        /// Gets the parameterType attribute of the LargestChainDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
         public override object GetParameterType(string name) => true;
 
         private static IAtomContainer SubsetMol(IAtomContainer mol, ISet<IAtom> include)
         {
-            IAtomContainer cpy = mol.Builder.NewAtomContainer();
+            var cpy = mol.Builder.NewAtomContainer();
             foreach (var atom in mol.Atoms)
             {
                 if (include.Contains(atom))

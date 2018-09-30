@@ -21,6 +21,7 @@ using NCDK.AtomTypes;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -80,7 +81,7 @@ namespace NCDK.Reactions.Types
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             MakeSureAtomTypesAreRecognized(molecule);
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
             /* initiate */
@@ -135,7 +136,7 @@ namespace NCDK.Reactions.Types
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             MakeSureAtomTypesAreRecognized(molecule);
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
             /* initiate */
@@ -302,7 +303,7 @@ namespace NCDK.Reactions.Types
         /// </summary>
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             // C{0}1=C{1}C{2}(=C{3}C{4}2=C{5}1C{6}=C{7}C{8}=C{9}2)C{10}
             // C1=CC(=CC2=C1C=CC=C2)C
             IAtomContainer molecule = builder.NewAtomContainer();

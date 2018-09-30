@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
-    public class JJTSMARTSParserState
+    internal class JJTSMARTSParserState
     {
-        private IList<Node> nodes;
+        private IList<INode> nodes;
         private IList<int> marks;
 
         private int sp;        // number of nodes on stack
@@ -14,7 +14,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public JJTSMARTSParserState()
         {
-            nodes = new List<Node>();
+            nodes = new List<INode>();
             marks = new List<int>();
             sp = 0;
             mk = 0;
@@ -40,13 +40,13 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         /* Returns the root node of the AST.  It only makes sense to call
            this after a successful parse. */
-        public Node RootNode()
+        public INode RootNode()
         {
             return nodes[0];
         }
 
         /* Pushes a node on to the stack. */
-        public void PushNode(Node n)
+        public void PushNode(INode n)
         {
             nodes.Add(n);
             ++sp;
@@ -54,7 +54,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         /* Returns the node on the top of the stack, and remove it from the
            stack.  */
-        public Node PopNode()
+        public INode PopNode()
         {
             if (--sp < mk)
             {
@@ -67,7 +67,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         /* Returns the node currently on the top of the stack. */
-        public Node PeekNode()
+        public INode PeekNode()
         {
             return nodes[nodes.Count - 1];
         }
@@ -80,7 +80,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
 
-        public void ClearNodeScope(Node n)
+        public void ClearNodeScope(INode n)
         {
             while (sp > mk)
             {
@@ -90,7 +90,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             marks.RemoveAt(marks.Count - 1);
         }
 
-        public void OpenNodeScope(Node n)
+        public void OpenNodeScope(INode n)
         {
             marks.Add(mk);
             mk = sp;
@@ -102,13 +102,13 @@ namespace NCDK.Smiles.SMARTS.Parser
            children.  That number of nodes are popped from the stack and
            made the children of the definite node.  Then the definite node
            is pushed on to the stack. */
-        public void CloseNodeScope(Node n, int num)
+        public void CloseNodeScope(INode n, int num)
         {
             mk = marks[marks.Count - 1];
             marks.RemoveAt(marks.Count - 1);
             while (num-- > 0)
             {
-                Node c = PopNode();
+                INode c = PopNode();
                 c.JjtSetParent(n);
                 n.JjtAddChild(c, num);
             }
@@ -123,7 +123,7 @@ namespace NCDK.Smiles.SMARTS.Parser
            made children of the conditional node, which is then pushed
            on to the stack.  If the condition is false the node is not
            constructed and they are left on the stack. */
-        public void CloseNodeScope(Node n, bool condition)
+        public void CloseNodeScope(INode n, bool condition)
         {
             if (condition)
             {
@@ -132,7 +132,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 marks.RemoveAt(marks.Count - 1);
                 while (a-- > 0)
                 {
-                    Node c = PopNode();
+                    INode c = PopNode();
                     c.JjtSetParent(n);
                     n.JjtAddChild(c, a);
                 }

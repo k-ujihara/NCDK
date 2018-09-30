@@ -37,12 +37,10 @@ namespace NCDK.Isomorphisms.Matchers
             Id = atom.Id;
         }
 
-        public void SetOperator(string str) { }
-
         public override bool Matches(IAtom atom)
         {
-            return this.Symbol.Equals(atom.Symbol) && this.FormalCharge == atom.FormalCharge
-                    && this.Id.Equals(atom.Id);
+            return this.Symbol.Equals(atom.Symbol, StringComparison.Ordinal) && this.FormalCharge == atom.FormalCharge
+                    && this.Id.Equals(atom.Id, StringComparison.Ordinal);
         }
 
         public override string ToString()

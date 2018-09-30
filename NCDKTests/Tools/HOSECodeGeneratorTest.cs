@@ -23,13 +23,14 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Numerics;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace NCDK.Tools
 {
@@ -42,7 +43,7 @@ namespace NCDK.Tools
     [TestClass()]
     public class HOSECodeGeneratorTest : CDKTestCase
     {
-        static bool standAlone = false;
+        static readonly bool standAlone = false;
 
         // @cdk.bug 968852
         [TestMethod()]
@@ -51,7 +52,7 @@ namespace NCDK.Tools
             string filename = "NCDK.Data.MDL.2,5-dimethyl-furan.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-            IAtomContainer mol1 = reader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
+            IAtomContainer mol1 = reader.Read(ChemObjectBuilder.Instance.NewAtomContainer());
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             Aromaticity.CDKLegacy.Apply(mol1);
             Assert.AreEqual(new HOSECodeGenerator().GetHOSECode(mol1, mol1.Atoms[2], 6),
@@ -64,12 +65,12 @@ namespace NCDK.Tools
             string filename = "NCDK.Data.MDL.isopropylacetate.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-            IAtomContainer mol1 = reader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
+            IAtomContainer mol1 = reader.Read(ChemObjectBuilder.Instance.NewAtomContainer());
             string code1 = new HOSECodeGenerator().GetHOSECode(mol1, mol1.Atoms[0], 6);
             filename = "NCDK.Data.MDL.testisopropylacetate.mol";
             Stream ins2 = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader2 = new MDLV2000Reader(ins2, ChemObjectReaderMode.Strict);
-            IAtomContainer mol2 = reader2.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
+            IAtomContainer mol2 = reader2.Read(ChemObjectBuilder.Instance.NewAtomContainer());
             string code2 = new HOSECodeGenerator().GetHOSECode(mol2, mol2.Atoms[2], 6);
             Assert.AreNotSame(code2, code1);
         }
@@ -217,9 +218,11 @@ namespace NCDK.Tools
             for (int f = 0; f < 23; f++)
             {
                 s = hcg.GetHOSECode(mol, mol.Atoms[f], 1);
-                if (standAlone) Console.Out.Write("|" + s + "| -> " + result[f]);
+                if (standAlone)
+                    Console.Out.Write("|" + s + "| -> " + result[f]);
                 Assert.AreEqual(result[f], s);
-                if (standAlone) Console.Out.WriteLine("  OK");
+                if (standAlone)
+                    Console.Out.WriteLine("  OK");
             }
         }
 
@@ -236,13 +239,14 @@ namespace NCDK.Tools
                 "O(//)", "CC(//)", "CCC(//)", "CCC(//)", "CCC(//)"};
 
             string s = null;
-            HOSECodeGenerator hcg = new HOSECodeGenerator();
             for (int f = 0; f < startData.Length; f++)
             {
-                s = hcg.MakeBremserCompliant(startData[f]);
-                if (standAlone) Console.Out.Write("|" + s + "| -> " + result[f]);
+                s = HOSECodeGenerator.MakeBremserCompliant(startData[f]);
+                if (standAlone)
+                    Console.Out.Write("|" + s + "| -> " + result[f]);
                 Assert.AreEqual(result[f], s);
-                if (standAlone) Console.Out.WriteLine("  OK");
+                if (standAlone)
+                    Console.Out.WriteLine("  OK");
             }
         }
 
@@ -402,9 +406,11 @@ namespace NCDK.Tools
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
                 Aromaticity.CDKLegacy.Apply(mol);
                 s = hcg.GetHOSECode(mol, mol.Atoms[f], 4);
-                if (standAlone) Console.Out.WriteLine(f + "|" + s + "| -> " + result[f]);
+                if (standAlone)
+                    Console.Out.WriteLine(f + "|" + s + "| -> " + result[f]);
                 Assert.AreEqual(result[f], s);
-                if (standAlone) Console.Out.WriteLine("  OK");
+                if (standAlone)
+                    Console.Out.WriteLine("  OK");
             }
         }
 
@@ -417,7 +423,7 @@ namespace NCDK.Tools
                 "C-3;*C*C(*C,*C/*C*N,*&/*&*C,*C)", "C-3;*C*C(*C,*C/*C*C,*&/*&*N,*C)",
                 "C-3;*C*C(*C*C,*C/*C*N,*C,*&/*&,*&,*&)"};
 
-            IAtomContainer molecule = (new SmilesParser(Default.ChemObjectBuilder.Instance))
+            IAtomContainer molecule = (new SmilesParser(ChemObjectBuilder.Instance))
                     .ParseSmiles("C1(C=CN2)=C2C=CC=C1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.CDKLegacy.Apply(molecule);
@@ -427,9 +433,11 @@ namespace NCDK.Tools
             for (int f = 0; f < molecule.Atoms.Count; f++)
             {
                 s = hcg.GetHOSECode(molecule, molecule.Atoms[f], 4);
-                if (standAlone) Console.Out.WriteLine(f + "|" + s + "| -> " + result[f]);
+                if (standAlone)
+                    Console.Out.WriteLine(f + "|" + s + "| -> " + result[f]);
                 Assert.AreEqual(result[f], s);
-                if (standAlone) Console.Out.WriteLine("  OK");
+                if (standAlone)
+                    Console.Out.WriteLine("  OK");
             }
         }
 
@@ -441,7 +449,7 @@ namespace NCDK.Tools
             HOSECodeGenerator hcg = null;
             string[] result = { "C-4;C(=C/Y/)", "C-3;=CC(Y,//)", "C-3;=CY(C,//)", "Br-1;C(=C/C/)" };
 
-            molecule = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CC=CBr");
+            molecule = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("CC=CBr");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.CDKLegacy.Apply(molecule);
             hcg = new HOSECodeGenerator();
@@ -449,9 +457,11 @@ namespace NCDK.Tools
             for (int f = 0; f < molecule.Atoms.Count; f++)
             {
                 s = hcg.GetHOSECode(molecule, molecule.Atoms[f], 4);
-                if (standAlone) Console.Out.Write("|" + s + "| -> " + result[f]);
+                if (standAlone)
+                    Console.Out.Write("|" + s + "| -> " + result[f]);
                 Assert.AreEqual(result[f], s);
-                if (standAlone) Console.Out.WriteLine("  OK");
+                if (standAlone)
+                    Console.Out.WriteLine("  OK");
             }
         }
 
@@ -463,7 +473,7 @@ namespace NCDK.Tools
             HOSECodeGenerator hcg = null;
             string[] result = { "C-4-;C(=C/Y'+4'/)", "C-3;=CC-(Y'+4',//)", "C-3;=CY'+4'(C-,//)", "Br-1'+4';C(=C/C-/)" };
 
-            molecule = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CC=CBr");
+            molecule = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("CC=CBr");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             bool isAromatic = Aromaticity.CDKLegacy.Apply(molecule);
             Assert.IsFalse(isAromatic);
@@ -474,22 +484,24 @@ namespace NCDK.Tools
             for (int f = 0; f < molecule.Atoms.Count; f++)
             {
                 s = hcg.GetHOSECode(molecule, molecule.Atoms[f], 4);
-                if (standAlone) Console.Out.Write("|" + s + "| -> " + result[f]);
+                if (standAlone)
+                    Console.Out.Write("|" + s + "| -> " + result[f]);
                 Assert.AreEqual(result[f], s);
-                if (standAlone) Console.Out.WriteLine("  OK");
+                if (standAlone)
+                    Console.Out.WriteLine("  OK");
             }
         }
 
         [TestMethod()]
         public void TestGetAtomsOfSphere()
         {
-            IAtomContainer molecule = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CC=CBr");
+            IAtomContainer molecule = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("CC=CBr");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.CDKLegacy.Apply(molecule);
             HOSECodeGenerator hcg = new HOSECodeGenerator();
 
             hcg.GetSpheres(molecule, molecule.Atoms[0], 4, true);
-          var atoms = hcg.GetNodesInSphere(3);
+            var atoms = hcg.GetNodesInSphere(3).ToList();
 
             Assert.AreEqual(1, atoms.Count);
             Assert.AreEqual("Br", atoms[0].Symbol);
@@ -498,14 +510,14 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestGetAtomsOfSphereWithHydr()
         {
-            IAtomContainer molecule = (new SmilesParser(Default.ChemObjectBuilder.Instance))
+            IAtomContainer molecule = (new SmilesParser(ChemObjectBuilder.Instance))
                     .ParseSmiles("C([H])([H])([H])C([H])=C([H])Br");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.CDKLegacy.Apply(molecule);
             HOSECodeGenerator hcg = new HOSECodeGenerator();
 
             hcg.GetSpheres(molecule, molecule.Atoms[0], 3, true);
-            var atoms = hcg.GetNodesInSphere(3);
+            var atoms = hcg.GetNodesInSphere(3).ToList();
 
             Assert.AreEqual(2, atoms.Count);
 

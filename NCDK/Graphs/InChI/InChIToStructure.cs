@@ -21,6 +21,7 @@ using NCDK.Config;
 using NCDK.Stereo;
 using NCDK.Tools;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -47,7 +48,6 @@ namespace NCDK.Graphs.InChI
     {
         internal NInchiInputInchi input;
         internal NInchiOutputStructure output;
-        protected IAtomContainer molecule;
 
         // magic number - indicates isotope mass is relative
         private const int ISOTOPIC_SHIFT_FLAG = 10000;
@@ -57,7 +57,7 @@ namespace NCDK.Graphs.InChI
         /// </summary>
         /// <param name="inchi"></param>
         /// <param name="builder"></param>
-        internal protected InChIToStructure(string inchi, IChemObjectBuilder builder)
+        internal InChIToStructure(string inchi, IChemObjectBuilder builder)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace NCDK.Graphs.InChI
         /// <param name="inchi"></param>
         /// <param name="builder"></param>
         /// <param name="options"></param>
-        protected internal InChIToStructure(string inchi, IChemObjectBuilder builder, string options)
+        internal InChIToStructure(string inchi, IChemObjectBuilder builder, string options)
         {
             try
             {
@@ -95,7 +95,7 @@ namespace NCDK.Graphs.InChI
         /// <param name="inchi"></param>
         /// <param name="builder"></param>
         /// <param name="options"></param>
-        protected internal InChIToStructure(string inchi, IChemObjectBuilder builder, IList<string> options)
+        internal InChIToStructure(string inchi, IChemObjectBuilder builder, IList<string> options)
         {
             if (options == null)
                 throw new ArgumentNullException(nameof(options));
@@ -115,7 +115,7 @@ namespace NCDK.Graphs.InChI
         /// Gets structure from InChI, and converts InChI library data structure into an IAtomContainer.
         /// </summary>
         /// <param name="builder"></param>
-        protected internal void GenerateAtomContainerFromInChI(IChemObjectBuilder builder)
+        private void GenerateAtomContainerFromInChI(IChemObjectBuilder builder)
         {
             try
             {
@@ -127,7 +127,7 @@ namespace NCDK.Graphs.InChI
             }
 
             //molecule = new AtomContainer();
-            molecule = builder.NewAtomContainer();
+            AtomContainer = builder.NewAtomContainer();
 
             IDictionary<NInchiAtom, IAtom> inchiCdkAtomMap = new Dictionary<NInchiAtom, IAtom>();
 
@@ -158,7 +158,7 @@ namespace NCDK.Graphs.InChI
                     {
                         try
                         {
-                            int massNumber = Isotopes.Instance.GetMajorIsotope(cAt.AtomicNumber.Value).MassNumber.Value;
+                            int massNumber = BODRIsotopeFactory.Instance.GetMajorIsotope(cAt.AtomicNumber.Value).MassNumber.Value;
                             cAt.MassNumber = massNumber + (isotopicMass - ISOTOPIC_SHIFT_FLAG);
                         }
                         catch (IOException e)
@@ -172,7 +172,7 @@ namespace NCDK.Graphs.InChI
                     }
                 }
 
-                molecule.Atoms.Add(cAt);
+                AtomContainer.Atoms.Add(cAt);
             }
 
             for (int i = 0; i < output.Bonds.Count; i++)
@@ -231,7 +231,7 @@ namespace NCDK.Graphs.InChI
                         cBo.Stereo = BondStereo.None;
                         break;
                 }
-                molecule.Bonds.Add(cBo);
+                AtomContainer.Bonds.Add(cBo);
             }
 
             for (int i = 0; i < output.Stereos.Count; i++)
@@ -263,7 +263,7 @@ namespace NCDK.Graphs.InChI
                             continue;
                     }
 
-                    IReadOnlyStereoElement<IChemObject, IChemObject> stereoElement = null;
+                    IStereoElement<IChemObject, IChemObject> stereoElement = null;
 
                     switch (stereo0d.StereoType)
                     {
@@ -281,7 +281,7 @@ namespace NCDK.Graphs.InChI
                                 //    /         \
                                 //   p1         p3
                                 IAtom[] peripherals = neighbors;
-                                IAtom[] terminals = ExtendedTetrahedral.FindTerminalAtoms(molecule, focus);
+                                IAtom[] terminals = ExtendedTetrahedral.FindTerminalAtoms(AtomContainer, focus);
 
                                 // InChI always provides the terminal atoms t0 and t1 as
                                 // periphals, here we find where they are and then add in
@@ -298,19 +298,19 @@ namespace NCDK.Graphs.InChI
                                 {
                                     if (peripherals[1].Equals(terminal))
                                     {
-                                        peripherals[1] = FindOtherSinglyBonded(molecule, terminal, peripherals[0]);
+                                        peripherals[1] = FindOtherSinglyBonded(AtomContainer, terminal, peripherals[0]);
                                     }
                                     else if (peripherals[2].Equals(terminal))
                                     {
-                                        peripherals[2] = FindOtherSinglyBonded(molecule, terminal, peripherals[3]);
+                                        peripherals[2] = FindOtherSinglyBonded(AtomContainer, terminal, peripherals[3]);
                                     }
                                     else if (peripherals[0].Equals(terminal))
                                     {
-                                        peripherals[0] = FindOtherSinglyBonded(molecule, terminal, peripherals[1]);
+                                        peripherals[0] = FindOtherSinglyBonded(AtomContainer, terminal, peripherals[1]);
                                     }
                                     else if (peripherals[3].Equals(terminal))
                                     {
-                                        peripherals[3] = FindOtherSinglyBonded(molecule, terminal, peripherals[2]);
+                                        peripherals[3] = FindOtherSinglyBonded(AtomContainer, terminal, peripherals[2]);
                                     }
                                 }
 
@@ -320,7 +320,7 @@ namespace NCDK.Graphs.InChI
                     }
 
                     Trace.Assert(stereoElement != null);
-                    molecule.StereoElements.Add(stereoElement);
+                    AtomContainer.StereoElements.Add(stereoElement);
                 }
                 else if (stereo0d.StereoType == INCHI_STEREOTYPE.DoubleBond)
                 {
@@ -339,7 +339,7 @@ namespace NCDK.Graphs.InChI
                     IAtom y = inchiCdkAtomMap[neighbors[3]];
 
                     // XXX: AtomContainer is doing slow lookup
-                    IBond stereoBond = molecule.GetBond(a, b);
+                    IBond stereoBond = AtomContainer.GetBond(a, b);
                     stereoBond.SetAtoms(new[] { a, b }); // ensure a is first atom
 
                     DoubleBondConformation conformation = DoubleBondConformation.Unset;
@@ -357,8 +357,8 @@ namespace NCDK.Graphs.InChI
                     // unspecified not stored
                     if (conformation.IsUnset()) continue;
 
-                    molecule.StereoElements.Add(new DoubleBondStereochemistry(stereoBond, new IBond[]{molecule.GetBond(x, a),
-                            molecule.GetBond(b, y)}, conformation));
+                    AtomContainer.StereoElements.Add(new DoubleBondStereochemistry(stereoBond, new IBond[]{AtomContainer.GetBond(x, a),
+                            AtomContainer.GetBond(b, y)}, conformation));
                 }
                 else
                 {
@@ -387,7 +387,7 @@ namespace NCDK.Graphs.InChI
         /// <summary>
         /// Generated molecule.
         /// </summary>
-        public IAtomContainer AtomContainer => molecule;
+        public IAtomContainer AtomContainer { get; private set; }
 
         /// <summary>
         /// Return status from InChI process.  OKAY and WARNING indicate
@@ -407,15 +407,54 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Returns warning flags, see INCHIDIFF in inchicmp.h.
-        /// 
-        /// [x][y]:
+        /// </summary>
+        /// <remarks>
+        /// [x * 2 + y]:
         /// <list type="bullet">
         /// <item>x=0 =&gt; Reconnected if present in InChI otherwise Disconnected/Normal</item>
         /// <item>x=1 =&gt; Disconnected layer if Reconnected layer is present</item>
         /// <item>y=1 =&gt; Main layer or Mobile-H</item>
         /// <item>y=0 =&gt; Fixed-H layer</item>
         /// </list>
+        /// </remarks>
+        public IReadOnlyList<ulong> WarningFlags => output.WarningFlags;
+
+        /// <summary>
+        /// Gets structure generator for an InChI string.
         /// </summary>
-        public ulong[,] WarningFlags => output.WarningFlags;
+        /// <param name="inchi">InChI to generate structure from.</param>
+        /// <param name="builder">the builder to use</param>
+        /// <returns>the InChI structure generator object</returns>
+        /// <exception cref="CDKException">if the generator cannot be instantiated</exception>
+        public static InChIToStructure FromInChI(string inchi, IChemObjectBuilder builder)
+        {
+            return new InChIToStructure(inchi, builder);
+        }
+
+        /// <summary>
+        /// Gets structure generator for an InChI string.
+        /// </summary>
+        /// <param name="inchi">InChI to generate structure from.</param>
+        /// <param name="builder">the builder to employ</param>
+        /// <param name="options">string of options for structure generation.</param>
+        /// <returns>the InChI structure generator object</returns>
+        /// <exception cref="CDKException">if the generator cannot be instantiated</exception>
+        public static InChIToStructure FromInChI(string inchi, IChemObjectBuilder builder, string options)
+        {
+            return new InChIToStructure(inchi, builder, options);
+        }
+
+        /// <summary>
+        /// Gets structure generator for an InChI string.
+        /// </summary>
+        /// <param name="inchi">InChI to generate structure from.</param>
+        /// <param name="options">List of options (net.sf.jniinchi.INCHI_OPTION) for structure generation.</param>
+        /// <param name="builder">the builder to employ</param>
+        /// <returns>the InChI structure generator object</returns>
+        /// <exception cref="CDKException">if the generator cannot be instantiated</exception>
+        public static InChIToStructure FromInChI(string inchi, IChemObjectBuilder builder, IList<string> options)
+        {
+            return new InChIToStructure(inchi, builder, options);
+        }
     }
 }

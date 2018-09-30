@@ -45,6 +45,7 @@
  * THE SOFTWARE.
  */
 using NCDK.Isomorphisms.Matchers;
+using System;
 using System.Linq;
 
 namespace NCDK.SMSD.Algorithms.Matchers
@@ -59,23 +60,12 @@ namespace NCDK.SMSD.Algorithms.Matchers
     {
         private int maximumNeighbors;
         private string symbol = null;
-        private IAtom qAtom = null;
-        private bool shouldMatchBonds = false;
+        private readonly IAtom qAtom = null;
 
         /// <summary>
         /// <returns>the shouldMatchBonds</returns>
         /// </summary>
-        public bool IsBondMatchFlag
-        {
-            get
-            {
-                return shouldMatchBonds;
-            }
-            set
-            {
-                this.shouldMatchBonds = value;
-            }
-        }
+        public bool IsBondMatchFlag { get; set; } = false;
 
         /// <summary>
         /// Constructor
@@ -154,7 +144,7 @@ namespace NCDK.SMSD.Algorithms.Matchers
             {
                 return false;
             }
-            return symbol.Equals(atom.Symbol);
+            return symbol.Equals(atom.Symbol, StringComparison.Ordinal);
         }
 
         private bool MatchMaximumNeighbors(IAtomContainer targetContainer, IAtom targetAtom)
@@ -168,17 +158,17 @@ namespace NCDK.SMSD.Algorithms.Matchers
             return maximumTargetNeighbors >= maximumNeighbors;
         }
 
-        private int CountImplicitHydrogens(IAtom atom)
+        private static int CountImplicitHydrogens(IAtom atom)
         {
             return atom.ImplicitHydrogenCount ?? 0;
         }
 
-        private int CountSaturation(IAtomContainer container, IAtom atom)
+        private static int CountSaturation(IAtomContainer container, IAtom atom)
         {
             return CountNeighbors(container, atom) + CountImplicitHydrogens(atom);
         }
 
-        private int CountNeighbors(IAtomContainer container, IAtom atom)
+        private static int CountNeighbors(IAtomContainer container, IAtom atom)
         {
             return container.GetConnectedAtoms(atom).Count();
         }

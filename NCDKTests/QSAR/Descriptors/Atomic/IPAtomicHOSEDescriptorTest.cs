@@ -16,8 +16,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.QSAR.Results;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
@@ -31,9 +33,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
     [TestClass()]
     public class IPAtomicHOSEDescriptorTest : AtomicDescriptorTest
     {
-        private SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-
+        private SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+        
         /// <summary>
         /// Constructor for the IPAtomicHOSEDescriptorTest object
         /// </summary>
@@ -60,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             IAtomContainer mol = sp.ParseSmiles("CCCCl");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
-            lpcheck.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             double result = ((Result<double>)descriptor.Calculate(mol.Atoms[3], mol).Value).Value;
             double resultAccordingNIST = 10.8;
@@ -78,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             IAtomContainer mol = sp.ParseSmiles("CC(CC)Cl"); // not in db
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
-            lpcheck.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             double result = ((Result<double>)descriptor.Calculate(mol.Atoms[4], mol).Value).Value;
             double resultAccordingNIST = 10.57; //value for CC(C)Cl
@@ -96,7 +97,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             IAtomContainer mol = sp.ParseSmiles("C=CCCl"); // not in db
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
-            lpcheck.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             double result = ((Result<double>)descriptor.Calculate(mol.Atoms[3], mol).Value).Value;
             double resultAccordingNIST = 10.8; //value for CCCCl aprox.
@@ -114,7 +115,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             IAtomContainer mol = sp.ParseSmiles("C-Cl");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
-            lpcheck.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             double result = ((Result<double>)descriptor.Calculate(mol.Atoms[1], mol).Value).Value;
             double resultAccordingNIST = 11.26;
@@ -132,7 +133,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             IAtomContainer mol = sp.ParseSmiles("C-C-Br");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
-            lpcheck.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             double result = ((Result<double>)descriptor.Calculate(mol.Atoms[2], mol).Value).Value;
             double resultAccordingNIST = 11.29;
@@ -149,7 +150,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             IAtomContainer mol = sp.ParseSmiles("C-C-C-I");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
-            lpcheck.Saturate(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
             double result = ((Result<double>)descriptor.Calculate(mol.Atoms[3], mol).Value).Value;
             double resultAccordingNIST = 9.27;
@@ -168,8 +169,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //
         //        AddExplicitHydrogens(mol);
         //
-        //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        //        lpcheck.Saturate(mol);
+        //        CDK.LonePairElectronChecker.Saturate(mol);
         //
         //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[2], mol).GetValue()).Value;
         //        double resultAccordingNIST = 10.48;
@@ -188,8 +188,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //
         //        AddExplicitHydrogens(mol);
         //
-        //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        //        lpcheck.Saturate(mol);
+        //        CDK.LonePairElectronChecker.Saturate(mol);
         //
         //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[0], mol).GetValue()).Value;
         //        double resultAccordingNIST = 7.77;
@@ -208,8 +207,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //
         //        AddExplicitHydrogens(mol);
         //
-        //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        //        lpcheck.Saturate(mol);
+        //        CDK.LonePairElectronChecker.Saturate(mol);
         //
         //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[1],mol).GetValue()).Value;
         //        double resultAccordingNIST = 8.24;
@@ -228,8 +226,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //
         //        AddExplicitHydrogens(mol);
         //
-        //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        //        lpcheck.Saturate(mol);
+        //        CDK.LonePairElectronChecker.Saturate(mol);
         //
         //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[2],mol).GetValue()).Value;
         //        double resultAccordingNIST = 8.9;
@@ -248,8 +245,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //
         //        AddExplicitHydrogens(mol);
         //
-        //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        //        lpcheck.Saturate(mol);
+        //        CDK.LonePairElectronChecker.Saturate(mol);
         //
         //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[2], mol).GetValue()).Value;
         //        double resultAccordingNIST = 8.5;
@@ -269,8 +265,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //
         //        AddExplicitHydrogens(mol);
         //
-        //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        //        lpcheck.Saturate(mol);
+        //        CDK.LonePairElectronChecker.Saturate(mol);
         //
         //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[0], mol).GetValue()).Value;
         //        double resultAccordingNIST = 9.3;
@@ -289,8 +284,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //
         //        AddExplicitHydrogens(mol);
         //
-        //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        //        lpcheck.Saturate(mol);
+        //        CDK.LonePairElectronChecker.Saturate(mol);
         //
         //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[0],mol).GetValue()).Value;
         //        double resultAccordingNIST = 9.01;
@@ -310,8 +304,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //
         //        AddExplicitHydrogens(mol);
         //
-        //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        //        lpcheck.Saturate(mol);
+        //        CDK.LonePairElectronChecker.Saturate(mol);
         //
         //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[2], mol).GetValue()).Value;
         ////        Assert.IsNotNull(result);
@@ -337,8 +330,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //        AddExplicitHydrogens(mol);
         //        AreEqual(10, mol.Atoms.Count);
         //
-        //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        //        lpcheck.Saturate(mol);
+        //        CDK.LonePairElectronChecker.Saturate(mol);
         //        AreEqual("Unexpected number of lone pairs", 1, mol.GetLonePairCount());
         //
         //        AreEqual("N", mol.Atoms[2].Symbol);
@@ -365,13 +357,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIPDescriptorReaction2() throws Exception{
         //
-        //        SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+        //        SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
         //        IAtomContainer mol = sp.ParseSmiles("CCCCCC");
         //
         //        AddExplicitHydrogens(mol);
         //
-        //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        //        lpcheck.Saturate(mol);
+        //        CDK.LonePairElectronChecker.Saturate(mol);
         //
         //        descriptor.Calculate(mol.Atoms[0], mol);
         //        IReactionSet reactionSet = descriptor.ReactionSet;
@@ -391,13 +382,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIPPySystemWithHeteroatomDescriptor3() throws Exception{
         //
-        //        SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+        //        SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
         //        IAtomContainer mol = sp.ParseSmiles("O(C=CC=C)C");
         //
         //        AddExplicitHydrogens(mol);
         //
-        //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        //        lpcheck.Saturate(mol);
+        //        CDK.LonePairElectronChecker.Saturate(mol);
         //
         //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[0],mol).GetValue()).Value;
         //        double resultAccordingNIST = 8.03;
@@ -419,13 +409,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIPPySystemWithHeteroatomDescriptor2() throws Exception{
         //
-        //        SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+        //        SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
         //        IAtomContainer mol = sp.ParseSmiles("OC=CC");
         //
         //        AddExplicitHydrogens(mol);
         //
-        //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        //        lpcheck.Saturate(mol);
+        //        CDK.LonePairElectronChecker.Saturate(mol);
         //
         //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[0],mol).GetValue()).Value;
         //        double resultAccordingNIST = 8.64;
@@ -447,13 +436,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIPPySystemWithHeteroatomDescriptor1() throws Exception{
         //
-        //        SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+        //        SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
         //        IAtomContainer mol = sp.ParseSmiles("C1=C(C)CCS1");
         //
         //        AddExplicitHydrogens(mol);
         //
-        //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        //        lpcheck.Saturate(mol);
+        //        CDK.LonePairElectronChecker.Saturate(mol);
         //
         //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[5],mol).GetValue()).Value;
         //        double resultAccordingNIST = 7.77;
@@ -476,13 +464,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIDescriptor5() throws Exception{
         //
-        //        SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+        //        SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
         //        IAtomContainer mol = sp.ParseSmiles("OC(C#CC)(C)C");
         //
         //        AddExplicitHydrogens(mol);
         //
-        //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        //        lpcheck.Saturate(mol);
+        //        CDK.LonePairElectronChecker.Saturate(mol);
         //
         //        descriptor.Calculate(mol.Atoms[0],mol);
         //

@@ -19,7 +19,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Collections;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Smiles;
 using NCDK.Templates;
@@ -85,25 +85,24 @@ namespace NCDK.Graphs
             IAtomContainer atomContainer = null;
             IAtom start = null;
             IAtom end = null;
-            IList<IAtom> path = null;
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             atomContainer = sp.ParseSmiles("CCCC");
             start = atomContainer.Atoms[0];
             end = atomContainer.Atoms[3];
-            path = PathTools.GetShortestPath(atomContainer, start, end);
-            Assert.AreEqual(4, path.Count());
+            var path = PathTools.GetShortestPath(atomContainer, start, end);
+            Assert.AreEqual(4, path.Count);
 
             atomContainer = sp.ParseSmiles("CC(N)CC");
             start = atomContainer.Atoms[0];
             end = atomContainer.Atoms[2];
             path = PathTools.GetShortestPath(atomContainer, start, end);
-            Assert.AreEqual(3, path.Count());
+            Assert.AreEqual(3, path.Count);
 
             atomContainer = sp.ParseSmiles("C1C(N)CC1");
             start = atomContainer.Atoms[0];
             end = atomContainer.Atoms[2];
             path = PathTools.GetShortestPath(atomContainer, start, end);
-            Assert.AreEqual(3, path.Count());
+            Assert.AreEqual(3, path.Count);
         }
 
         [TestMethod()]
@@ -115,14 +114,14 @@ namespace NCDK.Graphs
             IAtomContainer testMolecule = new AtomContainer();
             reader.Read(testMolecule);
 
-            IList<IAtom> path = PathTools.GetShortestPath(testMolecule, testMolecule.Atoms[0], testMolecule.Atoms[9]);
-            Assert.AreEqual(10, path.Count());
+            var path = PathTools.GetShortestPath(testMolecule, testMolecule.Atoms[0], testMolecule.Atoms[9]);
+            Assert.AreEqual(10, path.Count);
 
             path = PathTools.GetShortestPath(testMolecule, testMolecule.Atoms[1], testMolecule.Atoms[9]);
-            Assert.AreEqual(9, path.Count());
+            Assert.AreEqual(9, path.Count);
 
             path = PathTools.GetShortestPath(testMolecule, testMolecule.Atoms[9], testMolecule.Atoms[0]);
-            Assert.AreEqual(10, path.Count());
+            Assert.AreEqual(10, path.Count);
         }
 
         [TestMethod()]
@@ -277,7 +276,7 @@ namespace NCDK.Graphs
             foreach (var atom in molecule.Atoms)
                 atom.IsVisited = false;
 
-            IAtomContainer paths = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer paths = ChemObjectBuilder.Instance.NewAtomContainer();
             IAtom root = molecule.Atoms[0];
             IAtom target = null;
 

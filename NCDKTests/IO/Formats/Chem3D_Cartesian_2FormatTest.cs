@@ -30,7 +30,7 @@ namespace NCDK.IO.Formats
     {
         public Chem3D_Cartesian_2FormatTest()
         {
-            base.SetChemFormat((IChemFormat)Chem3D_Cartesian_2Format.Instance);
+            base.SetChemFormat((IChemFormat)Chem3DCartesian2Format.Instance);
         }
     }
 }

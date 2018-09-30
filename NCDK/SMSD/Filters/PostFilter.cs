@@ -41,7 +41,7 @@ namespace NCDK.SMSD.Filters
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
-    public class PostFilter
+    public static class PostFilter
     {
         /// <summary>
         /// Creates a new instance of Post Filter and removes
@@ -49,7 +49,7 @@ namespace NCDK.SMSD.Filters
         /// </summary>
         /// <param name="mappings"></param>
         /// <returns>Filtered non-redundant mappings</returns>
-        public static IList<IDictionary<int, int>> Filter(IList<IList<int>> mappings)
+        public static IReadOnlyList<IReadOnlyDictionary<int, int>> Filter(IList<IReadOnlyList<int>> mappings)
         {
             FinalMappings finalMappings = FinalMappings.Instance;
             if (mappings != null && mappings.Count != 0)
@@ -59,14 +59,14 @@ namespace NCDK.SMSD.Filters
             }
             else
             {
-                finalMappings.Set(new List<IDictionary<int, int>>());
+                finalMappings.Set(new List<IReadOnlyDictionary<int, int>>());
             }
             return finalMappings.GetFinalMapping();
         }
 
         private static DictionaryEqualityComparer<int, int> DictionaryEqualityComparer_int_int { get; } = new DictionaryEqualityComparer<int, int>();
 
-        private static bool HasMap(IDictionary<int, int> newMap, List<IDictionary<int, int>> nonRedundantMapping)
+        private static bool HasMap(IReadOnlyDictionary<int, int> newMap, IReadOnlyList<IReadOnlyDictionary<int, int>> nonRedundantMapping)
         {
             foreach (var storedMap in nonRedundantMapping)
             {
@@ -78,12 +78,12 @@ namespace NCDK.SMSD.Filters
             return false;
         }
 
-        private static List<IDictionary<int, int>> RemoveRedundantMapping(IList<IList<int>> mappingOrg)
+        private static List<IReadOnlyDictionary<int, int>> RemoveRedundantMapping(IList<IReadOnlyList<int>> mappingOrg)
         {
-            List<IDictionary<int, int>> nonRedundantMapping = new List<IDictionary<int, int>>();
+            var nonRedundantMapping = new List<IReadOnlyDictionary<int, int>>();
             foreach (var mapping in mappingOrg)
             {
-                IDictionary<int, int> newMap = GetMappingMapFromList(mapping);
+                var newMap = GetMappingMapFromList(mapping);
                 if (!HasMap(newMap, nonRedundantMapping))
                 {
                     nonRedundantMapping.Add(newMap);
@@ -92,9 +92,9 @@ namespace NCDK.SMSD.Filters
             return nonRedundantMapping;
         }
 
-        private static IDictionary<int, int> GetMappingMapFromList(IList<int> list)
+        private static SortedDictionary<int, int> GetMappingMapFromList(IReadOnlyList<int> list)
         {
-            IDictionary<int, int> newMap = new SortedDictionary<int, int>();
+            var newMap = new SortedDictionary<int, int>();
             for (int index = 0; index < list.Count; index += 2)
             {
                 newMap[list[index]] = list[index + 1];

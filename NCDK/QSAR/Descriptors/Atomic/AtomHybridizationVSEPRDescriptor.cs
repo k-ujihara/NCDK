@@ -80,8 +80,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the AtomHybridizationVSEPRDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomHybridizationVSEPR",
                 typeof(AtomHybridizationVSEPRDescriptor).FullName,
@@ -90,7 +90,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         ///  The parameters attribute of the AtomHybridizationVSEPRDescriptor object
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "hybr" };
 
@@ -109,28 +109,28 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
             catch (CDKException)
             {
-                return new DescriptorValue<Result<Hybridization>>(_Specification, ParameterNames, Parameters, new Result<Hybridization>(Hybridization.Unset), // does that work??
+                return new DescriptorValue<Result<Hybridization>>(specification, ParameterNames, Parameters, new Result<Hybridization>(Hybridization.Unset), // does that work??
                         DescriptorNames, new CDKException("Atom type was null"));
             }
             if (atomType == null)
             {
-                return new DescriptorValue<Result<Hybridization>>(_Specification, ParameterNames, Parameters, new Result<Hybridization>(Hybridization.Unset), // does that work??
+                return new DescriptorValue<Result<Hybridization>>(specification, ParameterNames, Parameters, new Result<Hybridization>(Hybridization.Unset), // does that work??
                         DescriptorNames, new CDKException("Atom type was null"));
             }
             if (atomType.Hybridization.IsUnset())
             {
-                return new DescriptorValue<Result<Hybridization>>(_Specification, ParameterNames, Parameters, new Result<Hybridization>(Hybridization.Unset), // does that work??
+                return new DescriptorValue<Result<Hybridization>>(specification, ParameterNames, Parameters, new Result<Hybridization>(Hybridization.Unset), // does that work??
                         DescriptorNames, new CDKException("Hybridization was null"));
             }
 
-            return new DescriptorValue<Result<Hybridization>>(_Specification, ParameterNames, Parameters, new Result<Hybridization>(
+            return new DescriptorValue<Result<Hybridization>>(specification, ParameterNames, Parameters, new Result<Hybridization>(
                     atomType.Hybridization), DescriptorNames);
         }
 
         /// <summary>
         /// The parameterNames attribute of the AtomHybridizationVSEPRDescriptor object
         /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[0];
+        public IReadOnlyList<string> ParameterNames { get; } = System.Array.Empty<string>();
 
         /// <summary>
         ///  Gets the parameterType attribute of the AtomHybridizationVSEPRDescriptor object

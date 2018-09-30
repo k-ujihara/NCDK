@@ -33,8 +33,8 @@ namespace NCDK.Config
     // @cdk.created    2001-08-29
     public abstract class IsotopeFactory
     {
-        private List<IIsotope>[] isotopes = new List<IIsotope>[256];
-        private IIsotope[] majorIsotope = new IIsotope[256];
+        private readonly List<IIsotope>[] isotopes = new List<IIsotope>[256];
+        private readonly IIsotope[] majorIsotope = new IIsotope[256];
 
         /// <summary>
         /// The number of isotopes defined by this class. The classes
@@ -80,7 +80,6 @@ namespace NCDK.Config
             int elem = ChemicalElement.OfString(symbol).AtomicNumber;
             if (isotopes[elem] == null)
                 yield break;
-            List<IIsotope> list = new List<IIsotope>();
             foreach (IIsotope isotope in isotopes[elem])
             {
                 yield return Clone(isotope);
@@ -141,7 +140,7 @@ namespace NCDK.Config
                 return null;
             foreach (IIsotope isotope in isotopes)
             {
-                if (isotope.Symbol.Equals(symbol) && isotope.MassNumber == massNumber)
+                if (isotope.Symbol.Equals(symbol, StringComparison.Ordinal) && isotope.MassNumber == massNumber)
                 {
                     return Clone(isotope);
                 }
@@ -167,7 +166,7 @@ namespace NCDK.Config
             foreach (IIsotope isotope in isotopes)
             {
                 double diff = Math.Abs(isotope.ExactMass.Value - exactMass);
-                if (isotope.Symbol.Equals(symbol) && diff <= tolerance && diff < minDiff)
+                if (isotope.Symbol.Equals(symbol, StringComparison.Ordinal) && diff <= tolerance && diff < minDiff)
                 {
                     ret = Clone(isotope);
                     minDiff = diff;
@@ -216,7 +215,7 @@ namespace NCDK.Config
             return Clone(major);
         }
 
-        private IIsotope Clone(IIsotope isotope)
+        private static IIsotope Clone(IIsotope isotope)
         {
             if (isotope == null)
                 return null;
@@ -270,7 +269,7 @@ namespace NCDK.Config
         /// <returns>The symbol of the given atomic number</returns>
         public string GetElementSymbol(int atomicNumber)
         {
-            IIsotope isotope = GetMajorIsotope(atomicNumber);
+            var isotope = GetMajorIsotope(atomicNumber);
             return isotope.Symbol;
         }
         
@@ -289,7 +288,7 @@ namespace NCDK.Config
             else
                 isotope = GetIsotope(atom.Symbol, atom.MassNumber.Value);
             if (isotope == null)
-                throw new ArgumentException("Cannot configure an unrecognized element/mass: " + atom.MassNumber + " " + atom);
+                throw new ArgumentException($"Cannot configure an unrecognized element/mass: {atom.MassNumber} {atom}");
             return Configure(atom, isotope);
         }
 

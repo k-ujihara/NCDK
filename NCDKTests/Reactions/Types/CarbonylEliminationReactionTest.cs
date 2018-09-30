@@ -18,7 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.AtomTypes;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Isomorphisms;
 using NCDK.Reactions.Types.Parameters;
 using NCDK.Tools;
@@ -36,7 +36,6 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class CarbonylEliminationReactionTest : ReactionProcessTest
     {
-        private readonly LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
         /// <summary>
@@ -183,7 +182,7 @@ namespace NCDK.Reactions.Types
         /// </summary>
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             IAtomContainer molecule = builder.NewAtomContainer();//CreateFromSmiles("C-C#[O+]")
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("H"));
@@ -203,7 +202,7 @@ namespace NCDK.Reactions.Types
             {
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
-                lpcheck.Saturate(molecule);
+                CDK.LonePairElectronChecker.Saturate(molecule);
                 MakeSureAtomTypesAreRecognized(molecule);
             }
             catch (CDKException e)

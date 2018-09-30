@@ -48,10 +48,10 @@ namespace NCDK.Geometries
     // @cdk.keyword RDF
     public class RDFCalculator
     {
-        private double startCutoff;
-        private double cutoff;
-        private double resolution;
-        private double peakWidth;
+        private readonly double startCutoff;
+        private readonly double cutoff;
+        private readonly double resolution;
+        private readonly double peakWidth;
 
         /// <summary>
         /// Calculates the weight for the interaction between the two atoms.
@@ -65,7 +65,7 @@ namespace NCDK.Geometries
         // @cdk.created 2005-01-14
         public delegate double WeightFunction(IAtom atom, IAtom atom2);
 
-        private WeightFunction weightFunction;
+        private readonly WeightFunction weightFunction;
 
         /// <summary>
         /// Constructs a RDF calculator that calculates a unweighted, digitized
@@ -103,7 +103,7 @@ namespace NCDK.Geometries
         public double[] Calculate(IAtomContainer container, IAtom atom)
         {
             int length = (int)((cutoff - startCutoff) / resolution) + 1;
-            Debug.WriteLine("Creating RDF of length ", length);
+            Debug.WriteLine($"Creating RDF of length {length}");
 
             // the next we need for Gaussian smoothing
             int binsToFillOnEachSide = (int)(peakWidth * 3.0 / resolution);

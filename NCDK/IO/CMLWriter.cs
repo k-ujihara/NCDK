@@ -197,7 +197,7 @@ namespace NCDK.IO
                 throw new CDKException("Cannot write this unsupported IChemObject: " + obj.GetType().Name);
             }
 
-            Debug.WriteLine("Writing obj in CML of type: ", obj.GetType().Name);
+            Debug.WriteLine($"Writing obj in CML of type: {obj.GetType().Name}");
 
             CustomizeJob();
 
@@ -289,43 +289,43 @@ namespace NCDK.IO
 
         private void InitIOSettings()
         {
-            cmlIds = Add(new BooleanIOSetting("CMLIDs", IOSetting.Importance.Low,
+            cmlIds = Add(new BooleanIOSetting("CMLIDs", Importance.Low,
                     "Should the output use CML identifiers?", "true"));
 
-            namespacedOutput = Add(new BooleanIOSetting("NamespacedOutput", IOSetting.Importance.Low,
+            namespacedOutput = Add(new BooleanIOSetting("NamespacedOutput", Importance.Low,
                     "Should the output use namespaced output?", "true"));
 
-            namespacePrefix = Add(new StringIOSetting("NamespacePrefix", IOSetting.Importance.Low,
+            namespacePrefix = Add(new StringIOSetting("NamespacePrefix", Importance.Low,
                     "What should the namespace prefix be? [empty is no prefix]", ""));
 
-            schemaInstanceOutput = Add(new BooleanIOSetting("SchemaInstance", IOSetting.Importance.Low,
+            schemaInstanceOutput = Add(new BooleanIOSetting("SchemaInstance", Importance.Low,
                     "Should the output use the Schema-Instance attribute?", "false"));
 
-            instanceLocation = Add(new StringIOSetting("InstanceLocation", IOSetting.Importance.Low,
+            instanceLocation = Add(new StringIOSetting("InstanceLocation", Importance.Low,
                     "Where is the schema found?", ""));
 
-            indent = Add(new BooleanIOSetting("Indenting", IOSetting.Importance.Low,
+            indent = Add(new BooleanIOSetting("Indenting", Importance.Low,
                     "Should the output be indented?", "true"));
 
-            xmlDeclaration = Add(new BooleanIOSetting("XMLDeclaration", IOSetting.Importance.Low,
+            xmlDeclaration = Add(new BooleanIOSetting("XMLDeclaration", Importance.Low,
                     "Should the output contain an XML declaration?", "true"));
         }
 
         private void CustomizeJob()
         {
-            FireIOSettingQuestion(cmlIds);
-            FireIOSettingQuestion(namespacedOutput);
+            ProcessIOSettingQuestion(cmlIds);
+            ProcessIOSettingQuestion(namespacedOutput);
             if (namespacedOutput.IsSet)
             {
-                FireIOSettingQuestion(namespacePrefix);
+                ProcessIOSettingQuestion(namespacePrefix);
             }
-            FireIOSettingQuestion(schemaInstanceOutput);
+            ProcessIOSettingQuestion(schemaInstanceOutput);
             if (schemaInstanceOutput.IsSet)
             {
-                FireIOSettingQuestion(instanceLocation);
+                ProcessIOSettingQuestion(instanceLocation);
             }
-            FireIOSettingQuestion(indent);
-            FireIOSettingQuestion(xmlDeclaration);
+            ProcessIOSettingQuestion(indent);
+            ProcessIOSettingQuestion(xmlDeclaration);
         }
     }
 }

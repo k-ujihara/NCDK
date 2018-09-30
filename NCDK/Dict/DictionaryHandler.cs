@@ -34,16 +34,13 @@ namespace NCDK.Dict
         private bool inMetadataList = false;
         Entry entry;
 
-        EntryDictionary dict;
-
         public DictionaryHandler() { }
 
-        public void DoctypeDecl(string name, string publicId, string systemId) { }
-
-
+        public virtual void DoctypeDecl(string name, string publicId, string systemId) { }
+        
         public override void StartDocument()
         {
-            dict = new EntryDictionary();
+            Dictionary = new EntryDictionary();
         }
 
         public override void EndDocument()
@@ -52,12 +49,12 @@ namespace NCDK.Dict
 
         public override void EndElement(XElement element)
         {
-            if ("entry".Equals(element.Name.LocalName) && !("bibtex:entry" == element.Name.ToString()) && inEntry)
+            if (string.Equals("entry", element.Name.LocalName, StringComparison.Ordinal) && !("bibtex:entry" == element.Name.ToString()) && inEntry)
             {
-                dict.AddEntry(entry);
+                Dictionary.AddEntry(entry);
                 inEntry = false;
             }
-            else if ("metadataList".Equals(element.Name.LocalName) && inMetadataList)
+            else if (string.Equals("metadataList", element.Name.LocalName, StringComparison.Ordinal) && inMetadataList)
             {
                 inMetadataList = false;
             }
@@ -91,7 +88,7 @@ namespace NCDK.Dict
 
             // if we're in a metadataList then look at individual
             // metadata nodes and check for any whose content refers
-            // to QSAR metadata and save that. Currently it does'nt
+            // to QSAR metadata and save that. Currently it doesn't
             // differentiate between descriptorType or descriptorClass.
             // Do we need to differentiate?
             //
@@ -121,6 +118,6 @@ namespace NCDK.Dict
             }
         }
 
-        public EntryDictionary Dictionary => dict;
+        public EntryDictionary Dictionary { get; private set; }
     }
 }

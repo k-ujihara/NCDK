@@ -8,9 +8,8 @@ using System.Linq;
 
 namespace NCDK
 {
-    [Serializable]
     internal class ObservableChemObjectCollection<T>
-        : IList<T>
+        : IList<T>, IReadOnlyList<T>
         where T : INotify
     {
         internal List<T> list;
@@ -45,7 +44,7 @@ namespace NCDK
             {
                 if (!AllowDuplicate)
                     if (list.Contains(value))
-                        throw new ArgumentException();
+                        throw new InvalidOperationException();
                 if (Listener != null)
                 {
                     list[index]?.Listeners?.Remove(Listener);

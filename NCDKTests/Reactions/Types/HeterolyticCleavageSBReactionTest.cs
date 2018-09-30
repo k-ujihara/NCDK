@@ -21,6 +21,7 @@ using NCDK.AtomTypes;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
+using NCDK.Silent;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
@@ -37,7 +38,6 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class HeterolyticCleavageSBReactionTest : ReactionProcessTest
     {
-        private readonly LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private UniversalIsomorphismTester uiTester = new UniversalIsomorphismTester();
 
@@ -91,7 +91,7 @@ namespace NCDK.Reactions.Types
             molecule.Atoms[2].IsReactiveCenter = true;
             molecule.Bonds[1].IsReactiveCenter = true;
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HeterolyticCleavageSBReaction();
@@ -141,7 +141,7 @@ namespace NCDK.Reactions.Types
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[3], BondOrder.Single);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected2);
-            lpcheck.Saturate(expected2);
+            CDK.LonePairElectronChecker.Saturate(expected2);
             IAtomContainer product2 = setOfReactions[0].Products[1];
             queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected2);
             Assert.IsTrue(uiTester.IsIsomorph(product2, queryAtom));
@@ -204,7 +204,7 @@ namespace NCDK.Reactions.Types
             molecule.Atoms[2].IsReactiveCenter = true;
             molecule.Bonds[1].IsReactiveCenter = true;
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HeterolyticCleavageSBReaction();
@@ -249,7 +249,7 @@ namespace NCDK.Reactions.Types
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[2], BondOrder.Single);
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[3], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected2);
-            lpcheck.Saturate(expected2);
+            CDK.LonePairElectronChecker.Saturate(expected2);
 
             IAtomContainer product2 = setOfReactions[0].Products[1];
             queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected2);
@@ -258,7 +258,7 @@ namespace NCDK.Reactions.Types
             //CreateFromSmiles("C=[C-]")
             expected1.Atoms[1].FormalCharge = -1;
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
-            lpcheck.Saturate(expected1);
+            CDK.LonePairElectronChecker.Saturate(expected1);
             product1 = setOfReactions[1].Products[0];
             queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
             Assert.IsTrue(uiTester.IsIsomorph(product1, queryAtom));
@@ -313,7 +313,7 @@ namespace NCDK.Reactions.Types
             molecule.Atoms[2].IsReactiveCenter = true;
             molecule.Bonds[1].IsReactiveCenter = true;
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HeterolyticCleavageSBReaction();
@@ -354,7 +354,7 @@ namespace NCDK.Reactions.Types
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[2], BondOrder.Single);
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[3], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected2);
-            lpcheck.Saturate(expected2);
+            CDK.LonePairElectronChecker.Saturate(expected2);
             IAtomContainer product2 = setOfReactions[1].Products[1];
             queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected2);
             Assert.IsTrue(uiTester.IsIsomorph(product2, queryAtom));
@@ -362,7 +362,7 @@ namespace NCDK.Reactions.Types
             //CreateFromSmiles("C#[C+]")
             expected1.Atoms[1].FormalCharge = +1;
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
-            lpcheck.Saturate(expected1);
+            CDK.LonePairElectronChecker.Saturate(expected1);
             product1 = setOfReactions[0].Products[0];
             queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
             Assert.IsTrue(uiTester.IsIsomorph(product1, queryAtom));
@@ -405,13 +405,13 @@ namespace NCDK.Reactions.Types
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[8], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[9], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             molecule.Atoms[1].IsReactiveCenter = true;
             molecule.Atoms[2].IsReactiveCenter = true;
             molecule.Bonds[1].IsReactiveCenter = true;
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HeterolyticCleavageSBReaction();
@@ -443,7 +443,7 @@ namespace NCDK.Reactions.Types
             expected1.AddBond(expected1.Atoms[0], expected1.Atoms[4], BondOrder.Single);
             expected1.AddBond(expected1.Atoms[1], expected1.Atoms[5], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
-            lpcheck.Saturate(expected1);
+            CDK.LonePairElectronChecker.Saturate(expected1);
             IAtomContainer product1 = setOfReactions[0].Products[0];
             QueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
             Assert.IsTrue(uiTester.IsIsomorph(product1, queryAtom));
@@ -490,13 +490,13 @@ namespace NCDK.Reactions.Types
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[6], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[7], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             molecule.Atoms[1].IsReactiveCenter = true;
             molecule.Atoms[2].IsReactiveCenter = true;
             molecule.Bonds[1].IsReactiveCenter = true;
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HeterolyticCleavageSBReaction();
@@ -539,7 +539,7 @@ namespace NCDK.Reactions.Types
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[2], BondOrder.Single);
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[3], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected2);
-            lpcheck.Saturate(expected2);
+            CDK.LonePairElectronChecker.Saturate(expected2);
             IAtomContainer product2 = setOfReactions[0].Products[0];
             queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected2);
             Assert.IsTrue(uiTester.IsIsomorph(product2, queryAtom));
@@ -573,13 +573,13 @@ namespace NCDK.Reactions.Types
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[7], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[8], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             molecule.Atoms[1].IsReactiveCenter = true;
             molecule.Atoms[2].IsReactiveCenter = true;
             molecule.Bonds[1].IsReactiveCenter = true;
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HeterolyticCleavageSBReaction();
@@ -609,7 +609,7 @@ namespace NCDK.Reactions.Types
             expected1.AddBond(expected1.Atoms[0], expected1.Atoms[3], BondOrder.Single);
             expected1.AddBond(expected1.Atoms[0], expected1.Atoms[4], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
             IAtomContainer product1 = setOfReactions[0].Products[0];
             QueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
             Assert.IsTrue(uiTester.IsIsomorph(product1, queryAtom));
@@ -650,13 +650,13 @@ namespace NCDK.Reactions.Types
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[3], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[4], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             molecule.Atoms[0].IsReactiveCenter = true;
             molecule.Atoms[1].IsReactiveCenter = true;
             molecule.Bonds[0].IsReactiveCenter = true;
 
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HeterolyticCleavageSBReaction();
@@ -676,7 +676,7 @@ namespace NCDK.Reactions.Types
             expected1.Atoms.Add(builder.NewAtom("F"));
             expected1.Atoms[0].FormalCharge = -1;
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
-            lpcheck.Saturate(expected1);
+            CDK.LonePairElectronChecker.Saturate(expected1);
             IAtomContainer product1 = setOfReactions[0].Products[0];
             QueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
             Assert.IsTrue(uiTester.IsIsomorph(product1, queryAtom));
@@ -791,7 +791,7 @@ namespace NCDK.Reactions.Types
         /// <returns>The IAtomContainerSet</returns>
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             IAtomContainer molecule = builder.NewAtomContainer();//CreateFromSmiles("CO")
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("O"));
@@ -800,7 +800,7 @@ namespace NCDK.Reactions.Types
             {
                 AddExplicitHydrogens(molecule);
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-                lpcheck.Saturate(molecule);
+                CDK.LonePairElectronChecker.Saturate(molecule);
                 MakeSureAtomTypesAreRecognized(molecule);
             }
             catch (Exception e)

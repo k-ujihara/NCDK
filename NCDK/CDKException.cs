@@ -33,6 +33,10 @@ namespace NCDK
     public class CDKException
         : Exception
     {
+        public CDKException()
+        {
+        }
+
         /// <summary>
         /// Constructs a new CDKException with the given message.
         /// </summary>

@@ -89,7 +89,7 @@ namespace NCDK.IO.Iterator
                         if (depthDiff > 0 && depth == 3)
                         {
                             string command = GetCommand(currentLine);
-                            if (command.Equals("compound"))
+                            if (string.Equals(command, "compound", StringComparison.Ordinal))
                             {
                                 buffer.Append("PC-Compound ::= {\n");
                                 currentLine = input.ReadLine();
@@ -118,7 +118,7 @@ namespace NCDK.IO.Iterator
                     }
                     using (PCCompoundASNReader asnReader = new PCCompoundASNReader(new StringReader(buffer.ToString())))
                     {
-                        IChemFile cFile = (IChemFile)asnReader.Read(builder.NewChemFile());
+                        var cFile = asnReader.Read(builder.NewChemFile());
                         ac = ChemFileManipulator.GetAllAtomContainers(cFile).First();
                     }
                 }
@@ -135,7 +135,7 @@ namespace NCDK.IO.Iterator
             yield break;
         }
 
-        private int CountChars(string copy, char character)
+        private static int CountChars(string copy, char character)
         {
             int occurences = 0;
             for (int i = 0; i < copy.Length; i++)
@@ -145,7 +145,7 @@ namespace NCDK.IO.Iterator
             return occurences;
         }
 
-        private int CountBrackets(string currentLine)
+        private static int CountBrackets(string currentLine)
         {
             int bracketsOpen = CountChars(currentLine, '{');
             int bracketsClose = CountChars(currentLine, '}');
@@ -172,7 +172,7 @@ namespace NCDK.IO.Iterator
         }
         #endregion
 
-        private string GetCommand(string line)
+        private static string GetCommand(string line)
         {
             StringBuilder buffer = new StringBuilder();
             int i = 0;

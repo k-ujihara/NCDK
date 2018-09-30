@@ -18,7 +18,7 @@
  */
 
 using NCDK.Numerics;
-using NCDK.Default;
+using NCDK.Silent;
 
 namespace NCDK.Pharmacophore
 {

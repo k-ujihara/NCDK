@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
@@ -49,13 +50,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.dictref qsar-descriptors:covalentradius
     public partial class CovalentRadiusDescriptor : IAtomicDescriptor
     {
-        private AtomTypeFactory factory = null;
+        private static readonly AtomTypeFactory factory = CDK.JmolAtomTypeFactory;
 
         public CovalentRadiusDescriptor() { }
 
         /// <inheritdoc/>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#covalentradius",
                 typeof(CovalentRadiusDescriptor).FullName, "The Chemistry Development Kit");
@@ -63,7 +64,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         ///  The parameters attribute of the VdWRadiusDescriptor object.
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "covalentRadius" };
 
@@ -75,30 +76,19 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>The Covalent radius of the atom</returns>
         public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer container)
         {
-            if (factory == null)
-                try
-                {
-                    factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt",
-                            container.Builder);
-                }
-                catch (Exception exception)
-                {
-                    return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, exception);
-                }
-
             double covalentradius;
             try
             {
                 string symbol = atom.Symbol;
                 IAtomType type = factory.GetAtomType(symbol);
                 covalentradius = type.CovalentRadius.Value;
-                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
+                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(
                         covalentradius), DescriptorNames);
             }
             catch (Exception exception)
             {
                 Debug.WriteLine(exception);
-                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
+                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(
                         double.NaN), DescriptorNames, exception);
             }
         }

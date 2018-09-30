@@ -19,7 +19,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 
@@ -28,13 +28,14 @@ namespace NCDK.Tools
     /// <summary>
     /// A test class for the AtomTypeAwereSaturationChecker-class
     /// </summary>
-    // @author Klas J&ouml;nsson
+    // @author Klas Jönsson
     // @cdk.created 2012-04-18
     // @cdk.module  test-valencycheck
     [TestClass()]
     public class ATASaturationCheckerTest : CDKTestCase
     {
-        SaturationChecker satcheck = new SaturationChecker();
+        private static readonly SaturationChecker satcheck = CDK.SaturationChecker;
+
         private static SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
         private AtomTypeAwareSaturationChecker atasc = new AtomTypeAwareSaturationChecker();
 
@@ -46,40 +47,40 @@ namespace NCDK.Tools
         public void TestASimpleCarbonRing()
         {
             // First we create a simple carbon ring to play with...
-            IAtomContainer mol = new AtomContainer();
-            IAtomType carbon = new AtomType(ChemicalElements.Carbon.ToIElement());
+            var mol = new AtomContainer();
+            var carbon = new AtomType(ChemicalElements.Carbon.ToIElement());
 
-            IAtom a0 = new Atom("C")
+            var a0 = new Atom("C")
             {
                 Hybridization = Hybridization.SP2,
                 ImplicitHydrogenCount = 1
             };
             AtomTypeManipulator.ConfigureUnsetProperties(a0, carbon);
-            IAtom a1 = new Atom("C")
+            var a1 = new Atom("C")
             {
                 Hybridization = Hybridization.SP2,
                 ImplicitHydrogenCount = 1
             };
             AtomTypeManipulator.ConfigureUnsetProperties(a1, carbon);
-            IAtom a2 = new Atom("C")
+            var a2 = new Atom("C")
             {
                 Hybridization = Hybridization.SP2,
                 ImplicitHydrogenCount = 1
             };
             AtomTypeManipulator.ConfigureUnsetProperties(a2, carbon);
-            IAtom a3 = new Atom("C")
+            var a3 = new Atom("C")
             {
                 Hybridization = Hybridization.SP2,
                 ImplicitHydrogenCount = 1
             };
             AtomTypeManipulator.ConfigureUnsetProperties(a3, carbon);
-            IAtom a4 = new Atom("C")
+            var a4 = new Atom("C")
             {
                 Hybridization = Hybridization.SP2,
                 ImplicitHydrogenCount = 1
             };
             AtomTypeManipulator.ConfigureUnsetProperties(a4, carbon);
-            IAtom a5 = new Atom("C")
+            var a5 = new Atom("C")
             {
                 Hybridization = Hybridization.SP2,
                 ImplicitHydrogenCount = 1
@@ -93,40 +94,20 @@ namespace NCDK.Tools
             mol.Atoms.Add(a4);
             mol.Atoms.Add(a5);
 
-            IBond b0 = new Bond(a0, a1)
-            {
-                IsSingleOrDouble = true
-            };
+            var b0 = new Bond(a0, a1) { IsSingleOrDouble = true };
             mol.Bonds.Add(b0);
-            IBond b1 = new Bond(a1, a2)
-            {
-                IsSingleOrDouble = true
-            };
+            var b1 = new Bond(a1, a2) { IsSingleOrDouble = true };
             mol.Bonds.Add(b1);
-            IBond b2 = new Bond(a2, a3)
-            {
-                IsSingleOrDouble = true
-            };
+            var b2 = new Bond(a2, a3) { IsSingleOrDouble = true };
             mol.Bonds.Add(b2);
-            IBond b3 = new Bond(a3, a4)
-            {
-                IsSingleOrDouble = true
-            };
+            var b3 = new Bond(a3, a4) { IsSingleOrDouble = true };
             mol.Bonds.Add(b3);
-            IBond b4 = new Bond(a4, a5)
-            {
-                IsSingleOrDouble = true
-            };
+            var b4 = new Bond(a4, a5) { IsSingleOrDouble = true };
             mol.Bonds.Add(b4);
-            IBond b5 = new Bond(a5, a0)
-            {
-                IsSingleOrDouble = true
-            };
+            var b5 = new Bond(a5, a0) { IsSingleOrDouble = true };
             mol.Bonds.Add(b5);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            AtomTypeTools att = new AtomTypeTools();
-            att.AssignAtomTypePropertiesToAtom(mol, false);
 
             // ...then we send it to the method we want to test...
             atasc.DecideBondOrder(mol, false);
@@ -148,7 +129,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestQuinone()
         {
-            IAtomContainer mol = sp.ParseSmiles("O=c1ccc(=O)cc1");
+            var mol = sp.ParseSmiles("O=c1ccc(=O)cc1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
 
             atasc.DecideBondOrder(mol, true);
@@ -197,7 +178,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestASimpleCarbonRing2()
         {
-            IAtomContainer mol = sp.ParseSmiles("c1ccccc1");
+            var mol = sp.ParseSmiles("c1ccccc1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
 
             atasc.DecideBondOrder(mol, true);
@@ -219,8 +200,8 @@ namespace NCDK.Tools
         public void TestALargeRingSystem()
         {
             // Should have 13 double bonds.
-            string smiles = "O=C1Oc6ccccc6(C(O)C1C5c2ccccc2CC(c3ccc(cc3)c4ccccc4)C5)";
-            IAtomContainer mol = sp.ParseSmiles(smiles);
+            var smiles = "O=C1Oc6ccccc6(C(O)C1C5c2ccccc2CC(c3ccc(cc3)c4ccccc4)C5)";
+            var mol = sp.ParseSmiles(smiles);
 
             atasc.DecideBondOrder(mol, true);
 
@@ -240,14 +221,15 @@ namespace NCDK.Tools
         public void TestLargeRingSystem1()
         {
             // Should have 6 double bonds
-            string smiles = "c1ccc2c(c1)CC4NCCc3cccc2c34";
-            IAtomContainer mol = sp.ParseSmiles(smiles);
+            var smiles = "c1ccc2c(c1)CC4NCCc3cccc2c34";
+            var mol = sp.ParseSmiles(smiles);
             atasc.DecideBondOrder(mol, true);
 
             int doubleBondCount = 0;
             foreach (var bond in mol.Bonds)
             {
-                if (bond.Order.Equals(BondOrder.Double)) doubleBondCount++;
+                if (bond.Order.Equals(BondOrder.Double))
+                    doubleBondCount++;
             }
             Assert.AreEqual(6, doubleBondCount);
         }
@@ -256,8 +238,8 @@ namespace NCDK.Tools
         public void TestLargeRingSystem2()
         {
             // Should have 8 double bonds
-            string smiles = "Oc1ccc(cc1)c1coc2c(c1=O)c(O)cc(c2)O";
-            IAtomContainer mol = sp.ParseSmiles(smiles);
+            var smiles = "Oc1ccc(cc1)c1coc2c(c1=O)c(O)cc(c2)O";
+            var mol = sp.ParseSmiles(smiles);
             atasc.DecideBondOrder(mol, true);
 
             int doubleBondCount = 0;
@@ -410,7 +392,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestAnOtherDoubleRing()
         {
-            IAtomContainer mol = sp.ParseSmiles("c1cccc2cccc2c1");
+            var mol = sp.ParseSmiles("c1cccc2cccc2c1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
 
             atasc.DecideBondOrder(mol, true);
@@ -426,17 +408,16 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestAnOtherRingSystem()
         {
-            // Should have 7 double bonds
-            //        IAtomContainer mol = sp.ParseSmiles("O=c2c1ccccc1c3ccccc23");
             // Should have 6 double bonds
-            IAtomContainer mol = sp.ParseSmiles("o2c1ccccc1c3c2cccc3");
+            var mol = sp.ParseSmiles("o2c1ccccc1c3c2cccc3");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             atasc.DecideBondOrder(mol, true);
             Assert.AreEqual(mol.Atoms[1].Hybridization, Hybridization.SP2);
             int doubleBondCount = 0;
             foreach (var bond in mol.Bonds)
             {
-                if (bond.Order == BondOrder.Double) doubleBondCount++;
+                if (bond.Order == BondOrder.Double)
+                    doubleBondCount++;
             }
             Assert.AreEqual(6, doubleBondCount);
         }
@@ -445,14 +426,15 @@ namespace NCDK.Tools
         public void TestAnOtherRingSystem2()
         {
             // Should have 7 double bonds
-            IAtomContainer mol = sp.ParseSmiles("O=c2c1ccccc1c3ccccc23");
+            var mol = sp.ParseSmiles("O=c2c1ccccc1c3ccccc23");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             atasc.DecideBondOrder(mol, true);
             Assert.AreEqual(mol.Atoms[1].Hybridization, Hybridization.SP2);
             int doubleBondCount = 0;
             foreach (var bond in mol.Bonds)
             {
-                if (bond.Order == BondOrder.Double) doubleBondCount++;
+                if (bond.Order == BondOrder.Double)
+                    doubleBondCount++;
             }
             Assert.AreEqual(7, doubleBondCount);
         }
@@ -460,7 +442,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestAzulene()
         {
-            IAtomContainer mol = sp.ParseSmiles("c12c(ccccc2)ccc1");
+            var mol = sp.ParseSmiles("c12c(ccccc2)ccc1");
             atasc.DecideBondOrder(mol, true);
 
             int doubleBondCount = 0;
@@ -476,7 +458,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void MailCase1a()
         {
-            IAtomContainer mol = sp.ParseSmiles("o1cccc1");
+            var mol = sp.ParseSmiles("o1cccc1");
             atasc.DecideBondOrder(mol, true);
 
             int doubleBondCount = 0;
@@ -490,7 +472,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void MailCase1b()
         {
-            IAtomContainer mol = sp.ParseSmiles("O1cccc1");
+            var mol = sp.ParseSmiles("O1cccc1");
             atasc.DecideBondOrder(mol, true);
 
             int doubleBondCount = 0;
@@ -504,7 +486,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void MailCase3b()
         {
-            IAtomContainer mol = sp.ParseSmiles("c1ccccc1Oc1cOcc1");
+            var mol = sp.ParseSmiles("c1ccccc1Oc1cOcc1");
             atasc.DecideBondOrder(mol, true);
 
             int doubleBondCount = 0;
@@ -518,7 +500,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void MailCase4()
         {
-            IAtomContainer mol = sp.ParseSmiles("o2c1ccccc1c3c2cccc3");
+            var mol = sp.ParseSmiles("o2c1ccccc1c3c2cccc3");
             atasc.DecideBondOrder(mol, true);
 
             int doubleBondCount = 0;
@@ -532,7 +514,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void MailCase5a()
         {
-            IAtomContainer mol = sp.ParseSmiles("c5cc2ccc1ccccc1c2c6c4c3ccccc3ccc4ccc56");
+            var mol = sp.ParseSmiles("c5cc2ccc1ccccc1c2c6c4c3ccccc3ccc4ccc56");
             atasc.DecideBondOrder(mol, true);
 
             int doubleBondCount = 0;
@@ -546,7 +528,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void MailCase5b()
         {
-            IAtomContainer mol = sp.ParseSmiles("c1cc2ccc3ccc4ccc5ccc6ccc1c7c2c3c4c5c67");
+            var mol = sp.ParseSmiles("c1cc2ccc3ccc4ccc5ccc6ccc1c7c2c3c4c5c67");
 
             atasc.DecideBondOrder(mol, true);
 
@@ -562,7 +544,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void MailCase6()
         {
-            IAtomContainer mol = sp.ParseSmiles("c1ccc2c(c1)cc-3c4c2cccc4-c5c3cccc5");
+            var mol = sp.ParseSmiles("c1ccc2c(c1)cc-3c4c2cccc4-c5c3cccc5");
             atasc.DecideBondOrder(mol, true);
 
             int doubleBondCount = 0;
@@ -576,7 +558,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestNPolycyclicCompounds()
         {
-            IAtomContainer mol = sp.ParseSmiles("n12cncc1cccc2");
+            var mol = sp.ParseSmiles("n12cncc1cccc2");
             atasc.DecideBondOrder(mol, true);
 
             int doubleBondCount = 0;
@@ -590,8 +572,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestIndoles2()
         {
-            IAtomContainer mol = sp
-                    .ParseSmiles("Cl.Cl.Oc1ccc2CC3[C@](Cc4c(-c5ccccc5)c(C)[nH0](Cc5ccccc5)c4[C@@H]([C@](CCN3CC3CC3)(c2c1O1)2)1)2(O)");
+            var mol = sp.ParseSmiles("Cl.Cl.Oc1ccc2CC3[C@](Cc4c(-c5ccccc5)c(C)[nH0](Cc5ccccc5)c4[C@@H]([C@](CCN3CC3CC3)(c2c1O1)2)1)2(O)");
             atasc.DecideBondOrder(mol, true);
 
             int doubleBondCount = 0;
@@ -605,7 +586,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void SomeOtherWieredDoubleRing()
         {
-            IAtomContainer mol = sp.ParseSmiles("CCc2c3ccccc3[nH]c2");
+            var mol = sp.ParseSmiles("CCc2c3ccccc3[nH]c2");
             atasc.DecideBondOrder(mol, true);
 
             int doubleBondCount = 0;
@@ -618,7 +599,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestButadieneSmile()
         {
-            IAtomContainer mol = sp.ParseSmiles("cccc");
+            var mol = sp.ParseSmiles("cccc");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             // The SMILES-parser does not seams raise the SingleOrDouble-flag if a
             // molecule don't have any rings
@@ -638,28 +619,28 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestButadiene()
         {
-            IAtomContainer mol = new AtomContainer();
-            IAtomType carbon = new AtomType(ChemicalElements.Carbon.ToIElement());
+            var mol = new AtomContainer();
+            var carbon = new AtomType(ChemicalElements.Carbon.ToIElement());
 
-            IAtom a0 = new Atom("C")
+            var a0 = new Atom("C")
             {
                 Hybridization = Hybridization.SP2,
                 ImplicitHydrogenCount = 2
             };
             AtomTypeManipulator.ConfigureUnsetProperties(a0, carbon);
-            IAtom a1 = new Atom("C")
+            var a1 = new Atom("C")
             {
                 Hybridization = Hybridization.SP2,
                 ImplicitHydrogenCount = 1
             };
             AtomTypeManipulator.ConfigureUnsetProperties(a1, carbon);
-            IAtom a2 = new Atom("C")
+            var a2 = new Atom("C")
             {
                 Hybridization = Hybridization.SP2,
                 ImplicitHydrogenCount = 1
             };
             AtomTypeManipulator.ConfigureUnsetProperties(a2, carbon);
-            IAtom a3 = new Atom("C")
+            var a3 = new Atom("C")
             {
                 Hybridization = Hybridization.SP2,
                 ImplicitHydrogenCount = 2
@@ -671,25 +652,14 @@ namespace NCDK.Tools
             mol.Atoms.Add(a2);
             mol.Atoms.Add(a3);
 
-            IBond b0 = new Bond(a0, a1)
-            {
-                IsSingleOrDouble = true
-            };
+            var b0 = new Bond(a0, a1) { IsSingleOrDouble = true };
             mol.Bonds.Add(b0);
-            IBond b1 = new Bond(a1, a2)
-            {
-                IsSingleOrDouble = true
-            };
+            var b1 = new Bond(a1, a2) { IsSingleOrDouble = true };
             mol.Bonds.Add(b1);
-            IBond b2 = new Bond(a2, a3)
-            {
-                IsSingleOrDouble = true
-            };
+            IBond b2 = new Bond(a2, a3) { IsSingleOrDouble = true };
             mol.Bonds.Add(b2);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            AtomTypeTools att = new AtomTypeTools();
-            att.AssignAtomTypePropertiesToAtom(mol, true);
 
             atasc.DecideBondOrder(mol, true);
 
@@ -701,13 +671,14 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestMolFromSdf()
         {
-            IAtomContainer mol = sp.ParseSmiles("OC(COc1ccccc1CC=C)CNC(C)C");
+            var mol = sp.ParseSmiles("OC(COc1ccccc1CC=C)CNC(C)C");
             atasc.DecideBondOrder(mol, true);
 
             int doubleBondCount = 0;
             foreach (var bond in mol.Bonds)
             {
-                if (bond.Order == BondOrder.Double) doubleBondCount++;
+                if (bond.Order == BondOrder.Double)
+                    doubleBondCount++;
             }
             Assert.AreEqual(4, doubleBondCount);
         }
@@ -716,7 +687,7 @@ namespace NCDK.Tools
         public void TestOnlyOneAtom()
         {
             // If all bonds in the molecule are implicit, then it was noticed that the SatChecker failed
-            IAtomContainer mol = sp.ParseSmiles("C");
+            var mol = sp.ParseSmiles("C");
 
             int preBondCount = mol.Bonds.Count;
             atasc.DecideBondOrder(mol);

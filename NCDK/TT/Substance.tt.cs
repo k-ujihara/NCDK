@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -27,6 +28,7 @@ using System;
 
 namespace NCDK.Default
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class Substance
         : ChemObjectSet<IAtomContainer>, ISubstance, ICloneable
@@ -39,6 +41,7 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class Substance
         : ChemObjectSet<IAtomContainer>, ISubstance, ICloneable

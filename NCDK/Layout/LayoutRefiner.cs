@@ -99,7 +99,7 @@ namespace NCDK.Layout
         private readonly IAtomContainer mol;
         private readonly IDictionary<IAtom, int> idxs;
         private readonly int[][] adjList;
-        private readonly GraphUtil.EdgeToBondMap bondMap;
+        private readonly EdgeToBondMap bondMap;
         private readonly IAtom[] atoms;
 
         // measuring and finding congestion
@@ -127,13 +127,13 @@ namespace NCDK.Layout
             this.mol = mol;
             this.afix = afix;
             this.bfix = bfix;
-            this.bondMap = GraphUtil.EdgeToBondMap.WithSpaceFor(mol);
+            this.bondMap = EdgeToBondMap.WithSpaceFor(mol);
             this.adjList = GraphUtil.ToAdjList(mol, bondMap);
             this.idxs = new Dictionary<IAtom, int>();
             foreach (var atom in mol.Atoms)
                 idxs[atom] = idxs.Count;
-            this.atoms = AtomContainerManipulator.GetAtomArray(mol);
-
+            this.atoms = mol.Atoms.ToArray();
+            
             // buffers for storing coordinates
             this.buffer1 = new Vector2[atoms.Length];
             this.buffer2 = new Vector2[atoms.Length];
@@ -298,7 +298,7 @@ namespace NCDK.Layout
         /// <param name="beg2">first atom of second bond</param>
         /// <param name="end2">first atom of second bond</param>
         /// <returns>bond is crossing</returns>
-        private bool IsCrossed(Vector2 beg1, Vector2 end1, Vector2 beg2, Vector2 end2)
+        private static bool IsCrossed(Vector2 beg1, Vector2 end1, Vector2 beg2, Vector2 end2)
         {
             return Vectors.LinesIntersect(beg1.X, beg1.Y, end1.X, end1.Y, beg2.X, beg2.Y, end2.X, end2.Y);
         }

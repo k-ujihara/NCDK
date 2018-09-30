@@ -18,8 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
-using NCDK.Graphs.Canon;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;

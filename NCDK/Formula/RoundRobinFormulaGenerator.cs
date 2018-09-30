@@ -155,8 +155,7 @@ namespace NCDK.Formula
         /// </summary>
         sealed class DecomposerFactory
         {
-            private static readonly int maximalNumberOfCachedDecomposers = 10;
-            private readonly static DecomposerFactory instance = new DecomposerFactory();
+            private const int maximalNumberOfCachedDecomposers = 10;
             private readonly List<RangeMassDecomposer> decomposerCache;
 
             private DecomposerFactory()
@@ -164,7 +163,7 @@ namespace NCDK.Formula
                 this.decomposerCache = new List<RangeMassDecomposer>(maximalNumberOfCachedDecomposers);
             }
 
-            public static DecomposerFactory Instance => instance;
+            public static DecomposerFactory Instance { get; } = new DecomposerFactory();
 
             public RangeMassDecomposer GetDecomposerFor(IIsotope[] alphabet)
             {
@@ -250,7 +249,7 @@ namespace NCDK.Formula
                 return Arrays.AreEqual(elements, this.elements);
             }
 
-            private double FindOptimalPrecision()
+            private static double FindOptimalPrecision()
             {
                 return 1d / 5963.337687d; // This blowup is optimized for organic compounds based on the CHNOPS alphabet
             }

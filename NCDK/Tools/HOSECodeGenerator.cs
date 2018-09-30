@@ -38,75 +38,77 @@ namespace NCDK.Tools
 {
     /// <summary>
     /// Generates HOSE codes <token>cdk-cite-BRE78</token>.
-    /// IMPORTANT: Your molecule must contain implicit or explicit hydrogens
-    /// for this method to work properly.
     /// </summary>
+    /// <remarks>
+    /// <note type="important" >
+    /// Your molecule must contain implicit or explicit hydrogens
+    /// for this method to work properly.
+    /// </note>
+    /// </remarks>
     // @author     steinbeck
     // @cdk.githash
     // @cdk.keyword    HOSE code, spherical atom search
     // @cdk.created    2002-05-10
     // @cdk.module     standard
-    [Serializable]
     public class HOSECodeGenerator
     {
         /// <summary>
         /// Container for the nodes in a sphere.
         /// </summary>
-        protected List<TreeNode> sphereNodes = null;
-        protected List<IAtom> sphereNodesWithAtoms = null;
+        private List<TreeNode> sphereNodes;
+        private readonly List<IAtom> sphereNodesWithAtoms;
 
         /// <summary>
         /// Container for the node in the next sphere assembled in a recursive method
         /// and then passed to the next recursion to become <see cref="sphereNodes"/>.
         /// </summary>
-        protected List<TreeNode> nextSphereNodes = null;
+        private List<TreeNode> nextSphereNodes;
 
         /// <summary>
         /// Counter for the sphere in which we currently work.
         /// </summary>
-        protected int sphere = 0;
+        private int sphere = 0;
 
         /// <summary>
         /// How many spheres are we supposed inspect.
         /// </summary>
-        protected int maxSphere = 0;
+        private int maxSphere = 0;
 
         /// <summary>
         /// Here we store the spheres that we assemble, in order to parse them into a code later.
         /// </summary>
-        protected List<TreeNode>[] spheres = null;
-        protected List<IAtom>[] spheresWithAtoms = null;
+        private List<TreeNode>[] spheres;
+        private List<IAtom>[] spheresWithAtoms;
 
         /// <summary>
         /// The HOSECode string that we assemble
         /// </summary>
-        protected StringBuilder HOSECode = null;
+        private StringBuilder HOSECode = null;
 
         /// <summary>
         /// The molecular structure on which we work
         /// </summary>
-        protected IAtomContainer atomContainer;
+        private IAtomContainer atomContainer;
 
         /// <summary>
         /// Delimiters used to separate spheres in the output string. Bremser uses the
         /// sequence"(//)" for the first four spheres.
         /// </summary>
-        protected string[] sphereDelimiters = { "(", "/", "/", ")", "/", "/", "/", "/", "/", "/", "/", "/" };
+        private readonly string[] sphereDelimiters = new string[] { "(", "/", "/", ")", "/", "/", "/", "/", "/", "/", "/", "/" };
 
         /// <summary>
         /// The bond symbols used for bond orders "single", "double", "triple" and "aromatic"
         /// </summary>
-        protected string[] bondSymbols = { "", "", "=", "%", "*" };
-        protected string centerCode = null;
-        public TreeNode rootNode = null;
-        private IAtomContainer acold = null;
+        private readonly string[] bondSymbols = new string[] { "", "", "=", "%", "*" };
+        private string centerCode = null;
+        private TreeNode rootNode = null;
+        private readonly IAtomContainer acold = null;
         private IRingSet soar = null;
 
         /// <summary>
         /// The rank order for the given element symbols.
         /// </summary>
-        static readonly string[] rankedSymbols = {"C", "O", "N", "S", "P", "Si", "B", "F", "Cl", "Br", ";", "I",
-            "#", "&", "," };
+        private static readonly string[] rankedSymbols = new string[] {"C", "O", "N", "S", "P", "Si", "B", "F", "Cl", "Br", ";", "I", "#", "&", "," };
 
         /// <summary>
         /// The ranking values to be used for the symbols above.
@@ -135,7 +137,7 @@ namespace NCDK.Tools
             {
                 try
                 {
-                    isotopeFac = Isotopes.Instance;
+                    isotopeFac = BODRIsotopeFactory.Instance;
                 }
                 catch (IOException e)
                 {
@@ -145,15 +147,15 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        ///  This method is intended to be used to get the atoms around an atom in spheres. It is not used in this class, but is provided for other classes to use.
-        ///  It also creates the HOSE code in HOSECode as a side-effect.
+        /// This method is intended to be used to get the atoms around an atom in spheres. It is not used in this class, but is provided for other classes to use.
+        /// It also creates the HOSE code in HOSECode as a side-effect.
         /// </summary>
         /// <param name="ac">The <see cref="IAtomContainer"/> with the molecular skeleton in which the root atom resides.</param>
         /// <param name="root">The root atom for which to produce the spheres.</param>
         /// <param name="noOfSpheres">The number of spheres to look at.</param>
         /// <param name="ringsize">Shall the center code have the ring size in it? Only use if you want to have the hose code later, else say false.</param>
-        /// <returns> An array <see cref="IList{T}"/> of <see cref="IAtom"/>. The list at i-1 contains the atoms at sphere i as <see cref="TreeNode"/>s.</returns>
-        public IList<IAtom>[] GetSpheres(IAtomContainer ac, IAtom root, int noOfSpheres, bool ringsize)
+        /// <returns>An array <see cref="IList{T}"/> of <see cref="IAtom"/>. The list at i-1 contains the atoms at sphere i as <see cref="TreeNode"/>s.</returns>
+        public IReadOnlyList<IAtom>[] GetSpheres(IAtomContainer ac, IAtom root, int noOfSpheres, bool ringsize)
         {
             EnsureIsotopeFactory();
             centerCode = "";
@@ -254,7 +256,7 @@ namespace NCDK.Tools
             BreadthFirstSearch(root, true);
             CreateCode();
             FillUpSphereDelimiters();
-            Debug.WriteLine("HOSECodeGenerator -> HOSECode: ", HOSECode);
+            Debug.WriteLine($"HOSECodeGenerator -> HOSECode: {HOSECode}");
             return HOSECode.ToString();
         }
 
@@ -284,13 +286,13 @@ namespace NCDK.Tools
             {
                 if (bool_[i]) sb.Append(i + "");
             }
-            if (sb.ToString() == string.Empty)
+            if (sb.Length == 0)
                 return "";
             else
                 return "-" + sb.ToString();
         }
 
-        private string CreateChargeCode(IAtom atom)
+        private static string CreateChargeCode(IAtom atom)
         {
             StringBuilder tempCode = new StringBuilder();
 
@@ -320,8 +322,8 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        ///  Prepares for a breadth first search within the <see cref="IAtomContainer"/>. The actual
-        ///  recursion is done in <see cref="NextSphere"/>.
+        /// Prepares for a breadth first search within the <see cref="IAtomContainer"/>. The actual
+        /// recursion is done in <see cref="NextSphere"/>.
         /// </summary>
         /// <param name="root">The atom at which we start the search</param>
         /// <param name="addTreeNode"></param>
@@ -338,7 +340,7 @@ namespace NCDK.Tools
             {
                 try
                 {
-                    if (atom.Symbol.Equals("H")) continue;
+                    if (string.Equals(atom.Symbol, "H", StringComparison.Ordinal)) continue;
                     bond = atomContainer.GetBond(root, atom);
                     
                     // In the first sphere the atoms are labeled with their own atom
@@ -382,7 +384,8 @@ namespace NCDK.Tools
         private void NextSphere(List<TreeNode> sphereNodes)
         {
             spheres[sphere] = sphereNodes;
-            if (spheresWithAtoms != null) spheresWithAtoms[sphere] = sphereNodesWithAtoms;
+            if (spheresWithAtoms != null)
+                spheresWithAtoms[sphere] = sphereNodesWithAtoms;
             
             // From here we start assembling the next sphere
             IAtom node = null;
@@ -393,10 +396,11 @@ namespace NCDK.Tools
             for (int i = 0; i < sphereNodes.Count; i++)
             {
                 treeNode = (TreeNode)sphereNodes[i];
-                if (!("&;#:,".IndexOf(treeNode.symbol) >= 0))
+                if (!("&;#:,".IndexOf(treeNode.symbol, StringComparison.Ordinal) >= 0))
                 {
                     node = treeNode.Atom;
-                    if (node.Symbol.Equals("H")) continue;
+                    if (string.Equals(node.Symbol, "H", StringComparison.Ordinal))
+                        continue;
 
                     var conAtoms = atomContainer.GetConnectedAtoms(node).ToList();
                     if (conAtoms.Count == 1)
@@ -413,8 +417,8 @@ namespace NCDK.Tools
                                 bond = atomContainer.GetBond(node, toNode);
                                 if (bond.IsAromatic)
                                 {
-                                    nextSphereNodes.Add(new TreeNode(this, toNode.Symbol, treeNode, toNode, 4, atomContainer
-                                            .GetConnectedBonds(toNode).Count(), treeNode.score));
+                                    nextSphereNodes.Add(
+                                        new TreeNode(this, toNode.Symbol, treeNode, toNode, 4, atomContainer.GetConnectedBonds(toNode).Count(), treeNode.score));
                                 }
                                 else
                                 {
@@ -436,7 +440,7 @@ namespace NCDK.Tools
             }
         }
 
-        public string MakeBremserCompliant(string code)
+        internal static string MakeBremserCompliant(string code)
         {
             int sepIndex = code.IndexOf(';');
             if (sepIndex >= 0)
@@ -447,8 +451,8 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        ///  After recursively having established the spheres and assigning each node an
-        ///  appropriate score, we now generate the complete HOSE code.
+        /// After recursively having established the spheres and assigning each node an
+        /// appropriate score, we now generate the complete HOSE code.
         /// </summary>
         /// <exception cref="CDKException"> Thrown if something goes wrong</exception>
         private void CreateCode()
@@ -516,7 +520,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        ///  Generates the string code for a given sphere.
+        /// Generates the string code for a given sphere.
         /// </summary>
         /// <param name="sphereNodes">A vector of TreeNodes for which a string code is to be generated</param>
         /// <returns>The SphereCode value</returns>
@@ -582,7 +586,7 @@ namespace NCDK.Tools
         {
             for (int f = 0; f < rankedSymbols.Length; f++)
             {
-                if (rankedSymbols[f].Equals(symbol))
+                if (string.Equals(rankedSymbols[f], symbol, StringComparison.Ordinal))
                 {
                     return symbolRankings[f];
                 }
@@ -592,35 +596,31 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        ///  Returns the Bremser-compatible symbols for a given element. Silicon, for
-        ///  example, is actually "Q". :-)
+        /// Returns the Bremser-compatible symbols for a given element. Silicon, for
+        /// example, is actually "Q". :-)
         /// </summary>
         /// <param name="sym">The element symbol to be converted</param>
         /// <returns>The converted symbol</returns>
-        private string GetElementSymbol(string sym)
+        private static string GetElementSymbol(string sym)
         {
-            if (sym.Equals("Si"))
+            switch (sym)
             {
-                return "Q";
+                case "Si":
+                    return "Q";
+                case "Cl":
+                    return "X";
+                case "Br":
+                    return "Y";
+                case ",":
+                    return "";
+                default:
+                    return sym;
             }
-            if (sym.Equals("Cl"))
-            {
-                return "X";
-            }
-            if (sym.Equals("Br"))
-            {
-                return "Y";
-            }
-            if (sym.Equals(","))
-            {
-                return "";
-            }
-            return sym;
         }
 
         /// <summary>
-        ///  Determines the ranking score for each node, allowing for a sorting of nodes
-        ///  within one sphere.
+        /// Determines the ranking score for each node, allowing for a sorting of nodes
+        /// within one sphere.
         /// </summary>
         /// <param name="sphereNodes">The nodes for which the score is to be calculated.</param>
         /// <exception cref="CDKException"> Thrown if something goes wrong.</exception>
@@ -643,15 +643,16 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        ///  Sorts the nodes (atoms) in the sphereNode vector according to their score.
-        ///  This is used for the essential ranking of nodes in HOSE code sphere.
+        /// Sorts the nodes (atoms) in the sphereNode vector according to their score.
+        /// This is used for the essential ranking of nodes in HOSE code sphere.
         /// </summary>
         /// <param name="sphereNodes">A vector with sphere nodes to be sorted.</param>
-        private void SortNodesByScore(List<TreeNode> sphereNodes)
+        private static void SortNodesByScore(List<TreeNode> sphereNodes)
         {
             TreeNode obj;
             bool changed;
-            if (sphereNodes.Count == 0) return;
+            if (sphereNodes.Count == 0)
+                return;
             
             // Now we sort by score
             do
@@ -673,18 +674,18 @@ namespace NCDK.Tools
             TreeNode temp = null;
             for (int i = 0; i < sphereNodes.Count; i++)
             {
-                temp = ((TreeNode)sphereNodes[i]);
+                temp = sphereNodes[i];
                 temp.sortOrder = sphereNodes.Count - i;
             }
         }
 
         /// <summary>
-        ///  If we use less than four sphere, this fills up the code with the missing
-        ///  delimiters such that we are compatible with Bremser's HOSE code table.
+        /// If we use less than four sphere, this fills up the code with the missing
+        /// delimiters such that we are compatible with Bremser's HOSE code table.
         /// </summary>
         private void FillUpSphereDelimiters()
         {
-            Debug.WriteLine("Sphere: " + sphere);
+            Debug.WriteLine($"Sphere: {sphere}");
             for (int f = sphere; f < 4; f++)
             {
                 HOSECode.Append(sphereDelimiters[f]);
@@ -694,7 +695,7 @@ namespace NCDK.Tools
         class TreeNodeComparator : IComparer<TreeNode>
         {
             /// <summary>
-            ///The compare method, compares by canonical label of atoms
+            /// The compare method, compares by canonical label of atoms
             /// </summary>
             /// <param name="a">The first TreeNode</param>
             /// <param name="b">The second TreeNode</param>
@@ -710,24 +711,23 @@ namespace NCDK.Tools
             /// </summary>
             /// <param name="node">a tree node to get the label from</param>
             /// <returns>canonical label value</returns>
-            private long Label(TreeNode node)
+            private static long Label(TreeNode node)
             {
                 if (node == null) return long.MinValue;
                 IAtom atom = node.Atom;
                 if (atom == null) return long.MinValue;
                 // cast can be removed in master
-                long label = atom.GetProperty(InvPair.CanonicalLabelKey, long.MinValue);
+                long label = atom.GetProperty(InvPair.CanonicalLabelPropertyKey, long.MinValue);
                 return label ;
             }
         }
 
         /// <summary>
-        ///  Helper class for storing the properties of a node in our breadth first search.
+        /// Helper class for storing the properties of a node in our breadth first search.
         /// </summary>
         // @author     steinbeck
         // @cdk.created    2002-11-16
-        [Serializable]
-        public class TreeNode
+        internal class TreeNode
         {
             private HOSECodeGenerator parent;
 
@@ -739,7 +739,7 @@ namespace NCDK.Tools
             internal long score;
             internal int ranking;
             internal int sortOrder = 1;
-            List<TreeNode> childs = null;
+            private readonly List<TreeNode> childs = null;
             internal string hSymbol = null;
             internal bool stopper = false;
             internal string stringscore = "";
@@ -778,8 +778,7 @@ namespace NCDK.Tools
             /// <returns><see langword="true"/>, if the this <see cref="TreeNode"/>'s atom object equals the one of the other <see cref="TreeNode"/></returns>
             public override bool Equals(object o)
             {
-                var n = o as TreeNode;
-                if (n == null)
+                if (!(o is TreeNode n))
                     return false;
                 return this.atom == n.atom;
             }
@@ -808,15 +807,12 @@ namespace NCDK.Tools
             }
         }
 
-        public IList<IAtom> GetNodesInSphere(int sphereNumber)
+        public IEnumerable<IAtom> GetNodesInSphere(int sphereNumber)
         {
             sphereNodes = spheres[sphereNumber - 1];
-            List<IAtom> atoms = new List<IAtom>();
             for (int g = 0; g < sphereNodes.Count; g++)
-            {
-                atoms.Add(((TreeNode)sphereNodes[g]).atom);
-            }
-            return (atoms);
+                yield return sphereNodes[g].atom;
+            yield break;
         }
     }
 }

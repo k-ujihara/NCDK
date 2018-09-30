@@ -25,6 +25,7 @@ using NCDK.Common.Primitives;
 using NCDK.Geometries;
 using NCDK.IO.Formats;
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.IO
@@ -100,7 +101,7 @@ namespace NCDK.IO
                 //        Debug.WriteLine("lauf");
                 // parse frame by frame
                 string token = Strings.Tokenize(line, '\t', ' ', ',', ';')[0];
-                number_of_atoms = int.Parse(token);
+                number_of_atoms = int.Parse(token, NumberFormatInfo.InvariantInfo);
                 string info = input.ReadLine();
 
                 IChemModel chemModel = file.Builder.NewChemModel();
@@ -138,7 +139,7 @@ namespace NCDK.IO
                         da_atom[i] = -1;
 
                         var tokens = Strings.Tokenize(line, '\t', ' ', ',', ';');
-                        int fields = int.Parse(tokens[0]);
+                        int fields = int.Parse(tokens[0], NumberFormatInfo.InvariantInfo);
 
                         if (fields < Math.Min(i * 2 + 1, 7))
                         {
@@ -152,28 +153,28 @@ namespace NCDK.IO
                         else if (i == 1)
                         {
                             types[i] = tokens[1];
-                            d_atom[i] = int.Parse(tokens[2]) - 1;
-                            d[i] = double.Parse(tokens[3]);
+                            d_atom[i] = int.Parse(tokens[2], NumberFormatInfo.InvariantInfo) - 1;
+                            d[i] = double.Parse(tokens[3], NumberFormatInfo.InvariantInfo);
                             i++;
                         }
                         else if (i == 2)
                         {
                             types[i] = tokens[1];
-                            d_atom[i] = int.Parse(tokens[2]) - 1;
-                            d[i] = double.Parse(tokens[3]);
-                            a_atom[i] = int.Parse(tokens[4]) - 1;
-                            a[i] = double.Parse(tokens[5]);
+                            d_atom[i] = int.Parse(tokens[2], NumberFormatInfo.InvariantInfo) - 1;
+                            d[i] = double.Parse(tokens[3], NumberFormatInfo.InvariantInfo);
+                            a_atom[i] = int.Parse(tokens[4], NumberFormatInfo.InvariantInfo) - 1;
+                            a[i] = double.Parse(tokens[5], NumberFormatInfo.InvariantInfo);
                             i++;
                         }
                         else
                         {
                             types[i] = tokens[1];
-                            d_atom[i] = int.Parse(tokens[2]) - 1;
-                            d[i] = double.Parse(tokens[3]);
-                            a_atom[i] = int.Parse(tokens[4]) - 1;
-                            a[i] = double.Parse(tokens[5]);
-                            da_atom[i] = int.Parse(tokens[6]) - 1;
-                            da[i] = double.Parse(tokens[7]);
+                            d_atom[i] = int.Parse(tokens[2], NumberFormatInfo.InvariantInfo) - 1;
+                            d[i] = double.Parse(tokens[3], NumberFormatInfo.InvariantInfo);
+                            a_atom[i] = int.Parse(tokens[4], NumberFormatInfo.InvariantInfo) - 1;
+                            a[i] = double.Parse(tokens[5], NumberFormatInfo.InvariantInfo);
+                            da_atom[i] = int.Parse(tokens[6], NumberFormatInfo.InvariantInfo) - 1;
+                            da[i] = double.Parse(tokens[7], NumberFormatInfo.InvariantInfo);
                             i++;
                         }
                     }

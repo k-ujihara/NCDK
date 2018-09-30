@@ -52,7 +52,9 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         }
 
         [Obsolete("use static utility methods to create logical atom matcher, " + nameof(And) + ", " + nameof(Or) + " or " + nameof(Not) + ".")]
+#pragma warning disable CA1716 // Identifiers should not match keywords
         public virtual string Operator
+#pragma warning restore CA1716 // Identifiers should not match keywords
         {
             get { return operator_; }
             set { operator_ = value; }
@@ -76,26 +78,32 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             bool matchesLeft = left.Matches(atom);
             if (right != null)
             {
-                if ("and".Equals(operator_) && matchesLeft)
+                switch (operator_)
                 {
-                    bool matchesRight = right.Matches(atom);
-                    val = matchesLeft && matchesRight;
-                }
-                else if ("or".Equals(operator_))
-                {
-                    bool matchesRight = right.Matches(atom);
-                    val = matchesLeft || matchesRight;
+                    case "and":
+                        {
+                            bool matchesRight = right.Matches(atom);
+                            val = matchesLeft && matchesRight;
+                        }
+                        break;
+                    case "or":
+                        {
+                            bool matchesRight = right.Matches(atom);
+                            val = matchesLeft || matchesRight;
+                        }
+                        break;
                 }
             }
             else
             {
-                if ("not".Equals(operator_))
+                switch (operator_)
                 {
-                    val = (!matchesLeft);
-                }
-                else
-                {
-                    val = matchesLeft;
+                    case "not":
+                        val = (!matchesLeft);
+                        break;
+                    default:
+                        val = matchesLeft;
+                        break;
                 }
             }
             return val;
@@ -261,7 +269,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             private SMARTSAtom expression;
 
             /// <summary>Is the expression chiral - if so, always true!</summary>
-            private bool chiral;
+            private readonly bool chiral;
 
             /// <summary>
             /// Create a negation of <paramref name="expression"/>.

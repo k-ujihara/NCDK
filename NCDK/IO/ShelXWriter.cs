@@ -25,6 +25,7 @@ using NCDK.IO.Formats;
 using NCDK.Numerics;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -107,7 +108,7 @@ namespace NCDK.IO
             var title = crystal.Title;
             if (title != null && title.Trim().Length > 0)
             {
-                Writeln("TITL " + title.ToString().Trim());
+                Writeln($"TITL {title.Trim()}");
             }
             else
             {
@@ -122,28 +123,27 @@ namespace NCDK.IO
             double alpha = Vectors.RadianToDegree(Vectors.Angle(b, c));
             double beta = Vectors.RadianToDegree(Vectors.Angle(a, c));
             double gamma = Vectors.RadianToDegree(Vectors.Angle(a, b));
-            Write("CELL " + 1.54184.ToString("F5") + "   ");
-            Write(alength.ToString("F5") + "  ");
-            Write(blength.ToString("F5") + "  ");
-            Write(clength.ToString("F5") + "  ");
-            Write(alpha.ToString("F4") + "  ");
-            Write(beta.ToString("F4") + "  ");
-            Write(gamma.ToString("F4") + "  ");
-            Writeln("ZERR " + ((double)crystal.Z).ToString("F5")
+            Write("CELL " + 1.54184.ToString("F5", NumberFormatInfo.InvariantInfo) + "   ");
+            Write(alength.ToString("F5", NumberFormatInfo.InvariantInfo) + "  ");
+            Write(blength.ToString("F5", NumberFormatInfo.InvariantInfo) + "  ");
+            Write(clength.ToString("F5", NumberFormatInfo.InvariantInfo) + "  ");
+            Write(alpha.ToString("F4", NumberFormatInfo.InvariantInfo) + "  ");
+            Write(beta.ToString("F4", NumberFormatInfo.InvariantInfo) + "  ");
+            Write(gamma.ToString("F4", NumberFormatInfo.InvariantInfo) + "  ");
+            Writeln("ZERR " + ((double)crystal.Z).ToString("F5", NumberFormatInfo.InvariantInfo)
                     + "    0.01000  0.01000   0.01000   0.0100   0.0100   0.0100");
             string spaceGroup = crystal.SpaceGroup;
-            if ("P1".Equals(spaceGroup))
+            if (string.Equals("P1", spaceGroup, StringComparison.Ordinal))
             {
                 Writeln("LATT  -1");
             }
-            else if ("P 2_1 2_1 2_1".Equals(spaceGroup))
+            else if (string.Equals("P 2_1 2_1 2_1", spaceGroup, StringComparison.Ordinal))
             {
                 Writeln("LATT  -1");
                 Writeln("SYMM  1/2+X   , 1/2-Y   ,    -Z");
                 Writeln("SYMM     -X   , 1/2+Y   , 1/2-Z");
                 Writeln("SYMM  1/2-X   ,    -Y   , 1/2+Z");
             }
-            //        MFAnalyser mfa = new MFAnalyser(crystal);
             string elemNames = "";
             string elemCounts = "";
             IMolecularFormula formula = MolecularFormulaManipulator.GetMolecularFormula(crystal);
@@ -152,7 +152,7 @@ namespace NCDK.IO
             {
                 string symbol = element.Symbol;
                 elemNames += symbol + "    ".Substring(symbol.Length);
-                string countS = MolecularFormulaManipulator.GetElementCount(formula, element).ToString();
+                string countS = MolecularFormulaManipulator.GetElementCount(formula, element).ToString(NumberFormatInfo.InvariantInfo);
                 elemCounts += countS + "    ".Substring(countS.Length);
             }
             Writeln("SFAC  " + elemNames);
@@ -175,17 +175,17 @@ namespace NCDK.IO
                 for (int elemidx = 0; elemidx < asortedElements.Count; elemidx++)
                 {
                     IElement elem = asortedElements[elemidx];
-                    if (elem.Symbol.Equals(symbol))
+                    if (elem.Symbol.Equals(symbol, StringComparison.Ordinal))
                     {
-                        elemID = (elemidx + 1).ToString();
+                        elemID = (elemidx + 1).ToString(NumberFormatInfo.InvariantInfo);
                         break;
                     }
                 }
                 Write(elemID);
                 Write("    ".Substring(elemID.Length));
-                Write(fracCoord.X.ToString("F5") + "   ");
-                Write(fracCoord.Y.ToString("F5") + "   ");
-                Writeln(fracCoord.Y.ToString("F5") + "    11.00000    0.05000");
+                Write(fracCoord.X.ToString("F5", NumberFormatInfo.InvariantInfo) + "   ");
+                Write(fracCoord.Y.ToString("F5", NumberFormatInfo.InvariantInfo) + "   ");
+                Writeln(fracCoord.Y.ToString("F5", NumberFormatInfo.InvariantInfo) + "    11.00000    0.05000");
             }
             Writeln("END");
         }
@@ -211,7 +211,7 @@ namespace NCDK.IO
             }
             catch (IOException e)
             {
-                Console.Error.WriteLine("CMLWriter IOException while printing \"" + s + "\":" + e.ToString());
+                Console.Error.WriteLine($"CMLWriter IOException while printing \"{s}\":{e.ToString()}");
             }
         }
     }

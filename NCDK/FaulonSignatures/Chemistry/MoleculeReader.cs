@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.FaulonSignatures.Chemistry
 {
-    public class MoleculeReader
+    public static class MoleculeReader
     {
         public static Molecule ReadMolfile(string filename)
         {
@@ -106,8 +107,8 @@ namespace NCDK.FaulonSignatures.Chemistry
             Molecule molecule = new Molecule();
             // counts are on the fourth line
             string countLine = block[3];
-            int atomCount = int.Parse(countLine.Substring(0, 3).Trim());
-            int bondCount = int.Parse(countLine.Substring(3, 3).Trim());
+            int atomCount = int.Parse(countLine.Substring(0, 3).Trim(), NumberFormatInfo.InvariantInfo);
+            int bondCount = int.Parse(countLine.Substring(3, 3).Trim(), NumberFormatInfo.InvariantInfo);
 
             // atom block starts on the fifth line (4th index)
             int atomLineStart = 4;
@@ -128,10 +129,10 @@ namespace NCDK.FaulonSignatures.Chemistry
                 {
                     string bondLine = block[i];
                     int atomNumberA =
-                        int.Parse(bondLine.Substring(0, 3).Trim());
+                        int.Parse(bondLine.Substring(0, 3).Trim(), NumberFormatInfo.InvariantInfo);
                     int atomNumberB =
-                        int.Parse(bondLine.Substring(3, 3).Trim());
-                    int order = int.Parse(bondLine.Substring(7, 3).Trim());
+                        int.Parse(bondLine.Substring(3, 3).Trim(), NumberFormatInfo.InvariantInfo);
+                    int order = int.Parse(bondLine.Substring(7, 3).Trim(), NumberFormatInfo.InvariantInfo);
                     var o = ConvertIntToBondOrder(order);
                     molecule.AddBond(atomNumberA - 1, atomNumberB - 1, o);
                 }

@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.Numerics;
 using NCDK.QSAR.Results;
+using NCDK.Silent;
 using NCDK.Smiles;
 using System;
 
@@ -12,13 +12,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class ChiChainDescriptorTest : MolecularDescriptorTest {
-        public ChiChainDescriptorTest() {
+    public class ChiChainDescriptorTest : MolecularDescriptorTest
+    {
+        public ChiChainDescriptorTest()
+        {
             SetDescriptor(typeof(ChiChainDescriptor));
         }
 
         [TestMethod()]
-        public void TestDan64() {
+        public void TestDan64()
+        {
             IAtomContainer mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.7500000000000004, 2.799038105676658);
@@ -54,7 +57,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         [TestMethod()]
-        public void TestDan80() {
+        public void TestDan80()
+        {
             IAtomContainer mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.0, 1.5);
@@ -92,11 +96,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Assert.AreEqual(0.0000, ret[6], 0.0001);
             Assert.AreEqual(0.04536, ret[7], 0.00001);
             Assert.AreEqual(0.0000, ret[8], 0.0001);
-
         }
 
         [TestMethod()]
-        public void TestDan81() {
+        public void TestDan81()
+        {
             IAtomContainer mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.0, 1.5);
@@ -137,8 +141,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         [TestMethod()]
-        public void TestDan82() {
-
+        public void TestDan82()
+        {
             IAtomContainer mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.0, 1.5);
@@ -179,8 +183,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         [TestMethod()]
-        public void TestDan154() {
-
+        public void TestDan154()
+        {
             IAtomContainer mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.0, 1.5);
@@ -237,8 +241,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         // @cdk.bug 3023326
         [TestMethod()]
-        public void TestCovalentMetal() {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+        public void TestCovalentMetal()
+        {
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCCC[Sn](CCCC)(CCCC)c1cc(Cl)c(Nc2nc(C)nc(N(CCC)CC3CC3)c2Cl)c(Cl)c1");
             ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
             Assert.IsNotNull(ret);
@@ -246,29 +251,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         // @cdk.bug 3023326
         [TestMethod()]
-        [ExpectedException(typeof(NullReferenceException))]
         public void TestCovalentPlatinum()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CC1CN[Pt]2(N1)OC(=O)C(C)P(=O)(O)O2");
             var dummy = Descriptor.Calculate(mol).Value;
+            if (dummy is ArrayResult<double> result)
+                Assert.IsTrue(double.IsNaN(result[0]));
+            else
+                Assert.Fail();
         }
-
-        //    [TestMethod()] public void TestDan277() {
-        //
-        //        IAtomContainer mol = null;
-        //
-        //        ChiChainDescriptor desc = new ChiChainDescriptor();
-        //        ArrayResult<double> ret = (ArrayResult<double>) desc.Calculate(mol).GetValue();
-        //
-        //        Assert.AreEqual(0.0000, ret[0], 0.0001);
-        //        Assert.AreEqual(0.0000, ret[1], 0.0001);
-        //        Assert.AreEqual(0.0000, ret[2], 0.0001);
-        //        Assert.AreEqual(0.08333, ret[3], 0.00001);
-        //        Assert.AreEqual(0.0000, ret[4], 0.0001);
-        //        Assert.AreEqual(0.0000, ret[5], 0.0001);
-        //        Assert.AreEqual(0.0000, ret[6], 0.0001);
-        //        Assert.AreEqual(0.02778, ret[7], 0.00001);
-        //    }
     }
 }

@@ -41,8 +41,8 @@ namespace NCDK.Graphs.Rebond
     public class RebondTool
     {
         private double maxCovalentRadius;
-        private double minBondDistance;
-        private double bondTolerance;
+        private readonly double minBondDistance;
+        private readonly double bondTolerance;
 
         private Bspt<ITupleAtom> bspt;
 
@@ -118,34 +118,31 @@ namespace NCDK.Graphs.Rebond
             return distance2 <= maxAcceptable2;
         }
 
-        public interface ITupleAtom : ITuple
+        internal interface ITupleAtom : ITuple
         {
             IAtom Atom { get; }
         }
 
-        public class TupleAtom : ITupleAtom
+        private class TupleAtom : ITupleAtom
         {
-            IAtom atom;
-
             public TupleAtom(IAtom atom)
             {
-                this.atom = atom;
+                this.Atom = atom;
             }
 
             public virtual double GetDimValue(int dim)
             {
-                if (dim == 0) return atom.Point3D.Value.X;
-                if (dim == 1) return atom.Point3D.Value.Y;
-                return atom.Point3D.Value.Z;
+                if (dim == 0) return Atom.Point3D.Value.X;
+                if (dim == 1) return Atom.Point3D.Value.Y;
+                return Atom.Point3D.Value.Z;
             }
 
-            public IAtom Atom => this.atom;
-
+            public IAtom Atom { get; }
             public double Distance2 { get; set; }
 
             public override string ToString()
             {
-                return ("<" + atom.Point3D.Value.X + "," + atom.Point3D.Value.Y + "," + atom.Point3D.Value.Z + ">");
+                return ("<" + Atom.Point3D.Value.X + "," + Atom.Point3D.Value.Y + "," + Atom.Point3D.Value.Z + ">");
             }
         }
     }

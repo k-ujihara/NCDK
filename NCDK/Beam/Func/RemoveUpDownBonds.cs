@@ -109,7 +109,7 @@ namespace NCDK.Beam
         /// <param name="ordering"></param>
         /// <param name="acc">accumulator for new edges</param>
         /// <exception cref="InvalidSmilesException">thrown if the edge could not be converted</exception>
-        private void RemoveRedundant(Graph g,
+        private static void RemoveRedundant(Graph g,
                                      Edge e,
                                      int[] ordering,
                                      IDictionary<Edge, Edge> acc)
@@ -122,9 +122,9 @@ namespace NCDK.Beam
 
         private class S : IComparer<Edge>
         {
-            Edge e;
-            int u;
-            int[] ordering;
+            readonly Edge e;
+            readonly int u;
+            readonly int[] ordering;
 
             public S(Edge e, int u, int[] ordering)
             {
@@ -155,7 +155,7 @@ namespace NCDK.Beam
         /// <param name="ordering"></param>
         /// <param name="acc">accumulator for new edges</param>
         /// <exception cref="InvalidSmilesException">thrown if the edge could not be converted</exception>
-        private void ReplaceImplWithExpl(Graph g,
+        private static void ReplaceImplWithExpl(Graph g,
                                       Edge e,
                                       int u,
                                       int[] ordering,

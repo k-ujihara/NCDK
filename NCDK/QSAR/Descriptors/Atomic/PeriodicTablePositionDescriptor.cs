@@ -42,65 +42,54 @@ namespace NCDK.QSAR.Descriptors.Atomic
     public partial class PeriodicTablePositionDescriptor : IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "periodicTablePosition" };
-        public IDictionary<string, int> periodicTable;
-
-        /// <summary>
-        ///  Constructor for the PeriodicTablePositionDescriptor object
-        /// </summary>
-        public PeriodicTablePositionDescriptor()
+        private static readonly IDictionary<string, int> periodicTable = new Dictionary<string, int>
         {
-            if (periodicTable == null)
-            {
-                periodicTable = new Dictionary<string, int>
-                {
-                    ["H"] = 1,
-                    ["Li"] = 2,
-                    ["Be"] = 2,
-                    ["B"] = 2,
-                    ["C"] = 2,
-                    ["N"] = 2,
-                    ["O"] = 2,
-                    ["F"] = 2,
-                    ["Na"] = 3,
-                    ["Mg"] = 3,
-                    ["Al"] = 3,
-                    ["Si"] = 3,
-                    ["P"] = 3,
-                    ["S"] = 3,
-                    ["Cl"] = 3,
-                    ["K"] = 4,
-                    ["Ca"] = 4,
-                    ["Ga"] = 4,
-                    ["Ge"] = 4,
-                    ["As"] = 4,
-                    ["Se"] = 4,
-                    ["Br"] = 4,
-                    ["Rb"] = 5,
-                    ["Sr"] = 5,
-                    ["In"] = 5,
-                    ["Sn"] = 5,
-                    ["Sb"] = 5,
-                    ["Te"] = 5,
-                    ["I"] = 5,
-                    ["Cs"] = 6,
-                    ["Ba"] = 6,
-                    ["Tl"] = 6,
-                    ["Pb"] = 6,
-                    ["Bi"] = 6,
-                    ["Po"] = 6,
-                    ["At"] = 6,
-                    ["Fr"] = 7,
-                    ["Ra"] = 7
-                };
-            }
-        }
+            ["H"] = 1,
+            ["Li"] = 2,
+            ["Be"] = 2,
+            ["B"] = 2,
+            ["C"] = 2,
+            ["N"] = 2,
+            ["O"] = 2,
+            ["F"] = 2,
+            ["Na"] = 3,
+            ["Mg"] = 3,
+            ["Al"] = 3,
+            ["Si"] = 3,
+            ["P"] = 3,
+            ["S"] = 3,
+            ["Cl"] = 3,
+            ["K"] = 4,
+            ["Ca"] = 4,
+            ["Ga"] = 4,
+            ["Ge"] = 4,
+            ["As"] = 4,
+            ["Se"] = 4,
+            ["Br"] = 4,
+            ["Rb"] = 5,
+            ["Sr"] = 5,
+            ["In"] = 5,
+            ["Sn"] = 5,
+            ["Sb"] = 5,
+            ["Te"] = 5,
+            ["I"] = 5,
+            ["Cs"] = 6,
+            ["Ba"] = 6,
+            ["Tl"] = 6,
+            ["Pb"] = 6,
+            ["Bi"] = 6,
+            ["Po"] = 6,
+            ["At"] = 6,
+            ["Fr"] = 7,
+            ["Ra"] = 7
+        };
 
         /// <summary>
         /// The specification attribute of the PeriodicTablePositionDescriptor object
         /// </summary>
         /// <returns>The specification value</returns>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#period",
                 typeof(PeriodicTablePositionDescriptor).FullName, "The Chemistry Development Kit");
@@ -108,7 +97,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the PeriodicTablePositionDescriptor object
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public IReadOnlyList<string> DescriptorNames => NAMES;
 
@@ -123,7 +112,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int period;
             string symbol = atom.Symbol;
             period = periodicTable[symbol];
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(period), NAMES);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(period), NAMES);
         }
 
         /// <summary>

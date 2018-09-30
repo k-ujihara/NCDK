@@ -18,6 +18,8 @@
  */
 
 using NCDK.Tools;
+using System;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -48,7 +50,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => null;
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[0];
+        public override IReadOnlyList<string> NameExtensions { get; } = Array.Empty<string>();
 
         /// <inheritdoc/>
         public override string ReaderClassName { get; } = typeof(MDLV3000Reader).FullName;
@@ -59,7 +61,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (lineNumber == 4 && (line.IndexOf("v3000") >= 0 || line.IndexOf("V3000") >= 0))
+            if (lineNumber == 4 && (line.Contains("v3000")|| line.Contains("V3000")))
             {
                 return true;
             }

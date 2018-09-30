@@ -23,7 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace NCDK.Stereo
 {
@@ -37,18 +36,18 @@ namespace NCDK.Stereo
         private List<TC> carriers;
         private IChemObjectBuilder builder;
 
-        internal AbstractStereo(TF focus, IList<TC> carriers, StereoElement value)
+        internal AbstractStereo(TF focus, IReadOnlyList<TC> carriers, StereoElement value)
         {
             if (focus == null)
-                throw new ArgumentNullException("Focus of stereochemistry can not be null!");
+                throw new ArgumentNullException(nameof(focus), "Focus of stereochemistry can not be null!");
             if (carriers == null)
-                throw new ArgumentNullException("Carriers of the configuration can not be null!");
+                throw new ArgumentNullException(nameof(carriers), "Carriers of the configuration can not be null!");
             if (carriers.Count != value.CarrierLength)
                 throw new ArgumentException($"Unexpected number of stereo carriers! expected {value.CarrierLength} was {carriers.Count}");
             foreach (TC carrier in carriers)
             {
                 if (carrier == null)
-                    throw new ArgumentNullException("A carrier was undefined!");
+                    throw new ArgumentNullException(nameof(carriers), "A carrier was undefined!");
             }
             this.value = value;
             this.focus = focus;
@@ -60,19 +59,20 @@ namespace NCDK.Stereo
         public virtual TF Focus => focus;
 
         /// <inheritdoc/>
-        public virtual IList<TC> Carriers => carriers;
-
-        /// <inheritdoc/>
-        public IReadOnlyList<TC> ReadOnlyCarriers => new ReadOnlyCollection<TC>(Carriers);
-
-        /// <inheritdoc/>
-        public virtual StereoElement.Classes Class => value.Class;
-
-        /// <inheritdoc/>
-        public virtual StereoElement.Configuration Configure
+        public IReadOnlyList<TC> Carriers
         {
-            get { return value.Configure; }
-            set { this.value.Configure = value; }
+            get => carriers;
+            set => carriers = new List<TC>(value);
+        }
+
+        /// <inheritdoc/>
+        public virtual StereoClass Class => value.Class;
+
+        /// <inheritdoc/>
+        public virtual StereoConfigurations Configure
+        {
+            get => value.Configuration; 
+            set => this.value.Configuration = value;
         }
 
         /// <inheritdoc/>
@@ -97,7 +97,7 @@ namespace NCDK.Stereo
             if (!map.TryGetValue(focus, out TF newfocus))
                 newfocus = focus;
 
-            List<TC> newcarriers = carriers;
+            var newcarriers = carriers;
             for (int i = 0; i < newcarriers.Count; i++)
             {
                 if (map.TryGetValue(newcarriers[i], out TC newcarrier))
@@ -119,7 +119,7 @@ namespace NCDK.Stereo
             return Clone(new CDKObjectMap());
         }
 
-        protected abstract IStereoElement<TF, TC> Create(TF focus, IList<TC> carriers, StereoElement stereo);
+        protected abstract IStereoElement<TF, TC> Create(TF focus, IReadOnlyList<TC> carriers, StereoElement stereo);
 
         /// <inheritdoc/>
         public virtual IChemObjectBuilder Builder
@@ -146,10 +146,10 @@ namespace NCDK.Stereo
         internal const int F = 5;
 
         // apply the inverse of a permutation
-        protected static T[] InvApply<T>(T[] src, int[] perm)
+        internal static T[] InvApply<T>(IReadOnlyList<T> src, int[] perm)
         {
-            T[] res = new T[src.Length];
-            for (int i = 0; i < src.Length; i++)
+            T[] res = new T[src.Count];
+            for (int i = 0; i < src.Count; i++)
                 res[i] = src[perm[i]];
             return res;
         }

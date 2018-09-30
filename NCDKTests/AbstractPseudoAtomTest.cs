@@ -73,7 +73,7 @@ namespace NCDK
         }
 
         [TestMethod()]
-        public override void TestSetCharge_Double()
+        public override void TestSetChargeDouble()
         {
             IPseudoAtom atom = (IPseudoAtom)NewChemObject();
             atom.Charge = 0.78;
@@ -89,7 +89,7 @@ namespace NCDK
         }
 
         [TestMethod()]
-        public override void TestSetStereoParity_Integer()
+        public override void TestSetStereoParityInteger()
         {
             IPseudoAtom atom = (IPseudoAtom)NewChemObject();
             atom.StereoParity = -1;
@@ -159,7 +159,7 @@ namespace NCDK
         /// expect zero hydrogen counts.
         /// </summary>
         [TestMethod()]
-        public override void TestClone_HydrogenCount()
+        public override void TestCloneHydrogenCount()
         {
             IAtom atom = (IAtom)NewChemObject();
             atom.ImplicitHydrogenCount = 3;
@@ -191,7 +191,7 @@ namespace NCDK
         /// expect zero stereo parity.
         /// </summary>
         [TestMethod()]
-        public override void TestClone_StereoParity()
+        public override void TestCloneStereoParity()
         {            
             IAtom atom = (IAtom)NewChemObject();
             atom.StereoParity = 3;

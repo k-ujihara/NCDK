@@ -2,38 +2,34 @@ using System;
 
 namespace NCDK.FaulonSignatures
 {
-
     public class InvariantIntStringPair : IComparable<InvariantIntStringPair>
     {
+        private readonly string stringValue;
+        private readonly int value;
+        private readonly int originalIndex;
 
-        public string string_;
-
-        public int value;
-
-        public int originalIndex;
-
-        public InvariantIntStringPair(string string_, int value, int originalIndex)
+        public InvariantIntStringPair(string stringValue, int value, int originalIndex)
         {
-            this.string_ = string_;
+            this.stringValue = stringValue;
             this.value = value;
             this.originalIndex = originalIndex;
         }
 
-        public bool Equals(string string_, int value)
+        public bool Equals(string stringValue, int value)
         {
-            return this.value == value && this.string_.Equals(string_);
+            return this.value == value && string.Equals(this.stringValue, stringValue, StringComparison.Ordinal);
         }
 
         public bool Equals(InvariantIntStringPair o)
         {
-            if (this.string_ == null || o.string_ == null) return false;
-            return this.value == o.value && this.string_.Equals(o.string_);
+            if (this.stringValue == null || o.stringValue == null) return false;
+            return this.value == o.value && string.Equals(this.stringValue, o.stringValue, StringComparison.Ordinal);
         }
 
         public int CompareTo(InvariantIntStringPair o)
         {
-            if (this.string_ == null || o.string_ == null) return 0;
-            int c = this.string_.CompareTo(o.string_);
+            if (this.stringValue == null || o.stringValue == null) return 0;
+            int c = string.CompareOrdinal(this.stringValue, o.stringValue);
             if (c == 0)
             {
                 if (this.value < o.value)
@@ -62,7 +58,7 @@ namespace NCDK.FaulonSignatures
 
         public override string ToString()
         {
-            return this.string_ + "|" + this.value + "|" + this.originalIndex;
+            return this.stringValue + "|" + this.value + "|" + this.originalIndex;
         }
     }
 }

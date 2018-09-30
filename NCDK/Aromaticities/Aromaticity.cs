@@ -103,7 +103,7 @@ namespace NCDK.Aromaticities
         /// are tested affects which atoms/bonds are found to be aromatic. There are
         /// several <see cref="ElectronDonation"/> models and <see cref="Cycles"/>
         /// available. A good choice for the cycles
-        /// is to use <see cref="Cycles.AllFinder()"/> falling back to
+        /// is to use <see cref="Cycles.AllSimpleFinder()"/> falling back to
         /// <see cref="Cycles.RelevantFinder"/> on failure. Finding all cycles is very
         /// fast but may produce an exponential number of cycles. It is therefore not
         /// feasible for complex fused systems and an exception is thrown.
@@ -135,19 +135,19 @@ namespace NCDK.Aromaticities
         public IEnumerable<IBond> FindBonds(IAtomContainer molecule)
         {
             // build graph data-structures for fast cycle perception
-            EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(molecule);
-            int[][] graph = GraphUtil.ToAdjList(molecule, bondMap);
+            var bondMap = EdgeToBondMap.WithSpaceFor(molecule);
+            var graph = GraphUtil.ToAdjList(molecule, bondMap);
 
             // initial ring/cycle search and get the contribution from each atom
             RingSearch ringSearch = new RingSearch(molecule, graph);
-            int[] electrons = model.Contribution(molecule, ringSearch);
+            var electrons = model.Contribution(molecule, ringSearch);
 
             // obtain the subset of electron contributions which are >= 0 (i.e.
             // allowed to be aromatic) - we then find the cycles in this subgraph
             // and 'lift' the indices back to the original graph using the subset
             // as a lookup
-            int[] subset = Subset(electrons);
-            int[][] subgraph = GraphUtil.Subgraph(graph, subset);
+            var subset = Subset(electrons);
+            var subgraph = GraphUtil.Subgraph(graph, subset);
 
             // for each cycle if the electron sum is valid add the bonds of the
             // cycle to the set or aromatic bonds
@@ -209,7 +209,7 @@ namespace NCDK.Aromaticities
         /// <param name="contributions">π-electron contribution from each atom</param>
         /// <param name="subset"></param>
         /// <returns>the number of electrons indicate they could delocalise</returns>
-        private static bool CheckElectronSum(int[] cycle, int[] contributions, int[] subset)
+        private static bool CheckElectronSum(IReadOnlyList<int> cycle, IReadOnlyList<int> contributions, IReadOnlyList<int> subset)
         {
             return ValidSum(ElectronSum(cycle, contributions, subset));
         }
@@ -224,10 +224,10 @@ namespace NCDK.Aromaticities
         /// <param name="contributions">π-electron contribution from each atom</param>
         /// <param name="subset"></param>
         /// <returns>the total sum of π-electrons contributed by the <paramref name="cycle"/></returns>
-        internal static int ElectronSum(int[] cycle, int[] contributions, int[] subset)
+        internal static int ElectronSum(IReadOnlyList<int> cycle, IReadOnlyList<int> contributions, IReadOnlyList<int> subset)
         {
             int sum = 0;
-            for (int i = 1; i < cycle.Length; i++)
+            for (int i = 1; i < cycle.Count; i++)
                 sum += contributions[subset[cycle[i]]];
             return sum;
         }
@@ -248,13 +248,14 @@ namespace NCDK.Aromaticities
         /// </summary>
         /// <param name="electrons">electron contribution</param>
         /// <returns>vertices which can be involved in an aromatic system</returns>
-        private static int[] Subset(int[] electrons)
+        private static int[] Subset(IReadOnlyList<int> electrons)
         {
-            int[] vs = new int[electrons.Length];
+            int[] vs = new int[electrons.Count];
             int n = 0;
 
-            for (int i = 0; i < electrons.Length; i++)
-                if (electrons[i] >= 0) vs[n++] = i;
+            for (int i = 0; i < electrons.Count; i++)
+                if (electrons[i] >= 0)
+                    vs[n++] = i;
 
             return Arrays.CopyOf(vs, n);
         }

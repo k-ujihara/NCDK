@@ -18,10 +18,9 @@
  */
 
 using NCDK.Common.Collections;
-using NCDK.Common.Mathematics;
+using NCDK.Numerics;
 using System;
 using System.IO;
-using NCDK.Numerics;
 
 namespace NCDK.Tools
 {
@@ -172,7 +171,7 @@ namespace NCDK.Tools
         /// <summary>
         /// Method initialise the given Grid points with a value.
         /// </summary>
-        public double[][][] InitializeGrid(double[][][] Grid, double value)
+        public static double[][][] InitializeGrid(double[][][] Grid, double value)
         {
             for (int i = 0; i < Grid.Length; i++)
             {

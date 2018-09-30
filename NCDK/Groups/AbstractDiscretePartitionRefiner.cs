@@ -74,7 +74,7 @@ namespace NCDK.Groups
         /// <summary>
         /// A refiner - it is necessary to call <see cref="Setup(PermutationGroup, EquitablePartitionRefiner)"/> before use.
         /// </summary>
-        public AbstractDiscretePartitionRefiner()
+        protected AbstractDiscretePartitionRefiner()
         {
             this.bestExist = false;
             this.best = null;
@@ -145,11 +145,11 @@ namespace NCDK.Groups
         }
 
         class AutomorphismPartitionBacktracker
-            : PermutationGroup.IBacktracker
+            : IBacktracker
         {
-            int n;
+            private readonly int n;
             DisjointSetForest forest;
-            bool[] inOrbit;
+            private readonly bool[] inOrbit;
             private int inOrbitCount = 0;
             private bool isFinished;
 

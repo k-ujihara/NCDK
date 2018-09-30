@@ -19,6 +19,7 @@
 using NCDK.Aromaticities;
 using NCDK.AtomTypes.Mappers;
 using NCDK.Config;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -62,11 +63,12 @@ namespace NCDK.AtomTypes
         /// <returns>an instance of this atom type matcher.</returns>
         public static SybylAtomTypeMatcher GetInstance(IChemObjectBuilder builder)
         {
-            if (!factories.ContainsKey(builder)) factories.Add(builder, new SybylAtomTypeMatcher(builder));
+            if (!factories.ContainsKey(builder))
+                factories.Add(builder, new SybylAtomTypeMatcher(builder));
             return factories[builder];
         }
 
-        public IAtomType[] FindMatchingAtomTypes(IAtomContainer atomContainer)
+        public IEnumerable<IAtomType> FindMatchingAtomTypes(IAtomContainer atomContainer)
         {
             foreach (var atom in atomContainer.Atoms)
             {
@@ -75,22 +77,21 @@ namespace NCDK.AtomTypes
                 atom.Hybridization = type == null ? Hybridization.Unset : type.Hybridization;
             }
             Aromaticity.CDKLegacy.Apply(atomContainer);
-            IAtomType[] types = new IAtomType[atomContainer.Atoms.Count];
             int typeCounter = 0;
             foreach (var atom in atomContainer.Atoms)
             {
                 string mappedType = MapCDKToSybylType(atom);
                 if (mappedType == null)
                 {
-                    types[typeCounter] = null;
+                    yield return null;
                 }
                 else
                 {
-                    types[typeCounter] = factory.GetAtomType(mappedType);
+                    yield return factory.GetAtomType(mappedType);
                 }
                 typeCounter++;
             }
-            return types;
+            yield break;
         }
 
         /// <summary>
@@ -104,41 +105,61 @@ namespace NCDK.AtomTypes
         public IAtomType FindMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
         {
             IAtomType type = cdkMatcher.FindMatchingAtomType(atomContainer, atom);
-            if ("Cr".Equals(atom.Symbol))
+
+            switch (atom.Symbol)
             {
-                // if only I had good descriptions of the Sybyl atom types
-                int neighbors = atomContainer.GetConnectedBonds(atom).Count();
-                if (neighbors > 4 && neighbors <= 6)
-                    return factory.GetAtomType("Cr.oh");
-                else if (neighbors > 0) return factory.GetAtomType("Cr.th");
+                case "Cr":
+                    {
+                        // if only I had good descriptions of the Sybyl atom types
+                        int neighbors = atomContainer.GetConnectedBonds(atom).Count();
+                        if (neighbors > 4 && neighbors <= 6)
+                            return factory.GetAtomType("Cr.oh");
+                        else if (neighbors > 0)
+                            return factory.GetAtomType("Cr.th");
+                    }
+                    break;
+                case "Co":
+                    {
+                        // if only I had good descriptions of the Sybyl atom types
+                        int neibors = atomContainer.GetConnectedBonds(atom).Count();
+                        if (neibors == 6)
+                            return factory.GetAtomType("Co.oh");
+                    }
+                    break;
             }
-            else if ("Co".Equals(atom.Symbol))
-            {
-                // if only I had good descriptions of the Sybyl atom types
-                int neibors = atomContainer.GetConnectedBonds(atom).Count();
-                if (neibors == 6) return factory.GetAtomType("Co.oh");
-            }
+
             if (type == null)
                 return null;
             else
                 atom.AtomTypeName = type.AtomTypeName;
+
             string mappedType = MapCDKToSybylType(atom);
-            if (mappedType == null) return null;
-            // special case: O.co2
-            if (("O.3".Equals(mappedType) || "O.2".Equals(mappedType)) && IsCarbonyl(atomContainer, atom))
-                mappedType = "O.co2";
-            // special case: nitrates, which can be perceived as N.2
-            if ("N.2".Equals(mappedType) && IsNitro(atomContainer, atom)) mappedType = "N.pl3"; // based on sparse examples
+            switch (mappedType)
+            {
+                case null:
+                    return null;
+                case "O.3":
+                case "O.2":
+                    // special case: O.co2
+                    if (IsCarbonyl(atomContainer, atom))
+                        mappedType = "O.co2";
+                    break;
+                case "N.2":
+                    // special case: nitrates, which can be perceived as N.2
+                    if (IsNitro(atomContainer, atom))
+                        mappedType = "N.pl3"; // based on sparse examples
+                    break;
+            }
             return factory.GetAtomType(mappedType);
         }
 
-        private bool IsCarbonyl(IAtomContainer atomContainer, IAtom atom)
+        private static bool IsCarbonyl(IAtomContainer atomContainer, IAtom atom)
         {
             var neighbors = atomContainer.GetConnectedBonds(atom).ToList();
             if (neighbors.Count != 1) return false;
             IBond neighbor = neighbors[0];
             IAtom neighborAtom = neighbor.GetOther(atom);
-            if (neighborAtom.Symbol.Equals("C"))
+            if (string.Equals(neighborAtom.Symbol, "C", StringComparison.Ordinal))
             {
                 if (neighbor.Order == BondOrder.Single)
                 {
@@ -152,17 +173,18 @@ namespace NCDK.AtomTypes
             return false;
         }
 
-        private bool IsNitro(IAtomContainer atomContainer, IAtom atom)
+        private static bool IsNitro(IAtomContainer atomContainer, IAtom atom)
         {
             var neighbors = atomContainer.GetConnectedAtoms(atom).ToList();
             if (neighbors.Count != 3) return false;
             int oxygenCount = 0;
             foreach (var neighbor in neighbors)
-                if ("O".Equals(neighbor.Symbol)) oxygenCount++;
+                if (string.Equals("O", neighbor.Symbol, StringComparison.Ordinal))
+                    oxygenCount++;
             return (oxygenCount == 2);
         }
 
-        private int CountAttachedBonds(IAtomContainer container, IAtom atom, BondOrder order, string symbol)
+        private static int CountAttachedBonds(IAtomContainer container, IAtom atom, BondOrder order, string symbol)
         {
             var neighbors = container.GetConnectedBonds(atom).ToList();
             int neighborcount = neighbors.Count;
@@ -177,7 +199,7 @@ namespace NCDK.AtomTypes
                         if (symbol != null)
                         {
                             IAtom neighbor = bond.GetOther(atom);
-                            if (neighbor.Symbol.Equals(symbol))
+                            if (string.Equals(neighbor.Symbol, symbol, StringComparison.Ordinal))
                             {
                                 doubleBondedAtoms++;
                             }
@@ -195,19 +217,23 @@ namespace NCDK.AtomTypes
         private string MapCDKToSybylType(IAtom atom)
         {
             string typeName = atom.AtomTypeName;
-            if (typeName == null) return null;
+            if (typeName == null)
+                return null;
             string mappedType = mapper.MapAtomType(typeName);
-            if ("C.2".Equals(mappedType) && atom.IsAromatic)
+            if (atom.IsAromatic)
             {
-                mappedType = "C.ar";
-            }
-            else if ("N.2".Equals(mappedType) && atom.IsAromatic)
-            {
-                mappedType = "N.ar";
-            }
-            else if ("N.pl3".Equals(mappedType) && atom.IsAromatic)
-            {
-                mappedType = "N.ar";
+                switch (mappedType)
+                {
+                    case "C.2":
+                        mappedType = "C.ar";
+                        break;
+                    case "N.2":
+                        mappedType = "N.ar";
+                        break;
+                    case "N.pl3":
+                        mappedType = "N.ar";
+                        break;
+                }
             }
             return mappedType;
         }

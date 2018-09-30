@@ -18,6 +18,7 @@
  */
 
 using NCDK.Isomorphisms.Matchers;
+using NCDK.Silent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,10 +40,10 @@ namespace NCDK.Pharmacophore
     // @cdk.githash
     public class PharmacophoreQuery : QueryAtomContainer
     {
-        private List<object> exclusionVolumes;
+        private readonly List<object> exclusionVolumes;
 
         public PharmacophoreQuery()
-            : base(Default.ChemObjectBuilder.Instance)
+            : base(ChemObjectBuilder.Instance)
         {
             // builder should be injected but this is difficult as this class is create in static methods
             exclusionVolumes = new List<object>();

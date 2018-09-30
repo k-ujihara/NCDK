@@ -19,6 +19,7 @@
 
 using NCDK.Isomorphisms.Matchers;
 using System;
+using System.Globalization;
 using System.Text;
 
 namespace NCDK.Pharmacophore
@@ -113,7 +114,7 @@ namespace NCDK.Pharmacophore
             return lower;
         }
 
-        private double Round(double val, int places)
+        private static double Round(double val, int places)
         {
             long factor = (long)Math.Pow(10, places);
             val = val * factor;
@@ -128,7 +129,7 @@ namespace NCDK.Pharmacophore
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append($"DC::{Atoms[0]}::{Atoms[1]}::[{GetLower().ToString("F1")} - {GetUpper().ToString("F1")}] ");
+            sb.Append($"DC::{Atoms[0]}::{Atoms[1]}::[{GetLower().ToString("F1", NumberFormatInfo.InvariantInfo)} - {GetUpper().ToString("F1", NumberFormatInfo.InvariantInfo)}] ");
             return sb.ToString();
         }
     }

@@ -19,9 +19,9 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.IO;
 using NCDK.Numerics;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Stereo;
 using System;

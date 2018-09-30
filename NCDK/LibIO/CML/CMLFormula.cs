@@ -17,6 +17,7 @@
 using NCDK.Config;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -48,32 +49,32 @@ namespace NCDK.LibIO.CML
             /// <summary>
             /// the simplest representation. an input-only format. parsing is possible but fragile. The charge semantics are not defined. Not recommended for output.
             /// </summary>
-            NOPUNCTUATION,
+            NoPunctuation,
 
             /// <summary>
             /// another simple representation. an input-only format. parsing is also fragile as charge semantics are not defined. Not recommended for output.
             /// </summary>
-            ELEMENT_COUNT_WHITESPACE,
+            ElementCountWhitespace,
 
             /// <summary>
             /// Yet another simple representation. an input-only format. Element counts of 1 should always be given. Fragile as charge field is likely to be undefined. Not recommended for output.
             /// </summary>
-            ELEMENT_WHITESPACE_COUNT,
+            ElementWhitespaceCount,
 
             /// <summary>
             /// the format used in concise. recommended as the main output form. Element counts of 1 should always be given. the charge shoudl always be included. See concise.xsd and formulaType.xsd for syntax.
             /// </summary>
-            CONCISE,
+            Concise,
 
             /// <summary>
             /// multipliers for moieties. an input only format. JUMBO will try to parse this correctly but no guarantee is given.
             /// </summary>
-            MULTIPLIED_ELEMENT_COUNT_WHITESPACE,
+            MultipliedElementCountWhitespace,
 
             /// <summary>
             /// hierarchical formula. an input-only format. JUMBO will try to parse this correctly but no guarantee is given.
             /// </summary>
-            NESTEDBRACKETS,
+            NestedBrackets,
 
             /// <summary>
             /// an input only format. JUMBO will not yet parse this correctly. comments from IUCr
@@ -83,22 +84,22 @@ namespace NCDK.LibIO.CML
             /// <summary>
             /// Moiety, used by IUCr. an input-only format. moieties assumed to be comma separated then ELEMENT_COUNT_WHITESPACE, with optional brackets and post or pre-multipliers
             /// </summary>
-            MOIETY,
+            Moiety,
 
             /// <summary>
             /// Submoiety, used by IUCr. the part of a moiety within the brackets assumed to b ELEMENT_OPTIONALCOUNT followed by optional FORMULA
             /// </summary>
-            SUBMOIETY,
+            Submoiety,
 
             /// <summary>
             /// Structural, used by IUCr. not currently implemented, I think. probably the same as nested brackets
             /// </summary>
-            STRUCTURAL,
+            Structural,
 
             /// <summary>
             /// any of the above. input-only.
             /// </summary>
-            ANY,
+            Any,
         }
 
         public enum SortType
@@ -106,12 +107,12 @@ namespace NCDK.LibIO.CML
             /// <summary>
             /// Sort alphabetically. output only. Not sure where this is.
             /// </summary>
-            ALPHABETIC_ELEMENTS,
+            AlphabeticElements,
 
             /// <summary>
             /// C H and then alphabetically (output only).
             /// </summary>
-            CHFIRST,
+            CHFirst,
         }
 
         /// <summary>
@@ -121,9 +122,9 @@ namespace NCDK.LibIO.CML
         public enum HydrogenStrategyType
         {
             /// <summary>use hydrogen count attribute</summary>
-            HYDROGEN_COUNT,
+            HydrogenCount,
             /// <summary>use explicit hydrogens</summary>
-            EXPLICIT_HYDROGENS,
+            ExplicitHydrogens,
         }
 
         // only edit insertion module!
@@ -145,7 +146,7 @@ namespace NCDK.LibIO.CML
             int formalCharge = 0;
             if (this.Attribute(Attribute_formalCharge) != null)
             {
-                formalCharge = int.Parse(this.Attribute(Attribute_formalCharge).Value);
+                formalCharge = int.Parse(this.Attribute(Attribute_formalCharge).Value, NumberFormatInfo.InvariantInfo);
             }
             string conciseS = conciseAtt?.Value;
             // convention
@@ -168,18 +169,16 @@ namespace NCDK.LibIO.CML
             else if (atomArrays.Count == 1)
             {
                 atomArray = atomArrays.First();
-                atomArray.Sort(SortType.CHFIRST);
+                atomArray.Sort(SortType.CHFirst);
                 atomArray2Concise = atomArray.GenerateConcise(formalCharge);
             }
 
             // concise from inline
             if (inline != null)
             {
-                if (SMILES.Equals(convention) ||
-                    SMILES1.Equals(convention))
+                if (SMILES.Equals(convention, StringComparison.Ordinal) ||
+                    SMILES1.Equals(convention, StringComparison.Ordinal))
                 {
-                    //                throw new RuntimeException("Move to SMILESTool");
-                    //                inline2Concise = GetConciseFromSMILES(inline);
                 }
             }
             if (conciseS == null)
@@ -197,9 +196,6 @@ namespace NCDK.LibIO.CML
             if (atomArray == null)
             {
                 // causes problems with Jmol
-                //            if (conciseS != null) {
-                //                atomArray = CreateAndAddAtomArrayAndFormalChargeFromConcise(conciseS);
-                //            }
             }
             else
             {
@@ -207,11 +203,11 @@ namespace NCDK.LibIO.CML
             }
             if (atomArray != null)
             {
-                atomArray.Sort(SortType.CHFIRST);
+                atomArray.Sort(SortType.CHFirst);
             }
             // check consistency
             if (atomArray2Concise != null &&
-                    !atomArray2Concise.Equals(conciseS))
+                    !atomArray2Concise.Equals(conciseS, StringComparison.Ordinal))
             {
                 throw new ApplicationException($"concise ({conciseS}) and atomArray ({atomArray2Concise}) differ");
             }
@@ -248,7 +244,7 @@ namespace NCDK.LibIO.CML
                     string countS = tokens[2 * i + 1];
                     try
                     {
-                        counts.Add(double.Parse(countS));
+                        counts.Add(double.Parse(countS, NumberFormatInfo.InvariantInfo));
                     }
                     catch (FormatException)
                     {
@@ -260,7 +256,7 @@ namespace NCDK.LibIO.CML
                     string chargeS = tokens[nelement * 2];
                     try
                     {
-                        int formalCharge = int.Parse(chargeS);
+                        int formalCharge = int.Parse(chargeS, NumberFormatInfo.InvariantInfo);
                         FormalCharge = formalCharge;
                     }
                     catch (FormatException)
@@ -286,7 +282,7 @@ namespace NCDK.LibIO.CML
         /// </summary>
         /// <param name="atomArray">to check (not modified)</param>
         /// <exception cref="ApplicationException">if invalid</exception>
-        public void CheckAtomArrayFormat(CMLAtomArray atomArray)
+        public static void CheckAtomArrayFormat(CMLAtomArray atomArray)
         {
             if (atomArray.HasElements)
             {
@@ -298,14 +294,14 @@ namespace NCDK.LibIO.CML
             {
                 throw new ApplicationException("formula/atomArray must have elementType and count attributes");
             }
-            if (elements.Length != counts.Length)
+            if (elements.Count != counts.Count)
             {
                 throw new ApplicationException("formula/atomArray must have equal length elementType and count values");
             }
             var elementSet = new HashSet<string>();
-            for (int i = 0; i < elements.Length; i++)
+            for (int i = 0; i < elements.Count; i++)
             {
-                if (elements[i] != null && !(elements[i].Equals("null")))
+                if (elements[i] != null && !(elements[i].Equals("null", StringComparison.Ordinal)))
                 {
                     if (elementSet.Contains(elements[i]))
                     {
@@ -357,7 +353,7 @@ namespace NCDK.LibIO.CML
                 CMLAtomArray atomArray = CreateAndAddAtomArrayAndFormalChargeFromConcise(conciseS);
                 if (atomArray != null)
                 {
-                    atomArray.Sort(SortType.CHFIRST);
+                    atomArray.Sort(SortType.CHFirst);
                     conciseS = atomArray.GenerateConcise(formalCharge);
                 }
             }
@@ -393,21 +389,21 @@ namespace NCDK.LibIO.CML
                     atomArray.Count = Array.Empty<double>();
                 }
             }
-            string[] elements = GetElementTypes();
+            var elements = GetElementTypes();
             if (elements == null)
             {
-                elements = new string[0];
+                elements = Array.Empty<string>();
             }
-            double[] counts = GetCounts();
+            var counts = GetCounts()?.ToArray();
             if (counts == null)
             {
-                counts = new double[0];
+                counts = Array.Empty<double>();
             }
-            int nelem = elements.Length;
+            var nelem = elements.Count;
             bool added = false;
             for (int i = 0; i < nelem; i++)
             {
-                if (elements[i].Equals(elementType))
+                if (elements[i].Equals(elementType, StringComparison.Ordinal))
                 {
                     counts[i] += count;
                     added = true;
@@ -416,12 +412,10 @@ namespace NCDK.LibIO.CML
             }
             if (!added)
             {
-                string[] newElem = new string[nelem + 1];
-                Array.Copy(elements, 0, newElem, 0, nelem);
-                newElem[nelem] = elementType;
-                double[] newCount = new double[nelem + 1];
-                Array.Copy(counts, 0, newCount, 0, nelem);
-                newCount[nelem] = count;
+                var newElem = elements.ToList();
+                newElem.Add(elementType);
+                var newCount = counts.ToList();
+                newCount.Add(count);
                 atomArray.ElementType = newElem;
                 atomArray.Count = newCount;
             }
@@ -440,7 +434,7 @@ namespace NCDK.LibIO.CML
         /// No defaults.
         /// </summary>
         /// <returns>double[] array of element counts; or null for none.</returns>
-        public double[] GetCounts()
+        public IReadOnlyList<double> GetCounts()
         {
             CMLAtomArray atomArray = AtomArrayElements.FirstOrDefault();
             return atomArray?.Count;
@@ -455,7 +449,7 @@ namespace NCDK.LibIO.CML
             //nwe23 - Fixed a bug here where GetCounts() returns null
             // for an empty formula, resulting in this crashing rather than
             // returning 0 as expected for empty formula
-            double[] counts = GetCounts();
+            var counts = GetCounts();
             if (counts == null)
             {
                 return 0;
@@ -473,7 +467,7 @@ namespace NCDK.LibIO.CML
         /// No defaults.
         /// </summary>
         /// <returns>double[] array of element counts; or null for none.</returns>
-        public string[] GetElementTypes()
+        public IReadOnlyList<string> GetElementTypes()
         {
             CMLAtomArray atomArray = AtomArrayElements.FirstOrDefault();
             return atomArray?.ElementType;

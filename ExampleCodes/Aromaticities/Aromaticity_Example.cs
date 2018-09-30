@@ -13,7 +13,7 @@ namespace NCDK.Aromaticities
                 var molecules = new Silent.AtomContainerSet();
                 #region 
                 ElectronDonation model = ElectronDonation.DaylightModel;
-                ICycleFinder cycles = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(6));
+                ICycleFinder cycles = Cycles.Or(Cycles.AllSimpleFinder, Cycles.GetAllFinder(6));
                 Aromaticity aromaticity = new Aromaticity(model, cycles);
 
                 // apply our configured model to each molecule
@@ -30,14 +30,14 @@ namespace NCDK.Aromaticities
                 // mimics the DoubleBondAcceptingAromaticityDetector
                 Aromaticity aromaticity_exo = new Aromaticity(ElectronDonation.CDKAllowingExocyclicModel, Cycles.CDKAromaticSetFinder);
                 // a good model for writing SMILES
-                Aromaticity aromaticity_smi = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllFinder);
+                Aromaticity aromaticity_smi = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllSimpleFinder);
                 // a good model for writing MDL/Mol2
-                Aromaticity aromaticity_mdl = new Aromaticity(ElectronDonation.PiBondsModel, Cycles.AllFinder);
+                Aromaticity aromaticity_mdl = new Aromaticity(ElectronDonation.PiBondsModel, Cycles.AllSimpleFinder);
                 #endregion
             }
             {
                 #region FindBonds
-                Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDKModel, Cycles.AllFinder);
+                Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDKModel, Cycles.AllSimpleFinder);
                 IAtomContainer container = TestMoleculeFactory.MakeAnthracene();
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
                 try
@@ -53,7 +53,7 @@ namespace NCDK.Aromaticities
             }
             {
                 #region Apply
-                Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDKModel, Cycles.AllFinder);
+                Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDKModel, Cycles.AllSimpleFinder);
                 IAtomContainer container = TestMoleculeFactory.MakeAnthracene();
                 try
                 {
@@ -75,7 +75,7 @@ namespace NCDK.Aromaticities
             }
             {
                 #region CDKLegacy_AllFinder_RelevantFinder
-                new Aromaticity(ElectronDonation.CDKModel, Cycles.Or(Cycles.AllFinder, Cycles.RelevantFinder));
+                new Aromaticity(ElectronDonation.CDKModel, Cycles.Or(Cycles.AllSimpleFinder, Cycles.RelevantFinder));
                 #endregion
             }
         }

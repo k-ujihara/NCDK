@@ -31,11 +31,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Calculates the Molecular Distance Edge descriptor described in <token>cdk-cite-LIU98</token>.
+    /// </summary>
+    /// <remarks>
     /// This class evaluates the 10 MDE descriptors described by Liu et al. and
     /// in addition it calculates variants where O and N are considered (as found in the DEDGE routine
     /// from ADAPT).
-    /// </summary>
-    /// <remarks>
     /// <para>
     /// The variants are described below:
     /// <list type="table">
@@ -112,17 +112,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mde",
                 typeof(MDEDescriptor).FullName, "The Chemistry Development Kit");
 
-        /// <summary>
-        /// The parameters attribute of the WeightDescriptor object.
-        /// </summary>
-        /// <exception cref="CDKException">if more than 1 parameter is specified or if the parameter is not of type string</exception>
-        public override object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public override IReadOnlyList<string> DescriptorNames => NAMES;
 
@@ -142,14 +138,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 retval.Add(Dedge(local, i));
             }
 
-            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval,
                     DescriptorNames);
         }
 
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(19);
 
-        private double Dedge(IAtomContainer atomContainer, int which)
+        private static double Dedge(IAtomContainer atomContainer, int which)
         {
             int[][] adjMatrix = AdjacencyMatrix.GetMatrix(atomContainer);
             int[][] tdist = PathTools.ComputeFloydAPSP(adjMatrix);
@@ -251,7 +247,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return retval;
         }
 
-        private int[][] EvalATable(IAtomContainer atomContainer, int atomicNum)
+        private static int[][] EvalATable(IAtomContainer atomContainer, int atomicNum)
         {
             //IAtom[] atoms = atomContainer.GetAtoms();
             int natom = atomContainer.Atoms.Count;
@@ -269,7 +265,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return atypes;
         }
 
-        private double EvalCValue(int[][] distmat, int[][] codemat, int type1, int type2)
+        private static double EvalCValue(int[][] distmat, int[][] codemat, int type1, int type2)
         {
             double lambda = 1;
             double n = 0;
@@ -306,16 +302,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return n / Math.Pow(Math.Pow(lambda, 1.0 / (2.0 * n)), 2);
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the WeightDescriptor object.
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames => null;
-
-        /// <summary>
-        /// Gets the parameterType attribute of the WeightDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object whose class is that of the parameter requested</returns>
         public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

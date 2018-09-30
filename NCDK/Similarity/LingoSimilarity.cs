@@ -39,16 +39,14 @@ namespace NCDK.Similarity
     // @cdk.keyword lingo
     // @cdk.keyword similarity, tanimoto
     // @cdk.module fingerprint
-    public class LingoSimilarity
+    public static class LingoSimilarity
     {
-        private LingoSimilarity() { }
-
         /// <summary>
         /// Evaluate the LINGO similarity between two key,value sty;e fingerprints.
         /// The value will range from 0.0 to 1.0.
         /// </summary>
         /// <returns>similarity</returns>
-        public static double Calculate(IDictionary<string, int> features1, IDictionary<string, int> features2)
+        public static double Calculate(IReadOnlyDictionary<string, int> features1, IReadOnlyDictionary<string, int> features2)
         {
             var keys = features1.Keys.Union(features2.Keys).ToList();
 

@@ -18,6 +18,7 @@
  */
 
 using NCDK.Tools;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -48,7 +49,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "cs" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "cs" };
 
         /// <inheritdoc/>
         public string ReaderClassName => null;
@@ -60,10 +61,10 @@ namespace NCDK.IO.Formats
         public override bool IsXmlBased => false;
 
         /// <inheritdoc/>
-        public DataFeatures SupportedDataFeatures => RequiredDataFeatures | DataFeatures.HAS_GRAPH_REPRESENTATION;
+        public DataFeatures SupportedDataFeatures => RequiredDataFeatures | DataFeatures.HasGraphRepresentation;
 
         /// <inheritdoc/>
-        public DataFeatures RequiredDataFeatures => DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+        public DataFeatures RequiredDataFeatures => DataFeatures.HasAtomElementSymbol;
     }
 }
 

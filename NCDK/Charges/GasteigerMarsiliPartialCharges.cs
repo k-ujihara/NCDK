@@ -110,7 +110,7 @@ namespace NCDK.Charges
 
                     if (gasteigerFactors[StepSize * atom1 + atom1 + 4] >= gasteigerFactors[StepSize * atom2 + atom2 + 4])
                     {
-                        if (ac.Atoms[atom2].Symbol.Equals("H"))
+                        if (string.Equals(ac.Atoms[atom2].Symbol, "H", StringComparison.Ordinal))
                         {
                             deoc = ChiCatHydrogen;
                         }
@@ -121,7 +121,7 @@ namespace NCDK.Charges
                     }
                     else
                     {
-                        if (ac.Atoms[atom1].Symbol.Equals("H"))
+                        if (string.Equals(ac.Atoms[atom1].Symbol, "H", StringComparison.Ordinal))
                         {
                             deoc = ChiCatHydrogen;
                         }

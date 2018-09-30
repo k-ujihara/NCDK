@@ -18,6 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Templates;
 using System.Diagnostics;
@@ -39,13 +40,13 @@ namespace NCDK.Layout
         static TemplateHandlerTest()
         {
             sdg = new StructureDiagramGenerator();
-            sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            sp = new SmilesParser(ChemObjectBuilder.Instance);
         }
 
         [TestMethod()]
         public void TestInit()
         {
-            TemplateHandler th = new TemplateHandler(Default.ChemObjectBuilder.Instance);
+            TemplateHandler th = new TemplateHandler(ChemObjectBuilder.Instance);
 
             Assert.AreEqual(5, th.TemplateCount);
         }
@@ -53,7 +54,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void TestDetection()
         {
-            TemplateHandler th = new TemplateHandler(Default.ChemObjectBuilder.Instance);
+            TemplateHandler th = new TemplateHandler(ChemObjectBuilder.Instance);
             string smiles = "CC12C3(C6CC6)C4(C)C1C5(C(CC)C)C(C(CC)C)2C(C)3C45CC(C)C";
             IAtomContainer mol = sp.ParseSmiles(smiles);
             Assert.IsTrue(th.MapTemplates(mol));
@@ -66,7 +67,7 @@ namespace NCDK.Layout
         public void TestOtherElements()
         {
             bool itIsInThere = false;
-            TemplateHandler th = new TemplateHandler(Default.ChemObjectBuilder.Instance);
+            TemplateHandler th = new TemplateHandler(ChemObjectBuilder.Instance);
             IAtomContainer mol = TestMoleculeFactory.MakeSteran();
             itIsInThere = th.MapTemplates(mol);
             Assert.IsTrue(itIsInThere);
@@ -82,7 +83,7 @@ namespace NCDK.Layout
         public void TestOtherBondOrder()
         {
             bool itIsInThere = false;
-            TemplateHandler th = new TemplateHandler(Default.ChemObjectBuilder.Instance);
+            TemplateHandler th = new TemplateHandler(ChemObjectBuilder.Instance);
             IAtomContainer mol = TestMoleculeFactory.MakeSteran();
             itIsInThere = th.MapTemplates(mol);
             Assert.IsTrue(itIsInThere);
@@ -96,7 +97,7 @@ namespace NCDK.Layout
         {
             Debug.WriteLine("***TestAddMolecule***");
             bool itIsInThere = false;
-            TemplateHandler th = new TemplateHandler(Default.ChemObjectBuilder.Instance);
+            TemplateHandler th = new TemplateHandler(ChemObjectBuilder.Instance);
             IAtomContainer mol = TestMoleculeFactory.MakeAlphaPinene();
             sdg.Molecule = mol;
             sdg.GenerateCoordinates();
@@ -105,12 +106,12 @@ namespace NCDK.Layout
             string smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
             IAtomContainer smilesMol = sp.ParseSmiles(smiles);
             itIsInThere = th.MapTemplates(smilesMol);
-            Debug.WriteLine("Alpha-Pinene found by templateMapper: " + itIsInThere);
+            Debug.WriteLine($"Alpha-Pinene found by templateMapper: {itIsInThere}");
             Assert.IsFalse(itIsInThere);
             th.AddMolecule(mol);
             Debug.WriteLine("now adding template for alpha-Pinen and trying again.");
             itIsInThere = th.MapTemplates(smilesMol);
-            Debug.WriteLine("Alpha-Pinene found by templateMapper: " + itIsInThere);
+            Debug.WriteLine($"Alpha-Pinene found by templateMapper: {itIsInThere}");
             Assert.IsTrue(itIsInThere);
         }
 
@@ -119,7 +120,7 @@ namespace NCDK.Layout
         {
             Debug.WriteLine("***TestRemoveMolecule***");
             bool itIsInThere = false;
-            TemplateHandler th = new TemplateHandler(Default.ChemObjectBuilder.Instance);
+            TemplateHandler th = new TemplateHandler(ChemObjectBuilder.Instance);
             IAtomContainer mol = TestMoleculeFactory.MakeAlphaPinene();
             sdg.Molecule = mol;
             sdg.GenerateCoordinates();
@@ -128,17 +129,17 @@ namespace NCDK.Layout
             string smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
             IAtomContainer smilesMol = sp.ParseSmiles(smiles);
             itIsInThere = th.MapTemplates(smilesMol);
-            Debug.WriteLine("Alpha-Pinene found by templateMapper: " + itIsInThere);
+            Debug.WriteLine($"Alpha-Pinene found by templateMapper: {itIsInThere}");
             Assert.IsFalse(itIsInThere);
             th.AddMolecule(mol);
             Debug.WriteLine("now adding template for alpha-Pinen and trying again.");
             itIsInThere = th.MapTemplates(smilesMol);
-            Debug.WriteLine("Alpha-Pinene found by templateMapper: " + itIsInThere);
+            Debug.WriteLine($"Alpha-Pinene found by templateMapper: {itIsInThere}");
             Assert.IsTrue(itIsInThere);
             Debug.WriteLine("now removing template for alpha-Pinen again and trying again.");
             th.RemoveMolecule(mol);
             itIsInThere = th.MapTemplates(smilesMol);
-            Debug.WriteLine("Alpha-Pinene found by templateMapper: " + itIsInThere);
+            Debug.WriteLine($"Alpha-Pinene found by templateMapper: {itIsInThere}");
             Assert.IsFalse(itIsInThere);
 
         }
@@ -155,10 +156,10 @@ namespace NCDK.Layout
             ISimpleChemObjectReader molReader = new MDLReader(ins, ChemObjectReaderMode.Strict);
 
             // Read molecule
-            IAtomContainer molecule = (IAtomContainer)molReader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
+            IAtomContainer molecule = (IAtomContainer)molReader.Read(ChemObjectBuilder.Instance.NewAtomContainer());
 
             // Map templates
-            TemplateHandler th = new TemplateHandler(Default.ChemObjectBuilder.Instance);
+            TemplateHandler th = new TemplateHandler(ChemObjectBuilder.Instance);
             var mappedStructures = th.GetMappedSubstructures(molecule);
 
             // Do the Assert.assertion

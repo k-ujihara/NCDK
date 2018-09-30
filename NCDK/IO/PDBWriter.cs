@@ -24,6 +24,7 @@ using NCDK.IO.Setting;
 using NCDK.Numerics;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -40,10 +41,10 @@ namespace NCDK.IO
     // @cdk.githash
     public class PDBWriter : DefaultChemObjectWriter
     {
-        public static string F_SERIAL_FORMAT(int serial) => serial.ToString().PadLeft(5);
-        public static string F_ATOM_NAME_FORMAT(string atomName) => atomName.PadRight(5);
-        public static string F_POSITION_FORMAT(double f) => f.ToString("F3").PadLeft(8);
-        public static string F_RESIDUE_FORMAT(string residue) => residue;
+        private static string F_SERIAL_FORMAT(int serial) => serial.ToString(NumberFormatInfo.InvariantInfo).PadLeft(5);
+        private static string F_ATOM_NAME_FORMAT(string atomName) => atomName.PadRight(5);
+        private static string F_POSITION_FORMAT(double f) => f.ToString("F3", NumberFormatInfo.InvariantInfo).PadLeft(8);
+        private static string F_RESIDUE_FORMAT(string residue) => residue;
 
         private BooleanIOSetting writeAsHET;
         private BooleanIOSetting useElementSymbolAsAtomName;
@@ -60,16 +61,16 @@ namespace NCDK.IO
         public PDBWriter(TextWriter output)
         {
             writer = output;
-            writeAsHET = IOSettings.Add(new BooleanIOSetting("WriteAsHET", IOSetting.Importance.Low,
-                    "Should the output file use HETATM", "false"));
-            useElementSymbolAsAtomName = IOSettings.Add(new BooleanIOSetting("UseElementSymbolAsAtomName",
-                    IOSetting.Importance.Low, "Should the element symbol be written as the atom name", "false"));
-            writeCONECTRecords = IOSettings.Add(new BooleanIOSetting("WriteCONECT", IOSetting.Importance.Low,
-                    "Should the bonds be written as CONECT records?", "true"));
-            writeTERRecord = IOSettings.Add(new BooleanIOSetting("WriteTER", IOSetting.Importance.Low,
-                    "Should a TER record be put at the end of the atoms?", "false"));
-            writeENDRecord = IOSettings.Add(new BooleanIOSetting("WriteEND", IOSetting.Importance.Low,
-                    "Should an END record be put at the end of the file?", "true"));
+            writeAsHET = IOSettings.Add(new BooleanIOSetting("WriteAsHET", Importance.Low, 
+                "Should the output file use HETATM", "false"));
+            useElementSymbolAsAtomName = IOSettings.Add(new BooleanIOSetting("UseElementSymbolAsAtomName", Importance.Low, 
+                "Should the element symbol be written as the atom name", "false"));
+            writeCONECTRecords = IOSettings.Add(new BooleanIOSetting("WriteCONECT", Importance.Low,
+                "Should the bonds be written as CONECT records?", "true"));
+            writeTERRecord = IOSettings.Add(new BooleanIOSetting("WriteTER", Importance.Low, 
+                "Should a TER record be put at the end of the atoms?", "false"));
+            writeENDRecord = IOSettings.Add(new BooleanIOSetting("WriteEND", Importance.Low,
+                "Should an END record be put at the end of the file?", "true"));
         }
 
         public PDBWriter(Stream output)
@@ -139,7 +140,7 @@ namespace NCDK.IO
 
                 string hetatmRecordName = (writeAsHET.IsSet) ? "HETATM" : "ATOM  ";
                 string id = molecule.Id;
-                string residueName = (id == null || id.Equals("")) ? "MOL" : id;
+                string residueName = string.IsNullOrEmpty(id) ? "MOL" : id;
                 string terRecordName = "TER";
 
                 // Loop through the atoms and write them out:
@@ -161,7 +162,7 @@ namespace NCDK.IO
                     }
                     else
                     {
-                        if (atom.Id == null || atom.Id.Equals(""))
+                        if (string.IsNullOrEmpty(atom.Id))
                         {
                             name = atom.Symbol;
                         }
@@ -256,8 +257,8 @@ namespace NCDK.IO
             writer.Write('\n');
         }
 
-        private static string F_LENGTH_FORMAT(double length) => length.ToString("F3").PadLeft(8);   //"%4.3f";
-        private static string F_ANGLE_FORMAT(double angle) => angle.ToString("F3").PadLeft(7);  //"%3.3f";
+        private static string F_LENGTH_FORMAT(double length) => length.ToString("F3", NumberFormatInfo.InvariantInfo).PadLeft(8);   //"%4.3f";
+        private static string F_ANGLE_FORMAT(double angle) => angle.ToString("F3", NumberFormatInfo.InvariantInfo).PadLeft(7);  //"%3.3f";
 
         public void WriteCrystal(ICrystal crystal)
         {
@@ -278,7 +279,7 @@ namespace NCDK.IO
                 // before saving the atoms, we need to create cartesian coordinates
                 foreach (var atom in crystal.Atoms)
                 {
-                    //                Debug.WriteLine("PDBWriter: atom -> " + atom);
+                    //                Debug.WriteLine($"PDBWriter: atom -> {atom}");
                     // if it got 3D coordinates, use that. If not, try fractional coordinates
                     if (atom.Point3D == null && atom.FractionalPoint3D != null)
                     {

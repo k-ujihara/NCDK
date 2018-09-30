@@ -45,14 +45,12 @@ namespace NCDK.Tools
     // @cdk.githash
     public class CDKHydrogenAdder
     {
-        private AtomTypeFactory atomTypeList;
-        private readonly string ATOM_TYPE_LIST = "NCDK.Dict.Data.cdk-atom-types.owl";
-
-        private static IDictionary<Type, CDKHydrogenAdder> tables = new Dictionary<Type, CDKHydrogenAdder>();
+        private static readonly AtomTypeFactory atomTypeList = CDK.CdkAtomTypeFactory;
+        
+        private static Dictionary<Type, CDKHydrogenAdder> tables = new Dictionary<Type, CDKHydrogenAdder>();
 
         private CDKHydrogenAdder(IChemObjectBuilder builder)
         {
-            if (atomTypeList == null) atomTypeList = AtomTypeFactory.GetInstance(ATOM_TYPE_LIST, builder);
         }
 
         public static CDKHydrogenAdder GetInstance(IChemObjectBuilder builder)
@@ -91,22 +89,22 @@ namespace NCDK.Tools
         /// <exception cref="CDKException">if insufficient information is present</exception>
         public void AddImplicitHydrogens(IAtomContainer container, IAtom atom)
         {
-            if (atom.AtomTypeName == null) throw new CDKException("IAtom is not typed! " + atom.Symbol);
+            if (atom.AtomTypeName == null)
+                throw new CDKException("IAtom is not typed! " + atom.Symbol);
 
-            if ("X".Equals(atom.AtomTypeName))
+            if (string.Equals("X", atom.AtomTypeName, StringComparison.Ordinal))
             {
-                if (atom.ImplicitHydrogenCount == null) atom.ImplicitHydrogenCount = 0;
+                if (atom.ImplicitHydrogenCount == null)
+                    atom.ImplicitHydrogenCount = 0;
                 return;
             }
 
-            IAtomType type = atomTypeList.GetAtomType(atom.AtomTypeName);
+            var type = atomTypeList.GetAtomType(atom.AtomTypeName);
             if (type == null)
                 throw new CDKException("Atom type is not a recognized CDK atom type: " + atom.AtomTypeName);
 
             if (type.FormalNeighbourCount == null)
-                throw new CDKException(
-                        "Atom type is too general; cannot decide the number of implicit hydrogen to add for: "
-                                + atom.AtomTypeName);
+                throw new CDKException($"Atom type is too general; cannot decide the number of implicit hydrogen to add for: {atom.AtomTypeName}");
 
             // very simply counting: each missing explicit neighbor is a missing hydrogen
             atom.ImplicitHydrogenCount = type.FormalNeighbourCount - container.GetConnectedBonds(atom).Count();

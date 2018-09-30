@@ -25,6 +25,7 @@ using NCDK.Common.Primitives;
 using NCDK.IO.Formats;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -120,21 +121,21 @@ namespace NCDK.IO
             }
         }
 
-        public bool Accepts(IChemObject obj)
+        public virtual bool Accepts(IChemObject o)
         {
-            if (obj is IReaction)
+            if (o is IReaction)
             {
                 return true;
             }
-            else if (obj is IChemModel)
+            else if (o is IChemModel)
             {
                 return true;
             }
-            else if (obj is IChemFile)
+            else if (o is IChemFile)
             {
                 return true;
             }
-            else if (obj is IReactionSet)
+            else if (o is IReactionSet)
             {
                 return true;
             }
@@ -171,14 +172,14 @@ namespace NCDK.IO
                 // this line contains the number of reactants and products
                 var tokenizer = Strings.Tokenize(countsLine).GetEnumerator();
                 tokenizer.MoveNext();
-                reactantCount = int.Parse(tokenizer.Current);
+                reactantCount = int.Parse(tokenizer.Current, NumberFormatInfo.InvariantInfo);
                 Trace.TraceInformation("Expecting " + reactantCount + " reactants in file");
                 tokenizer.MoveNext();
-                productCount = int.Parse(tokenizer.Current);
+                productCount = int.Parse(tokenizer.Current, NumberFormatInfo.InvariantInfo);
 
                 if (tokenizer.MoveNext())
                 {
-                    agentCount = int.Parse(tokenizer.Current);
+                    agentCount = int.Parse(tokenizer.Current, NumberFormatInfo.InvariantInfo);
                     // ChemAxon extension, technically BIOVIA now support this but
                     // not documented yet
                     if (ReaderMode == ChemObjectReaderMode.Strict && agentCount > 0)
@@ -209,7 +210,7 @@ namespace NCDK.IO
                         molFileLine = input.ReadLine();
                         molFile.Append(molFileLine);
                         molFile.Append('\n');
-                    } while (!molFileLine.Equals("M  END"));
+                    } while (!string.Equals(molFileLine, "M  END", StringComparison.Ordinal));
 
                     // read MDL molfile content
                     // Changed this to mdlv2000 reader
@@ -221,10 +222,10 @@ namespace NCDK.IO
                     reaction.Reactants.Add(reactant);
                 }
             }
-            catch (CDKException exception)
+            catch (CDKException)
             {
                 // rethrow exception from MDLReader
-                throw exception;
+                throw;
             }
             catch (Exception exception)
             {
@@ -249,7 +250,7 @@ namespace NCDK.IO
                         molFileLine = input.ReadLine();
                         molFile.Append(molFileLine);
                         molFile.Append('\n');
-                    } while (!molFileLine.Equals("M  END"));
+                    } while (!string.Equals(molFileLine, "M  END", StringComparison.Ordinal));
 
                     // read MDL molfile content
                     MDLV2000Reader reader = new MDLV2000Reader(new StringReader(molFile.ToString()));
@@ -288,7 +289,7 @@ namespace NCDK.IO
                         molFileLine = input.ReadLine();
                         molFile.Append(molFileLine);
                         molFile.Append('\n');
-                    } while (!molFileLine.Equals("M  END"));
+                    } while (!string.Equals(molFileLine, "M  END", StringComparison.Ordinal));
 
                     // read MDL molfile content
                     MDLV2000Reader reader = new MDLV2000Reader(new StringReader(molFile.ToString()));

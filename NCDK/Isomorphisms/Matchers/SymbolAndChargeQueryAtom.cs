@@ -36,14 +36,11 @@ namespace NCDK.Isomorphisms.Matchers
             FormalCharge = atom.FormalCharge;
         }
 
-        public void SetOperator(string str) { }
-
-
         public override bool Matches(IAtom atom)
         {
             int requiredCharge = this.FormalCharge ?? 0;
             int foundCharge = atom.FormalCharge ?? 0;
-            return this.Symbol.Equals(atom.Symbol) && requiredCharge == foundCharge;
+            return this.Symbol.Equals(atom.Symbol, StringComparison.Ordinal) && requiredCharge == foundCharge;
         }
 
         public override string ToString()

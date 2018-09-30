@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System.Collections.Generic;
+
 namespace NCDK.IO.Formats
 {
     // @cdk.module ioformats
@@ -46,7 +48,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "svg" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "svg" };
 
         /// <inheritdoc/>
         public override bool IsXmlBased => true;

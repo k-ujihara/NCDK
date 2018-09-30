@@ -24,6 +24,7 @@
 using NCDK.LibIO.MD;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Xml.Linq;
 using static NCDK.LibIO.CML.CMLElement;
 
@@ -103,23 +104,25 @@ namespace NCDK.IO.CML
             if (element.Name == XName_CML_molecule)
             {
                 // the copy the parsed content into a new MDMolecule
-                if (element.Attribute(Attribute_convention) != null && element.Attribute(Attribute_convention).Value.Equals("md:mdMolecule"))
+                if (element.Attribute(Attribute_convention) != null && string.Equals(element.Attribute(Attribute_convention).Value, "md:mdMolecule", StringComparison.Ordinal))
                 {
                     base.StartElement(xpath, element);
                     CurrentMolecule = new MDMolecule(CurrentMolecule);
                 }
                 else
                 {
-                    DICTREF = element.Attribute(Attribute_dictRef) != null ? element.Attribute(Attribute_dictRef).Value : "";
+                    DictRef = element.Attribute(Attribute_dictRef) != null ? element.Attribute(Attribute_dictRef).Value : "";
                     //If residue or chargeGroup, set up a new one
-                    if (DICTREF.Equals("md:chargeGroup"))
+                    switch (DictRef)
                     {
-                        currentChargeGroup = new ChargeGroup();
-                    }
-                    else if (DICTREF.Equals("md:residue"))
-                    {
-                        currentResidue = new Residue();
-                        if (element.Attribute(Attribute_title) != null) currentResidue.Name = element.Attribute(Attribute_title).Value;
+                        case "md:chargeGroup":
+                            currentChargeGroup = new ChargeGroup();
+                            break;
+                        case "md:residue":
+                            currentResidue = new Residue();
+                            if (element.Attribute(Attribute_title) != null)
+                                currentResidue.Name = element.Attribute(Attribute_title).Value;
+                            break;
                     }
                 }
             }
@@ -127,16 +130,17 @@ namespace NCDK.IO.CML
             //We have a scalar element. Now check who it belongs to
             if (element.Name == XName_CML_scalar)
             {
-                DICTREF = element.Attribute(Attribute_dictRef).Value;
+                DictRef = element.Attribute(Attribute_dictRef).Value;
                 //Switching Atom
-                if ("md:switchingAtom".Equals(DICTREF))
+                switch (DictRef)
                 {
-                    //Set current atom as switching atom
-                    currentChargeGroup.SetSwitchingAtom(CurrentAtom);
-                }
-                else
-                {
-                    base.StartElement(xpath, element);
+                    case "md:switchingAtom":
+                        //Set current atom as switching atom
+                        currentChargeGroup.SetSwitchingAtom(CurrentAtom);
+                        break;
+                    default:
+                        base.StartElement(xpath, element);
+                        break;
                 }
             }
             else if (element.Name == XName_CML_atom)
@@ -150,7 +154,7 @@ namespace NCDK.IO.CML
                         CurrentAtom = null;
                         foreach (var nextAtom in CurrentMolecule.Atoms)
                         {
-                            if (nextAtom.Id.Equals(id))
+                            if (string.Equals(nextAtom.Id, id, StringComparison.Ordinal))
                             {
                                 CurrentAtom = nextAtom;
                             }
@@ -174,7 +178,7 @@ namespace NCDK.IO.CML
                         IAtom referencedAtom = null;
                         foreach (var nextAtom in CurrentMolecule.Atoms)
                         {
-                            if (nextAtom.Id.Equals(id))
+                            if (string.Equals(nextAtom.Id, id, StringComparison.Ordinal))
                             {
                                 referencedAtom = nextAtom;
                             }
@@ -272,15 +276,15 @@ namespace NCDK.IO.CML
             else if (element.Name == XName_CML_scalar)
             {
                 //Residue number
-                if ("md:resNumber".Equals(DICTREF))
+                if (string.Equals("md:resNumber", DictRef, StringComparison.Ordinal))
                 {
-                    int myInt = int.Parse(element.Value);
+                    int myInt = int.Parse(element.Value, NumberFormatInfo.InvariantInfo);
                     currentResidue.SetNumber(myInt);
                 }
                 //ChargeGroup number
-                else if ("md:cgNumber".Equals(DICTREF))
+                else if (string.Equals("md:cgNumber", DictRef, StringComparison.Ordinal))
                 {
-                    int myInt = int.Parse(element.Value);
+                    int myInt = int.Parse(element.Value, NumberFormatInfo.InvariantInfo);
                     currentChargeGroup.SetNumber(myInt);
                 }
             }

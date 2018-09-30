@@ -24,15 +24,17 @@
 using NCDK.Numerics;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Xml.Linq;
 
 namespace NCDK.IO.CML
 {
     /// <summary>
-    ///  Implementation of the PMPMol Covention for CML.
-    /// <para>PMP stands for PolyMorph Predictor and is a module
-    ///  of Cerius2 (tm).</para>
+    /// Implementation of the PMPMol Convention for CML.
     /// </summary>
+    /// PMP stands for PolyMorph Predictor and is a module of Cerius2 (tm).
+    /// <remarks>
+    /// </remarks>
     // @cdk.module io
     // @cdk.githash
     // @author Egon Willighagen <egonw@sci.kun.nl>
@@ -67,50 +69,54 @@ namespace NCDK.IO.CML
             string s = element.Value.Trim();
             Debug.WriteLine($"Start PMP chardata ({CurrentElement}) :{s}");
             Debug.WriteLine($" ElTitle: {ElementTitle}");
-            if (xpath.ToString().EndsWith("string/", StringComparison.Ordinal) && BUILTIN.Equals("spacegroup"))
+            if (xpath.ToString().EndsWith("string/", StringComparison.Ordinal) && Builtin.Equals("spacegroup", StringComparison.Ordinal))
             {
                 string sg = "P1";
                 // standardize space group names (see Crystal.java)
-                if ("P 21 21 21 (1)".Equals(s))
+                if (string.Equals("P 21 21 21 (1)", s, StringComparison.Ordinal))
                 {
                     sg = "P 2_1 2_1 2_1";
                 }
-                //            cdo.SetObjectProperty("Crystal", "spacegroup", sg);
                 ((ICrystal)CurrentMolecule).SpaceGroup = sg;
             }
-            else if (xpath.ToString().EndsWith("floatArray/", StringComparison.Ordinal)
-                  && (ElementTitle.Equals("a") || ElementTitle.Equals("b") || ElementTitle.Equals("c")))
+            else if (xpath.ToString().EndsWith("floatArray/", StringComparison.Ordinal))
             {
-                var tokens = s.Split(' ');
-                if (tokens.Length > 2)
+                switch (ElementTitle)
                 {
-                    if (ElementTitle.Equals("a"))
-                    {
-                        ((ICrystal)CurrentMolecule).A = new Vector3(
-                            double.Parse(tokens[0]),
-                            double.Parse(tokens[1]),
-                            double.Parse(tokens[2]));
-                    }
-                    else if (ElementTitle.Equals("b"))
-                    {
-                        ((ICrystal)CurrentMolecule).B = new Vector3(
-                            double.Parse(tokens[0]),
-                            double.Parse(tokens[1]),
-                            double.Parse(tokens[2]));
-                    }
-                    else if (ElementTitle.Equals("c"))
-                    {
-                        ((ICrystal)CurrentMolecule).C = new Vector3(
-                            double.Parse(tokens[0]),
-                            double.Parse(tokens[1]),
-                            double.Parse(tokens[2]));
-                    }
+                    case "a":
+                    case "b":
+                    case "c":
+                        var tokens = s.Split(' ');
+                        if (tokens.Length > 2)
+                        {
+                            if (string.Equals(ElementTitle, "a", StringComparison.Ordinal))
+                            {
+                                ((ICrystal)CurrentMolecule).A = new Vector3(
+                                    double.Parse(tokens[0], NumberFormatInfo.InvariantInfo),
+                                    double.Parse(tokens[1], NumberFormatInfo.InvariantInfo),
+                                    double.Parse(tokens[2], NumberFormatInfo.InvariantInfo));
+                            }
+                            else if (string.Equals(ElementTitle, "b", StringComparison.Ordinal))
+                            {
+                                ((ICrystal)CurrentMolecule).B = new Vector3(
+                                    double.Parse(tokens[0], NumberFormatInfo.InvariantInfo),
+                                    double.Parse(tokens[1], NumberFormatInfo.InvariantInfo),
+                                    double.Parse(tokens[2], NumberFormatInfo.InvariantInfo));
+                            }
+                            else if (string.Equals(ElementTitle, "c", StringComparison.Ordinal))
+                            {
+                                ((ICrystal)CurrentMolecule).C = new Vector3(
+                                    double.Parse(tokens[0], NumberFormatInfo.InvariantInfo),
+                                    double.Parse(tokens[1], NumberFormatInfo.InvariantInfo),
+                                    double.Parse(tokens[2], NumberFormatInfo.InvariantInfo));
+                            }
+                        }
+                        else
+                        {
+                            Debug.WriteLine("PMP Convention error: incorrect number of cell axis fractions!");
+                        }
+                        break;
                 }
-                else
-                {
-                    Debug.WriteLine("PMP Convention error: incorrect number of cell axis fractions!");
-                }
-                //            cdo.EndObject(axis);
             }
             else
             {

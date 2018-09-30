@@ -28,6 +28,7 @@ using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -149,7 +150,7 @@ namespace NCDK.IO
             // Find first set of coordinates by skipping all before "Standard orientation"
             while (line != null)
             {
-                if (line.IndexOf("Standard orientation:") >= 0)
+                if (line.Contains("Standard orientation:"))
                 {
 
                     // Found a set of coordinates
@@ -173,7 +174,7 @@ namespace NCDK.IO
                         modelCounter = 0;
 
                     }
-                    else if (line.IndexOf("Standard orientation:") >= 0)
+                    else if (line.Contains("Standard orientation:"))
                     {
 
                         // Found a set of coordinates
@@ -186,49 +187,48 @@ namespace NCDK.IO
                         {
                             Trace.TraceInformation("Skipping frame, because I was told to do");
                         }
-                        FireFrameRead();
+                        FrameRead();
                         model = chemFile.Builder.NewChemModel();
                         modelCounter++;
                         ReadCoordinates(model);
                     }
-                    else if (line.IndexOf("SCF Done:") >= 0)
+                    else if (line.Contains("SCF Done:"))
                     {
 
                         // Found an energy
                         model.SetProperty(CDKPropertyName.Remark, line.Trim());
                     }
-                    else if (line.IndexOf("Harmonic frequencies") >= 0)
+                    else if (line.Contains("Harmonic frequencies"))
                     {
                         // Found a set of vibrations
                         // ReadFrequencies(frame);
                     }
-                    else if (line.IndexOf("Total atomic charges") >= 0)
+                    else if (line.Contains("Total atomic charges"))
                     {
                         ReadPartialCharges(model);
                     }
-                    else if (line.IndexOf("Magnetic shielding") >= 0)
+                    else if (line.Contains("Magnetic shielding"))
                     {
                         // Found NMR data
                         ReadNMRData(model, line);
                     }
-                    else if (line.IndexOf("GINC") >= 0)
+                    else if (line.Contains("GINC"))
                     {
                         // Found calculation level of theory
                         levelOfTheory = ParseLevelOfTheory(line);
-                        Debug.WriteLine("Level of Theory for this model: " + levelOfTheory);
+                        Debug.WriteLine($"Level of Theory for this model: {levelOfTheory}");
                         description = lastRoute + ", model no. " + modelCounter;
                         model.SetProperty(CDKPropertyName.Description, description);
                     }
                     else
                     {
-                        //Debug.WriteLine("Skipping line: " + line);
                     }
                     line = input.ReadLine();
                 }
 
                 // Add last frame to file
                 sequence.Add(model);
-                FireFrameRead();
+                FrameRead();
             }
             chemFile.Add(sequence);
 
@@ -250,7 +250,7 @@ namespace NCDK.IO
             while (true)
             {
                 line = input.ReadLine();
-                if ((line == null) || (line.IndexOf("-----") >= 0))
+                if ((line == null) || (line.Contains("-----")))
                 {
                     break;
                 }
@@ -260,7 +260,7 @@ namespace NCDK.IO
                 token.NextToken();
 
                 // ignore first token
-                if (token.NextToken() == StreamTokenizer.TT_NUMBER)
+                if (token.NextToken() == StreamTokenizer.TTypeNumber)
                 {
                     atomicNumber = (int)token.NumberValue;
                     if (atomicNumber == 0)
@@ -282,7 +282,7 @@ namespace NCDK.IO
                 double x;
                 double y;
                 double z;
-                if (token.NextToken() == StreamTokenizer.TT_NUMBER)
+                if (token.NextToken() == StreamTokenizer.TTypeNumber)
                 {
                     x = token.NumberValue;
                 }
@@ -290,7 +290,7 @@ namespace NCDK.IO
                 {
                     throw new IOException("Error reading x coordinate");
                 }
-                if (token.NextToken() == StreamTokenizer.TT_NUMBER)
+                if (token.NextToken() == StreamTokenizer.TTypeNumber)
                 {
                     y = token.NumberValue;
                 }
@@ -298,7 +298,7 @@ namespace NCDK.IO
                 {
                     throw new IOException("Error reading y coordinate");
                 }
-                if (token.NextToken() == StreamTokenizer.TT_NUMBER)
+                if (token.NextToken() == StreamTokenizer.TTypeNumber)
                 {
                     z = token.NumberValue;
                 }
@@ -334,15 +334,15 @@ namespace NCDK.IO
             while (true)
             {
                 line = input.ReadLine();
-                Debug.WriteLine("Read charge block line: " + line);
-                if ((line == null) || (line.IndexOf("Sum of Mulliken charges") >= 0))
+                Debug.WriteLine($"Read charge block line: {line}");
+                if ((line == null) || line.Contains("Sum of Mulliken charges"))
                 {
                     Debug.WriteLine("End of charge block found");
                     break;
                 }
                 StringReader sr = new StringReader(line);
                 StreamTokenizer tokenizer = new StreamTokenizer(sr);
-                if (tokenizer.NextToken() == StreamTokenizer.TT_NUMBER)
+                if (tokenizer.NextToken() == StreamTokenizer.TTypeNumber)
                 {
                     int atomCounter = (int)tokenizer.NumberValue;
 
@@ -350,7 +350,7 @@ namespace NCDK.IO
                     // ignore the symbol
 
                     double charge;
-                    if (tokenizer.NextToken() == StreamTokenizer.TT_NUMBER)
+                    if (tokenizer.NextToken() == StreamTokenizer.TTypeNumber)
                     {
                         charge = tokenizer.NumberValue;
                         Debug.WriteLine("Found charge for atom " + atomCounter + ": " + charge);
@@ -382,11 +382,11 @@ namespace NCDK.IO
             IAtomContainer ac = containers[0];
             // Determine label for properties
             string label;
-            if (labelLine.IndexOf("Diamagnetic") >= 0)
+            if (labelLine.Contains("Diamagnetic"))
             {
                 label = "Diamagnetic Magnetic shielding (Isotropic)";
             }
-            else if (labelLine.IndexOf("Paramagnetic") >= 0)
+            else if (labelLine.Contains("Paramagnetic"))
             {
                 label = "Paramagnetic Magnetic shielding (Isotropic)";
             }
@@ -400,7 +400,7 @@ namespace NCDK.IO
                 try
                 {
                     string line = input.ReadLine().Trim();
-                    while (line.IndexOf("Isotropic") < 0)
+                    while (!line.Contains("Isotropic"))
                     {
                         if (line == null)
                         {
@@ -413,7 +413,7 @@ namespace NCDK.IO
                     // Find Isotropic label
                     while (st1.MoveNext())
                     {
-                        if (st1.Current.Equals("Isotropic"))
+                        if (string.Equals(st1.Current, "Isotropic", StringComparison.Ordinal))
                         {
                             break;
                         }
@@ -422,10 +422,10 @@ namespace NCDK.IO
                     // Find Isotropic value
                     while (st1.MoveNext())
                     {
-                        if (st1.Current.Equals("=")) break;
+                        if (string.Equals(st1.Current, "=", StringComparison.Ordinal)) break;
                     }
                     st1.MoveNext();
-                    double shielding = double.Parse(st1.Current);
+                    double shielding = double.Parse(st1.Current, NumberFormatInfo.InvariantInfo);
                     Trace.TraceInformation("Type of shielding: " + label);
                     ac.Atoms[atomIndex].SetProperty(CDKPropertyName.IsotropicShielding, shielding);
                     ++atomIndex;
@@ -476,13 +476,13 @@ namespace NCDK.IO
         private void InitIOSettings()
         {
             readOptimizedStructureOnly = Add(new BooleanIOSetting("ReadOptimizedStructureOnly",
-                    IOSetting.Importance.Low, "Should I only read the optimized structure from a geometry optimization?",
+                    Importance.Low, "Should I only read the optimized structure from a geometry optimization?",
                     "false"));
         }
 
         private void CustomizeJob()
         {
-            FireIOSettingQuestion(readOptimizedStructureOnly);
+            ProcessIOSettingQuestion(readOptimizedStructureOnly);
         }
     }
 }

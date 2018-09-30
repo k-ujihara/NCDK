@@ -2,9 +2,7 @@
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=true,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 namespace NCDK.Smiles.SMARTS.Parser
 {
-
-    public
-    class ASTLowAndExpression : SimpleNode
+    internal class ASTLowAndExpression : SimpleNode
     {
         private int mapIdx = 0;
 
@@ -34,9 +32,9 @@ namespace NCDK.Smiles.SMARTS.Parser
             return visitor.Visit(this, data);
         }
 
-        public void InsertLeafChild(Node node)
+        public void InsertLeafChild(INode node)
         {
-            Node firstNode = this.JjtGetChild(0);
+            INode firstNode = this.JjtGetChild(0);
             while (!(firstNode is ASTImplicitHighAndExpression)) {
                 firstNode = firstNode.JjtGetChild(0);
             }

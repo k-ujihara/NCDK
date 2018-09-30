@@ -25,9 +25,10 @@
 using NCDK.Common.Base;
 using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Graphs;
 using static NCDK.Graphs.GraphUtil;
+using System.Linq;
 
 namespace NCDK.Stereo
 {
@@ -61,7 +62,7 @@ namespace NCDK.Stereo
                                                                    graph,
                                                                    bondMap,
                                                                    Stereocenters.Of(m));
-            var elements = recogniser.Recognise(new[] { Projection.Fischer });
+            var elements = recogniser.Recognise(new[] { Projection.Fischer }).ToList();
             Assert.AreEqual(1, elements.Count);
             AssertTetrahedralCenter(elements[0],
                                     m.Atoms[1],
@@ -96,7 +97,7 @@ namespace NCDK.Stereo
                                                                    graph,
                                                                    bondMap,
                                                                    Stereocenters.Of(m));
-            var elements = recogniser.Recognise(new[] { Projection.Fischer });
+            var elements = recogniser.Recognise(new[] { Projection.Fischer }).ToList();
             Assert.AreEqual(1, elements.Count);
             AssertTetrahedralCenter(elements[0],
                                     m.Atoms[1],
@@ -129,7 +130,7 @@ namespace NCDK.Stereo
                                                                    graph,
                                                                    bondMap,
                                                                    Stereocenters.Of(m));
-            var elements = recogniser.Recognise(new[] { Projection.Fischer });
+            var elements = recogniser.Recognise(new[] { Projection.Fischer }).ToList();
             Assert.AreEqual(1, elements.Count);
             AssertTetrahedralCenter(elements[0],
                                     m.Atoms[1],
@@ -172,7 +173,7 @@ namespace NCDK.Stereo
                                                                    graph,
                                                                    bondMap,
                                                                    Stereocenters.Of(m));
-            var elements = recogniser.Recognise(new[] { Projection.Fischer });
+            var elements = recogniser.Recognise(new[] { Projection.Fischer }).ToList();
 
             Assert.AreEqual(4, elements.Count);
             AssertTetrahedralCenter(elements[0],
@@ -562,7 +563,7 @@ namespace NCDK.Stereo
                                                                    graph,
                                                                    bondMap,
                                                                    Stereocenters.Of(m));
-            Assert.IsTrue(recogniser.Recognise(new[] { Projection.Fischer }).Count == 0);
+            Assert.IsTrue(recogniser.Recognise(new[] { Projection.Fischer }).Count() == 0);
         }
 
         /// <summary>
@@ -604,10 +605,10 @@ namespace NCDK.Stereo
                                                                    graph,
                                                                    bondMap,
                                                                    Stereocenters.Of(m));
-            Assert.IsTrue(recogniser.Recognise(new[] { Projection.Fischer }).Count == 0);
+            Assert.IsTrue(recogniser.Recognise(new[] { Projection.Fischer }).Count() == 0);
         }
 
-        static void AssertTetrahedralCenter(IReadOnlyStereoElement<IChemObject, IChemObject> element,
+        static void AssertTetrahedralCenter(IStereoElement<IChemObject, IChemObject> element,
                                             IAtom focus,
                                             TetrahedralStereo winding,
                                             params IAtom[] neighbors)
@@ -621,9 +622,11 @@ namespace NCDK.Stereo
 
         static IAtom Atom(string symbol, int h, double x, double y)
         {
-            IAtom a = new Atom(symbol);
-            a.ImplicitHydrogenCount = h;
-            a.Point2D = new Vector2(x, y);
+            IAtom a = new Atom(symbol)
+            {
+                ImplicitHydrogenCount = h,
+                Point2D = new Vector2(x, y),
+            };
             return a;
         }
     }

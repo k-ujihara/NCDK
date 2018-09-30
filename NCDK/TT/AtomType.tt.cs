@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -31,7 +32,8 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
+using NCDK.Common.Serialization;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace NCDK.Default
@@ -46,17 +48,16 @@ namespace NCDK.Default
     // @cdk.created  2001-08-08
     // @cdk.githash
     // @cdk.keyword  atom, type 
-    [Serializable]
     public class AtomType
-        : Isotope, IAtomType
+        : Isotope, IAtomType, ISerializable
     {
         /// <summary>
-        ///  The maximum bond order allowed for this atom type.
+        /// The maximum bond order allowed for this atom type.
         /// </summary>
         internal BondOrder maxBondOrder;
 
         /// <summary>
-        ///  The maximum sum of all bond orders allowed for this atom type.
+        /// The maximum sum of all bond orders allowed for this atom type.
         /// </summary>
         internal double? bondOrderSum;
 
@@ -66,28 +67,28 @@ namespace NCDK.Default
         internal double? covalentRadius;
 
         /// <summary>
-        ///  The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
+        /// The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
         /// </summary>
         /// <remarks>
-        ///  Note that some constructors (<see cref="AtomType(string)"/> and
-        /// <see cref="AtomType(string, string)"/> ) will explicitly set this field to 0
+        /// Note that some constructors (<see cref="AtomType(string)"/> and
+        /// <see cref="AtomType(string, string)"/>) will explicitly set this field to 0
         /// </remarks>
         internal int? formalCharge;
 
         /// <summary>
-        /// The hybridization state of this atom with CDKConstants.HYBRIDIZATION_UNSET
+        /// The hybridization state of this atom with <see cref="Hybridization.Unset"/>
         /// as default.
         /// </summary>
         internal Hybridization hybridization;
 
         /// <summary>
-        /// The electron Valency of this atom with CDKConstants.UNSET as default.
+        /// The electron valency of this atom with <see langword="null"/> as default.
         /// </summary>
         internal int? valency;
 
         /// <summary>
-        /// The formal number of neighbours this atom type can have with CDKConstants_UNSET
-        /// as default. This includes explicitely and implicitely connected atoms, including
+        /// The formal number of neighbours this atom type can have with <see langword="null"/>
+        /// as default. This includes explicitly and implicitly connected atoms, including
         /// implicit hydrogens.
         /// </summary>
         internal int? formalNeighbourCount;
@@ -100,12 +101,53 @@ namespace NCDK.Default
         internal bool isInRing;
         internal bool isReactiveCenter;
 
+        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue(nameof(maxBondOrder), maxBondOrder);
+            info.AddNullableValue(nameof(bondOrderSum), bondOrderSum);
+            info.AddNullableValue(nameof(covalentRadius), covalentRadius);
+            info.AddNullableValue(nameof(formalCharge), formalCharge);
+            info.AddValue(nameof(hybridization), hybridization);
+            info.AddNullableValue(nameof(valency), valency);
+            info.AddNullableValue(nameof(formalNeighbourCount), formalNeighbourCount);
+            info.AddValue(nameof(atomTypeName), atomTypeName);
+            info.AddValue(nameof(isHydrogenBondAcceptor), isHydrogenBondAcceptor);
+            info.AddValue(nameof(isHydrogenBondDonor), isHydrogenBondDonor);
+            info.AddValue(nameof(isAliphatic), isAliphatic);
+            info.AddValue(nameof(isAromatic), isAromatic);
+            info.AddValue(nameof(isInRing), isInRing);
+            info.AddValue(nameof(isReactiveCenter), isReactiveCenter);
+        }
+
+        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
+        protected AtomType(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+            maxBondOrder = (BondOrder)info.GetInt32(nameof(maxBondOrder));
+            bondOrderSum = info.GetNullable<double>(nameof(bondOrderSum));
+            covalentRadius = info.GetNullable<double>(nameof(covalentRadius));
+            formalCharge = info.GetNullable<int>(nameof(formalCharge));
+            hybridization = (Hybridization)info.GetInt32(nameof(hybridization));
+            valency = info.GetNullable<int>(nameof(valency));
+            formalNeighbourCount = info.GetNullable<int>(nameof(formalNeighbourCount));
+            atomTypeName = info.GetString(nameof(atomTypeName));
+            isHydrogenBondAcceptor = info.GetBoolean(nameof(isHydrogenBondAcceptor));
+            isHydrogenBondDonor = info.GetBoolean(nameof(isHydrogenBondDonor));
+            isAliphatic = info.GetBoolean(nameof(isAliphatic));
+            isAromatic = info.GetBoolean(nameof(isAromatic));
+            isInRing = info.GetBoolean(nameof(isInRing));
+            isReactiveCenter = info.GetBoolean(nameof(isReactiveCenter));
+        }
+
         /// <summary>
         /// Constructor for the AtomType object.
-        /// 
+        /// </summary>
+        /// <remarks>
         /// Defaults to a zero formal charge. All
         /// other fields are set to <see langword="null"/> or unset.
-        /// </summary>
+        /// </remarks>
         /// <param name="elementSymbol">Symbol of the atom</param>
         public AtomType(string elementSymbol)
             : base(elementSymbol)
@@ -240,8 +282,7 @@ namespace NCDK.Default
         /// <returns>true if the atom types are equal</returns>
         public override bool Compare(object obj)
         {
-            var o = obj as IAtomType;
-            return o != null && base.Compare(obj)
+            return obj is IAtomType o && base.Compare(obj)
                 && AtomTypeName == o.AtomTypeName
                 && MaxBondOrder == o.MaxBondOrder
                 && BondOrderSum == o.BondOrderSum;
@@ -371,17 +412,16 @@ namespace NCDK.Silent
     // @cdk.created  2001-08-08
     // @cdk.githash
     // @cdk.keyword  atom, type 
-    [Serializable]
     public class AtomType
-        : Isotope, IAtomType
+        : Isotope, IAtomType, ISerializable
     {
         /// <summary>
-        ///  The maximum bond order allowed for this atom type.
+        /// The maximum bond order allowed for this atom type.
         /// </summary>
         internal BondOrder maxBondOrder;
 
         /// <summary>
-        ///  The maximum sum of all bond orders allowed for this atom type.
+        /// The maximum sum of all bond orders allowed for this atom type.
         /// </summary>
         internal double? bondOrderSum;
 
@@ -391,28 +431,28 @@ namespace NCDK.Silent
         internal double? covalentRadius;
 
         /// <summary>
-        ///  The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
+        /// The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
         /// </summary>
         /// <remarks>
-        ///  Note that some constructors (<see cref="AtomType(string)"/> and
-        /// <see cref="AtomType(string, string)"/> ) will explicitly set this field to 0
+        /// Note that some constructors (<see cref="AtomType(string)"/> and
+        /// <see cref="AtomType(string, string)"/>) will explicitly set this field to 0
         /// </remarks>
         internal int? formalCharge;
 
         /// <summary>
-        /// The hybridization state of this atom with CDKConstants.HYBRIDIZATION_UNSET
+        /// The hybridization state of this atom with <see cref="Hybridization.Unset"/>
         /// as default.
         /// </summary>
         internal Hybridization hybridization;
 
         /// <summary>
-        /// The electron Valency of this atom with CDKConstants.UNSET as default.
+        /// The electron valency of this atom with <see langword="null"/> as default.
         /// </summary>
         internal int? valency;
 
         /// <summary>
-        /// The formal number of neighbours this atom type can have with CDKConstants_UNSET
-        /// as default. This includes explicitely and implicitely connected atoms, including
+        /// The formal number of neighbours this atom type can have with <see langword="null"/>
+        /// as default. This includes explicitly and implicitly connected atoms, including
         /// implicit hydrogens.
         /// </summary>
         internal int? formalNeighbourCount;
@@ -425,12 +465,53 @@ namespace NCDK.Silent
         internal bool isInRing;
         internal bool isReactiveCenter;
 
+        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue(nameof(maxBondOrder), maxBondOrder);
+            info.AddNullableValue(nameof(bondOrderSum), bondOrderSum);
+            info.AddNullableValue(nameof(covalentRadius), covalentRadius);
+            info.AddNullableValue(nameof(formalCharge), formalCharge);
+            info.AddValue(nameof(hybridization), hybridization);
+            info.AddNullableValue(nameof(valency), valency);
+            info.AddNullableValue(nameof(formalNeighbourCount), formalNeighbourCount);
+            info.AddValue(nameof(atomTypeName), atomTypeName);
+            info.AddValue(nameof(isHydrogenBondAcceptor), isHydrogenBondAcceptor);
+            info.AddValue(nameof(isHydrogenBondDonor), isHydrogenBondDonor);
+            info.AddValue(nameof(isAliphatic), isAliphatic);
+            info.AddValue(nameof(isAromatic), isAromatic);
+            info.AddValue(nameof(isInRing), isInRing);
+            info.AddValue(nameof(isReactiveCenter), isReactiveCenter);
+        }
+
+        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
+        protected AtomType(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+            maxBondOrder = (BondOrder)info.GetInt32(nameof(maxBondOrder));
+            bondOrderSum = info.GetNullable<double>(nameof(bondOrderSum));
+            covalentRadius = info.GetNullable<double>(nameof(covalentRadius));
+            formalCharge = info.GetNullable<int>(nameof(formalCharge));
+            hybridization = (Hybridization)info.GetInt32(nameof(hybridization));
+            valency = info.GetNullable<int>(nameof(valency));
+            formalNeighbourCount = info.GetNullable<int>(nameof(formalNeighbourCount));
+            atomTypeName = info.GetString(nameof(atomTypeName));
+            isHydrogenBondAcceptor = info.GetBoolean(nameof(isHydrogenBondAcceptor));
+            isHydrogenBondDonor = info.GetBoolean(nameof(isHydrogenBondDonor));
+            isAliphatic = info.GetBoolean(nameof(isAliphatic));
+            isAromatic = info.GetBoolean(nameof(isAromatic));
+            isInRing = info.GetBoolean(nameof(isInRing));
+            isReactiveCenter = info.GetBoolean(nameof(isReactiveCenter));
+        }
+
         /// <summary>
         /// Constructor for the AtomType object.
-        /// 
+        /// </summary>
+        /// <remarks>
         /// Defaults to a zero formal charge. All
         /// other fields are set to <see langword="null"/> or unset.
-        /// </summary>
+        /// </remarks>
         /// <param name="elementSymbol">Symbol of the atom</param>
         public AtomType(string elementSymbol)
             : base(elementSymbol)
@@ -559,8 +640,7 @@ namespace NCDK.Silent
         /// <returns>true if the atom types are equal</returns>
         public override bool Compare(object obj)
         {
-            var o = obj as IAtomType;
-            return o != null && base.Compare(obj)
+            return obj is IAtomType o && base.Compare(obj)
                 && AtomTypeName == o.AtomTypeName
                 && MaxBondOrder == o.MaxBondOrder
                 && BondOrderSum == o.BondOrderSum;

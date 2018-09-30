@@ -1,4 +1,3 @@
-using NCDK.FaulonSignatures;
 using System.Collections.Generic;
 
 namespace NCDK.FaulonSignatures.EdgeColored
@@ -10,9 +9,9 @@ namespace NCDK.FaulonSignatures.EdgeColored
     public class EdgeColoredGraphSignature : AbstractGraphSignature
     {
         public EdgeColoredGraph graph;
-        private IDictionary<string, int> colorMap;
+        private readonly IReadOnlyDictionary<string, int> colorMap;
 
-        public EdgeColoredGraphSignature(EdgeColoredGraph graph, IDictionary<string, int> colorMap)
+        public EdgeColoredGraphSignature(EdgeColoredGraph graph, IReadOnlyDictionary<string, int> colorMap)
             : base()
         {
             this.graph = graph;

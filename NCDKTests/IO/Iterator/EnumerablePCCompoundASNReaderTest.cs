@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using System.Diagnostics;
 
 namespace NCDK.IO.Iterator
@@ -35,8 +36,7 @@ namespace NCDK.IO.Iterator
             string filename = "NCDK.Data.ASN.PubChem.list.asn";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            EnumerablePCCompoundASNReader reader = new EnumerablePCCompoundASNReader(ins,
-                    Default.ChemObjectBuilder.Instance);
+            EnumerablePCCompoundASNReader reader = new EnumerablePCCompoundASNReader(ins, ChemObjectBuilder.Instance);
 
             int molCount = 0;
             foreach (var obj in reader)

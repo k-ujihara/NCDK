@@ -23,6 +23,7 @@ using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace NCDK.Formula
 {
@@ -36,29 +37,37 @@ namespace NCDK.Formula
     // @cdk.keyword isotope pattern
     public class IsotopePatternGenerator
     {
-        private IChemObjectBuilder builder = null;
-        private IsotopeFactory isoFactory;
+        private IsotopeFactory isoFactory = BODRIsotopeFactory.Instance;
 
-       /// <summary> Minimal abundance of the isotopes to be added in the combinatorial search.</summary>
-        private double minAbundance = .1;
+        /// <summary>
+        /// Minimal abundance of the isotopes to be added in the combinatorial search.
+        /// </summary>
+        private readonly double minAbundance;
+
+        /// <summary>
+        /// Maximum tolerance between two mass 
+        /// </summary>
+        private const double Tolerance = 0.00005;
 
         /// <summary>
         /// Constructor for the IsotopeGenerator. The minimum abundance is set to 
         ///                         0.1 (10% abundance) by default. 
         /// </summary>
         public IsotopePatternGenerator()
-        : this(0.1)
+            : this(0.1)
         { }
 
-        /// <summary>
-        /// Constructor for the IsotopeGenerator.
-        /// </summary>
-        /// <param name="minAb">Minimal abundance of the isotopes to be added in the combinatorial search (scale 0.0 to 1.0)</param>
-        public IsotopePatternGenerator(double minAb)
+        /// <param name="minAbundance">Minimal abundance of the isotopes to be added in the combinatorial search (scale 0.0 to 1.0)</param>
+        public IsotopePatternGenerator(double minAbundance)
         {
-            minAbundance = minAb;
+            this.minAbundance = minAbundance;
             Trace.TraceInformation("Generating all Isotope structures with IsotopeGenerator");
         }
+
+        /// <summary>
+        /// Minimum abundance
+        /// </summary>
+        public double MinAbundance => minAbundance;
 
         /// <summary>
         /// Get all combinatorial chemical isotopes given a structure.
@@ -67,21 +76,11 @@ namespace NCDK.Formula
         /// <returns>A IsotopePattern object containing the different combinations</returns>
         public IsotopePattern GetIsotopes(IMolecularFormula molFor)
         {
-            if (builder == null)
-            {
-                try
-                {
-                    isoFactory = Isotopes.Instance;
-                    builder = molFor.Builder;
-                }
-                catch (Exception e)
-                {
-                    Console.Error.WriteLine(e.StackTrace);
-                }
-            }
+            var isoFactory = BODRIsotopeFactory.Instance;
+            var builder = molFor.Builder;
             string mf = MolecularFormulaManipulator.GetString(molFor, true);
 
-            IMolecularFormula molecularFormula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula(mf, builder);
+            var molecularFormula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula(mf, builder);
 
             IsotopePattern abundance_Mass = null;
 
@@ -96,9 +95,9 @@ namespace NCDK.Formula
                 }
             }
 
-            IsotopePattern isoP = IsotopePatternManipulator.SortAndNormalizedByIntensity(abundance_Mass);
+            var isoP = IsotopePatternManipulator.SortAndNormalizedByIntensity(abundance_Mass);
             isoP = CleanAbundance(isoP, minAbundance);
-            IsotopePattern isoPattern = IsotopePatternManipulator.SortByMass(isoP);
+            var isoPattern = IsotopePatternManipulator.SortByMass(isoP);
             return isoPattern;
         }
 
@@ -115,22 +114,14 @@ namespace NCDK.Formula
         {
             var isotopes = isoFactory.GetIsotopes(elementSymbol);
 
-            if (isotopes == null) return isotopePattern;
-
-            //if (isotopes.Length == 0) return isotopePattern;
+            if (isotopes == null)
+                return isotopePattern;
 
             double mass, previousMass, abundance, totalAbundance, newAbundance;
 
             var isotopeMassAndAbundance = new Dictionary<double, double>();
-            IsotopePattern currentISOPattern = new IsotopePattern();
-
             // Generate isotopes for the current atom (element)
-            foreach (var isotope in isotopes)
-            {
-                mass = isotope.ExactMass.Value;
-                abundance = isotope.NaturalAbundance.Value;
-                currentISOPattern.Isotopes.Add(new IsotopeContainer(mass, abundance));
-            }
+            var currentISOPattern = new IsotopePattern(isotopes.Select(n => new IsotopeContainer(n.ExactMass.Value, n.NaturalAbundance.Value)));
 
             // Verify if there is a previous calculation. If it exists, add the new
             // isotopes
@@ -144,14 +135,16 @@ namespace NCDK.Formula
                 {
                     totalAbundance = isotope.Intensity;
 
-                    if (totalAbundance == 0) continue;
+                    if (totalAbundance == 0)
+                        continue;
 
                     for (int j = 0; j < currentISOPattern.Isotopes.Count; j++)
                     {
                         abundance = currentISOPattern.Isotopes[j].Intensity;
                         mass = isotope.Mass;
 
-                        if (abundance == 0) continue;
+                        if (abundance == 0)
+                            continue;
 
                         newAbundance = totalAbundance * abundance * 0.01;
                         mass += currentISOPattern.Isotopes[j].Mass;
@@ -173,11 +166,7 @@ namespace NCDK.Formula
                     }
                 }
 
-                isotopePattern = new IsotopePattern();
-                foreach (var imass in isotopeMassAndAbundance.Keys)
-                {
-                    isotopePattern.Isotopes.Add(new IsotopeContainer(imass, isotopeMassAndAbundance[imass]));
-                }
+                isotopePattern = new IsotopePattern(isotopeMassAndAbundance.Keys.Select(n => new IsotopeContainer(n, isotopeMassAndAbundance[n])));
             }
 
             return isotopePattern;
@@ -189,17 +178,17 @@ namespace NCDK.Formula
         /// <param name="keySet">The Set object</param>
         /// <param name="mass">The mass to look for</param>
         /// <returns>The key value</returns>
-        private double SearchMass(ICollection<Double> keySet, double mass)
+        private static double SearchMass(ICollection<Double> keySet, double mass)
         {
-            double TOLERANCE = 0.00005f;
             double diff;
             foreach (var key in keySet)
             {
                 diff = Math.Abs(key - mass);
-                if (diff < TOLERANCE) return key;
+                if (diff < Tolerance)
+                    return key;
             }
 
-            return 0.0d;
+            return 0.0;
         }
 
         /// <summary>
@@ -209,32 +198,33 @@ namespace NCDK.Formula
         /// <param name="isopattern">The IsotopePattern object</param>
         /// <param name="minAbundance">The minimum abundance</param>
         /// <returns>The IsotopePattern cleaned</returns>
-        private IsotopePattern CleanAbundance(IsotopePattern isopattern, double minAbundance)
+        private static IsotopePattern CleanAbundance(IsotopePattern isopattern, double minAbundance)
         {
-            double intensity, biggestIntensity = 0.0f;
+            double intensity;
+            double biggestIntensity = 0;
 
             foreach (var sc in isopattern.Isotopes)
             {
                 intensity = sc.Intensity;
-                if (intensity > biggestIntensity) biggestIntensity = intensity;
+                if (intensity > biggestIntensity)
+                    biggestIntensity = intensity;
             }
 
             foreach (var sc in isopattern.Isotopes)
             {
                 intensity = sc.Intensity;
                 intensity /= biggestIntensity;
-                if (intensity < 0) intensity = 0;
+                if (intensity < 0)
+                    intensity = 0;
 
                 sc.Intensity = intensity;
             }
 
-            IsotopePattern sortedIsoPattern = new IsotopePattern();
-            sortedIsoPattern.SetMonoIsotope(new IsotopeContainer(isopattern.Isotopes[0].Mass, isopattern.Isotopes[0].Intensity));
-            for (int i = 1; i < isopattern.Isotopes.Count; i++)
-            {
-                if (isopattern.Isotopes[i].Intensity >= (minAbundance))
-                    sortedIsoPattern.Isotopes.Add(new IsotopeContainer(isopattern.Isotopes[i].Mass, isopattern.Isotopes[i].Intensity));
-            }
+            IsotopePattern sortedIsoPattern = new IsotopePattern(
+                isopattern.Isotopes
+                    .Where(n => n.Intensity >= minAbundance)
+                    .Select(n => new IsotopeContainer(n.Mass, n.Intensity)));
+            sortedIsoPattern.MonoIsotope = sortedIsoPattern.Isotopes[0];
             return sortedIsoPattern;
         }
     }

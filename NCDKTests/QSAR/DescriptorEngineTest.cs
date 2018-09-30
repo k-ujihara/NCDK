@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using System.Linq;
 
 namespace NCDK.QSAR
@@ -33,47 +34,47 @@ namespace NCDK.QSAR
         [TestMethod()]
         public void TestConstructor()
         {
-            DescriptorEngine engine = DescriptorEngine.Create<IMolecularDescriptor>(Default.ChemObjectBuilder.Instance);
+            DescriptorEngine engine = DescriptorEngine.Create<IMolecularDescriptor>(ChemObjectBuilder.Instance);
             Assert.IsNotNull(engine);
         }
 
         [TestMethod()]
         public void TestLoadingOfMolecularDescriptors()
         {
-            DescriptorEngine engine = DescriptorEngine.Create<IMolecularDescriptor>(Default.ChemObjectBuilder.Instance);
+            DescriptorEngine engine = DescriptorEngine.Create<IMolecularDescriptor>(ChemObjectBuilder.Instance);
             Assert.IsNotNull(engine);
-            int loadedDescriptors = engine.GetDescriptorInstances().Count;
+            int loadedDescriptors = engine.GetDescriptorInstances().Count();
             Assert.IsTrue(0 != loadedDescriptors, "Could not load any descriptors");
-            Assert.AreEqual(loadedDescriptors, engine.GetDescriptorClassNames().Count);
-            Assert.AreEqual(loadedDescriptors, engine.GetDescriptorSpecifications().Count);
+            Assert.AreEqual(loadedDescriptors, engine.GetDescriptorClassNames().Count());
+            Assert.AreEqual(loadedDescriptors, engine.GetDescriptorSpecifications().Count());
         }
 
         [TestMethod()]
         public void TestLoadingOfAtomicDescriptors()
         {
-            DescriptorEngine engine = DescriptorEngine.Create<IAtomicDescriptor>(Default.ChemObjectBuilder.Instance);
+            DescriptorEngine engine = DescriptorEngine.Create<IAtomicDescriptor>(ChemObjectBuilder.Instance);
             Assert.IsNotNull(engine);
-            int loadedDescriptors = engine.GetDescriptorInstances().Count;
+            int loadedDescriptors = engine.GetDescriptorInstances().Count();
             Assert.AreNotSame(0, loadedDescriptors);
-            Assert.AreEqual(loadedDescriptors, engine.GetDescriptorClassNames().Count);
-            Assert.AreEqual(loadedDescriptors, engine.GetDescriptorSpecifications().Count);
+            Assert.AreEqual(loadedDescriptors, engine.GetDescriptorClassNames().Count());
+            Assert.AreEqual(loadedDescriptors, engine.GetDescriptorSpecifications().Count());
         }
 
         [TestMethod()]
         public void TestLoadingOfBondDescriptors()
         {
-            DescriptorEngine engine = DescriptorEngine.Create<IBondDescriptor>(Default.ChemObjectBuilder.Instance);
+            DescriptorEngine engine = DescriptorEngine.Create<IBondDescriptor>(ChemObjectBuilder.Instance);
             Assert.IsNotNull(engine);
-            int loadedDescriptors = engine.GetDescriptorInstances().Count;
+            int loadedDescriptors = engine.GetDescriptorInstances().Count();
             Assert.AreNotSame(0, loadedDescriptors);
-            Assert.AreEqual(loadedDescriptors, engine.GetDescriptorClassNames().Count);
-            Assert.AreEqual(loadedDescriptors, engine.GetDescriptorSpecifications().Count);
+            Assert.AreEqual(loadedDescriptors, engine.GetDescriptorClassNames().Count());
+            Assert.AreEqual(loadedDescriptors, engine.GetDescriptorSpecifications().Count());
         }
 
         [TestMethod()]
         public void TestDictionaryType()
         {
-            DescriptorEngine engine = DescriptorEngine.Create<IMolecularDescriptor>(Default.ChemObjectBuilder.Instance);
+            DescriptorEngine engine = DescriptorEngine.Create<IMolecularDescriptor>(ChemObjectBuilder.Instance);
 
             string className = "NCDK.QSAR.Descriptors.Moleculars.ZagrebIndexDescriptor";
             DescriptorSpecification specRef = new DescriptorSpecification(
@@ -88,7 +89,7 @@ namespace NCDK.QSAR
         [TestMethod()]
         public void TestDictionaryClass()
         {
-            DescriptorEngine engine = DescriptorEngine.Create<IMolecularDescriptor>(Default.ChemObjectBuilder.Instance);
+            DescriptorEngine engine = DescriptorEngine.Create<IMolecularDescriptor>(ChemObjectBuilder.Instance);
 
             string className = "NCDK.QSAR.Descriptors.Moleculars.TPSADescriptor";
             DescriptorSpecification specRef = new DescriptorSpecification(
@@ -96,13 +97,13 @@ namespace NCDK.QSAR
                     this.GetType().FullName,
                     "The Chemistry Development Kit");
 
-            string[] dictClass = engine.GetDictionaryClass(className);
-            Assert.AreEqual(2, dictClass.Length);
+            var dictClass = engine.GetDictionaryClass(className).ToList();
+            Assert.AreEqual(2, dictClass.Count);
             Assert.AreEqual("topologicalDescriptor", dictClass[0]);
             Assert.AreEqual("electronicDescriptor", dictClass[1]);
 
-            dictClass = engine.GetDictionaryClass(specRef);
-            Assert.AreEqual(2, dictClass.Length);
+            dictClass = engine.GetDictionaryClass(specRef).ToList();
+            Assert.AreEqual(2, dictClass.Count);
             Assert.AreEqual("topologicalDescriptor", dictClass[0]);
             Assert.AreEqual("electronicDescriptor", dictClass[1]);
         }
@@ -110,7 +111,7 @@ namespace NCDK.QSAR
         [TestMethod()]
         public void TestAvailableClass()
         {
-            DescriptorEngine engine = DescriptorEngine.Create<IMolecularDescriptor>(Default.ChemObjectBuilder.Instance);
+            DescriptorEngine engine = DescriptorEngine.Create<IMolecularDescriptor>(ChemObjectBuilder.Instance);
             var availClasses = engine.GetAvailableDictionaryClasses();
             Assert.AreEqual(5, availClasses.Count());
         }
@@ -118,12 +119,12 @@ namespace NCDK.QSAR
         [TestMethod()]
         public void TestLoadingOfAtomPairDescriptors()
         {
-            DescriptorEngine engine = DescriptorEngine.Create<IAtomicDescriptor>(Default.ChemObjectBuilder.Instance);
+            DescriptorEngine engine = DescriptorEngine.Create<IAtomicDescriptor>(ChemObjectBuilder.Instance);
             Assert.IsNotNull(engine);
-            int loadedDescriptors = engine.GetDescriptorInstances().Count;
+            int loadedDescriptors = engine.GetDescriptorInstances().Count();
             Assert.AreNotSame(0, loadedDescriptors);
-            Assert.AreEqual(loadedDescriptors, engine.GetDescriptorClassNames().Count);
-            Assert.AreEqual(loadedDescriptors, engine.GetDescriptorSpecifications().Count);
+            Assert.AreEqual(loadedDescriptors, engine.GetDescriptorClassNames().Count());
+            Assert.AreEqual(loadedDescriptors, engine.GetDescriptorSpecifications().Count());
         }
     }
 }

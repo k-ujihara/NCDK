@@ -45,7 +45,7 @@ namespace NCDK
             string EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
             try
             {
-                int[] array = new int[0];
+                int[] array = Array.Empty<int>();
                 int dummy = array[50];
                 dummy = dummy + 1;
                 Assert.Fail("Should not have reached this place. The test *requires* the error to occur!");

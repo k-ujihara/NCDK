@@ -18,7 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 
@@ -29,7 +29,6 @@ namespace NCDK.Charges
     public class PiElectronegativityTest : CDKTestCase
     {
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-        private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
         public PiElectronegativityTest()
             : base()
@@ -61,7 +60,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             for (int i = 0; i < molecule.Atoms.Count; i++)
             {
@@ -85,7 +84,7 @@ namespace NCDK.Charges
 
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             for (int i = 0; i < molecule.Atoms.Count; i++)
             {

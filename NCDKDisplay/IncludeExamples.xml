@@ -2,7 +2,7 @@
 <Comments>
   <Codes id="NCDK.Aromaticities.Aromaticity_Example.cs">
     <code>                ElectronDonation model = ElectronDonation.DaylightModel;
-                ICycleFinder cycles = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(6));
+                ICycleFinder cycles = Cycles.Or(Cycles.AllSimpleFinder, Cycles.GetAllFinder(6));
                 Aromaticity aromaticity = new Aromaticity(model, cycles);
 
                 // apply our configured model to each molecule
@@ -18,13 +18,13 @@
                 // mimics the DoubleBondAcceptingAromaticityDetector
                 Aromaticity aromaticity_exo = new Aromaticity(ElectronDonation.CDKAllowingExocyclicModel, Cycles.CDKAromaticSetFinder);
                 // a good model for writing SMILES
-                Aromaticity aromaticity_smi = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllFinder);
+                Aromaticity aromaticity_smi = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllSimpleFinder);
                 // a good model for writing MDL/Mol2
-                Aromaticity aromaticity_mdl = new Aromaticity(ElectronDonation.PiBondsModel, Cycles.AllFinder);
+                Aromaticity aromaticity_mdl = new Aromaticity(ElectronDonation.PiBondsModel, Cycles.AllSimpleFinder);
 </code>
   </Codes>
   <Codes id="NCDK.Aromaticities.Aromaticity_Example.cs+FindBonds">
-    <code>                Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDKModel, Cycles.AllFinder);
+    <code>                Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDKModel, Cycles.AllSimpleFinder);
                 IAtomContainer container = TestMoleculeFactory.MakeAnthracene();
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
                 try
@@ -39,7 +39,7 @@
 </code>
   </Codes>
   <Codes id="NCDK.Aromaticities.Aromaticity_Example.cs+Apply">
-    <code>                Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDKModel, Cycles.AllFinder);
+    <code>                Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDKModel, Cycles.AllSimpleFinder);
                 IAtomContainer container = TestMoleculeFactory.MakeAnthracene();
                 try
                 {
@@ -59,7 +59,7 @@
 </code>
   </Codes>
   <Codes id="NCDK.Aromaticities.Aromaticity_Example.cs+CDKLegacy_AllFinder_RelevantFinder">
-    <code>                new Aromaticity(ElectronDonation.CDKModel, Cycles.Or(Cycles.AllFinder, Cycles.RelevantFinder));
+    <code>                new Aromaticity(ElectronDonation.CDKModel, Cycles.Or(Cycles.AllSimpleFinder, Cycles.RelevantFinder));
 </code>
   </Codes>
   <Codes id="NCDK.Aromaticities.ElectronDonation_Example.cs">
@@ -106,7 +106,7 @@
 </code>
   </Codes>
   <Codes id="NCDK.Config.XMLIsotopeFactory_Example.cs+example">
-    <code>                IsotopeFactory factory = XMLIsotopeFactory.GetInstance(Default.ChemObjectBuilder.Instance);
+    <code>                IsotopeFactory factory = XMLIsotopeFactory.GetInstance(ChemObjectBuilder.Instance);
                 IIsotope major = factory.GetMajorIsotope("H");
 </code>
   </Codes>
@@ -193,21 +193,21 @@
     <code>                var molecule = new AtomContainer();
                 var fingerprinter = new Fingerprinter();
                 var fingerprint = fingerprinter.GetBitFingerprint(molecule);
-                Console.WriteLine(fingerprint.Count); // returns 1024 by default
+                Console.WriteLine(fingerprint.Length); // returns 1024 by default
 </code>
   </Codes>
   <Codes id="NCDK.Fingerprints.HybridizationFingerprinter_Example.cs">
     <code>                var molecule = new AtomContainer();
                 var fingerprinter = new HybridizationFingerprinter();
                 var fingerprint = fingerprinter.GetBitFingerprint(molecule);
-                Console.WriteLine(fingerprint.Count); // returns 1024 by default
+                Console.WriteLine(fingerprint.Length); // returns 1024 by default
 </code>
   </Codes>
   <Codes id="NCDK.Fingerprints.PubchemFingerprinter_Example.cs">
     <code>                var molecule = new AtomContainer();
                 IFingerprinter fingerprinter = new PubchemFingerprinter(Silent.ChemObjectBuilder.Instance);
                 IBitFingerprint fingerprint = fingerprinter.GetBitFingerprint(molecule);
-                Console.WriteLine(fingerprint.Count); // returns 881
+                Console.WriteLine(fingerprint.Length); // returns 881
 </code>
   </Codes>
   <Codes id="NCDK.Fingerprints.ShortestPathFingerprinter_Example.cs">
@@ -215,10 +215,10 @@
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
                 var fingerprinter = new ShortestPathFingerprinter();
                 var fingerprint = fingerprinter.GetBitFingerprint(molecule);
-                Console.WriteLine(fingerprint.Count); // returns 1024 by default
+                Console.WriteLine(fingerprint.Length); // returns 1024 by default
 </code>
   </Codes>
-  <Codes id="NCDK.ForceField.MMFF.MmffAtomTypeMatcher_Example.cs">
+  <Codes id="NCDK.ForceFields.MmffAtomTypeMatcher_Example.cs">
     <code>            MmffAtomTypeMatcher mmffAtomTypes = new MmffAtomTypeMatcher();
             foreach (var container in containers)
             {
@@ -226,7 +226,7 @@
             }
 </code>
   </Codes>
-  <Codes id="NCDK.ForceField.MMFF.Mmff_Example.cs">
+  <Codes id="NCDK.ForceFields.Mmff_Example.cs">
     <code>                IAtomContainer mol = TestMoleculeFactory.MakeAlphaPinene();
                 Mmff mmff = new Mmff();
                 mmff.AssignAtomTypes(mol);
@@ -235,7 +235,7 @@
 </code>
   </Codes>
   <Codes id="NCDK.Formula.FullEnumerationFormulaGenerator_Example.cs">
-    <code>            IsotopeFactory ifac = Isotopes.Instance;
+    <code>            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -258,7 +258,7 @@
 </code>
   </Codes>
   <Codes id="NCDK.Formula.MolecularFormulaGenerator_Example.cs">
-    <code>            IsotopeFactory ifac = Isotopes.Instance;
+    <code>            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
              IIsotope c = ifac.GetMajorIsotope("C");
              IIsotope h = ifac.GetMajorIsotope("H");
              IIsotope n = ifac.GetMajorIsotope("N");
@@ -282,8 +282,8 @@
 </code>
   </Codes>
   <Codes id="NCDK.Geometries.Alignments.KabschAlignment_Example.cs">
-    <code>                AtomContainer ac1 = new AtomContainer();    // molecule 1
-                AtomContainer ac2 = new AtomContainer();    // molecule 2
+    <code>                var ac1 = new AtomContainer();    // molecule 1
+                var ac2 = new AtomContainer();    // molecule 2
                 try
                 {
                     KabschAlignment sa = new KabschAlignment(ac1.Atoms, ac2.Atoms);
@@ -347,10 +347,8 @@
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.InChI.InChIToStructure_Example.cs">
-    <code>            // Generate factory -  if native code does not load
-            InChIGeneratorFactory factory = new InChIGeneratorFactory();
-            // Get InChIToStructure
-            InChIToStructure intostruct = factory.GetInChIToStructure(inchi, Default.ChemObjectBuilder.Instance);
+    <code>            // Get InChIToStructure
+            InChIToStructure intostruct = InChIToStructure.FromInChI(inchi, ChemObjectBuilder.Instance);
 
             InChIReturnCode ret = intostruct.ReturnStatus;
             if (ret == InChIReturnCode.Warning)
@@ -522,8 +520,8 @@ namespace NCDK.Graphs
             int fragmentCount = fragments.Count;
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+AllFinder">
-    <code>                ICycleFinder cf = Cycles.AllFinder;
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+AllSimpleFinder">
+    <code>                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -539,7 +537,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+MCB">
-    <code>                ICycleFinder cf = Cycles.AllFinder;
+    <code>                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -555,7 +553,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+Relevant">
-    <code>                ICycleFinder cf = Cycles.AllFinder;
+    <code>                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -571,7 +569,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+Essential">
-    <code>                ICycleFinder cf = Cycles.AllFinder;
+    <code>                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -587,7 +585,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+TripletShort">
-    <code>                ICycleFinder cf = Cycles.AllFinder;
+    <code>                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -603,7 +601,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+VertexShort">
-    <code>                ICycleFinder cf = Cycles.AllFinder;
+    <code>                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -619,7 +617,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+EdgeShort">
-    <code>                ICycleFinder cf = Cycles.AllFinder;
+    <code>                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -635,7 +633,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+CDKAromaticSetFinder">
-    <code>                ICycleFinder cf = Cycles.AllFinder;
+    <code>                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -651,7 +649,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+AllOrVertexShortFinder">
-    <code>                ICycleFinder cf = Cycles.AllFinder;
+    <code>                ICycleFinder cf = Cycles.AllSimpleFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -668,12 +666,12 @@ namespace NCDK.Graphs
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+Or6">
     <code>                // all cycles or all cycles size &lt;= 6
-                ICycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(6));
+                ICycleFinder cf = Cycles.Or(Cycles.AllSimpleFinder, Cycles.GetAllFinder(6));
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+OrARE">
     <code>                // all cycles or relevant or essential
-                ICycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.Or(Cycles.RelevantFinder, Cycles.EssentialFinder));
+                ICycleFinder cf = Cycles.Or(Cycles.AllSimpleFinder, Cycles.Or(Cycles.RelevantFinder, Cycles.EssentialFinder));
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+FindAll">
@@ -1039,7 +1037,7 @@ namespace NCDK.Graphs
     <code>                string filename = "/Users/rguha/conf2.sdf";
                 using (var srm = new FileStream(filename, FileMode.Open))
                 {
-                    IEnumerableMDLConformerReader reader = new IEnumerableMDLConformerReader(srm, Default.ChemObjectBuilder.Instance);
+                    IEnumerableMDLConformerReader reader = new IEnumerableMDLConformerReader(srm, ChemObjectBuilder.Instance);
                     foreach (var cc in reader)
                     {
                         // do something 
@@ -1051,7 +1049,7 @@ namespace NCDK.Graphs
   <Codes id="NCDK.IO.Iterator.EnumerableSDFReader_Example.cs">
     <code>                using (var srm = new FileStream("../zinc-structures/ZINC_subset3_3D_charged_wH_maxmin1000.sdf", FileMode.Open))
                 {
-                    EnumerableSDFReader reader = new EnumerableSDFReader(srm, Default.ChemObjectBuilder.Instance);
+                    EnumerableSDFReader reader = new EnumerableSDFReader(srm, ChemObjectBuilder.Instance);
                     foreach (var molecule in reader)
                     {
                         // do something
@@ -1062,7 +1060,7 @@ namespace NCDK.Graphs
   <Codes id="NCDK.IO.Setting.SettingManager_Example.cs">
     <code>                // create the manager and add a setting
                 var manager = new SettingManager&lt;BooleanIOSetting&gt;();
-                manager.Add(new BooleanIOSetting("Sample", IOSetting.Importance.Medium, "This is a sample?", "true"));
+                manager.Add(new BooleanIOSetting("Sample", Importance.Medium, "This is a sample?", "true"));
 
                 // check the setting is present (case insensitive)
                 if (manager.Has("sample"))
@@ -1444,7 +1442,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Isomorphisms.UniversalIsomorphismTester_Example.cs">
-    <code>            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+    <code>            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
             IAtomContainer SMILESquery = sp.ParseSmiles("CC"); // ethylene
             IQueryAtomContainer query = QueryAtomContainerCreator.CreateBasicQueryContainer(SMILESquery);
@@ -1488,12 +1486,12 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Modelings.Builder3D.ModelBuilder3D_Example.cs">
-    <code>            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Default.ChemObjectBuilder.Instance);
+    <code>            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(ChemObjectBuilder.Instance);
             IAtomContainer molecule = mb3d.Generate3DCoordinates(mol, false);
 </code>
   </Codes>
   <Codes id="NCDK.Pharmacophore.PharmacophoreMatcher_Example.cs">
-    <code>            QueryAtomContainer query = new QueryAtomContainer(Default.ChemObjectBuilder.Instance);
+    <code>            QueryAtomContainer query = new QueryAtomContainer(ChemObjectBuilder.Instance);
 
             PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
             PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("A", "[N]");
@@ -1514,7 +1512,7 @@ namespace NCDK.Graphs
             string filename = "/Users/rguha/pcore1.sdf";
             using (var srm = new FileStream(filename, FileMode.Open))
             {
-                foreach (var conformers in new IEnumerableMDLConformerReader(srm, Default.ChemObjectBuilder.Instance))
+                foreach (var conformers in new IEnumerableMDLConformerReader(srm, ChemObjectBuilder.Instance))
                 {
                     bool firstTime = true;
                     foreach (var conf in conformers)
@@ -1553,9 +1551,9 @@ namespace NCDK.Graphs
   </Codes>
   <Codes id="NCDK.QSAR.DescriptorEngine_Example.cs+ctor">
     <code>                var classNames = DescriptorEngine.GetDescriptorClassNameByPackage("NCDK.QSRA.Descriptors.Moleculars", null);
-                DescriptorEngine engine = new DescriptorEngine(classNames, Default.ChemObjectBuilder.Instance);
-                var instances = engine.InstantiateDescriptors(classNames);
-                var specs = engine.InitializeSpecifications(instances);
+                DescriptorEngine engine = new DescriptorEngine(classNames, ChemObjectBuilder.Instance);
+                var instances = DescriptorEngine.InstantiateDescriptors(classNames);
+                var specs = instances.Select(n =&gt; n.Specification).ToList();
                 engine.SetDescriptorInstances(instances);
                 engine.SetDescriptorSpecifications(specs);
 
@@ -1585,7 +1583,7 @@ namespace NCDK.Graphs
   </Codes>
   <Codes id="NCDK.RingSearches.AllRingsFinder_Example.cs+UsingThreshold">
     <code>                // using static NCDK.RingSearches.AllRingsFinder.Threshold;
-                AllRingsFinder arf = AllRingsFinder.UsingThreshold(PubChem_99);
+                AllRingsFinder arf = AllRingsFinder.UsingThreshold(Threshold.PubChem99);
 </code>
   </Codes>
   <Codes id="NCDK.RingSearches.RingSearch_Example.cs">
@@ -1660,7 +1658,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.RingSearches.RingSearch_Example.cs+Fused">
-    <code>                IAtomContainer mol = new Smiles.SmilesParser(Default.ChemObjectBuilder.Instance).ParseSmiles("c1cc(cc2cc(ccc12)C3C4CC34)C6CC5CCC6(C5)");
+    <code>                IAtomContainer mol = new Smiles.SmilesParser(ChemObjectBuilder.Instance).ParseSmiles("c1cc(cc2cc(ccc12)C3C4CC34)C6CC5CCC6(C5)");
                 RingSearch ringSearch = new RingSearch(mol);
                 
                 int[][] fused = ringSearch.Fused();
@@ -1688,6 +1686,24 @@ namespace NCDK.Graphs
             double tanimoto_coefficient = Tanimoto.Calculate(fingerprint1, fingerprint2);
 </code>
   </Codes>
+  <Codes id="NCDK.SMARTS.SmartsFragmentExtractor_Example.cs">
+    <code>            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            var smipar = new SmilesParser(bldr);
+
+            IAtomContainer mol = smipar.ParseSmiles("[nH]1ccc2c1cccc2");
+            var subsmarts = new SmartsFragmentExtractor(mol);
+
+            string smarts;
+            // smarts=[nH1v3X3+0][cH1v4X3+0][cH1v4X3+0][cH0v4X3+0]
+            // hits  =1
+            smarts = subsmarts.Generate(new int[]{0,1,3,4});
+
+            subsmarts.SetMode(SubstructureSelectionMode.JCompoundMapper);
+            // smarts=n(ccc(a)a)a
+            // hits  = 0 - one of the 'a' atoms needs to match the nitrogen
+            smarts = subsmarts.Generate(new int[]{0,1,3,4});
+</code>
+  </Codes>
   <Codes id="NCDK.Smiles.SMARTS.Parser.SMARTSParser_Example.cs+1">
     <code>            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
              IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C");
@@ -1701,14 +1717,14 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Smiles.SMARTS.Parser.SmartsQueryVisitor_Example.cs+1">
-    <code>             SMARTSParser parser = new SMARTSParser(new StringReader("C*C"));
-             ASTStart ast = parser.Start();
-             SmartsQueryVisitor visitor = new SmartsQueryVisitor(Silent.ChemObjectBuilder.Instance);
+    <code>            SMARTSParser parser = new SMARTSParser(new StringReader("C*C"));
+            ASTStart ast = parser.Start();
+            SmartsQueryVisitor visitor = new SmartsQueryVisitor(Silent.ChemObjectBuilder.Instance);
             QueryAtomContainer query = (QueryAtomContainer)visitor.Visit(ast, null);
 </code>
   </Codes>
   <Codes id="NCDK.Smiles.SMARTS.SmartsPattern_Example.cs+1">
-    <code>                Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC", Default.ChemObjectBuilder.Instance);
+    <code>                Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC", ChemObjectBuilder.Instance);
 
                 foreach (var ac in acs)
                 {
@@ -1720,7 +1736,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Smiles.SMARTS.SmartsPattern_Example.cs+2">
-    <code>                Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC", Default.ChemObjectBuilder.Instance);
+    <code>                Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC", ChemObjectBuilder.Instance);
 
                 foreach (var ac in acs)
                 {
@@ -1729,7 +1745,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Smiles.SMARTS.SmartsPattern_Example.cs+MatchAll">
-    <code>                 Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC", Default.ChemObjectBuilder.Instance);
+    <code>                 Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC", ChemObjectBuilder.Instance);
                  int nUniqueHits = 0;
                 
                  foreach (var ac in acs) {
@@ -1738,23 +1754,23 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Smiles.SMARTS.SMARTSQueryTool_Example.cs">
-    <code>                SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+    <code>                SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
                 IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C");
-                SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO", Silent.ChemObjectBuilder.Instance);
+                SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO", ChemObjectBuilder.Instance);
                 bool status = querytool.Matches(atomContainer);
                 if (status)
                 {
                     int nmatch = querytool.MatchesCount;
-                    IList&lt;IList&lt;int&gt;&gt; mappings = querytool.GetMatchingAtoms();
-                    for (int i = 0; i &lt; nmatch; i++)
+                    var mappings = querytool.GetMatchingAtoms();
+                    foreach (var atomIndices in mappings)
                     {
-                        IList&lt;int&gt; atomIndices = mappings[i];
+                        // do something
                     }
                 }
 </code>
   </Codes>
   <Codes id="NCDK.Smiles.SMARTS.SMARTSQueryTool_Example.cs+SetAromaticity">
-    <code>                SMARTSQueryTool sqt = new SMARTSQueryTool(someSmartsPattern, Default.ChemObjectBuilder.Instance);
+    <code>                SMARTSQueryTool sqt = new SMARTSQueryTool(someSmartsPattern, ChemObjectBuilder.Instance);
                 sqt.SetAromaticity(new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder));
                 foreach (var molecule in molecules)
                 {
@@ -1786,17 +1802,17 @@ namespace NCDK.Smiles
 }
 </code>
   </Codes>
-  <Codes id="NCDK.Smiles.SmilesGenerator_Example.cs+SmiFlavor">
-    <code>                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Isomeric);
+  <Codes id="NCDK.Smiles.SmilesGenerator_Example.cs+SmiFlavors">
+    <code>                SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Isomeric);
 </code>
   </Codes>
   <Codes id="NCDK.Smiles.SmilesGenerator_Example.cs+SmiFlavor_Isomeric">
-    <code>                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo | SmiFlavor.AtomicMass);
+    <code>                SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Stereo | SmiFlavors.AtomicMass);
 </code>
   </Codes>
   <Codes id="NCDK.Smiles.SmilesGenerator_Example.cs+1">
     <code>                    IAtomContainer ethanol = TestMoleculeFactory.MakeEthanol();
-                    sg = new SmilesGenerator(SmiFlavor.Generic);
+                    sg = new SmilesGenerator(SmiFlavors.Generic);
                     smi = sg.Create(ethanol); // CCO, C(C)O, C(O)C, or OCC
 
                     sg = SmilesGenerator.Unique();
@@ -1807,10 +1823,10 @@ namespace NCDK.Smiles
     <code>                    IAtomContainer benzene = TestMoleculeFactory.MakeBenzene();
 
                     // 'benzene' molecule has no arom flags, we always get Kekulé output
-                    sg = new SmilesGenerator(SmiFlavor.Generic);
+                    sg = new SmilesGenerator(SmiFlavors.Generic);
                     smi = sg.Create(benzene); // C1=CC=CC=C1
 
-                    sg = new SmilesGenerator(SmiFlavor.Generic | SmiFlavor.UseAromaticSymbols);
+                    sg = new SmilesGenerator(SmiFlavors.Generic | SmiFlavors.UseAromaticSymbols);
                     smi = sg.Create(benzene); // C1=CC=CC=C1 flags not set!
 
                     // Note, in practice we'd use an aromaticity algorithm
@@ -1820,16 +1836,16 @@ namespace NCDK.Smiles
                         b.IsAromatic = true;
 
                     // 'benzene' molecule now has arom flags, we always get aromatic SMILES if we request it
-                    sg = new SmilesGenerator(SmiFlavor.Generic);
+                    sg = new SmilesGenerator(SmiFlavors.Generic);
                     smi = sg.Create(benzene); // C1=CC=CC=C1
 
-                    sg = new SmilesGenerator(SmiFlavor.Generic | SmiFlavor.UseAromaticSymbols);
+                    sg = new SmilesGenerator(SmiFlavors.Generic | SmiFlavors.UseAromaticSymbols);
                     smi = sg.Create(benzene); // c1ccccc1
 </code>
   </Codes>
   <Codes id="NCDK.Smiles.SmilesGenerator_Example.cs+4">
     <code>                IAtomContainer mol = TestMoleculeFactory.MakeAlphaPinene();
-                SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Generic);
+                SmilesGenerator sg = new SmilesGenerator(SmiFlavors.Generic);
 
                 int n = mol.Atoms.Count;
                 int[] order = new int[n];
@@ -1848,11 +1864,11 @@ namespace NCDK.Smiles
 </code>
   </Codes>
   <Codes id="NCDK.Smiles.SmilesGenerator_Example.cs+Aromatic">
-    <code>                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.UseAromaticSymbols);
+    <code>                SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.UseAromaticSymbols);
 </code>
   </Codes>
   <Codes id="NCDK.Smiles.SmilesGenerator_Example.cs+WithAtomClasses">
-    <code>                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.AtomAtomMap);
+    <code>                SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.AtomAtomMap);
                 smigen.CreateSMILES(container); // C[CH2:4]O second atom has class = 4
 </code>
   </Codes>
@@ -1916,8 +1932,8 @@ namespace NCDK.Smiles
                 var c2 = m.Atoms[2].GetProperty&lt;int&gt;(CDKPropertyName.AtomAtomMapping); // null
 </code>
   </Codes>
-  <Codes id="NCDK.SMSD.Algorithms.RGraph.CDKMCS_Example.cs">
-    <code>            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+  <Codes id="NCDK.SMSD.Algorithms.RGraphs.CDKMCS_Example.cs">
+    <code>            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
             IAtomContainer SMILESquery = sp.ParseSmiles("CC"); // acetic acid anhydride
             IQueryAtomContainer query = QueryAtomContainerCreator.CreateBasicQueryContainer(SMILESquery);
@@ -1925,7 +1941,7 @@ namespace NCDK.Smiles
 </code>
   </Codes>
   <Codes id="NCDK.SMSD.Isomorphism_Example.cs+1">
-    <code>                SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+    <code>                SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
                 // Benzene
                 IAtomContainer A1 = sp.ParseSmiles("C1=CC=CC=C1");
                 // Napthalene
@@ -1960,7 +1976,7 @@ namespace NCDK.Smiles
 </code>
   </Codes>
   <Codes id="NCDK.SMSD.Isomorphism_Example.cs+2">
-    <code>                SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+    <code>                SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
                 // Benzene
                 IAtomContainer A1 = sp.ParseSmiles("C1=CC=CC=C1");
                 // Napthalene
@@ -2082,7 +2098,7 @@ namespace NCDK.Smiles
 </code>
   </Codes>
   <Codes id="NCDK.Tools.AtomContainerManipulator_Example.cs+SetSingleOrDoubleFlags">
-    <code>            SmilesParser parser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+    <code>            SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
             parser.IsPreservingAromaticity = true;
 
             IAtomContainer biphenyl = parser.ParseSmiles("c1cccc(c1)c1ccccc1");
@@ -2119,7 +2135,7 @@ namespace NCDK.Smiles
   </Codes>
   <Codes id="NCDK.Tools.DataFeatures_Example.cs+1">
     <code>            var features = new XYZFormat().SupportedDataFeatures;
-            bool has3DCoords = (features &amp; HAS_3D_COORDINATES) == HAS_3D_COORDINATES;
+            bool has3DCoords = (features &amp; DataFeatures.Has3DCoordinates) == DataFeatures.Has3DCoordinates;
 </code>
   </Codes>
   <Codes id="NCDK.Tools.StructureResonanceGenerator_Example.cs+1">
@@ -2162,7 +2178,7 @@ namespace NCDK.Smiles
   <Codes id="NCDK.ConformerContainer_Example.cs">
     <code>            var reader = new IEnumerableMDLConformerReader(
                 new FileStream(filename, FileMode.Open),
-                Default.ChemObjectBuilder.Instance);
+                ChemObjectBuilder.Instance);
             foreach (ConformerContainer cc in reader)
             {
                 foreach (var conformer in cc)

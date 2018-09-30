@@ -45,7 +45,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestFindChemFormats()
         {
-            IChemFormat[] formats = factory.FindChemFormats(DataFeatures.HAS_3D_COORDINATES);
+            IChemFormat[] formats = factory.FindChemFormats(DataFeatures.Has3DCoordinates);
             Assert.IsNotNull(formats);
             Assert.IsTrue(formats.Length > 0);
         }
@@ -63,7 +63,7 @@ namespace NCDK.IO
         public void TestCustomWriter()
         {
             WriterFactory factory = new WriterFactory();
-            factory.RegisterWriter(typeof(CustomWriter));
+            WriterFactory.RegisterWriter(typeof(CustomWriter));
             IChemObjectWriter writer = factory.CreateWriter(new CustomFormat(), new StringWriter());
             Assert.IsNotNull(writer);
             Assert.AreEqual(new CustomWriter(new StringWriter()).GetType().Name, writer.GetType().Name);

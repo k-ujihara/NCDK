@@ -38,14 +38,14 @@ namespace NCDK.Fingerprints
         /// <summary>
         /// The number of bits of this fingerprint.
         /// </summary>
-        long Count { get; }
+        long Length { get; }
 
         /// <summary>
         /// Returns the number of bins that are populated. This number is typically smaller
         /// then the total number of bins.
         /// </summary>
         /// <returns>the number of populated bins</returns>
-        /// <see cref="Count"/>
+        /// <see cref="Length"/>
         int GetNumberOfPopulatedBins();
 
         /// <summary>

@@ -22,7 +22,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.LibIO.CML;
 using NCDK.Numerics;
 using NCDK.Templates;

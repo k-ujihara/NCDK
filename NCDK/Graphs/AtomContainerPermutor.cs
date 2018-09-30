@@ -42,7 +42,7 @@ namespace NCDK.Graphs
         /// <summary>
         /// The atom container that is permuted at each step.
         /// </summary>
-        protected IAtomContainer atomContainer;
+        protected IAtomContainer AtomContainer { get; set; }
 
         public IAtomContainer Current { get; private set; }
 
@@ -54,10 +54,10 @@ namespace NCDK.Graphs
         /// </summary>
         /// <param name="size"></param>
         /// <param name="atomContainer"></param>
-        public AtomContainerPermutor(int size, IAtomContainer atomContainer)
+        protected AtomContainerPermutor(int size, IAtomContainer atomContainer)
             : base(size)
         {
-            this.atomContainer = atomContainer;
+            this.AtomContainer = atomContainer;
         }
 
         /// <summary>

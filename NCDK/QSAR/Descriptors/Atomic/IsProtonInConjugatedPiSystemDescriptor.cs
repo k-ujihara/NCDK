@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Aromaticities;
 using NCDK.Graphs.Invariant;
 using NCDK.QSAR.Results;
@@ -25,13 +26,13 @@ using System.Collections.Generic;
 namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
-    ///  This class evaluates if a proton is joined to a conjugated system.
-    ///  </summary>
+    /// This class evaluates if a proton is joined to a conjugated system.
+    /// </summary>
     /// <remarks>
-    ///  This descriptor uses these parameters:
+    /// This descriptor uses these parameters:
     /// <list type="table">
     /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
-    /// <item><term>checkAromaticity</term><term>false</term><term>True is the aromaticity has to be checked</term></item>
+    /// <item><term>checkAromaticity</term><term>false</term><term><see langword="true"/> is the aromaticity has to be checked</term></item>
     /// </list>
     /// </remarks>
     // @author      mfe4
@@ -47,15 +48,15 @@ namespace NCDK.QSAR.Descriptors.Atomic
         private IChemObjectSet<IAtomContainer> acSet = null;
 
         /// <summary>
-        ///  Constructor for the IsProtonInConjugatedPiSystemDescriptor object
+        /// Constructor for the IsProtonInConjugatedPiSystemDescriptor object
         /// </summary>
         public IsProtonInConjugatedPiSystemDescriptor() { }
 
         /// <summary>
         /// The specification attribute of the IsProtonInConjugatedPiSystemDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInConjugatedPiSystem",
                 typeof(IsProtonInConjugatedPiSystemDescriptor).FullName, "The Chemistry Development Kit");
@@ -64,13 +65,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// The parameters attribute of the IsProtonInConjugatedPiSystemDescriptor object
         /// <exception cref="CDKException"></exception>
         /// </summary>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
-                    throw new CDKException("IsProtonInConjugatedPiSystemDescriptor only expects one parameters");
+                    throw new CDKException($"{typeof(IsProtonInConjugatedPiSystemDescriptor)} only expects one parameters");
                 }
                 if (!(value[0] is bool))
                 {
@@ -110,10 +111,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 catch (CDKException e)
                 {
-                    return new DescriptorValue<Result<bool>>(_Specification, ParameterNames, Parameters, new Result<bool>(false), NAMES, e);
+                    return new DescriptorValue<Result<bool>>(specification, ParameterNames, Parameters, new Result<bool>(false), NAMES, e);
                 }
             }
-            if (atom.Symbol.Equals("H"))
+            if (string.Equals(atom.Symbol, "H", System.StringComparison.Ordinal))
             {
                 if (acold != clonedAtomContainer)
                 {
@@ -135,7 +136,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     }
                 }
             }
-            return new DescriptorValue<Result<bool>>(_Specification, ParameterNames, Parameters, new Result<bool>(
+            return new DescriptorValue<Result<bool>>(specification, ParameterNames, Parameters, new Result<bool>(
                     isProtonInPiSystem), NAMES);
         }
 

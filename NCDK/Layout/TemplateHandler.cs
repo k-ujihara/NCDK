@@ -148,8 +148,7 @@ namespace NCDK.Layout
                 throw new ArgumentException("Template did not have 2D coordinates");
 
             // we want a consistent scale!
-            GeometryUtil.ScaleMolecule(molecule, GeometryUtil.GetScaleFactor(molecule,
-                                                                             StructureDiagramGenerator.DefaultBondLength));
+            GeometryUtil.ScaleMolecule(molecule, GeometryUtil.GetScaleFactor(molecule, StructureDiagramGenerator.DefaultBondLength));
 
             templates.Add(molecule);
             anonPatterns.Add(VentoFoggia.FindSubstructure(molecule,

@@ -54,9 +54,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private static readonly List<SMARTSQueryTool> tools = new List<SMARTSQueryTool>();
         private bool checkAromaticity;
 
-        /// <summary>
-        /// Creates a new <see cref="AcidicGroupCountDescriptor"/>.
-        /// </summary>
         public AcidicGroupCountDescriptor()
         {
             this.checkAromaticity = true;
@@ -70,24 +67,24 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
              new DescriptorSpecification(
                     "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#acidicGroupCount",
                      typeof(AcidicGroupCountDescriptor).FullName,
                     "The Chemistry Development Kit");
 
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length != 1)
+                if (value.Count != 1)
                 {
-                    throw new CDKException("AcidicGroupCountDescriptor requires 1 parameter.");
+                    throw new CDKException(nameof(AcidicGroupCountDescriptor) + " requires 1 parameter.");
                 }
                 if (!(value[0] is bool))
                 {
-                    throw new CDKException("The parameter must be of type bool");
+                    throw new CDKException("The parameter must be of type " + nameof(System.Boolean));
                 }
 
                 // OK, all should be fine
@@ -124,9 +121,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 int count = 0;
                 foreach (var tool in tools)
                 {
-                    if (tool.Matches(atomContainer)) count += tool.MatchesCount;
+                    if (tool.Matches(atomContainer))
+                        count += tool.MatchesCount;
                 }
-                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(count), DescriptorNames);
+                return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(count), DescriptorNames);
             }
             catch (CDKException exception)
             {
@@ -134,21 +132,21 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IDescriptorResult DescriptorResultType => Result<int>.Instance;
+        public override IDescriptorResult DescriptorResultType => Result.Instance<int>();
         public override IReadOnlyList<string> ParameterNames { get; } 
             = new string[] { "checkAromaticity" };
 
         public override object GetParameterType(string name)
         {
             object obj = null;
-            if (name.Equals("checkAromaticity")) 
+            if (string.Equals(name, "checkAromaticity", StringComparison.Ordinal)) 
                 obj = true;
             return obj;
         }
 
         private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception exception)
         {
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(-1), DescriptorNames, exception);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(-1), DescriptorNames, exception);
         }
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

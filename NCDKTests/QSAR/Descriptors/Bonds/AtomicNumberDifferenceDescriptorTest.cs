@@ -18,6 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.QSAR.Results;
+using NCDK.Silent;
 using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Bonds
@@ -34,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         [TestMethod()]
         public void TestDescriptor1()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol1 = sp.ParseSmiles("CC");
             double value = ((Result<double>)descriptor.Calculate(mol1.Bonds[0], mol1).Value).Value;
             Assert.AreEqual(0, value, 0.0000);
@@ -43,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         [TestMethod()]
         public void TestDescriptor2()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol1 = sp.ParseSmiles("CO");
             double value = ((Result<double>)descriptor.Calculate(mol1.Bonds[0], mol1).Value).Value;
             Assert.AreEqual(2, value, 0.0000);

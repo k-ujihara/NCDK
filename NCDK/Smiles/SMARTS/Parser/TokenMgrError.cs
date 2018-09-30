@@ -17,13 +17,14 @@
  * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
+
 using System;
 using System.Text;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
     /// <summary>Token Manager Error.</summary>
-    public class TokenMgrError : Exception
+    public class TokenManagerException : Exception
     {
         /// <summary>
         /// Ordinals for various reasons why an Error of this type can be thrown.
@@ -136,7 +137,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             return ("Lexical error at line " +
                   errorLine + ", column " +
                   errorColumn + ".  Encountered: " +
-                  (EOFSeen ? "<EOF> " : ("\"" + AddEscapes(curChar.ToString()) + "\"") + " (" + (int)curChar + "), ") +
+                  (EOFSeen ? "<EOF> " : ("\"" + AddEscapes(new string(new[] { curChar })) + "\"") + " (" + (int)curChar + "), ") +
                   "after : \"" + AddEscapes(errorAfter) + "\"");
         }
 
@@ -158,20 +159,28 @@ namespace NCDK.Smiles.SMARTS.Parser
         // Constructors of various flavors follow.
 
         /// <summary>No arg constructor.</summary>
-        public TokenMgrError()
+        public TokenManagerException()
         {
         }
 
         /// <summary>Constructor with message and reason.</summary>
-        internal TokenMgrError(string message, ErrorCodes reason)
+        internal TokenManagerException(string message, ErrorCodes reason)
             : base(message)
         {
             errorCode = reason;
         }
 
         /// <summary>Full Constructor.</summary>
-        internal TokenMgrError(bool EOFSeen, int lexState, int errorLine, int errorColumn, string errorAfter, char curChar, ErrorCodes reason)
+        internal TokenManagerException(bool EOFSeen, int lexState, int errorLine, int errorColumn, string errorAfter, char curChar, ErrorCodes reason)
             : this(LexicalError(EOFSeen, lexState, errorLine, errorColumn, errorAfter, curChar), reason)
         { }
+
+        public TokenManagerException(string message) : base(message)
+        {
+        }
+
+        public TokenManagerException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
     }
 }

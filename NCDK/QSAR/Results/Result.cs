@@ -24,11 +24,19 @@ namespace NCDK.QSAR.Results
     {
     }
 
+    internal static class ResultInstance<T>
+    {
+        public static readonly Result<T> Value = new Result<T>();
+    }
+
+    public static class Result
+    {
+        public static Result<T> Instance<T>() => ResultInstance<T>.Value;
+    }
+
     public class Result<T>
         : IResult
     {
-        public static Result<T> Instance { get; } = new Result<T>();
-
         public T Value { get; private set; }
 
         public Result()

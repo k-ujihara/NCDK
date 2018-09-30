@@ -23,6 +23,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -54,7 +55,7 @@ namespace NCDK.IO.Formats
         public abstract string PreferredNameExtension { get; }
         
         /// <inheritdoc/>
-        public abstract string[] NameExtensions { get; }
+        public abstract IReadOnlyList<string> NameExtensions { get; }
         
         /// <inheritdoc/>
         public abstract string MIMEType { get; }

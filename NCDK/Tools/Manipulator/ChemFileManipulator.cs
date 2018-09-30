@@ -32,7 +32,7 @@ namespace NCDK.Tools.Manipulator
     /// <seealso cref="IAtomContainer.RemoveAtomAndConnectedElectronContainers(IAtom)"/>
     // @cdk.module standard
     // @cdk.githash
-    public class ChemFileManipulator
+    public static class ChemFileManipulator
     {
         /// <summary>
         /// Get the total number of atoms inside an IChemFile.

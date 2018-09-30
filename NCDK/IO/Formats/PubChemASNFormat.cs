@@ -19,6 +19,7 @@
 
 using NCDK.Tools;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -48,7 +49,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[] { "asn" };
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "asn" };
 
         /// <inheritdoc/>
         public override string ReaderClassName { get; } = typeof(PCCompoundASNReader).FullName;

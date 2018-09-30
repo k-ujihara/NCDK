@@ -42,7 +42,7 @@ namespace NCDK.IO
     public class ReaderFactory
     {
         private FormatFactory formatFactory = null;
-        private int headerLength = 8192;
+        private readonly int headerLength = 8192;
 
         /// <summary>
         /// Constructs a ReaderFactory which tries to detect the format in the
@@ -50,7 +50,8 @@ namespace NCDK.IO
         /// </summary>
         public ReaderFactory()
             : this(8192)
-        { }
+        {
+        }
 
         /// <summary>
         /// Constructs a ReaderFactory which tries to detect the format in the
@@ -71,7 +72,7 @@ namespace NCDK.IO
             formatFactory.RegisterFormat(format);
         }
 
-        public IList<IChemFormatMatcher> Formats => formatFactory.Formats;
+        public IReadOnlyList<IChemFormatMatcher> Formats => formatFactory.Formats;
 
         /// <summary>
         /// Detects the format of the Reader input, and if known, it will return
@@ -197,7 +198,7 @@ namespace NCDK.IO
         /// <seealso cref="CreateReader(Stream)"/>
         public ISimpleChemObjectReader CreateReader(TextReader input)
         {
-            IChemFormat format = formatFactory.GuessFormat(input);
+            var format = formatFactory.GuessFormat(input);
             return CreateReader(format, input);
         }
 
@@ -206,7 +207,7 @@ namespace NCDK.IO
             var type = GetReaderType(format);
             try
             {
-                ISimpleChemObjectReader coReader = (ISimpleChemObjectReader)type.GetConstructor(new Type[] { typeof(TextReader) }).Invoke(new object[] { input });
+                var coReader = (ISimpleChemObjectReader)type.GetConstructor(new Type[] { typeof(TextReader) }).Invoke(new object[] { input });
                 return coReader;
             }
             catch (Exception exception)

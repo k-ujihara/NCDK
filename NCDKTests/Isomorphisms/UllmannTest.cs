@@ -25,6 +25,7 @@ using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Templates;
 using System.Linq;
+using System;
 
 namespace NCDK.Isomorphisms
 {
@@ -55,7 +56,7 @@ namespace NCDK.Isomorphisms
             int[] match = Ullmann.FindSubstructure(
                 TestMoleculeFactory.MakeNaphthalene()).Match(
                 TestMoleculeFactory.MakeBenzene());
-            Assert.IsTrue(Compares.AreDeepEqual(new int[0], match));
+            Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), match));
             int count = Ullmann.FindSubstructure(
                 TestMoleculeFactory.MakeNaphthalene()).MatchAll(
                 TestMoleculeFactory.MakeBenzene()).ToList().Count;

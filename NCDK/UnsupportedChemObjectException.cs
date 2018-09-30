@@ -27,8 +27,17 @@ namespace NCDK
     // @cdk.githash
     public class UnsupportedChemObjectException : CDKException
     {
+        public UnsupportedChemObjectException()
+        {
+        }
+
         public UnsupportedChemObjectException(string message)
                 : base(message)
-        { }
+        {
+        }
+
+        public UnsupportedChemObjectException(string message, System.Exception innerException) : base(message, innerException)
+        {
+        }
     }
 }

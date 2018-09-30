@@ -68,9 +68,8 @@ namespace NCDK.Fragments
 
         IDictionary<long, IAtomContainer> frameMap = new Dictionary<long, IAtomContainer>();
         IDictionary<long, IAtomContainer> ringMap = new Dictionary<long, IAtomContainer>();
-
-        bool singleFrameworkOnly = false;
-        int minimumFragmentSize = 5;
+        readonly bool singleFrameworkOnly = false;
+        readonly int minimumFragmentSize = 5;
 
         /// <summary>
         /// Instantiate Murcko fragmenter.
@@ -129,7 +128,7 @@ namespace NCDK.Fragments
             long hash;
 
             // identify rings
-            AllRingsFinder arf = new AllRingsFinder(false);
+            AllRingsFinder arf = new AllRingsFinder();
 
             // manually flag ring bonds
             IRingSet r = arf.FindAllRings(atomContainer);
@@ -243,7 +242,7 @@ namespace NCDK.Fragments
             }
         }
 
-        private IAtomContainer RemoveSideChains(IAtomContainer atomContainer)
+        private static IAtomContainer RemoveSideChains(IAtomContainer atomContainer)
         {
             IAtomContainer clone;
             clone = (IAtomContainer)atomContainer.Clone();
@@ -257,7 +256,7 @@ namespace NCDK.Fragments
             return clone;
         }
 
-        private void MarkLinkers(IAtomContainer atomContainer)
+        private static void MarkLinkers(IAtomContainer atomContainer)
         {
             // first we check for single atoms between rings - these are linker atoms
             // this is also the place where we need to check for something like PhC(C)Ph
@@ -317,7 +316,7 @@ namespace NCDK.Fragments
             }
         }
 
-        private void MarkSideChains(IAtomContainer atomContainer)
+        private static void MarkSideChains(IAtomContainer atomContainer)
         {
             foreach (var atom in atomContainer.Atoms)
             {
@@ -412,33 +411,33 @@ namespace NCDK.Fragments
             return frameMap.Values;
         }
 
-        private bool IsRing(IAtom atom)
+        private static bool IsRing(IAtom atom)
         {
             return atom.IsInRing;
         }
 
-        private bool IsLinker(IAtom atom)
+        private static bool IsLinker(IAtom atom)
         {
             return atom.GetProperty<bool>(IS_LINKER_ATOM);
         }
 
-        private bool IsSideChain(IAtom atom)
+        private static bool IsSideChain(IAtom atom)
         {
             return atom.GetProperty<bool>(IS_SIDECHAIN_ATOM);
         }
 
-        private bool IsLinker(IBond bond)
+        private static bool IsLinker(IBond bond)
         {
             return IsLinker(bond.Begin) || IsLinker(bond.End);
         }
 
-        private bool IsZeroAtomLinker(IBond bond)
+        private static bool IsZeroAtomLinker(IBond bond)
         {
             bool isRingBond = bond.IsInRing;
             return IsRing(bond.Begin) && IsRing(bond.End) && !isRingBond;
         }
 
-        private bool Hasframework(IAtomContainer atomContainer)
+        private static bool Hasframework(IAtomContainer atomContainer)
         {
             bool hasLinker = false;
             bool hasRing = false;

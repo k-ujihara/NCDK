@@ -28,8 +28,6 @@ namespace NCDK.Reactions.Types
     // @cdk.githash
     public abstract class AbstractElectronImpactDBReaction : ReactionEngine, IReactionProcess
     {
-        public AbstractElectronImpactDBReaction() { }
-
         /// <inheritdoc/>
         public abstract ReactionSpecification Specification { get; }
 
@@ -91,7 +89,7 @@ namespace NCDK.Reactions.Types
             return setOfReactions;
         }
 
-        private void SetActiveCenters(IAtomContainer reactant, BondCheck bondChecker)
+        private static void SetActiveCenters(IAtomContainer reactant, BondCheck bondChecker)
         {
             foreach (var bondi in reactant.Bonds)
             {

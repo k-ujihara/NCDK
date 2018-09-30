@@ -19,6 +19,7 @@
 
 using NCDK.Tools.Manipulator;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NCDK.Formula.Rules
@@ -58,7 +59,7 @@ namespace NCDK.Formula.Rules
         /// <summary>
         /// The parameters attribute of the NitrogenRule object.
         /// </summary>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             get { return null; }
             set { if (value != null) throw new CDKException("NitrogenRule doesn't expect parameters"); }
@@ -114,7 +115,7 @@ namespace NCDK.Formula.Rules
         /// </summary>
         /// <param name="formula">The IMolecularFormula to analyze</param>
         /// <returns>Number of elements</returns>
-        private int GetOthers(IMolecularFormula formula)
+        private static int GetOthers(IMolecularFormula formula)
         {
             int number = 0;
             string[] elements = { "Co", "Hg", "Pt", "As" };
@@ -130,7 +131,7 @@ namespace NCDK.Formula.Rules
         /// </summary>
         /// <param name="value">The value to analyze</param>
         /// <returns>True, if the integer is odd</returns>
-        private bool IsOdd(double value)
+        private static bool IsOdd(double value)
         {
             if (value % 2 == 0)
                 return false;

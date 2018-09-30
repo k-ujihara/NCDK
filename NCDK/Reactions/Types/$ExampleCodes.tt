@@ -14,9 +14,9 @@ namespace NCDK.Reactions.Types
             foreach (var cs in source.GetFiles()               
                 .Where(fn => fn.Extension == ".cs")
                 .Where(fn =>
-				       fn.Name.Length > 0 
-				    && !fn.Name.StartsWith("Abstract", StringComparison.Ordinal)
-				    && !(fn.Name[0] == '$')))
+                       fn.Name.Length > 0 
+                    && !fn.Name.StartsWith("Abstract", StringComparison.Ordinal)
+                    && !(fn.Name[0] == '$')))
             {
                 string name = Path.GetFileNameWithoutExtension(cs.Name);
                 #>

@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Reactions.Types.Parameters;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -46,8 +47,8 @@ namespace NCDK.Reactions.Types
         /// <returns>The specification value</returns>
         public ReactionSpecification Specification =>
             new ReactionSpecification(
-                    "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#CarbonylElimination", this
-                            .GetType().Name, "$Id$", "The Chemistry Development Kit");
+                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#CarbonylElimination", 
+                this.GetType().Name, "$Id$", "The Chemistry Development Kit");
 
         /// <summary>
         ///  Initiate process.
@@ -68,7 +69,7 @@ namespace NCDK.Reactions.Types
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
             foreach (var atomi in reactant.Atoms)
             {
-                if (atomi.IsReactiveCenter && atomi.Symbol.Equals("O")
+                if (atomi.IsReactiveCenter && atomi.Symbol.Equals("O", StringComparison.Ordinal)
                     && atomi.FormalCharge == 1)
                 {
                     foreach (var bondi in reactant.GetConnectedBonds(atomi))
@@ -129,11 +130,11 @@ namespace NCDK.Reactions.Types
         ///  </pre>
         /// </summary>
         /// <param name="reactant">The molecule to set the activity</param>
-        private void SetActiveCenters(IAtomContainer reactant)
+        private static void SetActiveCenters(IAtomContainer reactant)
         {
             foreach (var atomi in reactant.Atoms)
             {
-                if (atomi.Symbol.Equals("O") && atomi.FormalCharge == 1)
+                if (atomi.Symbol.Equals("O", StringComparison.Ordinal) && atomi.FormalCharge == 1)
                 {
                     foreach (var bondi in reactant.GetConnectedBonds(atomi))
                     {
@@ -142,7 +143,8 @@ namespace NCDK.Reactions.Types
                             IAtom atomj = bondi.GetOther(atomi);
                             foreach (var bondj in reactant.GetConnectedBonds(atomj))
                             {
-                                if (bondj.Equals(bondi)) continue;
+                                if (bondj.Equals(bondi))
+                                    continue;
 
                                 if (bondj.Order == BondOrder.Single)
                                 {

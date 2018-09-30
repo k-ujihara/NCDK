@@ -21,27 +21,32 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using System;
 using System.Text;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
+    [Flags]
+    public enum ReactionRoles
+    {
+        Reactant = 0x1,
+        Agent = 0x2,
+        Product = 0x4,
+        Any = Reactant | Agent | Product,
+    }
+
     /// <summary>
     /// Matches atoms with a particular role in a reaction.
     /// </summary>
     public class ReactionRoleQueryAtom : SMARTSAtom
     {
-        public const int ROLE_REACTANT = 0x1;
-        public const int ROLE_AGENT = 0x2;
-        public const int ROLE_PRODUCT = 0x4;
-        public const int ROLE_ANY = ROLE_REACTANT | ROLE_PRODUCT | ROLE_AGENT;
+        private readonly ReactionRoles role;
 
-        private readonly int role;
+        public readonly static ReactionRoleQueryAtom RoleReactant = new ReactionRoleQueryAtom(null, ReactionRoles.Reactant);
+        public readonly static ReactionRoleQueryAtom RoleAgent = new ReactionRoleQueryAtom(null, ReactionRoles.Agent);
+        public readonly static ReactionRoleQueryAtom RoleProduct = new ReactionRoleQueryAtom(null, ReactionRoles.Product);
 
-        public readonly static ReactionRoleQueryAtom RoleReactant = new ReactionRoleQueryAtom(null, ROLE_REACTANT);
-        public readonly static ReactionRoleQueryAtom RoleAgent = new ReactionRoleQueryAtom(null, ROLE_AGENT);
-        public readonly static ReactionRoleQueryAtom RoleProduct = new ReactionRoleQueryAtom(null, ROLE_PRODUCT);
-
-        public ReactionRoleQueryAtom(IChemObjectBuilder builder, int role)
+        public ReactionRoleQueryAtom(IChemObjectBuilder builder, ReactionRoles role)
             : base(builder)
         {
             this.role = role;
@@ -51,15 +56,15 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         {
             ReactionRole? atomRole = atom.GetProperty<ReactionRole?>(CDKPropertyName.ReactionRole);
             if (atomRole == null)
-                return this.role == ROLE_ANY;
+                return this.role == ReactionRoles.Any;
             switch (atomRole.Value)
             {
                 case ReactionRole.Reactant:
-                    return (this.role & ROLE_REACTANT) != 0;
+                    return (this.role & ReactionRoles.Reactant) != 0;
                 case ReactionRole.Agent:
-                    return (this.role & ROLE_AGENT) != 0;
+                    return (this.role & ReactionRoles.Agent) != 0;
                 case ReactionRole.Product:
-                    return (this.role & ROLE_PRODUCT) != 0;
+                    return (this.role & ReactionRoles.Product) != 0;
                 default:
                     return false;
             }
@@ -68,11 +73,11 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            if ((role & ROLE_REACTANT) != 0)
+            if ((role & ReactionRoles.Reactant) != 0)
                 sb.Append("Reactant");
-            if ((role & ROLE_AGENT) != 0)
+            if ((role & ReactionRoles.Agent) != 0)
                 sb.Append("Agent");
-            if ((role & ROLE_PRODUCT) != 0)
+            if ((role & ReactionRoles.Product) != 0)
                 sb.Append("Product");
             return "ReactionRole(" + sb.ToString() + ")";
         }

@@ -18,7 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.QSAR.Results;
 using NCDK.Smiles;
 using NCDK.Tools;
@@ -34,8 +34,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     public class PartialSigmaChargeDescriptorTest : AtomicDescriptorTest
     {
         private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-
+        
         public PartialSigmaChargeDescriptorTest()
         {
             SetDescriptor(typeof(PartialSigmaChargeDescriptor));
@@ -66,7 +65,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             AddExplicitHydrogens(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             for (int i = 0; i < molecule.Atoms.Count; i++)
             {
@@ -91,7 +90,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             AddExplicitHydrogens(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             AddExplicitHydrogens(molecule);
             for (int i = 0; i < molecule.Atoms.Count; i++)
@@ -118,7 +117,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             AddExplicitHydrogens(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             for (int i = 0; i < molecule.Atoms.Count; i++)
             {
@@ -144,7 +143,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             AddExplicitHydrogens(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             for (int i = 0; i < molecule.Atoms.Count; i++)
             {
@@ -169,7 +168,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             AddExplicitHydrogens(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             for (int i = 0; i < molecule.Atoms.Count; i++)
             {
@@ -198,7 +197,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             AddExplicitHydrogens(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             double result = ((Result<double>)descriptor.Calculate(molecule.Atoms[3], molecule).Value).Value;
             Assert.AreEqual(testResult, result, 0.01);
@@ -213,7 +212,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { -0.0458, -0.0623, -0.0623, -0.0415, 0.0003, -0.0855 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("C(C)(C)CCI");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
@@ -247,7 +246,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             AddExplicitHydrogens(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             double result = ((Result<double>)descriptor.Calculate(molecule.Atoms[2], molecule).Value).Value;
             Assert.AreEqual(testResult, result, 0.01);
@@ -273,7 +272,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             AddExplicitHydrogens(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             for (int i = 0; i < 4; i++)
             {
@@ -302,7 +301,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             AddExplicitHydrogens(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             for (int i = 0; i < 4; i++)
             {
@@ -317,7 +316,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { -0.2138, 0.079, 0.0942, -0.072, 0.0563, 0.0563 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("[F+]=C([H])[C-]([H])[H]");
 
             for (int i = 0; i < mol.Atoms.Count; i++)
@@ -332,7 +331,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { -0.3855, -0.0454, 0.0634, -0.0544, -0.0391, -0.0391 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("O=C([H])[C-]([H])[H]");
             descriptor.Parameters = new object[] { 6 };
             for (int i = 0; i < mol.Atoms.Count; i++)
@@ -347,7 +346,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { -0.3855, -0.0454, 0.0634, -0.0544, -0.0391, -0.0391 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("[O-]C([H])=C([H])[H]");
 
             for (int i = 0; i < mol.Atoms.Count; i++)
@@ -374,7 +373,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             AddExplicitHydrogens(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             for (int i = 0; i < molecule.Atoms.Count; i++)
             {
@@ -405,7 +404,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             AddExplicitHydrogens(molecule);
-            lpcheck.Saturate(molecule);
+            CDK.LonePairElectronChecker.Saturate(molecule);
 
             descriptor.Parameters = new object[] { 6 };
 
@@ -421,7 +420,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { -0.4331, -0.1067, 0.0133, 0.0133, 0.0133 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("[O-]C([H])([H])[H]");
             descriptor.Parameters = new object[] { 6 };
             for (int i = 0; i < mol.Atoms.Count; i++)
@@ -440,7 +439,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             // from Petra online: http://www2.chemi.uni.erlange.de/services/petra/smiles.pthml
             double[] testResult = { 0.0835, 0.0265, -0.2622, 0.0265, 0.0835, -0.0444, 0.064, -0.0596, 0.0626, -0.0444, 0.064 };
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("[H]c1[n-][c+]([H])c([H])c([H])c1([H])");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
@@ -449,7 +448,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 double result = ((Result<double>)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
-                //			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
+                //            logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
                 Assert.AreEqual(testResult[i], result, 0.05);
             }
         }

@@ -24,7 +24,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NCDK.Default;
+using NCDK.Silent;
 using System;
 
 namespace NCDK.Stereo
@@ -41,22 +41,6 @@ namespace NCDK.Stereo
             ExtendedTetrahedral element = new ExtendedTetrahedral(focus, peripherals, TetrahedralStereo.Clockwise);
 
             // modifying this array does not change the one in the structure
-            peripherals[0] = peripherals[1] = peripherals[2] = peripherals[3] = null;
-            Assert.IsNotNull(element.Peripherals[0]);
-            Assert.IsNotNull(element.Peripherals[1]);
-            Assert.IsNotNull(element.Peripherals[2]);
-            Assert.IsNotNull(element.Peripherals[3]);
-        }
-
-        [TestMethod()]
-        public void PeripheralsAreNotModifable()
-        {
-            IAtom focus = new Mock<IAtom>().Object;
-            IAtom[] peripherals = new IAtom[] { new Mock<IAtom>().Object, new Mock<IAtom>().Object, new Mock<IAtom>().Object, new Mock<IAtom>().Object };
-            ExtendedTetrahedral element = new ExtendedTetrahedral(focus, peripherals, TetrahedralStereo.Clockwise);
-
-            // modifying this array does not change the one in the structure
-            peripherals = element.Peripherals;
             peripherals[0] = peripherals[1] = peripherals[2] = peripherals[3] = null;
             Assert.IsNotNull(element.Peripherals[0]);
             Assert.IsNotNull(element.Peripherals[1]);

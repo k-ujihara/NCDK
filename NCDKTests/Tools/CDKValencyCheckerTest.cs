@@ -19,7 +19,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.AtomTypes;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.Tools
@@ -36,7 +36,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestInstance()
         {
-            CDKValencyChecker checker = CDKValencyChecker.GetInstance(Default.ChemObjectBuilder.Instance);
+            CDKValencyChecker checker = CDKValencyChecker.GetInstance(ChemObjectBuilder.Instance);
             Assert.IsNotNull(checker);
         }
 

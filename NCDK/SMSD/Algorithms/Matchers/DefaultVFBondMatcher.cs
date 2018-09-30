@@ -59,7 +59,7 @@ namespace NCDK.SMSD.Algorithms.Matchers
     public class DefaultVFBondMatcher : IVFBondMatcher
     {
         private IBond queryBond = null;
-        private int unsaturation = 0;
+        private readonly int unsaturation = 0;
         private bool shouldMatchBonds;
         private IQueryBond smartQueryBond = null;
 
@@ -146,37 +146,37 @@ namespace NCDK.SMSD.Algorithms.Matchers
             return false;
         }
 
-        private int GetUnsaturation(TargetProperties container, IBond bond)
+        private static int GetUnsaturation(TargetProperties container, IBond bond)
         {
             return GetUnsaturation(container, bond.Atoms[0]) + GetUnsaturation(container, bond.Atoms[1]);
         }
 
-        private int GetUnsaturation(TargetProperties container, IAtom atom)
+        private static int GetUnsaturation(TargetProperties container, IAtom atom)
         {
             return GetValency(atom) - container.CountNeighbors(atom);
         }
 
-        private int GetValency(IAtom atom)
+        private static int GetValency(IAtom atom)
         {
             return (atom.Valency == null) ? 0 : atom.Valency.Value;
         }
 
-        private int GetUnsaturation(IAtomContainer container, IBond bond)
+        private static int GetUnsaturation(IAtomContainer container, IBond bond)
         {
             return GetUnsaturation(container, bond.Atoms[0]) + GetUnsaturation(container, bond.Atoms[1]);
         }
 
-        private int GetUnsaturation(IAtomContainer container, IAtom atom)
+        private static int GetUnsaturation(IAtomContainer container, IAtom atom)
         {
             return GetValency(atom) - (CountNeighbors(container, atom) + CountImplicitHydrogens(atom));
         }
 
-        private int CountNeighbors(IAtomContainer container, IAtom atom)
+        private static int CountNeighbors(IAtomContainer container, IAtom atom)
         {
             return container.GetConnectedAtoms(atom).Count();
         }
 
-        private int CountImplicitHydrogens(IAtom atom)
+        private static int CountImplicitHydrogens(IAtom atom)
         {
             return atom.ImplicitHydrogenCount ?? 0;
         }

@@ -19,11 +19,12 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Default;
 using NCDK.RingSearches;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Linq;
 
 namespace NCDK.AtomTypes
 {
@@ -74,8 +75,8 @@ namespace NCDK.AtomTypes
             mol.Atoms.Add(atom);
 
             // just check consistency; other methods do perception testing
-            IAtomType[] types = matcher.FindMatchingAtomTypes(mol);
-            for (int i = 0; i < types.Length; i++)
+            var types = matcher.FindMatchingAtomTypes(mol).ToList();
+            for (int i = 0; i < types.Count; i++)
             {
                 IAtomType type = matcher.FindMatchingAtomType(mol, mol.Atoms[i]);
                 Assert.AreEqual(type.AtomTypeName, types[i].AtomTypeName);
@@ -350,7 +351,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestBenzeneFromSmiles()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             mol = sp.ParseSmiles("C1=CC=CC=C1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);

@@ -21,6 +21,7 @@ using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Tools.Diff.Tree;
 using System;
+using NCDK.Silent;
 
 namespace NCDK.QSAR.Descriptors.Bonds
 {
@@ -129,12 +130,12 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
         private IAtomContainer SomeoneBringMeSomeWater()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom c1 = Default.ChemObjectBuilder.Instance.NewAtom("O");
+            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom c1 = ChemObjectBuilder.Instance.NewAtom("O");
             c1.Point3D = new Vector3(0.0, 0.0, 0.0);
-            IAtom h1 = Default.ChemObjectBuilder.Instance.NewAtom("H");
+            IAtom h1 = ChemObjectBuilder.Instance.NewAtom("H");
             h1.Point3D = new Vector3(1.0, 0.0, 0.0);
-            IAtom h2 = Default.ChemObjectBuilder.Instance.NewAtom("H");
+            IAtom h2 = ChemObjectBuilder.Instance.NewAtom("H");
             h2.Point3D = new Vector3(-1.0, 0.0, 0.0);
             mol.Atoms.Add(c1);
             mol.Atoms.Add(h1);

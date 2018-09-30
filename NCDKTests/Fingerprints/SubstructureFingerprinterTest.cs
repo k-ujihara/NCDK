@@ -24,6 +24,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Collections;
+using NCDK.Silent;
 using NCDK.Smiles;
 
 namespace NCDK.Fingerprints
@@ -41,7 +42,7 @@ namespace NCDK.Fingerprints
         public void TestSize()
         {
             SubstructureFingerprinter fp = new SubstructureFingerprinter();
-            Assert.AreEqual(307, fp.Count);
+            Assert.AreEqual(307, fp.Length);
         }
 
         [TestMethod()]
@@ -57,10 +58,10 @@ namespace NCDK.Fingerprints
             IBitFingerprint superBits = fpr.GetBitFingerprint(superStructure);
             IBitFingerprint subBits = fpr.GetBitFingerprint(subStructure);
 
-            Assert.IsTrue(BitArrays.AreEqual(
+            Assert.IsTrue(BitArrays.Equals(
                 AsBitSet(0, 11, 13, 17, 40, 48, 136, 273, 274, 278, 286, 294, 299, 301, 304, 306),
                 superBits.AsBitSet()));
-            Assert.IsTrue(BitArrays.AreEqual(
+            Assert.IsTrue(BitArrays.Equals(
                 AsBitSet(1, 17, 273, 274, 278, 294, 306),
                 subBits.AsBitSet()));
         }
@@ -70,9 +71,9 @@ namespace NCDK.Fingerprints
         {
             string[] smarts = { "c1ccccc1", "[CX4H3][#6]", "[CX2]#[CX2]" };
             IFingerprinter printer = new SubstructureFingerprinter(smarts);
-            Assert.AreEqual(3, printer.Count);
+            Assert.AreEqual(3, printer.Length);
 
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol1 = sp.ParseSmiles("c1ccccc1CCC");
             IBitFingerprint fp = printer.GetBitFingerprint(mol1);
             Assert.IsNotNull(fp);
@@ -93,9 +94,9 @@ namespace NCDK.Fingerprints
         public void TestFingerprint()
         {
             IFingerprinter printer = new SubstructureFingerprinter();
-            Assert.AreEqual(307, printer.Count);
+            Assert.AreEqual(307, printer.Length);
 
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol1 = sp.ParseSmiles("c1ccccc1CCC");
             IBitFingerprint fp = printer.GetBitFingerprint(mol1);
             Assert.IsNotNull(fp);
@@ -113,11 +114,11 @@ namespace NCDK.Fingerprints
         /// </summary>
         // @cdk.bug 2871303
         //("the SMARTS pattern vinylogous ester is not strict enough - we can not fix this")
-        public void TestVinylogousEster()
+        public static void TestVinylogousEster()
         {
             string benzaldehyde = "c1ccccc1C=O";
             IFingerprinter fprinter = new SubstructureFingerprinter();
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IBitFingerprint fp = fprinter.GetBitFingerprint(sp.ParseSmiles(benzaldehyde));
             Assert.IsFalse(fp[136], "Bit 136 (vinylogous ester) is set to true");
         }

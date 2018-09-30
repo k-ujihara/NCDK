@@ -19,7 +19,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,7 +37,7 @@ namespace NCDK.Config
     public class XMLIsotopeFactoryTest 
         : CDKTestCase
     {
-        bool standAlone = false;
+        readonly bool standAlone = false;
         readonly static AtomTypeFactory atf = AtomTypeFactory.GetInstance(new ChemObject().Builder);
         private const string JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
         private const string W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
@@ -70,7 +70,7 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestGetInstance_IChemObjectBuilder()
+        public void TestGetInstanceIChemObjectBuilder()
         {
             XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             Assert.IsNotNull(isofac);
@@ -84,7 +84,7 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestConfigure_IAtom()
+        public void TestConfigureIAtom()
         {
             XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             Atom atom = new Atom("H");
@@ -93,7 +93,7 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestConfigure_IAtom_IIsotope()
+        public void TestConfigureIAtomIIsotope()
         {
             XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             Atom atom = new Atom("H");
@@ -103,7 +103,7 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestGetMajorIsotope_String()
+        public void TestGetMajorIsotopeString()
         {
             XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             IIsotope isotope = isofac.GetMajorIsotope("Te");
@@ -112,7 +112,7 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestGetMajorIsotope_Nonelement()
+        public void TestGetMajorIsotopeNonelement()
         {
             XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             IIsotope isotope = isofac.GetMajorIsotope("E");
@@ -120,7 +120,7 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestGetMajorIsotope_int()
+        public void TestGetMajorIsotopeInt()
         {
             XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             IIsotope isotope = isofac.GetMajorIsotope(17);
@@ -128,7 +128,7 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestGetElement_String()
+        public void TestGetElementString()
         {
             XMLIsotopeFactory elfac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             IElement element = elfac.GetElement("Br");
@@ -136,7 +136,7 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestGetElement_Nonelement()
+        public void TestGetElementNonelement()
         {
             XMLIsotopeFactory elfac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             IElement element = elfac.GetElement("E");
@@ -144,7 +144,7 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestGetElement_int()
+        public void TestGetElemenInt()
         {
             XMLIsotopeFactory elfac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             IElement element = elfac.GetElement(6);
@@ -152,7 +152,7 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestGetElementSymbol_int()
+        public void TestGetElementSymbolInt()
         {
             XMLIsotopeFactory elfac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             String symbol = elfac.GetElementSymbol(8);
@@ -160,7 +160,7 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestGetIsotopes_String()
+        public void TestGetIsotopesString()
         {
             XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             IIsotope[] list = isofac.GetIsotopes("He").ToArray();
@@ -168,7 +168,7 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestGetIsotopes_Nonelement()
+        public void TestGetIsotopesNonelement()
         {
             XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             IIsotope[] list = isofac.GetIsotopes("E").ToArray();
@@ -185,7 +185,7 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestGetIsotopes_double_double()
+        public void TestGetIsotopesDoubleDouble()
         {
             XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             IIsotope[] list = isofac.GetIsotopes(87.90, 0.01).ToArray();
@@ -198,14 +198,14 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestIsElement_String()
+        public void TestIsElementString()
         {
             XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             Assert.IsTrue(isofac.IsElement("C"));
         }
 
         [TestMethod()]
-        public void TestConfigureAtoms_IAtomContainer()
+        public void TestConfigureAtomsIAtomContainer()
         {
             AtomContainer container = new AtomContainer();
             container.Atoms.Add(new Atom("C"));
@@ -229,7 +229,7 @@ namespace NCDK.Config
             AssertValidCML("NCDK.Config.Data.isotopes.xml", "Isotopes");
         }
 
-        private void AssertValidCML(string atomTypeList, string shortcut)
+        private static void AssertValidCML(string atomTypeList, string shortcut)
         {
             using (var ins = ResourceLoader.GetAsStream(atomTypeList))
             {
@@ -257,7 +257,7 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestGetNaturalMass_IElement()
+        public void TestGetNaturalMassIElement()
         {
             XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             Assert.AreEqual(1.0079760, isofac.GetNaturalMass(new Default.Element("H")), 0.1);
@@ -289,7 +289,7 @@ namespace NCDK.Config
         }
 
         [TestMethod()]
-        public void TestGetIsotopeFromExactMass_LargeTolerance()
+        public void TestGetIsotopeFromExactMassLargeTolerance()
         {
             XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             IIsotope carbon13 = isofac.GetIsotope("C", 13);

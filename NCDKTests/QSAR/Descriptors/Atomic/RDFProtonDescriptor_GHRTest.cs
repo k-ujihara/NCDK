@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO;
 using NCDK.QSAR.Results;
 
@@ -11,7 +11,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     {
         public RDFProtonDescriptor_GHRTest()
         {
-            SetDescriptor(typeof(RDFProtonDescriptor_GHR));
+            SetDescriptor(typeof(RDFProtonDescriptorGHR));
         }
 
         // @cdk.bug 1632419
@@ -28,7 +28,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             var som = model.MoleculeSet;
             IAtomContainer mol = som[0];
 
-            RDFProtonDescriptor_GHR descriptor = new RDFProtonDescriptor_GHR();
+            RDFProtonDescriptorGHR descriptor = new RDFProtonDescriptorGHR();
             int hNumber = 0;
             for (int i = 0; i < mol.Atoms.Count; i++)
             {

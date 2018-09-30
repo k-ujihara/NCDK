@@ -28,6 +28,7 @@ using NCDK.Numerics;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
 
@@ -117,15 +118,15 @@ namespace NCDK.IO
         {
             writer.Write(atom.Symbol);
             writer.Write(BLANK);
-            writer.Write(xCoord.ToString("F4"));
+            writer.Write(xCoord.ToString("F4", NumberFormatInfo.InvariantInfo));
             writer.Write(BLANK);
             writer.Write(optimize);
             writer.Write(BLANK);
-            writer.Write(yCoord.ToString("F4"));
+            writer.Write(yCoord.ToString("F4", NumberFormatInfo.InvariantInfo));
             writer.Write(BLANK);
             writer.Write(optimize);
             writer.Write(BLANK);
-            writer.Write(zCoord.ToString("F4"));
+            writer.Write(zCoord.ToString("F4", NumberFormatInfo.InvariantInfo));
             writer.Write(BLANK);
             writer.Write(optimize);
             writer.Write(BLANK);
@@ -167,16 +168,16 @@ namespace NCDK.IO
 
         private void InitIOSettings()
         {
-            optimize = Add(new BooleanIOSetting("Optimize", IOSetting.Importance.Medium,
+            optimize = Add(new BooleanIOSetting("Optimize", Importance.Medium,
                     "Should the structure be optimized?", "true"));
-            mopacCommands = Add(new StringIOSetting("Commands", IOSetting.Importance.Low,
+            mopacCommands = Add(new StringIOSetting("Commands", Importance.Low,
                     "What Mopac commands should be used (overwrites other choices)?",
                     "PM3 NOINTER NOMM BONDS MULLIK PRECISE"));
         }
 
         private void CustomizeJob()
         {
-            FireIOSettingQuestion(optimize);
+            ProcessIOSettingQuestion(optimize);
             try
             {
                 if (optimize.IsSet)
@@ -192,7 +193,7 @@ namespace NCDK.IO
             {
                 throw new ArgumentException(exception.Message);
             }
-            FireIOSettingQuestion(mopacCommands);
+            ProcessIOSettingQuestion(mopacCommands);
         }
     }
 }

@@ -46,7 +46,7 @@ namespace NCDK.IO
         /// <summary>
         /// Holder of reader event listeners.
         /// </summary>
-        private List<IChemObjectIOListener> listeners = new List<IChemObjectIOListener>(2);
+        private readonly List<IChemObjectIOListener> listeners = new List<IChemObjectIOListener>(2);
         private SettingManager<IOSetting> settings = new SettingManager<IOSetting>();
         public virtual ICollection<IChemObjectIOListener> Listeners => listeners;
         public virtual SettingManager<IOSetting> IOSettings => settings;
@@ -83,7 +83,7 @@ namespace NCDK.IO
         /// Fires <see cref="IChemObjectIOListener.ProcessIOSettingQuestion(IOSetting)"/> for all managed listeners.
         /// </summary>
         /// <param name="setting">the setting to process</param>
-        protected void FireIOSettingQuestion(IOSetting setting)
+        protected void ProcessIOSettingQuestion(IOSetting setting)
         {
             foreach (var listener in listeners)
             {

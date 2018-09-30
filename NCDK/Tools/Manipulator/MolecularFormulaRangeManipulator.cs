@@ -75,7 +75,7 @@ namespace NCDK.Tools.Manipulator
             // looking for those Isotopes which are not contained which then should be 0.
             foreach (var mf in mfSet)
             {
-                if (mf.Count != mfRange.Count)
+                if (mf.IsotopesCount != mfRange.Count)
                 {
                     foreach (var isotope in mfRange.GetIsotopes().ToList())
                     {

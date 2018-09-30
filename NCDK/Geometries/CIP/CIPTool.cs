@@ -22,7 +22,6 @@
  */
 
 using NCDK.Geometries.CIP.Rules;
-using NCDK.Stereo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,14 +38,14 @@ namespace NCDK.Geometries.CIP
     /// assumes atoms with four neighbours:
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Geometries.CIP.CIPTool_Example.cs"]/*' />
     /// The <see cref="BondStereo"/> value can be
-    /// reconstructed from 3D coordinates with the <see cref="StereoTool"/>.
+    /// reconstructed from 3D coordinates with the <see cref="StereoElementTools"/>.
     /// </example>
     // @cdk.module cip
     // @cdk.githash
-    public class CIPTool
+    public static class CIPTool
     {
         /// <summary>
-        /// IAtom index to indicate an implicit hydrogen, not present in the chemical graph.
+        /// <see cref="IAtom"/> index to indicate an implicit hydrogen, not present in the chemical graph.
         /// </summary>
         public const int Hydrogen = -1;
 
@@ -71,20 +70,40 @@ namespace NCDK.Geometries.CIP
         /// <returns>A <see cref="CIPChirality"/> value.</returns>
         public static CIPChirality GetCIPChirality(LigancyFourChirality stereoCenter)
         {
-            ILigand[] ligands = Order(stereoCenter.Ligands);
-            LigancyFourChirality rsChirality = stereoCenter.Project(ligands);
+            var ligands = Order(stereoCenter.Ligands);
+            var rsChirality = stereoCenter.Project(ligands);
 
             bool allAreDifferent = CheckIfAllLigandsAreDifferent(ligands);
-            if (!allAreDifferent) return CIPChirality.None;
+            if (!allAreDifferent)
+                return CIPChirality.None;
 
-            if (rsChirality.Stereo == TetrahedralStereo.Clockwise) return CIPChirality.R;
+            if (rsChirality.Stereo == TetrahedralStereo.Clockwise)
+                return CIPChirality.R;
 
             return CIPChirality.S;
         }
 
+        /// <summary> 
+        /// Property key to store the CIP descriptor label for an atom / bond. The
+        /// label is a string.
+        /// </summary>
+        public const string CIPDescriptorPropertyKey = "cip.label";
+
+        public static string GetCIPDescriptor(this IAtom o)
+            => o.GetProperty<string>(CIPDescriptorPropertyKey);
+
+        public static void SetCIPDescriptor(this IAtom o, string chirality)
+            => o.SetProperty(CIPDescriptorPropertyKey, chirality);
+
+        public static string GetCIPDescriptor(this IBond o)
+            => o.GetProperty<string>(CIPDescriptorPropertyKey);
+
+        public static void SetCIPDescriptor(this IBond o, string chirality)
+            => o.SetProperty(CIPDescriptorPropertyKey, chirality);
+
         /// <summary>
         /// Convenience method for labelling all stereo elements. The <see cref="CIPChirality"/> is determined for each element and stored as as <see cref="string"/> 
-        /// on the <see cref="CDKPropertyName.CIP_Descriptor"/> property key.
+        /// on the <see cref="CIPDescriptorPropertyKey"/> property key.
         /// Atoms/bonds that are not stereocenters have no label assigned and the
         /// property will be null.
         /// </summary>
@@ -95,12 +114,11 @@ namespace NCDK.Geometries.CIP
             {
                 if (stereoElement is ITetrahedralChirality tc)
                 {
-                    tc.ChiralAtom.SetProperty(CDKPropertyName.CIP_Descriptor, GetCIPChirality(container, tc).ToString());
+                    tc.ChiralAtom.SetCIPDescriptor(GetCIPChirality(container, tc).ToString());
                 }
                 else if (stereoElement is IDoubleBondStereochemistry dbs)
                 {
-                    dbs.StereoBond
-                            .SetProperty(CDKPropertyName.CIP_Descriptor, GetCIPChirality(container, dbs).ToString());
+                    dbs.StereoBond.SetCIPDescriptor(GetCIPChirality(container, dbs).ToString());
                 }
             }
         }
@@ -116,16 +134,20 @@ namespace NCDK.Geometries.CIP
         {
             // the LigancyFourChirality is kind of redundant but we keep for an
             // easy way to get the ILigands array
-            LigancyFourChirality tmp = new LigancyFourChirality(container, stereoCenter);
+            var tmp = new LigancyFourChirality(container, stereoCenter).ligands;
             var stereo = stereoCenter.Stereo;
 
-            int parity = PermParity(tmp.Ligands);
+            int parity = PermParity(tmp);
 
-            if (parity == 0) return CIPChirality.None;
-            if (parity < 0) stereo = stereo.Invert();
+            if (parity == 0)
+                return CIPChirality.None;
+            if (parity < 0)
+                stereo = stereo.Invert();
 
-            if (stereo == TetrahedralStereo.Clockwise) return CIPChirality.R;
-            if (stereo == TetrahedralStereo.AntiClockwise) return CIPChirality.S;
+            if (stereo == TetrahedralStereo.Clockwise)
+                return CIPChirality.R;
+            if (stereo == TetrahedralStereo.AntiClockwise)
+                return CIPChirality.S;
 
             return CIPChirality.None;
         }
@@ -152,25 +174,34 @@ namespace NCDK.Geometries.CIP
 
             var conformation = stereoCenter.Stereo;
 
-            ILigand[] leftLigands = GetLigands(u, container, v);
-            ILigand[] rightLigands = GetLigands(v, container, u);
+            var leftLigands = GetLigands(u, container, v).ToList();
+            var rightLigands = GetLigands(v, container, u).ToList();
 
-            if (leftLigands.Length > 2 || rightLigands.Length > 2) return CIPChirality.None;
+            if (leftLigands.Count > 2 || rightLigands.Count > 2)
+                return CIPChirality.None;
 
             // invert if x/y aren't in the first position
-            if (leftLigands[0].GetLigandAtom() != x) conformation = conformation.Invert();
-            if (rightLigands[0].GetLigandAtom() != y) conformation = conformation.Invert();
+            if (leftLigands[0].LigandAtom != x)
+                conformation = conformation.Invert();
+            if (rightLigands[0].LigandAtom != y)
+                conformation = conformation.Invert();
 
             int p = PermParity(leftLigands) * PermParity(rightLigands);
 
-            if (p == 0) return CIPChirality.None;
+            if (p == 0)
+                return CIPChirality.None;
+            else if (p < 0)
+                conformation = conformation.Invert();
 
-            if (p < 0) conformation = conformation.Invert();
-
-            if (conformation == DoubleBondConformation.Together) return CIPChirality.Z;
-            if (conformation == DoubleBondConformation.Opposite) return CIPChirality.E;
-
-            return CIPChirality.None;
+            switch (conformation)
+            {
+                case DoubleBondConformation.Together:
+                    return CIPChirality.Z;
+                case DoubleBondConformation.Opposite:
+                    return CIPChirality.E;
+                default:
+                    return CIPChirality.None;
+            }
         }
 
         /// <summary>
@@ -181,13 +212,13 @@ namespace NCDK.Geometries.CIP
         /// <param name="container">a structure to which 'atom' belongs</param>
         /// <param name="exclude">exclude this atom - can not be null</param>
         /// <returns>the ligands</returns>
-        private static ILigand[] GetLigands(IAtom atom, IAtomContainer container, IAtom exclude)
+        private static IEnumerable<ILigand> GetLigands(IAtom atom, IAtomContainer container, IAtom exclude)
         {
             var neighbors = container.GetConnectedAtoms(atom);
 
-            ILigand[] ligands = neighbors.
-                Where(neighbor => neighbor != exclude).
-                Select(neighbor => new Ligand(container, new VisitedAtoms(), atom, neighbor)).ToArray();
+            var ligands = neighbors
+                .Where(neighbor => neighbor != exclude)
+                .Select(neighbor => new Ligand(container, new VisitedAtoms(), atom, neighbor));
 
             return ligands;
         }
@@ -199,11 +230,12 @@ namespace NCDK.Geometries.CIP
         /// </summary>
         /// <param name="ligands">array of <see cref="ILigand"/> to check</param>
         /// <returns>true, if all ligands are different</returns>
-        public static bool CheckIfAllLigandsAreDifferent(ILigand[] ligands)
+        internal static bool CheckIfAllLigandsAreDifferent(IReadOnlyList<ILigand> ligands)
         {
-            for (int i = 0; i < (ligands.Length - 1); i++)
+            for (int i = 0; i < (ligands.Count - 1); i++)
             {
-                if (cipRule.Compare(ligands[i], ligands[i + 1]) == 0) return false;
+                if (cipRule.Compare(ligands[i], ligands[i + 1]) == 0)
+                    return false;
             }
             return true;
         }
@@ -213,11 +245,9 @@ namespace NCDK.Geometries.CIP
         /// </summary>
         /// <param name="ligands">Array of <see cref="ILigand"/>s to be reordered.</param>
         /// <returns>Reordered array of <see cref="ILigand"/>s.</returns>
-        public static ILigand[] Order(ILigand[] ligands)
+        internal static IReadOnlyList<ILigand> Order(IReadOnlyList<ILigand> ligands)
         {
-            ILigand[] newLigands = new ILigand[ligands.Length];
-            Array.Copy(ligands, 0, newLigands, 0, ligands.Length);
-
+            var newLigands = ligands.ToArray();
             Array.Sort(newLigands, cipRule);
             return newLigands;
         }
@@ -229,15 +259,15 @@ namespace NCDK.Geometries.CIP
         /// </summary>
         /// <param name="ligands">the ligands to sort</param>
         /// <returns>parity, odd (-1), even (+1) or none (0)</returns>
-        private static int PermParity(ILigand[] ligands)
+        private static int PermParity(List<ILigand> ligands)
         {
             // count the number of swaps made by insertion sort - if duplicates
             // are fount the parity is 0
             int swaps = 0;
 
-            for (int j = 1, hi = ligands.Length; j < hi; j++)
+            for (int j = 1, hi = ligands.Count; j < hi; j++)
             {
-                ILigand ligand = ligands[j];
+                var ligand = ligands[j];
                 int i = j - 1;
                 int cmp = 0;
                 while ((i >= 0) && (cmp = cipRule.Compare(ligand, ligands[i])) > 0)
@@ -269,12 +299,11 @@ namespace NCDK.Geometries.CIP
         /// <param name="ligand4">int pointing to the <see cref="IAtom"/> index of the fourth <see cref="ILigand"/></param>
         /// <param name="stereo"><see cref="TetrahedralStereo"/> for the chirality</param>
         /// <returns>the created <see cref="LigancyFourChirality"/></returns>
-        public static LigancyFourChirality DefineLigancyFourChirality(IAtomContainer container, int chiralAtom,
-                int ligand1, int ligand2, int ligand3, int ligand4, TetrahedralStereo stereo)
+        public static LigancyFourChirality DefineLigancyFourChirality(IAtomContainer container, int chiralAtom, int ligand1, int ligand2, int ligand3, int ligand4, TetrahedralStereo stereo)
         {
-            int[] atomIndices = { ligand1, ligand2, ligand3, ligand4 };
-            VisitedAtoms visitedAtoms = new VisitedAtoms();
-            ILigand[] ligands = new ILigand[4];
+            var atomIndices = new int[] { ligand1, ligand2, ligand3, ligand4 };
+            var visitedAtoms = new VisitedAtoms();
+            var ligands = new ILigand[4];
             for (int i = 0; i < 4; i++)
             {
                 ligands[i] = DefineLigand(container, visitedAtoms, chiralAtom, atomIndices[i]);
@@ -294,8 +323,7 @@ namespace NCDK.Geometries.CIP
         /// <param name="chiralAtom">an integer pointing to the <see cref="IAtom"/> index of the chiral atom</param>
         /// <param name="ligandAtom">an integer pointing to the <see cref="IAtom"/> index of the <see cref="ILigand"/></param>
         /// <returns>the created <see cref="ILigand"/></returns>
-        public static ILigand DefineLigand(IAtomContainer container, VisitedAtoms visitedAtoms, int chiralAtom,
-                int ligandAtom)
+        public static ILigand DefineLigand(IAtomContainer container, VisitedAtoms visitedAtoms, int chiralAtom, int ligandAtom)
         {
             if (ligandAtom == Hydrogen)
             {
@@ -314,14 +342,15 @@ namespace NCDK.Geometries.CIP
         /// </summary>
         /// <param name="ligand">the <see cref="ILigand"/> for which to return the ILigands</param>
         /// <returns>a <see cref="ILigand"/> array with the side chains of the ligand atom</returns>
-        public static ILigand[] GetLigandLigands(ILigand ligand)
+        public static IReadOnlyList<ILigand> GetLigandLigands(ILigand ligand)
         {
-            if (ligand is TerminalLigand) return new ILigand[0];
+            if (ligand is TerminalLigand)
+                return Array.Empty<ILigand>();
 
-            IAtomContainer container = ligand.GetAtomContainer();
-            IAtom ligandAtom = ligand.GetLigandAtom();
-            IAtom centralAtom = ligand.GetCentralAtom();
-            VisitedAtoms visitedAtoms = ligand.GetVisitedAtoms();
+            var container = ligand.AtomContainer;
+            var ligandAtom = ligand.LigandAtom;
+            var centralAtom = ligand.CentralAtom;
+            var visitedAtoms = ligand.VisitedAtoms;
             var bonds = container.GetConnectedBonds(ligandAtom);
             // duplicate ligands according to bond order, following the CIP rules
             var ligands = new List<ILigand>();
@@ -329,7 +358,8 @@ namespace NCDK.Geometries.CIP
             {
                 if (bond.Contains(centralAtom))
                 {
-                    if (BondOrder.Single == bond.Order) continue;
+                    if (BondOrder.Single == bond.Order)
+                        continue;
                     int duplication = GetDuplication(bond.Order) - 1;
                     if (duplication > 0)
                     {
@@ -341,8 +371,8 @@ namespace NCDK.Geometries.CIP
                 }
                 else
                 {
-                    int duplication = GetDuplication(bond.Order);
-                    IAtom connectedAtom = bond.GetOther(ligandAtom);
+                    var duplication = GetDuplication(bond.Order);
+                    var connectedAtom = bond.GetOther(ligandAtom);
                     if (visitedAtoms.IsVisited(connectedAtom))
                     {
                         ligands.Add(new TerminalLigand(container, visitedAtoms, ligandAtom, connectedAtom));
@@ -357,7 +387,7 @@ namespace NCDK.Geometries.CIP
                     }
                 }
             }
-            return ligands.ToArray();
+            return ligands;
         }
 
         /// <summary>

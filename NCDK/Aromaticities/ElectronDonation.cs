@@ -21,7 +21,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using NCDK.RingSearches;
+using System.Collections.Generic;
 
 namespace NCDK.Aromaticities
 {
@@ -64,7 +66,7 @@ namespace NCDK.Aromaticities
         /// <param name="container">molecule</param>
         /// <param name="ringSearch">ring information</param>
         /// <returns>electron contribution of each atom (-1=none)</returns>
-        public abstract int[] Contribution(IAtomContainer container, RingSearch ringSearch);
+        public abstract IReadOnlyList<int> Contribution(IAtomContainer container, RingSearch ringSearch);
 
         /// <summary>
         /// Electron donation model to use for aromaticity perception.

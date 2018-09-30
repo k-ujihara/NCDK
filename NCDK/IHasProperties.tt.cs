@@ -12,10 +12,10 @@ namespace NCDK
         /// Sets a property for a <see cref="IChemObject"/>.
         /// </summary>
         /// <param name="description">An object description of the property (most likely a unique string)</param>
-        /// <param name="property">An object with the property itself</param>
+        /// <param name="value">An object with the property itself</param>
         /// <seealso cref="GetProperty{T}(object)"/>
         /// <seealso cref="RemoveProperty(object)"/>
-        void SetProperty(object description, object property);
+        void SetProperty(object description, object value);
 
         /// <summary>
         /// Set the properties of this object to the provided map (shallow copy). Any
@@ -68,7 +68,7 @@ namespace NCDK
         /// </summary>
         /// <returns>The object's properties as an <see cref="IDictionary{T, T}"/></returns>
         /// <seealso cref="AddProperties(IEnumerable{KeyValuePair{object, object}})"/>
-        IDictionary<object, object> GetProperties();
+        IReadOnlyDictionary<object, object> GetProperties();
     }    
 }
 namespace NCDK
@@ -81,10 +81,10 @@ namespace NCDK
         /// Sets a property for a <see cref="IMolecularFormula"/>.
         /// </summary>
         /// <param name="description">An object description of the property (most likely a unique string)</param>
-        /// <param name="property">An object with the property itself</param>
+        /// <param name="value">An object with the property itself</param>
         /// <seealso cref="GetProperty{T}(object)"/>
         /// <seealso cref="RemoveProperty(object)"/>
-        void SetProperty(object description, object property);
+        void SetProperty(object description, object value);
 
         /// <summary>
         /// Set the properties of this object to the provided map (shallow copy). Any
@@ -137,6 +137,6 @@ namespace NCDK
         /// </summary>
         /// <returns>The object's properties as an <see cref="IDictionary{T, T}"/></returns>
         /// <seealso cref="AddProperties(IEnumerable{KeyValuePair{object, object}})"/>
-        IDictionary<object, object> GetProperties();
+        IReadOnlyDictionary<object, object> GetProperties();
     }    
 }

@@ -24,6 +24,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Moq;
 using System.Collections.Generic;
+using NCDK.Silent;
+using System.Linq;
 
 namespace NCDK.RingSearches
 {
@@ -226,7 +228,7 @@ namespace NCDK.RingSearches
 
             mock_cyclicSearch.Setup(n => n.Cyclic()).Returns(new int[] { 0, 1, 2 });
             mock_cyclicSearch.Setup(n => n.Isolated()).Returns(new int[][] { new[] { 0, 1, 2 } });
-            mock_cyclicSearch.Setup(n => n.Fused()).Returns(new int[0][]);
+            mock_cyclicSearch.Setup(n => n.Fused()).Returns(Array.Empty<int[]>());
             mock_container.Setup(n => n.Atoms.Count).Returns(3);
             mock_builder.Setup(n => n.NewAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>())).Returns(new Mock<IAtomContainer>().Object);
             mock_container.Setup(n => n.Builder).Returns(mock_builder.Object);
@@ -261,7 +263,7 @@ namespace NCDK.RingSearches
             mock_container.Setup(n => n.Atoms[It.IsAny<int>()]).Returns(new Mock<IAtom>().Object);
             mock_builder.Setup(n => n.NewAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>())).Returns(new Mock<IAtomContainer>().Object);
 
-            ringSearch.IsolatedRingFragments();
+            ringSearch.IsolatedRingFragments().ToList();
 
             mock_cyclicSearch.Verify(n => n.Isolated(), Times.Once());
 
@@ -290,7 +292,7 @@ namespace NCDK.RingSearches
             mock_container.Setup(n => n.Bonds).Returns(new List<IBond>());
             mock_container.Setup(n => n.Atoms[It.IsAny<int>()]).Returns(new Mock<IAtom>().Object);
 
-            ringSearch.FusedRingFragments();
+            ringSearch.FusedRingFragments().ToList();
 
             mock_cyclicSearch.Verify(n => n.Fused(), Times.Once());
 
@@ -329,8 +331,7 @@ namespace NCDK.RingSearches
         // @cdk.inchi InChI=1/C10H16/c1-2-9(1,3-4-9)10(5-6-10)7-8-10/h1-8H2
         public static IAtomContainer DiSpiroPentane()
         {
-
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
@@ -398,7 +399,7 @@ namespace NCDK.RingSearches
         public static IAtomContainer TriSpiroPentane()
         {
 
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;

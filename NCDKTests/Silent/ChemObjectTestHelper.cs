@@ -18,6 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace NCDK.Silent
 {
@@ -25,7 +26,7 @@ namespace NCDK.Silent
     /// Helper class to test the functionality of the <see cref="IChemObject"/>s.
     /// </summary>
     // @cdk.module test-silent
-    public class ChemObjectTestHelper
+    public static class ChemObjectTestHelper
     {
         public static void TestNotifyChanged(IChemObject chemObject)
         {
@@ -173,7 +174,7 @@ namespace NCDK.Silent
             // if all is well, we should not get a change event this time
             listener.Reset();
             Assert.IsFalse(listener.Changed); // make sure the reset worked
-            container.SetAtoms(new IAtom[0]);
+            container.SetAtoms(Array.Empty<IAtom>());
             atoms[1].AtomTypeName = "C.sp2"; // make a change to an old atom
             Assert.IsFalse(listener.Changed); // but no change event should happen
         }

@@ -60,7 +60,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_count).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_count, value); }
         }
@@ -72,29 +72,29 @@ namespace NCDK.LibIO.CML
         public int FormalCharge
         {
             get { return GetAttributeValueAsInt(Attribute_formalCharge, 0); }
-            set { SetAttributeValue(Attribute_formalCharge, value.ToString()); }
+            set { SetAttributeValue(Attribute_formalCharge, value.ToString(System.Globalization.NumberFormatInfo.InvariantInfo)); }
         }
         public int HydrogenCount
         {
             get { return GetAttributeValueAsInt(Attribute_hydrogenCount, 0); }
-            set { SetAttributeValue(Attribute_hydrogenCount, value.ToString()); }
+            set { SetAttributeValue(Attribute_hydrogenCount, value.ToString(System.Globalization.NumberFormatInfo.InvariantInfo)); }
         }
         public int IsotopeNumber
         {
             get { return GetAttributeValueAsInt(Attribute_isotopeNumber, 0); }
-            set { SetAttributeValue(Attribute_isotopeNumber, value.ToString()); }
+            set { SetAttributeValue(Attribute_isotopeNumber, value.ToString(System.Globalization.NumberFormatInfo.InvariantInfo)); }
         }
         public int SpinMultiplicity
         {
             get { return GetAttributeValueAsInt(Attribute_spinMultiplicity, 0); }
-            set { SetAttributeValue(Attribute_spinMultiplicity, value.ToString()); }
+            set { SetAttributeValue(Attribute_spinMultiplicity, value.ToString(System.Globalization.NumberFormatInfo.InvariantInfo)); }
         }
         public double X2
         {
             get
             {
                 var v = Attribute(Attribute_x2).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_x2, value); }
         }
@@ -103,7 +103,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_y2).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_y2, value); }
         }
@@ -112,7 +112,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_x3).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_x3, value); }
         }
@@ -121,7 +121,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_y3).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_y3, value); }
         }
@@ -130,7 +130,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_z3).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_z3, value); }
         }
@@ -139,7 +139,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_xFract).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_xFract, value); }
         }
@@ -148,7 +148,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_yFract).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_yFract, value); }
         }
@@ -157,7 +157,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_zFract).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_zFract, value); }
         }
@@ -175,7 +175,7 @@ namespace NCDK.LibIO.CML
             get { return Attribute(Attribute_order)?.Value; }
             set { SetAttributeValue(Attribute_order, value); }
         }
-        public string[] AtomRefs
+        public System.Collections.Generic.IReadOnlyList<string> AtomRefs
         {
             get
             {
@@ -184,7 +184,7 @@ namespace NCDK.LibIO.CML
             }
             set { SetAttributeValue(Attribute_atomRefs, Concat(value)); }
         }
-        public string[] AtomRefs2
+        public System.Collections.Generic.IReadOnlyList<string> AtomRefs2
         {
             get
             {
@@ -220,14 +220,14 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_count).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_count, value); }
         }
         public int FormalCharge
         {
             get { return GetAttributeValueAsInt(Attribute_formalCharge, 0); }
-            set { SetAttributeValue(Attribute_formalCharge, value.ToString()); }
+            set { SetAttributeValue(Attribute_formalCharge, value.ToString(System.Globalization.NumberFormatInfo.InvariantInfo)); }
         }
         public string Inline
         {
@@ -266,7 +266,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_errorValue).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_errorValue, value); }
         }
@@ -305,7 +305,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_constantToSI).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_constantToSI, value); }
         }
@@ -314,7 +314,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_multiplierToSI).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_multiplierToSI, value); }
         }
@@ -338,7 +338,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_count).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_count, value); }
         }
@@ -347,7 +347,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_state).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_state, value); }
         }
@@ -370,7 +370,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_count).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_count, value); }
         }
@@ -398,7 +398,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_count).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_count, value); }
         }
@@ -407,7 +407,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_state).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_state, value); }
         }
@@ -430,7 +430,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_count).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_count, value); }
         }
@@ -463,7 +463,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_count).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_count, value); }
         }
@@ -472,7 +472,7 @@ namespace NCDK.LibIO.CML
             get
             {
                 var v = Attribute(Attribute_state).Value;
-                return v == null ? double.NaN : double.Parse(v);
+                return v == null ? double.NaN : double.Parse(v, System.Globalization.NumberFormatInfo.InvariantInfo);
             }
             set { SetAttributeValue(Attribute_state, value); }
         }
@@ -502,7 +502,7 @@ namespace NCDK.LibIO.CML
         public int Z
         {
             get { return GetAttributeValueAsInt(Attribute_z, 0); }
-            set { SetAttributeValue(Attribute_z, value.ToString()); }
+            set { SetAttributeValue(Attribute_z, value.ToString(System.Globalization.NumberFormatInfo.InvariantInfo)); }
         }
     }
 }

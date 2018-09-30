@@ -83,7 +83,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="symbolRemap">a map that will hold symbol remapping</param>
         public static void PrepareDisplayShortcuts(IAtomContainer container, IDictionary<IAtom, string> symbolRemap)
         {
-            var sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            var sgroups = container.GetCtabSgroups();
             if (sgroups == null || !sgroups.Any())
                 return;
 
@@ -270,7 +270,7 @@ namespace NCDK.Renderers.Generators.Standards
         IRenderingElement GenerateSgroups(IAtomContainer container, AtomSymbol[] symbols)
         {
             ElementGroup result = new ElementGroup();
-            var sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            var sgroups = container.GetCtabSgroups();
 
             if (sgroups == null || !sgroups.Any())
                 return result;
@@ -392,7 +392,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// </summary>
         /// <param name="sgroup">the Sgroup</param>
         /// <returns>the rendered elements (empty if no brackets defined)</returns>
-        private IRenderingElement GeneratePolymerSgroup(Sgroup sgroup, IDictionary<IAtom, AtomSymbol> symbolMap)
+        private IRenderingElement GeneratePolymerSgroup(Sgroup sgroup, IReadOnlyDictionary<IAtom, AtomSymbol> symbolMap)
         {
             // draw the brackets
             var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
@@ -408,11 +408,11 @@ namespace NCDK.Renderers.Generators.Standards
                     case SgroupType.CtabCopolymer:
                         subscript = "co";
                         string subtype = (string)sgroup.GetValue(SgroupKey.CtabSubType);
-                        if ("RAN".Equals(subtype))
+                        if (string.Equals("RAN", subtype, StringComparison.Ordinal))
                             subscript = "ran";
-                        else if ("BLK".Equals(subtype))
+                        else if (string.Equals("BLK", subtype, StringComparison.Ordinal))
                             subscript = "blk";
-                        else if ("ALT".Equals(subtype))
+                        else if (string.Equals("ALT", subtype, StringComparison.Ordinal))
                             subscript = "alt";
                         break;
                     case SgroupType.CtabCrossLink:
@@ -517,7 +517,7 @@ namespace NCDK.Renderers.Generators.Standards
 
         private IRenderingElement GenerateSgroupBrackets(Sgroup sgroup,
                                                          IList<SgroupBracket> brackets,
-                                                         IDictionary<IAtom, AtomSymbol> symbols,
+                                                         IReadOnlyDictionary<IAtom, AtomSymbol> symbols,
                                                          string subscriptSuffix,
                                                          string superscriptSuffix)
         {
@@ -894,7 +894,7 @@ namespace NCDK.Renderers.Generators.Standards
             return GeneralPath.OutlineOf(path, stroke, foreground);
         }
 
-        private static IDictionary<SgroupBracket, IBond> BracketBondPairs(ICollection<SgroupBracket> brackets, ICollection<IBond> bonds)
+        private static IReadOnlyDictionary<SgroupBracket, IBond> BracketBondPairs(ICollection<SgroupBracket> brackets, ICollection<IBond> bonds)
         {
             var pairs = new Dictionary<SgroupBracket, IBond>();
 
@@ -930,7 +930,7 @@ namespace NCDK.Renderers.Generators.Standards
             return StandardGenerator.GenerateAnnotation(b1p2, subscriptSuffix, VecmathUtil.Negate(b1pvec), 1, labelScale, font, emSize, null).Resize(1 / scale, 1 / scale);
         }
 
-        private TextOutline LeftAlign(TextOutline outline)
+        private static TextOutline LeftAlign(TextOutline outline)
         {
             var center = outline.GetCenter();
             var first = outline.GetFirstGlyphCenter();

@@ -20,6 +20,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Graphs;
+using NCDK.Silent;
 using NCDK.Smiles;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace NCDK.Fragments
 
         static FragmentUtilsTest()
         {
-            smilesParser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
         }
 
         [TestMethod()]

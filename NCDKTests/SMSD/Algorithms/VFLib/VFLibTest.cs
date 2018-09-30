@@ -22,7 +22,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.SMSD.Algorithms.VFLib.Builder;
 using NCDK.SMSD.Algorithms.VFLib.Map;
 using NCDK.SMSD.Algorithms.VFLib.Query;
@@ -119,7 +119,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             Match match1 = new Match(benzeneQuery.GetNode(1), benzene.Atoms[1]);
             IState state2 = state1.NextState(match1);
 
-            IDictionary<INode, IAtom> map = state2.GetMap();
+            var map = state2.GetMap();
 
             Assert.AreEqual(2, map.Count);
             Assert.AreEqual(benzene.Atoms[0], map[benzeneQuery.GetNode(0)]);
@@ -156,7 +156,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             IState state2 = state1.NextState(match1);
             Match match2 = new Match(benzeneQuery.GetNode(2), benzene.Atoms[2]);
             IState state3 = state2.NextState(match2);
-            IDictionary<INode, IAtom> map = state3.GetMap();
+            var map = state3.GetMap();
 
             Assert.AreEqual(3, map.Count);
             Assert.AreEqual(benzene.Atoms[0], map[benzeneQuery.GetNode(0)]);
@@ -205,18 +205,18 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         public static IAtomContainer CreateHexane()
         {
-            IAtomContainer result = Default.ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom c1 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtomContainer result = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom c1 = ChemObjectBuilder.Instance.NewAtom("C");
             c1.Id = "1";
-            IAtom c2 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c2 = ChemObjectBuilder.Instance.NewAtom("C");
             c2.Id = "2";
-            IAtom c3 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c3 = ChemObjectBuilder.Instance.NewAtom("C");
             c3.Id = "3";
-            IAtom c4 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c4 = ChemObjectBuilder.Instance.NewAtom("C");
             c4.Id = "4";
-            IAtom c5 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c5 = ChemObjectBuilder.Instance.NewAtom("C");
             c5.Id = "5";
-            IAtom c6 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c6 = ChemObjectBuilder.Instance.NewAtom("C");
             c6.Id = "6";
 
             result.Atoms.Add(c1);
@@ -245,19 +245,19 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         public static IAtomContainer CreateBenzene()
         {
-            IAtomContainer result = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer result = ChemObjectBuilder.Instance.NewAtomContainer();
 
-            IAtom c1 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c1 = ChemObjectBuilder.Instance.NewAtom("C");
             c1.Id = "1";
-            IAtom c2 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c2 = ChemObjectBuilder.Instance.NewAtom("C");
             c2.Id = "2";
-            IAtom c3 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c3 = ChemObjectBuilder.Instance.NewAtom("C");
             c3.Id = "3";
-            IAtom c4 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c4 = ChemObjectBuilder.Instance.NewAtom("C");
             c4.Id = "4";
-            IAtom c5 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c5 = ChemObjectBuilder.Instance.NewAtom("C");
             c5.Id = "5";
-            IAtom c6 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c6 = ChemObjectBuilder.Instance.NewAtom("C");
             c6.Id = "6";
 
             result.Atoms.Add(c1);

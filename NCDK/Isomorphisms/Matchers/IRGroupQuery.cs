@@ -46,12 +46,12 @@ namespace NCDK.Isomorphisms.Matchers
         /// <summary>
         /// Root attachment points = bonds that connect R pseudo-atoms to the scaffold.
         /// </summary>
-        IDictionary<IAtom, IDictionary<int, IBond>> RootAttachmentPoints { get; set; }
+        IReadOnlyDictionary<IAtom, IReadOnlyDictionary<int, IBond>> RootAttachmentPoints { get; set; }
 
         /// <summary>
         /// the R-group definitions (substituents).
         /// </summary>
-        IDictionary<int, RGroupList> RGroupDefinitions { get; set; }
+        IReadOnlyDictionary<int, RGroupList> RGroupDefinitions { get; set; }
 
         /// <summary>
         /// the total number of atom containers (count the root plus all substituents).
@@ -62,7 +62,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// All the substituent atom containers, in other words the atom containers
         /// defined in this <see cref="IRGroupQuery"/> except for the root structure.
         /// </summary>
-        IList<IAtomContainer> GetSubstituents();
+        IEnumerable<IAtomContainer> GetSubstituents();
 
         /// <summary>
         /// Checks validity of the RGroupQuery.
@@ -85,6 +85,6 @@ namespace NCDK.Isomorphisms.Matchers
         /// Produces all combinations of the root structure (scaffold) with the R-groups
         /// substituted in valid ways, using each R-group's definitions and conditions.
         /// </summary>
-        IList<IAtomContainer> GetAllConfigurations();
+        IEnumerable<IAtomContainer> GetAllConfigurations();
     }
 }

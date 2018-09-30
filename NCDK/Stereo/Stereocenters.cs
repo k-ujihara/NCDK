@@ -29,7 +29,6 @@ using NCDK.RingSearches;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.Stereo
 {
@@ -122,10 +121,10 @@ namespace NCDK.Stereo
         private readonly EdgeToBondMap bondMap;
 
         /// <summary>the type of stereo center - indexed by atom.</summary>
-        private CenterType[] stereocenters;
+        private readonly CenterType[] stereocenters;
 
         /// <summary>the stereo elements - indexed by atom.</summary>
-        private StereoElement[] elements;
+        private readonly StereoElement[] elements;
 
         /// <summary>basic cycle information (i.e. is atom/bond cyclic) and cycle systems.</summary>
         private readonly RingSearch ringSearch;
@@ -144,9 +143,9 @@ namespace NCDK.Stereo
         /// <returns>the stereocenters</returns>
         public static Stereocenters Of(IAtomContainer container)
         {
-            EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(container);
-            int[][] g = GraphUtil.ToAdjList(container, bondMap);
-            Stereocenters stereocenters = new Stereocenters(container, g, bondMap);
+            var bondMap = EdgeToBondMap.WithSpaceFor(container);
+            var g = GraphUtil.ToAdjList(container, bondMap);
+            var stereocenters = new Stereocenters(container, g, bondMap);
             stereocenters.CheckSymmetry();
             return stereocenters;
         }
@@ -158,7 +157,7 @@ namespace NCDK.Stereo
         /// <param name="container">native CDK structure representation</param>
         /// <param name="graph">graph representation (adjacency list)</param>
         /// <param name="bondMap">fast lookup bonds by atom index</param>
-        public Stereocenters(IAtomContainer container, int[][] graph, EdgeToBondMap bondMap)
+        internal Stereocenters(IAtomContainer container, int[][] graph, EdgeToBondMap bondMap)
         {
             this.container = container;
             this.bondMap = bondMap;
@@ -368,7 +367,7 @@ namespace NCDK.Stereo
             {
                 if (stereocenters[v] == CenterType.Potential)
                 {
-                    int[] ws = elements[v].neighbors;
+                    var ws = elements[v].neighbors;
                     int nUnique = 0;
                     bool terminal = true;
 
@@ -410,14 +409,13 @@ namespace NCDK.Stereo
         private void LabelIsolatedPara(int[] symmetry)
         {
             // auxiliary array, has the symmetry class already been 'visited'
-            bool[] visited = new bool[symmetry.Length + 1];
+            var visited = new bool[symmetry.Length + 1];
 
             foreach (var isolated in ringSearch.Isolated())
             {
-
-                List<StereoElement> potential = new List<StereoElement>();
-                List<StereoElement> trueCentres = new List<StereoElement>();
-                BitArray cyclic = new BitArray(1000);
+                var potential = new List<StereoElement>();
+                var trueCentres = new List<StereoElement>();
+                var cyclic = new BitArray(1000);
 
                 foreach (var v in isolated)
                 {
@@ -439,44 +437,48 @@ namespace NCDK.Stereo
                 List<StereoElement> paraElements = new List<StereoElement>();
                 foreach (var element in potential)
                 {
-                    if (element.type == CoordinateType.Tetracoordinate)
+                    switch (element.type)
                     {
-
-                        int[] ws = element.neighbors;
-                        int nUnique = 0;
-                        bool terminal = true;
-
-                        foreach (var w in ws)
-                        {
-                            if (!cyclic[w])
+                        case CoordinateType.Tetracoordinate:
                             {
-                                if (!visited[symmetry[w]])
+                                int[] ws = element.neighbors;
+                                int nUnique = 0;
+                                bool terminal = true;
+
+                                foreach (var w in ws)
                                 {
-                                    visited[symmetry[w]] = true;
-                                    nUnique++;
+                                    if (!cyclic[w])
+                                    {
+                                        if (!visited[symmetry[w]])
+                                        {
+                                            visited[symmetry[w]] = true;
+                                            nUnique++;
+                                        }
+                                        else
+                                        {
+                                            if (g[w].Length > 1) terminal = false;
+                                        }
+                                    }
                                 }
-                                else
-                                {
-                                    if (g[w].Length > 1) terminal = false;
-                                }
+
+                                // reset for next element
+                                foreach (var w in ws)
+                                    visited[symmetry[w]] = false;
+
+                                int deg = g[element.focus].Length;
+
+                                if (deg == 3 || (deg == 4 && nUnique == 2)) paraElements.Add(element);
+
+                                // remove those we know cannot possibly be stereocenters
+                                if (deg == 4 && nUnique == 1 && terminal) stereocenters[element.focus] = CenterType.None;
                             }
-                        }
-
-                        // reset for next element
-                        foreach (var w in ws)
-                            visited[symmetry[w]] = false;
-
-                        int deg = g[element.focus].Length;
-
-                        if (deg == 3 || (deg == 4 && nUnique == 2)) paraElements.Add(element);
-
-                        // remove those we know cannot possibly be stereocenters
-                        if (deg == 4 && nUnique == 1 && terminal) stereocenters[element.focus] = CenterType.None;
-                    }
-                    else if (element.type == CoordinateType.Tricoordinate)
-                    {
-                        Tricoordinate either = (Tricoordinate)element;
-                        if (stereocenters[either.other] == CenterType.True) paraElements.Add(element);
+                            break;
+                        case CoordinateType.Tricoordinate:
+                            {
+                                Tricoordinate either = (Tricoordinate)element;
+                                if (stereocenters[either.other] == CenterType.True) paraElements.Add(element);
+                            }
+                            break;
                     }
                 }
 
@@ -514,7 +516,7 @@ namespace NCDK.Stereo
             // x: connected atoms
             // q: formal charge
 
-            int q = Charge(atom);
+            var q = Charge(atom);
 
             // more than one hydrogen
             if (checkSymmetry && h > 1)
@@ -601,8 +603,8 @@ namespace NCDK.Stereo
             if (!checkSymmetry)
                 return true;
 
-            int[] counts = new int[6];
-            int[][] atoms = Arrays.CreateJagged<int>(6, g[v].Length);
+            var counts = new int[6];
+            var atoms = Arrays.CreateJagged<int>(6, g[v].Length);
 
             bool found = false;
 
@@ -613,11 +615,13 @@ namespace NCDK.Stereo
                 found = found || (idx > 0 && counts[idx] > 1);
             }
 
-            if (!found) return true;
+            if (!found)
+                return true;
 
             for (int i = 1; i < counts.Length; i++)
             {
-                if (counts[i] < 2) continue;
+                if (counts[i] < 2)
+                    continue;
 
                 int terminalCount = 0;
                 int terminalHCount = 0;
@@ -625,7 +629,7 @@ namespace NCDK.Stereo
                 for (int j = 0; j < counts[i]; j++)
                 {
                     int hCount = 0;
-                    int[] ws = g[atoms[i][j]];
+                    var ws = g[atoms[i][j]];
                     foreach (var w in g[atoms[i][j]])
                     {
                         IAtom atom = container.Atoms[w];
@@ -643,7 +647,8 @@ namespace NCDK.Stereo
                     }
                 }
 
-                if (terminalCount > 1 && terminalHCount > 0) return false;
+                if (terminalCount > 1 && terminalHCount > 0)
+                    return false;
             }
 
             return true;
@@ -684,7 +689,7 @@ namespace NCDK.Stereo
         /// <returns>the atom is a member of a 3 member ring</returns>
         private bool InThreeMemberRing(int v)
         {
-            BitArray adj = new BitArray(0);
+            var adj = new BitArray(0);
             foreach (var w in g[v])
                 BitArrays.SetValue(adj, w, true);
             // is a neighbors neighbor adjacent?
@@ -712,9 +717,11 @@ namespace NCDK.Stereo
         /// <returns>the atomic number of the atom</returns>
         private static int GetAtomicNumber(IAtom a)
         {
-            int? elem = a.AtomicNumber;
-            if (elem != null) return elem.Value;
-            if (a is IPseudoAtom) return 0;
+            var elem = a.AtomicNumber;
+            if (elem != null)
+                return elem.Value;
+            if (a is IPseudoAtom)
+                return 0;
             throw new ArgumentException("an atom had an undefieind atomic number");
         }
 
@@ -738,47 +745,10 @@ namespace NCDK.Stereo
         /// <returns>the array cast to int values</returns>
         private static int[] ToIntArray(long[] org)
         {
-            int[] cpy = new int[org.Length];
+            var cpy = new int[org.Length];
             for (int i = 0; i < cpy.Length; i++)
                 cpy[i] = (int)org[i];
             return cpy;
-        }
-
-        /// <summary>Defines the type of a stereocenter.</summary>
-        public enum CenterType
-        {
-            /// <summary>Atom is a true stereo-centre.</summary>
-            True,
-
-            /// <summary>Atom resembles a stereo-centre (para).</summary>
-            Para,
-
-            /// <summary>Atom is a potential stereo-centre</summary>
-            Potential,
-
-            /// <summary>Non stereo-centre.</summary>
-            None,
-        }
-
-        public enum CoordinateType
-        {
-            /// <summary>An atom within a cumulated system. (not yet supported)</summary>
-            Bicoordinate,
-
-            /// <summary>
-            /// A potentially stereogenic atom with 3 neighbors - one atom in a
-            /// geometric centres or cumulated system (allene, cumulene).
-            /// </summary>
-            Tricoordinate,
-
-            /// <summary>
-            /// A potentially stereogenic atom with 4 neighbors - tetrahedral
-            /// centres.
-            /// </summary>
-            Tetracoordinate,
-
-            /// <summary>A non-stereogenic atom.</summary>
-            None
         }
 
         /// <summary>
@@ -848,5 +818,41 @@ namespace NCDK.Stereo
             }
         }
     }
-}
 
+    public enum CoordinateType
+    {
+        /// <summary>A non-stereogenic atom.</summary>
+        None = 0,
+
+        /// <summary>An atom within a cumulated system. (not yet supported)</summary>
+        Bicoordinate,
+
+        /// <summary>
+        /// A potentially stereogenic atom with 3 neighbors - one atom in a
+        /// geometric centres or cumulated system (allene, cumulene).
+        /// </summary>
+        Tricoordinate,
+
+        /// <summary>
+        /// A potentially stereogenic atom with 4 neighbors - tetrahedral
+        /// centres.
+        /// </summary>
+        Tetracoordinate,
+    }
+
+    /// <summary>Defines the type of a stereocenter.</summary>
+    public enum CenterType
+    {
+        /// <summary>Non stereo-centre.</summary>
+        None = 0,
+
+        /// <summary>Atom is a true stereo-centre.</summary>
+        True,
+
+        /// <summary>Atom resembles a stereo-centre (para).</summary>
+        Para,
+
+        /// <summary>Atom is a potential stereo-centre</summary>
+        Potential,
+    }
+}

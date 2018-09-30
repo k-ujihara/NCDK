@@ -52,7 +52,7 @@ namespace NCDK.Graphs
         /// <seealso cref="AtomContainerPermutor.ContainerFromPermutation(int[])"/>
         public override IAtomContainer ContainerFromPermutation(int[] permutation)
         {
-            IAtomContainer permutedContainer = (IAtomContainer)base.atomContainer.Clone();
+            IAtomContainer permutedContainer = (IAtomContainer)base.AtomContainer.Clone();
             int n = permutedContainer.Bonds.Count;
             IBond[] permutedBonds = new IBond[n];
             for (int i = 0; i < n; i++)

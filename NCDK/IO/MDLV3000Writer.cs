@@ -29,6 +29,7 @@ using NCDK.Sgroups;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -97,7 +98,7 @@ namespace NCDK.IO
         /// <param name="idxs">index map</param>
         /// <param name="obj">the object</param>
         /// <returns>index or -1 if not found</returns>
-        private static int FindIdx<T>(IDictionary<T, int> idxs, T obj)
+        private static int FindIdx<T>(IReadOnlyDictionary<T, int> idxs, T obj)
         {
             if (!idxs.TryGetValue(obj, out int idx))
                 return -1;
@@ -124,11 +125,11 @@ namespace NCDK.IO
             //  program input, internal registry number (R) if input through MDL
             //  form. A blank line can be substituted for line 2.
             writer.WriteDirect("  CDK     ");
-            writer.WriteDirect(DateTime.UtcNow.ToString("MMddyyHHmm"));
+            writer.WriteDirect(DateTime.UtcNow.ToString("MMddyyHHmm", DateTimeFormatInfo.InvariantInfo));
             int dim = GetNumberOfDimensions(mol);
             if (dim != 0)
             {
-                writer.WriteDirect(dim.ToString());
+                writer.WriteDirect(dim.ToString(NumberFormatInfo.InvariantInfo));
                 writer.WriteDirect('D');
             }
             writer.WriteDirect('\n');
@@ -236,7 +237,7 @@ namespace NCDK.IO
                     if (matcher.Success)
                     {
                         symbol = "R#";
-                        rnum = int.Parse(matcher.Groups[1].Value);
+                        rnum = int.Parse(matcher.Groups[1].Value, NumberFormatInfo.InvariantInfo);
                     }
                 }
 
@@ -322,7 +323,7 @@ namespace NCDK.IO
         /// <param name="atom">atom</param>
         /// <param name="elem">atomic number</param>
         /// <returns>atom symbol</returns>
-        private string GetSymbol(IAtom atom, int elem)
+        private static string GetSymbol(IAtom atom, int elem)
         {
             if (atom is IPseudoAtom)
                 return ((IPseudoAtom)atom).Label;
@@ -343,13 +344,13 @@ namespace NCDK.IO
         /// <param name="idxs">index lookup</param>
         /// <exception cref="IOException">low-level IO error</exception>
         /// <exception cref="CDKException">inconsistent state etc</exception>
-        private void WriteBondBlock(IAtomContainer mol, IDictionary<IChemObject, int> idxs)
+        private void WriteBondBlock(IAtomContainer mol, IReadOnlyDictionary<IChemObject, int> idxs)
         {
             if (mol.Bonds.Count == 0)
                 return;
 
             // collect multicenter Sgroups before output
-            var sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            var sgroups = mol.GetCtabSgroups();
             var multicenterSgroups = new Dictionary<IBond, Sgroup>();
             if (sgroups != null)
             {
@@ -366,8 +367,8 @@ namespace NCDK.IO
             int bondIdx = 0;
             foreach (var bond in mol.Bonds)
             {
-                IAtom beg = bond.Begin;
-                IAtom end = bond.End;
+                var beg = bond.Begin;
+                var end = bond.End;
                 if (beg == null || end == null)
                     throw new InvalidOperationException($"Bond {bondIdx} had one or more atoms.");
                 int begIdx = FindIdx(idxs, beg);
@@ -448,7 +449,7 @@ namespace NCDK.IO
         /// <param name="mol">molecule</param>
         /// <param name="atomToIdx">mapping that will be filled with the output index</param>
         /// <returns>the output order of atoms</returns>
-        private IAtom[] PushHydrogensToBack(IAtomContainer mol, IDictionary<IChemObject, int> atomToIdx)
+        private static IAtom[] PushHydrogensToBack(IAtomContainer mol, IDictionary<IChemObject, int> atomToIdx)
         {
             Trace.Assert(atomToIdx.Count == 0);
             IAtom[] atoms = new IAtom[mol.Atoms.Count];
@@ -475,9 +476,9 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="mol">molecule</param>
         /// <returns>the sgroups</returns>
-        private IList<Sgroup> GetSgroups(IAtomContainer mol)
+        private static IList<Sgroup> GetSgroups(IAtomContainer mol)
         {
-            var sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            var sgroups = mol.GetCtabSgroups();
             if (sgroups == null)
                 sgroups = Array.Empty<Sgroup>();
             return sgroups;
@@ -490,7 +491,8 @@ namespace NCDK.IO
             {
                 // empty parents come first
                 int cmp = -(o1.Parents.Count == 0).CompareTo(o2.Parents.Count == 0);
-                if (cmp != 0 || o1.Parents.Count == 0) return cmp;
+                if (cmp != 0 || o1.Parents.Count == 0)
+                    return cmp;
                 // non-empty parents, if one contains the other we have an ordering
                 if (o1.Parents.Contains(o2))
                     return +1;
@@ -501,7 +503,7 @@ namespace NCDK.IO
             }
         }
 
-        private int GetNumberOfDimensions(IAtomContainer mol)
+        private static int GetNumberOfDimensions(IAtomContainer mol)
         {
             foreach (IAtom atom in mol.Atoms)
             {
@@ -520,7 +522,7 @@ namespace NCDK.IO
         /// <param name="idxs">index map for looking up atom and bond indexes</param>
         /// <exception cref="IOException">low-level IO error</exception>
         /// <exception cref="CDKException">unsupported format feature or invalid state</exception>
-        private void WriteSgroupBlock(IEnumerable<Sgroup> sgroups, IDictionary<IChemObject, int> idxs)
+        private void WriteSgroupBlock(IEnumerable<Sgroup> sgroups, IReadOnlyDictionary<IChemObject, int> idxs)
         {
             // Short of building a full dependency graph we write the parents
             // first, this sort is good for three levels of nesting. Not perfect
@@ -540,7 +542,7 @@ namespace NCDK.IO
             int sgroupIdx = 0;
             foreach (var sgroup in a_sgroups)
             {
-                SgroupType type = sgroup.Type;
+                var type = sgroup.Type;
                 writer.Write(++sgroupIdx).Write(' ').Write(type.Key()).Write(" 0");
 
                 if (sgroup.Atoms.Any())
@@ -658,12 +660,12 @@ namespace NCDK.IO
                   .Write(" 0 0\n");
 
             // fast lookup atom indexes, MDL indexing starts at 1
-            IDictionary<IChemObject, int> idxs = new Dictionary<IChemObject, int>();
-            IDictionary<IAtom, ITetrahedralChirality> atomToStereo = new Dictionary<IAtom, ITetrahedralChirality>();
+            var idxs = new Dictionary<IChemObject, int>();
+            var atomToStereo = new Dictionary<IAtom, ITetrahedralChirality>();
 
             // work around specification ambiguities but reordering atom output
             // order, we also insert the index into a map for lookup
-            IAtom[] atoms = PushHydrogensToBack(mol, idxs);
+            var atoms = PushHydrogensToBack(mol, idxs);
 
             // bonds are in molecule order
             foreach (var bond in mol.Bonds)
@@ -836,7 +838,7 @@ namespace NCDK.IO
             /// <exception cref="IOException">low-level IO error</exception>
             public V30LineWriter Write(int num)
             {
-                return Write(num.ToString());
+                return Write(num.ToString(NumberFormatInfo.InvariantInfo));
             }
 
             /// <summary>
@@ -890,7 +892,7 @@ namespace NCDK.IO
             /// <param name="idxs">index map</param>
             /// <returns>self-reference for chaining.</returns>
             /// <exception cref="IOException">low-level IO error</exception>
-            public V30LineWriter Write(IEnumerable<IChemObject> chemObjects, IDictionary<IChemObject, int> idxs)
+            public V30LineWriter Write(IEnumerable<IChemObject> chemObjects, IReadOnlyDictionary<IChemObject, int> idxs)
             {
                 var chemObjectList = chemObjects.ToList();
                 this.Write(chemObjectList.Count);

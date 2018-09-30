@@ -25,6 +25,7 @@
 using NCDK.QSAR;
 using NCDK.QSAR.Results;
 using System;
+using System.Globalization;
 using System.Xml.Linq;
 
 namespace NCDK.IO.CML
@@ -85,22 +86,22 @@ namespace NCDK.IO.CML
             else if (xpath.EndsWith("property", "metadataList", "metadata"))
             {
                 base.StartElement(xpath, element);
-                if (DICTREF.Equals("qsar:specificationReference"))
+                if (string.Equals(DictRef, "qsar:specificationReference", StringComparison.Ordinal))
                 {
                     //                cdo.SetObjectProperty("MolecularDescriptor", "SpecificationReference", atts.GetValue("content"));
                     currentDescriptorAlgorithmSpecification = AttGetValue(element.Attributes(), "content");
                 }
-                else if (DICTREF.Equals("qsar:implementationTitle"))
+                else if (string.Equals(DictRef, "qsar:implementationTitle", StringComparison.Ordinal))
                 {
                     //                cdo.SetObjectProperty("MolecularDescriptor", "ImplementationTitle", atts.GetValue("content"));
                     currentDescriptorImplementationTitel = AttGetValue(element.Attributes(), "content");
                 }
-                else if (DICTREF.Equals("qsar:implementationIdentifier"))
+                else if (string.Equals(DictRef, "qsar:implementationIdentifier", StringComparison.Ordinal))
                 {
                     //                cdo.SetObjectProperty("MolecularDescriptor", "ImplementationIdentifier", atts.GetValue("content"));
                     currentDescriptorImplementationIdentifier = AttGetValue(element.Attributes(), "content");
                 }
-                else if (DICTREF.Equals("qsar:implementationVendor"))
+                else if (string.Equals(DictRef, "qsar:implementationVendor", StringComparison.Ordinal))
                 {
                     //                cdo.SetObjectProperty("MolecularDescriptor", "ImplementationVendor", atts.GetValue("content"));
                     currentDescriptorImplementationVendor = AttGetValue(element.Attributes(), "content");
@@ -153,7 +154,7 @@ namespace NCDK.IO.CML
                         {
                             var result = new ArrayResult<double>();
                             foreach (var token in descriptorValue.Split(' '))
-                                result.Add(double.Parse(token));
+                                result.Add(double.Parse(token, NumberFormatInfo.InvariantInfo));
                             return new DescriptorValue<ArrayResult<double>>(
                                 specification,
                                 Array.Empty<string>(), Array.Empty<object>(),
@@ -163,7 +164,7 @@ namespace NCDK.IO.CML
                         {
                             var result = new ArrayResult<int>();
                             foreach (var token in descriptorValue.Split(' '))
-                                result.Add(int.Parse(token));
+                                result.Add(int.Parse(token, NumberFormatInfo.InvariantInfo));
                             return new DescriptorValue<ArrayResult<int>>(
                                 specification,
                                 Array.Empty<string>(), Array.Empty<object>(),
@@ -181,13 +182,13 @@ namespace NCDK.IO.CML
                         return new DescriptorValue<Result<double>>(
                             specification,
                             Array.Empty<string>(), Array.Empty<object>(),
-                            new Result<double>(double.Parse(descriptorValue)),
+                            new Result<double>(double.Parse(descriptorValue, NumberFormatInfo.InvariantInfo)),
                             Array.Empty<string>());
                     case "xsd:integer":
                         return new DescriptorValue<Result<int>>(
                             specification,
                             Array.Empty<string>(), Array.Empty<object>(),
-                            new Result<int>(int.Parse(descriptorValue)),
+                            new Result<int>(int.Parse(descriptorValue, NumberFormatInfo.InvariantInfo)),
                             Array.Empty<string>());
                     case "xsd:boolean":
                         return new DescriptorValue<Result<bool>>(

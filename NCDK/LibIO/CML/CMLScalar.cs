@@ -1,4 +1,6 @@
-﻿namespace NCDK.LibIO.CML
+﻿using System.Globalization;
+
+namespace NCDK.LibIO.CML
 {
     public partial class CMLScalar
     {
@@ -22,13 +24,13 @@
 
         public void SetValue(bool scalar)
         {
-            Value = scalar.ToString().ToLowerInvariant();
+            Value = scalar.ToString(NumberFormatInfo.InvariantInfo).ToLowerInvariant();
             DataType = "xsd:boolean";
         }
 
         public void SetValue(double scalar)
         {
-            Value = scalar.ToString();
+            Value = scalar.ToString(NumberFormatInfo.InvariantInfo);
             DataType = "xsd:double";
         }
 
@@ -38,7 +40,7 @@
         /// <param name="scalar"></param>
         public void SetValue(int scalar)
         {
-            Add(scalar.ToString());
+            Add(scalar.ToString(NumberFormatInfo.InvariantInfo));
             DataType = "xsd:integer";
         }
     }

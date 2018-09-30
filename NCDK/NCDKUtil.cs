@@ -65,7 +65,7 @@ namespace NCDK
         /// Set the stereo elements - this will replace the existing instance with a new instance.
         /// </summary>
         /// <param name="elements"></param>
-        public static void SetStereoElements(this IAtomContainer mol, IEnumerable<IReadOnlyStereoElement<IChemObject, IChemObject>> elements)
+        public static void SetStereoElements(this IAtomContainer mol, IEnumerable<IStereoElement<IChemObject, IChemObject>> elements)
         {
             mol.StereoElements.Clear();
             foreach (var se in elements)

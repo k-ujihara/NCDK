@@ -17,42 +17,41 @@
  * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
+using System;
+
 namespace NCDK.Smiles.SMARTS.Parser
 {
-
     /// <summary>
     /// An implementation of interface CharStream, where the stream is assumed to
     /// contain only ASCII characters (without unicode processing).
     /// </summary>
-
     public class SimpleCharStream
     {
         /// <summary>Whether parser is static.</summary>
         public const bool staticFlag = false;
-        int bufsize;
-        int available;
-        int tokenBegin;
+        private int bufsize;
+        private int available;
+        private int tokenBegin;
         /// <summary>Position in buffer.</summary>
-        public int bufpos = -1;
-        protected int[] bufline;
-        protected int[] bufcolumn;
+        private int bufpos = -1;
+        private int[] bufline;
+        private int[] bufcolumn;
 
-        protected int column = 0;
-        protected int line = 1;
+        private int column = 0;
+        private int line = 1;
 
-        protected bool prevCharIsCR = false;
-        protected bool prevCharIsLF = false;
+        private bool prevCharIsCR = false;
+        private bool prevCharIsLF = false;
 
-        protected System.IO.TextReader inputStream;
+        private System.IO.TextReader inputStream;
 
-        protected char[] buffer;
-        protected int maxNextCharInd = 0;
-        protected int inBuf = 0;
-        protected int tabSize = 8;
+        private char[] buffer;
+        private int maxNextCharInd = 0;
+        private int inBuf = 0;
+        private int tabSize = 8;
 
         protected void SetTabSize(int i) { tabSize = i; }
         protected int GetTabSize(int i) { return tabSize; }
-
 
         protected void ExpandBuff(bool wrapAround)
         {
@@ -64,39 +63,38 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 if (wrapAround)
                 {
-                    System.Array.Copy(buffer, tokenBegin, newbuffer, 0, bufsize - tokenBegin);
-                    System.Array.Copy(buffer, 0, newbuffer, bufsize - tokenBegin, bufpos);
+                    Array.Copy(buffer, tokenBegin, newbuffer, 0, bufsize - tokenBegin);
+                    Array.Copy(buffer, 0, newbuffer, bufsize - tokenBegin, bufpos);
                     buffer = newbuffer;
 
-                    System.Array.Copy(bufline, tokenBegin, newbufline, 0, bufsize - tokenBegin);
-                    System.Array.Copy(bufline, 0, newbufline, bufsize - tokenBegin, bufpos);
+                    Array.Copy(bufline, tokenBegin, newbufline, 0, bufsize - tokenBegin);
+                    Array.Copy(bufline, 0, newbufline, bufsize - tokenBegin, bufpos);
                     bufline = newbufline;
 
-                    System.Array.Copy(bufcolumn, tokenBegin, newbufcolumn, 0, bufsize - tokenBegin);
-                    System.Array.Copy(bufcolumn, 0, newbufcolumn, bufsize - tokenBegin, bufpos);
+                    Array.Copy(bufcolumn, tokenBegin, newbufcolumn, 0, bufsize - tokenBegin);
+                    Array.Copy(bufcolumn, 0, newbufcolumn, bufsize - tokenBegin, bufpos);
                     bufcolumn = newbufcolumn;
 
                     maxNextCharInd = (bufpos += (bufsize - tokenBegin));
                 }
                 else
                 {
-                    System.Array.Copy(buffer, tokenBegin, newbuffer, 0, bufsize - tokenBegin);
+                    Array.Copy(buffer, tokenBegin, newbuffer, 0, bufsize - tokenBegin);
                     buffer = newbuffer;
 
-                    System.Array.Copy(bufline, tokenBegin, newbufline, 0, bufsize - tokenBegin);
+                    Array.Copy(bufline, tokenBegin, newbufline, 0, bufsize - tokenBegin);
                     bufline = newbufline;
 
-                    System.Array.Copy(bufcolumn, tokenBegin, newbufcolumn, 0, bufsize - tokenBegin);
+                    Array.Copy(bufcolumn, tokenBegin, newbufcolumn, 0, bufsize - tokenBegin);
                     bufcolumn = newbufcolumn;
 
                     maxNextCharInd = (bufpos -= tokenBegin);
                 }
             }
-            catch (System.Exception t)
+            catch (Exception t)
             {
-                throw new System.Exception(t.Message);
+                throw new Exception(t.Message);
             }
-
 
             bufsize += 2048;
             available = bufsize;
@@ -139,7 +137,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                     maxNextCharInd += i;
                 return;
             }
-            catch (System.Exception ee)
+            catch (Exception ee)
             {
                 var e = ee;
                 if (e is System.ObjectDisposedException)
@@ -227,13 +225,13 @@ namespace NCDK.Smiles.SMARTS.Parser
             return c;
         }
 
-        [System.Obsolete()]
+        [Obsolete]
         public int GetColumn()
         {
             return bufcolumn[bufpos];
         }
 
-        [System.Obsolete()]
+        [Obsolete]
         public int GetLine()
         {
             return bufline[bufpos];
@@ -416,12 +414,12 @@ namespace NCDK.Smiles.SMARTS.Parser
             char[] ret = new char[len];
 
             if ((bufpos + 1) >= len)
-                System.Array.Copy(buffer, bufpos - len + 1, ret, 0, len);
+                Array.Copy(buffer, bufpos - len + 1, ret, 0, len);
             else
             {
-                System.Array.Copy(buffer, bufsize - (len - bufpos - 1), ret, 0,
+                Array.Copy(buffer, bufsize - (len - bufpos - 1), ret, 0,
                                                                   len - bufpos - 1);
-                System.Array.Copy(buffer, 0, ret, len - bufpos - 1, bufpos + 1);
+                Array.Copy(buffer, 0, ret, len - bufpos - 1, bufpos + 1);
             }
 
             return ret;

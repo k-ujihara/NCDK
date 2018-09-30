@@ -22,6 +22,7 @@ using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 
 namespace NCDK.IO
@@ -88,19 +89,19 @@ namespace NCDK.IO
                     {
                         command = GetCommand(line);
                         int lineCount = GetContentLinesCount(line);
-                        if ("ATOMS".Equals(command))
+                        if (string.Equals("ATOMS", command, StringComparison.Ordinal))
                         {
                             ProcessAtomsBlock(lineCount, container);
                         }
-                        else if ("BONDS".Equals(command))
+                        else if (string.Equals("BONDS", command, StringComparison.Ordinal))
                         {
                             ProcessBondsBlock(lineCount, container);
                         }
-                        else if ("IDENT".Equals(command))
+                        else if (string.Equals("IDENT", command, StringComparison.Ordinal))
                         {
                             ProcessIdentBlock(lineCount, container);
                         }
-                        else if ("NAME".Equals(command))
+                        else if (string.Equals("NAME", command, StringComparison.Ordinal))
                         {
                             ProcessNameBlock(lineCount, container);
                         }
@@ -158,7 +159,7 @@ namespace NCDK.IO
             for (int i = 0; i < lineCount; i++)
             {
                 string line = input.ReadLine();
-                int atomicNumber = int.Parse(line.Substring(7, 3).Trim());
+                int atomicNumber = int.Parse(line.Substring(7, 3).Trim(), NumberFormatInfo.InvariantInfo);
                 IAtom atom = container.Builder.NewAtom();
                 atom.AtomicNumber = atomicNumber;
                 atom.Symbol = PeriodicTable.GetSymbol(atomicNumber);
@@ -171,30 +172,30 @@ namespace NCDK.IO
             for (int i = 0; i < lineCount; i++)
             {
                 string line = input.ReadLine();
-                int atom1 = int.Parse(line.Substring(10, 3).Trim()) - 1;
-                int atom2 = int.Parse(line.Substring(16, 3).Trim()) - 1;
+                int atom1 = int.Parse(line.Substring(10, 3).Trim(), NumberFormatInfo.InvariantInfo) - 1;
+                int atom2 = int.Parse(line.Substring(16, 3).Trim(), NumberFormatInfo.InvariantInfo) - 1;
                 if (container.GetBond(container.Atoms[atom1], container.Atoms[atom2]) == null)
                 {
                     IBond bond = container.Builder.NewBond(container.Atoms[atom1],
                             container.Atoms[atom2]);
-                    int order = int.Parse(line.Substring(23).Trim());
+                    int order = int.Parse(line.Substring(23).Trim(), NumberFormatInfo.InvariantInfo);
                     bond.Order = BondManipulator.CreateBondOrder((double)order);
                     container.Bonds.Add(bond);
                 } // else: bond already present; CTX store the bonds twice
             }
         }
 
-        private int GetContentLinesCount(string line)
+        private static int GetContentLinesCount(string line)
         {
-            return int.Parse(line.Substring(18, 3).Trim());
+            return int.Parse(line.Substring(18, 3).Trim(), NumberFormatInfo.InvariantInfo);
         }
 
-        private string GetCommand(string line)
+        private static string GetCommand(string line)
         {
             return line.Substring(2, 8).Trim();
         }
 
-        private bool IsCommand(string line)
+        private static bool IsCommand(string line)
         {
             return (line.Length > 1 && line[0] == ' ' && line[1] == '/');
         }

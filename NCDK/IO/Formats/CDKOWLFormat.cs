@@ -18,6 +18,7 @@
  */
 using NCDK.Tools;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -51,7 +52,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => NameExtensions[0];
         
         /// <inheritdoc/>
-        public override string[] NameExtensions => new string[] { "n3" };
+        public override IReadOnlyList<string> NameExtensions => new string[] { "n3" };
 
         /// <inheritdoc/>
         public override string ReaderClassName { get; } = typeof(RDF.CDKOWLReader).FullName;
@@ -74,10 +75,10 @@ namespace NCDK.IO.Formats
         
         /// <inheritdoc/>
         public override DataFeatures SupportedDataFeatures =>
-                DataFeatures.HAS_2D_COORDINATES | DataFeatures.HAS_3D_COORDINATES
-                    | DataFeatures.HAS_ATOM_PARTIAL_CHARGES | DataFeatures.HAS_ATOM_FORMAL_CHARGES
-                    | DataFeatures.HAS_ATOM_MASS_NUMBERS | DataFeatures.HAS_ATOM_ISOTOPE_NUMBERS
-                    | DataFeatures.HAS_GRAPH_REPRESENTATION | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+                DataFeatures.Has2DCoordinates | DataFeatures.Has3DCoordinates
+                    | DataFeatures.HasAtomPartialCharges | DataFeatures.HasAtomFormalCharges
+                    | DataFeatures.HasAtomMassNumbers | DataFeatures.HasAtomIsotopeNumbers
+                    | DataFeatures.HasGraphRepresentation | DataFeatures.HasAtomElementSymbol;
 
         /// <inheritdoc/>
         public override DataFeatures RequiredDataFeatures => DataFeatures.None;

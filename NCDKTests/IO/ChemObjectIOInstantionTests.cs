@@ -59,7 +59,7 @@ namespace NCDK.IO
                             var cls = typeof(IResourceFormat).Assembly.GetType(formatName);
                             if (cls != null)
                             {
-                                IResourceFormat format = (IResourceFormat)cls.GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
+                                IResourceFormat format = (IResourceFormat)cls.GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());
                                 if (format is IChemFormat)
                                 {
                                     formats.Add((IChemFormat)format);
@@ -127,7 +127,7 @@ namespace NCDK.IO
             }
             catch (ArgumentException)
             {
-                Debug.WriteLine("Could not find this class: " + className);
+                Debug.WriteLine($"Could not find this class: {className}");
                 // but that's not error, it can mean that it is a Jmol based IO class, and no Jmol is in the classpath
             }
             catch (IOException exception)

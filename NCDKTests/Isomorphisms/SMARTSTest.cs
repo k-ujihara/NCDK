@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Smiles;
 using NCDK.Templates;
@@ -37,7 +37,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestStrictSMARTS()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
             SmilesParser sp = new SmilesParser(builder);
             IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
@@ -56,7 +56,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSMARTS()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser sp = new SmilesParser(builder);
             IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
             var query = new QueryAtomContainer(builder);
@@ -88,7 +88,7 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer container = CreateEthane();
 
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
             QueryAtomContainer query1 = new QueryAtomContainer(builder); // SMARTS [h3][h3]
             var atom1 = new Matchers.SMARTS.ImplicitHCountAtom(3, builder);
@@ -104,7 +104,7 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer container = CreateEthane();
 
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
             QueryAtomContainer query1 = new QueryAtomContainer(builder); // SMARTS [h3][h2]
             var atom1 = new Matchers.SMARTS.ImplicitHCountAtom(3, builder);
@@ -120,7 +120,7 @@ namespace NCDK.Isomorphisms
         {
             try
             {
-                IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+                IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
                 SymbolQueryAtom c1 = new SymbolQueryAtom(new Atom("C"));
                 SymbolAndChargeQueryAtom c2 = new SymbolAndChargeQueryAtom(new Atom("C"));

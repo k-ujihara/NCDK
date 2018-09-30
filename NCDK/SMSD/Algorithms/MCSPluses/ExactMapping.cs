@@ -35,7 +35,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    public class ExactMapping
+    public static class ExactMapping
     {
         /// <summary>
         /// Extract atom mapping from the cliques and stores it in an <see cref="IEnumerable{T}"/>.
@@ -63,7 +63,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         /// <summary>
         /// extract atom mapping from the clique List and print it on the screen
         /// </summary>
-        public static IList<IList<int>> ExtractMapping(IList<IList<int>> mappings, IList<int> compGraphNodes, IList<int> cliqueListOrg)
+        internal static List<IReadOnlyList<int>> ExtractMapping(List<IReadOnlyList<int>> mappings, IReadOnlyList<int> compGraphNodes, IReadOnlyList<int> cliqueListOrg)
         {
             try
             {

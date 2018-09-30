@@ -18,8 +18,8 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.Numerics;
+using NCDK.Silent;
 
 namespace NCDK.Charges
 {
@@ -36,7 +36,7 @@ namespace NCDK.Charges
 
         static InductivePartialChargesTest()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             mol = builder.NewAtomContainer();
             IAtom atom1 = builder.NewAtom("C");
             IAtom atom2 = builder.NewAtom("Cl");

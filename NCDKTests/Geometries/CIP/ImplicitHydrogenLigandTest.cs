@@ -38,9 +38,9 @@ namespace NCDK.Geometries.CIP
 
             ILigand ligand = new ImplicitHydrogenLigand(molecule, new VisitedAtoms(), molecule.Atoms[1]);
             Assert.IsNotNull(ligand);
-            Assert.AreEqual(molecule, ligand.GetAtomContainer());
-            Assert.AreEqual(molecule.Atoms[1], ligand.GetCentralAtom());
-            Assert.IsTrue(ligand.GetLigandAtom() is ImmutableHydrogen);
+            Assert.AreEqual(molecule, ligand.AtomContainer);
+            Assert.AreEqual(molecule.Atoms[1], ligand.CentralAtom);
+            Assert.IsTrue(ligand.LigandAtom is ImmutableHydrogen);
         }
     }
 }

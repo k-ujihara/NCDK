@@ -38,7 +38,8 @@ namespace NCDK.Reactions
     public class ReactionEngine
     {
         private EntryDictionary dictionary;
-        public Dictionary<string, object> ParamsMap { get; set; }
+
+        public IReadOnlyDictionary<string, object> ParamsMap { get; set; }
         public IReactionMechanism Mechanism { get; set; }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace NCDK.Reactions
             string mechanismName = "NCDK.Reactions.Mechanisms." + entry.Mechanism;
             try
             {
-                Mechanism = (IReactionMechanism)this.GetType().Assembly.GetType(mechanismName).GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
+                Mechanism = (IReactionMechanism)this.GetType().Assembly.GetType(mechanismName).GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());
                 Trace.TraceInformation("Loaded mechanism: ", mechanismName);
             }
             catch (ArgumentException exception)
@@ -122,13 +123,13 @@ namespace NCDK.Reactions
         {
             var paramDic = entry.ParameterClass;
 
-            ParameterList = new List<IParameterReaction>();
+            this.ParameterList = new List<IParameterReaction>();
             foreach (var param in paramDic)
             {
                 string paramName = "NCDK.Reactions.Types.Parameters." + param[0];
                 try
                 {
-                    IParameterReaction ipc = (IParameterReaction)this.GetType().Assembly.GetType(paramName).GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
+                    var ipc = (IParameterReaction)this.GetType().Assembly.GetType(paramName).GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());
                     ipc.IsSetParameter = bool.Parse(param[1]);
                     ipc.Value = param[2];
 

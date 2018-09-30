@@ -25,9 +25,9 @@ using System;
 
 namespace NCDK.Smiles
 {
-    internal static class SmiFlavors
+    internal static class SmiFlavorTool
     {
-        internal static bool IsSet(this SmiFlavor opts, SmiFlavor opt)
+        internal static bool IsSet(this SmiFlavors opts, SmiFlavors opt)
         {
             return (opts & opt) != 0;
         }
@@ -37,7 +37,7 @@ namespace NCDK.Smiles
     /// Flags for customising SMILES generation.
     /// </summary>
     [Flags]
-    public enum SmiFlavor
+    public enum SmiFlavors
     {
         /// <summary>
         /// Output SMILES in a canonical order. The order is not guaranteed to be
@@ -45,11 +45,13 @@ namespace NCDK.Smiles
         /// </summary>
         Canonical = 0x001,
 
+        InChI = 0x002,
+
         /// <summary>
         /// Output SMILES in a canonical order using the InChI labelling algorithm.
         /// </summary>
         /// <seealso cref="UniversalSmiles"/>
-        InChILabelling = 0x003,
+        InChILabelling = Canonical | InChI,
 
         /// <summary>
         /// Output atom-atom mapping for reactions and atom classes for molecules. The
@@ -215,5 +217,5 @@ namespace NCDK.Smiles
         /// </ul>
         /// </remarks>
         UniversalSmiles = InChILabelling | Isomeric,
-    } // end of SmiFlavor
+    } // end of SmiFlavors
 }

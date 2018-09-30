@@ -26,6 +26,7 @@
 using NCDK.Aromaticities;
 using NCDK.Graphs;
 using NCDK.RingSearches;
+using NCDK.Silent;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
@@ -39,7 +40,7 @@ namespace NCDK.SMSD.Tools
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
-    public class MoleculeSanityCheck
+    public static class MoleculeSanityCheck
     {
         /// <summary>
         /// Modules for cleaning a molecule
@@ -51,7 +52,7 @@ namespace NCDK.SMSD.Tools
             bool isMarkush = false;
             foreach (var atom in molecule.Atoms)
             {
-                if (atom.Symbol.Equals("R"))
+                if (string.Equals(atom.Symbol, "R", StringComparison.Ordinal))
                 {
                     isMarkush = true;
                     break;
@@ -76,8 +77,8 @@ namespace NCDK.SMSD.Tools
                 }
                 else
                 {
-                    IAtomContainer frag1 = fragments[0];
-                    IAtomContainer frag2 = fragments[1];
+                    var frag1 = fragments[0];
+                    var frag2 = fragments[1];
                     if (frag1.Atoms.Count > frag2.Atoms.Count)
                     {
                         molecule = frag1;
@@ -104,7 +105,7 @@ namespace NCDK.SMSD.Tools
             IRingSet ringSet = null;
             try
             {
-                AllRingsFinder arf = new AllRingsFinder();
+                var arf = new AllRingsFinder();
                 ringSet = arf.FindAllRings(mol);
             }
             catch (Exception e)
@@ -115,7 +116,7 @@ namespace NCDK.SMSD.Tools
             try
             {
                 // figure out which atoms are in aromatic rings:
-                CDKHydrogenAdder cdk = CDKHydrogenAdder.GetInstance(Default.ChemObjectBuilder.Instance);
+                var cdk = CDKHydrogenAdder.GetInstance(ChemObjectBuilder.Instance);
                 ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
                 cdk.AddImplicitHydrogens(mol);
 

@@ -45,7 +45,8 @@ namespace NCDK.Hash.Stereo
         /// <exception cref="ArgumentException">less then two indices provided</exception>
         public BasicPermutationParity(int[] indices)
         {
-            if (indices == null) throw new ArgumentNullException("no indices[] provided");
+            if (indices == null)
+                throw new ArgumentNullException(nameof(indices), "no indices[] provided");
             if (indices.Length < 2)
                 throw new ArgumentException($"at least 2 incides required, use {PermutationParity.Identity} for single neighbors");
             this.indices = indices;

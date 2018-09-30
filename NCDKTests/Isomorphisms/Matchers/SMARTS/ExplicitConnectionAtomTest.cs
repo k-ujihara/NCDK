@@ -24,6 +24,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
@@ -40,7 +41,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             IAtom atom = mock_atom.Object;
             mock_atom.Setup(n => n.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key)).Returns(
                 new SMARTSAtomInvariants(new Mock<IAtomContainer>().Object, 0, 0,
-                new int[0], 0, 0, // <- degree not used due to old CDK bug
+                Array.Empty<int>(), 0, 0, // <- degree not used due to old CDK bug
                         2, 0));
             Assert.IsTrue(matcher.Matches(atom));
         }

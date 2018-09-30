@@ -29,14 +29,15 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Base;
 using NCDK.Common.Collections;
-using NCDK.Default;
 using NCDK.IO;
 using NCDK.Numerics;
+using NCDK.Silent;
 using NCDK.Smiles;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 
@@ -46,19 +47,7 @@ namespace NCDK.Fingerprints
     [TestClass()]
     public class CircularFingerprinterTest : CDKTestCase
     {
-        private static readonly IAtomContainer trivialMol = null;
-
-        static CircularFingerprinterTest()
-        {
-            SmilesParser parser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            try
-            {
-                trivialMol = parser.ParseSmiles("CCC(=O)N");
-            }
-            catch (InvalidSmilesException)
-            {
-            }
-        }
+        private static readonly IAtomContainer trivialMol = new SmilesParser(Silent.ChemObjectBuilder.Instance).ParseSmiles("CCC(=O)N");
 
         [TestMethod()]
         [TestCategory("SlowTest")]
@@ -66,7 +55,7 @@ namespace NCDK.Fingerprints
         {
             Trace.TraceInformation("CircularFingerprinter test: loading source materials");
 
-            string fnzip = "NCDK.Data.CDD.circular_validation.zip";
+            var fnzip = "NCDK.Data.CDD.circular_validation.zip";
             Trace.TraceInformation("Loading source content: " + fnzip);
             using (Stream ins = ResourceLoader.GetAsStream(fnzip))
             {
@@ -103,9 +92,8 @@ namespace NCDK.Fingerprints
             IAtomContainer mol2 = smipar.ParseSmiles(smiles2);
             IAtomContainer mol3 = mdlr.Read(bldr.NewAtomContainer());
 
-            CircularFingerprinter fpr = new CircularFingerprinter
+            var fpr = new CircularFingerprinter
             {
-
                 // when stereo-chemistry is perceived we don't have coordinates from the
                 // SMILES and so get a different fingerprint
                 PerceiveStereo = true
@@ -122,22 +110,23 @@ namespace NCDK.Fingerprints
         public void TestGetBitFingerprint()
         {
             Assert.IsTrue(trivialMol != null);
-            CircularFingerprinter circ = new CircularFingerprinter();
-            IBitFingerprint result = circ.GetBitFingerprint(trivialMol);
+            var circ = new CircularFingerprinter();
+            var result = circ.GetBitFingerprint(trivialMol);
 
             BitArray wantBits = new BitArray(0), gotBits = result.AsBitSet();
             int[] REQUIRE_BITS = { 19, 152, 293, 340, 439, 480, 507, 726, 762, 947, 993 };
             foreach (var b in REQUIRE_BITS)
                 BitArrays.SetValue(wantBits, b, true);
-            if (!BitArrays.AreEqual(wantBits, gotBits)) throw new CDKException("Got " + gotBits + ", wanted " + wantBits);
+            if (!BitArrays.Equals(wantBits, gotBits))
+                throw new CDKException("Got " + gotBits + ", wanted " + wantBits);
         }
 
         [TestMethod()]
         public void TestGetCountFingerprint()
         {
             Assert.IsTrue(trivialMol != null);
-            CircularFingerprinter circ = new CircularFingerprinter();
-            ICountFingerprint result = circ.GetCountFingerprint(trivialMol);
+            var circ = new CircularFingerprinter();
+            var result = circ.GetCountFingerprint(trivialMol);
 
             int[] ANSWER_KEY = {-414937772, 1, -1027418143, 1, 1627608083, 1, -868007456, 1, -1006701866, 1,
                 -1059145289, 1, -801752141, 1, 790592664, 1, -289109509, 1, -1650154758, 1, 1286833445, 1};
@@ -155,8 +144,7 @@ namespace NCDK.Fingerprints
                     {
                         found = true;
                         if (gotCount != wantCount)
-                            throw new CDKException("For hash " + gotHash + " got count " + gotCount + " but wanted "
-                                    + wantCount);
+                            throw new CDKException("For hash " + gotHash + " got count " + gotCount + " but wanted " + wantCount);
                     }
                 }
                 if (!found)
@@ -165,7 +153,8 @@ namespace NCDK.Fingerprints
                     break;
                 }
             }
-            if (fail) throw new CDKException("Hash values do not match.");
+            if (fail)
+                throw new CDKException("Hash values do not match.");
         }
 
         [TestMethod()]
@@ -174,16 +163,16 @@ namespace NCDK.Fingerprints
             // currently no-op
         }
 
-        private void Validate(Stream ins)
+        private static void Validate(Stream ins)
         {
             // stream the contents form the zipfile: these are all short
-            Dictionary<string, byte[]> content = new Dictionary<string, byte[]>();
+            var content = new Dictionary<string, byte[]>();
             using (var zip = new ZipArchive(ins))
             {
                 foreach (var ze in zip.Entries)
                 {
                     string fn = ze.Name;
-                    MemoryStream buff = new MemoryStream();
+                    var buff = new MemoryStream();
                     using (var zs = ze.Open())
                     {
                         int b;
@@ -196,7 +185,7 @@ namespace NCDK.Fingerprints
 
             for (int idx = 1; ; idx++)
             {
-                string basefn = idx.ToString();
+                string basefn = idx.ToString(NumberFormatInfo.InvariantInfo);
                 while (basefn.Length < 6)
                     basefn = "0" + basefn;
                 if (!content.TryGetValue(basefn + ".mol", out byte[] molBytes))
@@ -208,58 +197,57 @@ namespace NCDK.Fingerprints
                     mdl.Read(mol);
                 }
 
-                CircularFingerprinter.FP[] validateECFP = ParseValidation(content[basefn + ".ecfp"]);
-                CircularFingerprinter.FP[] validateFCFP = ParseValidation(content[basefn + ".fcfp"]);
+                CircularFingerprint[] validateECFP = ParseValidation(content[basefn + ".ecfp"]);
+                CircularFingerprint[] validateFCFP = ParseValidation(content[basefn + ".fcfp"]);
 
-                Trace.TraceInformation("FN=" + basefn + " MOL=" + mol.Atoms.Count + "," + mol.Bonds.Count + " Requires ECFP="
-                        + validateECFP.Length + " FCFP=" + validateFCFP.Length);
+                Trace.TraceInformation("FN=" + basefn + " MOL=" + mol.Atoms.Count + "," + mol.Bonds.Count + " Requires ECFP=" + validateECFP.Length + " FCFP=" + validateFCFP.Length);
 
-                ValidateFingerprints("ECFP6", mol, CircularFingerprinter.CFPClass.ECFP6, validateECFP);
-                ValidateFingerprints("FCFP6", mol, CircularFingerprinter.CFPClass.FCFP6, validateFCFP);
+                ValidateFingerprints("ECFP6", mol, CircularFingerprinterClass.ECFP6, validateECFP);
+                ValidateFingerprints("FCFP6", mol, CircularFingerprinterClass.FCFP6, validateFCFP);
             }
         }
 
-        private CircularFingerprinter.FP[] ParseValidation(byte[] raw)
+        private static CircularFingerprint[] ParseValidation(byte[] raw)
         {
-            Stream ins = new MemoryStream(raw);
-            TextReader rdr = new StreamReader(ins);
-            List<CircularFingerprinter.FP> list = new List<CircularFingerprinter.FP>();
-
-            while (true)
+            using (var rdr = new StreamReader(new MemoryStream(raw)))
             {
-                string line = rdr.ReadLine();
-                if (line == null || line.Length == 0) break;
-                string[] bits = line.Split(' ');
-                int hashCode = int.Parse(bits[0]);
-                int iteration = int.Parse(bits[1]);
-                int[] atoms = new int[bits.Length - 2];
-                for (int n = 0; n < atoms.Length; n++)
-                    atoms[n] = int.Parse(bits[n + 2]) - 1; // note: atom#'s are 1-based in reference file
-                list.Add(new CircularFingerprinter.FP(hashCode, iteration, atoms));
-            }
+                var list = new List<CircularFingerprint>();
 
-            rdr.Close();
-            return list.ToArray();
+                while (true)
+                {
+                    var line = rdr.ReadLine();
+                    if (line == null || line.Length == 0)
+                        break;
+                    var bits = line.Split(' ');
+                    var hashCode = int.Parse(bits[0], NumberFormatInfo.InvariantInfo);
+                    var iteration = int.Parse(bits[1], NumberFormatInfo.InvariantInfo);
+                    var atoms = new int[bits.Length - 2];
+                    for (int n = 0; n < atoms.Length; n++)
+                        atoms[n] = int.Parse(bits[n + 2], NumberFormatInfo.InvariantInfo) - 1; // note: atom#'s are 1-based in reference file
+                    list.Add(new CircularFingerprint(hashCode, iteration, atoms));
+                }
+
+                return list.ToArray();
+            }
         }
 
-        private void ValidateFingerprints(string label, AtomContainer mol, CircularFingerprinter.CFPClass classType,
-                CircularFingerprinter.FP[] validate)
+        private static void ValidateFingerprints(string label, AtomContainer mol, CircularFingerprinterClass classType, CircularFingerprint[] validate)
         {
             CircularFingerprinter circ = new CircularFingerprinter(classType);
             try
             {
                 circ.Calculate(mol);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 System.Console.Out.WriteLine("Fingerprint calculation failed for molecule:");
                 MDLV2000Writer molwr = new MDLV2000Writer(System.Console.Out);
                 molwr.Write(mol);
                 molwr.Close();
-                throw ex;
+                throw;
             }
 
-            CircularFingerprinter.FP[] obtained = new CircularFingerprinter.FP[circ.FPCount];
+            var obtained = new CircularFingerprint[circ.FPCount];
             for (int n = 0; n < circ.FPCount; n++)
                 obtained[n] = circ.GetFP(n);
 
@@ -273,7 +261,8 @@ namespace NCDK.Fingerprints
                         hit = true;
                         break;
                     }
-                if (!hit) same = false;
+                if (!hit)
+                    same = false;
             }
             for (int i = 0; i < validate.Length && same; i++)
             {
@@ -284,13 +273,15 @@ namespace NCDK.Fingerprints
                         hit = true;
                         break;
                     }
-                if (!hit) same = false;
+                if (!hit)
+                    same = false;
             }
-            if (same) return;
+            if (same)
+                return;
 
             {
                 System.Console.Out.WriteLine("Fingerprint mismatch, validation failed.\nMolecular structure");
-                MDLV2000Writer molwr = new MDLV2000Writer(System.Console.Out);
+                var molwr = new MDLV2000Writer(System.Console.Out);
                 molwr.Write(mol);
                 molwr.Close();
             }
@@ -305,19 +296,19 @@ namespace NCDK.Fingerprints
             throw new CDKException("Fingerprint comparison failed.");
         }
 
-        private bool EqualFingerprints(CircularFingerprinter.FP fp1, CircularFingerprinter.FP fp2)
+        private static bool EqualFingerprints(CircularFingerprint fp1, CircularFingerprint fp2)
         {
-            if (fp1.HashCode != fp2.HashCode || fp1.Iteration != fp2.Iteration || fp1.Atoms.Length != fp2.Atoms.Length)
+            if (fp1.Hash != fp2.Hash || fp1.Iteration != fp2.Iteration || fp1.Atoms.Count != fp2.Atoms.Count)
                 return false;
-            for (int n = 0; n < fp1.Atoms.Length; n++)
+            for (int n = 0; n < fp1.Atoms.Count; n++)
                 if (fp1.Atoms[n] != fp2.Atoms[n]) return false;
             return true;
         }
 
-        private string FormatFP(CircularFingerprinter.FP fp)
+        private static string FormatFP(CircularFingerprint fp)
         {
-            string str = "[" + fp.HashCode + "] iter=" + fp.Iteration + " atoms={";
-            for (int n = 0; n < fp.Atoms.Length; n++)
+            string str = "[" + fp.Hash + "] iter=" + fp.Iteration + " atoms={";
+            for (int n = 0; n < fp.Atoms.Count; n++)
                 str += (n > 0 ? "," : "") + fp.Atoms[n];
             return str + "}";
         }
@@ -327,7 +318,7 @@ namespace NCDK.Fingerprints
         {
             IAtomContainer proton = new AtomContainer();
             proton.Atoms.Add(Atom("H", +1, 0));
-            CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CFPClass.FCFP2);
+            var circ = new CircularFingerprinter(CircularFingerprinterClass.FCFP2);
             Assert.AreEqual(circ.GetBitFingerprint(proton).Cardinality, 0);
         }
 
@@ -347,7 +338,7 @@ namespace NCDK.Fingerprints
             pyrazole.AddBond(pyrazole.Atoms[3], pyrazole.Atoms[4], BondOrder.Single);
             pyrazole.AddBond(pyrazole.Atoms[4], pyrazole.Atoms[5], BondOrder.Double);
             pyrazole.AddBond(pyrazole.Atoms[1], pyrazole.Atoms[5], BondOrder.Single);
-            CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CFPClass.FCFP2);
+            var circ = new CircularFingerprinter(CircularFingerprinterClass.FCFP2);
             Assert.IsNotNull(circ.GetBitFingerprint(pyrazole));
         }
 
@@ -367,7 +358,7 @@ namespace NCDK.Fingerprints
             m.AddBond(m.Atoms[1], m.Atoms[3], BondOrder.Single, BondStereo.Down);
             m.AddBond(m.Atoms[1], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
-            CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CFPClass.ECFP6);
+            var circ = new CircularFingerprinter(CircularFingerprinterClass.ECFP6);
             Assert.IsNotNull(circ.GetBitFingerprint(m));
         }
 
@@ -391,11 +382,8 @@ namespace NCDK.Fingerprints
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
             mol.Bonds[0].Stereo = BondStereo.Up;
 
-            CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CFPClass.ECFP6)
-            {
-                PerceiveStereo = true
-            };
-            IBitFingerprint fp0 = circ.GetBitFingerprint(mol);
+            var circ = new CircularFingerprinter(CircularFingerprinterClass.ECFP6) { PerceiveStereo = true };
+            var fp0 = circ.GetBitFingerprint(mol);
 
             foreach (var atom in atoms)
             {
@@ -404,7 +392,7 @@ namespace NCDK.Fingerprints
                 atom.Point3D = v;
             }
 
-            IBitFingerprint fp1 = circ.GetBitFingerprint(mol);
+            var fp1 = circ.GetBitFingerprint(mol);
 
             Assert.AreEqual(fp0, fp1);
         }
@@ -432,9 +420,8 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestVersion()
         {
-            var fpr = new CircularFingerprinter(CircularFingerprinter.CFPClass.ECFP4);
-            string expected = "CDK-CircularFingerprinter/" + CDK.Version + 
-                " classType=ECFP4 perceiveStereochemistry=false";
+            var fpr = new CircularFingerprinter(CircularFingerprinterClass.ECFP4);
+            string expected = $"CDK-CircularFingerprinter/{CDK.Version} classType=ECFP4 perceiveStereochemistry=false";
             Assert.AreEqual(expected, fpr.GetVersionDescription());
         }
     }

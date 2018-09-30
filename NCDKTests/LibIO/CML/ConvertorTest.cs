@@ -22,6 +22,7 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using System.IO;
 using System.Xml.Linq;
 
@@ -34,7 +35,7 @@ namespace NCDK.LibIO.CML
         [TestMethod()]
         public void TestCdkBondToCMLBond_Wedge()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IBond bond = builder.NewBond();
             bond.Order = BondOrder.Single;
             bond.Stereo = BondStereo.Up;
@@ -55,7 +56,7 @@ namespace NCDK.LibIO.CML
         [TestMethod()]
         public void TestCdkBondToCMLBond_Hatch()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IBond bond = builder.NewBond();
             bond.Order = BondOrder.Single;
             bond.Stereo = BondStereo.Down;

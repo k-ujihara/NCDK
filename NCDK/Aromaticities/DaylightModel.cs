@@ -74,7 +74,7 @@ namespace NCDK.Aromaticities
         private const int SELENIUM = 34;
 
         /// <inheritdoc/>
-        public override int[] Contribution(IAtomContainer container, RingSearch ringSearch)
+        public override IReadOnlyList<int> Contribution(IAtomContainer container, RingSearch ringSearch)
         {
             int n = container.Atoms.Count;
 
@@ -309,7 +309,7 @@ namespace NCDK.Aromaticities
         /// <param name="charge">the formal charge on the atom</param>
         /// <returns>the valence</returns>
         /// <exception cref="NotSupportedException">encountered an element which the valence was not encoded for</exception>
-        private int Valence(int element, int charge)
+        private static int Valence(int element, int charge)
         {
             return Valence(element - charge);
         }
@@ -322,7 +322,7 @@ namespace NCDK.Aromaticities
         /// <param name="element">the atomic number of an element</param>
         /// <returns>the valence</returns>
         /// <exception cref="NotSupportedException">encountered an element which the valence was not encoded for</exception>
-        private int Valence(int element)
+        private static int Valence(int element)
         {
             switch (element)
             {
@@ -357,7 +357,7 @@ namespace NCDK.Aromaticities
         /// </summary>
         /// <param name="atom">atom to get the element from</param>
         /// <returns>the formal charge</returns>
-        private int Element(IAtom atom)
+        private static int Element(IAtom atom)
         {
             int? element = atom.AtomicNumber;
             if (element.HasValue) return element.Value;
@@ -370,7 +370,7 @@ namespace NCDK.Aromaticities
         /// </summary>
         /// <param name="atom">the atom to get the charge of</param>
         /// <returns>the formal charge</returns>
-        private int Charge(IAtom atom)
+        private static int Charge(IAtom atom)
         {
             return atom.FormalCharge ?? 0;
         }

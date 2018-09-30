@@ -35,7 +35,7 @@ namespace NCDK.Common.Util
     /// A typical application first constructs an instance of this class,
     /// sets up the syntax tables, and then repeatedly loops calling the
     /// <see cref="NextToken"/> method in each iteration of the loop until
-    /// it returns the value <see cref="TT_EOF"/>.
+    /// it returns the value <see cref="TTypeEOF"/>.
     /// </para>
     /// </summary>
     public class StreamTokenizer : IEnumerable<int>
@@ -56,13 +56,10 @@ namespace NCDK.Common.Util
         private const int SKIP_LF = Int32.MaxValue - 1;
 
         private bool pushedBack;
-        private bool forceLower;
-       /// <summary> The line number of the last token Read </summary>
+
+        /// <summary> The line number of the last token Read </summary>
 
         private bool eolIsSignificantP = false;
-        private bool slashSlashCommentsP = false;
-        private bool slashStarCommentsP = false;
-
         private byte[] characterType = new byte[256];
         private const byte CT_WHITESPACE = 1;
         private const byte CT_DIGIT = 2;
@@ -79,43 +76,43 @@ namespace NCDK.Common.Util
         /// For a quoted string token, its value is the quote character.
         /// Otherwise, its value is one of the following:
         /// <list type="bullet">
-        ///     <item><see cref="TT_WORD"/> indicates that the token is a word.</item>
-        ///     <item><see cref="TT_NUMBER"/> indicates that the token is a number.</item>
-        ///     <item><see cref="TT_EOL"/> indicates that the end of line has been Read.
+        ///     <item><see cref="TTypeWord"/> indicates that the token is a word.</item>
+        ///     <item><see cref="TTypeNumber"/> indicates that the token is a number.</item>
+        ///     <item><see cref="TTypeEOL"/> indicates that the end of line has been Read.
         ///     The field can only have this value if the <see cref="EolIsSignificant(bool)"/> 
         ///     method has been called with the argument <see langword="true"/>.</item>
-        ///     <item><see cref="TT_EOL"/> indicates that the end of the input stream has been reached.</item>
+        ///     <item><see cref="TTypeEOL"/> indicates that the end of the input stream has been reached.</item>
         /// </list>
         /// The initial value of this field is -4.
         /// </summary>
-        public int TType { get; set; } = TT_NOTHING;
+        public int TType { get; set; } = TTypeNothing;
 
         /// <summary>
         /// A constant indicating that the end of the stream has been Read.
         /// </summary>
-        public const int TT_EOF = -1;
+        public const int TTypeEOF = -1;
 
         /// <summary>
         /// A constant indicating that the end of the line has been Read.
         /// </summary>
-        public const int TT_EOL = '\n';
+        public const int TTypeEOL = '\n';
 
         /// <summary>
         /// A constant indicating that a number token has been Read.
         /// </summary>
-        public const int TT_NUMBER = -2;
+        public const int TTypeNumber = -2;
 
         /// <summary>
         /// A constant indicating that a word token has been Read.
         /// </summary>
-        public const int TT_WORD = -3;
+        public const int TTypeWord = -3;
 
         /// <summary>
         /// A constant indicating that no token has been Read, used for
         /// initializing ttype.  FIXME This could be made public and
         /// made available as the part of the API in a future release.
         /// </summary>
-        private const int TT_NOTHING = -4;
+        private const int TTypeNothing = -4;
 
         /// <summary>
         /// If the current token is a word token, this field contains a
@@ -124,7 +121,7 @@ namespace NCDK.Common.Util
         /// the string.
         /// <para>
         /// The current token is a word when the value of the
-        /// <see cref="TType"/> field is <see cref="TT_WORD"/>. The current token is
+        /// <see cref="TType"/> field is <see cref="TTypeWord"/>. The current token is
         /// a quoted string token when the value of the <see cref="TType"/> field is
         /// a quote character.
         /// </para>
@@ -133,14 +130,14 @@ namespace NCDK.Common.Util
         /// </para>
         /// </summary>
         /// <seealso cref="QuoteChar(int)"/>
-        /// <seealso cref="TT_WORD"/>
+        /// <seealso cref="TTypeWord"/>
         /// <seealso cref="TType"/>
         public string StringValue { get; private set; }
 
         /// <summary>
         /// If the current token is a number, this field contains the value
         /// of that number. The current token is a number when the value of
-        /// the <see cref="TType"/> field is <see cref="TT_NUMBER"/>.
+        /// the <see cref="TType"/> field is <see cref="TTypeNumber"/>.
         /// </summary>
         /// <value>The initial value of this field is 0.0.</value>
         public double NumberValue { get; private set; }
@@ -165,7 +162,7 @@ namespace NCDK.Common.Util
         /// <param name="r">a Reader object providing the input stream.</param>
         public StreamTokenizer(TextReader r) : this()
         {
-            reader = r ?? throw new ArgumentNullException();
+            reader = r ?? throw new ArgumentNullException(nameof(r));
         }
 
         /// <summary>
@@ -332,7 +329,7 @@ namespace NCDK.Common.Util
         /// When the parser encounters a word token that has the format of a
         /// double precision floating-point number, it treats the token as a
         /// number rather than a word, by setting the <see cref="TType"/>
-        /// field to the value <see cref="TT_NUMBER"/> and putting the numeric
+        /// field to the value <see cref="TTypeNumber"/> and putting the numeric
         /// value of the token into the <see cref="NumberValue"/> field.
         /// </para>
         /// </summary>
@@ -350,7 +347,7 @@ namespace NCDK.Common.Util
         /// Determines whether or not ends of line are treated as tokens.
         /// If the flag argument is true, this tokenizer treats end of lines
         /// as tokens; the <see cref="NextToken"/> method returns
-        /// <see cref="TT_EOL"/> and also sets the <see cref="TType"/> field to
+        /// <see cref="TTypeEOL"/> and also sets the <see cref="TType"/> field to
         /// this value when an end of line is Read.
         /// <para>
         /// A line is a sequence of characters ending with either a
@@ -380,11 +377,7 @@ namespace NCDK.Common.Util
         /// If the flag argument is <see langword="false"/>, then C-style comments
         /// are not treated specially.</para>
         /// </summary>
-        public bool SlashStarComments
-        {
-            get { return slashStarCommentsP; }
-            set { slashStarCommentsP = value; }
-        }
+        public bool SlashStarComments { get; set; } = false;
 
         /// <summary>
         /// Determines whether or not the tokenizer recognizes C++-style comments.
@@ -396,27 +389,20 @@ namespace NCDK.Common.Util
         /// If the flag argument is <see langword="false"/>, then C++-style
         /// comments are not treated specially.</para>
         /// </summary>
-        public bool SlashSlashComments
-        {
-            get { return slashSlashCommentsP; }
-            set { slashSlashCommentsP = value; }
-        }
+        public bool SlashSlashComments { get; set; } = false;
 
         /// <summary>
         /// Determines whether or not word token are automatically lowercased.
         /// If the flag argument is <see langword="true"/>, then the value in the
         /// <see cref="StringValue"/> field is lowercased whenever a word token is
         /// returned (the <see cref="TType"/> field has the
-        /// value <see cref="TT_WORD"/> by the <see cref="NextToken"/> method
+        /// value <see cref="TTypeWord"/> by the <see cref="NextToken"/> method
         /// of this tokenizer.
         /// <para>
         /// If the flag argument is <see langword="false"/>, then the
         /// <see cref="StringValue"/> field is not modified.</para>
         /// </summary>
-        public bool LowerCaseMode
-        {
-            set { forceLower = value; }
-        }
+        public bool LowerCaseMode { get; set; }
 
         /// <summary>Read the next character</summary>
         private int Read()
@@ -440,7 +426,7 @@ namespace NCDK.Common.Util
         /// <para>
         /// Typical clients of this
         /// class first set up the syntax tables and then sit in a loop
-        /// calling <see cref="NextToken"/> to parse successive tokens until <see cref="TT_EOF"/>
+        /// calling <see cref="NextToken"/> to parse successive tokens until <see cref="TTypeEOF"/>
         /// is returned.</para>
         /// </summary>
         /// <returns>the value of the <see cref="TType"/> field.</returns>
@@ -461,7 +447,7 @@ namespace NCDK.Common.Util
             {
                 c = Read();
                 if (c < 0)
-                    return TType = TT_EOF;
+                    return TType = TTypeEOF;
                 if (c == '\n')
                     c = NEED_CHAR;
             }
@@ -469,7 +455,7 @@ namespace NCDK.Common.Util
             {
                 c = Read();
                 if (c < 0)
-                    return TType = TT_EOF;
+                    return TType = TTypeEOF;
             }
             TType = c;      /* Just to be safe */
 
@@ -486,7 +472,7 @@ namespace NCDK.Common.Util
                     if (eolIsSignificantP)
                     {
                         peekc = SKIP_LF;
-                        return TType = TT_EOL;
+                        return TType = TTypeEOL;
                     }
                     c = Read();
                     if (c == '\n')
@@ -499,13 +485,13 @@ namespace NCDK.Common.Util
                         LineNumber++;
                         if (eolIsSignificantP)
                         {
-                            return TType = TT_EOL;
+                            return TType = TTypeEOL;
                         }
                     }
                     c = Read();
                 }
                 if (c < 0)
-                    return TType = TT_EOF;
+                    return TType = TTypeEOF;
                 ctype = c < 256 ? ct[c] : CT_ALPHA;
             }
 
@@ -552,7 +538,7 @@ namespace NCDK.Common.Util
                     v = v / denom;
                 }
                 NumberValue = neg ? -v : v;
-                return TType = TT_NUMBER;
+                return TType = TTypeNumber;
             }
 
             if ((ctype & CT_ALPHA) != 0)
@@ -566,9 +552,9 @@ namespace NCDK.Common.Util
                 } while ((ctype & (CT_ALPHA | CT_DIGIT)) != 0);
                 peekc = c;
                 StringValue = sb.ToString();
-                if (forceLower)
-                    StringValue = StringValue.ToLower();
-                return TType = TT_WORD;
+                if (LowerCaseMode)
+                    StringValue = StringValue.ToLowerInvariant();
+                return TType = TTypeWord;
             }
 
             if ((ctype & CT_QUOTE) != 0)
@@ -650,10 +636,10 @@ namespace NCDK.Common.Util
                 return TType;
             }
 
-            if (c == '/' && (slashSlashCommentsP || slashStarCommentsP))
+            if (c == '/' && (SlashSlashComments || SlashStarComments))
             {
                 c = Read();
-                if (c == '*' && slashStarCommentsP)
+                if (c == '*' && SlashStarComments)
                 {
                     int prevc = 0;
                     while ((c = Read()) != '/' || prevc != '*')
@@ -676,12 +662,12 @@ namespace NCDK.Common.Util
                             }
                         }
                         if (c < 0)
-                            return TType = TT_EOF;
+                            return TType = TTypeEOF;
                         prevc = c;
                     }
                     return NextToken();
                 }
-                else if (c == '/' && slashSlashCommentsP)
+                else if (c == '/' && SlashSlashComments)
                 {
                     while ((c = Read()) != '\n' && c != '\r' && c >= 0) ;
                     peekc = c;
@@ -722,7 +708,7 @@ namespace NCDK.Common.Util
         /// </summary>
         public void PushBack()
         {
-            if (TType != TT_NOTHING)   /* No-op if NextToken() not called */
+            if (TType != TTypeNothing)   /* No-op if NextToken() not called */
             {
                 pushedBack = true;
             }
@@ -744,19 +730,19 @@ namespace NCDK.Common.Util
             string ret;
             switch (TType)
             {
-                case TT_EOF:
+                case TTypeEOF:
                     ret = "EOF";
                     break;
-                case TT_EOL:
+                case TTypeEOL:
                     ret = "EOL";
                     break;
-                case TT_WORD:
+                case TTypeWord:
                     ret = StringValue;
                     break;
-                case TT_NUMBER:
+                case TTypeNumber:
                     ret = "n=" + NumberValue;
                     break;
-                case TT_NOTHING:
+                case TTypeNothing:
                     ret = "NOTHING";
                     break;
                 default:
@@ -788,7 +774,7 @@ namespace NCDK.Common.Util
             while (true)
             {
                 int token = NextToken();
-                if (token == TT_EOF)
+                if (token == TTypeEOF)
                 {
                     yield break;
                 }

@@ -2,6 +2,7 @@ using NCDK.IO.Formats;
 using NCDK.LibIO.CML;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Xml.Linq;
 
@@ -28,44 +29,44 @@ namespace NCDK.IO
         /// <summary>
         /// the link map. If you put a string in this map with one of the objects you want to write as key, it will be added as a link to this object (no validity check is done)
         /// </summary>
-        public IDictionary<IChemObject, string> LinkMap { get; set; } = new Dictionary<IChemObject, string>();
+        public IReadOnlyDictionary<IChemObject, string> LinkMap { get; set; } = new Dictionary<IChemObject, string>();
 
         /// <summary>
         /// the date map. If you put a <see cref="DateTime"/> in this map with one of the objects you want to write as key, it will be added as a date to this object (no validity check is done)
         /// </summary>
-        public IDictionary<IChemObject, DateTime> DateMap { get; set; } = new Dictionary<IChemObject, DateTime>();
+        public IReadOnlyDictionary<IChemObject, DateTime> DateMap { get; set; } = new Dictionary<IChemObject, DateTime>();
 
         /// <summary>
         /// the title map. If you put a string in this map with one of the objects you want to write as key, it will be added as a title to this object (no validity check is done)
         /// </summary>
-        public IDictionary<IChemObject, string> TitleMap { get; set; } = new Dictionary<IChemObject, string>();
+        public IReadOnlyDictionary<IChemObject, string> TitleMap { get; set; } = new Dictionary<IChemObject, string>();
 
         /// <summary>
         /// the creator map. If you put a string in this map with one of the objects you want to write as key, it will be added as a creator to this object (no validity check is done)
         /// </summary>
-        public IDictionary<IChemObject, string> CreatorMap { get; set; } = new Dictionary<IChemObject, string>();
+        public IReadOnlyDictionary<IChemObject, string> CreatorMap { get; set; } = new Dictionary<IChemObject, string>();
 
         /// <summary>
         /// InChI map If you put any number of strings in this map with one of the objects you want to write as key, it will be added as a child to the same node as the cml code of the object
         /// </summary>
-        public IDictionary<IChemObject, string> InChIMap { get; set; } = new Dictionary<IChemObject, string>();
+        public IReadOnlyDictionary<IChemObject, string> InChIMap { get; set; } = new Dictionary<IChemObject, string>();
 
-        private string Creator = "";
+        public string Creator { get; set; } = "";
 
         /// <summary>
         /// This will be the title for the rss feed
         /// </summary>
-        private string Title = "";
+        public string Title { get; set; } = "";
 
         /// <summary>
         /// This will be the link for the rss feed
         /// </summary>
-        private string Link = "";
+        public string Link { get; set; } = "";
 
         /// <summary>
         /// This will be the description for the rss feed
         /// </summary>
-        private string Description = "";
+        public string Description { get; set; } = "";
 
         /// <summary>
         /// This will be the Publisher for the rss feed
@@ -75,34 +76,22 @@ namespace NCDK.IO
         /// <summary>
         /// This will be the ImageLink for the rss feed
         /// </summary>
-        private string ImageLink = "";
+        public string ImageLink { get; set; } = "";
 
         /// <summary>
         /// This will be the About for the rss feed
         /// </summary>
-        private string About = "";
+        public string About { get; set; } = "";
 
         /// <summary>
         /// This will be added to the data as TimeZone. format according to 23c. Examples "+01:00" "-05:00"
         /// </summary>
-        private string TimeZone = "+01:00";
-        private IDictionary<IChemObject, IEnumerable<XElement>> multiMap = new Dictionary<IChemObject, IEnumerable<XElement>>();
+        public string TimeZone { get; set; } = "+01:00";
 
         /// <summary>
-        /// the multi map. If you put any number of nu.xom.Elements in this map with one of the objects you want to write as key, it will be added as a child to the same node as the cml code of the object
+        /// If you put any number of nu.xom.Elements in this map with one of the objects you want to write as key, it will be added as a child to the same node as the cml code of the object
         /// </summary>
-        public IDictionary<IChemObject, IEnumerable<XElement>> GetMultiMap()
-        {
-            return multiMap;
-        }
-
-        /// <summary>
-        /// the multi map. If you put any number of nu.xom.Elements in this map with one of the objects you want to write as key, it will be added as a child to the same node as the cml code of the object
-        /// </summary>
-        public void SetMultiMap(IDictionary<IChemObject, IEnumerable<XElement>> value)
-        {
-            multiMap = value;
-        }
+        public IReadOnlyDictionary<IChemObject, IEnumerable<XElement>> MultiMap { get; set; }
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
@@ -153,7 +142,7 @@ namespace NCDK.IO
                 rdfElement.SetAttributeValue(XNamespace.Xmlns + "rdf", NS_RSS10);
                 rdfElement.SetAttributeValue(XNamespace.Xmlns + "mn", "http://usefulinc.com/rss/manifest/");
                 rdfElement.SetAttributeValue(XNamespace.Xmlns + "dc", NS_DCELEMENTS);
-                rdfElement.SetAttributeValue(XNamespace.Xmlns + "cml", Convertor.NS_CML);
+                rdfElement.SetAttributeValue(XNamespace.Xmlns + "cml", Convertor.NamespaceCML);
                 doc.Add(rdfElement);
                 var channelElement = new XElement(NS_RSS10 + "channel");
                 var titleElement = new XElement(NS_RSS10 + "title")
@@ -239,7 +228,7 @@ namespace NCDK.IO
                     {
                         var dateElement = new XElement(NS_DCELEMENTS + "date")
                         {
-                            Value = DateMap[chemObject].ToString("yyyy-MM-dd'T'HH:mm:ss") + TimeZone
+                            Value = DateMap[chemObject].ToString("yyyy-MM-dd'T'HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + TimeZone
                         };
                         itemElement.Add(dateElement);
                     }
@@ -258,7 +247,7 @@ namespace NCDK.IO
                         itemElement.Add(inchiElement);
                     }
                     CMLElement root = null;
-                    Convertor convertor = new Convertor(true, null);
+                    var convertor = new Convertor(true, null);
                     obj = (IChemObject)list[i];
                     if (obj is IAtomContainer)
                     {
@@ -302,12 +291,12 @@ namespace NCDK.IO
                     }
                     else
                     {
-                        throw new CDKException("Unsupported chemObject: " + obj.GetType().Name);
+                        throw new CDKException($"Unsupported chemObject: {obj.GetType().Name}");
                     }
                     itemElement.Add(root);
-                    if (GetMultiMap()[chemObject] != null)
+                    if (MultiMap[chemObject] != null)
                     {
-                        var coll = GetMultiMap()[chemObject];
+                        var coll = MultiMap[chemObject];
                         foreach (var e in coll)
                         {
                             itemElement.Add(e);

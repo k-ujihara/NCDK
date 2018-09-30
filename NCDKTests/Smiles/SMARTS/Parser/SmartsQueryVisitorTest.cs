@@ -17,6 +17,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Silent;
 using System.IO;
 
 namespace NCDK.Smiles.SMARTS.Parser
@@ -35,7 +36,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             SMARTSParser parser = new SMARTSParser(new StringReader(smarts));
             ASTStart start = parser.Start();
-            SmartsQueryVisitor visitor = new SmartsQueryVisitor(Default.ChemObjectBuilder.Instance);
+            SmartsQueryVisitor visitor = new SmartsQueryVisitor(ChemObjectBuilder.Instance);
             visitor.Visit(start, null);
         }
 

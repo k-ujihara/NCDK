@@ -19,6 +19,7 @@
 
 using NCDK.Tools;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -49,7 +50,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => null;
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = Array.Empty<string>();
+        public override IReadOnlyList<string> NameExtensions { get; } = Array.Empty<string>();
 
         /// <inheritdoc/>
         public override string ReaderClassName { get; } = typeof(ZMatrixReader).FullName;
@@ -60,7 +61,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (lineNumber == 4 && line.IndexOf("Z Matrix") != -1)
+            if (lineNumber == 4 && line.Contains("Z Matrix"))
             {
                 return true;
             }

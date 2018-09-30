@@ -1,6 +1,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
@@ -30,12 +31,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Collections.ObjectModel;
 
 namespace NCDK.Default
 {
     /// <inheritdoc cref="IReaction"/>
     // @cdk.githash
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class Reaction
         : ChemObject, IReaction, ICloneable
@@ -52,7 +53,7 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public IChemObjectSet<IAtomContainer> Agents => agents;
 
-        private IList<IMapping> mappings;
+        private List<IMapping> mappings;
         /// <inheritdoc/>
         public IList<IMapping> Mappings => mappings;
 
@@ -99,11 +100,11 @@ namespace NCDK.Default
             var clone_agents = (IChemObjectSet<IAtomContainer>)agents.Clone(map);
             var clone_products = (IChemObjectSet<IAtomContainer>)products.Clone(map);
 
-            var clone_mappings = new ObservableCollection<IMapping>();
+            var clone_mappings = new List<IMapping>();
             foreach (var mapping in mappings)
                 clone_mappings.Add((IMapping)mapping.Clone(map));
 
-            Reaction clone = (Reaction)base.Clone(map);
+            var clone = (Reaction)base.Clone(map);
             clone.reactants = clone_reactants;
             clone.agents = clone_agents;
             clone.products = clone_products;
@@ -117,6 +118,7 @@ namespace NCDK.Silent
 {
     /// <inheritdoc cref="IReaction"/>
     // @cdk.githash
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class Reaction
         : ChemObject, IReaction, ICloneable
@@ -133,7 +135,7 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public IChemObjectSet<IAtomContainer> Agents => agents;
 
-        private IList<IMapping> mappings;
+        private List<IMapping> mappings;
         /// <inheritdoc/>
         public IList<IMapping> Mappings => mappings;
 
@@ -180,11 +182,11 @@ namespace NCDK.Silent
             var clone_agents = (IChemObjectSet<IAtomContainer>)agents.Clone(map);
             var clone_products = (IChemObjectSet<IAtomContainer>)products.Clone(map);
 
-            var clone_mappings = new ObservableCollection<IMapping>();
+            var clone_mappings = new List<IMapping>();
             foreach (var mapping in mappings)
                 clone_mappings.Add((IMapping)mapping.Clone(map));
 
-            Reaction clone = (Reaction)base.Clone(map);
+            var clone = (Reaction)base.Clone(map);
             clone.reactants = clone_reactants;
             clone.agents = clone_agents;
             clone.products = clone_products;

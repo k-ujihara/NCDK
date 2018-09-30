@@ -34,9 +34,9 @@ namespace NCDK
     {
         /// <summary>
         /// Called by objects to notify objects that implemented this interface
-        /// and registered with them as ChemObjectListeners.
+        /// and registered with them as <see cref="IChemObjectListener"/>s.
         /// </summary>
-        /// <param name="event">a ChemObjectChangeEvent object</param>
-        void OnStateChanged(ChemObjectChangeEventArgs @event);
+        /// <param name="eventArgs">Event arguments</param>
+        void OnStateChanged(ChemObjectChangeEventArgs eventArgs);
     }
 }

@@ -41,7 +41,6 @@ namespace NCDK.Renderers.Colors
     ///<seealso href="http://jmol.sourceforge.net/jscolors/">Jmol, Colors</seealso>
     // @cdk.module render
     // @cdk.githash
-    [Serializable]
     public class CDK2DAtomColors : IAtomColorer
     {
         private static readonly Color hexD9FFFF = Color.FromRgb(0xD9, 0xFF, 0xFF);

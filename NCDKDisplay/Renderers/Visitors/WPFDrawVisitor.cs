@@ -238,8 +238,8 @@ namespace NCDK.Renderers.Visitors
 
         private void Visit(TextElement textElement)
         {
-            var point = this.GetTextBasePoint(textElement.Text, textElement.Coord, this.fontManager.Typeface, this.fontManager.Size);
-            var textBounds = this.GetTextBounds(textElement.Text, textElement.Coord, this.fontManager.Typeface, this.fontManager.Size);
+            var point = GetTextBasePoint(textElement.Text, textElement.Coord, this.fontManager.Typeface, this.fontManager.Size);
+            var textBounds = GetTextBounds(textElement.Text, textElement.Coord, this.fontManager.Typeface, this.fontManager.Size);
             var backColor = this.BackgroundColor;
             this.dc.DrawRectangle(GetBrush(backColor), null, textBounds);
             this.dc.DrawText(new FormattedText(

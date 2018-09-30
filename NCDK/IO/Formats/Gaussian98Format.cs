@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Tools;
+using System;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -47,7 +49,7 @@ namespace NCDK.IO.Formats
         public override string PreferredNameExtension => null;
 
         /// <inheritdoc/>
-        public override string[] NameExtensions { get; } = new string[0];
+        public override IReadOnlyList<string> NameExtensions { get; } = Array.Empty<string>();
 
         /// <inheritdoc/>
         public override string ReaderClassName { get; } = typeof(Gaussian98Reader).FullName;
@@ -58,7 +60,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.IndexOf("Gaussian(R) 98") >= 0 || line.IndexOf("Gaussian 98") >= 0)
+            if (line.Contains("Gaussian(R) 98") || line.Contains("Gaussian 98"))
             {
                 return true;
             }

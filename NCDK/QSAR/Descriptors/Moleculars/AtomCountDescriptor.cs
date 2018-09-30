@@ -18,6 +18,7 @@
  */
 
 using NCDK.QSAR.Results;
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -53,31 +54,24 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     {
         private string elementName = "*";
 
-        /// <summary>
-        ///  Constructor for the AtomCountDescriptor object.
-        /// </summary>
         public AtomCountDescriptor()
         {
             elementName = "*";
         }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public override IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount",
                 typeof(AtomCountDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        /// <summary>
-        ///  Sets the parameters attribute of the AtomCountDescriptor object.
-        /// </summary>
-        /// <exception cref="CDKException">if the number of parameters is greater than 1 or else the parameter is not of type string</exception>
-        public override object[] Parameters
+        public override IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
                     throw new CDKException("AtomCount only expects one parameter");
                 }
@@ -99,7 +93,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             get
             {
                 string name = "n";
-                if (elementName.Equals("*"))
+                if (string.Equals(elementName, "*", StringComparison.Ordinal))
                     name = "nAtom";
                 else
                     name += elementName;
@@ -108,7 +102,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <summary>
-        ///  This method calculate the number of atoms of a given type in an <see cref="IAtomContainer"/>.
+        /// This method calculate the number of atoms of a given type in an <see cref="IAtomContainer"/>.
         /// </summary>
         /// <param name="container">The atom container for which this descriptor is to be calculated</param>
         /// <returns>Number of atoms of a certain type is returned.</returns>
@@ -120,19 +114,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             if (container == null)
             {
-                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters,
+                return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters,
                     new Result<int>(0), DescriptorNames,
                     new CDKException("The supplied AtomContainer was NULL"));
             }
 
             if (container.Atoms.Count == 0)
             {
-                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters,
+                return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters,
                     new Result<int>(0), DescriptorNames, new CDKException(
                         "The supplied AtomContainer did not have any atoms"));
             }
 
-            if (elementName.Equals("*"))
+            if (string.Equals(elementName, "*", StringComparison.Ordinal))
             {
                 for (int i = 0; i < container.Atoms.Count; i++)
                 {
@@ -142,11 +136,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
                 atomCount += container.Atoms.Count;
             }
-            else if (elementName.Equals("H"))
+            else if (string.Equals(elementName, "H", StringComparison.Ordinal))
             {
                 for (int i = 0; i < container.Atoms.Count; i++)
                 {
-                    if (container.Atoms[i].Symbol.Equals(elementName))
+                    if (container.Atoms[i].Symbol.Equals(elementName, StringComparison.Ordinal))
                     {
                         atomCount += 1;
                     }
@@ -162,30 +156,22 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 for (int i = 0; i < container.Atoms.Count; i++)
                 {
-                    if (container.Atoms[i].Symbol.Equals(elementName))
+                    if (container.Atoms[i].Symbol.Equals(elementName, StringComparison.Ordinal))
                     {
                         atomCount += 1;
                     }
                 }
             }
 
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(
                     atomCount), DescriptorNames);
         }
 
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
-        /// <summary>
-        ///  The parameterNames attribute of the AtomCountDescriptor object.
-        /// </summary>
         public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "elementName" };
 
-        /// <summary>
-        ///  Gets the parameterType attribute of the AtomCountDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object whose class is that of the parameter requested</returns>
         public override object GetParameterType(string name) => "";
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

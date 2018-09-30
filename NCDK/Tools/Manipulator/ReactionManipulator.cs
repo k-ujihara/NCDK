@@ -516,7 +516,7 @@ namespace NCDK.Tools.Manipulator
             }
             // fail fast
             if (!mappedReactantBonds.Any())
-                return GenericCollections.GetEmptySet<IBond>();
+                return Sets.Empty<IBond>();
 
             foreach (IAtomContainer product in reaction.Products)
             {
@@ -530,7 +530,7 @@ namespace NCDK.Tools.Manipulator
             }
             // fail fast
             if (!mappedProductBonds.Any())
-                return GenericCollections.GetEmptySet<IBond>();
+                return Sets.Empty<IBond>();
 
             // repeat above but now store any that are different or unmapped as being mapped
             foreach (IAtomContainer reactant in reaction.Reactants)

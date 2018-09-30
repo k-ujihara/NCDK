@@ -37,7 +37,7 @@ namespace NCDK.Fingerprints
     {
         private volatile int[] trueBits;
 
-        public IntArrayFingerprint(IDictionary<string, int> rawFingerPrint)
+        public IntArrayFingerprint(IReadOnlyDictionary<string, int> rawFingerPrint)
         {
             trueBits = new int[rawFingerPrint.Count];
             int i = 0;
@@ -55,7 +55,7 @@ namespace NCDK.Fingerprints
 
         public IntArrayFingerprint()
         {
-            trueBits = new int[0];
+            trueBits = Array.Empty<int>();
         }
 
         public IntArrayFingerprint(IBitFingerprint fingerprint)
@@ -70,7 +70,7 @@ namespace NCDK.Fingerprints
             {
                 trueBits = new int[fingerprint.Cardinality];
                 int index = 0;
-                for (int i = 0; i < fingerprint.Count; i++)
+                for (int i = 0; i < fingerprint.Length; i++)
                 {
                     if (fingerprint[i])
                     {
@@ -82,7 +82,7 @@ namespace NCDK.Fingerprints
 
         public int Cardinality => trueBits.Length;
 
-        public long Count => 4294967296L;
+        public long Length => 4294967296L;
 
         public void And(IBitFingerprint fingerprint)
         {

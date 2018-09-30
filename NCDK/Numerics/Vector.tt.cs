@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 #pragma warning disable 3021
+#pragma warning disable CA1000 // Do not declare static members on generic types
 
 using System;
 using System.Diagnostics.Contracts;

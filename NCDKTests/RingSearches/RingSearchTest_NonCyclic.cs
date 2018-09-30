@@ -22,6 +22,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Templates;
+using System.Linq;
 
 namespace NCDK.RingSearches
 {
@@ -73,13 +74,13 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestIsolatedRingFragments()
         {
-            Assert.IsTrue(new RingSearch(nonCyclic).IsolatedRingFragments().Count == 0);
+            Assert.IsTrue(new RingSearch(nonCyclic).IsolatedRingFragments().Count() == 0);
         }
 
         [TestMethod()]
         public void TestFusedRingFragments()
         {
-            Assert.IsTrue(new RingSearch(nonCyclic).FusedRingFragments().Count == 0);
+            Assert.IsTrue(new RingSearch(nonCyclic).FusedRingFragments().Count() == 0);
         }
     }
 }

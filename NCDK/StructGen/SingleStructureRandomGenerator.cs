@@ -33,20 +33,22 @@ namespace NCDK.StructGen
     /// <summary>
     /// Randomly generates a single, connected, correctly bonded structure for
     /// a given molecular formula.
-    /// To see it working run the graphical
-    /// test org.openscience.cdk.test.SingleStructureRandomGeneratorTest
-    /// and add more structures to the panel using the "More" button.
-    /// In order to use this class, use MFAnalyser to get an AtomContainer from
-    /// a molecular formula string.
     /// </summary>
     /// <remarks>
+    /// <para>
+    /// To see it working run the graphical
+    /// test SingleStructureRandomGeneratorTest
+    /// and add more structures to the panel using the "More" button.
+    /// In order to use this class, use MFAnalyser to get an <see cref="IAtomContainer"/> from
+    /// a molecular formula string.
+    /// </para>
     /// <para>Assign hydrogen counts to each heavy atom. The hydrogens should not be
     /// in the atom pool but should be assigned implicitly to the heavy atoms in
     /// order to reduce computational cost.
     /// Assign this AtomContainer to the
     /// SingleStructureRandomGenerator and retrieve a randomly generated, but correctly bonded
     /// structure by using the Generate() method. You can then repeatedly call
-    /// the Generate() method in order to retrieve further structures.</para>
+    /// the <see cref="Generate()"/> method in order to retrieve further structures.</para>
     /// <para>
     /// Agenda:
     /// <list type="bullet">
@@ -61,8 +63,9 @@ namespace NCDK.StructGen
     // @cdk.githash
     public class SingleStructureRandomGenerator
     {
+        private static readonly SaturationChecker satCheck = CDK.SaturationChecker;
+
         IAtomContainer atomContainer;
-        SaturationChecker satCheck;
         Maths.Random random = null;
 
         /// <summary>
@@ -70,100 +73,79 @@ namespace NCDK.StructGen
         /// </summary>
         public SingleStructureRandomGenerator(long seed)
         {
-            satCheck = new SaturationChecker();
             random = new Maths.Random(seed);
         }
 
-        /// <summary>
-        /// Constructor for the SingleStructureRandomGenerator object.
-        /// </summary>
         public SingleStructureRandomGenerator()
             : this((long)11000)
-        { }
+        {
+        }
 
-        /// <summary>
-        /// Sets the AtomContainer attribute of the SingleStructureRandomGenerator object.
-        ///
-        /// <param name="ac">The new AtomContainer value</param>
-        /// </summary>
         public void SetAtomContainer(IAtomContainer ac)
         {
             this.atomContainer = ac;
         }
 
         /// <summary>
-        /// Generates a random structure based on the atoms in the given IAtomContainer.
+        /// Generates a random structure based on the atoms in the given <see cref="IAtomContainer"/>.
         /// </summary>
         public IAtomContainer Generate()
         {
-            bool structureFound = false;
-            bool bondFormed;
-            double order;
-            double max, cmax1, cmax2;
             int iteration = 0;
-            IAtom partner;
-            IAtom atom;
+            bool structureFound = false;
             do
             {
                 iteration++;
                 atomContainer.RemoveAllElectronContainers();
+                bool bondFormed;
                 do
                 {
                     bondFormed = false;
-                    for (int f = 0; f < atomContainer.Atoms.Count; f++)
+                    foreach (var atom in atomContainer.Atoms)
                     {
-                        atom = atomContainer.Atoms[f];
-
                         if (!satCheck.IsSaturated(atom, atomContainer))
                         {
-                            partner = GetAnotherUnsaturatedNode(atom);
+                            var partner = GetAnotherUnsaturatedNode(atom);
                             if (partner != null)
                             {
-                                cmax1 = satCheck.GetCurrentMaxBondOrder(atom, atomContainer);
-
-                                cmax2 = satCheck.GetCurrentMaxBondOrder(partner, atomContainer);
-                                max = Math.Min(cmax1, cmax2);
-                                order = Math.Min(Math.Max(1.0, random.NextInt((int)Math.Round(max))), 3.0);
-                                Debug.WriteLine("Forming bond of order ", order);
-                                atomContainer.Bonds.Add(atomContainer.Builder.NewBond(atom, partner,
-                                        BondManipulator.CreateBondOrder(order)));
+                                var cmax1 = satCheck.GetCurrentMaxBondOrder(atom, atomContainer);
+                                var cmax2 = satCheck.GetCurrentMaxBondOrder(partner, atomContainer);
+                                var max = Math.Min(cmax1, cmax2);
+                                var order = Math.Min(Math.Max(1.0, random.NextInt((int)Math.Round(max))), 3.0);
+                                Debug.WriteLine($"Forming bond of order {order}");
+                                atomContainer.Bonds.Add(atomContainer.Builder.NewBond(atom, partner, BondManipulator.CreateBondOrder(order)));
                                 bondFormed = true;
                             }
                         }
                     }
                 } while (bondFormed);
-                if (ConnectivityChecker.IsConnected(atomContainer) && satCheck.AllSaturated(atomContainer))
+                if (ConnectivityChecker.IsConnected(atomContainer) && satCheck.IsSaturated(atomContainer))
                 {
                     structureFound = true;
                 }
             } while (!structureFound && iteration < 20);
-            Debug.WriteLine("Structure found after #iterations: ", iteration);
+            Debug.WriteLine($"Structure found after #iterations: {iteration}");
             return atomContainer.Builder.NewAtomContainer(atomContainer);
         }
 
-        /// <summary>
-        /// Gets the AnotherUnsaturatedNode attribute of the SingleStructureRandomGenerator object.
-        /// </summary>
-        /// <returns>The AnotherUnsaturatedNode value</returns>
         private IAtom GetAnotherUnsaturatedNode(IAtom exclusionAtom)
         {
-            IAtom atom;
-            int next = random.NextInt(atomContainer.Atoms.Count);
+            var next = random.NextInt(atomContainer.Atoms.Count);
 
             for (int f = next; f < atomContainer.Atoms.Count; f++)
             {
-                atom = atomContainer.Atoms[f];
+                var atom = atomContainer.Atoms[f];
                 if (!satCheck.IsSaturated(atom, atomContainer) && exclusionAtom != atom
-                        && !atomContainer.GetConnectedAtoms(exclusionAtom).Contains(atom))
+                 && !atomContainer.GetConnectedAtoms(exclusionAtom).Contains(atom))
                 {
                     return atom;
                 }
             }
             for (int f = 0; f < next; f++)
             {
-                atom = atomContainer.Atoms[f];
+                var atom = atomContainer.Atoms[f];
                 if (!satCheck.IsSaturated(atom, atomContainer) && exclusionAtom != atom
-                        && !atomContainer.GetConnectedAtoms(exclusionAtom).Contains(atom))
+                 && !atomContainer.GetConnectedAtoms(exclusionAtom).Contains(atom))
                 {
                     return atom;
                 }

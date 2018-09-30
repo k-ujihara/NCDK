@@ -49,8 +49,6 @@ namespace NCDK.Isomorphisms.Matchers
             : base(builder)
         { }
 
-        public void SetOperator(string str) { }
-
         /// <summary>
         /// The matches implementation of the <see cref="QueryAtom"/> interface.
         /// </summary>

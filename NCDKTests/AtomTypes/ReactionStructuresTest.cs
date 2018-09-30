@@ -18,7 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 
@@ -726,8 +726,7 @@ namespace NCDK.AtomTypes
             expected1.AddBond(expected1.Atoms[6], expected1.Atoms[1], BondOrder.Single);
             AddExplicitHydrogens(expected1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
-            LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-            lpcheck.Saturate(expected1);
+            CDK.LonePairElectronChecker.Saturate(expected1);
 
             string[] expectedTypes = { "F.plus.sp2", "C.sp2", "C.minus.planar", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "H", "H", "H", "H", "H" };
             Assert.AreEqual(expectedTypes.Length, expected1.Atoms.Count);

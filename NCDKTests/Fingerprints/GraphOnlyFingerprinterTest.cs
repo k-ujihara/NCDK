@@ -22,9 +22,9 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.IO;
 using NCDK.Isomorphisms;
+using NCDK.Silent;
 using NCDK.Smiles;
 using System.Collections;
 using System.Diagnostics;
@@ -94,7 +94,7 @@ namespace NCDK.Fingerprints
                 Assert.IsNotNull(reader, "Could not create reader");
                 if (reader.Accepts(typeof(AtomContainer)))
                 {
-                    structure = reader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
+                    structure = reader.Read(ChemObjectBuilder.Instance.NewAtomContainer());
                 }
             }
             return structure;

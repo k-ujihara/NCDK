@@ -19,6 +19,7 @@
 using NCDK.Aromaticities;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -63,8 +64,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the IsProtonInAromaticSystemDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
-        private static DescriptorSpecification _Specification { get; } =
+        public IImplementationSpecification Specification => specification;
+        private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInAromaticSystem",
                 typeof(IsProtonInAromaticSystemDescriptor).FullName, "The Chemistry Development Kit");
@@ -73,11 +74,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// The parameters attribute of the IsProtonInAromaticSystemDescriptor object
         /// </summary>
         /// <exception cref="CDKException"></exception>
-        public object[] Parameters
+        public IReadOnlyList<object> Parameters
         {
             set
             {
-                if (value.Length > 1)
+                if (value.Count > 1)
                 {
                     throw new CDKException("IsProtonInAromaticSystemDescriptor only expects two parameters");
                 }
@@ -119,12 +120,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 catch (CDKException e)
                 {
-                    return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), NAMES, e);
+                    return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(0), NAMES, e);
                 }
             }
             var neighboor = mol.GetConnectedAtoms(clonedAtom);
             IAtom neighbour0 = (IAtom)neighboor.First();
-            if (atom.Symbol.Equals("H"))
+            if (string.Equals(atom.Symbol, "H", StringComparison.Ordinal))
             {
                 //Debug.WriteLine("aromatic proton");
                 if (neighbour0.IsAromatic)
@@ -151,7 +152,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             {
                 isProtonInAromaticSystem = 0;
             }
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(isProtonInAromaticSystem), NAMES);
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(isProtonInAromaticSystem), NAMES);
         }
 
         /// <summary>

@@ -22,8 +22,8 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.Geometries;
+using NCDK.Silent;
 using System.Diagnostics;
 
 namespace NCDK.IO.CML
