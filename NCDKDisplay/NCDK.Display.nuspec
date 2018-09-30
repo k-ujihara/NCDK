@@ -4,7 +4,7 @@ xmlns:xi="http://www.w3.org/2001/XInclude"
 >
   <metadata>
     <id>NCDK.Display</id>
-    <version>1.4.0-alpha</version>
+    <version>1.4.0</version>
     <title>NCDK.Display: Depiction module of NCDK</title>
     <authors>Kazuya Ujihara</authors>
     <owners>kazuya</owners>
@@ -27,5 +27,6 @@ xmlns:xi="http://www.w3.org/2001/XInclude"
   </metadata>
   <files>
     <file src="bin/Release/NCDK.Display.dll" target="lib/net461" />
+    <file src="bin/Release/NCDK.Display.xml" target="lib/net461" />
   </files>
 </package>
