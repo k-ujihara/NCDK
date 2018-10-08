@@ -5,9 +5,6 @@ using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @author      chhoppe from EUROSCREEN
     // @cdk.module test-qsarmolecular
     [TestClass()]
@@ -24,7 +21,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Descriptor.Parameters = new object[] { true };
             SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCCCc1ccccc1"); // benzol
-                                                                 //Debug.WriteLine("test1>:"+((Result<int>)Descriptor.Calculate(mol).GetValue()).Value);
             Assert.AreEqual(4, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
 
@@ -34,7 +30,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Descriptor.Parameters = new object[] { true };
             SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("C=CC=Cc1ccccc1");
-            //Debug.WriteLine("test2>"+((Result<int>)Descriptor.Calculate(mol).GetValue()).Value);
             Assert.AreEqual(4, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
 
@@ -44,7 +39,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Descriptor.Parameters = new object[] { true };
             SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("C=C(CCC1CC1C(C)C(C)C)C(C)CC2CCCC2");
-            //Debug.WriteLine("test3>"+((Result<int>)Descriptor.Calculate(mol).GetValue()).Value);
             Assert.AreEqual(5, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
 
@@ -54,7 +48,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Descriptor.Parameters = new object[] { true };
             SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCCCNCC");
-            //Debug.WriteLine("test4>"+((Result<int>)Descriptor.Calculate(mol).GetValue()).Value);
             Assert.AreEqual(4, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
 
@@ -64,7 +57,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Descriptor.Parameters = new object[] { true };
             SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CC(C)(C)c1ccccc1");
-            //Debug.WriteLine("test5>"+((Result<int>)Descriptor.Calculate(mol).GetValue()).Value);
             Assert.AreEqual(3, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
 
@@ -74,7 +66,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Descriptor.Parameters = new object[] { true };
             SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CC(C)(C)c2ccc(OCCCC(=O)Nc1nccs1)cc2");
-            //Debug.WriteLine("test6>"+((Result<int>)Descriptor.Calculate(mol).GetValue()).Value);
             Assert.AreEqual(4, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
 
@@ -84,7 +75,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Descriptor.Parameters = new object[] { true };
             SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CC(=O)N1CCN(CC1)c2ccc(NC(=O)COc3ccc(cc3)C(C)(C)C)cc2");
-            //Debug.WriteLine("test7>"+((Result<int>)Descriptor.Calculate(mol).GetValue()).Value);
             Assert.AreEqual(3, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
 
@@ -93,6 +83,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             AssertSmiles("CCO", 2);
             AssertSmiles("OCC", 2);
+        }
+
+        [TestMethod()]
+        public void TestHeptabarb()
+        {
+            Descriptor.Parameters = new object[] { true };
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            IAtomContainer mol = sp.ParseSmiles("O=C1NC(=O)NC(=O)C1(/C2=C/CCCCC2)CC");
+            Assert.AreEqual(2, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
 
         private void AssertSmiles(string smi, int expected)

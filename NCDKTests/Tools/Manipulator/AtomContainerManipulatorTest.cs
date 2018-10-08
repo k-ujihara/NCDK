@@ -696,7 +696,7 @@ namespace NCDK.Tools.Manipulator
         }
 
         [TestMethod()]
-        public void TestPerceiveAtomTypesAndConfigureUnSetProperties()
+        public void TestPerceiveAtomTypesAndConfigureUnsetProperties()
         {
             IAtomContainer container = new AtomContainer();
             IAtom atom = new Atom("C") { ExactMass = 13.0 };

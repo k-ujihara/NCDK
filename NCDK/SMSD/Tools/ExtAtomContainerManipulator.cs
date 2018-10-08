@@ -207,7 +207,7 @@ namespace NCDK.SMSD.Tools
                 foreach (var atom in mol.Atoms.Where(n => !n.ImplicitHydrogenCount.HasValue))
                     atom.ImplicitHydrogenCount = 0;
                 //            Recompute hydrogen counts of neighbours of removed Hydrogens.
-                mol = ReComputeHydrogens(mol, atomContainer, remove, map);
+                mol = RecomputeHydrogens(mol, atomContainer, remove, map);
                 return mol;
             }
             else
@@ -253,12 +253,12 @@ namespace NCDK.SMSD.Tools
         /// <exception cref="CDKException"></exception>
         public static void PercieveAtomTypesAndConfigureAtoms(IAtomContainer container)
         {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+            var matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
             foreach (var atom in container.Atoms)
             {
                 if (!(atom is IPseudoAtom))
                 {
-                    IAtomType matched = matcher.FindMatchingAtomType(container, atom);
+                    var matched = matcher.FindMatchingAtomType(container, atom);
                     if (matched != null)
                     {
                         AtomTypeManipulator.Configure(atom, matched);
@@ -267,8 +267,7 @@ namespace NCDK.SMSD.Tools
             }
         }
 
-        private static IAtomContainer ReComputeHydrogens(IAtomContainer mol, IAtomContainer atomContainer,
-                List<IAtom> remove, CDKObjectMap map)
+        private static IAtomContainer RecomputeHydrogens(IAtomContainer mol, IAtomContainer atomContainer, List<IAtom> remove, CDKObjectMap map)
         {
             // Recompute hydrogen counts of neighbours of removed Hydrogens.
             foreach (var aRemove in remove)
