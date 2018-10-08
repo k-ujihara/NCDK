@@ -216,7 +216,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 Assert.IsNotNull(names[i], "A descriptor label may not be null.");
                 Assert.AreNotSame(0, names[i].Length, "The label string must not be empty.");
-                //            Console.Out.WriteLine("Label: " + names[i]);
             }
             Assert.IsNotNull(v.Value);
             var valueCount = v.Value.Length;

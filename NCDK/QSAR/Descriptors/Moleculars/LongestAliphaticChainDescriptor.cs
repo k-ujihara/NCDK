@@ -37,13 +37,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     ///   </item>
     ///   <item>
     ///     <term>checkRingSystem</term>
-    ///     <term>false</term>
-    ///     <term>True is the CDKConstant.ISINRING has to be set</term>
+    ///     <term><see langword="false"/></term>
+    ///     <term><see langword="true"/> is <see cref="IMolecularEntity.IsInRing"/> has to be set</term>
     ///   </item>
     /// </list>
     /// </para>
-    /// </remarks>
     /// Returns a single value named <i>nAtomLAC</i>
+    /// </remarks>
     // @author      chhoppe from EUROSCREEN
     // @author John Mayfield
     // @cdk.created 2006-1-03
