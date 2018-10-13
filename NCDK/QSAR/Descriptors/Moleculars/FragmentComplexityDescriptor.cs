@@ -74,7 +74,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             get
             {
                 return Array.Empty<object>();
-                // return the parameters as used for the descriptor calculation
             }
         }
 
@@ -87,22 +86,24 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>the complexity</returns>
         public DescriptorValue<Result<double>> Calculate(IAtomContainer container)
         {
-            //Console.Out.WriteLine("FragmentComplexityDescriptor");
             int a = 0;
             double h = 0;
-            for (int i = 0; i < container.Atoms.Count; i++)
+            foreach (var atom in container.Atoms)
             {
-                if (!string.Equals(container.Atoms[i].Symbol, "H", StringComparison.Ordinal))
+                switch (atom.Symbol)
                 {
-                    a++;
-                }
-                if (!container.Atoms[i].Symbol.Equals("H", StringComparison.Ordinal) & !container.Atoms[i].Symbol.Equals("C", StringComparison.Ordinal))
-                {
-                    h++;
+                    default:
+                        h++;
+                        goto case "C";
+                    case "C":
+                        a++;
+                        goto case "H";
+                    case "H":
+                        break;
                 }
             }
-            int b = container.Bonds.Count + AtomContainerManipulator.GetImplicitHydrogenCount(container);
-            double c = Math.Abs(b * b - a * a + a) + (h / 100);
+            var b = container.Bonds.Count + AtomContainerManipulator.GetImplicitHydrogenCount(container);
+            var c = Math.Abs(b * b - a * a + a) + (h / 100);
             return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(c), DescriptorNames);
         }
 

@@ -64,8 +64,8 @@ namespace NCDK.Config
         private const string XML_EXTENSION = ".xml";
         private const string OWL_EXTENSION = ".owl";
 
-        private static IDictionary<string, AtomTypeFactory> tables = new Dictionary<string, AtomTypeFactory>();
-        private IDictionary<string, IAtomType> atomTypes = new Dictionary<string, IAtomType>();
+        private static Dictionary<string, AtomTypeFactory> tables = new Dictionary<string, AtomTypeFactory>();
+        private Dictionary<string, IAtomType> atomTypes = new Dictionary<string, IAtomType>();
 
         private AtomTypeFactory(string configFile, IChemObjectBuilder builder)
         {

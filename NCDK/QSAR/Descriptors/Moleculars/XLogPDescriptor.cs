@@ -254,10 +254,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             for (int i = 0; i < atomCount; i++)
             {
                 atomi = (IAtom)ac.Atoms[i];
-                if (xlogPOld == xlogP & i > 0 & !symbol.Equals("H", StringComparison.Ordinal))
+#if DEBUG
+                if (xlogPOld == xlogP && i > 0 & !symbol.Equals("H", StringComparison.Ordinal))
                 {
-                    //Debug.WriteLine("\nXlogPAssignmentError: Could not assign atom number:"+(i-1));
+                    //System.Diagnostics.Debug.WriteLine($"\nXlogPAssignmentError: Could not assign atom number:{i-1}");
                 }
+#endif
 
                 xlogPOld = xlogP;
                 symbol = atomi.Symbol;

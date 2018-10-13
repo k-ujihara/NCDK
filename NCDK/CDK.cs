@@ -36,13 +36,19 @@ namespace NCDK
         /// <returns>The library version</returns>
         public static string Version => typeof(CDK).Assembly.GetName().Version.ToString();
 
+        private static readonly object syncLock = new object();
+
         private static Config.AtomTypeFactory atomTypeFactory = null;
         internal static Config.AtomTypeFactory JmolAtomTypeFactory
         {
             get
             {
                 if (atomTypeFactory == null)
-                    atomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt", Silent.ChemObjectBuilder.Instance);
+                    lock (syncLock)
+                    {
+                        if (atomTypeFactory == null)
+                            atomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt", Silent.ChemObjectBuilder.Instance);
+                    }
                 return atomTypeFactory;
             }
         }
@@ -53,7 +59,11 @@ namespace NCDK
             get
             {
                 if (cdkAtomTypeFactory == null)
-                    cdkAtomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", Silent.ChemObjectBuilder.Instance);
+                    lock (syncLock)
+                    {
+                        if (cdkAtomTypeFactory == null)
+                            cdkAtomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", Silent.ChemObjectBuilder.Instance);
+                    }
                 return cdkAtomTypeFactory;
             }
         }
@@ -64,7 +74,11 @@ namespace NCDK
             get
             {
                 if (structgenAtomTypeFactory == null)
-                    structgenAtomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Config.Data.structgen_atomtypes.xml", Silent.ChemObjectBuilder.Instance);
+                    lock (syncLock)
+                    {
+                        if (structgenAtomTypeFactory == null)
+                            structgenAtomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Config.Data.structgen_atomtypes.xml", Silent.ChemObjectBuilder.Instance);
+                    }
                 return structgenAtomTypeFactory;
             }
         }
@@ -75,7 +89,11 @@ namespace NCDK
             get
             {
                 if (silentSmilesParser == null)
-                    silentSmilesParser = new Smiles.SmilesParser(Silent.ChemObjectBuilder.Instance);
+                    lock (syncLock)
+                    {
+                        if (silentSmilesParser == null)
+                            silentSmilesParser = new Smiles.SmilesParser(Silent.ChemObjectBuilder.Instance);
+                    }
                 return silentSmilesParser;
             }
         }
@@ -87,7 +105,11 @@ namespace NCDK
             get
             {
                 if (saturationChecker == null)
-                    saturationChecker = new Tools.SaturationChecker();
+                    lock (syncLock)
+                    {
+                        if (saturationChecker == null)
+                            saturationChecker = new Tools.SaturationChecker();
+                    }
                 return saturationChecker;
             }
         }
@@ -99,7 +121,11 @@ namespace NCDK
             get
             {
                 if (lonePairElectronChecker == null)
-                    lonePairElectronChecker = new Tools.LonePairElectronChecker();
+                    lock (syncLock)
+                    {
+                        if (lonePairElectronChecker == null)
+                            lonePairElectronChecker = new Tools.LonePairElectronChecker();
+                    }
                 return lonePairElectronChecker;
             }
         }

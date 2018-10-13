@@ -62,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public override IImplementationSpecification Specification => specification;
         private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
+            new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes",
                 typeof(CarbonTypesDescriptor).FullName,
                 "The Chemistry Development Kit");
@@ -105,36 +105,57 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             foreach (var atom in container.Atoms)
             {
-                if (!atom.Symbol.Equals("C", StringComparison.Ordinal) && !atom.Symbol.Equals("c", StringComparison.Ordinal))
-                    continue;
-                var connectedAtoms = container.GetConnectedAtoms(atom);
+                switch (atom.Symbol)
+                {
+                    case "C":
+                    case "c":
+                        break;
+                    default:
+                        continue;
+                }
 
+                var connectedAtoms = container.GetConnectedAtoms(atom);
                 int cc = 0;
                 foreach (var connectedAtom in connectedAtoms)
                 {
-                    if (connectedAtom.Symbol.Equals("C", StringComparison.Ordinal) || connectedAtom.Symbol.Equals("c", StringComparison.Ordinal))
-                        cc++;
+                    switch (connectedAtom.Symbol)
+                    {
+                        case "C":
+                        case "c":
+                            cc++;
+                            break;
+                    }
                 }
 
                 BondOrder maxBondOrder = GetHighestBondOrder(container, atom);
 
-                if (maxBondOrder == BondOrder.Triple && cc == 1)
-                    c1sp1++;
-                else if (maxBondOrder == BondOrder.Triple && cc == 2)
-                    c2sp1++;
-                else if (maxBondOrder == BondOrder.Double && cc == 1)
-                    c1sp2++;
-                else if (maxBondOrder == BondOrder.Double && cc == 2)
-                    c2sp2++;
-                else if (maxBondOrder == BondOrder.Double && cc == 3)
-                    c3sp2++;
-                else if (maxBondOrder == BondOrder.Single && cc == 1)
-                    c1sp3++;
-                else if (maxBondOrder == BondOrder.Single && cc == 2)
-                    c2sp3++;
-                else if (maxBondOrder == BondOrder.Single && cc == 3)
-                    c3sp3++;
-                else if (maxBondOrder == BondOrder.Single && cc == 4) c4sp3++;
+                switch (maxBondOrder)
+                {
+                    case BondOrder.Triple:
+                        switch (cc)
+                        {
+                            case 1: c1sp1++; break;
+                            case 2: c2sp1++; break;
+                        }
+                        break;
+                    case BondOrder.Double:
+                        switch (cc)
+                        {
+                            case 1: c1sp2++; break;
+                            case 2: c2sp2++; break;
+                            case 3: c3sp2++; break;
+                        }
+                        break;
+                    case BondOrder.Single:
+                        switch (cc)
+                        {
+                            case 1: c1sp3++; break;
+                            case 2: c2sp3++; break;
+                            case 3: c3sp3++; break;
+                            case 4: c4sp3++; break;
+                        }
+                        break;
+                }
             }
 
             ArrayResult<int> retval = new ArrayResult<int>(9)
@@ -156,10 +177,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private static BondOrder GetHighestBondOrder(IAtomContainer container, IAtom atom)
         {
             var bonds = container.GetConnectedBonds(atom);
-            BondOrder maxOrder = BondOrder.Single;
+            var maxOrder = BondOrder.Single;
             foreach (var bond in bonds)
             {
-                if (BondManipulator.IsHigherOrder(bond.Order, maxOrder)) maxOrder = bond.Order;
+                if (BondManipulator.IsHigherOrder(bond.Order, maxOrder))
+                    maxOrder = bond.Order;
             }
             return maxOrder;
         }

@@ -150,10 +150,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 //Possible pi System double bond or triple bond, charge, N or O (free electron pair)
                 if ((container.GetMaximumBondOrder(container.Atoms[i]) != BondOrder.Single
-                        || Math.Abs(container.Atoms[i].FormalCharge.Value) >= 1
-                        || container.Atoms[i].IsAromatic
-                        || container.Atoms[i].Symbol.Equals("N", StringComparison.Ordinal) || container.Atoms[i].Symbol.Equals("O", StringComparison.Ordinal))
-                        & !container.Atoms[i].IsVisited)
+                  || Math.Abs(container.Atoms[i].FormalCharge.Value) >= 1
+                  || container.Atoms[i].IsAromatic
+                  || container.Atoms[i].Symbol.Equals("N", StringComparison.Ordinal) 
+                  || container.Atoms[i].Symbol.Equals("O", StringComparison.Ordinal))
+                 && !container.Atoms[i].IsVisited)
                 {
                     //Debug.WriteLine("...... -> Accepted");
                     var startSphere = new List<IAtom>();

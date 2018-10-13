@@ -457,7 +457,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     for (int i = 0; i < 6; i++)
                     {
                         int b = FindBond(r[i], r[i == 5 ? 0 : i + 1]);
-                        if (bondArom[b]) continue; // valid for either phase
+                        if (bondArom[b])
+                            continue; // valid for either phase
                         phase1 = phase1 && bondOrder[b] == (2 - (i & 1));
                         phase2 = phase2 && bondOrder[b] == (1 + (i & 1));
                     }
