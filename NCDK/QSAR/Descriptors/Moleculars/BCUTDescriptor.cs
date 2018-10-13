@@ -132,7 +132,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public override IImplementationSpecification Specification => specification;
         private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT",
+            new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT",
                typeof(BCUTDescriptor).FullName, "The Chemistry Development Kit");
 
         /// <summary>
@@ -145,7 +145,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///               already been checked.
         /// </summary>
         /// <exception cref="CDKException">if the parameters are of the wrong type</exception>
-        /// <seealso cref="Parameters"/>
         public override IReadOnlyList<object> Parameters
         {
             set

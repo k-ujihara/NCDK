@@ -40,16 +40,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private static double[] Listcharges(IAtomContainer container)
         {
-            int natom = container.Atoms.Count;
-            double[] charges = new double[natom];
+            var natom = container.Atoms.Count;
+            var charges = new double[natom];
             try
             {
-                IAtomContainer mol = container.Builder.NewAtomContainer(((IAtomContainer)container.Clone()));
-                GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+                var mol = container.Builder.NewAtomContainer(((IAtomContainer)container.Clone()));
+                var peoe = new GasteigerMarsiliPartialCharges();
                 peoe.AssignGasteigerMarsiliSigmaPartialCharges(mol, true);
                 for (int i = 0; i < natom; i++)
                 {
-                    IAtom atom = mol.Atoms[i];
+                    var atom = mol.Atoms[i];
                     charges[i] = atom.Charge.Value;
                 }
             }
@@ -63,49 +63,42 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer atomContainer)
         {
-            IAtomContainer container = (IAtomContainer)atomContainer.Clone();
+            var container = (IAtomContainer)atomContainer.Clone();
             container = AtomContainerManipulator.RemoveHydrogens(container);
 
             try
             {
-                double[] w = Listcharges(container);
-                int natom = container.Atoms.Count;
-                int[][] distancematrix = TopologicalMatrix.GetMatrix(container);
+                var w = Listcharges(container);
+                var natom = container.Atoms.Count;
+                var distancematrix = TopologicalMatrix.GetMatrix(container);
 
-                double[] chargeSum = new double[5];
+                var chargeSum = new double[5];
 
                 for (int k = 0; k < 5; k++)
                 {
                     for (int i = 0; i < natom; i++)
-                    {
                         for (int j = 0; j < natom; j++)
-                        {
                             if (distancematrix[i][j] == k)
-                            {
                                 chargeSum[k] += w[i] * w[j];
-                            }
                             else
                                 chargeSum[k] += 0.0;
-                        }
-                    }
-                    if (k > 0) chargeSum[k] = chargeSum[k] / 2;
-
+                    if (k > 0)
+                        chargeSum[k] = chargeSum[k] / 2;
                 }
-                ArrayResult<double> result = new ArrayResult<double>(5);
+                var result = new ArrayResult<double>(5);
                 foreach (var aChargeSum in chargeSum)
                 {
                     result.Add(aChargeSum);
                 }
                 return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, NAMES);
-
             }
             catch (Exception ex)
             {
-                ArrayResult<double> result = new ArrayResult<double>(5);
+                var result = new ArrayResult<double>(5);
                 for (int i = 0; i < 5; i++)
                     result.Add(double.NaN);
                 return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, NAMES,
-                        new CDKException("Error while calculating the ATS_charge descriptor: " + ex.Message, ex));
+                    new CDKException($"Error while calculating the ATS_charge descriptor: {ex.Message}", ex));
             }
         }
 
@@ -123,9 +116,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public override IImplementationSpecification Specification => specification;
         private static readonly DescriptorSpecification specification =
              new DescriptorSpecification(
-                    "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationCharge",
-                    typeof(AutocorrelationDescriptorCharge).FullName,
-                    "The Chemistry Development Kit");
+                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationCharge",
+                 typeof(AutocorrelationDescriptorCharge).FullName,
+                 "The Chemistry Development Kit");
 
         public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
 

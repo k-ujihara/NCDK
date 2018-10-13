@@ -248,16 +248,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestGetDescriptorResultType()
         {
             var result = Descriptor.DescriptorResultType;
-            Assert.IsNotNull(result, "The DescriptorResultType must not be null.");
+            Assert.IsNotNull(result, $"The {nameof(IMolecularDescriptor.DescriptorResultType)} must not be null.");
 
             var mol = SomeoneBringMeSomeWater(ChemObjectBuilder.Instance);
             var v = Descriptor.Calculate(mol);
 
             Assert.IsTrue(
-                    result.GetType().FullName.Contains(v.Value.GetType().FullName),
-                    "The DescriptorResultType is inconsistent with the calculated descriptor results");
+                result.GetType().FullName.Contains(v.Value.GetType().FullName),
+                $"The {nameof(IMolecularDescriptor.DescriptorResultType)} is inconsistent with the calculated descriptor results");
             Assert.AreEqual(v.Value.Length, result.Length,
-                    "The specified DescriptorResultType length does not match the actually calculated result vector length");
+                $"The specified {nameof(IMolecularDescriptor.DescriptorResultType)} length does not match the actually calculated result vector length");
         }
 
         [TestMethod()]

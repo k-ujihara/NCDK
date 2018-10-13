@@ -115,11 +115,11 @@ namespace NCDK
         /// <param name="container">IAtomContainer to test atom types of</param>
         public virtual void AssertAtomTypesPerceived(IAtomContainer container)
         {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+            var matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
             foreach (var atom in container.Atoms)
             {
-                IAtomType type = matcher.FindMatchingAtomType(container, atom);
-                Assert.IsNotNull(type, "Could not perceive atom type for: " + atom);
+                var type = matcher.FindMatchingAtomType(container, atom);
+                Assert.IsNotNull(type, $"Could not perceive atom type for: {atom}");
             }
         }
 
@@ -143,22 +143,22 @@ namespace NCDK
         /// <param name="container">to which implicit hydrogens are added.</param>
         protected virtual void AddImplicitHydrogens(IAtomContainer container)
         {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
-            int atomCount = container.Atoms.Count;
-            string[] originalAtomTypeNames = new string[atomCount];
+            var matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+            var atomCount = container.Atoms.Count;
+            var originalAtomTypeNames = new string[atomCount];
             for (int i = 0; i < atomCount; i++)
             {
-                IAtom atom = container.Atoms[i];
-                IAtomType type = matcher.FindMatchingAtomType(container, atom);
+                var atom = container.Atoms[i];
+                var type = matcher.FindMatchingAtomType(container, atom);
                 originalAtomTypeNames[i] = atom.AtomTypeName;
                 atom.AtomTypeName = type.AtomTypeName;
             }
-            CDKHydrogenAdder hAdder = CDKHydrogenAdder.GetInstance(container.Builder);
+            var hAdder = CDKHydrogenAdder.GetInstance(container.Builder);
             hAdder.AddImplicitHydrogens(container);
             // reset to the original atom types
             for (int i = 0; i < atomCount; i++)
             {
-                IAtom atom = container.Atoms[i];
+                var atom = container.Atoms[i];
                 atom.AtomTypeName = originalAtomTypeNames[i];
             }
         }
@@ -171,7 +171,7 @@ namespace NCDK
         /// <param name="container">the atom container to check</param>
         protected void AssertAllSingleOrAromatic(IAtomContainer container)
         {
-            foreach (IBond bond in container.Bonds)
+            foreach (var bond in container.Bonds)
             {
                 if (!bond.IsAromatic)
                     Assert.AreEqual(BondOrder.Single, bond.Order);

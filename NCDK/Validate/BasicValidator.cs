@@ -38,7 +38,7 @@ namespace NCDK.Validate
 
         public override ValidationReport ValidateAtom(IAtom subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             report.Add(ValidateCharge(subject));
             report.Add(ValidateHydrogenCount(subject));
             report.Add(ValidatePseudoAtom(subject));
@@ -47,7 +47,7 @@ namespace NCDK.Validate
 
         public override ValidationReport ValidateBond(IBond subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             report.Add(ValidateStereoChemistry(subject));
             report.Add(ValidateMaxBondOrder(subject));
             return report;
@@ -60,8 +60,8 @@ namespace NCDK.Validate
 
         public override ValidationReport ValidateMolecule(IAtomContainer subject)
         {
-            ValidationReport report = new ValidationReport();
-            ValidationTest emptyMolecule = new ValidationTest(subject, "Molecule does not contain any atom");
+            var report = new ValidationReport();
+            var emptyMolecule = new ValidationTest(subject, "Molecule does not contain any atom");
 
             if (subject.Atoms.Count == 0)
             {
@@ -70,8 +70,7 @@ namespace NCDK.Validate
             else
             {
                 report.OKs.Add(emptyMolecule);
-                ValidationTest massCalcProblem = new ValidationTest(subject,
-                        "Molecule contains PseudoAtom's. Won't be able to calculate some properties, like molecular mass.");
+                var massCalcProblem = new ValidationTest(subject, "Molecule contains PseudoAtom's. Won't be able to calculate some properties, like molecular mass.");
                 bool foundMassCalcProblem = false;
                 for (int i = 0; i < subject.Atoms.Count; i++)
                 {
@@ -98,14 +97,14 @@ namespace NCDK.Validate
 
         public override ValidationReport ValidateReaction(IReaction subject)
         {
-            ValidationReport report = new ValidationReport();
-            IAtomContainer container1 = subject.Builder.NewAtomContainer();
+            var report = new ValidationReport();
+            var container1 = subject.Builder.NewAtomContainer();
             var reactants = subject.Reactants;
             for (int i = 0; i < reactants.Count; i++)
             {
                 container1.Add(reactants[i]);
             }
-            IAtomContainer container2 = subject.Builder.NewAtomContainer();
+            var container2 = subject.Builder.NewAtomContainer();
             var products = subject.Products;
             for (int i = 0; i < products.Count; i++)
             {
@@ -120,8 +119,8 @@ namespace NCDK.Validate
 
         private static ValidationReport ValidateCharge(IAtom atom)
         {
-            ValidationReport report = new ValidationReport();
-            ValidationTest tooCharged = new ValidationTest(atom, "Atom has an unlikely large positive or negative charge");
+            var report = new ValidationReport();
+            var tooCharged = new ValidationTest(atom, "Atom has an unlikely large positive or negative charge");
             switch (atom.Symbol)
             {
                 case "O":
@@ -185,9 +184,8 @@ namespace NCDK.Validate
 
         private static ValidationReport ValidateHydrogenCount(IAtom atom)
         {
-            ValidationReport report = new ValidationReport();
-            ValidationTest negativeHydrogenCount = new ValidationTest(atom,
-                    "An Atom cannot have a negative number of hydrogens attached.");
+            var report = new ValidationReport();
+            var negativeHydrogenCount = new ValidationTest(atom, "An Atom cannot have a negative number of hydrogens attached.");
             if (atom.ImplicitHydrogenCount == null)
             {
                 report.Warnings.Add(new ValidationTest(atom, "An atom had unset (null) implicit hydrogen count"));
@@ -206,8 +204,8 @@ namespace NCDK.Validate
 
         private static ValidationReport ValidatePseudoAtom(IAtom atom)
         {
-            ValidationReport report = new ValidationReport();
-            ValidationTest isElementOrPseudo = new ValidationTest(atom, "Non-element atom must be of class PseudoAtom.");
+            var report = new ValidationReport();
+            var isElementOrPseudo = new ValidationTest(atom, "Non-element atom must be of class PseudoAtom.");
             if (atom is IPseudoAtom)
             {
                 // that's fine
@@ -218,8 +216,8 @@ namespace NCDK.Validate
                 // check whether atom is really an element
                 try
                 {
-                    IsotopeFactory isotopeFactory = BODRIsotopeFactory.Instance;
-                    IElement element = isotopeFactory.GetElement(atom.Symbol);
+                    var isotopeFactory = BODRIsotopeFactory.Instance;
+                    var element = isotopeFactory.GetElement(atom.Symbol);
                     if (element == null)
                     {
                         isElementOrPseudo.Details = $"Element {atom.Symbol} does not exist.";
@@ -244,9 +242,8 @@ namespace NCDK.Validate
 
         private static ValidationReport ValidateStereoChemistry(IBond bond)
         {
-            ValidationReport report = new ValidationReport();
-            ValidationTest bondStereo = new ValidationTest(bond, "Defining stereochemistry on bonds is not safe.",
-                    "Use atom based stereochemistry.");
+            var report = new ValidationReport();
+            var bondStereo = new ValidationTest(bond, "Defining stereochemistry on bonds is not safe.", "Use atom based stereochemistry.");
             if (bond.Stereo != BondStereo.None)
             {
                 report.Warnings.Add(bondStereo);
@@ -260,18 +257,14 @@ namespace NCDK.Validate
 
         private static ValidationReport ValidateMaxBondOrder(IBond bond)
         {
-            ValidationReport report = new ValidationReport();
-            ValidationTest maxBO = new ValidationTest(bond, "Bond order exceeds the maximum for one of its atoms.");
+            var report = new ValidationReport();
+            var maxBO = new ValidationTest(bond, "Bond order exceeds the maximum for one of its atoms.");
             try
             {
-<<<<<<< HEAD
-                AtomTypeFactory structgenATF = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", bond.Builder);
-=======
                 var structgenATF = CDK.CdkAtomTypeFactory;
->>>>>>> develop
                 for (int i = 0; i < bond.Atoms.Count; i++)
                 {
-                    IAtom atom = bond.Atoms[i];
+                    var atom = bond.Atoms[i];
                     if (atom is IPseudoAtom)
                     {
                         // ok, all is fine; we don't know the properties of pseudo atoms
@@ -319,11 +312,11 @@ namespace NCDK.Validate
 
         public static ValidationReport ValidateIsotopeExistence(IIsotope isotope)
         {
-            ValidationReport report = new ValidationReport();
-            ValidationTest isotopeExists = new ValidationTest(isotope, "Isotope with this mass number is not known for this element.");
+            var report = new ValidationReport();
+            var isotopeExists = new ValidationTest(isotope, "Isotope with this mass number is not known for this element.");
             try
             {
-                IsotopeFactory isotopeFac = BODRIsotopeFactory.Instance;
+                var isotopeFac = BODRIsotopeFactory.Instance;
                 var isotopes = isotopeFac.GetIsotopes(isotope.Symbol);
                 bool foundKnownIsotope = false;
                 if (isotope.MassNumber != 0)
@@ -357,8 +350,8 @@ namespace NCDK.Validate
 
         private static ValidationReport ValidateBondOrderSum(IAtom atom, IAtomContainer molecule)
         {
-            ValidationReport report = new ValidationReport();
-            ValidationTest checkBondSum = new ValidationTest(atom, "The atom's total bond order is too high.");
+            var report = new ValidationReport();
+            var checkBondSum = new ValidationTest(atom, "The atom's total bond order is too high.");
             try
             {
                 var structgenATF = CDK.CdkAtomTypeFactory;
@@ -416,8 +409,8 @@ namespace NCDK.Validate
 
         private static ValidationReport ValidateAtomCountConservation(IReaction reaction, IAtomContainer reactants, IAtomContainer products)
         {
-            ValidationReport report = new ValidationReport();
-            ValidationTest atomCount = new ValidationTest(reaction, "Atom count mismatch for reaction: the product side has a different atom count than the reactant side.");
+            var report = new ValidationReport();
+            var atomCount = new ValidationTest(reaction, "Atom count mismatch for reaction: the product side has a different atom count than the reactant side.");
             if (reactants.Atoms.Count != products.Atoms.Count)
             {
                 report.Errors.Add(atomCount);
@@ -429,11 +422,10 @@ namespace NCDK.Validate
             return report;
         }
 
-        private static ValidationReport ValidateChargeConservation(IReaction reaction, IAtomContainer reactants,
-                IAtomContainer products)
+        private static ValidationReport ValidateChargeConservation(IReaction reaction, IAtomContainer reactants, IAtomContainer products)
         {
-            ValidationReport report = new ValidationReport();
-            ValidationTest chargeConservation = new ValidationTest(reaction, "Total formal charge is not preserved during the reaction");
+            var report = new ValidationReport();
+            var chargeConservation = new ValidationTest(reaction, "Total formal charge is not preserved during the reaction");
             var atoms1 = reactants.Atoms;
             int totalCharge1 = 0;
             foreach (var atom1 in atoms1)

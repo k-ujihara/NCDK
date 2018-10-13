@@ -32,7 +32,7 @@ namespace NCDK.AtomTypes
     /// <summary>
     /// Atom Type matcher that perceives atom types as defined in the CDK atom type list
     /// "NCDK.Dict.Data.cdk-atom-types.owl".
-    ///  If there is not an atom type defined for the tested atom, then <see langword="null"/> is returned.
+    /// If there is not an atom type defined for the tested atom, then <see langword="null"/> is returned.
     /// </summary>
     // @author         egonw
     // @cdk.created    2007-07-20
@@ -47,13 +47,10 @@ namespace NCDK.AtomTypes
             RequireExplicitHydrogens = 2,
         }
 
-        private AtomTypeFactory factory = CDK.CdkAtomTypeFactory;
-            
+        private static readonly AtomTypeFactory factory = CDK.CdkAtomTypeFactory;
         private readonly Mode mode;
-
         private static readonly object syncLock = new object();
-
-        private static IDictionary<Mode, IDictionary<IChemObjectBuilder, CDKAtomTypeMatcher>> factories = new ConcurrentDictionary<Mode, IDictionary<IChemObjectBuilder, CDKAtomTypeMatcher>>();
+        private static Dictionary<Mode, IDictionary<IChemObjectBuilder, CDKAtomTypeMatcher>> factories = new Dictionary<Mode, IDictionary<IChemObjectBuilder, CDKAtomTypeMatcher>>();
 
         private CDKAtomTypeMatcher(IChemObjectBuilder builder, Mode mode)
         {
@@ -67,14 +64,19 @@ namespace NCDK.AtomTypes
 
         public static CDKAtomTypeMatcher GetInstance(IChemObjectBuilder builder, Mode mode)
         {
-            lock (syncLock)
-            {
-                if (!factories.ContainsKey(mode))
-                    factories.Add(mode, new Dictionary<IChemObjectBuilder, CDKAtomTypeMatcher>(1));
-                if (!factories[mode].ContainsKey(builder))
-                    factories[mode].Add(builder, new CDKAtomTypeMatcher(builder, mode));
-                return factories[mode][builder];
-            }
+            if (!factories.ContainsKey(mode))
+                lock (syncLock)
+                {
+                    if (!factories.ContainsKey(mode))
+                        factories.Add(mode, new Dictionary<IChemObjectBuilder, CDKAtomTypeMatcher>(1));
+                }
+            if (!factories[mode].ContainsKey(builder))
+                lock (syncLock)
+                {
+                    if (!factories[mode].ContainsKey(builder))
+                        factories[mode].Add(builder, new CDKAtomTypeMatcher(builder, mode));
+                }
+            return factories[mode][builder];
         }
 
         public IEnumerable<IAtomType> FindMatchingAtomTypes(IAtomContainer atomContainer)
@@ -85,7 +87,8 @@ namespace NCDK.AtomTypes
         private IEnumerable<IAtomType> FindMatchingAtomTypes(IAtomContainer atomContainer, RingSearch searcher)
         {
             // cache the ring information
-            if (searcher == null) searcher = new RingSearch(atomContainer);
+            if (searcher == null)
+                searcher = new RingSearch(atomContainer);
             // cache atom bonds
             var connectedBonds = new Dictionary<IAtom, IList<IBond>>(atomContainer.Atoms.Count);
             foreach (var bond in atomContainer.Bonds)
@@ -101,11 +104,9 @@ namespace NCDK.AtomTypes
                 }
             }
 
-            int typeCounter = 0;
             foreach (var atom in atomContainer.Atoms)
             {
                 yield return FindMatchingAtomType(atomContainer, atom, searcher, connectedBonds.ContainsKey(atom) ? connectedBonds[atom] : null);
-                typeCounter++;
             }
             yield break;
         }

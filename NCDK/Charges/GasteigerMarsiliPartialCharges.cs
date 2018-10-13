@@ -23,9 +23,12 @@ namespace NCDK.Charges
 {
     /// <summary>
     /// The calculation of the Gasteiger Marsili (PEOE) partial charges is based on
-    /// <token>cdk-cite-GM80</token>. This class only implements the original method which only
-    /// applies to É–-bond systems.
+    /// <token>cdk-cite-GM80</token>. 
     /// </summary>
+    /// <remarks>
+    /// This class only implements the original method which only
+    /// applies to É–-bond systems.
+    /// </remarks>
     // @author      chhoppe
     // @author      rojas
     // @cdk.module  charges
@@ -39,9 +42,6 @@ namespace NCDK.Charges
     {
         // Flag is set if the formal charge of a chemobject is changed due to resonance.
 
-        /// <summary>
-        ///  Constructor for the GasteigerMarsiliPartialCharges object.
-        /// </summary>
         public GasteigerMarsiliPartialCharges() { }
 
         /// <summary>
@@ -49,31 +49,22 @@ namespace NCDK.Charges
         /// </summary>
         public double ChiCatHydrogen { get; set; } = 20.02;
 
-        /// <summary>
-        /// the maxGasteigerDamp attribute of the GasteigerMarsiliPartialCharges object.
-        /// </summary>
         public double MaxGasteigerDamp { get; set; } = 0.5;
 
-        /// <summary>
-        /// the maxGasteigerIters attribute of the GasteigerMarsiliPartialCharges object.
-        /// </summary>
         public double MaxGasteigerIterations { get; set; } = 20;
 
         /// <summary>
-        ///  Main method which assigns Gasteiger Marisili partial sigma charges.
+        /// Main method which assigns Gasteiger Marisili partial sigma charges.
         /// </summary>
         /// <param name="ac">AtomContainer</param>
         /// <param name="setCharge">The Charge</param>
         /// <returns>AtomContainer with partial charges</returns>
         public IAtomContainer AssignGasteigerMarsiliSigmaPartialCharges(IAtomContainer ac, bool setCharge)
         {
-            //        if (setCharge) {
-            //            atomTypeCharges.SetCharges(ac); // not necessary initial charge
-            //        }
             /* add the initial charge to 0. According results of Gasteiger */
             for (int i = 0; i < ac.Atoms.Count; i++)
                 ac.Atoms[i].Charge = 0.0;
-            double[] gasteigerFactors = AssignGasteigerSigmaMarsiliFactors(ac);//a,b,c,deoc,chi,q
+            var gasteigerFactors = AssignGasteigerSigmaMarsiliFactors(ac);//a,b,c,deoc,chi,q
             double alpha = 1.0;
             double q;
             double deoc;
@@ -81,7 +72,7 @@ namespace NCDK.Charges
             int atom1 = 0;
             int atom2 = 0;
 
-            double[] q_old = new double[ac.Atoms.Count];
+            var q_old = new double[ac.Atoms.Count];
             for (int i = 0; i < q_old.Length; i++)
                 q_old[0] = 20.0;
             for (int i = 0; i < MaxGasteigerIterations; i++)
@@ -92,17 +83,16 @@ namespace NCDK.Charges
                 {
                     q = gasteigerFactors[StepSize * j + j + 5];
                     double difference = Math.Abs(q_old[j]) - Math.Abs(q);
-                    if (Math.Abs(difference) > 0.001) isDifferent = true;
+                    if (Math.Abs(difference) > 0.001)
+                        isDifferent = true;
                     q_old[j] = q;
 
                     gasteigerFactors[StepSize * j + j + 4] = gasteigerFactors[StepSize * j + j + 2] * q * q
                             + gasteigerFactors[StepSize * j + j + 1] * q + gasteigerFactors[StepSize * j + j];
-                    //                Debug.WriteLine("g4: "+gasteigerFactors[StepSize * j + j + 4]);
                 }
                 if (!isDifferent) /* automatically break the maximum iterations */
                     goto break_out;
 
-                //            bonds = ac.Bonds;
                 foreach (var bond in ac.Bonds)
                 {
                     atom1 = ac.Atoms.IndexOf(bond.Begin);
@@ -131,9 +121,7 @@ namespace NCDK.Charges
                         }
                     }
 
-                    q = (gasteigerFactors[StepSize * atom1 + atom1 + 4] - gasteigerFactors[StepSize * atom2 + atom2 + 4])
-                            / deoc;
-                    //                Debug.WriteLine("qq: "+q);
+                    q = (gasteigerFactors[StepSize * atom1 + atom1 + 4] - gasteigerFactors[StepSize * atom2 + atom2 + 4]) / deoc;
                     gasteigerFactors[StepSize * atom1 + atom1 + 5] -= (q * alpha);
                     gasteigerFactors[StepSize * atom2 + atom2 + 5] += (q * alpha);
                 }
@@ -155,26 +143,22 @@ namespace NCDK.Charges
             }
             catch (Exception exception)
             {
-                throw new CDKException("Could not calculate Gasteiger-Marsili sigma charges: " + exception.Message,
-                        exception);
+                throw new CDKException($"Could not calculate Gasteiger-Marsili sigma charges: {exception.Message}", exception);
             }
         }
 
-        /// <summary>
-        /// Get the StepSize attribute of the GasteigerMarsiliPartialCharges object.
-        /// </summary>
         public int StepSize { get; set; } = 5;
 
         /// <summary>
-        ///  Method which stores and assigns the factors a,b,c and CHI+.
+        /// Method which stores and assigns the factors a,b,c and CHI+.
         /// </summary>
         /// <param name="ac">AtomContainer</param>
         /// <returns>Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer</returns>
         public double[] AssignGasteigerSigmaMarsiliFactors(IAtomContainer ac)
         {
             //a,b,c,denom,chi,q
-            double[] gasteigerFactors = new double[(ac.Atoms.Count * (StepSize + 1))];
-            double[] factors = new double[] { 0.0, 0.0, 0.0 };
+            var gasteigerFactors = new double[(ac.Atoms.Count * (StepSize + 1))];
+            var factors = new double[] { 0.0, 0.0, 0.0 };
             for (int i = 0; i < ac.Atoms.Count; i++)
             {
                 factors[0] = 0.0;
@@ -192,8 +176,8 @@ namespace NCDK.Charges
                         factors[2] = -0.56;
                         break;
                     case "C":
-                        if (maxBondOrder == BondOrder.Double ||
-                            (maxBondOrder == BondOrder.Single && (charge == -1 || charge == +1)))
+                        if (maxBondOrder == BondOrder.Double 
+                         || (maxBondOrder == BondOrder.Single && (charge == -1 || charge == +1)))
                         {
                             factors[0] = 8.79;/* 8.79 *//* 8.81 */
                             factors[1] = 9.32;/* 9.32 *//* 9.34 */
@@ -206,7 +190,7 @@ namespace NCDK.Charges
                             factors[2] = 1.88;
                         }
                         else if (maxBondOrder == BondOrder.Triple
-                                 || maxBondOrder == BondOrder.Quadruple)
+                              || maxBondOrder == BondOrder.Quadruple)
                         {
                             factors[0] = 10.39;/* 10.39 */
                             factors[1] = 9.45;/* 9.45 */
@@ -215,21 +199,21 @@ namespace NCDK.Charges
                         break;
                     case "N":
                         if ((maxBondOrder == BondOrder.Single)
-                            && (charge != -1))
+                         && (charge != -1))
                         {
                             factors[0] = 11.54;
                             factors[1] = 10.82;
                             factors[2] = 1.36;
                         }
                         else if ((maxBondOrder == BondOrder.Double)
-                                 || ((maxBondOrder == BondOrder.Single)))
+                              || (maxBondOrder == BondOrder.Single))
                         {
                             factors[0] = 12.87;
                             factors[1] = 11.15;
                             factors[2] = 0.85;
                         }
                         else if (maxBondOrder == BondOrder.Triple
-                                 || maxBondOrder == BondOrder.Quadruple)
+                              || maxBondOrder == BondOrder.Quadruple)
                         {
                             factors[0] = 17.68;/* 15.68 */
                             factors[1] = 12.70;/* 11.70 */
@@ -238,30 +222,24 @@ namespace NCDK.Charges
                         break;
                     case "O":
                         if ((maxBondOrder == BondOrder.Single)
-                            && (charge != -1))
+                         && (charge != -1))
                         {
                             factors[0] = 14.18;
                             factors[1] = 12.92;
                             factors[2] = 1.39;
                         }
                         else if ((maxBondOrder == BondOrder.Double)
-                                 || ((maxBondOrder == BondOrder.Single)))
+                              || (maxBondOrder == BondOrder.Single))
                         {
-                            factors[0] = 17.07;/*
-                                            * paramaters aren'T correct
-                                            * parametrized.
-                                            */
+                            factors[0] = 17.07; /* paramaters aren'T correct parametrized. */
                             factors[1] = 13.79;
                             factors[2] = 0.47;/* 0.47 */
                         }
                         break;
                     case "Si": // <--not correct
                         factors[0] = 8.10;// <--not correct
-
                         factors[1] = 7.92;// <--not correct
-
                         factors[2] = 1.78;// <--not correct
-
                         break;
                     case "P":
                         factors[0] = 8.90;
@@ -269,12 +247,6 @@ namespace NCDK.Charges
                         factors[2] = 1.58;
                         break;
                     case "S":
-                        /*
-                                                                           * &&
-                                                                           * ac.getMaximumBondOrder(ac.getAtomAt
-                                                                           * (i)) == 1
-                                                                           */
-
                         factors[0] = 10.14;/* 10.14 */
                         factors[1] = 9.13;/* 9.13 */
                         factors[2] = 1.38;/* 1.38 */
@@ -300,7 +272,7 @@ namespace NCDK.Charges
                         factors[2] = 0.945;/* 0.96 */
                         break;
                     default:
-                        throw new CDKException("Partial charge not-supported for element: '" + symbol + "'.");
+                        throw new CDKException($"Partial charge not-supported for element: '{symbol}'.");
                 }
 
                 gasteigerFactors[StepSize * i + i] = factors[0];

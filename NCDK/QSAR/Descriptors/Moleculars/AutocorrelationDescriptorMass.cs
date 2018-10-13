@@ -49,9 +49,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private static double[] ListConvertion(IAtomContainer container)
         {
-            int natom = container.Atoms.Count;
-
-            double[] scalated = new double[natom];
+            var natom = container.Atoms.Count;
+            var scalated = new double[natom];
 
             for (int i = 0; i < natom; i++)
             {
@@ -71,10 +70,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             try
             {
-                double[] w = ListConvertion(container);
-                int natom = container.Atoms.Count;
-                int[][] distancematrix = TopologicalMatrix.GetMatrix(container);
-                double[] masSum = new double[5];
+                var w = ListConvertion(container);
+                var natom = container.Atoms.Count;
+                var distancematrix = TopologicalMatrix.GetMatrix(container);
+                var masSum = new double[5];
 
                 for (int k = 0; k < 5; k++)
                 {
@@ -91,22 +90,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                 masSum[k] += 0.0;
                         }
                     }
-                    if (k > 0) masSum[k] = masSum[k] / 2;
-
+                    if (k > 0)
+                        masSum[k] = masSum[k] / 2;
                 }
-                ArrayResult<double> result = new ArrayResult<double>(5);
+                var result = new ArrayResult<double>(5);
                 foreach (var aMasSum in masSum)
                 {
                     result.Add(aMasSum);
                 }
 
-                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result,
-                        DescriptorNames);
-
+                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, DescriptorNames);
             }
             catch (IOException ex)
             {
-                ArrayResult<double> result = new ArrayResult<double>(5);
+                var result = new ArrayResult<double>(5);
                 for (int i = 0; i < 5; i++)
                     result.Add(double.NaN);
                 return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result,
@@ -128,7 +125,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public override IImplementationSpecification Specification => specification;
         private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
+            new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationMass",
                 typeof(AutocorrelationDescriptorMass).FullName,
                 "The Chemistry Development Kit");

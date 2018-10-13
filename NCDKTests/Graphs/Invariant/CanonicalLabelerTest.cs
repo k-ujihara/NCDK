@@ -15,8 +15,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.AtomTypes;
 using NCDK.IO;
@@ -79,7 +79,7 @@ namespace NCDK.Graphs.Invariant
         [TestCategory("SlowTest")]
         public void TestSomeMoleculeWithDifferentStartingOrder()
         {
-            IAtomContainer molecule = parser.ParseSmiles("O=C(C)CBr");
+            var molecule = parser.ParseSmiles("O=C(C)CBr");
             labeler.CanonLabel(molecule);
             foreach (var atom in molecule.Atoms)
             {
@@ -97,17 +97,16 @@ namespace NCDK.Graphs.Invariant
         [TestCategory("SlowTest")]
         public void TestStabilityAfterRoundtrip()
         {
-            string filename = "NCDK.Data.MDL.bug1014344-1.mol";
+            var filename = "NCDK.Data.MDL.bug1014344-1.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLReader reader = new MDLReader(ins, ChemObjectReaderMode.Strict);
-            IAtomContainer mol1 = reader.Read(new AtomContainer());
+            var reader = new MDLReader(ins, ChemObjectReaderMode.Strict);
+            var mol1 = reader.Read(new AtomContainer());
             AddImplicitHydrogens(mol1);
-            StringWriter output = new StringWriter();
-            CMLWriter cmlWriter = new CMLWriter(output);
+            var output = new StringWriter();
+            var cmlWriter = new CMLWriter(output);
             cmlWriter.Write(mol1);
-            CMLReader cmlreader = new CMLReader(new MemoryStream(Encoding.UTF8.GetBytes(output.ToString())));
-            IAtomContainer mol2 = ((IChemFile)cmlreader.Read(new ChemFile()))[0][0]
-                    .MoleculeSet[0];
+            var cmlreader = new CMLReader(new MemoryStream(Encoding.UTF8.GetBytes(output.ToString())));
+            var mol2 = ((IChemFile)cmlreader.Read(new ChemFile()))[0][0].MoleculeSet[0];
             AddImplicitHydrogens(mol2);
 
             labeler.CanonLabel(mol1);
@@ -117,8 +116,8 @@ namespace NCDK.Graphs.Invariant
             while (atoms1.MoveNext())
             {
                 atoms2.MoveNext();
-                IAtom atom1 = atoms1.Current;
-                IAtom atom2 = atoms2.Current;
+                var atom1 = atoms1.Current;
+                var atom2 = atoms2.Current;
                 Assert.AreEqual(atom1.GetProperty<long>(InvPair.CanonicalLabelPropertyKey), atom2.GetProperty<long>(InvPair.CanonicalLabelPropertyKey));
             }
         }
@@ -131,13 +130,13 @@ namespace NCDK.Graphs.Invariant
         /// <param name="container">to which implicit hydrogens are added.</param>
         protected override void AddImplicitHydrogens(IAtomContainer container)
         {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+            var matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
             foreach (var atom in container.Atoms)
             {
-                IAtomType type = matcher.FindMatchingAtomType(container, atom);
+                var type = matcher.FindMatchingAtomType(container, atom);
                 AtomTypeManipulator.Configure(atom, type);
             }
-            CDKHydrogenAdder hAdder = CDKHydrogenAdder.GetInstance(container.Builder);
+            var hAdder = CDKHydrogenAdder.GetInstance(container.Builder);
             hAdder.AddImplicitHydrogens(container);
         }
 
@@ -146,13 +145,13 @@ namespace NCDK.Graphs.Invariant
         [TestCategory("SlowTest")]
         public void TestBug2944519()
         {
-            IAtomContainer ac = ChemObjectBuilder.Instance.NewAtomContainer();
+            var ac = ChemObjectBuilder.Instance.NewAtomContainer();
             ac.Atoms.Add(ac.Builder.NewAtom("C"));
             ac.Atoms.Add(ac.Builder.NewAtom("O"));
             ac.AddBond(ac.Atoms[0], ac.Atoms[1], BondOrder.Single);
-            CanonicalLabeler canLabler = new CanonicalLabeler();
+            var canLabler = new CanonicalLabeler();
             canLabler.CanonLabel(ac);
-            IAtomContainer ac2 = ChemObjectBuilder.Instance.NewAtomContainer();
+            var ac2 = ChemObjectBuilder.Instance.NewAtomContainer();
             ac2.Atoms.Add(ac2.Builder.NewAtom("O"));
             ac2.Atoms.Add(ac2.Builder.NewAtom("C"));
             ac2.AddBond(ac2.Atoms[0], ac2.Atoms[1], BondOrder.Single);
