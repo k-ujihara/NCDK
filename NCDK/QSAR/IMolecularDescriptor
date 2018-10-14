@@ -1,4 +1,5 @@
 # Molecular QSAR descriptors
+NCDK.QSAR.Descriptors.Moleculars.FractionalCSP3Descriptor
 NCDK.QSAR.Descriptors.Moleculars.SmallRingDescriptor
 NCDK.QSAR.Descriptors.Moleculars.FractionalPSADescriptor
 NCDK.QSAR.Descriptors.Moleculars.ZagrebIndexDescriptor
