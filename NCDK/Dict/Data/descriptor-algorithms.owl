@@ -1094,7 +1094,7 @@
     </Descriptor>
   
     <Descriptor rdf:ID="Fsp3">
-        <rdfs:label>number of sp3 hybridized carbons/total carbon count</rdfs:label>
+        <rdfs:label>Number of sp3 hybridized carbons/total carbon count</rdfs:label>
         <annotation>
             <documentation>
                 <dc:contributor rdf:resource="#ku"/>
@@ -1105,7 +1105,7 @@
             Returns the number of sp3 hybridized carbons divided by total carbon count.
         </definition>
         <description rdf:parseType='Literal'>
-            This descriptor is described by Lovering et al <bibtex:cite ref="LOV2009"/>.
+            This descriptor is described by Lovering et al <bibtex:cite ref="Lovering2009"/>.
         </description>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
