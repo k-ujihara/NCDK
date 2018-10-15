@@ -129,5 +129,21 @@ namespace NCDK
                 return lonePairElectronChecker;
             }
         }
+
+        private static AtomTypes.CDKAtomTypeMatcher cdkAtomTypeMatcher;
+
+        internal static AtomTypes.CDKAtomTypeMatcher CdkAtomTypeMatcher
+        {
+            get
+            {
+                if (cdkAtomTypeMatcher == null)
+                    lock (syncLock)
+                    {
+                        if (cdkAtomTypeMatcher == null)
+                            cdkAtomTypeMatcher = AtomTypes.CDKAtomTypeMatcher.GetInstance(Silent.ChemObjectBuilder.Instance);
+                    }
+                return cdkAtomTypeMatcher;
+            }
+        }
     }
 }

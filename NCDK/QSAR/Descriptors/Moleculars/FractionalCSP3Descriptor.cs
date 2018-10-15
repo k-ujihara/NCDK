@@ -20,7 +20,6 @@
  */
 
 using NCDK.QSAR.Results;
-using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 
@@ -51,11 +50,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "Fsp3" };
 
-        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
-        {
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
-        }
-
         /// <summary>
         /// Calculates the fraction of C atoms that are SP3 hybridized.
         /// </summary>
@@ -63,21 +57,33 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>F<sub>sp</sub><sup>3</sup></returns>
         public DescriptorValue<Result<double>> Calculate(IAtomContainer mol)
         {
-            mol = (IAtomContainer)mol.Clone();
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            int nC = 0;
-            int nCSP3 = 0;
-            foreach (var atom in mol.Atoms)
+            double v;
+            try
             {
-                if (atom.AtomicNumber == 6)
+                int nC = 0;
+                int nCSP3 = 0;
+                var matcher = CDK.CdkAtomTypeMatcher;
+                foreach (var atom in mol.Atoms)
                 {
-                    nC++;
-                    if (atom.Hybridization == Hybridization.SP3)
-                        nCSP3++;
+                    if (atom.AtomicNumber == 6)
+                    {
+                        nC++;
+                        var matched = matcher.FindMatchingAtomType(mol, atom);
+                        if (matched != null && matched.Hybridization == Hybridization.SP3)
+                        {
+                            nCSP3++;
+                        }
+                    }
                 }
+                v = nC == 0 ? 0 : (double)nCSP3 / nC;
             }
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, 
-                new Result<double>(nC == 0 ? 0 : (double)nCSP3 / nC), DescriptorNames);
+            catch (CDKException)
+            {
+                v = double.NaN;
+            }
+
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters,
+                new Result<double>(v), DescriptorNames);
         }
 
         public override IDescriptorResult DescriptorResultType { get; } = new Result<double>();

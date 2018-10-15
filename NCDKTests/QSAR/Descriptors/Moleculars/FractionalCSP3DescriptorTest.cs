@@ -48,8 +48,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         static readonly E[] table = new E[]
         {
-            new E("HH", 0, "hydrogen"),
-            new E("HOH", 0, "water"),
+            new E("[H][H]", 0, "hydrogen"),
+            new E("O", 0, "water"),
             new E("C1=CC=CC=C1", 0, "benzene"),
             new E("C1=CN=CC=C1", 0, "pyridine"),
             new E("CC1=CC=CC(C)=N1", 0.29, "dimethylpyridine"),
@@ -60,10 +60,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestFractionalCSP3Descriptor()
         {
-            var sp = CDK.SilentSmilesParser;
             foreach (var e in table)
             {
-                var mol = sp.ParseSmiles(e.Smiles);
+                var mol = CDK.SilentSmilesParser.ParseSmiles(e.Smiles);
                 Assert.AreEqual(e.Value, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.01);
             }
         }
