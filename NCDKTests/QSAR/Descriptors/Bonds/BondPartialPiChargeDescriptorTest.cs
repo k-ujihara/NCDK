@@ -43,8 +43,8 @@ namespace NCDK.QSAR.Descriptors.Bonds
             double[] testResult = { 0.0, 0.0 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("CF");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("CF");
             AddExplicitHydrogens(mol);
 
             for (int i = 0; i < 2; i++)
@@ -63,8 +63,8 @@ namespace NCDK.QSAR.Descriptors.Bonds
             descriptor = new BondPartialPiChargeDescriptor();
             double[] testResult = { 0.0022, 0.0011, 0.0011, 0.0011, 0.0011, 0.0, 0.0, 0.0 }; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("C=CCBr");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("C=CCBr");
             AddExplicitHydrogens(mol);
 
             for (int i = 0; i < 8; i++)
@@ -83,8 +83,8 @@ namespace NCDK.QSAR.Descriptors.Bonds
             descriptor = new BondPartialPiChargeDescriptor();
             double testResult = 0.0; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("C(C)(C)CCI");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("C(C)(C)CCI");
             AddExplicitHydrogens(mol);
             for (int i = 0; i < 6; i++)
             {
@@ -102,8 +102,8 @@ namespace NCDK.QSAR.Descriptors.Bonds
             descriptor = new BondPartialPiChargeDescriptor();
             double[] testResult = { 0.0006, 0.0003, 0.0003, 0.0003, 0.0003, 0.0, 0.0, 0.0, 0.0 }; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("C=CCS");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("C=CCS");
             AddExplicitHydrogens(mol);
 
             for (int i = 0; i < 9; i++)

@@ -152,9 +152,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestBasicQueryAtomContainer()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
-            IAtomContainer SMILESquery = sp.ParseSmiles("CC"); // acetic acid anhydride
+            var sp = CDK.SilentSmilesParser;
+            var atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
+            var SMILESquery = sp.ParseSmiles("CC"); // acetic acid anhydride
             var query = QueryAtomContainerCreator.CreateBasicQueryContainer(SMILESquery);
 
             Assert.IsTrue(CDKMCS.IsSubgraph(atomContainer, query, true));
@@ -197,7 +197,7 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             QueryAtomContainer query1 = null;
             QueryAtomContainer query2 = null;
 
-            Stream ins = ResourceLoader.GetAsStream(molfile);
+            var ins = ResourceLoader.GetAsStream(molfile);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             reader.Read(mol);
             ins = ResourceLoader.GetAsStream(queryfile);
@@ -205,8 +205,8 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             reader.Read(temp);
             query1 = QueryAtomContainerCreator.CreateBasicQueryContainer(temp);
 
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer atomContainer = sp.ParseSmiles("C1CCCCC1");
+            var sp = CDK.SilentSmilesParser;
+            var atomContainer = sp.ParseSmiles("C1CCCCC1");
             query2 = QueryAtomContainerCreator.CreateBasicQueryContainer(atomContainer);
 
             var list = CDKMCS.GetSubgraphMap(mol, query1, true);
@@ -229,9 +229,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             IAtomContainer mol1 = new AtomContainer();
             IAtomContainer mol2 = new AtomContainer();
 
-            Stream ins1 = ResourceLoader.GetAsStream(file1);
+            var ins1 = ResourceLoader.GetAsStream(file1);
             new MDLV2000Reader(ins1, ChemObjectReaderMode.Strict).Read(mol1);
-            Stream ins2 = ResourceLoader.GetAsStream(file2);
+            var ins2 = ResourceLoader.GetAsStream(file2);
             new MDLV2000Reader(ins2, ChemObjectReaderMode.Strict).Read(mol2);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
@@ -262,9 +262,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             IAtomContainer mol1 = new AtomContainer();
             IAtomContainer mol2 = new AtomContainer();
 
-            Stream ins1 = ResourceLoader.GetAsStream(file1);
+            var ins1 = ResourceLoader.GetAsStream(file1);
             new MDLV2000Reader(ins1, ChemObjectReaderMode.Strict).Read(mol1);
-            Stream ins2 = ResourceLoader.GetAsStream(file2);
+            var ins2 = ResourceLoader.GetAsStream(file2);
             new MDLV2000Reader(ins2, ChemObjectReaderMode.Strict).Read(mol2);
             AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
             permutor.MoveNext();
@@ -325,9 +325,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestAnyAtomAnyBondCase()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer target = sp.ParseSmiles("O1C=CC=C1");
-            IAtomContainer queryac = sp.ParseSmiles("C1CCCC1");
+            var sp = CDK.SilentSmilesParser;
+            var target = sp.ParseSmiles("O1C=CC=C1");
+            var queryac = sp.ParseSmiles("C1CCCC1");
             var query = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(queryac, false);
 
             Assert.IsTrue(CDKMCS.IsSubgraph(target, query, true), "C1CCCC1 should be a subgraph of O1C=CC=C1");
@@ -338,9 +338,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestFirstArgumentMustNotBeAnQueryAtomContainer()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer target = sp.ParseSmiles("O1C=CC=C1");
-            IAtomContainer queryac = sp.ParseSmiles("C1CCCC1");
+            var sp = CDK.SilentSmilesParser;
+            var target = sp.ParseSmiles("O1C=CC=C1");
+            var queryac = sp.ParseSmiles("C1CCCC1");
             var query = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(queryac, false);
 
             try
@@ -358,9 +358,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestSingleAtomMatching1()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer target = sp.ParseSmiles("[H]");
-            IAtomContainer queryac = sp.ParseSmiles("[H]");
+            var sp = CDK.SilentSmilesParser;
+            var target = sp.ParseSmiles("[H]");
+            var queryac = sp.ParseSmiles("[H]");
             var query = QueryAtomContainerCreator.CreateSymbolAndBondOrderQueryContainer(queryac);
 
             var matches = CDKMCS.GetIsomorphMaps(target, query, true);
@@ -377,9 +377,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestSingleAtomMatching2()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer target = sp.ParseSmiles("CNC");
-            IAtomContainer queryac = sp.ParseSmiles("C");
+            var sp = CDK.SilentSmilesParser;
+            var target = sp.ParseSmiles("CNC");
+            var queryac = sp.ParseSmiles("C");
             var query = QueryAtomContainerCreator.CreateSymbolAndBondOrderQueryContainer(queryac);
 
             var matches = CDKMCS.GetIsomorphMaps(target, query, true);

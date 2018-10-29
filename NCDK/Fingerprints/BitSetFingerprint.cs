@@ -59,7 +59,7 @@ namespace NCDK.Fingerprints
             }
             else
             {
-                BitArray bitSet = new BitArray((int)fingerprint.Length);
+                var bitSet = new BitArray((int)fingerprint.Length);
                 for (int i = 0; i < fingerprint.Length; i++)
                 {
                     bitSet.Set(i, fingerprint[i]);
@@ -136,10 +136,13 @@ namespace NCDK.Fingerprints
 
         public override bool Equals(object obj)
         {
-            if (this == obj) return true;
-            if (obj == null) return false;
-            if (GetType() != obj.GetType()) return false;
-            BitSetFingerprint other = (BitSetFingerprint)obj;
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (GetType() != obj.GetType())
+                return false;
+            var other = (BitSetFingerprint)obj;
             if (bitset == null)
             {
                 if (other.bitset != null)

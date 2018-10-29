@@ -54,7 +54,7 @@ namespace NCDK.Stereo
     /// </remarks>
     /// <seealso href="http://opensmiles.org/opensmiles.html#_octahedral_centers">Octahedral Centers, OpenSMILES</seealso>
     public class Atropisomeric
-            : AbstractStereo<IBond, IAtom>
+        : AbstractStereo<IBond, IAtom>
     {
         /// <summary>
         /// Define a new atropisomer using the focus bond and the carrier atoms.

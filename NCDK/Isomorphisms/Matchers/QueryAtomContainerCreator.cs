@@ -19,95 +19,67 @@
 
 namespace NCDK.Isomorphisms.Matchers
 {
-    // @cdk.module   isomorphism
-    // @cdk.githash
+    /// <summary>
+    /// Utilities for creating queries from 'real' molecules. Note that most of this
+    /// functionality has now been replaced by the
+    /// <see cref="QueryAtomContainer.Create(IAtomContainer, ExprType[])"/> method and
+    /// the documentation simply indicates what settings are used.
+    /// </summary>
     public static class QueryAtomContainerCreator
     {
         /// <summary>
-        /// Creates a <see cref="QueryAtomContainer"/> with <see cref="SymbolQueryAtom"/>'s, <see cref="AromaticQueryBond"/>'s and
-        /// <see cref="OrderQueryBond"/>'s. If a <see cref="IBond"/> of the input <paramref name="container"/> is flagged
-        /// aromatic, then it disregards bond order information and only match against
-        /// an aromatic target atom instead.
+        /// Creates a <see cref="QueryAtomContainer"/> with the following settings:
+        /// <c>QueryAtomContainer.Create(container, 
+        ///     Expr.Type.ALIPHATIC_ELEMENT,
+        ///     Expr.Type.AROMATIC_ELEMENT,
+        ///     Expr.Type.IS_AROMATIC,
+        ///     Expr.Type.ALIPHATIC_ORDER,
+        ///     Expr.Type.STEREOCHEMISTRY);</c>
         /// </summary>
         /// <param name="container">The <see cref="IAtomContainer"/> that stands as model</param>
         /// <returns>The new <see cref="QueryAtomContainer"/> created from container.</returns>
         public static QueryAtomContainer CreateBasicQueryContainer(IAtomContainer container)
         {
-            var queryContainer = new QueryAtomContainer(container.Builder);
-            for (int i = 0; i < container.Atoms.Count; i++)
-            {
-                queryContainer.Atoms.Add(new SymbolQueryAtom(container.Atoms[i]));
-            }
-            foreach (var bond in container.Bonds)
-            {
-                int index1 = container.Atoms.IndexOf(bond.Begin);
-                int index2 = container.Atoms.IndexOf(bond.End);
-                if (bond.IsAromatic)
-                {
-                    queryContainer.Bonds.Add(new AromaticQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                        (IQueryAtom)queryContainer.Atoms[index2], container.Builder));
-                }
-                else
-                {
-                    queryContainer.Bonds.Add(new OrderQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                        (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
-                }
-            }
-            return queryContainer;
+            return QueryAtomContainer.Create(container,
+                ExprType.AliphaticElement,
+                ExprType.AromaticElement,
+                ExprType.IsAromatic,
+                ExprType.AliphaticOrder,
+                ExprType.Stereochemistry);
         }
 
         /// <summary>
-        /// Creates a <see cref="QueryAtomContainer"/> with SymbolQueryAtom's and OrderQueryBond's. Unlike
-        /// <see cref="CreateBasicQueryContainer(IAtomContainer)"/>, it disregards aromaticity flags.
+        /// Creates a <see cref="QueryAtomContainer"/> with the following settings:
+        /// <c>QueryAtomContainer.Create(container,
+        ///     ExprType.ELEMENT,
+        ///     ExprType.ORDER);</c>
         /// </summary>
         /// <param name="container">The AtomContainer that stands as model</param>
         /// <returns>The new QueryAtomContainer created from container.</returns>
         public static QueryAtomContainer CreateSymbolAndBondOrderQueryContainer(IAtomContainer container)
         {
-            var queryContainer = new QueryAtomContainer(container.Builder);
-            for (int i = 0; i < container.Atoms.Count; i++)
-            {
-                queryContainer.Atoms.Add(new SymbolQueryAtom(container.Atoms[i]));
-            }
-            foreach (var bond in container.Bonds)
-            {
-                int index1 = container.Atoms.IndexOf(bond.Begin);
-                int index2 = container.Atoms.IndexOf(bond.End);
-                queryContainer.Bonds.Add(new OrderQueryBondOrderOnly((IQueryAtom)queryContainer.Atoms[index1],
-                    (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
-            }
-            return queryContainer;
+            return QueryAtomContainer.Create(container,
+                ExprType.Element,
+                ExprType.Order);
         }
 
         /// <summary>
-        /// Creates a <see cref="QueryAtomContainer"/> with <see cref="SymbolAndChargeQueryAtom"/>'s and
-        /// <see cref="OrderQueryBond"/>'s.
+        /// Creates a <see cref="QueryAtomContainer"/> with the following settings:
+        /// <c>QueryAtomContainer.Create(container,
+        ///     ExprType.ELEMENT,
+        ///     ExprType.FORMAL_CHARGE,
+        ///     ExprType.IS_AROMATIC,
+        ///     ExprType.ORDER);</c>
         /// </summary>
         /// <param name="container">The <see cref="IAtomContainer"/> that stands as model</param>
         /// <returns>The new <see cref="QueryAtomContainer"/> created from container.</returns>
         public static QueryAtomContainer CreateSymbolAndChargeQueryContainer(IAtomContainer container)
         {
-            var queryContainer = new QueryAtomContainer(container.Builder);
-            for (int i = 0; i < container.Atoms.Count; i++)
-            {
-                queryContainer.Atoms.Add(new SymbolAndChargeQueryAtom(container.Atoms[i]));
-            }
-            foreach (var bond in container.Bonds)
-            {
-                int index1 = container.Atoms.IndexOf(bond.Begin);
-                int index2 = container.Atoms.IndexOf(bond.End);
-                if (bond.IsAromatic)
-                {
-                    queryContainer.Bonds.Add(new AromaticQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                        (IQueryAtom)queryContainer.Atoms[index2], container.Builder));
-                }
-                else
-                {
-                    queryContainer.Bonds.Add(new OrderQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                        (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
-                }
-            }
-            return queryContainer;
+            return QueryAtomContainer.Create(container,
+                ExprType.Element,
+                ExprType.FormalCharge,
+                ExprType.IsAromatic,
+                ExprType.Order);
         }
 
         public static QueryAtomContainer CreateSymbolChargeIDQueryContainer(IAtomContainer container)
@@ -123,189 +95,91 @@ namespace NCDK.Isomorphisms.Matchers
                 int index2 = container.Atoms.IndexOf(bond.End);
                 if (bond.IsAromatic)
                 {
-                    queryContainer.Bonds.Add(new AromaticQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                        (IQueryAtom)queryContainer.Atoms[index2], container.Builder));
+                    QueryBond qbond = new QueryBond(queryContainer.Atoms[index1],
+                                                queryContainer.Atoms[index2],
+                                                ExprType.IsAromatic);
+                    queryContainer.Bonds.Add(qbond);
                 }
                 else
                 {
-                    queryContainer.Bonds.Add(new OrderQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                        (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
+                    QueryBond qbond = new QueryBond(queryContainer.Atoms[index1],
+                                                 queryContainer.Atoms[index2],
+                                                 ExprType.Order,
+                                                 bond.Order.Numeric())
+                    {
+                        Order = bond.Order // backwards compatibility
+                    };
+                    queryContainer.Bonds.Add(qbond);
                 }
             }
             return queryContainer;
         }
 
         /// <summary>
-        /// Creates a <see cref="QueryAtomContainer"/> with AnyAtoms / Aromatic Atoms and OrderQueryBonds / AromaticQueryBonds.
-        /// It uses the CDKConstants.ISAROMATIC flag to determine the aromaticity of container.
+        /// Creates a QueryAtomContainer with the following settings:
+        /// <c>
+        /// // aromaticity = true
+        /// QueryAtomContainer.Create(container,
+        ///     ExprType.IS_AROMATIC,
+        ///     ExprType.ALIPHATIC_ORDER);
+        /// // aromaticity = false
+        /// QueryAtomContainer.Create(container,
+        ///     ExprType.ORDER);
+        /// </c>
         /// </summary>
         /// <param name="container">The <see cref="IAtomContainer"/> that stands as model</param>
-        /// <param name="aromaticity">True = use aromaticity flags to create AtomaticAtoms and AromaticQueryBonds</param>
-        /// <returns>The new <see cref="QueryAtomContainer"/> created from container</returns>
+        /// <param name="aromaticity">option flag</param>
+        /// <returns>The new <see cref="QueryAtomContainer"/> created from container.</returns>
         public static QueryAtomContainer CreateAnyAtomContainer(IAtomContainer container, bool aromaticity)
         {
-            var queryContainer = new QueryAtomContainer(container.Builder);
-
-            for (int i = 0; i < container.Atoms.Count; i++)
-            {
-                if (aromaticity && container.Atoms[i].IsAromatic)
-                {
-                    queryContainer.Atoms.Add(new AromaticAtom(container.Builder));
-                }
-                else
-                {
-                    queryContainer.Atoms.Add(new AnyAtom(container.Builder));
-                }
-            }
-
-            foreach (var bond in container.Bonds)
-            {
-                int index1 = container.Atoms.IndexOf(bond.Begin);
-                int index2 = container.Atoms.IndexOf(bond.End);
-                if (aromaticity && bond.IsAromatic)
-                {
-                    queryContainer.Bonds.Add(new AromaticQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                        (IQueryAtom)queryContainer.Atoms[index2], container.Builder));
-                }
-                else
-                {
-                    queryContainer.Bonds.Add(new OrderQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                        (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
-                }
-            }
-            return queryContainer;
+            if (aromaticity)
+                return QueryAtomContainer.Create(container,
+                    ExprType.IsAromatic,
+                    ExprType.AliphaticOrder);
+            else
+                return QueryAtomContainer.Create(container,
+                       ExprType.Order);
         }
 
         /// <summary>
-        /// Creates a <see cref="QueryAtomContainer"/> with wildcard atoms and wildcard bonds.
+        /// Creates a QueryAtomContainer with the following settings:
+        /// <c>
+        /// // aromaticity = true
+        /// QueryAtomContainer.Create(container, ExprType.IS_AROMATIC);
+        /// // aromaticity = false
+        /// QueryAtomContainer.Create(container);
+        /// </c>
         /// </summary>
         /// <remarks>
         /// This method thus allows the user to search based only on connectivity.
         /// </remarks>
         /// <param name="container">The AtomContainer that stands as the model</param>
-        /// <param name="aromaticity">If True, aromaticity flags are checked to create AromaticAtoms and AromaticQueryBonds</param>
+        /// <param name="aromaticity">option flag</param>
         /// <returns>The new QueryAtomContainer</returns>
         public static QueryAtomContainer CreateAnyAtomAnyBondContainer(IAtomContainer container, bool aromaticity)
         {
-            var queryContainer = new QueryAtomContainer(container.Builder);
-
-            for (int i = 0; i < container.Atoms.Count; i++)
-            {
-                if (aromaticity && container.Atoms[i].IsAromatic)
-                {
-                    queryContainer.Atoms.Add(new AromaticAtom(container.Builder));
-                }
-                else
-                {
-                    queryContainer.Atoms.Add(new AnyAtom(container.Builder));
-                }
-            }
-
-            foreach (var bond in container.Bonds)
-            {
-                int index1 = container.Atoms.IndexOf(bond.Begin);
-                int index2 = container.Atoms.IndexOf(bond.End);
-                queryContainer.Bonds.Add(new AnyOrderBond(queryContainer.Atoms[index1], queryContainer.Atoms[index2], container.Builder));
-            }
-            return queryContainer;
+            if (aromaticity)
+                return QueryAtomContainer.Create(container, ExprType.IsAromatic);
+            else
+                return QueryAtomContainer.Create(container);
         }
 
         /// <summary>
-        ///  Creates a <see cref="QueryAtomContainer"/> with <see cref="SymbolQueryAtom"/>'s and
-        ///  <see cref="OrderQueryBond"/>'s. Each <see cref="IPseudoAtom"/> will be replaced by a
-        ///  <see cref="AnyAtom"/>
+        /// Creates a QueryAtomContainer with the following settings:
+        /// <c>QueryAtomContainer.Create(container,
+        ///     ExprType.ELEMENT,
+        ///     ExprType.IS_AROMATIC,
+        ///     ExprType.ALIPHATIC_ORDER);
+        /// </c>>
         /// </summary>
         /// <param name="container">The AtomContainer that stands as model</param>
         /// <returns>The new QueryAtomContainer created from container.</returns>
         public static QueryAtomContainer CreateAnyAtomForPseudoAtomQueryContainer(IAtomContainer container)
         {
-            var queryContainer = new QueryAtomContainer(container.Builder);
-            for (int i = 0; i < container.Atoms.Count; i++)
-            {
-                if (container.Atoms[i] is IPseudoAtom)
-                {
-                    queryContainer.Atoms.Add(new AnyAtom(container.Builder));
-                }
-                else
-                {
-                    queryContainer.Atoms.Add(new SymbolQueryAtom(container.Atoms[i]));
-                }
-            }
-            foreach (var bond in container.Bonds)
-            {
-                int index1 = container.Atoms.IndexOf(bond.Begin);
-                int index2 = container.Atoms.IndexOf(bond.End);
-                if (bond.IsAromatic)
-                {
-                    queryContainer.Bonds.Add(new AromaticQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                        (IQueryAtom)queryContainer.Atoms[index2], container.Builder));
-                }
-                else
-                {
-                    queryContainer.Bonds.Add(new OrderQueryBond((IQueryAtom)queryContainer.Atoms[index1],
-                        (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
-                }
-            }
-            return queryContainer;
-        }
-
-        /// <summary>Match any atom.</summary>
-        private sealed class AnyAtom : QueryAtom
-        {
-            public AnyAtom(IChemObjectBuilder builder)
-                : base(builder)
-            { }
-
-            /// <inheritdoc/>
-            public override bool Matches(IAtom atom)
-            {
-                return true;
-            }
-        }
-
-        /// <summary>Match any aromatic atom.</summary>
-        private sealed class AromaticAtom : QueryAtom
-        {
-            public AromaticAtom(IChemObjectBuilder builder)
-                : base(builder)
-            {
-            }
-
-            /// <inheritdoc/>
-
-            public override bool Matches(IAtom atom)
-            {
-                return atom.IsAromatic;
-            }
-        }
-
-        /// <summary>Match any bond which doesn't have a null or unset bond order.</summary>
-        private sealed class AnyOrderBond : QueryBond
-        {
-            public AnyOrderBond(IAtom either, IAtom other, IChemObjectBuilder builder)
-                : base(either, other, BondOrder.Unset, builder)
-            { }
-
-            /// <inheritdoc/>
-            public override bool Matches(IBond bond)
-            {
-                return bond != null && bond.Order != BondOrder.Unset;
-            }
-        }
-
-        /// <summary>Match any aromatic bond.</summary>
-        private sealed class AromaticQueryBond : QueryBond
-        {
-            public AromaticQueryBond(IAtom either, IAtom other, IChemObjectBuilder builder)
-                : base(either, other, BondOrder.Unset, builder)
-            {
-            }
-
-            /// <inheritdoc/>
-            public override bool Matches(IBond bond)
-            {
-                return bond.IsAromatic;
-            }
+            return QueryAtomContainer.Create(container,
+                ExprType.Element,
+                ExprType.IsAromatic,
+                ExprType.AliphaticOrder);
         }
     }
 }

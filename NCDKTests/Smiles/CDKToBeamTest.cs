@@ -525,7 +525,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void R_penta_2_3_diene_impl_h()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));
@@ -546,7 +546,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void S_penta_2_3_diene_impl_h()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));
@@ -567,7 +567,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void R_penta_2_3_diene_expl_h()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));
@@ -599,7 +599,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void S_penta_2_3_diene_expl_h()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));

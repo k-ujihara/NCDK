@@ -228,7 +228,7 @@ namespace NCDK.FaulonSignatures.Chemistry
             using (var reader = new StreamReader(filename))
             {
                 string line;
-                List<string> sigs = new List<string>();
+                var sigs = new List<string>();
                 while ((line = reader.ReadLine()) != null)
                 {
                     int index = line.IndexOf(" ") + 1;
@@ -246,7 +246,7 @@ namespace NCDK.FaulonSignatures.Chemistry
             using (var reader = new StreamReader(new FileStream(filename, FileMode.Open, FileAccess.Read)))
             {
                 string line;
-                List<string> sigs = new List<string>();
+                var sigs = new List<string>();
                 while ((line = reader.ReadLine()) != null)
                 {
                     string[] bits = Strings.Tokenize(line).ToArray();

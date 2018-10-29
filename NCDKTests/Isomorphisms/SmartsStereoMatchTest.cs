@@ -43,8 +43,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Tetrahedral_missingInTarget()
         {
-            IAtomContainer query = Sma("[C@@](C)(C)(C)C");
-            IAtomContainer target = Dimethylpropane();
+            var query = Sma("[C@@](C)(C)(C)C");
+            var target = Dimethylpropane();
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
         }
 
@@ -55,8 +55,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Tetrahedral_missingInQuery()
         {
-            IAtomContainer query = Sma("[C@@](C)(C)(C)C");
-            IAtomContainer target = Dimethylpropane();
+            var query = Sma("[C@@](C)(C)(C)C");
+            var target = Dimethylpropane();
             target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.Clockwise));
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
@@ -65,8 +65,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Tetrahedral_match()
         {
-            IAtomContainer query = Sma("[C@@](C)(C)(C)C"); ;
-            IAtomContainer target = Dimethylpropane();
+            var query = Sma("[C@@](C)(C)(C)C"); ;
+            var target = Dimethylpropane();
             target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.Clockwise));
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
@@ -75,8 +75,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Tetrahedral_mismatch()
         {
-            IAtomContainer query = Sma("[C@@](C)(C)(C)C");
-            IAtomContainer target = Dimethylpropane();
+            var query = Sma("[C@@](C)(C)(C)C");
+            var target = Dimethylpropane();
             target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.AntiClockwise));
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
@@ -89,8 +89,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Tetrahedral_match_swap()
         {
-            IAtomContainer query = Sma("[C@@](C)(C)(C)C");
-            IAtomContainer target = Dimethylpropane();
+            var query = Sma("[C@@](C)(C)(C)C");
+            var target = Dimethylpropane();
             target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.AntiClockwise));
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 3, 2, 4 }));
@@ -100,8 +100,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Tetrahedral_mismatch_swap()
         {
-            IAtomContainer query = Sma("[C@@](C)(C)(C)C");
-            IAtomContainer target = Dimethylpropane();
+            var query = Sma("[C@@](C)(C)(C)C");
+            var target = Dimethylpropane();
             target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.Clockwise));
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 3, 2, 4 }));
@@ -110,8 +110,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Tetrahedral_unspecified_match()
         {
-            IAtomContainer query = Sma("[C@@?](C)(C)(C)C");
-            IAtomContainer target = Dimethylpropane();
+            var query = Sma("[C@@?](C)(C)(C)C");
+            var target = Dimethylpropane();
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
             target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.Clockwise));
@@ -121,8 +121,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Tetrahedral_unspecified_match2()
         {
-            IAtomContainer query = Sma("[C@?](C)(C)(C)C");
-            IAtomContainer target = Dimethylpropane();
+            var query = Sma("[C@?](C)(C)(C)C");
+            var target = Dimethylpropane();
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
             target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.AntiClockwise));
@@ -132,8 +132,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Tetrahedral_unspecified_mismatch()
         {
-            IAtomContainer query = Sma("[C@@?](C)(C)(C)C");
-            IAtomContainer target = Dimethylpropane();
+            var query = Sma("[C@@?](C)(C)(C)C");
+            var target = Dimethylpropane();
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
             target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.AntiClockwise));
@@ -143,8 +143,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Tetrahedral_unspecified_mismatch2()
         {
-            IAtomContainer query = Sma("[C@?](C)(C)(C)C");
-            IAtomContainer target = Dimethylpropane();
+            var query = Sma("[C@?](C)(C)(C)C");
+            var target = Dimethylpropane();
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
             target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.Clockwise));
@@ -154,8 +154,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Tetrahedral_either_match()
         {
-            IAtomContainer query = Sma("[@,@@](C)(C)(C)C");
-            IAtomContainer target = Dimethylpropane();
+            var query = Sma("[@,@@](C)(C)(C)C");
+            var target = Dimethylpropane();
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
             target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.Clockwise));
@@ -169,8 +169,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Geometric_match_together1()
         {
-            IAtomContainer query = Sma("C/C=C\\C");
-            IAtomContainer target = But2ene();
+            var query = Sma("C/C=C\\C");
+            var target = But2ene();
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
@@ -180,8 +180,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Geometric_match_together2()
         {
-            IAtomContainer query = Sma("C\\C=C/C");
-            IAtomContainer target = But2ene();
+            var query = Sma("C\\C=C/C");
+            var target = But2ene();
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
@@ -191,8 +191,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Geometric_match_opposite1()
         {
-            IAtomContainer query = Sma("C/C=C/C");
-            IAtomContainer target = But2ene();
+            var query = Sma("C/C=C/C");
+            var target = But2ene();
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Opposite));
@@ -202,8 +202,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Geometric_match_opposite2()
         {
-            IAtomContainer query = Sma("C\\C=C\\C");
-            IAtomContainer target = But2ene();
+            var query = Sma("C\\C=C\\C");
+            var target = But2ene();
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Opposite));
@@ -213,8 +213,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Geometric_mismatch_together1()
         {
-            IAtomContainer query = Sma("C/C=C\\C");
-            IAtomContainer target = But2ene();
+            var query = Sma("C/C=C\\C");
+            var target = But2ene();
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Opposite));
@@ -224,8 +224,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Geometric_mismatch_together2()
         {
-            IAtomContainer query = Sma("C\\C=C/C");
-            IAtomContainer target = But2ene();
+            var query = Sma("C\\C=C/C");
+            var target = But2ene();
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Opposite));
@@ -235,8 +235,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Geometric_mismatch_opposite1()
         {
-            IAtomContainer query = Sma("C/C=C/C");
-            IAtomContainer target = But2ene();
+            var query = Sma("C/C=C/C");
+            var target = But2ene();
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
@@ -246,8 +246,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Geometric_mismatch_opposite2()
         {
-            IAtomContainer query = Sma("C\\C=C\\C");
-            IAtomContainer target = But2ene();
+            var query = Sma("C\\C=C\\C");
+            var target = But2ene();
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
@@ -257,8 +257,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Geometric_match_together_unspecified1()
         {
-            IAtomContainer query = Sma("C/C=C\\?C");
-            IAtomContainer target = But2ene();
+            var query = Sma("C/C=C\\?C");
+            var target = But2ene();
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
@@ -268,8 +268,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Geometric_match_together_unspecified2()
         {
-            IAtomContainer query = Sma("C/?C=C\\C");
-            IAtomContainer target = But2ene();
+            var query = Sma("C/?C=C\\C");
+            var target = But2ene();
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
@@ -283,8 +283,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Geometric_match_together_unspecified3()
         {
-            IAtomContainer query = Sma("C\\C=C/?C");
-            IAtomContainer target = But2ene();
+            var query = Sma("C\\C=C/?C");
+            var target = But2ene();
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
@@ -298,8 +298,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Geometric_match_together_unspecified4()
         {
-            IAtomContainer query = Sma("C\\?C=C/C");
-            IAtomContainer target = But2ene();
+            var query = Sma("C\\?C=C/C");
+            var target = But2ene();
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
@@ -313,8 +313,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Geometric_match_opposite_unspecified1()
         {
-            IAtomContainer query = Sma("C/C=C/?C");
-            IAtomContainer target = But2ene();
+            var query = Sma("C/C=C/?C");
+            var target = But2ene();
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Opposite));
@@ -328,8 +328,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Geometric_match_opposite_unspecified2()
         {
-            IAtomContainer query = Sma("C/?C=C/C");
-            IAtomContainer target = But2ene();
+            var query = Sma("C/?C=C/C");
+            var target = But2ene();
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Opposite));
@@ -343,8 +343,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Geometric_match_opposite_unspecified3()
         {
-            IAtomContainer query = Sma("C\\C=C\\?C");
-            IAtomContainer target = But2ene();
+            var query = Sma("C\\C=C\\?C");
+            var target = But2ene();
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Opposite));
@@ -358,8 +358,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Geometric_match_opposite_unspecified4()
         {
-            IAtomContainer query = Sma("C\\?C=C\\C");
-            IAtomContainer target = But2ene();
+            var query = Sma("C\\?C=C\\C");
+            var target = But2ene();
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Opposite));

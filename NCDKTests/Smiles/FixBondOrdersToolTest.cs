@@ -36,9 +36,8 @@ namespace NCDK.Smiles
         public void TestPyrrole()
         {
             string smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
-            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
-            smilesParser.Kekulise(false);
-            IAtomContainer molecule = smilesParser.ParseSmiles(smiles);
+            var sp = new SmilesParser(ChemObjectBuilder.Instance, false);
+            var molecule = sp.ParseSmiles(smiles);
             AtomContainerManipulator.SetSingleOrDoubleFlags(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
@@ -61,9 +60,8 @@ namespace NCDK.Smiles
         public void TestPyrrole_Silent()
         {
             string smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
-            SmilesParser smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            smilesParser.Kekulise(false);
-            IAtomContainer molecule = smilesParser.ParseSmiles(smiles);
+            var sp = new SmilesParser(ChemObjectBuilder.Instance, false);
+            var molecule = sp.ParseSmiles(smiles);
             AtomContainerManipulator.SetSingleOrDoubleFlags(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
@@ -86,7 +84,7 @@ namespace NCDK.Smiles
         {
             string smiles = "O=C1Oc6ccccc6(C(O)C1C5c2ccccc2CC(c3ccc(cc3)c4ccccc4)C5)";
             SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer molecule = smilesParser.ParseSmiles(smiles);
+            var molecule = smilesParser.ParseSmiles(smiles);
 
             molecule = FixBondOrdersTool.KekuliseAromaticRings(molecule);
             Assert.IsNotNull(molecule);
@@ -110,7 +108,7 @@ namespace NCDK.Smiles
         {
             string smiles = "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@@H]6COc7cc(OC)ccc7[C@H]56";
             SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer molecule = smilesParser.ParseSmiles(smiles);
+            var molecule = smilesParser.ParseSmiles(smiles);
 
             molecule = FixBondOrdersTool.KekuliseAromaticRings(molecule);
             Assert.IsNotNull(molecule);
@@ -330,7 +328,7 @@ namespace NCDK.Smiles
         {
             string smiles = "CCCCCCC";
             SmilesParser smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer molecule = smilesParser.ParseSmiles(smiles);
+            var molecule = smilesParser.ParseSmiles(smiles);
 
             molecule = FixBondOrdersTool.KekuliseAromaticRings(molecule);
             Assert.IsNotNull(molecule);

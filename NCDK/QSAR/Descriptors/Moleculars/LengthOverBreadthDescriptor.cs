@@ -24,7 +24,6 @@
 using MathNet.Numerics.LinearAlgebra;
 using NCDK.Common.Collections;
 using NCDK.Geometries;
-using NCDK.Numerics;
 using NCDK.QSAR.Results;
 using NCDK.Tools;
 using System;
@@ -79,7 +78,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             ArrayResult<double> result = new ArrayResult<double>(2)
             {
                 double.NaN,
-                double.NaN
+                double.NaN,
             };
             return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, DescriptorNames, e);
         }
@@ -209,12 +208,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int natom = atomContainer.Atoms.Count;
             for (int i = 0; i < natom; i++)
             {
-                double[] coord = new double[coords[0].Length];
+                var coord = new double[coords[0].Length];
                 Array.Copy(coords[i], 0, coord, 0, coords[0].Length);
                 if (withRadii)
                 {
-                    IAtom atom = atomContainer.Atoms[i];
-                    double radius = PeriodicTable.GetCovalentRadius(atom.Symbol).Value;
+                    var atom = atomContainer.Atoms[i];
+                    var radius = PeriodicTable.GetCovalentRadius(atom.Symbol).Value;
                     xmax = Math.Max(xmax, coord[0] + radius);
                     ymax = Math.Max(ymax, coord[1] + radius);
                     zmax = Math.Max(zmax, coord[2] + radius);
@@ -234,7 +233,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     zmin = Math.Min(zmin, coord[2]);
                 }
             }
-            double[] ranges = new double[3];
+            var ranges = new double[3];
             ranges[0] = xmax - xmin;
             ranges[1] = ymax - ymin;
             ranges[2] = zmax - zmin;

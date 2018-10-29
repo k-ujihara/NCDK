@@ -37,7 +37,7 @@ namespace NCDK.Stereo
         public void NormalizeOh()
         {
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = smipar.ParseSmiles("C[Co@OH8](F)(Br)(Cl)(I)S");
+            var mol = smipar.ParseSmiles("C[Co@OH8](F)(Br)(Cl)(I)S");
             var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(Octahedral));
             Assert.AreEqual(8, se.Configure.Order());

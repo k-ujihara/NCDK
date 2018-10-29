@@ -100,7 +100,7 @@ namespace NCDK.Tools.Manipulator
 
         public static IList<string> GetAllIDs(IReactionSet set)
         {
-            List<string> IDlist = new List<string>();
+            var IDlist = new List<string>();
             if (set.Id != null) IDlist.Add(set.Id);
             foreach (var reaction in set)
             {

@@ -29,7 +29,7 @@ namespace NCDK.Isomorphisms.Matchers
     /// Captures query bond types defined in the CTFile.
     /// </summary>
     // @cdk.module  isomorphism
-    // @cdk.githash
+    [Obsolete("Use " + nameof(ExprType) + "." + nameof(ExprType.SingleOrAromatic) + " etc.")]
     public class CTFileQueryBond : Silent.Bond, IQueryBond // use Default.Bond instead of QueryBond
     {
         /// <summary>

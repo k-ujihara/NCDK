@@ -45,6 +45,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 if (value.Count != 0)
                     throw new CDKException($"The {nameof(FractionalCSP3Descriptor)} expects zero parameters");
             }
+
             get => Array.Empty<object>();
         }
 

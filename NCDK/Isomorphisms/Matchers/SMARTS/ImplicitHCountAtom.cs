@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Text;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
@@ -27,6 +28,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     // @cdk.module  smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
+    [Obsolete]
     public class ImplicitHCountAtom : SMARTSAtom
     {
         private readonly int hcount;
@@ -52,7 +54,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         public override string ToString()
         {
-            StringBuilder s = new StringBuilder();
+            var s = new StringBuilder();
             s.Append("ImplicitHCountAtom(");
             s.Append(this.GetHashCode()).Append(", ");
             s.Append("IH:" + hcount);

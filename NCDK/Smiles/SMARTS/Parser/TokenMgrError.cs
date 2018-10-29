@@ -24,6 +24,7 @@ using System.Text;
 namespace NCDK.Smiles.SMARTS.Parser
 {
     /// <summary>Token Manager Error.</summary>
+    [Obsolete]
     public class TokenManagerException : Exception
     {
         /// <summary>
@@ -64,7 +65,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         /// </summary>
         protected static string AddEscapes(string str)
         {
-            StringBuilder retval = new StringBuilder();
+            var retval = new StringBuilder();
             char ch;
             for (int i = 0; i < str.Length; i++)
             {

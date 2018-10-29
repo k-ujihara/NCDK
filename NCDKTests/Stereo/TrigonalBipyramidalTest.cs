@@ -37,7 +37,7 @@ namespace NCDK.Stereo
         public void Normalize()
         {
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = smipar.ParseSmiles("C[As@TB3](Cl)(Cl)(C)Cl");
+            var mol = smipar.ParseSmiles("C[As@TB3](Cl)(Cl)(C)Cl");
             var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(TrigonalBipyramidal));
             Assert.AreEqual(3, se.Configure.Order());

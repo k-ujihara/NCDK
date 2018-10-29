@@ -74,7 +74,7 @@ namespace NCDK.Beam
         /// <returns>a * 3 line string showing the buffer and it's current position</returns>
         static string Display(CharBuffer buffer, int offset)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append('\n');
             sb.Append(buffer);
             sb.Append('\n');

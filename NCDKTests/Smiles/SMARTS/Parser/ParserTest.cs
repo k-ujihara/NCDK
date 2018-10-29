@@ -31,7 +31,6 @@ namespace NCDK.Smiles.SMARTS.Parser
     {
         private void Parse(string smarts)
         {
-            //SMARTSParser.Parse(smarts);
             SMARTSParser parser = new SMARTSParser(new StringReader(smarts));
             parser.Start();
         }
@@ -1776,9 +1775,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Parse("C\r");
         }
 
-        /// <summary>
         // @cdk.bug 909
-        /// </summary>
         [TestMethod()]
         public void Bug909()
         {

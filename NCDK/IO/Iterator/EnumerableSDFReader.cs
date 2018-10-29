@@ -238,7 +238,7 @@ namespace NCDK.IO.Iterator
         private void ReadDataBlockInto(IAtomContainer m)
         {
             string dataHeader = null;
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             currentLine = input.ReadLine();
             while (currentLine != null)
             {

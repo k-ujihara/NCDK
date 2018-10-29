@@ -370,7 +370,7 @@ namespace NCDK.Depict
             Dimensions total = CalcTotalDimensions(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, fmt);
             double fitting = CalcFitting(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, fmt);
 
-            IDrawVisitor visitor = new SvgDrawVisitor(total.width, total.height, "mm");
+            IDrawVisitor visitor = new SvgDrawVisitor(total.width, total.height, units);
             if (fmt.Equals(SvgFormatKey))
             {
                 SvgPrevisit(fmt, scale * zoom * fitting, (SvgDrawVisitor)visitor, mainComp);

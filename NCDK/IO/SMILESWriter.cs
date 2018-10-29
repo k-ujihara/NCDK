@@ -151,7 +151,7 @@ namespace NCDK.IO
             {
                 if (exc is CDKException | exc is IOException)
                 {
-                    Trace.TraceError("Error while writing Molecule: ", exc.Message);
+                    Trace.TraceError($"Error while writing Molecule: {exc.Message}");
                     Debug.WriteLine(exc);
                 }
                 else

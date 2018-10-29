@@ -64,7 +64,7 @@ namespace NCDK.Normalizers
         public static bool Normalize(IAtomContainer ac, XDocument doc)
         {
             var nl = doc.Elements("replace-set");
-            SmilesParser sp = new SmilesParser(ac.Builder);
+            var sp = new SmilesParser(ac.Builder);
 
             bool change = false;
             foreach (var child in nl)
@@ -82,7 +82,7 @@ namespace NCDK.Normalizers
                         replacementstring = en.Current.Value;
                     }
                 }
-                IAtomContainer replacementStructure = sp.ParseSmiles(replacementstring);
+                var replacementStructure = sp.ParseSmiles(replacementstring);
                 foreach (var replace in replaces)
                 {
                     string replacestring;
@@ -96,7 +96,7 @@ namespace NCDK.Normalizers
                             replacestring = ((XText)en.Current).Value;
                         }
                     }
-                    IAtomContainer replaceStructure = sp.ParseSmiles(replacestring);
+                    var replaceStructure = sp.ParseSmiles(replacestring);
                     IReadOnlyList<RMap> l = null;
                     UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
                     while ((l = universalIsomorphismTester.GetSubgraphMap(ac, replaceStructure)) != null)

@@ -40,9 +40,9 @@ namespace NCDK.SMSD.Tools
         public void TestCheckAndCleanMolecule()
         {
             string fragmentMolSmiles = "C1=CC=CC=C1.C1=CC2=C(C=C1)C=CC=C2";
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer molecule = sp.ParseSmiles(fragmentMolSmiles);
-            IAtomContainer expResult = sp.ParseSmiles("C1=CC2=C(C=C1)C=CC=C2");
+            var sp = CDK.SilentSmilesParser;
+            var molecule = sp.ParseSmiles(fragmentMolSmiles);
+            var expResult = sp.ParseSmiles("C1=CC2=C(C=C1)C=CC=C2");
             IAtomContainer result = MoleculeSanityCheck.CheckAndCleanMolecule(molecule);
             Assert.AreEqual(expResult.Bonds.Count, result.Bonds.Count);
         }
@@ -54,8 +54,8 @@ namespace NCDK.SMSD.Tools
         public void TestFixAromaticity()
         {
             string rawMolSmiles = "C1=CC2=C(C=C1)C=CC=C2";
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles(rawMolSmiles);
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles(rawMolSmiles);
             MoleculeSanityCheck.CheckAndCleanMolecule(mol);
             int count = 0;
             foreach (var b in mol.Bonds)

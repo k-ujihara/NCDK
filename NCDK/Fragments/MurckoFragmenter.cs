@@ -22,6 +22,7 @@
  */
 
 using NCDK.Aromaticities;
+using NCDK.Common.Collections;
 using NCDK.Graphs;
 using NCDK.Hash;
 using NCDK.RingSearches;
@@ -69,6 +70,7 @@ namespace NCDK.Fragments
         IDictionary<long, IAtomContainer> frameMap = new Dictionary<long, IAtomContainer>();
         IDictionary<long, IAtomContainer> ringMap = new Dictionary<long, IAtomContainer>();
         readonly bool singleFrameworkOnly = false;
+        bool ringFragments = true;
         readonly int minimumFragmentSize = 5;
 
         /// <summary>
@@ -111,6 +113,15 @@ namespace NCDK.Fragments
         }
 
         /// <summary>
+        /// Whether to calculate ring fragments (<see langword="true"/> by default).
+        /// </summary>
+        public bool ComputeRingFragments
+        {
+            get => this.ringFragments;
+            set => this.ringFragments = value;
+        }
+
+        /// <summary>
         /// Perform the fragmentation procedure.
         /// </summary>
         /// <param name="atomContainer">The input molecule</param>
@@ -123,8 +134,95 @@ namespace NCDK.Fragments
             Run(atomContainer, fragmentSet);
         }
 
+        /// <summary>
+        /// Computes the Murcko Scaffold for the provided molecule in linear time.
+        /// </summary>
+        /// <remarks>
+        /// Note the return value contains the same atoms/bonds as in the input
+        /// and an additional clone and valence adjustments may be required.
+        /// </remarks>
+        /// <param name="mol">the molecule</param>
+        /// <returns>the atoms and bonds in the scaffold</returns>
+        public static IAtomContainer Scaffold(IAtomContainer mol)
+        {
+            // Old AtomContainer IMPL, cannot work with this
+            if (!mol.IsEmpty() && mol.Atoms[0].Container == null)
+                return null;
+            var queue = new Deque<IAtom>();
+            var bcount = new int[mol.Atoms.Count];
+            // Step 1. Mark and queue all terminal (degree 1) atoms
+            foreach (var atom in mol.Atoms)
+            {
+                int numBonds = atom.Bonds.Count;
+                bcount[atom.Index] = numBonds;
+                if (numBonds == 1)
+                    queue.Add(atom);
+            }
+            // Step 2. Iteratively remove terminal atoms queuing new atoms
+            //         as they become terminal
+            while (queue.Any())
+            {
+                var atom = queue.Poll();
+                if (atom == null)
+                    continue;
+                bcount[atom.Index] = 0;
+                foreach (var bond in atom.Bonds)
+                {
+                    var nbr = bond.GetOther(atom);
+                    bcount[nbr.Index]--;
+                    if (bcount[nbr.Index] == 1)
+                        queue.Add(nbr);
+                }
+            }
+            // Step 3. Copy out the atoms/bonds that are part of the Murcko
+            //         scaffold
+            var scaffold = mol.Builder.NewAtomContainer();
+            for (int i = 0; i < mol.Atoms.Count; i++)
+            {
+                var atom = mol.Atoms[i];
+                if (bcount[i] > 0)
+                    scaffold.Atoms.Add(atom);
+            }
+            for (int i = 0; i < mol.Bonds.Count; i++)
+            {
+                var bond = mol.Bonds[i];
+                if (bcount[bond.Begin.Index] > 0 &&
+                    bcount[bond.End.Index] > 0)
+                    scaffold.Bonds.Add(bond);
+            }
+            return scaffold;
+        }
+
+        private void AddRingFragment(IAtomContainer mol)
+        {
+            if (mol.Atoms.Count < minimumFragmentSize)
+                return;
+            var hash = generator.Generate(mol);
+            ringMap[hash] = mol;
+        }
+
         private void Run(IAtomContainer atomContainer, ICollection<long> fragmentSet)
         {
+            if (singleFrameworkOnly)
+            {
+                var scaffold = Scaffold(atomContainer);
+                if (scaffold != null)
+                {
+                    scaffold = (IAtomContainer)scaffold.Clone();
+                    if (scaffold.Atoms.Count >= minimumFragmentSize)
+                        frameMap[0L] = scaffold;
+                    if (ringFragments)
+                    {
+                        RingSearch rs = new RingSearch(scaffold);
+                        foreach (var rset in rs.FusedRingFragments())
+                            AddRingFragment(rset);
+                        foreach (var rset in rs.IsolatedRingFragments())
+                            AddRingFragment(rset);
+                    }
+                    return;
+                }
+            }
+
             long hash;
 
             // identify rings

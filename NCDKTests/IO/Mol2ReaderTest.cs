@@ -111,8 +111,8 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.Mol2.NCI_feb03_2D.mol2.gz";
             Stream ins = new GZipStream(ResourceLoader.GetAsStream(filename), CompressionMode.Decompress);
-            TextReader br = new StreamReader(ins);
-            StringBuilder buf = new StringBuilder();
+            var br = new StreamReader(ins);
+            var buf = new StringBuilder();
             string line;
             while ((line = br.ReadLine()) != null)
             {
@@ -166,7 +166,7 @@ namespace NCDK.IO
         public void TestIAtomContainer()
         {
             string filename = "NCDK.Data.Mol2.fromWebsite.mol2";
-            Stream ins = ResourceLoader.GetAsStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             Mol2Reader reader = new Mol2Reader(ins);
             IAtomContainer mol = (IAtomContainer)reader.Read(new AtomContainer());
             reader.Close();

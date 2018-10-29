@@ -43,9 +43,9 @@ namespace NCDK.SMSD
         [TestMethod()]
         public virtual void TestIsSubgraph()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
-            IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
+            var sp = CDK.SilentSmilesParser;
+            var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
+            var queryac = sp.ParseSmiles("Nc1ccccc1");
 
             VFlibSubStructureHandler smsd1 = new VFlibSubStructureHandler();
             MolHandler mol1 = new MolHandler(queryac, true, true);

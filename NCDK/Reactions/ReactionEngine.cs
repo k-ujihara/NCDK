@@ -53,7 +53,9 @@ namespace NCDK.Reactions
                 EntryReact entry = InitiateDictionary("reaction-processes", (IReactionProcess)reaction);
                 InitiateParameterMap2(entry);
                 reaction.ParameterList = ParameterList;
-                ExtractMechanism(entry);
+                // extract mechanism dependence, if there is one
+                if (!string.IsNullOrEmpty(entry.Mechanism))
+                    ExtractMechanism(entry);
             }
             catch (Exception e)
             {
@@ -75,12 +77,12 @@ namespace NCDK.Reactions
             }
             catch (ArgumentException exception)
             {
-                Trace.TraceError("Could not find this IReactionMechanism: ", mechanismName);
+                Trace.TraceError($"Could not find this IReactionMechanism: {mechanismName}");
                 Debug.WriteLine(exception);
             }
             catch (Exception exception)
             {
-                Trace.TraceError("Could not load this IReactionMechanism: ", mechanismName);
+                Trace.TraceError($"Could not load this IReactionMechanism: {mechanismName}");
                 Debug.WriteLine(exception);
             }
         }
@@ -138,12 +140,12 @@ namespace NCDK.Reactions
                 }
                 catch (ArgumentException exception)
                 {
-                    Trace.TraceError("Could not find this IParameterReact: ", paramName);
+                    Trace.TraceError($"Could not find this IParameterReact: {paramName}");
                     Debug.WriteLine(exception);
                 }
                 catch (Exception exception)
                 {
-                    Trace.TraceError("Could not load this IParameterReact: ", paramName);
+                    Trace.TraceError($"Could not load this IParameterReact: {paramName}");
                     Debug.WriteLine(exception);
                 }
             }

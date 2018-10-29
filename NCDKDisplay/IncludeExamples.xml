@@ -235,7 +235,7 @@
 </code>
   </Codes>
   <Codes id="NCDK.Formula.FullEnumerationFormulaGenerator_Example.cs">
-    <code>            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
+    <code>            var ifac = BODRIsotopeFactory.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
             IIsotope n = ifac.GetMajorIsotope("N");
@@ -258,7 +258,7 @@
 </code>
   </Codes>
   <Codes id="NCDK.Formula.MolecularFormulaGenerator_Example.cs">
-    <code>            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
+    <code>            var ifac = BODRIsotopeFactory.Instance;
              IIsotope c = ifac.GetMajorIsotope("C");
              IIsotope h = ifac.GetMajorIsotope("H");
              IIsotope n = ifac.GetMajorIsotope("N");
@@ -506,7 +506,7 @@ namespace NCDK.Graphs
   <Codes id="NCDK.Graphs.ConnectedComponents_Example.cs">
     <code>            int[][] g = GraphUtil.ToAdjList(container);
             ConnectedComponents cc = new ConnectedComponents(g);
-            int[] components = cc.Components();
+            int[] components = cc.GetComponents();
             for (int v = 0; v &lt; g.Length; v++)
                 Console.WriteLine(components[v]);
 </code>
@@ -1091,8 +1091,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.IO.CMLWriter_Example.cs">
-    <code>                using (var output = new FileStream("molecule.cml", FileMode.Create))
-                using (CMLWriter cmlwriter = new CMLWriter(output))
+    <code>                using (CMLWriter cmlwriter = new CMLWriter(new FileStream("molecule.cml", FileMode.Create)))
                 {
                     cmlwriter.Write(molecule);
                 }
@@ -1104,16 +1103,14 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.IO.MDLRXNWriter_Example.cs">
-    <code>                using (var srm = new FileStream("output.mol", FileMode.Create))
-                using (MDLRXNWriter writer = new MDLRXNWriter(srm))
+    <code>                using (MDLRXNWriter writer = new MDLRXNWriter(new FileStream("output.mol", FileMode.Create)))
                 {
                     writer.Write(molecule);
                 }
 </code>
   </Codes>
   <Codes id="NCDK.IO.MDLV2000Writer_Example.cs">
-    <code>                using (var srm = new FileStream("output.mol", FileMode.Create))
-                using (MDLV2000Writer writer = new MDLV2000Writer(srm))
+    <code>                using (MDLV2000Writer writer = new MDLV2000Writer(new FileStream("output.mol", FileMode.Create)))
                 {
                     writer.Write((IAtomContainer)molecule);
                 }
@@ -1145,15 +1142,15 @@ namespace NCDK.Graphs
             }
 </code>
   </Codes>
-  <Codes id="NCDK.Isomorphisms.ComponentGrouping_Example.cs">
+  <Codes id="NCDK.Isomorphisms.ComponentFilter_Example.cs">
     <code>            // grouping is actually set by SMARTS parser but this shows how it's stored
-            query.SetProperty(ComponentGrouping.Key, grouping);
+            query.SetProperty(ComponentFilter.Key, grouping);
 
             IAtomContainer target = someTarget;
             Pattern pattern = somePattern; // create pattern for query
 
             // filter for mappings which respect component grouping in the query
-            var filter = new ComponentGrouping(query, target);
+            var filter = new ComponentFilter(query, target);
             pattern.MatchAll(target).Where(n =&gt; filter.Apply(n));
 </code>
   </Codes>
@@ -2098,8 +2095,7 @@ namespace NCDK.Smiles
 </code>
   </Codes>
   <Codes id="NCDK.Tools.AtomContainerManipulator_Example.cs+SetSingleOrDoubleFlags">
-    <code>            SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
-            parser.IsPreservingAromaticity = true;
+    <code>            SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance, false);
 
             IAtomContainer biphenyl = parser.ParseSmiles("c1cccc(c1)c1ccccc1");
 

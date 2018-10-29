@@ -23,7 +23,7 @@ using System.Text;
 namespace NCDK.Isomorphisms.Matchers
 {
     // @cdk.module  isomorphism
-    // @cdk.githash
+    [Obsolete]
     public class SymbolQueryAtom : QueryAtom, IQueryAtom
     {
         private string ID;
@@ -56,7 +56,7 @@ namespace NCDK.Isomorphisms.Matchers
 
         public override string ToString()
         {
-            StringBuilder s = new StringBuilder();
+            var s = new StringBuilder();
             s.Append("SymbolQueryAtom(");
             s.Append(this.GetHashCode() + ", ");
             s.Append(Symbol);

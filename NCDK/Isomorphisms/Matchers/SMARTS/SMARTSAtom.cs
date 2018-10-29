@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
@@ -26,6 +27,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
+    [Obsolete]
     public abstract class SMARTSAtom : QueryAtom, IQueryAtom
     {
         protected SMARTSAtom(IChemObjectBuilder builder)
@@ -41,7 +43,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <exception cref="NullReferenceException">thrown if the invariants were not set</exception>
         internal static SMARTSAtomInvariants Invariants(IAtom atom)
         {
-            SMARTSAtomInvariants inv = atom.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key);
+            var inv = atom.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key);
             if (inv == null)
                 throw new NullReferenceException("Missing SMARTSAtomInvariants - please compute these values before matching.");
             return inv;

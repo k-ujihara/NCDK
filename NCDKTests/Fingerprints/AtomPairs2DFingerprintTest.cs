@@ -24,7 +24,7 @@ namespace NCDK.Fingerprints
             // at distance 10 should return false, while all the other C-C fingerprint slots
             // should return true.
             IFingerprinter printer = new AtomPairs2DFingerprinter();
-            IAtomContainer mol1 = parser.ParseSmiles("cccccccccc");
+            var mol1 = parser.ParseSmiles("cccccccccc");
             BitSetFingerprint bsfp = (BitSetFingerprint)printer.GetBitFingerprint(mol1);
             Assert.AreEqual(9, bsfp.Cardinality);
             Assert.AreEqual(true, bsfp[0]);        //Distance 1
@@ -43,7 +43,7 @@ namespace NCDK.Fingerprints
         public void TestHalogen()
         {
             IFingerprinter printer = new AtomPairs2DFingerprinter();
-            IAtomContainer mol1 = parser.ParseSmiles("Clc1ccccc1");
+            var mol1 = parser.ParseSmiles("Clc1ccccc1");
             var map = printer.GetRawFingerprint(mol1);
             Assert.IsTrue(map.ContainsKey("1_X_C"));
             Assert.IsTrue(map.ContainsKey("1_Cl_C"));
@@ -59,7 +59,7 @@ namespace NCDK.Fingerprints
         public void IgnoredAtom()
         {
             IFingerprinter printer = new AtomPairs2DFingerprinter();
-            IAtomContainer mol1 = parser.ParseSmiles("[Te]1cccc1");
+            var mol1 = parser.ParseSmiles("[Te]1cccc1");
             var map = printer.GetRawFingerprint(mol1);
             Assert.IsTrue(map.ContainsKey("1_C_C"));
             Assert.IsTrue(map.ContainsKey("2_C_C"));
@@ -69,7 +69,7 @@ namespace NCDK.Fingerprints
         public void TestGetCountFingerprint()
         {
             IFingerprinter printer = new AtomPairs2DFingerprinter();
-            IAtomContainer mol1 = parser.ParseSmiles("cccccccccc");
+            var mol1 = parser.ParseSmiles("cccccccccc");
             ICountFingerprint icfp = printer.GetCountFingerprint(mol1);
             Assert.AreEqual(9, icfp.GetNumberOfPopulatedBins());
         }

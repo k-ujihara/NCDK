@@ -191,7 +191,7 @@ namespace NCDK.Common.Collections
 
         public static string ToString(this BitArray a)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             var isFirst = true;
             sb.Append("{");
             for (var i = 0; i < a.Length; i++)

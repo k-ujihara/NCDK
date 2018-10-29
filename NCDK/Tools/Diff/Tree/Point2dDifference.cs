@@ -69,7 +69,7 @@ namespace NCDK.Tools.Diff.Tree
             if (ChildCount() == 0)
                 return "";
 
-            StringBuilder diffBuffer = new StringBuilder();
+            var diffBuffer = new StringBuilder();
             diffBuffer.Append(this.name).Append('{');
             bool isFirst = true;
             foreach (var child in GetChildren())

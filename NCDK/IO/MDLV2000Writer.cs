@@ -60,6 +60,12 @@ namespace NCDK.IO
     // @cdk.keyword file format, MDL molfile
     public class MDLV2000Writer : DefaultChemObjectWriter
     {
+        public const string OptForceWriteAs2DCoordinates = "ForceWriteAs2DCoordinates";
+        public const string OptWriteMajorIsotopes = "WriteMajorIsotopes";
+        public const string OptWriteAromaticBondTypes = "WriteAromaticBondTypes";
+        public const string OptWriteQueryFormatValencies = "WriteQueryFormatValencies";
+        public const string OptWriteDefaultProperties = "WriteDefaultProperties";
+
         // regular expression to capture R groups with attached numbers
         private static readonly Regex NUMERED_R_GROUP = new Regex("R(\\d+)", RegexOptions.Compiled);
 
@@ -119,6 +125,8 @@ namespace NCDK.IO
 
         private BooleanIOSetting ForceWriteAs2DCoords;
 
+        private BooleanIOSetting writeMajorIsotopes;
+
         // The next two options are MDL Query format options, not really
         // belonging to the MDLV2000 format, and will be removed when
         // a MDLV2000QueryWriter is written.
@@ -132,6 +140,8 @@ namespace NCDK.IO
         /* Should atomic valencies be written in the Query format. */
         [Obsolete]
         private BooleanIOSetting WriteQueryFormatValencies;
+
+        private BooleanIOSetting writeDefaultProps;
 
         private TextWriter writer;
 
@@ -187,9 +197,12 @@ namespace NCDK.IO
 
         public override bool Accepts(Type type)
         {
-            if (typeof(IAtomContainer).IsAssignableFrom(type)) return true;
-            if (typeof(IChemFile).IsAssignableFrom(type)) return true;
-            if (typeof(IChemModel).IsAssignableFrom(type)) return true;
+            if (typeof(IAtomContainer).IsAssignableFrom(type))
+                return true;
+            if (typeof(IChemFile).IsAssignableFrom(type))
+                return true;
+            if (typeof(IChemModel).IsAssignableFrom(type))
+                return true;
             return false;
         }
 
@@ -205,24 +218,21 @@ namespace NCDK.IO
             CustomizeJob();
             try
             {
-                if (obj is IChemFile)
+                switch (obj)
                 {
-                    WriteChemFile((IChemFile)obj);
-                    return;
-                }
-                else if (obj is IChemModel)
-                {
-                    IChemFile file = obj.Builder.NewChemFile();
-                    IChemSequence sequence = obj.Builder.NewChemSequence();
-                    sequence.Add((IChemModel)obj);
-                    file.Add(sequence);
-                    WriteChemFile((IChemFile)file);
-                    return;
-                }
-                else if (obj is IAtomContainer)
-                {
-                    WriteMolecule((IAtomContainer)obj);
-                    return;
+                    case IChemFile cf:
+                        WriteChemFile(cf);
+                        return;
+                    case IChemModel cm:
+                        var file = obj.Builder.NewChemFile();
+                        var sequence = cm.Builder.NewChemSequence();
+                        sequence.Add(cm);
+                        file.Add(sequence);
+                        WriteChemFile((IChemFile)file);
+                        return;
+                    case IAtomContainer ac:
+                        WriteMolecule(ac);
+                        return;
                 }
             }
             catch (Exception ex)
@@ -265,7 +275,7 @@ namespace NCDK.IO
         public void WriteMolecule(IAtomContainer container)
         {
             int dim = GetNumberOfDimensions(container);
-            string line = "";
+            var line = new StringBuilder();
             IDictionary<int, int> rgroups = null;
             IDictionary<int, string> aliases = null;
             // write header block
@@ -312,49 +322,50 @@ namespace NCDK.IO
                 atomindex[atom] = atomindex.Count;
 
             // write Counts line
-            line += FormatMDLInt(container.Atoms.Count, 3);
-            line += FormatMDLInt(container.Bonds.Count, 3);
-            line += "  0  0";
+            line.Append(FormatMDLInt(container.Atoms.Count, 3));
+            line.Append(FormatMDLInt(container.Bonds.Count, 3));
+            line.Append("  0  0");
             // we mark all stereochemistry to absolute for now
-            line += !atomstereo.Any() ? "  0" : "  1";
-            line += "  0  0  0  0  0999 V2000";
-            writer.Write(line);
+            line.Append(!atomstereo.Any() ? "  0" : "  1");
+            line.Append("  0  0  0  0  0999 V2000");
+            writer.Write(line.ToString());
             writer.Write('\n');
 
             // write Atom block
             for (int f = 0; f < container.Atoms.Count; f++)
             {
                 IAtom atom = container.Atoms[f];
-                line = "";
+                line.Clear();
                 switch (dim)
                 {
                     case 0:
                         // if no coordinates available, then output a number
                         // of zeros
-                        line += "    0.0000    0.0000    0.0000 ";
+                        line.Append("    0.0000    0.0000    0.0000 ");
                         break;
                     case 2:
                         if (atom.Point2D != null)
                         {
-                            line += FormatMDLFloat(atom.Point2D.Value.X);
-                            line += FormatMDLFloat(atom.Point2D.Value.Y);
-                            line += "    0.0000 ";
+                            line.Append(FormatMDLFloat(atom.Point2D.Value.X));
+                            line.Append(FormatMDLFloat(atom.Point2D.Value.Y));
+                            line.Append("    0.0000 ");
                         }
                         else
                         {
-                            line += "    0.0000    0.0000    0.0000 ";
+                            line.Append("    0.0000    0.0000    0.0000 ");
                         }
                         break;
                     case 3:
                         if (atom.Point3D != null)
                         {
-                            line += FormatMDLFloat((float)atom.Point3D.Value.X);
-                            line += FormatMDLFloat((float)atom.Point3D.Value.Y);
-                            line += FormatMDLFloat((float)atom.Point3D.Value.Z) + " ";
+                            line.Append(FormatMDLFloat((float)atom.Point3D.Value.X));
+                            line.Append(FormatMDLFloat((float)atom.Point3D.Value.Y));
+                            line.Append(FormatMDLFloat((float)atom.Point3D.Value.Z));
+                            line.Append(" ");
                         }
                         else
                         {
-                            line += "    0.0000    0.0000    0.0000 ";
+                            line.Append("    0.0000    0.0000    0.0000 ");
                         }
                         break;
                 }
@@ -370,7 +381,7 @@ namespace NCDK.IO
                     if (pseudoAtom.Symbol.Equals("R", StringComparison.Ordinal) && !string.IsNullOrEmpty(label) && matcher.Success)
                     {
 
-                        line += "R# ";
+                        line.Append("R# ");
                         if (rgroups == null)
                         {
                             // we use a tree map to ensure the output order is always the same
@@ -394,7 +405,7 @@ namespace NCDK.IO
 
                             aliases[f + 1] = label; // atom index to alias
 
-                            line += FormatMDLString(atom.Symbol, 3);
+                            line.Append(FormatMDLString(atom.Symbol, 3));
 
                         }
                         else
@@ -402,224 +413,110 @@ namespace NCDK.IO
 
                             // make sure it's not empty
                             if (!string.IsNullOrEmpty(label))
-                                line += FormatMDLString(label, 3);
+                                line.Append(FormatMDLString(label, 3));
                             else
-                                line += FormatMDLString(atom.Symbol, 3);
+                                line.Append(FormatMDLString(atom.Symbol, 3));
                         }
                     }
                 }
                 else
                 {
-                    line += FormatMDLString(container.Atoms[f].Symbol, 3);
+                    line.Append(FormatMDLString(container.Atoms[f].Symbol, 3));
                 }
 
-                if (!atomstereo.TryGetValue(atom, out ITetrahedralChirality tc))
+                // atom properties
+                int[] atomprops = new int[12];
+                atomprops[0] = DetermineIsotope(atom);
+                atomprops[1] = DetermineCharge(container, atom);
+                atomprops[2] = DetermineStereoParity(container, atomstereo, atomindex, atom);
+                atomprops[5] = DetermineValence(container, atom);
+                atomprops[9] = DetermineAtomMap(atom);
+                line.Append(FormatMDLInt(atomprops[0], 2)); // dd (mass-number)
+                line.Append(FormatMDLInt(atomprops[1], 3)); // ccc (charge)
+                int last = atomprops.Length - 1;
+                if (!writeDefaultProps.IsSet)
                 {
-                    line += " 0  0  0  0  0";
+                    while (last >= 0)
+                    {
+                        if (atomprops[last] != 0)
+                            break;
+                        last--;
+                    }
+                    // matches BIOVIA syntax
+                    if (last >= 2 && last < atomprops.Length)
+                        last = 5;
                 }
-                else
-                {
-                    int parity = tc.Stereo == TetrahedralStereo.Clockwise ? 1 : 2;
-                    IAtom focus = tc.ChiralAtom;
-                    var carriers = tc.Ligands;
-
-                    int hidx = -1;
-                    for (int i = 0; i < 4; i++)
-                    {
-                        // hydrogen position
-                        if (carriers[i] == focus || carriers[i].AtomicNumber == 1)
-                        {
-                            if (hidx >= 0) parity = 0;
-                            hidx = i;
-                        }
-                    }
-
-                    if (parity != 0)
-                    {
-                        for (int i = 0; i < 4; i++)
-                        {
-                            for (int j = i + 1; j < 4; j++)
-                            {
-                                int a = atomindex[carriers[i]];
-                                int b = atomindex[carriers[j]];
-                                if (i == hidx)
-                                    a = container.Atoms.Count;
-                                if (j == hidx)
-                                    b = container.Atoms.Count;
-                                if (a > b)
-                                    parity ^= 0x3;
-                            }
-                        }
-                    }
-                    line += $" 0  0  {parity}  0  0";
-                }
-
-                // write valence - this is a bit of pain as the CDK has both
-                // valence and implied hydrogen counts making life a lot more
-                // difficult than it needs to be - we also have formal
-                // neighbor count but to avoid more verbosity that check has been
-                // omitted
-                {
-                    try
-                    {
-                        // slow but neat
-                        int explicitValence = (int)AtomContainerManipulator.GetBondOrderSum(container, atom);
-                        int charge = atom.FormalCharge ?? 0;
-                        int? element = atom.AtomicNumber;
-
-                        if (element == null)
-                        {
-                            line += FormatMDLInt(0, 3);
-                        }
-                        else
-                        {
-                            int implied = MDLValence.ImplicitValence(element.Value, charge, explicitValence);
-
-                            if (atom.Valency != null && atom.ImplicitHydrogenCount != null)
-                            {
-                                int valence = atom.Valency.Value;
-                                int actual = explicitValence + atom.ImplicitHydrogenCount.Value;
-
-                                // valence from h count differs from field? we still
-                                // set to default - which one has more merit?
-                                if (valence != actual || implied == atom.Valency)
-                                    line += FormatMDLInt(0, 3);
-                                else if (valence == 0)
-                                    line += FormatMDLInt(15, 3);
-                                else if (valence > 0 && valence < 15)
-                                    line += FormatMDLInt(valence, 3);
-                                else
-                                    line += FormatMDLInt(0, 3);
-                            }
-                            else if (atom.ImplicitHydrogenCount != null)
-                            {
-                                int actual = explicitValence + atom.ImplicitHydrogenCount.Value;
-
-                                if (implied == actual)
-                                {
-                                    line += FormatMDLInt(0, 3);
-                                }
-                                else
-                                {
-                                    if (actual == 0)
-                                        line += FormatMDLInt(15, 3);
-                                    else if (actual > 0 && actual < 15)
-                                        line += FormatMDLInt(actual, 3);
-                                    else
-                                        line += FormatMDLInt(0, 3);
-                                }
-                            }
-                            else
-                            {
-                                int valence = atom.Valency.Value;
-
-                                // valence from h count differs from field? we still
-                                // set to default - which one has more merit?
-                                if (implied == valence)
-                                    line += FormatMDLInt(0, 3);
-                                else if (valence == 0)
-                                    line += FormatMDLInt(15, 3);
-                                else if (valence > 0 && valence < 15)
-                                    line += FormatMDLInt(valence, 3);
-                                else
-                                    line += FormatMDLInt(0, 3);
-                            }
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        // null bond order, query bond order - who knows.. but
-                        line += FormatMDLInt(0, 3);
-                    }
-                }
-                line += "  0  0  0";
-
-                if (container.Atoms[f].GetProperty<object>(CDKPropertyName.AtomAtomMapping) != null)
-                {
-                    object atomAtomMapping = container.Atoms[f].GetProperty<object>(CDKPropertyName.AtomAtomMapping);
-                    if (atomAtomMapping is string)
-                    {
-                        try
-                        {
-                            int value = int.Parse((string)atomAtomMapping, NumberFormatInfo.InvariantInfo);
-                            line += FormatMDLInt(value, 3);
-                        }
-                        catch (FormatException)
-                        {
-                            line += FormatMDLInt(0, 3);
-                            Trace.TraceWarning("Skipping atom-atom mapping, invalid value: " + atomAtomMapping);
-                        }
-                    }
-                    else if (atomAtomMapping is int value)
-                    {
-                        line += FormatMDLInt(value, 3);
-                    }
-                    else
-                    {
-                        line += FormatMDLInt(0, 3);
-                    }
-                }
-                else
-                {
-                    line += FormatMDLInt(0, 3);
-                }
-                line += "  0  0";
-                writer.Write(line);
-                writer.Write('\n');
+                for (int i = 2; i <= last; i++)
+                    line.Append(FormatMDLInt(atomprops[i], 3));
+                line.Append('\n');
+                writer.Write(line.ToString());
             }
 
             // write Bond block
             foreach (var bond in container.Bonds)
             {
+                line.Length = 0;
                 if (bond.Atoms.Count != 2)
                 {
                     Trace.TraceWarning("Skipping bond with more/less than two atoms: " + bond);
                 }
                 else
                 {
-                    if (bond.Stereo == BondStereo.UpInverted || bond.Stereo == BondStereo.DownInverted
-                        || bond.Stereo == BondStereo.UpOrDownInverted)
+                    if (bond.Stereo == BondStereo.UpInverted 
+                     || bond.Stereo == BondStereo.DownInverted
+                     || bond.Stereo == BondStereo.UpOrDownInverted)
                     {
                         // turn around atom coding to correct for inversed stereo
-                        line = FormatMDLInt(atomindex[bond.End] + 1, 3);
-                        line += FormatMDLInt(atomindex[bond.Begin] + 1, 3);
+                        line.Append(FormatMDLInt(atomindex[bond.End] + 1, 3));
+                        line.Append(FormatMDLInt(atomindex[bond.Begin] + 1, 3));
                     }
                     else
                     {
-                        line = FormatMDLInt(atomindex[bond.Begin] + 1, 3);
-                        line += FormatMDLInt(atomindex[bond.End] + 1, 3);
+                        line.Append(FormatMDLInt(atomindex[bond.Begin] + 1, 3));
+                        line.Append(FormatMDLInt(atomindex[bond.End] + 1, 3));
                     }
                     int bondType = 0;
 
-                    if (bond is CTFileQueryBond)
+                    if (bond is QueryBond qbond)
                     {
-                        // Could do ordinal()-1 but this is clearer
-                        switch (((CTFileQueryBond)bond).Type)
+                        Expr e = qbond.Expression;
+                        switch (e.GetExprType())
                         {
-                            case CTFileQueryBond.BondType.Single:
-                                bondType = 1;
+                            case ExprType.AliphaticElement:
+                            case ExprType.Order:
+                                bondType = e.Value;
                                 break;
-                            case CTFileQueryBond.BondType.Double:
-                                bondType = 2;
-                                break;
-                            case CTFileQueryBond.BondType.Triple:
-                                bondType = 3;
-                                break;
-                            case CTFileQueryBond.BondType.Aromatic:
+                            case ExprType.IsAromatic:
                                 bondType = 4;
                                 break;
-                            case CTFileQueryBond.BondType.SingleOrDouble:
+                            case ExprType.SingleOrDouble:
                                 bondType = 5;
                                 break;
-                            case CTFileQueryBond.BondType.SingleOrAromatic:
+                            case ExprType.SingleOrAromatic:
                                 bondType = 6;
                                 break;
-                            case CTFileQueryBond.BondType.DoubleOrAromatic:
+                            case ExprType.DoubleOrAromatic:
                                 bondType = 7;
                                 break;
-                            case CTFileQueryBond.BondType.Any:
+                            case ExprType.True:
                                 bondType = 8;
                                 break;
+                            case ExprType.Or:
+                                // SINGLE_OR_DOUBLE
+                                if (e.Equals(new Expr(ExprType.AliphaticOrder, 1).Or(new Expr(ExprType.AliphaticOrder, 2))) ||
+                                    e.Equals(new Expr(ExprType.AliphaticOrder, 2).Or(new Expr(ExprType.AliphaticOrder, 1))))
+                                    bondType = 5;
+                                // SINGLE_OR_AROMATIC
+                                else if (e.Equals(new Expr(ExprType.AliphaticOrder, 1).Or(new Expr(ExprType.IsAromatic))) ||
+                                    e.Equals(new Expr(ExprType.IsAromatic).Or(new Expr(ExprType.AliphaticOrder, 1))))
+                                    bondType = 6;
+                                // DOUBLE_OR_AROMATIC
+                                else if (e.Equals(new Expr(ExprType.AliphaticOrder, 2).Or(new Expr(ExprType.IsAromatic))) ||
+                                         e.Equals(new Expr(ExprType.IsAromatic).Or(new Expr(ExprType.AliphaticOrder, 2))))
+                                    bondType = 6;
+                                break;
+                            default:
+                                throw new ArgumentException("Unsupported bond type!");
                         }
                     }
                     else
@@ -648,42 +545,43 @@ namespace NCDK.IO
                     if (bondType == 0)
                         throw new CDKException($"Bond at index={container.Bonds.IndexOf(bond)} is not supported by Molfile, bond={bond.Order}");
 
-                    line += FormatMDLInt(bondType, 3);
-                    line += "  ";
+                    line.Append(FormatMDLInt(bondType, 3));
+                    line.Append("  ");
                     switch (bond.Stereo)
                     {
                         case BondStereo.Up:
                         case BondStereo.UpInverted:
-                            line += "1";
+                            line.Append("1");
                             break;
                         case BondStereo.Down:
                         case BondStereo.DownInverted:
-                            line += "6";
+                            line.Append("6");
                             break;
                         case BondStereo.UpOrDown:
                         case BondStereo.UpOrDownInverted:
-                            line += "4";
+                            line.Append("4");
                             break;
                         case BondStereo.EOrZ:
-                            line += "3";
+                            line.Append("3");
                             break;
                         default:
-                            line += "0";
+                            line.Append("0");
                             break;
                     }
-                    line += "  0  0  0 ";
-                    writer.Write(line);
-                    writer.Write('\n');
+                    if (writeDefaultProps.IsSet)
+                        line.Append("  0  0  0 ");
+                    line.Append('\n');
+                    writer.Write(line.ToString());
                 }
             }
 
             // Write Atom Value
             for (int i = 0; i < container.Atoms.Count; i++)
             {
-                IAtom atom = container.Atoms[i];
+                var atom = container.Atoms[i];
                 if (atom.GetProperty<object>(CDKPropertyName.Comment) != null
-                    && atom.GetProperty<object>(CDKPropertyName.Comment) is string
-                    && atom.GetProperty<string>(CDKPropertyName.Comment).Trim().Length != 0)
+                 && atom.GetProperty<object>(CDKPropertyName.Comment) is string
+                 && atom.GetProperty<string>(CDKPropertyName.Comment).Trim().Length != 0)
                 {
                     writer.Write("V  ");
                     writer.Write(FormatMDLInt(i + 1, 3));
@@ -696,7 +594,7 @@ namespace NCDK.IO
             // write formal atomic charges
             for (int i = 0; i < container.Atoms.Count; i++)
             {
-                IAtom atom = container.Atoms[i];
+                var atom = container.Atoms[i];
                 int? charge = atom.FormalCharge;
                 if (charge != null && charge != 0)
                 {
@@ -711,10 +609,10 @@ namespace NCDK.IO
             // write radical information
             if (container.SingleElectrons.Count > 0)
             {
-                IDictionary<int, SpinMultiplicity> atomIndexSpinMap = new SortedDictionary<int, SpinMultiplicity>();
+                var atomIndexSpinMap = new SortedDictionary<int, SpinMultiplicity>();
                 for (int i = 0; i < container.Atoms.Count; i++)
                 {
-                    int eCount = container.GetConnectedSingleElectrons(container.Atoms[i]).Count();
+                    var eCount = container.GetConnectedSingleElectrons(container.Atoms[i]).Count();
                     switch (eCount)
                     {
                         case 0:
@@ -731,7 +629,7 @@ namespace NCDK.IO
                             break;
                     }
                 }
-                IEnumerator<KeyValuePair<int, SpinMultiplicity>> iterator = atomIndexSpinMap.GetEnumerator();
+                var iterator = atomIndexSpinMap.GetEnumerator();
                 for (int i = 0; i < atomIndexSpinMap.Count; i += NN8)
                 {
                     if (atomIndexSpinMap.Count - i <= NN8)
@@ -753,21 +651,19 @@ namespace NCDK.IO
             // write formal isotope information
             for (int i = 0; i < container.Atoms.Count; i++)
             {
-                IAtom atom = container.Atoms[i];
+                var atom = container.Atoms[i];
                 if (!(atom is IPseudoAtom))
                 {
-                    int? atomicMass = atom.MassNumber;
+                    var atomicMass = atom.MassNumber;
+                    if (!writeMajorIsotopes.IsSet && IsMajorIsotope(atom))
+                        atomicMass = null;
                     if (atomicMass != null)
                     {
-                        int majorMass = BODRIsotopeFactory.Instance.GetMajorIsotope(atom.Symbol).MassNumber.Value;
-                        if (atomicMass != majorMass)
-                        {
-                            writer.Write("M  ISO  1 ");
-                            writer.Write(FormatMDLInt(i + 1, 3));
-                            writer.Write(" ");
-                            writer.Write(FormatMDLInt(atomicMass.Value, 3));
-                            writer.Write('\n');
-                        }
+                        writer.Write("M  ISO  1 ");
+                        writer.Write(FormatMDLInt(i + 1, 3));
+                        writer.Write(" ");
+                        writer.Write(FormatMDLInt(atomicMass.Value, 3));
+                        writer.Write('\n');
                     }
                 }
             }
@@ -775,7 +671,7 @@ namespace NCDK.IO
             //write RGP line (max occurrence is 16 data points per line)
             if (rgroups != null)
             {
-                StringBuilder rgpLine = new StringBuilder();
+                var rgpLine = new StringBuilder();
                 int cnt = 0;
 
                 // the order isn't guarantied but as we index with the atom
@@ -800,26 +696,24 @@ namespace NCDK.IO
                     writer.Write(rgpLine.ToString());
                     writer.Write('\n');
                 }
-
             }
 
             // write atom aliases
             if (aliases != null)
             {
-
                 foreach (var e in aliases)
                 {
                     writer.Write("A" + FormatMDLInt(e.Key, 5));
                     writer.Write('\n');
 
-                    string label = e.Value;
+                    var label = e.Value;
 
                     // fixed width file - doubtful someone would have a label > 70 but trim if they do
-                    if (label.Length > 70) label = label.Substring(0, 70);
+                    if (label.Length > 70)
+                        label = label.Substring(0, 70);
 
                     writer.Write(label);
                     writer.Write('\n');
-
                 }
             }
 
@@ -829,6 +723,156 @@ namespace NCDK.IO
             writer.Write("M  END");
             writer.Write('\n');
             writer.Flush();
+        }
+
+        // 0 = uncharged or value other than these, 1 = +3, 2 = +2, 3 = +1,
+        // 4 = doublet radical, 5 = -1, 6 = -2, 7 = -3
+        private int DetermineCharge(IAtomContainer mol, IAtom atom)
+        {
+            var q = atom.FormalCharge ?? 0;
+            switch (q)
+            {
+                case -3: return 7;
+                case -2: return 6;
+                case -1: return 5;
+                case 0:
+                    if (mol.GetConnectedSingleElectrons(atom).Count() == 1)
+                        return 4;
+                    return 0;
+                case +1: return 3;
+                case +2: return 2;
+                case +3: return 1;
+            }
+            return 0;
+        }
+
+        private int DetermineIsotope(IAtom atom)
+        {
+            var mass = atom.MassNumber;
+            IIsotope major = null;
+            if (mass == null)
+                return 0;
+            try
+            {
+                major = BODRIsotopeFactory.Instance.GetMajorIsotope(atom.Symbol);
+            }
+            catch (IOException)
+            {
+                // ignored
+            }
+            if (!writeMajorIsotopes.IsSet
+             && major != null 
+             && mass.Equals(major.MassNumber))
+                mass = null;
+            if (mass != null)
+            {
+                mass -= major != null ? major.MassNumber : 0;
+                return mass >= -3 && mass <= 4 ? (int)mass : 0;
+            }
+            return 0;
+        }
+
+        private int DetermineAtomMap(IAtom atom)
+        {
+            var amap = atom.GetProperty<object>(CDKPropertyName.AtomAtomMapping);
+            if (amap == null)
+                return 0;
+            if (amap is int?)
+                return (int)amap;
+            else
+            {
+                if (amap is string)
+                {
+                    try
+                    {
+                        return int.Parse((string)amap);
+                    }
+                    catch (Exception)
+                    {
+                        //ignored
+                    }
+                }
+                Trace.TraceWarning($"Skipping non-integer atom map: {amap} type:{amap}");
+                return 0;
+            }
+        }
+
+        private int DetermineValence(IAtomContainer container, IAtom atom)
+        {
+            var explicitValence = (int)AtomContainerManipulator.GetBondOrderSum(container, atom);
+            var charge = atom.FormalCharge ?? 0;
+            var element = atom.AtomicNumber;
+            int valence = 0;
+            if (element != null)
+            {
+                var implied = MDLValence.ImplicitValence(element.Value, charge, explicitValence);
+                int actual;
+                if (atom.ImplicitHydrogenCount != null)
+                    actual = explicitValence + atom.ImplicitHydrogenCount.Value;
+                else if (atom.Valency != null)
+                    actual = atom.Valency.Value;
+                else
+                    return 0;
+                if (implied != actual)
+                {
+                    if (actual == 0)
+                        return 15;
+                    else if (actual > 0 && actual < 15)
+                        return actual;
+                }
+            }
+            return valence;
+        }
+
+        private int DetermineStereoParity(
+            IAtomContainer container,
+            IDictionary<IAtom, ITetrahedralChirality> atomstereo,
+            IDictionary<IAtom, int> atomindex, 
+            IAtom atom)
+        {
+            if (!atomstereo.TryGetValue(atom, out ITetrahedralChirality tc))
+                return 0;
+            var parity = tc.Stereo == TetrahedralStereo.Clockwise ? 1 : 2;
+            var focus = tc.ChiralAtom;
+            var carriers = tc.Ligands;
+            int hidx = -1;
+            for (int i = 0; i < 4; i++)
+            {
+                // hydrogen position
+                if (carriers[i].Equals(focus) || carriers[i].AtomicNumber == 1)
+                {
+                    if (hidx >= 0)
+                        parity = 0;
+                    hidx = i;
+                }
+            }
+            if (parity != 0)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = i + 1; j < 4; j++)
+                    {
+                        int a = atomindex[carriers[i]];
+                        int b = atomindex[carriers[j]];
+                        if (i == hidx)
+                            a = container.Atoms.Count;
+                        if (j == hidx)
+                            b = container.Atoms.Count;
+                        if (a > b)
+                            parity ^= 0x3;
+                    }
+                }
+            }
+            return parity;
+        }
+
+        private bool IsMajorIsotope(IAtom atom)
+        {
+            if (atom.MassNumber == null)
+                return false;
+
+            var major = BODRIsotopeFactory.Instance.GetMajorIsotope(atom.Symbol);
+            return major != null && major.MassNumber.Equals(atom.MassNumber);
         }
 
         private static void WriteSgroups(IAtomContainer container, TextWriter writer, IReadOnlyDictionary<IAtom, int> atomidxs)
@@ -912,7 +956,7 @@ namespace NCDK.IO
                     writer.Write('\n');
                 }
 
-                ICollection<SgroupKey> attributeKeys = sgroup.AttributeKeys;
+                var attributeKeys = sgroup.AttributeKeys;
                 // TODO order and aggregate attribute keys
                 foreach (var key in attributeKeys)
                 {
@@ -926,7 +970,7 @@ namespace NCDK.IO
                             writer.Write('\n');
                             break;
                         case SgroupKey.CtabExpansion:
-                            bool expanded = (bool)sgroup.GetValue(key);
+                            var expanded = (bool)sgroup.GetValue(key);
                             if (expanded)
                             {
                                 writer.Write("M  SDS EXP");
@@ -937,7 +981,7 @@ namespace NCDK.IO
                             }
                             break;
                         case SgroupKey.CtabBracket:
-                            IEnumerable<SgroupBracket> brackets = (IEnumerable<SgroupBracket>)sgroup.GetValue(key);
+                            var brackets = (IEnumerable<SgroupBracket>)sgroup.GetValue(key);
                             foreach (var bracket in brackets)
                             {
                                 writer.Write("M  SDI ");
@@ -978,7 +1022,7 @@ namespace NCDK.IO
                             writer.Write('\n');
                             break;
                         case SgroupKey.CtabParentAtomList:
-                            IEnumerable<IAtom> parentAtomList = (IEnumerable<IAtom>)sgroup.GetValue(key);
+                            var parentAtomList = (IEnumerable<IAtom>)sgroup.GetValue(key);
                             foreach (var atoms in Wrap(parentAtomList.ToList(), 15))
                             {
                                 writer.Write("M  SPA ");
@@ -993,7 +1037,7 @@ namespace NCDK.IO
                             }
                             break;
                         case SgroupKey.CtabComponentNumber:
-                            int compNumber = (int)sgroup.GetValue(key);
+                            var compNumber = (int)sgroup.GetValue(key);
                             writer.Write("M  SNC");
                             writer.Write(FormatMDLInt(1, 3));
                             writer.Write(' ');
@@ -1009,8 +1053,8 @@ namespace NCDK.IO
 
         private static IList<IList<T>> Wrap<T>(ICollection<T> set, int lim)
         {
-            IList<IList<T>> wrapped = new List<IList<T>>();
-            List<T> list = new List<T>(set);
+            var wrapped = new List<IList<T>>();
+            var list = new List<T>(set);
             if (set.Count <= lim)
             {
                 if (list.Count != 0)
@@ -1030,7 +1074,7 @@ namespace NCDK.IO
 
         private int GetNumberOfDimensions(IAtomContainer mol)
         {
-            foreach (IAtom atom in mol.Atoms)
+            foreach (var atom in mol.Atoms)
             {
                 if (atom.Point3D != null && !ForceWriteAs2DCoords.IsSet)
                     return 3;
@@ -1042,28 +1086,34 @@ namespace NCDK.IO
 
         private void WriteRadicalPattern(IEnumerator<KeyValuePair<int, SpinMultiplicity>> iterator, int i)
         {
-
-            KeyValuePair<int, SpinMultiplicity> entry = iterator.Current;
+            var entry = iterator.Current;
             writer.Write(" ");
             writer.Write(FormatMDLInt(entry.Key + 1, WIDTH));
             writer.Write(" ");
             writer.Write(FormatMDLInt(entry.Value.Value, WIDTH));
 
             i = i + 1;
-            if (i < NN8 && iterator.MoveNext()) WriteRadicalPattern(iterator, i);
+            if (i < NN8 && iterator.MoveNext())
+                WriteRadicalPattern(iterator, i);
         }
 
         /// <summary>
         /// Formats an integer to fit into the connection table and changes it
         /// to a string.
         /// </summary>
-        /// <param name="i">The int to be formated</param>
-        /// <param name="l">Length of the string</param>
+        /// <param name="x">The int to be formated</param>
+        /// <param name="n">Length of the string</param>
         /// <returns>The string to be written into the connection table</returns>
-        protected internal static string FormatMDLInt(int i, int l)
+        protected internal static string FormatMDLInt(int x, int n)
         {
-            string s = i.ToString(CultureInfo.InvariantCulture);
-            return new string(' ', l - s.Length) + s;
+            var buf = new string(' ', n).ToCharArray();
+            var val = x.ToString(NumberFormatInfo.InvariantInfo);
+            if (val.Length > n)
+                val = "0";
+            var off = n - val.Length;
+            for (int i = 0; i < val.Length; i++)
+                buf[off + i] = val[i];
+            return new string(buf);
         }
 
         /// <summary>
@@ -1102,12 +1152,21 @@ namespace NCDK.IO
         /// </summary>
         private void InitIOSettings()
         {
-            ForceWriteAs2DCoords = IOSettings.Add(new BooleanIOSetting("ForceWriteAs2DCoordinates", Importance.Low,
+            ForceWriteAs2DCoords = IOSettings.Add(
+                new BooleanIOSetting(OptForceWriteAs2DCoordinates, Importance.Low,
                 "Should coordinates always be written as 2D?", "false"));
-            WriteAromaticBondTypes = IOSettings.Add(new BooleanIOSetting("WriteAromaticBondTypes", Importance.Low,
+            writeMajorIsotopes = IOSettings.Add(
+                new BooleanIOSetting(OptWriteMajorIsotopes, Importance.Low,
+                 "Write atomic mass of any non-null atomic mass including major isotopes (e.g. [12]C)", "true"));
+            WriteAromaticBondTypes = IOSettings.Add(
+                new BooleanIOSetting(OptWriteAromaticBondTypes, Importance.Low,
                 "Should aromatic bonds be written as bond type 4?", "false"));
-            WriteQueryFormatValencies = IOSettings.Add(new BooleanIOSetting("WriteQueryFormatValencies", Importance.Low,
+            WriteQueryFormatValencies = IOSettings.Add(
+                new BooleanIOSetting(OptWriteQueryFormatValencies, Importance.Low,
                 "Should valencies be written in the MDL Query format? (deprecated)", "false"));
+            writeDefaultProps = IOSettings.Add(
+                new BooleanIOSetting(OptWriteDefaultProperties, Importance.Low,
+                "Write trailing zero's on atom/bond property blocks even if they're not used.", "true"));
         }
 
         /// <summary>

@@ -126,7 +126,7 @@ namespace NCDK.IO.Iterator
                 {
                     if (!(exception is IOException || exception is ArgumentException || exception is CDKException))
                             throw;
-                    Trace.TraceError("Error while reading next molecule: ", exception.Message);
+                    Trace.TraceError($"Error while reading next molecule: {exception.Message}");
                     Debug.WriteLine(exception);
                     Console.Error.WriteLine(exception.StackTrace);
                 }
@@ -174,7 +174,7 @@ namespace NCDK.IO.Iterator
 
         private static string GetCommand(string line)
         {
-            StringBuilder buffer = new StringBuilder();
+            var buffer = new StringBuilder();
             int i = 0;
             bool foundBracket = false;
             while (i < line.Length && !foundBracket)

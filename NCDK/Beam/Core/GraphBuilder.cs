@@ -202,7 +202,8 @@ namespace NCDK.Beam
         /// <summary>Start building the geometric configuration of the double bond '<paramref name="u"/>' / '<paramref name="v"/>'.</summary>
         public GeometricBuilder Geometric(int u, int v)
         {
-            return new GeometricBuilder(this, u, v);
+            var builder = new GeometricBuilder(this, u, v) { Extended = false };
+            return builder;
         }
 
         /// <summary>
@@ -214,6 +215,19 @@ namespace NCDK.Beam
         public ExtendedTetrahedralBuilder CreateExtendedTetrahedral(int u)
         {
             return new ExtendedTetrahedralBuilder(this, u);
+        }
+
+        /// <summary>
+        /// Start building the extended geometric configuration of a set of cumulated
+        /// double bonds between <paramref name="u"/> and <paramref name="v"/>.
+        /// </summary>
+        /// <param name="u"></param>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        public GeometricBuilder CreateExtendedGeometric(int u, int v)
+        {
+            var builder = new GeometricBuilder(this, u, v) { Extended = true };
+            return builder;
         }
 
         /// <summary>
@@ -242,8 +256,108 @@ namespace NCDK.Beam
             }
         }
 
+        private Edge FindDoubleBond(Graph g, int i)
+        {
+            Edge res = null;
+            foreach (var e in g.GetEdges(i))
+            {
+                if (e.Bond != Bond.Double)
+                    continue;
+                if (res != null)
+                    return null;
+                res = e;
+            }
+            return res;
+        }
+
+        private Edge FindBondToLabel(Graph g, int i)
+        {
+            Edge res = null;
+            foreach (var e in g.GetEdges(i))
+            {
+                if (e.Bond.Order != 1)
+                    continue;
+                if (res == null)
+                    res = e;
+                else if (e.Bond.IsDirectional && !res.Bond.IsDirectional)
+                    res = e;
+            }
+            return res;
+        }
+        private void SetDirection(Edge e, int u, Bond b)
+        {
+            if (e.Either() == u)
+                e.SetBond(b);
+            else
+                e.SetBond(b.Inverse());
+        }
+
         private void AssignDirectionalLabels()
         {
+            if (!builders.Any())
+                return;
+
+            // handle extended geometric configurations first
+
+            var buildersToRemove = new List<GeometricBuilder>();
+            foreach (var builder in builders)
+            {
+                if (!builder.Extended)
+                    continue;
+                buildersToRemove.Add(builder);
+                Edge e = FindDoubleBond(g, builder.u);
+                Edge f = FindDoubleBond(g, builder.v);
+                if (e == null || f == null)
+                    continue;
+                Edge eRef = g.CreateEdge(builder.u, builder.X);
+                Edge fRef = g.CreateEdge(builder.v, builder.Y);
+                Edge eLab = FindBondToLabel(g, builder.u);
+                Edge fLab = FindBondToLabel(g, builder.v);
+                // adjust for reference
+                Configuration.ConfigurationDoubleBond config = builder.c;
+                if ((eLab == eRef) != (fRef == fLab))
+                {
+                    if (config == Configuration.ConfigurationDoubleBond.Together)
+                        config = Configuration.ConfigurationDoubleBond.Opposite;
+                    else if (config == Configuration.ConfigurationDoubleBond.Opposite)
+                        config = Configuration.ConfigurationDoubleBond.Together;
+                }
+                if (eLab.Bond.IsDirectional)
+                {
+                    if (fLab.Bond.IsDirectional)
+                    {
+                        // can't do anything, may be incorrect
+                    }
+                    else
+                    {
+                        if (config == Configuration.ConfigurationDoubleBond.Together)
+                            SetDirection(fLab, builder.v, eLab.GetBond(builder.u));
+                        else if (config == Configuration.ConfigurationDoubleBond.Opposite)
+                            SetDirection(fLab, builder.v, eLab.GetBond(builder.u));
+                    }
+                }
+                else
+                {
+                    if (fLab.Bond.IsDirectional)
+                    {
+                        if (config == Configuration.ConfigurationDoubleBond.Together)
+                            SetDirection(eLab, builder.v, fLab.GetBond(builder.u));
+                        else if (config == Configuration.ConfigurationDoubleBond.Opposite)
+                            SetDirection(eLab, builder.v, fLab.GetBond(builder.u));
+                    }
+                    else
+                    {
+                        SetDirection(eLab, builder.u, Bond.Down);
+                        if (config == Configuration.ConfigurationDoubleBond.Together)
+                            SetDirection(fLab, builder.v, Bond.Down);
+                        else if (config == Configuration.ConfigurationDoubleBond.Opposite)
+                            SetDirection(fLab, builder.v, Bond.Up);
+                    }
+                }
+            }
+            foreach (var builder in buildersToRemove)
+                builders.Remove(builder);
+
             if (!builders.Any())
                 return;
 
@@ -267,8 +381,8 @@ namespace NCDK.Beam
 
             foreach (Edge e in g.Edges)
             {
-                 int u = e.Either();
-                 int v = e.Other(u);
+                int u = e.Either();
+                int v = e.Other(u);
                 if (e.Bond.Order == 2 && g.Degree(u) >= 2 && g.Degree(v) >= 2)
                 {
                     unspecified.Set(u, true);
@@ -300,8 +414,7 @@ namespace NCDK.Beam
                 Fix(g, v, u, pibonded);
 
                 Bond first = FirstDirectionalLabel(u, x, pibonded);
-                Bond second = builder.c == Configuration.ConfigurationDoubleBond.Together ? first
-                                                    : first.Inverse();
+                Bond second = builder.c == Configuration.ConfigurationDoubleBond.Together ? first : first.Inverse();
 
                 // check if the second label would cause a conflict
                 if (CheckDirectionalAssignment(second, v, y, pibonded))
@@ -339,15 +452,14 @@ namespace NCDK.Beam
                     {
                         e.SetBond(e.Either() == v ? second.Inverse() : second);
                     }
-
             }
 
             // unspecified pibonds should "not" have a configuration, if they
             // do we try to eliminate it
             foreach (Edge unspecEdge in unspecEdges)
             {
-                 int u = unspecEdge.Either();
-                 int v = unspecEdge.Other(u);
+                int u = unspecEdge.Either();
+                int v = unspecEdge.Other(u);
                 // no problem if one side isn't defined
                 if (!HasDirectional(g, u) || !HasDirectional(g, v))
                     continue;
@@ -828,6 +940,7 @@ namespace NCDK.Beam
 
             internal int X { get; set; }
             internal int Y { get; set; }
+            internal bool Extended { get; set; }
             internal Configuration.ConfigurationDoubleBond c;
 
             public GeometricBuilder(GraphBuilder gb, int u, int v)

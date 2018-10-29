@@ -32,7 +32,7 @@ namespace NCDK.Groups
 
         public static string ToString(IAtomContainer atomContainer, Permutation permutation, bool sortEdges)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             int atomCount = atomContainer.Atoms.Count;
             IAtom[] pAtoms = new IAtom[atomCount];
             {

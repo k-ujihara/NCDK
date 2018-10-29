@@ -26,7 +26,7 @@ namespace NCDK.Isomorphisms.Matchers
     /// disregarding any aromaticity flag.
     /// </summary>
     // @cdk.module  isomorphism
-    // @cdk.githash
+    [Obsolete("Use new QueryBond(beg, end, ORDER, bord)")]
     public class OrderQueryBondOrderOnly : QueryBond, IQueryBond
     {
         public OrderQueryBondOrderOnly(IChemObjectBuilder builder)

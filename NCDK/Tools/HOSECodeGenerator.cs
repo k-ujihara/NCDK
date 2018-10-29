@@ -276,7 +276,7 @@ namespace NCDK.Tools
                 soar = Cycles.FindSSSR(ac).ToRingSet();
             }
             bool[] bool_ = new bool[1000];
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             foreach (var soar_ring in soar.GetRings(root))
             {
                 if (soar_ring.Atoms.Count < bool_.Length)
@@ -294,7 +294,7 @@ namespace NCDK.Tools
 
         private static string CreateChargeCode(IAtom atom)
         {
-            StringBuilder tempCode = new StringBuilder();
+            var tempCode = new StringBuilder();
 
             if (atom != null)
             {
@@ -532,7 +532,7 @@ namespace NCDK.Tools
                 return sphereDelimiters[sphere - 1];
             }
             TreeNode treeNode = null;
-            StringBuilder code = new StringBuilder();
+            var code = new StringBuilder();
             
             // append the tree node code to the HOSECode in their now determined
             // order, using commas to separate nodes from different branches

@@ -178,7 +178,7 @@ namespace NCDK.Charges
         public void TestUndefinedPartialCharge()
         {
             string filename = "NCDK.Data.MDL.burden_undefined.sdf";
-            Stream ins = ResourceLoader.GetAsStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = reader.Read(new ChemFile());
             reader.Close();

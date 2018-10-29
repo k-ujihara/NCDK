@@ -19,11 +19,10 @@
 
 using NCDK.Config.Fragments;
 using NCDK.QSAR.Results;
-using NCDK.Smiles.SMARTS;
+using NCDK.SMARTS;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -300,7 +299,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     public class KierHallSmartsDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static string[] names;
-        private static readonly IReadOnlyList<string> SMARTS = EStateFragments.Smarts;
+        private static readonly IReadOnlyList<SmartsPattern> SMARTS = EStateFragments.Patterns;
 
         public KierHallSmartsDescriptor()
         {
@@ -310,19 +309,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 names[i] = "khs." + tmp[i];
         }
 
-        /// <summary>
-        /// A map which specifies which descriptor
-        /// is implemented by this class.
-        /// <para>
-        /// These fields are used in the map:
-        /// <list type="bullet"> 
-        /// <item>Specification-Reference: refers to an entry in a unique dictionary</item>
-        /// <item>Implementation-Title: anything</item>
-        /// <item>Implementation-Identifier: a unique identifier for this version of
-        /// this class</item>
-        /// <item>Implementation-Vendor: CDK, JOELib, or anything else</item>
-        /// </list></para>
-        /// </summary>
+        /// <inheritdoc/>
         public override IImplementationSpecification Specification => specification;
         private static readonly DescriptorSpecification specification =
          new DescriptorSpecification(
@@ -330,15 +317,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 typeof(KierHallSmartsDescriptor).FullName,
                 "The Chemistry Development Kit");
 
+        /// <inheritdoc/>
         public override IReadOnlyList<object> Parameters
         {
-            get
-            {
-                return null;
-            }
+            get => null;
             set
             {
-                if (value != null) throw new CDKException("Must not supply any parameters");
+                if (value != null)
+                    throw new CDKException("Must not supply any parameters");
             }
         }
 
@@ -364,31 +350,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(new CDKException("Container was null or else had no atoms"));
             }
 
-            IAtomContainer atomContainer = (IAtomContainer)container.Clone();
+            var atomContainer = (IAtomContainer)container.Clone();
             atomContainer = AtomContainerManipulator.RemoveHydrogens(atomContainer);
 
-            int[] counts = new int[SMARTS.Count];
-            try
+            var counts = new int[SMARTS.Count];
+            SmartsPattern.Prepare(atomContainer);
+            for (int i = 0; i < SMARTS.Count; i++)
             {
-                SMARTSQueryTool sqt = new SMARTSQueryTool("C", container.Builder);
-                for (int i = 0; i < SMARTS.Count; i++)
-                {
-                    sqt.Smarts = SMARTS[i];
-                    bool status = sqt.Matches(atomContainer);
-                    if (status)
-                    {
-                        counts[i] = sqt.GetUniqueMatchingAtoms().Count();
-                    }
-                    else
-                        counts[i] = 0;
-                }
-            }
-            catch (CDKException e)
-            {
-                return GetDummyDescriptorValue(e);
+                counts[i] = SMARTS[i].MatchAll(atomContainer).CountUnique();
             }
 
-            ArrayResult<int> result = new ArrayResult<int>();
+            var result = new ArrayResult<int>();
             foreach (var i in counts)
                 result.Add(i);
 
@@ -398,7 +370,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<int>(SMARTS.Count);
 
-        public override IReadOnlyList<string> ParameterNames => null;
+        /// <inheritdoc/>
+        public override IReadOnlyList<string> ParameterNames => Array.Empty<string>();
+
+        /// <inheritdoc/>
         public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

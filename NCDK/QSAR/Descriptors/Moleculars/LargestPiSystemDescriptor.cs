@@ -200,19 +200,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private void BreadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path)
         {
             IAtom nextAtom;
-            List<IAtom> newSphere = new List<IAtom>();
-            //Debug.WriteLine("Start of breadthFirstSearch");
+            var newSphere = new List<IAtom>();
             foreach (var atom in sphere)
             {
-                //Debug.WriteLine("BreadthFirstSearch around atom " + (atomNr + 1));
                 var bonds = container.GetConnectedBonds(atom);
                 foreach (var bond in bonds)
                 {
                     nextAtom = ((IBond)bond).GetConnectedAtom(atom);
                     if ((container.GetMaximumBondOrder(nextAtom) != BondOrder.Single
-                            || Math.Abs(nextAtom.FormalCharge.Value) >= 1 || nextAtom.IsAromatic
-                            || nextAtom.Symbol.Equals("N", StringComparison.Ordinal) || nextAtom.Symbol.Equals("O", StringComparison.Ordinal))
-                            & !nextAtom.IsVisited)
+                      || Math.Abs(nextAtom.FormalCharge.Value) >= 1 || nextAtom.IsAromatic
+                      || nextAtom.Symbol.Equals("N", StringComparison.Ordinal) 
+                      || nextAtom.Symbol.Equals("O", StringComparison.Ordinal))
+                     && !nextAtom.IsVisited)
                     {
                         //Debug.WriteLine("BDS> AtomNr:"+container.Atoms.IndexOf(nextAtom)+" maxBondOrder:"+container.GetMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.IsAromatic+" FormalCharge:"+nextAtom.FormalCharge+" Charge:"+nextAtom.Charge+" Flag:"+nextAtom.IsVisited);
                         path.Add(nextAtom);

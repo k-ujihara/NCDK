@@ -26,20 +26,27 @@ using NCDK.Graphs;
 using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace NCDK.Stereo
 {
     /// <summary>
-    /// Create stereo elements for a structure with 2D and 3D coordinates. The
-    /// factory does not verify whether atoms can or cannot support stereochemistry -
+    /// Create stereo elements for a structure with 2D and 3D coordinates. 
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// The factory does not verify whether atoms can or cannot support stereochemistry -
     /// for this functionality use <see cref="Stereocenters"/>. The factory will not create
     /// stereo elements if there is missing information (wedge/hatch bonds, undefined
     /// coordinates) or the layout indicates unspecified configuration.
-    ///
+    /// </para>
+    /// <para>
     /// Stereocenters specified with inverse down (hatch) bond style are created if
     /// the configuration is unambiguous and the bond does not connect to another
     /// stereocenter.
-    /// </summary>
+    /// </para>
+    /// </remarks>
     /// <example>
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Stereo.StereoElementFactory_Example.cs"]/*' />
     /// </example>
@@ -78,35 +85,93 @@ namespace NCDK.Stereo
             this.bondMap = bondMap;
         }
 
-        private bool VisitSmallRing(bool[] mark, int aidx, int prev,
-                                   int first, int depth)
+        private bool VisitSmallRing(int[] mark, int aidx, int prev, int depth, int max)
         {
-            if (depth > 7)
+            if (mark[aidx] == 2)
+                return true;
+            if (depth == max)
                 return false;
-            mark[aidx] = true;
-            foreach (int nbr in graph[aidx])
+            if (mark[aidx] == 1)
+                return false;
+            mark[aidx] = 1;
+            foreach (var nbr in graph[aidx])
             {
-                if (nbr == prev)
-                    continue;
-                if (nbr == first)
-                    return true;
-                else if (!mark[nbr] && VisitSmallRing(mark, nbr, aidx, first, depth + 1))
+                if (nbr != prev && VisitSmallRing(mark, nbr, aidx, depth + 1, max))
                     return true;
             }
-            mark[aidx] = false;
+            mark[aidx] = 0;
             return false;
         }
 
-        private bool IsInSmallRing(IBond bond)
+        private bool IsInSmallRing(IBond bond, int max)
         {
             if (!bond.IsInRing)
                 return false;
             var beg = bond.Begin;
             var end = bond.End;
-            var mark = new bool[container.Atoms.Count];
+            var mark = new int[container.Atoms.Count];
             var bidx = container.Atoms.IndexOf(beg);
             var eidx = container.Atoms.IndexOf(end);
-            return VisitSmallRing(mark, bidx, eidx, bidx, 1);
+            mark[bidx] = 2;
+            return VisitSmallRing(mark,
+                                  eidx,
+                                  bidx,
+                                  1,
+                                  max);
+        }
+
+        private bool IsInSmallRing(IAtom atom, int max)
+        {
+            if (!atom.IsInRing)
+                return false;
+            foreach (var bond in container.GetConnectedBonds(atom))
+            {
+                if (IsInSmallRing(bond, max))
+                    return true;
+            }
+            return false;
+        }
+
+        private IBond GetOtherDb(IAtom a, IBond other)
+        {
+            IBond result = null;
+            foreach (var bond in container.GetConnectedBonds(a))
+            {
+                if (bond.Equals(other))
+                    continue;
+                if (bond.Order != BondOrder.Double)
+                    continue;
+                if (result != null)
+                    return null;
+                result = bond;
+            }
+            return result;
+        }
+
+        private static IAtom GetShared(IBond a, IBond b)
+        {
+            if (b.Contains(a.Begin))
+                return a.Begin;
+            if (b.Contains(a.End))
+                return a.End;
+            return null;
+        }
+
+        private List<IBond> GetCumulatedDbs(IBond endBond)
+        {
+            var dbs = new List<IBond> { endBond };
+            var other = GetOtherDb(endBond.Begin, endBond);
+            if (other == null)
+                other = GetOtherDb(endBond.End, endBond);
+            if (other == null)
+                return null;
+            while (other != null)
+            {
+                dbs.Add(other);
+                IAtom a = GetShared(dbs[dbs.Count - 1], dbs[dbs.Count - 2]);
+                other = GetOtherDb(other.GetOther(a), other);
+            }
+            return dbs;
         }
 
         /// <summary>
@@ -138,22 +203,33 @@ namespace NCDK.Stereo
                 {
                     // elongated tetrahedrals
                     case CoordinateType.Bicoordinate:
-                        var t0 = graph[v][0];
-                        var t1 = graph[v][1];
-                        if (centers.ElementType(t0) == CoordinateType.Tricoordinate
-                         && centers.ElementType(t1) == CoordinateType.Tricoordinate)
+                        foreach (var w in graph[v])
                         {
-                            if (check && centers.IsStereocenter(t0) && centers.IsStereocenter(t1))
+                            // end of an extended tetrahedral or cis/trans
+                            if (centers.ElementType(w) == CoordinateType.Tricoordinate)
                             {
-                                var element = CreateExtendedTetrahedral(v, centers);
-                                if (element != null)
-                                    yield return element;
-                            }
-                            else
-                            {
-                                var element = CreateExtendedTetrahedral(v, centers);
-                                if (element != null)
-                                    yield return element;
+                                List<IBond> dbs = GetCumulatedDbs(container.GetBond(container.Atoms[w], container.Atoms[v]));
+                                if (dbs == null)
+                                    continue;
+                                if (container.Bonds.IndexOf(dbs[0]) > container.Bonds.IndexOf(dbs[dbs.Count - 1]))
+                                    continue;
+                                if ((dbs.Count & 0x1) == 0)
+                                {
+                                    IAtom focus = GetShared(dbs[dbs.Count / 2],
+                                                            dbs[(dbs.Count / 2) - 1]);
+                                    // extended tetrahedral
+                                    var element = CreateExtendedTetrahedral(container.Atoms.IndexOf(focus), centers);
+                                    if (element != null)
+                                        yield return element;
+                                }
+                                else
+                                {
+                                    // extended cis-trans
+                                    var element = CreateExtendedCisTrans(dbs, centers);
+                                    if (element != null)
+                                        yield return element;
+                                }
+                                break;
                             }
                         }
                         break;
@@ -173,8 +249,9 @@ namespace NCDK.Stereo
                             if (w > v &&
                                 centers.ElementType(w) == CoordinateType.Tricoordinate &&
                                 bond.Order == BondOrder.Single &&
-                                !bond.IsInRing &&
-                                bond.Begin.IsInRing && bond.End.IsInRing)
+                                !IsInSmallRing(bond, 6) &&
+                                IsInSmallRing(bond.Begin, 6) &&
+                                IsInSmallRing(bond.End, 6))
                             {
                                 var element = CreateAtropisomer(v, w, centers);
                                 if (element != null)
@@ -203,7 +280,7 @@ namespace NCDK.Stereo
                             {
                                 if (centers.ElementType(w) == CoordinateType.Tricoordinate
                                  && centers.IsStereocenter(w)
-                                 && !IsInSmallRing(bond))
+                                 && !IsInSmallRing(bond, 7))
                                 {
                                     var element = CreateGeometric(v, w, centers);
                                     if (element != null)
@@ -301,6 +378,26 @@ namespace NCDK.Stereo
         /// <param name="v">atom index (vertex)</param>
         /// <returns>a new stereo element</returns>
         public abstract ExtendedTetrahedral CreateExtendedTetrahedral(int v, Stereocenters stereocenters);
+
+        /// <summary>
+        /// Create an extended cis/trans bond (cumulated) given one end (see diagram below). 
+        /// </summary>
+        /// <remarks>
+        /// The stereo element geometry will only be created if there is an
+        /// odd number of cumulated double bonds. The double bond list ('bonds')
+        /// should be ordered consecutively from one end to the other.
+        /// <pre>
+        ///  C               C
+        ///   \             /
+        ///    C = C = C = C
+        ///      ^   ^   ^
+        ///      ^---^---^----- bonds
+        /// </pre>
+        /// </remarks>
+        /// <param name="bonds">cumulated double bonds</param>
+        /// <param name="centers">discovered stereocentres</param>
+        /// <returns>the extended cis/trans geometry if one could be created</returns>
+        public abstract ExtendedCisTrans CreateExtendedCisTrans(IReadOnlyList<IBond> bonds, Stereocenters centers);
 
         /// <summary>
         /// Indicate that stereochemistry drawn as a certain projection should be
@@ -454,7 +551,8 @@ namespace NCDK.Stereo
                     }
 
                     // still no bonds to use
-                    if (!nonplanar) return null;
+                    if (!nonplanar)
+                        return null;
                 }
 
                 var parity = Parity(focus, neighbors, elevation);
@@ -518,8 +616,10 @@ namespace NCDK.Stereo
                 foreach (int w in graph[u])
                 {
                     IBond bond = bondMap[u, w];
-                    if (w == v) continue;
-                    if (IsUnspecified(bond)) return null;
+                    if (w == v)
+                        continue;
+                    if (IsUnspecified(bond))
+                        return null;
 
                     carriers[n] = container.Atoms[w];
                     elevation[n] = ElevationOf(end1, bond);
@@ -535,7 +635,6 @@ namespace NCDK.Stereo
                         }
                     }
 
-
                     n++;
                 }
                 n = 2;
@@ -543,7 +642,8 @@ namespace NCDK.Stereo
                 {
                     IBond bond = bondMap[v, w];
                     if (w == u) continue;
-                    if (IsUnspecified(bond)) return null;
+                    if (IsUnspecified(bond))
+                        return null;
 
                     carriers[n] = container.Atoms[w];
                     elevation[n] = ElevationOf(end2, bond);
@@ -575,11 +675,13 @@ namespace NCDK.Stereo
 
                 if (elevation[0] != 0 || elevation[1] != 0)
                 {
-                    if (elevation[2] != 0 || elevation[3] != 0) return null;
+                    if (elevation[2] != 0 || elevation[3] != 0)
+                        return null;
                 }
                 else
                 {
-                    if (elevation[2] == 0 && elevation[3] == 0) return null; // undefined configuration
+                    if (elevation[2] == 0 && elevation[3] == 0)
+                        return null; // undefined configuration
                 }
 
                 IAtom tmp = end1.Builder.NewAtom();
@@ -595,12 +697,14 @@ namespace NCDK.Stereo
             public override IDoubleBondStereochemistry CreateGeometric(int u, int v, Stereocenters stereocenters)
             {
                 if (HasUnspecifiedParity(container.Atoms[u]) ||
-                 HasUnspecifiedParity(container.Atoms[v])) return null;
+                 HasUnspecifiedParity(container.Atoms[v]))
+                    return null;
 
                 int[] us = graph[u];
                 int[] vs = graph[v];
 
-                if (us.Length < 2 || us.Length > 3 || vs.Length < 2 || vs.Length > 3) return null;
+                if (us.Length < 2 || us.Length > 3 || vs.Length < 2 || vs.Length > 3)
+                    return null;
 
                 // move pi bonded neighbors to back
                 MoveToBack(us, v);
@@ -615,17 +719,20 @@ namespace NCDK.Stereo
 
                 // are any substituents a wavy unspecified bond
                 if (IsUnspecified(bondMap[u, us[0]]) || IsUnspecified(bondMap[u, us[1]])
-                        || IsUnspecified(bondMap[v, vs[0]]) || IsUnspecified(bondMap[v, vs[1]])) return null;
+                        || IsUnspecified(bondMap[v, vs[0]]) || IsUnspecified(bondMap[v, vs[1]]))
+                    return null;
 
                 int parity = Parity(vAtoms) * Parity(wAtoms);
                 DoubleBondConformation conformation = parity > 0 ? DoubleBondConformation.Opposite : DoubleBondConformation.Together;
 
-                if (parity == 0) return null;
+                if (parity == 0)
+                    return null;
 
                 IBond bond = bondMap[u, v];
 
                 // crossed bond
-                if (IsUnspecified(bond)) return null;
+                if (IsUnspecified(bond))
+                    return null;
 
                 // put the bond in to v is the first neighbor
                 bond.SetAtoms(new[] { container.Atoms[u], container.Atoms[v] });
@@ -636,21 +743,23 @@ namespace NCDK.Stereo
             /// <inheritdoc/>
             public override ExtendedTetrahedral CreateExtendedTetrahedral(int v, Stereocenters stereocenters)
             {
-                IAtom focus = container.Atoms[v];
+                var focus = container.Atoms[v];
 
-                if (HasUnspecifiedParity(focus)) return null;
+                if (HasUnspecifiedParity(focus))
+                    return null;
 
-                IAtom[] terminals = ExtendedTetrahedral.FindTerminalAtoms(container, focus);
+                var terminals = ExtendedTetrahedral.FindTerminalAtoms(container, focus);
 
                 int t0 = container.Atoms.IndexOf(terminals[0]);
                 int t1 = container.Atoms.IndexOf(terminals[1]);
 
-                // check the focus is cumulated
-                if (bondMap[v, t0].Order != BondOrder.Double
-                        || bondMap[v, t1].Order != BondOrder.Double) return null;
+                if (stereocenters.IsSymmetryChecked() 
+                 && (!stereocenters.IsStereocenter(t0) 
+                  || !stereocenters.IsStereocenter(t1)))
+                    return null;
 
-                IAtom[] neighbors = new IAtom[4];
-                int[] elevation = new int[4];
+                var neighbors = new IAtom[4];
+                var elevation = new int[4];
 
                 neighbors[1] = terminals[0];
                 neighbors[3] = terminals[1];
@@ -658,40 +767,97 @@ namespace NCDK.Stereo
                 int n = 0;
                 foreach (var w in graph[t0])
                 {
-                    IBond bond = bondMap[t0, w];
-                    if (w == v) continue;
-                    if (bond.Order != BondOrder.Single) return null;
-                    if (IsUnspecified(bond)) return null;
+                    var bond = bondMap[t0, w];
+                    if (w == v)
+                        continue;
+                    if (bond.Order != BondOrder.Single)
+                        continue;
+                    if (IsUnspecified(bond))
+                        return null;
                     neighbors[n] = container.Atoms[w];
                     elevation[n] = ElevationOf(terminals[0], bond);
                     n++;
                 }
+                if (n == 0)
+                    return null;
                 n = 2;
                 foreach (var w in graph[t1])
                 {
-                    IBond bond = bondMap[t1, w];
-                    if (w == v) continue;
-                    if (bond.Order != BondOrder.Single) return null;
-                    if (IsUnspecified(bond)) return null;
+                    var bond = bondMap[t1, w];
+                    if (bond.Order != BondOrder.Single)
+                        continue;
+                    if (IsUnspecified(bond))
+                        return null;
                     neighbors[n] = container.Atoms[w];
                     elevation[n] = ElevationOf(terminals[1], bond);
                     n++;
                 }
-
+                if (n == 2)
+                    return null;
                 if (elevation[0] != 0 || elevation[1] != 0)
                 {
-                    if (elevation[2] != 0 || elevation[3] != 0) return null;
+                    if (elevation[2] != 0 || elevation[3] != 0)
+                        return null;
                 }
                 else
                 {
-                    if (elevation[2] == 0 && elevation[3] == 0) return null; // undefined configuration
+                    if (elevation[2] == 0 && elevation[3] == 0)
+                        return null; // undefined configuration
                 }
 
-                int parity = Parity(focus, neighbors, elevation);
+                var parity = Parity(focus, neighbors, elevation);
 
-                TetrahedralStereo winding = parity > 0 ? TetrahedralStereo.AntiClockwise : TetrahedralStereo.Clockwise;
+                var winding = parity > 0 ? TetrahedralStereo.AntiClockwise : TetrahedralStereo.Clockwise;
 
                 return new ExtendedTetrahedral(focus, neighbors, winding);
+            }
+
+            public override ExtendedCisTrans CreateExtendedCisTrans(IReadOnlyList<IBond> dbs, Stereocenters stereocenters)
+            {
+                // only applies to odd-counts
+                if ((dbs.Count & 0x1) == 0)
+                    return null;
+                var focus = dbs[dbs.Count / 2];
+                var carriers = new IBond[2];
+                var config = StereoConfigurations.Unset;
+                var begAtom = dbs[0].GetOther(GetShared(dbs[0], dbs[1]));
+                var endAtom = dbs[dbs.Count - 1].GetOther(GetShared(dbs[dbs.Count - 1], dbs[dbs.Count - 2]));
+                var begBonds = container.GetConnectedBonds(begAtom).ToList();
+                var endBonds = container.GetConnectedBonds(endAtom).ToList();
+                if (stereocenters.IsSymmetryChecked() &&
+                   (!stereocenters.IsStereocenter(container.Atoms.IndexOf(begAtom)) ||
+                    !stereocenters.IsStereocenter(container.Atoms.IndexOf(endAtom))))
+                    return null;
+                if (begBonds.Count < 2 || endBonds.Count < 2)
+                    return null;
+                begBonds.Remove(dbs[0]);
+                endBonds.Remove(dbs[dbs.Count - 1]);
+                var ends = ExtendedCisTrans.FindTerminalAtoms(container, focus);
+                Trace.Assert(ends != null);
+                if (ends[0].Equals(begAtom))
+                {
+                    carriers[0] = begBonds[0];
+                    carriers[1] = endBonds[0];
+                }
+                else
+                {
+                    carriers[1] = begBonds[0];
+                    carriers[0] = endBonds[0];
+                }
+                var begNbr = begBonds[0].GetOther(begAtom);
+                var endNbr = endBonds[0].GetOther(endAtom);
+                var begVec = new Vector2(begNbr.Point2D.Value.X - begAtom.Point2D.Value.X,
+                                         begNbr.Point2D.Value.Y - begAtom.Point2D.Value.Y);
+                var endVec = new Vector2(endNbr.Point2D.Value.X - endAtom.Point2D.Value.X,
+                                         endNbr.Point2D.Value.Y - endAtom.Point2D.Value.Y);
+                begVec = Vector2.Normalize(begVec);
+                endVec = Vector2.Normalize(endVec);
+                var dot = Vector2.Dot(begVec, endVec);
+                if (dot < 0)
+                    config = StereoConfigurations.Opposite;
+                else
+                    config = StereoConfigurations.Together;
+                return new ExtendedCisTrans(focus, carriers, config);
             }
 
             /// <summary>
@@ -720,20 +886,23 @@ namespace NCDK.Stereo
             /// <returns>the parity of the atoms</returns>
             private static int Parity(IAtom[] atoms)
             {
-                if (atoms.Length != 3) throw new ArgumentException("incorrect number of atoms");
+                if (atoms.Length != 3)
+                    throw new ArgumentException("incorrect number of atoms");
 
                 Vector2? a = atoms[0].Point2D;
                 Vector2? b = atoms[1].Point2D;
                 Vector2? c = atoms[2].Point2D;
 
-                if (a == null || b == null || c == null) return 0;
+                if (a == null || b == null || c == null)
+                    return 0;
 
                 double det = Det(a.Value.X, a.Value.Y, b.Value.X, b.Value.Y, c.Value.X, c.Value.Y);
 
                 // unspecified by coordinates
-                if (Math.Abs(det) < Threshold) return 0;
+                if (Math.Abs(det) < Threshold)
+                    return 0;
 
-                return (int)Math.Sign(det);
+                return Math.Sign(det);
             }
 
             /// <summary>
@@ -744,19 +913,21 @@ namespace NCDK.Stereo
             /// <returns>the parity (winding)</returns>
             private static int Parity(IAtom focus, IAtom[] atoms, int[] elevations)
             {
-                if (atoms.Length != 4) throw new ArgumentException("incorrect number of atoms");
+                if (atoms.Length != 4)
+                    throw new ArgumentException("incorrect number of atoms");
 
-                Vector2[] coordinates = new Vector2[atoms.Length];
+                var coordinates = new Vector2[atoms.Length];
                 for (int i = 0; i < atoms.Length; i++)
                 {
                     var atoms_i_Point2D = atoms[i].Point2D;
-                    if (atoms_i_Point2D == null) return 0;
+                    if (atoms_i_Point2D == null)
+                        return 0;
                     coordinates[i] = ToUnitVector(focus.Point2D.Value, atoms_i_Point2D.Value);
                 }
 
-                double det = Parity(coordinates, elevations);
+                var det = Parity(coordinates, elevations);
 
-                return (int)Math.Sign(det);
+                return Math.Sign(det);
             }
 
             /// <summary>
@@ -769,7 +940,7 @@ namespace NCDK.Stereo
             {
                 if (from == to)
                     return Vector2.Zero;
-                Vector2 v2d = new Vector2(to.X - from.X, to.Y - from.Y);
+                var v2d = new Vector2(to.X - from.X, to.Y - from.Y);
                 return Vector2.Normalize(v2d);
             }
 
@@ -793,7 +964,7 @@ namespace NCDK.Stereo
                 double y4 = coordinates[3].Y;
 
                 return (elevations[0] * Det(x2, y2, x3, y3, x4, y4)) - (elevations[1] * Det(x1, y1, x3, y3, x4, y4))
-                        + (elevations[2] * Det(x1, y1, x2, y2, x4, y4)) - (elevations[3] * Det(x1, y1, x2, y2, x3, y3));
+                     + (elevations[2] * Det(x1, y1, x2, y2, x4, y4)) - (elevations[3] * Det(x1, y1, x2, y2, x3, y3));
             }
 
             /// <summary>3x3 determinant helper for a constant third column</summary>
@@ -934,13 +1105,13 @@ namespace NCDK.Stereo
                 if (sum1 + sum2 < 17)
                     return null;
 
-
-                IAtom[] carriers = new IAtom[4];
+                var carriers = new IAtom[4];
 
                 int n = 0;
                 foreach (int w in graph[u])
                 {
-                    if (w == v) continue;
+                    if (w == v)
+                        continue;
 
                     carriers[n] = container.Atoms[w];
 
@@ -955,7 +1126,8 @@ namespace NCDK.Stereo
                 n = 2;
                 foreach (int w in graph[v])
                 {
-                    if (w == u) continue;
+                    if (w == u)
+                        continue;
 
                     carriers[n] = container.Atoms[w];
 
@@ -988,7 +1160,8 @@ namespace NCDK.Stereo
             /// <inheritdoc/>
             public override IDoubleBondStereochemistry CreateGeometric(int u, int v, Stereocenters stereocenters)
             {
-                if (HasUnspecifiedParity(container.Atoms[u]) || HasUnspecifiedParity(container.Atoms[v])) return null;
+                if (HasUnspecifiedParity(container.Atoms[u]) || HasUnspecifiedParity(container.Atoms[v]))
+                    return null;
 
                 int[] us = graph[u];
                 int[] vs = graph[v];
@@ -996,20 +1169,19 @@ namespace NCDK.Stereo
                 int x = us[0] == v ? us[1] : us[0];
                 int w = vs[0] == u ? vs[1] : vs[0];
 
-                IAtom uAtom = container.Atoms[u];
-                IAtom vAtom = container.Atoms[v];
-                IAtom uSubstituentAtom = container.Atoms[x];
-                IAtom vSubstituentAtom = container.Atoms[w];
+                var uAtom = container.Atoms[u];
+                var vAtom = container.Atoms[v];
+                var uSubstituentAtom = container.Atoms[x];
+                var vSubstituentAtom = container.Atoms[w];
 
-                if (uAtom.Point3D == null || vAtom.Point3D == null || uSubstituentAtom.Point3D == null
-                        || vSubstituentAtom.Point3D == null) return null;
+                if (uAtom.Point3D == null || vAtom.Point3D == null || uSubstituentAtom.Point3D == null || vSubstituentAtom.Point3D == null)
+                    return null;
 
-                int parity = Parity(uAtom.Point3D.Value, vAtom.Point3D.Value, uSubstituentAtom.Point3D.Value,
-                        vSubstituentAtom.Point3D.Value);
+                int parity = Parity(uAtom.Point3D.Value, vAtom.Point3D.Value, uSubstituentAtom.Point3D.Value, vSubstituentAtom.Point3D.Value);
 
-                DoubleBondConformation conformation = parity > 0 ? DoubleBondConformation.Opposite : DoubleBondConformation.Together;
+                var conformation = parity > 0 ? DoubleBondConformation.Opposite : DoubleBondConformation.Together;
 
-                IBond bond = bondMap[u, v];
+                var bond = bondMap[u, v];
                 bond.SetAtoms(new[] { uAtom, vAtom });
 
                 return new DoubleBondStereochemistry(bond, new IBond[] { bondMap[u, x], bondMap[v, w], }, conformation);
@@ -1018,19 +1190,16 @@ namespace NCDK.Stereo
             /// <inheritdoc/>
             public override ExtendedTetrahedral CreateExtendedTetrahedral(int v, Stereocenters stereocenters)
             {
-                IAtom focus = container.Atoms[v];
+                var focus = container.Atoms[v];
 
-                if (HasUnspecifiedParity(focus)) return null;
+                if (HasUnspecifiedParity(focus))
+                    return null;
 
-                IAtom[] terminals = ExtendedTetrahedral.FindTerminalAtoms(container, focus);
-                IAtom[] neighbors = new IAtom[4];
+                var terminals = ExtendedTetrahedral.FindTerminalAtoms(container, focus);
+                var neighbors = new IAtom[4];
 
-                int t0 = container.Atoms.IndexOf(terminals[0]);
-                int t1 = container.Atoms.IndexOf(terminals[1]);
-
-                // check the focus is cumulated
-                if (bondMap[v, t0].Order != BondOrder.Double
-                        || bondMap[v, t1].Order != BondOrder.Double) return null;
+                var t0 = container.Atoms.IndexOf(terminals[0]);
+                var t1 = container.Atoms.IndexOf(terminals[1]);
 
                 // check for kinked cumulated bond
                 if (!IsColinear(focus, terminals))
@@ -1042,31 +1211,83 @@ namespace NCDK.Stereo
                 int n = 0;
                 foreach (var w in graph[t0])
                 {
-                    if (bondMap[t0, w].Order != BondOrder.Single) continue;
+                    if (bondMap[t0, w].Order != BondOrder.Single)
+                        continue;
                     neighbors[n++] = container.Atoms[w];
                 }
+                if (n == 0)
+                    return null;
                 n = 2;
                 foreach (var w in graph[t1])
                 {
-                    if (bondMap[t1, w].Order != BondOrder.Single) continue;
+                    if (bondMap[t1, w].Order != BondOrder.Single)
+                        continue;
                     neighbors[n++] = container.Atoms[w];
                 }
+                if (n == 2)
+                    return null;
 
-                int parity = Parity(neighbors);
+                var parity = Parity(neighbors);
 
-                TetrahedralStereo winding = parity > 0 ? TetrahedralStereo.AntiClockwise : TetrahedralStereo.Clockwise;
+                var winding = parity > 0 ? TetrahedralStereo.AntiClockwise : TetrahedralStereo.Clockwise;
 
                 return new ExtendedTetrahedral(focus, neighbors, winding);
+            }
+
+            public override ExtendedCisTrans CreateExtendedCisTrans(IReadOnlyList<IBond> dbs, Stereocenters centers)
+            {
+                // only applies to odd-counts
+                if ((dbs.Count & 0x1) == 0)
+                    return null;
+                var focus = dbs[dbs.Count / 2];
+                var carriers = new IBond[2];
+                var config = StereoConfigurations.Unset;
+                var begAtom = dbs[0].GetOther(GetShared(dbs[0], dbs[1]));
+                var endAtom = dbs[dbs.Count - 1].GetOther(GetShared(dbs[dbs.Count - 1], dbs[dbs.Count - 2]));
+                var begBonds = container.GetConnectedBonds(begAtom).ToList();
+                var endBonds = container.GetConnectedBonds(endAtom).ToList();
+                if (begBonds.Count < 2 || endBonds.Count < 2)
+                    return null;
+                begBonds.Remove(dbs[0]);
+                endBonds.Remove(dbs[dbs.Count - 1]);
+                var ends = ExtendedCisTrans.FindTerminalAtoms(container, focus);
+                Trace.Assert(ends != null);
+                if (ends[0].Equals(begAtom))
+                {
+                    carriers[0] = begBonds[0];
+                    carriers[1] = endBonds[0];
+                }
+                else
+                {
+                    carriers[1] = begBonds[0];
+                    carriers[0] = endBonds[0];
+                }
+                var begNbr = begBonds[0].GetOther(begAtom);
+                var endNbr = endBonds[0].GetOther(endAtom);
+                var begVec = new Vector3(begNbr.Point3D.Value.X - begAtom.Point3D.Value.X,
+                                         begNbr.Point3D.Value.Y - begAtom.Point3D.Value.Y,
+                                         begNbr.Point3D.Value.Z - begAtom.Point3D.Value.Z);
+                var endVec = new Vector3(endNbr.Point3D.Value.X - endAtom.Point3D.Value.X,
+                                         endNbr.Point3D.Value.Y - endAtom.Point3D.Value.Y,
+                                         endNbr.Point3D.Value.Z - endAtom.Point3D.Value.Z);
+                begVec = Vector3.Normalize(begVec);
+                endVec = Vector3.Normalize(endVec);
+                var dot = Vector3.Dot(begVec, endVec);
+                if (dot < 0)
+                    config = StereoConfigurations.Opposite;
+                else
+                    config = StereoConfigurations.Together;
+                return new ExtendedCisTrans(focus, carriers, config);
             }
 
             private static bool IsColinear(IAtom focus, IAtom[] terminals)
             {
                 var vec0 = new Vector3(terminals[0].Point3D.Value.X - focus.Point3D.Value.X,
-                                             terminals[0].Point3D.Value.Y - focus.Point3D.Value.Y,
-                                             terminals[0].Point3D.Value.Z - focus.Point3D.Value.Z);
+                                       terminals[0].Point3D.Value.Y - focus.Point3D.Value.Y,
+                                       terminals[0].Point3D.Value.Z - focus.Point3D.Value.Z);
                 var vec1 = new Vector3(terminals[1].Point3D.Value.X - focus.Point3D.Value.X,
-                                             terminals[1].Point3D.Value.Y - focus.Point3D.Value.Y,
-                                             terminals[1].Point3D.Value.Z - focus.Point3D.Value.Z);
+                                       terminals[1].Point3D.Value.Y - focus.Point3D.Value.Y,
+                                       terminals[1].Point3D.Value.Z - focus.Point3D.Value.Z);
                 vec0 = Vector3.Normalize(vec0);
                 vec1 = Vector3.Normalize(vec1);
                 return Math.Abs(Vector3.Dot(vec0, vec1) + 1) < 0.05;

@@ -43,8 +43,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestOneAcidGroup()
         {
-            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("CC(=O)O");
+            var sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var mol = sp.ParseSmiles("CC(=O)O");
             Result<int> result = (Result<int>)Descriptor.Calculate(mol).Value;
             Assert.AreEqual(1, result.Value);
         }
@@ -52,8 +52,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestSulphurAcidGroup()
         {
-            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("OS(=O)(=O)O");
+            var sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var mol = sp.ParseSmiles("OS(=O)(=O)O");
             Result<int> result = (Result<int>)Descriptor.Calculate(mol).Value;
             Assert.AreEqual(2, result.Value);
         }
@@ -61,8 +61,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestPhosphorusAcidGroup()
         {
-            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("O=P(=O)O");
+            var sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var mol = sp.ParseSmiles("O=P(=O)O");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Result<int> result = (Result<int>)Descriptor.Calculate(mol).Value;
             Assert.AreEqual(1, result.Value);
@@ -71,8 +71,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestFancyGroup()
         {
-            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("[NH](S(=O)=O)C(F)(F)F");
+            var sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var mol = sp.ParseSmiles("[NH](S(=O)=O)C(F)(F)F");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Result<int> result = (Result<int>)Descriptor.Calculate(mol).Value;
             Assert.AreEqual(1, result.Value);
@@ -81,8 +81,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestNitroRing()
         {
-            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("[nH]1nnnc1");
+            var sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var mol = sp.ParseSmiles("[nH]1nnnc1");
             Result<int> result = (Result<int>)Descriptor.Calculate(mol).Value;
             Assert.AreEqual(2, result.Value);
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
+    [System.Obsolete]
     internal class JJTSMARTSParserState
     {
         private IList<INode> nodes;

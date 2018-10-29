@@ -15,6 +15,7 @@
  * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
+
 using System;
 
 namespace NCDK.Smiles.SMARTS.Parser
@@ -28,6 +29,7 @@ namespace NCDK.Smiles.SMARTS.Parser
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS AST
+    [Obsolete]
     internal class Smarts2MQLVisitor : ISMARTSParserVisitor
     {
         public object Visit(ASTRingIdentifier node, object data)

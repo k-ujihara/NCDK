@@ -37,8 +37,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestClenbuterol()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("Clc1cc(cc(Cl)c1N)C(O)CNC(C)(C)C");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("Clc1cc(cc(Cl)c1N)C(O)CNC(C)(C)C");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
             Result<double> result = (Result<double>)Descriptor.Calculate(mol).Value;
@@ -48,8 +48,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestCarbinoxamine()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("CN(C)CCOC(C1=CC=C(Cl)C=C1)C1=CC=CC=N1");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("CN(C)CCOC(C1=CC=C(Cl)C=C1)C1=CC=CC=N1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
             Result<double> result = (Result<double>)Descriptor.Calculate(mol).Value;
@@ -59,8 +59,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestIsamoltane()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("CC(C)NCC(O)COC1=C(C=CC=C1)N1C=CC=C1");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("CC(C)NCC(O)COC1=C(C=CC=C1)N1C=CC=C1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
             Result<double> result = (Result<double>)Descriptor.Calculate(mol).Value;
@@ -70,8 +70,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestPirenperone()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("Fc1ccc(cc1)C(=O)C4CCN(CCC\\3=C(\\N=C2\\C=C/C=C\\N2C/3=O)C)CC4");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("Fc1ccc(cc1)C(=O)C4CCN(CCC\\3=C(\\N=C2\\C=C/C=C\\N2C/3=O)C)CC4");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
             Result<double> result = (Result<double>)Descriptor.Calculate(mol).Value;

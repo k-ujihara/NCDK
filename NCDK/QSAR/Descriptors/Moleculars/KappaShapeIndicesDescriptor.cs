@@ -79,8 +79,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <exception cref="CDKException">Possible Exceptions</exception>
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
-            IAtomContainer atomContainer;
-            atomContainer = (IAtomContainer)container.Clone();
+            var atomContainer = (IAtomContainer)container.Clone();
             atomContainer = AtomContainerManipulator.RemoveHydrogens(atomContainer);
 
             //IAtom[] atoms = atomContainer.GetAtoms();
@@ -91,12 +90,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double kier1;
             double kier2;
             double kier3;
-            double atomsCount = atomContainer.Atoms.Count;
+            var atomsCount = atomContainer.Atoms.Count;
             var singlePaths = new List<double>();
             var doublePaths = new List<string>();
             var triplePaths = new List<string>();
-            double[] sorterFirst = new double[2];
-            double[] sorterSecond = new double[3];
+            var sorterFirst = new double[2];
+            var sorterSecond = new double[3];
             string tmpbond2;
             string tmpbond3;
 
@@ -164,7 +163,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             else
             {
-                kier1 = (((atomsCount) * ((atomsCount - 1) * (atomsCount - 1))) / (singlePaths.Count * singlePaths.Count));
+                kier1 = (double)(atomsCount * (atomsCount - 1) * (atomsCount - 1)) / (singlePaths.Count * singlePaths.Count);
                 if (atomsCount == 2)
                 {
                     kier2 = 0;
@@ -175,7 +174,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     if (doublePaths.Count == 0)
                         kier2 = double.NaN;
                     else
-                        kier2 = (((atomsCount - 1) * ((atomsCount - 2) * (atomsCount - 2))) / (doublePaths.Count * doublePaths.Count));
+                        kier2 = (double)((atomsCount - 1) * (atomsCount - 2) * (atomsCount - 2)) / (doublePaths.Count * doublePaths.Count);
                     if (atomsCount == 3)
                     {
                         kier3 = 0;
@@ -187,14 +186,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             if (triplePaths.Count == 0)
                                 kier3 = double.NaN;
                             else
-                                kier3 = (((atomsCount - 1) * ((atomsCount - 3) * (atomsCount - 3))) / (triplePaths.Count * triplePaths.Count));
+                                kier3 = (double)((atomsCount - 1) * (atomsCount - 3) * (atomsCount - 3)) / (triplePaths.Count * triplePaths.Count);
                         }
                         else
                         {
                             if (triplePaths.Count == 0)
                                 kier3 = double.NaN;
                             else
-                                kier3 = (((atomsCount - 3) * ((atomsCount - 2) * (atomsCount - 2))) / (triplePaths.Count * triplePaths.Count));
+                                kier3 = (double)((atomsCount - 3) * (atomsCount - 2) * (atomsCount - 2)) / (triplePaths.Count * triplePaths.Count);
                         }
                     }
                 }
@@ -203,8 +202,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             kierValues.Add(kier1);
             kierValues.Add(kier2);
             kierValues.Add(kier3);
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, kierValues,
-                    DescriptorNames);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, kierValues, DescriptorNames);
         }
 
         /// <inheritdoc/>

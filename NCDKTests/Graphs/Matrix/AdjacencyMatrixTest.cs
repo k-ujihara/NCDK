@@ -25,12 +25,12 @@ namespace NCDK.Graphs.Matrix
     [TestClass()]
     public class AdjacencyMatrixTest : CDKTestCase
     {
-        private static SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+        private static SmilesParser sp = CDK.SilentSmilesParser;
 
         [TestMethod()]
         public void TestGetMatrix_IAtomContainer()
         {
-            IAtomContainer container = sp.ParseSmiles("C1CC1");
+            var container = sp.ParseSmiles("C1CC1");
             int[][] matrix = AdjacencyMatrix.GetMatrix(container);
             Assert.AreEqual(3, matrix.Length);
             Assert.AreEqual(3, matrix[0].Length);

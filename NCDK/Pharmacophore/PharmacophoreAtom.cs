@@ -58,7 +58,7 @@ namespace NCDK.Pharmacophore
         public PharmacophoreAtom(string smarts, string symbol, Vector3 coordinates)
         {
             Smarts = smarts;
-            this.symbol = symbol;
+            this.Symbol = symbol;
             Point3D = coordinates;
         }
 
@@ -69,7 +69,7 @@ namespace NCDK.Pharmacophore
         public PharmacophoreAtom(PharmacophoreAtom pharmacophoreAtom)
         {
             Smarts = pharmacophoreAtom.Smarts;
-            this.symbol = pharmacophoreAtom.Symbol;
+            this.Symbol = pharmacophoreAtom.Symbol;
             Point3D = pharmacophoreAtom.Point3D;
             if (pharmacophoreAtom.GetMatchingAtoms() != null)
             {
@@ -92,6 +92,9 @@ namespace NCDK.Pharmacophore
         /// The SMARTS for the group.
         /// </summary>
         public string Smarts { get; set; }
+
+        /// <inheritdoc/>
+        public override string Symbol { get; set; }
 
         /// <summary>
         /// Set the atoms of a target molecule that correspond to this group.
@@ -135,7 +138,7 @@ namespace NCDK.Pharmacophore
             if (!(o is PharmacophoreAtom)) return false;
 
             PharmacophoreAtom that = (PharmacophoreAtom)o;
-            return Smarts.Equals(that.Smarts, StringComparison.Ordinal) && symbol.Equals(that.Symbol, StringComparison.Ordinal)
+            return Smarts.Equals(that.Smarts, StringComparison.Ordinal) && Symbol.Equals(that.Symbol, StringComparison.Ordinal)
                     && Point3D.Equals(that.Point3D) && Arrays.AreEqual(this.matchingAtoms, that.matchingAtoms);
         }
     }

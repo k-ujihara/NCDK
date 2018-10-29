@@ -43,24 +43,24 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestCyclic()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("C1CCC2CCCCC2C1");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("C1CCC2CCCCC2C1");
             Assert.AreEqual(4.459, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.001);
         }
 
         [TestMethod()]
         public void TestLinear()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("CCCCCCCCCC");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("CCCCCCCCCC");
             Assert.AreEqual(4.17, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.001);
         }
 
         [TestMethod()]
         public void TestCompound()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("CCCCC1CCCCC1");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("CCCCC1CCCCC1");
             Assert.AreEqual(4.322, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.001);
         }
     }

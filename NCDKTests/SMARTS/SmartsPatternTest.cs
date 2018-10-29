@@ -23,63 +23,16 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Smiles;
 
-namespace NCDK.Smiles.SMARTS
+namespace NCDK.SMARTS
 {
     // @author John May
     [TestClass()]
     public class SmartsPatternTest
     {
-        IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
-
-        [TestMethod()]
-        public void RingSizeOrNumber_membership()
-        {
-            Assert.IsFalse(SmartsPattern.RingSizeOrNumber("[R]"));
-        }
-
-        [TestMethod()]
-        public void RingSizeOrNumber_ringConnectivity()
-        {
-            Assert.IsFalse(SmartsPattern.RingSizeOrNumber("[X2]"));
-        }
-
-        [TestMethod()]
-        public void RingSizeOrNumber_elements()
-        {
-            Assert.IsFalse(SmartsPattern.RingSizeOrNumber("[Br]"));
-            Assert.IsFalse(SmartsPattern.RingSizeOrNumber("[Cr]"));
-            Assert.IsFalse(SmartsPattern.RingSizeOrNumber("[Fr]"));
-            Assert.IsFalse(SmartsPattern.RingSizeOrNumber("[Sr]"));
-            Assert.IsFalse(SmartsPattern.RingSizeOrNumber("[Ra]"));
-            Assert.IsFalse(SmartsPattern.RingSizeOrNumber("[Re]"));
-            Assert.IsFalse(SmartsPattern.RingSizeOrNumber("[Rf]"));
-        }
-
-        [TestMethod()]
-        public void RingSizeOrNumber_negatedMembership()
-        {
-            Assert.IsTrue(SmartsPattern.RingSizeOrNumber("[!R]"));
-        }
-
-        [TestMethod()]
-        public void RingSizeOrNumber_membershipZero()
-        {
-            Assert.IsTrue(SmartsPattern.RingSizeOrNumber("[R0]"));
-        }
-
-        [TestMethod()]
-        public void RingSizeOrNumber_membershipTwo()
-        {
-            Assert.IsTrue(SmartsPattern.RingSizeOrNumber("[R2]"));
-        }
-
-        [TestMethod()]
-        public void RingSizeOrNumber_ringSize()
-        {
-            Assert.IsTrue(SmartsPattern.RingSizeOrNumber("[r5]"));
-        }
-
+        readonly IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+        
         [TestMethod()]
         public void Isotopes()
         {
@@ -217,8 +170,7 @@ namespace NCDK.Smiles.SMARTS
         [TestMethod()]
         public void CCBondForming()
         {
-            Assert.AreEqual(2, SmartsPattern.Create("([C:1]).([C:2])>>[C:1][C:2]", null)
-                                    .MatchAll(Rsmi("[C-:13]#[N:14].[K+].[CH:3]1=[CH:4][C:5](=[CH:11][CH:12]=[C:2]1[CH2:1]Br)[C:6](=[O:10])[CH:7]2[CH2:8][CH2:9]2>>[CH:3]1=[CH:4][C:5](=[CH:11][CH:12]=[C:2]1[CH2:1][C:13]#[N:14])[C:6](=[O:10])[CH:7]2[CH2:8][CH2:9]2 |f:0.1|")).Count());
+            Assert.AreEqual(2, SmartsPattern.Create("([C:1]).([C:2])>>[C:1][C:2]", null).MatchAll(Rsmi("[C-:13]#[N:14].[K+].[CH:3]1=[CH:4][C:5](=[CH:11][CH:12]=[C:2]1[CH2:1]Br)[C:6](=[O:10])[CH:7]2[CH2:8][CH2:9]2>>[CH:3]1=[CH:4][C:5](=[CH:11][CH:12]=[C:2]1[CH2:1][C:13]#[N:14])[C:6](=[O:10])[CH:7]2[CH2:8][CH2:9]2 |f:0.1|")).Count());
         }
 
         [TestMethod()]
@@ -246,7 +198,7 @@ namespace NCDK.Smiles.SMARTS
         }
 
         [TestMethod()]
-        public void hIsotope()
+        public void HIsotope()
         {
             var ptrn = SmartsPattern.Create("[2#1,3#1]");
             Assert.IsFalse(ptrn.Matches(Smi("[H][H]")));

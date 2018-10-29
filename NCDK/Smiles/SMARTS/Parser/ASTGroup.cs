@@ -4,6 +4,7 @@ using NCDK.Isomorphisms.Matchers.SMARTS;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
+    [System.Obsolete]
     internal class ASTGroup : SimpleNode
     {
         public ReactionRoles Role { get; set; } = ReactionRoles.Any;

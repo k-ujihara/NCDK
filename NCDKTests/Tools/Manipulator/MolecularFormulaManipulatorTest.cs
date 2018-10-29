@@ -59,13 +59,10 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAtomCount_IMolecularFormula()
         {
-
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(builder.NewIsotope("C"));
             formula.Add(builder.NewIsotope("H"), 3);
-
             Assert.AreEqual(2, formula.Isotopes.Count());
-
             Assert.AreEqual(4, MolecularFormulaManipulator.GetAtomCount(formula));
         }
 
@@ -75,11 +72,11 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetElementCount_IMolecularFormula_IElement()
         {
-            IMolecularFormula formula = new MolecularFormula();
-            IIsotope carb = builder.NewIsotope("C");
-            IIsotope flu = builder.NewIsotope("F");
-            IIsotope h1 = builder.NewIsotope("H");
-            IIsotope h2 = builder.NewIsotope("H");
+            var formula = new MolecularFormula();
+            var carb = builder.NewIsotope("C");
+            var flu = builder.NewIsotope("F");
+            var h1 = builder.NewIsotope("H");
+            var h2 = builder.NewIsotope("H");
             h2.ExactMass = 2.014101778;
             formula.Add(carb, 2);
             formula.Add(flu);
@@ -91,12 +88,9 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(3, formula.GetCount(h1));
             Assert.AreEqual(4, formula.GetCount(h2));
 
-            Assert.AreEqual(2,
-                MolecularFormulaManipulator.GetElementCount(formula, builder.NewElement(carb)));
-            Assert.AreEqual(1,
-                    MolecularFormulaManipulator.GetElementCount(formula, builder.NewElement(flu)));
-            Assert.AreEqual(7,
-                    MolecularFormulaManipulator.GetElementCount(formula, builder.NewElement(h1)));
+            Assert.AreEqual(2, MolecularFormulaManipulator.GetElementCount(formula, builder.NewElement(carb)));
+            Assert.AreEqual(1, MolecularFormulaManipulator.GetElementCount(formula, builder.NewElement(flu)));
+            Assert.AreEqual(7, MolecularFormulaManipulator.GetElementCount(formula, builder.NewElement(h1)));
         }
 
         /// <summary>
@@ -105,30 +99,29 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetIsotopes_IMolecularFormula_IElement()
         {
-            IMolecularFormula formula = new MolecularFormula();
-            IIsotope carb = builder.NewIsotope("C");
-            IIsotope flu = builder.NewIsotope("F");
-            IIsotope h1 = builder.NewIsotope("H");
-            IIsotope h2 = builder.NewIsotope("H");
+            var formula = new MolecularFormula();
+            var carb = builder.NewIsotope("C");
+            var flu = builder.NewIsotope("F");
+            var h1 = builder.NewIsotope("H");
+            var h2 = builder.NewIsotope("H");
             h2.ExactMass = 2.014101778;
             formula.Add(carb, 1);
             formula.Add(flu);
             formula.Add(h1, 1);
             formula.Add(h2, 2);
 
-            var isotopes = MolecularFormulaManipulator.GetIsotopes(formula,
-                            builder.NewElement("H"));
+            var isotopes = MolecularFormulaManipulator.GetIsotopes(formula, builder.NewElement("H"));
             Assert.AreEqual(2, isotopes.Count());
         }
 
         [TestMethod()]
         public void TestContainsElement_IMolecularFormula_IElement()
         {
-            IMolecularFormula formula = new MolecularFormula();
-            IIsotope carb = builder.NewIsotope("C");
-            IIsotope flu = builder.NewIsotope("F");
-            IIsotope h1 = builder.NewIsotope("H");
-            IIsotope h2 = builder.NewIsotope("H");
+            var formula = new MolecularFormula();
+            var carb = builder.NewIsotope("C");
+            var flu = builder.NewIsotope("F");
+            var h1 = builder.NewIsotope("H");
+            var h2 = builder.NewIsotope("H");
             h2.ExactMass = 2.014101778;
             formula.Add(carb, 1);
             formula.Add(flu);
@@ -143,7 +136,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetString_IMolecularFormula_Empty()
         {
-            string stringMF = MolecularFormulaManipulator.GetString(new MolecularFormula());
+            var stringMF = MolecularFormulaManipulator.GetString(new MolecularFormula());
             Assert.IsNotNull(stringMF);
             Assert.AreEqual("", stringMF);
         }
@@ -152,28 +145,27 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetString_IMolecularFormula_arrayString_boolean()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(builder.NewIsotope("C"), 2);
             formula.Add(builder.NewIsotope("H"), 2);
             Assert.AreEqual("C2H2", MolecularFormulaManipulator.GetString(formula));
 
-            string[] newOrder = new string[2];
+            var newOrder = new string[2];
             newOrder[0] = "H";
             newOrder[1] = "C";
 
             Assert.AreEqual("H2C2", MolecularFormulaManipulator.GetString(formula, newOrder, true));
-
         }
 
         /// <summary>Test if isotope-list re-ordering to a user-specified element order works</summary>
         [TestMethod()]
         public void TestPutInOrder_arrayString_IMolecularFormula()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(builder.NewIsotope("C"), 2);
             formula.Add(builder.NewIsotope("H"), 2);
 
-            string[] newOrder = new string[2];
+            var newOrder = new string[2];
             newOrder[0] = "H";
             newOrder[1] = "C";
 
@@ -188,7 +180,6 @@ namespace NCDK.Tools.Manipulator
             list = MolecularFormulaManipulator.PutInOrder(newOrder, formula);
             Assert.AreEqual("C", list[0].Symbol);
             Assert.AreEqual("H", list[1].Symbol);
-
         }
 
         [TestMethod()]
@@ -202,20 +193,19 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetString_IMolecularFormula()
         {
-            IMolecularFormula mf1 = new MolecularFormula();
+            var mf1 = new MolecularFormula();
             mf1.Add(builder.NewIsotope("C"), 10);
             mf1.Add(builder.NewIsotope("H"), 16);
 
             Assert.AreEqual("C10H16", MolecularFormulaManipulator.GetString(mf1));
 
-            IMolecularFormula mf2 = new MolecularFormula();
+            var mf2 = new MolecularFormula();
             mf2.Add(builder.NewAtom("H"), 16);
             mf2.Add(builder.NewAtom("C"), 10);
 
             Assert.AreEqual("C10H16", MolecularFormulaManipulator.GetString(mf2));
 
             Assert.AreEqual(MolecularFormulaManipulator.GetString(mf2), MolecularFormulaManipulator.GetString(mf1));
-
         }
 
         /// <summary>
@@ -224,7 +214,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestBug2276507()
         {
-            IMolecularFormula mf1 = new MolecularFormula();
+            var mf1 = new MolecularFormula();
             mf1.Add(builder.NewIsotope("C"), 1);
             mf1.Add(builder.NewIsotope("H"), 4);
 
@@ -237,7 +227,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetString_IMolecularFormula_boolean()
         {
-            IMolecularFormula mf1 = new MolecularFormula();
+            var mf1 = new MolecularFormula();
             mf1.Add(builder.NewIsotope("C"), 1);
             mf1.Add(builder.NewIsotope("H"), 4);
 
@@ -248,7 +238,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetString_Isotopes()
         {
-            IMolecularFormula mf1 = new MolecularFormula();
+            var mf1 = new MolecularFormula();
             mf1.Add(builder.NewIsotope("C", 12), 9);
             mf1.Add(builder.NewIsotope("C", 13), 1);
             mf1.Add(builder.NewIsotope("H"), 16);
@@ -259,7 +249,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetMolecularFormula_String_IChemObjectBuilder()
         {
-            IMolecularFormula molecularFormula = MolecularFormulaManipulator.GetMolecularFormula("C10H16", builder);
+            var molecularFormula = MolecularFormulaManipulator.GetMolecularFormula("C10H16", builder);
 
             Assert.AreEqual(26, MolecularFormulaManipulator.GetAtomCount(molecularFormula));
             Assert.AreEqual(2, molecularFormula.Isotopes.Count());
@@ -269,14 +259,14 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetMolecularFormula_String_IMolecularFormula()
         {
-            IMolecularFormula mf1 = new MolecularFormula();
+            var mf1 = new MolecularFormula();
             mf1.Add(builder.NewIsotope("C"), 10);
             mf1.Add(builder.NewIsotope("H"), 16);
 
             Assert.AreEqual(26, MolecularFormulaManipulator.GetAtomCount(mf1));
             Assert.AreEqual(2, mf1.Isotopes.Count());
 
-            IMolecularFormula mf2 = MolecularFormulaManipulator.GetMolecularFormula("C11H17", mf1);
+            var mf2 = MolecularFormulaManipulator.GetMolecularFormula("C11H17", mf1);
 
             Assert.AreEqual(54, MolecularFormulaManipulator.GetAtomCount(mf2));
             Assert.AreEqual(2, mf2.Isotopes.Count());
@@ -286,12 +276,12 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetMajorIsotopeMolecularFormula_String_IChemObjectBuilder()
         {
-            IMolecularFormula mf2 = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C11H17", builder);
+            var mf2 = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C11H17", builder);
 
             Assert.AreEqual(28, MolecularFormulaManipulator.GetAtomCount(mf2));
             Assert.AreEqual(2, mf2.Isotopes.Count());
-            IIsotope carbon = BODRIsotopeFactory.Instance.GetMajorIsotope("C");
-            IIsotope hydrogen = BODRIsotopeFactory.Instance.GetMajorIsotope("H");
+            var carbon = BODRIsotopeFactory.Instance.GetMajorIsotope("C");
+            var hydrogen = BODRIsotopeFactory.Instance.GetMajorIsotope("H");
             double totalMass = carbon.ExactMass.Value * 11;
             totalMass += hydrogen.ExactMass.Value * 17;
             Assert.AreEqual(totalMass, MolecularFormulaManipulator.GetTotalExactMass(mf2), 0.0000001);
@@ -301,11 +291,13 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveElement_IMolecularFormula_IElement()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            IMolecularFormula formula;
+
+            formula = new MolecularFormula();
             formula.Add(builder.NewIsotope("C"), 1);
-            IIsotope fl = builder.NewIsotope("F");
-            IIsotope hy2 = builder.NewIsotope("H");
-            IIsotope hy1 = builder.NewIsotope("H");
+            var fl = builder.NewIsotope("F");
+            var hy2 = builder.NewIsotope("H");
+            var hy1 = builder.NewIsotope("H");
             hy2.ExactMass = 2.014101778;
             formula.Add(fl, 1);
             formula.Add(hy1, 2);
@@ -330,7 +322,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalExactMass_IMolecularFormula()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             IIsotope carb = builder.NewIsotope("C");
             carb.ExactMass = 12.00;
             IIsotope cl = builder.NewIsotope("Cl");
@@ -350,7 +342,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalExactMassWithCharge_IMolecularFormula()
         {
-            IMolecularFormula formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("CH5O", builder);
+            var formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("CH5O", builder);
 
             double totalExactMass = MolecularFormulaManipulator.GetTotalExactMass(formula);
             Assert.AreEqual(33.034040, totalExactMass, 0.0001);
@@ -366,7 +358,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalExactMassWithChargeNeg_IMolecularFormula()
         {
-            IMolecularFormula formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("H2PO4", builder);
+            var formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("H2PO4", builder);
             formula.Charge = -1;
             double totalExactMass2 = MolecularFormulaManipulator.GetTotalExactMass(formula);
             Assert.AreEqual(96.96961875390926, totalExactMass2, 0.0001);
@@ -375,7 +367,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetNaturalExactMass_IMolecularFormula()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(builder.NewIsotope("C"));
             formula.Add(builder.NewIsotope("Cl"));
 
@@ -390,7 +382,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalMassNumber_IMolecularFormula()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(builder.NewIsotope("C"));
             formula.Add(builder.NewIsotope("O"));
 
@@ -401,7 +393,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetMajorIsotopeMass_IMolecularFormula()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(builder.NewIsotope("C"));
             formula.Add(builder.NewIsotope("H"), 4);
 
@@ -420,7 +412,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestBug_1944604()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             IIsotope carb = builder.NewIsotope("C");
 
             formula.Add(carb);
@@ -438,7 +430,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalNaturalAbundance_IMolecularFormula()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             IIsotope carb = builder.NewIsotope("C");
             carb.NaturalAbundance = 98.93;
             IIsotope cl = builder.NewIsotope("Cl");
@@ -506,7 +498,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetDBE_IMolecularFormula()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(builder.NewIsotope("C"), 10);
             formula.Add(builder.NewIsotope("H"), 22);
 
@@ -585,7 +577,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetHTML_IMolecularFormula_arrayString_boolean_boolean()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(builder.NewIsotope("C"), 2);
             formula.Add(builder.NewIsotope("H"), 2);
 
@@ -629,9 +621,9 @@ namespace NCDK.Tools.Manipulator
             ac.Atoms.Add(builder.NewAtom("H"));
             ac.Atoms.Add(builder.NewAtom("H"));
 
-            IMolecularFormula mf1 = MolecularFormulaManipulator.GetMolecularFormula(ac);
+            var mf1 = MolecularFormulaManipulator.GetMolecularFormula(ac);
 
-            IMolecularFormula mf2 = new MolecularFormula();
+            var mf2 = new MolecularFormula();
             mf2.Add(builder.NewIsotope("C"), 2);
             mf2.Add(builder.NewIsotope("H"), 4);
 
@@ -662,7 +654,7 @@ namespace NCDK.Tools.Manipulator
             ac.Atoms.Add(builder.NewAtom("H"));
             ac.Atoms.Add(builder.NewAtom("H"));
 
-            IMolecularFormula mf1 = MolecularFormulaManipulator.GetMolecularFormula(ac);
+            var mf1 = MolecularFormulaManipulator.GetMolecularFormula(ac);
             Assert.IsNotNull(mf1);
         }
 
@@ -677,7 +669,7 @@ namespace NCDK.Tools.Manipulator
             ac.Atoms.Add(builder.NewAtom("H"));
             ac.Atoms.Add(builder.NewAtom("H"));
 
-            IMolecularFormula mf1 = MolecularFormulaManipulator.GetMolecularFormula(ac);
+            var mf1 = MolecularFormulaManipulator.GetMolecularFormula(ac);
 
             Assert.AreEqual(1, mf1.Charge.Value, 0.000);
         }
@@ -693,17 +685,17 @@ namespace NCDK.Tools.Manipulator
             ac.Atoms.Add(builder.NewAtom("H"));
             ac.Atoms.Add(builder.NewAtom("H"));
 
-            IMolecularFormula mf1 = MolecularFormulaManipulator.GetMolecularFormula(ac, new MolecularFormula());
+            var mf1 = MolecularFormulaManipulator.GetMolecularFormula(ac, new MolecularFormula());
 
-            IMolecularFormula mf2 = new MolecularFormula();
+            var mf2 = new MolecularFormula();
             mf2.Add(builder.NewIsotope("C"), 2);
             mf2.Add(builder.NewIsotope("H"), 4);
 
             Assert.AreEqual(MolecularFormulaManipulator.GetAtomCount(mf2),
                     MolecularFormulaManipulator.GetAtomCount(mf1));
             Assert.AreEqual(mf2.Isotopes.Count(), mf1.Isotopes.Count());
-            IElement elemC = builder.NewElement("C");
-            IElement elemH = builder.NewElement("H");
+            var elemC = builder.NewElement("C");
+            var elemH = builder.NewElement("H");
             Assert.AreEqual(mf2.GetCount(builder.NewIsotope(elemC)),
                     mf1.GetCount(builder.NewIsotope(elemC)));
             Assert.AreEqual(mf2.GetCount(builder.NewIsotope(elemH)),
@@ -717,7 +709,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetMolecularFormula_IAtomContainerIMolecularFormula_2()
         {
-            IAtomContainer ac = builder.NewAtomContainer();
+            var ac = builder.NewAtomContainer();
             ac.Atoms.Add(builder.NewAtom("C"));
             ac.Atoms.Add(builder.NewAtom("C"));
             ac.Atoms.Add(builder.NewAtom("H"));
@@ -725,21 +717,21 @@ namespace NCDK.Tools.Manipulator
             ac.Atoms.Add(builder.NewAtom("H"));
             ac.Atoms.Add(builder.NewAtom("H"));
 
-            IMolecularFormula mf0 = new MolecularFormula();
+            var mf0 = new MolecularFormula();
             mf0.Add(builder.NewIsotope("C"), 2);
             mf0.Add(builder.NewIsotope("H"), 5);
 
-            IMolecularFormula mf1 = MolecularFormulaManipulator.GetMolecularFormula(ac, mf0);
+            var mf1 = MolecularFormulaManipulator.GetMolecularFormula(ac, mf0);
 
-            IMolecularFormula mf2 = new MolecularFormula();
+            var mf2 = new MolecularFormula();
             mf2.Add(builder.NewIsotope("C"), 4);
             mf2.Add(builder.NewIsotope("H"), 9);
 
             Assert.AreEqual(MolecularFormulaManipulator.GetAtomCount(mf2),
                     MolecularFormulaManipulator.GetAtomCount(mf1));
             Assert.AreEqual(mf2.Isotopes.Count(), mf1.Isotopes.Count());
-            IElement elemC = builder.NewElement("C");
-            IElement elemH = builder.NewElement("H");
+            var elemC = builder.NewElement("C");
+            var elemH = builder.NewElement("H");
             Assert.AreEqual(mf2.GetCount(builder.NewIsotope(elemC)),
                     mf1.GetCount(builder.NewIsotope(elemC)));
             Assert.AreEqual(mf2.GetCount(builder.NewIsotope(elemH)),
@@ -753,11 +745,11 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAtomContainer_IMolecularFormula()
         {
-            IMolecularFormula mf2 = new MolecularFormula();
+            var mf2 = new MolecularFormula();
             mf2.Add(builder.NewIsotope("C"), 2);
             mf2.Add(builder.NewIsotope("H"), 4);
 
-            IAtomContainer ac = MolecularFormulaManipulator.GetAtomContainer(mf2);
+            var ac = MolecularFormulaManipulator.GetAtomContainer(mf2);
 
             Assert.AreEqual(6, ac.Atoms.Count);
         }
@@ -765,12 +757,11 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAtomContainer_IMolecularFormula_IAtomContainer()
         {
-            IMolecularFormula mf2 = new MolecularFormula();
+            var mf2 = new MolecularFormula();
             mf2.Add(builder.NewIsotope("C"), 2);
             mf2.Add(builder.NewIsotope("H"), 4);
 
-            IAtomContainer ac = MolecularFormulaManipulator
-                    .GetAtomContainer(mf2, builder.NewAtomContainer());
+            var ac = MolecularFormulaManipulator.GetAtomContainer(mf2, builder.NewAtomContainer());
 
             Assert.AreEqual(6, ac.Atoms.Count);
         }
@@ -778,9 +769,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAtomContainer_String_IChemObjectBuilder()
         {
-            string mf = "C2H4";
-            IAtomContainer atomContainer = MolecularFormulaManipulator.GetAtomContainer(mf,
-                    ChemObjectBuilder.Instance);
+            var mf = "C2H4";
+            var atomContainer = MolecularFormulaManipulator.GetAtomContainer(mf, ChemObjectBuilder.Instance);
             Assert.AreEqual(6, atomContainer.Atoms.Count);
         }
 
@@ -788,11 +778,10 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAtomContainer_AddsAtomicNumbers()
         {
-            IMolecularFormula mf2 = new MolecularFormula();
+            var mf2 = new MolecularFormula();
             mf2.Add(builder.NewIsotope("C"), 2);
             mf2.Add(builder.NewIsotope("H"), 4);
-            IAtomContainer ac = MolecularFormulaManipulator
-                    .GetAtomContainer(mf2, builder.NewAtomContainer());
+            var ac = MolecularFormulaManipulator.GetAtomContainer(mf2, builder.NewAtomContainer());
             Assert.AreEqual(6, ac.Atoms.Count);
             Assert.IsNotNull(ac.Atoms[0].AtomicNumber);
             foreach (var atom in ac.Atoms)
@@ -802,14 +791,14 @@ namespace NCDK.Tools.Manipulator
                 else if (string.Equals("H", atom.Symbol, StringComparison.Ordinal))
                     Assert.AreEqual(1, atom.AtomicNumber.Value);
                 else
-                    Assert.Fail("Unexcepted element: " + atom.Symbol);
+                    Assert.Fail("Unexpected element: " + atom.Symbol);
             }
         }
 
         [TestMethod()]
         public void TestMolecularFormulaIAtomContainer_to_IAtomContainer2()
         {
-            IAtomContainer ac = builder.NewAtomContainer();
+            var ac = builder.NewAtomContainer();
             ac.Atoms.Add(builder.NewAtom("C"));
             ac.Atoms.Add(builder.NewAtom("C"));
             ac.Atoms.Add(builder.NewAtom("H"));
@@ -817,12 +806,11 @@ namespace NCDK.Tools.Manipulator
             ac.Atoms.Add(builder.NewAtom("H"));
             ac.Atoms.Add(builder.NewAtom("H"));
 
-            IMolecularFormula mf2 = new MolecularFormula();
+            var mf2 = new MolecularFormula();
             mf2.Add(builder.NewIsotope("C"), 2);
             mf2.Add(builder.NewIsotope("H"), 4);
 
-            IAtomContainer ac2 = MolecularFormulaManipulator.GetAtomContainer(mf2,
-                    builder.NewAtomContainer());
+            var ac2 = MolecularFormulaManipulator.GetAtomContainer(mf2, builder.NewAtomContainer());
 
             Assert.AreEqual(ac2.Atoms.Count, ac2.Atoms.Count);
             Assert.AreEqual(ac2.Atoms[0].Symbol, ac2.Atoms[0].Symbol);
@@ -832,14 +820,14 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestElements_IMolecularFormula()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(builder.NewIsotope("C"), 1);
             formula.Add(builder.NewIsotope("H"), 2);
 
-            IIsotope br1 = builder.NewIsotope("Br");
+            var br1 = builder.NewIsotope("Br");
             br1.NaturalAbundance = 50.69;
             formula.Add(br1);
-            IIsotope br2 = builder.NewIsotope("Br");
+            var br2 = builder.NewIsotope("Br");
             br2.NaturalAbundance = 50.69;
             formula.Add(br2);
 
@@ -852,15 +840,15 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestCompare_Charge()
         {
-            IMolecularFormula formula1 = new MolecularFormula();
+            var formula1 = new MolecularFormula();
             formula1.Add(builder.NewIsotope("C"), 1);
             formula1.Add(builder.NewIsotope("H"), 2);
 
-            IMolecularFormula formula2 = new MolecularFormula();
+            var formula2 = new MolecularFormula();
             formula2.Add(builder.NewIsotope("C"), 1);
             formula2.Add(builder.NewIsotope("H"), 2);
 
-            IMolecularFormula formula3 = new MolecularFormula();
+            var formula3 = new MolecularFormula();
             formula3.Add(builder.NewIsotope("C"), 1);
             formula3.Add(builder.NewIsotope("H"), 2);
             formula3.Charge = 0;
@@ -872,15 +860,15 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestCompare_NumberIsotope()
         {
-            IMolecularFormula formula1 = new MolecularFormula();
+            var formula1 = new MolecularFormula();
             formula1.Add(builder.NewIsotope("C"), 1);
             formula1.Add(builder.NewIsotope("H"), 2);
 
-            IMolecularFormula formula2 = new MolecularFormula();
+            var formula2 = new MolecularFormula();
             formula2.Add(builder.NewIsotope("C"), 1);
             formula2.Add(builder.NewIsotope("H"), 2);
 
-            IMolecularFormula formula3 = new MolecularFormula();
+            var formula3 = new MolecularFormula();
             formula3.Add(builder.NewIsotope("C"), 1);
             formula3.Add(builder.NewIsotope("H"), 3);
 
@@ -891,17 +879,17 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestCompare_IMolecularFormula_IMolecularFormula()
         {
-            IMolecularFormula formula1 = new MolecularFormula();
+            var formula1 = new MolecularFormula();
             formula1.Add(builder.NewIsotope("C"), 1);
             formula1.Add(builder.NewIsotope("H"), 2);
 
-            IMolecularFormula formula2 = new MolecularFormula();
+            var formula2 = new MolecularFormula();
             formula2.Add(builder.NewIsotope("C"), 1);
             formula2.Add(builder.NewIsotope("H"), 2);
 
-            IMolecularFormula formula3 = new MolecularFormula();
+            var formula3 = new MolecularFormula();
             formula3.Add(builder.NewIsotope("C"), 1);
-            IIsotope hyd = builder.NewIsotope("H");
+            var hyd = builder.NewIsotope("H");
             hyd.ExactMass = 2.002334234;
             formula3.Add(hyd, 2);
 
@@ -912,7 +900,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetHeavyElements_IMolecularFormula()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(builder.NewIsotope("C"), 10);
             formula.Add(builder.NewIsotope("H"), 16);
             Assert.AreEqual(1, MolecularFormulaManipulator.GetHeavyElements(formula).Count());
@@ -921,7 +909,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetHeavyElements_IMolecularFormula_2()
         {
-            IMolecularFormula formula = MolecularFormulaManipulator.GetMolecularFormula("CH3OH", builder);
+            var formula = MolecularFormulaManipulator.GetMolecularFormula("CH3OH", builder);
             Assert.AreEqual(2, MolecularFormulaManipulator.GetHeavyElements(formula).Count());
         }
 
@@ -968,8 +956,11 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetHillString_IMolecularFormula()
         {
-            IMolecularFormula formula = MolecularFormulaManipulator.GetMolecularFormula("CH3OH", builder);
-            string listGenerated = MolecularFormulaManipulator.GetHillString(formula);
+            IMolecularFormula formula;
+            string listGenerated;
+
+            formula = MolecularFormulaManipulator.GetMolecularFormula("CH3OH", builder);
+            listGenerated = MolecularFormulaManipulator.GetHillString(formula);
             Assert.AreEqual("CH4O", listGenerated);
 
             formula = MolecularFormulaManipulator.GetMolecularFormula("CH3CH2Br", builder);
@@ -993,62 +984,60 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestSingleAtomFromSmiles()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
 
             // previously performed inside SmilesParser
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             CDKHydrogenAdder.GetInstance(ChemObjectBuilder.Instance).AddImplicitHydrogens(mol);
 
-            IMolecularFormula mf = MolecularFormulaManipulator.GetMolecularFormula(mol);
-            double exactMass = MolecularFormulaManipulator.GetTotalExactMass(mf);
+            var mf = MolecularFormulaManipulator.GetMolecularFormula(mol);
+            var exactMass = MolecularFormulaManipulator.GetTotalExactMass(mf);
             Assert.AreEqual(16.0313, exactMass, 0.0001);
         }
 
         [TestMethod()]
         public void TestSingleAtom()
         {
-            string formula = "CH4";
-            IMolecularFormula mf = MolecularFormulaManipulator.GetMolecularFormula(formula, builder);
-            Assert.AreEqual(1,
-                    MolecularFormulaManipulator.GetIsotopes(mf, mf.Builder.NewElement("C")).Count());
+            var formula = "CH4";
+            var mf = MolecularFormulaManipulator.GetMolecularFormula(formula, builder);
+            Assert.AreEqual(1, MolecularFormulaManipulator.GetIsotopes(mf, mf.Builder.NewElement("C")).Count());
         }
 
         [TestMethod()]
         public void TestSimplifyMolecularFormula_String()
         {
-            string formula = "C1H41.H2O";
-            string simplifyMF = MolecularFormulaManipulator.SimplifyMolecularFormula(formula);
+            var formula = "C1H41.H2O";
+            var simplifyMF = MolecularFormulaManipulator.SimplifyMolecularFormula(formula);
             Assert.AreEqual("C1H43O", simplifyMF);
         }
 
         [TestMethod()]
         public void TestSimplifyMolecularFormula_String2()
         {
-            string formula = "CH41.H2O";
-            string simplifyMF = MolecularFormulaManipulator.SimplifyMolecularFormula(formula);
+            var formula = "CH41.H2O";
+            var simplifyMF = MolecularFormulaManipulator.SimplifyMolecularFormula(formula);
             Assert.AreEqual("CH43O", simplifyMF);
         }
 
         [TestMethod()]
         public void TestSimplifygetMF()
         {
-            string formula = "CH4.H2O";
-            IMolecularFormula formula1 = new MolecularFormula();
+            var formula = "CH4.H2O";
+            var formula1 = new MolecularFormula();
             formula1.Add(builder.NewIsotope("C"), 1);
             formula1.Add(builder.NewIsotope("H"), 6);
             formula1.Add(builder.NewIsotope("O"), 1);
-            IMolecularFormula ff = MolecularFormulaManipulator.GetMolecularFormula(formula, builder);
-            Assert.IsTrue(MolecularFormulaManipulator.Compare(formula1,
-                    MolecularFormulaManipulator.GetMolecularFormula(formula, builder)));
+            var ff = MolecularFormulaManipulator.GetMolecularFormula(formula, builder);
+            Assert.IsTrue(MolecularFormulaManipulator.Compare(formula1, MolecularFormulaManipulator.GetMolecularFormula(formula, builder)));
             Assert.AreEqual("CH6O", MolecularFormulaManipulator.GetString(ff));
         }
 
         [TestMethod()]
         public void TestSpace()
         {
-            string formula = "C17H21NO. C7H6O3";
-            string simplifyMF = MolecularFormulaManipulator.SimplifyMolecularFormula(formula);
+            var formula = "C17H21NO. C7H6O3";
+            var simplifyMF = MolecularFormulaManipulator.SimplifyMolecularFormula(formula);
             Assert.AreEqual("C24H27NO4", simplifyMF);
         }
 
@@ -1056,8 +1045,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void Test0()
         {
-            string formula = "Fe.(C6H11O7)3";
-            string simplifyMF = MolecularFormulaManipulator.SimplifyMolecularFormula(formula);
+            var formula = "Fe.(C6H11O7)3";
+            var simplifyMF = MolecularFormulaManipulator.SimplifyMolecularFormula(formula);
             Assert.AreEqual("FeC18H33O21", simplifyMF);
         }
 
@@ -1065,8 +1054,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void Test1()
         {
-            string formula = "(C6H11O7)3.Fe";
-            string simplifyMF = MolecularFormulaManipulator.SimplifyMolecularFormula(formula);
+            var formula = "(C6H11O7)3.Fe";
+            var simplifyMF = MolecularFormulaManipulator.SimplifyMolecularFormula(formula);
             Assert.AreEqual("C18H33O21Fe", simplifyMF);
         }
 
@@ -1074,8 +1063,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void Test2()
         {
-            string formula = "C14H14N2.2HCl";
-            string simplifyMF = MolecularFormulaManipulator.SimplifyMolecularFormula(formula);
+            var formula = "C14H14N2.2HCl";
+            var simplifyMF = MolecularFormulaManipulator.SimplifyMolecularFormula(formula);
             Assert.AreEqual("C14H16N2Cl2", simplifyMF);
         }
 
@@ -1083,8 +1072,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void Test3()
         {
-            string formula = "(C27H33N3O8)2.2HNO3.3H2O";
-            string simplifyMF = MolecularFormulaManipulator.SimplifyMolecularFormula(formula);
+            var formula = "(C27H33N3O8)2.2HNO3.3H2O";
+            var simplifyMF = MolecularFormulaManipulator.SimplifyMolecularFormula(formula);
             Assert.AreEqual("C54H74N8O25", simplifyMF);
         }
 
@@ -1092,15 +1081,14 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void Test4()
         {
-            string formula = "(C27H33N3O8)2.2HNO3.3H2O";
-            IMolecularFormula formula1 = new MolecularFormula();
+            var formula = "(C27H33N3O8)2.2HNO3.3H2O";
+            var formula1 = new MolecularFormula();
             formula1.Add(builder.NewIsotope("C"), 54);
             formula1.Add(builder.NewIsotope("H"), 74);
             formula1.Add(builder.NewIsotope("O"), 25);
             formula1.Add(builder.NewIsotope("N"), 8);
             IMolecularFormula ff = MolecularFormulaManipulator.GetMolecularFormula(formula, builder);
-            Assert.IsTrue(MolecularFormulaManipulator.Compare(formula1,
-                    MolecularFormulaManipulator.GetMolecularFormula(formula, builder)));
+            Assert.IsTrue(MolecularFormulaManipulator.Compare(formula1, MolecularFormulaManipulator.GetMolecularFormula(formula, builder)));
             Assert.AreEqual("C54H74N8O25", MolecularFormulaManipulator.GetString(ff));
         }
 
@@ -1108,15 +1096,14 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void Test5()
         {
-            string formula = "[SO3]2-";
-            IMolecularFormula formula1 = new MolecularFormula();
+            var formula = "[SO3]2-";
+            var formula1 = new MolecularFormula();
             formula1.Add(builder.NewIsotope("S"), 1);
             formula1.Add(builder.NewIsotope("O"), 3);
             formula1.Charge = -2;
-            IMolecularFormula ff = MolecularFormulaManipulator.GetMolecularFormula(formula, builder);
-            Assert.IsTrue(MolecularFormulaManipulator.Compare(formula1,
-                    MolecularFormulaManipulator.GetMolecularFormula(formula, builder)));
-            Assert.AreEqual("O3S", MolecularFormulaManipulator.GetString(ff));
+            var ff = MolecularFormulaManipulator.GetMolecularFormula(formula, builder);
+            Assert.IsTrue(MolecularFormulaManipulator.Compare(formula1, MolecularFormulaManipulator.GetMolecularFormula(formula, builder)));
+            Assert.AreEqual("[O3S]2-", MolecularFormulaManipulator.GetString(ff));
             Assert.AreEqual(-2, ff.Charge.Value, 0.00001);
         }
 
@@ -1124,13 +1111,12 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void Test6()
         {
-            string formula = "(CH3)2";
-            IMolecularFormula formula1 = new MolecularFormula();
+            var formula = "(CH3)2";
+            var formula1 = new MolecularFormula();
             formula1.Add(builder.NewIsotope("C"), 2);
             formula1.Add(builder.NewIsotope("H"), 6);
-            IMolecularFormula ff = MolecularFormulaManipulator.GetMolecularFormula(formula, builder);
-            Assert.IsTrue(MolecularFormulaManipulator.Compare(formula1,
-                    MolecularFormulaManipulator.GetMolecularFormula(formula, builder)));
+            var ff = MolecularFormulaManipulator.GetMolecularFormula(formula, builder);
+            Assert.IsTrue(MolecularFormulaManipulator.Compare(formula1, MolecularFormulaManipulator.GetMolecularFormula(formula, builder)));
             Assert.AreEqual("C2H6", MolecularFormulaManipulator.GetString(ff));
         }
 
@@ -1138,15 +1124,14 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestWithH_Initial()
         {
-            string formula = "HC5H11NO2H";
-            IMolecularFormula formula1 = new MolecularFormula();
+            var formula = "HC5H11NO2H";
+            var formula1 = new MolecularFormula();
             formula1.Add(builder.NewIsotope("C"), 5);
             formula1.Add(builder.NewIsotope("H"), 13);
             formula1.Add(builder.NewIsotope("N"), 1);
             formula1.Add(builder.NewIsotope("O"), 2);
-            IMolecularFormula ff = MolecularFormulaManipulator.GetMolecularFormula(formula, builder);
-            Assert.IsTrue(MolecularFormulaManipulator.Compare(formula1,
-                    MolecularFormulaManipulator.GetMolecularFormula(formula, builder)));
+            var ff = MolecularFormulaManipulator.GetMolecularFormula(formula, builder);
+            Assert.IsTrue(MolecularFormulaManipulator.Compare(formula1, MolecularFormulaManipulator.GetMolecularFormula(formula, builder)));
             Assert.AreEqual("C5H13NO2", MolecularFormulaManipulator.GetString(ff));
         }
 
@@ -1154,22 +1139,23 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestFromMol()
         {
-            string filename = "NCDK.Data.MDL.formulatest.mol";
-            Stream ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            ChemFile chemFile = reader.Read(new ChemFile());
-            reader.Close();
+            var filename = "NCDK.Data.MDL.formulatest.mol";
+            ChemFile chemFile;
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
+            {
+                chemFile = reader.Read(new ChemFile());
+            }
             Assert.IsNotNull(chemFile);
             var mols = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
-            IAtomContainer mol = mols[0];
+            var mol = mols[0];
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            CDKHydrogenAdder ha = CDKHydrogenAdder.GetInstance(ChemObjectBuilder.Instance);
+            var ha = CDKHydrogenAdder.GetInstance(ChemObjectBuilder.Instance);
             ha.AddImplicitHydrogens(mol);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
 
-            IMolecularFormula molecularFormula = MolecularFormulaManipulator.GetMolecularFormula(mol);
-            string formula2 = MolecularFormulaManipulator.GetString(molecularFormula);
+            var molecularFormula = MolecularFormulaManipulator.GetMolecularFormula(mol);
+            var formula2 = MolecularFormulaManipulator.GetString(molecularFormula);
             Assert.IsTrue(formula2.Equals("C35H64N3O21P3S"));
         }
 
@@ -1177,10 +1163,9 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestHelium()
         {
-            IAtomContainer helium = new AtomContainer();
+            var helium = new AtomContainer();
             helium.Atoms.Add(new Atom("He"));
-
-            IMolecularFormula formula = MolecularFormulaManipulator.GetMolecularFormula(helium);
+            var formula = MolecularFormulaManipulator.GetMolecularFormula(helium);
             Assert.IsNotNull(formula);
             Assert.AreEqual("He", MolecularFormulaManipulator.GetString(formula));
         }
@@ -1189,10 +1174,9 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestAmericum()
         {
-            IAtomContainer helium = new AtomContainer();
+            var helium = new AtomContainer();
             helium.Atoms.Add(new Atom("Am"));
-
-            IMolecularFormula formula = MolecularFormulaManipulator.GetMolecularFormula(helium);
+            var formula = MolecularFormulaManipulator.GetMolecularFormula(helium);
             Assert.IsNotNull(formula);
             Assert.AreEqual("Am", MolecularFormulaManipulator.GetString(formula));
         }
@@ -1201,13 +1185,10 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestImplicitH()
         {
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(Silent.ChemObjectBuilder.Instance);
-
-            IAtomContainer mol = TestMoleculeFactory.MakeBenzene();
-
-            IMolecularFormula f = MolecularFormulaManipulator.GetMolecularFormula(mol);
+            var adder = CDKHydrogenAdder.GetInstance(Silent.ChemObjectBuilder.Instance);
+            var mol = TestMoleculeFactory.MakeBenzene();
+            var f = MolecularFormulaManipulator.GetMolecularFormula(mol);
             Assert.AreEqual("C6", MolecularFormulaManipulator.GetString(f));
-
             Assert.AreEqual(6, mol.Atoms.Count);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             adder.AddImplicitHydrogens(mol);
@@ -1219,7 +1200,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void NoNullPointerExceptionForExactMassOfRGroups()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(new Isotope("C"));
             formula.Add(new Isotope("H"), 3);
             formula.Add(new Isotope("R"));
@@ -1229,7 +1210,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void NoNullPointerExceptionForMassOfRGroups()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(new Isotope("C"));
             formula.Add(new Isotope("H"), 3);
             formula.Add(new Isotope("R"));
@@ -1239,7 +1220,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void NoNullPointerExceptionForMajorMassOfRGroups()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(new Isotope("C"));
             formula.Add(new Isotope("H"), 3);
             formula.Add(new Isotope("R"));
@@ -1249,9 +1230,9 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void NoNullPointerForStaticIsotopes()
         {
-            BODRIsotopeFactory isotopes = BODRIsotopeFactory.Instance;
-            IIsotope carbon = isotopes.GetMajorIsotope("C");
-            MolecularFormula mf = new MolecularFormula();
+            var isotopes = BODRIsotopeFactory.Instance;
+            var carbon = isotopes.GetMajorIsotope("C");
+            var mf = new MolecularFormula();
             mf.Add(carbon, 10);
             MolecularFormulaManipulator.GetNaturalExactMass(mf);
         }
@@ -1259,27 +1240,26 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void AcceptMinusAsInput()
         {
-            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
-            IMolecularFormula mf = MolecularFormulaManipulator.GetMolecularFormula("[PO4]3–",
-                                                                                   bldr);
+            var bldr = Silent.ChemObjectBuilder.Instance;
+            var mf = MolecularFormulaManipulator.GetMolecularFormula("[PO4]3–", bldr);
             Assert.AreEqual(-3, mf.Charge);
         }
 
         [TestMethod()]
         public void DeprotonatePhenol()
         {
-            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
-            IMolecularFormula mf = MolecularFormulaManipulator.GetMolecularFormula("C6H6O", bldr);
+            var bldr = Silent.ChemObjectBuilder.Instance;
+            var mf = MolecularFormulaManipulator.GetMolecularFormula("C6H6O", bldr);
             Assert.IsTrue(MolecularFormulaManipulator.AdjustProtonation(mf, -1));
-            Assert.AreEqual("C6H5O", MolecularFormulaManipulator.GetString(mf));
+            Assert.AreEqual("[C6H5O]-", MolecularFormulaManipulator.GetString(mf));
             Assert.AreEqual(-1, mf.Charge);
         }
 
         [TestMethod()]
         public void ProtonatePhenolate()
         {
-            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
-            IMolecularFormula mf = MolecularFormulaManipulator.GetMolecularFormula("[C6H5O]-", bldr);
+            var bldr = Silent.ChemObjectBuilder.Instance;
+            var mf = MolecularFormulaManipulator.GetMolecularFormula("[C6H5O]-", bldr);
             Assert.IsTrue(MolecularFormulaManipulator.AdjustProtonation(mf, +1));
             Assert.AreEqual("C6H6O", MolecularFormulaManipulator.GetString(mf));
             Assert.AreEqual(0, mf.Charge);
@@ -1289,8 +1269,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void ProtonatePhenolateMajorIsotopes()
         {
-            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
-            IMolecularFormula mf = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("[C6H5O]-", bldr);
+            var bldr = Silent.ChemObjectBuilder.Instance;
+            var mf = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("[C6H5O]-", bldr);
             Assert.IsTrue(MolecularFormulaManipulator.AdjustProtonation(mf, +1));
             Assert.AreEqual("C6H6O", MolecularFormulaManipulator.GetString(mf));
             Assert.AreEqual(0, mf.Charge);
@@ -1300,10 +1280,10 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void DeprontateHCl()
         {
-            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
-            IMolecularFormula mf = MolecularFormulaManipulator.GetMolecularFormula("HCl", bldr);
+            var bldr = Silent.ChemObjectBuilder.Instance;
+            var mf = MolecularFormulaManipulator.GetMolecularFormula("HCl", bldr);
             Assert.IsTrue(MolecularFormulaManipulator.AdjustProtonation(mf, -1));
-            Assert.AreEqual("Cl", MolecularFormulaManipulator.GetString(mf));
+            Assert.AreEqual("[Cl]-", MolecularFormulaManipulator.GetString(mf));
             Assert.AreEqual(-1, mf.Charge);
             Assert.AreEqual(1, mf.Isotopes.Count());
         }
@@ -1311,8 +1291,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void ProntateChloride()
         {
-            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
-            IMolecularFormula mf = MolecularFormulaManipulator.GetMolecularFormula("[Cl]-", bldr);
+            var bldr = Silent.ChemObjectBuilder.Instance;
+            var mf = MolecularFormulaManipulator.GetMolecularFormula("[Cl]-", bldr);
             Assert.IsTrue(MolecularFormulaManipulator.AdjustProtonation(mf, +1));
             Assert.AreEqual("ClH", MolecularFormulaManipulator.GetString(mf));
             Assert.AreEqual(0, mf.Charge);
@@ -1322,19 +1302,19 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void DeprontateChloride()
         {
-            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
-            IMolecularFormula mf = MolecularFormulaManipulator.GetMolecularFormula("[Cl]-", bldr);
+            var bldr = Silent.ChemObjectBuilder.Instance;
+            var mf = MolecularFormulaManipulator.GetMolecularFormula("[Cl]-", bldr);
             Assert.IsFalse(MolecularFormulaManipulator.AdjustProtonation(mf, -1));
         }
 
         [TestMethod()]
         public void ProtonateDeuteratedPhenolate()
         {
-            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
-            IMolecularFormula mf = bldr.NewMolecularFormula();
+            var bldr = Silent.ChemObjectBuilder.Instance;
+            var mf = bldr.NewMolecularFormula();
             // [C6DH4O]- (parser not good enough ATM so need to create like this)
-            IIsotope deuterium = BODRIsotopeFactory.Instance.GetIsotope("H", 2);
-            IIsotope hydrogen = BODRIsotopeFactory.Instance.GetMajorIsotope(1);
+            var deuterium = BODRIsotopeFactory.Instance.GetIsotope("H", 2);
+            var hydrogen = BODRIsotopeFactory.Instance.GetMajorIsotope(1);
             mf.Add(deuterium, 1);
             mf.Add(hydrogen, 4);
             mf.Add(BODRIsotopeFactory.Instance.GetMajorIsotope(6), 6);
@@ -1346,6 +1326,54 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(4, mf.Isotopes.Count());
             Assert.AreEqual(1, mf.GetCount(deuterium));
             Assert.AreEqual(5, mf.GetCount(hydrogen));
+        }
+
+        [TestMethod()]
+        public void TestMassNumberDisplay()
+        {
+            var ifac = BODRIsotopeFactory.Instance;
+            var bldr = Silent.ChemObjectBuilder.Instance;
+            var mf = bldr.NewMolecularFormula();
+            mf.Add(new Atom("C"), 7);
+            mf.Add(new Atom("O"), 3);
+            mf.Add(new Atom("H"), 3);
+            mf.Add(new Atom("Br"), 1);
+            mf.Add(ifac.GetIsotope("Br", 81), 1);
+            Assert.AreEqual("C7H3Br2O3", MolecularFormulaManipulator.GetString(mf, false, false));
+            Assert.AreEqual("C7H3Br[81]BrO3", MolecularFormulaManipulator.GetString(mf, false, true));
+        }
+
+        [TestMethod()]
+        public void TestMassNumberDisplayWithDefinedIsotopes()
+        {
+            var ifac = BODRIsotopeFactory.Instance;
+            var bldr = Silent.ChemObjectBuilder.Instance;
+            var mf = bldr.NewMolecularFormula();
+            mf.Add(ifac.GetMajorIsotope("C"), 7);
+            mf.Add(ifac.GetMajorIsotope("O"), 3);
+            mf.Add(ifac.GetMajorIsotope("H"), 3);
+            mf.Add(ifac.GetMajorIsotope("Br"), 1);
+            mf.Add(ifac.GetIsotope("Br", 81), 1);
+            BODRIsotopeFactory.ClearMajorIsotopes(mf);
+            Assert.AreEqual("C7H3Br2O3", MolecularFormulaManipulator.GetString(mf, false, false));
+            Assert.AreEqual("C7H3Br[81]BrO3", MolecularFormulaManipulator.GetString(mf, false, true));
+        }
+
+        [TestMethod()]
+        public void ParseMFMass()
+        {
+            var str = "C7H3[81]BrBrO3";
+            var builder = Silent.ChemObjectBuilder.Instance;
+            var mf = MolecularFormulaManipulator.GetMolecularFormula(str, builder);
+            Assert.AreEqual("C7H3Br[81]BrO3", MolecularFormulaManipulator.GetString(mf, false, true));
+        }
+
+        [TestMethod()]
+        public void TestRoundTripCharge()
+        {
+            var f = "[C3H7]+";
+            var m = MolecularFormulaManipulator.GetMolecularFormula(f, Silent.ChemObjectBuilder.Instance);
+            Assert.AreEqual("[C3H7]+", MolecularFormulaManipulator.GetString(m));
         }
     }
 }

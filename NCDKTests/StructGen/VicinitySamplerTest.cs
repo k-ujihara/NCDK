@@ -63,7 +63,7 @@ namespace NCDK.StructGen
         // @cdk.bug 1632610
         public void TestCycloButene()
         {
-            IAtomContainer mol = parser.ParseSmiles("C=CC=C");
+            var mol = parser.ParseSmiles("C=CC=C");
 
             BODRIsotopeFactory.Instance.ConfigureAtoms(mol);
             AddImplicitHydrogens(mol);

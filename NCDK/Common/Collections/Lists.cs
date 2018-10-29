@@ -30,5 +30,29 @@ namespace NCDK.Common.Collections
             }
             return ret;
         }
+
+        public static void StableSort<T>(IList<T> list, Comparison<T> comparison)
+        {
+            var wrapped = new List<KeyValuePair<int, T>>(list.Count);
+            for (int i = 0; i < list.Count; i++)
+            {
+                wrapped.Add(new KeyValuePair<int, T>(i, list[i]));
+            }
+
+            wrapped.Sort((x, y) =>
+            {
+                var result = comparison(x.Value, y.Value);
+                if (result == 0)
+                {
+                    result = x.Key.CompareTo(y.Key);
+                }
+                return result;
+            });
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i] = wrapped[i].Value;
+            }
+        }
     }
 }

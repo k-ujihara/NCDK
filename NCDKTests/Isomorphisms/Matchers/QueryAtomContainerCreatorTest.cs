@@ -31,7 +31,7 @@ namespace NCDK.Isomorphisms.Matchers
         [TestMethod()]
         public void Test12DimethylBenzene()
         {
-            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+            var builder = Silent.ChemObjectBuilder.Instance;
             IAtomContainer molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("C"));

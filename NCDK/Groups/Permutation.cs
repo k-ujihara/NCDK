@@ -209,7 +209,7 @@ namespace NCDK.Groups
             bool[] p = new bool[n];
             Arrays.Fill(p, true);
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             int j = 0;
             for (int i = 0; i < n; i++)
             {

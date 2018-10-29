@@ -131,7 +131,7 @@ namespace NCDK.Pharmacophore
         /// <returns>string representation of and angle constraint</returns>
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("AC::").Append(Atoms[0]).Append("::").Append(Atoms[1]).Append("::").Append(Atoms[2]);
             sb.Append("::[").Append(GetLower()).Append(" - ").Append(GetUpper()).Append("] ");
             return sb.ToString();

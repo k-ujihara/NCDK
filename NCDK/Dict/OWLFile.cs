@@ -83,13 +83,13 @@ namespace NCDK.Dict
             }
             catch (XmlException ex)
             {
-                Trace.TraceError("Dictionary is not well-formed: ", ex.Message);
+                Trace.TraceError($"Dictionary is not well-formed: {ex.Message}");
                 Debug.WriteLine("Error at line " + ex.LineNumber, ", column " + ex.LinePosition);
                 dict = null;
             }
             catch (IOException ex)
             {
-                Trace.TraceError("Due to an IOException, the parser could not check:", ex.Message);
+                Trace.TraceError($"Due to an IOException, the parser could not check:{ex.Message}");
                 Debug.WriteLine(ex);
                 dict = null;
             }

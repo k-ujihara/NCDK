@@ -25,12 +25,12 @@
 
 using NCDK.Common.Mathematics;
 using NCDK.Geometries;
+using NCDK.Numerics;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using NCDK.Numerics;
 
 namespace NCDK.Layout
 {
@@ -97,17 +97,18 @@ namespace NCDK.Layout
         /// <param name="bondLength">The standard bondlength</param>
         public virtual void PlaceRing(IRing ring, IAtomContainer sharedAtoms, Vector2 sharedAtomsCenter, Vector2 ringCenterVector, double bondLength)
         {
-            int sharedAtomCount = sharedAtoms.Atoms.Count;
-            Debug.WriteLine($"placeRing -> sharedAtomCount: {sharedAtomCount}");
-            if (sharedAtomCount > 2)
+            int numSharedAtoms = sharedAtoms.Atoms.Count;
+            int numSharedBonds = sharedAtoms.Bonds.Count;
+            Debug.WriteLine($"placeRing -> sharedAtomCount: {numSharedAtoms}");
+            if (numSharedAtoms > 2 && numSharedBonds > 1)
             {
                 PlaceBridgedRing(ring, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
             }
-            else if (sharedAtomCount == 2)
+            else if (numSharedAtoms == 2 && numSharedBonds == 1)
             {
                 PlaceFusedRing(ring, sharedAtoms, ringCenterVector, bondLength);
             }
-            else if (sharedAtomCount == 1)
+            else if (numSharedAtoms == 1 && numSharedBonds == 0)
             {
                 PlaceSpiroRing(ring, sharedAtoms, sharedAtomsCenter, ringCenterVector, bondLength);
             }
@@ -134,12 +135,12 @@ namespace NCDK.Layout
         public virtual void PlaceRing(IRing ring, Vector2 ringCenter, double bondLength, IReadOnlyDictionary<int, double> startAngles)
         {
             var radius = GetNativeRingRadius(ring, bondLength);
-            double addAngle = 2 * Math.PI / ring.RingSize;
+            var addAngle = 2 * Math.PI / ring.RingSize;
 
-            IAtom startAtom = ring.Atoms[0];
+            var startAtom = ring.Atoms[0];
             Vector2 p = new Vector2((ringCenter.X + radius), ringCenter.Y);
             startAtom.Point2D = p;
-            double startAngle = Math.PI * 0.5;
+            var startAngle = Math.PI * 0.5;
 
             // Different ring sizes get different start angles to have visually
             // correct placement
@@ -337,28 +338,58 @@ namespace NCDK.Layout
         /// <param name="bondLength">The standard bond length</param>
         public virtual void PlaceSpiroRing(IRing ring, IAtomContainer sharedAtoms, Vector2 sharedAtomsCenter, Vector2 ringCenterVector, double bondLength)
         {
-            Debug.WriteLine(nameof(PlaceSpiroRing));
-            double radius = GetNativeRingRadius(ring, bondLength);
-            Vector2 ringCenter = sharedAtomsCenter;
-            ringCenterVector = Vector2.Normalize(ringCenterVector);
-            ringCenterVector *= radius;
+            var startAtom = sharedAtoms.Atoms[0];
+            var mBonds = Molecule.GetConnectedBonds(sharedAtoms.Atoms[0]).ToList();
+            var degree = mBonds.Count;
+            Debug.WriteLine($"placeSpiroRing: D={degree}");
+            // recalculate the ringCentreVector
+            if (degree != 4)
+            {
+                int numPlaced = 0;
+                foreach (var bond in mBonds)
+                {
+                    var nbr = bond.GetOther(sharedAtoms.Atoms[0]);
+                    if (!nbr.IsPlaced)
+                        continue;
+                    numPlaced++;
+                }
+                if (numPlaced == 2)
+                {
+                    // nudge the shared atom such that bond lengths will be
+                    // equal
+                    startAtom.Point2D += ringCenterVector;
+                    sharedAtomsCenter += ringCenterVector;
+                }
+                var theta = Math.PI - (2 * Math.PI / (degree / 2));
+                Rotate(ringCenterVector, theta);
+            }
+
+            var radius = GetNativeRingRadius(ring, bondLength);
+            var ringCenter = sharedAtomsCenter;
+            if (degree == 4)
+            {
+                ringCenterVector = Vector2.Normalize(ringCenterVector);
+                ringCenterVector *= radius;
+            }
+            else
+            {
+                // spread things out a little for multiple spiro centres
+                ringCenterVector = Vector2.Normalize(ringCenterVector);
+                ringCenterVector *= (2 * radius);
+            }
+
             ringCenter += ringCenterVector;
-            double addAngle = 2 * Math.PI / ring.RingSize;
+            var addAngle = 2 * Math.PI / ring.RingSize;
 
-            IAtom startAtom = sharedAtoms.Atoms[0];
+            var currentAtom = startAtom;
+            var startAngle = GeometryUtil.GetAngle(
+                startAtom.Point2D.Value.X - ringCenter.X, 
+                startAtom.Point2D.Value.Y - ringCenter.Y);
 
-            //double centerX = ringCenter.X;
-            //double centerY = ringCenter.Y;
-
-            //int direction = 1;
-
-            IAtom currentAtom = startAtom;
-            double startAngle = GeometryUtil.GetAngle(startAtom.Point2D.Value.X - ringCenter.X, startAtom.Point2D.Value.Y
-                    - ringCenter.Y);
             // Get one bond connected to the spiro bridge atom. It doesn't matter in which direction we draw.
-            var bonds = ring.GetConnectedBonds(startAtom);
+            var rBonds = ring.GetConnectedBonds(startAtom);
 
-            IBond currentBond = (IBond)bonds.First();
+            var currentBond = rBonds.First();
 
             var atomsToDraw = new List<IAtom>();
             // Store all atoms to draw in consequtive order relative to the chosen bond.
@@ -366,7 +397,8 @@ namespace NCDK.Layout
             {
                 currentBond = ring.GetNextBond(currentBond, currentAtom);
                 currentAtom = currentBond.GetOther(currentAtom);
-                atomsToDraw.Add(currentAtom);
+                if (!currentAtom.Equals(startAtom))
+                    atomsToDraw.Add(currentAtom);
             }
             Debug.WriteLine($"currentAtom  {currentAtom}");
             Debug.WriteLine($"startAtom  {startAtom}");
@@ -509,7 +541,7 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Completes the layout of a partiallyed laid out ring.
+        /// Completes the layout of a partially laid out ring.
         /// </summary>
         /// <param name="rset">ring set</param>
         /// <param name="ring">the ring to complete</param>

@@ -609,5 +609,12 @@ namespace NCDK.Beam
             Assert.AreEqual("C[Co@](F)(Cl)(Br)(I)S", g.ToSmiles());
             Assert.AreEqual("C[Co@OH8](F)(Br)(Cl)(I)S", g.Permute(new int[] { 0, 1, 2, 4, 3, 5, 6 }).ToSmiles());
         }
+
+        [TestMethod()]
+        public void ExtendedTetrahedralRingClosures()
+        {
+            Graph g = Graph.FromSmiles("[CH3:3]1.[CH3:1]C(=[C@@]=[CH:2]1)[CH2:4]C");
+            Assert.AreEqual(Configuration.AL2, g.TopologyOf(3).Configuration);
+        }
     }
 }

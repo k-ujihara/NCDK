@@ -120,7 +120,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     nRings7++;
                 else if (sz == 8)
                     nRings8++;
-                else if (sz == 9) nRings9++;
+                else if (sz == 9)
+                    nRings9++;
 
                 bool aromatic = true;
                 for (int n = 0; n < r.Length; n++)
@@ -129,14 +130,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         aromatic = false;
                         break;
                     }
-                if (aromatic) nAromRings++;
+                if (aromatic)
+                    nAromRings++;
             }
 
             // # of ring blocks: the highest identifier is the total number of ring systems (0=not in a ring block)
             for (int n = ringBlock.Length - 1; n >= 0; n--)
                 nRingBlocks = Math.Max(nRingBlocks, ringBlock[n]);
 
-            ArrayResult<int> result = new ArrayResult<int>
+            var result = new ArrayResult<int>
             {
                 nSmallRings,
                 nAromRings,
@@ -164,8 +166,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             bondOrder = new int[nb];
             for (int n = 0; n < mol.Bonds.Count; n++)
             {
-                IBond bond = mol.Bonds[n];
-                if (bond.Atoms.Count != 2) continue; // biconnected bonds only
+                var bond = mol.Bonds[n];
+                if (bond.Atoms.Count != 2)
+                    continue; // biconnected bonds only
                 int a1 = mol.Atoms.IndexOf(bond.Atoms[0]), a2 = mol.Atoms.IndexOf(bond.Atoms[1]);
 
                 atomAdj[a1] = AppendInteger(atomAdj[a1], a2);
@@ -194,8 +197,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int[] HYVALENCE_VAL = { 4, 3, 2, 2, 3 };
             for (int n = 0; n < na; n++)
             {
-                IAtom atom = mol.Atoms[n];
-                string el = atom.Symbol;
+                var atom = mol.Atoms[n];
+                var el = atom.Symbol;
                 int hy = 0;
                 for (int i = 0; i < HYVALENCE_EL.Length; i++)
                     if (el.Equals(HYVALENCE_EL[i], StringComparison.Ordinal))
@@ -203,9 +206,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         hy = HYVALENCE_VAL[i];
                         break;
                     }
-                if (hy == 0) continue;
+                if (hy == 0)
+                    continue;
                 int ch = atom.FormalCharge.Value;
-                if (string.Equals(el, "C", StringComparison.Ordinal)) ch = -Math.Abs(ch);
+                if (string.Equals(el, "C", StringComparison.Ordinal))
+                    ch = -Math.Abs(ch);
                 int unpaired = 0; // (not current available, maybe introduce later)
                 hy += ch - unpaired;
                 for (int i = 0; i < bondAdj[n].Length; i++)
@@ -235,10 +240,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         // assign a ring block ID to each atom (0=not in ring)
         private void MarkRingBlocks()
         {
-            int na = mol.Atoms.Count;
+            var na = mol.Atoms.Count;
             ringBlock = new int[na];
 
-            bool[] visited = new bool[na];
+            var visited = new bool[na];
 
             int[] path = new int[na + 1];
             int plen = 0;

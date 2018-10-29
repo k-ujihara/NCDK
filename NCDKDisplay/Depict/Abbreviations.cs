@@ -32,12 +32,10 @@ using NCDK.Tools.Manipulator;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using static NCDK.Config.ChemicalElement;
-using static NCDK.Graphs.GraphUtil;
 using static NCDK.Isomorphisms.Matchers.SMARTS.LogicalOperatorAtom;
 
 namespace NCDK.Depict
@@ -146,8 +144,8 @@ namespace NCDK.Depict
 
         private static List<IAtomContainer> MakeCut(IBond cut, IAtomContainer mol, Dictionary<IAtom, int> idx, int[][] adjlist)
         {
-            IAtom beg = cut.Begin;
-            IAtom end = cut.End;
+            var beg = cut.Begin;
+            var end = cut.End;
 
             var bvisit = new LinkedHashSet<IAtom>();
             var evisit = new LinkedHashSet<IAtom>();
@@ -160,11 +158,11 @@ namespace NCDK.Depict
             bvisit.Add(end); // stop visits
             while (queue.Any())
             {
-                IAtom atom = queue.Poll();
+                var atom = queue.Poll();
                 bvisit.Add(atom);
                 foreach (var w in adjlist[idx[atom]])
                 {
-                    IAtom nbr = mol.Atoms[w];
+                    var nbr = mol.Atoms[w];
                     if (!bvisit.Contains(nbr))
                         queue.Add(nbr);
                 }
@@ -175,20 +173,20 @@ namespace NCDK.Depict
             evisit.Add(beg); // stop visits
             while (queue.Any())
             {
-                IAtom atom = queue.Poll();
+                var atom = queue.Poll();
                 evisit.Add(atom);
                 foreach (var w in adjlist[idx[atom]])
                 {
-                    IAtom nbr = mol.Atoms[w];
+                    var nbr = mol.Atoms[w];
                     if (!evisit.Contains(nbr))
                         queue.Add(nbr);
                 }
             }
             evisit.Remove(beg);
 
-            IChemObjectBuilder bldr = mol.Builder;
-            IAtomContainer bfrag = bldr.NewAtomContainer();
-            IAtomContainer efrag = bldr.NewAtomContainer();
+            var bldr = mol.Builder;
+            var bfrag = bldr.NewAtomContainer();
+            var efrag = bldr.NewAtomContainer();
 
             int diff = bvisit.Count - evisit.Count;
 
@@ -217,8 +215,8 @@ namespace NCDK.Depict
 
             foreach (var bond in mol.Bonds)
             {
-                IAtom a1 = bond.Begin;
-                IAtom a2 = bond.End;
+                var a1 = bond.Begin;
+                var a2 = bond.End;
                 if (bvisit.Contains(a1) && bvisit.Contains(a2))
                     bfrag.Bonds.Add(bond);
                 else if (evisit.Contains(a1) && evisit.Contains(a2))
@@ -303,71 +301,40 @@ namespace NCDK.Depict
                     }
                     else if (cansmi.Contains("."))
                     {
-                        var complexAbbr = new List<Sgroup>(4); // e.g. NEt3
-                        var simpleAbbr = new List<Sgroup>(4); // e.g. HCl
-                        foreach (IAtomContainer part in ConnectivityChecker.PartitionIntoMolecules(mol))
+                        var parts = ConnectivityChecker.PartitionIntoMolecules(mol);
+                        // partiton in two two parts
+                        Sgroup best = null;
+                        for (int i = 0; i < parts.Count; i++)
                         {
-                            if (part.Atoms.Count == 1)
-                            {
-                                var atom = part.Atoms[0];
-                                label = GetBasicElementSymbol(atom);
-                                if (label != null)
-                                {
-                                    var sgroup = new Sgroup
-                                    {
-                                        Type = SgroupType.CtabAbbreviation,
-                                        Subscript = label
-                                    };
-                                    sgroup.Atoms.Add(atom);
-                                    simpleAbbr.Add(sgroup);
-                                }
-                            }
-                            else
-                            {
-                                cansmi = usmigen.Create(part);
-                                label = disconnectedAbbreviations[cansmi];
-                                if (label != null && !disabled.Contains(label))
-                                {
-                                    foreach (IAtom atom in part.Atoms)
-                                        new Sgroup
-                                        {
-                                            Type = SgroupType.CtabAbbreviation,
-                                            Subscript = label
-                                        }.Atoms.Add(atom);
-                                    complexAbbr.Add(new Sgroup
-                                    {
-                                        Type = SgroupType.CtabAbbreviation,
-                                        Subscript = label
-                                    });
-                                }
-                            }
-                        }
-                        if (complexAbbr.Any())
-                        {
-                            // merge together the abbreviations, if there is at least
-                            // one complex abbr
-                            if (complexAbbr.Any() &&
-                                complexAbbr.Count + simpleAbbr.Count > 1)
+                            var a = parts[i];
+                            var b = a.Builder.NewAtomContainer();
+                            for (int j = 0; j < parts.Count; j++)
+                                if (j != i)
+                                    b.Add(parts[j]);
+                            var sgroup1 = GetAbbr(a);
+                            var sgroup2 = GetAbbr(b);
+                            if (sgroup1 != null && sgroup2 != null)
                             {
                                 var combined = new Sgroup();
                                 label = null;
-                                complexAbbr.AddRange(simpleAbbr);
-                                foreach (Sgroup sgroup in complexAbbr)
-                                {
-                                    if (label == null)
-                                        label = sgroup.Subscript;
-                                    else
-                                        label += String_Interpunct + sgroup.Subscript;
-                                    foreach (IAtom atom in sgroup.Atoms)
-                                        combined.Atoms.Add(atom);
-                                }
-                                combined.Subscript = label;
+                                foreach (var atom in sgroup1.Atoms)
+                                    combined.Atoms.Add(atom);
+                                foreach (var atom in sgroup2.Atoms)
+                                    combined.Atoms.Add(atom);
+                                if (sgroup1.Subscript.Length > sgroup2.Subscript.Length)
+                                    combined.Subscript = sgroup1.Subscript + String_Interpunct + sgroup2.Subscript;
+                                else
+                                    combined.Subscript = sgroup2.Subscript + String_Interpunct + sgroup1.Subscript;
                                 combined.Type = SgroupType.CtabAbbreviation;
-                                complexAbbr.Clear();
-                                complexAbbr.Add(combined);
+                                return new[] { combined };
                             }
-                            return complexAbbr;
+                            if (sgroup1 != null && (best == null || sgroup1.Atoms.Count > best.Atoms.Count))
+                                best = sgroup1;
+                            if (sgroup2 != null && (best == null || sgroup2.Atoms.Count > best.Atoms.Count))
+                                best = sgroup2;
                         }
+                        if (best != null)
+                            return new[] { best };
                     }
                 }
                 catch (CDKException)
@@ -390,8 +357,8 @@ namespace NCDK.Depict
                     bool overlap = false;
 
                     // note: first atom is '*'
-                    int numAtoms = frag.Atoms.Count;
-                    int numBonds = frag.Bonds.Count;
+                    var numAtoms = frag.Atoms.Count;
+                    var numBonds = frag.Bonds.Count;
                     for (int i = 1; i < numAtoms; i++)
                     {
                         if (usedAtoms.Contains(frag.Atoms[i]))
@@ -412,7 +379,7 @@ namespace NCDK.Depict
                         Subscript = label
                     };
 
-                    IBond attachBond = frag.Bonds[0].GetProperty<IBond>(PropertyName_CutBond);
+                    var attachBond = frag.Bonds[0].GetProperty<IBond>(PropertyName_CutBond);
                     IAtom attachAtom = null;
                     sgroup.Bonds.Add(attachBond);
                     for (int i = 1; i < numAtoms; i++)
@@ -437,19 +404,19 @@ namespace NCDK.Depict
             }
 
             // now collapse
-            foreach (IAtom attach in mol.Atoms)
+            foreach (var attach in mol.Atoms)
             {
                 if (usedAtoms.Contains(attach))
                     continue;
 
                 // skip charged or isotopic labelled, C or R/*, H, He
                 if ((attach.FormalCharge != null && attach.FormalCharge != 0)
-                    || attach.MassNumber != null
-                    || attach.AtomicNumber == 6
-                    || attach.AtomicNumber < 2)
+                 || attach.MassNumber != null
+                 || attach.AtomicNumber == 6
+                 || attach.AtomicNumber < 2)
                     continue;
 
-                int hcount = attach.ImplicitHydrogenCount.Value;
+                var hcount = attach.ImplicitHydrogenCount.Value;
                 var xatoms = new HashSet<IAtom>();
                 var xbonds = new HashSet<IBond>();
                 var newbonds = new HashSet<IBond>();
@@ -457,7 +424,7 @@ namespace NCDK.Depict
 
                 var nbrSymbols = new List<string>();
                 var todelete = new HashSet<Sgroup>();
-                foreach (Sgroup sgroup in sgroupAdjs[attach])
+                foreach (var sgroup in sgroupAdjs[attach])
                 {
                     if (ContainsChargeChar(sgroup.Subscript))
                         continue;
@@ -473,7 +440,7 @@ namespace NCDK.Depict
                 {
                     if (!xbonds.Contains(bond))
                     {
-                        IAtom nbr = bond.GetOther(attach);
+                        var nbr = bond.GetOther(attach);
                         // contract terminal bonds
                         if (mol.GetConnectedBonds(nbr).Count() == 1)
                         {
@@ -541,7 +508,7 @@ namespace NCDK.Depict
                     newSgroups.Remove(e);
 
                 // create new
-                Sgroup newSgroup = new Sgroup
+                var newSgroup = new Sgroup
                 {
                     Type = SgroupType.CtabAbbreviation,
                     Subscript = sb.ToString()
@@ -559,10 +526,47 @@ namespace NCDK.Depict
             return newSgroups;
         }
 
+        private Sgroup GetAbbr(IAtomContainer part)
+        {
+            string label;
+            string cansmi;
+            if (part.Atoms.Count == 1)
+            {
+                var atom = part.Atoms[0];
+                label = GetBasicElementSymbol(atom);
+                if (label != null)
+                {
+                    var sgroup = new Sgroup
+                    {
+                        Type = SgroupType.CtabAbbreviation,
+                        Subscript = label
+                    };
+                    sgroup.Atoms.Add(atom);
+                    return sgroup;
+                }
+            }
+            else
+            {
+                cansmi = usmigen.Create(part);
+                if (disconnectedAbbreviations.TryGetValue(cansmi, out label) && !disabled.Contains(label))
+                {
+                    var sgroup = new Sgroup
+                    {
+                        Type = SgroupType.CtabAbbreviation,
+                        Subscript = label
+                    };
+                    foreach (var atom in part.Atoms)
+                        sgroup.Atoms.Add(atom);
+                    return sgroup;
+                }
+            }
+            return null;
+        }
+
         /// <summary>
         /// Count number of upper case chars.
         /// </summary>
-        private static int CountUpper(String str)
+        private static int CountUpper(string str)
         {
             if (str == null)
                 return 0;
@@ -573,7 +577,7 @@ namespace NCDK.Depict
             return num;
         }
 
-        private static bool ContainsChargeChar(String str)
+        private static bool ContainsChargeChar(string str)
         {
             for (int i = 0; i < str.Length; i++)
             {
@@ -596,7 +600,7 @@ namespace NCDK.Depict
 
         private static string NewSymbol(int atomnum, int hcount, bool prefix)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             var elem = ChemicalElement.OfNumber(atomnum);
             if (elem == ChemicalElements.Carbon && hcount == 3)
                 return "Me";
@@ -679,7 +683,7 @@ namespace NCDK.Depict
         /// <returns>the query atom (null if attachment point)</returns>
         private static IQueryAtom MatchExact(IAtomContainer mol, IAtom atom)
         {
-            IChemObjectBuilder bldr = atom.Builder;
+            var bldr = atom.Builder;
 
             int elem = atom.AtomicNumber.Value;
 
@@ -687,9 +691,9 @@ namespace NCDK.Depict
             if (elem == 0)
                 return null;
 
-            int hcnt = atom.ImplicitHydrogenCount.Value;
-            int val = hcnt;
-            int con = hcnt;
+            var hcnt = atom.ImplicitHydrogenCount.Value;
+            var val = hcnt;
+            var con = hcnt;
 
             foreach (var bond in mol.GetConnectedBonds(atom))
             {
@@ -699,10 +703,11 @@ namespace NCDK.Depict
                     hcnt++;
             }
 
-            return And(And(new AtomicNumberAtom(elem, bldr),
-                           new TotalConnectionAtom(con, bldr)),
-                       And(new TotalHCountAtom(hcnt, bldr),
-                           new TotalValencyAtom(val, bldr)));
+            var expr = new Expr(ExprType.Element, elem)
+                           .And(new Expr(ExprType.TotalDegree, con))
+                           .And(new Expr(ExprType.TotalHCount, hcnt))
+                           .And(new Expr(ExprType.Valence, val));
+            return new QueryAtom(expr);
         }
 
         /// <summary>
@@ -715,13 +720,13 @@ namespace NCDK.Depict
         /// <seealso cref="QueryAtomContainerCreator"/>
         private static IQueryAtomContainer MatchExact(IAtomContainer mol)
         {
-            IChemObjectBuilder bldr = mol.Builder;
-            IQueryAtomContainer qry = new QueryAtomContainer(mol.Builder);
+            var bldr = mol.Builder;
+            var qry = new QueryAtomContainer(mol.Builder);
             var atmmap = new Dictionary<IAtom, IAtom>();
 
             foreach (var atom in mol.Atoms)
             {
-                IAtom qatom = MatchExact(mol, atom);
+                var qatom = MatchExact(mol, atom);
                 if (qatom != null)
                 {
                     atmmap[atom] = qatom;
@@ -731,16 +736,14 @@ namespace NCDK.Depict
 
             foreach (var bond in mol.Bonds)
             {
-                IAtom beg = atmmap[bond.Begin];
-                IAtom end = atmmap[bond.End];
+                var beg = atmmap[bond.Begin];
+                var end = atmmap[bond.End];
 
                 // attach bond skipped
                 if (beg == null || end == null)
                     continue;
 
-                IQueryBond qbond = new AnyOrderQueryBond(bldr);
-                qbond.Atoms[0] = beg;
-                qbond.Atoms[1] = end;
+                IQueryBond qbond = new QueryBond(beg, end, ExprType.True);
                 qry.Bonds.Add(qbond);
             }
 
@@ -833,7 +836,7 @@ namespace NCDK.Depict
 
         private static string GetSmilesSuffix(string line)
         {
-            int last = line.Length - 1;
+            var last = line.Length - 1;
             for (int i = 0; i < last; i++)
                 if (line[i] == ' ' || line[i] == '\t')
                     return line.Substring(i + 1).Trim();
@@ -852,7 +855,7 @@ namespace NCDK.Depict
             if (hcnt == null)
                 return null;
             var elem = ChemicalElement.OfNumber(atom.AtomicNumber.Value);
-            string hsym = (hcnt > 0) ? ((hcnt > 1) ? ("H" + hcnt) : "H") : "";
+            var hsym = (hcnt > 0) ? ((hcnt > 1) ? ("H" + hcnt) : "H") : "";
             // see HydrogenPosition for canonical list
             switch (elem.AtomicNumber)
             {

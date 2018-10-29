@@ -66,7 +66,7 @@ namespace NCDK.Modelings.Builder3D
             string cyclicMolSmi = "O(CC(O)CN1CCN(CC1)CC(=O)Nc1c(cccc1C)C)c1c(cccc1)OC";
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser smiparser = new SmilesParser(builder);
-            IAtomContainer molecule = smiparser.ParseSmiles(cyclicMolSmi);
+            var molecule = smiparser.ParseSmiles(cyclicMolSmi);
             ForceFieldConfigurator forcefconf = new ForceFieldConfigurator();
             forcefconf.SetForceFieldConfigurator("mmff94", builder);
             IRingSet rings = forcefconf.AssignAtomTyps(molecule);
@@ -88,7 +88,7 @@ namespace NCDK.Modelings.Builder3D
             string cyclicMolSmi = "CC(C)(C)NC(=O)C1CN(CCN1CC(CC(Cc1ccccc1)C(=O)NC1c2ccccc2CC1O)O)Cc1cccnc1";
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser smiparser = new SmilesParser(builder);
-            IAtomContainer molecule = smiparser.ParseSmiles(cyclicMolSmi);
+            var molecule = smiparser.ParseSmiles(cyclicMolSmi);
             ForceFieldConfigurator forcefconf = new ForceFieldConfigurator();
             forcefconf.SetForceFieldConfigurator("mmff94", builder);
             IRingSet rings = forcefconf.AssignAtomTyps(molecule);

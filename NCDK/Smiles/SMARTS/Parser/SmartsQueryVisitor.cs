@@ -46,6 +46,7 @@ namespace NCDK.Smiles.SMARTS.Parser
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS AST
+    [System.Obsolete]
     internal class SmartsQueryVisitor : ISMARTSParserVisitor
     {
         // current atoms with a ring identifier
@@ -253,12 +254,13 @@ namespace NCDK.Smiles.SMARTS.Parser
                 fullQuery = new QueryAtomContainer(builder);
 
             // keeps track of component grouping
-            int[] components = fullQuery.GetProperty<int[]>(ComponentGrouping.Key, Array.Empty<int>());
+            var components = fullQuery.GetProperty<int[]>("COMPONENT.GROUPING", Array.Empty<int>());
             int maxId = 0;
             if (components.Length > 0)
             {
                 foreach (int id in components)
-                    if (id > maxId) maxId = id;
+                    if (id > maxId)
+                        maxId = id;
             }
 
             for (int i = 0; i < node.JjtGetNumChildren(); i++)
@@ -275,7 +277,8 @@ namespace NCDK.Smiles.SMARTS.Parser
                     components = Arrays.CopyOf(components, 1 + fullQuery.Atoms.Count + query.Atoms.Count);
                     int id = smarts.ComponentId;
                     Arrays.Fill(components, fullQuery.Atoms.Count, components.Length, id);
-                    if (id > maxId) maxId = id;
+                    if (id > maxId)
+                        maxId = id;
                 }
 
                 fullQuery.Add(query);
@@ -285,7 +288,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             if (maxId > 0)
             {
                 components[components.Length - 1] = maxId; // we left space to store how many groups there were
-                fullQuery.SetProperty(ComponentGrouping.Key, components);
+                fullQuery.SetProperty("COMPONENT.GROUPING", components);
             }
 
             // create tetrahedral elements

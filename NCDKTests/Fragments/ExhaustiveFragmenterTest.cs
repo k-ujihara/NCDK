@@ -44,7 +44,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestEF1()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("CCC");
+            var mol = smilesParser.ParseSmiles("CCC");
             fragmenter.GenerateFragments(mol);
             var frags = fragmenter.GetFragments();
             Assert.AreEqual(0, frags.Count());
@@ -53,7 +53,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestEF2()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("C1CCCC1");
+            var mol = smilesParser.ParseSmiles("C1CCCC1");
             fragmenter.GenerateFragments(mol);
             var frags = fragmenter.GetFragments();
             Assert.AreEqual(0, frags.Count());
@@ -62,7 +62,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestEF3()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("C1CCCCC1CC");
+            var mol = smilesParser.ParseSmiles("C1CCCCC1CC");
             fragmenter.GenerateFragments(mol);
             var frags = fragmenter.GetFragments();
             Assert.IsTrue(Compares.AreDeepEqual(new string[] { "C1CCCCC1" }, frags));
@@ -71,7 +71,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestEF4()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("c1ccccc1CC");
+            var mol = smilesParser.ParseSmiles("c1ccccc1CC");
             fragmenter.GenerateFragments(mol);
             var frags = fragmenter.GetFragments();
             Assert.IsNotNull(frags);
@@ -81,7 +81,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestEF5()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("c1ccccc1Cc1ccccc1");
+            var mol = smilesParser.ParseSmiles("c1ccccc1Cc1ccccc1");
             fragmenter.GenerateFragments(mol);
             var frags = fragmenter.GetFragments();
             Assert.IsNotNull(frags);
@@ -94,7 +94,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestEF6()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("c1ccccc1c1ccccc1");
+            var mol = smilesParser.ParseSmiles("c1ccccc1c1ccccc1");
             fragmenter.GenerateFragments(mol);
             var frags = fragmenter.GetFragments();
             Assert.IsNotNull(frags);
@@ -107,7 +107,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestEF7()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1");
+            var mol = smilesParser.ParseSmiles("C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1");
             fragmenter.GenerateFragments(mol);
             var frags = fragmenter.GetFragments().ToList();
             Assert.IsNotNull(frags);
@@ -125,7 +125,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestMinSize()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("C1CCCC1C2CCCCC2");
+            var mol = smilesParser.ParseSmiles("C1CCCC1C2CCCCC2");
             fragmenter.MinimumFragmentSize = 6;
             fragmenter.GenerateFragments(mol);
             var frags = fragmenter.GetFragments();

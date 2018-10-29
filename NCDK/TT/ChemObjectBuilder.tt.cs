@@ -30,6 +30,7 @@ using NCDK.Numerics;
 using NCDK.Stereo;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace NCDK.Default
 {
@@ -80,6 +81,9 @@ namespace NCDK.Default
                         throw new InvalidOperationException("Invalid value, expected true/false: " + val);
                 }
             }
+
+			if (LegacyAtomContainer)
+				Trace.TraceError("[WARN] Using the old AtomContainer implementation.");
         }
 
         internal ChemObjectBuilder(bool legacyAtomContainer)
@@ -250,6 +254,9 @@ namespace NCDK.Silent
                         throw new InvalidOperationException("Invalid value, expected true/false: " + val);
                 }
             }
+
+			if (LegacyAtomContainer)
+				Trace.TraceError("[WARN] Using the old AtomContainer implementation.");
         }
 
         internal ChemObjectBuilder(bool legacyAtomContainer)

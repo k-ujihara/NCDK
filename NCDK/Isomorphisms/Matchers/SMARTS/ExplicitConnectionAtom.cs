@@ -18,6 +18,8 @@
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
 
+using System;
+
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
@@ -27,10 +29,11 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     // @cdk.module smarts
     // @cdk.keyword SMARTS
     // @cdk.githash
+    [Obsolete]
     public sealed class ExplicitConnectionAtom : SMARTSAtom
     {
         /// <summary>Number of explicit connections.</summary>
-        private int degree;
+        private readonly int degree;
 
         /// <summary>
         /// Create a query atom for matching the degree of an atom. The degree is the

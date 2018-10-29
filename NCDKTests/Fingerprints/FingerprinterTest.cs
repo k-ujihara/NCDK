@@ -144,7 +144,7 @@ namespace NCDK.Fingerprints
         {
             string filename1 = "NCDK.Data.MDL.0002.stg01.rxn";
             Trace.TraceInformation("Testing: " + filename1);
-            Stream ins1 = ResourceLoader.GetAsStream(filename1);
+            var ins1 = ResourceLoader.GetAsStream(filename1);
             MDLRXNV2000Reader reader = new MDLRXNV2000Reader(ins1, ChemObjectReaderMode.Strict);
             IReaction reaction = (IReaction)reader.Read(new Reaction());
             Assert.IsNotNull(reaction);
@@ -164,7 +164,7 @@ namespace NCDK.Fingerprints
         {
             string filename1 = "NCDK.Data.MDL.boronBuckyBall.mol";
             Trace.TraceInformation("Testing: " + filename1);
-            Stream ins1 = ResourceLoader.GetAsStream(filename1);
+            var ins1 = ResourceLoader.GetAsStream(filename1);
             MDLV2000Reader reader = new MDLV2000Reader(ins1, ChemObjectReaderMode.Strict);
             IChemFile chemFile = reader.Read(new ChemFile());
             Assert.IsNotNull(chemFile);
@@ -359,8 +359,8 @@ namespace NCDK.Fingerprints
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             string query = "*1CCCC1";
             string indole = "N1CCCC1";
-            IAtomContainer queryMol = smipar.ParseSmiles(query);
-            IAtomContainer indoleMol = smipar.ParseSmiles(indole);
+            var queryMol = smipar.ParseSmiles(query);
+            var indoleMol = smipar.ParseSmiles(indole);
             Fingerprinter fpr = new Fingerprinter();
             BitArray fp1 = fpr.GetFingerprint(queryMol);
             BitArray fp2 = fpr.GetFingerprint(indoleMol);
@@ -379,8 +379,8 @@ namespace NCDK.Fingerprints
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             string query = "*1cccc1";
             string indole = "o1cccc1";
-            IAtomContainer queryMol = smipar.ParseSmiles(query);
-            IAtomContainer indoleMol = smipar.ParseSmiles(indole);
+            var queryMol = smipar.ParseSmiles(query);
+            var indoleMol = smipar.ParseSmiles(indole);
             Fingerprinter fpr = new Fingerprinter();
             BitArray fp1 = fpr.GetFingerprint(queryMol);
             BitArray fp2 = fpr.GetFingerprint(indoleMol);

@@ -42,8 +42,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestRotatableBondsCount()
         {
             Descriptor.Parameters = new object[] { true, false };
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("CC2CCC(C1CCCCC1)CC2"); // molecule with 2 bridged cicloexane and 1 methyl
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("CC2CCC(C1CCCCC1)CC2"); // molecule with 2 bridged cicloexane and 1 methyl
             Assert.AreEqual(2, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
 
@@ -170,8 +170,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestAmideIncluded()
         {
             string amide = "CCNC(=O)CC(C)C"; // N-ethyl-3-methylbutanamide
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles(amide);
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles(amide);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
             IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
@@ -184,8 +184,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestAmideExcluded()
         {
             string amide = "CCNC(=O)CC(C)C"; // N-ethyl-3-methylbutanamide
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles(amide);
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles(amide);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
             IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();

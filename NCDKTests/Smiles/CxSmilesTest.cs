@@ -85,7 +85,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void NonCXSMILESLayer()
         {
-            IAtomContainer mol = smipar.ParseSmiles("c1ccccc1 |<benzene>|");
+            var mol = smipar.ParseSmiles("c1ccccc1 |<benzene>|");
             Assert.IsNotNull(mol);
             Assert.AreEqual("|<benzene>|", (string)mol.Title);
         }
@@ -93,7 +93,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TruncatedCXSMILES()
         {
-            IAtomContainer mol = smipar.ParseSmiles("c1ccccc1 |");
+            var mol = smipar.ParseSmiles("c1ccccc1 |");
             Assert.IsNotNull(mol);
             Assert.AreEqual("|", (string)mol.Title);
         }
@@ -101,7 +101,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void CorrectTitle()
         {
-            IAtomContainer mol = smipar.ParseSmiles("c1ccccc1 |c:1,3,4| benzene");
+            var mol = smipar.ParseSmiles("c1ccccc1 |c:1,3,4| benzene");
             Assert.IsNotNull(mol);
             Assert.AreEqual("benzene", (string)mol.Title);
         }
@@ -109,7 +109,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void AtomLabels()
         {
-            IAtomContainer mol = smipar.ParseSmiles("**.c1ccccc1CC |$R'$|");
+            var mol = smipar.ParseSmiles("**.c1ccccc1CC |$R'$|");
             Assert.IsInstanceOfType(mol.Atoms[0], typeof(IPseudoAtom));
             Assert.AreEqual("R'", ((IPseudoAtom)mol.Atoms[0]).Label);
         }
@@ -117,7 +117,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void AttachPoints()
         {
-            IAtomContainer mol = smipar.ParseSmiles("**.c1ccccc1CC |$;;;;;;;;;_AP1$|");
+            var mol = smipar.ParseSmiles("**.c1ccccc1CC |$;;;;;;;;;_AP1$|");
             Assert.IsInstanceOfType(mol.Atoms[9], typeof(IPseudoAtom));
             Assert.AreEqual(1, ((IPseudoAtom)mol.Atoms[9]).AttachPointNum);
         }
@@ -165,7 +165,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void AtomCoordinates2D()
         {
-            IAtomContainer mol = smipar.ParseSmiles("CCC |(0,1,;0,2,;0,3,)|");
+            var mol = smipar.ParseSmiles("CCC |(0,1,;0,2,;0,3,)|");
             Assert.AreEqual(new Vector2(0, 1), mol.Atoms[0].Point2D);
             Assert.AreEqual(new Vector2(0, 2), mol.Atoms[1].Point2D);
             Assert.AreEqual(new Vector2(0, 3), mol.Atoms[2].Point2D);
@@ -174,7 +174,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void AtomCoordinates3D()
         {
-            IAtomContainer mol = smipar.ParseSmiles("CCC |(0,1,1;0,2,1;0,3,1)|");
+            var mol = smipar.ParseSmiles("CCC |(0,1,1;0,2,1;0,3,1)|");
             Assert.AreEqual(new Vector3(0, 1, 1), mol.Atoms[0].Point3D);
             Assert.AreEqual(new Vector3(0, 2, 1), mol.Atoms[1].Point3D);
             Assert.AreEqual(new Vector3(0, 3, 1), mol.Atoms[2].Point3D);
@@ -183,7 +183,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void AtomValues()
         {
-            IAtomContainer mol = smipar.ParseSmiles("N1CN=CC1 |$_AV:HydDonor;;HydAcceptor$|");
+            var mol = smipar.ParseSmiles("N1CN=CC1 |$_AV:HydDonor;;HydAcceptor$|");
             Assert.AreEqual("HydDonor", (string)mol.Atoms[0].GetProperty<string>(CDKPropertyName.Comment));
             Assert.AreEqual("HydAcceptor", (string)mol.Atoms[2].GetProperty<string>(CDKPropertyName.Comment));
         }
@@ -191,14 +191,14 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void MonovalentRadical()
         {
-            IAtomContainer mol = smipar.ParseSmiles("[N]1C=CC=C1 |c:1,3,^1:0|");
+            var mol = smipar.ParseSmiles("[N]1C=CC=C1 |c:1,3,^1:0|");
             Assert.AreEqual(1, mol.GetConnectedSingleElectrons(mol.Atoms[0]).Count());
         }
 
         [TestMethod()]
         public void DivalentRadical()
         {
-            IAtomContainer mol = smipar.ParseSmiles("[C]1C2=CC=CC=C2C2=CC=CC=C12 |c:3,5,10,t:1,8,12,^3:0|");
+            var mol = smipar.ParseSmiles("[C]1C2=CC=CC=C2C2=CC=CC=C12 |c:3,5,10,t:1,8,12,^3:0|");
             Assert.AreEqual(2, mol.GetConnectedSingleElectrons(mol.Atoms[0]).Count());
         }
 
@@ -264,7 +264,7 @@ namespace NCDK.Smiles
         {
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
-            IAtomContainer mol = smipar.ParseSmiles("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|");
+            var mol = smipar.ParseSmiles("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|");
             SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.UseAromaticSymbols |
                                                          SmiFlavors.CxMulticenter);
             string smi = smigen.Create(mol);
@@ -276,7 +276,7 @@ namespace NCDK.Smiles
         {
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
-            IAtomContainer mol = smipar.ParseSmiles("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|");
+            var mol = smipar.ParseSmiles("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|");
             SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.UseAromaticSymbols |
                                                          SmiFlavors.CxMulticenter |
                                                          SmiFlavors.Canonical);
@@ -290,7 +290,7 @@ namespace NCDK.Smiles
         {
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
-            IAtomContainer mol = smipar.ParseSmiles("CCCOCCO |Sg:n:1,2,3::ht|");
+            var mol = smipar.ParseSmiles("CCCOCCO |Sg:n:1,2,3::ht|");
             SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.CxPolymer);
             string smi = smigen.Create(mol);
             Assert.AreEqual("CCCOCCO |Sg:n:1,2,3:n:ht|", smi);
@@ -301,7 +301,7 @@ namespace NCDK.Smiles
         {
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
-            IAtomContainer mol = smipar.ParseSmiles("CCCOCCO |Sg:n:1,2,3::ht|");
+            var mol = smipar.ParseSmiles("CCCOCCO |Sg:n:1,2,3::ht|");
             SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Canonical |
                                                          SmiFlavors.CxPolymer);
             string smi = smigen.Create(mol);
@@ -313,7 +313,7 @@ namespace NCDK.Smiles
         {
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
-            IAtomContainer mol = smipar.ParseSmiles("CCO |(,,;1,1,;2,2,)|");
+            var mol = smipar.ParseSmiles("CCO |(,,;1,1,;2,2,)|");
             SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.CxCoordinates);
             string smi = smigen.Create(mol);
             Assert.AreEqual("CCO |(,,;1,1,;2,2,)|", smi);
@@ -324,7 +324,7 @@ namespace NCDK.Smiles
         {
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
-            IAtomContainer mol = smipar.ParseSmiles("CCO |(,,;1,1,;2,2,)|");
+            var mol = smipar.ParseSmiles("CCO |(,,;1,1,;2,2,)|");
             SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Canonical |
                                                          SmiFlavors.CxCoordinates);
             string smi = smigen.Create(mol);
@@ -336,7 +336,7 @@ namespace NCDK.Smiles
         {
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
-            IAtomContainer mol = smipar.ParseSmiles("CCO |(,,;1,1,;2,2,)|");
+            var mol = smipar.ParseSmiles("CCO |(,,;1,1,;2,2,)|");
             SmilesGenerator smigen = new SmilesGenerator(0);
             string smi = smigen.Create(mol);
             Assert.AreEqual("CCO", smi);
@@ -347,7 +347,7 @@ namespace NCDK.Smiles
         {
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
-            IAtomContainer mol = smipar.ParseSmiles("CCO");
+            var mol = smipar.ParseSmiles("CCO");
             SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.CxCoordinates);
             string smi = smigen.Create(mol);
             Assert.AreEqual("CCO", smi);
@@ -358,7 +358,7 @@ namespace NCDK.Smiles
         {
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
-            IAtomContainer mol = smipar.ParseSmiles("[C]1C[CH][CH]OC1 |^1:2,3,^2:0|");
+            var mol = smipar.ParseSmiles("[C]1C[CH][CH]OC1 |^1:2,3,^2:0|");
             SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.CxRadical);
             string smi = smigen.Create(mol);
             Assert.AreEqual("[C]1C[CH][CH]OC1 |^1:2,3,^2:0|", smi);
@@ -369,7 +369,7 @@ namespace NCDK.Smiles
         {
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
-            IAtomContainer mol = smipar.ParseSmiles("[C]1C[CH][CH]OC1 |^1:2,3,^2:0|");
+            var mol = smipar.ParseSmiles("[C]1C[CH][CH]OC1 |^1:2,3,^2:0|");
             SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.CxRadical |
                                                          SmiFlavors.Canonical);
             string smi = smigen.Create(mol);
@@ -405,7 +405,7 @@ namespace NCDK.Smiles
         {
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
-            IAtomContainer mol = smipar.ParseSmiles("c1ccccc1O |$_AV:0;1;2;3;4;5;6$|");
+            var mol = smipar.ParseSmiles("c1ccccc1O |$_AV:0;1;2;3;4;5;6$|");
             SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Canonical | SmiFlavors.CxAtomValue);
             Assert.AreEqual("OC=1C=CC=CC1 |$_AV:6;5;0;1;2;3;4$|", smigen.Create(mol));
         }

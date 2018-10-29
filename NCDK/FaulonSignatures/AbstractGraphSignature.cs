@@ -172,10 +172,10 @@ namespace NCDK.FaulonSignatures
                     sigmap[signatureString] = 1;
                 }
             }
-            List<string> keyList = new List<string>();
+            var keyList = new List<string>();
             keyList.AddRange(sigmap.Keys);
             keyList.Sort(StringComparer.Ordinal);
-            StringBuilder buffer = new StringBuilder();
+            var buffer = new StringBuilder();
             for (int i = 0; i < keyList.Count - 1; i++)
             {
                 string signature = keyList[i];
@@ -226,7 +226,7 @@ namespace NCDK.FaulonSignatures
         /// <returns>a list of canonical signature strings</returns>
         public List<string> GetVertexSignatureStrings()
         {
-            List<string> vertexSignatures = new List<string>();
+            var vertexSignatures = new List<string>();
             for (int i = 0; i < this.GetVertexCount(); i++)
             {
                 vertexSignatures.Add(this.SignatureStringForVertex(i));

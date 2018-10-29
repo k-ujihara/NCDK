@@ -24,8 +24,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// This smarts atom matches aliphatic atom with element symbol specified.
     /// </summary>
     // @cdk.module  smarts
-    // @cdk.githash
     // @cdk.keyword SMARTS
+    [Obsolete]
     public class AliphaticSymbolAtom : SMARTSAtom
     {
         /// <summary>

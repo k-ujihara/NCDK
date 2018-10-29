@@ -127,36 +127,6 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         [TestMethod()]
-        public void RecursiveGeometric_trans()
-        {
-            AssertMatch("[$(*/C=C/*)]", "C/C=C/C", 2, 2);
-            AssertMatch("[$(*/C=C/*)]", "F/C=C/Cl", 2, 2);
-            AssertMatch("[$(*/C=C/*)]", "CC=CC", 0, 0);
-            AssertMatch("[$(*/C=C/*)]", "FC=CCl", 0, 0);
-            AssertMatch("[$(*/C=C/*)]", "C/C=C\\C", 0, 0);
-            AssertMatch("[$(*/C=C/*)]", "F/C=C\\Cl", 0, 0);
-        }
-
-        [TestMethod()]
-        public void RecursiveGeometric_cis()
-        {
-            AssertMatch("[$(C(/*)=C/*)]", "C/C=C/C", 0, 0);
-            AssertMatch("[$(C(/*)=C/*)]", "F/C=C/Cl", 0, 0);
-            AssertMatch("[$(C(/*)=C/*)]", "CC=CC", 0, 0);
-            AssertMatch("[$(C(/*)=C/*)]", "FC=CCl", 0, 0);
-            AssertMatch("[$(C(/*)=C/*)]", "C/C=C\\C", 2, 2);
-            AssertMatch("[$(C(/*)=C/*)]", "F/C=C\\Cl", 2, 2);
-        }
-
-        [TestMethod()]
-        public void RecursiveTetrahedral()
-        {
-            AssertMatch("[$([C@](C)(CC)(N)O)]", "C[C@@](N)(CC)O", 1, 1);
-            AssertMatch("[$([C@](C)(CC)(N)O)]", "C[C@](N)(CC)O", 0, 0);
-            AssertMatch("[$([C@](C)(CC)(N)O)]", "CC(N)(CC)O", 0, 0);
-        }
-
-        [TestMethod()]
         public void TetrahedralImplicitH()
         {
             AssertMatch("[C@H](C)(N)O", "[C@@H](N)(C)O", 1, 1);
@@ -194,6 +164,6 @@ namespace NCDK.Smiles.SMARTS.Parser
             return new SMARTSQueryTool(smarts, ChemObjectBuilder.Instance);
         }
 
-        private static readonly SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+        private static readonly SmilesParser sp = CDK.SilentSmilesParser;
     }
 }

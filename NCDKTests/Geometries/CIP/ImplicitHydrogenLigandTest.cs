@@ -34,7 +34,7 @@ namespace NCDK.Geometries.CIP
         public void TestConstructorAndGetMethods()
         {
             SmilesParser smiles = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer molecule = smiles.ParseSmiles("ClC(Br)(I)");
+            var molecule = smiles.ParseSmiles("ClC(Br)(I)");
 
             ILigand ligand = new ImplicitHydrogenLigand(molecule, new VisitedAtoms(), molecule.Atoms[1]);
             Assert.IsNotNull(ligand);

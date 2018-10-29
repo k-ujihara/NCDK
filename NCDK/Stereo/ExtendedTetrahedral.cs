@@ -92,12 +92,12 @@ namespace NCDK.Stereo
         {
         }
 
-        ExtendedTetrahedral(IAtom focus, IEnumerable<IAtom> peripherals, StereoConfigurations configure)
+        public ExtendedTetrahedral(IAtom focus, IEnumerable<IAtom> peripherals, StereoConfigurations configure)
             : base(focus, peripherals.ToList(), new StereoElement(StereoClass.Allenal, configure))
         {
         }
 
-        ExtendedTetrahedral(IAtom focus, IEnumerable<IAtom> peripherals, StereoElement stereo)
+        public ExtendedTetrahedral(IAtom focus, IEnumerable<IAtom> peripherals, StereoElement stereo)
             : this(focus, peripherals, stereo.Configuration)
         {
         }
@@ -115,6 +115,24 @@ namespace NCDK.Stereo
         /// <returns>winding configuration</returns>
         public TetrahedralStereo Winding => Configure.ToStereo();
 
+        private static IAtom GetOtherNbr(IAtomContainer mol, IAtom atom, IAtom other)
+        {
+            IAtom res = null;
+            foreach (var bond in mol.GetConnectedBonds(atom))
+            {
+                if (bond.Order != BondOrder.Double)
+                    continue;
+                var nbr = bond.GetOther(atom);
+                if (!nbr.Equals(other))
+                {
+                    if (res != null)
+                        return null;
+                    res = nbr;
+                }
+            }
+            return res;
+        }
+
         /// <summary>
         /// Helper method to locate two terminal atoms in a container for a given
         /// focus.
@@ -126,12 +144,25 @@ namespace NCDK.Stereo
         {
             var focusBonds = container.GetConnectedBonds(focus);
 
-            if (focusBonds.Count() != 2) throw new ArgumentException("focus must have exactly 2 neighbors");
+            if (focusBonds.Count() != 2)
+                throw new ArgumentException("focus must have exactly 2 neighbors");
 
-            IAtom left = focusBonds.ElementAt(0).GetOther(focus);
-            IAtom right = focusBonds.ElementAt(1).GetOther(focus);
+            var leftPrev = focus;
+            var rightPrev = focus;
+            var left = focusBonds.ElementAt(0).GetOther(focus);
+            var right = focusBonds.ElementAt(1).GetOther(focus);
 
-            return new IAtom[] { left, right };
+            IAtom tmp;
+            while (left != null && right != null)
+            {
+                tmp = GetOtherNbr(container, left, leftPrev);
+                leftPrev = left;
+                left = tmp;
+                tmp = GetOtherNbr(container, right, rightPrev);
+                rightPrev = right;
+                right = tmp;
+            }
+            return new IAtom[] { leftPrev, rightPrev };
         }
 
         /// <summary>
@@ -144,25 +175,16 @@ namespace NCDK.Stereo
         /// <returns>the terminal atoms (ordered)</returns>
         public IAtom[] FindTerminalAtoms(IAtomContainer container)
         {
-            var focusBonds = container.GetConnectedBonds(Focus).ToList();
-
-            if (focusBonds.Count != 2)
-                throw new ArgumentException("focus must have exactly 2 neighbors");
-
-            var left = focusBonds[0].GetOther(Focus);
-            var right = focusBonds[1].GetOther(Focus);
-
-            var leftAtoms = container.GetConnectedAtoms(left);
+            var atoms = FindTerminalAtoms(container, Focus);
             var carriers = Carriers;
-
-            if (leftAtoms.Contains(carriers[2]) || leftAtoms.Contains(carriers[3]))
+            if (container.GetBond(atoms[0], carriers[2]) != null
+             || container.GetBond(atoms[0], carriers[3]) != null)
             {
-                return new IAtom[] { right, left };
+                var tmp = atoms[0];
+                atoms[0] = atoms[1];
+                atoms[1] = tmp;
             }
-            else
-            {
-                return new IAtom[] { left, right };
-            }
+            return atoms;
         }
 
         protected override IStereoElement<IAtom, IAtom> Create(IAtom focus, IReadOnlyList<IAtom> carriers, StereoElement stereo)

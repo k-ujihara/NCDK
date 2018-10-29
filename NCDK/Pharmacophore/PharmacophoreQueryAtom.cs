@@ -19,7 +19,7 @@
 
 using NCDK.Common.Primitives;
 using NCDK.Isomorphisms.Matchers;
-using NCDK.Smiles.SMARTS.Parser;
+using NCDK.Smiles.SMARTS;
 using System;
 using System.Text;
 
@@ -37,7 +37,6 @@ namespace NCDK.Pharmacophore
     /// <seealso cref="PharmacophoreMatcher"/>
     // @author Rajarshi Guha
     // @cdk.module pcore
-    // @cdk.githash
     // @cdk.keyword pharmacophore
     // @cdk.keyword 3D isomorphism
     public class PharmacophoreQueryAtom : Silent.Atom, IQueryAtom
@@ -49,15 +48,15 @@ namespace NCDK.Pharmacophore
         /// <param name="smarts">The SMARTS pattern to be used for matching</param>
         public PharmacophoreQueryAtom(string symbol, string smarts)
         {
-            Symbol = symbol;
-            Smarts = smarts;
+            this.Symbol = symbol;
+            this.Smarts = smarts;
             // Note that we allow a special form of SMARTS where the | operator
             // represents logical or of multi-atom groups (as opposed to ','
             // which is for single atom matches)
             var subSmarts = Strings.Tokenize(smarts, '|');
-            CompiledSmarts = new IQueryAtomContainer[subSmarts.Count];
+            CompiledSmarts = new SmartsPattern[subSmarts.Count];
             for (int i = 0; i < CompiledSmarts.Length; i++)
-                CompiledSmarts[i] = SMARTSParser.Parse(subSmarts[i], null);
+                CompiledSmarts[i] = SmartsPattern.Create(subSmarts[i]).SetPrepare(false);
         }
 
         /// <summary>
@@ -65,10 +64,13 @@ namespace NCDK.Pharmacophore
         /// </summary>
         public string Smarts { get; private set; }
 
+        /// <inheritdoc/>
+        public override string Symbol { get; set; }
+
         /// <summary>
         /// Accessed the compiled SMARTS for this pcore query atom.  
         /// </summary>
-        internal IQueryAtomContainer[] CompiledSmarts { get; private set; }
+        internal SmartsPattern[] CompiledSmarts { get; private set; }
 
         /// <summary>
         /// Checks whether this query atom matches a target atom.
@@ -93,7 +95,7 @@ namespace NCDK.Pharmacophore
         /// <returns>string representation of this pharmacophore group</returns>
         public override string ToString()
         {
-            StringBuilder s = new StringBuilder();
+            var s = new StringBuilder();
             s.Append(Symbol).Append(" [").Append(Smarts).Append(']');
             return s.ToString();
         }

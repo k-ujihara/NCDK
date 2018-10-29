@@ -26,6 +26,7 @@ using NCDK.Beam;
 using NCDK.Common.Collections;
 using NCDK.Stereo;
 using System;
+using System.Collections.Generic;
 using static NCDK.Beam.Configuration.ConfigurationType;
 
 namespace NCDK.Smiles
@@ -36,7 +37,7 @@ namespace NCDK.Smiles
     /// <see cref="IMolecularEntity.IsAromatic"/> flag set.
     /// </summary>
     /// <example><code>
-    /// IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+    /// var builder = Silent.ChemObjectBuilder.Instance;
     /// ChemicalGraph g = ChemicalGraph.FromSmiles("CCO");
     ///
     /// BeamToCDK g2c = new BeamToCDK(builder);
@@ -232,6 +233,21 @@ namespace NCDK.Smiles
             return ac;
         }
 
+        private static Edge FindCumulatedEdge(Graph g, int v, Edge e)
+        {
+            Edge res = null;
+            foreach (var f in g.GetEdges(v))
+            {
+                if (f != e && f.Bond == Bond.Double)
+                {
+                    if (res != null)
+                        return null;
+                    res = f;
+                }
+            }
+            return res;
+        }
+
         /// <summary>
         /// Adds double-bond conformations (<see cref="DoubleBondStereochemistry"/>) to the
         /// atom-container.
@@ -254,25 +270,57 @@ namespace NCDK.Smiles
 
                 // if either atom is not incident to a directional label there
                 // is no configuration
-                if ((first = FindDirectionalEdge(g, u)) != null && (second = FindDirectionalEdge(g, v)) != null)
+                if ((first = FindDirectionalEdge(g, u)) != null)
                 {
-                    // if the directions (relative to the double bond) are the
-                    // same then they are on the same side - otherwise they
-                    // are opposite
-                    var conformation = first.GetBond(u) == second.GetBond(v) ? DoubleBondConformation.Together : DoubleBondConformation.Opposite;
-
-                    // get the stereo bond and build up the ligands for the
-                    // stereo-element - linear search could be improved with
-                    // map or API change to double bond element
-                    var db = ac.GetBond(ac.Atoms[u], ac.Atoms[v]);
-
-                    var ligands = new IBond[]
+                    if ((second = FindDirectionalEdge(g, v)) != null)
                     {
-                        ac.GetBond(ac.Atoms[u], ac.Atoms[first.Other(u)]),
-                        ac.GetBond(ac.Atoms[v], ac.Atoms[second.Other(v)])
-                    };
-
-                    ac.StereoElements.Add(new DoubleBondStereochemistry(db, ligands, conformation));
+                        // if the directions (relative to the double bond) are the
+                        // same then they are on the same side - otherwise they
+                        // are opposite
+                        DoubleBondConformation conformation = first.GetBond(u) == second.GetBond(v) ?
+                            DoubleBondConformation.Together : DoubleBondConformation.Opposite;
+                        // get the stereo bond and build up the ligands for the
+                        // stereo-element - linear search could be improved with
+                        // map or API change to double bond element
+                        IBond db = ac.GetBond(ac.Atoms[u], ac.Atoms[v]);
+                        IBond[] ligands = new IBond[]
+                        {
+                            ac.GetBond(ac.Atoms[u], ac.Atoms[first.Other(u)]),
+                            ac.GetBond(ac.Atoms[v], ac.Atoms[second.Other(v)])
+                        };
+                        ac.StereoElements.Add(new DoubleBondStereochemistry(db, ligands, conformation));
+                    }
+                    else if (g.Degree(v) == 2)
+                    {
+                        var edges = new List<Edge> { e };
+                        Edge f = FindCumulatedEdge(g, v, e);
+                        while (f != null)
+                        {
+                            edges.Add(f);
+                            v = f.Other(v);
+                            f = FindCumulatedEdge(g, v, f);
+                        }
+                        // only odd number of cumulated bonds here, otherwise is
+                        // extended tetrahedral
+                        if ((edges.Count & 0x1) == 0)
+                            continue;
+                        second = FindDirectionalEdge(g, v);
+                        if (second != null)
+                        {
+                            var cfg = first.GetBond(u) == second.GetBond(v)
+                                               ? StereoConfigurations.Together
+                                               : StereoConfigurations.Opposite;
+                            Edge middleEdge = edges[edges.Count / 2];
+                            IBond middleBond = ac.GetBond(ac.Atoms[middleEdge.Either()],
+                                                          ac.Atoms[middleEdge.Other(middleEdge.Either())]);
+                            IBond[] ligands = new IBond[]
+                            {
+                                ac.GetBond(ac.Atoms[u], ac.Atoms[first.Other(u)]),
+                                ac.GetBond(ac.Atoms[v], ac.Atoms[second.Other(v)])
+                            };
+                            ac.StereoElements.Add(new ExtendedCisTrans(middleBond, ligands, cfg));
+                        }
+                    }
                 }
                 // extension F[C@]=[C@@]F
                 else
@@ -468,9 +516,43 @@ namespace NCDK.Smiles
                                   order);
         }
 
+        private static int GetOtherDb(Graph g, int u, int v)
+        {
+            foreach (var e in g.GetEdges(u))
+            {
+                if (e.Bond != Bond.Double)
+                    continue;
+                int nbr = e.Other(u);
+                if (nbr == v)
+                    continue;
+                return nbr;
+            }
+            return -1;
+        }
+
+        private static int[] FindExtendedTetrahedralEnds(Graph g, int focus)
+        {
+            var es = g.GetEdges(focus);
+            int prevEnd1 = focus;
+            int prevEnd2 = focus;
+            int end1 = es[0].Other(prevEnd2);
+            int end2 = es[1].Other(prevEnd2);
+            int tmp;
+            while (end1 >= 0 && end2 >= 0)
+            {
+                tmp = GetOtherDb(g, end1, prevEnd1);
+                prevEnd1 = end1;
+                end1 = tmp;
+                tmp = GetOtherDb(g, end2, prevEnd2);
+                prevEnd2 = end2;
+                end2 = tmp;
+            }
+            return new int[] { prevEnd1, prevEnd2 };
+        }
+
         private static IStereoElement<IChemObject, IChemObject> NewExtendedTetrahedral(int u, Graph g, IAtom[] atoms)
         {
-            int[] terminals = g.Neighbors(u);
+            int[] terminals = FindExtendedTetrahedralEnds(g, u);
             int[] xs = new int[] { -1, terminals[0], -1, terminals[1] };
 
             int n = 0;

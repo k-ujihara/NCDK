@@ -26,6 +26,7 @@ using NCDK.Common.Collections;
 using NCDK.Graphs;
 using NCDK.Numerics;
 using NCDK.RingSearches;
+using NCDK.Stereo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -112,7 +113,8 @@ namespace NCDK.Layout
             {
                 IAtom atom = container.Atoms[i];
                 atomToIndex[atom] = i;
-                if (atom.Point2D == null) throw new ArgumentException("atom " + i + " had unset coordinates");
+                if (atom.Point2D == null)
+                    throw new ArgumentException("atom " + i + " had unset coordinates");
             }
 
             foreach (var element in container.StereoElements)
@@ -120,6 +122,9 @@ namespace NCDK.Layout
                 if (element is IDoubleBondStereochemistry)
                 {
                     Adjust((IDoubleBondStereochemistry)element);
+                }
+                else if (element is ExtendedCisTrans) {
+                    Adjust((ExtendedCisTrans)element);
                 }
             }
         }
@@ -130,15 +135,15 @@ namespace NCDK.Layout
         /// <param name="dbs">double-bond stereochemistry element</param>
         private void Adjust(IDoubleBondStereochemistry dbs)
         {
-            IBond db = dbs.StereoBond;
+            var db = dbs.StereoBond;
             var bonds = dbs.Bonds;
 
-            IAtom left = db.Begin;
-            IAtom right = db.End;
+            var left = db.Begin;
+            var right = db.End;
 
-            int p = Parity(dbs);
-            int q = Parity(GetAtoms(left, bonds[0].GetOther(left), right)) 
-                * Parity(GetAtoms(right, bonds[1].GetOther(right), left));
+            var p = Parity(dbs.Configure);
+            var q = Parity(GetAtoms(left, bonds[0].GetOther(left), right)) 
+                  * Parity(GetAtoms(right, bonds[1].GetOther(right), left));
 
             // configuration is unspecified? then we add an unspecified bond.
             // note: IDoubleBondStereochemistry doesn't indicate this yet
@@ -153,7 +158,8 @@ namespace NCDK.Layout
             }
 
             // configuration is already correct
-            if (p == q) return;
+            if (p == q)
+                return;
 
             Arrays.Fill(visited, false);
             visited[atomToIndex[left]] = true;
@@ -171,6 +177,48 @@ namespace NCDK.Layout
         }
 
         /// <summary>
+        /// Adjust the configuration of the cumulated double bonds to be
+        /// either Cis or Trans.
+        /// </summary>
+        /// <param name="elem">the stereo element to adjust</param>
+        private void Adjust(ExtendedCisTrans elem)
+        {
+            var middle = elem.Focus;
+            var ends = ExtendedCisTrans.FindTerminalAtoms(container, middle);
+            var bonds = elem.Carriers;
+            var left = ends[0];
+            var right = ends[1];
+            var p = Parity(elem.Configure);
+            var q = Parity(GetAtoms(left, bonds[0].GetOther(left), right))
+                  * Parity(GetAtoms(right, bonds[1].GetOther(right), left));
+            // configuration is unspecified? then we add an unspecified bond.
+            // note: IDoubleBondStereochemistry doesn't indicate this yet
+            if (p == 0)
+            {
+                foreach (var bond in container.GetConnectedBonds(left))
+                    bond.Stereo = BondStereo.None;
+                foreach (var bond in container.GetConnectedBonds(right))
+                    bond.Stereo = BondStereo.None;
+                bonds[0].Stereo = BondStereo.UpOrDown;
+                return;
+            }
+            // configuration is already correct
+            if (p == q)
+                return;
+            Arrays.Fill(visited, false);
+            visited[atomToIndex[left]] = true;
+            if (ringSearch.Cyclic(atomToIndex[middle.Begin], atomToIndex[middle.End]))
+            {
+                return;
+            }
+            foreach (var w in graph[atomToIndex[right]])
+            {
+                if (!visited[w])
+                    Reflect(w, middle);
+            }
+        }
+
+        /// <summary>
         /// Create an array of three atoms for a side of the double bond. This is
         /// used to determine the 'winding' of one side of the double bond.
         /// </summary>
@@ -182,11 +230,12 @@ namespace NCDK.Layout
         ///         substituent is the focus.</returns>
         private IAtom[] GetAtoms(IAtom focus, IAtom substituent, IAtom otherFocus)
         {
-            IAtom otherSubstituent = focus;
+            var otherSubstituent = focus;
             foreach (var w in graph[atomToIndex[focus]])
             {
-                IAtom atom = container.Atoms[w];
-                if (atom != substituent && atom != otherFocus) otherSubstituent = atom;
+                var atom = container.Atoms[w];
+                if (atom != substituent && atom != otherFocus)
+                    otherSubstituent = atom;
             }
             return new IAtom[] { substituent, otherSubstituent, otherFocus };
         }
@@ -194,15 +243,15 @@ namespace NCDK.Layout
         /// <summary>
         /// Access the parity (odd/even) parity of the double bond configuration (together/opposite).
         /// </summary>
-        /// <param name="element">double bond element</param>
+        /// <param name="config">double bond element</param>
         /// <returns>together = -1, opposite = +1</returns>
-        private static int Parity(IDoubleBondStereochemistry element)
+        private static int Parity(StereoConfigurations config)
         {
-            switch (element.Stereo)
+            switch (config)
             {
-                case DoubleBondConformation.Together:
+                case StereoConfigurations.Together:
                     return -1;
-                case DoubleBondConformation.Opposite:
+                case StereoConfigurations.Opposite:
                     return +1;
                 default:
                     return 0;
@@ -229,7 +278,7 @@ namespace NCDK.Layout
         private static int Parity(Vector2 a, Vector2 b, Vector2 c)
         {
             double det = (a.X - c.X) * (b.Y - c.Y) - (a.Y - c.Y) * (b.X - c.X);
-            return (int)Math.Sign(det);
+            return Math.Sign(det);
         }
 
         /// <summary>
@@ -244,7 +293,8 @@ namespace NCDK.Layout
             atom.Point2D = Reflect(atom.Point2D.Value, bond);
             foreach (var w in graph[v])
             {
-                if (!visited[w]) Reflect(w, bond);
+                if (!visited[w])
+                    Reflect(w, bond);
             }
         }
 
@@ -256,8 +306,8 @@ namespace NCDK.Layout
         /// <returns>the reflected point</returns>
         private static Vector2 Reflect(Vector2 p, IBond bond)
         {
-            IAtom a = bond.Begin;
-            IAtom b = bond.End;
+            var a = bond.Begin;
+            var b = bond.End;
             return Reflect(p, a.Point2D.Value.X, a.Point2D.Value.Y, b.Point2D.Value.X, b.Point2D.Value.Y);
         }
 

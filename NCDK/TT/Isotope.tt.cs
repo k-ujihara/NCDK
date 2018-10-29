@@ -48,7 +48,6 @@ namespace NCDK.Default
     /// the <see cref="NCDK.Config.IsotopeFactory.Configure(IAtom, IIsotope)"/> method:
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
     /// </example>
-    // @cdk.githash 
     // @author     steinbeck
     // @cdk.created    2001-08-21 
     // @cdk.keyword     isotope 
@@ -72,14 +71,13 @@ namespace NCDK.Default
         protected Isotope(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            symbol = info.GetString(nameof(symbol));
             naturalAbundance = info.GetNullable<double>(nameof(naturalAbundance));
             exactMass = info.GetNullable<double>(nameof(exactMass));
             massNumber = info.GetNullable<int>(nameof(massNumber));
         }
 
         /// <summary>
-        ///  Constructor for the Isotope object.
+        /// Constructor for the Isotope object.
         /// </summary>
         /// <param name="elementSymbol">The element symbol, "O" for Oxygen, etc.</param>
         public Isotope(string elementSymbol)
@@ -88,7 +86,7 @@ namespace NCDK.Default
         }
 
         /// <summary>
-        ///  Constructor for the Isotope object.
+        /// Constructor for the Isotope object.
         /// </summary>
         /// <param name="atomicNumber">The atomic number of the isotope</param>
         /// <param name="elementSymbol">The element symbol, "O" for Oxygen, etc.</param>
@@ -104,7 +102,7 @@ namespace NCDK.Default
         }
 
         /// <summary>
-        ///  Constructor for the Isotope object.
+        /// Constructor for the Isotope object.
         /// </summary>
         /// <param name="atomicNumber">The atomic number of the isotope, 8 for Oxygen</param>
         /// <param name="elementSymbol">The element symbol, "O" for Oxygen, etc.</param>
@@ -258,7 +256,6 @@ namespace NCDK.Silent
     /// the <see cref="NCDK.Config.IsotopeFactory.Configure(IAtom, IIsotope)"/> method:
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Isotope_Example.cs+NaturalAbundance"]/*' />
     /// </example>
-    // @cdk.githash 
     // @author     steinbeck
     // @cdk.created    2001-08-21 
     // @cdk.keyword     isotope 
@@ -282,14 +279,13 @@ namespace NCDK.Silent
         protected Isotope(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            symbol = info.GetString(nameof(symbol));
             naturalAbundance = info.GetNullable<double>(nameof(naturalAbundance));
             exactMass = info.GetNullable<double>(nameof(exactMass));
             massNumber = info.GetNullable<int>(nameof(massNumber));
         }
 
         /// <summary>
-        ///  Constructor for the Isotope object.
+        /// Constructor for the Isotope object.
         /// </summary>
         /// <param name="elementSymbol">The element symbol, "O" for Oxygen, etc.</param>
         public Isotope(string elementSymbol)
@@ -298,7 +294,7 @@ namespace NCDK.Silent
         }
 
         /// <summary>
-        ///  Constructor for the Isotope object.
+        /// Constructor for the Isotope object.
         /// </summary>
         /// <param name="atomicNumber">The atomic number of the isotope</param>
         /// <param name="elementSymbol">The element symbol, "O" for Oxygen, etc.</param>
@@ -314,7 +310,7 @@ namespace NCDK.Silent
         }
 
         /// <summary>
-        ///  Constructor for the Isotope object.
+        /// Constructor for the Isotope object.
         /// </summary>
         /// <param name="atomicNumber">The atomic number of the isotope, 8 for Oxygen</param>
         /// <param name="elementSymbol">The element symbol, "O" for Oxygen, etc.</param>

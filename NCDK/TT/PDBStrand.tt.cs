@@ -83,7 +83,7 @@ namespace NCDK.Default
 
         public override string ToString()
         {
-            StringBuilder stringContent = new StringBuilder();
+            var stringContent = new StringBuilder();
             stringContent.Append("PDBPolymer(");
             stringContent.Append(this.GetHashCode()).Append(", ");
             stringContent.Append(base.ToString());
@@ -144,7 +144,7 @@ namespace NCDK.Silent
 
         public override string ToString()
         {
-            StringBuilder stringContent = new StringBuilder();
+            var stringContent = new StringBuilder();
             stringContent.Append("PDBPolymer(");
             stringContent.Append(this.GetHashCode()).Append(", ");
             stringContent.Append(base.ToString());

@@ -113,7 +113,7 @@ namespace NCDK.Signatures
 
         public string CanonicalStringFromSmiles(string smiles)
         {
-            IAtomContainer mol = parser.ParseSmiles(smiles);
+            var mol = parser.ParseSmiles(smiles);
             MoleculeSignature signature = new MoleculeSignature(mol);
             return signature.ToCanonicalString();
         }
@@ -421,7 +421,7 @@ namespace NCDK.Signatures
         public void MethylFerroceneTest()
         {
             string smiles = "CC12C3C4C5C1[Fe]23456789C%10C6C7C8C9%10";
-            IAtomContainer mol = parser.ParseSmiles(smiles);
+            var mol = parser.ParseSmiles(smiles);
             MoleculeSignature molSig = new MoleculeSignature(mol);
             int feIndex = FindFirstAtomIndexForSymbol(mol, "Fe");
             string sigForIron = molSig.SignatureStringForVertex(feIndex);

@@ -970,11 +970,12 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestQueryBondType8()
         {
+            IAtomContainer atc;
             var filename = "NCDK.Data.MDL.iridiumCoordination.chebi52748.mol";
-            var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            IAtomContainer atc = reader.Read(new AtomContainer());
-            reader.Close();
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
+            {
+                atc = reader.Read(new AtomContainer());
+            }
 
             int queryBondCount = 0;
             foreach (var atom in atc.Atoms)
@@ -983,16 +984,15 @@ namespace NCDK.IO
                 {
                     foreach (var bond in atc.GetConnectedBonds(atom))
                     {
-                        if (bond is CTFileQueryBond)
+                        if (bond is QueryBond)
                         {
                             queryBondCount++;
-                            Assert.IsTrue(((CTFileQueryBond)bond).Type == CTFileQueryBond.BondType.Any);
-                            Assert.AreEqual(BondOrder.Unset, bond.Order);
+                            Assert.AreEqual(ExprType.True, ((QueryBond)bond).Expression.GetExprType());
                         }
                     }
                 }
             }
-            Assert.IsTrue(queryBondCount == 3, "Expecting three 'query' bond types to 'Ir'");
+            Assert.AreEqual(3, queryBondCount, "Expecting three 'query' bond types to 'Ir'");
         }
 
         /// <summary>
@@ -1001,23 +1001,24 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestQueryBondType6()
         {
+            IAtomContainer atc;
             var filename = "NCDK.Data.MDL.chebi.querybond.51736.mol";
-            var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            IAtomContainer atc = reader.Read(new AtomContainer());
-            reader.Close();
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
+            {
+                atc = reader.Read(new AtomContainer());
+            }
             int queryBondCount = 0;
 
             foreach (var bond in atc.Bonds)
             {
-                if (bond is CTFileQueryBond)
+                if (bond is QueryBond)
                 {
                     queryBondCount++;
-                    Assert.IsTrue(((CTFileQueryBond)bond).Type == CTFileQueryBond.BondType.SingleOrAromatic);
-                    Assert.AreEqual(BondOrder.Unset, bond.Order);
+                    Assert.AreEqual(ExprType.SingleOrAromatic, ((QueryBond)bond).Expression.GetExprType());
+
                 }
             }
-            Assert.IsTrue(queryBondCount == 6, "Expecting six 'query' bond types");
+            Assert.AreEqual(6, queryBondCount, "Expecting six 'query' bond types");
         }
 
         /// <summary>
@@ -1064,7 +1065,7 @@ namespace NCDK.IO
             molecule = reader.Read(molecule);
             reader.Close();
             Assert.IsTrue(molecule.Atoms[4] is IPseudoAtom);
-            Assert.AreEqual("Gln", molecule.Atoms[4].Symbol);
+            Assert.AreEqual("R", molecule.Atoms[4].Symbol);
             IPseudoAtom pa = (IPseudoAtom)molecule.Atoms[4];
             Assert.AreEqual("Gln", pa.Label);
         }
@@ -1315,7 +1316,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void ReadNonStructuralData()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("> 29 <DENSITY>").Append('\n');
             sb.Append("0.9132 - 20.0").Append('\n');
             sb.Append('\n');
@@ -1349,7 +1350,7 @@ namespace NCDK.IO
         public void ReadNonStructuralData_emtpy()
         {
             // a single space is read as a property
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("> <ONE_SPACE>").Append('\n');
             sb.Append(" ").Append('\n');
             sb.Append('\n');
@@ -1372,7 +1373,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void ReadNonStructuralData_wrap()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("> <LONG_PROPERTY>").Append('\n');
             sb.Append("This is a long property which should be wrapped when stored as field in an SDF D");
             sb.Append('\n');

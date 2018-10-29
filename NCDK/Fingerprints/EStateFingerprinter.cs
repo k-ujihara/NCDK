@@ -22,7 +22,7 @@
  */
 
 using NCDK.Config.Fragments;
-using NCDK.Smiles.SMARTS;
+using NCDK.SMARTS;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,10 +56,9 @@ namespace NCDK.Fingerprints
     // @cdk.keyword similarity
     // @cdk.keyword estate
     // @cdk.module fingerprint
-    // @cdk.githash
     public class EStateFingerprinter : AbstractFingerprinter, IFingerprinter
     {
-        private static readonly IReadOnlyList<string> PATTERNS = EStateFragments.Smarts;
+        private static readonly IReadOnlyList<SmartsPattern> PATTERNS = EStateFragments.Patterns;
 
         public EStateFingerprinter() { }
 
@@ -69,12 +68,11 @@ namespace NCDK.Fingerprints
             int bitsetLength = PATTERNS.Count;
             BitArray fingerPrint = new BitArray(bitsetLength);
 
-            SMARTSQueryTool sqt = new SMARTSQueryTool("C", atomContainer.Builder);
+            SmartsPattern.Prepare(atomContainer);
             for (int i = 0; i < PATTERNS.Count; i++)
             {
-                sqt.Smarts = PATTERNS[i];
-                bool status = sqt.Matches(atomContainer);
-                if (status) fingerPrint.Set(i, true);
+                if (PATTERNS[i].Matches(atomContainer))
+                    fingerPrint.Set(i, true);
             }
             return new BitSetFingerprint(fingerPrint);
         }

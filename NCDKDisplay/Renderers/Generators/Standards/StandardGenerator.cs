@@ -65,7 +65,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// </summary>
         /// <example>
         /// <code>
-        /// atom.SetProperty(StandardGenerator.HIGHLIGHT_COLOR, WPF::Media.Colors.Red);
+        /// atom.SetProperty(StandardGenerator.HighlightColorKey, WPF::Media.Colors.Red);
         /// </code></example>
         public const string HighlightColorKey = "stdgen.highlight.color";
 
@@ -76,7 +76,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <example>
         /// <code>
         /// string number = Integer.ToString(1 + container.Atoms.IndexOf(atom));
-        /// atom.SetProperty(CDKConstants.ANNOTATION_LABEL, number);
+        /// atom.SetProperty(StandardGenerator.AnnotationLabelKey, number);
         /// </code></example>
         public const string AnnotationLabelKey = "stdgen.annotation.label";
 
@@ -87,7 +87,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// </summary>
         /// <example><code>
         /// string cipLabel = "R";
-        /// atom.SetProperty(CDKConstants.ANNOTATION_LABEL, StandardGenerator.ITALIC_DISPLAY_PREFIX + cipLabel);
+        /// atom.SetProperty(CDKConstants.ANNOTATION_LABEL, StandardGenerator.ItalicDisplayPrefix + cipLabel);
         /// </code></example>
         public const string ItalicDisplayPrefix = "std.itl:";
 

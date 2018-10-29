@@ -249,13 +249,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private static int[][] EvalATable(IAtomContainer atomContainer, int atomicNum)
         {
-            //IAtom[] atoms = atomContainer.GetAtoms();
-            int natom = atomContainer.Atoms.Count;
-            int[][] atypes = Arrays.CreateJagged<int>(natom, 2);
+            var natom = atomContainer.Atoms.Count;
+            var atypes = Arrays.CreateJagged<int>(natom, 2);
             for (int i = 0; i < natom; i++)
             {
-                IAtom atom = atomContainer.Atoms[i];
-                int numConnectedBonds = atomContainer.GetConnectedBonds(atom).Count();
+                var atom = atomContainer.Atoms[i];
+                var numConnectedBonds = atomContainer.GetConnectedBonds(atom).Count();
                 atypes[i][1] = i;
                 if (atomicNum == (atom.AtomicNumber == null ? 0 : atom.AtomicNumber))
                     atypes[i][0] = numConnectedBonds;
@@ -270,8 +269,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double lambda = 1;
             double n = 0;
 
-            List<int> v1 = new List<int>();
-            List<int> v2 = new List<int>();
+            var v1 = new List<int>();
+            var v2 = new List<int>();
             for (int i = 0; i < codemat.Length; i++)
             {
                 if (codemat[i][0] == type1) v1.Add(codemat[i][1]);
@@ -282,10 +281,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 for (int j = 0; j < v2.Count; j++)
                 {
-                    int a = v1[i];
-                    int b = v2[j];
-                    if (a == b) continue;
-                    double distance = distmat[a][b];
+                    var a = v1[i];
+                    var b = v2[j];
+                    if (a == b)
+                        continue;
+                    var distance = distmat[a][b];
                     lambda = lambda * distance;
                     n++;
                 }

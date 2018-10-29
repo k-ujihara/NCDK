@@ -71,7 +71,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void Cumulated_x2()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3));
             m.Atoms.Add(Atom("C", 1));
             m.Atoms.Add(Atom("C", 0));
@@ -106,7 +106,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void Cumulated_x3()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3));
             m.Atoms.Add(Atom("C", 1));
             m.Atoms.Add(Atom("C", 0));

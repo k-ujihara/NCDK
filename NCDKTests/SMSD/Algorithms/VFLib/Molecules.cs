@@ -307,9 +307,9 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         public static IAtomContainer CreatePyridazine()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             string smiles = "C1=CN=NC=C1";
-            IAtomContainer result = sp.ParseSmiles(smiles);
+            var result = sp.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
             CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
             adder.AddImplicitHydrogens(result);
@@ -319,9 +319,9 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         public static IAtomContainer CreateChloroIsoquinoline4()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             string smiles = "ClC1=CC=NC2=C1C=CC=C2";
-            IAtomContainer result = sp.ParseSmiles(smiles);
+            var result = sp.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
             CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
             adder.AddImplicitHydrogens(result);
@@ -331,9 +331,9 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         public static IAtomContainer CreateChlorobenzene()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             string smiles = "Clc1ccccc1";
-            IAtomContainer result = sp.ParseSmiles(smiles);
+            var result = sp.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
             CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
             adder.AddImplicitHydrogens(result);

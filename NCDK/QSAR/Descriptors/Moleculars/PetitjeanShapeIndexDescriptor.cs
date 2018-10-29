@@ -21,7 +21,6 @@
 using NCDK.Common.Collections;
 using NCDK.Geometries;
 using NCDK.Graphs;
-using NCDK.Numerics;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
@@ -102,21 +101,21 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>A ArrayResult&lt;double&gt; value representing the Petitjean shape indices</returns>
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
-            IAtomContainer local = AtomContainerManipulator.RemoveHydrogens(container);
+            var local = AtomContainerManipulator.RemoveHydrogens(container);
 
-            int tradius = PathTools.GetMolecularGraphRadius(local);
-            int tdiameter = PathTools.GetMolecularGraphDiameter(local);
+            var tradius = PathTools.GetMolecularGraphRadius(local);
+            var tdiameter = PathTools.GetMolecularGraphDiameter(local);
 
-            ArrayResult<double> retval = new ArrayResult<double>
+            var retval = new ArrayResult<double>
             {
-                (double)(tdiameter - tradius) / (double)tradius
+                (double)(tdiameter - tradius) / tradius
             };
 
             // get the 3D distance matrix
             if (GeometryUtil.Has3DCoordinates(container))
             {
-                int natom = container.Atoms.Count;
-                double[][] distanceMatrix = Arrays.CreateJagged<double>(natom, natom);
+                var natom = container.Atoms.Count;
+                var distanceMatrix = Arrays.CreateJagged<double>(natom, natom);
                 for (int i = 0; i < natom; i++)
                 {
                     for (int j = 0; j < natom; j++)
@@ -127,10 +126,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             continue;
                         }
 
-                        Vector3 a = container.Atoms[i].Point3D.Value;
-                        Vector3 b = container.Atoms[j].Point3D.Value;
-                        distanceMatrix[i][j] = Math.Sqrt((a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y)
-                                + (a.Z - b.Z) * (a.Z - b.Z));
+                        var a = container.Atoms[i].Point3D.Value;
+                        var b = container.Atoms[j].Point3D.Value;
+                        distanceMatrix[i][j] = Math.Sqrt((a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y) + (a.Z - b.Z) * (a.Z - b.Z));
                     }
                 }
                 double gradius = 999999;
@@ -141,14 +139,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     double max = -99999;
                     for (int j = 0; j < natom; j++)
                     {
-                        if (distanceMatrix[i][j] > max) max = distanceMatrix[i][j];
+                        if (distanceMatrix[i][j] > max)
+                            max = distanceMatrix[i][j];
                     }
                     geta[i] = max;
                 }
                 for (int i = 0; i < natom; i++)
                 {
-                    if (geta[i] < gradius) gradius = geta[i];
-                    if (geta[i] > gdiameter) gdiameter = geta[i];
+                    if (geta[i] < gradius)
+                        gradius = geta[i];
+                    if (geta[i] > gdiameter)
+                        gdiameter = geta[i];
                 }
                 retval.Add((gdiameter - gradius) / gradius);
             }
@@ -157,8 +158,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 retval.Add(double.NaN);
             }
 
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval,
-                    DescriptorNames);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval, DescriptorNames);
         }
 
         /// <inheritdoc/>
@@ -167,4 +167,3 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }
-

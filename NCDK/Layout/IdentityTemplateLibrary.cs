@@ -273,7 +273,7 @@ namespace NCDK.Layout
         /// <returns>encoded entry</returns>
         public static string EncodeEntry(KeyValuePair<string, Vector2[]> entry)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append(entry.Key);
             sb.Append(' ');
             sb.Append(EncodeCoordinates(entry.Value));
@@ -287,7 +287,7 @@ namespace NCDK.Layout
         /// <returns>extended SMILES format coordinates</returns>
         public static string EncodeCoordinates(Vector2[] points)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("|(");
             foreach (var point in points)
             {
@@ -406,7 +406,7 @@ namespace NCDK.Layout
         /// <exception cref="ArgumentException">resource not found or could not be loaded</exception>
         public static IdentityTemplateLibrary LoadFromResource(string resource)
         {
-            using (Stream ins = ResourceLoader.GetAsStream(typeof(IdentityTemplateLibrary), resource))
+            using (var ins = ResourceLoader.GetAsStream(typeof(IdentityTemplateLibrary), resource))
             {
                 try
                 {
@@ -469,7 +469,7 @@ namespace NCDK.Layout
             {
                 try
                 {
-                    IAtomContainer mol = smipar.ParseSmiles(e.Key);
+                    var mol = smipar.ParseSmiles(e.Key);
                     int[] order = new int[mol.Atoms.Count];
                     string key = CreateCanonicalSmiles(mol, order);
                     foreach (var coords in e.Value)

@@ -21,12 +21,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-using NCDK.Numerics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.Graphs;
+using NCDK.Numerics;
+using NCDK.Silent;
 using NCDK.Stereo;
-using NCDK.Smiles;
+using System;
+using System.Collections.Generic;
 
 namespace NCDK.Layout
 {
@@ -39,7 +41,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void Clockwise_implH_1()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, 0.00d, 1.50d));
             m.Atoms.Add(Atom("C", 3, 0.00d, 0.00d));
             m.Atoms.Add(Atom("N", 2, -1.30d, 2.25d));
@@ -47,8 +49,11 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[2], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[3], BondOrder.Single);
-            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[0], m.Atoms[1], m.Atoms[2],
-                m.Atoms[3]}, TetrahedralStereo.Clockwise));
+            m.StereoElements.Add(
+                new TetrahedralChirality(
+                    m.Atoms[0], 
+                    new IAtom[] { m.Atoms[0], m.Atoms[1], m.Atoms[2], m.Atoms[3]},
+                    TetrahedralStereo.Clockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
             Assert.AreEqual(BondStereo.Down, m.Bonds[1].Stereo);
@@ -60,7 +65,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void Clockwise_implH_2()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -1.30d, 2.25d));
             m.Atoms.Add(Atom("C", 2, 0.00d, 1.50d));
             m.Atoms.Add(Atom("C", 3, 0.00d, 0.00d));
@@ -70,8 +75,10 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[3], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
-            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[0], m.Atoms[1], m.Atoms[3],
-                m.Atoms[4]}, TetrahedralStereo.Clockwise));
+            m.StereoElements.Add(new TetrahedralChirality(
+                m.Atoms[0], 
+                new IAtom[]{m.Atoms[0], m.Atoms[1], m.Atoms[3], m.Atoms[4]},
+                TetrahedralStereo.Clockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
             Assert.AreEqual(BondStereo.None, m.Bonds[1].Stereo);
@@ -83,7 +90,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void Anticlockwise_implH_1()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, 0.00d, 1.50d));
             m.Atoms.Add(Atom("C", 3, 0.00d, 0.00d));
             m.Atoms.Add(Atom("N", 2, -1.30d, 2.25d));
@@ -91,8 +98,10 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[2], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[3], BondOrder.Single);
-            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[0], m.Atoms[1], m.Atoms[2],
-                m.Atoms[3]}, TetrahedralStereo.AntiClockwise));
+            m.StereoElements.Add(new TetrahedralChirality(
+                m.Atoms[0], 
+                new IAtom[]{m.Atoms[0], m.Atoms[1], m.Atoms[2], m.Atoms[3]}, 
+                TetrahedralStereo.AntiClockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
             Assert.AreEqual(BondStereo.Up, m.Bonds[1].Stereo);
@@ -104,7 +113,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void Anticlockwise_implH_2()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -1.30d, 2.25d));
             m.Atoms.Add(Atom("C", 2, 0.00d, 1.50d));
             m.Atoms.Add(Atom("C", 3, 0.00d, 0.00d));
@@ -127,7 +136,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void Clockwise_1()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, -1.47d, 3.62d));
             m.Atoms.Add(Atom("C", 2, -1.13d, 2.16d));
             m.Atoms.Add(Atom("C", 2, 0.30d, 1.72d));
@@ -141,8 +150,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[5], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[6], BondOrder.Single);
-            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[1], m.Atoms[4], m.Atoms[5],
-                m.Atoms[6]}, TetrahedralStereo.Clockwise));
+            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[] { m.Atoms[1], m.Atoms[4], m.Atoms[5], m.Atoms[6] }, TetrahedralStereo.Clockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
             Assert.AreEqual(BondStereo.None, m.Bonds[3].Stereo);
@@ -154,7 +162,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void Clockwise_2()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, -0.96d, -1.04d));
             m.Atoms.Add(Atom("C", 2, 0.18d, -0.08d));
             m.Atoms.Add(Atom("C", 2, -0.08d, 1.40d));
@@ -171,8 +179,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[0], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[4], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[6], m.Atoms[7], BondOrder.Single);
-            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[1], m.Atoms[4], m.Atoms[5],
-                m.Atoms[6]}, TetrahedralStereo.Clockwise));
+            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[] { m.Atoms[1], m.Atoms[4], m.Atoms[5], m.Atoms[6] }, TetrahedralStereo.Clockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.Up, m.Bonds[0].Stereo);
             Assert.AreEqual(BondStereo.None, m.Bonds[3].Stereo);
@@ -184,7 +191,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void Anticlockwise_1()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, -1.47d, 3.62d));
             m.Atoms.Add(Atom("C", 2, -1.13d, 2.16d));
             m.Atoms.Add(Atom("C", 2, 0.30d, 1.72d));
@@ -198,8 +205,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[5], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[6], BondOrder.Single);
-            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[1], m.Atoms[4], m.Atoms[5],
-                m.Atoms[6]}, TetrahedralStereo.AntiClockwise));
+            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[] { m.Atoms[1], m.Atoms[4], m.Atoms[5], m.Atoms[6] }, TetrahedralStereo.AntiClockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
             Assert.AreEqual(BondStereo.None, m.Bonds[3].Stereo);
@@ -211,7 +217,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void Anticlockwise_2()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, -0.96d, -1.04d));
             m.Atoms.Add(Atom("C", 2, 0.18d, -0.08d));
             m.Atoms.Add(Atom("C", 2, -0.08d, 1.40d));
@@ -228,8 +234,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[0], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[4], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[6], m.Atoms[7], BondOrder.Single);
-            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[1], m.Atoms[4], m.Atoms[5],
-                m.Atoms[6]}, TetrahedralStereo.AntiClockwise));
+            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[] { m.Atoms[1], m.Atoms[4], m.Atoms[5], m.Atoms[6] }, TetrahedralStereo.AntiClockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.Down, m.Bonds[0].Stereo);
             Assert.AreEqual(BondStereo.None, m.Bonds[3].Stereo);
@@ -240,7 +245,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void NonPlanarBondsForAntiClockwsieExtendedTetrahedral()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, -1.56d, 0.78d));
             m.Atoms.Add(Atom("C", 0, -1.13d, 1.49d));
             m.Atoms.Add(Atom("C", 0, -0.31d, 1.47d));
@@ -254,8 +259,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[5], BondOrder.Single);
-            m.StereoElements.Add(new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[0], m.Atoms[6], m.Atoms[4],
-                m.Atoms[5]}, TetrahedralStereo.AntiClockwise));
+            m.StereoElements.Add(new ExtendedTetrahedral(m.Atoms[2], new IAtom[] { m.Atoms[0], m.Atoms[6], m.Atoms[4], m.Atoms[5] }, TetrahedralStereo.AntiClockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.Down, m.GetBond(m.Atoms[1], m.Atoms[0]).Stereo);
             Assert.AreEqual(BondStereo.Up, m.GetBond(m.Atoms[1], m.Atoms[6]).Stereo);
@@ -264,7 +268,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void NonPlanarBondsForClockwsieExtendedTetrahedral()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, -1.56d, 0.78d));
             m.Atoms.Add(Atom("C", 0, -1.13d, 1.49d));
             m.Atoms.Add(Atom("C", 0, -0.31d, 1.47d));
@@ -278,8 +282,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[5], BondOrder.Single);
-            m.StereoElements.Add(new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[0], m.Atoms[6], m.Atoms[4],
-                m.Atoms[5]}, TetrahedralStereo.Clockwise));
+            m.StereoElements.Add(new ExtendedTetrahedral(m.Atoms[2], new IAtom[] { m.Atoms[0], m.Atoms[6], m.Atoms[4], m.Atoms[5] }, TetrahedralStereo.Clockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.Up, m.GetBond(m.Atoms[1], m.Atoms[0]).Stereo);
             Assert.AreEqual(BondStereo.Down, m.GetBond(m.Atoms[1], m.Atoms[6]).Stereo);
@@ -288,7 +291,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void ClockwiseSortShouldHandleExactlyOppositeAtoms()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 4.50d, -14.84d));
             m.Atoms.Add(Atom("C", 3, 4.51d, -13.30d));
             m.Atoms.Add(Atom("C", 2, 4.93d, -14.13d));
@@ -304,8 +307,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[0], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[7], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[3], BondOrder.Single);
-            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[2], m.Atoms[4], m.Atoms[6],
-                m.Atoms[3],}, TetrahedralStereo.AntiClockwise));
+            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[] { m.Atoms[2], m.Atoms[4], m.Atoms[6], m.Atoms[3], }, TetrahedralStereo.AntiClockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.Up, m.Bonds[2].Stereo);
         }
@@ -314,7 +316,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void DontCrossEtheneDoubleBond()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 2, 0.000, 0.000));
             m.Atoms.Add(Atom("C", 2, 1.299, -0.750));
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Double);
@@ -326,7 +328,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void DontMarkTerminalBonds()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, 0.000, 0.000));
             m.Atoms.Add(Atom("C", 0, 1.299, -0.750));
             m.Atoms.Add(Atom("C", 2, 2.598, -0.000));
@@ -346,7 +348,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void MarkBut2eneWithWavyBond()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, 0.000, 0.000));
             m.Atoms.Add(Atom("C", 1, 1.299, -0.750));
             m.Atoms.Add(Atom("C", 1, 2.598, -0.000));
@@ -362,7 +364,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void UseCrossedBondIfNeeded()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, 0.000, 0.000));
             m.Atoms.Add(Atom("C", 1, 1.299, -0.750));
             m.Atoms.Add(Atom("C", 1, 2.598, -0.000));
@@ -378,18 +380,20 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
             m.AddBond(m.Atoms[5], m.Atoms[6], BondOrder.Double);
             m.AddBond(m.Atoms[6], m.Atoms[7], BondOrder.Single);
-            m.StereoElements.Add(new DoubleBondStereochemistry(m.Bonds[1],
-                                                             new IBond[]{
-                                                                 m.Bonds[0],
-                                                                 m.Bonds[2]
-                                                             },
-                                                             DoubleBondConformation.Opposite));
-            m.StereoElements.Add(new DoubleBondStereochemistry(m.Bonds[5],
-                                                             new IBond[]{
-                                                                 m.Bonds[4],
-                                                                 m.Bonds[6]
-                                                             },
-                                                             DoubleBondConformation.Opposite));
+            m.StereoElements.Add(new DoubleBondStereochemistry(
+                m.Bonds[1],
+                new IBond[]{
+                    m.Bonds[0],
+                    m.Bonds[2]
+                },
+                DoubleBondConformation.Opposite));
+            m.StereoElements.Add(new DoubleBondStereochemistry(
+                m.Bonds[5],
+                new IBond[]{
+                    m.Bonds[4],
+                    m.Bonds[6]
+                },
+                DoubleBondConformation.Opposite));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.EOrZ, m.Bonds[3].Stereo);
         }
@@ -398,7 +402,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void DontMarkTetrahedralCentresWithDoubleBondsAsUnspecified()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, 2.598, 1.500));
             m.Atoms.Add(Atom("S", 0, 2.598, -0.000));
             m.Atoms.Add(Atom("C", 1, 1.299, -0.750));
@@ -410,9 +414,11 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
-            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[1],
-                                                        new IAtom[] { m.Atoms[0], m.Atoms[1], m.Atoms[2], m.Atoms[4] },
-                                                        TetrahedralStereo.AntiClockwise));
+            m.StereoElements.Add(
+                new TetrahedralChirality(
+                    m.Atoms[1],
+                    new IAtom[] { m.Atoms[0], m.Atoms[1], m.Atoms[2], m.Atoms[4] },
+                    TetrahedralStereo.AntiClockwise));
 
             NonplanarBonds.Assign(m);
             Assert.AreNotEqual(BondStereo.UpOrDown, m.Bonds[0].Stereo);
@@ -423,7 +429,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void DontMarkRingBondsInBezeneAsUnspecified()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -1.299, 0.750));
             m.Atoms.Add(Atom("C", 1, 0.000, 1.500));
             m.Atoms.Add(Atom("C", 1, 1.299, 0.750));
@@ -449,7 +455,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void DontMarkGuanidineAsUnspecified()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("R", 0, 0.00, 0.00));
             m.Atoms.Add(Atom("C", 2, 1.30, -0.75));
             m.Atoms.Add(Atom("N", 0, 2.60, -0.00));
@@ -472,7 +478,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void DontUnspecifiedDueToHRepresentation()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("R", 0, 0.00, 0.00));
             m.Atoms.Add(Atom("C", 2, 1.30, -0.75));
             m.Atoms.Add(Atom("N", 0, 2.60, -0.00));
@@ -505,7 +511,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void DontMarkUnspecifiedForLinearEqualChains()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("R", 0, 0.00, -0.00));
             m.Atoms.Add(Atom("C", 2, 1.30, -0.75));
             m.Atoms.Add(Atom("N", 0, 2.60, -0.00));
@@ -536,7 +542,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void MarkUnspecifiedForCyclicLigands()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("R", 0, -4.22, 3.05));
             m.Atoms.Add(Atom("C", 2, -2.92, 2.30));
             m.Atoms.Add(Atom("N", 0, -1.62, 3.05));
@@ -570,7 +576,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void UnspecifiedMarkedOnDifferentLigands()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("R", 0, 0.00, -0.00));
             m.Atoms.Add(Atom("C", 2, 1.30, -0.75));
             m.Atoms.Add(Atom("N", 0, 2.60, -0.00));
@@ -604,9 +610,9 @@ namespace NCDK.Layout
         [TestMethod()]
         public void Testosterone()
         {
-            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = smipar.ParseSmiles("O=C4C=C2[C@]([C@@]1([H])CC[C@@]3([C@@]([H])(O)CC[C@@]3([H])[C@]1([H])CC2)C)(C)CC4");
-            StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+            var smipar = CDK.SilentSmilesParser;
+            var mol = smipar.ParseSmiles("O=C4C=C2[C@]([C@@]1([H])CC[C@@]3([C@@]([H])(O)CC[C@@]3([H])[C@]1([H])CC2)C)(C)CC4");
+            var sdg = new StructureDiagramGenerator();
             sdg.GenerateCoordinates(mol);
             int wedgeCount = 0;
             foreach (IBond bond in mol.Bonds)
@@ -621,9 +627,9 @@ namespace NCDK.Layout
         [TestMethod()]
         public void NoWavyBondForCisTransNv5()
         {
-            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = smipar.ParseSmiles("CN(C)(C)=CC");
-            StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+            var smipar = CDK.SilentSmilesParser;
+            var mol = smipar.ParseSmiles("CN(C)(C)=CC");
+            var sdg = new StructureDiagramGenerator();
             sdg.GenerateCoordinates(mol);
             foreach (IBond bond in mol.Bonds)
             {
@@ -632,11 +638,158 @@ namespace NCDK.Layout
             }
         }
 
+        [TestMethod()]
+        public void AtropisomerWedgeBonds()
+        {
+            var smipar = CDK.SilentSmilesParser;
+            var mol = smipar.ParseSmiles("OC1=CC=C2C=CC=CC2=C1C1=C(O)C=CC2=C1C=CC=C2");
+
+            var focus = mol.GetBond(mol.Atoms[10], mol.Atoms[11]);
+            var carriers = new List<IAtom>();
+            carriers.AddRange(mol.GetConnectedAtoms(focus.Begin));
+            carriers.AddRange(mol.GetConnectedAtoms(focus.End));
+            carriers.Remove(focus.Begin);
+            carriers.Remove(focus.End);
+
+            mol.StereoElements.Add(new Atropisomeric(focus, carriers, StereoConfigurations.Left));
+
+            var sdg = new StructureDiagramGenerator();
+            sdg.GenerateCoordinates(mol);
+
+            var bond1 = mol.GetBond(focus.Begin, carriers[1]);
+            var bond2 = mol.GetBond(focus.End, carriers[3]);
+            Assert.AreEqual(BondOrder.Single, bond1.Order);
+            Assert.AreEqual(BondOrder.Single, bond2.Order);
+
+            Assert.IsTrue(bond1.Stereo == BondStereo.Down || bond2.Stereo == BondStereo.Down, "One of the single bonds should have been wedged");
+        }
+
+        [TestMethod()]
+        public void InconsistentStereoState()
+        {
+            try
+            {
+                var smi = "O[C@]([H])(C)CCC";
+                var smipar = CDK.SilentSmilesParser;
+                var mol = smipar.ParseSmiles(smi);
+                mol.Remove(mol.Bonds[1]);
+                mol.Atoms.RemoveAt(2); // unsafe-removes
+                var sdg = new StructureDiagramGenerator();
+                sdg.GenerateCoordinates(mol);
+                Assert.Fail();
+            }
+            catch (ArgumentException)
+            {
+            }
+        }
+
+        [TestMethod()]
+        public void AvoidBondsToOtherStereoCentres()
+        {
+            var smi = "[H][C@@]([C@H](C)N)([C@@H](C)O)[C@@H](C)OC";
+            var smipar = CDK.SilentSmilesParser;
+            var mol = smipar.ParseSmiles(smi);
+            var sdg = new StructureDiagramGenerator();
+            sdg.GenerateCoordinates(mol);
+            int wedgeCount = 0;
+            foreach (var bond in mol.Bonds)
+            {
+                switch (bond.Stereo)
+                {
+                    case BondStereo.Up:
+                    case BondStereo.Down:
+                    case BondStereo.UpInverted:
+                    case BondStereo.DownInverted:
+                        wedgeCount++;
+                        break;
+                }
+            }
+            Assert.AreEqual(4, wedgeCount);
+        }
+
+        [TestMethod()]
+        public void AvoidWedgingRingBond()
+        {
+            var smi = "CC(C)[C@@H]1CCCCO1";
+            var smipar = CDK.SilentSmilesParser;
+            var mol = smipar.ParseSmiles(smi);
+            var sdg = new StructureDiagramGenerator();
+            sdg.GenerateCoordinates(mol);
+            int wedgeCount = 0;
+            foreach (var bond in mol.Bonds)
+            {
+                switch (bond.Stereo)
+                {
+                    case BondStereo.Up:
+                    case BondStereo.Down:
+                    case BondStereo.UpInverted:
+                    case BondStereo.DownInverted:
+                        Assert.IsFalse(bond.IsInRing);
+                        ++wedgeCount;
+                        break;
+                }
+            }
+            Assert.AreEqual(1, wedgeCount);
+        }
+
+        [Ignore]
+        [TestMethod()]
+        public void WedgeExtendedTetrahedral()
+        {
+            var smi = "C(=C=C=[C@@]=C=C=CC)C";
+            var smipar = CDK.SilentSmilesParser;
+            var mol = smipar.ParseSmiles(smi);
+            var sdg = new StructureDiagramGenerator();
+            sdg.GenerateCoordinates(mol);
+            int wedgeCount = 0;
+            foreach (var bond in mol.Bonds)
+            {
+                switch (bond.Stereo)
+                {
+                    case BondStereo.Up:
+                    case BondStereo.Down:
+                    case BondStereo.UpInverted:
+                    case BondStereo.DownInverted:
+                        ++wedgeCount;
+                        break;
+                }
+            }
+            Assert.AreEqual(2, wedgeCount);
+        }
+
+        // this structure should be displayed with 7 wedges, for some reason the
+        // atom order affects whether multiple wedges are used
+        [TestMethod()]
+        public void MinWedges()
+        {
+            var smi = "[C@](([C@@H](C)Cl)([C@H](C)Cl)[C@H](O)[C@](([C@@H](C)Cl)[C@H](C)Cl)[H])[H]";
+            var smipar = CDK.SilentSmilesParser;
+            var mol = smipar.ParseSmiles(smi);
+            var sdg = new StructureDiagramGenerator();
+            sdg.GenerateCoordinates(mol);
+            int wedgeCount = 0;
+            foreach (var bond in mol.Bonds)
+            {
+                switch (bond.Stereo)
+                {
+                    case BondStereo.Up:
+                    case BondStereo.Down:
+                    case BondStereo.UpInverted:
+                    case BondStereo.DownInverted:
+                        ++wedgeCount;
+                        break;
+                }
+            }
+            Assert.AreEqual(7, wedgeCount);
+        }
+
         static IAtom Atom(string symbol, int hCount, double x, double y)
         {
-            IAtom a = new Atom(symbol);
-            a.ImplicitHydrogenCount = hCount;
-            a.Point2D = new Vector2(x, y);
+            var a = new Atom(symbol)
+            {
+                ImplicitHydrogenCount = hCount,
+                Point2D = new Vector2(x, y)
+            };
             return a;
         }
     }

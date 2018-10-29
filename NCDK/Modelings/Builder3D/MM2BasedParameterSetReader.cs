@@ -918,7 +918,7 @@ namespace NCDK.Modelings.Builder3D
             }
 
             // read the contents from file
-            TextReader r = new StreamReader(ins);
+            var r = new StreamReader(ins);
             string s;
             int[] a = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             try

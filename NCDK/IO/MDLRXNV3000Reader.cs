@@ -175,7 +175,7 @@ namespace NCDK.IO
             // now read the reactants
             for (int i = 1; i <= reactantCount; i++)
             {
-                StringBuilder molFile = new StringBuilder();
+                var molFile = new StringBuilder();
                 string announceMDLFileLine = ReadCommand();
                 if (!string.Equals(announceMDLFileLine, "BEGIN REACTANT", StringComparison.Ordinal))
                 {
@@ -217,7 +217,7 @@ namespace NCDK.IO
             // now read the products
             for (int i = 1; i <= productCount; i++)
             {
-                StringBuilder molFile = new StringBuilder();
+                var molFile = new StringBuilder();
                 string announceMDLFileLine = ReadCommand();
                 if (!string.Equals(announceMDLFileLine, "BEGIN PRODUCT", StringComparison.Ordinal))
                 {

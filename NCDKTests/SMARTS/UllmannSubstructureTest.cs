@@ -21,16 +21,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.Isomorphisms
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Isomorphisms;
+
+namespace NCDK.SMARTS
 {
     // @author John May
     // @cdk.module test-smarts
-     [TestClass()]
+    [TestClass()]
     public class UllmannSubstructureTest : SubstructureTest
     {
-        protected override Pattern Create(IAtomContainer container)
+        public override Pattern Create(IAtomContainer container)
         {
             return Ullmann.FindSubstructure(container);
         }

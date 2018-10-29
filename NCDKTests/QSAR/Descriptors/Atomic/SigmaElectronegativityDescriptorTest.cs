@@ -44,8 +44,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { 8.7177, 11.306 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
-            SmilesParser sp = new SmilesParser(builder);
-            IAtomContainer mol = sp.ParseSmiles("CF");
+            var sp = new SmilesParser(builder);
+            var mol = sp.ParseSmiles("CF");
             AddExplicitHydrogens(mol);
 
             for (int i = 0; i < 2; i++)
@@ -66,8 +66,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { 8.3293, 10.491 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
-            SmilesParser sp = new SmilesParser(builder);
-            IAtomContainer mol = sp.ParseSmiles("CCl");
+            var sp = new SmilesParser(builder);
+            var mol = sp.ParseSmiles("CCl");
             AddExplicitHydrogens(mol);
             for (int i = 0; i < 2; i++)
             {
@@ -86,8 +86,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { 7.8677, 8.1073, 8.4452, 10.154 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
-            SmilesParser sp = new SmilesParser(builder);
-            IAtomContainer mol = sp.ParseSmiles("C=CCBr");
+            var sp = new SmilesParser(builder);
+            var mol = sp.ParseSmiles("C=CCBr");
             AddExplicitHydrogens(mol);
 
             for (int i = 0; i < 4; i++)
@@ -108,8 +108,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
 
-            SmilesParser sp = new SmilesParser(builder);
-            IAtomContainer mol = sp.ParseSmiles("C(C)(C)CCI");
+            var sp = new SmilesParser(builder);
+            var mol = sp.ParseSmiles("C(C)(C)CCI");
             AddExplicitHydrogens(mol);
 
             double result = ((Result<double>)descriptor.Calculate(mol.Atoms[5], mol).Value).Value;
@@ -125,8 +125,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { 7.6009, 8.3948, 9.4663, 8.3948, 7.6009 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
-            SmilesParser sp = new SmilesParser(builder);
-            IAtomContainer mol = sp.ParseSmiles("CCOCC");
+            var sp = new SmilesParser(builder);
+            var mol = sp.ParseSmiles("CCOCC");
             AddExplicitHydrogens(mol);
 
             for (int i = 0; i < 5; i++)
@@ -146,8 +146,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { 8.1395, 8.1321, 8.5049, 9.3081 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
-            SmilesParser sp = new SmilesParser(builder);
-            IAtomContainer mol = sp.ParseSmiles("NCCO");
+            var sp = new SmilesParser(builder);
+            var mol = sp.ParseSmiles("NCCO");
             AddExplicitHydrogens(mol);
 
             for (int i = 0; i < 4; i++)
@@ -168,8 +168,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
 
-            SmilesParser sp = new SmilesParser(builder);
-            IAtomContainer mol = sp.ParseSmiles("C=CCS");
+            var sp = new SmilesParser(builder);
+            var mol = sp.ParseSmiles("C=CCS");
             AddExplicitHydrogens(mol);
 
             for (int i = 0; i < 4; i++)

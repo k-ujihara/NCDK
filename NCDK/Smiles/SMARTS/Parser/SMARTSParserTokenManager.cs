@@ -16,9 +16,11 @@
  * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
+
 namespace NCDK.Smiles.SMARTS.Parser
 {
     /// <summary>Token Manager.</summary>
+    [System.Obsolete]
     internal class SMARTSParserTokenManager
     {
         // Required by SetState

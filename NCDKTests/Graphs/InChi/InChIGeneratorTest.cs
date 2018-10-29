@@ -736,7 +736,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void R_penta_2_3_diene_impl_h()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(new Atom("CH3"));
             m.Atoms.Add(new Atom("CH"));
             m.Atoms.Add(new Atom("C"));
@@ -775,7 +775,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void S_penta_2_3_diene_impl_h()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(new Atom("CH3"));
             m.Atoms.Add(new Atom("CH"));
             m.Atoms.Add(new Atom("C"));
@@ -814,7 +814,7 @@ namespace NCDK.Graphs.InChI
         // why it does not work? [TestMethod()]
         public void R_penta_2_3_diene_expl_h()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(new Atom("CH3"));
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));
@@ -857,7 +857,7 @@ namespace NCDK.Graphs.InChI
         // why it does not work? [TestMethod()]
         public void S_penta_2_3_diene_expl_h()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(new Atom("CH3"));
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));
@@ -903,7 +903,7 @@ namespace NCDK.Graphs.InChI
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
             string smiles = "C(CCCNC(=N)N)(COCC(COP([O])(=O)OCCCCCCNC(NC1=CC(=C(C=C1)C2(C3=CC=C(C=C3OC=4C2=CC=C(C4)O)O)C)C(=O)[O])=S)OP(=O)([O])OCC(COCC(CCC/[NH]=C(\\[NH])/N)(CCCNC(=N)N)CCCNC(=N)N)OP(=O)([O])OCC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)OP(OCC(COCC(CCCNC(=N)N)(CCCNC(=N)N)CCC/[NH]=C(\\[NH])/N)OP(=O)([O])OCC(COCC(CCCNC(=N)N)(CCCNC(N)=N)CCC/[NH]=C(/N)\\[NH])OP([O])(=O)CCC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)OP([O])(=O)OCC(COCC(CCCNC(N)=N)(CCCNC(N)=N)CCC/[NH]=C(\\[NH])/N)OP(OCC(COCC(CCCNC(N)=N)(CCC/[NH]=C(/N)\\[NH])CCCNC(N)=N)O=P([O])(OCC(COP(=OC(COCC(CCC/[NH]=C(\\[NH])/N)(CCCNC(N)=N)CCCNC(N)=N)COP([O])(=O)OC(COP(OC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)COP(OC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)COP([O])(=O)OC(COP(OC(COP(OC(COP(=O)([O])OC(COCC(CCC/[NH]=C(/N)\\[NH])(CCCNC(N)=N)CCCNC(=N)N)COP([O])(=O)OCCCCCCNC(NC=5C=CC(=C(C5)C(=O)[O])C6(C7=CC=C(C=C7OC=8C6=CC=C(C8)O)O)C)=S)COCC(CCCNC(N)=N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)([O])=O)COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)([O])=O)COCC(CCCNC(=N)N)(CCCNC(=N)N)CCC/[NH]=C(\\[NH])/N)([O])=O)([O])=O)COCC(CCC/[NH]=C(/N)\\[NH])(CCCNC(=N)N)CCCNC(=N)N)([O])[O])(C)COP(OCCCCCCO)(=O)[O])[O])(=O)[O])([O])=O)(CCC/[NH]=C(\\[NH])/[NH])CCCNC(=N)N";
-            IAtomContainer mol = smipar.ParseSmiles(smiles);
+            var mol = smipar.ParseSmiles(smiles);
             InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
             InChIGenerator generator = inchiFact.GetInChIGenerator(mol, "W0.01");
             Assert.AreEqual(InChIReturnCode.Error, generator.ReturnStatus);
@@ -922,7 +922,7 @@ namespace NCDK.Graphs.InChI
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
             string smiles = "NC1=NC2=C(N=CN2)C(=O)N1";
-            IAtomContainer mol = smipar.ParseSmiles(smiles);
+            var mol = smipar.ParseSmiles(smiles);
             InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
             InChIGenerator inchigen = inchiFact.GetInChIGenerator(mol);
             Assert.AreEqual(InChIReturnCode.Ok, inchigen.ReturnStatus);
@@ -939,7 +939,7 @@ namespace NCDK.Graphs.InChI
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
             string smiles = "NC1=NC2=C(N=CN2)C(=O)N1";
-            IAtomContainer mol = smipar.ParseSmiles(smiles);
+            var mol = smipar.ParseSmiles(smiles);
             InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
             InChIGenerator inchigen = inchiFact.GetInChIGenerator(mol, "KET");
             Assert.AreEqual(InChIReturnCode.Ok, inchigen.ReturnStatus);
@@ -956,7 +956,7 @@ namespace NCDK.Graphs.InChI
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
             string smiles = "N\\C=C/C=O";
-            IAtomContainer mol = smipar.ParseSmiles(smiles);
+            var mol = smipar.ParseSmiles(smiles);
             InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
             InChIGenerator stdinchi = inchiFact.GetInChIGenerator(mol);
             Assert.AreEqual(InChIReturnCode.Ok, stdinchi.ReturnStatus);
@@ -976,7 +976,7 @@ namespace NCDK.Graphs.InChI
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
             string smiles = "N\\C=C/C=O";
-            IAtomContainer mol = smipar.ParseSmiles(smiles);
+            var mol = smipar.ParseSmiles(smiles);
             InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
             InChIGenerator inchigen = inchiFact.GetInChIGenerator(mol, "15T");
             Assert.AreEqual(InChIReturnCode.Ok, inchigen.ReturnStatus);

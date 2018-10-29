@@ -44,8 +44,8 @@ namespace NCDK
         public virtual void TestGetSymbol()
         {
             IElement e = (IElement)NewChemObject();
-            e.Symbol = "X";
-            Assert.AreEqual("X", e.Symbol);
+            e.Symbol = "Ir";
+            Assert.AreEqual("Ir", e.Symbol);
         }
 
         [TestMethod()]

@@ -124,66 +124,63 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public DescriptorValue<Result<double>> Calculate(IAtomContainer container)
         {
             double weight = 0;
-            if (string.Equals(elementName, "*", StringComparison.Ordinal))
+            switch (elementName)
             {
-                try
-                {
-                    for (int i = 0; i < container.Atoms.Count; i++)
+                case "*":
+                    try
                     {
-                        //Debug.WriteLine("WEIGHT: "+container.GetAtomAt(i).Symbol +" " +IsotopeFactory.Instance.GetMajorIsotope( container.GetAtomAt(i).Symbol ).ExactMass);
-                        weight += BODRIsotopeFactory.Instance.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
-                        int hcount = container.Atoms[i].ImplicitHydrogenCount ?? 0;
-                        weight += (hcount * 1.00782504);
-                    }
-                }
-                catch (Exception e)
-                {
-                    return GetDummyDescriptorValue(e);
-                }
-            }
-            else if (string.Equals(elementName, "H", StringComparison.Ordinal))
-            {
-                try
-                {
-                    IIsotope h = BODRIsotopeFactory.Instance.GetMajorIsotope("H");
-                    for (int i = 0; i < container.Atoms.Count; i++)
-                    {
-                        if (container.Atoms[i].Symbol.Equals(elementName, StringComparison.Ordinal))
+                        for (int i = 0; i < container.Atoms.Count; i++)
                         {
                             weight += BODRIsotopeFactory.Instance.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
-                        }
-                        else
-                        {
-                            weight += (container.Atoms[i].ImplicitHydrogenCount.Value * h.ExactMass.Value);
+                            int hcount = container.Atoms[i].ImplicitHydrogenCount ?? 0;
+                            weight += (hcount * 1.00782504);
                         }
                     }
-                }
-                catch (Exception e)
-                {
-                    return GetDummyDescriptorValue(e);
-                }
-            }
-            else
-            {
-                try
-                {
-                    for (int i = 0; i < container.Atoms.Count; i++)
+                    catch (Exception e)
                     {
-                        if (container.Atoms[i].Symbol.Equals(elementName, StringComparison.Ordinal))
+                        return GetDummyDescriptorValue(e);
+                    }
+                    break;
+                case "H":
+                    try
+                    {
+                        IIsotope h = BODRIsotopeFactory.Instance.GetMajorIsotope("H");
+                        for (int i = 0; i < container.Atoms.Count; i++)
                         {
-                            weight += BODRIsotopeFactory.Instance.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
+                            if (container.Atoms[i].Symbol.Equals(elementName, StringComparison.Ordinal))
+                            {
+                                weight += BODRIsotopeFactory.Instance.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
+                            }
+                            else
+                            {
+                                weight += (container.Atoms[i].ImplicitHydrogenCount.Value * h.ExactMass.Value);
+                            }
                         }
                     }
-                }
-                catch (Exception e)
-                {
-                    return GetDummyDescriptorValue(e);
-                }
+                    catch (Exception e)
+                    {
+                        return GetDummyDescriptorValue(e);
+                    }
+                    break;
+                default:
+                    try
+                    {
+                        for (int i = 0; i < container.Atoms.Count; i++)
+                        {
+                            if (container.Atoms[i].Symbol.Equals(elementName, StringComparison.Ordinal))
+                            {
+                                weight += BODRIsotopeFactory.Instance.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return GetDummyDescriptorValue(e);
+                    }
+                    break;
             }
 
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(weight),
-                    DescriptorNames);
-
+            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(weight), DescriptorNames);
         }
 
         /// <inheritdoc/>

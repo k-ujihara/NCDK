@@ -160,7 +160,7 @@ namespace NCDK.IO
             {
                 // should make some noise now
                 file = null;
-                Trace.TraceError("Error while reading file: ", e.Message);
+                Trace.TraceError($"Error while reading file: {e.Message}");
                 Debug.WriteLine(e);
             }
             return file;

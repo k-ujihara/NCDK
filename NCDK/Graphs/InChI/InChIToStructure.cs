@@ -21,7 +21,6 @@ using NCDK.Config;
 using NCDK.Stereo;
 using NCDK.Tools;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -95,7 +94,7 @@ namespace NCDK.Graphs.InChI
         /// <param name="inchi"></param>
         /// <param name="builder"></param>
         /// <param name="options"></param>
-        internal InChIToStructure(string inchi, IChemObjectBuilder builder, IList<string> options)
+        internal InChIToStructure(string inchi, IChemObjectBuilder builder, IEnumerable<string> options)
         {
             if (options == null)
                 throw new ArgumentNullException(nameof(options));
@@ -129,12 +128,12 @@ namespace NCDK.Graphs.InChI
             //molecule = new AtomContainer();
             AtomContainer = builder.NewAtomContainer();
 
-            IDictionary<NInchiAtom, IAtom> inchiCdkAtomMap = new Dictionary<NInchiAtom, IAtom>();
+            var inchiCdkAtomMap = new Dictionary<NInchiAtom, IAtom>();
 
             for (int i = 0; i < output.Atoms.Count; i++)
             {
-                NInchiAtom iAt = output.Atoms[i];
-                IAtom cAt = builder.NewAtom();
+                var iAt = output.Atoms[i];
+                var cAt = builder.NewAtom();
 
                 inchiCdkAtomMap[iAt] = cAt;
 
@@ -150,7 +149,7 @@ namespace NCDK.Graphs.InChI
                 cAt.FormalCharge = iAt.Charge;
                 cAt.ImplicitHydrogenCount = iAt.ImplicitH;
 
-                int isotopicMass = iAt.IsotopicMass;
+                var isotopicMass = iAt.IsotopicMass;
 
                 if (isotopicMass != 0)
                 {
@@ -158,7 +157,7 @@ namespace NCDK.Graphs.InChI
                     {
                         try
                         {
-                            int massNumber = BODRIsotopeFactory.Instance.GetMajorIsotope(cAt.AtomicNumber.Value).MassNumber.Value;
+                            var massNumber = BODRIsotopeFactory.Instance.GetMajorIsotope(cAt.AtomicNumber.Value).MassNumber.Value;
                             cAt.MassNumber = massNumber + (isotopicMass - ISOTOPIC_SHIFT_FLAG);
                         }
                         catch (IOException e)
@@ -173,17 +172,43 @@ namespace NCDK.Graphs.InChI
                 }
 
                 AtomContainer.Atoms.Add(cAt);
+
+                cAt = AtomContainer.Atoms[AtomContainer.Atoms.Count - 1];
+                for (int j = 0; j < iAt.ImplicitDeuterium; j++)
+                {
+                    var deut = builder.NewAtom();
+                    deut.AtomicNumber = 1;
+                    deut.Symbol = "H";
+                    deut.MassNumber = 2;
+                    deut.ImplicitHydrogenCount = 0;
+                    AtomContainer.Atoms.Add(deut);
+                    deut = AtomContainer.Atoms[AtomContainer.Atoms.Count - 1];
+                    var bond = builder.NewBond(cAt, deut, BondOrder.Single);
+                    AtomContainer.Bonds.Add(bond);
+                }
+                for (int j = 0; j < iAt.ImplicitTritium; j++)
+                {
+                    var trit = builder.NewAtom();
+                    trit.AtomicNumber = 1;
+                    trit.Symbol = "H";
+                    trit.MassNumber = 3;
+                    trit.ImplicitHydrogenCount = 0;
+                    AtomContainer.Atoms.Add(trit);
+                    trit = AtomContainer.Atoms[AtomContainer.Atoms.Count - 1];
+                    var bond = builder.NewBond(cAt, trit, BondOrder.Single);
+                    AtomContainer.Bonds.Add(bond);
+                }
             }
 
             for (int i = 0; i < output.Bonds.Count; i++)
             {
-                NInchiBond iBo = output.Bonds[i];
+                var iBo = output.Bonds[i];
 
-                IAtom atO = inchiCdkAtomMap[iBo.OriginAtom];
-                IAtom atT = inchiCdkAtomMap[iBo.TargetAtom];
-                IBond cBo = builder.NewBond(atO, atT);
+                var atO = inchiCdkAtomMap[iBo.OriginAtom];
+                var atT = inchiCdkAtomMap[iBo.TargetAtom];
+                var cBo = builder.NewBond(atO, atT);
 
-                INCHI_BOND_TYPE type = iBo.BondType;
+                var type = iBo.BondType;
                 switch (type)
                 {
                     case INCHI_BOND_TYPE.Single:
@@ -202,7 +227,7 @@ namespace NCDK.Graphs.InChI
                         throw new CDKException("Unknown bond type: " + type);
                 }
 
-                INCHI_BOND_STEREO stereo = iBo.BondStereo;
+                var stereo = iBo.BondStereo;
                 switch (stereo)
                 {
                     // No stereo definition
@@ -236,16 +261,21 @@ namespace NCDK.Graphs.InChI
 
             for (int i = 0; i < output.Stereos.Count; i++)
             {
-                NInchiStereo0D stereo0d = output.Stereos[i];
+                var stereo0d = output.Stereos[i];
                 if (stereo0d.StereoType == INCHI_STEREOTYPE.Tetrahedral
-                        || stereo0d.StereoType == INCHI_STEREOTYPE.Allene)
+                 || stereo0d.StereoType == INCHI_STEREOTYPE.Allene)
                 {
-                    NInchiAtom central = stereo0d.CentralAtom;
-                    NInchiAtom[] neighbours = stereo0d.Neighbors;
+                    var central = stereo0d.CentralAtom;
+                    var neighbours = stereo0d.Neighbors;
 
-                    IAtom focus = inchiCdkAtomMap[central];
-                    IAtom[] neighbors = new IAtom[]{inchiCdkAtomMap[neighbours[0]], inchiCdkAtomMap[neighbours[1]],
-                            inchiCdkAtomMap[neighbours[2]], inchiCdkAtomMap[neighbours[3]]};
+                    var focus = inchiCdkAtomMap[central];
+                    var neighbors = new IAtom[]
+                    {
+                        inchiCdkAtomMap[neighbours[0]],
+                        inchiCdkAtomMap[neighbours[1]],
+                        inchiCdkAtomMap[neighbours[2]],
+                        inchiCdkAtomMap[neighbours[3]]
+                    };
                     TetrahedralStereo stereo;
 
                     // as per JNI InChI doc even is clockwise and odd is
@@ -280,8 +310,8 @@ namespace NCDK.Graphs.InChI
                                 //     t0 = f = t1
                                 //    /         \
                                 //   p1         p3
-                                IAtom[] peripherals = neighbors;
-                                IAtom[] terminals = ExtendedTetrahedral.FindTerminalAtoms(AtomContainer, focus);
+                                var peripherals = neighbors;
+                                var terminals = ExtendedTetrahedral.FindTerminalAtoms(AtomContainer, focus);
 
                                 // InChI always provides the terminal atoms t0 and t1 as
                                 // periphals, here we find where they are and then add in
@@ -333,16 +363,16 @@ namespace NCDK.Graphs.InChI
                     //   A == B       \      /
                     //         \       A == B
                     //          Y
-                    IAtom x = inchiCdkAtomMap[neighbors[0]];
-                    IAtom a = inchiCdkAtomMap[neighbors[1]];
-                    IAtom b = inchiCdkAtomMap[neighbors[2]];
-                    IAtom y = inchiCdkAtomMap[neighbors[3]];
+                    var x = inchiCdkAtomMap[neighbors[0]];
+                    var a = inchiCdkAtomMap[neighbors[1]];
+                    var b = inchiCdkAtomMap[neighbors[2]];
+                    var y = inchiCdkAtomMap[neighbors[3]];
 
                     // XXX: AtomContainer is doing slow lookup
-                    IBond stereoBond = AtomContainer.GetBond(a, b);
+                    var stereoBond = AtomContainer.GetBond(a, b);
                     stereoBond.SetAtoms(new[] { a, b }); // ensure a is first atom
 
-                    DoubleBondConformation conformation = DoubleBondConformation.Unset;
+                    var conformation = DoubleBondConformation.Unset;
 
                     switch (stereo0d.Parity)
                     {
@@ -366,7 +396,7 @@ namespace NCDK.Graphs.InChI
                 }
             }
         }
-        
+
         /// <summary>
         /// Finds a neighbor attached to 'atom' that is singley bonded and isn't 'exclude'. If no such atom exists, the 'atom' is returned.
         /// </summary>
@@ -378,7 +408,8 @@ namespace NCDK.Graphs.InChI
         {
             foreach (var bond in container.GetConnectedBonds(atom))
             {
-                if (!BondOrder.Single.Equals(bond.Order) || bond.Contains(exclude)) continue;
+                if (!BondOrder.Single.Equals(bond.Order) || bond.Contains(exclude))
+                    continue;
                 return bond.GetOther(atom);
             }
             return atom;
@@ -399,7 +430,7 @@ namespace NCDK.Graphs.InChI
         /// Generated (error/warning) messages.
         /// </summary>
         public string Message => output.Message;
-        
+
         /// <summary>
         /// Generated log.
         /// </summary>
@@ -452,7 +483,7 @@ namespace NCDK.Graphs.InChI
         /// <param name="builder">the builder to employ</param>
         /// <returns>the InChI structure generator object</returns>
         /// <exception cref="CDKException">if the generator cannot be instantiated</exception>
-        public static InChIToStructure FromInChI(string inchi, IChemObjectBuilder builder, IList<string> options)
+        public static InChIToStructure FromInChI(string inchi, IChemObjectBuilder builder, IEnumerable<string> options)
         {
             return new InChIToStructure(inchi, builder, options);
         }

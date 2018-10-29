@@ -26,6 +26,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     // @cdk.module  smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
+    [Obsolete]
     public class AromaticSymbolAtom : SMARTSAtom
     {
         public AromaticSymbolAtom(string symbol, IChemObjectBuilder builder)

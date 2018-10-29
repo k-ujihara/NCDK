@@ -29,6 +29,7 @@ using NCDK.Graphs;
 using NCDK.IO;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Silent;
+using NCDK.SMARTS;
 using NCDK.Smiles;
 using NCDK.Templates;
 using NCDK.Tools;
@@ -78,19 +79,9 @@ namespace NCDK.Isomorphisms
             atomContainer.Atoms.Add(builder.NewAtom("N"));
             atomContainer.AddBond(atomContainer.Atoms[0], atomContainer.Atoms[1], BondOrder.Single);
             atomContainer.AddBond(atomContainer.Atoms[1], atomContainer.Atoms[2], BondOrder.Single);
-            var a1 = new SymbolQueryAtom(ChemObjectBuilder.Instance) { Symbol = "C" };
-            var a2 = new Matchers.SMARTS.AnyAtom(ChemObjectBuilder.Instance);
-            var b1 = new OrderQueryBond(a1, a2, BondOrder.Single, ChemObjectBuilder.Instance);
-            var a3 = new SymbolQueryAtom(ChemObjectBuilder.Instance) { Symbol = "C" };
-            var b2 = new OrderQueryBond(a2, a3, BondOrder.Single, ChemObjectBuilder.Instance);
-
             var query = new QueryAtomContainer(ChemObjectBuilder.Instance);
-            query.Atoms.Add(a1);
-            query.Atoms.Add(a2);
-            query.Atoms.Add(a3);
-
-            query.Bonds.Add(b1);
-            query.Bonds.Add(b2);
+            if (!Smarts.Parse(query, "C*C"))
+                Assert.Fail(Smarts.GetLastErrorMessage());
 
             var list = uiTester.GetSubgraphMaps(atomContainer, query);
 
@@ -140,7 +131,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestBasicQueryAtomContainer()
         {
-            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             var atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
             var SMILESquery = sp.ParseSmiles("CC"); // acetic acid anhydride
             var query = QueryAtomContainerCreator.CreateBasicQueryContainer(SMILESquery);
@@ -189,7 +180,7 @@ namespace NCDK.Isomorphisms
             reader.Read(temp);
             query1 = QueryAtomContainerCreator.CreateBasicQueryContainer(temp);
 
-            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             var atomContainer = sp.ParseSmiles("C1CCCCC1");
             query2 = QueryAtomContainerCreator.CreateBasicQueryContainer(atomContainer);
 
@@ -417,7 +408,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestAnyAtomAnyBondCase()
         {
-            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             var target = sp.ParseSmiles("O1C=CC=C1");
             var queryac = sp.ParseSmiles("C1CCCC1");
             var query = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(queryac, false);
@@ -430,7 +421,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestFirstArgumentMustNotBeAnQueryAtomContainer()
         {
-            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             var target = sp.ParseSmiles("O1C=CC=C1");
             var queryac = sp.ParseSmiles("C1CCCC1");
             var query = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(queryac, false);
@@ -449,7 +440,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSingleAtomMatching()
         {
-            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             var target = sp.ParseSmiles("C");
             var query = sp.ParseSmiles("C");
 
@@ -461,7 +452,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSingleAtomMismatching()
         {
-            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             var target = sp.ParseSmiles("C");
             var query = sp.ParseSmiles("N");
 
@@ -474,7 +465,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSingleAtomMatching1()
         {
-            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             var target = sp.ParseSmiles("[H]");
             var queryac = sp.ParseSmiles("[H]");
             var query = QueryAtomContainerCreator.CreateSymbolAndBondOrderQueryContainer(queryac);
@@ -493,7 +484,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSingleAtomMatching2()
         {
-            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             var target = sp.ParseSmiles("CNC");
             var queryac = sp.ParseSmiles("C");
             var query = QueryAtomContainerCreator.CreateSymbolAndBondOrderQueryContainer(queryac);
@@ -519,7 +510,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSingleAtomMatching3()
         {
-            var sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             var target = sp.ParseSmiles("CNC");
             var queryac = sp.ParseSmiles("C");
 
@@ -580,25 +571,8 @@ namespace NCDK.Isomorphisms
         public void TestUITSymmetricMatch()
         {
             var q = new QueryAtomContainer(ChemObjectBuilder.Instance);
-            //setting atoms
-            var a0 = new Matchers.SMARTS.AliphaticSymbolAtom("C", ChemObjectBuilder.Instance);
-            q.Atoms.Add(a0);
-            var a1 = new Matchers.SMARTS.AnyAtom(ChemObjectBuilder.Instance);
-            q.Atoms.Add(a1);
-            var a2 = new Matchers.SMARTS.AnyAtom(ChemObjectBuilder.Instance);
-            q.Atoms.Add(a2);
-            var a3 = new Matchers.SMARTS.AliphaticSymbolAtom("C", ChemObjectBuilder.Instance);
-            q.Atoms.Add(a3);
-            //setting bonds
-            var b0 = new Matchers.SMARTS.OrderQueryBond(BondOrder.Single, ChemObjectBuilder.Instance);
-            b0.SetAtoms(new IAtom[] { a0, a1 });
-            q.Bonds.Add(b0);
-            var b1 = new Matchers.SMARTS.OrderQueryBond(BondOrder.Single, ChemObjectBuilder.Instance);
-            b1.SetAtoms(new IAtom[] { a1, a2 });
-            q.Bonds.Add(b1);
-            var b2 = new Matchers.SMARTS.OrderQueryBond(BondOrder.Single, ChemObjectBuilder.Instance);
-            b2.SetAtoms(new IAtom[] { a2, a3 });
-            q.Bonds.Add(b2);
+            if (!Smarts.Parse(q, "C**C"))
+                Assert.Fail(Smarts.GetLastErrorMessage());
 
             //Creating 'SCCS' target molecule
             var target = new AtomContainer();

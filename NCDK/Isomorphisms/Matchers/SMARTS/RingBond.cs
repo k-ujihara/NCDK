@@ -16,6 +16,8 @@
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
 
+using System;
+
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
@@ -24,6 +26,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     // @cdk.module  smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
+    [Obsolete]
     public class RingBond : SMARTSBond
     {
         /// <summary>

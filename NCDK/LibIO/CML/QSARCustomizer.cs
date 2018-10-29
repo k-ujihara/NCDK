@@ -78,7 +78,7 @@ namespace NCDK.LibIO.CML
                         scalar = new CMLArray();
                         scalar.SetAttributeValue(CMLElement.Attribute_dataType, "xsd:int");
                         scalar.SetAttributeValue(CMLElement.Attribute_size, result.Length.ToString(NumberFormatInfo.InvariantInfo));
-                        StringBuilder buffer = new StringBuilder();
+                        var buffer = new StringBuilder();
                         for (int i = 0; i < result.Length; i++)
                         {
                             buffer.Append(result[i] + " ");
@@ -91,7 +91,7 @@ namespace NCDK.LibIO.CML
                         scalar = new CMLArray();
                         scalar.SetAttributeValue(CMLElement.Attribute_dataType, "xsd:double");
                         scalar.SetAttributeValue(CMLElement.Attribute_size, "" + result.Length);
-                        StringBuilder buffer = new StringBuilder();
+                        var buffer = new StringBuilder();
                         for (int i = 0; i < result.Length; i++)
                         {
                             buffer.Append(result[i] + " ");
@@ -100,7 +100,7 @@ namespace NCDK.LibIO.CML
                     }
                     break;
                 default:
-                    // Trace.TraceError("Could not convert this object to a scalar element: ", value);
+                    // Trace.TraceError($"Could not convert this object to a scalar element: {value}");
                     scalar = new CMLScalar();
                     scalar.Add(value.ToString());
                     break;

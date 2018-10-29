@@ -1,5 +1,7 @@
 # Beam
 
+This is based on snap shot of cdk-beam on [2018-07-23](https://github.com/johnmay/beam/tree/335ee67bfe886613cd0ed27ae89a98150c46af13).
+
 [![DOI](https://zenodo.org/badge/12061606.svg)](https://zenodo.org/badge/latestdoi/12061606)
 
 Beam - _to express by means of a radiant smile_ 

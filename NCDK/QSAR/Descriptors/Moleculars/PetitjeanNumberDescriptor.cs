@@ -80,10 +80,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>petitjean number</returns>
         public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
         {
-            IAtomContainer cloneContainer = AtomContainerManipulator.RemoveHydrogens(atomContainer);
+            var cloneContainer = AtomContainerManipulator.RemoveHydrogens(atomContainer);
             double petitjeanNumber; //weinerPath
-            int diameter = PathTools.GetMolecularGraphDiameter(cloneContainer);
-            int radius = PathTools.GetMolecularGraphRadius(cloneContainer);
+            var diameter = PathTools.GetMolecularGraphDiameter(cloneContainer);
+            var radius = PathTools.GetMolecularGraphRadius(cloneContainer);
 
             if (diameter == 0)
                 petitjeanNumber = 0;

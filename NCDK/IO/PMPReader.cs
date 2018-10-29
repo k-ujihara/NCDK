@@ -212,6 +212,11 @@ namespace NCDK.IO
                                     atomGivenIds[int.Parse(chemObject.GetProperty<string>(PMP_ID), NumberFormatInfo.InvariantInfo)] = id;
                                     modelStructure.Atoms.Add((IAtom)chemObject);
                                 }
+                                else if (chemObject is IBond) {
+                                    // ignored: bonds may be defined before their
+                                    // atoms so their handling is deferred until the
+                                    // end of the model
+                                } 
                                 else
                                 {
                                     Trace.TraceError("chemObject is not initialized or of bad class type");
@@ -362,13 +367,13 @@ namespace NCDK.IO
             }
             catch (IOException e)
             {
-                Trace.TraceError("An IOException happened: ", e.Message);
+                Trace.TraceError($"An IOException happened: {e.Message}");
                 Debug.WriteLine(e);
                 chemFile = null;
             }
             catch (CDKException e)
             {
-                Trace.TraceError("An CDKException happened: ", e.Message);
+                Trace.TraceError($"An CDKException happened: {e.Message}");
                 Debug.WriteLine(e);
                 chemFile = null;
             }

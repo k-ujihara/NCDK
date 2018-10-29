@@ -117,5 +117,44 @@ namespace NCDK.Graphs.InChI
                 throw new ArgumentNullException(nameof(options));
             return (new InChIGenerator(container, options, IgnoreAromaticBonds));
         }
+
+    /// <summary>
+    /// Gets structure generator for an InChI string.
+    /// </summary>
+    /// <param name="inchi">InChI to generate structure from.</param>
+    /// <param name="builder">the builder to use</param>
+    /// <returns>the InChI structure generator object</returns>
+    /// <exception cref="CDKException">if the generator cannot be instantiated</exception>
+        public InChIToStructure GetInChIToStructure(string inchi, IChemObjectBuilder builder)
+        {
+            return (new InChIToStructure(inchi, builder));
+        }
+
+        /// <summary>
+        /// Gets structure generator for an InChI string.
+        /// </summary>
+        /// <param name="inchi">InChI to generate structure from.</param>
+        /// <param name="builder">the builder to employ</param>
+        /// <param name="options">String of options for structure generation.</param>
+        /// <returns>the InChI structure generator object</returns>
+        /// <exception cref="CDKException">if the generator cannot be instantiated</exception>
+        public InChIToStructure GetInChIToStructure(string inchi, IChemObjectBuilder builder, string options)
+    {
+        return (new InChIToStructure(inchi, builder, options));
+    }
+
+/*
+ * <p>Gets structure generator for an InChI string.
+ *
+ * @param inchi         InChI to generate structure from.
+ * @param options       List of options (net.sf.jniinchi.INCHI_OPTION) for structure generation.
+ * @param builder the builder to employ
+ * @return   the InChI structure generator object
+ * @throws CDKException    if the generator cannot be instantiated
+ */
+public InChIToStructure GetInChIToStructure(string inchi, IChemObjectBuilder builder, IEnumerable<string> options)
+{
+        return (new InChIToStructure(inchi, builder, options));
+    }
     }
 }

@@ -65,7 +65,7 @@ namespace NCDK.Renderers.Generators
             sceneGenerator = new BasicSceneGenerator();
         }
 
-        public IList<IRenderingElement> GetAllSimpleElements(IGenerator<IAtomContainer> generator, IAtomContainer container)
+        public IReadOnlyList<IRenderingElement> GetAllSimpleElements(IGenerator<IAtomContainer> generator, IAtomContainer container)
         {
             IRenderingElement root = generator.Generate(container, model);
             return elementUtil.GetAllSimpleElements(root);
@@ -134,7 +134,7 @@ namespace NCDK.Renderers.Generators
         /// </summary>
         /// <param name="elements"></param>
         /// <returns></returns>
-        public static Point Center(IList<IRenderingElement> elements)
+        public static Point Center(IEnumerable<IRenderingElement> elements)
         {
             var center = new Point(0, 0);
             double counter = 0;

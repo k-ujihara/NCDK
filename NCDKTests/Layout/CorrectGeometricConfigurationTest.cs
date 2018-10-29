@@ -39,7 +39,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void Cis()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, -0.74d, 5.00d));
             m.Atoms.Add(Atom("C", 1, -1.49d, 3.70d));
             m.Atoms.Add(Atom("C", 1, -0.74d, 2.40d));
@@ -63,7 +63,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void Trans()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, -0.74d, 5.00d));
             m.Atoms.Add(Atom("C", 1, -1.49d, 3.70d));
             m.Atoms.Add(Atom("C", 1, -0.74d, 2.40d));

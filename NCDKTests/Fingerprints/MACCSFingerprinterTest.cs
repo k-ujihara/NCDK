@@ -54,9 +54,9 @@ namespace NCDK.Fingerprints
             SmilesParser parser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             IFingerprinter printer = new MACCSFingerprinter();
 
-            IAtomContainer mol1 = parser.ParseSmiles("c1ccccc1CCc1ccccc1");
-            IAtomContainer mol2 = parser.ParseSmiles("c1ccccc1CC");
-            IAtomContainer mol3 = parser.ParseSmiles("CCC.CCC");
+            var mol1 = parser.ParseSmiles("c1ccccc1CCc1ccccc1");
+            var mol2 = parser.ParseSmiles("c1ccccc1CC");
+            var mol3 = parser.ParseSmiles("CCC.CCC");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);
@@ -87,9 +87,9 @@ namespace NCDK.Fingerprints
             SmilesParser parser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             IFingerprinter printer = new MACCSFingerprinter();
 
-            IAtomContainer mol1 = parser.ParseSmiles("CC(N)CCCN");
-            IAtomContainer mol2 = parser.ParseSmiles("CC(N)CCC");
-            IAtomContainer mol3 = parser.ParseSmiles("CCCC");
+            var mol1 = parser.ParseSmiles("CC(N)CCCN");
+            var mol2 = parser.ParseSmiles("CC(N)CCC");
+            var mol3 = parser.ParseSmiles("CCCC");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);

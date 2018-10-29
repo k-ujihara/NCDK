@@ -16,10 +16,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Numerics;
 using NCDK.QSAR.Results;
-using NCDK.Smiles;
 using NCDK.Silent;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -40,10 +39,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestHBondAcceptorCountDescriptor()
         {
             Descriptor.Parameters = new object[] { true };
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             // original molecule O=N(=O)c1cccc2cn[nH]c12 - correct kekulisation will give
             // the same result. this test though should depend on kekulisation working
-            IAtomContainer mol = sp.ParseSmiles("O=N(=O)C1=C2NN=CC2=CC=C1");
+            var mol = sp.ParseSmiles("O=N(=O)C1=C2NN=CC2=CC=C1");
             Assert.AreEqual(1, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
 
@@ -105,6 +104,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             Descriptor.Parameters = new object[] { true };
             Assert.AreEqual(2, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
+        }
+
+        /// <summary>
+        /// <see href="https://github.com/cdk/cdk/issues/495">Issue 495</see>
+        /// </summary>
+        [TestMethod()]
+        public void ExocyclicOxygenInAromaticRing()
+        {
+            var sp = CDK.SilentSmilesParser;
+            var m = sp.ParseSmiles("Cn1c2nc([nH]c2c(=O)n(c1=O)C)C1CCCC1");
+            var hbond_acceptor_desc = new HBondAcceptorCountDescriptor();
+            int actual = hbond_acceptor_desc.Calculate(m).Value.Value;
+            Assert.AreEqual(3, actual);
         }
     }
 }

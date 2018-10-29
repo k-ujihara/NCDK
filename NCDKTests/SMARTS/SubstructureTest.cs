@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
  *
@@ -23,23 +23,17 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Isomorphisms;
+using NCDK.Isomorphisms.Matchers;
 using NCDK.Smiles;
-using NCDK.Smiles.SMARTS.Parser;
-using static NCDK.CDKPropertyName;
+using System.IO;
 
-namespace NCDK.Isomorphisms
+namespace NCDK.SMARTS
 {
-    /// <summary>
-    /// A collection of substructure integration tests. These give a high-level view
-    /// of what we expect to match. To run these tests the subclass should <see cref="Create(IAtomContainer)"/> 
-    /// a pattern for the input.
-    /// </summary>
-    // @author John May
-    // @cdk.module test-smarts
     [TestClass()]
     public abstract class SubstructureTest
     {
-        protected abstract Pattern Create(IAtomContainer container);
+        public abstract Pattern Create(IAtomContainer container);
 
         // ensure edges can be absent in the target
         [TestMethod()]
@@ -330,8 +324,8 @@ namespace NCDK.Isomorphisms
                     300);
         }
 
-        [TestCategory("SlowTest")]
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void Fullerene_c70_automorphisms()
         {
             AssertMatch(
@@ -349,8 +343,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Ferrocene_automorphisms()
         {
-            AssertMatch(Smi("[Fe]123456789C%10C1C2C3C4%10.C51C6C7C8C91"), Smi("[Fe]123456789C%10C1C2C3C4%10.C51C6C7C8C91"),
-                    200);
+            AssertMatch(Smi("[Fe]123456789C%10C1C2C3C4%10.C51C6C7C8C91"), Smi("[Fe]123456789C%10C1C2C3C4%10.C51C6C7C8C91"), 200);
         }
 
         [TestMethod()]
@@ -365,10 +358,18 @@ namespace NCDK.Isomorphisms
             AssertMatch(Smi("CC[C@@H](C)O"), Smi("CC[C@](C)([H])O"), 1);
         }
 
-        [TestMethod()]
-        public void Erm()
+        public void ShouldMatchAsSmilesButNotSmarts()
         {
-            AssertMismatch(Smi("CC[C@@H](C)O"), Smi("CC[C@](C)(N)O"));
+            // H > 0
+            AssertMismatch(Sma("CC[C@@H](C)O"), Smi("CC[C@](C)(N)O"));
+        }
+
+        [TestMethod()]
+        public void Sulfoxide()
+        {
+            AssertMatch(Sma("[S@](=O)(C)CC"), Smi("O=[S@@](C)CC"), 1);
+            AssertMatch(Smi("O1.[S@]=1(C)CC"), Smi("O=[S@@](C)CC"), 1);
+            AssertMatch(Sma("O1.[S@]=1(C)CC"), Smi("O=[S@@](C)CC"), 1);
         }
 
         // doesn't matter if the match takes place but it should not cause and error
@@ -393,30 +394,25 @@ namespace NCDK.Isomorphisms
 
         void AssertMatch(IAtomContainer query, IAtomContainer target, int count)
         {
-            Assert.AreEqual(count, Create(query).MatchAll(target).GetStereochemistry().Count(),
-                query.Title + " should match " + target.Title + " " + count + " times");
+            Assert.AreEqual(count, Create(query).MatchAll(target).Count(), query.Title + " should match " + target.Title + " " + count + " times");
         }
 
         void AssertMatch(IAtomContainer query, IAtomContainer target)
         {
-            Assert.IsTrue(
-                    Create(query).Matches(target),
-                    query.Title + " should match " + target.Title);
+            Assert.IsTrue(Create(query).Matches(target), query.Title + " should match " + target.Title);
         }
 
         void AssertMismatch(IAtomContainer query, IAtomContainer target)
         {
-            Assert.IsFalse(
-                Create(query).Matches(target),
-                query.Title + " should not matched " + target.Title);
+            Assert.IsFalse(Create(query).Matches(target), query.Title + " should not matched " + target.Title);
         }
 
-        private static readonly SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+        private static readonly SmilesParser sp = CDK.SilentSmilesParser;
 
         // create a container from a smiles string
         IAtomContainer Smi(string smi)
         {
-            IAtomContainer container = sp.ParseSmiles(smi);
+            var container = sp.ParseSmiles(smi);
             container.Title = smi;
             return container;
         }
@@ -426,9 +422,13 @@ namespace NCDK.Isomorphisms
         // currently be initialised. avoid aromaticity, rings etc.
         IAtomContainer Sma(string sma)
         {
-            IAtomContainer container = SMARTSParser.Parse(sma, Silent.ChemObjectBuilder.Instance);
-            container.Title = sma;
-            return container;
+            var query = new QueryAtomContainer(Silent.ChemObjectBuilder.Instance);
+            if (!Smarts.Parse(query, sma))
+            {
+                throw new IOException(Smarts.GetLastErrorMessage());
+            }
+            query.Title = sma;
+            return query;
         }
     }
 }

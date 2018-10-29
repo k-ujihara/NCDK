@@ -62,7 +62,7 @@ namespace NCDK.Smiles
         private readonly SmiFlavors flavour;
 
         /// <summary>Create a isomeric and aromatic converter.</summary>
-        internal CDKToBeam() 
+        internal CDKToBeam()
             : this(SmiFlavors.AtomicMass | SmiFlavors.AtomAtomMap | SmiFlavors.UseAromaticSymbols)
         {
         }
@@ -103,8 +103,8 @@ namespace NCDK.Smiles
         {
             int order = ac.Atoms.Count;
 
-            GraphBuilder gb = GraphBuilder.Create(order);
-            IDictionary<IAtom, int> indices = new Dictionary<IAtom, int>(order);
+            var gb = GraphBuilder.Create(order);
+            var indices = new Dictionary<IAtom, int>(order);
 
             foreach (var a in ac.Atoms)
             {
@@ -136,6 +136,11 @@ namespace NCDK.Smiles
                              se is ExtendedTetrahedral)
                     {
                         AddExtendedTetrahedralConfiguration((ExtendedTetrahedral)se, gb, indices);
+                    }
+                    else if (SmiFlavorTool.IsSet(flavour, SmiFlavors.StereoExCisTrans) &&
+                            se is ExtendedCisTrans)
+                    {
+                        AddExtendedCisTransConfig((ExtendedCisTrans)se, gb, indices, ac);
                     }
                 }
             }
@@ -185,17 +190,18 @@ namespace NCDK.Smiles
         /// <exception cref="NullReferenceException">the atom had an undefined symbol or implicit hydrogen count</exception>
         static Beam.IAtom ToBeamAtom(IAtom a, SmiFlavors flavour)
         {
-            bool aromatic = SmiFlavorTool.IsSet(flavour, SmiFlavors.UseAromaticSymbols) && a.IsAromatic;
-            int? charge = a.FormalCharge;
+            var aromatic = SmiFlavorTool.IsSet(flavour, SmiFlavors.UseAromaticSymbols) && a.IsAromatic;
+            var charge = a.FormalCharge;
             string symbol = CheckNotNull(a.Symbol, "An atom had an undefined symbol");
 
-            Element element = Element.OfSymbol(symbol);
-            if (element == null) element = Element.Unknown;
+            var element = Element.OfSymbol(symbol);
+            if (element == null)
+                element = Element.Unknown;
 
-            AtomBuilder ab = aromatic ? AtomBuilder.Aromatic(element) : AtomBuilder.Aliphatic(element);
+            var ab = aromatic ? AtomBuilder.Aromatic(element) : AtomBuilder.Aliphatic(element);
 
             // CDK leaves nulls on pseudo atoms - we need to check this special case
-            int? hCount = a.ImplicitHydrogenCount;
+            var hCount = a.ImplicitHydrogenCount;
             if (element == Element.Unknown)
             {
                 ab.NumOfHydrogens(hCount ?? 0);
@@ -205,7 +211,8 @@ namespace NCDK.Smiles
                 ab.NumOfHydrogens(CheckNotNull(hCount, "One or more atoms had an undefined number of implicit hydrogens"));
             }
 
-            if (charge.HasValue) ab.Charge(charge.Value);
+            if (charge.HasValue)
+                ab.Charge(charge.Value);
 
             // use the mass number to specify isotope?
             if (SmiFlavorTool.IsSet(flavour, SmiFlavors.AtomicMass | SmiFlavors.AtomicMassStrict))
@@ -217,7 +224,7 @@ namespace NCDK.Smiles
                 }
             }
 
-            int? atomClass = a.GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
+            var atomClass = a.GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
             if (SmiFlavorTool.IsSet(flavour, SmiFlavors.AtomAtomMap) && atomClass != null)
             {
                 ab.AtomClass(atomClass.Value);
@@ -238,8 +245,8 @@ namespace NCDK.Smiles
         {
             CheckArgument(b.Atoms.Count == 2, "Invalid number of atoms on bond");
 
-            int u = indices[b.Begin];
-            int v = indices[b.End];
+            var u = indices[b.Begin];
+            var v = indices[b.End];
 
             return ToBeamEdgeLabel(b, flavour).CreateEdge(u, v);
         }
@@ -263,7 +270,7 @@ namespace NCDK.Smiles
             if (b.Order.IsUnset())
                 throw new CDKException("A bond had undefined order, possible query bond?");
 
-            BondOrder order = b.Order;
+            var order = b.Order;
             switch (order)
             {
                 case BondOrder.Single:
@@ -287,18 +294,19 @@ namespace NCDK.Smiles
         /// <param name="indices">atom indices</param>
         private static void AddGeometricConfiguration(IDoubleBondStereochemistry dbs, SmiFlavors flavour, GraphBuilder gb, IDictionary<IAtom, int> indices)
         {
-            IBond db = dbs.StereoBond;
+            var db = dbs.StereoBond;
             var bs = dbs.Bonds;
 
             // don't try to set a configuration on aromatic bonds
-            if (SmiFlavorTool.IsSet(flavour, SmiFlavors.UseAromaticSymbols) && db.IsAromatic) return;
+            if (SmiFlavorTool.IsSet(flavour, SmiFlavors.UseAromaticSymbols) && db.IsAromatic)
+                return;
 
-            int u = indices[db.Begin];
-            int v = indices[db.End];
+            var u = indices[db.Begin];
+            var v = indices[db.End];
 
             // is bs[0] always connected to db.Atom(0)?
-            int x = indices[bs[0].GetOther(db.Begin)];
-            int y = indices[bs[1].GetOther(db.End)];
+            var x = indices[bs[0].GetOther(db.Begin)];
+            var y = indices[bs[1].GetOther(db.End)];
 
             if (dbs.Stereo == DoubleBondConformation.Together)
             {
@@ -320,15 +328,15 @@ namespace NCDK.Smiles
         {
             var ligands = tc.Ligands;
 
-            int u = indices[tc.ChiralAtom];
-            int[] vs = new int[] {
+            var u = indices[tc.ChiralAtom];
+            var vs = new int[] {
                 indices[ligands[0]],
                 indices[ligands[1]],
                 indices[ligands[2]],
                 indices[ligands[3]], };
 
             gb.CreateTetrahedral(u).LookingFrom(vs[0]).Neighbors(vs[1], vs[2], vs[3])
-                    .Winding(tc.Stereo == TetrahedralStereo.Clockwise ? Beam.Configuration.Clockwise : Beam.Configuration.AntiClockwise).Build();
+                .Winding(tc.Stereo == TetrahedralStereo.Clockwise ? Beam.Configuration.Clockwise : Beam.Configuration.AntiClockwise).Build();
         }
 
         /// <summary>
@@ -341,15 +349,44 @@ namespace NCDK.Smiles
         {
             var ligands = et.Peripherals;
 
-            int u = indices[et.Focus];
-            int[] vs = new int[]{
+            var u = indices[et.Focus];
+            var vs = new int[]{
                 indices[ligands[0]],
                 indices[ligands[1]],
                 indices[ligands[2]],
                 indices[ligands[3]], };
 
             gb.CreateExtendedTetrahedral(u).LookingFrom(vs[0]).Neighbors(vs[1], vs[2], vs[3])
-                    .Winding(et.Winding == TetrahedralStereo.Clockwise ? Beam.Configuration.Clockwise : Beam.Configuration.AntiClockwise).Build();
+                .Winding(et.Winding == TetrahedralStereo.Clockwise ? Beam.Configuration.Clockwise : Beam.Configuration.AntiClockwise).Build();
+        }
+
+        private static void AddExtendedCisTransConfig(ExtendedCisTrans ect, GraphBuilder gb,
+            Dictionary<IAtom, int> indices,
+            IAtomContainer container)
+        {
+            var ends = ExtendedCisTrans.FindTerminalAtoms(container, ect.Focus);
+            var carriers = ect.Carriers;
+            if (ends != null)
+            {
+                Configuration.ConfigurationDoubleBond config;
+                switch (ect.Configure)
+                {
+                    case StereoConfigurations.Together:
+                        config = Configuration.ConfigurationDoubleBond.Together;
+                        break;
+                    case StereoConfigurations.Opposite:
+                        config = Configuration.ConfigurationDoubleBond.Opposite;
+                        break;
+                    default:
+                        config = Configuration.ConfigurationDoubleBond.Unspecified;
+                        break;
+                }
+                gb.CreateExtendedGeometric(indices[ends[0]], indices[ends[1]])
+                    .Configure(indices[carriers[0].GetOther(ends[0])],
+                               indices[carriers[1].GetOther(ends[1])],
+                               config);
+            }
         }
     }
 }
+            

@@ -56,6 +56,7 @@ namespace NCDK.Layout
         private readonly List<Pattern> elemPatterns = new List<Pattern>();
 
         private readonly AtomMatcher elemAtomMatcher = new ElemAtomMatcher();
+
         class ElemAtomMatcher : AtomMatcher
         {
             public override bool Matches(IAtom a, IAtom b)
@@ -65,6 +66,7 @@ namespace NCDK.Layout
         }
 
         private readonly AtomMatcher anonAtomMatcher = new AnonAtomMatcher();
+
         class AnonAtomMatcher : AtomMatcher
         {
             public override bool Matches(IAtom a, IAtom b)
@@ -74,6 +76,7 @@ namespace NCDK.Layout
         }
 
         private readonly BondMatcher anonBondMatcher = new AnonBondMatcher();
+
         class AnonBondMatcher : BondMatcher
         {
             public override bool Matches(IBond a, IBond b)
@@ -106,7 +109,7 @@ namespace NCDK.Layout
         {
             try
             {
-                using (Stream ins = ResourceLoader.GetAsStream("NCDK.Layout.Templates.templates.list"))
+                using (var ins = ResourceLoader.GetAsStream("NCDK.Layout.Templates.templates.list"))
                 using (var reader = new StreamReader(ins))
                 {
                     string line;
@@ -163,8 +166,7 @@ namespace NCDK.Layout
         {
             for (int i = 0; i < templates.Count; i++)
             {
-                if (VentoFoggia.FindIdentical(templates[i], anonAtomMatcher, anonBondMatcher)
-                               .Matches(molecule))
+                if (VentoFoggia.FindIdentical(templates[i], anonAtomMatcher, anonBondMatcher).Matches(molecule))
                 {
                     elemPatterns.RemoveAt(i);
                     anonPatterns.RemoveAt(i);
@@ -187,8 +189,7 @@ namespace NCDK.Layout
         {
             foreach (var template in templates)
             {
-                Mappings mappings = VentoFoggia.FindIdentical(template, anonAtomMatcher, anonBondMatcher)
-                                               .MatchAll(molecule);
+                var mappings = VentoFoggia.FindIdentical(template, anonAtomMatcher, anonBondMatcher).MatchAll(molecule);
                 foreach (var atoms in mappings.ToAtomMap())
                 {
                     foreach (var e in atoms)
@@ -276,16 +277,20 @@ namespace NCDK.Layout
                 foreach (var map in anonPattern.MatchAll(molecule).GetUniqueAtoms().ToAtomBondMap())
                 {
                     bool overlaps = false;
-                    IAtomContainer matched = molecule.Builder
-                                                     .NewAtomContainer();
+                    var matched = molecule.Builder.NewAtomContainer();
                     foreach (var e in map)
                     {
                         if (matchedChemObjs.Contains(e.Value))
                             overlaps = true;
-                        if (e.Value is IAtom)
-                            matched.Atoms.Add((IAtom)e.Value);
-                        else if (e.Value is IBond)
-                            matched.Bonds.Add((IBond)e.Value);
+                        switch (e.Value)
+                        {
+                            case IAtom atom:
+                                matched.Atoms.Add(atom);
+                                break;
+                            case IBond bond:
+                                matched.Bonds.Add(bond);
+                                break;
+                        }
                     }
 
                     // only add if the atoms/bonds of this match don't overlap existing
@@ -303,17 +308,18 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Singleton template instance, mainly useful for aligning molecules. If the template
-        /// does not have coordinates an error is thrown.
-        ///
-        /// For safety we clone the molecule.
+        /// Singleton template instance, mainly useful for aligning molecules. 
         /// </summary>
+        /// <remarks>
+        /// If the template does not have coordinates an error is thrown.
+        /// For safety we clone the molecule.
+        /// </remarks>
         /// <param name="template">the molecule</param>
         /// <returns>new template handler</returns>
         public static TemplateHandler CreateSingleton(IAtomContainer template)
         {
-            TemplateHandler handler = new TemplateHandler();
-            IAtomContainer copy = (IAtomContainer)template.Clone();
+            var handler = new TemplateHandler();
+            var copy = (IAtomContainer)template.Clone();
             handler.AddMolecule(copy);
             return handler;
         }
@@ -355,10 +361,9 @@ namespace NCDK.Layout
         /// <returns>identity template library</returns>
         internal IdentityTemplateLibrary ToIdentityTemplateLibrary()
         {
-            IdentityTemplateLibrary lib = IdentityTemplateLibrary.Empty();
+            var lib = IdentityTemplateLibrary.Empty();
             foreach (var mol in templates)
             {
-                lib.Add(mol);
                 lib.Add(AtomContainerManipulator.Anonymise(mol));
             }
             return lib;

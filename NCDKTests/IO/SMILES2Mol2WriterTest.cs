@@ -43,8 +43,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestWriter1()
         {
-            SmilesParser sp = new SmilesParser(builder);
-            IAtomContainer molecule = sp.ParseSmiles("C([H])([H])([H])([H])");
+            var sp = new SmilesParser(builder);
+            var molecule = sp.ParseSmiles("C([H])([H])([H])([H])");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
             StringWriter swriter = new StringWriter();
@@ -58,8 +58,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestWriter2()
         {
-            SmilesParser sp = new SmilesParser(builder);
-            IAtomContainer molecule = sp.ParseSmiles("c1ccccc1C=O");
+            var sp = new SmilesParser(builder);
+            var molecule = sp.ParseSmiles("c1ccccc1C=O");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.CDKLegacy.Apply(molecule);
 
@@ -78,8 +78,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestWriterForAmide()
         {
-            SmilesParser sp = new SmilesParser(builder);
-            IAtomContainer molecule = sp.ParseSmiles("CC(=O)NC");
+            var sp = new SmilesParser(builder);
+            var molecule = sp.ParseSmiles("CC(=O)NC");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
             StringWriter swriter = new StringWriter();

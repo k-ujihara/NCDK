@@ -20,7 +20,7 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
 
 using System;
@@ -77,6 +77,54 @@ namespace NCDK
         /// <see cref="IChemObject"/>.physicalProperties hashtable.</summary>
         /// <seealso cref="NCDK.Default.ChemObject"/>
         public const string NMRShiftDeuterium = "deuterium nmr shift";
+
+        /// <summary>
+        /// Sulfur NMR shift constant for use as a key in the 
+        /// <see cref="IChemObject"/>'a physical properties hashtable.
+        /// </summary>
+        public const string NMRShiftSulfer = "sulfur nmr shift";
+
+        /// <summary>
+        /// NMR spectrum type constant for use as key for an arbitrary 1-dimensional
+        /// NMR experiment.
+        /// </summary>
+        public const string NMRSpecType1D = "1D NMR spectrum";
+
+        /// <summary>
+        /// NMR spectrum type constant for use as key for a 1-dimensional DEPT90
+        /// NMR experiment.
+        /// </summary>
+        public const string NMRSpecType1DDEPT90 = "1D NMR spectrum: DEPT90";
+
+        /// <summary>
+        /// NMR spectrum type constant for use as key for a 1-dimensional DEPT135
+        /// NMR experiment.
+        /// </summary>
+        public const string NMRSpecType1DDEPT135 = "1D NMR spectrum: DEPT135";
+
+        /// <summary>
+        /// NMR spectrum type constant for use as key for a 2-dimensional HSQC
+        /// NMR experiment.
+        /// </summary>
+        public const string NMRSpecType2DHSQC = "2D NMR spectrum: HSQC";
+
+        /// <summary>
+        /// NMR spectrum type constant for use as key for a 2-dimensional H,H-COSY
+        /// NMR experiment.
+        /// </summary>
+        public const string NMRSpecType2DHHCOSY = "2D NMR spectrum: HHCOSY";
+
+        /// <summary>
+        /// NMR spectrum type constant for use as key for a 2-dimensional INADEQUATE
+        /// NMR experiment.
+        /// </summary>
+        public const string NMRSpecType2DINADEQUATE = "2D NMR spectrum: INADEQUATE";
+
+        /// <summary>
+        /// NMR spectrum type constant for use as key for a 2-dimensional HMBC
+        /// NMR experiment.
+        /// </summary>
+        public const string NMRSpecType2DHMBC = "2D NMR spectrum: HMBC";
 
         // **************************************
         // Some predefined property names for * ChemObjects *

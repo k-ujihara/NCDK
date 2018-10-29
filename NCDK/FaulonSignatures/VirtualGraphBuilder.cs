@@ -83,7 +83,7 @@ namespace NCDK.FaulonSignatures
 
         public string ToEdgeString()
         {
-            StringBuilder edgeString = new StringBuilder();
+            var edgeString = new StringBuilder();
             this.edges.Sort();
             foreach (var edge in this.edges)
             {

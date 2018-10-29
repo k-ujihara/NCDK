@@ -286,17 +286,16 @@ namespace NCDK.Graphs.InChI
         /// Checks and canonicalises options.
         /// </summary>
         /// <param name="ops">List of INCHI_OPTION</param>
-        protected internal static string CheckOptions(IList<InChIOption> ops)
+        protected internal static string CheckOptions(IEnumerable<InChIOption> ops)
         {
             if (ops == null)
             {
                 throw new ArgumentNullException(nameof(ops), "Null options");
             }
-            StringBuilder sbOptions = new StringBuilder();
+            var sbOptions = new StringBuilder();
 
-            for (int i = 0; i < ops.Count; i++)
+            foreach (var op in ops)
             {
-                InChIOption op = ops[i];
                 sbOptions.Append(FlagChar + op.Name + " ");
             }
 
@@ -324,7 +323,7 @@ namespace NCDK.Graphs.InChI
                 {
                     op = op.Substring(1);
                 }
-                InChIOption option = InChIOption.ValueOfIgnoreCase(op);
+                var option = InChIOption.ValueOfIgnoreCase(op);
                 if (option != null)
                 {
                     return FlagChar + option.Name;
@@ -802,4 +801,3 @@ namespace NCDK.Graphs.InChI
         }
     }
 }
-

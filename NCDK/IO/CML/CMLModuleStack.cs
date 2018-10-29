@@ -86,7 +86,7 @@ namespace NCDK.IO.CML
         /// </summary>
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append('/');
             for (int i = 0; i < sp; ++i)
             {

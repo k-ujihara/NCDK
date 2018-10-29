@@ -103,7 +103,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double difference;
             try
             {
-                IsotopeFactory ifac = BODRIsotopeFactory.Instance;
+                var ifac = BODRIsotopeFactory.Instance;
                 IElement element0;
                 IElement element1;
 

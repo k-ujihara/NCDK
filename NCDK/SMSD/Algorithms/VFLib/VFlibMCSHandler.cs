@@ -21,18 +21,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Base;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.SMSD.Algorithms.McGregors;
-
 using NCDK.SMSD.Algorithms.VFLib.Map;
 using NCDK.SMSD.Algorithms.VFLib.Query;
 using NCDK.SMSD.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace NCDK.SMSD.Algorithms.VFLib
 {
@@ -56,8 +56,8 @@ namespace NCDK.SMSD.Algorithms.VFLib
         private static Dictionary<IAtom, IAtom> atomsMCS = null;
         private static List<IReadOnlyDictionary<IAtom, IAtom>> allAtomMCSCopy = null;
         private static SortedDictionary<int, int> firstMCS = null;
-        private static List<IReadOnlyDictionary<int, int>> allMCS = null;
-        private static List<IReadOnlyDictionary<int, int>> allMCSCopy = null;
+        private static List<SortedDictionary<int, int>> allMCS = null;
+        private static List<SortedDictionary<int, int>> allMCSCopy = null;
         private List<IReadOnlyDictionary<INode, IAtom>> vfLibSolutions = null;
         private IQueryAtomContainer queryMol = null;
         private IAtomContainer mol1 = null;
@@ -76,15 +76,15 @@ namespace NCDK.SMSD.Algorithms.VFLib
             allAtomMCSCopy = new List<IReadOnlyDictionary<IAtom, IAtom>>();
             atomsMCS = new Dictionary<IAtom, IAtom>();
             firstMCS = new SortedDictionary<int, int>();
-            allMCS = new List<IReadOnlyDictionary<int, int>>();
-            allMCSCopy = new List<IReadOnlyDictionary<int, int>>();
+            allMCS = new List<SortedDictionary<int, int>>();
+            allMCSCopy = new List<SortedDictionary<int, int>>();
         }
 
         public override void SearchMCS(bool bondTypeMatch)
         {
             IsBondMatchFlag = bondTypeMatch;
             SearchVFMCSMappings();
-            bool flag = McGregorFlag();
+            var flag = McGregorFlag();
             if (flag && vfLibSolutions.Count != 0)
             {
                 try
@@ -100,7 +100,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
                     Trace.TraceError(ex.Message);
                 }
             }
-            else if (allAtomMCSCopy.Count != 0)
+            else if (allAtomMCSCopy.Any())
             {
                 allAtomMCS.AddRange(allAtomMCSCopy);
                 allMCS.AddRange(allMCSCopy);
@@ -145,15 +145,11 @@ namespace NCDK.SMSD.Algorithms.VFLib
             mol2 = target;
         }
 
-        private static bool HasMap(IReadOnlyDictionary<int, int> maps, List<IReadOnlyDictionary<int, int>> mapGlobal)
+        private static bool HasMap(SortedDictionary<int, int> maps, List<SortedDictionary<int, int>> mapGlobal)
         {
             foreach (var test in mapGlobal)
-            {
-                if (test.Equals(maps))
-                {
+                if (Compares.AreDeepEqual(test, maps))
                     return true;
-                }
-            }
             return false;
         }
 
@@ -179,7 +175,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         private static int CheckCommonAtomCount(IAtomContainer reactantMolecule, IAtomContainer productMolecule)
         {
-            List<string> atoms = new List<string>();
+            var atoms = new List<string>();
             for (int i = 0; i < reactantMolecule.Atoms.Count; i++)
             {
                 atoms.Add(reactantMolecule.Atoms[i].Symbol);
@@ -200,16 +196,15 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         private void SearchVFMCSMappings()
         {
-            //        Console.Out.WriteLine("searchVFMCSMappings ");
             IQuery query = null;
             IMapper mapper = null;
 
             if (queryMol == null)
             {
                 countR = GetReactantMol().Atoms.Count
-                        + AtomContainerManipulator.GetSingleBondEquivalentSum(GetReactantMol());
+                    + AtomContainerManipulator.GetSingleBondEquivalentSum(GetReactantMol());
                 countP = GetProductMol().Atoms.Count
-                        + AtomContainerManipulator.GetSingleBondEquivalentSum(GetProductMol());
+                    + AtomContainerManipulator.GetSingleBondEquivalentSum(GetProductMol());
             }
             vfLibSolutions = new List<IReadOnlyDictionary<INode, IAtom>>();
             if (queryMol != null)
@@ -320,8 +315,8 @@ namespace NCDK.SMSD.Algorithms.VFLib
                     {
                         tAtom = query.GetAtom(mapping.Key);
                         qAtom = mapping.Value;
-                        qIndex = GetReactantMol().Atoms.IndexOf(qAtom);
-                        tIndex = GetProductMol().Atoms.IndexOf(tAtom);
+                        tIndex = GetProductMol().Atoms.IndexOf(qAtom);
+                        qIndex = GetReactantMol().Atoms.IndexOf(tAtom);
                     }
 
                     if (qIndex != -1 && tIndex != -1)
@@ -341,8 +336,9 @@ namespace NCDK.SMSD.Algorithms.VFLib
                         }
                     }
                 }
-                if (atomatomMapping.Count != 0 && !HasMap(indexindexMapping, allMCSCopy)
-                        && indexindexMapping.Count == vfMCSSize)
+                if (atomatomMapping.Any()
+                 && !HasMap(indexindexMapping, allMCSCopy)
+                 && indexindexMapping.Count == vfMCSSize)
                 {
                     allAtomMCSCopy.Insert(counter, atomatomMapping);
                     allMCSCopy.Insert(counter, indexindexMapping);
@@ -388,15 +384,12 @@ namespace NCDK.SMSD.Algorithms.VFLib
                         tIndex = mapping[index];
                     }
 
-                    //if (qIndex != null && tIndex != null) {
                     atomatomMapping[qAtom] = tAtom;
                     indexindexMapping[qIndex] = tIndex;
-                    //} else {
-                    //    throw new CDKException("Atom index pointing to NULL");
-                    //}
                 }
-                if (atomatomMapping.Count != 0 && !HasMap(indexindexMapping, allMCS)
-                        && (2 * indexindexMapping.Count) == vfMCSSize)
+                if (atomatomMapping.Any()
+                 && !HasMap(indexindexMapping, allMCS)
+                 && (2 * indexindexMapping.Count) == vfMCSSize)
                 {
                     allAtomMCS.Insert(counter, atomatomMapping);
                     allMCS.Insert(counter, indexindexMapping);

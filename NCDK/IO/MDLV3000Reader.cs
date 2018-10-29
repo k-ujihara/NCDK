@@ -742,7 +742,7 @@ namespace NCDK.IO
 
         public static string ExhaustStringTokenizer(IEnumerator<string> tokenizer)
         {
-            StringBuilder buffer = new StringBuilder();
+            var buffer = new StringBuilder();
             buffer.Append(' ');
             while (tokenizer.MoveNext())
             {

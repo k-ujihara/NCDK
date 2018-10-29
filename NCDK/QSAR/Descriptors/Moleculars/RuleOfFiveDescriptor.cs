@@ -111,7 +111,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             mol = Clone(mol); // don't mod original
             int lipinskifailures = 0;
 
-            IMolecularDescriptor xlogP = new XLogPDescriptor();
+            var xlogP = new XLogPDescriptor();
             object[] xlogPparams = { checkAromaticity, true, };
 
             try
@@ -119,29 +119,29 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 xlogP.Parameters = xlogPparams;
                 double xlogPvalue = ((Result<double>)xlogP.Calculate(mol).Value).Value;
 
-                IMolecularDescriptor acc = new HBondAcceptorCountDescriptor();
+                var acc = new HBondAcceptorCountDescriptor();
                 object[] hBondparams = { checkAromaticity };
                 acc.Parameters = hBondparams;
-                int acceptors = ((Result<int>)acc.Calculate(mol).Value).Value;
+                var acceptors = ((Result<int>)acc.Calculate(mol).Value).Value;
 
-                IMolecularDescriptor don = new HBondDonorCountDescriptor
+                var don = new HBondDonorCountDescriptor
                 {
                     Parameters = hBondparams
                 };
-                int donors = ((Result<int>)don.Calculate(mol).Value).Value;
+                var donors = don.Calculate(mol).Value.Value;
 
-                IMolecularDescriptor mw = new WeightDescriptor();
+                var mw = new WeightDescriptor();
                 object[] mwparams = { "" };
                 mw.Parameters = mwparams;
-                double mwvalue = ((Result<double>)mw.Calculate(mol).Value).Value;
+                var mwvalue = mw.Calculate(mol).Value.Value;
 
                 // exclude (heavy atom) terminal bonds
                 // exclude amide C-N bonds because of their high rotational barrier
                 // see Veber, D.F. et al., 2002, 45(12), pp.2615–23.
-                IMolecularDescriptor rotata = new RotatableBondsCountDescriptor();
+                var rotata = new RotatableBondsCountDescriptor();
                 object[] rotatableBondsParams = { false, true };
                 rotata.Parameters = rotatableBondsParams;
-                int rotatablebonds = ((Result<int>)rotata.Calculate(mol).Value).Value;
+                var rotatablebonds = rotata.Calculate(mol).Value.Value;
 
                 if (xlogPvalue > 5.0)
                 {
@@ -186,4 +186,3 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }
-

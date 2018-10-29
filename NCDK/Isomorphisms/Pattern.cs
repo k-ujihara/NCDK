@@ -22,7 +22,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using NCDK.Isomorphisms.Matchers;
+using NCDK.Smiles.Isomorphisms;
 using NCDK.Tools.Manipulator;
+using System.Linq;
 
 namespace NCDK.Isomorphisms
 {
@@ -33,6 +36,46 @@ namespace NCDK.Isomorphisms
     // @cdk.module isomorphism
     public abstract class Pattern
     {
+        /// <summary>
+        /// Additional filters on results.
+        /// </summary>
+        private bool hasStereo, hasQueryStereo, hasCompGrp, hasRxnMap;
+
+        internal void DetermineFilters(IAtomContainer query)
+        {
+            hasStereo = query.StereoElements.Any();
+            hasCompGrp = query.GetProperty<int[]>(ComponentFilter.Key) != null;
+            foreach (var atom in query.Atoms)
+            {
+                var compId = atom.GetProperty<int?>(CDKPropertyName.ReactionGroup);
+                var mapIdx = atom.GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
+                if (mapIdx != null && mapIdx != 0)
+                    hasRxnMap = true;
+                if (compId != null && compId != 0)
+                    hasCompGrp = true;
+                if (atom is IQueryAtom)
+                    hasQueryStereo = true;
+                if (hasRxnMap && hasCompGrp && hasQueryStereo)
+                    break;
+            }
+        }
+
+        internal Mappings Filter(Mappings mappings, IAtomContainer query, IAtomContainer target)
+        {
+            // apply required post-match filters
+            if (hasStereo)
+            {
+                mappings = hasQueryStereo
+                        ? mappings.Filter(n => new QueryStereoFilter(query, target).Apply(n))
+                        : mappings.Filter(n => new StereoMatch(query, target).Apply(n));
+            }
+            if (hasCompGrp)
+                mappings = mappings.Filter(n => new ComponentFilter(query, target).Apply(n));
+            if (hasRxnMap)
+                mappings = mappings.Filter(n => new AtomMapFilter(query, target).Apply(n));
+            return mappings;
+        }
+
         /// <summary>
         /// Find a matching of this pattern in the <paramref name="target"/>. If no such order
         /// exist an empty mapping is returned. Depending on the implementation

@@ -59,23 +59,23 @@ namespace NCDK.ForceFields
 
         MmffParamSet()
         {
-            using (Stream ins = ResourceLoader.GetAsStream(GetType(), "MMFFCHG.PAR"))
+            using (var ins = ResourceLoader.GetAsStream(GetType(), "MMFFCHG.PAR"))
             {
                 ParseMMFFCHARGE(ins, bcis);
             }
-            using (Stream ins = ResourceLoader.GetAsStream(GetType(), "MMFFFORMCHG.PAR"))
+            using (var ins = ResourceLoader.GetAsStream(GetType(), "MMFFFORMCHG.PAR"))
             {
                 ParseMMFFFORMCHG(ins, fCharges);
             }
-            using (Stream ins = ResourceLoader.GetAsStream(GetType(), "MMFFPROP.PAR"))
+            using (var ins = ResourceLoader.GetAsStream(GetType(), "MMFFPROP.PAR"))
             {
                 ParseMMFFPPROP(ins, properties);
             }
-            using (Stream ins = ResourceLoader.GetAsStream(GetType(), "MMFFPBCI.PAR"))
+            using (var ins = ResourceLoader.GetAsStream(GetType(), "MMFFPBCI.PAR"))
             {
                 ParseMMFFPBCI(ins, properties);
             }
-            using (Stream ins = ResourceLoader.GetAsStream(GetType(), "mmff-symb-mapping.tsv"))
+            using (var ins = ResourceLoader.GetAsStream(GetType(), "mmff-symb-mapping.tsv"))
             {
                 ParseMMFFTypeMap(ins, typeMap);
             }

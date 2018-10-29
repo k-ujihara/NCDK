@@ -56,7 +56,7 @@ namespace NCDK.QSAR
             engine.Process(ac);
 
             int ncalc = 0;
-            List<string> descNames = new List<string>();
+            var descNames = new List<string>();
             foreach (var spec in specs)
             {
                 var value = ac.GetProperty<IDescriptorValue>(spec);
@@ -66,7 +66,7 @@ namespace NCDK.QSAR
                 descNames.AddRange(names);
             }
 
-            List<string> dups = new List<string>();
+            var dups = new List<string>();
             var uniqueNames = new HashSet<string>();
             foreach (var name in descNames)
             {

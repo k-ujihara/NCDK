@@ -68,7 +68,7 @@ namespace NCDK.Tools
             IAtomContainer mol1 = reader.Read(ChemObjectBuilder.Instance.NewAtomContainer());
             string code1 = new HOSECodeGenerator().GetHOSECode(mol1, mol1.Atoms[0], 6);
             filename = "NCDK.Data.MDL.testisopropylacetate.mol";
-            Stream ins2 = ResourceLoader.GetAsStream(filename);
+            var ins2 = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader2 = new MDLV2000Reader(ins2, ChemObjectReaderMode.Strict);
             IAtomContainer mol2 = reader2.Read(ChemObjectBuilder.Instance.NewAtomContainer());
             string code2 = new HOSECodeGenerator().GetHOSECode(mol2, mol2.Atoms[2], 6);

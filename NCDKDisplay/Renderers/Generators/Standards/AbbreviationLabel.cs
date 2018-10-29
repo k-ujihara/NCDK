@@ -97,7 +97,7 @@ namespace NCDK.Renderers.Generators.Standards
         {
             "acac", "Ace", "Acetyl", "Acyl", "Ad", "All", "Alloc", "Allyl",
             "Amyl", "AOC", "BDMS", "Benzoyl", "Benzyl", "Bn", "BOC",
-            "Boc", "BOM", "Bromo", "Bs", "Bu", "But", "Butyl", "Bz",
+            "Boc", "BOM", "bpy", "Bromo", "Bs", "Bu", "But", "Butyl", "Bz",
             "Bzl", "Cbz", "Chloro", "CoA", "D", "Dan", "Dansyl",
             "DEIPS", "DEM", "Dip", "Dmb", "DPA", "DTBMS", "EE", "EOM",
             "Et", "Ethyl", "Fluoro", "FMOC", "Fmoc", "Formyl",
@@ -109,9 +109,9 @@ namespace NCDK.Renderers.Generators.Standards
             "TMS", "Tos", "Tosyl", "Tr", "Troc", "Vinyl", "Voc", "Z",
         };
 
-        private static Trie PREFIX_TRIE = new Trie();
-        private static Trie ITAL_PREFIX_TRIE = new Trie();
-        private static Trie SYMBOL_TRIE = new Trie();
+        private static readonly Trie PREFIX_TRIE = new Trie();
+        private static readonly Trie ITAL_PREFIX_TRIE = new Trie();
+        private static readonly Trie SYMBOL_TRIE = new Trie();
 
         // build the tries on class init
         static AbbreviationLabel()
@@ -175,31 +175,29 @@ namespace NCDK.Renderers.Generators.Standards
                 char c = label[i];
 
                 // BRACKETS we treat as separate
-                if (c == '(' || c == ')')
+                switch (c)
                 {
-                    tokens.Add(c.ToString());
-                    i++;
-
-                    // digits following closing brackets
-                    if (c == ')')
-                    {
-                        st = i;
-                        while (i < len && IsDigit(c = label[i]))
+                    case '(':
+                    case ')':
+                        tokens.Add(c.ToString());
+                        i++;
+                        // digits following closing brackets
+                        if (c == ')')
                         {
-                            i++;
+                            st = i;
+                            while (i < len && IsDigit(c = label[i]))
+                            {
+                                i++;
+                            }
+                            if (i > st)
+                                tokens.Add(label.Substring(st, i - st));
                         }
-                        if (i > st)
-                            tokens.Add(label.Substring(st, i - st));
-                    }
-
-                    continue;
-                }
-
-                if (c == '/' || c == '·')
-                {
-                    tokens.Add(c.ToString());
-                    i++;
-                    continue;
+                        continue;
+                    case '/':
+                    case '·':
+                        tokens.Add(c.ToString());
+                        i++;
+                        continue;
                 }
 
                 // SYMBOL Tokens
@@ -224,19 +222,22 @@ namespace NCDK.Renderers.Generators.Standards
                 else if (i == st && st > 0)
                 {
                     c = Norm(label[i]);
-                    if (c == '-' || c == '+')
+                    switch (c)
                     {
-                        i++;
-                        while (i < len && IsDigit(label[i]))
-                        {
+                        case '-':
+                        case '+':
                             i++;
-                        }
-                        // we expect charge at the end of the string.. if there is
-                        // still more it's not good input
-                        if (i < len)
-                        {
-                            return FailParse(label, tokens);
-                        }
+                            while (i < len && IsDigit(label[i]))
+                            {
+                                i++;
+                            }
+                            // we expect charge at the end of the string.. if there is
+                            // still more it's not good input
+                            if (i < len)
+                            {
+                                return FailParse(label, tokens);
+                            }
+                            break;
                     }
                 }
 
@@ -282,34 +283,35 @@ namespace NCDK.Renderers.Generators.Standards
         {
             tokens.Reverse();
             // now flip brackets and move numbers
-            Deque<string> numbers = new Deque<string>();
+            var numbers = new Deque<string>();
             for (int i = 0; i < tokens.Count; i++)
             {
                 string token = tokens[i];
-                if (token.Equals("("))
+                switch (token)
                 {
-                    tokens[i] = ")";
-                    string num = numbers.Pop();
-                    if (num.Any())
-                    {
-                        tokens.Insert(i + 1, num);
-                        i++;
-                    }
-                }
-                else if (token.Equals(")"))
-                {
-                    tokens[i] = "(";
-                    if (i > 0 && IsNumber(tokens[i - 1]))
-                    {
-                        var last = tokens[i - 1];
-                        tokens.RemoveAt(i - 1);
-                        numbers.Push(last);
-                        i--;
-                    }
-                    else
-                    {
-                        numbers.Push("");
-                    }
+                    case "(":
+                        tokens[i] = ")";
+                        string num = numbers.Pop();
+                        if (num.Any())
+                        {
+                            tokens.Insert(i + 1, num);
+                            i++;
+                        }
+                        break;
+                    case ")":
+                        tokens[i] = "(";
+                        if (i > 0 && IsNumber(tokens[i - 1]))
+                        {
+                            var last = tokens[i - 1];
+                            tokens.RemoveAt(i - 1);
+                            numbers.Push(last);
+                            i--;
+                        }
+                        else
+                        {
+                            numbers.Push("");
+                        }
+                        break;
                 }
             }
         }
@@ -322,16 +324,17 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="tokens">tokenized label</param>
         public static List<FormattedText> Format(IList<string> tokens)
         {
-            List<FormattedText> texts = new List<FormattedText>(2 + tokens.Count);
+            var texts = new List<FormattedText>(2 + tokens.Count);
             foreach (var token in tokens)
             {
                 // charges
                 if (IsChargeToken(token))
                 {
                     // charges are superscript
-                    string sign = Norm(token[0]).ToString();
+                    var sign = Norm(token[0]).ToString();
                     string coef = token.Length > 1 ? token.Substring(1) : "";
-                    if (sign.Equals("-")) sign = MINUS_STRING;
+                    if (sign.Equals("-"))
+                        sign = MINUS_STRING;
                     texts.Add(new FormattedText(coef + sign, STYLE_SUPSCRIPT));
                 }
                 // subscript number after brackets
@@ -350,7 +353,8 @@ namespace NCDK.Renderers.Generators.Standards
                     // check if we have numeric suffix
                     if (j > 0 && j < token.Length)
                     {
-                        if (i > j) i = 0; // prefix overlaps with suffix so don't use it
+                        if (i > j)
+                            i = 0; // prefix overlaps with suffix so don't use it
                         if (i > 0)
                             texts.Add(new FormattedText(token.Substring(0, i), STYLE_ITALIC));
                         texts.Add(new FormattedText(token.Substring(i, j), STYLE_NORMAL));
@@ -366,7 +370,7 @@ namespace NCDK.Renderers.Generators.Standards
             }
 
             // merge adjacent text together if it is of the same style
-            List<FormattedText> res = new List<FormattedText>(texts.Count);
+            var res = new List<FormattedText>(texts.Count);
             FormattedText prev = null;
             foreach (var curr in texts)
             {
@@ -385,10 +389,10 @@ namespace NCDK.Renderers.Generators.Standards
 
         internal static void Reduce(List<FormattedText> texts, int from, int to)
         {
-            List<FormattedText> tmp = new List<FormattedText>(texts.Count);
+            var tmp = new List<FormattedText>(texts.Count);
             FormattedText prev = null;
             tmp.AddRange(texts.GetRange(0, from));
-            foreach (FormattedText curr in texts.GetRange(from, to - from))
+            foreach (var curr in texts.GetRange(from, to - from))
             {
                 if (prev == null || prev.Style != curr.Style)
                 {

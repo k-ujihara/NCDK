@@ -19,7 +19,6 @@
 
 using NCDK.Config;
 using NCDK.Geometries;
-using NCDK.Numerics;
 using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
@@ -137,8 +136,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 mass1 = factory.GetMajorIsotope(bond.Atoms[0].Symbol).MassNumber.Value;
                 mass2 = factory.GetMajorIsotope(bond.Atoms[1].Symbol).MassNumber.Value;
 
-                Vector3 p1 = bond.Atoms[0].Point3D.Value;
-                Vector3 p2 = bond.Atoms[1].Point3D.Value;
+                var p1 = bond.Atoms[0].Point3D.Value;
+                var p2 = bond.Atoms[1].Point3D.Value;
 
                 var x1 = p1.X;
                 var y1 = p1.Y;
@@ -166,8 +165,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 mass1 = factory.GetMajorIsotope(b.Atoms[0].Symbol).MassNumber.Value;
                 mass2 = factory.GetMajorIsotope(b.Atoms[1].Symbol).MassNumber.Value;
 
-                Vector3 point0 = b.Atoms[0].Point3D.Value;
-                Vector3 point1 = b.Atoms[1].Point3D.Value;
+                var point0 = b.Atoms[0].Point3D.Value;
+                var point1 = b.Atoms[1].Point3D.Value;
 
                 var x1 = point0.X;
                 var y1 = point0.Y;
@@ -184,9 +183,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var x = new List<int>();
             for (int i = 0; i < container.Atoms.Count; i++)
             {
-                if (!string.Equals(container.Atoms[i].Symbol, "H", StringComparison.Ordinal)) x.Add(i);
+                if (!string.Equals(container.Atoms[i].Symbol, "H", StringComparison.Ordinal))
+                    x.Add(i);
             }
-            int npair = x.Count * (x.Count - 1) / 2;
+            var npair = x.Count * (x.Count - 1) / 2;
             var p = new Pair[npair];
             for (int i = 0; i < npair; i++)
                 p[i] = new Pair();
@@ -254,4 +254,3 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }
-

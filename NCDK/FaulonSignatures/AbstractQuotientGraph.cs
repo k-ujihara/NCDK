@@ -91,7 +91,7 @@ namespace NCDK.FaulonSignatures
 
         public List<string> GetVertexSignatureStrings()
         {
-            List<string> signatureStrings = new List<string>();
+            var signatureStrings = new List<string>();
             foreach (var vertex in vertices)
             {
                 signatureStrings.Add(vertex.signature);
@@ -158,7 +158,7 @@ namespace NCDK.FaulonSignatures
 
         public override string ToString()
         {
-            StringBuilder buffer = new StringBuilder();
+            var buffer = new StringBuilder();
             int i = 0;
             foreach (var vertex in vertices)
             {

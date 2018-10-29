@@ -37,7 +37,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestMethanol()
         {
-            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+            var builder = Silent.ChemObjectBuilder.Instance;
             IAtomContainer methanol = builder.NewAtomContainer();
             methanol.Atoms.Add(builder.NewAtom("C"));
             methanol.Atoms.Add(builder.NewAtom("O"));
@@ -50,7 +50,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestMethane()
         {
-            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+            var builder = Silent.ChemObjectBuilder.Instance;
             IAtomContainer methane = builder.NewAtomContainer();
             methane.Atoms.Add(builder.NewAtom("C"));
             IDescriptorResult result = Descriptor.Calculate(methane).Value;
@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestChloroform()
         {
-            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+            var builder = Silent.ChemObjectBuilder.Instance;
             IAtomContainer chloroform = builder.NewAtomContainer();
             chloroform.Atoms.Add(builder.NewAtom("C"));
             for (int i = 0; i < 3; i++)

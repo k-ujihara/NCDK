@@ -42,27 +42,29 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetRange_IMolecularFormulaSet()
         {
-            IMolecularFormula mf1 = new MolecularFormula(); /* C4H12NO4 */
+            var mf1 = new MolecularFormula(); /* C4H12NO4 */
             mf1.Add(builder.NewIsotope("C"), 4);
             mf1.Add(builder.NewIsotope("H"), 12);
             mf1.Add(builder.NewIsotope("N"), 1);
             mf1.Add(builder.NewIsotope("O"), 4);
 
-            IMolecularFormula mf2 = new MolecularFormula(); /* C7H20N4O2 */
+            var mf2 = new MolecularFormula(); /* C7H20N4O2 */
             mf2.Add(builder.NewIsotope("C"), 7);
             mf2.Add(builder.NewIsotope("H"), 20);
             mf2.Add(builder.NewIsotope("N"), 4);
             mf2.Add(builder.NewIsotope("O"), 2);
 
-            IMolecularFormula mf3 = new MolecularFormula(); /* C9H5O7 */
+            var mf3 = new MolecularFormula(); /* C9H5O7 */
             mf3.Add(builder.NewIsotope("C"), 9);
             mf3.Add(builder.NewIsotope("H"), 5);
             mf3.Add(builder.NewIsotope("O"), 7);
 
-            IMolecularFormulaSet mfSet = new MolecularFormulaSet();
-            mfSet.Add(mf1);
-            mfSet.Add(mf2);
-            mfSet.Add(mf3);
+            var mfSet = new MolecularFormulaSet
+            {
+                mf1,
+                mf2,
+                mf3
+            };
 
             MolecularFormulaRange mfRange = MolecularFormulaRangeManipulator.GetRange(mfSet);
 
@@ -82,27 +84,29 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetMaximalFormula_MolecularFormulaRange_IChemObjectBuilder()
         {
-            IMolecularFormula mf1 = new MolecularFormula(); /* C4H12NO4 */
+            var mf1 = new MolecularFormula(); /* C4H12NO4 */
             mf1.Add(builder.NewIsotope("C"), 4);
             mf1.Add(builder.NewIsotope("H"), 12);
             mf1.Add(builder.NewIsotope("N"), 1);
             mf1.Add(builder.NewIsotope("O"), 4);
 
-            IMolecularFormula mf2 = new MolecularFormula(); /* C7H20N4O2 */
+            var mf2 = new MolecularFormula(); /* C7H20N4O2 */
             mf2.Add(builder.NewIsotope("C"), 7);
             mf2.Add(builder.NewIsotope("H"), 20);
             mf2.Add(builder.NewIsotope("N"), 4);
             mf2.Add(builder.NewIsotope("O"), 2);
 
-            IMolecularFormula mf3 = new MolecularFormula(); /* C9H5O7 */
+            var mf3 = new MolecularFormula(); /* C9H5O7 */
             mf3.Add(builder.NewIsotope("C"), 9);
             mf3.Add(builder.NewIsotope("H"), 5);
             mf3.Add(builder.NewIsotope("O"), 7);
 
-            IMolecularFormulaSet mfSet = new MolecularFormulaSet();
-            mfSet.Add(mf1);
-            mfSet.Add(mf2);
-            mfSet.Add(mf3);
+            var mfSet = new MolecularFormulaSet
+            {
+                mf1,
+                mf2,
+                mf3
+            };
 
             MolecularFormulaRange mfRange = MolecularFormulaRangeManipulator.GetRange(mfSet);
             IMolecularFormula formula = MolecularFormulaRangeManipulator.GetMaximalFormula(mfRange, builder);
@@ -123,27 +127,29 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetMinimalFormula_MolecularFormulaRange_IChemObjectBuilder()
         {
-            IMolecularFormula mf1 = new MolecularFormula(); /* C4H12NO4 */
+            var mf1 = new MolecularFormula(); /* C4H12NO4 */
             mf1.Add(builder.NewIsotope("C"), 4);
             mf1.Add(builder.NewIsotope("H"), 12);
             mf1.Add(builder.NewIsotope("N"), 1);
             mf1.Add(builder.NewIsotope("O"), 4);
 
-            IMolecularFormula mf2 = new MolecularFormula(); /* C7H20N4O2 */
+            var mf2 = new MolecularFormula(); /* C7H20N4O2 */
             mf2.Add(builder.NewIsotope("C"), 7);
             mf2.Add(builder.NewIsotope("H"), 20);
             mf2.Add(builder.NewIsotope("N"), 4);
             mf2.Add(builder.NewIsotope("O"), 2);
 
-            IMolecularFormula mf3 = new MolecularFormula(); /* C9H5O7 */
+            var mf3 = new MolecularFormula(); /* C9H5O7 */
             mf3.Add(builder.NewIsotope("C"), 9);
             mf3.Add(builder.NewIsotope("H"), 5);
             mf3.Add(builder.NewIsotope("O"), 7);
 
-            IMolecularFormulaSet mfSet = new MolecularFormulaSet();
-            mfSet.Add(mf1);
-            mfSet.Add(mf2);
-            mfSet.Add(mf3);
+            var mfSet = new MolecularFormulaSet
+            {
+                mf1,
+                mf2,
+                mf3
+            };
 
             MolecularFormulaRange mfRange = MolecularFormulaRangeManipulator.GetRange(mfSet);
             IMolecularFormula formula = MolecularFormulaRangeManipulator.GetMinimalFormula(mfRange, builder);

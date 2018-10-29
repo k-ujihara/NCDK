@@ -29,6 +29,7 @@
  * OF THIS SOFTWARE, Even IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+using NCDK.SMARTS;
 using System.Collections.Generic;
 
 namespace NCDK.Config.Fragments
@@ -45,10 +46,8 @@ namespace NCDK.Config.Fragments
     // @cdk.created 2008-07-22
     // @cdk.keyword estate
     // @cdk.keyword fragment
-    // @cdk.githash
     public static class EStateFragments
     {
-
         /// <summary>
         /// The fragment names.
         /// </summary>
@@ -79,5 +78,19 @@ namespace NCDK.Config.Fragments
             "[SeD2H0](-*)-*", "[SeD2H0](:*):*", "[SeD3H0](=*)(-*)-*", "[SeD4H0](=*)(=*)(-*)-*", "[BrD1]-*",
             "[SnD1H3]-*", "[SnD2H2](-*)-*", "[SnD3H1](-*)(-*)-*", "[SnD4H0](-*)(-*)(-*)-*", "[ID1]-*", "[PbD1H3]-*",
             "[PbD2H2](-*)-*", "[PbD3H1](-*)(-*)-*", "[PbD4H0](-*)(-*)(-*)-*",};
+
+        public static IReadOnlyList<SmartsPattern> Patterns
+        {
+            get
+            {
+                var ptrns = new SmartsPattern[Smarts.Count];
+                for (int i = 0; i < ptrns.Length; i++)
+                {
+                    ptrns[i] = SmartsPattern.Create(Smarts[i]);
+                    ptrns[i].SetPrepare(false);
+                }
+                return ptrns;
+            }
+        }
     }
 }

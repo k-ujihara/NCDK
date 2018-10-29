@@ -42,29 +42,31 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetMaxOccurrenceElements_IMolecularFormulaSet()
         {
-            IMolecularFormula mf1 = new MolecularFormula(); /* C4H12NO4 */
+            var mf1 = new MolecularFormula(); /* C4H12NO4 */
             mf1.Add(builder.NewIsotope("C"), 4);
             mf1.Add(builder.NewIsotope("H"), 12);
             mf1.Add(builder.NewIsotope("N"), 1);
             mf1.Add(builder.NewIsotope("O"), 4);
 
-            IMolecularFormula mf2 = new MolecularFormula(); /* C7H20N4O2 */
+            var mf2 = new MolecularFormula(); /* C7H20N4O2 */
             mf2.Add(builder.NewIsotope("C"), 7);
             mf2.Add(builder.NewIsotope("H"), 20);
             mf2.Add(builder.NewIsotope("N"), 4);
             mf2.Add(builder.NewIsotope("O"), 2);
 
-            IMolecularFormula mf3 = new MolecularFormula(); /* C9H5O7 */
+            var mf3 = new MolecularFormula(); /* C9H5O7 */
             mf3.Add(builder.NewIsotope("C"), 9);
             mf3.Add(builder.NewIsotope("H"), 5);
             mf3.Add(builder.NewIsotope("O"), 7);
 
-            IMolecularFormulaSet mfSet = new MolecularFormulaSet();
-            mfSet.Add(mf1);
-            mfSet.Add(mf2);
-            mfSet.Add(mf3);
+            IMolecularFormulaSet mfSet = new MolecularFormulaSet
+            {
+                mf1,
+                mf2,
+                mf3
+            };
 
-            IMolecularFormula molecularFormula = MolecularFormulaSetManipulator.GetMaxOccurrenceElements(mfSet);
+            var molecularFormula = MolecularFormulaSetManipulator.GetMaxOccurrenceElements(mfSet);
 
             /* Result: C9H20N4O7 */
 
@@ -79,29 +81,31 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetMinOccurrenceElements_IMolecularFormulaSet()
         {
-            IMolecularFormula mf1 = new MolecularFormula(); /* C4H12NO4 */
+            var mf1 = new MolecularFormula(); /* C4H12NO4 */
             mf1.Add(builder.NewIsotope("C"), 4);
             mf1.Add(builder.NewIsotope("H"), 12);
             mf1.Add(builder.NewIsotope("N"), 1);
             mf1.Add(builder.NewIsotope("O"), 4);
 
-            IMolecularFormula mf2 = new MolecularFormula(); /* C7H20N4O2 */
+            var mf2 = new MolecularFormula(); /* C7H20N4O2 */
             mf2.Add(builder.NewIsotope("C"), 7);
             mf2.Add(builder.NewIsotope("H"), 20);
             mf2.Add(builder.NewIsotope("N"), 4);
             mf2.Add(builder.NewIsotope("O"), 2);
 
-            IMolecularFormula mf3 = new MolecularFormula(); /* C9H5O7 */
+            var mf3 = new MolecularFormula(); /* C9H5O7 */
             mf3.Add(builder.NewIsotope("C"), 9);
             mf3.Add(builder.NewIsotope("H"), 5);
             mf3.Add(builder.NewIsotope("O"), 7);
 
-            IMolecularFormulaSet mfSet = new MolecularFormulaSet();
-            mfSet.Add(mf1);
-            mfSet.Add(mf2);
-            mfSet.Add(mf3);
+            var mfSet = new MolecularFormulaSet
+            {
+                mf1,
+                mf2,
+                mf3
+            };
 
-            IMolecularFormula molecularFormula = MolecularFormulaSetManipulator.GetMinOccurrenceElements(mfSet);
+            var molecularFormula = MolecularFormulaSetManipulator.GetMinOccurrenceElements(mfSet);
 
             /* Result: C4H5NO2 */
 
@@ -116,69 +120,68 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemove_IMolecularFormulaSet_IMolecularFormula_IMolecularFormula()
         {
-            IMolecularFormula formulaMin = new MolecularFormula();
+            var formulaMin = new MolecularFormula();
             formulaMin.Add(builder.NewIsotope("C"), 1);
             formulaMin.Add(builder.NewIsotope("H"), 1);
             formulaMin.Add(builder.NewIsotope("O"), 1);
 
-            IMolecularFormula formulaMax = new MolecularFormula();
+            var formulaMax = new MolecularFormula();
             formulaMax.Add(builder.NewIsotope("C"), 4);
             formulaMax.Add(builder.NewIsotope("H"), 12);
             formulaMax.Add(builder.NewIsotope("N"), 2);
 
-            IMolecularFormula mf1 = new MolecularFormula();
+            var mf1 = new MolecularFormula();
             mf1.Add(builder.NewIsotope("C"), 3);
             mf1.Add(builder.NewIsotope("H"), 10);
             mf1.Add(builder.NewIsotope("N"), 1);
 
-            IMolecularFormulaSet formulaSet = new MolecularFormulaSet();
-            formulaSet.Add(mf1);
-
-            IMolecularFormulaSet newMFSet = MolecularFormulaSetManipulator.Remove(formulaSet, formulaMin, formulaMax);
-
+            var formulaSet = new MolecularFormulaSet { mf1 };
+            var newMFSet = MolecularFormulaSetManipulator.Remove(formulaSet, formulaMin, formulaMax);
             Assert.IsNull(newMFSet);
         }
 
         [TestMethod()]
         public void TestRemove_1()
         {
-            IMolecularFormula formulaMin = new MolecularFormula();
+            var formulaMin = new MolecularFormula();
             formulaMin.Add(builder.NewIsotope("C"), 1);
             formulaMin.Add(builder.NewIsotope("H"), 1);
             formulaMin.Add(builder.NewIsotope("N"), 1);
 
-            IMolecularFormula formulaMax = new MolecularFormula();
+            var formulaMax = new MolecularFormula();
             formulaMax.Add(builder.NewIsotope("C"), 4);
             formulaMax.Add(builder.NewIsotope("H"), 12);
             formulaMax.Add(builder.NewIsotope("N"), 2);
 
-            IMolecularFormula mf1 = new MolecularFormula();
+            var mf1 = new MolecularFormula();
             mf1.Add(builder.NewIsotope("C"), 3);
             mf1.Add(builder.NewIsotope("H"), 10);
             mf1.Add(builder.NewIsotope("N"), 1);
 
-            IMolecularFormula mf2 = new MolecularFormula();
+            var mf2 = new MolecularFormula();
             mf2.Add(builder.NewIsotope("C"), 1);
             mf2.Add(builder.NewIsotope("H"), 1);
             mf2.Add(builder.NewIsotope("N"), 1);
 
-            IMolecularFormula mf3 = new MolecularFormula();
+            var mf3 = new MolecularFormula();
             mf3.Add(builder.NewIsotope("C"), 4);
             mf3.Add(builder.NewIsotope("H"), 12);
             mf3.Add(builder.NewIsotope("N"), 2);
 
-            IMolecularFormula mf4 = new MolecularFormula();
+            var mf4 = new MolecularFormula();
             mf4.Add(builder.NewIsotope("C"), 7);
             mf4.Add(builder.NewIsotope("H"), 10);
             mf4.Add(builder.NewIsotope("N"), 1);
 
-            IMolecularFormulaSet formulaSet = new MolecularFormulaSet();
-            formulaSet.Add(mf1);
-            formulaSet.Add(mf2);
-            formulaSet.Add(mf3);
-            formulaSet.Add(mf4);
+            var formulaSet = new MolecularFormulaSet
+            {
+                mf1,
+                mf2,
+                mf3,
+                mf4
+            };
 
-            IMolecularFormulaSet newMFSet = MolecularFormulaSetManipulator.Remove(formulaSet, formulaMin, formulaMax);
+            var newMFSet = MolecularFormulaSetManipulator.Remove(formulaSet, formulaMin, formulaMax);
             /* the mf4 is excluded from the limits */
 
             Assert.AreEqual(3, newMFSet.Count());
@@ -193,30 +196,32 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemove_2()
         {
-            IMolecularFormula formulaMin = new MolecularFormula();
+            var formulaMin = new MolecularFormula();
             formulaMin.Add(builder.NewIsotope("C"), 1);
             formulaMin.Add(builder.NewIsotope("H"), 1);
             formulaMin.Add(builder.NewIsotope("N"), 1);
 
-            IMolecularFormula formulaMax = new MolecularFormula();
+            var formulaMax = new MolecularFormula();
             formulaMax.Add(builder.NewIsotope("C"), 4);
             formulaMax.Add(builder.NewIsotope("H"), 12);
             formulaMax.Add(builder.NewIsotope("N"), 2);
 
-            IMolecularFormula mf1 = new MolecularFormula();
+            var mf1 = new MolecularFormula();
             mf1.Add(builder.NewIsotope("C"), 3);
             mf1.Add(builder.NewIsotope("H"), 10);
             mf1.Add(builder.NewIsotope("N"), 1);
 
-            IMolecularFormula mf2 = new MolecularFormula();
+            var mf2 = new MolecularFormula();
             mf2.Add(builder.NewIsotope("C"), 1);
             mf2.Add(builder.NewIsotope("H"), 1);
 
-            IMolecularFormulaSet formulaSet = new MolecularFormulaSet();
-            formulaSet.Add(mf1);
-            formulaSet.Add(mf2);
+            var formulaSet = new MolecularFormulaSet
+            {
+                mf1,
+                mf2
+            };
 
-            IMolecularFormulaSet newMFSet = MolecularFormulaSetManipulator.Remove(formulaSet, formulaMin, formulaMax);
+            var newMFSet = MolecularFormulaSetManipulator.Remove(formulaSet, formulaMin, formulaMax);
             /* the mf2 is excluded from the limits. It doesn't contain N */
 
             Assert.AreEqual(1, newMFSet.Count());
@@ -227,31 +232,33 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemove_3()
         {
-            IMolecularFormula formulaMin = new MolecularFormula();
+            var formulaMin = new MolecularFormula();
             formulaMin.Add(builder.NewIsotope("C"), 1);
             formulaMin.Add(builder.NewIsotope("H"), 1);
             formulaMin.Add(builder.NewIsotope("N"), 1);
 
-            IMolecularFormula formulaMax = new MolecularFormula();
+            var formulaMax = new MolecularFormula();
             formulaMax.Add(builder.NewIsotope("C"), 4);
             formulaMax.Add(builder.NewIsotope("H"), 12);
             formulaMax.Add(builder.NewIsotope("N"), 2);
 
-            IMolecularFormula mf1 = new MolecularFormula();
+            var mf1 = new MolecularFormula();
             mf1.Add(builder.NewIsotope("C"), 3);
             mf1.Add(builder.NewIsotope("H"), 10);
             mf1.Add(builder.NewIsotope("N"), 1);
 
-            IMolecularFormula mf2 = new MolecularFormula();
+            var mf2 = new MolecularFormula();
             mf2.Add(builder.NewIsotope("C"), 1);
             mf2.Add(builder.NewIsotope("H"), 1);
             mf2.Add(builder.NewIsotope("O"), 1);
 
-            IMolecularFormulaSet formulaSet = new MolecularFormulaSet();
-            formulaSet.Add(mf1);
-            formulaSet.Add(mf2);
+            var formulaSet = new MolecularFormulaSet
+            {
+                mf1,
+                mf2
+            };
 
-            IMolecularFormulaSet newMFSet = MolecularFormulaSetManipulator.Remove(formulaSet, formulaMin, formulaMax);
+            var newMFSet = MolecularFormulaSetManipulator.Remove(formulaSet, formulaMin, formulaMax);
             /* the mf2 is excluded from the limits. It doesn't contain N */
 
             Assert.AreEqual(1, newMFSet.Count());
@@ -262,25 +269,27 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemove_IMolecularFormulaSet_MolecularFormulaRange()
         {
-            MolecularFormulaRange formulaRange = new MolecularFormulaRange();
+            var formulaRange = new MolecularFormulaRange();
             formulaRange.AddIsotope(builder.NewIsotope("C"), 0, 4);
             formulaRange.AddIsotope(builder.NewIsotope("H"), 0, 12);
             formulaRange.AddIsotope(builder.NewIsotope("N"), 0, 2);
 
-            IMolecularFormula mf2 = new MolecularFormula();
+            var mf2 = new MolecularFormula();
             mf2.Add(builder.NewIsotope("C"), 1);
             mf2.Add(builder.NewIsotope("H"), 11);
             mf2.Add(builder.NewIsotope("N"), 1);
 
-            IMolecularFormula mf1 = new MolecularFormula();
+            var mf1 = new MolecularFormula();
             mf1.Add(builder.NewIsotope("C"), 3);
             mf1.Add(builder.NewIsotope("H"), 10);
 
-            IMolecularFormulaSet formulaSet = new MolecularFormulaSet();
-            formulaSet.Add(mf1);
-            formulaSet.Add(mf2);
+            var formulaSet = new MolecularFormulaSet
+            {
+                mf1,
+                mf2
+            };
 
-            IMolecularFormulaSet newMFSet = MolecularFormulaSetManipulator.Remove(formulaSet, formulaRange);
+            var newMFSet = MolecularFormulaSetManipulator.Remove(formulaSet, formulaRange);
             /* the mf2 is excluded from the limits. It doesn't contain N */
 
             Assert.AreEqual(2, newMFSet.Count());
@@ -289,30 +298,32 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestContains_IMolecularFormulaSet_IMolecularFormula()
         {
-            IMolecularFormula mf1 = new MolecularFormula();
+            var mf1 = new MolecularFormula();
             mf1.Add(builder.NewIsotope("C"), 4);
             mf1.Add(builder.NewIsotope("H"), 12);
             mf1.Add(builder.NewIsotope("N"), 1);
             mf1.Add(builder.NewIsotope("O"), 4);
 
-            IMolecularFormula mf3 = new MolecularFormula();
+            var mf3 = new MolecularFormula();
             mf3.Add(builder.NewIsotope("C"), 9);
             mf3.Add(builder.NewIsotope("H"), 5);
             mf3.Add(builder.NewIsotope("O"), 7);
 
-            IMolecularFormulaSet formulaSet = new MolecularFormulaSet();
-            formulaSet.Add(mf1);
-            formulaSet.Add(mf3);
+            var formulaSet = new MolecularFormulaSet
+            {
+                mf1,
+                mf3
+            };
 
-            IMolecularFormula mf2 = new MolecularFormula();
+            var mf2 = new MolecularFormula();
             mf2.Add(builder.NewIsotope("C"), 4);
             mf2.Add(builder.NewIsotope("H"), 12);
             mf2.Add(builder.NewIsotope("N"), 1);
             mf2.Add(builder.NewIsotope("O"), 4);
 
-            IMolecularFormula mf4 = new MolecularFormula();
+            var mf4 = new MolecularFormula();
             mf4.Add(builder.NewIsotope("C"), 4);
-            IIsotope hyd = builder.NewIsotope("H");
+            var hyd = builder.NewIsotope("H");
             hyd.ExactMass = 2.0032342;
             mf4.Add(hyd, 12);
             mf4.Add(builder.NewIsotope("N"), 1);

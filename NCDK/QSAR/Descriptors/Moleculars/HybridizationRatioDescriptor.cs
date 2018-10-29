@@ -77,16 +77,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             try
             {
-                IAtomContainer clone = (IAtomContainer)container.Clone();
+                var clone = (IAtomContainer)container.Clone();
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(clone);
                 int nsp2 = 0;
                 int nsp3 = 0;
                 foreach (var atom in clone.Atoms)
                 {
-                    if (!string.Equals(atom.Symbol, "C", StringComparison.Ordinal)) continue;
+                    if (!string.Equals(atom.Symbol, "C", StringComparison.Ordinal))
+                        continue;
                     if (atom.Hybridization == Hybridization.SP2)
                         nsp2++;
-                    else if (atom.Hybridization == Hybridization.SP3) nsp3++;
+                    else if (atom.Hybridization == Hybridization.SP3)
+                        nsp3++;
                 }
                 double ratio = nsp3 / (double)(nsp2 + nsp3);
                 return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters,

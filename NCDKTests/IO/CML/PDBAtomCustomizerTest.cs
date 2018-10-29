@@ -44,7 +44,7 @@ namespace NCDK.IO.CML
         public void TestSFBug1085912_1()
         {
             string filename_pdb = "NCDK.Data.PDB.1CKV.pdb";
-            Stream ins1 = ResourceLoader.GetAsStream(this.GetType(), filename_pdb);
+            var ins1 = ResourceLoader.GetAsStream(this.GetType(), filename_pdb);
 
             ISimpleChemObjectReader reader = new PDBReader(ins1);
             IChemFile chemFile1 = (IChemFile)reader.Read(new ChemFile());

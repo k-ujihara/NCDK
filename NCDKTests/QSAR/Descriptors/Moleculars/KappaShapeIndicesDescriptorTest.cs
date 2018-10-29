@@ -41,8 +41,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestKappaShapeIndicesDescriptor()
         {
             double[] testResult = { 5, 2.25, 4 };
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("O=C(O)CC");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("O=C(O)CC");
             AtomContainerManipulator.RemoveHydrogens(mol);
             ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
             // position 0 =  kier1

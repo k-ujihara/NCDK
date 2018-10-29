@@ -423,7 +423,7 @@ namespace NCDK.LibIO.DotNetRDF
 
         private Uri CreateIdentifier(IChemObject obj)
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append("http://example.com/");
             result.Append(g.GetHashCode()).Append('/');
             result.Append(obj.GetType().Name).Append('/');

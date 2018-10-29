@@ -68,8 +68,8 @@ namespace NCDK.Fingerprints
             IFingerprinter printer = new PubchemFingerprinter(ChemObjectBuilder.Instance);
             CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(ChemObjectBuilder.Instance);
 
-            IAtomContainer mol1 = parser.ParseSmiles("c1ccccc1CCc1ccccc1");
-            IAtomContainer mol2 = parser.ParseSmiles("c1ccccc1CC");
+            var mol1 = parser.ParseSmiles("c1ccccc1CCc1ccccc1");
+            var mol2 = parser.ParseSmiles("c1ccccc1CC");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);
@@ -97,9 +97,9 @@ namespace NCDK.Fingerprints
         {
             IFingerprinter printer = new PubchemFingerprinter(ChemObjectBuilder.Instance);
 
-            IAtomContainer mol1 = parser.ParseSmiles("CC(N)CCCN");
-            IAtomContainer mol2 = parser.ParseSmiles("CC(N)CCC");
-            IAtomContainer mol3 = parser.ParseSmiles("CCCC");
+            var mol1 = parser.ParseSmiles("CC(N)CCCN");
+            var mol2 = parser.ParseSmiles("CC(N)CCC");
+            var mol3 = parser.ParseSmiles("CCCC");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);
@@ -125,7 +125,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestCID2518130()
         {
-            IAtomContainer mol = parser.ParseSmiles("COC1C(C(C(C(O1)CO)OC2C(C(C(C(O2)CO)S)O)O)O)O");
+            var mol = parser.ParseSmiles("COC1C(C(C(C(O1)CO)OC2C(C(C(C(O2)CO)S)O)O)O)O");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(mol.Builder);
             adder.AddImplicitHydrogens(mol);
@@ -148,7 +148,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestCID5934166()
         {
-            IAtomContainer mol = parser.ParseSmiles("C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
+            var mol = parser.ParseSmiles("C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(mol.Builder);
             adder.AddImplicitHydrogens(mol);
@@ -170,7 +170,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestCID25181289()
         {
-            IAtomContainer mol = parser.ParseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
+            var mol = parser.ParseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(mol.Builder);
             adder.AddImplicitHydrogens(mol);
@@ -189,7 +189,7 @@ namespace NCDK.Fingerprints
         public void TestGetFingerprintAsBytes()
         {
 
-            IAtomContainer mol = parser.ParseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
+            var mol = parser.ParseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(mol.Builder);
@@ -244,7 +244,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestBenzene()
         {
-            IAtomContainer mol = parser.ParseSmiles("c1ccccc1");
+            var mol = parser.ParseSmiles("c1ccccc1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(mol.Builder);
             adder.AddImplicitHydrogens(mol);
@@ -290,7 +290,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestMultithReadedUsage()
         {
-            IAtomContainer mol1 = parser.ParseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
+            var mol1 = parser.ParseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
             IAtomContainer mol2 = parser
                     .ParseSmiles("C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
 

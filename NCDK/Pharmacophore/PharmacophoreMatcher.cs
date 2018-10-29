@@ -17,19 +17,17 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Base;
 using NCDK.Common.Collections;
-using NCDK.Numerics;
-using NCDK.Aromaticities;
 using NCDK.Geometries;
-using NCDK.Graphs;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
-using NCDK.Isomorphisms.Matchers.SMARTS;
+using NCDK.Numerics;
+using NCDK.SMARTS;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using NCDK.Common.Base;
-using System;
 
 namespace NCDK.Pharmacophore
 {
@@ -90,24 +88,18 @@ namespace NCDK.Pharmacophore
     /// <seealso cref="PharmacophoreQueryBond"/>
     // @author Rajarshi Guha
     // @cdk.module pcore
-    // @cdk.githash
     // @cdk.keyword pharmacophore
     // @cdk.keyword 3D isomorphism
     public class PharmacophoreMatcher
     {
         private PharmacophoreQuery pharmacophoreQuery = null;
         private IAtomContainer pharmacophoreMolecule = null;
-
         private Mappings mappings = null;
-
-        private readonly Aromaticity arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.Or(Cycles.AllSimpleFinder, Cycles.RelevantFinder));
 
         /// <summary>
         /// An empty constructor.
-        /// <para>
-        /// You should set the query before performing a match
-        /// </para>
         /// </summary>
+        /// <remarks>You should set the query before performing a match</remarks>
         public PharmacophoreMatcher() { }
 
         /// <summary>
@@ -362,9 +354,7 @@ namespace NCDK.Pharmacophore
                 foreach (var query in qatom.CompiledSmarts)
                 {
                     // create the lazy mappings iterator
-                    Mappings mappings = Pattern.FindSubstructure(query)
-                                                    .MatchAll(input)
-                                                    .GetUniqueAtoms();
+                    Mappings mappings = query.MatchAll(input).GetUniqueAtoms();
 
                     foreach (var mapping in mappings)
                     {
@@ -483,8 +473,7 @@ namespace NCDK.Pharmacophore
 
         private void PrepareInput(IAtomContainer input)
         {
-            SmartsMatchers.Prepare(input, true);
-            arom.Apply(input);
+            SmartsPattern.Prepare(input);
         }
 
         private static bool HasDistanceConstraints(IQueryAtomContainer query)

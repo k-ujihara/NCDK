@@ -112,7 +112,7 @@
     <Compile Include="IO\ReaderFactory_Example.cs" />
     <Compile Include="IO\Setting\SettingManager_Example.cs" />
     <Compile Include="ISingleElectron_Example.cs" />
-    <Compile Include="Isomorphisms\ComponentGrouping_Example.cs" />
+    <Compile Include="Isomorphisms\ComponentFilter_Example.cs" />
     <Compile Include="Isomorphisms\Mappings_Example.cs" />
     <Compile Include="Isomorphisms\Pattern_Example.cs" />
     <Compile Include="Isomorphisms\Ullmann_Example.cs" />

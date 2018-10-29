@@ -310,7 +310,7 @@ namespace NCDK.Modelings.Builder3D
         {
             SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
             string smiles = "CCCCCC";
-            IAtomContainer molecule = parser.ParseSmiles(smiles);
+            var molecule = parser.ParseSmiles(smiles);
             Assert.IsNotNull(molecule);
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
             ffc.SetForceFieldConfigurator("mmff94", ChemObjectBuilder.Instance);
@@ -332,7 +332,7 @@ namespace NCDK.Modelings.Builder3D
         {
             SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
             string smiles = "CCCCCC";
-            IAtomContainer molecule = parser.ParseSmiles(smiles);
+            var molecule = parser.ParseSmiles(smiles);
             Assert.IsNotNull(molecule);
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
             ffc.SetForceFieldConfigurator("mmff94", ChemObjectBuilder.Instance);
@@ -356,7 +356,7 @@ namespace NCDK.Modelings.Builder3D
         {
             SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
             string smiles = "CCCN";
-            IAtomContainer molecule = parser.ParseSmiles(smiles);
+            var molecule = parser.ParseSmiles(smiles);
             Assert.IsNotNull(molecule);
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
             ffc.SetForceFieldConfigurator("mmff94", ChemObjectBuilder.Instance);
@@ -379,8 +379,8 @@ namespace NCDK.Modelings.Builder3D
         public void InvalidChain()
         {
             string input = "CCCCCC(CCCC)CCCC";
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer m = sp.ParseSmiles(input);
+            var sp = CDK.SilentSmilesParser;
+            var m = sp.ParseSmiles(input);
 
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
             ffc.SetForceFieldConfigurator("mmff92", ChemObjectBuilder.Instance);

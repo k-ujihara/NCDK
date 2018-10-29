@@ -23,7 +23,9 @@
  */
 
 using NCDK.Common.Collections;
+using NCDK.Tools.Manipulator;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -119,15 +121,44 @@ namespace NCDK.Graphs.Invariant
         /// </remarks>
         /// <param name="container">structure</param>
         /// <param name="g">adjacency list graph representation</param>
-        /// <param name="invariants">initial invariants</param>
+        /// <param name="initial    ">initial seed invariants</param>
         /// <returns>the canonical labelling</returns>
         /// <seealso cref="EquivalentClassPartitioner"/>
         /// <seealso cref="InChINumbersTools"/>
-        public static long[] Label(IAtomContainer container, int[][] g, long[] invariants)
+        public static long[] Label(IAtomContainer container, int[][] g, long[] initial)
         {
-            if (invariants.Length != g.Length)
-                throw new ArgumentException("number of invariants != number of atoms");
-            return new Canon(g, invariants, TerminalHydrogens(container, g), false).labelling;
+            if (initial.Length != g.Length)
+                throw new ArgumentException("number of initial != number of atoms");
+            return new Canon(g, initial, TerminalHydrogens(container, g), false).labelling;
+        }
+
+        /// <summary>
+        /// Compute the canonical labels for the provided structure. The initial
+        /// labelling is seed-ed with the provided atom comparator <paramref name="cmp"/>
+        /// allowing arbitary properties to be distinguished or ignored.
+        /// </summary>
+        /// <param name="container">structure</param>
+        /// <param name="g">adjacency list graph representation</param>
+        /// <param name="cmp">comparator to compare atoms</param>
+        /// <returns>the canonical labelling</returns>
+        public static long[] Label(IAtomContainer container,
+                                   int[][] g,
+                                   IComparer<IAtom> cmp)
+        {
+            if (g.Length == 0)
+                return new long[0];
+            var atoms = new List<IAtom>(container.Atoms);
+            atoms.Sort(cmp);
+            var initial = new long[atoms.Count];
+            long part = 1;
+            initial[container.Atoms.IndexOf(atoms[0])] = part;
+            for (int i = 1; i < atoms.Count; i++)
+            {
+                if (cmp.Compare(atoms[i], atoms[i - 1]) != 0)
+                    ++part;
+                initial[container.Atoms.IndexOf(atoms[i])] = part;
+            }
+            return Label(container, g, initial);
         }
 
         /// <summary>

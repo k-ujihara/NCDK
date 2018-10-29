@@ -25,10 +25,11 @@
 using NCDK.Aromaticities;
 using NCDK.Graphs;
 using NCDK.Isomorphisms;
-using NCDK.Isomorphisms.Matchers.SMARTS;
-using NCDK.Smiles.SMARTS.Parser;
+using NCDK.Isomorphisms.Matchers;
+using NCDK.SMARTS;
+using System;
 using System.Diagnostics;
-using System.Linq;
+using System.IO;
 
 namespace NCDK.Smiles.SMARTS
 {
@@ -46,6 +47,7 @@ namespace NCDK.Smiles.SMARTS
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SMARTS.SmartsPattern_Example.cs+2"]/*' />
     /// </example>
     // @author John May
+    [Obsolete]
     public sealed class SmartsPattern : Pattern
     {
         /// <summary>Parsed query.</summary>
@@ -54,11 +56,14 @@ namespace NCDK.Smiles.SMARTS
         /// <summary>Subgraph mapping.</summary>
         private readonly Pattern pattern;
 
-        /// <summary>Include invariants about ring size / number.</summary>
-        private readonly bool ringInfo, hasStereo, hasCompGrp, hasRxnMap;
+        /// <summary>
+        /// Prepare the target molecule (i.e. detect rings, aromaticity) before
+        /// matching the SMARTS.
+        /// </summary>
+        private bool doPrep = true;
 
         /// <summary>Aromaticity model.</summary>
-        private readonly Aromaticity arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.Or(Cycles.AllSimpleFinder, Cycles.RelevantFinder));
+        private static readonly Aromaticity arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.Or(Cycles.AllSimpleFinder, Cycles.RelevantFinder));
 
         /// <summary>
         /// Internal constructor.
@@ -68,27 +73,37 @@ namespace NCDK.Smiles.SMARTS
         /// <exception cref="System.IO.IOException">the pattern could not be parsed</exception>
         private SmartsPattern(string smarts, IChemObjectBuilder builder)
         {
-#if !DEBUG
-            try
-#endif
-            {
-                this.query = SMARTSParser.Parse(smarts, builder);
-            }
-#if !DEBUG
-            catch (System.Exception e)
-            {
-                throw new System.IO.IOException(e.Message);
-            }
-#endif
+            this.query = new QueryAtomContainer(null);
+            if (!Smarts.Parse(query, smarts))
+                throw new IOException($"Could not parse SMARTS: {smarts}");
             this.pattern = Pattern.FindSubstructure(query);
+        }
 
-            // X<num>, R and @ are cheap and done always but R<num>, r<num> are not
-            // we inspect the SMARTS pattern string to determine if ring
-            // size or number queries are needed
-            this.ringInfo = RingSizeOrNumber(smarts);
-            this.hasStereo = query.StereoElements.Any();
-            this.hasCompGrp = query.GetProperty<int[]>(ComponentGrouping.Key) != null;
-            this.hasRxnMap = smarts.Contains(":");
+        static void Prepare(IAtomContainer target)
+        {
+            // apply the daylight aromaticity model
+            try
+            {
+                Cycles.MarkRingAtomsAndBonds(target);
+                arom.Apply(target);
+            }
+            catch (CDKException e)
+            {
+                Trace.TraceError(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Sets whether the molecule should be "prepared" for a SMARTS match,
+        /// including set ring flags and perceiving aromaticity. The main reason
+        /// to skip preparation (via {@link #Prepare(IAtomContainer)}) is if it has
+        /// already been done, for example when matching multiple SMARTS patterns.
+        /// </summary>
+        /// <param name="doPrep">whether preparation should be done</param>
+        public SmartsPattern SetPrepare(bool doPrep)
+        {
+            this.doPrep = doPrep;
+            return this;
         }
 
         /// <inheritdoc/>
@@ -112,48 +127,10 @@ namespace NCDK.Smiles.SMARTS
         /// <returns>mappings of the query to the target compound</returns>
         public override Mappings MatchAll(IAtomContainer target)
         {
-            // TODO: prescreen target for element frequency before intialising
-            // invariants and applying aromaticity, requires pattern enumeration -
-            // see http://www.daylight.com/meetings/emug00/Sayle/substruct.html.
+            if (doPrep)
+                Prepare(target);
 
-            // assign additional atom invariants for SMARTS queries, a CDK quirk
-            // as each atom knows not which molecule from wence it came
-            SmartsMatchers.Prepare(target, ringInfo);
-
-            // apply the daylight aromaticity model
-            try
-            {
-                arom.Apply(target);
-            }
-            catch (CDKException e)
-            {
-                Trace.TraceError(e.Message);
-            }
-
-            Mappings mappings = pattern.MatchAll(target);
-
-            // apply required post-match filters
-            if (hasStereo)
-            {
-                var stereoMatch = new SmartsStereoMatch(query, target);
-                foreach (var stereoElement in query.StereoElements)
-                    mappings = mappings.Filter(n => stereoMatch.Apply(n));
-            }
-            if (hasCompGrp)
-            {
-                var grouping = new ComponentGrouping(query, target);
-                mappings = mappings.Filter(n => grouping.Apply(n));
-            }
-            if (hasRxnMap)
-            {
-                var filter = new SmartsAtomAtomMapFilter(query, target);
-                mappings = mappings.Filter(n => filter.Apply(n));
-            }
-
-            // Note: Mappings is lazy, we can't reset aromaticity etc as the
-            // substructure match may not have finished
-
-            return mappings;
+            return pattern.MatchAll(target);
         }
 
         /// <summary>
@@ -177,24 +154,6 @@ namespace NCDK.Smiles.SMARTS
         public static SmartsPattern Create(string smarts)
         {
             return new SmartsPattern(smarts, null);
-        }
-
-        /// <summary>
-        /// Checks a smarts string for !R, R&lt;num&gt; or r&lt;num&gt;. If found then the more
-        /// expensive ring info needs to be initlised before querying.
-        /// </summary>
-        /// <param name="smarts">pattern string</param>
-        /// <returns>the pattern has a ring size or number query</returns>
-        internal static bool RingSizeOrNumber(string smarts)
-        {
-            for (int i = 0, end = smarts.Length - 1; i <= end; i++)
-            {
-                char c = smarts[i];
-                if ((c == 'r' || c == 'R') && i < end && char.IsDigit(smarts[i + 1])) return true;
-                // !R = R0
-                if (c == '!' && i < end && smarts[i + 1] == 'R') return true;
-            }
-            return false;
         }
     }
 }

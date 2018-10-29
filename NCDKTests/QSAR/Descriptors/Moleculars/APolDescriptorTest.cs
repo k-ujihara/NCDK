@@ -38,8 +38,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestAPolDescriptorTest()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("O=C(O)CC");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("O=C(O)CC");
             AddExplicitHydrogens(mol);
             Assert.AreEqual(10.88, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.01);
         }

@@ -139,7 +139,7 @@ namespace NCDK.Renderers.Elements
 
         private void Traverse(IRenderingElement newElement)
         {
-            Deque<IRenderingElement> stack = new Deque<IRenderingElement>();
+            var stack = new Deque<IRenderingElement>();
             stack.Push(newElement);
             while (stack.Any())
             {
@@ -163,6 +163,12 @@ namespace NCDK.Renderers.Elements
                         Add(lineElem.SecondPoint + vec + ortho);
                         Add(lineElem.FirstPoint - vec - ortho);
                         Add(lineElem.SecondPoint + vec - ortho);
+                        break;
+                    case OvalElement oval:
+                        Add(new Point(oval.Coord.X - oval.Radius, oval.Coord.Y));
+                        Add(new Point(oval.Coord.X + oval.Radius, oval.Coord.Y));
+                        Add(new Point(oval.Coord.X, oval.Coord.Y - oval.Radius));
+                        Add(new Point(oval.Coord.X, oval.Coord.Y + oval.Radius));
                         break;
                     case ElementGroup elementGroup:
                         stack.AddRange(elementGroup);

@@ -35,7 +35,7 @@ namespace NCDK.IO
     public class MDLV2000BondBlockTest
     {
         private readonly MDLV2000Reader reader = new MDLV2000Reader(new StringReader(""));
-        private readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private readonly IAtom[] atoms = new IAtom[]
             {
                 new Mock<IAtom>().Object, new Mock<IAtom>().Object,
@@ -90,7 +90,6 @@ namespace NCDK.IO
         {
             string input = "  1  3  4  0  0  0  0";
             IBond bond = reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
-            Assert.AreEqual(BondOrder.Unset, bond.Order);
             Assert.AreEqual(BondStereo.None, bond.Stereo);
             Assert.IsTrue(bond.IsAromatic);
             Assert.IsTrue(bond.IsSingleOrDouble);
@@ -101,12 +100,11 @@ namespace NCDK.IO
         {
             string input = "  1  3  5  0  0  0  0";
             IBond bond = reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
-            Assert.AreEqual(BondOrder.Unset, bond.Order);
             Assert.AreEqual(BondStereo.None, bond.Stereo);
             Assert.IsFalse(bond.IsAromatic);
             Assert.IsFalse(bond.IsSingleOrDouble);
-            Assert.IsInstanceOfType(bond, typeof(CTFileQueryBond));
-            Assert.AreEqual(CTFileQueryBond.BondType.SingleOrDouble, ((CTFileQueryBond)bond).Type);
+            Assert.IsInstanceOfType(bond, typeof(QueryBond));
+            Assert.AreEqual(ExprType.SingleOrDouble, ((QueryBond)bond).Expression.GetExprType());
         }
 
         [TestMethod()]
@@ -118,8 +116,8 @@ namespace NCDK.IO
             Assert.AreEqual(BondStereo.None, bond.Stereo);
             Assert.IsFalse(bond.IsAromatic);
             Assert.IsFalse(bond.IsSingleOrDouble);
-            Assert.IsInstanceOfType(bond, typeof(CTFileQueryBond));
-            Assert.AreEqual(CTFileQueryBond.BondType.SingleOrAromatic, ((CTFileQueryBond)bond).Type);
+            Assert.IsInstanceOfType(bond, typeof(QueryBond));
+            Assert.AreEqual(ExprType.SingleOrAromatic, ((QueryBond)bond).Expression.GetExprType());
         }
 
         [TestMethod()]
@@ -131,8 +129,8 @@ namespace NCDK.IO
             Assert.AreEqual(BondStereo.None, bond.Stereo);
             Assert.IsFalse(bond.IsAromatic);
             Assert.IsFalse(bond.IsSingleOrDouble);
-            Assert.IsInstanceOfType(bond, typeof(CTFileQueryBond));
-            Assert.AreEqual(CTFileQueryBond.BondType.DoubleOrAromatic, ((CTFileQueryBond)bond).Type);
+            Assert.IsInstanceOfType(bond, typeof(QueryBond));
+            Assert.AreEqual(ExprType.DoubleOrAromatic, ((QueryBond)bond).Expression.GetExprType());
         }
 
         [TestMethod()]
@@ -144,8 +142,8 @@ namespace NCDK.IO
             Assert.AreEqual(BondStereo.None, bond.Stereo);
             Assert.IsFalse(bond.IsAromatic);
             Assert.IsFalse(bond.IsSingleOrDouble);
-            Assert.IsInstanceOfType(bond, typeof(CTFileQueryBond));
-            Assert.AreEqual(CTFileQueryBond.BondType.Any, ((CTFileQueryBond)bond).Type);
+            Assert.IsInstanceOfType(bond, typeof(QueryBond));
+            Assert.AreEqual(ExprType.True, ((QueryBond)bond).Expression.GetExprType());
         }
 
         [TestMethod()]

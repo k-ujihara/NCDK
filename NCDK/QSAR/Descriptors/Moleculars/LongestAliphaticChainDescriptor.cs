@@ -126,7 +126,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int longest = 0;
             foreach (var w in adjlist[v])
             {
-                if (w == prev) continue;
+                if (w == prev)
+                    continue;
                 // no cycles so don't need to check previous
                 int length = GetMaxDepth(adjlist, w, v);
                 if (length > longest)
@@ -150,7 +151,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             if (checkRingSystem)
                 Cycles.MarkRingAtomsAndBonds(mol);
 
-            IAtomContainer aliphaticParts = mol.Builder.NewAtomContainer();
+            var aliphaticParts = mol.Builder.NewAtomContainer();
             foreach (var atom in mol.Atoms)
             {
                 if (IsAcyclicCarbon(atom))

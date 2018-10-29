@@ -35,7 +35,7 @@ namespace NCDK.Tools
         public void TestAllSaturated()
         {
             // test methane with explicit hydrogen
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             Atom c = new Atom("C");
             Atom h1 = new Atom("H");
             Atom h2 = new Atom("H");
@@ -63,7 +63,7 @@ namespace NCDK.Tools
         public void TestIsSaturated()
         {
             // test methane with explicit hydrogen
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             Atom c = new Atom("C");
             Atom h1 = new Atom("H");
             Atom h2 = new Atom("H");
@@ -92,7 +92,7 @@ namespace NCDK.Tools
         public void TestIsSaturated_NegativelyChargedOxygen()
         {
             // test methane with explicit hydrogen
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             Atom c = new Atom("C");
             Atom h1 = new Atom("H");
             Atom h2 = new Atom("H");
@@ -121,7 +121,7 @@ namespace NCDK.Tools
         public void TestIsSaturated_PositivelyChargedNitrogen()
         {
             // test methane with explicit hydrogen
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             Atom n = new Atom("N");
             Atom h1 = new Atom("H");
             Atom h2 = new Atom("H");
@@ -152,7 +152,7 @@ namespace NCDK.Tools
             Atom c2 = new Atom("C") { ImplicitHydrogenCount = 2 };
             Bond b = new Bond(c1, c2, BondOrder.Single);
             // force single bond, Saturate() must fix that
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(c1);
             m.Atoms.Add(c2);
             m.Bonds.Add(b);
@@ -172,7 +172,7 @@ namespace NCDK.Tools
             Bond b2 = new Bond(c3, c2, BondOrder.Single);
             Bond b3 = new Bond(c3, c4, BondOrder.Single);
             // force single bond, Saturate() must fix that
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(c1);
             m.Atoms.Add(c2);
             m.Atoms.Add(c3);
@@ -253,7 +253,7 @@ namespace NCDK.Tools
         public void TestBug772316()
         {
             // test methane with explicit hydrogen
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             Atom sulphur = new Atom("S");
             Atom o1 = new Atom("O");
             Atom o2 = new Atom("O");
@@ -286,7 +286,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestBug777529()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));

@@ -35,30 +35,30 @@ namespace NCDK.Formula.Rules
 
         protected override IRule GetRule()
         {
-            List<double[]> spectrum = new List<double[]>
+            var spectrum = new List<double[]>
             {
                 new double[] { 133.0977, 100.00 },
                 new double[] { 134.09475, 0.6 },
                 new double[] { 134.1010, 5.4 }
             };
-            object[] parameters = new object[2];
+            var parameters = new object[2];
             parameters[0] = spectrum;
             parameters[1] = 0.001;
-            IRule rule = new IsotopePatternRule { Parameters = parameters };
+            var rule = new IsotopePatternRule { Parameters = parameters };
             return rule;
         }
 
         [TestMethod()]
         public void TestIsotopePatternRule()
         {
-            IRule rule = new IsotopePatternRule();
+            var rule = new IsotopePatternRule();
             Assert.IsNotNull(rule);
         }
 
         [TestMethod()]
         public void TestDefault()
         {
-            IRule rule = new IsotopePatternRule();
+            var rule = new IsotopePatternRule();
             var objects = rule.Parameters;
 
             Assert.IsNull(objects[0]);
@@ -67,9 +67,9 @@ namespace NCDK.Formula.Rules
         [TestMethod()]
         public void TestSetParameters()
         {
-            IRule rule = new IsotopePatternRule();
+            var rule = new IsotopePatternRule();
 
-            object[] parameters = new object[2];
+            var parameters = new object[2];
 
             parameters[0] = new List<double[]>();
             parameters[1] = 0.0001;
@@ -84,20 +84,20 @@ namespace NCDK.Formula.Rules
         [TestMethod()]
         public void TestValidBromine()
         {
-            List<double[]> spectrum = new List<double[]>
+            var spectrum = new List<double[]>
             {
                 new double[] { 157.8367, 51.399 },
                 new double[] { 159.8346, 100.00 },
                 new double[] { 161.8326, 48.639 }
             };
 
-            IRule rule = new IsotopePatternRule();
-            object[] parameters = new object[2];
+            var rule = new IsotopePatternRule();
+            var parameters = new object[2];
             parameters[0] = spectrum;
             parameters[1] = 0.001;
             rule.Parameters = parameters;
 
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(ifac.GetMajorIsotope("C"), 2);
             formula.Add(ifac.GetMajorIsotope("Br"), 2);
             formula.Charge = 0;
@@ -108,24 +108,24 @@ namespace NCDK.Formula.Rules
         [TestMethod()]
         public override void TestValidate_IMolecularFormula()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(ifac.GetMajorIsotope("C"), 5);
             formula.Add(ifac.GetMajorIsotope("H"), 13);
             formula.Add(ifac.GetMajorIsotope("N"), 2);
             formula.Add(ifac.GetMajorIsotope("O"), 2);
             formula.Charge = 0;
 
-            /// <summary> experimental results</summary>
+            // experimental results
 
-            List<double[]> spectrum = new List<double[]>
+            var spectrum = new List<double[]>
             {
                 new double[] { 133.0977, 100.00 },
                 new double[] { 134.09475, 0.6 },
                 new double[] { 134.1010, 5.4 }
             };
 
-            IRule rule = new IsotopePatternRule();
-            object[] parameters = new object[2];
+            var rule = new IsotopePatternRule();
+            var parameters = new object[2];
             parameters[0] = spectrum;
             parameters[1] = 0.001;
             rule.Parameters = parameters;

@@ -292,5 +292,22 @@ namespace NCDK.Formula
 
             Assert.AreEqual(ip1.Isotopes[0].Mass, ip2.Isotopes[0].Mass, 0.001);
         }
+
+        [TestMethod()]
+        public void TestMultipleFormulasForAMass()
+        {
+            var mf = MolecularFormulaManipulator.GetMolecularFormula("C6Cl2", builder);
+            var isogen = new IsotopePatternGenerator(0.1)
+                .SetMinIntensity(0.01)
+                .SetMinResolution(0.01)
+                .SetStoreFormulas(true);
+            var pattern = isogen.GetIsotopes(mf);
+            var isotopes = pattern.Isotopes;
+            Assert.AreEqual(1, isotopes[0].Formulas.Count);
+            Assert.AreEqual(1, isotopes[1].Formulas.Count);
+            Assert.AreEqual(2, isotopes[2].Formulas.Count);
+            Assert.AreEqual(2, isotopes[3].Formulas.Count);
+            Assert.AreEqual(3, isotopes[4].Formulas.Count);
+        }
     }
 }

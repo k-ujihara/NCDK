@@ -128,7 +128,7 @@ namespace NCDK.Pharmacophore
         /// <returns>string representation of a distance constraint</returns>
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append($"DC::{Atoms[0]}::{Atoms[1]}::[{GetLower().ToString("F1", NumberFormatInfo.InvariantInfo)} - {GetUpper().ToString("F1", NumberFormatInfo.InvariantInfo)}] ");
             return sb.ToString();
         }

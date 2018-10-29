@@ -7,7 +7,7 @@ namespace NCDK.Formula
         public void Main()
         {
             #region
-            IsotopeFactory ifac = BODRIsotopeFactory.Instance;
+            var ifac = BODRIsotopeFactory.Instance;
              IIsotope c = ifac.GetMajorIsotope("C");
              IIsotope h = ifac.GetMajorIsotope("H");
              IIsotope n = ifac.GetMajorIsotope("N");

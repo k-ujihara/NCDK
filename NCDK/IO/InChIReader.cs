@@ -116,12 +116,12 @@ namespace NCDK.IO
             }
             catch (IOException e)
             {
-                Trace.TraceError("IOException: ", e.Message);
+                Trace.TraceError($"IOException: {e.Message}");
                 Debug.WriteLine(e);
             }
             catch (XmlException saxe)
             {
-                Trace.TraceError("SAXException: ", saxe.Message);
+                Trace.TraceError($"SAXException: {saxe.Message}");
                 Debug.WriteLine(saxe);
             }
             return cf;

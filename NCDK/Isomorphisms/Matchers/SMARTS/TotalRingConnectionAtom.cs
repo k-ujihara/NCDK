@@ -21,6 +21,8 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
+
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
@@ -31,6 +33,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
+    [Obsolete]
     public sealed class TotalRingConnectionAtom : SMARTSAtom
     {
         /// <summary>Number of rings.</summary>

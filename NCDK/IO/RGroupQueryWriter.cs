@@ -150,7 +150,7 @@ namespace NCDK.IO
                 IAtomContainer rootAtc = rGroupQuery.RootStructure;
 
                 //Construct header
-                StringBuilder rootBlock = new StringBuilder();
+                var rootBlock = new StringBuilder();
                 string header = "$MDL  REV  1   " + now + LSEP + "$MOL" + LSEP + "$HDR" + LSEP
                         + "  Rgroup query file (RGFile)" + LSEP + "  CDK    " + now + "2D" + LSEP + LSEP + "$END HDR"
                         + LSEP + "$CTAB";
@@ -232,7 +232,7 @@ namespace NCDK.IO
                 rootBlock.Append("M  END").Append(LSEP).Append("$END CTAB").Append(LSEP);
 
                 //Construct each R-group block
-                StringBuilder rgpBlock = new StringBuilder();
+                var rgpBlock = new StringBuilder();
                 foreach (var rgrpNum in rGroupQuery.RGroupDefinitions.Keys)
                 {
                     var rgrpList = rGroupQuery.RGroupDefinitions[rgrpNum].RGroups;
@@ -255,7 +255,7 @@ namespace NCDK.IO
                             int apoCount = 0;
                             if (firstAttachmentPoint != null)
                             {
-                                StringBuilder apoLine = new StringBuilder();
+                                var apoLine = new StringBuilder();
                                 for (int atIdx = 0; atIdx < rgroup.Group.Atoms.Count; atIdx++)
                                 {
                                     if (rgroup.Group.Atoms[atIdx].Equals(firstAttachmentPoint))

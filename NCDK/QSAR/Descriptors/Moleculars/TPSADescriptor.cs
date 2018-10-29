@@ -193,7 +193,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
         {
             IAtomContainer ac = (IAtomContainer)atomContainer.Clone();
-            List<string> profiles = new List<string>();
+            var profiles = new List<string>();
 
             // calculate the set of all rings
             IRingSet rs;

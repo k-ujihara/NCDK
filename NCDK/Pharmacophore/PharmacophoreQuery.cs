@@ -55,7 +55,7 @@ namespace NCDK.Pharmacophore
         /// <returns>string representation of this query</returns>
         public override string ToString()
         {
-            StringBuilder stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder();
             stringBuilder.Append("PharmacophoreQuery(").Append(this.GetHashCode()).Append(", ");
             stringBuilder.Append("#A:").Append(Atoms.Count).Append(", ");
             stringBuilder.Append("#EC:").Append(GetElectronContainers().Count()).Append(", ");

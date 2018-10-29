@@ -181,7 +181,7 @@ namespace NCDK.Fingerprints
                 patternIndex++;
             }
             // Check for the charges
-            List<string> l = new List<string>();
+            var l = new List<string>();
             foreach (var atom in container.Atoms)
             {
                 int charge = atom.FormalCharge ?? 0;
@@ -216,14 +216,14 @@ namespace NCDK.Fingerprints
 
             if (container.SingleElectrons.Count > 0)
             {
-                StringBuilder radicalInformation = new StringBuilder();
+                var radicalInformation = new StringBuilder();
                 radicalInformation.Append("RAD: ").Append(container.SingleElectrons.Count);
                 paths.Insert(patternIndex, Strings.GetJavaHashCode(radicalInformation.ToString()));
                 patternIndex++;
             }
             if (container.LonePairs.Count > 0)
             {
-                StringBuilder lpInformation = new StringBuilder();
+                var lpInformation = new StringBuilder();
                 lpInformation.Append("LP: ").Append(container.LonePairs.Count);
                 paths.Insert(patternIndex, Strings.GetJavaHashCode(lpInformation.ToString()));
                 patternIndex++;

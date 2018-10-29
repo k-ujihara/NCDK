@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     [TestClass()]
     public class IPAtomicHOSEDescriptorTest : AtomicDescriptorTest
     {
-        private SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+        private SmilesParser sp = CDK.SilentSmilesParser;
         
         /// <summary>
         /// Constructor for the IPAtomicHOSEDescriptorTest object
@@ -58,7 +58,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestIPDescriptor1()
         {
-            IAtomContainer mol = sp.ParseSmiles("CCCCl");
+            var mol = sp.ParseSmiles("CCCCl");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
@@ -76,7 +76,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestIPDescriptor2()
         {
-            IAtomContainer mol = sp.ParseSmiles("CC(CC)Cl"); // not in db
+            var mol = sp.ParseSmiles("CC(CC)Cl"); // not in db
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
@@ -94,7 +94,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestNotDB()
         {
-            IAtomContainer mol = sp.ParseSmiles("C=CCCl"); // not in db
+            var mol = sp.ParseSmiles("C=CCCl"); // not in db
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
@@ -112,7 +112,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestIPDescriptor_1()
         {
-            IAtomContainer mol = sp.ParseSmiles("C-Cl");
+            var mol = sp.ParseSmiles("C-Cl");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
@@ -130,7 +130,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         public void TestIPDescriptor_2()
         {
 
-            IAtomContainer mol = sp.ParseSmiles("C-C-Br");
+            var mol = sp.ParseSmiles("C-C-Br");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
@@ -147,7 +147,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestIPDescriptor_3()
         {
-            IAtomContainer mol = sp.ParseSmiles("C-C-C-I");
+            var mol = sp.ParseSmiles("C-C-C-I");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
@@ -165,7 +165,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIPDescriptor_4() throws Exception{
         //
-        //        IAtomContainer mol = sp.ParseSmiles("C-C-O");
+        //        var mol = sp.ParseSmiles("C-C-O");
         //
         //        AddExplicitHydrogens(mol);
         //
@@ -184,7 +184,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIPDescriptor_5() throws Exception{
         //
-        //        IAtomContainer mol = sp.ParseSmiles("N1(C)CCC(C)(C)CC1");
+        //        var mol = sp.ParseSmiles("N1(C)CCC(C)(C)CC1");
         //
         //        AddExplicitHydrogens(mol);
         //
@@ -203,7 +203,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIPDescriptor_6() throws Exception{
         //
-        //        IAtomContainer mol = sp.ParseSmiles("C-N-C");
+        //        var mol = sp.ParseSmiles("C-N-C");
         //
         //        AddExplicitHydrogens(mol);
         //
@@ -222,7 +222,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIPDescriptor_7() throws Exception{
         //
-        //        IAtomContainer mol = sp.ParseSmiles("C-C-N");
+        //        var mol = sp.ParseSmiles("C-C-N");
         //
         //        AddExplicitHydrogens(mol);
         //
@@ -241,7 +241,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIPDescriptor_8() throws Exception{
         //
-        //        IAtomContainer mol = sp.ParseSmiles("C-C-P-C-C");
+        //        var mol = sp.ParseSmiles("C-C-P-C-C");
         //
         //        AddExplicitHydrogens(mol);
         //
@@ -261,7 +261,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIPDescriptor_9() throws Exception{
         //
-        //        IAtomContainer mol = sp.ParseSmiles("O=C(C)CC(C)C");
+        //        var mol = sp.ParseSmiles("O=C(C)CC(C)C");
         //
         //        AddExplicitHydrogens(mol);
         //
@@ -280,7 +280,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIPDescriptor_10() throws Exception{
         //
-        //        IAtomContainer mol = sp.ParseSmiles("O=C1C2CCC1CC2");
+        //        var mol = sp.ParseSmiles("O=C1C2CCC1CC2");
         //
         //        AddExplicitHydrogens(mol);
         //
@@ -300,7 +300,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIPDescriptor_14() throws Exception{
         //
-        //        IAtomContainer mol = sp.ParseSmiles("CCOCCCO");
+        //        var mol = sp.ParseSmiles("CCOCCCO");
         //
         //        AddExplicitHydrogens(mol);
         //
@@ -325,7 +325,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIPDescriptorReaction() throws Exception{
         //
-        //        IAtomContainer mol = sp.ParseSmiles("C-C-N");
+        //        var mol = sp.ParseSmiles("C-C-N");
         //        AreEqual(3, mol.Atoms.Count);
         //        AddExplicitHydrogens(mol);
         //        AreEqual(10, mol.Atoms.Count);
@@ -357,8 +357,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIPDescriptorReaction2() throws Exception{
         //
-        //        SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-        //        IAtomContainer mol = sp.ParseSmiles("CCCCCC");
+        //        var sp = CDK.SilentSmilesParser;
+        //        var mol = sp.ParseSmiles("CCCCCC");
         //
         //        AddExplicitHydrogens(mol);
         //
@@ -382,8 +382,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIPPySystemWithHeteroatomDescriptor3() throws Exception{
         //
-        //        SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-        //        IAtomContainer mol = sp.ParseSmiles("O(C=CC=C)C");
+        //        var sp = CDK.SilentSmilesParser;
+        //        var mol = sp.ParseSmiles("O(C=CC=C)C");
         //
         //        AddExplicitHydrogens(mol);
         //
@@ -409,8 +409,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIPPySystemWithHeteroatomDescriptor2() throws Exception{
         //
-        //        SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-        //        IAtomContainer mol = sp.ParseSmiles("OC=CC");
+        //        var sp = CDK.SilentSmilesParser;
+        //        var mol = sp.ParseSmiles("OC=CC");
         //
         //        AddExplicitHydrogens(mol);
         //
@@ -436,8 +436,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIPPySystemWithHeteroatomDescriptor1() throws Exception{
         //
-        //        SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-        //        IAtomContainer mol = sp.ParseSmiles("C1=C(C)CCS1");
+        //        var sp = CDK.SilentSmilesParser;
+        //        var mol = sp.ParseSmiles("C1=C(C)CCS1");
         //
         //        AddExplicitHydrogens(mol);
         //
@@ -464,8 +464,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    [TestMethod()]
         //    public void TestIDescriptor5() throws Exception{
         //
-        //        SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-        //        IAtomContainer mol = sp.ParseSmiles("OC(C#CC)(C)C");
+        //        var sp = CDK.SilentSmilesParser;
+        //        var mol = sp.ParseSmiles("OC(C#CC)(C)C");
         //
         //        AddExplicitHydrogens(mol);
         //

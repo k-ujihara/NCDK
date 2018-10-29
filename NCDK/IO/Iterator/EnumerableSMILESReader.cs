@@ -102,7 +102,7 @@ namespace NCDK.IO.Iterator
                 }
                 catch (Exception exception)
                 {
-                    Trace.TraceError("Unexpected problem: ", exception.Message);
+                    Trace.TraceError($"Unexpected problem: {exception.Message}");
                     Debug.WriteLine(exception);
                     yield break;
                 }

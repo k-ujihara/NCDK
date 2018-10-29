@@ -135,15 +135,15 @@ namespace NCDK.SMSD.Algorithms.McGregors
             int mappingSize = presentMapping.Count;
 
             List<int> iBondNeighborsA = new List<int>();
-            List<string> cBondNeighborsA = new List<string>();
+            var cBondNeighborsA = new List<string>();
 
             List<int> iBondSetA = new List<int>();
-            List<string> cBondSetA = new List<string>();
+            var cBondSetA = new List<string>();
 
             List<int> iBondNeighborsB = new List<int>();
             List<int> iBondSetB = new List<int>();
-            List<string> cBondNeighborsB = new List<string>();
-            List<string> cBondSetB = new List<string>();
+            var cBondNeighborsB = new List<string>();
+            var cBondSetB = new List<string>();
 
             //find unmapped atoms of molecule A
 
@@ -228,15 +228,15 @@ namespace NCDK.SMSD.Algorithms.McGregors
             int mappedAtomCount = 0;
 
             List<int> iBondNeighborAtomsA = new List<int>();
-            List<string> cBondNeighborsA = new List<string>();
+            var cBondNeighborsA = new List<string>();
 
             List<int> iBondSetA = new List<int>();
-            List<string> cBondSetA = new List<string>();
+            var cBondSetA = new List<string>();
 
             List<int> iBondNeighborAtomsB = new List<int>();
             List<int> iBondSetB = new List<int>();
-            List<string> cBondNeighborsB = new List<string>();
-            List<string> cBondSetB = new List<string>();
+            var cBondNeighborsB = new List<string>();
+            var cBondSetB = new List<string>();
 
             int cliqueSize = cliqueVector.Count;
             int vecSize = compGraphNodes.Count;
@@ -391,12 +391,12 @@ namespace NCDK.SMSD.Algorithms.McGregors
 
                 List<int> newINeighborsA = new List<int>(); //instead of iBondNeighborAtomsA
                 List<int> newINeighborsB = new List<int>(); //instead of iBondNeighborAtomsB
-                List<string> newCNeighborsA = new List<string>(); //instead of cBondNeighborsA
-                List<string> newCNeighborsB = new List<string>(); //instead of cBondNeighborsB
+                var newCNeighborsA = new List<string>(); //instead of cBondNeighborsA
+                var newCNeighborsB = new List<string>(); //instead of cBondNeighborsB
                 List<int> newIBondSetA = new List<int>(); //instead of iBondSetA
                 List<int> newIBondSetB = new List<int>(); //instead of iBondSetB
-                List<string> newCBondSetA = new List<string>(); //instead of cBondSetA
-                List<string> newCBondSetB = new List<string>(); //instead of cBondSetB
+                var newCBondSetA = new List<string>(); //instead of cBondSetA
+                var newCBondSetB = new List<string>(); //instead of cBondSetB
                                                                 //new values for setNumA + setNumB
                                                                 //new arrays for iBondSetA + iBondSetB + cBondSetB + cBondSetB
 

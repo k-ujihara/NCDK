@@ -150,7 +150,7 @@ namespace NCDK.Isomorphisms
         {
             //get the biphenyl as aromatic smiles
             SmilesParser parser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer biphenyl_aromaticsmiles = parser.ParseSmiles("c1ccccc1-c2ccccc2");
+            var biphenyl_aromaticsmiles = parser.ParseSmiles("c1ccccc1-c2ccccc2");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(biphenyl_aromaticsmiles);
             CDKHydrogenAdder hAdder = CDKHydrogenAdder.GetInstance(biphenyl_aromaticsmiles.Builder);
             hAdder.AddImplicitHydrogens(biphenyl_aromaticsmiles);
@@ -158,7 +158,7 @@ namespace NCDK.Isomorphisms
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(biphenyl_aromaticsmiles);
 
             //get the biphenyl as Kekule smiles
-            IAtomContainer biphenyl_kekulesmiles = parser.ParseSmiles("C1=C(C=CC=C1)C2=CC=CC=C2");
+            var biphenyl_kekulesmiles = parser.ParseSmiles("C1=C(C=CC=C1)C2=CC=CC=C2");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(biphenyl_kekulesmiles);
             hAdder = CDKHydrogenAdder.GetInstance(biphenyl_kekulesmiles.Builder);
             hAdder.AddImplicitHydrogens(biphenyl_kekulesmiles);

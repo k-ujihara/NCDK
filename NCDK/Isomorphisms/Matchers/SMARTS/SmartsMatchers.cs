@@ -22,6 +22,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using System;
+
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
@@ -33,6 +35,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     // @author John May
     // @cdk.module smarts
     // @cdk.githash
+    [Obsolete]
     public sealed class SmartsMatchers
     {
         /// <summary>

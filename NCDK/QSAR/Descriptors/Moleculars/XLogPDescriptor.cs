@@ -27,6 +27,7 @@ using NCDK.Isomorphisms.Matchers;
 using NCDK.Isomorphisms.Matchers.SMARTS;
 using NCDK.Isomorphisms.MCSS;
 using NCDK.QSAR.Results;
+using NCDK.SMARTS;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
@@ -902,7 +903,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         break;
                 }
 
-                //            Halogen pair 1-3
+                // Halogen pair 1-3
                 int halcount = GetHalogenCount(ac, atomi);
                 switch (halcount)
                 {
@@ -932,7 +933,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 pairCheck = InitializeHydrogenPairCheck(Arrays.CreateJagged<int>(atomCount, atomCount));
             }
-            AllPairsShortestPaths apsp = new AllPairsShortestPaths(ac);
+            var apsp = new AllPairsShortestPaths(ac);
             for (int i = 0; i < hBondAcceptors.Count; i++)
             {
                 for (int j = 0; j < hBondDonors.Count; j++)
@@ -964,7 +965,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
+            var universalIsomorphismTester = new UniversalIsomorphismTester();
             if (checkAminoAcid > 1)
             {
                 //            alpha amino acid
@@ -981,7 +982,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                      && bond.Order == BondOrder.Single)
                     {
                         aminoAcid.RemoveBond(bondAtom0, bondAtom1);
-                        aminoAcid.Bonds.Add(new AnyOrderQueryBond((IQueryAtom)bondAtom0, (IQueryAtom)bondAtom1, BondOrder.Single, atomContainer.Builder));
+                        var qbond = new QueryBond(bondAtom0, bondAtom1, ExprType.SingleOrAromatic);
+                        aminoAcid.Bonds.Add(qbond);
                         break;
                     }
                 }
@@ -1017,7 +1019,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            IAtomContainer paba = CreatePaba(ac.Builder);
+            var paba = CreatePaba(ac.Builder);
             // p-amino sulphonic acid
             try
             {
@@ -1034,7 +1036,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             // salicylic acid
             if (salicylFlag)
             {
-                IAtomContainer salicilic = CreateSalicylicAcid(ac.Builder);
+                var salicilic = CreateSalicylicAcid(ac.Builder);
                 try
                 {
                     if (universalIsomorphismTester.IsSubgraph(ac, salicilic))
@@ -1049,31 +1051,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
 
             // ortho oxygen pair
-            QueryAtomContainer orthopair = new QueryAtomContainer(atomContainer.Builder);
-            AromaticAtom atom1 = new AromaticAtom(atomContainer.Builder) { Symbol = "C" };
-            AromaticAtom atom2 = new AromaticAtom(atomContainer.Builder) { Symbol = "C" };
-            SymbolQueryAtom atom3 = new SymbolQueryAtom(atomContainer.Builder) { Symbol = "O" };
-            SymbolQueryAtom atom4 = new SymbolQueryAtom(atomContainer.Builder) { Symbol = "O" };
-
-            orthopair.Atoms.Add(atom1);
-            orthopair.Atoms.Add(atom2);
-            orthopair.Atoms.Add(atom3);
-            orthopair.Atoms.Add(atom4);
-
-            orthopair.Bonds.Add(new AromaticQueryBond(atom1, atom2, BondOrder.Single, atomContainer.Builder));
-            orthopair.Bonds.Add(new Isomorphisms.Matchers.OrderQueryBond(atom1, atom3, BondOrder.Single, atomContainer.Builder));
-            orthopair.Bonds.Add(new Isomorphisms.Matchers.OrderQueryBond(atom2, atom4, BondOrder.Single, atomContainer.Builder));
-
-            try
+            var orthopair = SmartsPattern.Create("OccO");
+            if (orthopair.Matches(ac))
             {
-                if (universalIsomorphismTester.IsSubgraph(ac, orthopair))
-                {
-                    xlogP -= 0.268;
-                }
-            }
-            catch (CDKException e)
-            {
-                return GetDummyDescriptorValue(e);
+                xlogP -= 0.268;
+                //logger.debug("XLOGP: Ortho oxygen pair	-0.268");
             }
 
             return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(xlogP), DescriptorNames);

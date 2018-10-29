@@ -24,6 +24,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Base;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.Renderers.Generators.Standards
 {
@@ -31,7 +32,7 @@ namespace NCDK.Renderers.Generators.Standards
     public class AbbreviationLabelTest
     {
         [TestMethod()]
-        public void Carboxylicacid()
+        public void CarboxylicAcid()
         {
             var tokens = new List<string>();
             Assert.IsTrue(AbbreviationLabel.Parse("COOH", tokens));
@@ -109,6 +110,23 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         [TestMethod()]
+        public void FormatRubpy3Cl2()
+        {
+            var tokens = new List<string>();
+            Assert.IsTrue(AbbreviationLabel.Parse("Ru(bpy)3Cl2", tokens));
+            var formatted = AbbreviationLabel.Format(tokens);
+            AbbreviationLabel.Reduce(formatted, 0, formatted.Count);
+            Assert.AreEqual("Ru(bpy)", formatted[0].Text);
+            Assert.AreEqual(0, formatted[0].Style);
+            Assert.AreEqual("3", formatted[1].Text);
+            Assert.AreEqual(-1, formatted[1].Style);
+            Assert.AreEqual("Cl", formatted[2].Text);
+            Assert.AreEqual(0, formatted[2].Style);
+            Assert.AreEqual("2", formatted[3].Text);
+            Assert.AreEqual(-1, formatted[3].Style);
+        }
+
+        [TestMethod()]
         public void CO2Et()
         {
             var tokens = new List<string>();
@@ -166,7 +184,7 @@ namespace NCDK.Renderers.Generators.Standards
         public void FormatOPO3()
         {
             var tokens = new[] { "O", "P", "O3", "-2" };
-            List<AbbreviationLabel.FormattedText> texts = AbbreviationLabel.Format(tokens);
+            var texts = AbbreviationLabel.Format(tokens);
             Assert.AreEqual(3, texts.Count);
             Assert.AreEqual("OPO", texts[0].Text);
             Assert.AreEqual(AbbreviationLabel.STYLE_NORMAL, texts[0].Style);

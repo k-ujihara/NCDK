@@ -34,7 +34,7 @@ namespace NCDK.IO
             int shieldingCounter = 0;
             string filename = "NCDK.Data.Gaussian.g98ReaderNMRTest.log";
             var ins = ResourceLoader.GetAsStream(filename);
-            TextReader inputReader = new StreamReader(ins);
+            var inputReader = new StreamReader(ins);
             Gaussian98Reader g98Reader = new Gaussian98Reader(inputReader);
             ChemFile chemFile = (ChemFile)g98Reader.Read(new ChemFile());
             g98Reader.Close();

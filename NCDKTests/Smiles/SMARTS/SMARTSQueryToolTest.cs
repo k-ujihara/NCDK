@@ -49,8 +49,8 @@ namespace NCDK.Smiles.SMARTS
         [TestMethod()]
         public void TestQueryTool()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C");
+            var sp = CDK.SilentSmilesParser;
+            var atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C");
             SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO", ChemObjectBuilder.Instance);
 
             bool status = querytool.Matches(atomContainer);
@@ -79,8 +79,8 @@ namespace NCDK.Smiles.SMARTS
         [TestMethod()]
         public void TestQueryToolSingleAtomCase()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer atomContainer = sp.ParseSmiles("C1CCC12CCCC2");
+            var sp = CDK.SilentSmilesParser;
+            var atomContainer = sp.ParseSmiles("C1CCC12CCCC2");
             SMARTSQueryTool querytool = new SMARTSQueryTool("C", ChemObjectBuilder.Instance);
 
             bool status = querytool.Matches(atomContainer);
@@ -93,8 +93,8 @@ namespace NCDK.Smiles.SMARTS
         [TestMethod()]
         public void TestQueryToolReSetSmarts()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer atomContainer = sp.ParseSmiles("C1CCC12CCCC2");
+            var sp = CDK.SilentSmilesParser;
+            var atomContainer = sp.ParseSmiles("C1CCC12CCCC2");
             SMARTSQueryTool querytool = new SMARTSQueryTool("C", ChemObjectBuilder.Instance);
 
             bool status = querytool.Matches(atomContainer);
@@ -117,8 +117,8 @@ namespace NCDK.Smiles.SMARTS
         [TestMethod()]
         public void TestUniqueQueries()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer atomContainer = sp.ParseSmiles("c1ccccc1CCCNCCCc1ccccc1");
+            var sp = CDK.SilentSmilesParser;
+            var atomContainer = sp.ParseSmiles("c1ccccc1CCCNCCCc1ccccc1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);
             Aromaticity.CDKLegacy.Apply(atomContainer);
             SMARTSQueryTool querytool = new SMARTSQueryTool("c1ccccc1", ChemObjectBuilder.Instance);
@@ -136,8 +136,8 @@ namespace NCDK.Smiles.SMARTS
         [TestMethod()]
         public void TestQuery()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer atomContainer = sp.ParseSmiles("c12cc(CCN)ccc1c(COC)ccc2");
+            var sp = CDK.SilentSmilesParser;
+            var atomContainer = sp.ParseSmiles("c12cc(CCN)ccc1c(COC)ccc2");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);
             Aromaticity.CDKLegacy.Apply(atomContainer);
             SMARTSQueryTool querytool = new SMARTSQueryTool("c12ccccc1cccc2", ChemObjectBuilder.Instance);

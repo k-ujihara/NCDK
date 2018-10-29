@@ -108,7 +108,7 @@ namespace NCDK.IO
                             var getinstanceMethod = formatClass.GetProperty("Instance").GetGetMethod();
                             if (getinstanceMethod == null)
                             {
-                                Trace.TraceError("Could not find this IResourceFormat: ", formatName);
+                                Trace.TraceError($"Could not find this IResourceFormat: {formatName}");
                             }
                             else
                             {
@@ -122,7 +122,7 @@ namespace NCDK.IO
                         }
                         catch (Exception exception)
                         {
-                            Trace.TraceError("Could not load this IResourceFormat: ", formatName);
+                            Trace.TraceError($"Could not load this IResourceFormat: {formatName}");
                             Debug.WriteLine(exception);
                         }
                     }
@@ -130,7 +130,7 @@ namespace NCDK.IO
                 }
                 catch (Exception exception)
                 {
-                    Trace.TraceError("Could not load this io format list: ", IO_FORMATS_LIST);
+                    Trace.TraceError($"Could not load this io format list: {IO_FORMATS_LIST}");
                     Debug.WriteLine(exception);
                 }
             }

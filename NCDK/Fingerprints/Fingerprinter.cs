@@ -362,7 +362,7 @@ namespace NCDK.Fingerprints
             var hashes = new HashSet<int>();
 
             IDictionary<IAtom, List<IBond>> cache = new Dictionary<IAtom, List<IBond>>();
-            StringBuilder buffer = new StringBuilder();
+            var buffer = new StringBuilder();
             foreach (IAtom startAtom in container.Atoms)
             {
                 var p = PathTools.GetLimitedPathsOfLengthUpto(container, startAtom, searchDepth, pathLimit);

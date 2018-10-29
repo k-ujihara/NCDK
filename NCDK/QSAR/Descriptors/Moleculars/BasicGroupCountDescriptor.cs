@@ -53,7 +53,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         };
         private readonly static string[] NAMES = { "nBase" };
 
-        private static readonly List<SMARTSQueryTool> tools = new List<SMARTSQueryTool>();
+        private static readonly List<SmartsPattern> tools = new List<SmartsPattern>();
 
         public BasicGroupCountDescriptor() 
         { 
@@ -63,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             foreach (var smarts in SMARTS_STRINGS)
             {
-                tools.Add(new SMARTSQueryTool(smarts, Silent.ChemObjectBuilder.Instance));
+                tools.Add(SmartsPattern.Create(smarts));
             }
         }
 
@@ -86,19 +86,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             atomContainer = Clone(atomContainer);
 
-            try
+            int count = 0;
+            foreach (var ptrn in tools)
             {
-                int count = 0;
-                foreach (var tool in tools)
-                {
-                    if (tool.Matches(atomContainer)) count += tool.MatchesCount;
-                }
-                return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(count), DescriptorNames);
+                count += ptrn.MatchAll(atomContainer).Count();
             }
-            catch (CDKException exception)
-            {
-                return GetDummyDescriptorValue(exception);
-            }
+            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters,  new Result<int>(count), DescriptorNames);
         }
 
         public override IDescriptorResult DescriptorResultType => Result.Instance<int>();

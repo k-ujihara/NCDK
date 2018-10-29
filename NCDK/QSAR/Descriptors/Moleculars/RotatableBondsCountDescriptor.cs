@@ -132,14 +132,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             foreach (var bond in ac.Bonds)
             {
-                IAtom atom0 = bond.Atoms[0];
-                IAtom atom1 = bond.Atoms[1];
+                var atom0 = bond.Atoms[0];
+                var atom1 = bond.Atoms[1];
                 if (atom0.Symbol.Equals("H", StringComparison.Ordinal) || atom1.Symbol.Equals("H", StringComparison.Ordinal))
                     continue;
                 if (bond.Order == BondOrder.Single)
                 {
-                    if ((BondManipulator.IsLowerOrder(ac.GetMaximumBondOrder(atom0), BondOrder.Triple))
-                            && (BondManipulator.IsLowerOrder(ac.GetMaximumBondOrder(atom1), BondOrder.Triple)))
+                    if (BondManipulator.IsLowerOrder(ac.GetMaximumBondOrder(atom0), BondOrder.Triple)
+                     && BondManipulator.IsLowerOrder(ac.GetMaximumBondOrder(atom1), BondOrder.Triple))
                     {
                         if (!bond.IsInRing)
                         {
@@ -187,7 +187,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 foreach (var neighbor in ac.GetConnectedAtoms(atom0))
                 {
                     if (neighbor.Symbol.Equals("O", StringComparison.Ordinal)
-                            && ac.GetBond(atom0, neighbor).Order == BondOrder.Double)
+                     && ac.GetBond(atom0, neighbor).Order == BondOrder.Double)
                     {
                         return true;
                     }
@@ -201,7 +201,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var connectedAtoms = atomContainer.GetConnectedAtoms(atom);
             int n = 0;
             foreach (var anAtom in connectedAtoms)
-                if (string.Equals(anAtom.Symbol, "H", StringComparison.Ordinal)) n++;
+                if (string.Equals(anAtom.Symbol, "H", StringComparison.Ordinal))
+                    n++;
             return n;
         }
 

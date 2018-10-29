@@ -49,7 +49,7 @@ namespace NCDK.Tautomers
 
         private ICollection<IAtomContainer> UnitTestWithInChIProvided(string smiles, string inchi, int tautCountExpected)
         {
-            IAtomContainer container = smilesParser.ParseSmiles(smiles);
+            var container = smilesParser.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
             var tautomers = tautomerGenerator.GetTautomers(container, inchi);
             Assert.AreEqual(tautCountExpected, tautomers.Count);
@@ -58,7 +58,7 @@ namespace NCDK.Tautomers
 
         private ICollection<IAtomContainer> UnitTestWithoutInChIProvided(string smiles, InChITautomerGenerator.Options flags, int tautCountExpected)
         {
-            IAtomContainer container = smilesParser.ParseSmiles(smiles);
+            var container = smilesParser.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
             InChITautomerGenerator tautegen = new InChITautomerGenerator(flags);
             var tautomers = tautegen.GetTautomers(container);

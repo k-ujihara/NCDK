@@ -102,7 +102,7 @@ namespace NCDK.Smiles
         {
             string ins = "Oc1ccc(cc1O)C(\\C([O-])=O)=c1/cc(O)\\c(cc1O)=C(/C([O-])=O)c1ccccc1";
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = smipar.ParseSmiles(ins);
+            var mol = smipar.ParseSmiles(ins);
             SmilesGenerator cansmi = SmilesGenerator.CreateAbsolute();
             Assert.AreEqual(cansmi.Create(mol), cansmi.Create(smipar.ParseSmiles(cansmi.Create(mol))));
         }
@@ -128,7 +128,7 @@ namespace NCDK.Smiles
 
         static void Test(params string[] inputs)
         {
-            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             SmilesGenerator sg = SmilesGenerator.CreateAbsolute();
 
             ICollection<string> output = new HashSet<string>();

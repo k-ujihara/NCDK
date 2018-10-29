@@ -28,8 +28,7 @@ namespace NCDK.Graphs
     [TestClass()]
     public class ConnectionMatrixTest : CDKTestCase
     {
-
-        private readonly static SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+        private readonly static SmilesParser sp = CDK.SilentSmilesParser;
 
         public ConnectionMatrixTest()
                 : base()
@@ -38,7 +37,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public void TestGetMatrix_IAtomContainer()
         {
-            IAtomContainer container = sp.ParseSmiles("C1CC1");
+            var container = sp.ParseSmiles("C1CC1");
             double[][] matrix = ConnectionMatrix.GetMatrix(container);
             Assert.AreEqual(3, matrix.Length);
             Assert.AreEqual(3, matrix[0].Length);

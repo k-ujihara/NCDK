@@ -92,9 +92,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         public void TestCalculateOverlapsAndReduce()
         {
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
-            SmilesParser sp = new SmilesParser(builder);
-            IAtomContainer Molecule1 = sp.ParseSmiles("O1C=CC=C1");
-            IAtomContainer Molecule2 = sp.ParseSmiles("C1CCCC1");
+            var sp = new SmilesParser(builder);
+            var Molecule1 = sp.ParseSmiles("O1C=CC=C1");
+            var Molecule2 = sp.ParseSmiles("C1CCCC1");
             CDKRMapHandler instance = new CDKRMapHandler();
             instance.CalculateOverlapsAndReduce(Molecule1, Molecule2, true);
             Assert.IsNotNull(FinalMappings.Instance.Count);
@@ -107,9 +107,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         public void TestCalculateOverlapsAndReduceExactMatch()
         {
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
-            SmilesParser sp = new SmilesParser(builder);
-            IAtomContainer Molecule1 = sp.ParseSmiles("O1C=CC=C1");
-            IAtomContainer Molecule2 = sp.ParseSmiles("O1C=CC=C1");
+            var sp = new SmilesParser(builder);
+            var Molecule1 = sp.ParseSmiles("O1C=CC=C1");
+            var Molecule2 = sp.ParseSmiles("O1C=CC=C1");
             CDKRMapHandler instance = new CDKRMapHandler();
             instance.CalculateOverlapsAndReduceExactMatch(Molecule1, Molecule2, true);
             // TODO review the generated test code and remove the default call to fail.
@@ -123,9 +123,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         public void TestGetMappings()
         {
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
-            SmilesParser sp = new SmilesParser(builder);
-            IAtomContainer Molecule1 = sp.ParseSmiles("O1C=CC=C1");
-            IAtomContainer Molecule2 = sp.ParseSmiles("O1C=CC=C1");
+            var sp = new SmilesParser(builder);
+            var Molecule1 = sp.ParseSmiles("O1C=CC=C1");
+            var Molecule2 = sp.ParseSmiles("O1C=CC=C1");
             CDKRMapHandler instance = new CDKRMapHandler();
             instance.CalculateOverlapsAndReduceExactMatch(Molecule1, Molecule2, true);
             var result = instance.Mappings;

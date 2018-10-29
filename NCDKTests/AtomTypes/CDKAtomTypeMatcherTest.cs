@@ -6696,7 +6696,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_n_planar3_sp2_aromaticity()
         {
-            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+            var builder = Silent.ChemObjectBuilder.Instance;
 
             // simulate an IAtomContainer returned from a SDFile with bond order 4 to indicate aromaticity
             IAtomContainer pyrrole = builder.NewAtomContainer();
@@ -6738,7 +6738,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_n_planar3_sp2_aromaticity_explicitH()
         {
-            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+            var builder = Silent.ChemObjectBuilder.Instance;
 
             // simulate an IAtomContainer returned from a SDFile with bond order 4 to indicate aromaticity
             IAtomContainer pyrrole = builder.NewAtomContainer();

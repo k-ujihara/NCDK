@@ -355,7 +355,7 @@ namespace NCDK.Tools.Manipulator
 
         public static List<string> GetAllIDs(IChemModel chemModel)
         {
-            List<string> list = new List<string>();
+            var list = new List<string>();
             if (chemModel.Id != null) list.Add(chemModel.Id);
             ICrystal crystal = chemModel.Crystal;
             if (crystal != null)

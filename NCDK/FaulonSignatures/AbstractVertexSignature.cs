@@ -239,7 +239,7 @@ namespace NCDK.FaulonSignatures
         /// <returns>the canonical string form</returns>
         public string ToCanonicalString()
         {
-            StringBuilder stringBuffer = new StringBuilder();
+            var stringBuffer = new StringBuilder();
             TMP_COLORING_COUNT = 0;
             this.Canonize(0, stringBuffer);
             return stringBuffer.ToString();
@@ -446,7 +446,7 @@ namespace NCDK.FaulonSignatures
         /// </summary>
         public override string ToString()
         {
-            StringBuilder buffer = new StringBuilder();
+            var buffer = new StringBuilder();
             Print(buffer, this.dag.GetRoot(), null, new List<DAG.Arc>());
             return buffer.ToString();
         }

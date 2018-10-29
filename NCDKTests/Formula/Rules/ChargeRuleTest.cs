@@ -65,7 +65,7 @@ namespace NCDK.Formula.Rules
         {
             IRule rule = new ChargeRule();
 
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(builder.NewIsotope("C"), 2);
             formula.Add(builder.NewIsotope("H"), 200);
             formula.Charge = 1;
@@ -77,7 +77,7 @@ namespace NCDK.Formula.Rules
         public void TestDefaultValidFalseSetParam()
         {
             IRule rule = new ChargeRule();
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(builder.NewIsotope("C"), 2);
             formula.Add(builder.NewIsotope("H"), 200);
             formula.Charge = 1;
@@ -91,7 +91,7 @@ namespace NCDK.Formula.Rules
         {
             IRule rule = new ChargeRule();
 
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(builder.NewIsotope("C"), 2);
             formula.Add(builder.NewIsotope("H"), 6);
             formula.Charge = 0;

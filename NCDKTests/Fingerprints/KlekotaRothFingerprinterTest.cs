@@ -45,6 +45,11 @@ namespace NCDK.Fingerprints
         }
 
         [TestMethod()]
+        public override void TestGetCountFingerprint()
+        {
+        }
+
+        [TestMethod()]
         public void TestFingerprint()
         {
             SmilesParser parser = new SmilesParser(Silent.ChemObjectBuilder.Instance);

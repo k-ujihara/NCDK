@@ -504,7 +504,7 @@ namespace NCDK.IO
 
         private static string GetCommand(string line)
         {
-            StringBuilder buffer = new StringBuilder();
+            var buffer = new StringBuilder();
             int i = 0;
             bool foundBracket = false;
             while (i < line.Length && !foundBracket)
@@ -525,7 +525,7 @@ namespace NCDK.IO
 
         private static string GetValue(string line)
         {
-            StringBuilder buffer = new StringBuilder();
+            var buffer = new StringBuilder();
             int i = 0;
             bool foundComma = false;
             bool preWS = true;
@@ -552,7 +552,7 @@ namespace NCDK.IO
 
         private string GetQuotedValue(string line)
         {
-            StringBuilder buffer = new StringBuilder();
+            var buffer = new StringBuilder();
             int i = 0;
             //        Debug.WriteLine($"QV line: {line}");
             bool startQuoteFound = false;

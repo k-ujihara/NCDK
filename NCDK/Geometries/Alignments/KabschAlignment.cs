@@ -113,7 +113,7 @@ namespace NCDK.Geometries.Alignments
             }
             catch (Exception e)
             {
-                Trace.TraceError("Error while instantiating the isotope factory: ", e.Message);
+                Trace.TraceError($"Error while instantiating the isotope factory: {e.Message}");
                 Debug.WriteLine(e);
             }
 
@@ -135,7 +135,7 @@ namespace NCDK.Geometries.Alignments
             }
             catch (Exception e)
             {
-                Trace.TraceError("Error while instantiating the isotope factory: ", e.Message);
+                Trace.TraceError($"Error while instantiating the isotope factory: {e.Message}");
                 Debug.WriteLine(e);
             }
 

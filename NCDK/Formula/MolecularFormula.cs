@@ -188,11 +188,14 @@ namespace NCDK.Formula
         /// <returns>True, if both isotope are the same</returns>
         internal static bool IsTheSame(IIsotope isotopeOne, IIsotope isotopeTwo)
         {
-            double? natAbund1 = isotopeOne.NaturalAbundance;
-            double? natAbund2 = isotopeTwo.NaturalAbundance;
+            if (!object.Equals(isotopeOne.MassNumber, isotopeTwo.MassNumber))
+                return false;
 
-            double? exactMass1 = isotopeOne.ExactMass;
-            double? exactMass2 = isotopeTwo.ExactMass;
+            var natAbund1 = isotopeOne.NaturalAbundance;
+            var natAbund2 = isotopeTwo.NaturalAbundance;
+
+            var exactMass1 = isotopeOne.ExactMass;
+            var exactMass2 = isotopeTwo.ExactMass;
 
             if (natAbund1 == null)
                 natAbund1 = -1.0;

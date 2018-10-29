@@ -210,7 +210,7 @@ namespace NCDK.Config
                 if (major != null)
                     this.majorIsotope[elem] = major;
                 else
-                    Trace.TraceError("Could not find major isotope for: ", elem);
+                    Trace.TraceError($"Could not find major isotope for: {elem}");
             }
             return Clone(major);
         }

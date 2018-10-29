@@ -39,7 +39,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void RecogniseRightHandedGlyceraldehyde()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 0.80d, 1.24d));
             m.Atoms.Add(Atom("C", 0, 0.80d, 0.42d));
             m.Atoms.Add(Atom("O", 1, 0.09d, 1.66d));
@@ -74,7 +74,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void RecogniseLeftHandedGlyceraldehyde()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 0.80d, 1.24d));
             m.Atoms.Add(Atom("C", 0, 0.80d, 0.42d));
             m.Atoms.Add(Atom("O", 1, 0.09d, 1.66d));
@@ -109,7 +109,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void RecogniseRightHandedGlyceraldehydeWithImplicitHydrogen()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 0.80d, 1.24d));
             m.Atoms.Add(Atom("C", 1, 0.80d, 0.42d));
             m.Atoms.Add(Atom("O", 1, 0.09d, 1.66d));
@@ -142,7 +142,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Mannitol()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 2, -0.53d, 6.25d));
             m.Atoms.Add(Atom("C", 1, -0.53d, 5.42d));
             m.Atoms.Add(Atom("O", 1, 0.18d, 6.66d));
@@ -508,7 +508,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void IgnoreCyclicStereocenters()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 6.87d, -5.59d));
             m.Atoms.Add(Atom("C", 0, 6.87d, -6.61d));
             m.Atoms.Add(Atom("C", 0, 7.82d, -5.62d));
@@ -573,7 +573,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void HorizontalBondsMustBeTerminal()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 12.71d, -16.51d));
             m.Atoms.Add(Atom("C", 1, 12.30d, -17.22d));
             m.Atoms.Add(Atom("C", 1, 11.47d, -17.22d));

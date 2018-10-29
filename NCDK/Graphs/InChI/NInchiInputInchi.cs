@@ -67,7 +67,7 @@ namespace NCDK.Graphs.InChI
         /// <param name="inchi">InChI string</param>
         /// <param name="opts">Options</param>
         /// </summary>
-        public NInchiInputInchi(string inchi, IList<InChIOption> opts)
+        public NInchiInputInchi(string inchi, IEnumerable<InChIOption> opts)
         {
             Inchi = inchi;
             Options = NInchiWrapper.CheckOptions(opts);

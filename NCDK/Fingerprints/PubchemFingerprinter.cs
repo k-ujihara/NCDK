@@ -22,12 +22,11 @@
  */
 
 using NCDK.Graphs;
-using NCDK.Smiles.SMARTS;
+using NCDK.SMARTS;
 using NCDK.Tools;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Fingerprints
 {
@@ -75,7 +74,6 @@ namespace NCDK.Fingerprints
     // @cdk.keyword fingerprint
     // @cdk.keyword similarity
     // @cdk.module fingerprint
-    // @cdk.githash
     // @cdk.threadnonsafe
     public class PubchemFingerprinter : AbstractFingerprinter, IFingerprinter
     {
@@ -86,7 +84,7 @@ namespace NCDK.Fingerprints
 
         private byte[] m_bits;
 
-        private SMARTSQueryTool sqt;
+        private Dictionary<string, SmartsPattern> cache = new Dictionary<string, SmartsPattern>();
 
         public PubchemFingerprinter()
             : this(Silent.ChemObjectBuilder.Instance)
@@ -95,7 +93,6 @@ namespace NCDK.Fingerprints
 
         public PubchemFingerprinter(IChemObjectBuilder builder)
         {
-            sqt = new SMARTSQueryTool("C", builder);
             m_bits = new byte[(FPSize + 7) >> 3];
         }
 
@@ -312,8 +309,11 @@ namespace NCDK.Fingerprints
                 int c = 0;
                 foreach (var ring in ringSet)
                 {
-                    if (ring.Atoms.Count == size && IsRingUnsaturated(ring) && !IsAromaticRing(ring)
-                            && CountHeteroInRing(ring) > 0) ++c;
+                    if (ring.Atoms.Count == size 
+                     && IsRingUnsaturated(ring) 
+                     && !IsAromaticRing(ring)
+                     && CountHeteroInRing(ring) > 0)
+                        ++c;
                 }
                 return c;
             }
@@ -332,19 +332,19 @@ namespace NCDK.Fingerprints
 
             public int CountSubstructure(string smarts)
             {
-                parent.sqt.Smarts = smarts;
-                bool status = parent.sqt.Matches(mol);
-                if (status)
+                if (!parent.cache.TryGetValue(smarts, out SmartsPattern ptrn))
                 {
-                    return parent.sqt.GetUniqueMatchingAtoms().Count();
+                    ptrn = SmartsPattern.Create(smarts);
+                    ptrn.SetPrepare(false);
+                    parent.cache[smarts] = ptrn;
                 }
-                else
-                    return 0;
+                return ptrn.MatchAll(mol).CountUnique();
             }
         }
 
         private void _GenerateFp(byte[] fp, IAtomContainer mol)
         {
+            SmartsPattern.Prepare(mol);
             CountElements(fp, mol);
             CountRings(fp, mol);
             CountSubstructures(fp, mol);

@@ -47,7 +47,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.VASP.LiMoS2_optimisation_ISIF3.vasp";
             Trace.TraceInformation("Testing: " + filename);
-            Stream ins = ResourceLoader.GetAsStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             VASPReader reader = new VASPReader(ins);
             ChemFile chemFile = (ChemFile)reader.Read(new ChemFile());
             Assert.IsNotNull(chemFile);

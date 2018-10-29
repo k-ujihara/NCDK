@@ -328,9 +328,9 @@ namespace NCDK.IO.PubChemXml
 
         public static void ParserBondBlock(XElement parser, IAtomContainer molecule)
         {
-            List<string> id1s = new List<string>();
-            List<string> id2s = new List<string>();
-            List<string> orders = new List<string>();
+            var id1s = new List<string>();
+            var id2s = new List<string>();
+            var orders = new List<string>();
             foreach (var elm in parser.Descendants())
             {
                 if (Name_EL_BONDID1.Equals(elm.Name))
@@ -375,10 +375,10 @@ namespace NCDK.IO.PubChemXml
 
         public static void ParserCoordBlock(XElement parser, IAtomContainer molecule)
         {
-            List<string> ids = new List<string>();
-            List<string> xs = new List<string>();
-            List<string> ys = new List<string>();
-            List<string> zs = new List<string>();
+            var ids = new List<string>();
+            var xs = new List<string>();
+            var ys = new List<string>();
+            var zs = new List<string>();
             foreach (var elm in parser.Descendants())
             {
                 if (Name_EL_COORDINATES_AID.Equals(elm.Name))
@@ -420,7 +420,7 @@ namespace NCDK.IO.PubChemXml
 
         private static List<string> ParseValues(XElement parser, XName fieldTag)
         {
-            List<string> values = new List<string>();
+            var values = new List<string>();
             foreach (var elm in parser.Descendants())
             {
                 if (fieldTag.Equals(elm.Name))

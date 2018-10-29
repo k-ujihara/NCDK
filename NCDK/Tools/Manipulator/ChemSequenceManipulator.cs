@@ -101,7 +101,7 @@ namespace NCDK.Tools.Manipulator
 
         public static IList<string> GetAllIDs(IChemSequence sequence)
         {
-            List<string> list = new List<string>();
+            var list = new List<string>();
             if (sequence.Id != null) list.Add(sequence.Id);
             for (int i = 0; i < sequence.Count; i++)
             {

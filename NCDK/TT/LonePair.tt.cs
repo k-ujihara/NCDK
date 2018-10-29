@@ -108,7 +108,7 @@ namespace NCDK.Default
         /// <returns>The string representation of this LonePair</returns>
         public override string ToString()
         {
-            StringBuilder resultString = new StringBuilder();
+            var resultString = new StringBuilder();
             resultString.Append("LonePair(");
             resultString.Append(this.GetHashCode());
             if (atom != null)
@@ -202,7 +202,7 @@ namespace NCDK.Silent
         /// <returns>The string representation of this LonePair</returns>
         public override string ToString()
         {
-            StringBuilder resultString = new StringBuilder();
+            var resultString = new StringBuilder();
             resultString.Append("LonePair(");
             resultString.Append(this.GetHashCode());
             if (atom != null)

@@ -56,7 +56,7 @@ namespace NCDK.Graphs.Invariant
         [TestCategory("SlowTest")]
         public void TestCanonLabel_IAtomContainer()
         {
-            IAtomContainer molecule = parser.ParseSmiles("CC(=O)CBr");
+            var molecule = parser.ParseSmiles("CC(=O)CBr");
 
             labeler.CanonLabel(molecule);
             foreach (var atom in molecule.Atoms)

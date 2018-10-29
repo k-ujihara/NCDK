@@ -21,7 +21,7 @@ namespace NCDK.Fingerprints
 
         public string GetVersionDescription()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("CDK-")
               .Append(GetType().Name)
               .Append("/")

@@ -29,8 +29,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [TestClass()]
     public class BondCountDescriptorTest : MolecularDescriptorTest
     {
-        private static readonly SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-
+        private static readonly SmilesParser sp = CDK.SilentSmilesParser;
+        
         public BondCountDescriptorTest()
         {
             SetDescriptor(typeof(BondCountDescriptor));
@@ -46,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestSingleBondCount()
         {
             Descriptor.Parameters = new string[] { "s" };
-            IAtomContainer mol = sp.ParseSmiles("CCO"); // ethanol
+            var mol = sp.ParseSmiles("CCO"); // ethanol
             Assert.AreEqual(2, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
             mol = sp.ParseSmiles("C=C=C");
             Assert.AreEqual(0, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestDoubleBondCount()
         {
             Descriptor.Parameters = new string[] { "d" };
-            IAtomContainer mol = sp.ParseSmiles("CCO"); // ethanol
+            var mol = sp.ParseSmiles("CCO"); // ethanol
             Assert.AreEqual(0, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
             mol = sp.ParseSmiles("C=C=C");
             Assert.AreEqual(2, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestDefaultSetting()
         {
             IMolecularDescriptor descriptor = new BondCountDescriptor();
-            IAtomContainer mol = sp.ParseSmiles("CCO"); // ethanol
+            var mol = sp.ParseSmiles("CCO"); // ethanol
             Assert.AreEqual(2, ((Result<int>)descriptor.Calculate(mol).Value).Value);
             mol = sp.ParseSmiles("C=C=C");
             Assert.AreEqual(2, ((Result<int>)descriptor.Calculate(mol).Value).Value);

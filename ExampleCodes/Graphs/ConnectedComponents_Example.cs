@@ -11,7 +11,7 @@ namespace NCDK.Graphs
             #region
             int[][] g = GraphUtil.ToAdjList(container);
             ConnectedComponents cc = new ConnectedComponents(g);
-            int[] components = cc.Components();
+            int[] components = cc.GetComponents();
             for (int v = 0; v < g.Length; v++)
                 Console.WriteLine(components[v]);
             #endregion

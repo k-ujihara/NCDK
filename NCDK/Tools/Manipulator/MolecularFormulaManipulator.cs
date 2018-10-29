@@ -25,6 +25,7 @@
 using NCDK.Config;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -124,7 +125,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The list with the elements in this molecular formula</returns>
         public static IEnumerable<IElement> Elements(IMolecularFormula formula)
         {
-            List<string> stringList = new List<string>();
+            var stringList = new List<string>();
             foreach (var isotope in formula.Isotopes)
             {
                 if (!stringList.Contains(isotope.Symbol))
@@ -174,39 +175,14 @@ namespace NCDK.Tools.Manipulator
         /// <param name="formula">The IMolecularFormula Object</param>
         /// <param name="orderElements">The order of Elements</param>
         /// <param name="setOne">True, when must be set the value 1 for elements with one atom</param>
-        /// <returns>A string containing the molecular formula</returns>
+        /// <returns>A String containing the molecular formula</returns>
         /// <seealso cref="GetHTML(IMolecularFormula)"/>
         /// <seealso cref="OrderEle"/>
         /// <seealso cref="OrderEleHillNoCarbons"/>
         /// <seealso cref="OrderEleHillWithCarbons"/>
         public static string GetString(IMolecularFormula formula, IReadOnlyList<string> orderElements, bool setOne)
         {
-            var stringMF = new StringBuilder();
-            var isotopesList = PutInOrder(orderElements, formula);
-
-            // collect elements in a map - since different isotopes of the
-            // same element will get repeated in the formula
-            var elemSet = new List<string>();
-            foreach (var isotope in isotopesList)
-            {
-                var symbol = isotope.Symbol;
-                if (!elemSet.Contains(symbol))
-                    elemSet.Add(symbol);
-            }
-
-            foreach (var elem in elemSet)
-            {
-                int count = 0;
-                foreach (var isotope in formula.Isotopes)
-                {
-                    if (isotope.Symbol.Equals(elem, StringComparison.Ordinal))
-                        count += formula.GetCount(isotope);
-                }
-                stringMF.Append(elem);
-                if (!(count == 1 && !setOne))
-                    stringMF.Append(count);
-            }
-            return stringMF.ToString();
+            return GetString(formula, orderElements, setOne, true);
         }
 
         /// <summary>
@@ -226,6 +202,97 @@ namespace NCDK.Tools.Manipulator
             return GetString(formula, false);
         }
 
+        private static void AppendElement(StringBuilder sb, int? mass, int elem, int count)
+        {
+            if (mass != null)
+                sb.Append('[')
+                  .Append(mass)
+                  .Append(']')
+                  .Append(ChemicalElement.OfNumber(elem).Symbol);
+            else
+                sb.Append(ChemicalElement.OfNumber(elem).Symbol);
+            if (count != 0)
+                sb.Append(count);
+        }
+
+        /// <summary>
+        /// Returns the string representation of the molecule formula.
+        /// </summary>
+        /// <param name="formula">The IMolecularFormula Object</param>
+        /// <param name="orderElements">The order of Elements</param>
+        /// <param name="setOne">True, when must be set the value 1 for elements with one atom</param>
+        /// <param name="setMassNumber">If the formula contains an isotope of an element that is the
+        /// non-major isotope, the element is represented as "[XE]" where
+        /// "X" is the mass number and "E" is the element symbol</param>
+        /// <returns>A String containing the molecular formula</returns>
+        /// <seealso cref="GetHTML(IMolecularFormula)"/>
+        /// <seealso cref="OrderEle"/>
+        /// <seealso cref="OrderEleHillNoCarbons"/>
+        /// <seealso cref="OrderEleHillWithCarbons"/>
+        public static string GetString(IMolecularFormula formula, IReadOnlyList<string> orderElements, bool setOne, bool setMassNumber)
+        {
+            var stringMF = new StringBuilder();
+            var isotopesList = PutInOrder(orderElements, formula);
+            var q = formula.Charge;
+
+            if (q != null && q != 0)
+                stringMF.Append('[');
+
+            if (!setMassNumber)
+            {
+                int count = 0;
+                int prev = -1;
+                foreach (var isotope in isotopesList)
+                {
+                    if (isotope.AtomicNumber != prev)
+                    {
+                        if (count != 0)
+                            AppendElement(stringMF,
+                                          null, prev,
+                                          setOne || count != 1 ? count : 0);
+                        prev = isotope.AtomicNumber.Value;
+                        count = formula.GetCount(isotope);
+                    }
+                    else
+                        count += formula.GetCount(isotope);
+                }
+                if (count != 0)
+                    AppendElement(stringMF,
+                                  null, prev,
+                                  setOne || count != 1 ? count : 0);
+            }
+            else
+            {
+                foreach (var isotope in isotopesList)
+                {
+                    int count = formula.GetCount(isotope);
+                    AppendElement(stringMF,
+                            isotope.MassNumber,
+                            isotope.AtomicNumber.Value,
+                            setOne || count != 1 ? count : 0);
+                }
+            }
+
+            if (q != null && q != 0)
+            {
+                stringMF.Append(']');
+                if (q > 0)
+                {
+                    if (q > 1)
+                        stringMF.Append(q);
+                    stringMF.Append('+');
+                }
+                else
+                {
+                    if (q < -1)
+                        stringMF.Append(-q);
+                    stringMF.Append('-');
+                }
+            }
+
+            return stringMF.ToString();
+        }
+
         /// <summary>
         /// Returns the string representation of the molecule formula.
         /// Based on Hill System. The Hill system is a system of writing
@@ -242,9 +309,33 @@ namespace NCDK.Tools.Manipulator
         public static string GetString(IMolecularFormula formula, bool setOne)
         {
             if (ContainsElement(formula, formula.Builder.NewElement("C")))
-                return GetString(formula, OrderEleHillWithCarbons, setOne);
+                return GetString(formula, OrderEleHillWithCarbons, setOne, false);
             else
-                return GetString(formula, OrderEleHillNoCarbons, setOne);
+                return GetString(formula, OrderEleHillNoCarbons, setOne, false);
+        }
+
+        /// <summary>
+        /// Returns the string representation of the molecule formula.
+        /// Based on Hill System. The Hill system is a system of writing
+        /// chemical formulas such that the number of carbon atoms in a
+        /// molecule is indicated first, the number of hydrogen atoms next,
+        /// and then the number of all other chemical elements subsequently,
+        /// in alphabetical order. When the formula contains no carbon, all
+        /// the elements, including hydrogen, are listed alphabetically.
+        /// </summary>
+        /// <param name="formula">The IMolecularFormula Object</param>
+        /// <param name="setOne">True, when must be set the value 1 for elements with one atom</param>
+        /// <param name="setMassNumber">If the formula contains an isotope of an element that is the
+        /// non-major isotope, the element is represented as "[XE]" where
+        /// "X" is the mass number and "E" is the element symbol</param>
+        /// <returns>A String containing the molecular formula</returns>
+        /// <see cref="GetHTML(IMolecularFormula)"/>
+        public static string GetString(IMolecularFormula formula, bool setOne, bool setMassNumber)
+        {
+            if (ContainsElement(formula, formula.Builder.NewElement("C")))
+                return GetString(formula, OrderEleHillWithCarbons, setOne, setMassNumber);
+            else
+                return GetString(formula, OrderEleHillNoCarbons, setOne, setMassNumber);
         }
 
         public static IReadOnlyList<IIsotope> PutInOrder(IReadOnlyList<string> orderElements, IMolecularFormula formula)
@@ -255,11 +346,18 @@ namespace NCDK.Tools.Manipulator
                 var element = formula.Builder.NewElement(orderElement);
                 if (ContainsElement(formula, element))
                 {
-                    var isotopes = GetIsotopes(formula, element);
-                    foreach (var isotope in isotopes)
+                    var isotopes = GetIsotopes(formula, element).ToList();
+                    isotopes.Sort((a, b) =>
                     {
-                        isotopesList.Add(isotope);
-                    }
+                        var aMass = a.MassNumber;
+                        var bMass = b.MassNumber;
+                        if (aMass == null)
+                            return -1;
+                        if (bMass == null)
+                            return +1;
+                        return aMass.Value.CompareTo(bMass.Value);
+                    });
+                    isotopesList.AddRange(isotopes);
                 }
             }
             return isotopesList;
@@ -287,13 +385,15 @@ namespace NCDK.Tools.Manipulator
             {
                 hillString.Append('C');
                 count = hillMap["C"];
-                if (count > 1) hillString.Append(count);
+                if (count > 1)
+                    hillString.Append(count);
                 hillMap.Remove("C");
                 if (hillMap.ContainsKey("H"))
                 {
                     hillString.Append('H');
                     count = hillMap["H"];
-                    if (count > 1) hillString.Append(count);
+                    if (count > 1)
+                        hillString.Append(count);
                     hillMap.Remove("H");
                 }
             }
@@ -336,7 +436,7 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="GetHTML(IMolecularFormula)"/>
         public static string GetHTML(IMolecularFormula formula, bool chargeB, bool isotopeB)
         {
-            var orderElements = 
+            var orderElements =
                 ContainsElement(formula, formula.Builder.NewElement("C"))
               ? OrderEleHillWithCarbons
               : OrderEleHillNoCarbons;
@@ -494,68 +594,17 @@ namespace NCDK.Tools.Manipulator
                 stringMF = CleanMFfromCharge(stringMF);
             }
 
-            // FIXME: MF: variables with lower case first char
-            char ThisChar;
-
-            // Buffer for
-            var RecentElementSymbol = "";
-            var RecentElementCountString = "0";
-            // string to be converted to an integer
-
-            int RecentElementCount;
-
-            if (stringMF.Length == 0)
-            {
+            if (string.IsNullOrEmpty(stringMF))
                 return null;
-            }
 
-            for (int f = 0; f < stringMF.Length; f++)
+            var len = stringMF.Length;
+            var iter = new CharIter { str = stringMF };
+            while (iter.pos < len)
             {
-                ThisChar = stringMF[f];
-                if (f < stringMF.Length)
+                if (!ParseIsotope(iter, formula, assumeMajorIsotope))
                 {
-                    if (ThisChar >= 'A' && ThisChar <= 'Z')
-                    {
-                        //
-                        // New Element begins
-                        //
-                        RecentElementSymbol = new string(new[] { ThisChar });
-                        RecentElementCountString = "0";
-                    }
-                    if (ThisChar >= 'a' && ThisChar <= 'z')
-                    {
-                        // Two-letter Element continued
-                        RecentElementSymbol += ThisChar;
-                    }
-                    if (ThisChar >= '0' && ThisChar <= '9')
-                    {
-                        // Two-letter Element continued
-                        RecentElementCountString += ThisChar;
-                    }
-                }
-                if (f == stringMF.Length - 1 || (stringMF[f + 1] >= 'A' && stringMF[f + 1] <= 'Z'))
-                {
-                    // Here an element symbol as well as its number should have been read completely
-                    RecentElementCount = int.Parse(RecentElementCountString, NumberFormatInfo.InvariantInfo);
-                    if (RecentElementCount == 0)
-                    {
-                        RecentElementCount = 1;
-                    }
-
-                    var isotope = formula.Builder.NewIsotope(RecentElementSymbol);
-                    if (assumeMajorIsotope)
-                    {
-                        try
-                        {
-                            isotope = BODRIsotopeFactory.Instance.GetMajorIsotope(RecentElementSymbol);
-                        }
-                        catch (IOException)
-                        {
-                            throw new ApplicationException("Cannot load the IsotopeFactory");
-                        }
-                    }
-                    formula.Add(isotope, RecentElementCount);
-
+                    Trace.TraceError($"Could not parse MF: {iter.str}");
+                    return null;
                 }
             }
             if (charge != null)
@@ -576,7 +625,7 @@ namespace NCDK.Tools.Manipulator
             string finalFormula = "";
             for (int f = 0; f < formula.Length; f++)
             {
-                char thisChar = formula[f];
+                var thisChar = formula[f];
                 if (thisChar == '[')
                 {
                     // start
@@ -606,7 +655,7 @@ namespace NCDK.Tools.Manipulator
             string multiple = "";
             for (int f = 0; f < formula.Length; f++)
             {
-                char thisChar = formula[f];
+                var thisChar = formula[f];
                 switch (thisChar)
                 {
                     case ']':
@@ -627,7 +676,7 @@ namespace NCDK.Tools.Manipulator
                         break;
                 }
             }
-        Exit_For:
+            Exit_For:
             switch (multiple)
             {
                 case "":
@@ -648,26 +697,34 @@ namespace NCDK.Tools.Manipulator
         public static double GetTotalExactMass(IMolecularFormula formula)
         {
             double mass = 0.0;
-
             foreach (var isotope in formula.Isotopes)
             {
-                if (isotope.ExactMass == null)
+                try
                 {
-                    try
+                    var massNum = isotope.MassNumber;
+                    var exactMass = isotope.ExactMass;
+                    if (massNum == null || massNum == 0)
                     {
                         var majorIsotope = BODRIsotopeFactory.Instance.GetMajorIsotope(isotope.Symbol);
                         if (majorIsotope != null)
+                            exactMass = majorIsotope.ExactMass;
+                    }
+                    else
+                    {
+                        if (exactMass == null)
                         {
-                            mass += majorIsotope.ExactMass.Value * formula.GetCount(isotope);
+                            var temp = BODRIsotopeFactory.Instance.GetIsotope(isotope.Symbol, massNum.Value);
+                            if (temp != null)
+                                exactMass = temp.ExactMass;
                         }
                     }
-                    catch (IOException)
-                    {
-                        throw new ApplicationException("Could not instantiate the IsotopeFactory.");
-                    }
+                    if (exactMass != null)
+                        mass += exactMass.Value * formula.GetCount(isotope);
                 }
-                else
-                    mass += isotope.ExactMass.Value * formula.GetCount(isotope);
+                catch (IOException)
+                {
+                    throw new ApplicationException("Could not instantiate the IsotopeFactory.");
+                }
             }
             if (formula.Charge != null)
                 mass = CorrectMass(mass, formula.Charge.Value);
@@ -840,6 +897,114 @@ namespace NCDK.Tools.Manipulator
             }
             formula.Charge = charge;
             return formula;
+        }
+
+        private static bool IsUpper(char c)
+        {
+            return c >= 'A' && c <= 'Z';
+        }
+
+        private static bool IsLower(char c)
+        {
+            return c >= 'a' && c <= 'z';
+        }
+
+        private static bool IsDigit(char c)
+        {
+            return c >= '0' && c <= '9';
+        }
+
+        // helper class for parsing MFs
+        sealed class CharIter
+        {
+            public int pos;
+            public string str;
+
+            public char Next()
+            {
+                return pos == str.Length ? '\0' : str[pos++];
+            }
+
+            public int NextUInt()
+            {
+                char c = Next();
+                if (!IsDigit(c))
+                {
+                    if (c != '\0')
+                        pos--;
+                    return -1;
+                }
+                int res = c - '0';
+                while (IsDigit(c = Next()))
+                    res = (10 * res) + (c - '0');
+                if (c != '\0')
+                    pos--;
+                return res;
+            }
+
+            public bool NextIf(char c)
+            {
+                if (str[pos] == c)
+                {
+                    pos++;
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        // parses an isotope from a symbol in the form:
+        // ('[' <DIGIT> ']')? <UPPER> <LOWER>? <DIGIT>+?
+        private static bool ParseIsotope(CharIter iter,
+                                            IMolecularFormula mf,
+                                            bool setMajor)
+        {
+            ChemicalElement elem = null;
+            int mass = 0;
+            int count = 0;
+            if (iter.NextIf('['))
+            {
+                mass = iter.NextUInt();
+                if (mass < 0)
+                    return false;
+                if (!iter.NextIf(']'))
+                    return false;
+            }
+            char c1 = iter.Next();
+            char c2 = iter.Next();
+            if (!IsLower(c2))
+            {
+                // could use a switch, see SMARTS parser
+                elem = ChemicalElement.OfString("" + c1);
+                if (c2 != '\0')
+                    iter.pos--;
+            }
+            else
+            {
+                elem = ChemicalElement.OfString("" + c1 + c2);
+            }
+            count = iter.NextUInt();
+            if (count < 0)
+                count = 1;
+            var isotope = mf.Builder.NewIsotope(elem.Symbol);
+            isotope.AtomicNumber = elem.AtomicNumber;
+            if (mass != 0)
+                isotope.MassNumber = mass;
+            else if (setMajor)
+            {
+                try
+                {
+                    var major = BODRIsotopeFactory.Instance.GetMajorIsotope(elem.AtomicNumber);
+                    if (major != null)
+                        isotope.MassNumber = major.MassNumber;
+                }
+                catch (IOException)
+                {
+                    // ignored
+                }
+            }
+            mf.Add(isotope, count);
+            return true;
         }
 
         /// <summary>
@@ -1027,11 +1192,11 @@ namespace NCDK.Tools.Manipulator
             if (!formula.Contains("."))
                 return BreakExtractor(formula);
 
-            List<string> listMF = new List<string>();
+            var listMF = new List<string>();
             while (newFormula.Contains("."))
             {
-                int pos = newFormula.IndexOf('.');
-                string thisFormula = newFormula.Substring(0, pos);
+                var pos = newFormula.IndexOf('.');
+                var thisFormula = newFormula.Substring(0, pos);
                 if (thisFormula[0] >= '0' && thisFormula[0] <= '9')
                     thisFormula = MultipleExtractor(thisFormula);
 
@@ -1062,7 +1227,7 @@ namespace NCDK.Tools.Manipulator
             var eleCount = new List<int>();
             for (int i = 0; i < listMF.Count; i++)
             {
-                string thisFormula = listMF[i];
+                var thisFormula = listMF[i];
                 for (int f = 0; f < thisFormula.Length; f++)
                 {
                     thisChar = thisFormula[f];
@@ -1084,8 +1249,8 @@ namespace NCDK.Tools.Manipulator
                     }
                     if (f == thisFormula.Length - 1 || (thisFormula[f + 1] >= 'A' && thisFormula[f + 1] <= 'Z'))
                     {
-                        int posit = eleSymb.IndexOf(recentElementSymbol);
-                        int count = int.Parse(recentElementCountString, NumberFormatInfo.InvariantInfo);
+                        var posit = eleSymb.IndexOf(recentElementSymbol);
+                        var count = int.Parse(recentElementCountString, NumberFormatInfo.InvariantInfo);
                         if (posit == -1)
                         {
                             eleSymb.Add(recentElementSymbol);
@@ -1093,13 +1258,13 @@ namespace NCDK.Tools.Manipulator
                         }
                         else
                         {
-                            int countP = int.Parse(recentElementCountString, NumberFormatInfo.InvariantInfo);
+                            var countP = int.Parse(recentElementCountString, NumberFormatInfo.InvariantInfo);
                             if (countP == 0)
                                 countP = 1;
-                            int countA = eleCount[posit];
+                            var countA = eleCount[posit];
                             if (countA == 0)
                                 countA = 1;
-                            int value = countP + countA;
+                            var value = countP + countA;
                             eleCount.RemoveAt(posit);
                             eleCount.Insert(posit, value);
                         }
@@ -1170,7 +1335,7 @@ namespace NCDK.Tools.Manipulator
             bool found = false;
             for (int f = 0; f < formula.Length; f++)
             {
-                char thisChar = formula[f];
+                var thisChar = formula[f];
                 if (thisChar >= '0' && thisChar <= '9')
                 {
                     if (!found)
@@ -1200,7 +1365,7 @@ namespace NCDK.Tools.Manipulator
             var recentElementCountString = new StringBuilder("0");
             for (int f = 0; f < formula.Length; f++)
             {
-                char thisChar = formula[f];
+                var thisChar = formula[f];
                 if (f < formula.Length)
                 {
                     if (thisChar >= 'A' && thisChar <= 'Z')
@@ -1219,7 +1384,7 @@ namespace NCDK.Tools.Manipulator
                 }
                 if (f == formula.Length - 1 || (formula[f + 1] >= 'A' && formula[f + 1] <= 'Z'))
                 {
-                    int recentElementCount = int.Parse(recentElementCountString.ToString(), NumberFormatInfo.InvariantInfo);
+                    var recentElementCount = int.Parse(recentElementCountString.ToString(), NumberFormatInfo.InvariantInfo);
                     if (recentElementCount == 0)
                         finalformula.Append(recentElementSymbol).Append(factor);
                     else
@@ -1263,8 +1428,8 @@ namespace NCDK.Tools.Manipulator
             if (hcnt == 0)
                 return false; // no protons to add
 
-            IChemObjectBuilder bldr = mf.Builder;
-            int chg = mf.Charge ?? 0;
+            var bldr = mf.Builder;
+            var chg = mf.Charge ?? 0;
 
             IIsotope proton = null;
             int pcount = 0;
@@ -1273,20 +1438,21 @@ namespace NCDK.Tools.Manipulator
             {
                 if (string.Equals("H", iso.Symbol, StringComparison.Ordinal))
                 {
-                    int count = mf.GetCount(iso);
+                    var count = mf.GetCount(iso);
                     if (count < hcnt)
                         continue;
                     // acceptable
-                    if (proton == null &&
-                        (iso.MassNumber == null || iso.MassNumber == 1))
+                    if (proton == null 
+                     && (iso.MassNumber == null || iso.MassNumber == 1))
                     {
                         proton = iso;
                         pcount = count;
                     }
                     // better
-                    else if (proton != null &&
-                               iso.MassNumber != null && iso.MassNumber == 1 &&
-                               proton.MassNumber == null)
+                    else if (proton != null
+                          && iso.MassNumber != null 
+                          && iso.MassNumber == 1 
+                          && proton.MassNumber == null)
                     {
                         proton = iso;
                         pcount = count;

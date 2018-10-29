@@ -212,7 +212,7 @@ namespace NCDK.IO
             }
             catch (Exception exception)
             {
-                Trace.TraceError("Could not set the Reader source: ", exception.Message);
+                Trace.TraceError($"Could not set the Reader source: {exception.Message}");
                 Debug.WriteLine(exception);
             }
             return null;

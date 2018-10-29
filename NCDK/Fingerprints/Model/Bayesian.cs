@@ -495,7 +495,7 @@ namespace NCDK.Fingerprints.Model
         /// <returns>serialised model</returns>
         public string Serialise()
         {
-            StringBuilder buff = new StringBuilder();
+            var buff = new StringBuilder();
             string fpname = CToE(ClassType);
             buff.Append("Bayesian!(" + fpname + "," + Folding + "," + LowThreshold + "," + HighThreshold + ")\n");
 

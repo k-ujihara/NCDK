@@ -15,6 +15,7 @@
  * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
+
 namespace NCDK.Smiles.SMARTS.Parser
 {
     /// <summary>
@@ -25,6 +26,7 @@ namespace NCDK.Smiles.SMARTS.Parser
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
+    [System.Obsolete]
     internal class ASTPrimitiveAtomExpression : SimpleNode
     {
         /// <summary>

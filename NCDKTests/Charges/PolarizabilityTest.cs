@@ -32,8 +32,8 @@ namespace NCDK.Charges
         [TestMethod()]
         public void TestGetPolarizabilitiyFactorForAtom_IAtomContainer_IAtom()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("NCCN(C)(C)");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("NCCN(C)(C)");
             double result = Polarizability.GetPolarizabilitiyFactorForAtom(mol, mol.Atoms[0]);
             Assert.IsNotNull(result);
             result = Polarizability.GetPolarizabilitiyFactorForAtom(mol, mol.Atoms[3]);
@@ -47,8 +47,8 @@ namespace NCDK.Charges
         public void TestCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Int_Boolean()
         {
             double[] testResult = { 4.73, 6.92 };
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("NCCN(C)(C)");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("NCCN(C)(C)");
             double result = Polarizability.CalculateGHEffectiveAtomPolarizability(mol, mol.Atoms[0], 100, true);
             Assert.AreEqual(testResult[0], result, 0.01);
             result = Polarizability.CalculateGHEffectiveAtomPolarizability(mol, mol.Atoms[3], 100, true);
@@ -67,8 +67,8 @@ namespace NCDK.Charges
         [TestMethod()]
         public void TestCalculateBondPolarizability_IAtomContainer_IBond()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("NCCN(C)(C)");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("NCCN(C)(C)");
             double result = Polarizability.CalculateBondPolarizability((IAtomContainer)mol, mol.Bonds[0]);
             Assert.IsNotNull(result);
         }
@@ -80,8 +80,8 @@ namespace NCDK.Charges
         public void TestCalculateKJMeanMolecularPolarizability()
         {
             double testResult = 2.61;
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("C");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("C");
             double result = Polarizability.CalculateKJMeanMolecularPolarizability(mol);
             Assert.AreEqual(testResult, result, 0.01);
         }
@@ -93,8 +93,8 @@ namespace NCDK.Charges
         public void TestCalculateGHEffectiveAtomPolarizability_Ethyl_chloride()
         {
             double testResult = 4.62; /* from thesis Wolfgang Hanebeck, TUM */
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("CCCl");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("CCCl");
             double result = Polarizability.CalculateGHEffectiveAtomPolarizability(mol, mol.Atoms[2], 100, true);
             Assert.AreEqual(testResult, result, 0.01);
         }
@@ -106,8 +106,8 @@ namespace NCDK.Charges
         public void TestCalculateGHEffectiveAtomPolarizability_Allyl_bromide()
         {
             double testResult = 6.17; /* from thesis Wolfgang Hanebeck, TUM */
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("C=CCBr");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("C=CCBr");
             double result = Polarizability.CalculateGHEffectiveAtomPolarizability(mol, mol.Atoms[3], 100, true);
             Assert.AreEqual(testResult, result, 0.01);
         }
@@ -119,8 +119,8 @@ namespace NCDK.Charges
         public void TestCalculateGHEffectiveAtomPolarizability_Isopentyl_iodide()
         {
             double testResult = 8.69; /* from thesis Wolfgang Hanebeck, TUM */
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("C(C)(C)CCI");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("C(C)(C)CCI");
             double result = Polarizability.CalculateGHEffectiveAtomPolarizability(mol, mol.Atoms[5], 100, true);
             Assert.AreEqual(testResult, result, 0.01);
         }
@@ -132,8 +132,8 @@ namespace NCDK.Charges
         public void TestCalculateGHEffectiveAtomPolarizability_Ethoxy_ethane()
         {
             double testResult = 5.21; /* from thesis Wolfgang Hanebeck, TUM */
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("CCOCC");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("CCOCC");
             double result = Polarizability.CalculateGHEffectiveAtomPolarizability(mol, mol.Atoms[2], 100, true);
             Assert.AreEqual(testResult, result, 0.01);
         }
@@ -145,8 +145,8 @@ namespace NCDK.Charges
         public void TestCalculateGHEffectiveAtomPolarizability_Ethanolamine()
         {
             double[] testResult = { 4.26, 3.60 }; // from thesis Wolfgang Hanebeck, TUM
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("NCCO");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("NCCO");
             double result = Polarizability.CalculateGHEffectiveAtomPolarizability(mol, mol.Atoms[3], 100, true);
             Assert.AreEqual(testResult[1], result, 0.01);
             result = Polarizability.CalculateGHEffectiveAtomPolarizability(mol, mol.Atoms[0], 100, true);
@@ -160,8 +160,8 @@ namespace NCDK.Charges
         public void TestCalculateGHEffectiveAtomPolarizability_Allyl_mercaptan()
         {
             double testResult = 6.25; /* from thesis Wolfgang Hanebeck, TUM */
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("C=CCS");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("C=CCS");
             double result = Polarizability.CalculateGHEffectiveAtomPolarizability(mol, mol.Atoms[3], 100, true);
             Assert.AreEqual(testResult, result, 0.01);
         }

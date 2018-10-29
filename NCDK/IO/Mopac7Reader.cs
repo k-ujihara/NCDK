@@ -79,7 +79,7 @@ namespace NCDK.IO
         private static readonly string[] expected_columns = { "NO.", "ATOM", "X", "Y", "Z" };
         public override T Read<T>(T obj)
         {
-            StringBuilder eigenvalues = new StringBuilder();
+            var eigenvalues = new StringBuilder();
             if (obj is IAtomContainer container)
             {
                 try

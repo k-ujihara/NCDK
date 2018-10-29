@@ -42,16 +42,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestZagrebIndexDescriptor()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("O=C(O)CC");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("O=C(O)CC");
             Assert.AreEqual(16, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.0001);
         }
 
         [TestMethod()]
         public void Test2Dvs3D()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("O1C2C34C(C(C1O)CCCc1cc(cc(c1)C(F)(F)F)C(F)(F)F)CCC(C3CCC(O2)(OO4)C)C");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("O1C2C34C(C(C1O)CCCc1cc(cc(c1)C(F)(F)F)C(F)(F)F)CCC(C3CCC(O2)(OO4)C)C");
 
             AddExplicitHydrogens(mol);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);

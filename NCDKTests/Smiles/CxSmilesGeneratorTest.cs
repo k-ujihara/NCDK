@@ -121,7 +121,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void RadicalCanon()
         {
-            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+            var builder = Silent.ChemObjectBuilder.Instance;
 
             IAtomContainer mola = builder.NewAtomContainer();
             mola.Atoms.Add(builder.NewAtom("CH3"));
@@ -140,7 +140,7 @@ namespace NCDK.Smiles
             mola.AddSingleElectronTo(mola.Atoms[1]);
 
             SmilesParser smipar = new SmilesParser(builder);
-            IAtomContainer molb = smipar.ParseSmiles("CC(CCC[CH2])C |^1:5|");
+            var molb = smipar.ParseSmiles("CC(CCC[CH2])C |^1:5|");
             SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Canonical | SmiFlavors.CxRadical);
             Assert.AreEqual(smigen.Create(molb), smigen.Create(mola));
         }

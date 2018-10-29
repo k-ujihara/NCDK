@@ -22,18 +22,18 @@
  */
 
 using NCDK.Common.Primitives;
+using NCDK.Dict;
 using NCDK.Geometries;
+using NCDK.Numerics;
 using NCDK.Stereo;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using NCDK.Numerics;
-using System.Xml.Linq;
-using NCDK.Dict;
 using System.Globalization;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace NCDK.IO.CML
 {
@@ -563,7 +563,7 @@ namespace NCDK.IO.CML
                                     }
                                     catch (Exception e)
                                     {
-                                        Trace.TraceError("Error in CML file: ", e.Message);
+                                        Trace.TraceError($"Error in CML file: {e.Message}");
                                         Debug.WriteLine(e);
                                     }
                                 }
@@ -596,7 +596,7 @@ namespace NCDK.IO.CML
                                 }
                                 catch (Exception e)
                                 {
-                                    Trace.TraceError("Error in CML file: ", e.Message);
+                                    Trace.TraceError($"Error in CML file: {e.Message}");
                                     Debug.WriteLine(e);
                                 }
                                 break;
@@ -1446,7 +1446,7 @@ namespace NCDK.IO.CML
                     CurrentMolecule.SetProperty(CDKPropertyName.Formula, cData);
                     break;
                 default:
-                    Trace.TraceWarning($"Skipping element: {name}");
+                    Debug.WriteLine($"Skipping element: {name}");
                     break;
             }
 
@@ -1477,7 +1477,7 @@ namespace NCDK.IO.CML
             {
                 CurrentMolecule.SetProperty(CDKPropertyName.Formula, Formula);
             }
-            IEnumerator<string> customs = MoleculeCustomProperty.GetEnumerator();
+            var customs = MoleculeCustomProperty.GetEnumerator();
 
             while (customs.MoveNext())
             {
@@ -1540,7 +1540,7 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Debug.WriteLine("No atom ids: " + ElId.Count, " != " + AtomCounter);
+                Debug.WriteLine($"No atom ids: {ElId.Count} != {AtomCounter}");
             }
 
             if (ElSym.Count == AtomCounter)
@@ -1549,7 +1549,7 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Debug.WriteLine("No atom symbols: " + ElSym.Count, " != " + AtomCounter);
+                Debug.WriteLine($"No atom symbols: {ElSym.Count} != {AtomCounter}");
             }
 
             if (ElTitles.Count == AtomCounter)
@@ -1558,7 +1558,7 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Debug.WriteLine("No atom titles: " + ElTitles.Count, " != " + AtomCounter);
+                Debug.WriteLine($"No atom titles: {ElTitles.Count} != {AtomCounter}");
             }
 
             if ((X3.Count == AtomCounter) && (Y3.Count == AtomCounter) && (Z3.Count == AtomCounter))
@@ -1567,7 +1567,7 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Debug.WriteLine("No 3D info: " + X3.Count, " " + Y3.Count, " " + Z3.Count, " != " + AtomCounter);
+                Debug.WriteLine($"No 3D info: {X3.Count} {Y3.Count} {Z3.Count} != {AtomCounter}");
             }
 
             if ((XFract.Count == AtomCounter) && (YFract.Count == AtomCounter) && (ZFract.Count == AtomCounter))
@@ -1576,7 +1576,7 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Debug.WriteLine("No 3D fractional info: " + XFract.Count, " " + YFract.Count, " " + ZFract.Count, " != " + AtomCounter);
+                Debug.WriteLine($"No 3D fractional info: {XFract.Count} {YFract.Count} {ZFract.Count} != {AtomCounter}");
             }
 
             if ((X2.Count == AtomCounter) && (Y2.Count == AtomCounter))
@@ -1585,7 +1585,7 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Debug.WriteLine("No 2D info: " + X2.Count, " " + Y2.Count, " != " + AtomCounter);
+                Debug.WriteLine($"No 2D info: {X2.Count} {Y2.Count} != {AtomCounter}");
             }
 
             if (FormalCharges.Count == AtomCounter)
@@ -1594,7 +1594,7 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Debug.WriteLine("No formal Charge info: " + FormalCharges.Count, " != " + AtomCounter);
+                Debug.WriteLine($"No formal Charge info: {FormalCharges.Count} != {AtomCounter}");
             }
 
             if (AtomAromaticities.Count == AtomCounter)
@@ -1603,7 +1603,7 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Debug.WriteLine("No aromatic atom info: " + AtomAromaticities.Count, " != " + AtomCounter);
+                Debug.WriteLine($"No aromatic atom info: {AtomAromaticities.Count} != {AtomCounter}");
             }
 
             if (PartialCharges.Count == AtomCounter)
@@ -1612,7 +1612,7 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Debug.WriteLine("No partial Charge info: " + PartialCharges.Count, " != " + AtomCounter);
+                Debug.WriteLine($"No partial Charge info: {PartialCharges.Count} != {AtomCounter}");
             }
 
             if (HCounts.Count == AtomCounter)
@@ -1621,7 +1621,7 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Debug.WriteLine("No hydrogen Count info: " + HCounts.Count, " != " + AtomCounter);
+                Debug.WriteLine($"No hydrogen Count info: {HCounts.Count} != {AtomCounter}");
             }
 
             if (SpinMultiplicities.Count == AtomCounter)
@@ -1630,7 +1630,7 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Debug.WriteLine("No spinMultiplicity info: " + SpinMultiplicities.Count, " != " + AtomCounter);
+                Debug.WriteLine($"No spinMultiplicity info: {SpinMultiplicities.Count} != {AtomCounter}");
             }
 
             if (AtomParities.Count == AtomCounter)
@@ -1639,7 +1639,7 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Debug.WriteLine("No atomParity info: " + SpinMultiplicities.Count, " != " + AtomCounter);
+                Debug.WriteLine($"No atomParity info: {SpinMultiplicities.Count} != {AtomCounter}");
             }
 
             if (Occupancies.Count == AtomCounter)
@@ -1648,7 +1648,7 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Debug.WriteLine("No occupancy info: " + Occupancies.Count, " != " + AtomCounter);
+                Debug.WriteLine($"No occupancy info: {Occupancies.Count} != {AtomCounter}");
             }
 
             if (AtomDictRefs.Count == AtomCounter)
@@ -1657,7 +1657,7 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Debug.WriteLine("No dictRef info: " + AtomDictRefs.Count, " != " + AtomCounter);
+                Debug.WriteLine($"No dictRef info: {AtomDictRefs.Count} != {AtomCounter}");
             }
 
             if (Isotope.Count == AtomCounter)
@@ -1666,7 +1666,7 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Debug.WriteLine("No isotope info: " + Isotope.Count, " != " + AtomCounter);
+                Debug.WriteLine($"No isotope info: {Isotope.Count} != {AtomCounter}");
             }
             if (AtomicNumbers.Count == AtomCounter)
             {
@@ -1674,7 +1674,7 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Debug.WriteLine("No atomicNumbers info: " + AtomicNumbers.Count, " != " + AtomCounter);
+                Debug.WriteLine($"No atomicNumbers info: {AtomicNumbers.Count} != {AtomCounter}");
             }
             if (ExactMasses.Count == AtomCounter)
             {
@@ -1682,25 +1682,25 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Debug.WriteLine("No atomicNumbers info: " + AtomicNumbers.Count, " != " + AtomCounter);
+                Debug.WriteLine($"No atomicNumbers info: {AtomicNumbers.Count} != {AtomCounter}");
             }
 
             for (int i = 0; i < AtomCounter; i++)
             {
-                Trace.TraceInformation("Storing atom: ", i);
+                Trace.TraceInformation($"Storing atom: {i}");
                 CurrentAtom = CurrentChemFile.Builder.NewAtom("H");
                 Debug.WriteLine($"Atom # {AtomCounter}");
                 if (hasID)
                 {
-                    Debug.WriteLine($"id: {(string)ElId[i]}");
-                    CurrentAtom.Id = (string)ElId[i];
-                    AtomEnumeration[(string)ElId[i]] = CurrentAtom;
+                    Debug.WriteLine($"id: {ElId[i]}");
+                    CurrentAtom.Id = ElId[i];
+                    AtomEnumeration[ElId[i]] = CurrentAtom;
                 }
                 if (hasTitles)
                 {
                     if (hasSymbols)
                     {
-                        string symbol = (string)ElSym[i];
+                        string symbol = ElSym[i];
                         switch (symbol)
                         {
                             case "Du":
@@ -1708,27 +1708,27 @@ namespace NCDK.IO.CML
                                 if (!(CurrentAtom is IPseudoAtom))
                                 {
                                     CurrentAtom = CurrentChemFile.Builder.NewPseudoAtom(CurrentAtom);
-                                    if (hasID) AtomEnumeration[(string)ElId[i]] = CurrentAtom;
+                                    if (hasID) AtomEnumeration[ElId[i]] = CurrentAtom;
                                 }
-                                ((IPseudoAtom)CurrentAtom).Label = (string)ElTitles[i];
+                                ((IPseudoAtom)CurrentAtom).Label = ElTitles[i];
                                 break;
                             default:
                                 if (ElTitles[i] != null)
-                                    CurrentAtom.SetProperty(CDKPropertyName.Title, (string)ElTitles[i]);
+                                    CurrentAtom.SetProperty(CDKPropertyName.Title, ElTitles[i]);
                                 break;
                         }
                     }
                     else
                     {
                         if (ElTitles[i] != null)
-                            CurrentAtom.SetProperty(CDKPropertyName.Title, (string)ElTitles[i]);
+                            CurrentAtom.SetProperty(CDKPropertyName.Title, ElTitles[i]);
                     }
                 }
 
                 // store optional atom properties
                 if (hasSymbols)
                 {
-                    string symbol = (string)ElSym[i];
+                    string symbol = ElSym[i];
                     switch (symbol)
                     {
                         case "Du":
@@ -1741,7 +1741,7 @@ namespace NCDK.IO.CML
                                 CurrentAtom = CurrentChemFile.Builder.NewPseudoAtom(CurrentAtom);
                                 ((IPseudoAtom)CurrentAtom).Label = "R";
                                 if (hasID)
-                                    AtomEnumeration[(string)ElId[i]] = CurrentAtom;
+                                    AtomEnumeration[ElId[i]] = CurrentAtom;
                             }
                             break;
                         default:
@@ -1757,34 +1757,35 @@ namespace NCDK.IO.CML
                     if (X3[i] != null && Y3[i] != null && Z3[i] != null)
                     {
                         CurrentAtom.Point3D = new Vector3(
-                            double.Parse((string)X3[i], NumberFormatInfo.InvariantInfo),
-                            double.Parse((string)Y3[i], NumberFormatInfo.InvariantInfo),
-                            double.Parse((string)Z3[i], NumberFormatInfo.InvariantInfo));
+                            double.Parse(X3[i], NumberFormatInfo.InvariantInfo),
+                            double.Parse(Y3[i], NumberFormatInfo.InvariantInfo),
+                            double.Parse(Z3[i], NumberFormatInfo.InvariantInfo));
                     }
                 }
 
                 if (has3Dfract)
                 {
                     CurrentAtom.FractionalPoint3D = new Vector3(
-                        double.Parse((string)XFract[i], NumberFormatInfo.InvariantInfo),
-                        double.Parse((string)YFract[i], NumberFormatInfo.InvariantInfo),
-                        double.Parse((string)ZFract[i], NumberFormatInfo.InvariantInfo));
+                        double.Parse(XFract[i], NumberFormatInfo.InvariantInfo),
+                        double.Parse(YFract[i], NumberFormatInfo.InvariantInfo),
+                        double.Parse(ZFract[i], NumberFormatInfo.InvariantInfo));
                 }
 
                 if (hasFormalCharge)
                 {
-                    CurrentAtom.FormalCharge = int.Parse((string)FormalCharges[i], NumberFormatInfo.InvariantInfo);
+                    CurrentAtom.FormalCharge = int.Parse(FormalCharges[i], NumberFormatInfo.InvariantInfo);
                 }
 
                 if (hasAtomAromaticities)
                 {
-                    if (AtomAromaticities[i] != null) CurrentAtom.IsAromatic = true;
+                    if (AtomAromaticities[i] != null)
+                        CurrentAtom.IsAromatic = true;
                 }
 
                 if (hasPartialCharge)
                 {
                     Debug.WriteLine("Storing partial atomic charge...");
-                    CurrentAtom.Charge = double.Parse((string)PartialCharges[i], NumberFormatInfo.InvariantInfo);
+                    CurrentAtom.Charge = double.Parse(PartialCharges[i], NumberFormatInfo.InvariantInfo);
                 }
 
                 if (hasHCounts)
@@ -1805,20 +1806,20 @@ namespace NCDK.IO.CML
                     if (X2[i] != null && Y2[i] != null)
                     {
                         CurrentAtom.Point2D = new Vector2(
-                            double.Parse((string)X2[i], NumberFormatInfo.InvariantInfo),
-                            double.Parse((string)Y2[i], NumberFormatInfo.InvariantInfo));
+                            double.Parse(X2[i], NumberFormatInfo.InvariantInfo),
+                            double.Parse(Y2[i], NumberFormatInfo.InvariantInfo));
                     }
                 }
 
                 if (hasDictRefs)
                 {
                     if (AtomDictRefs[i] != null)
-                        CurrentAtom.SetProperty("org.openscience.cdk.dict", (string)AtomDictRefs[i]);
+                        CurrentAtom.SetProperty("org.openscience.cdk.dict", AtomDictRefs[i]);
                 }
 
                 if (hasSpinMultiplicities && SpinMultiplicities[i] != null)
                 {
-                    int unpairedElectrons = int.Parse((string)SpinMultiplicities[i], NumberFormatInfo.InvariantInfo) - 1;
+                    int unpairedElectrons = int.Parse(SpinMultiplicities[i], NumberFormatInfo.InvariantInfo) - 1;
                     for (int sm = 0; sm < unpairedElectrons; sm++)
                     {
                         CurrentMolecule.SingleElectrons.Add(CurrentChemFile.Builder.NewSingleElectron(CurrentAtom));
@@ -1833,7 +1834,7 @@ namespace NCDK.IO.CML
                 if (hasIsotopes)
                 {
                     if (Isotope[i] != null)
-                        CurrentAtom.MassNumber = (int)double.Parse((string)Isotope[i], NumberFormatInfo.InvariantInfo);
+                        CurrentAtom.MassNumber = (int)double.Parse(Isotope[i], NumberFormatInfo.InvariantInfo);
                 }
 
                 if (hasAtomicNumbers)
@@ -1862,28 +1863,36 @@ namespace NCDK.IO.CML
 
             for (int i = 0; i < AtomCounter; i++)
             {
-                if (hasAtomParities && AtomParities[i] != null)
+                if (hasAtomParities && AtomParities[i] != null && AtomParities[i].Any())
                 {
+                    var ligandAtom1 = AtomEnumeration[ParityARef1[i]];
+                    var ligandAtom2 = AtomEnumeration[ParityARef2[i]];
+                    var ligandAtom3 = AtomEnumeration[ParityARef3[i]];
+                    var ligandAtom4 = AtomEnumeration[ParityARef4[i]];
+                    var ligandAtoms = new IAtom[] { ligandAtom1, ligandAtom2, ligandAtom3, ligandAtom4 };
+                    TetrahedralStereo config;
+                    int parity = 0;
                     try
                     {
-                        int parity = (int)Math.Round(double.Parse(AtomParities[i], NumberFormatInfo.InvariantInfo));
-                        //currentAtom.StereoParity = parity;
-                        IAtom ligandAtom1 = AtomEnumeration[ParityARef1[i]];
-                        IAtom ligandAtom2 = AtomEnumeration[ParityARef2[i]];
-                        IAtom ligandAtom3 = AtomEnumeration[ParityARef3[i]];
-                        IAtom ligandAtom4 = AtomEnumeration[ParityARef4[i]];
-                        IAtom[] ligandAtoms = new IAtom[] { ligandAtom1, ligandAtom2, ligandAtom3, ligandAtom4 };
-                        TetrahedralStereo stereo = (parity == 1 ? TetrahedralStereo.Clockwise : TetrahedralStereo.AntiClockwise);
-                        TetrahedralChirality chirality = new TetrahedralChirality(CurrentMolecule.Atoms[i], ligandAtoms,
-                                stereo);
-                        CurrentMolecule.StereoElements.Add(chirality);
+                        parity = Math.Sign(double.Parse(AtomParities[i]));
                     }
-                    catch (FormatException e)
+                    catch (Exception)
                     {
-                        if (!string.Equals(e.Message, "empty string", StringComparison.Ordinal))
-                        {
-                            Trace.TraceWarning("Cannot interpret stereo information: " + AtomParities[i]);
-                        }
+                        // ignored
+                    }
+                    if (parity > 0)
+                        config = TetrahedralStereo.Clockwise;
+                    else if (parity < 0)
+                        config = TetrahedralStereo.AntiClockwise;
+                    else
+                    {
+                        config = TetrahedralStereo.Unset;
+                        Trace.TraceWarning($"Cannot interpret stereo information, invalid parity: '{AtomParities[i]}'");
+                    }
+                    if (!config.IsUnset())
+                    {
+                        TetrahedralChirality chirality = new TetrahedralChirality(CurrentMolecule.Atoms[i], ligandAtoms, config);
+                        CurrentMolecule.StereoElements.Add(chirality);
                     }
                 }
             }
@@ -1903,27 +1912,27 @@ namespace NCDK.IO.CML
             {
                 Debug.WriteLine("About to add bond info...");
 
-                IEnumerator<string> orders = Order.GetEnumerator();
-                IEnumerator<string> ids = BondId.GetEnumerator();
-                IEnumerator<string> bar1s = BondARef1.GetEnumerator();
-                IEnumerator<string> bar2s = BondARef2.GetEnumerator();
-                IEnumerator<string> stereos = BondStereo.GetEnumerator();
-                IEnumerator<bool?> aroms = BondAromaticity.GetEnumerator();
+                var orders = Order.GetEnumerator();
+                var ids = BondId.GetEnumerator();
+                var bar1s = BondARef1.GetEnumerator();
+                var bar2s = BondARef2.GetEnumerator();
+                var stereos = BondStereo.GetEnumerator();
+                var aroms = BondAromaticity.GetEnumerator();
 
                 while (bar1s.MoveNext())
                 {
                     bar2s.MoveNext();
-                    IAtom a1 = (IAtom)AtomEnumeration[(string)bar1s.Current];
-                    IAtom a2 = (IAtom)AtomEnumeration[(string)bar2s.Current];
+                    var a1 =AtomEnumeration[bar1s.Current];
+                    var a2 =AtomEnumeration[bar2s.Current];
                     CurrentBond = CurrentChemFile.Builder.NewBond(a1, a2);
                     if (ids.MoveNext())
                     {
-                        CurrentBond.Id = (string)ids.Current;
+                        CurrentBond.Id = ids.Current;
                     }
 
                     if (orders.MoveNext())
                     {
-                        string bondOrder = (string)orders.Current;
+                        var bondOrder = orders.Current;
 
                         switch (bondOrder)
                         {
@@ -1948,7 +1957,7 @@ namespace NCDK.IO.CML
 
                     if (stereos.MoveNext())
                     {
-                        string nextStereo = (string)stereos.Current;
+                        var nextStereo = stereos.Current;
                         switch (nextStereo)
                         {
                             case "H":
@@ -1958,9 +1967,9 @@ namespace NCDK.IO.CML
                                 CurrentBond.Stereo = NCDK.BondStereo.Up;
                                 break;
                             default:
-                                if (nextStereo != null)
+                                if (nextStereo != null && nextStereo.Any())
                                 {
-                                    Trace.TraceWarning("Cannot interpret stereo information: " + nextStereo);
+                                    Trace.TraceWarning($"Cannot interpret bond display information: '{nextStereo}'");
                                 }
                                 break;
                         }

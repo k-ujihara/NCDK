@@ -18,6 +18,7 @@
  */
 
 using NCDK.Common.Collections;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +29,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// This matches recursive smarts atoms.
     /// </summary>
     // @cdk.module smarts
-    // @cdk.githash
     // @cdk.keyword SMARTS
+    [Obsolete]
     public sealed class RecursiveSmartsAtom : SMARTSAtom
     {
         /// <summary>The IQueryAtomContainer created by parsing the recursive smarts</summary>
@@ -62,9 +63,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             if (!cache.TryGetValue(target, out BitArray v))
             {
                 BitArray hits = new BitArray(0);
-                foreach (var mapping in Pattern.FindSubstructure(query).MatchAll(target)
-                    .Where(n => new SmartsStereoMatch(query, target).Apply(n))
-                    .Where(n => new ComponentGrouping(query, target).Apply(n)))
+                foreach (var mapping in Pattern.FindSubstructure(query).MatchAll(target))
                 {
                     BitArrays.SetValue(hits, mapping[0], true);
                 }

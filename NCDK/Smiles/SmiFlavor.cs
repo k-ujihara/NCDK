@@ -99,6 +99,8 @@ namespace NCDK.Smiles
         /// <seealso cref="Stereo"/>
         StereoExTetrahedral = 0x400,
 
+        StereoExCisTrans = 0x500,
+
         /// <summary>
         /// Generate SMILES with the major isotopes, only omit mass numbers when it
         /// is unset.
@@ -112,7 +114,7 @@ namespace NCDK.Smiles
         /// <seealso cref="StereoTetrahedral"/>
         /// <seealso cref="StereoCisTrans"/>
         /// <seealso cref="StereoExTetrahedral"/>
-        Stereo = StereoTetrahedral | StereoCisTrans | StereoExTetrahedral,
+        Stereo = StereoTetrahedral | StereoCisTrans | StereoExTetrahedral | StereoExCisTrans,
 
         /// <summary>
         /// Output 2D coordinates.
@@ -161,6 +163,11 @@ namespace NCDK.Smiles
         /// Output fragment grouping for reactions.
         /// </summary>
         CxFragmentGroup = 0x100000,
+
+        /// <summary>
+        /// Renumber AtomAtomMaps during canonical generation
+        /// </summary>
+        AtomAtomMapRenumber = Canonical | AtomAtomMap | 0x200000,
 
         /// <summary>
         /// Output CXSMILES layers.

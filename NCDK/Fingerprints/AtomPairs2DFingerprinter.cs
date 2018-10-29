@@ -158,7 +158,7 @@ namespace NCDK.Fingerprints
         public override IBitFingerprint GetBitFingerprint(IAtomContainer container)
         {
             BitArray fp = new BitArray(pathToBit.Count);
-            List<string> paths = new List<string>();
+            var paths = new List<string>();
             Calculate(paths, container);
             foreach (string path in paths)
                 fp.Set(pathToBit[path], true);

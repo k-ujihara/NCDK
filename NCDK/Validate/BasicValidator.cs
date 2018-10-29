@@ -319,7 +319,7 @@ namespace NCDK.Validate
                 var isotopeFac = BODRIsotopeFactory.Instance;
                 var isotopes = isotopeFac.GetIsotopes(isotope.Symbol);
                 bool foundKnownIsotope = false;
-                if (isotope.MassNumber != 0)
+                if (isotope.MassNumber != null && isotope.MassNumber != 0)
                 {
                     foreach (var facIsotope in isotopes)
                     {
@@ -335,7 +335,7 @@ namespace NCDK.Validate
                 }
                 else
                 {
-                    // isotopic number is not set
+                    // isotopic is unspecified
                     report.OKs.Add(isotopeExists);
                 }
             }
@@ -401,7 +401,7 @@ namespace NCDK.Validate
             }
             catch (Exception exception)
             {
-                Trace.TraceError("Error while performing atom bos validation: ", exception.Message);
+                Trace.TraceError($"Error while performing atom bos validation: {exception.Message}");
                 Debug.WriteLine(exception);
             }
             return report;

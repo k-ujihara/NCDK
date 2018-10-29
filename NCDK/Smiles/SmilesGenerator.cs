@@ -31,7 +31,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 
 namespace NCDK.Smiles
 {
@@ -240,9 +239,7 @@ namespace NCDK.Smiles
             }
             catch (CDKException e)
             {
-                throw new ArgumentException(
-                        "SMILES could not be generated, please use the new API method 'create()'"
-                                + "to catch the checked exception", e);
+                throw new ArgumentException($"SMILES could not be generated, please use the new API method '{nameof(Create)}' to catch the checked exception", e);
             }
         }
 
@@ -260,9 +257,7 @@ namespace NCDK.Smiles
             }
             catch (CDKException e)
             {
-                throw new ArgumentException(
-                        "SMILES could not be generated, please use the new API method 'create()'"
-                                + "to catch the checked exception", e);
+                throw new ArgumentException($"SMILES could not be generated, please use the new API method '{nameof(Create)}' to catch the checked exception", e);
             }
         }
 
@@ -323,15 +318,21 @@ namespace NCDK.Smiles
                 if (order.Length != molecule.Atoms.Count)
                     throw new ArgumentException("the array for storing output order should be the same length as the number of atoms");
 
-                Graph g = CDKToBeam.ToBeamGraph(molecule, flavour);
+                var g = CDKToBeam.ToBeamGraph(molecule, flavour);
 
                 // apply the canonical labelling
                 if (SmiFlavorTool.IsSet(flavour, SmiFlavors.Canonical))
                 {
                     // determine the output order
-                    int[] labels = Labels(flavour, molecule);
+                    var labels = Labels(flavour, molecule);
 
-                    g = g.Permute(labels).Resonate();
+                    g = g.Permute(labels);
+
+                    if ((flavour & SmiFlavors.AtomAtomMapRenumber) == SmiFlavors.AtomAtomMapRenumber)
+                        g = Functions.RenumberAtomMaps(g);
+
+                    if (!SmiFlavorTool.IsSet(flavour, SmiFlavors.UseAromaticSymbols))
+                        g = g.Resonate();
 
                     if (SmiFlavorTool.IsSet(flavour, SmiFlavors.StereoCisTrans))
                     {
@@ -347,11 +348,11 @@ namespace NCDK.Smiles
                         g.Sort(new Graph.VisitHighOrderFirst()).Sort(new Graph.VisitHydrogenFirst());
                     }
 
-                    string smiles = g.ToSmiles(order);
+                    var smiles = g.ToSmiles(order);
 
                     // the SMILES has been generated on a reordered molecule, transform
                     // the ordering
-                    int[] canorder = new int[order.Length];
+                    var canorder = new int[order.Length];
                     for (int i = 0; i < labels.Length; i++)
                         canorder[i] = order[labels[i]];
                     System.Array.Copy(canorder, 0, order, 0, order.Length);
@@ -494,13 +495,13 @@ namespace NCDK.Smiles
                     cxstate.fragGroups = new List<List<int>>();
 
                     // calculate the connected components
-                    components = new ConnectedComponents(GraphUtil.ToAdjList(unified)).Components();
+                    components = new ConnectedComponents(GraphUtil.ToAdjList(unified)).GetComponents();
 
                     // AtomContainerSet is ordered so this is safe, it was actually a set we
                     // would need some extra data structures
                     var tmp = new HashSet<int>();
                     int beg = 0, end = 0;
-                    foreach (IAtomContainer mol in reactants)
+                    foreach (var mol in reactants)
                     {
                         end = end + mol.Atoms.Count;
                         tmp.Clear();
@@ -510,7 +511,7 @@ namespace NCDK.Smiles
                             cxstate.fragGroups.Add(new List<int>(tmp));
                         beg = end;
                     }
-                    foreach (IAtomContainer mol in agents)
+                    foreach (var mol in agents)
                     {
                         end = end + mol.Atoms.Count;
                         tmp.Clear();
@@ -520,7 +521,7 @@ namespace NCDK.Smiles
                             cxstate.fragGroups.Add(new List<int>(tmp));
                         beg = end;
                     }
-                    foreach (IAtomContainer mol in products)
+                    foreach (var mol in products)
                     {
                         end = end + mol.Atoms.Count;
                         tmp.Clear();
@@ -560,8 +561,9 @@ namespace NCDK.Smiles
         private static int[] Labels(SmiFlavors flavour, IAtomContainer molecule)
         {
             // FIXME: use SmiOpt.InChiLabelling
-            var labels = SmiFlavorTool.IsSet(flavour, SmiFlavors.Isomeric) ? InChINumbers(molecule)
-                                                                         : Canon.Label(molecule, GraphUtil.ToAdjList(molecule));
+            var labels = SmiFlavorTool.IsSet(flavour, SmiFlavors.Isomeric)
+                ? InChINumbers(molecule)
+                : Canon.Label(molecule, GraphUtil.ToAdjList(molecule), CreateComparator(molecule, flavour));
             var cpy = new int[labels.Length];
             for (int i = 0; i < labels.Length; i++)
                 cpy[i] = (int)labels[i] - 1;
@@ -579,44 +581,20 @@ namespace NCDK.Smiles
         /// <exception cref="CDKException">the inchi numbers could not be obtained</exception>
         private static long[] InChINumbers(IAtomContainer container)
         {
-            // TODO: create an interface so we don't have to dynamically load the
-            // class each time
-            string cname = "NCDK.Graphs.Invariant.InChINumbersTools";
-            string mname = "GetUSmilesNumbers";
-
             var rgrps = GetRgrps(container, ChemicalElements.Rutherfordium);
-            foreach (IAtom rgrp in rgrps)
+            foreach (var rgrp in rgrps)
             {
                 rgrp.AtomicNumber = ChemicalElements.Rutherfordium.AtomicNumber;
                 rgrp.Symbol = ChemicalElements.Rutherfordium.Symbol;
             }
 
-            try
+            var numbers = InChINumbersTools.GetUSmilesNumbers(container);
+            foreach (var rgrp in rgrps)
             {
-                var c = Type.GetType(cname, true);
-                var method = c.GetMethod("GetUSmilesNumbers", BindingFlags.Public | BindingFlags.Static, null, new[] { container.GetType() }, null);
-                return (long[])method.Invoke(c, new[] { container });
+                rgrp.AtomicNumber = ChemicalElements.Unknown.AtomicNumber;
+                rgrp.Symbol = "*";
             }
-            catch (FileNotFoundException)
-            {
-                throw new CDKException("The cdk-inchi module is not loaded, this module is need when generating absolute SMILES.");
-            }
-            catch (TypeLoadException e)
-            {
-                throw new CDKException($"The method {mname} was not found", e);
-            }
-            catch (TargetInvocationException e)
-            {
-                throw new CDKException($"An InChI could not be generated and used to canonise SMILES: {e.Message}", e);
-            }
-            finally
-            {
-                foreach (IAtom rgrp in rgrps)
-                {
-                    rgrp.AtomicNumber = ChemicalElements.Unknown.AtomicNumber;
-                    rgrp.Symbol = "*";
-                }
-            }
+            return numbers;
         }
 
         private static IList<IAtom> GetRgrps(IAtomContainer container, Config.ChemicalElement reversed)
@@ -846,5 +824,77 @@ namespace NCDK.Smiles
                     throw new ArgumentException($"{sgroup.Type} is not proper.");
             }
         }
+
+        class Comparer : IComparer<IAtom>
+        {
+            readonly IAtomContainer mol;
+            readonly SmiFlavors flavor;
+
+            public Comparer(IAtomContainer mol, SmiFlavors flavor)
+            {
+                this.mol = mol;
+                this.flavor = flavor;
+            }
+
+            static int Unbox(int? x) => x ?? 0;
+
+
+            public int Compare(IAtom a, IAtom b)
+            {
+                var aBonds = mol.GetConnectedBonds(a).ToList();
+                var bBonds = mol.GetConnectedBonds(b).ToList();
+                var aH = Unbox(a.ImplicitHydrogenCount);
+                var bH = Unbox(b.ImplicitHydrogenCount);
+                int cmp;
+                // 1) Connectivity, X=D+h
+                if ((cmp = (aBonds.Count + aH).CompareTo(bBonds.Count + bH)) != 0)
+                    return cmp;
+                // 2) Degree, D
+                if ((cmp = aBonds.Count.CompareTo(bBonds.Count)) != 0)
+                    return cmp;
+                // 3) Element, #<N>
+                if ((cmp = Unbox(a.AtomicNumber).CompareTo(Unbox(b.AtomicNumber))) != 0)
+                    return cmp;
+                // 4a) charge sign
+                int aQ = Unbox(a.FormalCharge);
+                int bQ = Unbox(b.FormalCharge);
+                if ((cmp = ((aQ >> 31) & 0x1).CompareTo((bQ >> 31) & 0x1)) != 0)
+                    return cmp;
+                // 4b) charge magnitude
+                if ((cmp = Math.Abs(aQ).CompareTo(Math.Abs(bQ))) != 0)
+                    return cmp;
+                int aTotalH = aH;
+                int bTotalH = bH;
+                foreach (var bond in aBonds)
+                    aTotalH += bond.GetOther(a).AtomicNumber == 1 ? 1 : 0;
+                foreach (var bond in bBonds)
+                    bTotalH += bond.GetOther(b).AtomicNumber == 1 ? 1 : 0;
+                // 5) total H count
+                if ((cmp = aTotalH.CompareTo(bTotalH)) != 0)
+                    return cmp;
+                // XXX: valence and ring membership should also be used to split
+                //      ties, but will change the current canonical labelling!
+                // extra 1) atomic mass
+                if (SmiFlavorTool.IsSet(flavor, SmiFlavors.Isomeric)
+                 && (cmp = Unbox(a.MassNumber).CompareTo(b.MassNumber)) != 0)
+                    return cmp;
+                // extra 2) atom map
+                if (SmiFlavorTool.IsSet(flavor, SmiFlavors.AtomAtomMap)
+                 && (flavor & SmiFlavors.AtomAtomMapRenumber) != SmiFlavors.AtomAtomMapRenumber)
+                {
+                    var aMapIdx = a.GetProperty<int>(CDKPropertyName.AtomAtomMapping);
+                    var bMapIdx = b.GetProperty<int>(CDKPropertyName.AtomAtomMapping);
+                    if ((cmp = Unbox(aMapIdx).CompareTo(Unbox(bMapIdx))) != 0)
+                        return cmp;
+                }
+                return 0;
+            }
+        }
+
+        public static IComparer<IAtom> CreateComparator(IAtomContainer mol, SmiFlavors flavor)
+        {
+            return new Comparer(mol, flavor);
+        }
     }
 }
+

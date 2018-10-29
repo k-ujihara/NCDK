@@ -289,7 +289,7 @@ namespace NCDK.FaulonSignatures.Chemistry
 
         public override string ToString()
         {
-            StringBuilder buffer = new StringBuilder();
+            var buffer = new StringBuilder();
             foreach (var a in this.atoms)
             {
                 buffer.Append(a).Append("|");
@@ -382,7 +382,7 @@ namespace NCDK.FaulonSignatures.Chemistry
 
         public string ToEdgeString()
         {
-            StringBuilder edgeString = new StringBuilder();
+            var edgeString = new StringBuilder();
             List<Bond> listCopy = new List<Bond>();
             foreach (var bond in this.bonds)
             {

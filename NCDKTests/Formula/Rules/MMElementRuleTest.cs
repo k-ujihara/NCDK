@@ -69,7 +69,7 @@ namespace NCDK.Formula.Rules
         {
             IRule rule = new MMElementRule();
 
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(builder.NewIsotope("C"), 2);
             formula.Add(builder.NewIsotope("H"), 200);
 
@@ -81,7 +81,7 @@ namespace NCDK.Formula.Rules
         {
             IRule rule = new MMElementRule();
 
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(builder.NewIsotope("C"), 2);
             formula.Add(builder.NewIsotope("H"), 6);
 

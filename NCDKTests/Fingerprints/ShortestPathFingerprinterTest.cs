@@ -78,7 +78,7 @@ namespace NCDK.Fingerprints
         {
             string smiles = "CCCCC1C(=O)N(N(C1=O)C1=CC=CC=C1)C1=CC=CC=C1";
             SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer molecule = smilesParser.ParseSmiles(smiles);
+            var molecule = smilesParser.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.CDKLegacy.Apply(molecule);
             ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
@@ -98,8 +98,8 @@ namespace NCDK.Fingerprints
             string smilesT = "NC(=O)C1=C2C=CC(Br)=CC2=C(Cl)C=C1";
             string smilesQ = "CC1=C2C=CC(Br)=CC2=C(Cl)C=C1";
             SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer moleculeQ = smilesParser.ParseSmiles(smilesQ);
-            IAtomContainer moleculeT = smilesParser.ParseSmiles(smilesT);
+            var moleculeQ = smilesParser.ParseSmiles(smilesQ);
+            var moleculeT = smilesParser.ParseSmiles(smilesT);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(moleculeQ);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(moleculeT);
@@ -122,10 +122,9 @@ namespace NCDK.Fingerprints
         {
             string smilesT = "O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@H](O)[C@@H]1O";
             string smilesQ = "OC[C@@H](O)[C@@H](O)[C@H](O)[C@@H](O)C(O)=O";
-            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
-            smilesParser.Kekulise(false);
-            IAtomContainer moleculeQ = smilesParser.ParseSmiles(smilesQ);
-            IAtomContainer moleculeT = smilesParser.ParseSmiles(smilesT);
+            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance, false);
+            var moleculeQ = smilesParser.ParseSmiles(smilesQ);
+            var moleculeT = smilesParser.ParseSmiles(smilesT);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(moleculeQ);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(moleculeT);
@@ -143,7 +142,7 @@ namespace NCDK.Fingerprints
         {
             string smiles = "C1=CC2=CC3=CC=CC=C3C=C2C=C1";
             SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer molecule = smilesParser.ParseSmiles(smiles);
+            var molecule = smilesParser.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.CDKLegacy.Apply(molecule);
             ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
@@ -157,7 +156,7 @@ namespace NCDK.Fingerprints
         {
             string smiles = "C1=CC2=CC=CC=C2C=C1";
             SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer molecule = smilesParser.ParseSmiles(smiles);
+            var molecule = smilesParser.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.CDKLegacy.Apply(molecule);
             ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
@@ -171,7 +170,7 @@ namespace NCDK.Fingerprints
         {
             string smiles = "C1=CC2=CC=C3C4=CC5=CC6=CC=CC=C6C=C5C=C4C=CC3=C2C=C1";
             SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer molecule = smilesParser.ParseSmiles(smiles);
+            var molecule = smilesParser.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);

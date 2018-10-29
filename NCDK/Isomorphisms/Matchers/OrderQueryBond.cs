@@ -22,7 +22,7 @@ using System;
 namespace NCDK.Isomorphisms.Matchers
 {
     // @cdk.module isomorphism
-    // @cdk.githash
+    [Obsolete]
     public class OrderQueryBond : QueryBond, IQueryBond
     {
         public OrderQueryBond(IChemObjectBuilder builder)

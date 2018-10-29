@@ -18,6 +18,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -34,6 +35,7 @@ namespace NCDK.Isomorphisms.Matchers
     // @cdk.created   2004-09-16
     // @see           SymbolSetQueryAtom
     // @cdk.module    isomorphism
+    [Obsolete("Use new Expr(Element, 6).And(new Expr(Element, 8)).Negate() etc")]
     public class InverseSymbolSetQueryAtom : QueryAtom, IQueryAtom
     {
         private ICollection<string> symbols = new HashSet<string>();
@@ -99,7 +101,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// <returns>The string representation of this object.</returns>
         public override string ToString()
         {
-            StringBuilder s = new StringBuilder();
+            var s = new StringBuilder();
             s.Append("InverseSymbolSetQueryAtom(");
             s.Append(this.GetHashCode() + ", ");
             s.Append(symbols.ToString());

@@ -93,7 +93,7 @@ namespace NCDK.QSAR
             speclist = ToSpecifications(descriptors).ToList();
 
             // get the dictionary for the descriptors
-            DictionaryDatabase dictDB = new DictionaryDatabase();
+            var dictDB = new DictionaryDatabase();
             dict = dictDB.GetDictionary("descriptor-algorithms");
         }
 
@@ -147,7 +147,7 @@ namespace NCDK.QSAR
 
             for (int i = 0; i < descriptors.Count; i++)
             {
-                IDescriptor descriptor = descriptors[i];
+                var descriptor = descriptors[i];
                 if (descriptor is IMolecularDescriptor)
                 {
                     var value = ((IMolecularDescriptor)descriptor).Calculate(molecule);
@@ -169,7 +169,7 @@ namespace NCDK.QSAR
                             atom.SetProperty(speclist[i], value);
                         else
                         {
-                            Trace.TraceError("Could not calculate descriptor value for: ", descriptor.GetType().FullName);
+                            Trace.TraceError($"Could not calculate descriptor value for: {descriptor.GetType().FullName}");
                             Debug.WriteLine(value.Exception);
                         }
                     }
@@ -184,7 +184,7 @@ namespace NCDK.QSAR
                             bond.SetProperty(speclist[i], value);
                         else
                         {
-                            Trace.TraceError("Could not calculate descriptor value for: ", descriptor.GetType().FullName);
+                            Trace.TraceError($"Could not calculate descriptor value for: {descriptor.GetType().FullName}");
                             Debug.WriteLine(value.Exception);
                         }
                     }
@@ -221,7 +221,7 @@ namespace NCDK.QSAR
         public string GetDictionaryType(string identifier)
         {
             var dictEntries = dict.Entries;
-            string specRef = GetSpecRef(identifier);
+            var specRef = GetSpecRef(identifier);
 
             Debug.WriteLine($"Got identifier: {identifier}");
             Debug.WriteLine($"Final spec ref: {specRef}");
@@ -245,7 +245,7 @@ namespace NCDK.QSAR
                         if (attr.Value.Contains("molecularDescriptor")
                          || attr.Value.Contains("atomicDescriptor"))
                         {
-                            string[] tmp = attr.Value.Split('#');
+                            var tmp = attr.Value.Split('#');
                             return tmp[1];
                         }
                     }
@@ -307,20 +307,21 @@ namespace NCDK.QSAR
         {
             var dictEntries = dict.Entries;
 
-            string specRef = GetSpecRef(identifier);
+            var specRef = GetSpecRef(identifier);
             if (specRef == null)
             {
-                Trace.TraceError("Cannot determine specification for id: ", identifier);
+                Trace.TraceError($"Cannot determine specification for id: {identifier}");
                 return Array.Empty<string>();
             }
-            List<string> dictClasses = new List<string>();
+            var dictClasses = new List<string>();
 
             foreach (var dictEntry in dictEntries)
             {
-                if (!string.Equals(dictEntry.ClassName, "Descriptor", StringComparison.Ordinal)) continue;
+                if (!string.Equals(dictEntry.ClassName, "Descriptor", StringComparison.Ordinal))
+                    continue;
                 if (dictEntry.Id.Equals(specRef.ToLowerInvariant(), StringComparison.Ordinal))
                 {
-                    XElement rawElement = (XElement)dictEntry.RawContent;
+                    var rawElement = (XElement)dictEntry.RawContent;
                     var classifications = rawElement.Elements(dict.NS + "isClassifiedAs");
                     foreach (var element in classifications)
                     {
@@ -330,7 +331,7 @@ namespace NCDK.QSAR
                         {
                             continue;
                         }
-                        string[] tmp = attr.Value.Split('#');
+                        var tmp = attr.Value.Split('#');
                         dictClasses.Add(tmp[1]);
                     }
                 }
@@ -382,10 +383,10 @@ namespace NCDK.QSAR
         {
             var dictEntries = dict.Entries;
 
-            string specRef = GetSpecRef(identifier);
+            var specRef = GetSpecRef(identifier);
             if (specRef == null)
             {
-                Trace.TraceError("Cannot determine specification for id: ", identifier);
+                Trace.TraceError($"Cannot determine specification for id: {identifier}");
                 return "";
             }
 
@@ -428,10 +429,10 @@ namespace NCDK.QSAR
         public string GetDictionaryTitle(string identifier)
         {
             var dictEntries = dict.Entries;
-            string specRef = GetSpecRef(identifier);
+            var specRef = GetSpecRef(identifier);
             if (specRef == null)
             {
-                Trace.TraceError("Cannot determine specification for id: ", identifier);
+                Trace.TraceError($"Cannot determine specification for id: {identifier}");
                 return "";
             }
 
@@ -514,7 +515,7 @@ namespace NCDK.QSAR
         /// <returns>An array containing the unique dictionary classes.</returns>
         public IEnumerable<string> GetAvailableDictionaryClasses()
         {
-            List<string> classList = new List<string>();
+            var classList = new List<string>();
             foreach (var spec in speclist)
             {
                 var tmp = GetDictionaryClass(spec);
@@ -610,9 +611,12 @@ namespace NCDK.QSAR
                 {
                     if (type.FullName.StartsWith(namespaceId, StringComparison.Ordinal))
                     {
-                        if (type.IsNested) continue;
-                        if (type.FullName.Contains("Test")) continue;
-                        if (type.FullName.Contains("ChiIndexUtils")) continue;
+                        if (type.IsNested)
+                            continue;
+                        if (type.FullName.Contains("Test"))
+                            continue;
+                        if (type.FullName.Contains("ChiIndexUtils"))
+                            continue;
                         yield return type.FullName;
                     }
                 }
@@ -629,9 +633,9 @@ namespace NCDK.QSAR
                 try
                 {
                     var c = assembly.GetType(descriptorName);    // c is IDescriptor type
-                    IDescriptor descriptor = Instantiate(c);
+                    var descriptor = Instantiate(c);
                     descriptors.Add(descriptor);
-                    Trace.TraceInformation("Loaded descriptor: ", descriptorName);
+                    Trace.TraceInformation($"Loaded descriptor: {descriptorName}");
                 }
                 catch (Exception error)
                 {
@@ -644,8 +648,7 @@ namespace NCDK.QSAR
 
         private static IDescriptor Instantiate(Type c)
         {
-            ConstructorInfo ctor;
-            ctor = c.GetConstructor(Type.EmptyTypes);
+            var ctor = c.GetConstructor(Type.EmptyTypes);
             if (ctor != null)
                 return (IDescriptor)ctor.Invoke(Array.Empty<object>());
             ctor = c.GetConstructor(new Type[] { typeof(IChemObjectBuilder) });
@@ -670,12 +673,12 @@ namespace NCDK.QSAR
             // see if we got a descriptors .NET class name
             for (int i = 0; i < classNames.Count; i++)
             {
-                string className = classNames[i];
+                var className = classNames[i];
                 if (className.Equals(identifier, StringComparison.Ordinal))
                 {
-                    IDescriptor descriptor = descriptors[i];
-                    IImplementationSpecification descSpecification = descriptor.Specification;
-                    string[] tmp = descSpecification.SpecificationReference.Split('#');
+                    var descriptor = descriptors[i];
+                    var descSpecification = descriptor.Specification;
+                    var tmp = descSpecification.SpecificationReference.Split('#');
                     if (tmp.Length != 2)
                     {
                         Debug.WriteLine($"Something fishy with the spec ref: {descSpecification.SpecificationReference}");
@@ -689,7 +692,7 @@ namespace NCDK.QSAR
             // if we are here and specRef==null we have a SpecificationReference
             if (specRef == null)
             {
-                string[] tmp = identifier.Split('#');
+                var tmp = identifier.Split('#');
                 if (tmp.Length != 2)
                 {
                     Debug.WriteLine($"Something fishy with the identifier: {identifier}");
@@ -703,4 +706,3 @@ namespace NCDK.QSAR
         }
     }
 }
-

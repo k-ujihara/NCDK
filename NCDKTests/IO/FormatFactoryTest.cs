@@ -228,12 +228,12 @@ namespace NCDK.IO
         public void TestGuessFormat()
         {
             string filename = "NCDK.Data.XYZ.bf3.xyz";
-            Stream input = ResourceLoader.GetAsStream(filename);
+            var input = ResourceLoader.GetAsStream(filename);
             input = new BufferedStream(input);
             IChemFormat format = factory.GuessFormat(input);
             Assert.IsNotNull(format);
             // make sure the Stream is properly reset
-            TextReader reader = new StreamReader(input);
+            var reader = new StreamReader(input);
             string line = reader.ReadLine();
             Assert.IsNotNull(line);
             Assert.AreEqual("4", line);
@@ -250,7 +250,7 @@ namespace NCDK.IO
             IChemFormat format = factory.GuessFormat(input);
             Assert.IsNotNull(format);
             // make sure the Stream is properly reset
-            TextReader reader = new StreamReader(input);
+            var reader = new StreamReader(input);
             string line = reader.ReadLine();
             Assert.IsNotNull(line);
             Assert.AreEqual("4", line);
@@ -263,8 +263,8 @@ namespace NCDK.IO
         public void TestGuessFormat_Reader()
         {
             string filename = "NCDK.Data.XYZ.bf3.xyz";
-            Stream input = ResourceLoader.GetAsStream(filename);
-            TextReader reader = new StreamReader(input);
+            var input = ResourceLoader.GetAsStream(filename);
+            var reader = new StreamReader(input);
             IChemFormat format = factory.GuessFormat(reader);
             Assert.IsNotNull(format);
             // make sure the Reader is properly reset

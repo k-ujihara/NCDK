@@ -20,13 +20,27 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 namespace NCDK
 {
     public enum ReactionRole
     {
         None = 0,
-        Reactant,
-        Agent,
-        Product,
+        Reactant = 1,
+        Agent = 2,
+        Product = 3,
     };
+
+    public static class ReactionRoleTool
+    {
+        public static bool IsUnset(this ReactionRole role)
+        {
+            return role == ReactionRole.None;
+        }
+
+        public static int Ordinal(this ReactionRole role)
+        {
+            return (int)role;
+        }
+    }
 }

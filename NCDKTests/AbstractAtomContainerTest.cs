@@ -3225,5 +3225,26 @@ namespace NCDK
             Assert.IsTrue(clonedSgroup.Bonds.Contains(clone.Bonds[0]));
             Assert.IsTrue(clonedSgroup.Bonds.Contains(clone.Bonds[1]));
         }
+
+        [TestMethod()]
+        public void GetSelfBond()
+        {
+            var mol = (IAtomContainer)NewChemObject();
+            var a1 = mol.Builder.NewAtom();
+            var a2 = mol.Builder.NewAtom();
+            var a3 = mol.Builder.NewAtom();
+            var b1 = mol.Builder.NewBond();
+            var b2 = mol.Builder.NewBond();
+            b1.Atoms.Add(a1);
+            b1.Atoms.Add(a2);
+            b2.Atoms.Add(a2);
+            b2.Atoms.Add(a3);
+            mol.Atoms.Add(a1);
+            mol.Atoms.Add(a2);
+            mol.Atoms.Add(a3);
+            mol.Bonds.Add(b1);
+            mol.Bonds.Add(b2);
+            Assert.IsNull(mol.GetBond(a1, a1));
+        }
     }
 }

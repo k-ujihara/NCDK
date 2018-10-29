@@ -46,7 +46,7 @@ namespace NCDK.Hash.Stereo
         [TestMethod()]
         public void TestCreate()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(CarbonAt(-0.2994, 3.2084));
             m.Atoms.Add(CarbonAt(-1.1244, 3.2084));
             m.Atoms.Add(CarbonAt(-1.9494, 3.2084));

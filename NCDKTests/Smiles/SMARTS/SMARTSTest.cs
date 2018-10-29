@@ -1,4 +1,4 @@
-/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2004-2018  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,13 +20,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
+using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
-using NCDK.Smiles;
+using NCDK.Isomorphisms.Matchers.SMARTS;
+using NCDK.Silent;
 using NCDK.Templates;
 
-namespace NCDK.Isomorphisms
+namespace NCDK.Smiles.SMARTS
 {
     // @cdk.module  test-smarts
     [TestClass()]
@@ -39,16 +41,14 @@ namespace NCDK.Isomorphisms
         {
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
-            SmilesParser sp = new SmilesParser(builder);
-            IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
+            var sp = new SmilesParser(builder);
+            var atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
             var query = new QueryAtomContainer(builder);
-            SymbolQueryAtom atom1 = new SymbolQueryAtom(builder);
-            atom1.Symbol = "N";
-            SymbolQueryAtom atom2 = new SymbolQueryAtom(builder);
-            atom2.Symbol = "C";
+            var atom1 = new SymbolQueryAtom(builder) { Symbol = "N" };
+            var atom2 = new SymbolQueryAtom(builder) { Symbol = "C" };
             query.Atoms.Add(atom1);
             query.Atoms.Add(atom2);
-            query.Bonds.Add(new OrderQueryBond(atom1, atom2, BondOrder.Double, builder));
+            query.Bonds.Add(new NCDK.Isomorphisms.Matchers.OrderQueryBond(atom1, atom2, BondOrder.Double, builder));
 
             Assert.IsFalse(uiTester.IsSubgraph(atomContainer, query));
         }
@@ -57,15 +57,14 @@ namespace NCDK.Isomorphisms
         public void TestSMARTS()
         {
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
-            SmilesParser sp = new SmilesParser(builder);
-            IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
+            var sp = new SmilesParser(builder);
+            var atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
             var query = new QueryAtomContainer(builder);
-            var atom1 = new Matchers.SMARTS.AnyAtom(builder);
-            SymbolQueryAtom atom2 = new SymbolQueryAtom(builder);
-            atom2.Symbol = "C";
+            var atom1 = new NCDK.Isomorphisms.Matchers.SMARTS.AnyAtom(builder);
+            var atom2 = new SymbolQueryAtom(builder) { Symbol = "C" };
             query.Atoms.Add(atom1);
             query.Atoms.Add(atom2);
-            query.Bonds.Add(new OrderQueryBond(atom1, atom2, BondOrder.Double, builder));
+            query.Bonds.Add(new NCDK.Isomorphisms.Matchers.OrderQueryBond(atom1, atom2, BondOrder.Double, builder));
 
             Assert.IsTrue(uiTester.IsSubgraph(atomContainer, query));
         }
@@ -91,11 +90,11 @@ namespace NCDK.Isomorphisms
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
             QueryAtomContainer query1 = new QueryAtomContainer(builder); // SMARTS [h3][h3]
-            var atom1 = new Matchers.SMARTS.ImplicitHCountAtom(3, builder);
-            var atom2 = new Matchers.SMARTS.ImplicitHCountAtom(3, builder);
+            var atom1 = new ImplicitHCountAtom(3, builder);
+            var atom2 = new ImplicitHCountAtom(3, builder);
             query1.Atoms.Add(atom1);
             query1.Atoms.Add(atom2);
-            query1.Bonds.Add(new OrderQueryBond(atom1, atom2, BondOrder.Single, builder));
+            query1.Bonds.Add(new NCDK.Isomorphisms.Matchers.OrderQueryBond(atom1, atom2, BondOrder.Single, builder));
             Assert.IsTrue(uiTester.IsSubgraph(container, query1));
         }
 
@@ -107,11 +106,11 @@ namespace NCDK.Isomorphisms
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
             QueryAtomContainer query1 = new QueryAtomContainer(builder); // SMARTS [h3][h2]
-            var atom1 = new Matchers.SMARTS.ImplicitHCountAtom(3, builder);
-            var atom2 = new Matchers.SMARTS.ImplicitHCountAtom(2, builder);
+            var atom1 = new ImplicitHCountAtom(3, builder);
+            var atom2 = new ImplicitHCountAtom(2, builder);
             query1.Atoms.Add(atom1);
             query1.Atoms.Add(atom2);
-            query1.Bonds.Add(new OrderQueryBond(atom1, atom2, BondOrder.Single, builder));
+            query1.Bonds.Add(new NCDK.Isomorphisms.Matchers.OrderQueryBond(atom1, atom2, BondOrder.Single, builder));
             Assert.IsFalse(uiTester.IsSubgraph(container, query1));
         }
 
@@ -130,15 +129,14 @@ namespace NCDK.Isomorphisms
                 QueryAtomContainer query1 = new QueryAtomContainer(builder);
                 query1.Atoms.Add(c1);
                 query1.Atoms.Add(c2);
-                query1.Bonds.Add(new OrderQueryBond(c1, c2, BondOrder.Single, builder));
+                query1.Bonds.Add(new NCDK.Isomorphisms.Matchers.OrderQueryBond(c1, c2, BondOrder.Single, builder));
                 Assert.IsTrue(uiTester.IsSubgraph(c, query1));
 
                 var query = new QueryAtomContainer(builder);
                 query.Atoms.Add(c1);
                 query.Atoms.Add(c2);
-                query.Bonds.Add(new Matchers.SMARTS.AnyOrderQueryBond(c1, c2, BondOrder.Single, builder));
+                query.Bonds.Add(new AnyOrderQueryBond(c1, c2, BondOrder.Single, builder));
                 Assert.IsTrue(uiTester.IsSubgraph(c, query));
-
             }
             catch (CDKException exception)
             {
@@ -150,10 +148,10 @@ namespace NCDK.Isomorphisms
         public void TestUnspecifiedIsotope()
         {
             IAtom aexpr = Smiles.SMARTS.Parser.SMARTSParser.Parse("[!0]", Silent.ChemObjectBuilder.Instance).Atoms[0];
-            Assert.IsInstanceOfType(aexpr, typeof(Matchers.SMARTS.LogicalOperatorAtom));
-            Assert.AreEqual("not", ((Matchers.SMARTS.LogicalOperatorAtom)aexpr).Operator);
-            IQueryAtom subexpr = ((Matchers.SMARTS.LogicalOperatorAtom)aexpr).Left;
-            Assert.IsInstanceOfType(subexpr, typeof(Matchers.SMARTS.MassAtom));
+            Assert.IsInstanceOfType(aexpr, typeof(LogicalOperatorAtom));
+            Assert.AreEqual("not", ((LogicalOperatorAtom)aexpr).Operator);
+            IQueryAtom subexpr = ((LogicalOperatorAtom)aexpr).Left;
+            Assert.IsInstanceOfType(subexpr, typeof(MassAtom));
             Assert.AreEqual(0, subexpr.MassNumber);
         }
     }

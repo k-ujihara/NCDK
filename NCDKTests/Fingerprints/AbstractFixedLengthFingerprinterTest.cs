@@ -70,7 +70,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestBug853254()
         {
-            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+            var builder = Silent.ChemObjectBuilder.Instance;
             string filename = "NCDK.Data.MDL.bug853254-2.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
@@ -127,7 +127,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestBug771485()
         {
-            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+            var builder = Silent.ChemObjectBuilder.Instance;
             string filename = "NCDK.Data.MDL.bug771485-1.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
@@ -172,7 +172,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestBug931608()
         {
-            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+            var builder = Silent.ChemObjectBuilder.Instance;
             string filename = "NCDK.Data.MDL.bug931608-1.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);

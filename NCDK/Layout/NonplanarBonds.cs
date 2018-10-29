@@ -424,6 +424,36 @@ namespace NCDK.Layout
         }
 
         /// <summary>
+        /// Find a bond between two possible atoms. For example beg1 - end or
+        /// beg2 - end.
+        /// </summary>
+        /// <param name="beg1">begin 1</param>
+        /// <param name="beg2">begin 3</param>
+        /// <param name="end">end</param>
+        /// <returns>the bond (or <see langword="null"/> if none)</returns>
+        private IBond FindBond(IAtom beg1, IAtom beg2, IAtom end)
+        {
+            IBond bond = container.GetBond(beg1, end);
+            if (bond != null)
+                return bond;
+            return container.GetBond(beg2, end);
+        }
+
+        /// <summary>
+        /// Sets a wedge bond, because wedges are relative we may need to flip
+        /// the storage order on the bond.
+        /// </summary>
+        /// <param name="bond">the bond</param>
+        /// <param name="end">the expected end atom (fat end of wedge)</param>
+        /// <param name="style">the wedge style</param>
+        private void SetWedge(IBond bond, IAtom end, BondStereo style)
+        {
+            if (!bond.End.Equals(end))
+                bond.SetAtoms(new IAtom[] { bond.End, bond.Begin });
+            bond.Stereo = style;
+        }
+
+        /// <summary>
         /// Assign non-planar labels (wedge/hatch) to the bonds of extended
         /// tetrahedral elements to correctly represent its stereochemistry.
         /// </summary>
@@ -451,13 +481,11 @@ namespace NCDK.Layout
 
             // some bonds may be null if, this happens when an implicit atom
             // is present and one or more 'atoms' is a terminal atom
-            bonds[0] = container.GetBond(left, atoms[0]);
-            bonds[1] = container.GetBond(left, atoms[1]);
-            bonds[2] = container.GetBond(right, atoms[2]);
-            bonds[3] = container.GetBond(right, atoms[3]);
+            for (int i = 0; i < 4; i++)
+                bonds[i] = FindBond(left, right, atoms[i]);
 
             // find the clockwise ordering (in the plane of the page) by sorting by
-            // polar corodinates
+            // polar coordinates
             var rank = new int[4];
             {
                 for (int i = 0; i < 4; i++)
@@ -497,28 +525,16 @@ namespace NCDK.Layout
             if (priority[0] + priority[1] < priority[2] + priority[3])
             {
                 if (priority[0] < 5)
-                {
-                    bonds[0].SetAtoms(new IAtom[] { left, atoms[0] });
-                    bonds[0].Stereo = labels[0];
-                }
+                    SetWedge(bonds[0], atoms[0], labels[0]);
                 if (priority[1] < 5)
-                {
-                    bonds[1].SetAtoms(new IAtom[] { left, atoms[1] });
-                    bonds[1].Stereo = labels[1];
-                }
+                    SetWedge(bonds[1], atoms[1], labels[1]);
             }
             else
             {
                 if (priority[2] < 5)
-                {
-                    bonds[2].SetAtoms(new IAtom[] { right, atoms[2] });
-                    bonds[2].Stereo = labels[2];
-                }
+                    SetWedge(bonds[2], atoms[2], labels[2]);
                 if (priority[3] < 5)
-                {
-                    bonds[3].SetAtoms(new IAtom[] { right, atoms[3] });
-                    bonds[3].Stereo = labels[3];
-                }
+                    SetWedge(bonds[3], atoms[3], labels[3]);
             }
         }
 
@@ -721,6 +737,9 @@ namespace NCDK.Layout
                 // second label
                 else if (labels[v] != firstlabel)
                 {
+                    // don't add if it's possibly a stereo-centre
+                    if (IsSp3Carbon(atoms[v], graph[container.Atoms.IndexOf(atoms[v])].Length))
+                        break;
                     bond.SetAtoms(new IAtom[] { focus, atoms[v] }); // avoids UP_INVERTED/DOWN_INVERTED
                     bond.Stereo = labels[v];
                     break;
@@ -819,13 +838,39 @@ namespace NCDK.Layout
             return rank;
         }
 
-        private static bool IsSp3Carbon(IAtom atom, int deg)
+        // indicates where an atom is a Sp3 carbon and is possibly a stereo-centre
+        private bool IsSp3Carbon(IAtom atom, int deg)
         {
             var elem = atom.AtomicNumber;
             var hcnt = atom.ImplicitHydrogenCount;
             if (elem == null || hcnt == null)
                 return false;
-            return elem == 6 && hcnt <= 1 && deg + hcnt == 4;
+            if (elem == 6 && hcnt <= 1 && deg + hcnt == 4)
+            {
+                // more expensive check, look one out and see if we have any
+                // duplicate terminal neighbors
+                var terminals = new List<IAtom>();
+                foreach (var bond in container.GetConnectedBonds(atom))
+                {
+                    IAtom nbr = bond.GetOther(atom);
+                    if (container.GetConnectedBonds(nbr).Count() == 1)
+                    {
+                        foreach (var terminal in terminals)
+                        {
+                            if (object.Equals(terminal.AtomicNumber, nbr.AtomicNumber)
+                             && object.Equals(terminal.MassNumber, nbr.MassNumber)
+                             && object.Equals(terminal.FormalCharge, nbr.FormalCharge)
+                             && object.Equals(terminal.ImplicitHydrogenCount, nbr.ImplicitHydrogenCount))
+                            {
+                                return false;
+                            }
+                        }
+                        terminals.Add(nbr);
+                    }
+                }
+                return true;
+            }
+            return false;
         }
 
         /// <summary>

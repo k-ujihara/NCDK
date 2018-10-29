@@ -121,7 +121,7 @@ namespace NCDK.Beam
 
         private class S : IComparer<int>
         {
-            long[] labels;
+            private readonly long[] labels;
 
             public S(long[] labels)
             {
@@ -160,6 +160,17 @@ namespace NCDK.Beam
             for (int i = 0; i < is_.Length; i++)
                 p[is_[i]] = i;
             return g.Permute(p);
+        }
+
+        /// <summary>
+        /// Renumbers atom-atom maps using a depth-first traversal. Note this function modifies the input graph.
+        /// </summary>
+        /// <param name="g">the graph</param>
+        /// <returns>the input graph</returns>
+        public static Graph RenumberAtomMaps(Graph g)
+        {
+            AtomMapsRenumberer.Renumber(g);
+            return g;
         }
 
         private static int[] Random(int n)

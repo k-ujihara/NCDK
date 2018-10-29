@@ -183,8 +183,7 @@ namespace NCDK.Default
             {
                 foreach (IBond bond in bonds)
                 {
-                    if (bond.Begin.Equals(atom) ||
-                        bond.End.Equals(atom))
+                    if (bond.GetOther(this).Equals(atom))
                         return bond;
                 }
                 return null;
@@ -1594,8 +1593,7 @@ namespace NCDK.Silent
             {
                 foreach (IBond bond in bonds)
                 {
-                    if (bond.Begin.Equals(atom) ||
-                        bond.End.Equals(atom))
+                    if (bond.GetOther(this).Equals(atom))
                         return bond;
                 }
                 return null;

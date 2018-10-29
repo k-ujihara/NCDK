@@ -27,6 +27,7 @@ namespace NCDK.Smiles.SMARTS.Parser
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS AST
+    [System.Obsolete]
     internal class SmartsDumpVisitor : ISMARTSParserVisitor
     {
         public object Visit(ASTRingIdentifier node, object data)
@@ -51,7 +52,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         private string IndentString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             for (int i = 0; i < indent; ++i)
             {
                 sb.Append("  ");

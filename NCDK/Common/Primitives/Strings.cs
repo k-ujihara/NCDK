@@ -176,7 +176,7 @@ namespace NCDK.Common.Primitives
             if (list.Count == 0)
                 return "[]";
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append('[');
             bool isFirst = true;
             foreach (var e in list)

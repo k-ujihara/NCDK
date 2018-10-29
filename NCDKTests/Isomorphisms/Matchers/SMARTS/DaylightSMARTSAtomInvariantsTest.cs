@@ -15,7 +15,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         [TestMethod()]
         public void TargetTest()
         {
-            IAtomContainer container = sp.ParseSmiles("CCC");
+            var container = sp.ParseSmiles("CCC");
             SMARTSAtomInvariants.ConfigureDaylightWithRingInfo(container);
             foreach (var atom in container.Atoms) {
                 Assert.AreEqual(container, (atom.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key)).Target);
@@ -104,7 +104,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// </summary>
         [TestMethod()]
         public void RingNumber_cyclophane() {
-            IAtomContainer container = sp.ParseSmiles("C1CC23CCC11CCC4(CC1)CCC(CC2)(CC3)CC4");
+            var container = sp.ParseSmiles("C1CC23CCC11CCC4(CC1)CCC(CC2)(CC3)CC4");
             SMARTSAtomInvariants.ConfigureDaylightWithRingInfo(container);
             int R1 = 0, R2 = 0, R3 = 0;
             foreach (var atom in container.Atoms) {
@@ -144,7 +144,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         [TestMethod()]
         public void RingSize_imidazole() {
 
-            IAtomContainer container = sp.ParseSmiles("N1C=NC2=CC=CC=C12");
+            var container = sp.ParseSmiles("N1C=NC2=CC=CC=C12");
             SMARTSAtomInvariants.ConfigureDaylightWithRingInfo(container);
             int ringSize5 = 0, ringSize6 = 0;
             foreach (var atom in container.Atoms) {
@@ -164,7 +164,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         public void RingSize_cyclophane()
         {
 
-            IAtomContainer container = sp.ParseSmiles("C1CC23CCC11CCC4(CC1)CCC(CC2)(CC3)CC4");
+            var container = sp.ParseSmiles("C1CC23CCC11CCC4(CC1)CCC(CC2)(CC3)CC4");
             SMARTSAtomInvariants.ConfigureDaylightWithRingInfo(container);
             foreach (var atom in container.Atoms)
             {
@@ -176,7 +176,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         [TestMethod()]
         public void NoRingInfo() {
-            IAtomContainer container = sp.ParseSmiles("C1CC23CCC11CCC4(CC1)CCC(CC2)(CC3)CC4");
+            var container = sp.ParseSmiles("C1CC23CCC11CCC4(CC1)CCC(CC2)(CC3)CC4");
             SMARTSAtomInvariants.ConfigureDaylightWithoutRingInfo(container);
             foreach (var atom in container.Atoms) {
                 SMARTSAtomInvariants inv = atom.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key);
@@ -185,11 +185,11 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             }
         }
 
-        static readonly SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+        static readonly SmilesParser sp = CDK.SilentSmilesParser;
 
         // compute the invariants for the first atom in a SMILES string
         static SMARTSAtomInvariants InvariantOfFirstAtom(string smiles) {
-            IAtomContainer container = sp.ParseSmiles(smiles);
+            var container = sp.ParseSmiles(smiles);
             SMARTSAtomInvariants.ConfigureDaylightWithRingInfo(container);
             return container.Atoms[0].GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key);
         }

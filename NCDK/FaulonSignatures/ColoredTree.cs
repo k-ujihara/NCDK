@@ -97,7 +97,7 @@ namespace NCDK.FaulonSignatures
 
             public override string ToString()
             {
-                StringBuilder builder = new StringBuilder();
+                var builder = new StringBuilder();
                 this.BuilderString(builder);
                 return builder.ToString();
             }
@@ -152,7 +152,7 @@ namespace NCDK.FaulonSignatures
 
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             this.root.BuilderString(builder);
             return builder.ToString();
         }

@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.Graphs
 {
@@ -51,7 +52,7 @@ namespace NCDK.Graphs
                 return true;
 
             var cc = new ConnectedComponents(GraphUtil.ToAdjList(atomContainer));
-            return cc.NComponents == 1;
+            return cc.NumberOfComponents == 1;
         }
 
         /// <summary>
@@ -63,7 +64,7 @@ namespace NCDK.Graphs
         public static IChemObjectSet<IAtomContainer> PartitionIntoMolecules(IAtomContainer container)
         {
             var cc = new ConnectedComponents(GraphUtil.ToAdjList(container));
-            return PartitionIntoMolecules(container, cc.Components());
+            return PartitionIntoMolecules(container, cc.GetComponents());
         }
 
         public static IChemObjectSet<IAtomContainer> PartitionIntoMolecules(IAtomContainer container, int[] components)

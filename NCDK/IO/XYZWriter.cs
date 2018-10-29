@@ -162,7 +162,7 @@ namespace NCDK.IO
             catch (IOException e)
             {
                 //            throw e;
-                Trace.TraceError("Error while writing file: ", e.Message);
+                Trace.TraceError($"Error while writing file: {e.Message}");
                 Debug.WriteLine(e);
             }
         }

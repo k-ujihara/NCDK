@@ -351,7 +351,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestBenzeneFromSmiles()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             mol = sp.ParseSmiles("C1=CC=CC=C1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);

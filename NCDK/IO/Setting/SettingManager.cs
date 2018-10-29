@@ -58,7 +58,7 @@ namespace NCDK.IO.Setting
         /// <summary>
         /// Settings are stored in a map of name -> instance.
         /// </summary>
-        private IDictionary<string, T> settings = new Dictionary<string, T>(3);
+        private Dictionary<string, T> settings = new Dictionary<string, T>(3);
 
         /// <summary>
         /// Generate a simple key for the given name. This method normalises the name by
@@ -99,7 +99,7 @@ namespace NCDK.IO.Setting
         /// <returns>usable setting</returns>
         public TT Add<TT>(TT setting) where TT : T
         {
-            string key = MakeKey(setting);
+            var key = MakeKey(setting);
 
             if (settings.ContainsKey(key))
             {
@@ -133,9 +133,9 @@ namespace NCDK.IO.Setting
             get
             {
                 string key = MakeKey(name);
-                if (settings.ContainsKey(key)) return settings[key];
-                throw new ArgumentException("No setting found for name " + name + "(key=" + key + ") "
-                        + "available settings are: " + settings.Keys);
+                if (settings.ContainsKey(key))
+                    return settings[key];
+                throw new ArgumentException($"No setting found for name {name}(key={key}) available settings are: {settings.Keys}");
             }
         }
 

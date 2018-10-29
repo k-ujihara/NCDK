@@ -19,8 +19,8 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Collections;
-using NCDK.Silent;
 using NCDK.IO;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Templates;
 using System.Collections.Generic;
@@ -32,7 +32,7 @@ namespace NCDK.Graphs
     public class PathToolsTest : CDKTestCase
     {
         private static IAtomContainer molecule = TestMoleculeFactory.MakeAlphaPinene();
-        private static SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+        private static SmilesParser sp = CDK.SilentSmilesParser;
 
         [TestMethod()]
         public virtual void TestBreadthFirstTargetSearch_IAtomContainer_List_IAtom_int_int()
@@ -85,7 +85,7 @@ namespace NCDK.Graphs
             IAtomContainer atomContainer = null;
             IAtom start = null;
             IAtom end = null;
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             atomContainer = sp.ParseSmiles("CCCC");
             start = atomContainer.Atoms[0];
             end = atomContainer.Atoms[3];
@@ -144,7 +144,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void TestGetAllPaths_IAtomContainer_IAtom_IAtom()
         {
-            IAtomContainer atomContainer = sp.ParseSmiles("c12ccccc1cccc2");
+            var atomContainer = sp.ParseSmiles("c12ccccc1cccc2");
 
             IAtom start = atomContainer.Atoms[0];
             IAtom end = atomContainer.Atoms[2];
@@ -171,7 +171,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void TestGetVertexCountAtDistance_IAtomContainer_int()
         {
-            IAtomContainer atomContainer = sp.ParseSmiles("c12ccccc1cccc2");
+            var atomContainer = sp.ParseSmiles("c12ccccc1cccc2");
             Assert.AreEqual(11, PathTools.GetVertexCountAtDistance(atomContainer, 1));
             Assert.AreEqual(14, PathTools.GetVertexCountAtDistance(atomContainer, 2));
         }
@@ -192,7 +192,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void TestGetMolecularGraphRadius_IAtomContainer()
         {
-            IAtomContainer atomContainer = sp.ParseSmiles("CCCC");
+            var atomContainer = sp.ParseSmiles("CCCC");
             Assert.AreEqual(2, PathTools.GetMolecularGraphRadius(atomContainer));
             atomContainer = sp.ParseSmiles("C1C(N)CC1");
             Assert.AreEqual(2, PathTools.GetMolecularGraphRadius(atomContainer));
@@ -203,7 +203,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void TestGetMolecularGraphDiameter_IAtomContainer()
         {
-            IAtomContainer atomContainer = sp.ParseSmiles("CCCC");
+            var atomContainer = sp.ParseSmiles("CCCC");
             Assert.AreEqual(3, PathTools.GetMolecularGraphDiameter(atomContainer));
             atomContainer = sp.ParseSmiles("C1C(N)CC1");
             Assert.AreEqual(3, PathTools.GetMolecularGraphDiameter(atomContainer));
@@ -272,7 +272,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void TestDepthFirstTargetSearch_IAtomContainer_IAtom_IAtom_IAtomContainer()
         {
-            IAtomContainer molecule = sp.ParseSmiles("C(COF)(Br)NC");
+            var molecule = sp.ParseSmiles("C(COF)(Br)NC");
             foreach (var atom in molecule.Atoms)
                 atom.IsVisited = false;
 
@@ -341,7 +341,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void TestFindClosestByBond()
         {
-            IAtomContainer container = sp.ParseSmiles("CCN(CSCP)CCCOF");
+            var container = sp.ParseSmiles("CCN(CSCP)CCCOF");
             IAtom queryAtom = null;
             foreach (var atom in container.Atoms)
             {
@@ -361,7 +361,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void TestGetPathsOfLengthUpto()
         {
-            IAtomContainer container = sp.ParseSmiles("CCCC");
+            var container = sp.ParseSmiles("CCCC");
             IEnumerable<IList<IAtom>> paths = PathTools.GetPathsOfLengthUpto(container, container.Atoms[0], 2);
             Assert.AreEqual(3, paths.Count());
 
@@ -373,7 +373,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void TestGetLimitedPathsOfLengthUpto()
         {
-            IAtomContainer container = sp.ParseSmiles("CCCC");
+            var container = sp.ParseSmiles("CCCC");
             IEnumerable<IList<IAtom>> paths = PathTools.GetPathsOfLengthUpto(container, container.Atoms[0], 2);
             Assert.AreEqual(3, paths.Count());
 

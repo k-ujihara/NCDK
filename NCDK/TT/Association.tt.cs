@@ -87,7 +87,7 @@ namespace NCDK.Default
 
         public override string ToString()
         {
-            StringBuilder s = new StringBuilder();
+            var s = new StringBuilder();
             s.Append("Association(");
             s.Append(this.GetHashCode());
             foreach (var atom in AssociatedAtoms)
@@ -163,7 +163,7 @@ namespace NCDK.Silent
 
         public override string ToString()
         {
-            StringBuilder s = new StringBuilder();
+            var s = new StringBuilder();
             s.Append("Association(");
             s.Append(this.GetHashCode());
             foreach (var atom in AssociatedAtoms)

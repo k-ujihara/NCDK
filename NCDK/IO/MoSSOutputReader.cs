@@ -129,8 +129,7 @@ namespace NCDK.IO
         /// <exception cref="IOException">if there is an error during reading</exception>
         private IChemObjectSet<IAtomContainer> ReadAtomContainerSet(IChemObjectSet<IAtomContainer> molSet)
         {
-            SmilesParser parser = new SmilesParser(molSet.Builder);
-            parser.Kekulise(false);
+            SmilesParser parser = new SmilesParser(molSet.Builder, false);
             string line = input.ReadLine();
             line = input.ReadLine(); // skip the first line
             while (line != null)
@@ -138,7 +137,7 @@ namespace NCDK.IO
                 string[] cols = line.Split(',');
                 try
                 {
-                    IAtomContainer mol = parser.ParseSmiles(cols[1]);
+                    var mol = parser.ParseSmiles(cols[1]);
                     mol.SetProperty("focusSupport", cols[5]);
                     mol.SetProperty("complementSupport", cols[7]);
                     mol.SetProperty("atomCount", cols[2]);

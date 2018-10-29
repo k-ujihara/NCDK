@@ -295,7 +295,7 @@ namespace NCDK.IO.CML
             reaction.Id = "r1";
             IAtomContainer moleculeA = reaction.Builder.NewAtomContainer();
             moleculeA.Id = "A";
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(reaction.Builder.NewIsotope("C"), 10);
             formula.Add(reaction.Builder.NewIsotope("H"), 15);
             formula.Add(reaction.Builder.NewIsotope("N"), 2);

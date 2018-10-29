@@ -32,9 +32,9 @@ namespace NCDK.Isomorphisms.Matchers
     /// </summary>
     /// <seealso cref="InverseSymbolSetQueryAtom"/>
     // @author        kha
-    // @cdk.githash
     // @cdk.created   2004-09-16
     // @cdk.module    isomorphism
+    [Obsolete("Use new Expr(Element, 6).And(new Expr(Element, 8)) etc")]
     public class SymbolSetQueryAtom : QueryAtom, IQueryAtom
     {
         /// <summary>
@@ -65,7 +65,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// <returns>The string representation of this object.</returns>
         public override string ToString()
         {
-            StringBuilder s = new StringBuilder();
+            var s = new StringBuilder();
             s.Append("SymbolSetQueryAtom(");
             s.Append(this.GetHashCode() + ", ");
             s.Append(Strings.ToJavaString(Symbols));

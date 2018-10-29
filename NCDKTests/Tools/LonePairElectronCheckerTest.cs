@@ -40,7 +40,7 @@ namespace NCDK.Tools
         public void TestAllSaturated_Formaldehyde()
         {
             // test Formaldehyde, CH2=O with explicit hydrogen
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             Atom c = new Atom("C");
             Atom h1 = new Atom("H");
             Atom h2 = new Atom("H");
@@ -71,7 +71,7 @@ namespace NCDK.Tools
 
             Bond b1 = new Bond(c, s, BondOrder.Single);
 
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(c);
             m.Atoms.Add(s);
             m.Bonds.Add(b1);
@@ -93,7 +93,7 @@ namespace NCDK.Tools
             Atom cl = new Atom("Cl");
             Bond b1 = new Bond(c1, cl, BondOrder.Single);
 
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(c1);
             m.Atoms.Add(cl);
             m.Bonds.Add(b1);
@@ -112,7 +112,7 @@ namespace NCDK.Tools
             Atom o = new Atom("O") { ImplicitHydrogenCount = 1 };
             Bond b1 = new Bond(c1, o, BondOrder.Single);
 
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(c1);
             m.Atoms.Add(o);
             m.Bonds.Add(b1);
@@ -127,7 +127,7 @@ namespace NCDK.Tools
         public void TestNewSaturate_Methyl_alcohol_AddH()
         {
             // test Methyl alcohol, CH3OH
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("O"));
             for (int i = 0; i < 4; i++)
@@ -157,7 +157,7 @@ namespace NCDK.Tools
             };
             Bond b1 = new Bond(c1, o, BondOrder.Single);
 
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(c1);
             m.Atoms.Add(o);
             m.Bonds.Add(b1);
@@ -176,7 +176,7 @@ namespace NCDK.Tools
             Atom o = new Atom("O") { FormalCharge = -1 };
             Bond b1 = new Bond(c1, o, BondOrder.Single);
 
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(c1);
             m.Atoms.Add(o);
             m.Bonds.Add(b1);
@@ -193,7 +193,7 @@ namespace NCDK.Tools
             // test Ammonia, H3N
             Atom n = new Atom("N") { ImplicitHydrogenCount = 3 };
 
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(n);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(m);
@@ -214,7 +214,7 @@ namespace NCDK.Tools
             };
             Bond b1 = new Bond(c, n, BondOrder.Single);
 
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(c);
             m.Atoms.Add(n);
             m.Bonds.Add(b1);
@@ -232,8 +232,8 @@ namespace NCDK.Tools
         public void TestNewSaturate_withHAdded()
         {
             // O=C([H])[C+]([H])[C-]([H])[H]
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
 

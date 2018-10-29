@@ -41,7 +41,7 @@ namespace NCDK.Isomorphisms
     /// </remarks>
     // @author John May
     // @cdk.module smarts
-    // @cdk.githash
+    [Obsolete]
     public sealed class SmartsStereoMatch
     {
         /// <summary>Query and target contains.</summary>
@@ -68,8 +68,6 @@ namespace NCDK.Isomorphisms
         public SmartsStereoMatch(IAtomContainer query, IAtomContainer target)
         {
             if (!(query is IQueryAtomContainer))
-                throw new ArgumentException("match predicate is for SMARTS only");
-            if (!(query.Atoms[0] is SMARTSAtom))
                 throw new ArgumentException("match predicate is for SMARTS only");
 
             this.query = query;
@@ -134,7 +132,13 @@ namespace NCDK.Isomorphisms
             int p = PermutationParity(us);
 
             // check if unspecified was allowed
-            if (targetTypes[v] == StereoType.Unset) return queryAtom.ChiralityMatches(targetAtom, 0, p);
+            if (targetTypes[v] == StereoType.Unset)
+            {
+                if (queryAtom is SMARTSAtom)
+                    return ((SMARTSAtom)queryAtom).ChiralityMatches(targetAtom, 0, p);
+                else
+                    return ((QueryAtom)queryAtom).Expression.Matches(targetAtom, 0);
+            }
 
             // target was non-tetrahedral
             if (targetTypes[v] != StereoType.Tetrahedral) return false;
@@ -142,7 +146,18 @@ namespace NCDK.Isomorphisms
             int[] vs = Neighbors(targetElement, targetMap);
             int q = PermutationParity(vs) * Parity(targetElement.Stereo);
 
-            return queryAtom.ChiralityMatches(targetAtom, q, p);
+            if (queryAtom is SMARTSAtom)
+                return ((SMARTSAtom)queryAtom).ChiralityMatches(targetAtom, q, p);
+            else
+            {
+                q *= p;
+                if (q < 0)
+                    return ((QueryAtom)queryAtom).Expression.Matches(targetAtom, (int)StereoConfigurations.Left);
+                else if (q > 0)
+                    return ((QueryAtom)queryAtom).Expression.Matches(targetAtom, (int)StereoConfigurations.Right);
+                else
+                    return ((QueryAtom)queryAtom).Expression.Matches(targetAtom, 0);
+            }
         }
 
         /// <summary>

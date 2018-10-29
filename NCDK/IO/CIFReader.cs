@@ -532,7 +532,7 @@ namespace NCDK.IO
 
         private static string ExtractFirstLetters(string value)
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             for (int i = 0; i < value.Length; i++)
             {
                 if (char.IsDigit(value[i]))

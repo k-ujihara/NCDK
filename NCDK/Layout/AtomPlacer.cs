@@ -885,17 +885,16 @@ namespace NCDK.Layout
         /// -N=[N+]=N
         /// </pre>
         /// </summary>
-        private static bool IsColinear(IAtom atom, IEnumerable<IBond> bonds)
+        internal static bool IsColinear(IAtom atom, IEnumerable<IBond> bonds)
         {
-            if (bonds.Count() != 2)
-                return false;
-
             int numSgl = atom.ImplicitHydrogenCount ?? 0;
             int numDbl = 0;
             int numTpl = 0;
+            int count = 0;
 
             foreach (var bond in bonds)
             {
+                ++count;
                 switch (bond.Order.Numeric())
                 {
                     case 1:
@@ -913,6 +912,8 @@ namespace NCDK.Layout
                         return false;
                 }
             }
+            if (count != 2)
+                return false;
 
             switch (atom.AtomicNumber)
             {

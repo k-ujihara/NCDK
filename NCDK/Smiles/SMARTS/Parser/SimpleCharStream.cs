@@ -17,6 +17,7 @@
  * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
+
 using System;
 
 namespace NCDK.Smiles.SMARTS.Parser
@@ -25,6 +26,7 @@ namespace NCDK.Smiles.SMARTS.Parser
     /// An implementation of interface CharStream, where the stream is assumed to
     /// contain only ASCII characters (without unicode processing).
     /// </summary>
+    [Obsolete]
     public class SimpleCharStream
     {
         /// <summary>Whether parser is static.</summary>

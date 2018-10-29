@@ -45,8 +45,11 @@ namespace NCDK
         /// <summary>Tetrahedral (T-4) (e.g. butan-2-ol)</summary>
         Tetrahedral = 0x42,
 
-        /// <summary>ExtendedTetrahedral (e.g. 2,3-pentadiene)</summary>
+        /// <summary>ExtendedTetrahedral a.k.a. allene (e.g. 2,3-pentadiene)</summary>
         Allenal = 0x43,
+
+        /// <summary>ExtendedCisTrans a.k.a. cumulene (e.g. hexa-2,3,4-triene)</summary>
+        Cumulene = 0x22,
 
         /// <summary>Atropisomeric (e.g. BiNAP)</summary>
         Atropisomeric = 0x44,

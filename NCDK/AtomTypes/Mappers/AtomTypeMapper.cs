@@ -38,7 +38,7 @@ namespace NCDK.AtomTypes.Mappers
         private AtomTypeMapper(string mappingFile)
         {
             this.Mapping = mappingFile;
-            Stream stream = ResourceLoader.GetAsStream(mappingFile);
+            var stream = ResourceLoader.GetAsStream(mappingFile);
             OWLAtomTypeMappingReader reader = new OWLAtomTypeMappingReader(new StreamReader(stream));
             mappings = reader.ReadAtomTypeMappings();
         }

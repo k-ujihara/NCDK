@@ -80,11 +80,14 @@ namespace NCDK.Isomorphisms
         /// <returns>the next value of n</returns>
         public sealed override int NextN(int n)
         {
-            if (size == 0) return 0;
+            if (size == 0)
+                return 0;
             for (int i = n + 1; i < g1.Length; i++)
-                if (m1[i] == UNMAPPED && t1[i] > 0) return i;
+                if (m1[i] == UNMAPPED && t1[i] > 0)
+                    return i;
             for (int i = n + 1; i < g1.Length; i++)
-                if (m1[i] == UNMAPPED) return i;
+                if (m1[i] == UNMAPPED)
+                    return i;
             return NMax();
         }
 
@@ -100,11 +103,13 @@ namespace NCDK.Isomorphisms
         /// <returns>the next value of m</returns>
         public sealed override int NextM(int n, int m)
         {
-            if (size == 0) return m + 1;
+            if (size == 0)
+                return m + 1;
             // if the query vertex 'n' is in the terminal set (t1) then the
             // target vertex must be in the terminal set (t2)
             for (int i = m + 1; i < g2.Length; i++)
-                if (m2[i] == UNMAPPED && (t1[n] == 0 || t2[i] > 0)) return i;
+                if (m2[i] == UNMAPPED && (t1[n] == 0 || t2[i] > 0))
+                    return i;
             return MMax();
         }
 
@@ -123,14 +128,17 @@ namespace NCDK.Isomorphisms
         /// <inheritdoc/>
         public sealed override bool Add(int n, int m)
         {
-            if (!Feasible(n, m)) return false;
+            if (!Feasible(n, m))
+                return false;
             m1[n] = m;
             m2[m] = n;
             size = size + 1;
             foreach (var w in g1[n])
-                if (t1[w] == 0) t1[w] = size;
+                if (t1[w] == 0)
+                    t1[w] = size;
             foreach (var w in g2[m])
-                if (t2[w] == 0) t2[w] = size;
+                if (t2[w] == 0)
+                    t2[w] = size;
             return true;
         }
 
@@ -140,9 +148,11 @@ namespace NCDK.Isomorphisms
             m1[n] = m2[m] = UNMAPPED;
             size = size - 1;
             foreach (var w in g1[n])
-                if (t1[w] > size) t1[w] = 0;
+                if (t1[w] > size)
+                    t1[w] = 0;
             foreach (var w in g2[m])
-                if (t2[w] > size) t2[w] = 0;
+                if (t2[w] > size)
+                    t2[w] = 0;
         }
 
         /// <summary>

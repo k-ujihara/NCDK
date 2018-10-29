@@ -48,7 +48,7 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         {
             try
             {
-                SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+                var sp = CDK.SilentSmilesParser;
                 IAtomContainer target = null;
                 target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
                 IAtomContainer queryac = null;
@@ -72,9 +72,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestSet_IAtomContainer_IAtomContainer()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
-            IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
+            var sp = CDK.SilentSmilesParser;
+            var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
+            var queryac = sp.ParseSmiles("Nc1ccccc1");
 
             CDKMCSHandler smsd1 = new CDKMCSHandler();
             MolHandler mol1 = new MolHandler(queryac, true, true);
@@ -96,7 +96,7 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             IAtomContainer query = new AtomContainer();
             IAtomContainer target = new AtomContainer();
 
-            Stream ins = ResourceLoader.GetAsStream(molfile);
+            var ins = ResourceLoader.GetAsStream(molfile);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             reader.Read(query);
             ins = ResourceLoader.GetAsStream(queryfile);
@@ -116,10 +116,10 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestSet_MolHandler_MolHandler()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
 
-            IAtomContainer target1 = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
-            IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
+            var target1 = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
+            var queryac = sp.ParseSmiles("Nc1ccccc1");
             MolHandler source = new MolHandler(queryac, true, true);
             MolHandler target = new MolHandler(target1, true, true);
             CDKMCSHandler instance = new CDKMCSHandler();
@@ -134,9 +134,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestGetAllAtomMapping()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
-            IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
+            var sp = CDK.SilentSmilesParser;
+            var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
+            var queryac = sp.ParseSmiles("Nc1ccccc1");
 
             CDKMCSHandler smsd1 = new CDKMCSHandler();
             MolHandler mol1 = new MolHandler(queryac, true, true);
@@ -153,9 +153,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestGetAllMapping()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
-            IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
+            var sp = CDK.SilentSmilesParser;
+            var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
+            var queryac = sp.ParseSmiles("Nc1ccccc1");
 
             CDKMCSHandler smsd1 = new CDKMCSHandler();
             MolHandler mol1 = new MolHandler(queryac, true, true);
@@ -173,9 +173,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestGetFirstAtomMapping()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
-            IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
+            var sp = CDK.SilentSmilesParser;
+            var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
+            var queryac = sp.ParseSmiles("Nc1ccccc1");
 
             CDKMCSHandler smsd1 = new CDKMCSHandler();
             MolHandler mol1 = new MolHandler(queryac, true, true);
@@ -194,9 +194,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestGetFirstMapping()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
-            IAtomContainer queryac = sp.ParseSmiles("Nc1ccccc1");
+            var sp = CDK.SilentSmilesParser;
+            var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
+            var queryac = sp.ParseSmiles("Nc1ccccc1");
 
             CDKMCSHandler smsd1 = new CDKMCSHandler();
             MolHandler mol1 = new MolHandler(queryac, true, true);

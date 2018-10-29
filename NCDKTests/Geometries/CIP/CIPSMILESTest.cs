@@ -40,7 +40,7 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void Test()
         {
-            IAtomContainer molecule = smiles.ParseSmiles("ClC(Br)(I)[H]");
+            var molecule = smiles.ParseSmiles("ClC(Br)(I)[H]");
             LigancyFourChirality chirality = CIPTool.DefineLigancyFourChirality(molecule, 1, 4, 0, 2, 3, TetrahedralStereo.Clockwise);
             Assert.AreEqual(CIPTool.CIPChirality.R, CIPTool.GetCIPChirality(chirality));
         }
@@ -53,7 +53,7 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void Test2methylbutanolR()
         {
-            IAtomContainer molecule = smiles.ParseSmiles("OCC([H])(C)CC");
+            var molecule = smiles.ParseSmiles("OCC([H])(C)CC");
             LigancyFourChirality chirality = CIPTool.DefineLigancyFourChirality(molecule, 2, 3, 1, 4, 5, TetrahedralStereo.Clockwise);
             Assert.AreEqual(CIPTool.CIPChirality.R, CIPTool.GetCIPChirality(chirality));
         }
@@ -66,7 +66,7 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void Test2methylbutanolS()
         {
-            IAtomContainer molecule = smiles.ParseSmiles("OCC([H])(C)CC");
+            var molecule = smiles.ParseSmiles("OCC([H])(C)CC");
             LigancyFourChirality chirality = CIPTool.DefineLigancyFourChirality(molecule, 2, 3, 1, 4, 5,
                     TetrahedralStereo.AntiClockwise);
             Assert.AreEqual(CIPTool.CIPChirality.S, CIPTool.GetCIPChirality(chirality));
@@ -75,7 +75,7 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void TestTwoVersusDoubleBondedOxygenR()
         {
-            IAtomContainer molecule = smiles.ParseSmiles("OC(O)C([H])(C)C=O");
+            var molecule = smiles.ParseSmiles("OC(O)C([H])(C)C=O");
             LigancyFourChirality chirality = CIPTool.DefineLigancyFourChirality(molecule, 3, 4, 5, 1, 6, TetrahedralStereo.Clockwise);
             Assert.AreEqual(CIPTool.CIPChirality.R, CIPTool.GetCIPChirality(chirality));
         }
@@ -83,7 +83,7 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void TestTwoVersusDoubleBondedOxygenS()
         {
-            IAtomContainer molecule = smiles.ParseSmiles("OC(O)C([H])(C)C=O");
+            var molecule = smiles.ParseSmiles("OC(O)C([H])(C)C=O");
             LigancyFourChirality chirality = CIPTool.DefineLigancyFourChirality(molecule, 3, 4, 5, 1, 6,
                     TetrahedralStereo.AntiClockwise);
             Assert.AreEqual(CIPTool.CIPChirality.S, CIPTool.GetCIPChirality(chirality));
@@ -92,7 +92,7 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void TestImplicitHydrogen()
         {
-            IAtomContainer molecule = smiles.ParseSmiles("CCC(C)CCC");
+            var molecule = smiles.ParseSmiles("CCC(C)CCC");
             LigancyFourChirality chirality = CIPTool.DefineLigancyFourChirality(molecule, 2, CIPTool.Hydrogen, 3, 1, 4,
                     TetrahedralStereo.AntiClockwise);
             Assert.AreEqual(CIPTool.CIPChirality.S, CIPTool.GetCIPChirality(chirality));
@@ -117,7 +117,7 @@ namespace NCDK.Geometries.CIP
         // 5 seconds should be enough
         public void TestTermination2()
         {
-            IAtomContainer mol = smiles.ParseSmiles("OC1CCC[C@](F)(CC1)Cl");
+            var mol = smiles.ParseSmiles("OC1CCC[C@](F)(CC1)Cl");
             var stereoElements = mol.StereoElements;
             var stereo = stereoElements.First();
             Assert.IsNotNull(stereo);
@@ -128,7 +128,7 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void TestTetraHalogenMethane()
         {
-            IAtomContainer molecule = smiles.ParseSmiles("FC(Br)(Cl)I");
+            var molecule = smiles.ParseSmiles("FC(Br)(Cl)I");
             LigancyFourChirality chirality = CIPTool.DefineLigancyFourChirality(molecule, 1, 0, 4, 2, 3,
                     TetrahedralStereo.AntiClockwise);
             Assert.AreEqual(CIPTool.CIPChirality.R, CIPTool.GetCIPChirality(chirality));
@@ -140,7 +140,7 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void TestCID42475007R()
         {
-            IAtomContainer mol = smiles.ParseSmiles("C[NH+](C)CCN(C1=NC2=C(S1)C=C(C=C2)Br)C(=O)[C@H]3COC4=CC=CC=C4O3");
+            var mol = smiles.ParseSmiles("C[NH+](C)CCN(C1=NC2=C(S1)C=C(C=C2)Br)C(=O)[C@H]3COC4=CC=CC=C4O3");
             var stereoElements = mol.StereoElements;
             var stereo = stereoElements.First();
             Assert.IsNotNull(stereo);
@@ -152,7 +152,7 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void TestCID42475007S()
         {
-            IAtomContainer mol = smiles.ParseSmiles("C[NH+](C)CCN(C1=NC2=C(S1)C=C(C=C2)Br)C(=O)[C@@H]3COC4=CC=CC=C4O3");
+            var mol = smiles.ParseSmiles("C[NH+](C)CCN(C1=NC2=C(S1)C=C(C=C2)Br)C(=O)[C@@H]3COC4=CC=CC=C4O3");
             var stereoElements = mol.StereoElements;
             var stereo = stereoElements.First();
             Assert.IsNotNull(stereo);
@@ -164,7 +164,7 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void RSulfinyl()
         {
-            IAtomContainer mol = smiles.ParseSmiles("CCC[S@@](C)=O");
+            var mol = smiles.ParseSmiles("CCC[S@@](C)=O");
             var stereoElements = mol.StereoElements;
             var stereo = stereoElements.First();
             Assert.IsNotNull(stereo);
@@ -176,7 +176,7 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void SSulfinyl()
         {
-            IAtomContainer mol = smiles.ParseSmiles("CCC[S@](C)=O");
+            var mol = smiles.ParseSmiles("CCC[S@](C)=O");
             var stereoElements = mol.StereoElements;
             var stereo = stereoElements.First();
             Assert.IsNotNull(stereo);

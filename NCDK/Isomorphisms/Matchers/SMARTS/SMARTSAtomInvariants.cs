@@ -55,6 +55,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// </remarks>
     // @author John May
     // @cdk.module smarts
+    [Obsolete]
     internal sealed class SMARTSAtomInvariants
     {
         /// <summary>Property key to index the class by.</summary>
@@ -246,7 +247,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
                     for (int i = 1; i < cycle.Length; i++)
                     {
                         var v = cycle[i];
-                        if (size < ringSize[v]) ringSize[v] = size;
+                        if (size < ringSize[v])
+                            ringSize[v] = size;
                         ringNumber[v]++;
                         bondMap[cycle[i], cycle[i - 1]].IsInRing = true;
                     }

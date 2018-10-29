@@ -235,7 +235,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                             if (plusMinus == 1) sign = 1;
 
                             var st = Strings.Tokenize(hoseCode, '(', ')', '/').GetEnumerator();
-                            StringBuilder hoseCodeBuffer = new StringBuilder();
+                            var hoseCodeBuffer = new StringBuilder();
                             int sum = exactSphere + sign * (i + 1);
                             for (int k = 0; k < sum; k++)
                             {
@@ -308,8 +308,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>List with string = HOSECode and string = energy</returns>
         private static List<string> ExtractInfo(string str)
         {
-            StringBuilder idEdited = new StringBuilder();
-            StringBuilder valEdited = new StringBuilder();
+            var idEdited = new StringBuilder();
+            var valEdited = new StringBuilder();
 
             int strlen = str.Length;
 

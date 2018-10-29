@@ -39,13 +39,14 @@ namespace NCDK.Isomorphisms.Matchers
 
         public override bool Matches(IAtom atom)
         {
-            return this.Symbol.Equals(atom.Symbol, StringComparison.Ordinal) && this.FormalCharge == atom.FormalCharge
-                    && this.Id.Equals(atom.Id, StringComparison.Ordinal);
+            return this.Symbol.Equals(atom.Symbol, StringComparison.Ordinal)
+                && this.FormalCharge == atom.FormalCharge
+                && this.Id.Equals(atom.Id, StringComparison.Ordinal);
         }
 
         public override string ToString()
         {
-            StringBuilder s = new StringBuilder();
+            var s = new StringBuilder();
             s.Append("SymbolAndChargeQueryAtom(");
             s.Append(this.GetHashCode() + ", ");
             s.Append(Id + ", ");

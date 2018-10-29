@@ -130,7 +130,7 @@ namespace NCDK.IO
 
                     try
                     {
-                        IAtomContainer molecule = sp.ParseSmiles(line);
+                        var molecule = sp.ParseSmiles(line);
                         molecule.SetProperty("SMIdbNAME", name);
                         som.Add(molecule);
                     }
@@ -147,7 +147,7 @@ namespace NCDK.IO
             }
             catch (Exception exception)
             {
-                Trace.TraceError("Error while reading SMILES line: ", exception.Message);
+                Trace.TraceError($"Error while reading SMILES line: {exception.Message}");
                 Debug.WriteLine(exception);
             }
             return som;

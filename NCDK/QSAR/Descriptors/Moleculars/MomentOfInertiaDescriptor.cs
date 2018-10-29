@@ -113,10 +113,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             if (!GeometryUtil.Has3DCoordinates(container))
                 return GetDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
 
-            IAtomContainer clone;
-            IsotopeFactory factory;
-            clone = (IAtomContainer)container.Clone();
-            factory = BODRIsotopeFactory.Instance;
+            var clone = (IAtomContainer)container.Clone();
+            var factory = BODRIsotopeFactory.Instance;
             factory.ConfigureAtoms(clone);
 
             ArrayResult<double> retval = new ArrayResult<double>(7);
@@ -124,7 +122,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double ccf = 1.000138;
             double eps = 1e-5;
 
-            double[][] imat = Arrays.CreateJagged<double>(3, 3);
+            var imat = Arrays.CreateJagged<double>(3, 3);
             var centerOfMass = GeometryUtil.Get3DCentreOfMass(clone).Value;
 
             double xdif;
@@ -135,7 +133,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double zsq;
             for (int i = 0; i < clone.Atoms.Count; i++)
             {
-                IAtom currentAtom = clone.Atoms[i];
+                var currentAtom = clone.Atoms[i];
 
                 var _mass = factory.GetMajorIsotope(currentAtom.Symbol).ExactMass;
                 double mass = _mass == null ? factory.GetNaturalMass(currentAtom) : _mass.Value;
@@ -165,13 +163,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             // diagonalize the MI tensor
             var tmp = Matrix<double>.Build.DenseOfColumnArrays(imat);
             var eigenDecomp = tmp.Evd();
-            double[] eval = eigenDecomp.EigenValues.Select(n => n.Real).ToArray();
+            var eval = eigenDecomp.EigenValues.Select(n => n.Real).ToArray();
 
             retval.Add(eval[2]);
             retval.Add(eval[1]);
             retval.Add(eval[0]);
 
-            double etmp = eval[0];
+            var etmp = eval[0];
             eval[0] = eval[2];
             eval[2] = etmp;
 
@@ -193,15 +191,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             // finally get the radius of gyration
             double pri;
-            IMolecularFormula formula = MolecularFormulaManipulator.GetMolecularFormula(clone);
+            var formula = MolecularFormulaManipulator.GetMolecularFormula(clone);
             if (Math.Abs(eval[2]) > eps)
                 pri = Math.Pow(eval[0] * eval[1] * eval[2], 1.0 / 3.0);
             else
                 pri = Math.Sqrt(eval[0] * ccf / MolecularFormulaManipulator.GetTotalExactMass(formula));
             retval.Add(Math.Sqrt(Math.PI * 2 * pri * ccf / MolecularFormulaManipulator.GetTotalExactMass(formula)));
 
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval,
-                    DescriptorNames);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval, DescriptorNames);
         }
 
         /// <inheritdoc/>

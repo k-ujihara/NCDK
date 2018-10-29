@@ -156,7 +156,7 @@ namespace NCDK.IO
         {
             bool doChop = false;
             int branchLevel = 0;
-            StringBuilder choppedString = new StringBuilder();
+            var choppedString = new StringBuilder();
             for (int i = 0; i < remainder.Length; i++)
             {
                 char currentChar = remainder[i];

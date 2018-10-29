@@ -23,15 +23,16 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Isomorphisms;
 
-namespace NCDK.Isomorphisms
+namespace NCDK.SMARTS
 {
     // @author John May
     // @cdk.module test-smarts
-     [TestClass()]
+    [TestClass()]
     public class VFSubstructureTest : SubstructureTest
     {
-        protected override Pattern Create(IAtomContainer container)
+        public override Pattern Create(IAtomContainer container)
         {
             return VentoFoggia.FindSubstructure(container);
         }

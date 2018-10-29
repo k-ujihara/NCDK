@@ -57,7 +57,7 @@ namespace NCDK.Fingerprints
 
             var fnzip = "NCDK.Data.CDD.circular_validation.zip";
             Trace.TraceInformation("Loading source content: " + fnzip);
-            using (Stream ins = ResourceLoader.GetAsStream(fnzip))
+            using (var ins = ResourceLoader.GetAsStream(fnzip))
             {
                 Validate(ins);
             }
@@ -88,8 +88,8 @@ namespace NCDK.Fingerprints
             MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(molfile));
             SmilesParser smipar = new SmilesParser(bldr);
 
-            IAtomContainer mol1 = smipar.ParseSmiles(smiles1);
-            IAtomContainer mol2 = smipar.ParseSmiles(smiles2);
+            var mol1 = smipar.ParseSmiles(smiles1);
+            var mol2 = smipar.ParseSmiles(smiles2);
             IAtomContainer mol3 = mdlr.Read(bldr.NewAtomContainer());
 
             var fpr = new CircularFingerprinter
@@ -346,7 +346,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void PartialCoordinatesDontCauseNPE()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, 0.000, 0.000));
             m.Atoms.Add(Atom("C", 0, 1.299, -0.750));
             m.Atoms.Add(Atom("H", 0, 0));

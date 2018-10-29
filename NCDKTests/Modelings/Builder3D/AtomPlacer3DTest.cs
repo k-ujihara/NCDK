@@ -123,7 +123,7 @@ namespace NCDK.Modelings.Builder3D
         public void TestFindHeavyAtomsInChain_IAtomContainer_IAtomContainer()
         {
             string filename = "NCDK.Data.MDL.allmol232.mol";
-            Stream ins = ResourceLoader.GetAsStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             // TODO: shk3-cleanuptests: best to use the STRICT IO mode here
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());

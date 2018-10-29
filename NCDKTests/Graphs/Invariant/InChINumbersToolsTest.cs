@@ -69,7 +69,7 @@ namespace NCDK.Graphs.Invariant
         public void TestGlycine()
         {
             SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer atomContainer = parser.ParseSmiles("C(C(=O)O)N");
+            var atomContainer = parser.ParseSmiles("C(C(=O)O)N");
             long[] numbers = InChINumbersTools.GetNumbers(atomContainer);
             Assert.AreEqual(5, numbers.Length);
             Assert.AreEqual(1, numbers[0]);
@@ -83,7 +83,7 @@ namespace NCDK.Graphs.Invariant
         public void TestGlycine_uSmiles()
         {
             SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer atomContainer = parser.ParseSmiles("C(C(=O)O)N");
+            var atomContainer = parser.ParseSmiles("C(C(=O)O)N");
             long[] numbers = InChINumbersTools.GetNumbers(atomContainer);
             Assert.AreEqual(5, numbers.Length);
             Assert.AreEqual(1, numbers[0]);
@@ -97,7 +97,7 @@ namespace NCDK.Graphs.Invariant
         public void FixedH()
         {
             SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer atomContainer = parser.ParseSmiles("N1C=NC2=CC=CC=C12");
+            var atomContainer = parser.ParseSmiles("N1C=NC2=CC=CC=C12");
             string auxInfo = InChINumbersTools.AuxInfo(atomContainer, InChIOption.FixedH);
             string expected = "AuxInfo=1/1/" + "N:6,7,5,8,2,4,9,3,1/" + "E:(1,2)(3,4)(6,7)(8,9)/" + "F:7,6,8,5,2,9,4,1,3/"
                     + "rA:9NCNCCCCCC/" + "rB:s1;d2;s3;d4;s5;d6;s7;s1s4d8;/" + "rC:;;;;;;;;;";

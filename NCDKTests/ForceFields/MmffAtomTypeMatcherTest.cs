@@ -45,7 +45,7 @@ namespace NCDK.ForceFields
         [ExpectedException(typeof(ArgumentException))]
         public void HydrogenCountMustBeDefined()
         {
-            IAtomContainer container = new AtomContainer();
+            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
             container.Atoms.Add(new Atom("C"));
             container.Atoms.Add(new Atom("H"));
             container.Atoms.Add(new Atom("H"));
@@ -63,7 +63,7 @@ namespace NCDK.ForceFields
         [ExpectedException(typeof(ArgumentException))]
         public void HydrogenCountMustBeExplicit()
         {
-            IAtomContainer container = new AtomContainer();
+            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
             container.Atoms.Add(new Atom("C"));
             container.Atoms[0].ImplicitHydrogenCount = 4;
             Instance.SymbolicTypes(container);
@@ -73,7 +73,7 @@ namespace NCDK.ForceFields
         [ExpectedException(typeof(ArgumentException))]
         public void AromaticCompoundsAreRejected()
         {
-            IAtomContainer container = new AtomContainer();
+            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
             container.Atoms.Add(new Atom("C"));
             container.Atoms[0].ImplicitHydrogenCount = 4;
             container.Atoms[0].IsAromatic = true;
@@ -88,7 +88,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void Bug3523240IsResolved()
         {
-            IAtomContainer container = new AtomContainer();
+            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
             container.Atoms.Add(Atom("H", 0));
             container.Atoms.Add(Atom("O", 0));
             container.Atoms.Add(Atom("C", 0));
@@ -206,7 +206,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void Bug3524734IsResolved()
         {
-            IAtomContainer container = new AtomContainer();
+            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
             container.Atoms.Add(Atom("H", 0));
             container.Atoms.Add(Atom("C", 0));
             container.Atoms.Add(Atom("H", 0));
@@ -240,7 +240,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void Hydroxyurea()
         {
-            IAtomContainer container = new AtomContainer();
+            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
             container.Atoms.Add(Atom("H", 0));
             container.Atoms.Add(Atom("O", 0));
             container.Atoms.Add(Atom("N", 0));
@@ -271,7 +271,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void MolecularHydrogenDoesNotBreakAssignment()
         {
-            IAtomContainer container = new AtomContainer();
+            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
             container.Atoms.Add(Atom("H", 0));
             container.Atoms.Add(Atom("H", 0));
             container.AddBond(container.Atoms[0], container.Atoms[1], BondOrder.Single);
@@ -288,7 +288,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void Methylamine()
         {
-            IAtomContainer container = new AtomContainer();
+            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
             container.Atoms.Add(Atom("H", 0));
             container.Atoms.Add(Atom("N", 0));
             container.Atoms.Add(Atom("H", 0));
@@ -314,7 +314,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void Thiophene()
         {
-            IAtomContainer container = new AtomContainer();
+            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
             container.Atoms.Add(Atom("H", 0));
             container.Atoms.Add(Atom("C", 0));
             container.Atoms.Add(Atom("C", 0));
@@ -345,7 +345,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void Furane()
         {
-            IAtomContainer container = new AtomContainer();
+            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
             container.Atoms.Add(Atom("H", 0));
             container.Atoms.Add(Atom("C", 0));
             container.Atoms.Add(Atom("C", 0));
@@ -372,7 +372,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void Methane()
         {
-            IAtomContainer container = new AtomContainer();
+            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
             container.Atoms.Add(Atom("C", 0));
             container.Atoms.Add(Atom("H", 0));
             container.Atoms.Add(Atom("H", 0));

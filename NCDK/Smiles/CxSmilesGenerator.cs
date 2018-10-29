@@ -44,7 +44,7 @@ namespace NCDK.Smiles
 
         private static string Encode_alias(string label)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             for (int i = 0; i < label.Length; i++)
             {
                 char c = label[i];
@@ -80,7 +80,7 @@ namespace NCDK.Smiles
 
             int[] invorder = Inverse(ordering);
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append(' ');
             sb.Append('|');
 

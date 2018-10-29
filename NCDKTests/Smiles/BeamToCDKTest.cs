@@ -36,7 +36,7 @@ namespace NCDK.Smiles
     [TestClass()]
     public class BeamToCDKTest
     {
-        private static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private static BeamToCDK g2c = new BeamToCDK(builder);
 
         [TestMethod()]
@@ -428,7 +428,7 @@ namespace NCDK.Smiles
         public void ErroneousLabels_tRNA()
         {
             IAtomContainer ac = Convert("[tRNA]CC");
-            Assert.AreEqual("*", ac.Atoms[0].Symbol);
+            Assert.AreEqual("R", ac.Atoms[0].Symbol);
             Assert.IsInstanceOfType(ac.Atoms[0], typeof(IPseudoAtom));
             Assert.AreEqual("tRNA", ((IPseudoAtom)ac.Atoms[0]).Label);
         }
@@ -439,7 +439,7 @@ namespace NCDK.Smiles
         public void ErroneousLabels_nested()
         {
             IAtomContainer ac = Convert("[now-[this]-is-mean]CC");
-            Assert.AreEqual("*", ac.Atoms[0].Symbol);
+            Assert.AreEqual("R", ac.Atoms[0].Symbol);
             Assert.IsInstanceOfType(ac.Atoms[0], typeof(IPseudoAtom));
 
             Assert.AreEqual("now-[this]-is-mean", ((IPseudoAtom)ac.Atoms[0]).Label);

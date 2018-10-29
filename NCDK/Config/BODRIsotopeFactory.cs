@@ -24,8 +24,10 @@
 
 using NCDK.Tools;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace NCDK.Config
 {
@@ -70,7 +72,7 @@ namespace NCDK.Config
                 int massNum = BitConverter.ToInt16(buffer, 0);
                 ins.Read(buffer, 0, 8);
                 Array.Reverse(buffer, 0, 8);
-                double exactMass = BitConverter.ToDouble(buffer, 0);
+                var exactMass = BitConverter.ToDouble(buffer, 0);
                 double natAbund;
                 if (ins.ReadByte() == 1)
                 {
@@ -86,7 +88,7 @@ namespace NCDK.Config
                 Add(isotope);
             }
         }
-
+        
         private static bool IsMajor(IIsotope atom)
         {
             var mass = atom.MassNumber;
@@ -131,24 +133,25 @@ namespace NCDK.Config
         /// <param name="formula">the formula</param>
         public static void ClearMajorIsotopes(IMolecularFormula formula)
         {
-            foreach (var _iso in formula.Isotopes)
+            var isotopesToRemove = new List<IIsotope>();
+            var isotopesToAdd = new List<Tuple<IIsotope, int>>();
+            foreach (var iso in formula.Isotopes.Where(n => IsMajor(n)))
             {
-                var iso = _iso;
-                if (IsMajor(iso))
-                {
-                    int count = formula.GetCount(iso);
-                    formula.Remove(iso);
-                    iso.MassNumber = null;
-                    // may be immutable
-                    if (iso.MassNumber != null)
-                    {
-                        iso = formula.Builder.NewIsotope(iso.Symbol);
-                    }
-                    iso.ExactMass = null;
-                    iso.NaturalAbundance = null;
-                    formula.Add(iso, count);
-                }
+                var count = formula.GetCount(iso);
+                isotopesToRemove.Add(iso);
+                iso.MassNumber = null;
+                // may be immutable
+                var iso_ = iso;
+                if (iso_.MassNumber != null)
+                    iso_ = formula.Builder.NewIsotope(iso_.Symbol);
+                iso_.ExactMass = null;
+                iso_.NaturalAbundance = null;
+                isotopesToAdd.Add(new Tuple<IIsotope, int>(iso_, count));
             }
+            foreach (var isotope in isotopesToRemove)
+                formula.Remove(isotope);
+            foreach (var t in isotopesToAdd)
+                formula.Add(t.Item1, t.Item2);
         }
     }
 }

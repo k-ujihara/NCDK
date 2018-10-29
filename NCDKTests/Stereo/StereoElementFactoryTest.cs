@@ -22,14 +22,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-using NCDK.Common.Base;
-using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
+using NCDK.Common.Base;
 using NCDK.IO;
-using System.Linq;
+using NCDK.Numerics;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.Stereo
 {
@@ -149,7 +150,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void E_but2ene()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -2.19d, 1.64d));
             m.Atoms.Add(Atom("C", 1, -1.36d, 1.64d));
             m.Atoms.Add(Atom("C", 3, -2.60d, 0.92d));
@@ -169,7 +170,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Z_but2ene()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, -2.46d, 1.99d));
             m.Atoms.Add(Atom("C", 1, -1.74d, 0.68d));
             m.Atoms.Add(Atom("C", 1, -0.24d, 0.65d));
@@ -185,10 +186,128 @@ namespace NCDK.Stereo
             Assert.AreEqual(DoubleBondConformation.Together, element.Stereo);
         }
 
+        /// <summary>
+        /// (E)-hexa-2,3,4-triene
+        /// </summary>
+        // @cdk.smiles C/C=C=C=C/C
         [TestMethod()]
-        public void Unspec_but2ene_byCoordinates()
+        public void E_hexa234triene()
         {
-            IAtomContainer m = new AtomContainer();
+            IAtomContainer mol = new AtomContainer();
+            mol.Atoms.Add(Atom("C", 1, 2.48d, 0.00d));
+            mol.Atoms.Add(Atom("C", 0, 1.65d, 0.00d));
+            mol.Atoms.Add(Atom("C", 0, 0.83d, 0.00d));
+            mol.Atoms.Add(Atom("C", 1, 0.00d, 0.00d));
+            mol.Atoms.Add(Atom("C", 3, -0.41d, -0.71d));
+            mol.Atoms.Add(Atom("C", 3, 2.89d, 0.71d));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Double);
+            mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Double);
+            mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
+            mol.AddBond(mol.Atoms[0], mol.Atoms[5], BondOrder.Single);
+            StereoElementFactory factory = StereoElementFactory.Using2DCoordinates(mol);
+            var dbs = new List<IBond>();
+            dbs.Add(mol.Bonds[0]);
+            dbs.Add(mol.Bonds[1]);
+            dbs.Add(mol.Bonds[2]);
+            ExtendedCisTrans element = factory.CreateExtendedCisTrans(dbs, Stereocenters.Of(mol));
+            Assert.IsNotNull(element);
+            Assert.AreEqual(StereoConfigurations.Opposite, element.Configure);
+        }
+
+        /// <summary>
+        /// (Z)-hexa-2,3,4-triene
+        /// </summary>
+        // @cdk.smiles C/C=C=C=C\C
+        [TestMethod()]
+        public void z_hexa234triene()
+        {
+            IAtomContainer mol = new AtomContainer();
+            mol.Atoms.Add(Atom("C", 1, 2.48d, 0.00d));
+            mol.Atoms.Add(Atom("C", 0, 1.65d, 0.00d));
+            mol.Atoms.Add(Atom("C", 0, 0.83d, 0.00d));
+            mol.Atoms.Add(Atom("C", 1, 0.00d, 0.00d));
+            mol.Atoms.Add(Atom("C", 3, -0.41d, -0.71d));
+            mol.Atoms.Add(Atom("C", 3, 2.92d, -0.69d));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Double);
+            mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Double);
+            mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
+            mol.AddBond(mol.Atoms[0], mol.Atoms[5], BondOrder.Single);
+            StereoElementFactory factory = StereoElementFactory.Using2DCoordinates(mol);
+            var dbs = new List<IBond>();
+            dbs.Add(mol.Bonds[0]);
+            dbs.Add(mol.Bonds[1]);
+            dbs.Add(mol.Bonds[2]);
+            ExtendedCisTrans element = factory.CreateExtendedCisTrans(dbs, Stereocenters.Of(mol));
+            Assert.IsNotNull(element);
+            Assert.AreEqual(StereoConfigurations.Together, element.Configure);
+        }
+
+        /// <summary>
+        /// (E)-hexa-2,3,4-triene
+        /// </summary>
+        // @cdk.smiles C/C=C=C=C/C
+        [TestMethod()]
+        public void E_hexa234triene_3D()
+        {
+            IAtomContainer mol = new AtomContainer();
+            mol.Atoms.Add(Atom("C", 1, 0.29d, 0.01d, 0.02d));
+            mol.Atoms.Add(Atom("C", 0, -0.56d, -0.90d, 0.25d));
+            mol.Atoms.Add(Atom("C", 0, -1.37d, -1.75d, 0.46d));
+            mol.Atoms.Add(Atom("C", 1, -2.24d, -2.65d, 0.67d));
+            mol.Atoms.Add(Atom("C", 3, -3.66d, -2.36d, 0.68d));
+            mol.Atoms.Add(Atom("C", 3, 1.69d, -0.32d, -0.11d));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Double);
+            mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Double);
+            mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
+            mol.AddBond(mol.Atoms[0], mol.Atoms[5], BondOrder.Single);
+            StereoElementFactory factory = StereoElementFactory.Using3DCoordinates(mol);
+            var dbs = new List<IBond>();
+            dbs.Add(mol.Bonds[0]);
+            dbs.Add(mol.Bonds[1]);
+            dbs.Add(mol.Bonds[2]);
+            ExtendedCisTrans element = factory.CreateExtendedCisTrans(dbs, Stereocenters.Of(mol));
+            Assert.IsNotNull(element);
+            Assert.AreEqual(StereoConfigurations.Opposite, element.Configure);
+        }
+
+        /// <summary>
+        /// (Z)-hexa-2,3,4-triene
+        /// </summary>
+        // @cdk.smiles C/C=C=C=C\C
+        [TestMethod()]
+        public void Z_hexa234triene_3D()
+        {
+            IAtomContainer mol = new AtomContainer();
+            mol.Atoms.Add(Atom("C", 1, -0.09d, -0.45d, -1.07d));
+            mol.Atoms.Add(Atom("C", 0, -0.67d, -1.04d, -0.11d));
+            mol.Atoms.Add(Atom("C", 0, -1.23d, -1.59d, 0.79d));
+            mol.Atoms.Add(Atom("C", 1, -1.84d, -2.17d, 1.74d));
+            mol.Atoms.Add(Atom("C", 3, -3.13d, -1.73d, 2.21d));
+            mol.Atoms.Add(Atom("C", 3, -0.70d, 0.69d, -1.73d));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Double);
+            mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Double);
+            mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
+            mol.AddBond(mol.Atoms[0], mol.Atoms[5], BondOrder.Single);
+            StereoElementFactory factory = StereoElementFactory.Using3DCoordinates(mol);
+            var dbs = new List<IBond>
+            {
+                mol.Bonds[0],
+                mol.Bonds[1],
+                mol.Bonds[2]
+            };
+            ExtendedCisTrans element = factory.CreateExtendedCisTrans(dbs, Stereocenters.Of(mol));
+            Assert.IsNotNull(element);
+            Assert.AreEqual(StereoConfigurations.Together, element.Configure);
+        }
+
+        [TestMethod()]
+        public void UnspecBut2eneByCoordinates()
+        {
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -1.37d, 1.64d));
             m.Atoms.Add(Atom("C", 1, -2.19d, 1.63d));
             m.Atoms.Add(Atom("C", 3, -2.59d, 0.90d));
@@ -206,7 +325,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Unspec_but2ene_wavyBond()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -1.27d, 1.48d));
             m.Atoms.Add(Atom("C", 1, -2.10d, 1.46d));
             m.Atoms.Add(Atom("C", 3, -2.50d, 0.74d));
@@ -224,7 +343,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Unspec_but2ene_crossBond()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -1.27d, 1.48d));
             m.Atoms.Add(Atom("C", 1, -2.10d, 1.46d));
             m.Atoms.Add(Atom("C", 3, -2.50d, 0.74d));
@@ -242,7 +361,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void R_butan2ol()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("O", 1, -0.46d, 1.98d));
             m.Atoms.Add(Atom("C", 1, -1.28d, 1.96d));
             m.Atoms.Add(Atom("C", 2, -1.71d, 2.67d));
@@ -261,7 +380,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void S_butan2ol()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("O", 1, -0.46d, 1.98d));
             m.Atoms.Add(Atom("C", 1, -1.28d, 1.96d));
             m.Atoms.Add(Atom("C", 2, -1.71d, 2.67d));
@@ -280,7 +399,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void R_butan2ol_3d()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, 0.56d, 0.05d, 0.71d));
             m.Atoms.Add(Atom("C", 2, -0.53d, 0.51d, -0.30d));
             m.Atoms.Add(Atom("C", 3, 1.81d, -0.53d, 0.02d));
@@ -299,7 +418,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void S_butan2ol_3d()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -0.17d, -0.12d, -0.89d));
             m.Atoms.Add(Atom("C", 2, 1.12d, -0.91d, -0.51d));
             m.Atoms.Add(Atom("C", 3, -0.10d, 0.46d, -2.32d));
@@ -318,7 +437,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void R_butan2ol_3d_expH()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, -0.07d, -0.14d, 0.50d));
             m.Atoms.Add(Atom("C", 2, -0.05d, -1.20d, -0.65d));
             m.Atoms.Add(Atom("C", 3, 0.98d, -0.46d, 1.60d));
@@ -339,7 +458,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void S_butan2ol_3d_expH()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, -0.17d, -0.12d, -0.89d));
             m.Atoms.Add(Atom("C", 2, 1.12d, -0.91d, -0.51d));
             m.Atoms.Add(Atom("C", 3, -0.10d, 0.46d, -2.32d));
@@ -360,7 +479,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Unspec_butan2ol()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("O", 1, -0.46d, 1.98d));
             m.Atoms.Add(Atom("C", 1, -1.28d, 1.96d));
             m.Atoms.Add(Atom("C", 2, -1.71d, 2.67d));
@@ -380,7 +499,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void R_methanesulfinylethane()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("S", 0, 0.01d, 1.50d));
             m.Atoms.Add(Atom("C", 3, 0.03d, 0.00d));
             m.Atoms.Add(Atom("C", 2, -1.30d, 2.23d));
@@ -400,7 +519,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void S_methanesulfinylethane()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("S", 0, 0.01d, 1.50d));
             m.Atoms.Add(Atom("C", 3, 0.03d, 0.00d));
             m.Atoms.Add(Atom("C", 2, -1.30d, 2.23d));
@@ -419,7 +538,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void E_but2ene_3d()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -0.19d, 0.09d, -0.27d));
             m.Atoms.Add(Atom("C", 1, 0.22d, -1.15d, 0.05d));
             m.Atoms.Add(Atom("C", 3, 0.21d, 0.75d, -1.49d));
@@ -438,7 +557,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Z_but2ene_3d()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, 0.05d, -1.28d, 0.13d));
             m.Atoms.Add(Atom("C", 1, -0.72d, -0.58d, -0.72d));
             m.Atoms.Add(Atom("C", 3, 1.11d, -0.74d, 0.95d));
@@ -457,7 +576,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Inverse_style_Downbond()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("O", 1, -0.46d, 1.98d));
             m.Atoms.Add(Atom("C", 1, -1.28d, 1.96d));
             m.Atoms.Add(Atom("C", 2, -1.71d, 2.67d));
@@ -479,7 +598,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Inverse_style_Downbond_ambiguous()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("O", 1, -0.46d, 1.98d));
             m.Atoms.Add(Atom("C", 1, -1.28d, 1.96d));
             m.Atoms.Add(Atom("C", 1, -1.71d, 2.67d));
@@ -526,7 +645,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void CreateExtendedTetrahedralFrom2DCoordinates_cw()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, -1.56d, 0.78d));
             m.Atoms.Add(Atom("C", 0, -1.13d, 1.49d));
             m.Atoms.Add(Atom("C", 0, -0.31d, 1.47d));
@@ -551,7 +670,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void CreateExtendedTetrahedralFrom2DCoordinates_ccw()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, -1.56d, 0.78d));
             m.Atoms.Add(Atom("C", 0, -1.13d, 1.49d));
             m.Atoms.Add(Atom("C", 0, -0.31d, 1.47d));
@@ -576,7 +695,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void CreateExtendedTetrahedralFrom2DCoordinatesImplicitHydrogens_cw()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, -1.56d, 0.78d));
             m.Atoms.Add(Atom("C", 1, -1.13d, 1.49d));
             m.Atoms.Add(Atom("C", 0, -0.31d, 1.47d));
@@ -597,7 +716,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void CreateExtendedTetrahedralFrom2DCoordinatesImplicitHydrogens_ccw()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, -1.56d, 0.78d));
             m.Atoms.Add(Atom("C", 1, -1.13d, 1.49d));
             m.Atoms.Add(Atom("C", 0, -0.31d, 1.47d));
@@ -618,7 +737,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void CreateExtendedTetrahedralFrom2DCoordinatesNoNonplanarBonds()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, -1.56d, 0.78d));
             m.Atoms.Add(Atom("C", 0, -1.13d, 1.49d));
             m.Atoms.Add(Atom("C", 0, -0.31d, 1.47d));
@@ -641,7 +760,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void CreateExtendedTetrahedralFrom3DCoordinates_cw()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, 0.1925, -2.7911, 1.8739));
             m.Atoms.Add(Atom("C", 0, -0.4383, -2.0366, 0.8166));
             m.Atoms.Add(Atom("C", 0, 0.2349, -1.2464, 0.0943));
@@ -668,7 +787,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void CreateExtendedTetrahedralFrom3DCoordinates_ccw()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, -1.4096, -2.1383, 0.6392));
             m.Atoms.Add(Atom("C", 0, -0.4383, -2.0366, 0.8166));
             m.Atoms.Add(Atom("C", 0, 0.2349, -1.2464, 0.0943));
@@ -695,7 +814,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void CreateExtendedTetrahedral()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, -1.56d, 0.78d));
             m.Atoms.Add(Atom("C", 1, -1.13d, 1.49d));
             m.Atoms.Add(Atom("C", 0, -0.31d, 1.47d));
@@ -713,7 +832,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void DoNotCreateNonStereogenicExtendedTetrahedral()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, -1.56d, 0.78d));
             m.Atoms.Add(Atom("C", 1, -1.13d, 1.49d));
             m.Atoms.Add(Atom("C", 0, -0.31d, 1.47d));
@@ -737,7 +856,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void DifferentBondLengthsDoNotAffectWinding()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("O", 1, 14.50d, -8.72d));
             m.Atoms.Add(Atom("N", 2, 14.50d, -11.15d));
             m.Atoms.Add(Atom("C", 0, 15.28d, -7.81d));
@@ -765,7 +884,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Always2DTetrahedralElements()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, 0.34d, 2.28d));
             m.Atoms.Add(Atom("O", 1, 1.17d, 2.28d));
             m.Atoms.Add(Atom("C", 1, -0.07d, 2.99d));
@@ -794,7 +913,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void BadlyOptimizedAllene()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -4.02, 3.96, -1.09));
             m.Atoms.Add(Atom("C", 0, -4.96, 3.82, 0.13));
             m.Atoms.Add(Atom("C", 3, -3.70, 5.35, -1.67));
@@ -811,7 +930,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void OnlyCreateStereoForConsitionalDifferencesIn3D()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -1.00d, -0.25d, 1.22d));
             m.Atoms.Add(Atom("O", 1, -1.82d, 0.20d, 2.30d));
             m.Atoms.Add(Atom("C", 1, -0.04d, -1.38d, 1.71d));
@@ -837,7 +956,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void DontCreateStereoForNonStereogenicIn3D()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 0.00d, 0.00d, 0.00d));
             m.Atoms.Add(Atom("H", 0, -0.36d, -0.51d, 0.89d));
             m.Atoms.Add(Atom("H", 0, 1.09d, 0.00d, 0.00d));
@@ -861,7 +980,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void OnlyInterpretFischerProjectionsWhenAsked()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 0.80d, 1.24d));
             m.Atoms.Add(Atom("C", 0, 0.80d, 0.42d));
             m.Atoms.Add(Atom("O", 1, 0.09d, 1.66d));
@@ -902,7 +1021,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void OnlyInterpretHaworthProjectionsWhenAsked()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, 4.16d, 1.66d));
             m.Atoms.Add(Atom("C", 1, 3.75d, 0.94d));
             m.Atoms.Add(Atom("C", 1, 4.16d, 0.23d));
@@ -952,7 +1071,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void OnlyInterpretChairProjectionsWhenAsked()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -0.77d, 10.34d));
             m.Atoms.Add(Atom("C", 1, 0.03d, 10.13d));
             m.Atoms.Add(Atom("O", 0, 0.83d, 10.34d));
@@ -1001,7 +1120,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void KeepNonStereoConfiguration()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 0.07, 1.19));
             m.Atoms.Add(Atom("H", 0, 0.56, 2.02));
             m.Atoms.Add(Atom("C", 3, -0.29, 2.04));
@@ -1023,7 +1142,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void KeepNonStereoConfigurationPhosphorusTautomer()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("P", 0, 0.07, 1.19));
             m.Atoms.Add(Atom("O", 0, 0.56, 2.02));
             m.Atoms.Add(Atom("O", 1, -0.29, 2.04));
@@ -1045,7 +1164,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void DoNotkeepNonStereoConfigurationPhosphorusTautomer()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("P", 0, 0.07, 1.19));
             m.Atoms.Add(Atom("O", 0, 0.56, 2.02));
             m.Atoms.Add(Atom("O", 1, -0.29, 2.04));
@@ -1070,7 +1189,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void DoNotKeepNonStereoConfiguration()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 0.07, 1.19));
             m.Atoms.Add(Atom("H", 0, 0.56, 2.02));
             m.Atoms.Add(Atom("C", 3, -0.29, 2.04));
@@ -1095,7 +1214,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void KeepNonStereoConfigurationH2()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 0.07, 1.19));
             m.Atoms.Add(Atom("H", 0, 0.56, 2.02));
             m.Atoms.Add(Atom("H", 0, -0.29, 2.04));
@@ -1126,7 +1245,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Binol2D()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, -0.83, -0.01));
             m.Atoms.Add(Atom("C", 0, -1.55, -0.42));
             m.Atoms.Add(Atom("C", 1, -1.55, -1.25));
@@ -1174,7 +1293,7 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[18], m.Atoms[21], BondOrder.Double);
             m.AddBond(m.Atoms[4], m.Atoms[19], BondOrder.Single);
             m.AddBond(m.Atoms[18], m.Atoms[5], BondOrder.Single);
-            var stereo =StereoElementFactory.Using2DCoordinates(m).CreateAll().ToList();
+            var stereo = StereoElementFactory.Using2DCoordinates(m).CreateAll().ToList();
             Assert.AreEqual(0, stereo.Count);
             m.Bonds[12].Stereo = BondStereo.Up;
             var stereoUp = StereoElementFactory.Using2DCoordinates(m).CreateAll().ToList();
@@ -1212,7 +1331,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Atropisomer1()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, -7.53, -2.12));
             m.Atoms.Add(Atom("C", 1, -8.24, -2.53));
             m.Atoms.Add(Atom("C", 1, -8.24, -3.36));
@@ -1252,7 +1371,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void NonAtropisomer2()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, -7.53, -2.12));
             m.Atoms.Add(Atom("C", 1, -8.24, -2.53));
             m.Atoms.Add(Atom("C", 1, -8.24, -3.36));
@@ -1290,7 +1409,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void NonAtropisomer3()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, -7.53, -2.12));
             m.Atoms.Add(Atom("C", 1, -8.24, -2.53));
             m.Atoms.Add(Atom("C", 1, -8.24, -3.36));
@@ -1328,7 +1447,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void NonAtropisomerExplHydrogens()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("H", 0, -1.43, 0.83));
             m.Atoms.Add(Atom("C", 0, -0.71, 1.24));
             m.Atoms.Add(Atom("C", 1, -0.71, 2.06));
@@ -1384,7 +1503,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Atropisomer3D()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -4.95, 1.27));
             m.Atoms.Add(Atom("C", 1, -4.26, 1.73));
             m.Atoms.Add(Atom("C", 0, -2.85, 1.74));

@@ -45,7 +45,7 @@ namespace NCDK.SMSD.Labelling
 
         public static string ToString(IAtomContainer atomContainer)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             foreach (var atom in atomContainer.Atoms)
             {
                 sb.Append(atom.Symbol);

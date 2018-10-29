@@ -138,7 +138,7 @@ namespace NCDK.Templates
                 {
                     if (exception is CDKException | exception is IOException)
                     {
-                        Trace.TraceError("Failed reading file: ", exception.Message);
+                        Trace.TraceError($"Failed reading file: {exception.Message}");
                         Debug.WriteLine(exception);
                     }
                     else

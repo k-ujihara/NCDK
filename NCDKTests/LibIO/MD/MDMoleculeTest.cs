@@ -229,7 +229,7 @@ namespace NCDK.LibIO.MD
                 if (!(exception is CDKException || exception is IOException))
                     throw;
                 {
-                    Trace.TraceError("Error while creating an CML2 file: ", exception.Message);
+                    Trace.TraceError($"Error while creating an CML2 file: {exception.Message}");
                     Debug.WriteLine(exception);
                     Assert.Fail(exception.Message);
                 }

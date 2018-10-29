@@ -22,6 +22,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace NCDK.Fingerprints
 {
@@ -32,10 +33,17 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestGetFunctionalGroupSubstructureSet()
         {
-            string[] smarts = null;
-            smarts = StandardSubstructureSets.GetFunctionalGroupSMARTS();
+            var smarts = StandardSubstructureSets.GetFunctionalGroupSMARTS();
             Assert.IsNotNull(smarts);
-            Assert.AreEqual(307, smarts.Length);
+            Assert.AreEqual(307, smarts.Count());
+        }
+
+        [TestMethod()]
+        public void TestGetCountableMACCSSMARTSSubstructureSet()
+        {
+            var smarts = StandardSubstructureSets.GetCountableMACCSSMARTS();
+            Assert.IsNotNull(smarts);
+            Assert.AreEqual(142, smarts.Count()); // currently fragment pattern is ignored
         }
     }
 }

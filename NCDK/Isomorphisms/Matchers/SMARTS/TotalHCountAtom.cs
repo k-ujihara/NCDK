@@ -19,6 +19,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
+
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
@@ -27,7 +29,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// </summary>
     // @cdk.module  smarts
     // @cdk.keyword SMARTS
-    // @cdk.githash
+    [Obsolete]
     public sealed class TotalHCountAtom : SMARTSAtom
     {
         /// <summary>The total hydrogen count to match.</summary>

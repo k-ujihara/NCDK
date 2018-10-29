@@ -41,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestWeightedPathDescriptor()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             IAtomContainer mol = null;
             IDescriptorValue value = null;
             ArrayResult<double> result = null;

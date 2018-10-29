@@ -17,19 +17,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Text;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// This matches a bond with a certain bond order.
-    ///
+    /// </summary>
+    /// <remarks>
     /// Daylight spec indicates that if match a single bond
     /// using '-', it should be an aliphatic single bond
-    /// </summary>
+    /// </remarks>
     // @cdk.module  smarts
-    // @cdk.githash
     // @cdk.keyword SMARTS
+    [Obsolete]
     public class OrderQueryBond : SMARTSBond
     {
         /// <summary>
@@ -54,7 +56,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         public override string ToString()
         {
-            StringBuilder s = new StringBuilder();
+            var s = new StringBuilder();
             s.Append("OrderQueryBond(");
             s.Append(this.GetHashCode() + ", ");
             s.Append("#O:" + Order);

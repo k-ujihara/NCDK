@@ -14,8 +14,7 @@ namespace NCDK.IO
             {
                 IAtomContainer molecule = null;
                 #region 
-                using (var srm = new FileStream("output.mol", FileMode.Create))
-                using (MDLRXNWriter writer = new MDLRXNWriter(srm))
+                using (var writer = new MDLRXNWriter(new FileStream("output.mol", FileMode.Create)))
                 {
                     writer.Write(molecule);
                 }

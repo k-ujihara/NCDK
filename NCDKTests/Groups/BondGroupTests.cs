@@ -35,9 +35,8 @@ namespace NCDK.Groups
 
         public static IAtomContainer GetMol(string smiles)
         {
-            var parser = new SmilesParser(ChemObjectBuilder.Instance);
-            parser.Kekulise(false);
-            return parser.ParseSmiles(smiles);
+            var sp = new SmilesParser(ChemObjectBuilder.Instance, false);
+            return sp.ParseSmiles(smiles);
         }
 
         public static void Test(IAtomContainer mol, int expected)

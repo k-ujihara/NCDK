@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
- *                    John May <jwmay@users.sf.net>
+ *               2018 John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -19,11 +19,12 @@
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 using NCDK.Graphs;
 using System;
+using System.Linq;
 
 namespace NCDK.Isomorphisms
 {
@@ -37,12 +38,12 @@ namespace NCDK.Isomorphisms
     /// of '0' indicates there are no grouping restrictions.
     /// </summary>
     /// <example>
-    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.ComponentGrouping_Example.cs"]/*' />
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.ComponentFilter_Example.cs"]/*' />
     /// </example>
     /// <seealso cref="Pattern"/>
     // @author John May
     // @cdk.module isomorphism
-    public sealed class ComponentGrouping
+    public sealed class ComponentFilter
     {
         /// <summary>
         /// Key indicates where the grouping should be store in the query
@@ -63,35 +64,47 @@ namespace NCDK.Isomorphisms
         /// </summary>
         /// <param name="query">query structure</param>
         /// <param name="target">target structure</param>
-        public ComponentGrouping(IAtomContainer query, IAtomContainer target)
-            : this(query.GetProperty<int[]>(Key),
-             query.GetProperty<int[]>(Key) != null ? DetermineComponents(target) : (int[])null)
+        public ComponentFilter(IAtomContainer query, IAtomContainer target)
+            : this(query.GetProperty<int[]>(Key) ?? DetermineComponents(query, false),
+                   DetermineComponents(target, true))
         { }
 
-        private static int[] DetermineComponents(IAtomContainer target)
+        private static int[] DetermineComponents(IAtomContainer target, bool auto)
         {
             int[] components = null;
             // no atoms -> no components
             if (target.IsEmpty())
-                components = Array.Empty<int>();
+                components = new int[0];
             // defined by reaction grouping
-            if (components == null && target.Atoms[0].GetProperty<int?>(CDKPropertyName.ReactionGroup) != null)
+            if (components == null && target.Atoms[0].GetProperty<int?>(CDKPropertyName.ReactionGroup) !=null)
             {
-                components = new int[target.Atoms.Count];
+                int max = 0;
+                components = new int[target.Atoms.Count + 1];
                 for (int i = 0; i < target.Atoms.Count; i++)
                 {
-                    int? grp = target.Atoms[i].GetProperty<int?>(CDKPropertyName.ReactionGroup);
+                    var grp = target.Atoms[i].GetProperty<int?>(CDKPropertyName.ReactionGroup);
                     if (grp == null)
-                    {
-                        components = null;
-                        break;
-                    }
+                        grp = 0;
                     components[i] = grp.Value;
+                    if (grp > max)
+                        max = grp.Value;
                 }
+                components[target.Atoms.Count] = max;
             }
             // calculate from connection table
-            if (components == null)
-                components = new ConnectedComponents(GraphUtil.ToAdjList(target)).Components();
+            if (components == null && auto)
+            {
+                int max = 0;
+                components = new int[target.Atoms.Count + 1];
+                int i = 0;
+                foreach (int grp in new ConnectedComponents(GraphUtil.ToAdjList(target)).GetComponents())
+                {
+                    components[i++] = grp;
+                    if (grp > max)
+                        max = grp;
+                }
+                components[target.Atoms.Count] = max;
+            }
             return components;
         }
 
@@ -101,7 +114,7 @@ namespace NCDK.Isomorphisms
         /// </summary>
         /// <param name="grouping">query grouping</param>
         /// <param name="targetComponents">connected component of the target</param>
-        public ComponentGrouping(int[] grouping, int[] targetComponents)
+        public ComponentFilter(int[] grouping, int[] targetComponents)
         {
             this.queryComponents = grouping;
             this.targetComponents = targetComponents;

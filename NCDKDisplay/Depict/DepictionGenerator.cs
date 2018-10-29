@@ -655,8 +655,7 @@ namespace NCDK.Depict
         {
             if (!GeometryUtil.Has2DCoordinates(rxn))
             {
-                StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-                sdg.SetAlignMappedReaction(alignMappedReactions);
+                StructureDiagramGenerator sdg = new StructureDiagramGenerator { AlignMappedReaction = alignMappedReactions };
                 sdg.GenerateCoordinates(rxn);
             }
         }

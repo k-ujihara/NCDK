@@ -16,6 +16,8 @@
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
 
+using System;
+
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
@@ -28,13 +30,14 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     // @cdk.module smarts
     // @cdk.keyword SMARTS
     // @cdk.githash
+    [Obsolete]
     public class RingMembershipAtom : SMARTSAtom
     {
         /// <summary>
         /// Number of rings to which this atom belongs, if &lt; 0 check any ring
         /// membership.
         /// </summary>
-        private int ringNumber;
+        private readonly int ringNumber;
 
         /// <summary>
         /// Ring membership query atom. Check if the an atom belongs to <i>num</i> of

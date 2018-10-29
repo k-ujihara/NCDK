@@ -92,6 +92,7 @@ namespace NCDK.Isomorphisms
     // @cdk.require java1.4+
     // @cdk.module  standard
     // @cdk.githash
+    [Obsolete("Use the Pattern APIs from the " + nameof(Isomorphisms) + " namespace")]
     public class UniversalIsomorphismTester
     {
         private enum IdType

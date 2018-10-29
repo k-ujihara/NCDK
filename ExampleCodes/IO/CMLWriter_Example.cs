@@ -9,8 +9,7 @@ namespace NCDK.IO
             {
                 IAtomContainer molecule = null;
                 #region 
-                using (var output = new FileStream("molecule.cml", FileMode.Create))
-                using (CMLWriter cmlwriter = new CMLWriter(output))
+                using (var cmlwriter = new CMLWriter(new FileStream("molecule.cml", FileMode.Create)))
                 {
                     cmlwriter.Write(molecule);
                 }

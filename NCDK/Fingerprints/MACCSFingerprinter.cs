@@ -24,8 +24,7 @@
 using NCDK.Common.Primitives;
 using NCDK.Graphs;
 using NCDK.Isomorphisms;
-using NCDK.Isomorphisms.Matchers.SMARTS;
-using NCDK.Smiles.SMARTS.Parser;
+using NCDK.SMARTS;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -98,7 +97,7 @@ namespace NCDK.Fingerprints
             var fp = new BitArray(keys.Count);
 
             // init SMARTS invariants (connectivity, degree, etc)
-            SmartsMatchers.Prepare(container, false);
+            SmartsPattern.Prepare(container);
 
             int numAtoms = container.Atoms.Count;
 
@@ -329,8 +328,9 @@ namespace NCDK.Fingerprints
         /// <returns>the pattern to match</returns>
         private static Pattern CreatePattern(string smarts, IChemObjectBuilder builder)
         {
-            if (string.Equals(smarts, "[!0]", StringComparison.Ordinal)) return null; // FIXME can't be parsed by our SMARTS Grammar ATM
-            return VentoFoggia.FindSubstructure(SMARTSParser.Parse(smarts, builder));
+            var ptrn = SmartsPattern.Create(smarts, builder);
+            ptrn.SetPrepare(false); // avoid redoing aromaticity etc
+            return ptrn;
         }
     }
 }

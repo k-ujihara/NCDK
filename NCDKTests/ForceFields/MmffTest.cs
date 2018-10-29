@@ -346,7 +346,7 @@ namespace NCDK.ForceFields
 
         private IAtomContainer LoadSmi(string smi)
         {
-            IAtomContainer mol = smipar.ParseSmiles(smi);
+            var mol = smipar.ParseSmiles(smi);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
             return mol;
         }

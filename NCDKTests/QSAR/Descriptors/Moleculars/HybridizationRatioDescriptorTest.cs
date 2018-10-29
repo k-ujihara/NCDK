@@ -39,24 +39,24 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestHybRatioDescriptor1()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("CCC");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("CCC");
             Assert.AreEqual(1.0, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
         }
 
         [TestMethod()]
         public void TestHybRatioDescriptor2()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("c1ccccc1");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("c1ccccc1");
             Assert.AreEqual(0.0, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
         }
 
         [TestMethod()]
         public void TestHybRatioDescriptor3()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("[H]C#N");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("[H]C#N");
             Assert.AreEqual(double.NaN, ((Result<double>)Descriptor.Calculate(mol).Value).Value);
         }
     }

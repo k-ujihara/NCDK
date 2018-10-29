@@ -18,8 +18,7 @@ namespace NCDK.Tools
                 #endregion
             }
             #region SetSingleOrDoubleFlags
-            SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
-            parser.IsPreservingAromaticity = true;
+            SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance, false);
 
             IAtomContainer biphenyl = parser.ParseSmiles("c1cccc(c1)c1ccccc1");
 

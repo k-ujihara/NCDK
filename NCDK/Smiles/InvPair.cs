@@ -100,7 +100,7 @@ namespace NCDK.Smiles
         /// <inheritdoc/>
         public override string ToString()
         {
-            StringBuilder buff = new StringBuilder();
+            var buff = new StringBuilder();
             buff.Append(Curr);
             buff.Append('\t');
             return buff.ToString();

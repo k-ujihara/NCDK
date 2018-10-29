@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Silent;
 using System.Linq;
@@ -34,14 +35,14 @@ namespace NCDK.QSAR
         [TestMethod()]
         public void TestConstructor()
         {
-            DescriptorEngine engine = DescriptorEngine.Create<IMolecularDescriptor>(ChemObjectBuilder.Instance);
+            var engine = DescriptorEngine.Create<IMolecularDescriptor>(ChemObjectBuilder.Instance);
             Assert.IsNotNull(engine);
         }
 
         [TestMethod()]
         public void TestLoadingOfMolecularDescriptors()
         {
-            DescriptorEngine engine = DescriptorEngine.Create<IMolecularDescriptor>(ChemObjectBuilder.Instance);
+            var engine = DescriptorEngine.Create<IMolecularDescriptor>(ChemObjectBuilder.Instance);
             Assert.IsNotNull(engine);
             int loadedDescriptors = engine.GetDescriptorInstances().Count();
             Assert.IsTrue(0 != loadedDescriptors, "Could not load any descriptors");
@@ -52,7 +53,7 @@ namespace NCDK.QSAR
         [TestMethod()]
         public void TestLoadingOfAtomicDescriptors()
         {
-            DescriptorEngine engine = DescriptorEngine.Create<IAtomicDescriptor>(ChemObjectBuilder.Instance);
+            var engine = DescriptorEngine.Create<IAtomicDescriptor>(ChemObjectBuilder.Instance);
             Assert.IsNotNull(engine);
             int loadedDescriptors = engine.GetDescriptorInstances().Count();
             Assert.AreNotSame(0, loadedDescriptors);
@@ -63,7 +64,7 @@ namespace NCDK.QSAR
         [TestMethod()]
         public void TestLoadingOfBondDescriptors()
         {
-            DescriptorEngine engine = DescriptorEngine.Create<IBondDescriptor>(ChemObjectBuilder.Instance);
+            var engine = DescriptorEngine.Create<IBondDescriptor>(ChemObjectBuilder.Instance);
             Assert.IsNotNull(engine);
             int loadedDescriptors = engine.GetDescriptorInstances().Count();
             Assert.AreNotSame(0, loadedDescriptors);
@@ -74,7 +75,7 @@ namespace NCDK.QSAR
         [TestMethod()]
         public void TestDictionaryType()
         {
-            DescriptorEngine engine = DescriptorEngine.Create<IMolecularDescriptor>(ChemObjectBuilder.Instance);
+            var engine = DescriptorEngine.Create<IMolecularDescriptor>(ChemObjectBuilder.Instance);
 
             string className = "NCDK.QSAR.Descriptors.Moleculars.ZagrebIndexDescriptor";
             DescriptorSpecification specRef = new DescriptorSpecification(
@@ -89,7 +90,7 @@ namespace NCDK.QSAR
         [TestMethod()]
         public void TestDictionaryClass()
         {
-            DescriptorEngine engine = DescriptorEngine.Create<IMolecularDescriptor>(ChemObjectBuilder.Instance);
+            var engine = DescriptorEngine.Create<IMolecularDescriptor>(ChemObjectBuilder.Instance);
 
             string className = "NCDK.QSAR.Descriptors.Moleculars.TPSADescriptor";
             DescriptorSpecification specRef = new DescriptorSpecification(
@@ -111,7 +112,7 @@ namespace NCDK.QSAR
         [TestMethod()]
         public void TestAvailableClass()
         {
-            DescriptorEngine engine = DescriptorEngine.Create<IMolecularDescriptor>(ChemObjectBuilder.Instance);
+            var engine = DescriptorEngine.Create<IMolecularDescriptor>(ChemObjectBuilder.Instance);
             var availClasses = engine.GetAvailableDictionaryClasses();
             Assert.AreEqual(5, availClasses.Count());
         }
@@ -119,7 +120,7 @@ namespace NCDK.QSAR
         [TestMethod()]
         public void TestLoadingOfAtomPairDescriptors()
         {
-            DescriptorEngine engine = DescriptorEngine.Create<IAtomicDescriptor>(ChemObjectBuilder.Instance);
+            var engine = DescriptorEngine.Create<IAtomicDescriptor>(ChemObjectBuilder.Instance);
             Assert.IsNotNull(engine);
             int loadedDescriptors = engine.GetDescriptorInstances().Count();
             Assert.AreNotSame(0, loadedDescriptors);

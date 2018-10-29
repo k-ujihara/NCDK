@@ -56,7 +56,7 @@ namespace NCDK.Layout
         {
             TemplateHandler th = new TemplateHandler(ChemObjectBuilder.Instance);
             string smiles = "CC12C3(C6CC6)C4(C)C1C5(C(CC)C)C(C(CC)C)2C(C)3C45CC(C)C";
-            IAtomContainer mol = sp.ParseSmiles(smiles);
+            var mol = sp.ParseSmiles(smiles);
             Assert.IsTrue(th.MapTemplates(mol));
         }
 
@@ -104,7 +104,7 @@ namespace NCDK.Layout
             mol = sdg.Molecule;
 
             string smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
-            IAtomContainer smilesMol = sp.ParseSmiles(smiles);
+            var smilesMol = sp.ParseSmiles(smiles);
             itIsInThere = th.MapTemplates(smilesMol);
             Debug.WriteLine($"Alpha-Pinene found by templateMapper: {itIsInThere}");
             Assert.IsFalse(itIsInThere);
@@ -127,7 +127,7 @@ namespace NCDK.Layout
             mol = sdg.Molecule;
 
             string smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
-            IAtomContainer smilesMol = sp.ParseSmiles(smiles);
+            var smilesMol = sp.ParseSmiles(smiles);
             itIsInThere = th.MapTemplates(smilesMol);
             Debug.WriteLine($"Alpha-Pinene found by templateMapper: {itIsInThere}");
             Assert.IsFalse(itIsInThere);
@@ -152,7 +152,7 @@ namespace NCDK.Layout
         {
             // Set up molecule reader
             string filename = "NCDK.Data.MDL.diadamantane-cubane.mol";
-            Stream ins = ResourceLoader.GetAsStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader molReader = new MDLReader(ins, ChemObjectReaderMode.Strict);
 
             // Read molecule

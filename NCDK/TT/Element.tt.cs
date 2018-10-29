@@ -41,14 +41,10 @@ namespace NCDK.Default
     /// by symbol or atomic number:
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Element_Example.cs"]/*' />
     /// </example>
-    // @cdk.githash 
-    // @cdk.keyword element 
+    // @cdk.keyword element
     public class Element
         : ChemObject, IElement, ICloneable, ISerializable
     {
-        /// <summary>The element symbol for this element as listed in the periodic table.</summary>
-        internal string symbol;
-
         /// <summary>The atomic number for this element giving their position in the periodic table.</summary>
         internal int? atomicNumber;
 
@@ -56,7 +52,6 @@ namespace NCDK.Default
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue(nameof(symbol), symbol);
             info.AddNullableValue(nameof(atomicNumber), atomicNumber);
         }
 
@@ -64,7 +59,6 @@ namespace NCDK.Default
         protected Element(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            symbol = info.GetString(nameof(symbol));
             atomicNumber = info.GetNullable<int>(nameof(atomicNumber));
         }
 
@@ -93,7 +87,7 @@ namespace NCDK.Default
         /// </summary>
         /// <param name="symbol">The element symbol that this element should have.</param>
         public Element(string symbol)
-            : this(symbol, ChemicalElement.OfString(symbol).AtomicNumber)
+            : this(symbol, SymbolToAtomicNumber(symbol))
         {
         }
 
@@ -106,7 +100,6 @@ namespace NCDK.Default
         public Element(string symbol, int? atomicNumber)
             : base()
         {
-            this.symbol = symbol;
             this.atomicNumber = atomicNumber;
         }
 
@@ -121,7 +114,7 @@ namespace NCDK.Default
         /// </example>
         public virtual int? AtomicNumber
         {
-            get { return atomicNumber; }
+            get => atomicNumber;
 
             set
             {
@@ -136,13 +129,28 @@ namespace NCDK.Default
         /// <returns>The element symbol of this element. <see langword="null"/> if unset.</returns>
         public virtual string Symbol
         {
-            get { return symbol; }
+            get
+            {
+                if (atomicNumber == null)
+                    return null;
+                if (atomicNumber.Value == 0)
+                    return "R";
+                return ChemicalElement.OfNumber(atomicNumber.Value).Symbol;
+            }
 
             set
             {
-                symbol = value;
+                AtomicNumber = SymbolToAtomicNumber(value);
                 NotifyChanged();
             }
+        }
+
+        private static int? SymbolToAtomicNumber(string symbol)
+        {
+            if (symbol == null)
+                return null;
+            else
+                return ChemicalElement.OfString(symbol).AtomicNumber;
         }
 
         public override string ToString()
@@ -170,7 +178,7 @@ namespace NCDK.Default
                 return false;
             if (!base.Compare(obj))
                 return false;
-            return AtomicNumber == elem.AtomicNumber && Symbol == elem.Symbol;
+            return object.Equals(AtomicNumber, elem.AtomicNumber);
         }
     }
 }
@@ -184,14 +192,10 @@ namespace NCDK.Silent
     /// by symbol or atomic number:
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Element_Example.cs"]/*' />
     /// </example>
-    // @cdk.githash 
-    // @cdk.keyword element 
+    // @cdk.keyword element
     public class Element
         : ChemObject, IElement, ICloneable, ISerializable
     {
-        /// <summary>The element symbol for this element as listed in the periodic table.</summary>
-        internal string symbol;
-
         /// <summary>The atomic number for this element giving their position in the periodic table.</summary>
         internal int? atomicNumber;
 
@@ -199,7 +203,6 @@ namespace NCDK.Silent
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue(nameof(symbol), symbol);
             info.AddNullableValue(nameof(atomicNumber), atomicNumber);
         }
 
@@ -207,7 +210,6 @@ namespace NCDK.Silent
         protected Element(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            symbol = info.GetString(nameof(symbol));
             atomicNumber = info.GetNullable<int>(nameof(atomicNumber));
         }
 
@@ -236,7 +238,7 @@ namespace NCDK.Silent
         /// </summary>
         /// <param name="symbol">The element symbol that this element should have.</param>
         public Element(string symbol)
-            : this(symbol, ChemicalElement.OfString(symbol).AtomicNumber)
+            : this(symbol, SymbolToAtomicNumber(symbol))
         {
         }
 
@@ -249,7 +251,6 @@ namespace NCDK.Silent
         public Element(string symbol, int? atomicNumber)
             : base()
         {
-            this.symbol = symbol;
             this.atomicNumber = atomicNumber;
         }
 
@@ -264,7 +265,7 @@ namespace NCDK.Silent
         /// </example>
         public virtual int? AtomicNumber
         {
-            get { return atomicNumber; }
+            get => atomicNumber;
 
             set
             {
@@ -278,12 +279,27 @@ namespace NCDK.Silent
         /// <returns>The element symbol of this element. <see langword="null"/> if unset.</returns>
         public virtual string Symbol
         {
-            get { return symbol; }
+            get
+            {
+                if (atomicNumber == null)
+                    return null;
+                if (atomicNumber.Value == 0)
+                    return "R";
+                return ChemicalElement.OfNumber(atomicNumber.Value).Symbol;
+            }
 
             set
             {
-                symbol = value;
+                AtomicNumber = SymbolToAtomicNumber(value);
             }
+        }
+
+        private static int? SymbolToAtomicNumber(string symbol)
+        {
+            if (symbol == null)
+                return null;
+            else
+                return ChemicalElement.OfString(symbol).AtomicNumber;
         }
 
         public override string ToString()
@@ -311,7 +327,7 @@ namespace NCDK.Silent
                 return false;
             if (!base.Compare(obj))
                 return false;
-            return AtomicNumber == elem.AtomicNumber && Symbol == elem.Symbol;
+            return object.Equals(AtomicNumber, elem.AtomicNumber);
         }
     }
 }

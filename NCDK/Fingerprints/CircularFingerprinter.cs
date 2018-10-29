@@ -291,7 +291,7 @@ namespace NCDK.Fingerprints
         public override IBitFingerprint GetBitFingerprint(IAtomContainer mol)
         {
             Calculate(mol);
-            BitArray bits = new BitArray(length);
+            var bits = new BitArray(length);
             for (int n = 0; n < fplist.Count; n++)
             {
                 int i = fplist[n].Hash;
@@ -371,9 +371,16 @@ namespace NCDK.Fingerprints
         /// <returns>the size of the fingerprint</returns>
         public override int Length => length;
 
-        /// ------------ private methods ------------
+        // ------------ private methods ------------
 
+        private static readonly int[] ELEMENT_BONDING = new int[] {0, 1, 0, 1, 2, 3, 4, 3, 2, 1, 0, 1, 2, 3, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8,
+                    9, 10, 11, 12, 3, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 3, 4, 3, 2, 1, 0, 1, 2, 4, 4,
+                    4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 3, 4, 5, 6, 7, 8, 1, 1, 4, 4, 4,
+                    4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+
+        /// <summary>
         /// calculates an integer number that stores the bit-packed identity of the given atom
+        /// </summary>
         private int InitialIdentityECFP(int aidx)
         {
             // <summary>
@@ -382,19 +389,15 @@ namespace NCDK.Fingerprints
             // number (4) atomic mass (5) atom charge (6) number of hydrogen
             // neighbours (7) whether the atom is in a ring
             // </summary>
-            IAtom atom = mol.Atoms[aidx];
+            var atom = mol.Atoms[aidx];
 
-            int nheavy = atomAdj[aidx].Length, nhydr = hcount[aidx];
-            int atno = atom.AtomicNumber.Value;
+            var nheavy = atomAdj[aidx].Length;
+            var nhydr = hcount[aidx];
+            var atno = atom.AtomicNumber.Value;
 
-            int[] ELEMENT_BONDING = {0, 1, 0, 1, 2, 3, 4, 3, 2, 1, 0, 1, 2, 3, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8,
-                    9, 10, 11, 12, 3, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 3, 4, 3, 2, 1, 0, 1, 2, 4, 4,
-                    4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 3, 4, 5, 6, 7, 8, 1, 1, 4, 4, 4,
-                    4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-
-            int degree = (atno > 0 && atno < ELEMENT_BONDING.Length ? ELEMENT_BONDING[atno] : 0) - nhydr;
-            int chg = atom.FormalCharge.Value;
-            int inring = ringBlock[aidx] > 0 ? 1 : 0;
+            var degree = (atno > 0 && atno < ELEMENT_BONDING.Length ? ELEMENT_BONDING[atno] : 0) - nhydr;
+            var chg = atom.FormalCharge.Value;
+            var inring = ringBlock[aidx] > 0 ? 1 : 0;
             return (int)Crc32.Compute(new byte[]
                 {
                     (byte)((nheavy << 4) | degree),
@@ -406,9 +409,13 @@ namespace NCDK.Fingerprints
 
         private int InitialIdentityFCFP(int aidx)
         {
-            return (maskDon[aidx] ? 0x01 : 0) | (maskAcc[aidx] ? 0x02 : 0) | (maskPos[aidx] ? 0x04 : 0)
-                    | (maskNeg[aidx] ? 0x08 : 0) | (atomArom[aidx] ? 0x10 : 0) | // strictly bond aromaticity more accurate rendition
-                    (maskHal[aidx] ? 0x20 : 0);
+            return (maskDon[aidx] ? 0x01 : 0) 
+                 | (maskAcc[aidx] ? 0x02 : 0) 
+                 | (maskPos[aidx] ? 0x04 : 0)
+                 | (maskNeg[aidx] ? 0x08 : 0) 
+                 | (atomArom[aidx] ? 0x10 : 0) 
+                 | // strictly bond aromaticity more accurate rendition
+                   (maskHal[aidx] ? 0x20 : 0);
         }
 
         /// takes the current identity values
@@ -432,7 +439,7 @@ namespace NCDK.Fingerprints
             int p = 0;
             while (p < adj.Length - 1)
             {
-                int i = 2 + 2 * p;
+                var i = 2 + 2 * p;
                 if (seq[i] > seq[i + 2] || (seq[i] == seq[i + 2] && seq[i + 1] > seq[i + 3]))
                 {
                     int sw = seq[i];
@@ -454,7 +461,7 @@ namespace NCDK.Fingerprints
                 for (int n = 0; n < seq.Length; n += 2)
                 {
                     array.WriteByte((byte)seq[n]);
-                    uint v = (uint)seq[n + 1];
+                    var v = (uint)seq[n + 1];
                     array.WriteByte((byte)(v >> 24));
                     array.WriteByte((byte)((v >> 16) & 0xFF));
                     array.WriteByte((byte)((v >> 8) & 0xFF));
@@ -465,10 +472,19 @@ namespace NCDK.Fingerprints
                 if (!resolvedChiral[atom] && tetra[atom] != null)
                 {
                     var ru = tetra[atom];
-                    int[] par = {ru[0] < 0 ? 0 : identity[ru[0]], ru[1] < 0 ? 0 : identity[ru[1]],
-                            ru[2] < 0 ? 0 : identity[ru[2]], ru[3] < 0 ? 0 : identity[ru[3]]};
-                    if (par[0] != par[1] && par[0] != par[2] && par[0] != par[3] && par[1] != par[2] && par[1] != par[3]
-                            && par[2] != par[3])
+                    var par = new int []
+                        {
+                            ru[0] < 0 ? 0 : identity[ru[0]],
+                            ru[1] < 0 ? 0 : identity[ru[1]],
+                            ru[2] < 0 ? 0 : identity[ru[2]],
+                            ru[3] < 0 ? 0 : identity[ru[3]],
+                        };
+                    if (par[0] != par[1]
+                     && par[0] != par[2] 
+                     && par[0] != par[3] 
+                     && par[1] != par[2]
+                     && par[1] != par[3]
+                     && par[2] != par[3])
                     {
                         int rp = 0;
                         if (par[0] < par[1]) rp++;
@@ -505,7 +521,8 @@ namespace NCDK.Fingerprints
             }
             int sz = 0;
             for (int n = 0; n < na; n++)
-                if (mask[n]) sz++;
+                if (mask[n])
+                    sz++;
             var newList = new int[sz];
             for (int n = na - 1; n >= 0; n--)
                 if (mask[n])
@@ -524,7 +541,7 @@ namespace NCDK.Fingerprints
             for (int n = 0; n < fplist.Count; n++)
             {
                 fp = fplist[n];
-                bool equal = fp.Atoms.Count == newFP.Atoms.Count;
+                var equal = fp.Atoms.Count == newFP.Atoms.Count;
                 for (int i = fp.Atoms.Count - 1; equal && i >= 0; i--)
                     if (fp.Atoms[i] != newFP.Atoms[i])
                         equal = false;
@@ -548,12 +565,16 @@ namespace NCDK.Fingerprints
 
         // ------------ molecule analysis: cached cheminformatics ------------
 
+        private static readonly string[] HYVALENCE_EL = { "C", "N", "O", "S", "P" };
+        private static readonly int[] HYVALENCE_VAL = { 4, 3, 2, 2, 3 };
+
         /// <summary>
         /// summarize preliminary information about the molecular structure, to make sure the rest all goes quickly
         /// </summary>
         private void ExcavateMolecule()
         {
-            int na = mol.Atoms.Count, nb = mol.Bonds.Count;
+            var na = mol.Atoms.Count;
+            var nb = mol.Bonds.Count;
 
             // create the mask of heavy atoms (amask) and the adjacency graphs, index-based, that are used to traverse
             // the heavy part of the graph
@@ -601,8 +622,6 @@ namespace NCDK.Fingerprints
             }
 
             // calculate implicit hydrogens, using a very conservative formula
-            string[] HYVALENCE_EL = { "C", "N", "O", "S", "P" };
-            int[] HYVALENCE_VAL = { 4, 3, 2, 2, 3 };
             for (int n = 0; n < na; n++)
             {
                 var atom = mol.Atoms[n];
@@ -845,35 +864,37 @@ namespace NCDK.Fingerprints
         /// rings such as thiophene, imidazolium, porphyrins, etc.: these systems will be left in their original single/double bond form
         private void DetectStrictAromaticity()
         {
-            int na = mol.Atoms.Count, nb = mol.Bonds.Count;
+            var na = mol.Atoms.Count;
+            var nb = mol.Bonds.Count;
             atomArom = new bool[na];
             bondArom = new bool[nb];
 
-            if (smallRings.Length == 0) return;
+            if (smallRings.Length == 0)
+                return;
 
-            bool[] piAtom = new bool[na];
+            var piAtom = new bool[na];
             for (int n = 0; n < nb; n++)
                 if (bondOrder[n] == 2)
                 {
-                    IBond bond = mol.Bonds[n];
+                    var bond = mol.Bonds[n];
                     piAtom[mol.Atoms.IndexOf(bond.Begin)] = true;
                     piAtom[mol.Atoms.IndexOf(bond.End)] = true;
                 }
 
-            List<int[]> maybe = new List<int[]>(); // rings which may yet be aromatic
+            var maybe = new List<int[]>(); // rings which may yet be aromatic
             foreach (var r in smallRings)
                 if (r.Length == 6)
                 {
                     bool consider = true;
                     for (int n = 0; n < 6; n++)
                     {
-                        int a = r[n];
+                        var a = r[n];
                         if (!piAtom[a])
                         {
                             consider = false;
                             break;
                         }
-                        int b = FindBond(a, r[n == 5 ? 0 : n + 1]);
+                        var b = FindBond(a, r[n == 5 ? 0 : n + 1]);
                         if (bondOrder[b] != 1 && bondOrder[b] != 2)
                         {
                             consider = false;
@@ -891,16 +912,18 @@ namespace NCDK.Fingerprints
 
                 for (int n = maybe.Count() - 1; n >= 0; n--)
                 {
-                    int[] r = maybe[n];
+                    var r = maybe[n];
                     bool phase1 = true, phase2 = true; // has to go 121212 or 212121; already arom=either is OK
                     for (int i = 0; i < 6; i++)
                     {
                         int b = FindBond(r[i], r[i == 5 ? 0 : i + 1]);
-                        if (bondArom[b]) continue; // valid for either phase
+                        if (bondArom[b])
+                            continue; // valid for either phase
                         phase1 = phase1 && bondOrder[b] == (2 - (i & 1));
                         phase2 = phase2 && bondOrder[b] == (1 + (i & 1));
                     }
-                    if (!phase1 && !phase2) continue;
+                    if (!phase1 && !phase2)
+                        continue;
 
                     // the ring is deemed aromatic: mark the flags and remove from the maybe list
                     for (int i = 0; i < r.Length; i++)
@@ -912,7 +935,8 @@ namespace NCDK.Fingerprints
                     anyChange = true;
                 }
 
-                if (!anyChange) break;
+                if (!anyChange)
+                    break;
             }
         }
 
@@ -954,6 +978,11 @@ namespace NCDK.Fingerprints
             }
         }
 
+        private static readonly int[] ELEMENT_BLOCKS = {0, 1, 2, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 3, 3, 3, 3, 3, 3,
+                    3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 1, 1, 4, 4, 4, 4,
+                    4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 1, 1, 4, 4, 4, 4, 4, 4,
+                    4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
+
         /// tetrahedral 'rubric': for any sp3 atom that has enough neighbours and appropriate wedge bond/3D geometry information,
         /// build up a list of neighbours in a certain permutation order; the resulting array of size 4 can have a total of
         /// 24 permutations; there are two groups of 12 that can be mapped onto each other by tetrahedral rotations, hence this
@@ -962,47 +991,51 @@ namespace NCDK.Fingerprints
         /// does not consider the possibility of lone-pair chirality (e.g. sp3 phosphorus)
         private int[] RubricTetrahedral(int aidx)
         {
-            if (hcount[aidx] > 1) return null;
+            if (hcount[aidx] > 1)
+                return null;
 
             // make sure the atom has an acceptable environment
-            IAtom atom = mol.Atoms[aidx];
-            int[] ELEMENT_BLOCKS = {0, 1, 2, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 3, 3, 3, 3, 3, 3,
-                    3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 1, 1, 4, 4, 4, 4,
-                    4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 1, 1, 4, 4, 4, 4, 4, 4,
-                    4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
-            int atno = atom.AtomicNumber.Value;
-            if (atno <= 1 || atno >= ELEMENT_BLOCKS.Length) return null;
-            if (ELEMENT_BLOCKS[atno] != 2 /* p-block */) return null;
+            var atom = mol.Atoms[aidx];
+            var atno = atom.AtomicNumber.Value;
+            if (atno <= 1 || atno >= ELEMENT_BLOCKS.Length)
+                return null;
+            if (ELEMENT_BLOCKS[atno] != 2 /* p-block */)
+                return null;
 
-            int adjc = atomAdj[aidx].Length, hc = hcount[aidx];
-            if (!(adjc == 3 && hc == 1) && !(adjc == 4 && hc == 0)) return null;
+            var adjc = atomAdj[aidx].Length;
+            var hc = hcount[aidx];
+            if (!(adjc == 3 && hc == 1) && !(adjc == 4 && hc == 0))
+                return null;
 
             // must have 3D coordinates or a wedge bond to qualify
             bool wedgeOr3D = false;
-            Vector3? a3d = atom.Point3D;
+            var a3d = atom.Point3D;
             for (int n = 0; n < adjc; n++)
             {
-                BondStereo stereo = mol.Bonds[bondAdj[aidx][n]].Stereo;
+                var stereo = mol.Bonds[bondAdj[aidx][n]].Stereo;
                 if (stereo == BondStereo.Up || stereo == BondStereo.Down)
                 {
                     wedgeOr3D = true;
                     break;
                 }
-                if (stereo == BondStereo.UpOrDown) return null; // squiggly line: definitely not
-                Vector3? o3d = atom.Point3D;
+                if (stereo == BondStereo.UpOrDown)
+                    return null; // squiggly line: definitely not
+                var o3d = atom.Point3D;
                 if (a3d != null && o3d != null && a3d.Value.Z != o3d.Value.Z)
                 {
                     wedgeOr3D = true;
                     break;
                 }
             }
-            if (!wedgeOr3D) return null;
+            if (!wedgeOr3D)
+                return null;
 
             // fill in existing positions, including "fake" Z coordinate if wedges are being used
-            Vector2? a2d = atom.Point2D;
+            var a2d = atom.Point2D;
 
             // for safety in case the bond type (bond stereo) is set but no coords are
-            if (a2d == null && a3d == null) return null;
+            if (a2d == null && a3d == null)
+                return null;
 
             var x0 = a3d != null ? a3d.Value.X : a2d.Value.X;
             var y0 = a3d != null ? a3d.Value.Y : a2d.Value.Y;
@@ -1013,10 +1046,10 @@ namespace NCDK.Fingerprints
             int numShort = 0;
             for (int n = 0; n < adjc; n++)
             {
-                IAtom other = mol.Atoms[atomAdj[aidx][n]];
-                IBond bond = mol.Bonds[bondAdj[aidx][n]];
-                Vector3? o3d = other.Point3D;
-                Vector2? o2d = other.Point2D;
+                var other = mol.Atoms[atomAdj[aidx][n]];
+                var bond = mol.Bonds[bondAdj[aidx][n]];
+                var o3d = other.Point3D;
+                var o2d = other.Point2D;
                 if (o3d != null)
                 {
                     xp[n] = o3d.Value.X - x0;
@@ -1025,11 +1058,10 @@ namespace NCDK.Fingerprints
                 }
                 else if (o2d != null)
                 {
-                    BondStereo stereo = bond.Stereo;
+                    var stereo = bond.Stereo;
                     xp[n] = o2d.Value.X - x0;
                     yp[n] = o2d.Value.Y - y0;
-                    zp[n] = other == bond.Begin ? 0 : stereo == BondStereo.Up ? 1 : stereo == BondStereo.Down ? -1
-                            : 0;
+                    zp[n] = other == bond.Begin ? 0 : stereo == BondStereo.Up ? 1 : stereo == BondStereo.Down ? -1 : 0;
                 }
                 else
                 {
@@ -1043,12 +1075,13 @@ namespace NCDK.Fingerprints
                 if (dsq < 0.01f * 0.01f)
                 {
                     numShort++;
-                    if (numShort > 1) return null; // second one's the dealbreaker
+                    if (numShort > 1)
+                        return null; // second one's the dealbreaker
                 }
             }
 
             // build an implicit H if necessary
-            int[] adj = atomAdj[aidx];
+            var adj = atomAdj[aidx];
             if (adjc == 3)
             {
                 adj = AppendInteger(adj, -1);
@@ -1104,7 +1137,7 @@ namespace NCDK.Fingerprints
 
             if (two > one)
             {
-                int i = adj[2];
+                var i = adj[2];
                 adj[2] = adj[3];
                 adj[3] = i;
             }
@@ -1115,7 +1148,8 @@ namespace NCDK.Fingerprints
         /// capabilities, that being defined by centers of biological interactions, such as hydrogen bonding and electrostatics
         private void CalculateBioTypes()
         {
-            int na = mol.Atoms.Count, nb = mol.Bonds.Count;
+            var na = mol.Atoms.Count;
+            var nb = mol.Bonds.Count;
 
             maskDon = new bool[na];
             maskAcc = new bool[na];
@@ -1138,17 +1172,21 @@ namespace NCDK.Fingerprints
             for (int n = 0; n < nb; n++)
             {
                 IBond bond = mol.Bonds[n];
-                if (bond.Atoms.Count != 2) continue;
+                if (bond.Atoms.Count != 2)
+                    continue;
                 int a1 = mol.Atoms.IndexOf(bond.Begin), a2 = mol.Atoms.IndexOf(bond.End), o = bondOrder[n];
-                if (!amask[a1] || !amask[a2]) continue;
+                if (!amask[a1] || !amask[a2])
+                    continue;
                 bondSum[a1] += o;
                 bondSum[a2] += o;
                 if (o == 2)
                 {
                     hasDouble[a1] = true;
                     hasDouble[a2] = true;
-                    if (string.Equals(mol.Atoms[a1].Symbol, "O", StringComparison.Ordinal)) isOxide[a2] = true;
-                    if (string.Equals(mol.Atoms[a2].Symbol, "O", StringComparison.Ordinal)) isOxide[a1] = true;
+                    if (string.Equals(mol.Atoms[a1].Symbol, "O", StringComparison.Ordinal))
+                        isOxide[a2] = true;
+                    if (string.Equals(mol.Atoms[a2].Symbol, "O", StringComparison.Ordinal))
+                        isOxide[a1] = true;
                 }
                 if (o != 1)
                 {
@@ -1160,10 +1198,24 @@ namespace NCDK.Fingerprints
             lonePair = new bool[na];
             for (int n = 0; n < na; n++)
             {
-                IAtom atom = mol.Atoms[n];
-                string el = atom.Symbol;
-                int valence = el.Equals("N", StringComparison.Ordinal) ? 3 : el.Equals("O", StringComparison.Ordinal) || el.Equals("S", StringComparison.Ordinal) ? 2 : 0;
-                if (valence > 0 && bondSum[n] + atom.FormalCharge <= valence) lonePair[n] = true;
+                var atom = mol.Atoms[n];
+                var el = atom.Symbol;
+                int valence;
+                switch (el)
+                {
+                    case "N":
+                        valence = 3;
+                        break;
+                    case "O": 
+                    case "S":
+                        valence = 2;
+                        break;
+                    default:
+                        valence = 0;
+                        break;
+                }
+                if (valence > 0 && bondSum[n] + atom.FormalCharge <= valence)
+                    lonePair[n] = true;
             }
 
             // preprocess small rings
@@ -1193,7 +1245,7 @@ namespace NCDK.Fingerprints
         /// neighbouring functional groups, rather than disambiguating conjugational equivalence
         private void ConsiderBioTypeAromaticity(int[] ring)
         {
-            int rsz = ring.Length;
+            var rsz = ring.Length;
             int countDouble = 0;
             for (int n = 0; n < rsz; n++)
             {
@@ -1203,9 +1255,11 @@ namespace NCDK.Fingerprints
                     countDouble++;
                     continue;
                 }
-                if (!lonePair[a]) return;
+                if (!lonePair[a])
+                    return;
             }
-            if (countDouble < rsz - 2) return;
+            if (countDouble < rsz - 2)
+                return;
             for (int n = 0; n < rsz; n++)
                 maskAro[ring[n]] = true;
         }
@@ -1217,8 +1271,9 @@ namespace NCDK.Fingerprints
             int countC = 0, countN = 0, ndbl = 0;
             for (int n = 0; n < 5; n++)
             {
-                IAtom atom = mol.Atoms[ring[n]];
-                if (atom.FormalCharge != 0) return;
+                var atom = mol.Atoms[ring[n]];
+                if (atom.FormalCharge != 0)
+                    return;
                 string el = atom.Symbol;
                 switch (el)
                 {
@@ -1232,7 +1287,8 @@ namespace NCDK.Fingerprints
                 if (bondOrder[FindBond(ring[n], ring[n == 4 ? 0 : n + 1])] == 2)
                     ndbl++;
             }
-            if (countC != 1 || countN != 4 || ndbl != 2) return;
+            if (countC != 1 || countN != 4 || ndbl != 2)
+                return;
             for (int n = 0; n < 5; n++)
                 if (string.Equals(mol.Atoms[ring[n]].Symbol, "N", StringComparison.Ordinal))
                     tetrazole[ring[n]] = true;
@@ -1245,8 +1301,8 @@ namespace NCDK.Fingerprints
             if (hcount[aidx] == 0)
                 return false;
 
-            IAtom atom = mol.Atoms[aidx];
-            string el = atom.Symbol;
+            var atom = mol.Atoms[aidx];
+            var el = atom.Symbol;
             switch (el)
             {
                 case "N":
@@ -1284,10 +1340,11 @@ namespace NCDK.Fingerprints
         /// hydrogen bond acceptor
         private bool DetermineAcceptor(int aidx)
         {
-            IAtom atom = mol.Atoms[aidx];
+            var atom = mol.Atoms[aidx];
 
             // must have an N,O,S lonepair and nonpositive charge for starters
-            if (!lonePair[aidx] || mol.Atoms[aidx].FormalCharge > 0) return false;
+            if (!lonePair[aidx] || mol.Atoms[aidx].FormalCharge > 0)
+                return false;
 
             // basic nitrogens do not qualify
             switch (atom.Symbol)
@@ -1311,11 +1368,12 @@ namespace NCDK.Fingerprints
         /// positive charge centre
         private bool DeterminePositive(int aidx)
         {
-            IAtom atom = mol.Atoms[aidx];
+            var atom = mol.Atoms[aidx];
 
             // consider formal ionic charge first
             int chg = atom.FormalCharge.Value;
-            if (chg < 0) return false;
+            if (chg < 0)
+                return false;
             if (chg > 0)
             {
                 for (int n = 0; n < atomAdj[aidx].Length; n++)
@@ -1323,7 +1381,7 @@ namespace NCDK.Fingerprints
                         return false;
                 return true;
             }
-            string el = atom.Symbol;
+            var el = atom.Symbol;
 
             switch (el)
             {
@@ -1337,7 +1395,8 @@ namespace NCDK.Fingerprints
                                 basic = false;
                                 break;
                             }
-                        if (basic) return true;
+                        if (basic)
+                            return true;
 
                         // imines with N=C-N motif: the carbon atom must be bonded to at least one amine, and both other substituents
                         // have to be without double bonds, i.e. R-N=C(R)NR2 or R-N=C(NR2)NR2 (R=not hydrogen)
@@ -1356,7 +1415,8 @@ namespace NCDK.Fingerprints
                                 for (int n = 0; n < atomAdj[other].Length; n++)
                                 {
                                     int a = atomAdj[other][n];
-                                    if (a == aidx) continue;
+                                    if (a == aidx)
+                                        continue;
                                     if (hasDouble[a])
                                     {
                                         amines = 0;
@@ -1378,7 +1438,8 @@ namespace NCDK.Fingerprints
                                         break;
                                     }
                                 }
-                                if (amines > 0) return true;
+                                if (amines > 0)
+                                    return true;
                             }
                         }
                     }
@@ -1400,9 +1461,11 @@ namespace NCDK.Fingerprints
                                 continue;
                             if (BondOrderBioType(bondAdj[aidx][n]) == 2)
                                 imine = true;
-                            else if (hcount[a] == 1) amine = true;
+                            else if (hcount[a] == 1)
+                                amine = true;
                         }
-                        if (imine && amine) return true;
+                        if (imine && amine)
+                            return true;
                     }
                     break;
             }
@@ -1413,7 +1476,7 @@ namespace NCDK.Fingerprints
         /// negative charge centre
         private bool DetermineNegative(int aidx)
         {
-            IAtom atom = mol.Atoms[aidx];
+            var atom = mol.Atoms[aidx];
 
             // consider formal ionic charge first
             int chg = atom.FormalCharge.Value;
@@ -1422,7 +1485,8 @@ namespace NCDK.Fingerprints
             if (chg < 0)
             {
                 for (int n = 0; n < atomAdj[aidx].Length; n++)
-                    if (mol.Atoms[atomAdj[aidx][n]].FormalCharge > 0) return false;
+                    if (mol.Atoms[atomAdj[aidx][n]].FormalCharge > 0)
+                        return false;
                 return true;
             }
 
@@ -1472,18 +1536,21 @@ namespace NCDK.Fingerprints
         /// returns either the bond order in the molecule, or -1 if the atoms are both labelled as aromatic
         private int BondOrderBioType(int bidx)
         {
-            IBond bond = mol.Bonds[bidx];
-            if (bond.Atoms.Count != 2) return 0;
+            var bond = mol.Bonds[bidx];
+            if (bond.Atoms.Count != 2)
+                return 0;
             int a1 = mol.Atoms.IndexOf(bond.Begin), a2 = mol.Atoms.IndexOf(bond.End);
-            if (maskAro[a1] && maskAro[a2]) return -1;
+            if (maskAro[a1] && maskAro[a2])
+                return -1;
             return bondOrder[bidx];
         }
 
         /// convenience: appending to an int array
         private static int[] AppendInteger(int[] a, int v)
         {
-            if (a == null || a.Length == 0) return new int[] { v };
-            int[] b = new int[a.Length + 1];
+            if (a == null || a.Length == 0)
+                return new int[] { v };
+            var b = new int[a.Length + 1];
             for (int n = a.Length - 1; n >= 0; n--)
                 b[n] = a[n];
             b[a.Length] = v;
@@ -1494,7 +1561,8 @@ namespace NCDK.Fingerprints
         private int FindBond(int a1, int a2)
         {
             for (int n = atomAdj[a1].Length - 1; n >= 0; n--)
-                if (atomAdj[a1][n] == a2) return bondAdj[a1][n];
+                if (atomAdj[a1][n] == a2)
+                    return bondAdj[a1][n];
             return -1;
         }
     }

@@ -185,7 +185,7 @@ namespace NCDK.Config
                 }
                 catch (Exception exc)
                 {
-                    Trace.TraceError("Could not read AtomType's from file due to: {0}", exc.Message);
+                    Trace.TraceError($"Could not read AtomType's from file due to: {exc.Message}");
                     Debug.WriteLine(exc);
                 }
             }
@@ -225,7 +225,7 @@ namespace NCDK.Config
         /// <returns>An <see cref="IEnumerable{IAtomType}"/> that matches the given element symbol and <see cref="IAtomType"/> class</returns>
         public IEnumerable<IAtomType> GetAtomTypes(string symbol)
         {
-            return atomTypes.Values.Where(n => n.Symbol == symbol);
+            return atomTypes.Values.Where(n => string.Equals(n.Symbol, symbol, StringComparison.Ordinal));
         }
 
         /// <summary>

@@ -168,8 +168,8 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestSingleMappingTesting()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer atomContainer = sp.ParseSmiles("C");
+            var sp = CDK.SilentSmilesParser;
+            var atomContainer = sp.ParseSmiles("C");
 
             IAtomContainer mol2 = Create4Toluene();
 
@@ -196,12 +196,12 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestSMSDFragHetSubgraph()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             string file1 = "O=C1NC(=O)C2=C(N1)NC(=O)C=N2";
             string file2 = "OC[C@@H](O)[C@@H](O)[C@@H](O)CN1C(O)C(CCC(O)O)NC2C(O)NC(O)NC12";
 
-            IAtomContainer mol1 = sp.ParseSmiles(file1);
-            IAtomContainer mol2 = sp.ParseSmiles(file2);
+            var mol1 = sp.ParseSmiles(file1);
+            var mol2 = sp.ParseSmiles(file2);
 
             ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);

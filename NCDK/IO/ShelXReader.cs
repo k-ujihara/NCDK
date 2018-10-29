@@ -320,7 +320,7 @@ namespace NCDK.IO
                                 }
                                 else
                                 {
-                                    StringBuilder sb2 = new StringBuilder();
+                                    var sb2 = new StringBuilder();
                                     sb2.Append(atype[1]);
                                     atype = atype.Substring(0, 1) + sb2.ToString().ToLowerInvariant();
                                 }

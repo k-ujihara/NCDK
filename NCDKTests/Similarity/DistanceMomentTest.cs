@@ -14,7 +14,7 @@ namespace NCDK.Similarity
     {
         private IAtomContainer LoadMolecule(string path)
         {
-            Stream ins = ResourceLoader.GetAsStream(path);
+            var ins = ResourceLoader.GetAsStream(path);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();

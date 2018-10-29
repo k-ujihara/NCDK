@@ -30,7 +30,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <NoWarn>1701;1702;0612,0618</NoWarn>
+    <NoWarn>1701;1702;0162,0164,0219,0612,0618,0672,0809,1591,3021,1573</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net461|AnyCPU'">
@@ -70,6 +70,7 @@
     <None Remove="Dict\Data\reaction-processes.owl" />
     <None Remove="Dict\Data\sybyl-atom-types.owl" />
     <None Remove="Fingerprints\Data\maccs.txt" />
+    <None Remove="Fingerprints\Data\SMARTS_countable_MACCS_keys.txt" />
     <None Remove="Fingerprints\Data\SMARTS_InteLigand.txt" />
     <None Remove="Graphs\Invariant\primes.dat" />
     <None Remove="io-formats.set" />
@@ -143,6 +144,7 @@
     <EmbeddedResource Include="Dict\Data\reaction-processes.owl" />
     <EmbeddedResource Include="Dict\Data\sybyl-atom-types.owl" />
     <EmbeddedResource Include="Fingerprints\Data\maccs.txt" />
+    <EmbeddedResource Include="Fingerprints\Data\SMARTS_countable_MACCS_keys.txt" />
     <EmbeddedResource Include="Fingerprints\Data\SMARTS_InteLigand.txt" />
     <EmbeddedResource Include="ForceFields\mmff-symb-mapping.tsv" />
     <EmbeddedResource Include="ForceFields\MMFFCHG.PAR" />
@@ -198,7 +200,7 @@
 
   <ItemGroup>
     <PackageReference Include="dotNetRDF" Version="2.1.0" />
-    <PackageReference Include="MathNet.Numerics.Signed" Version="4.5.0" />
+    <PackageReference Include="MathNet.Numerics.Signed" Version="4.6.0" />
   </ItemGroup>
 
   <ItemGroup>

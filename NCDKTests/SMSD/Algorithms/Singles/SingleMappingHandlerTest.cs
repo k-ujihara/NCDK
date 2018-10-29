@@ -70,7 +70,7 @@ namespace NCDK.SMSD.Algorithms.Singles
             IAtomContainer query = new AtomContainer();
             IAtomContainer target = new AtomContainer();
 
-            Stream ins = ResourceLoader.GetAsStream(molfile);
+            var ins = ResourceLoader.GetAsStream(molfile);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             reader.Read(query);
             ins = ResourceLoader.GetAsStream(queryfile);

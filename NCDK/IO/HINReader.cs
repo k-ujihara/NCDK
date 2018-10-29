@@ -17,14 +17,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Primitives;
 using NCDK.IO.Formats;
+using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using NCDK.Numerics;
-using NCDK.Common.Primitives;
 using System.Globalization;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -79,7 +79,8 @@ namespace NCDK.IO
 
         public override bool Accepts(Type type)
         {
-            if (typeof(IChemFile).IsAssignableFrom(type)) return true;
+            if (typeof(IChemFile).IsAssignableFrom(type))
+                return true;
             return false;
         }
 
@@ -122,13 +123,13 @@ namespace NCDK.IO
         /// <returns>A ChemFile containing the data parsed from input.</returns>
         private IChemFile ReadChemFile(IChemFile file)
         {
-            IChemSequence chemSequence = file.Builder.NewChemSequence();
-            IChemModel chemModel = file.Builder.NewChemModel();
-            IChemObjectSet<IAtomContainer> setOfMolecules = file.Builder.NewAtomContainerSet();
+            var chemSequence = file.Builder.NewChemSequence();
+            var chemModel = file.Builder.NewChemModel();
+            var setOfMolecules = file.Builder.NewAtomContainerSet();
             string info;
 
-            IList<string> aroringText = new List<string>();
-            IList<IAtomContainer> mols = new List<IAtomContainer>();
+            var aroringText = new List<string>();
+            var mols = new List<IAtomContainer>();
 
             try
             {
@@ -149,15 +150,17 @@ namespace NCDK.IO
                 line = input.ReadLine();
                 while (true)
                 {
-                    if (line == null) break; // end of file
-                    if (line.StartsWithChar(';')) continue; // comment line
+                    if (line == null)
+                        break; // end of file
+                    if (line.StartsWithChar(';'))
+                        continue; // comment line
 
                     if (line.StartsWith("mol", StringComparison.Ordinal))
                     {
                         info = GetMolName(line);
                         line = input.ReadLine();
                     }
-                    IAtomContainer m = file.Builder.NewAtomContainer();
+                    var m = file.Builder.NewAtomContainer();
                     m.Title = info;
 
                     // Each element of cons is an List of length 3 which stores
@@ -174,26 +177,27 @@ namespace NCDK.IO
                         {
                             break;
                         }
-                        if (line.StartsWithChar(';')) continue; // comment line
+                        if (line.StartsWithChar(';'))
+                            continue; // comment line
 
-                        string[] toks = line.Split(' ');
+                        var toks = line.Split(' ');
 
-                        string sym = toks[3];
-                        double charge = double.Parse(toks[6], NumberFormatInfo.InvariantInfo);
-                        double x = double.Parse(toks[7], NumberFormatInfo.InvariantInfo);
-                        double y = double.Parse(toks[8], NumberFormatInfo.InvariantInfo);
-                        double z = double.Parse(toks[9], NumberFormatInfo.InvariantInfo);
-                        int nbond = int.Parse(toks[10], NumberFormatInfo.InvariantInfo);
+                        var sym = toks[3];
+                        var charge = double.Parse(toks[6], NumberFormatInfo.InvariantInfo);
+                        var x = double.Parse(toks[7], NumberFormatInfo.InvariantInfo);
+                        var y = double.Parse(toks[8], NumberFormatInfo.InvariantInfo);
+                        var z = double.Parse(toks[9], NumberFormatInfo.InvariantInfo);
+                        var nbond = int.Parse(toks[10], NumberFormatInfo.InvariantInfo);
 
-                        IAtom atom = file.Builder.NewAtom(sym, new Vector3(x, y, z));
+                        var atom = file.Builder.NewAtom(sym, new Vector3(x, y, z));
                         atom.Charge = charge;
 
-                        BondOrder bo = BondOrder.Single;
+                        var bo = BondOrder.Single;
 
                         for (int j = 11; j < (11 + nbond * 2); j += 2)
                         {
-                            int s = int.Parse(toks[j], NumberFormatInfo.InvariantInfo) - 1; // since atoms start from 1 in the file
-                            char bt = toks[j + 1][0];
+                            var s = int.Parse(toks[j], NumberFormatInfo.InvariantInfo) - 1; // since atoms start from 1 in the file
+                            var bt = toks[j + 1][0];
                             switch (bt)
                             {
                                 case 's':
@@ -209,7 +213,7 @@ namespace NCDK.IO
                                     bo = BondOrder.Quadruple;
                                     break;
                             }
-                            List<object> ar = new List<object>(3)
+                            var ar = new List<object>(3)
                             {
                                 atomSerial,
                                 s,
@@ -225,10 +229,11 @@ namespace NCDK.IO
                     // now just store all the bonds we have
                     foreach (var ar in cons)
                     {
-                        IAtom s = m.Atoms[(int)ar[0]];
-                        IAtom e = m.Atoms[(int)ar[1]];
-                        BondOrder bo = (BondOrder)ar[2];
-                        if (!IsConnected(m, s, e)) m.Bonds.Add(file.Builder.NewBond(s, e, bo));
+                        var s = m.Atoms[(int)ar[0]];
+                        var e = m.Atoms[(int)ar[1]];
+                        var bo = (BondOrder)ar[2];
+                        if (!IsConnected(m, s, e))
+                            m.Bonds.Add(file.Builder.NewBond(s, e, bo));
                     }
                     mols.Add(m);
 
@@ -263,13 +268,13 @@ namespace NCDK.IO
             { // process aromaticring annotations
                 foreach (var line in aroringText)
                 {
-                    string[] toks = line.Split(' ');
-                    int natom = int.Parse(toks[1], NumberFormatInfo.InvariantInfo);
+                    var toks = line.Split(' ');
+                    var natom = int.Parse(toks[1], NumberFormatInfo.InvariantInfo);
                     int n = 0;
                     for (int i = 2; i < toks.Length; i += 2)
                     {
-                        int molnum = int.Parse(toks[i], NumberFormatInfo.InvariantInfo); // starts from 1
-                        int atnum = int.Parse(toks[i + 1], NumberFormatInfo.InvariantInfo); // starts from 1
+                        var molnum = int.Parse(toks[i], NumberFormatInfo.InvariantInfo); // starts from 1
+                        var atnum = int.Parse(toks[i + 1], NumberFormatInfo.InvariantInfo); // starts from 1
                         mols[molnum - 1].Atoms[atnum - 1].IsAromatic = true;
                         n++;
                     }
@@ -290,7 +295,8 @@ namespace NCDK.IO
         {
             foreach (var bond in atomContainer.Bonds)
             {
-                if (bond.Contains(atom1) && bond.Contains(atom2)) return true;
+                if (bond.Contains(atom1) && bond.Contains(atom2))
+                    return true;
             }
             return false;
         }

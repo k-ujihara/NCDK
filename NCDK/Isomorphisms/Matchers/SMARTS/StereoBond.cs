@@ -26,6 +26,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     // @cdk.module  smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
+    [Obsolete]
     public class StereoBond : SMARTSBond
     {
         private readonly bool unspecified;

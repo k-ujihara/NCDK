@@ -89,7 +89,7 @@ namespace <#= ns.NS #>
 
         public override string ToString()
         {
-            StringBuilder s = new StringBuilder();
+            var s = new StringBuilder();
             s.Append("Association(");
             s.Append(this.GetHashCode());
             foreach (var atom in AssociatedAtoms)

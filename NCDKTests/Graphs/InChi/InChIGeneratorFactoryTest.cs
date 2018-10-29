@@ -47,11 +47,10 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIGenerator_IAtomContainer()
         {
-            IAtomContainer ac = new AtomContainer();
-            IAtom a = new Atom("Cl");
-            a.ImplicitHydrogenCount = 1;
+            var ac = new AtomContainer();
+            var a = new Atom("Cl") { ImplicitHydrogenCount = 1 };
             ac.Atoms.Add(a);
-            InChIGenerator gen = InChIGeneratorFactory.Instance.GetInChIGenerator(ac);
+            var gen = InChIGeneratorFactory.Instance.GetInChIGenerator(ac);
             Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1S/ClH/h1H", gen.InChI);
         }
@@ -62,11 +61,10 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIGenerator_IAtomContainer_String()
         {
-            IAtomContainer ac = new AtomContainer();
-            IAtom a = new Atom("Cl");
-            a.ImplicitHydrogenCount = 1;
+            var ac = new AtomContainer();
+            var a = new Atom("Cl") { ImplicitHydrogenCount = 1 };
             ac.Atoms.Add(a);
-            InChIGenerator gen = InChIGeneratorFactory.Instance.GetInChIGenerator(ac, "FixedH");
+            var gen = InChIGeneratorFactory.Instance.GetInChIGenerator(ac, "FixedH");
             Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/ClH/h1H", gen.InChI);
         }
@@ -77,11 +75,10 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIGenerator_IAtomContainer_NullString()
         {
-            IAtomContainer ac = new AtomContainer();
-            IAtom a = new Atom("Cl");
-            a.ImplicitHydrogenCount = 1;
+            var ac = new AtomContainer();
+            var a = new Atom("Cl") { ImplicitHydrogenCount = 1 };
             ac.Atoms.Add(a);
-            InChIGenerator gen = InChIGeneratorFactory.Instance.GetInChIGenerator(ac, (string)null);
+            var gen = InChIGeneratorFactory.Instance.GetInChIGenerator(ac, (string)null);
             Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1S/ClH/h1H", gen.InChI);
         }
@@ -92,13 +89,11 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIGenerator_IAtomContainer_List()
         {
-            IAtomContainer ac = new AtomContainer();
-            IAtom a = new Atom("Cl");
-            a.ImplicitHydrogenCount = 1;
+            var ac = new AtomContainer();
+            var a = new Atom("Cl") { ImplicitHydrogenCount = 1 };
             ac.Atoms.Add(a);
-            List<InChIOption> options = new List<InChIOption>();
-            options.Add(InChIOption.FixedH);
-            InChIGenerator gen = InChIGeneratorFactory.Instance.GetInChIGenerator(ac, options);
+            var options = new List<InChIOption> { InChIOption.FixedH };
+            var gen = InChIGeneratorFactory.Instance.GetInChIGenerator(ac, options);
             Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/ClH/h1H", gen.InChI);
         }
@@ -110,9 +105,8 @@ namespace NCDK.Graphs.InChI
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestGetInChIGenerator_IAtomContainer_NullList()
         {
-            IAtomContainer ac = new AtomContainer();
-            IAtom a = new Atom("Cl");
-            a.ImplicitHydrogenCount = 1;
+            var ac = new AtomContainer();
+            var a = new Atom("Cl") { ImplicitHydrogenCount = 1 };
             ac.Atoms.Add(a);
             InChIGeneratorFactory.Instance.GetInChIGenerator(ac, (List<InChIOption>)null);
         }
@@ -153,7 +147,7 @@ namespace NCDK.Graphs.InChI
         {
             // (2R,3R,4S,5R,6S)-3,5-dimethylheptane-2,4,6-triol
             SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer container = parser.ParseSmiles("C[C@@H](O)[C@@H](C)[C@@H](O)[C@H](C)[C@H](C)O");
+            var container = parser.ParseSmiles("C[C@@H](O)[C@@H](C)[C@@H](O)[C@H](C)[C@H](C)O");
 
             InChIGenerator generator = InChIGeneratorFactory.Instance.GetInChIGenerator(container);
 
@@ -166,10 +160,22 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void DontIgnoreMajorIsotopes()
         {
-            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            InChIGeneratorFactory inchifact = InChIGeneratorFactory.Instance;
+            var smipar = CDK.SilentSmilesParser;
+            var inchifact = InChIGeneratorFactory.Instance;
             Assert.IsTrue(inchifact.GetInChIGenerator(smipar.ParseSmiles("[12CH4]")).InChI.Contains("/i"));
             Assert.IsFalse(inchifact.GetInChIGenerator(smipar.ParseSmiles("C")).InChI.Contains("/i"));
+        }
+
+        // InChI only supports cumulenes of length 2 (CC=[C@]=CC) and 3
+        // (C/C=C=C=C=C/C) longer ones should be ignored
+        [TestMethod()]
+        public void LongerExtendedTetrahedralsIgnored()
+        {
+            var smipar = CDK.SilentSmilesParser;
+            var mol = smipar.ParseSmiles("CC=C=C=[C@]=C=C=CC");
+            var gen = InChIGeneratorFactory.Instance.GetInChIGenerator(mol);
+            Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
+            Assert.AreEqual("InChI=1S/C9H8/c1-3-5-7-9-8-6-4-2/h3-4H,1-2H3", gen.InChI);
         }
 
         /// <summary>

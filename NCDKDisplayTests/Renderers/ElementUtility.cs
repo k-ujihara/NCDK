@@ -48,7 +48,6 @@ namespace NCDK.Renderers
             return this.elements.Count;
         }
 
-
         public void Visit(IRenderingElement element, Transform transform)
         {
             var save = transform;
@@ -81,12 +80,12 @@ namespace NCDK.Renderers
             }
         }
 
-        public IList<IRenderingElement> GetElements()
+        public IReadOnlyList<IRenderingElement> GetElements()
         {
             return this.elements;
         }
 
-        public IList<IRenderingElement> GetAllSimpleElements(IRenderingElement root)
+        public IReadOnlyList<IRenderingElement> GetAllSimpleElements(IRenderingElement root)
         {
             elements.Clear();
             getElementGroups = false;
@@ -142,8 +141,7 @@ namespace NCDK.Renderers
                         string p2 = ToString(e.SecondPoint);
                         string p1T = ToString(TransformPoint(e.FirstPoint));
                         string p2T = ToString(TransformPoint(e.SecondPoint));
-                        string lineFormat = "Line [%s, %s] -> [%s, %s]\n";
-                        return string.Format(lineFormat, p1, p2, p1T, p2T);
+                        return $"Line [{p1}, {p2}] -> [{p1T}, {p2T}]\n";
                     }
                 case OvalElement e:
                     {
@@ -151,10 +149,10 @@ namespace NCDK.Renderers
                         string c = ToString(e.Coord.X, e.Coord.Y, r);
                         string p1 = ToString(TransformPoint(new Point(e.Coord.X - r, e.Coord.Y - r)));
                         string p2 = ToString(TransformPoint(new Point(e.Coord.X + r, e.Coord.Y + r)));
-                        return string.Format("Oval [%s] -> [%s, %s]\n", c, p1, p2);
+                        return $"Oval [{c}] -> [{p1}, {p2}]\n";
                     }
                 case AtomSymbolElement e:
-                    return string.Format("AtomSymbol [%s]\n", e.Text);
+                    return $"AtomSymbol [{e.Text}]\n";
                 case ElementGroup e:
                     return "Element Group\n";
                 default:

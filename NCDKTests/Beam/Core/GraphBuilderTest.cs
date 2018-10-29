@@ -456,5 +456,25 @@ namespace NCDK.Beam
               .Geometric(22, 32).Opposite(4, 16);
             Assert.AreEqual("CC(C)NC(C=1C=CC=2C(C1)=N\\C(=C3\\C=CC(/C=C3)=C\\4C=C/C(=C/5C=C/C(C=C5)=C/6\\N=C7C=CC(=CC7=N6)C(=N)NC(C)C)/O4)\\N2)=N.Cl", gb.Build().ToSmiles());
         }
+
+        [TestMethod()]
+        public void ExtendedCisTrans()
+        {
+            GraphBuilder gb = GraphBuilder.Create(6)
+                .Add(AtomImpl.AliphaticSubset.Carbon)
+                .Add(AtomImpl.AliphaticSubset.Carbon)
+                .Add(AtomImpl.AliphaticSubset.Carbon)
+                .Add(AtomImpl.AliphaticSubset.Carbon)
+                .Add(AtomImpl.AliphaticSubset.Carbon)
+                .Add(AtomImpl.AliphaticSubset.Carbon)
+                .ConnectWithSingleBond(0, 1)
+                .ConnectWithDoubleBond(1, 2)
+                .ConnectWithDoubleBond(2, 3)
+                .ConnectWithDoubleBond(3, 4)
+                .ConnectWithSingleBond(4, 5)
+                .CreateExtendedGeometric(1, 4)
+                .Configure(0, 5, Configuration.ConfigurationDoubleBond.Together);
+            Assert.AreEqual("C/C=C=C=C\\C", gb.Build().ToSmiles());
+        }
     }
 }

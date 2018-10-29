@@ -474,7 +474,7 @@ namespace NCDK.Modelings.Builder3D
                 throw new IOException("There was a problem getting the default stream: " + configFile);
             }
 
-            TextReader r = new StreamReader(ins);
+            var r = new StreamReader(ins);
             string s;
             int[] a = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -487,7 +487,7 @@ namespace NCDK.Modelings.Builder3D
                 throw new IOException("There was a problem getting the default stream: " + configFilevdW);
             }
 
-            TextReader rvdW = new StreamReader(insvdW);
+            var rvdW = new StreamReader(insvdW);
             string svdW;
             int ntvdW;
 
@@ -500,7 +500,7 @@ namespace NCDK.Modelings.Builder3D
                 throw new IOException("There was a problem getting the default stream: " + configFileDFSB);
             }
 
-            TextReader rDFSB = new StreamReader(insDFSB);
+            var rDFSB = new StreamReader(insDFSB);
             string sDFSB;
             int ntDFSB;
 

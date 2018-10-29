@@ -26,7 +26,6 @@ using NCDK.Graphs;
 using NCDK.Isomorphisms.Matchers;
 using System.Collections;
 using System.Collections.Generic;
-using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.Isomorphisms
 {
@@ -61,9 +60,6 @@ namespace NCDK.Isomorphisms
         /// <summary>The bond matcher to determine atom feasibility.</summary>
         private readonly BondMatcher bondMatcher;
 
-        /// <summary>Is the query matching query atoms/bonds etc?</summary>
-        private readonly bool queryMatching;
-
         /// <summary>
         /// Non-public constructor for-now the atom/bond semantics are fixed.
         /// </summary>
@@ -77,12 +73,12 @@ namespace NCDK.Isomorphisms
             this.bondMatcher = bondMatcher;
             this.bonds1 = EdgeToBondMap.WithSpaceFor(query);
             this.g1 = GraphUtil.ToAdjList(query, bonds1);
-            this.queryMatching = query is IQueryAtomContainer;
+            DetermineFilters(query);
         }
 
         public override int[] Match(IAtomContainer target)
         {
-            return MatchAll(target).GetStereochemistry().First();
+            return MatchAll(target).First();
         }
 
         public override Mappings MatchAll(IAtomContainer target)
@@ -90,7 +86,8 @@ namespace NCDK.Isomorphisms
             var bonds2 = EdgeToBondMap.WithSpaceFor(target);
             var g2 = GraphUtil.ToAdjList(target, bonds2);
             var iterable = new UllmannIterable(query, target, g1, g2, bonds1, bonds2, atomMatcher, bondMatcher);
-            return new Mappings(query, target, iterable);
+            var mappings = new Mappings(query, target, iterable);
+            return Filter(mappings, query, target);
         }
 
         /// <summary>

@@ -130,7 +130,7 @@ namespace NCDK.LibIO.CML
             }
             catch (Exception exception)
             {
-                Trace.TraceError("Could not load this list: ", CUSTOMIZERS_LIST);
+                Trace.TraceError($"Could not load this list: {CUSTOMIZERS_LIST}");
                 Debug.WriteLine(exception);
             }
         }

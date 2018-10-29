@@ -70,8 +70,9 @@ namespace NCDK.Isomorphisms
         /// <param name="bonds2">bond lookup of the target</param>
         /// <param name="atomMatcher">what semantic attributes (symbol, charge, query) determines atoms to be compatible</param>
         /// <param name="bondMatcher">what semantic attributes (order/aromatic, query) determines bonds to be compatible</param>
-        public VFSubState(IAtomContainer container1, IAtomContainer container2, int[][] g1, int[][] g2, EdgeToBondMap bonds1,
-                EdgeToBondMap bonds2, AtomMatcher atomMatcher, BondMatcher bondMatcher)
+        public VFSubState(IAtomContainer container1, IAtomContainer container2, int[][] g1, int[][] g2, 
+            EdgeToBondMap bonds1, EdgeToBondMap bonds2, 
+            AtomMatcher atomMatcher, BondMatcher bondMatcher)
             : base(g1, g2)
         {
             this.container1 = container1;
@@ -116,7 +117,8 @@ namespace NCDK.Isomorphisms
         public override bool Feasible(int n, int m)
         {
             // verify atom semantic feasibility
-            if (!atomMatcher.Matches(container1.Atoms[n], container2.Atoms[m])) return false;
+            if (!atomMatcher.Matches(container1.Atoms[n], container2.Atoms[m]))
+                return false;
 
             // unmapped terminal vertices n and m are adjacent to
             int nTerminal1 = 0, nTerminal2 = 0;
@@ -127,16 +129,17 @@ namespace NCDK.Isomorphisms
             // terminal or remaining
             foreach (var n_prime in g1[n])
             {
-                int m_prime = m1[n_prime];
+                var m_prime = m1[n_prime];
 
                 // v is already mapped, there should be an edge {m, w} in g2.
                 if (m_prime != UNMAPPED)
                 {
-                    IBond bond2 = bonds2[m, m_prime];
+                    var bond2 = bonds2[m, m_prime];
                     if (bond2 == null) // the bond is not present in the target
                         return false;
                     // verify bond semantic feasibility
-                    if (!bondMatcher.Matches(bonds1[n, n_prime], bond2)) return false;
+                    if (!bondMatcher.Matches(bonds1[n, n_prime], bond2))
+                        return false;
                 }
                 else
                 {

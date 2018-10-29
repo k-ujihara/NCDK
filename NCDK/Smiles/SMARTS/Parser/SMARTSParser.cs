@@ -53,6 +53,7 @@ namespace NCDK.Smiles.SMARTS.Parser
     // @cdk.module  smarts
     // @cdk.keyword SMARTS
     // @cdk.keyword substructure search
+    [System.Obsolete]
     internal class SMARTSParser/*@bgen(jjtree)*/
     {/*@bgen(jjtree)*/
         protected JJTSMARTSParserState jjtree = new JJTSMARTSParserState();
@@ -64,19 +65,19 @@ namespace NCDK.Smiles.SMARTS.Parser
         public static QueryAtomContainer Parse(string smarts, IChemObjectBuilder builder)
         {
             QueryAtomContainer container = null;
-            StringReader reader = new StringReader(smarts);
             try
             {
-                SMARTSParser parser = new SMARTSParser(reader);
-                ASTStart start = parser.Start();
-                SmartsQueryVisitor visitor
-                                   = new SmartsQueryVisitor(builder);
-                container = (QueryAtomContainer)start.JjtAccept(visitor, null);
+                using (var reader = new StringReader(smarts))
+                {
+                    var parser = new SMARTSParser(reader);
+                    var start = parser.Start();
+                    var visitor = new SmartsQueryVisitor(builder);
+                    container = (QueryAtomContainer)start.JjtAccept(visitor, null);
+                }
             }
             catch (ParseException exception)
             {
-                throw new ArgumentException("The string " + smarts + " is not a valid" +
-                  " SMARTS string: " + exception.Message, exception);
+                throw new ArgumentException($"The string {smarts} is not a valid SMARTS string: {exception.Message}", nameof(smarts), exception);
             }
             return container;
         }
@@ -714,7 +715,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Token secondToken;
             Token rightBracket;
             ASTAtomicMass massNode = null;
-            StringBuilder mapidx = new StringBuilder();
+            var mapidx = new StringBuilder();
             try
             {
                 switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
@@ -2024,7 +2025,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) TotalHCount */
             ASTTotalHCount jjtn000 = new ASTTotalHCount(JJTTOTALHCOUNT);
             bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); var digits = new StringBuilder();
             try
             {
                 Jj_consume_token(H);
@@ -2069,7 +2070,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) ImplicitHCount */
             ASTImplicitHCount jjtn000 = new ASTImplicitHCount(JJTIMPLICITHCOUNT);
             bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); var digits = new StringBuilder();
             try
             {
                 Jj_consume_token(h);
@@ -2114,7 +2115,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) ExplicitConnectivity */
             ASTExplicitConnectivity jjtn000 = new ASTExplicitConnectivity(JJTEXPLICITCONNECTIVITY);
             bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); var digits = new StringBuilder();
             try
             {
                 Jj_consume_token(D);
@@ -2159,7 +2160,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) AtomicNumber */
             ASTAtomicNumber jjtn000 = new ASTAtomicNumber(JJTATOMICNUMBER);
             bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); var digits = new StringBuilder();
             try
             {
                 Jj_consume_token(T_BOND);
@@ -2222,7 +2223,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) Charge */
             ASTCharge jjtn000 = new ASTCharge(JJTCHARGE);
             bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); var digits = new StringBuilder();
             try
             {
                 if (Jj_2_3(2))
@@ -2437,7 +2438,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) PeriodicGroupNumber */
             ASTPeriodicGroupNumber jjtn000 = new ASTPeriodicGroupNumber(JJTPERIODICGROUPNUMBER);
             bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); var digits = new StringBuilder();
             try
             {
                 Jj_consume_token(G);
@@ -2478,7 +2479,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) TotalConnectivity */
             ASTTotalConnectivity jjtn000 = new ASTTotalConnectivity(JJTTOTALCONNECTIVITY);
             bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); var digits = new StringBuilder();
             try
             {
                 Jj_consume_token(X);
@@ -2523,7 +2524,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) Valence */
             ASTValence jjtn000 = new ASTValence(JJTVALENCE);
             bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); var digits = new StringBuilder();
             try
             {
                 Jj_consume_token(v);
@@ -2568,7 +2569,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) RingMembership */
             ASTRingMembership jjtn000 = new ASTRingMembership(JJTRINGMEMBERSHIP);
             bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); var digits = new StringBuilder();
             try
             {
                 Jj_consume_token(R);
@@ -2613,7 +2614,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) SmallestRingSize */
             ASTSmallestRingSize jjtn000 = new ASTSmallestRingSize(JJTSMALLESTRINGSIZE);
             bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); var digits = new StringBuilder();
             try
             {
                 Jj_consume_token(r);
@@ -2734,7 +2735,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) AtomicMass */
             ASTAtomicMass jjtn000 = new ASTAtomicMass(JJTATOMICMASS);
             bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); var digits = new StringBuilder();
             try
             {
                 label_18:
@@ -2808,7 +2809,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) Chirality */
             ASTChirality jjtn000 = new ASTChirality(JJTCHIRALITY);
             bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); var digits = new StringBuilder();
             try
             {
                 Jj_consume_token(R_BOND);

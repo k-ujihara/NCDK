@@ -201,6 +201,11 @@ namespace NCDK.Stereo
                 return elements[v].type;
         }
 
+        internal bool IsSymmetryChecked()
+        {
+            return checkSymmetry;
+        }
+
         /// <summary>
         /// Is the atom be a stereocenter (i.e. <see cref="CenterType.True"/> or <see cref="CenterType.Para"/>).
         /// </summary>
@@ -503,7 +508,7 @@ namespace NCDK.Stereo
         /// <returns>type of stereo chemistry</returns>
         private CoordinateType SupportedType(int i, int v, int d, int h, int x)
         {
-            IAtom atom = container.Atoms[i];
+            var atom = container.Atoms[i];
 
             // the encoding a bit daunting and to be concise short variable names
             // are used. these parameters make no distinction between implicit/
@@ -529,22 +534,31 @@ namespace NCDK.Stereo
                 case 5: // boron
                     return q == -1 && v == 4 && x == 4 ? CoordinateType.Tetracoordinate : CoordinateType.None;
                 case 6: // carbon
-                    if (v != 4 || q != 0) return CoordinateType.None;
-                    if (x == 2) return CoordinateType.Bicoordinate;
-                    if (x == 3) return CoordinateType.Tricoordinate;
-                    if (x == 4) return CoordinateType.Tetracoordinate;
+                    if (v != 4 || q != 0)
+                        return CoordinateType.None;
+                    if (x == 2)
+                        return CoordinateType.Bicoordinate;
+                    if (x == 3)
+                        return CoordinateType.Tricoordinate;
+                    if (x == 4)
+                        return CoordinateType.Tetracoordinate;
                     return CoordinateType.None;
                 case 7: // nitrogen
-                    if (x == 2 && v == 3 && d == 2 && q == 0) return CoordinateType.Tricoordinate;
-                    if (x == 3 && v == 4 && q == 1) return CoordinateType.Tricoordinate;
+                    if (x == 2 && v == 3 && d == 2 && q == 0)
+                        return CoordinateType.Tricoordinate;
+                    if (x == 3 && v == 4 && q == 1)
+                        return CoordinateType.Tricoordinate;
                     if (x == 4 && h == 0 && (q == 0 && v == 5 || q == 1 && v == 4))
                         return VerifyTerminalHCount(i) ? CoordinateType.Tetracoordinate : CoordinateType.None;
                     // note: bridgehead not allowed by InChI but makes sense
-                    return x == 3 && h == 0 && (IsBridgeHeadNitrogen(i) || InThreeMemberRing(i)) ? CoordinateType.Tetracoordinate : CoordinateType.None;
+                    return x == 3 && h == 0 && (IsBridgeHead(i) || InThreeMemberRing(i)) ? CoordinateType.Tetracoordinate : CoordinateType.None;
                 case 14: // silicon
-                    if (v != 4 || q != 0) return CoordinateType.None;
-                    if (x == 3) return CoordinateType.Tricoordinate;
-                    if (x == 4) return CoordinateType.Tetracoordinate;
+                    if (v != 4 || q != 0)
+                        return CoordinateType.None;
+                    if (x == 3)
+                        return CoordinateType.Tricoordinate;
+                    if (x == 4)
+                        return CoordinateType.Tetracoordinate;
                     return CoordinateType.None;
                 case 15: // phosphorus
                     if (x == 4 && (q == 0 && v == 5 && h == 0 || q == 1 && v == 4))
@@ -555,7 +569,8 @@ namespace NCDK.Stereo
                         return VerifyTerminalHCount(i) ? CoordinateType.Tetracoordinate : CoordinateType.None;
                     goto case 16;
                 case 16: // sulphur
-                    if (h > 0) return CoordinateType.None;
+                    if (h > 0)
+                        return CoordinateType.None;
                     if (q == 0 && ((v == 4 && x == 3) || (v == 6 && x == 4)))
                         return VerifyTerminalHCount(i) ? CoordinateType.Tetracoordinate : CoordinateType.None;
                     if (q == 1 && ((v == 3 && x == 3) || (v == 5 && x == 4)))
@@ -563,15 +578,20 @@ namespace NCDK.Stereo
                     return CoordinateType.None;
 
                 case 32: // germanium
-                    if (v != 4 || q != 0) return CoordinateType.None;
-                    if (x == 3) return CoordinateType.Tricoordinate;
-                    if (x == 4) return CoordinateType.Tetracoordinate;
+                    if (v != 4 || q != 0)
+                        return CoordinateType.None;
+                    if (x == 3)
+                        return CoordinateType.Tricoordinate;
+                    if (x == 4)
+                        return CoordinateType.Tetracoordinate;
                     return CoordinateType.None;
                 case 33: // arsenic
-                    if (x == 4 && q == 1 && v == 4) return VerifyTerminalHCount(i) ? CoordinateType.Tetracoordinate : CoordinateType.None;
+                    if (x == 4 && q == 1 && v == 4)
+                        return VerifyTerminalHCount(i) ? CoordinateType.Tetracoordinate : CoordinateType.None;
                     return CoordinateType.None;
                 case 34: // selenium
-                    if (h > 0) return CoordinateType.None;
+                    if (h > 0)
+                        return CoordinateType.None;
                     if (q == 0 && ((v == 4 && x == 3) || (v == 6 && x == 4)))
                         return VerifyTerminalHCount(i) ? CoordinateType.Tetracoordinate : CoordinateType.None;
                     if (q == 1 && ((v == 3 && x == 3) || (v == 5 && x == 4)))
@@ -632,7 +652,7 @@ namespace NCDK.Stereo
                     var ws = g[atoms[i][j]];
                     foreach (var w in g[atoms[i][j]])
                     {
-                        IAtom atom = container.Atoms[w];
+                        var atom = container.Atoms[w];
                         if (GetAtomicNumber(atom) == 1 && atom.MassNumber == null)
                         {
                             hCount++;
@@ -695,17 +715,78 @@ namespace NCDK.Stereo
             // is a neighbors neighbor adjacent?
             foreach (var w in g[v])
                 foreach (var u in g[w])
-                    if (BitArrays.GetValue(adj, u)) return true;
+                    if (BitArrays.GetValue(adj, u))
+                        return true;
             return false;
         }
 
-        private bool IsBridgeHeadNitrogen(int v)
+        private void VisitPart(bool[] visit, IAtom atom)
         {
-            if (g[v].Length != 3)
+            visit[container.Atoms.IndexOf(atom)] = true;
+            foreach (var bond in container.GetConnectedBonds(atom))
+            {
+                var nbr = bond.GetOther(atom);
+                if (!visit[container.Atoms.IndexOf(nbr)])
+                    VisitPart(visit, nbr);
+            }
+        }
+
+        /// <summary>
+        /// Detects if a bond is a fused-ring bond (e.g. napthalene). A bond is a
+        /// ring fusion if deleting it creates a new component. Or to put it another
+        /// way if using a flood-fill we can't visit every atom without going through
+        /// this bond, not we only check ring bonds.
+        /// </summary>
+        /// <param name="bond">the bond</param>
+        /// <returns>the bond is a fused bond</returns>
+        private bool IsFusedBond(IBond bond)
+        {
+            var beg = bond.Begin;
+            var end = bond.End;
+            if (GetRingDegree(container.Atoms.IndexOf(beg)) < 3
+             && GetRingDegree(container.Atoms.IndexOf(end)) < 3)
                 return false;
-            return ringSearch.Cyclic(v, g[v][0]) &&
-                   ringSearch.Cyclic(v, g[v][1]) &&
-                   ringSearch.Cyclic(v, g[v][2]);
+            var avisit = new bool[container.Bonds.Count];
+            avisit[container.Atoms.IndexOf(beg)] = true;
+            avisit[container.Atoms.IndexOf(end)] = true;
+            int count = 0;
+            foreach (var nbond in container.GetConnectedBonds(beg))
+            {
+                var nbr = nbond.GetOther(beg);
+                if (nbr.Equals(end) || !ringSearch.Cyclic(nbond))
+                    continue;
+                if (count == 0)
+                {
+                    count++;
+                    VisitPart(avisit, nbr);
+                }
+                else
+                {
+                    if (!avisit[container.Atoms.IndexOf(nbr)])
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        private int GetRingDegree(int v)
+        {
+            int x = 0;
+            foreach (int w in g[v])
+                if (ringSearch.Cyclic(v, w))
+                    x++;
+            return x;
+        }
+
+        private bool IsBridgeHead(int v)
+        {
+            if (GetRingDegree(v) < 3)
+                return false;
+            var atom = container.Atoms[v];
+            foreach (var bond in container.GetConnectedBonds(atom))
+                if (IsFusedBond(bond))
+                    return false;
+            return true;
         }
 
         /// <summary>
@@ -813,7 +894,8 @@ namespace NCDK.Stereo
                 // equivalence
                 for (int i = 0; i < neighbors.Length; i++)
                 {
-                    if (neighbors[i] != other) this.neighbors[n++] = neighbors[i];
+                    if (neighbors[i] != other)
+                        this.neighbors[n++] = neighbors[i];
                 }
             }
         }

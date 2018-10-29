@@ -69,7 +69,7 @@ namespace NCDK.FaulonSignatures.Chemistry
                 {
                     string line;
                     int i = 0;
-                    List<string> block = new List<string>();
+                    var block = new List<string>();
                     while ((line = reader.ReadLine()) != null)
                     {
                         if (line.StartsWith("$$$$", StringComparison.Ordinal))

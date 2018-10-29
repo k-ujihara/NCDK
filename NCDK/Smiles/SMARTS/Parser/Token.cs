@@ -23,6 +23,7 @@ namespace NCDK.Smiles.SMARTS.Parser
     /// <summary>
     /// Describes the input token stream.
     /// </summary>
+    [System.Obsolete]
     internal class Token
     {
         /// <summary>

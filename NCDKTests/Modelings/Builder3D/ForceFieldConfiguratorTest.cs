@@ -115,7 +115,7 @@ namespace NCDK.Modelings.Builder3D
             string husmi = "NC(=O)NO";
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser parser = new SmilesParser(builder);
-            IAtomContainer hu = parser.ParseSmiles(husmi);
+            var hu = parser.ParseSmiles(husmi);
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
             ffc.SetForceFieldConfigurator("mmff94", builder);
             IAtom N1 = hu.Atoms[0];
@@ -132,7 +132,7 @@ namespace NCDK.Modelings.Builder3D
             string pasmi = "NC(=O)CC";
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser parser = new SmilesParser(builder);
-            IAtomContainer pa = parser.ParseSmiles(pasmi);
+            var pa = parser.ParseSmiles(pasmi);
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
             ffc.SetForceFieldConfigurator("mmff94", builder);
             IAtom amideN = pa.Atoms[0];
@@ -147,7 +147,7 @@ namespace NCDK.Modelings.Builder3D
             string usmi = "NC(N)=O";
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser parser = new SmilesParser(builder);
-            IAtomContainer urea = parser.ParseSmiles(usmi);
+            var urea = parser.ParseSmiles(usmi);
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
             ffc.SetForceFieldConfigurator("mmff94", builder);
             IAtom amideN = urea.Atoms[0];
@@ -195,7 +195,7 @@ namespace NCDK.Modelings.Builder3D
             string smiles = "CC(C)C1CCC(CC1)C(=O)NC(Cc1ccccc1)C(=O)O";
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser parser = new SmilesParser(builder);
-            IAtomContainer bugmol = parser.ParseSmiles(smiles);
+            var bugmol = parser.ParseSmiles(smiles);
             forceFieldConfigurator.SetForceFieldConfigurator("mmff94", builder);
             IAtom amideN = bugmol.Atoms[11];
             forceFieldConfigurator.ConfigureMMFF94BasedAtom(amideN, new HOSECodeGenerator().GetHOSECode(bugmol, amideN, 3), false);
@@ -209,7 +209,7 @@ namespace NCDK.Modelings.Builder3D
             string smiles = "CC[N+](=O)[O-]";
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser parser = new SmilesParser(builder);
-            IAtomContainer bugmol = parser.ParseSmiles(smiles);
+            var bugmol = parser.ParseSmiles(smiles);
             forceFieldConfigurator.SetForceFieldConfigurator("mmff94", builder);
             IAtom amideN = bugmol.Atoms[2];
             forceFieldConfigurator.ConfigureMMFF94BasedAtom(amideN, new HOSECodeGenerator().GetHOSECode(bugmol, amideN, 3), false);
@@ -223,7 +223,7 @@ namespace NCDK.Modelings.Builder3D
             string smiles = "CS(=O)(=O)NC(=O)NN1CC2CCCC2C1";
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser parser = new SmilesParser(builder);
-            IAtomContainer bugmol = parser.ParseSmiles(smiles);
+            var bugmol = parser.ParseSmiles(smiles);
             forceFieldConfigurator.SetForceFieldConfigurator("mmff94", builder);
             IAtom sulphur = bugmol.Atoms[1];
             HOSECodeGenerator hscodegen = new HOSECodeGenerator();
@@ -238,7 +238,7 @@ namespace NCDK.Modelings.Builder3D
             string smiles = "CNC(=O)N(C)N=O";
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser parser = new SmilesParser(builder);
-            IAtomContainer bugmol = parser.ParseSmiles(smiles);
+            var bugmol = parser.ParseSmiles(smiles);
             forceFieldConfigurator.SetForceFieldConfigurator("mmff94", builder);
             IAtom nitrogen1 = bugmol.Atoms[1];
             IAtom nitrogen2 = bugmol.Atoms[4];
@@ -258,7 +258,7 @@ namespace NCDK.Modelings.Builder3D
             string smiles = "O=C1N(C(=O)C(C(=O)N1)(CC)CC)C";
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             SmilesParser parser = new SmilesParser(builder);
-            IAtomContainer bugmol = parser.ParseSmiles(smiles);
+            var bugmol = parser.ParseSmiles(smiles);
             forceFieldConfigurator.SetForceFieldConfigurator("mmff94", builder);
             IAtom nitrogen1 = bugmol.Atoms[2];
             HOSECodeGenerator hscodegen = new HOSECodeGenerator();

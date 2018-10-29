@@ -43,8 +43,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestAmine()
         {
-            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("NC");
+            var sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var mol = sp.ParseSmiles("NC");
             Result<int> result = (Result<int>)Descriptor.Calculate(mol).Value;
             Assert.AreEqual(1, result.Value);
         }
@@ -53,7 +53,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void Test()
         {
-            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+            var builder = Silent.ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("N");
             mol.Atoms.Add(a1);

@@ -66,7 +66,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestIsValidSum_IMolecularFormula()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(ifac.GetMajorIsotope("C"), 1);
             formula.Add(ifac.GetMajorIsotope("H"), 100);
 
@@ -83,7 +83,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestIsValid_NOT()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(ifac.GetMajorIsotope("C"), 1);
             formula.Add(ifac.GetMajorIsotope("H"), 100);
 
@@ -102,7 +102,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestIsValid_IMolecularFormula()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(ifac.GetMajorIsotope("C"), 1);
             formula.Add(ifac.GetMajorIsotope("H"), 100);
             formula.Charge = 0;
@@ -121,7 +121,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestIsValid_NOT_2Rules()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(ifac.GetMajorIsotope("C"), 1);
             formula.Add(ifac.GetMajorIsotope("H"), 100);
             formula.Charge = 0;
@@ -143,7 +143,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestIsValidSum_True_2Rules()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(ifac.GetMajorIsotope("C"), 1);
             formula.Add(ifac.GetMajorIsotope("H"), 4);
             formula.Charge = 0;
@@ -162,7 +162,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestIsValid_True_2Rules()
         {
-            IMolecularFormula formula = new MolecularFormula();
+            var formula = new MolecularFormula();
             formula.Add(ifac.GetMajorIsotope("C"), 1);
             formula.Add(ifac.GetMajorIsotope("H"), 4);
             formula.Charge = 0;

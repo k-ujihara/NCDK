@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public override IImplementationSpecification Specification => specification;
         private static readonly DescriptorSpecification specification =
             new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/" + "chemoinformatics-algorithms/#mannholdLogP",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mannholdLogP",
                 typeof(MannholdLogPDescriptor).FullName,
                 "The Chemistry Development Kit");
 
@@ -99,7 +99,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     }
                 }
             }
-            double mLogP = 1.46 + 0.11 * carbonCount - 0.11 * heteroCount;
+            var mLogP = 1.46 + 0.11 * carbonCount - 0.11 * heteroCount;
 
             return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(mLogP), DescriptorNames);
         }

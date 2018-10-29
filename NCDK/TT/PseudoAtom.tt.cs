@@ -35,7 +35,6 @@ using System.Text;
 namespace NCDK.Default
 {
     /// <inheritdoc cref="IPseudoAtom"/>
-    // @cdk.githash
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class PseudoAtom
@@ -73,12 +72,12 @@ namespace NCDK.Default
         public PseudoAtom(IElement element)
             : base(element)
         {
+            AtomicNumber = 0;
             if (element is IPseudoAtom aa)
                 this.label = aa.Label;
             else
             {
-                base.symbol = "R";
-                this.label = element.Symbol;
+                this.label = "R";
             }
         }
 
@@ -148,7 +147,6 @@ namespace NCDK.Default
 namespace NCDK.Silent
 {
     /// <inheritdoc cref="IPseudoAtom"/>
-    // @cdk.githash
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
     public class PseudoAtom
@@ -186,12 +184,12 @@ namespace NCDK.Silent
         public PseudoAtom(IElement element)
             : base(element)
         {
+            AtomicNumber = 0;
             if (element is IPseudoAtom aa)
                 this.label = aa.Label;
             else
             {
-                base.symbol = "R";
-                this.label = element.Symbol;
+                this.label = "R";
             }
         }
 

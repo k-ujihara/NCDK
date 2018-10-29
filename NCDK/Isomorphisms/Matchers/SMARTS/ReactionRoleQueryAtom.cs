@@ -26,6 +26,7 @@ using System.Text;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
+    [Obsolete]
     [Flags]
     public enum ReactionRoles
     {
@@ -38,6 +39,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// <summary>
     /// Matches atoms with a particular role in a reaction.
     /// </summary>
+    [Obsolete]
     public class ReactionRoleQueryAtom : SMARTSAtom
     {
         private readonly ReactionRoles role;
@@ -72,7 +74,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             if ((role & ReactionRoles.Reactant) != 0)
                 sb.Append("Reactant");
             if ((role & ReactionRoles.Agent) != 0)

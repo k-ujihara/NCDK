@@ -99,7 +99,7 @@ namespace NCDK.Hash
         // @cdk.inchi InChI=1S/C13H17N/c1-10-2-4-11(5-3-10)14-12-6-7-13(14)9-8-12/h2-5,12-13H,6-9H2,1H3
         private IAtomContainer CID44333798()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             IAtom[] as_ = new IAtom[]{new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"),
                 new Atom("C"), new Atom("C"), new Atom("N"), new Atom("C"), new Atom("C"), new Atom("C"),
                 new Atom("C"), new Atom("C"), new Atom("C"),};
@@ -119,7 +119,7 @@ namespace NCDK.Hash
         // @cdk.inchi InChI=1S/C13H17N/c1-10-2-4-11(5-3-10)14(12-6-7-12)13-8-9-13/h2-5,12-13H,6-9H2,1H3
         private IAtomContainer CID57170558()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             IAtom[] as_ = new IAtom[]{new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"),
                 new Atom("C"), new Atom("C"), new Atom("N"), new Atom("C"), new Atom("C"), new Atom("C"),
                 new Atom("C"), new Atom("C"), new Atom("C"),};

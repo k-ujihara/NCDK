@@ -289,7 +289,7 @@ namespace NCDK.IO.Iterator
                     }
                     catch (CDKException e)
                     {
-                        Trace.TraceError("Could not set forceReadAs3DCoords setting: ", e.Message);
+                        Trace.TraceError($"Could not set forceReadAs3DCoords setting: {e.Message}");
                         Debug.WriteLine(e);
                     }
                 }
@@ -301,8 +301,8 @@ namespace NCDK.IO.Iterator
         public void TestBrokenSDF()
         {
             string path = "NCDK.Data.MDL.bug3488307.sdf";
-            Stream ins = ResourceLoader.GetAsStream(path);
-            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+            var ins = ResourceLoader.GetAsStream(path);
+            var builder = Silent.ChemObjectBuilder.Instance;
             EnumerableSDFReader reader = new EnumerableSDFReader(ins, builder)
             {
                 Skip = true // skip over null entries and keep reading until EOF
@@ -324,8 +324,8 @@ namespace NCDK.IO.Iterator
         public void TestV3000MolfileFormat()
         {
             string path = "NCDK.Data.MDL.molV3000.mol";
-            Stream ins = ResourceLoader.GetAsStream(path);
-            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+            var ins = ResourceLoader.GetAsStream(path);
+            var builder = Silent.ChemObjectBuilder.Instance;
             EnumerableSDFReader reader = new EnumerableSDFReader(ins, builder)
             {
                 Skip = true // skip over null entries and keep reading until EOF

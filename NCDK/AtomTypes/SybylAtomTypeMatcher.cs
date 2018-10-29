@@ -48,10 +48,10 @@ namespace NCDK.AtomTypes
 
         private SybylAtomTypeMatcher(IChemObjectBuilder builder)
         {
-            Stream stream = ResourceLoader.GetAsStream(SYBYL_ATOM_TYPE_LIST);
+            var stream = ResourceLoader.GetAsStream(SYBYL_ATOM_TYPE_LIST);
             factory = AtomTypeFactory.GetInstance(stream, "owl", builder);
             cdkMatcher = CDKAtomTypeMatcher.GetInstance(builder);
-            Stream mapStream = ResourceLoader.GetAsStream(CDK_TO_SYBYL_MAP);
+            var mapStream = ResourceLoader.GetAsStream(CDK_TO_SYBYL_MAP);
             mapper = AtomTypeMapper.GetInstance(CDK_TO_SYBYL_MAP, mapStream);
         }
 

@@ -265,7 +265,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         {
 
             int countNodes = 1;
-            List<string> map = new List<string>();
+            var map = new List<string>();
             compGraphNodesCZero = new List<int>(); //Initialize the compGraphNodesCZero List
             LabelContainer labelContainer = LabelContainer.Instance;
             compGraphNodes.Clear();

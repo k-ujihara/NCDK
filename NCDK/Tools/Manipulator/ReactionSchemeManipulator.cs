@@ -96,7 +96,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>A List with all ID</returns>
         public static IEnumerable<string> GetAllIDs(IReactionScheme scheme)
         {
-            List<string> IDlist = new List<string>();
+            var IDlist = new List<string>();
             if (scheme.Id != null) IDlist.Add(scheme.Id);
             foreach (var reaction in scheme.Reactions)
             {

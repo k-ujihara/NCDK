@@ -251,7 +251,7 @@ namespace NCDK.Fingerprints.Model
 
             try
             {
-                using (Stream ins = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile))
+                using (var ins = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile))
                 {
                     EnumerableSDFReader rdr = new EnumerableSDFReader(ins, ChemObjectBuilder.Instance);
 
@@ -315,7 +315,7 @@ namespace NCDK.Fingerprints.Model
             bool failed = false;
             try
             {
-                using (Stream ins = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile))
+                using (var ins = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile))
                 {
                     EnumerableSDFReader rdr = new EnumerableSDFReader(ins, ChemObjectBuilder.Instance);
 

@@ -23,7 +23,6 @@
 
 using System;
 using System.Reflection;
-using static NCDK.DoubleBondConformation;
 
 namespace NCDK
 {
@@ -46,7 +45,7 @@ namespace NCDK
     {
         public static bool IsUnset(this DoubleBondConformation value)
         {
-            return value == Unset;
+            return value == DoubleBondConformation.Unset;
         }
 
         /// <summary>
@@ -55,18 +54,22 @@ namespace NCDK
         /// </summary>
         /// <returns>the inverse conformation</returns>
         public static DoubleBondConformation Invert(this DoubleBondConformation value)
-            => value == Together ? Opposite : Together;
+            => value == DoubleBondConformation.Together 
+             ? DoubleBondConformation.Opposite 
+             : DoubleBondConformation.Together;
 
         public static DoubleBondConformation ToConformation(this StereoConfigurations configure)
         {
             switch (configure)
             {
+                case StereoConfigurations.Unset:
+                    return DoubleBondConformation.Unset;
                 case StereoConfigurations.Together:
-                    return Together;
+                    return DoubleBondConformation.Together;
                 case StereoConfigurations.Opposite:
-                    return Opposite;
+                    return DoubleBondConformation.Opposite;
                 default:
-                    throw new ArgumentException("Cannot map config to enum: " + configure);
+                    throw new ArgumentException($"Cannot map enum to config: {configure}");
             }
         }
 
@@ -74,12 +77,14 @@ namespace NCDK
         {
             switch (conformation)
             {
+                case DoubleBondConformation.Unset:
+                    return StereoConfigurations.Unset;
                 case DoubleBondConformation.Together:
                     return StereoConfigurations.Together;
                 case DoubleBondConformation.Opposite:
                     return StereoConfigurations.Opposite;
                 default:
-                    throw new System.ArgumentException("Cannot map enum to config: " + conformation);
+                    throw new ArgumentException($"Cannot map enum to config: {conformation}");
             }
         }
     }

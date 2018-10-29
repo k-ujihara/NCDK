@@ -202,7 +202,7 @@ namespace NCDK.IO
             {
                 for (int i = 1; i <= reactantCount; i++)
                 {
-                    StringBuilder molFile = new StringBuilder();
+                    var molFile = new StringBuilder();
                     input.ReadLine(); // announceMDLFileLine
                     string molFileLine = "";
                     do
@@ -242,7 +242,7 @@ namespace NCDK.IO
             {
                 for (int i = 1; i <= agentCount; i++)
                 {
-                    StringBuilder molFile = new StringBuilder();
+                    var molFile = new StringBuilder();
                     input.ReadLine(); // String announceMDLFileLine =
                     string molFileLine = "";
                     do
@@ -281,7 +281,7 @@ namespace NCDK.IO
             {
                 for (int i = 1; i <= productCount; i++)
                 {
-                    StringBuilder molFile = new StringBuilder();
+                    var molFile = new StringBuilder();
                     input.ReadLine(); // string announceMDLFileLine =
                     string molFileLine = "";
                     do

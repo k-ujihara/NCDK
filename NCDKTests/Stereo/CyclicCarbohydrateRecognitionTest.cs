@@ -135,7 +135,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void BetaDGlucose_Haworth()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, 4.16d, 1.66d));
             m.Atoms.Add(Atom("C", 1, 3.75d, 0.94d));
             m.Atoms.Add(Atom("C", 1, 4.16d, 0.23d));
@@ -197,7 +197,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void BetaDGlucose_Chair()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -0.77d, 10.34d));
             m.Atoms.Add(Atom("C", 1, 0.03d, 10.13d));
             m.Atoms.Add(Atom("O", 0, 0.83d, 10.34d));
@@ -259,7 +259,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void BetaDGlucoseWithExplicitHydrogens_Haworth()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 4.16d, 1.66d));
             m.Atoms.Add(Atom("C", 0, 3.75d, 0.94d));
             m.Atoms.Add(Atom("C", 0, 4.16d, 0.23d));
@@ -334,7 +334,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Oxpene()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, 1.39d, 3.65d));
             m.Atoms.Add(Atom("C", 2, 2.22d, 3.65d));
             m.Atoms.Add(Atom("C", 1, 2.93d, 4.07d));
@@ -408,7 +408,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Atp_Haworth()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("O", 0, 2.56d, -6.46d));
             m.Atoms.Add(Atom("C", 1, 1.90d, -6.83d));
             m.Atoms.Add(Atom("C", 1, 2.15d, -7.46d));
@@ -508,7 +508,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Hexopyranose()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("O", 1, 0.00d, 2.48d));
             m.Atoms.Add(Atom("C", 2, 0.71d, 2.06d));
             m.Atoms.Add(Atom("C", 1, 0.71d, 1.24d));
@@ -554,7 +554,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void BetaDGlucose_Chair_Rotated()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -0.77d, 10.34d));
             m.Atoms.Add(Atom("C", 1, 0.03d, 10.13d));
             m.Atoms.Add(Atom("O", 0, 0.83d, 10.34d));
@@ -627,7 +627,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void HaworthFalsePositive()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("C", 2, -0.71d, 0.41d));
             m.Atoms.Add(Atom("C", 2, 0.71d, -0.41d));
             m.Atoms.Add(Atom("C", 2, 0.71d, 0.41d));
@@ -667,7 +667,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void RequireAtLeastTwoProjectedSubstituents()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(Atom("O", 0, -0.71d, 1.24d));
             m.Atoms.Add(Atom("C", 0, 0.00d, 0.83d));
             m.Atoms.Add(Atom("O", 0, 0.71d, 1.24d));

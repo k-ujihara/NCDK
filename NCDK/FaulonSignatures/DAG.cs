@@ -91,7 +91,7 @@ namespace NCDK.FaulonSignatures
 
             public override string ToString()
             {
-                StringBuilder parentString = new StringBuilder();
+                var parentString = new StringBuilder();
                 parentString.Append('[');
                 foreach (var parent in this.parents)
                 {
@@ -105,7 +105,7 @@ namespace NCDK.FaulonSignatures
                 {
                     parentString.Append(']');
                 }
-                StringBuilder childString = new StringBuilder();
+                var childString = new StringBuilder();
                 childString.Append('[');
                 foreach (var child in this.children)
                 {
@@ -765,7 +765,7 @@ namespace NCDK.FaulonSignatures
 
         public override string ToString()
         {
-            StringBuilder buffer = new StringBuilder();
+            var buffer = new StringBuilder();
             foreach (var layer in this)
             {
                 buffer.Append(layer);

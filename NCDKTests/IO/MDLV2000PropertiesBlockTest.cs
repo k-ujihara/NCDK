@@ -35,7 +35,7 @@ namespace NCDK.IO
     public class MDLV2000PropertiesBlockTest
     {
         private readonly MDLV2000Reader reader = new MDLV2000Reader(new StringReader(""));
-        private readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
         [TestMethod()]
         public void M_end()

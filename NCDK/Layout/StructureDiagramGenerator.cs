@@ -72,11 +72,11 @@ namespace NCDK.Layout
 
         private IAtomContainer molecule;
         private IRingSet sssr;
+
         /// <summary>
-        /// The bond length used for laying out the molecule. 
-        /// The default value is 1.5.
+        /// The bond length used for laying out the molecule.
         /// </summary>
-        public double BondLength { get; set; } = DefaultBondLength;
+        public double BondLength { get; } = DefaultBondLength;
 
         private Vector2 firstBondVector;
         private RingPlacer ringPlacer = new RingPlacer();
@@ -149,7 +149,7 @@ namespace NCDK.Layout
         /// <summary>
         /// <para>Convenience method to generate 2D coordinates for a reaction. If atom-atom
         /// maps are present on a reaction, the substructures are automatically aligned.</para>
-        /// <para>This feature can be disabled by changing the <see cref="SetAlignMappedReaction(bool)"/>.</para>
+        /// <para>This feature can be disabled by changing the <see cref="AlignMappedReaction"/>.</para>
         /// </summary>
         /// <param name="reaction">reaction to layout</param>
         /// <exception cref="CDKException">problem with layout</exception>
@@ -172,7 +172,7 @@ namespace NCDK.Layout
                 {
                     Cycles.MarkRingAtomsAndBonds(mol);
                     var cc = new ConnectedComponents(GraphUtil.ToAdjListSubgraph(mol, mapped));
-                    var parts = ConnectivityChecker.PartitionIntoMolecules(mol, cc.Components());
+                    var parts = ConnectivityChecker.PartitionIntoMolecules(mol, cc.GetComponents());
                     foreach (var part in parts)
                     {
                         // skip single atoms (unmapped)
@@ -203,7 +203,7 @@ namespace NCDK.Layout
                 {
                     Cycles.MarkRingAtomsAndBonds(mol);
                     var cc = new ConnectedComponents(GraphUtil.ToAdjListSubgraph(mol, mapped));
-                    var parts = ConnectivityChecker.PartitionIntoMolecules(mol, cc.Components());
+                    var parts = ConnectivityChecker.PartitionIntoMolecules(mol, cc.GetComponents());
 
                     // we only aligned the largest part
                     IAtomContainer largest = null;
@@ -215,6 +215,8 @@ namespace NCDK.Layout
 
                     afix.Clear();
                     bfix.Clear();
+
+                    bool aggresive = false;
 
                     if (largest != null && largest.Atoms.Count > 1)
                     {
@@ -228,12 +230,22 @@ namespace NCDK.Layout
                             var src = reference[idx];
                             if (src == null)
                                 continue;
+                            if (!aggresive)
+                            {
+                                // no way to get the container of 'src' without
+                                // lots of refactoring, instead we just use the
+                                // new API points - first checking these will not
+                                // fail
+                                if (src.Container != null
+                                    && atom.Container != null
+                                    && AtomPlacer.IsColinear(src, src.Bonds)
+                                       != AtomPlacer.IsColinear(atom, atom.Bonds))
+                                    continue;
+                            }
                             atom.Point2D = src.Point2D;
                             afix[atom] = src;
                         }
                     }
-
-                    bool aggresive = false;
 
                     if (afix.Any())
                     {
@@ -287,12 +299,71 @@ namespace NCDK.Layout
                                     }
                                 }
                             }
-                            // XXX: can do better
+                            
                             afix.Clear();
                             foreach (var bond in bfix)
                             {
                                 afix[bond.Begin] = null;
                                 afix[bond.End] = null;
+                            }
+
+                            int[] parts2 = new int[mol.Atoms.Count];
+                            int numParts = 0;
+                            var queue = new Deque<IAtom>();
+                            foreach (var atom in afix.Keys)
+                            {
+                                if (parts2[mol.Atoms.IndexOf(atom)] != 0)
+                                    continue;
+                                parts2[mol.Atoms.IndexOf(atom)] = ++numParts;
+                                foreach (var bond in mol.GetConnectedBonds(atom))
+                                {
+                                    if (bfix.Contains(bond))
+                                        queue.Add(bond.GetOther(atom));
+                                }
+                                while (queue.Any())
+                                {
+                                    var atom_ = queue.Poll();
+                                    if (parts2[mol.Atoms.IndexOf(atom_)] != 0)
+                                        continue;
+                                    parts2[mol.Atoms.IndexOf(atom_)] = numParts;
+                                    foreach (var bond in mol.GetConnectedBonds(atom_))
+                                    {
+                                        if (bfix.Contains(bond))
+                                            queue.Add(bond.GetOther(atom_));
+                                    }
+                                }
+                            }
+                            if (numParts > 1)
+                            {
+                                int best = 0;
+                                int bestSize = 0;
+                                for (int part = 1; part <= numParts; part++)
+                                {
+                                    int size = 0;
+                                    for (int i = 0; i < parts2.Length; i++)
+                                    {
+                                        if (parts2[i] == part)
+                                            ++size;
+                                    }
+                                    if (size > bestSize)
+                                    {
+                                        bestSize = size;
+                                        best = part;
+                                    }
+                                }
+
+                                var afixToRemove = new List<IAtom>();
+                                foreach (var atom in afix.Keys)
+                                {
+                                    if (parts2[mol.Atoms.IndexOf(atom)] != best)
+                                    {
+                                        afixToRemove.Add(atom);
+                                        foreach (var bond in mol.GetConnectedBonds(atom))
+                                            mol.Bonds.Remove(bond);
+                                    }
+                                }
+                                foreach (var atom in afixToRemove)
+                                    afix.Remove(atom);
                             }
                         }
                     }
@@ -303,7 +374,6 @@ namespace NCDK.Layout
 
                 // reorder reactants such that they are in the same order they appear on the right
                 reaction.Reactants.Sort(centerComparer);
-
             }
             else
             {
@@ -426,12 +496,12 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Set whether reaction reactants should be allignned to their product.
+        /// Whether reaction reactants should be aligned to their product.
         /// </summary>
-        /// <param name="align">align setting</param>
-        public void SetAlignMappedReaction(bool align)
+        public bool AlignMappedReaction
         {
-            this.alignMappedReaction = align;
+            get => this.alignMappedReaction;
+            set => this.alignMappedReaction = value;
         }
 
         /// <summary>

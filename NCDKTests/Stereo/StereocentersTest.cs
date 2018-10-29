@@ -781,31 +781,41 @@ namespace NCDK.Stereo
             None("[NH2+](=[NH+]C)C");
         }
 
+        [TestMethod()]
+        public void Bridgehead_nitrogens()
+        {
+            CreateTetrahedral("N1(CC2)CC2CC1");
+            // fused
+            None("N1(CCCC2)CCCC12");
+            // adjacent to fused (but not fused)
+            CreateTetrahedral("N1(c(cccc3)c32)CC2CC1");
+        }
+
         // assert the first atom of the SMILES is accepted as a tetrahedral center
         static void CreateTetrahedral(string smi)
         {
-            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            SmilesParser sp = CDK.SilentSmilesParser;
             Test(sp.ParseSmiles(smi), CoordinateType.Tetracoordinate, smi + " was not accepted", true);
         }
 
         // assert the first atom of the SMILES is accepted as a geometric center
         static void Geometric(string smi)
         {
-            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            SmilesParser sp = CDK.SilentSmilesParser;
             Test(sp.ParseSmiles(smi), CoordinateType.Tricoordinate, smi + " was not accepted", true);
         }
 
         // assert the first atom of the SMILES is accepted as a bicoordinate center
         static void Bicoordinate(string smi)
         {
-            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            SmilesParser sp = CDK.SilentSmilesParser;
             Test(sp.ParseSmiles(smi), CoordinateType.Bicoordinate, smi + " was not accepted", true);
         }
 
         // assert the first atom of the SMILES is non stereogenic
         static void None(string smi)
         {
-            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            SmilesParser sp = CDK.SilentSmilesParser;
             Test(sp.ParseSmiles(smi), CoordinateType.None, smi + " was not rejected", true);
         }
 
@@ -822,7 +832,7 @@ namespace NCDK.Stereo
 
         static void Test(string smi, CoordinateType type, bool hnorm)
         {
-            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            SmilesParser sp = CDK.SilentSmilesParser;
             Test(sp.ParseSmiles(smi), type, smi + " was not accepted", hnorm);
         }
     }

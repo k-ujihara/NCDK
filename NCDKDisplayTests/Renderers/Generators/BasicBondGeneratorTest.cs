@@ -1,5 +1,4 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Numerics;
 using NCDK.Renderers.Elements;
 using System.Windows;
 
@@ -28,7 +27,7 @@ namespace NCDK.Renderers.Generators
         }
 
         public BasicBondGeneratorTest()
-                : base()
+            : base()
         {
             this.generator = new BasicBondGenerator();
             base.SetTestedGenerator(generator);
@@ -37,10 +36,10 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public void TestSingleAtom()
         {
-            IAtomContainer singleAtom = MakeSingleAtom();
+            var singleAtom = MakeSingleAtom();
 
             // nothing should be made
-            IRenderingElement root = generator.Generate(singleAtom, model);
+            var root = generator.Generate(singleAtom, model);
             var elements = elementUtil.GetAllSimpleElements(root);
             Assert.AreEqual(0, elements.Count);
         }
@@ -48,25 +47,25 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public void TestSingleBond()
         {
-            IAtomContainer container = MakeSingleBond();
+            var container = MakeSingleBond();
 
             // generate the single line element
-            IRenderingElement root = generator.Generate(container, model);
+            var root = generator.Generate(container, model);
             var elements = elementUtil.GetAllSimpleElements(root);
             Assert.AreEqual(1, elements.Count);
 
             // test that the endpoints are distinct
-            LineElement line = (LineElement)elements[0];
+            var line = (LineElement)elements[0];
             Assert.AreNotSame(0, AbstractGeneratorTest<IAtomContainer>.Length(line));
         }
 
         [TestMethod()]
         public void TestSquare()
         {
-            IAtomContainer square = MakeSquare();
+            var square = MakeSquare();
 
             // generate all four bonds
-            IRenderingElement root = generator.Generate(square, model);
+            var root = generator.Generate(square, model);
             var elements = elementUtil.GetAllSimpleElements(root);
             Assert.AreEqual(4, elements.Count);
 

@@ -21,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Silent;
 using NCDK.Graphs;
@@ -73,7 +74,7 @@ namespace NCDK.Isomorphisms
         /// <summary>@cdk.inchi InChI=1/O2/c1-2</summary>
         static IAtomContainer Oxidanone()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(new Atom("O"));
             m.Atoms.Add(new Atom("O"));
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Double);
@@ -83,7 +84,7 @@ namespace NCDK.Isomorphisms
         /// <summary>@cdk.inchi InChI=1/C2H6O2/c3-1-2-4/h3-4H,1-2H2</summary>
         static IAtomContainer EthyleneGlycol()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(new Atom("O"));
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));
@@ -97,7 +98,7 @@ namespace NCDK.Isomorphisms
         /// <summary>InChI=1/C2H6O.H2O/c1-2-3;/h3H,2H2,1H3;1H2</summary>
         static IAtomContainer EthylAlcoholHydrate()
         {
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(new Atom("O"));
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));
@@ -107,9 +108,9 @@ namespace NCDK.Isomorphisms
             return m;
         }
         
-        static ComponentGrouping Create(int[] grouping, IAtomContainer container)
+        static ComponentFilter Create(int[] grouping, IAtomContainer container)
         {
-            return new ComponentGrouping(grouping, new ConnectedComponents(GraphUtil.ToAdjList(container)).Components());
+            return new ComponentFilter(grouping, new ConnectedComponents(GraphUtil.ToAdjList(container)).GetComponents());
         }
     }
 }

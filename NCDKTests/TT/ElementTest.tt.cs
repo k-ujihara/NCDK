@@ -62,7 +62,7 @@ namespace NCDK.Default
         public void TestElement_X()
         {
             IElement e = new Element("X");
-            Assert.AreEqual("X", e.Symbol);
+            Assert.AreEqual("R", e.Symbol);
             // and it should not throw exceptions
             Assert.IsNotNull(e.AtomicNumber);
             Assert.AreEqual(0, e.AtomicNumber);
@@ -103,8 +103,8 @@ namespace NCDK.Default
         [TestMethod()]
         public void CompareDiffAtomicNumber()
         {
-            Element e1 = new Element("H", 1);
-            Element e2 = new Element("H", null);
+            Element e1 = new Element { AtomicNumber = 1 };
+            Element e2 = new Element { AtomicNumber = 2 };
             Assert.IsFalse(e1.Compare(e2));
         }
 
@@ -149,7 +149,7 @@ namespace NCDK.Silent
         public void TestElement_X()
         {
             IElement e = new Element("X");
-            Assert.AreEqual("X", e.Symbol);
+            Assert.AreEqual("R", e.Symbol);
             // and it should not throw exceptions
             Assert.IsNotNull(e.AtomicNumber);
             Assert.AreEqual(0, e.AtomicNumber);
@@ -190,8 +190,8 @@ namespace NCDK.Silent
         [TestMethod()]
         public void CompareDiffAtomicNumber()
         {
-            Element e1 = new Element("H", 1);
-            Element e2 = new Element("H", null);
+            Element e1 = new Element { AtomicNumber = 1 };
+            Element e2 = new Element { AtomicNumber = 2 };
             Assert.IsFalse(e1.Compare(e2));
         }
 

@@ -151,7 +151,7 @@ namespace NCDK.IO
                 }
                 foreach (var atom in molecule.Atoms)
                 {
-                    StringBuilder buffer = new StringBuilder();
+                    var buffer = new StringBuilder();
                     buffer.Append(hetatmRecordName);
                     buffer.Append(F_SERIAL_FORMAT(atomNumber));
                     buffer.Append(' ');

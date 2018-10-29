@@ -25,13 +25,10 @@
 using NCDK.Common.Primitives;
 using NCDK.Graphs;
 using NCDK.Isomorphisms;
-using NCDK.Isomorphisms.Matchers;
-using NCDK.Isomorphisms.Matchers.SMARTS;
-using NCDK.Smiles.SMARTS.Parser;
+using NCDK.SMARTS;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.ForceFields
 {
@@ -61,18 +58,20 @@ namespace NCDK.ForceFields
         /// </summary>
         public MmffAtomTypeMatcher()
         {
-            Stream smaIn = ResourceLoader.GetAsStream(GetType(), "MMFFSYMB.sma");
-            Stream hdefIn = ResourceLoader.GetAsStream(GetType(), "mmff-symb-mapping.tsv");
+            var smaIn = ResourceLoader.GetAsStream(GetType(), "MMFFSYMB.sma");
+            var hdefIn = ResourceLoader.GetAsStream(GetType(), "mmff-symb-mapping.tsv");
 
             try
             {
                 this.patterns = LoadPatterns(smaIn);
                 this.hydrogenMap = LoadHydrogenDefinitions(hdefIn);
             }
+#if !DEBUG
             catch (IOException e)
             {
                 throw new ApplicationException($"Atom type definitions for MMFF94 Atom Types could not be loaded: {e.Message}");
             }
+#endif
             finally
             {
                 Close(smaIn);
@@ -195,9 +194,9 @@ namespace NCDK.ForceFields
         private void AssignPreliminaryTypes(IAtomContainer container, string[] symbs)
         {
             // shallow copy
-            IAtomContainer cpy = container.Builder.NewAtomContainer(container);
-            SmartsMatchers.Prepare(cpy, true);
-            foreach (AtomTypePattern matcher in patterns)
+            var cpy = container.Builder.NewAtomContainer(container);
+            Cycles.MarkRingAtomsAndBonds(cpy);
+            foreach (var matcher in patterns)
             {
                 foreach (int idx in matcher.Matches(cpy))
                 {
@@ -217,30 +216,26 @@ namespace NCDK.ForceFields
         /// <exception cref="IOException"></exception>
         internal static AtomTypePattern[] LoadPatterns(Stream smaIn)
         {
-            List<AtomTypePattern> matchers = new List<AtomTypePattern>();
+            var matchers = new List<AtomTypePattern>();
 
             using (var br = new StreamReader(smaIn))
             {
                 string line = null;
                 while ((line = br.ReadLine()) != null)
                 {
-                    if (SkipLine(line)) continue;
+                    if (SkipLine(line))
+                        continue;
                     var cols = Strings.Tokenize(line, ' ');
-                    string sma = cols[0];
-                    string symb = cols[1];
+                    var sma = cols[0];
+                    var symb = cols[1];
 
                     try
                     {
-                        IQueryAtomContainer container = SMARTSParser.Parse(sma, null);
-                        matchers.Add(new AtomTypePattern(VentoFoggia.FindSubstructure(container), symb));
+                        matchers.Add(new AtomTypePattern(SmartsPattern.Create(sma).SetPrepare(false), symb));
                     }
-                    catch (ArgumentException e)
+                    catch (ArgumentException ex)
                     {
-                        throw new IOException(line + " could not be loaded: " + e.Message);
-                    }
-                    catch (TokenManagerException e)
-                    {
-                        throw new IOException(line + " could not be loaded: " + e.Message);
+                        throw new IOException(ex.Message);
                     }
                 }
 

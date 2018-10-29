@@ -318,7 +318,7 @@ namespace NCDK.IO
                                 if (atomType == null)
                                 {
                                     atomType = atFactory.GetAtomType("X");
-                                    Trace.TraceError("Could not find specified atom type: ", atomTypeStr);
+                                    Trace.TraceError($"Could not find specified atom type: {atomTypeStr}");
                                 }
                                 AtomTypeManipulator.Configure(atom, atomType);
                             }

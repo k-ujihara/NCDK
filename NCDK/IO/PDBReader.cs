@@ -120,14 +120,14 @@ namespace NCDK.IO
         /// implementation does not support a specific IChemObject it will throw
         /// an Exception.
         /// </summary>
-        /// <param name="oObj">The object that subclasses IChemObject</param>
+        /// <param name="o">The object that subclasses IChemObject</param>
         /// <returns>The IChemObject read</returns>
         /// <exception cref="CDKException"></exception>
-        public override T Read<T>(T oObj)
+        public override T Read<T>(T o)
         {
-            if (oObj is IChemFile)
+            if (o is IChemFile)
             {
-                return (T)ReadChemFile((IChemFile)oObj);
+                return (T)ReadChemFile((IChemFile)o);
             }
             else
             {
@@ -155,16 +155,10 @@ namespace NCDK.IO
             var oSet = oFile.Builder.NewAtomContainerSet();
 
             // some variables needed
-            string cCol;
-            PDBAtom oAtom;
             var oBP = new PDBPolymer();
             var molecularStructure = oFile.Builder.NewAtomContainer();
-            StringBuilder cResidue;
-            string oObj;
-            IMonomer oMonomer;
             string cRead = "";
             char chain = 'A'; // To ensure stringent name giving of monomers
-            IStrand oStrand;
             int lineLength = 0;
 
             bool isProteinStructure = false;
@@ -186,18 +180,13 @@ namespace NCDK.IO
                     {
                         lineLength = cRead.Length;
 
-                        if (lineLength < 80)
-                        {
-                            Trace.TraceWarning("Line is not of the expected length 80!");
-                        }
-
                         // make sure the record name is 6 characters long
                         if (lineLength < 6)
                         {
                             cRead = cRead + "      ";
                         }
                         // check the first column to decide what to do
-                        cCol = cRead.Substring(0, 6);
+                        var cCol = cRead.Substring(0, 6);
                         switch (cCol.ToUpperInvariant())
                         {
                             case "SEQRES":
@@ -209,13 +198,13 @@ namespace NCDK.IO
                                 {
                                     #region
                                     // read an atom record
-                                    oAtom = ReadAtom(cRead, lineLength);
+                                    var oAtom = ReadAtom(cRead, lineLength);
 
                                     if (isProteinStructure)
                                     {
                                         // construct a string describing the residue
-                                        cResidue = new StringBuilder(8);
-                                        oObj = oAtom.ResName;
+                                        var cResidue = new StringBuilder(8);
+                                        var oObj = oAtom.ResName;
                                         if (oObj != null)
                                         {
                                             cResidue = cResidue.Append(oObj.Trim());
@@ -233,12 +222,12 @@ namespace NCDK.IO
                                         }
 
                                         // search for an existing strand or create a new one.
-                                        string strandName = oAtom.ChainID;
+                                        var strandName = oAtom.ChainID;
                                         if (strandName == null || strandName.Length == 0)
                                         {
                                             strandName = chain.ToString(NumberFormatInfo.InvariantInfo);
                                         }
-                                        oStrand = oBP.GetStrand(strandName);
+                                        var oStrand = oBP.GetStrand(strandName);
                                         if (oStrand == null)
                                         {
                                             oStrand = new PDBStrand
@@ -249,10 +238,10 @@ namespace NCDK.IO
                                         }
 
                                         // search for an existing monomer or create a new one.
-                                        oMonomer = oBP.GetMonomer(cResidue.ToString(), chain.ToString(NumberFormatInfo.InvariantInfo));
+                                        var oMonomer = oBP.GetMonomer(cResidue.ToString(), chain.ToString(NumberFormatInfo.InvariantInfo));
                                         if (oMonomer == null)
                                         {
-                                            PDBMonomer monomer = new PDBMonomer
+                                            var monomer = new PDBMonomer
                                             {
                                                 MonomerName = cResidue.ToString(),
                                                 MonomerType = oAtom.ResName,
@@ -273,15 +262,15 @@ namespace NCDK.IO
 
                                     if (readConnect.IsSet)
                                     {
-                                        bool isDup = atomNumberMap.ContainsKey(oAtom.Serial.Value);
+                                        var isDup = atomNumberMap.ContainsKey(oAtom.Serial.Value);
                                         atomNumberMap[oAtom.Serial.Value] = oAtom;
                                         if (isDup)
-                                            Trace.TraceWarning("Duplicate serial ID found for atom: ", oAtom);
+                                            Trace.TraceWarning($"Duplicate serial ID found for atom: {oAtom}");
                                     }
                                     Debug.WriteLine($"Added ATOM: {oAtom}");
 
                                     // As HETATMs cannot be considered to either belong to a certain monomer or strand,
-                                    // they are dealt with seperately.
+                                    // they are dealt with separately.
                                     #endregion
                                 }
                                 break;
@@ -289,7 +278,7 @@ namespace NCDK.IO
                                 {
                                     #region
                                     // read an atom record
-                                    oAtom = ReadAtom(cRead, lineLength);
+                                    var oAtom = ReadAtom(cRead, lineLength);
                                     oAtom.HetAtom = true;
                                     if (isProteinStructure)
                                     {
@@ -313,7 +302,7 @@ namespace NCDK.IO
                                     #region
                                     // start new strand
                                     chain++;
-                                    oStrand = new PDBStrand
+                                    var oStrand = new PDBStrand
                                     {
                                         StrandName = chain.ToString(NumberFormatInfo.InvariantInfo)
                                     };
@@ -371,13 +360,15 @@ namespace NCDK.IO
                                             oBP = new PDBPolymer();
                                             oModel = oFile.Builder.NewChemModel();
                                             oSet = oFile.Builder.NewAtomContainerSet();
+                                            // avoid duplicate atom warnings
+                                            atomNumberMap.Clear();
                                         }
                                     }
                                     else
                                     {
                                         if (molecularStructure.Atoms.Count > 0)
                                         {
-                                            //                                 save the model
+                                            // save the model
                                             oSet.Add(molecularStructure);
                                             oModel.MoleculeSet = oSet;
                                             oSeq.Add(oModel);
@@ -410,7 +401,7 @@ namespace NCDK.IO
                             case "COMPND":
                                 {
                                     #region
-                                    string title = cRead.Substring(10).Trim();
+                                    var title = cRead.Substring(10).Trim();
                                     oFile.SetProperty(CDKPropertyName.Title, title);
                                     #endregion
                                 }
@@ -433,10 +424,10 @@ namespace NCDK.IO
                                         int lineIndex = 6;
                                         int atomFromNumber = -1;
                                         int atomToNumber = -1;
-                                        IAtomContainer molecule = (isProteinStructure) ? oBP : molecularStructure;
+                                        var molecule = (isProteinStructure) ? oBP : molecularStructure;
                                         while (lineIndex + 5 <= cRead.Length)
                                         {
-                                            string part = cRead.Substring(lineIndex, 5).Trim();
+                                            var part = cRead.Substring(lineIndex, 5).Trim();
                                             if (atomFromNumber == -1)
                                             {
                                                 try
@@ -460,7 +451,7 @@ namespace NCDK.IO
                                                 if (atomFromNumber != -1 && atomToNumber != -1)
                                                 {
                                                     AddBond(molecule, atomFromNumber, atomToNumber);
-                                                    Trace.TraceWarning("Bonded " + atomFromNumber + " with " + atomToNumber);
+                                                    Debug.WriteLine($"Bonded {atomFromNumber} with {atomToNumber}");
                                                 }
                                             }
                                             lineIndex += 5;
@@ -472,10 +463,10 @@ namespace NCDK.IO
                             case "HELIX ":
                                 {
                                     #region
-                                    //                        HELIX    1 H1A CYS A   11  LYS A   18  1 RESIDUE 18 HAS POSITIVE PHI    1D66  72
-                                    //                                  1         2         3         4         5         6         7
-                                    //                        01234567890123456789012345678901234567890123456789012345678901234567890123456789
-                                    PDBStructure structure = new PDBStructure
+                                    // HELIX    1 H1A CYS A   11  LYS A   18  1 RESIDUE 18 HAS POSITIVE PHI    1D66  72
+                                    //           1         2         3         4         5         6         7
+                                    // 01234567890123456789012345678901234567890123456789012345678901234567890123456789
+                                    var structure = new PDBStructure
                                     {
                                         StructureType = PDBStructure.Helix,
                                         StartChainID = cRead[19],
@@ -492,7 +483,7 @@ namespace NCDK.IO
                             case "SHEET ":
                                 {
                                     #region
-                                    PDBStructure structure = new PDBStructure
+                                    var structure = new PDBStructure
                                     {
                                         StructureType = PDBStructure.Sheet,
                                         StartChainID = cRead[21],
@@ -509,7 +500,7 @@ namespace NCDK.IO
                             case "TURN  ":
                                 {
                                     #region
-                                    PDBStructure structure = new PDBStructure
+                                    var structure = new PDBStructure
                                     {
                                         StructureType = PDBStructure.Turn,
                                         StartChainID = cRead[19],
@@ -566,9 +557,9 @@ namespace NCDK.IO
         private void AddBond(IAtomContainer molecule, int bondAtomNo, int bondedAtomNo)
         {
             if (!atomNumberMap.TryGetValue(bondAtomNo, out IAtom firstAtom))
-                Trace.TraceError("Could not find bond start atom in map with serial id: ", bondAtomNo);
+                Trace.TraceError($"Could not find bond start atom in map with serial id: {bondAtomNo}");
             if (!atomNumberMap.TryGetValue(bondedAtomNo, out IAtom secondAtom))
-                Trace.TraceError("Could not find bond target atom in map with serial id: ", bondAtomNo);
+                Trace.TraceError($"Could not find bond target atom in map with serial id: {bondAtomNo}");
             var bond = firstAtom.Builder.NewBond(firstAtom, secondAtom, BondOrder.Single);
             for (int i = 0; i < bondsFromConnectRecords.Count; i++)
             {

@@ -20,7 +20,7 @@ namespace NCDK.Graphs
         private readonly int[] component;
 
         /// <summary>The number of components.</summary>
-        private int components;
+        private readonly int components;
 
         /// <summary>The number remaining vertices.</summary>
         private int remaining;
@@ -35,7 +35,8 @@ namespace NCDK.Graphs
             this.component = new int[g.Length];
             this.remaining = g.Length;
             for (int i = 0; remaining > 0 && i < g.Length; i++)
-                if (component[i] == 0) Visit(i, ++components);
+                if (component[i] == 0)
+                    Visit(i, ++components);
         }
 
         /// <summary>
@@ -48,18 +49,19 @@ namespace NCDK.Graphs
             remaining--;
             component[v] = c;
             foreach (var w in g[v])
-                if (component[w] == 0) Visit(w, c);
+                if (component[w] == 0)
+                    Visit(w, c);
         }
 
         /// <summary>
         /// Access the components each vertex belongs to.
         /// </summary>
         /// <returns>component labels</returns>
-        public int[] Components()
+        public int[] GetComponents()
         {
             return Arrays.CopyOf(component, component.Length);
         }
 
-        public int NComponents => components;
+        public int NumberOfComponents => components;
     }
 }

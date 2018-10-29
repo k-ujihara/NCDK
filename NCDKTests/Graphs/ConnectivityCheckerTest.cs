@@ -161,8 +161,8 @@ namespace NCDK.Graphs
         [TestMethod()]
         public void TestIsConnectedArtemisinin1()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer container = sp.ParseSmiles("C1CN2CCN(CCCN(CCN(C1)Cc1ccccn1)CC2)C");
+            var sp = CDK.SilentSmilesParser;
+            var container = sp.ParseSmiles("C1CN2CCN(CCCN(CCN(C1)Cc1ccccn1)CC2)C");
             Assert.IsTrue(ConnectivityChecker.IsConnected(container));
         }
 
@@ -202,7 +202,7 @@ namespace NCDK.Graphs
         public void TestPartitionExtendedTetrahedral()
         {
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer container = smipar.ParseSmiles("CC=[C@]=CC.C");
+            var container = smipar.ParseSmiles("CC=[C@]=CC.C");
             IChemObjectSet<IAtomContainer> containerSet = ConnectivityChecker.PartitionIntoMolecules(container);
             Assert.AreEqual(2, containerSet.Count);
             Assert.IsTrue(containerSet[0].StereoElements.GetEnumerator().MoveNext());

@@ -21,9 +21,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-using NCDK.Common.Base;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
 using NCDK.Smiles;
+using System.Collections.Generic;
 using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.Graphs.Invariant
@@ -34,19 +36,49 @@ namespace NCDK.Graphs.Invariant
     public class CanonTest
     {
         [TestMethod()]
-        public void Phenol_symmetry()
+        public void PhenolSymmetry()
         {
-            IAtomContainer m = Smi("OC1=CC=CC=C1");
+            var m = Smi("OC1=CC=CC=C1");
             long[] symmetry = Canon.Symmetry(m, GraphUtil.ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(new long[] { 1, 7, 5, 3, 2, 3, 5 }, symmetry));
         }
 
         [TestMethod()]
-        public void Phenol_labelling()
+        public void PhenolLabelling()
         {
-            IAtomContainer m = Smi("OC1=CC=CC=C1");
+            var m = Smi("OC1=CC=CC=C1");
             long[] labels = Canon.Label(m, GraphUtil.ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(new long[] { 1, 7, 5, 3, 2, 4, 6 }, labels));
+        }
+
+        class AtomNumberComparer : IComparer<IAtom>
+        {
+            public int Compare(IAtom o1, IAtom o2)
+            {
+                return (o1.AtomicNumber ?? 0).CompareTo(o2.AtomicNumber ?? 0);
+            }
+        }
+
+        class AtomNumberComparer2 : IComparer<IAtom>
+        {
+            public int Compare(IAtom o1, IAtom o2)
+            {
+                return -(o1.AtomicNumber ?? 0).CompareTo(o2.AtomicNumber ?? 0);
+            }
+        }
+
+        [TestMethod()]
+        public void AtomComparatorLabelling()
+        {
+            var m = Smi("c1ccccc1O");
+            var labels = Canon.Label(m, GraphUtil.ToAdjList(m), new AtomNumberComparer());
+            for (int i = 0; i < labels.Length; i++)
+                m.Atoms[i].SetProperty(CDKPropertyName.AtomAtomMapping, (int)labels[i]);
+            Assert.AreEqual("[CH:4]1=[CH:2][CH:1]=[CH:3][CH:5]=[C:6]1[OH:7]", SmiGen(m));
+            var labels2 = Canon.Label(m, GraphUtil.ToAdjList(m), new AtomNumberComparer2());
+            for (int i = 0; i < labels.Length; i++)
+                m.Atoms[i].SetProperty(CDKPropertyName.AtomAtomMapping, (int)labels2[i]);
+            Assert.AreEqual("[CH:5]1=[CH:3][CH:2]=[CH:4][CH:6]=[C:7]1[OH:1]", SmiGen(m));
         }
 
         /// <summary>
@@ -57,9 +89,9 @@ namespace NCDK.Graphs.Invariant
         /// </summary>
         // @cdk.inchi InChI=1/C2H4S5/c1-3-4-2-6-7-5-1/h1-2H2
         [TestMethod()]
-        public void Lenthionine_symmetry()
+        public void LenthionineSymmetry()
         {
-            IAtomContainer m = Smi("C1SSCSSS1");
+            var m = Smi("C1SSCSSS1");
             long[] labels = Canon.Symmetry(m, GraphUtil.ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(new long[] { 6, 4, 4, 6, 2, 1, 2 }, labels));
         }
@@ -67,16 +99,16 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void TestBasicInvariants_ethanol()
         {
-            IAtomContainer m = Smi("CCO");
+            var m = Smi("CCO");
             long[] exp = new long[] { 1065731, 1082114, 541697 };
             long[] act = Canon.BasicInvariants(m, ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(exp, act));
         }
 
         [TestMethod()]
-        public void TestBasicInvariants_phenol()
+        public void TestBasicInvariantsPhenol()
         {
-            IAtomContainer m = Smi("OC1=CC=CC=C1");
+            var m = Smi("OC1=CC=CC=C1");
             long[] exp = new long[] { 541697, 836352, 819969, 819969, 819969, 819969, 819969 };
             long[] act = Canon.BasicInvariants(m, ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(exp, act));
@@ -85,82 +117,88 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void TerminalExplicitHydrogensAreNotIncluded()
         {
-            IAtomContainer m = Smi("C/C=C(/C)C[H]");
-            bool[] mask = Canon.TerminalHydrogens(m, GraphUtil.ToAdjList(m));
+            var m = Smi("C/C=C(/C)C[H]");
+            var mask = Canon.TerminalHydrogens(m, GraphUtil.ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(new bool[] { false, false, false, false, false, true }, mask));
         }
 
         [TestMethod()]
         public void BridgingExplicitHydrogensAreIncluded()
         {
-            IAtomContainer m = Smi("B1[H]B[H]1");
-            bool[] mask = Canon.TerminalHydrogens(m, GraphUtil.ToAdjList(m));
+            var m = Smi("B1[H]B[H]1");
+            var mask = Canon.TerminalHydrogens(m, GraphUtil.ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(new bool[] { false, false, false, false }, mask));
         }
 
         [TestMethod()]
         public void ExplicitHydrogensIonsAreIncluded()
         {
-            IAtomContainer m = Smi("[H+]");
-            bool[] mask = Canon.TerminalHydrogens(m, GraphUtil.ToAdjList(m));
+            var m = Smi("[H+]");
+            var mask = Canon.TerminalHydrogens(m, GraphUtil.ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(new bool[] { false }, mask));
         }
 
         [TestMethod()]
         public void MolecularHydrogensAreNotIncluded()
         {
-            IAtomContainer m = Smi("[H][H]");
-            bool[] mask = Canon.TerminalHydrogens(m, GraphUtil.ToAdjList(m));
+            var m = Smi("[H][H]");
+            var mask = Canon.TerminalHydrogens(m, GraphUtil.ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(new bool[] { true, true }, mask));
         }
 
         [TestMethod()]
         public void ExplicitHydrogensOfEthanolHaveSymmetry()
         {
-            IAtomContainer m = Smi("C([H])([H])C([H])([H])O");
-            long[] symmetry = Canon.Symmetry(m, GraphUtil.ToAdjList(m));
+            var m = Smi("C([H])([H])C([H])([H])O");
+            var symmetry = Canon.Symmetry(m, GraphUtil.ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(new long[] { 6, 1, 1, 7, 3, 3, 5 }, symmetry));
         }
 
         [TestMethod()]
         public void ExplicitHydrogensDoNotAffectHeavySymmetry()
         {
-            IAtomContainer m = Smi("CC=C(C)C[H]");
-            long[] symmetry = Canon.Symmetry(m, GraphUtil.ToAdjList(m));
+            var m = Smi("CC=C(C)C[H]");
+            var symmetry = Canon.Symmetry(m, GraphUtil.ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(new long[] { 4, 2, 3, 5, 5, 1 }, symmetry));
         }
 
         [TestMethod()]
         public void CanonicallyLabelEthaneWithInConsistentHydrogenRepresentation()
         {
-            IAtomContainer m = Smi("CC[H]");
-            long[] labels = Canon.Label(m, GraphUtil.ToAdjList(m));
+            var m = Smi("CC[H]");
+            var labels = Canon.Label(m, GraphUtil.ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(new long[] { 2, 3, 1 }, labels));
         }
 
         [TestMethod()]
         public void CanonicallyLabelEthaneWithInConsistentHydrogenRepresentation2()
         {
-            IAtomContainer m = Smi("CC([H])([H])");
-            long[] labels = Canon.Label(m, GraphUtil.ToAdjList(m));
+            var m = Smi("CC([H])([H])");
+            var labels = Canon.Label(m, GraphUtil.ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(new long[] { 3, 4, 1, 2 }, labels));
         }
 
         [TestMethod()]
         public void CanonicallyLabelCaffeineWithExplicitHydrogenRepresentation()
         {
-            IAtomContainer m = Smi("[H]C1=NC2=C(N1C([H])([H])[H])C(=O)N(C(=O)N2C([H])([H])[H])C([H])([H])[H]");
-            long[] labels = Canon.Label(m, GraphUtil.ToAdjList(m));
+            var m = Smi("[H]C1=NC2=C(N1C([H])([H])[H])C(=O)N(C(=O)N2C([H])([H])[H])C([H])([H])[H]");
+            var labels = Canon.Label(m, GraphUtil.ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(
                 new long[] { 1, 14, 13, 16, 18, 19, 22, 2, 3, 4, 15, 11, 20, 17, 12, 21, 24, 8, 9, 10, 23, 5, 6, 7 },
                 labels));
         }
 
-        static readonly SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+        static readonly SmilesParser sp = CDK.SilentSmilesParser;
+        static readonly SmilesGenerator sg = new SmilesGenerator(SmiFlavors.Isomeric | SmiFlavors.AtomAtomMap);
 
         static IAtomContainer Smi(string smi)
         {
             return sp.ParseSmiles(smi);
+        }
+
+        static string SmiGen(IAtomContainer mol)
+        {
+            return sg.Create(mol);
         }
     }
 }

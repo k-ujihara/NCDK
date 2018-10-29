@@ -69,7 +69,7 @@ namespace NCDK.Layout
             // h1 has no coordinates
             IAtom h1 = new Atom("H");
             IAtom h2 = new Atom("H", Vector2.Zero);
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(h1);
             m.Atoms.Add(h2);
             m.Bonds.Add(new Bond(h1, h2));
@@ -86,7 +86,7 @@ namespace NCDK.Layout
             // c2 is unplaced
             IAtom c1 = new Atom("C", Vector2.Zero);
             IAtom c2 = new Atom("C");
-            IAtomContainer m = new AtomContainer();
+            var m = new AtomContainer();
             m.Atoms.Add(c1);
             m.Atoms.Add(c2);
             m.Bonds.Add(new Bond(c1, c2));
@@ -158,7 +158,7 @@ namespace NCDK.Layout
         {
             HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
             string filename = "NCDK.Data.MDL.reserpine.mol";
-            Stream ins = ResourceLoader.GetAsStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLReader reader = new MDLReader(ins, ChemObjectReaderMode.Strict);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IChemSequence seq = chemFile[0];

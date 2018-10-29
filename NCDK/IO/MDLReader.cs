@@ -521,7 +521,7 @@ namespace NCDK.IO
                         HandleError("Atom charge count is empty", linecount, 35, 39);
                     }
 
-                    try
+                    if (line.Length >= 64)
                     {
                         // read the mmm field as position 61-63
                         string reactionAtomIDString = Strings.Substring(line, 60, 3).Trim();
@@ -539,11 +539,6 @@ namespace NCDK.IO
                             Trace.TraceError("Mapping number ", reactionAtomIDString, " is not an integer.");
                             Debug.WriteLine(exception);
                         }
-                    }
-                    catch (Exception)
-                    {
-                        // older mol files don't have all these fields...
-                        Trace.TraceWarning("A few fields are missing. Older MDL MOL file?");
                     }
 
                     //shk3: This reads shifts from after the molecule. I don't think this is an official format, but I saw it frequently 80=>78 for alk

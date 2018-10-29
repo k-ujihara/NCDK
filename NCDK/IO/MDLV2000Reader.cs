@@ -377,8 +377,11 @@ namespace NCDK.IO
                 {
                     //'  CDK     09251712073D'
                     // 0123456789012345678901
-                    if (!(program.Length >= 22 && program.Substring(20, 2).Equals("3D", StringComparison.Ordinal))
-                        && !forceReadAs3DCoords.IsSet)
+                    if (Is3Dfile(program))
+                    {
+                        hasZ = true;
+                    }
+                    else if (!forceReadAs3DCoords.IsSet)
                     {
                         foreach (var atomToUpdate in atoms)
                         {
@@ -530,6 +533,12 @@ namespace NCDK.IO
             return outputContainer;
         }
 
+        private bool Is3Dfile(string program)
+        {
+            return program.Length >= 22
+                && program.Substring(20, 2).Equals("3D", StringComparison.Ordinal);
+        }
+
         /// <summary>
         /// Applies the MDL valence model to atoms using the explicit valence (bond
         /// order sum) and charge to determine the correct number of implicit
@@ -640,7 +649,7 @@ namespace NCDK.IO
 
         private static string RemoveNonDigits(string input)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             for (int i = 0; i < input.Length; i++)
             {
                 char inputChar = input[i];
@@ -832,10 +841,16 @@ namespace NCDK.IO
                     atoms[v].IsAromatic = true;
                     break;
                 case 5: // single or double
+                    bond = new QueryBond(bond.Begin, bond.End, ExprType.SingleOrDouble);
+                    break;
                 case 6: // single or aromatic
+                    bond = new QueryBond(bond.Begin, bond.End, ExprType.SingleOrAromatic);
+                    break;
                 case 7: // double or aromatic
+                    bond = new QueryBond(bond.Begin, bond.End, ExprType.DoubleOrAromatic);
+                    break;
                 case 8: // any
-                    bond = CTFileQueryBond.OfType(bond, type);
+                    bond = new QueryBond(bond.Begin, bond.End, ExprType.True);
                     break;
                 default:
                     throw new CDKException("unrecognised bond type: " + type + ", " + line);
@@ -2036,26 +2051,23 @@ namespace NCDK.IO
             }
             else
             {
-                newBond = new CTFileQueryBond(builder);
+                newBond = new QueryBond(builder);
                 newBond.SetAtoms(new[] { a1, a2 });
-                newBond.Order = BondOrder.Unset;
-                CTFileQueryBond.BondType queryBondType = CTFileQueryBond.BondType.Unset;
                 switch (order)
                 {
                     case 5:
-                        queryBondType = CTFileQueryBond.BondType.SingleOrDouble;
+                        ((QueryBond)newBond).Expression.SetPrimitive(ExprType.SingleOrDouble);
                         break;
                     case 6:
-                        queryBondType = CTFileQueryBond.BondType.SingleOrAromatic;
+                        ((QueryBond)newBond).Expression.SetPrimitive(ExprType.SingleOrAromatic);
                         break;
                     case 7:
-                        queryBondType = CTFileQueryBond.BondType.DoubleOrAromatic;
+                        ((QueryBond)newBond).Expression.SetPrimitive(ExprType.DoubleOrAromatic);
                         break;
                     case 8:
-                        queryBondType = CTFileQueryBond.BondType.Any;
+                        ((QueryBond)newBond).Expression.SetPrimitive(ExprType.True);
                         break;
                 }
-                ((CTFileQueryBond)newBond).Type = queryBondType;
                 newBond.Stereo = stereo;
                 explicitValence[atom1 - 1] = explicitValence[atom2 - 1] = int.MinValue;
             }

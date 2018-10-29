@@ -34,6 +34,7 @@ namespace NCDK.Smiles.SMARTS.Parser
     /// You can modify this class to customize your error reporting
     /// mechanisms so long as you retain the public fields.
     /// </remarks>
+    [Obsolete]
     public class ParseException : Exception
     {
         /// <summary>
@@ -100,7 +101,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                                  IReadOnlyList<string> tokenImage)
         {
             string eol = System.Environment.NewLine;
-            StringBuilder expected = new StringBuilder();
+            var expected = new StringBuilder();
             int maxSize = 0;
             for (int i = 0; i < expectedTokenSequences.Count; i++)
             {
@@ -155,7 +156,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         /// </summary>
         static string AddEscapes(string str)
         {
-            StringBuilder retval = new StringBuilder();
+            var retval = new StringBuilder();
             char ch;
             for (int i = 0; i < str.Length; i++)
             {

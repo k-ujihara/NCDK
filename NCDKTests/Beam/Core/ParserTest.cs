@@ -26,6 +26,7 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Base;
 using System;
@@ -294,9 +295,19 @@ namespace NCDK.Beam
             Assert.AreEqual("ethanol", g.Title);
         }
 
+        // extended TH over 7 atoms, super rare (and probably never
+        // encountered) but valid
+        [TestMethod()]
+        public void ParseTH7()
+        {
+            Graph g = Parser.Parse("CC=C=C=[C@]=C=C=CC");
+            Assert.AreEqual(Configuration.AL1, g.TopologyOf(4).Configuration);
+            Assert.AreEqual("C(C)=C=C=[C@@]=C=C=CC", g.Permute(new int[] { 1, 0, 2, 3, 4, 5, 6, 7, 8 }).ToSmiles());
+        }
+
         // this one has been mistreated... ignore for now
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void Chembl345045Mangleded()
+        public void Chembl345045Mangled()
         {
             Parser.Parse("c1c(ccc(c1)F)c2/c3n/c(c(\\c4[nH]c(/c(c/5\\nc(/c(c/6\\s\\c2\\cc6)/c7ccc(cc7)F)C=C5)/c8ccc(cc8)S(=O)(=O)[O-])cc4)/c9ccc(cc9)S(=O)(=O)[O-])/C=C3.[Na+].[Na+] CHEMBL345045");
         }
@@ -332,6 +343,18 @@ namespace NCDK.Beam
         public void NonSmiles()
         {
             Graph.FromSmiles("50-00-0");
+        }
+
+        [TestMethod()]
+        public void OutOfOrderTetrahedral1()
+        {
+            Assert.AreEqual("[C@@](Cl)(F)(I)Br", Graph.FromSmiles("[C@@](Cl)(F)(I)1.Br1").ToSmiles());
+        }
+
+        [TestMethod()]
+        public void OutOfOrderTetrahedral2()
+        {
+            Assert.AreEqual("[C@@](Cl)(F)(I)Br", Graph.FromSmiles("[C@](Cl)(F)1I.Br1").ToSmiles());
         }
     }
 }

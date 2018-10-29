@@ -159,7 +159,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     {
                         if (bond.GetConnectedAtom(atom).Symbol.Equals("O", StringComparison.Ordinal))
                             goto continue_atomloop;
-                        if (BondOrder.Double.Equals(bond.Order)) nPiBonds++;
+                        if (BondOrder.Double.Equals(bond.Order))
+                            nPiBonds++;
                     }
 
                     // if the nitrogen is aromatic and there are no pi bonds then it's
@@ -173,11 +174,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 else if (atom.Symbol.Equals("O", StringComparison.Ordinal) && atom.FormalCharge <= 0)
                 {
                     //excluding oxygens that are adjacent to a nitrogen or to an aromatic carbon
-                    var neighbours = ac.GetConnectedAtoms(atom);
-                    foreach (var neighbour in neighbours)
-                        if (neighbour.Symbol.Equals("N", StringComparison.Ordinal)
-                                || (neighbour.Symbol.Equals("C", StringComparison.Ordinal) && neighbour.IsAromatic))
-                            goto continue_atomloop;
+                    var neighbours = ac.GetConnectedBonds(atom);
+                    foreach (var bond in neighbours)
+                    {
+                        var neighbor = bond.GetOther(atom);
+                        switch (neighbor.Symbol)
+                        {
+                            case "N":
+                                goto continue_atomloop;
+                            case "C":
+                                if (neighbor.IsAromatic && bond.Order != BondOrder.Double)
+                                    goto continue_atomloop;
+                                break;
+                        }
+                    }
                     hBondAcceptors++;
                 }
             continue_atomloop:

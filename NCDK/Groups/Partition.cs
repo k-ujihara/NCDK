@@ -429,7 +429,7 @@ namespace NCDK.Groups
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append('[');
             for (int cellIndex = 0; cellIndex < cells.Count; cellIndex++)
             {

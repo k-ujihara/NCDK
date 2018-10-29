@@ -20,7 +20,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using NCDK.Common.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -49,6 +51,7 @@ namespace NCDK.Smiles.SMARTS
     /// [C:1][C:1]>>[C:1]    [CH3:7][CH3:7]>>[CH3:7][CH3:8] 2 hits   The reactants are bound to class 7. The product atom can
     ///                                                              bind to class 7 only.
     /// </pre>
+    [Obsolete]
     internal sealed class SmartsAtomAtomMapFilter
     {
         private readonly List<MappedPairs> mapped = new List<MappedPairs>();

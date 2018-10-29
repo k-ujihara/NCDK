@@ -218,7 +218,7 @@ namespace NCDK.SMARTS
                 avisit[atmIdx] = -1;
 
             // second pass builds the expression
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             for (int i = 0; i < atomIdxs.Count; i++)
             {
                 if (avisit[atomIdxs[i]] < 0)
@@ -363,7 +363,7 @@ namespace NCDK.SMARTS
 
             bool complex = mode == SubstructureSelectionMode.ExactSmarts;
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             switch (atom.AtomicNumber)
             {

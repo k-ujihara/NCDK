@@ -232,6 +232,104 @@ namespace NCDK.Beam
             return edges;
         }
 
+        private int GetOtherDb(int u, int v)
+        {
+            foreach (var e in GetLocalEdges(u))
+            {
+                if (e.Bond != Bond.Double)
+                    continue;
+                int nbr = e.Other(u);
+                if (nbr == v)
+                    continue;
+                return nbr;
+            }
+            return -1;
+        }
+
+        private int[] FindExtendedTetrahedralEnds(int focus)
+        {
+            var es = GetLocalEdges(focus);
+            int prevEnd1 = focus;
+            int prevEnd2 = focus;
+            int end1 = es[0].Other(prevEnd2);
+            int end2 = es[1].Other(prevEnd2);
+            int tmp;
+            while (end1 >= 0 && end2 >= 0)
+            {
+                tmp = GetOtherDb(end1, prevEnd1);
+                prevEnd1 = end1;
+                end1 = tmp;
+                tmp = GetOtherDb(end2, prevEnd2);
+                prevEnd2 = end2;
+                end2 = tmp;
+            }
+            return new int[] { prevEnd1, prevEnd2 };
+        }
+
+        /// <summary>
+        /// Access the local edges in order.
+        /// </summary>
+        private IList<Edge> GetLocalEdges(int end)
+        {
+            if (!arrangement.TryGetValue(end, out LocalArrangement la))
+                la = null;
+            return GetEdges(la, end);
+        }
+
+        /**
+        * Complicated process to get correct Allene neighbors.
+        * @param focus the focus (central cumualted atom)
+        * @return the carrier list
+        */
+        public int[] GetAlleneCarriers(int focus)
+        {
+            int[] carriers = new int[4];
+            int i = 0;
+            int[] ends = FindExtendedTetrahedralEnds(focus);
+            int beg = ends[0];
+            int end = ends[1];
+            bool begh = g.ImplHCount(beg) == 1;
+            bool endh = g.ImplHCount(end) == 1;
+            var begEdges = new List<Edge>(GetLocalEdges(beg));
+            if (begh)
+                begEdges.Insert(start.Contains(beg) ? 0 : 1, null);
+            foreach (var bEdge in GetLocalEdges(beg))
+            {
+                if (bEdge == null)
+                {
+                    carriers[i++] = beg;
+                    continue;
+                }
+                int bnbr = bEdge.Other(beg);
+                if (beg < bnbr && begh)
+                {
+                    carriers[i++] = beg;
+                    begh = false;
+                }
+                if (bEdge.Bond == Bond.Double)
+                {
+                    // neighbors next to end
+                    var endEdges = new List<Edge>(GetLocalEdges(end));
+                    if (endh)
+                        endEdges.Insert(1, null);
+                    foreach (var eEdge in endEdges)
+                    {
+                        if (eEdge == null)
+                            carriers[i++] = end;
+                        else if (eEdge.Bond != Bond.Double)
+                            carriers[i++] = eEdge.Other(end);
+                    }
+                }
+                else
+                {
+                    carriers[i++] = bnbr;
+                }
+            }
+            if (i != 4)
+                return null;
+            return carriers;
+        }
+
         /// <summary>
         /// Add a topology for vertex 'u' with configuration 'c'. If the atom 'u' was
         /// involved in a ring closure the local arrangement is used instead of the
@@ -247,7 +345,7 @@ namespace NCDK.Beam
             if (arrangement.ContainsKey(u))
             {
                 int[] us = arrangement[u].ToArray();
-                var es = GetEdges(arrangement[u], u);
+                var es = GetLocalEdges(u);
 
                 if (c.Type == Configuration.ConfigurationType.Tetrahedral)
                     us = InsertThImplicitRef(u, us); // XXX: temp fix
@@ -256,43 +354,7 @@ namespace NCDK.Beam
                 else if (c.Type == Configuration.ConfigurationType.ExtendedTetrahedral)
                 {
                     g.AddFlags(Graph.HAS_EXT_STRO);
-                    // Extended tetrahedral is a little more complicated, note
-                    // following presumes the end atoms are not in ring closures
-                    int v = es[0].Other(u);
-                    int w = es[1].Other(u);
-                    var vs = GetEdges(arrangement[v], v);
-                    var ws = GetEdges(arrangement[w], w);
-                    us = new int[4];
-                    int i = 0;
-                    foreach (Edge e in vs)
-                    {
-                        int x = e.Other(v);
-                        if (e.Bond.Order == 1) us[i++] = x;
-                    }
-                    if (i < 2)
-                    {
-                        if (start.Contains(u))
-                        {
-                            us[i++] = us[0];
-                            us[0] = v;
-                        }
-                        else
-                        {
-                            us[i++] = v;
-                        }
-                    }
-                    if (i != 2) return;
-                    foreach (Edge e in ws)
-                    {
-                        int x = e.Other(w);
-                        if (e.Bond.Order == 1) us[i++] = x;
-                    }
-                    if (i < 4)
-                    {
-                        us[i++] = us[2];
-                        us[u] = w;
-                    }
-                    if (i != 4)
+                    if ((us = GetAlleneCarriers(u)) == null)
                         return;
                 }
 
@@ -316,40 +378,7 @@ namespace NCDK.Beam
                 else if (c.Type == Configuration.ConfigurationType.ExtendedTetrahedral)
                 {
                     g.AddFlags(Graph.HAS_EXT_STRO);
-                    // Extended tetrahedral is a little more complicated, note
-                    // following presumes the end atoms are not in ring closures
-                    int v = es[0].Other(u);
-                    int w = es[1].Other(u);
-                    var vs = GetEdges(arrangement.ContainsKey(v) ? arrangement[v] : null, v);
-                    var ws = GetEdges(arrangement.ContainsKey(w) ? arrangement[w] : null, w);
-                    us = new int[4];
-                    int i = 0;
-                    foreach (Edge e in vs)
-                    {
-                        int x = e.Other(v);
-                        if (e.Bond.Order == 1) us[i++] = x;
-                    }
-                    if (i < 2)
-                    {
-                        if (start.Contains(u))
-                        {
-                            us[i++] = us[0];
-                            us[0] = v;
-                        }
-                        else
-                        {
-                            us[i++] = v;
-                        }
-                    }
-                    if (i != 2) return;
-                    if (ws.Count < 3)
-                        us[i++] = w;
-                    foreach (Edge e in ws)
-                    {
-                        int x = e.Other(w);
-                        if (e.Bond.Order == 1) us[i++] = x;
-                    }
-                    if (i != 4)
+                    if ((us = GetAlleneCarriers(u)) == null)
                         return;
                 }
 
@@ -403,13 +432,13 @@ namespace NCDK.Beam
                         checkDirectionalBonds.Set(v, true);
                     }
                     g.AddEdge(new Edge(u, v, bond));
+                    if (arrangement.ContainsKey(u))
+                        arrangement[u].Add(v);
                 }
                 else
                 {
                     start.Add(v); // start of a new run
                 }
-                if (arrangement.ContainsKey(u))
-                    arrangement[u].Add(v);
             }
             stack.Push(v);
             bond = Bond.Implicit;
@@ -608,7 +637,7 @@ namespace NCDK.Beam
                     case '\t':
                     case ' ':
                         // String suffix is title 
-                        StringBuilder sb = new StringBuilder();
+                        var sb = new StringBuilder();
                         while (buffer.HasRemaining())
                         {
                             c = buffer.Get();

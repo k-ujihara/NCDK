@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
+
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
@@ -25,7 +27,9 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     // @cdk.module  smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    public class AromaticQueryBond : SMARTSBond {
+    [Obsolete]
+    public class AromaticQueryBond : SMARTSBond
+    {
         public AromaticQueryBond(IChemObjectBuilder builder)
             : base(builder)
         {
@@ -38,11 +42,13 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             IsAromatic = true;
         }
 
-        public override bool Matches(IBond bond) {
+        public override bool Matches(IBond bond)
+        {
             return bond.IsAromatic;
         }
 
-        public override string ToString() {
+        public override string ToString()
+        {
             return "AromaticQueryBond()";
         }
     }

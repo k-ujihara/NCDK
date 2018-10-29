@@ -21,12 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using NCDK.Graphs;
 using NCDK.Isomorphisms.Matchers;
-using static NCDK.Graphs.GraphUtil;
-using System.Collections.Generic;
-using System.Collections;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace NCDK.Isomorphisms
 {
@@ -64,9 +64,6 @@ namespace NCDK.Isomorphisms
         /// <summary>Search for a subgraph.</summary>
         private readonly bool subgraph;
 
-        /// <summary>Is the query matching query atoms/bonds etc?</summary>
-        private readonly bool queryMatching;
-
         /// <summary>
         /// Non-public constructor for-now the atom/bond semantics are fixed.
         /// </summary>
@@ -82,13 +79,13 @@ namespace NCDK.Isomorphisms
             this.bonds1 = EdgeToBondMap.WithSpaceFor(query);
             this.g1 = GraphUtil.ToAdjList(query, bonds1);
             this.subgraph = substructure;
-            this.queryMatching = query is IQueryAtomContainer;
+            DetermineFilters(query);
         }
 
         /// <inheritdoc/>
         public override int[] Match(IAtomContainer target)
         {
-            return MatchAll(target).GetStereochemistry().First();
+            return MatchAll(target).First();
         }
 
         /// <inheritdoc/>
@@ -97,7 +94,7 @@ namespace NCDK.Isomorphisms
             EdgeToBondMap bonds2;
             int[][] g2;
 
-            AdjListCache cached = target.GetProperty<AdjListCache>(typeof(AdjListCache).FullName);
+            var cached = target.GetProperty<AdjListCache>(typeof(AdjListCache).FullName);
             if (cached == null || !cached.Validate(target))
             {
                 cached = new AdjListCache(target);
@@ -106,8 +103,9 @@ namespace NCDK.Isomorphisms
 
             bonds2 = cached.bmap;
             g2 = cached.g;
-            IEnumerable<int[]> iterable = new VFIterable(query, target, g1, g2, bonds1, bonds2, atomMatcher, bondMatcher, subgraph);
-            return new Mappings(query, target, iterable);
+            var iterable = new VFIterable(query, target, g1, g2, bonds1, bonds2, atomMatcher, bondMatcher, subgraph);
+            var mappings = new Mappings(query, target, iterable);
+            return Filter(mappings, query, target);
         }
 
         /// <summary>
@@ -255,9 +253,9 @@ namespace NCDK.Isomorphisms
 
             internal bool Validate(IAtomContainer mol)
             {
-                return mol.Atoms.Count == numAtoms &&
-                       mol.Bonds.Count == numBonds &&
-                       (DateTime.Now.Ticks - tInit) < MAX_AGE;
+                return mol.Atoms.Count == numAtoms 
+                    && mol.Bonds.Count == numBonds
+                    && (DateTime.Now.Ticks - tInit) < MAX_AGE;
             }
         }
     }

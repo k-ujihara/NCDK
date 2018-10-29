@@ -541,7 +541,7 @@ namespace NCDK.Tools.Manipulator
         public void TestGetTotalFormalCharge_IAtomContainer()
         {
             SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = parser.ParseSmiles("[O-]C([N+])C([N+])C");
+            var mol = parser.ParseSmiles("[O-]C([N+])C([N+])C");
             int totalCharge = AtomContainerManipulator.GetTotalFormalCharge(mol);
 
             Assert.AreEqual(1, totalCharge);
@@ -554,7 +554,7 @@ namespace NCDK.Tools.Manipulator
         public void TestGetTotalExactMass_IAtomContainer()
         {
             SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = parser.ParseSmiles("CCl");
+            var mol = parser.ParseSmiles("CCl");
             mol.Atoms[0].ExactMass = 12.00;
             mol.Atoms[1].ExactMass = 34.96885268;
             double totalExactMass = AtomContainerManipulator.GetTotalExactMass(mol);
@@ -610,7 +610,7 @@ namespace NCDK.Tools.Manipulator
         public void TestGetTotalNaturalAbundance_IAtomContainer()
         {
             SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = parser.ParseSmiles("CCl");
+            var mol = parser.ParseSmiles("CCl");
             mol.Atoms[0].NaturalAbundance = 98.93;
             mol.Atoms[1].NaturalAbundance = 75.78;
             double totalAbudance = AtomContainerManipulator.GetTotalNaturalAbundance(mol);
@@ -625,7 +625,7 @@ namespace NCDK.Tools.Manipulator
         public void TestGetTotalPositiveFormalCharge_IAtomContainer()
         {
             SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = parser.ParseSmiles("[O-]C([N+])C([N+])C");
+            var mol = parser.ParseSmiles("[O-]C([N+])C([N+])C");
             int totalCharge = AtomContainerManipulator.GetTotalPositiveFormalCharge(mol);
 
             Assert.AreEqual(2, totalCharge);
@@ -638,7 +638,7 @@ namespace NCDK.Tools.Manipulator
         public void TestGetTotalNegativeFormalCharge_IAtomContainer()
         {
             SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = parser.ParseSmiles("[O-]C([N+])C([N+])C");
+            var mol = parser.ParseSmiles("[O-]C([N+])C([N+])C");
             int totalCharge = AtomContainerManipulator.GetTotalNegativeFormalCharge(mol);
 
             Assert.AreEqual(-1, totalCharge);
@@ -957,7 +957,7 @@ namespace NCDK.Tools.Manipulator
         {
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
-            IAtomContainer mol = smipar.ParseSmiles("N[C@H](CC)O");
+            var mol = smipar.ParseSmiles("N[C@H](CC)O");
             IAtom newAtom = bldr.NewAtom("Cl");
             newAtom.ImplicitHydrogenCount = 0;
             AtomContainerManipulator.ReplaceAtomByAtom(mol, mol.Atoms[0], newAtom);
@@ -1037,11 +1037,11 @@ namespace NCDK.Tools.Manipulator
         public void TestCreateAnyAtomAnyBondAtomContainerIAtomContainer()
         {
             string smiles = "c1ccccc1";
-            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles(smiles);
+            var sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var mol = sp.ParseSmiles(smiles);
             mol = AtomContainerManipulator.CreateAllCarbonAllSingleNonAromaticBondAtomContainer(mol);
             string smiles2 = "C1CCCCC1";
-            IAtomContainer mol2 = sp.ParseSmiles(smiles2);
+            var mol2 = sp.ParseSmiles(smiles2);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(mol, mol2));
         }
 
@@ -1177,7 +1177,7 @@ namespace NCDK.Tools.Manipulator
         public void TestBondOrderSum()
         {
             SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = parser.ParseSmiles("C=CC");
+            var mol = parser.ParseSmiles("C=CC");
             double bosum = AtomContainerManipulator.GetBondOrderSum(mol, mol.Atoms[0]);
             Assert.AreEqual(2.0, bosum, 0.001);
             bosum = AtomContainerManipulator.GetBondOrderSum(mol, mol.Atoms[1]);
@@ -1190,7 +1190,7 @@ namespace NCDK.Tools.Manipulator
         public void ConvertExplicitHydrogenChiralCarbon()
         {
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer m = smipar.ParseSmiles("C[C@H](CC)O");
+            var m = smipar.ParseSmiles("C[C@H](CC)O");
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(m);
             Assert.AreEqual("C([C@](C(C([H])([H])[H])([H])[H])(O[H])[H])([H])([H])[H]", SmilesGenerator.Isomeric().Create(m));
         }
@@ -1199,7 +1199,7 @@ namespace NCDK.Tools.Manipulator
         public void ConvertExplicitHydrogenSulfoxide()
         {
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer m = smipar.ParseSmiles("[S@](=O)(C)CC");
+            var m = smipar.ParseSmiles("[S@](=O)(C)CC");
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(m);
             Assert.AreEqual("[S@](=O)(C([H])([H])[H])C(C([H])([H])[H])([H])[H]", SmilesGenerator.Isomeric().Create(m));
         }
@@ -1322,10 +1322,10 @@ namespace NCDK.Tools.Manipulator
         public void MolecularWeight()
         {
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = smipar.ParseSmiles("[13CH4]CO");
+            var mol = smipar.ParseSmiles("[13CH4]CO");
             double molecularWeight = AtomContainerManipulator.GetMolecularWeight(mol);
             double naturalExactMass = AtomContainerManipulator.GetNaturalExactMass(mol);
-            BODRIsotopeFactory isotopes = BODRIsotopeFactory.Instance;
+            var isotopes = BODRIsotopeFactory.Instance;
             foreach (IAtom atom in mol.Atoms)
             {
                 if (atom.MassNumber == null)
@@ -1343,7 +1343,7 @@ namespace NCDK.Tools.Manipulator
         public void RemoveBondStereo()
         {
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = smipar.ParseSmiles("[2H]/C=C/[H]");
+            var mol = smipar.ParseSmiles("[2H]/C=C/[H]");
             AtomContainerManipulator.SuppressHydrogens(mol);
             Assert.IsFalse(mol.StereoElements.Any());
         }
@@ -1352,7 +1352,7 @@ namespace NCDK.Tools.Manipulator
         public void Keep1Hisotopes()
         {
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = smipar.ParseSmiles("[2H]/C=C/[1H]");
+            var mol = smipar.ParseSmiles("[2H]/C=C/[1H]");
             AtomContainerManipulator.SuppressHydrogens(mol);
             Assert.AreEqual(4, mol.Atoms.Count);
         }
@@ -1361,7 +1361,7 @@ namespace NCDK.Tools.Manipulator
         static void AssertRemoveH(string smiIn, string smiExp)
         {
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer m = smipar.ParseSmiles(smiIn);
+            var m = smipar.ParseSmiles(smiIn);
 
             string smiAct = new SmilesGenerator().Create(AtomContainerManipulator.RemoveHydrogens(m));
 

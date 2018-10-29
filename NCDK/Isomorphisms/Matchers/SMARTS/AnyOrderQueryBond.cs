@@ -17,14 +17,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
+
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// This matches a bond of any order.
     /// </summary>
     // @cdk.module  smarts
-    // @cdk.githash
     // @cdk.keyword SMARTS
+    [Obsolete]
     public class AnyOrderQueryBond : SMARTSBond
     {
         public AnyOrderQueryBond(IChemObjectBuilder builder)

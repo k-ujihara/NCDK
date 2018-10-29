@@ -23,7 +23,6 @@ using NCDK.Graphs;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Isomorphisms.Matchers.SMARTS;
-using NCDK.Isomorphisms.MCSS;
 using NCDK.Smiles.SMARTS.Parser;
 using System;
 using System.Collections;
@@ -114,9 +113,9 @@ namespace NCDK.Smiles.SMARTS
     // @author Rajarshi Guha
     // @cdk.created 2007-04-08
     // @cdk.module smarts
-    // @cdk.githash
     // @cdk.keyword SMARTS
     // @cdk.keyword substructure search
+    [Obsolete("Use " + nameof(SmartsPattern))]
     public class SMARTSQueryTool
     {
         private string smarts;
@@ -207,7 +206,7 @@ namespace NCDK.Smiles.SMARTS
 
         // a simplistic cache to store parsed SMARTS queries
         private int MAX_ENTRIES = 20;
-        IDictionary<string, QueryAtomContainer> cache = new Dictionary<string, QueryAtomContainer>();
+        Dictionary<string, QueryAtomContainer> cache = new Dictionary<string, QueryAtomContainer>();
         // TODO: handle MAX_ENTRIES
 
         /// <summary>
@@ -317,10 +316,12 @@ namespace NCDK.Smiles.SMARTS
         /// the mapping of query atoms to the target molecule</para>
         /// </summary>
         /// <remarks>
-        /// <b>Note</b>: This method performs a simple caching scheme, by comparing the current molecule to the previous
+        /// <note type="note">
+        /// This method performs a simple caching scheme, by comparing the current molecule to the previous
         /// molecule by reference. If you repeatedly match different SMARTS on the same molecule, this method will avoid
         /// initializing ( ring perception, aromaticity etc.) the molecule each time. If however, you modify the molecule
         /// between such multiple matchings you should use the other form of this method to force initialization.
+        /// </note>
         /// </remarks>
         /// <param name="atomContainer">The target molecule</param>
         /// <returns>true if the pattern is found in the target molecule, false otherwise</returns>
@@ -352,7 +353,8 @@ namespace NCDK.Smiles.SMARTS
         {
             if (this.atomContainer == atomContainer)
             {
-                if (forceInitialization) InitializeMolecule();
+                if (forceInitialization)
+                    InitializeMolecule();
             }
             else
             {
@@ -364,7 +366,7 @@ namespace NCDK.Smiles.SMARTS
             if (query.Atoms.Count == 1)
             {
                 // lets get the query atom
-                IQueryAtom queryAtom = (IQueryAtom)query.Atoms[0];
+                var queryAtom = (IQueryAtom)query.Atoms[0];
 
                 mappings = new List<int[]>();
                 for (int i = 0; i < atomContainer.Atoms.Count; i++)
@@ -379,7 +381,7 @@ namespace NCDK.Smiles.SMARTS
             {
                 mappings = Ullmann.FindSubstructure(query).MatchAll(atomContainer)
                         .Where(n => new SmartsStereoMatch(query, atomContainer).Apply(n))
-                        .Where(n => new ComponentGrouping(query, atomContainer).Apply(n)).ToList();
+                        .ToList();
             }
 
             return mappings.Count != 0;

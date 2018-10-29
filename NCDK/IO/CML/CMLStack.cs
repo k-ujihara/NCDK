@@ -41,7 +41,7 @@ namespace NCDK.IO.CML
         /// <returns>A string representation of the stack.</returns>
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append('/');
             foreach (var e in this.Reverse())
             {

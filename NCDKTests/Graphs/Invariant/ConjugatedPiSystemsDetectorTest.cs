@@ -446,8 +446,8 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void TestChargeWithProtonExplicit()
         {
-            SmilesParser sp = new SmilesParser(builder);
-            IAtomContainer mol = sp.ParseSmiles("[H]C([H])=C([H])[C+]([H])[H]");
+            var sp = new SmilesParser(builder);
+            var mol = sp.ParseSmiles("[H]C([H])=C([H])[C+]([H])[H]");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
             Aromaticity.CDKLegacy.Apply(mol);
@@ -474,8 +474,8 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void TestChargeWithProtonImplicit()
         {
-            SmilesParser sp = new SmilesParser(builder);
-            IAtomContainer mol = sp.ParseSmiles("C=C[C+]");
+            var sp = new SmilesParser(builder);
+            var mol = sp.ParseSmiles("C=C[C+]");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
             Aromaticity.CDKLegacy.Apply(mol);

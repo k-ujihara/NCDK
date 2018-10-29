@@ -45,8 +45,8 @@ namespace NCDK.Smiles.SMARTS.Parser
         public void Match(string smarts, string smiles)
         {
             SMARTSQueryTool sqt = new SMARTSQueryTool(smarts, ChemObjectBuilder.Instance);
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer atomContainer = sp.ParseSmiles(smiles);
+            var sp = CDK.SilentSmilesParser;
+            var atomContainer = sp.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);
             Aromaticity.CDKLegacy.Apply(atomContainer);
             bool status = sqt.Matches(atomContainer);
@@ -489,7 +489,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
             // iterating SMILES reader doesn't allow us to turn off automatic aromaticity
             // perception
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
 
             int nmatch = 0;
             int nmol = 0;
@@ -498,7 +498,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 string smi;
                 while ((smi = reader.ReadLine()) != null)
                 {
-                    IAtomContainer container = sp.ParseSmiles(smi.Split('\t')[0]);
+                    var container = sp.ParseSmiles(smi.Split('\t')[0]);
                     if (sqt.Matches(container))
                     {
                         nmatch++;
@@ -510,9 +510,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        /// <summary>
         // @cdk.bug 1312
-        /// </summary>
         [TestMethod()]
         public void RecursiveComponentGrouping()
         {
@@ -520,9 +518,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 0 }, SMARTSSearchTest.Match("[O;D1;$(([a,A]).([A,a]))][CH]=O", "OC=O")));
         }
 
-        /// <summary>
         // @cdk.bug 844
-         /// </summary>
         [TestMethod()]
         public void Bug844()
         {

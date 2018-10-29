@@ -109,7 +109,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public DescriptorValue<Result<int>> Calculate(IAtomContainer atomContainer)
         {
             int hBondDonors = 0;
-            IAtomContainer ac = (IAtomContainer)atomContainer.Clone();
+            var ac = (IAtomContainer)atomContainer.Clone();
 
             //IAtom[] atoms = ac.GetAtoms();
             // iterate over all atoms of this AtomContainer; use label atomloop to allow for labelled continue
@@ -117,7 +117,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             //atomloop:
             for (int atomIndex = 0; atomIndex < ac.Atoms.Count; atomIndex++)
             {
-                IAtom atom = (IAtom)ac.Atoms[atomIndex];
+                var atom = (IAtom)ac.Atoms[atomIndex];
                 // checking for O and N atoms where the formal charge is >= 0
                 switch (atom.Symbol)
                 {
@@ -136,7 +136,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             var neighbours = ac.GetConnectedAtoms(atom);
                             foreach (var neighbour in neighbours)
                             {
-                                if (((IAtom)neighbour).Symbol.Equals("H", StringComparison.Ordinal))
+                                if ((neighbour).Symbol.Equals("H", StringComparison.Ordinal))
                                 {
                                     hBondDonors++;
                                     goto continue_atomloop;

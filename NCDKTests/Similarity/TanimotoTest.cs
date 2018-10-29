@@ -104,15 +104,15 @@ namespace NCDK.Similarity
         [TestMethod()]
         public void KeggR00258()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             string smiles1 = "O=C(O)CCC(=O)C(=O)O";
             string smiles2 = "O=C(O)C(N)CCC(=O)O";
             string smiles3 = "O=C(O)C(N)C";
             string smiles4 = "CC(=O)C(=O)O";
-            IAtomContainer molecule1 = sp.ParseSmiles(smiles1);
-            IAtomContainer molecule2 = sp.ParseSmiles(smiles2);
-            IAtomContainer molecule3 = sp.ParseSmiles(smiles3);
-            IAtomContainer molecule4 = sp.ParseSmiles(smiles4);
+            var molecule1 = sp.ParseSmiles(smiles1);
+            var molecule2 = sp.ParseSmiles(smiles2);
+            var molecule3 = sp.ParseSmiles(smiles3);
+            var molecule4 = sp.ParseSmiles(smiles4);
             Fingerprinter fingerprinter = new Fingerprinter(1024, 6);
             BitArray bs1 = fingerprinter.GetBitFingerprint(molecule1).AsBitSet();
             BitArray bs2 = fingerprinter.GetBitFingerprint(molecule2).AsBitSet();

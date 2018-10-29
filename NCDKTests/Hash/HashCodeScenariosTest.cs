@@ -1083,7 +1083,7 @@ namespace NCDK.Hash
         /// <returns>list of structures</returns>
         private List<IAtomContainer> ExtractSDF(string path, int exp)
         {
-            Stream ins = ResourceLoader.GetAsStream(path);
+            var ins = ResourceLoader.GetAsStream(path);
 
             Assert.IsNotNull(ins, path + " could not be found in classpath");
 

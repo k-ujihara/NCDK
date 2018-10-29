@@ -395,7 +395,7 @@ namespace NCDK.Beam
         private static string RandomPermutations(string input, int n)
         {
             Graph g = Parser.Parse(input);
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append(Generator.Generate(g));
             for (int i = 0; i < n; i++)
             {

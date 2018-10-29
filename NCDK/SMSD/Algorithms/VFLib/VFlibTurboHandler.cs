@@ -149,7 +149,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         private static int CheckCommonAtomCount(IAtomContainer reactantMolecule, IAtomContainer productMolecule)
         {
-            List<string> atoms = new List<string>();
+            var atoms = new List<string>();
             for (int i = 0; i < reactantMolecule.Atoms.Count; i++)
             {
                 atoms.Add(reactantMolecule.Atoms[i].Symbol);

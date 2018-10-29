@@ -57,9 +57,9 @@ namespace NCDK.SMSD
         public void TestMatchCount()
         {
             Isomorphism smsd = new Isomorphism(Algorithm.VFLibMCS, true);
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer query = sp.ParseSmiles("CC");
-            IAtomContainer target = sp.ParseSmiles("C1CCC12CCCC2");
+            var sp = CDK.SilentSmilesParser;
+            var query = sp.ParseSmiles("CC");
+            var target = sp.ParseSmiles("C1CCC12CCCC2");
 
             smsd.Init(query, target, false, true);
             bool foundMatches = smsd.IsSubgraph();
@@ -215,8 +215,8 @@ namespace NCDK.SMSD
         //    [TestMethod()]
         //    public void TestSingleMappingTesting() {
         //
-        //        SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-        //        IAtomContainer atomContainer = sp.ParseSmiles("C");
+        //        var sp = CDK.SilentSmilesParser;
+        //        var atomContainer = sp.ParseSmiles("C");
         //        IQueryAtomContainer query = QueryAtomContainerCreator.CreateBasicQueryContainer(atomContainer);
         //
         //        IAtomContainer mol2 = Molecules.Create4Toluene();
@@ -246,11 +246,11 @@ namespace NCDK.SMSD
         [TestCategory("SlowTest")]
         public void TestSMSDAdpAtpSubgraph()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             string adp = "NC1=NC=NC2=C1N=CN2[C@@H]1O[C@H](COP(O)(=O)OP(O)(O)=O)[C@@H](O)[C@H]1O";
             string atp = "NC1=NC=NC2=C1N=CN2[C@@H]1O[C@H](COP(O)(=O)OP(O)(=O)OP(O)(O)=O)[C@@H](O)[C@H]1O";
-            IAtomContainer mol1 = sp.ParseSmiles(adp);
-            IAtomContainer mol2 = sp.ParseSmiles(atp);
+            var mol1 = sp.ParseSmiles(adp);
+            var mol2 = sp.ParseSmiles(atp);
 
             ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);
@@ -280,7 +280,7 @@ namespace NCDK.SMSD
         [TestCategory("SlowTest")]
         public void TestSMSDLargeSubgraph()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             string c03374 = "CC1=C(C=C)\\C(NC1=O)=C" + "\\C1=C(C)C(CCC(=O)O[C@@H]2O[C@@H]"
                     + "([C@@H](O)[C@H](O)[C@H]2O)C(O)=O)" + "=C(CC2=C(CCC(O)=O)C(C)=C(N2)" + "\\C=C2NC(=O)C(C=C)=C/2C)N1";
 
@@ -288,8 +288,8 @@ namespace NCDK.SMSD
                     + "([C@@H](O)[C@H](O)[C@H]2O)C(O)=O)" + "=C(CC2=C(CCC(=O)O[C@@H]3O[C@@H]"
                     + "([C@@H](O)[C@H](O)[C@H]3O)C(O)=O)" + "C(C)=C(N2)" + "\\C=C2NC(=O)C(C=C)=C/2C)N1";
 
-            IAtomContainer mol1 = sp.ParseSmiles(c03374);
-            IAtomContainer mol2 = sp.ParseSmiles(c05787);
+            var mol1 = sp.ParseSmiles(c03374);
+            var mol2 = sp.ParseSmiles(c05787);
 
             ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);

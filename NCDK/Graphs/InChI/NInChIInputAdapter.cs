@@ -75,7 +75,7 @@ namespace NCDK.Graphs.InChI
             {
                 throw new ArgumentNullException(nameof(ops));
             }
-            StringBuilder sbOptions = new StringBuilder();
+            var sbOptions = new StringBuilder();
 
             bool hasUserSpecifiedTimeout = false;
 

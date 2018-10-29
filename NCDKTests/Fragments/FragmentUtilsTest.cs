@@ -44,7 +44,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestSplit()
         {
-            IAtomContainer mol = smilesParser.ParseSmiles("C1CC1C2CCC2");
+            var mol = smilesParser.ParseSmiles("C1CC1C2CCC2");
             SpanningTree st = new SpanningTree(mol);
             IRingSet rings = st.GetAllRings();
             IBond splitBond = null;
@@ -72,7 +72,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestMakeAtomContainer()
         {
-            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+            var builder = Silent.ChemObjectBuilder.Instance;
 
             IAtom atom = builder.NewAtom("C");
             IAtom exclude = builder.NewAtom("C");
@@ -101,7 +101,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestTraversal_Chain()
         {
-            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+            var builder = Silent.ChemObjectBuilder.Instance;
 
             IAtom[] atoms = new IAtom[]{builder.NewAtom("C"), builder.NewAtom("C"),
                 builder.NewAtom("C"), builder.NewAtom("C"),

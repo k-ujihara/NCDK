@@ -446,7 +446,7 @@ namespace NCDK.IO
         /// <returns></returns>
         private string ParseLevelOfTheory(string line)
         {
-            StringBuilder summary = new StringBuilder();
+            var summary = new StringBuilder();
             summary.Append(line);
             try
             {

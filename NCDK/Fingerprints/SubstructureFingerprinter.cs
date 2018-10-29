@@ -21,10 +21,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Smiles.SMARTS;
+using NCDK.Isomorphisms;
+using NCDK.Isomorphisms.Matchers;
+using NCDK.SMARTS;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.Fingerprints
 {
@@ -358,7 +361,28 @@ namespace NCDK.Fingerprints
     // @cdk.githash
     public class SubstructureFingerprinter : AbstractFingerprinter, IFingerprinter
     {
-        private string[] smarts;
+        private sealed class Key
+        {
+            public string Smarts { get; private set; }
+            public Pattern Pattern { get; private set; }
+
+            public Key(string smarts, Pattern pattern)
+            {
+                this.Smarts = smarts;
+                this.Pattern = pattern;
+            }
+        }
+
+        private readonly List<Key> keys = new List<Key>();
+
+        /// <summary>
+        /// Set up the fingerprinter to use a user-defined set of fragments.
+        /// </summary>
+        /// <param name="smarts">The collection of fragments to look for</param>
+        public SubstructureFingerprinter(IEnumerable<string> smarts)
+        {
+            SetSmarts(smarts);
+        }
 
         /// <summary>
         /// Set up the fingerprinter to use the fragments from <see cref="StandardSubstructureSets"/>.
@@ -367,44 +391,91 @@ namespace NCDK.Fingerprints
         {
             try
             {
-                smarts = StandardSubstructureSets.GetFunctionalGroupSMARTS();
+                SetSmarts(StandardSubstructureSets.GetFunctionalGroupSMARTS());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                smarts = null;
+                throw new InvalidOperationException("Could not load SMARTS patterns", ex);
             }
         }
 
         /// <summary>
-        /// Set up the fingerprinter to use a user-defined set of fragments.
+        /// Set the SMARTS patterns.
         /// </summary>
-        /// <param name="smarts">The collection of fragments to look for</param>
-        public SubstructureFingerprinter(string[] smarts)
+        /// <param name="smarts">the SMARTS</param>
+        private void SetSmarts(IEnumerable<string> smarts)
         {
-            this.smarts = smarts;
+            keys.Clear();
+            foreach (var key in smarts)
+            {
+                var qmol = new QueryAtomContainer(null);
+                SmartsPattern ptrn = null;
+                ptrn = SmartsPattern.Create(key);
+                ptrn.SetPrepare(false); // prepare is done once
+                keys.Add(new Key(key, ptrn));
+            }
         }
 
         /// <inheritdoc/>
         public override IBitFingerprint GetBitFingerprint(IAtomContainer atomContainer)
         {
-            if (smarts == null)
+            if (!keys.Any())
             {
                 throw new CDKException("No substructures were defined");
             }
 
-            int bitsetLength = smarts.Length;
-            BitArray fingerPrint = new BitArray(bitsetLength);
+            SmartsPattern.Prepare(atomContainer);
+            var fingerPrint = new BitArray(keys.Count);
 
-            SMARTSQueryTool sqt = new SMARTSQueryTool("C", atomContainer.Builder);
-            for (int i = 0; i < smarts.Length; i++)
+            for (int i = 0; i < keys.Count; i++)
             {
-                string pattern = smarts[i];
-
-                sqt.Smarts = pattern;
-                bool status = sqt.Matches(atomContainer);
-                if (status) fingerPrint.Set(i, true);
+                if (keys[i].Pattern.Matches(atomContainer))
+                    fingerPrint[i] = true;
             }
             return new BitSetFingerprint(fingerPrint);
+        }
+
+        /// <inheritdoc/>
+        public override ICountFingerprint GetCountFingerprint(IAtomContainer atomContainer)
+        {
+            if (!keys.Any())
+            {
+                throw new CDKException("No substructures were defined");
+            }
+
+            // init SMARTS invariants (connectivity, degree, etc)
+            SmartsPattern.Prepare(atomContainer);
+
+            var map = new SortedDictionary<int, int>();
+            for (int i = 0; i < keys.Count; i++)
+            {
+                var ptrn = keys[i].Pattern;
+                map[i] = ptrn.MatchAll(atomContainer).CountUnique();
+            }
+            return new CountFingerprint(map);
+        }
+
+        class CountFingerprint : ICountFingerprint
+        {
+            readonly IReadOnlyDictionary<int, int> map;
+            readonly int[] keys;
+            readonly int[] values;
+
+            public CountFingerprint(IReadOnlyDictionary<int, int> map)
+            {
+                this.map = map;
+                this.keys = map.Keys.ToArray();
+                this.values = map.Values.ToArray();
+            }
+
+            public long Length => map.Count;
+            public int GetCount(int index) => values[index];
+            public int GetCountForHash(int hash) => map[hash];
+            public int GetHash(int index) => keys[index];
+            public int GetNumberOfPopulatedBins() => map.Count;
+            public bool HasHash(int hash) => map.ContainsKey(hash);
+            public void Merge(ICountFingerprint fp) { }
+            public void SetBehaveAsBitFingerprint(bool behaveAsBitFingerprint) { }
         }
 
         /// <inheritdoc/>
@@ -414,7 +485,7 @@ namespace NCDK.Fingerprints
         }
 
         /// <inheritdoc/>
-        public override int Length => smarts.Length;
+        public override int Length => keys.Count;
 
         /// <summary>
         /// Retrieves the SMARTS representation of a substructure for a given
@@ -424,13 +495,7 @@ namespace NCDK.Fingerprints
         /// <returns>SMARTS representation of substructure at index <paramref name="bitIndex"/>.</returns>
         public string GetSubstructure(int bitIndex)
         {
-            return smarts[bitIndex];
-        }
-
-        /// <inheritdoc/>
-        public override ICountFingerprint GetCountFingerprint(IAtomContainer container)
-        {
-            throw new NotSupportedException();
+            return keys[bitIndex].Smarts;
         }
     }
 }

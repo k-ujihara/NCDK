@@ -37,8 +37,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestWienerNumbersDescriptor()
         {
             double[] testResult = { 18, 2 };
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
             AtomContainerManipulator.RemoveHydrogens(mol);
             ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
             Assert.AreEqual(testResult[0], retval[0], 0.0001);
@@ -52,8 +52,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestWithExplicitHydrogens()
         {
             double[] testResult = { 18, 2 };
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
+            var sp = CDK.SilentSmilesParser;
+            var mol = sp.ParseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
             ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
             Assert.AreEqual(testResult[0], retval[0], 0.0001);
             Assert.AreEqual(testResult[1], retval[1], 0.0001);
@@ -65,13 +65,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestOriginalWienerPaperCompounds()
         {
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             double[] testResult = { 10, 20, 35, 56, 84, 120, 165, 220, 286 };
             string smiles = "CCC";
             for (int i = 0; i < testResult.Length; i++)
             {
                 smiles += "C"; // create the matching paraffin
-                IAtomContainer mol = sp.ParseSmiles(smiles);
+                var mol = sp.ParseSmiles(smiles);
                 ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
                 Assert.AreEqual(testResult[i], retval[0], 0.0001);
             }

@@ -31,7 +31,7 @@ namespace NCDK.IO
         /// </summary>
         public GamessReaderTest()
         {
-            Stream ins = ResourceLoader.GetAsStream(TestFile);
+            var ins = ResourceLoader.GetAsStream(TestFile);
             this.inputReader = new StreamReader(ins);
             this.gamessReaderUnderTest = new GamessReader(this.inputReader);
         }

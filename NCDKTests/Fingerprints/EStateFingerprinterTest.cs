@@ -70,7 +70,6 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public override void TestBug706786()
         {
-
             IAtomContainer superStructure = Bug706786_1();
             IAtomContainer subStructure = Bug706786_2();
 
@@ -78,6 +77,12 @@ namespace NCDK.Fingerprints
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(subStructure);
             AddImplicitHydrogens(superStructure);
             AddImplicitHydrogens(subStructure);
+
+            // SMARTS is now correct and D will include H atoms, CDK had this wrong
+            // for years (had it has non-H count). Whilst you can set the optional
+            // SMARTS flavor CDK_LEGACY this is not correct
+            AtomContainerManipulator.SuppressHydrogens(superStructure);
+            AtomContainerManipulator.SuppressHydrogens(subStructure);
 
             IFingerprinter fpr = new EStateFingerprinter();
             IBitFingerprint superBits = fpr.GetBitFingerprint(superStructure);

@@ -106,7 +106,7 @@ namespace NCDK.Smiles
         /// bond orders (if possible) using an efficient algorithm from the
         /// underlying Beam library (soon to be added to CDK).
         /// </summary>
-        private bool kekulise = true;
+        private readonly bool kekulise = true;
 
         /// <summary>
         /// Create a new SMILES parser which will create <see cref="IAtomContainer"/>s with
@@ -114,9 +114,15 @@ namespace NCDK.Smiles
         /// </summary>
         /// <param name="builder">used to create the CDK domain objects</param>
         public SmilesParser(IChemObjectBuilder builder)
+            : this(builder, true)
+        {
+        }
+
+        public SmilesParser(IChemObjectBuilder builder, bool kekulise)
         {
             this.builder = builder;
             this.beamToCDK = new BeamToCDK(builder);
+            this.kekulise = kekulise;
         }
 
         /// <summary>
@@ -676,7 +682,6 @@ namespace NCDK.Smiles
         public bool IsPreservingAromaticity
         {
             get { return !kekulise; }
-            set { kekulise = !value; }
         }
 
         /// <summary>
@@ -685,10 +690,6 @@ namespace NCDK.Smiles
         /// turned off if it is believed the structures can be handled without
         /// assigned bond orders (not recommended).
         /// </summary>
-        /// <param name="kekulise">should structures be kekulised</param>
-        public void Kekulise(bool kekulise)
-        {
-            this.kekulise = kekulise;
-        }
+        public bool Kekulise => this.kekulise;
     }
 }

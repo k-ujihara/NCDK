@@ -257,7 +257,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
 
         internal static List<string> GenerateCSetCopy(int bondNumber, IList<string> cSet)
         {
-            List<string> cTabCopy = new List<string>();
+            var cTabCopy = new List<string>();
             for (int a = 0; a < bondNumber; a++)
             {
                 cTabCopy.Add(cSet[a * 4 + 0]);
@@ -270,7 +270,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
 
         internal static List<string> GenerateCTabCopy(IAtomContainer atomContainer)
         {
-            List<string> cTabCopy = new List<string>();
+            var cTabCopy = new List<string>();
             foreach (var bond in atomContainer.Bonds)
             {
                 string atomI = bond.Begin.Symbol;

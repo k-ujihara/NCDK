@@ -257,17 +257,17 @@ namespace NCDK.Smiles
                 num[j] = m.Atoms.IndexOf(r.Atoms[j]);
             }
 
-            List<string> al1 = new List<string>();
-            List<string> al2 = new List<string>();
-            List<string> al3 = new List<string>();
-            List<string> al4 = new List<string>();
-            List<string> al5 = new List<string>();
+            var al1 = new List<string>();
+            var al2 = new List<string>();
+            var al3 = new List<string>();
+            var al4 = new List<string>();
+            var al5 = new List<string>();
 
-            List<string> al6 = new List<string>();
-            List<string> al7 = new List<string>();
-            List<string> al8 = new List<string>();
-            List<string> al9 = new List<string>();
-            List<string> al10 = new List<string>();
+            var al6 = new List<string>();
+            var al7 = new List<string>();
+            var al8 = new List<string>();
+            var al9 = new List<string>();
+            var al10 = new List<string>();
 
             al1.Add(num[1] + "-" + num[2]);
             al1.Add(num[3] + "-" + num[4]);
@@ -324,8 +324,8 @@ namespace NCDK.Smiles
                 num[j] = m.Atoms.IndexOf(r.Atoms[j]);
             }
 
-            List<string> al1 = new List<string>();
-            List<string> al2 = new List<string>();
+            var al1 = new List<string>();
+            var al2 = new List<string>();
 
             al1.Add(num[0] + "-" + num[1]);
             al1.Add(num[2] + "-" + num[3]);
@@ -335,24 +335,24 @@ namespace NCDK.Smiles
             al2.Add(num[3] + "-" + num[4]);
             al2.Add(num[5] + "-" + num[0]);
 
-            List<string> al3 = new List<string>();
-            List<string> al4 = new List<string>();
-            List<string> al5 = new List<string>();
-            List<string> al6 = new List<string>();
-            List<string> al7 = new List<string>();
-            List<string> al8 = new List<string>();
-            List<string> al9 = new List<string>();
-            List<string> al10 = new List<string>();
-            List<string> al11 = new List<string>();
+            var al3 = new List<string>();
+            var al4 = new List<string>();
+            var al5 = new List<string>();
+            var al6 = new List<string>();
+            var al7 = new List<string>();
+            var al8 = new List<string>();
+            var al9 = new List<string>();
+            var al10 = new List<string>();
+            var al11 = new List<string>();
 
-            List<string> al12 = new List<string>();
-            List<string> al13 = new List<string>();
-            List<string> al14 = new List<string>();
-            List<string> al15 = new List<string>();
-            List<string> al16 = new List<string>();
-            List<string> al17 = new List<string>();
+            var al12 = new List<string>();
+            var al13 = new List<string>();
+            var al14 = new List<string>();
+            var al15 = new List<string>();
+            var al16 = new List<string>();
+            var al17 = new List<string>();
 
-            List<string> al18 = new List<string>();
+            var al18 = new List<string>();
 
             al3.Add(num[0] + "-" + num[1]);
             al3.Add(num[2] + "-" + num[3]);
@@ -428,11 +428,11 @@ namespace NCDK.Smiles
                 num[j] = m.Atoms.IndexOf(r.Atoms[j]);
             }
 
-            List<string> al1 = new List<string>();
-            List<string> al2 = new List<string>();
-            List<string> al3 = new List<string>();
-            List<string> al4 = new List<string>();
-            List<string> al5 = new List<string>();
+            var al1 = new List<string>();
+            var al2 = new List<string>();
+            var al3 = new List<string>();
+            var al4 = new List<string>();
+            var al5 = new List<string>();
 
             al1.Add(num[0] + "-" + num[1]);
             al1.Add(num[2] + "-" + num[3]);
@@ -580,7 +580,7 @@ namespace NCDK.Smiles
                     }
                     catch (Exception e)
                     {
-                        Trace.TraceError("Failed to clone atomContainer: ", e.Message);
+                        Trace.TraceError($"Failed to clone atomContainer: {e.Message}");
                         Debug.WriteLine(e);
                     }
 

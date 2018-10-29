@@ -68,7 +68,7 @@ namespace NCDK.Isomorphisms
     // @cdk.keyword structure search
     // @cdk.keyword mappings
     // @cdk.keyword matching
-    // @cdk.githash
+    [Obsolete("Results now automatically consider stereo if it's present, to match without stereochemistry remove the stereo features.")]
     public sealed class Mappings : IEnumerable<int[]>
     {
         /// <summary>Enumerable permutations of the query vertices.</summary>

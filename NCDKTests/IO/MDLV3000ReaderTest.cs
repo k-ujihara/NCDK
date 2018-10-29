@@ -97,14 +97,14 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestPseudoAtomLabels()
         {
-            using (Stream ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.pseudoatomsv3000.mol"))
+            using (var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.pseudoatomsv3000.mol"))
             using (MDLV3000Reader reader = new MDLV3000Reader(ins))
             {
                 IAtomContainer molecule = ChemObjectBuilder.Instance.NewAtomContainer();
                 molecule = reader.Read(molecule);
                 reader.Close();
                 Assert.IsTrue(molecule.Atoms[9] is IPseudoAtom);
-                Assert.AreEqual("Leu", molecule.Atoms[9].Symbol);
+                Assert.AreEqual("R", molecule.Atoms[9].Symbol);
                 IPseudoAtom pa = (IPseudoAtom)molecule.Atoms[9];
                 Assert.AreEqual("Leu", pa.Label);
             }
