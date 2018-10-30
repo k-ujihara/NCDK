@@ -92,9 +92,11 @@ namespace NCDK.Reactions.Types
             MakeSureAtomTypesAreRecognized(reactant);
 
             IReactionProcess type = new ElectronImpactNBEReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
-            param.IsSetParameter = true;
+            var paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter
+            {
+                IsSetParameter = true
+            };
             paramList.Add(param);
             type.ParameterList = paramList;
 
@@ -185,10 +187,12 @@ namespace NCDK.Reactions.Types
             var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
-            IReactionProcess type = new ElectronImpactNBEReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
-            param.IsSetParameter = true;
+            var type = new ElectronImpactNBEReaction();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter
+            {
+                IsSetParameter = true
+            };
             paramList.Add(param);
             type.ParameterList = paramList;
 
@@ -254,9 +258,11 @@ namespace NCDK.Reactions.Types
 
             IReactionProcess type = new ElectronImpactNBEReaction();
 
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
-            param.IsSetParameter = true;
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter
+            {
+                IsSetParameter = true
+            };
             paramList.Add(param);
             type.ParameterList = paramList;
 
@@ -316,11 +322,13 @@ namespace NCDK.Reactions.Types
             var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
-            IReactionProcess type = new ElectronImpactNBEReaction();
+            var type = new ElectronImpactNBEReaction();
 
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
-            param.IsSetParameter = true;
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter
+            {
+                IsSetParameter = true
+            };
             paramList.Add(param);
             type.ParameterList = paramList;
 
@@ -367,9 +375,11 @@ namespace NCDK.Reactions.Types
             /* manually put the reactive center */
             molecule.Atoms[1].IsReactiveCenter = true;
 
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
-            param.IsSetParameter = true;
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter
+            {
+                IsSetParameter = true
+            };
             paramList.Add(param);
             type.ParameterList = paramList;
 
@@ -397,9 +407,11 @@ namespace NCDK.Reactions.Types
             IAtomContainer molecule = setOfReactants[0];
 
             /* automatic search of the center active */
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
-            param.IsSetParameter = false;
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter
+            {
+                IsSetParameter = false
+            };
             paramList.Add(param);
             type.ParameterList = paramList;
 
@@ -419,11 +431,10 @@ namespace NCDK.Reactions.Types
         /// <param name="molecule">The IAtomContainer to analyze</param>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
-
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.Builder);
+            var matcher = CDK.AtomTypeMatcher;
             foreach (var nextAtom in molecule.Atoms)
             {
-                Assert.IsNotNull(matcher.FindMatchingAtomType(molecule, nextAtom), "Missing atom type for: " + nextAtom);
+                Assert.IsNotNull(matcher.FindMatchingAtomType(molecule, nextAtom), $"Missing atom type for: {nextAtom}");
             }
         }
 

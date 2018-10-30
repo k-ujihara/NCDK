@@ -275,7 +275,7 @@ namespace NCDK.Tools
 
         private void FindAndConfigureAtomTypesForAllAtoms(IAtomContainer container)
         {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+            var matcher = CDK.AtomTypeMatcher;
             foreach (var atom in container.Atoms)
             {
                 IAtomType type = matcher.FindMatchingAtomType(container, atom);

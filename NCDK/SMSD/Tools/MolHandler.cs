@@ -45,7 +45,7 @@ namespace NCDK.SMSD.Tools
     public class MolHandler
     {
         private IAtomContainer atomContainer = null;
-        private bool removeHydrogen = false;
+        private readonly bool removeHydrogen = false;
         private ICanonicalMoleculeLabeller canonLabeler = new CanonicalLabellingAdaptor();
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace NCDK.SMSD.Tools
                     // percieve atoms, set valency etc
                     ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);
                     //Add implicit Hydrogens
-                    CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(atomContainer.Builder);
+                    var adder = CDK.HydrogenAdder;
                     adder.AddImplicitHydrogens(atomContainer);
                     // figure out which atoms are in aromatic rings:
                     Aromaticity.CDKLegacy.Apply(atomContainer);
@@ -148,7 +148,7 @@ namespace NCDK.SMSD.Tools
                     // percieve atoms, set valency etc
                     ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);
                     //Add implicit Hydrogens
-                    CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(atomContainer.Builder);
+                    var adder = CDK.HydrogenAdder;
                     adder.AddImplicitHydrogens(atomContainer);
                     // figure out which atoms are in aromatic rings:
                     Aromaticity.CDKLegacy.Apply(atomContainer);

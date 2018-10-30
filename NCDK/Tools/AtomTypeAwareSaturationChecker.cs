@@ -49,7 +49,7 @@ namespace NCDK.Tools
     // @cdk.module  valencycheck
     public class AtomTypeAwareSaturationChecker : IValencyChecker, IDeduceBondOrderTool
     {
-        private static readonly SaturationChecker staturationChecker = CDK.SaturationChecker;
+        private static readonly ISaturationChecker staturationChecker = CDK.SaturationChecker;
 
         private BondOrder oldBondOrder;
         private int startBond;

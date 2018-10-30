@@ -29,12 +29,12 @@ namespace NCDK.AtomTypes
     public class ReactionStructuresTest : CDKTestCase
     {
         private readonly static IChemObjectBuilder builder;
-        private readonly static CDKAtomTypeMatcher matcher;
+        private readonly static IAtomTypeMatcher matcher;
 
         static ReactionStructuresTest()
         {
             builder = Silent.ChemObjectBuilder.Instance;
-            matcher = CDKAtomTypeMatcher.GetInstance(builder);
+            matcher = CDK.AtomTypeMatcher;
         }
 
         public ReactionStructuresTest()

@@ -106,7 +106,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestNewChemModel_IAtomContainer()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("C"));
             IChemModel model = ChemModelManipulator.NewChemModel(ac);
             IAtomContainer mol = model.MoleculeSet[0];

@@ -168,7 +168,7 @@ namespace NCDK.Smiles.SMARTS
             Aromaticity.CDKLegacy.Apply(indole);
             SmilesGenerator generator = new SmilesGenerator().Aromatic();
             string indoleSmiles = generator.Create(indole);
-            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser smilesParser = CDK.SilentSmilesParser;
             indole = smilesParser.ParseSmiles(indoleSmiles);
 
             SMARTSQueryTool querytool = new SMARTSQueryTool(indoleSmiles, ChemObjectBuilder.Instance);
@@ -215,7 +215,7 @@ namespace NCDK.Smiles.SMARTS
 
         static IAtomContainer CreateFromSmiles(string smi)
         {
-            return new SmilesParser(Silent.ChemObjectBuilder.Instance).ParseSmiles(smi);
+            return CDK.SilentSmilesParser.ParseSmiles(smi);
         }
     }
 }

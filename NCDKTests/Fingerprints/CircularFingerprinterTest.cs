@@ -47,7 +47,7 @@ namespace NCDK.Fingerprints
     [TestClass()]
     public class CircularFingerprinterTest : CDKTestCase
     {
-        private static readonly IAtomContainer trivialMol = new SmilesParser(Silent.ChemObjectBuilder.Instance).ParseSmiles("CCC(=O)N");
+        private static readonly IAtomContainer trivialMol = CDK.SilentSmilesParser.ParseSmiles("CCC(=O)N");
 
         [TestMethod()]
         [TestCategory("SlowTest")]

@@ -146,7 +146,7 @@ namespace NCDK.Graphs.InChI
         public void TestSMILESConversion_TopologicalCentre()
         {
             // (2R,3R,4S,5R,6S)-3,5-dimethylheptane-2,4,6-triol
-            SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser parser = CDK.SilentSmilesParser;
             var container = parser.ParseSmiles("C[C@@H](O)[C@@H](C)[C@@H](O)[C@H](C)[C@H](C)O");
 
             InChIGenerator generator = InChIGeneratorFactory.Instance.GetInChIGenerator(container);

@@ -105,7 +105,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             IAtomType atomType;
             try
             {
-                atomType = CDKAtomTypeMatcher.GetInstance(atom.Builder).FindMatchingAtomType(container, atom);
+                atomType =  CDK.AtomTypeMatcher.FindMatchingAtomType(container, atom);
             }
             catch (CDKException)
             {

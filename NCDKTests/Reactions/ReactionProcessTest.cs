@@ -226,8 +226,8 @@ namespace NCDK.Reactions
             Assert.IsNotNull(ipr);
             Assert.IsFalse(ipr.IsSetParameter);
 
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;

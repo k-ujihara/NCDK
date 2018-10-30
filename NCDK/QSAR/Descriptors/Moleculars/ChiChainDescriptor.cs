@@ -68,8 +68,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword descriptor
     public class ChiChainDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
-        private SmilesParser sp;
-
         private static readonly string[] NAMES = { "SCH-3", "SCH-4", "SCH-5", "SCH-6", "SCH-7", "VCH-3", "VCH-4", "VCH-5", "VCH-6", "VCH-7" };
 
         public ChiChainDescriptor() { }
@@ -113,18 +111,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
-            if (sp == null)
-                sp = new SmilesParser(container.Builder);
-
             // we don't make a clone, since removeHydrogens returns a deep copy
             var localAtomContainer = AtomContainerManipulator.RemoveHydrogens(container);
-            var matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+            var matcher = CDK.AtomTypeMatcher;
             foreach (var atom in localAtomContainer.Atoms)
             {
-                IAtomType type;
                 try
                 {
-                    type = matcher.FindMatchingAtomType(localAtomContainer, atom);
+                    var type = matcher.FindMatchingAtomType(localAtomContainer, atom);
                     AtomTypeManipulator.Configure(atom, type);
                 }
                 catch (Exception)
@@ -132,7 +126,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     return GetDummyDescriptorValue(new CDKException($"Error in atom typing: {atom}"));
                 }
             }
-            var hAdder = CDKHydrogenAdder.GetInstance(container.Builder);
+            var hAdder = CDK.HydrogenAdder;
             try
             {
                 hAdder.AddImplicitHydrogens(localAtomContainer);
@@ -216,8 +210,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var queries = new QueryAtomContainer[2];
             try
             {
-                queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("C1CCC1"), false);
-                queries[1] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC1CC1"), false);
+                queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SilentSmilesParser.ParseSmiles("C1CCC1"), false);
+                queries[1] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SilentSmilesParser.ParseSmiles("CC1CC1"), false);
             }
             catch (InvalidSmilesException e)
             {
@@ -231,9 +225,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var queries = new QueryAtomContainer[3];
             try
             {
-                queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("C1CCCC1"), false);
-                queries[1] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC1CCC1"), false);
-                queries[2] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC1CC1(C)"), false);
+                queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SilentSmilesParser.ParseSmiles("C1CCCC1"), false);
+                queries[1] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SilentSmilesParser.ParseSmiles("CC1CCC1"), false);
+                queries[2] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SilentSmilesParser.ParseSmiles("CC1CC1(C)"), false);
             }
             catch (InvalidSmilesException e)
             {
@@ -247,15 +241,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var queries = new QueryAtomContainer[9];
             try
             {
-                queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC1CCCC1"), false);
-                queries[1] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC1CC(C)C1"), false);
-                queries[2] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC1(C)(CCC1)"), false);
-                queries[3] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CCC1CCC1"), false);
-                queries[4] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("C1CCCCC1"), false);
-                queries[5] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC1CCC1(C)"), false);
-                queries[6] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC1C(C)C1(C)"), false);
-                queries[7] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CCCC1CC1"), false);
-                queries[8] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CCC1CC1(C)"), false);
+                queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SilentSmilesParser.ParseSmiles("CC1CCCC1"), false);
+                queries[1] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SilentSmilesParser.ParseSmiles("CC1CC(C)C1"), false);
+                queries[2] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SilentSmilesParser.ParseSmiles("CC1(C)(CCC1)"), false);
+                queries[3] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SilentSmilesParser.ParseSmiles("CCC1CCC1"), false);
+                queries[4] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SilentSmilesParser.ParseSmiles("C1CCCCC1"), false);
+                queries[5] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SilentSmilesParser.ParseSmiles("CC1CCC1(C)"), false);
+                queries[6] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SilentSmilesParser.ParseSmiles("CC1C(C)C1(C)"), false);
+                queries[7] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SilentSmilesParser.ParseSmiles("CCCC1CC1"), false);
+                queries[8] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SilentSmilesParser.ParseSmiles("CCC1CC1(C)"), false);
             }
             catch (InvalidSmilesException e)
             {
@@ -281,7 +275,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             try
             {
                 for (int i = 0; i < smiles.Length; i++)
-                    queries[i] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles(smiles[i]), false);
+                    queries[i] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SilentSmilesParser.ParseSmiles(smiles[i]), false);
             }
             catch (InvalidSmilesException e)
             {

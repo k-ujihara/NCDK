@@ -6,7 +6,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new AdductionProtonLPReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -26,7 +26,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new AdductionProtonPBReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -46,7 +46,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new AdductionSodiumLPReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -66,7 +66,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new CarbonylEliminationReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -86,7 +86,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new ElectronImpactNBEReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -106,7 +106,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new ElectronImpactPDBReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -126,7 +126,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new ElectronImpactSDBReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -146,7 +146,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new HeterolyticCleavagePBReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -166,7 +166,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new HeterolyticCleavageSBReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -186,7 +186,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new HomolyticCleavageReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -206,7 +206,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new HyperconjugationReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -226,7 +226,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new PiBondingMovementReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -246,7 +246,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new RadicalChargeSiteInitiationHReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -266,7 +266,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new RadicalChargeSiteInitiationReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -286,7 +286,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new RadicalSiteHrAlphaReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -306,7 +306,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new RadicalSiteHrBetaReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -326,7 +326,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new RadicalSiteHrDeltaReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -346,7 +346,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new RadicalSiteHrGammaReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -366,7 +366,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new RadicalSiteInitiationHReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -386,7 +386,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new RadicalSiteInitiationReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -406,7 +406,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new RadicalSiteRrAlphaReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -426,7 +426,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new RadicalSiteRrBetaReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -446,7 +446,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new RadicalSiteRrDeltaReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -466,7 +466,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new RadicalSiteRrGammaReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -486,7 +486,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new RearrangementAnionReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -506,7 +506,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new RearrangementCationReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -526,7 +526,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new RearrangementLonePairReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -546,7 +546,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new RearrangementRadicalReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -566,7 +566,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new SharingAnionReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -586,7 +586,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new SharingChargeDBReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -606,7 +606,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new SharingChargeSBReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -626,7 +626,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new SharingLonePairReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;
@@ -646,7 +646,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new TautomerizationReaction();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;

@@ -308,7 +308,7 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestGetAngleValue_String_String_String()
         {
-            SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser parser = CDK.SilentSmilesParser;
             string smiles = "CCCCCC";
             var molecule = parser.ParseSmiles(smiles);
             Assert.IsNotNull(molecule);
@@ -330,7 +330,7 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestGetBondLengthValue_String_String()
         {
-            SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser parser = CDK.SilentSmilesParser;
             string smiles = "CCCCCC";
             var molecule = parser.ParseSmiles(smiles);
             Assert.IsNotNull(molecule);
@@ -354,7 +354,7 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestGetBondLengthValue_bug_CNBond()
         {
-            SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser parser = CDK.SilentSmilesParser;
             string smiles = "CCCN";
             var molecule = parser.ParseSmiles(smiles);
             Assert.IsNotNull(molecule);

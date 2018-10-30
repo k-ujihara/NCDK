@@ -52,7 +52,7 @@ namespace NCDK.Stereo
         [ExpectedException(typeof(ArgumentException))]
         public void NonCumulatedAtomThrowsException()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("C"));
             ac.Atoms.Add(new Atom("C"));
             ac.Atoms.Add(new Atom("C"));
@@ -64,7 +64,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void TerminalAtomsAreFoundUnordered()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("C"));
             ac.Atoms.Add(new Atom("C"));
             ac.Atoms.Add(new Atom("C"));
@@ -79,7 +79,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void TerminalAtomsAreFoundOrdered()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("C"));
             ac.Atoms.Add(new Atom("C"));
             ac.Atoms.Add(new Atom("C"));

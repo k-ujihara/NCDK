@@ -185,7 +185,8 @@ namespace NCDK.Modelings.Builder3D
 
         public void SetMMFF94Parameters(IChemObjectBuilder builder)
         {
-            if (mmff94 == null) mmff94 = new MMFF94BasedParameterSetReader();
+            if (mmff94 == null)
+                mmff94 = new MMFF94BasedParameterSetReader();
             mmff94.ReadParameterSets(builder);
             parameterSet = mmff94.GetParamterSet();
             atomTypes = mmff94.AtomTypes;

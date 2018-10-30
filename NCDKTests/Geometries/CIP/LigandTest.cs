@@ -33,7 +33,7 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void TestConstructorAndGetMethods()
         {
-            var smiles = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var smiles = CDK.SilentSmilesParser;
             var molecule = smiles.ParseSmiles("ClC(Br)(I)[H]");
 
             var ligand = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[0]);
@@ -46,7 +46,7 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void TestVisitedTracking()
         {
-            var smiles = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var smiles = CDK.SilentSmilesParser;
             var molecule = smiles.ParseSmiles("ClC(Br)(I)[H]");
 
             var ligand = new Ligand(molecule, new VisitedAtoms(), molecule.Atoms[1], molecule.Atoms[0]);

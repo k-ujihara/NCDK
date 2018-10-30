@@ -218,7 +218,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestBug2944080()
         {
-            var smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
+            var smilesParser = CDK.SilentSmilesParser;
             var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             var mol2 = smilesParser.ParseSmiles("CCC(=CC)C(=O)NC(N)=O");
 
@@ -235,7 +235,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestGetSubgraphAtomsMap2944080()
         {
-            var smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
+            var smilesParser = CDK.SilentSmilesParser;
             var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             var mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
 
@@ -249,7 +249,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestGetSubgraphMap2944080()
         {
-            var smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
+            var smilesParser = CDK.SilentSmilesParser;
             var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             var mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
 
@@ -263,7 +263,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSearchNoConditions2944080()
         {
-            var smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
+            var smilesParser = CDK.SilentSmilesParser;
             var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             var mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
 
@@ -277,7 +277,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSearch2944080()
         {
-            var smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
+            var smilesParser = CDK.SilentSmilesParser;
             var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             var mol2 = smilesParser.ParseSmiles("CCC(=CC)C(=O)NC(N)=O");
 
@@ -303,7 +303,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestGetSubgraphAtomsMaps2944080()
         {
-            var smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
+            var smilesParser = CDK.SilentSmilesParser;
             var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             var mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
 
@@ -379,8 +379,8 @@ namespace NCDK.Isomorphisms
         public void TestItself()
         {
             var smiles = "C1CCCCCCC1CC";
-            var query = QueryAtomContainerCreator.CreateAnyAtomContainer(new SmilesParser(ChemObjectBuilder.Instance).ParseSmiles(smiles), true);
-            var ac = new SmilesParser(ChemObjectBuilder.Instance).ParseSmiles(smiles);
+            var query = QueryAtomContainerCreator.CreateAnyAtomContainer(CDK.SilentSmilesParser.ParseSmiles(smiles), true);
+            var ac = CDK.SilentSmilesParser.ParseSmiles(smiles);
             if (standAlone)
             {
                 Console.Out.WriteLine("AtomCount of query: " + query.Atoms.Count);
@@ -544,8 +544,8 @@ namespace NCDK.Isomorphisms
             for (int j = 0; j < 2; j++)
             {
                 var aAtomContainer = (IAtomContainer)cList[j];
-                var tmpMatcher = CDKAtomTypeMatcher.GetInstance(aAtomContainer.Builder);
-                var tmpAdder = CDKHydrogenAdder.GetInstance(aAtomContainer.Builder);
+                var tmpMatcher = CDK.AtomTypeMatcher;
+                var tmpAdder = CDK.HydrogenAdder;
                 for (int i = 0; i < aAtomContainer.Atoms.Count; i++)
                 {
                     var tmpAtom = aAtomContainer.Atoms[i];

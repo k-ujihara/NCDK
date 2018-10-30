@@ -14,7 +14,7 @@ namespace NCDK.Fingerprints
     [TestClass()]
     public class AtomPairs2DFingerprintTest
     {
-        SmilesParser parser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+        SmilesParser parser = CDK.SilentSmilesParser;
 
         [TestMethod()]
         public void TestFingerprint()

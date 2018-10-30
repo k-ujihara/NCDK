@@ -65,7 +65,7 @@ namespace NCDK.Reactions.Types
             var setOfReactants = GetExampleReactants();
 
             /* initiate */
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            var paramList = new List<IParameterReaction>();
             IParameterReaction param = new SetReactionCenter
             {
                 IsSetParameter = false
@@ -107,7 +107,7 @@ namespace NCDK.Reactions.Types
             molecule.Bonds[3].IsReactiveCenter = true;
             molecule.Bonds[4].IsReactiveCenter = true;
 
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            var paramList = new List<IParameterReaction>();
             IParameterReaction param = new SetReactionCenter
             {
                 IsSetParameter = true
@@ -143,7 +143,7 @@ namespace NCDK.Reactions.Types
             IAtomContainer molecule = setOfReactants[0];
 
             /* initiate */
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            var paramList = new List<IParameterReaction>();
             IParameterReaction param = new SetReactionCenter
             {
                 IsSetParameter = false
@@ -170,7 +170,7 @@ namespace NCDK.Reactions.Types
         /// <param name="molecule">The IAtomContainer to analyze</param>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.Builder);
+            var matcher = CDK.AtomTypeMatcher;
             foreach (var nextAtom in molecule.Atoms)
             {
                 Assert.IsNotNull(matcher.FindMatchingAtomType(molecule, nextAtom), "Missing atom type for: " + nextAtom);

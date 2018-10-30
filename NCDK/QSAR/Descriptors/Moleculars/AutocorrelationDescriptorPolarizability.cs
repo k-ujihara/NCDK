@@ -73,13 +73,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             // add H's in case they're not present
             try
             {
-                CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.Builder);
+                var matcher = CDK.AtomTypeMatcher;
                 foreach (var atom in molecule.Atoms)
                 {
                     IAtomType type = matcher.FindMatchingAtomType(molecule, atom);
                     AtomTypeManipulator.Configure(atom, type);
                 }
-                CDKHydrogenAdder hAdder = CDKHydrogenAdder.GetInstance(molecule.Builder);
+                var hAdder = CDK.HydrogenAdder;
                 hAdder.AddImplicitHydrogens(molecule);
                 AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(molecule);
             }

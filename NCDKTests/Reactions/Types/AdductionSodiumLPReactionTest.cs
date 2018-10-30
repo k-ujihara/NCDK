@@ -64,8 +64,8 @@ namespace NCDK.Reactions.Types
             var setOfReactants = GetExampleReactants();
 
             /* initiate */
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -101,8 +101,8 @@ namespace NCDK.Reactions.Types
             molecule.Atoms[0].IsReactiveCenter = true;
 
             /* initiate */
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -137,8 +137,8 @@ namespace NCDK.Reactions.Types
             molecule.Bonds[1].IsReactiveCenter = true;
             molecule.Bonds[3].IsReactiveCenter = true;
 
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -173,8 +173,8 @@ namespace NCDK.Reactions.Types
             IAtomContainer molecule = setOfReactants[0];
 
             /* automatic looking for active center */
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
             type.ParameterList = paramList;

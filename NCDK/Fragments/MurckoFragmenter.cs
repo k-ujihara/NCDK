@@ -433,7 +433,7 @@ namespace NCDK.Fragments
                     foreach (var atom in mol.Atoms)
                         atom.ImplicitHydrogenCount = null;
                     AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-                    CDKHydrogenAdder.GetInstance(mol.Builder).AddImplicitHydrogens(mol);
+                    CDK.HydrogenAdder.AddImplicitHydrogens(mol);
                     Aromaticity.CDKLegacy.Apply(mol);
                     smi = smigen.Create(mol);
                 }

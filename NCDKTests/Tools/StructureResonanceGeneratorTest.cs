@@ -152,7 +152,7 @@ namespace NCDK.Tools
         //    /// <returns>The test suite</returns>
         //    /// </summary>
         //    [TestMethod()] public void TestGetAllStructures_IAtomContainer() {
-        //        IAtomContainer molecule = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("CC(=O)C=O");
+        //        IAtomContainer molecule = CDK.SilentSmilesParser.ParseSmiles("CC(=O)C=O");
         //        AddExplicitHydrogens(molecule);
         //        AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
         //        CDK.LonePairElectronChecker.Saturate(molecule);
@@ -180,7 +180,7 @@ namespace NCDK.Tools
         //        Assert.AreEqual(8,setOfMolecules.Count);
         //
         //        /*1*/
-        //        IAtomContainer molecule1 = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("C[C+](O)C=O");
+        //        IAtomContainer molecule1 = CDK.SilentSmilesParser.ParseSmiles("C[C+](O)C=O");
         //        For(int i = 0; i < 4; i++)
         //            molecule1.Atoms.Add(new Atom("H"));
         //        molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[5], BondOrder.Single);
@@ -216,7 +216,7 @@ namespace NCDK.Tools
         //    private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         //            {
         //        Iterator<IAtom> atoms = molecule.Atoms();
-        //        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.GetNewBuilder());
+        //        CDKAtomTypeMatcher matcher = CDK.CdkAtomTypeMatcher);
         //        while (atoms.HasNext()) {
         //            IAtom nextAtom = atoms.Next();
         //            Assert.IsNotNull(
@@ -231,7 +231,7 @@ namespace NCDK.Tools
         //    /// <returns>The test suite</returns>
         //    /// </summary>
         //    [TestMethod()] public void TestGetStructures_IAtomContainer() {
-        //        IAtomContainer molecule = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("CC(=O)C=O");
+        //        IAtomContainer molecule = CDK.SilentSmilesParser.ParseSmiles("CC(=O)C=O");
         //        AddExplicitHydrogens(molecule);
         //        AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
         //        CDK.LonePairElectronChecker.Saturate(molecule);
@@ -248,7 +248,7 @@ namespace NCDK.Tools
         //
         //        Assert.AreEqual(2,setOfMolecules.Count);
         //
-        //        IAtomContainer molecule1 = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("CC(=O)C=O");
+        //        IAtomContainer molecule1 = CDK.SilentSmilesParser.ParseSmiles("CC(=O)C=O");
         //        AddExplicitHydrogens(molecule1);
         //        CDK.LonePairElectronChecker.Saturate(molecule1);
         //        IAtom atom1 =  molecule1.Atoms[4];
@@ -268,7 +268,7 @@ namespace NCDK.Tools
         //    /// <returns>The test suite</returns>
         //    /// </summary>
         //    [TestMethod()] public void TestGetStructures2() {
-        //        IAtomContainer molecule = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("CCC(=O)C(C)=O");
+        //        IAtomContainer molecule = CDK.SilentSmilesParser.ParseSmiles("CCC(=O)C(C)=O");
         //        AddExplicitHydrogens(molecule);
         //        AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
         //        CDK.LonePairElectronChecker.Saturate(molecule);
@@ -285,7 +285,7 @@ namespace NCDK.Tools
         //
         //        Assert.AreEqual(2,setOfMolecules.Count);
         //
-        //        IAtomContainer molecule1 = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("CCC(=O)C(C)=O");
+        //        IAtomContainer molecule1 = CDK.SilentSmilesParser.ParseSmiles("CCC(=O)C(C)=O");
         //        AddExplicitHydrogens(molecule1);
         //        CDK.LonePairElectronChecker.Saturate(molecule1);
         //
@@ -367,7 +367,7 @@ namespace NCDK.Tools
             molecule.Bonds[2].IsReactiveCenter = true;
             molecule.Atoms[3].IsReactiveCenter = true;
 
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            var paramList = new List<IParameterReaction>();
             IParameterReaction param = new SetReactionCenter { IsSetParameter = true };
             paramList.Add(param);
 

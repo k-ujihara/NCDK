@@ -30,7 +30,7 @@ namespace NCDK.Geometries.Volume
     [TestClass()]
     public class VABCVolumeTest
     {
-        private static SmilesParser smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+        private static SmilesParser smilesParser = CDK.SilentSmilesParser;
 
         [TestMethod()]
         public void TestMethane()

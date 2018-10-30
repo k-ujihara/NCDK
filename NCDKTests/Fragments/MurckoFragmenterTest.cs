@@ -36,7 +36,7 @@ namespace NCDK.Fragments
     public class MurckoFragmenterTest : CDKTestCase
     {
         static MurckoFragmenter fragmenter = new MurckoFragmenter();
-        static SmilesParser smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+        static SmilesParser smilesParser = CDK.SilentSmilesParser;
 
         [TestMethod()]
         public void TestNoFramework()
@@ -247,7 +247,7 @@ namespace NCDK.Fragments
 
             AtomContainerManipulator.ClearAtomConfigurations(mol);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            CDKHydrogenAdder.GetInstance(mol.Builder).AddImplicitHydrogens(mol);
+            CDK.HydrogenAdder.AddImplicitHydrogens(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
             Assert.AreEqual("N=1C=C(CN2C=CC=CC12)CCN3CCC(Cc4ccccc4)CC3", f[0]);

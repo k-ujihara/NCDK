@@ -32,6 +32,12 @@ using System.Linq;
 
 namespace NCDK.Tools
 {
+    public interface ISaturationChecker : IValencyChecker, IDeduceBondOrderTool
+    {
+        double GetCurrentMaxBondOrder(IAtom atom, IAtomContainer ac);
+        int CalculateNumberOfImplicitHydrogens(IAtom atom, IAtomContainer container);
+    }
+
     /// <summary>
     /// Provides methods for checking whether an atoms valences are saturated with
     /// respect to a particular atom type.
@@ -47,7 +53,7 @@ namespace NCDK.Tools
     // @cdk.keyword    atom, valency
     // @cdk.module     valencycheck
     // @cdk.githash
-    public class SaturationChecker : IValencyChecker, IDeduceBondOrderTool
+    public class SaturationChecker : ISaturationChecker
     {
         private static readonly AtomTypeFactory structgenATF = CDK.StructgenAtomTypeFactory;
 
@@ -143,7 +149,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// Checks whether an Atom is saturated by comparing it with known atom types.
+        /// Checks whether an atom is saturated by comparing it with known atom types.
         /// </summary>
         public bool IsSaturated(IAtom atom, IAtomContainer ac)
         {
@@ -271,7 +277,7 @@ namespace NCDK.Tools
         /// <summary>
         /// Saturates a molecule by setting appropriate bond orders.
         /// This method is known to fail, especially on pyrrole-like compounds.
-        /// Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
+        /// Consider using <see cref="Smiles.DeduceBondSystemTool"/>, which should work better
         /// </summary>
         // @cdk.keyword bond order, calculation
         // @cdk.created 2003-10-03
@@ -317,7 +323,7 @@ namespace NCDK.Tools
         /// <summary>
         /// Saturates a set of Bonds in an AtomContainer.
         /// This method is known to fail, especially on pyrrole-like compounds.
-        /// Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
+        /// Consider using <see cref="Smiles.DeduceBondSystemTool"/>, which should work better
         /// </summary>
         public bool NewSaturate(IBond[] bonds, IAtomContainer atomContainer)
         {
@@ -410,7 +416,7 @@ namespace NCDK.Tools
         /// <summary>
         /// Saturate atom by adjusting its bond orders.
         /// This method is known to fail, especially on pyrrole-like compounds.
-        /// Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
+        /// Consider using <see cref="Smiles.DeduceBondSystemTool"/>, which should work better
         /// </summary>
         public bool NewSaturate(IBond bond, IAtomContainer atomContainer)
         {

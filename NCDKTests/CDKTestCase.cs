@@ -115,7 +115,7 @@ namespace NCDK
         /// <param name="container">IAtomContainer to test atom types of</param>
         public virtual void AssertAtomTypesPerceived(IAtomContainer container)
         {
-            var matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+            var matcher = CDK.AtomTypeMatcher;
             foreach (var atom in container.Atoms)
             {
                 var type = matcher.FindMatchingAtomType(container, atom);
@@ -143,7 +143,7 @@ namespace NCDK
         /// <param name="container">to which implicit hydrogens are added.</param>
         protected virtual void AddImplicitHydrogens(IAtomContainer container)
         {
-            var matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+            var matcher = CDK.AtomTypeMatcher;
             var atomCount = container.Atoms.Count;
             var originalAtomTypeNames = new string[atomCount];
             for (int i = 0; i < atomCount; i++)
@@ -153,7 +153,7 @@ namespace NCDK
                 originalAtomTypeNames[i] = atom.AtomTypeName;
                 atom.AtomTypeName = type.AtomTypeName;
             }
-            var hAdder = CDKHydrogenAdder.GetInstance(container.Builder);
+            var hAdder = CDK.HydrogenAdder;
             hAdder.AddImplicitHydrogens(container);
             // reset to the original atom types
             for (int i = 0; i < atomCount; i++)

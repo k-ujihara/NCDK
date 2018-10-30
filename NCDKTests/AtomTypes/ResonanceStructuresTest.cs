@@ -27,12 +27,12 @@ namespace NCDK.AtomTypes
     public class ResonanceStructuresTest : CDKTestCase
     {
         private readonly static IChemObjectBuilder builder;
-        private readonly static CDKAtomTypeMatcher matcher;
+        private readonly static IAtomTypeMatcher matcher;
 
         static ResonanceStructuresTest()
         {
             builder = Silent.ChemObjectBuilder.Instance;
-            matcher = CDKAtomTypeMatcher.GetInstance(builder);
+            matcher = CDK.AtomTypeMatcher;
         }
 
         /// <summary>

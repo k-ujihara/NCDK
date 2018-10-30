@@ -116,7 +116,7 @@ namespace NCDK.SMSD.Tools
             try
             {
                 // figure out which atoms are in aromatic rings:
-                var cdk = CDKHydrogenAdder.GetInstance(ChemObjectBuilder.Instance);
+                var cdk = CDK.HydrogenAdder;
                 ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
                 cdk.AddImplicitHydrogens(mol);
 

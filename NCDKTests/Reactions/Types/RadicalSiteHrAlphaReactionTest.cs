@@ -60,9 +60,11 @@ namespace NCDK.Reactions.Types
             /* initiate */
             MakeSureAtomTypesAreRecognized(molecule);
 
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
-            param.IsSetParameter = false;
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter
+            {
+                IsSetParameter = false
+            };
             paramList.Add(param);
             type.ParameterList = paramList;
             var setOfReactions = type.Initiate(setOfReactants, null);
@@ -181,9 +183,11 @@ namespace NCDK.Reactions.Types
             molecule.Atoms[6].IsReactiveCenter = true;
             molecule.Bonds[5].IsReactiveCenter = true;
 
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
-            param.IsSetParameter = true;
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter
+            {
+                IsSetParameter = true
+            };
             paramList.Add(param);
             type.ParameterList = paramList;
 
@@ -212,16 +216,18 @@ namespace NCDK.Reactions.Types
             IAtomContainer molecule = setOfReactants[0];
 
             /* automatic search of the center active */
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
-            param.IsSetParameter = false;
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter
+            {
+                IsSetParameter = false
+            };
             paramList.Add(param);
             type.ParameterList = paramList;
 
             /* initiate */
             var setOfReactions = type.Initiate(setOfReactants, null);
 
-            IAtomContainer product = setOfReactions[2].Products[0];
+            var product = setOfReactions[2].Products[0];
 
             Assert.AreEqual(19, setOfReactions[2].Mappings.Count);
             IAtom mappedProductA1 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[2],
@@ -241,7 +247,7 @@ namespace NCDK.Reactions.Types
         /// <param name="molecule">The IAtomContainer to analyze</param>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.Builder);
+            var matcher = CDK.AtomTypeMatcher;
             foreach (var nextAtom in molecule.Atoms)
             {
                 Assert.IsNotNull(matcher.FindMatchingAtomType(molecule, nextAtom), "Missing atom type for: " + nextAtom);

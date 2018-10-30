@@ -41,7 +41,7 @@ namespace NCDK.AtomTypes
         private const string CDK_TO_SYBYL_MAP = "NCDK.Dict.Data.cdk-sybyl-mappings.owl";
 
         private AtomTypeFactory factory;
-        private CDKAtomTypeMatcher cdkMatcher;
+        private IAtomTypeMatcher cdkMatcher;
         private AtomTypeMapper mapper;
 
         private static IDictionary<IChemObjectBuilder, SybylAtomTypeMatcher> factories = new Dictionary<IChemObjectBuilder, SybylAtomTypeMatcher>(1);
@@ -50,7 +50,7 @@ namespace NCDK.AtomTypes
         {
             var stream = ResourceLoader.GetAsStream(SYBYL_ATOM_TYPE_LIST);
             factory = AtomTypeFactory.GetInstance(stream, "owl", builder);
-            cdkMatcher = CDKAtomTypeMatcher.GetInstance(builder);
+            cdkMatcher = CDK.AtomTypeMatcher;
             var mapStream = ResourceLoader.GetAsStream(CDK_TO_SYBYL_MAP);
             mapper = AtomTypeMapper.GetInstance(CDK_TO_SYBYL_MAP, mapStream);
         }

@@ -97,7 +97,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void TestBug933572()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("H"));
             ac.Atoms[0].Point2D = Vector2.Zero;
             AddExplicitHydrogens(ac);

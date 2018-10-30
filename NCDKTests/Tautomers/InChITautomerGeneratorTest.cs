@@ -40,7 +40,7 @@ namespace NCDK.Tautomers
     [TestClass()]
     public class InChITautomerGeneratorTest : CDKTestCase
     {
-        private SmilesParser smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+        private SmilesParser smilesParser = CDK.SilentSmilesParser;
         private InChITautomerGenerator tautomerGenerator = new InChITautomerGenerator();
 
         public InChITautomerGeneratorTest()
@@ -178,7 +178,7 @@ namespace NCDK.Tautomers
             MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdlInput));
             IAtomContainer molecule = reader.Read(new AtomContainer());
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            CDKHydrogenAdder hAdder = CDKHydrogenAdder.GetInstance(molecule.Builder);
+            var hAdder = CDK.HydrogenAdder;
             hAdder.AddImplicitHydrogens(molecule);
 
             var tautomers = tautomerGenerator.GetTautomers(molecule); // InChI will be calculated

@@ -32,7 +32,7 @@ namespace NCDK.Fingerprints
     [TestClass()]
     public class CircularFingerprintSmartsTest : CDKTestCase
     {
-        private static SmilesParser parser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+        private static SmilesParser parser = CDK.SilentSmilesParser;
 
         [TestMethod()]
         public void TestMol1()

@@ -45,7 +45,7 @@ namespace NCDK.Reactions.Mechanisms
         /// <returns>The Reaction mechanism</returns>
         public IReaction Initiate(IChemObjectSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
         {
-            CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.GetInstance(atomContainerSet.Builder);
+            var atMatcher = CDK.AtomTypeMatcher;
             if (atomContainerSet.Count != 2)
             {
                 throw new CDKException("AdductionPBMechanism expects two IAtomContainer's");

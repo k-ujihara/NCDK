@@ -253,7 +253,7 @@ namespace NCDK.SMSD.Tools
         /// <exception cref="CDKException"></exception>
         public static void PercieveAtomTypesAndConfigureAtoms(IAtomContainer container)
         {
-            var matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+            var matcher = CDK.AtomTypeMatcher;
             foreach (var atom in container.Atoms)
             {
                 if (!(atom is IPseudoAtom))

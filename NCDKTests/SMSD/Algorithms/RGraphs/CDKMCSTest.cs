@@ -44,18 +44,18 @@ namespace NCDK.SMSD.Algorithms.RGraphs
     [TestClass()]
     public class CDKMCSTest : CDKTestCase
     {
-        bool standAlone = false;
+        readonly bool standAlone = false;
 
         [TestMethod()]
         public void TestIsSubgraph_IAtomContainer_IAtomContainer()
         {
-            IAtomContainer mol = TestMoleculeFactory.MakeAlphaPinene();
-            IAtomContainer frag1 = TestMoleculeFactory.MakeCyclohexene(); //one double bond in ring
+            var mol = TestMoleculeFactory.MakeAlphaPinene();
+            var frag1 = TestMoleculeFactory.MakeCyclohexene(); //one double bond in ring
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(frag1);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(mol.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(mol);
-            adder = CDKHydrogenAdder.GetInstance(frag1.Builder);
+            adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(frag1);
             Aromaticity.CDKLegacy.Apply(mol);
             Aromaticity.CDKLegacy.Apply(frag1);
@@ -74,25 +74,25 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestSFBug1708336()
         {
-            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
-            IAtomContainer atomContainer = builder.NewAtomContainer();
+            var builder = ChemObjectBuilder.Instance;
+            var atomContainer = builder.NewAtomContainer();
             atomContainer.Atoms.Add(builder.NewAtom("C"));
             atomContainer.Atoms.Add(builder.NewAtom("C"));
             atomContainer.Atoms.Add(builder.NewAtom("N"));
             atomContainer.AddBond(atomContainer.Atoms[0], atomContainer.Atoms[1], BondOrder.Single);
             atomContainer.AddBond(atomContainer.Atoms[1], atomContainer.Atoms[2], BondOrder.Single);
-            IQueryAtomContainer query = new QueryAtomContainer(ChemObjectBuilder.Instance);
-            IQueryAtom a1 = new SymbolQueryAtom(ChemObjectBuilder.Instance);
-            a1.Symbol = "C";
+            var query = new QueryAtomContainer(ChemObjectBuilder.Instance);
+            var a1 = new SymbolQueryAtom(ChemObjectBuilder.Instance)
+            {
+                Symbol = "C"
+            };
 
             var a2 = new Isomorphisms.Matchers.SMARTS.AnyAtom(ChemObjectBuilder.Instance);
+            var b1 = new OrderQueryBond(a1, a2, BondOrder.Single, ChemObjectBuilder.Instance);
 
-            IBond b1 = new OrderQueryBond(a1, a2, BondOrder.Single, ChemObjectBuilder.Instance);
+            var a3 = new SymbolQueryAtom(ChemObjectBuilder.Instance) { Symbol = "C" };
 
-            IQueryAtom a3 = new SymbolQueryAtom(ChemObjectBuilder.Instance);
-            a3.Symbol = "C";
-
-            IBond b2 = new OrderQueryBond(a2, a3, BondOrder.Single, ChemObjectBuilder.Instance);
+            var b2 = new OrderQueryBond(a2, a3, BondOrder.Single, ChemObjectBuilder.Instance);
             query.Atoms.Add(a1);
             query.Atoms.Add(a2);
             query.Atoms.Add(a3);
@@ -108,8 +108,8 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void Test2()
         {
-            IAtomContainer mol = TestMoleculeFactory.MakeAlphaPinene();
-            IAtomContainer frag1 = TestMoleculeFactory.MakeCyclohexane(); // no double bond in ring
+            var mol = TestMoleculeFactory.MakeAlphaPinene();
+            var frag1 = TestMoleculeFactory.MakeCyclohexane(); // no double bond in ring
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(frag1);
             Aromaticity.CDKLegacy.Apply(mol);
@@ -128,13 +128,13 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void Test3()
         {
-            IAtomContainer mol = TestMoleculeFactory.MakeIndole();
-            IAtomContainer frag1 = TestMoleculeFactory.MakePyrrole();
+            var mol = TestMoleculeFactory.MakeIndole();
+            var frag1 = TestMoleculeFactory.MakePyrrole();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(frag1);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(mol.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(mol);
-            adder = CDKHydrogenAdder.GetInstance(frag1.Builder);
+            adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(frag1);
             Aromaticity.CDKLegacy.Apply(mol);
             Aromaticity.CDKLegacy.Apply(frag1);
@@ -166,13 +166,13 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             int[] result1 = { 6, 5, 7, 8, 0 };
             int[] result2 = { 3, 4, 2, 1, 0 };
 
-            IAtomContainer mol = TestMoleculeFactory.MakeIndole();
-            IAtomContainer frag1 = TestMoleculeFactory.MakePyrrole();
+            var mol = TestMoleculeFactory.MakeIndole();
+            var frag1 = TestMoleculeFactory.MakePyrrole();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(frag1);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(mol.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(mol);
-            adder = CDKHydrogenAdder.GetInstance(frag1.Builder);
+            adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(frag1);
             Aromaticity.CDKLegacy.Apply(mol);
             Aromaticity.CDKLegacy.Apply(frag1);
@@ -192,7 +192,7 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         {
             string molfile = "NCDK.Data.MDL.decalin.mol";
             string queryfile = "NCDK.Data.MDL.decalin.mol";
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtomContainer temp = new AtomContainer();
             QueryAtomContainer query1 = null;
             QueryAtomContainer query2 = null;
@@ -235,12 +235,12 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             new MDLV2000Reader(ins2, ChemObjectReaderMode.Strict).Read(mol2);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(mol1.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(mol1);
             Aromaticity.CDKLegacy.Apply(mol1);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);
-            adder = CDKHydrogenAdder.GetInstance(mol2.Builder);
+            adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(mol2);
             Aromaticity.CDKLegacy.Apply(mol2);
 
@@ -271,12 +271,12 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             mol2 = new AtomContainer(permutor.Current);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(mol1.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(mol1);
             Aromaticity.CDKLegacy.Apply(mol1);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);
-            adder = CDKHydrogenAdder.GetInstance(mol2.Builder);
+            adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(mol2);
             Aromaticity.CDKLegacy.Apply(mol2);
 
@@ -291,9 +291,8 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         public void TestItself()
         {
             string smiles = "C1CCCCCCC1CC";
-            var query = QueryAtomContainerCreator.CreateAnyAtomContainer(new SmilesParser(
-                    ChemObjectBuilder.Instance).ParseSmiles(smiles), true);
-            IAtomContainer ac = new SmilesParser(ChemObjectBuilder.Instance).ParseSmiles(smiles);
+            var query = QueryAtomContainerCreator.CreateAnyAtomContainer(CDK.SilentSmilesParser.ParseSmiles(smiles), true);
+            IAtomContainer ac = CDK.SilentSmilesParser.ParseSmiles(smiles);
             if (standAlone)
             {
                 Console.Out.WriteLine("AtomCount of query: " + query.Atoms.Count);

@@ -37,13 +37,11 @@ namespace NCDK.IO
     [TestClass()]
     public class SMILES2Mol2WriterTest
     {
-        private static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-
         // @cdk.bug 2675188
         [TestMethod()]
         public void TestWriter1()
         {
-            var sp = new SmilesParser(builder);
+            var sp = CDK.SilentSmilesParser;
             var molecule = sp.ParseSmiles("C([H])([H])([H])([H])");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
@@ -58,7 +56,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestWriter2()
         {
-            var sp = new SmilesParser(builder);
+            var sp = CDK.SilentSmilesParser;
             var molecule = sp.ParseSmiles("c1ccccc1C=O");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.CDKLegacy.Apply(molecule);
@@ -78,7 +76,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestWriterForAmide()
         {
-            var sp = new SmilesParser(builder);
+            var sp = CDK.SilentSmilesParser;
             var molecule = sp.ParseSmiles("CC(=O)NC");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 

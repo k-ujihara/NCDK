@@ -93,8 +93,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -182,8 +182,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -263,8 +263,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -344,8 +344,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -418,8 +418,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -489,8 +489,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -566,8 +566,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -658,8 +658,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -706,8 +706,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -790,8 +790,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -839,8 +839,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -916,8 +916,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -954,8 +954,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -1011,8 +1011,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -1062,8 +1062,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -1150,8 +1150,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -1189,8 +1189,8 @@ namespace NCDK.Reactions.Types
             var setOfReactants = builder.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             IReactionProcess type = new HomolyticCleavageReaction();
@@ -1251,8 +1251,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -1293,8 +1293,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HomolyticCleavageReaction();
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -1342,8 +1342,8 @@ namespace NCDK.Reactions.Types
             molecule.Atoms[1].IsReactiveCenter = true;
             molecule.Bonds[0].IsReactiveCenter = true;
 
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -1371,8 +1371,8 @@ namespace NCDK.Reactions.Types
             IAtomContainer molecule = setOfReactants[0];
 
             /* automatic search of the center active */
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -1442,8 +1442,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             /* has active center */
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -1595,8 +1595,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             /* has active center */
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
+            var paramList = new List<IParameterReaction>();
+            var param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -1636,7 +1636,7 @@ namespace NCDK.Reactions.Types
         /// <param name="molecule">The IAtomContainer to analyze</param>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.Builder);
+            var matcher = CDK.AtomTypeMatcher;
             foreach (var nextAtom in molecule.Atoms)
             {
                 Assert.IsNotNull(matcher.FindMatchingAtomType(molecule, nextAtom), "Missing atom type for: " + nextAtom);

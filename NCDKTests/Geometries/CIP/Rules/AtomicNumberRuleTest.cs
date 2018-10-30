@@ -31,7 +31,7 @@ namespace NCDK.Geometries.CIP.Rules
     [TestClass()]
     public class AtomicNumberRuleTest : CDKTestCase
     {
-        static SmilesParser smiles = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+        static SmilesParser smiles = CDK.SilentSmilesParser;
         static IAtomContainer molecule = smiles.ParseSmiles("ClC(Br)(I)[H]");
 
         [TestMethod()]

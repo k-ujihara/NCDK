@@ -191,7 +191,7 @@ namespace NCDK.Aromaticities
 
         static IAtomContainer CreateFromSmiles(string smi)
         {
-            return new SmilesParser(Silent.ChemObjectBuilder.Instance).ParseSmiles(smi);
+            return CDK.SilentSmilesParser.ParseSmiles(smi);
         }
 
         /// <summary>Check the electron contribution is the same as expected.</summary>

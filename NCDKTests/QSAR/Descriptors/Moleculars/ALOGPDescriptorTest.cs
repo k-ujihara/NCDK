@@ -32,12 +32,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [TestClass()]
     public class ALogPDescriptorTest : MolecularDescriptorTest
     {
-        private readonly CDKHydrogenAdder hydrogenAdder;
+        private readonly IHydrogenAdder hydrogenAdder;
 
         public ALogPDescriptorTest()
         {
             SetDescriptor(typeof(ALogPDescriptor));
-            hydrogenAdder = CDKHydrogenAdder.GetInstance(ChemObjectBuilder.Instance);
+            hydrogenAdder = CDK.HydrogenAdder;
         }
 
         /// <summary>

@@ -19,7 +19,6 @@
 
 using NCDK.Graphs;
 using NCDK.Maths;
-using NCDK.Tools;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,7 +33,7 @@ namespace NCDK.StructGen.Stochastic.Operators
     // @cdk.githash
     public class CrossoverMachine
     {
-        PartialFilledStructureMerger pfsm;
+        PartialFilledStructureMerger pfsm = CDK.PartialFilledStructureMerger;
 
         /// <summary>
         /// Indicates which mode <see cref="CrossoverMachine"/> is using.
@@ -57,7 +56,6 @@ namespace NCDK.StructGen.Stochastic.Operators
         /// <summary>Constructs a new CrossoverMachine operator.</summary>
         public CrossoverMachine()
         {
-            pfsm = new PartialFilledStructureMerger();
         }
 
         /// <summary>

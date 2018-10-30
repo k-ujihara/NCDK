@@ -32,7 +32,6 @@ namespace NCDK.Tools.Manipulator
     public class ReactionManipulatorTest : CDKTestCase
     {
         private IReaction reaction;
-        private IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
         public ReactionManipulatorTest()
             : base()
@@ -86,9 +85,10 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetMappedChemObject_IReaction_IAtom()
         {
+            var builder = ChemObjectBuilder.Instance;
             IReaction reaction = builder.NewReaction();
-            IAtomContainer reactant = (new SmilesParser(builder)).ParseSmiles("[C+]-C=C");
-            IAtomContainer product = (new SmilesParser(builder)).ParseSmiles("C=C=C");
+            IAtomContainer reactant = CDK.SilentSmilesParser.ParseSmiles("[C+]-C=C");
+            IAtomContainer product = CDK.SilentSmilesParser.ParseSmiles("C=C=C");
 
             IMapping mapping = builder.NewMapping(reactant.Atoms[0], product.Atoms[0]);
             reaction.Mappings.Add(mapping);
@@ -114,9 +114,10 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetMappedChemObject_IReaction_IBond()
         {
+            var builder = ChemObjectBuilder.Instance;
             IReaction reaction = builder.NewReaction();
-            IAtomContainer reactant = (new SmilesParser(builder)).ParseSmiles("[C+]-C=C");
-            IAtomContainer product = (new SmilesParser(builder)).ParseSmiles("C=C=C");
+            IAtomContainer reactant = CDK.SilentSmilesParser.ParseSmiles("[C+]-C=C");
+            IAtomContainer product = CDK.SilentSmilesParser.ParseSmiles("C=C=C");
 
             IMapping mapping = builder.NewMapping(reactant.Atoms[0], product.Atoms[0]);
             reaction.Mappings.Add(mapping);
@@ -199,6 +200,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveElectronContainer_IReaction_IElectronContainer()
         {
+            var builder = ChemObjectBuilder.Instance;
             IReaction reaction = builder.NewReaction();
             IAtomContainer mol = builder.NewAtomContainer();
             mol.Atoms.Add(builder.NewAtom("C"));
@@ -220,6 +222,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveAtomAndConnectedElectronContainers_IReaction_IAtom()
         {
+            var builder = ChemObjectBuilder.Instance;
             IReaction reaction = builder.NewReaction();
             IAtomContainer mol = builder.NewAtomContainer();
             mol.Atoms.Add(builder.NewAtom("C"));
@@ -241,6 +244,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllMolecules_IReaction()
         {
+            var builder = ChemObjectBuilder.Instance;
             IReaction reaction = builder.NewReaction();
             reaction.Reactants.Add(builder.NewAtomContainer());
             reaction.Reactants.Add(builder.NewAtomContainer());
@@ -253,6 +257,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllProducts_IReaction()
         {
+            var builder = ChemObjectBuilder.Instance;
             IReaction reaction = builder.NewReaction();
             reaction.Reactants.Add(builder.NewAtomContainer());
             reaction.Reactants.Add(builder.NewAtomContainer());
@@ -265,6 +270,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllReactants_IReaction()
         {
+            var builder = ChemObjectBuilder.Instance;
             IReaction reaction = builder.NewReaction();
             reaction.Reactants.Add(builder.NewAtomContainer());
             reaction.Reactants.Add(builder.NewAtomContainer());
@@ -277,7 +283,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void InliningReactions()
         {
-            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            IChemObjectBuilder bldr = ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
             IReaction reaction = smipar.ParseReactionSmiles("CCO.CC(=O)O>[H+]>CCOC(=O)C.O ethyl esterification");
             SmilesGenerator smigen = SmilesGenerator.Isomeric();
@@ -290,7 +296,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void InliningReactionsWithRadicals()
         {
-            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            IChemObjectBuilder bldr = ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
             IReaction reaction = smipar.ParseReactionSmiles("[CH2]CO.CC(=O)O>[H+]>CCOC(=O)C.O |^1:0| ethyl esterification");
             SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.CxSmiles);

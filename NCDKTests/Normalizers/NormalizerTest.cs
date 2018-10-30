@@ -28,7 +28,7 @@ namespace NCDK.Normalizers
         [TestMethod()]
         public void TestNormalize()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("C"));
             ac.Atoms.Add(new Atom("N"));
             ac.Atoms.Add(new Atom("O"));

@@ -201,7 +201,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public void TestPartitionExtendedTetrahedral()
         {
-            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            SmilesParser smipar = CDK.SilentSmilesParser;
             var container = smipar.ParseSmiles("CC=[C@]=CC.C");
             IChemObjectSet<IAtomContainer> containerSet = ConnectivityChecker.PartitionIntoMolecules(container);
             Assert.AreEqual(2, containerSet.Count);

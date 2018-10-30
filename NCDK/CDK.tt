@@ -1,0 +1,114 @@
+<#@ template debug="true" hostspecific="false" language="C#" #>
+<#@ output extension=".tt.cs" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+/* Copyright (C) 2010  Egon Willighagen <egonw@users.sf.net>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All I ask is that proper credit is given for my work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+
+namespace NCDK
+{
+    /// <summary>
+    /// Helper class to provide general information about this CDK library.
+    /// </summary>
+    // @cdk.module core
+    // @cdk.githash
+    public static class CDK
+    {
+        /// <summary>
+        /// Returns the version of this CDK library.
+        /// </summary>
+        /// <returns>The library version</returns>
+        public static string Version => typeof(CDK).Assembly.GetName().Version.ToString();
+
+<#
+    foreach (var nc in NCs)
+    {
+        MakeVar(nc);
+    }
+#>
+    }
+}
+
+<#+
+    /// <summary>Name and creation<summary>
+    public class NC
+    {
+        public string Name { get; private set; }
+        public string Type { get; private set; }
+        public string Creation { get; private set; }
+
+        public NC(string name, string type, string creation)
+        {
+            Name = name;
+            Type = type;
+            Creation = creation;
+        }
+    }
+
+    public NC[] NCs { get; } = new NC[] 
+    {
+        new NC("JmolAtomTypeFactory", "Config.AtomTypeFactory", "Config.AtomTypeFactory.GetInstance(\"NCDK.Config.Data.jmol_atomtypes.txt\", Silent.ChemObjectBuilder.Instance)"),
+        new NC("CdkAtomTypeFactory", "Config.AtomTypeFactory", "Config.AtomTypeFactory.GetInstance(\"NCDK.Dict.Data.cdk-atom-types.owl\", Silent.ChemObjectBuilder.Instance)"),
+        new NC("StructgenAtomTypeFactory", "Config.AtomTypeFactory", "Config.AtomTypeFactory.GetInstance(\"NCDK.Config.Data.structgen_atomtypes.xml\", Silent.ChemObjectBuilder.Instance)"),
+        new NC("SilentSmilesParser", "Smiles.SmilesParser", "new Smiles.SmilesParser(Silent.ChemObjectBuilder.Instance)"),
+        new NC("SaturationChecker", "Tools.ISaturationChecker", "new Tools.SaturationChecker()"),
+        new NC("LonePairElectronChecker", "Tools.ILonePairElectronChecker", "new Tools.LonePairElectronChecker()"),
+        new NC("AtomTypeMatcher", "AtomTypes.IAtomTypeMatcher", "AtomTypes.CDKAtomTypeMatcher.GetInstance()"),
+        new NC("HydrogenAdder", "Tools.IHydrogenAdder", "Tools.CDKHydrogenAdder.Instance"),
+        new NC("PartialFilledStructureMerger", "StructGen.Stochastic.PartialFilledStructureMerger", "new StructGen.Stochastic.PartialFilledStructureMerger()"),
+    };
+
+    public void MakeVar(NC nc)
+    {
+#>
+
+        private static <#= nc.Type #> local<#= nc.Name #> = null;
+        private static readonly object lock<#= nc.Name #> = new object();
+        internal static <#= nc.Type #> <#= nc.Name #>
+        {
+            get
+            {
+                if (local<#= nc.Name #> == null)
+                    lock (lock<#= nc.Name #>)
+                    {
+                        if (local<#= nc.Name #> == null)
+                            local<#= nc.Name #> = <#= nc.Creation #>;
+                    }
+                return local<#= nc.Name #>;
+            }
+        }
+<#+
+    }
+#>

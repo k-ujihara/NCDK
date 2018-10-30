@@ -86,17 +86,19 @@ namespace NCDK.Fragments
 
         private List<IAtomContainer> Run(IAtomContainer atomContainer)
         {
-            List<IAtomContainer> fragments = new List<IAtomContainer>();
+            var fragments = new List<IAtomContainer>();
 
-            if (atomContainer.Bonds.Count < 3) return fragments;
-            List<IBond> splitableBonds = GetSplitableBonds(atomContainer);
-            if (splitableBonds.Count == 0) return fragments;
+            if (atomContainer.Bonds.Count < 3)
+                return fragments;
+            var splitableBonds = GetSplitableBonds(atomContainer);
+            if (splitableBonds.Count == 0)
+                return fragments;
             Debug.WriteLine("Got " + splitableBonds.Count + " splittable bonds");
 
             string tmpSmiles;
             foreach (var bond in splitableBonds)
             {
-                List<IAtomContainer> parts = FragmentUtils.SplitMolecule(atomContainer, bond);
+                var parts = FragmentUtils.SplitMolecule(atomContainer, bond);
                 // make sure we don't add the same fragment twice
                 foreach (var partContainer in parts)
                 {
@@ -104,7 +106,7 @@ namespace NCDK.Fragments
                     foreach (var atom in partContainer.Atoms)
                         atom.ImplicitHydrogenCount = null;
                     AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(partContainer);
-                    CDKHydrogenAdder.GetInstance(partContainer.Builder).AddImplicitHydrogens(partContainer);
+                    CDK.HydrogenAdder.AddImplicitHydrogens(partContainer);
                     Aromaticity.CDKLegacy.Apply(partContainer);
                     tmpSmiles = smilesGenerator.Create(partContainer);
                     if (partContainer.Atoms.Count >= MinimumFragmentSize && !fragMap.ContainsKey(tmpSmiles))
@@ -116,23 +118,27 @@ namespace NCDK.Fragments
             }
 
             // try and partition the fragments
-            List<IAtomContainer> tmp = new List<IAtomContainer>(fragments);
+            var tmp = new List<IAtomContainer>(fragments);
             foreach (var fragment in fragments)
             {
-                if (fragment.Bonds.Count < 3 || fragment.Atoms.Count < MinimumFragmentSize) continue;
-                if (GetSplitableBonds(fragment).Count == 0) continue;
+                if (fragment.Bonds.Count < 3 || fragment.Atoms.Count < MinimumFragmentSize)
+                    continue;
+                if (GetSplitableBonds(fragment).Count == 0)
+                    continue;
 
-                List<IAtomContainer> frags = Run(fragment);
-                if (frags.Count == 0) continue;
+                var frags = Run(fragment);
+                if (frags.Count == 0)
+                    continue;
 
                 foreach (var frag in frags)
                 {
-                    if (frag.Bonds.Count < 3) continue;
+                    if (frag.Bonds.Count < 3)
+                        continue;
                     AtomContainerManipulator.ClearAtomConfigurations(frag);
                     foreach (var atom in frag.Atoms)
                         atom.ImplicitHydrogenCount = null;
                     AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(frag);
-                    CDKHydrogenAdder.GetInstance(frag.Builder).AddImplicitHydrogens(frag);
+                    CDK.HydrogenAdder.AddImplicitHydrogens(frag);
                     Aromaticity.CDKLegacy.Apply(frag);
                     tmpSmiles = smilesGenerator.Create(frag);
                     if (frag.Atoms.Count >= MinimumFragmentSize && !fragMap.ContainsKey(tmpSmiles))

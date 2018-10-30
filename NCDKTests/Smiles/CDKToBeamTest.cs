@@ -61,24 +61,30 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void UnknownSymbol()
         {
-            IAtom a = new PseudoAtom("ALA");
-            a.ImplicitHydrogenCount = 0;
+            var a = new PseudoAtom("ALA")
+            {
+                ImplicitHydrogenCount = 0
+            };
             Assert.AreEqual(Beam.Element.Unknown, new CDKToBeam().ToBeamAtom(a).Element);
         }
 
         [TestMethod()]
         public void UnknownSymbol_Pseudo()
         {
-            IAtom a = new PseudoAtom("R1");
-            a.ImplicitHydrogenCount = 0;
+            var a = new PseudoAtom("R1")
+            {
+                ImplicitHydrogenCount = 0
+            };
             Assert.AreEqual(Beam.Element.Unknown, new CDKToBeam().ToBeamAtom(a).Element);
         }
 
         [TestMethod()]
         public void Methane_Atom()
         {
-            IAtom a = new Atom("C");
-            a.ImplicitHydrogenCount = 4;
+            var a = new Atom("C")
+            {
+                ImplicitHydrogenCount = 4
+            };
             Assert.AreEqual(Beam.Element.Carbon, new CDKToBeam().ToBeamAtom(a).Element);
             Assert.AreEqual(4, new CDKToBeam().ToBeamAtom(a).NumOfHydrogens);
         }
@@ -86,8 +92,10 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Water_Atom()
         {
-            IAtom a = new Atom("O");
-            a.ImplicitHydrogenCount = 2;
+            var a = new Atom("O")
+            {
+                ImplicitHydrogenCount = 2
+            };
             Assert.AreEqual(Beam.Element.Oxygen, new CDKToBeam().ToBeamAtom(a).Element);
             Assert.AreEqual(2, new CDKToBeam().ToBeamAtom(a).NumOfHydrogens);
         }
@@ -95,8 +103,10 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void ChargedAtom()
         {
-            IAtom a = new Atom("C");
-            a.ImplicitHydrogenCount = 0;
+            var a = new Atom("C")
+            {
+                ImplicitHydrogenCount = 0
+            };
             for (int chg = -10; chg < 10; chg++)
             {
                 a.FormalCharge = chg;
@@ -107,43 +117,53 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void AliphaticAtom()
         {
-            IAtom a = new Atom("C");
-            a.ImplicitHydrogenCount = 0;
+            var a = new Atom("C")
+            {
+                ImplicitHydrogenCount = 0
+            };
             Assert.IsFalse(new CDKToBeam().ToBeamAtom(a).IsAromatic());
         }
 
         [TestMethod()]
         public void AromaticAtom()
         {
-            IAtom a = new Atom("C");
-            a.ImplicitHydrogenCount = 0;
-            a.IsAromatic = true;
+            var a = new Atom("C")
+            {
+                ImplicitHydrogenCount = 0,
+                IsAromatic = true
+            };
             Assert.IsTrue(new CDKToBeam().ToBeamAtom(a).IsAromatic());
         }
 
         [TestMethod()]
         public void UnspecifiedIsotope()
         {
-            IAtom a = new Atom("C");
-            a.ImplicitHydrogenCount = 0;
+            var a = new Atom("C")
+            {
+                ImplicitHydrogenCount = 0
+            };
             Assert.AreEqual(-1, new CDKToBeam().ToBeamAtom(a).Isotope);
         }
 
         [TestMethod()]
         public void SpecifiedIsotope()
         {
-            IAtom a = new Atom("C");
-            a.ImplicitHydrogenCount = 0;
-            a.MassNumber = 13;
+            var a = new Atom("C")
+            {
+                ImplicitHydrogenCount = 0,
+                MassNumber = 13
+            };
             Assert.AreEqual(13, new CDKToBeam().ToBeamAtom(a).Isotope);
         }
 
         [TestMethod()]
         public void NoDefaultIsotope()
         {
-            IAtom a = new Atom("C");
-            a.ImplicitHydrogenCount = 0;
-            a.MassNumber = 12;
+            var a = new Atom("C")
+            {
+                ImplicitHydrogenCount = 0,
+                MassNumber = 12
+            };
             Assert.AreEqual(12, new CDKToBeam().ToBeamAtom(a).Isotope);
         }
 
@@ -217,8 +237,10 @@ namespace NCDK.Smiles
         {
             var mock_u = new Mock<IAtom>(); var u = mock_u.Object;
             var mock_v = new Mock<IAtom>(); var v = mock_v.Object;
-            IBond b = new Bond(u, v);
-            b.IsAromatic = true;
+            var b = new Bond(u, v)
+            {
+                IsAromatic = true
+            };
             var mock = new Mock<IDictionary<IAtom, int>>();
             mock.SetupGet(n => n[u]).Returns(0);
             mock.SetupGet(n => n[v]).Returns(1);
@@ -313,9 +335,11 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void C13_Isomeric()
         {
-            IAtomContainer ac = new AtomContainer();
-            IAtom a = new Atom("C");
-            a.MassNumber = 13;
+            var ac = new AtomContainer();
+            var a = new Atom("C")
+            {
+                MassNumber = 13
+            };
             ac.Atoms.Add(a);
             Beam.Graph g = Convert(ac, SmiFlavors.AtomicMass);
             Assert.AreEqual(13, g.GetAtom(0).Isotope);
@@ -325,9 +349,11 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void C13_nonIsomeric()
         {
-            IAtomContainer ac = new AtomContainer();
-            IAtom a = new Atom("C");
-            a.MassNumber = 13;
+            var ac = new AtomContainer();
+            var a = new Atom("C")
+            {
+                MassNumber = 13
+            };
             ac.Atoms.Add(a);
             Beam.Graph g = Convert(ac, false, 0); // non-isomeric
             Assert.AreEqual(-1, g.GetAtom(0).Isotope);
@@ -337,9 +363,11 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Azanium()
         {
-            IAtomContainer ac = new AtomContainer();
-            IAtom a = new Atom("N");
-            a.FormalCharge = +1;
+            var ac = new AtomContainer();
+            var a = new Atom("N")
+            {
+                FormalCharge = +1
+            };
             ac.Atoms.Add(a);
             Beam.Graph g = Convert(ac, 0);
             Assert.AreEqual(+1, g.GetAtom(0).Charge);
@@ -349,9 +377,11 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Oxidanide()
         {
-            IAtomContainer ac = new AtomContainer();
-            IAtom a = new Atom("O");
-            a.FormalCharge = -1;
+            var ac = new AtomContainer();
+            var a = new Atom("O")
+            {
+                FormalCharge = -1
+            };
             ac.Atoms.Add(a);
             Beam.Graph g = Convert(ac, 0);
             Assert.AreEqual(-1, g.GetAtom(0).Charge);
@@ -361,9 +391,11 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Oxidandiide()
         {
-            IAtomContainer ac = new AtomContainer();
-            IAtom a = new Atom("O");
-            a.FormalCharge = -2;
+            var ac = new AtomContainer();
+            var a = new Atom("O")
+            {
+                FormalCharge = -2
+            };
             ac.Atoms.Add(a);
             Beam.Graph g = Convert(ac, 0);
             Assert.AreEqual(-2, g.GetAtom(0).Charge);
@@ -377,7 +409,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void E_1_2_difluoroethene()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("F"));
             ac.Atoms.Add(new Atom("C"));
             ac.Atoms.Add(new Atom("C"));
@@ -399,7 +431,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Z_1_2_difluoroethene()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("F"));
             ac.Atoms.Add(new Atom("C"));
             ac.Atoms.Add(new Atom("C"));
@@ -421,7 +453,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Test_2R_butan_2_ol()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("C"));
             ac.Atoms.Add(new Atom("C"));
             ac.Atoms.Add(new Atom("C"));
@@ -451,7 +483,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Test_2S_butan_2_ol()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("C"));
             ac.Atoms.Add(new Atom("C"));
             ac.Atoms.Add(new Atom("C"));
@@ -483,7 +515,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Z_1_2_difluoroethene_aromatic()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("F"));
             ac.Atoms.Add(new Atom("C"));
             ac.Atoms.Add(new Atom("C"));
@@ -510,7 +542,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void WriteAtomClass()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("C"));
             ac.Atoms.Add(new Atom("C"));
             ac.Atoms.Add(new Atom("O"));
@@ -636,7 +668,7 @@ namespace NCDK.Smiles
         static Beam.Graph Convert(IAtomContainer ac, bool perceiveAromaticity, SmiFlavors options)
         {
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
-            CDKHydrogenAdder.GetInstance(Silent.ChemObjectBuilder.Instance).AddImplicitHydrogens(ac);
+            CDK.HydrogenAdder.AddImplicitHydrogens(ac);
             if (perceiveAromaticity) Aromaticity.CDKLegacy.Apply(ac);
             return new CDKToBeam(options).ToBeamGraph(ac);
         }

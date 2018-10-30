@@ -96,13 +96,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 // type & assign implicit hydrogens
                 var builder = mol.Builder;
-                var matcher = CDKAtomTypeMatcher.GetInstance(builder);
+                var matcher = CDK.AtomTypeMatcher;
                 foreach (var atom in mol.Atoms)
                 {
                     var type = matcher.FindMatchingAtomType(mol, atom);
                     AtomTypeManipulator.Configure(atom, type);
                 }
-                var adder = CDKHydrogenAdder.GetInstance(builder);
+                var adder = CDK.HydrogenAdder;
                 adder.AddImplicitHydrogens(mol);
 
                 // polar surface area: chain it off the TPSADescriptor

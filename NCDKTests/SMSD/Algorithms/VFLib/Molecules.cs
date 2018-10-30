@@ -104,7 +104,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             result.Bonds.Add(bond7);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
 
@@ -116,7 +116,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             IAtomContainer result = ChemObjectBuilder.Instance.NewAtomContainer();
             IAtom c1 = ChemObjectBuilder.Instance.NewAtom("C");
             result.Atoms.Add(c1);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
 
             return result;
@@ -140,7 +140,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             result.Bonds.Add(bond2);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
 
@@ -184,7 +184,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             result.Bonds.Add(bond5);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
 
@@ -230,7 +230,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             result.Bonds.Add(bond6);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
 
@@ -298,7 +298,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             result.Bonds.Add(bond11);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
 
@@ -311,7 +311,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             string smiles = "C1=CN=NC=C1";
             var result = sp.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
             return result;
@@ -323,7 +323,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             string smiles = "ClC1=CC=NC2=C1C=CC=C2";
             var result = sp.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
             return result;
@@ -335,7 +335,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             string smiles = "Clc1ccccc1";
             var result = sp.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
             return result;
@@ -367,7 +367,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             result.Bonds.Add(bond2);
             result.Bonds.Add(bond3);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
 
@@ -450,7 +450,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             result.Bonds.Add(bond12);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
 
@@ -534,7 +534,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             result.Bonds.Add(bond5);
             result.Bonds.Add(bond6);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
 
@@ -585,7 +585,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             result.Bonds.Add(bond7);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
 
@@ -637,7 +637,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             result.Bonds.Add(bond7);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
 
@@ -684,7 +684,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             result.Bonds.Add(bond6);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
 
@@ -712,7 +712,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             result.Bonds.Add(bond3);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
 
@@ -742,7 +742,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             result.Bonds.Add(bond3);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
 
@@ -821,7 +821,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             result.Bonds.Add(bond);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
 
@@ -846,7 +846,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             result.Bonds.Add(bond);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
 

@@ -25,7 +25,7 @@ namespace NCDK.Reactions.Types
     /// var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet&lt;IAtomContainer&gt;();
     /// setOfReactants.Add(molecular);
     /// var type = new <#= name #>();
-    /// IParameterReaction param = new SetReactionCenter();
+    /// var param = new SetReactionCenter();
     /// param.IsSetParameter = false;
     /// var paramList = new[] { param };
     /// type.ParameterList = paramList;

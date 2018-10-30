@@ -42,7 +42,7 @@ namespace NCDK.AtomTypes
 
         public override IAtomTypeMatcher GetAtomTypeMatcher(IChemObjectBuilder builder)
         {
-            return CDKAtomTypeMatcher.GetInstance(builder);
+            return CDK.AtomTypeMatcher;
         }
     }
 }

@@ -66,7 +66,7 @@ namespace NCDK.Modelings.Builder3D
             Vector3 h2_coord = new Vector3(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
             Vector3 h3_coord = new Vector3(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 
-            var sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             var mol = sp.ParseSmiles("CF");
             AddExplicitHydrogens(mol);
             //mb3d.SetTemplateHandler();
@@ -84,7 +84,7 @@ namespace NCDK.Modelings.Builder3D
         {
             ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Silent.ChemObjectBuilder.Instance);
             string smile = "CccccC";
-            var sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             var mol = sp.ParseSmiles(smile);
             AddExplicitHydrogens(mol);
             mol = mb3d.Generate3DCoordinates(mol, false);
@@ -102,7 +102,7 @@ namespace NCDK.Modelings.Builder3D
         {
             ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Silent.ChemObjectBuilder.Instance);
             string smile = "c1ccccc1C=O";
-            var sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             var mol = sp.ParseSmiles(smile);
             AddExplicitHydrogens(mol);
             mb3d.Generate3DCoordinates(mol, false);
@@ -136,7 +136,7 @@ namespace NCDK.Modelings.Builder3D
         {
             ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Silent.ChemObjectBuilder.Instance);
             string smile = "c1(:c(:c(:c(-[H]):c(-Cl):c:1-[H])-[H])-[H])-[H]";
-            var sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             var mol = sp.ParseSmiles(smile);
             AddExplicitHydrogens(mol);
             mol = mb3d.Generate3DCoordinates(mol, false);
@@ -153,7 +153,7 @@ namespace NCDK.Modelings.Builder3D
         {
             ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Silent.ChemObjectBuilder.Instance);
             string smile = "C1CCCCCCC1CC";
-            var sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             var mol = sp.ParseSmiles(smile);
             AddExplicitHydrogens(mol);
             mol = mb3d.Generate3DCoordinates(mol, false);
@@ -174,7 +174,7 @@ namespace NCDK.Modelings.Builder3D
         {
             ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Silent.ChemObjectBuilder.Instance);
             string smile = "CCCCCCCCCC";
-            var sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             var mol = sp.ParseSmiles(smile);
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
@@ -296,7 +296,7 @@ namespace NCDK.Modelings.Builder3D
 
             string[] smiles = new string[]{"CC", "OCC", "O(C)CCC", "c1ccccc1", "C(=C)=C", "OCC=CCc1ccccc1(C=C)",
                 "O(CC=C)CCN", "CCCCCCCCCCCCCCC", "OCC=CCO", "NCCCCN"};
-            var sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             IAtomContainer[] atomContainer = new IAtomContainer[smiles.Length];
             for (int i = 0; i < smiles.Length; i++)
             {
@@ -397,7 +397,7 @@ namespace NCDK.Modelings.Builder3D
         {
             string smiles1 = "CCCCCCCCCCCCCCCCCC";
             string smiles2 = "CCCCCC(CCCC)CCCC";
-            SmilesParser parser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            SmilesParser parser = CDK.SilentSmilesParser;
             var nonBranchedAlkane = parser.ParseSmiles(smiles1);
             var branchedAlkane = parser.ParseSmiles(smiles2);
             ModelBuilder3D.GetInstance(Silent.ChemObjectBuilder.Instance).Generate3DCoordinates(nonBranchedAlkane,
@@ -408,7 +408,7 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void HydrogenAsFirstAtomInMethane()
         {
-            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            SmilesParser smipar = CDK.SilentSmilesParser;
             var methane = smipar.ParseSmiles("[H]C([H])([H])[H]");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(methane);
             ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Silent.ChemObjectBuilder.Instance);
@@ -420,7 +420,7 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void HydrogenAsFirstAtomInEthane()
         {
-            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            SmilesParser smipar = CDK.SilentSmilesParser;
             var ethane = smipar.ParseSmiles("[H]C([H])([H])C([H])([H])[H]");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ethane);
             ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Silent.ChemObjectBuilder.Instance);

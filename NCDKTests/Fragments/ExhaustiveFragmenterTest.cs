@@ -38,7 +38,7 @@ namespace NCDK.Fragments
         static ExhaustiveFragmenterTest()
         {
             fragmenter = new ExhaustiveFragmenter();
-            smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            smilesParser = CDK.SilentSmilesParser;
         }
 
         [TestMethod()]

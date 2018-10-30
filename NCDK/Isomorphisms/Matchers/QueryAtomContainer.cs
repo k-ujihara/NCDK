@@ -83,68 +83,64 @@ namespace NCDK.Isomorphisms.Matchers
 
         /// <summary>
         /// Create a query from a molecule and a provided set of expressions. The
-        /// molecule is converted and any features specified in the {@code opts}
-        /// will be matched. <br><br>
+        /// molecule is converted and any features specified in the <paramref name="opts"/>
+        /// will be matched. 
+        /// </summary>
+        /// <remarks>
         /// A good starting point is the following options:
-        /// <pre>{@code
+        /// <code>
         /// // [nH]1ccc(=O)cc1 => n1:c:c:c(=O):c:c:1
         /// QueryAtomContainer.create(mol, ALIPHATIC_ELEMENT,
         ///                                AROMATIC_ELEMENT,
         ///                                SingleOrAromatic,
         ///                                ALIPHATIC_ORDER,
         ///                                STEREOCHEMISTRY);
-        /// }</pre>
-        /// <br>
-        /// Specifying {@link ExprType#DEGREE} (or {@link ExprType#TOTAL_DEGREE} +
-        /// {@link ExprType#IMPL_H_COUNT}) means the molecule will not match as a
+        /// </code>
+        /// Specifying <see cref="ExprType.Degree"/> (or <see cref="ExprType.TotalDegree"/> +
+        /// <see cref="ExprType.ImplicitHCount"/>) means the molecule will not match as a
         /// substructure.
-        /// <br>
-        /// <pre>{@code
+        /// <code>
         /// // [nH]1ccc(=O)cc1 => [nD2]1:[cD2]:[cD2]:[cD2](=[OD1]):[cD2]:[cD2]:1
-        /// QueryAtomContainer.create(mol, ALIPHATIC_ELEMENT,
-        ///                                AROMATIC_ELEMENT,
-        ///                                DEGREE,
+        /// QueryAtomContainer.create(mol, AliphaticElement,
+        ///                                AromaticElement,
+        ///                                Degree,
         ///                                SingleOrAromatic,
-        ///                                ALIPHATIC_ORDER);
-        /// }</pre>
-        /// <br>
-        /// The {@link ExprType#RING_BOND_COUNT} property is useful for locking in
+        ///                                AromaticOrder);
+        /// </code>
+        /// The <see cref="ExprType.RingBondCount"/> property is useful for locking in
         /// ring systems. Specifying the ring bond count on benzene means it will
         /// not match larger ring systems (e.g. naphthalenee) but can still be
         /// substituted.
-        /// <br>
-        /// <pre>{@code
+        /// <code>
         /// // [nH]1ccc(=O)cc1 =>
-        /// //   [nx2+0]1:[cx2+0]:[cx2+0]:[cx2+0](=[O&x0+0]):[cx2+0]:[cx2+0]:1
+        /// //   [nx2+0]1:[cx2+0]:[cx2+0]:[cx2+0](=[O&amp;x0+0]):[cx2+0]:[cx2+0]:1
         /// // IMPORTANT! use Cycles.markRingAtomsAndBonds(mol) to set ring status
-        /// QueryAtomContainer.create(mol, ALIPHATIC_ELEMENT,
-        ///                                AROMATIC_ELEMENT,
-        ///                                FORMAL_CHARGE,
-        ///                                ISOTOPE,
-        ///                                RING_BOND_COUNT,
+        /// QueryAtomContainer.create(mol, AliphaticElement,
+        ///                                AromaticElement,
+        ///                                FormalCharge,
+        ///                                Isotope,
+        ///                                RingBondCount,
         ///                                SingleOrAromatic,
-        ///                                ALIPHATIC_ORDER);
-        /// }</pre>
-        /// <br>
-        /// Note that {@link ExprType#FORMAL_CHARGE},
-        /// {@link ExprType#IMPL_H_COUNT}, and {@link ExprType#ISOTOPE} are ignored
-        /// if null. Explicitly setting these to zero (only required for Isotope from
+        ///                                AliphaticOrder);
+        /// </code>
+        /// Note that <see cref="ExprType.FormalCharge"/>,
+        /// <see cref="ExprType.ImplicitHCount"/>, and <see cref="ExprType.Isotope"/> are ignored
+        /// if <see langword="null"/>. Explicitly setting these to zero (only required for Isotope from
         /// SMILES) forces their inclusion.
-        /// <br>
-        /// <pre>{@code
+        /// <code>
         /// // [nH]1ccc(=O)cc1 =>
         /// //   [0n+0]1:[0c+0]:[0c+0]:[0c+0](=[O+0]):[0c+0]:[0c+0]:1
-        /// QueryAtomContainer.create(mol, ALIPHATIC_ELEMENT,
-        ///                                AROMATIC_ELEMENT,
-        ///                                FORMAL_CHARGE,
-        ///                                ISOTOPE,
-        ///                                RING_BOND_COUNT,
+        /// QueryAtomContainer.create(mol, AliphaticElement,
+        ///                                AromaticElement,
+        ///                                FormalCharge,
+        ///                                Isotope,
+        ///                                RingBondCount,
         ///                                SingleOrAromatic,
-        ///                                ALIPHATIC_ORDER);
-        /// }</pre>
+        ///                                AliphaticOrder);
+        /// </code>
         /// Please note not all <see cref="ExprType"/>s are currently supported, if you
         /// require a specific type that you think is useful please open an issue.
-        /// </summary>
+        /// </remarks>
         /// <param name="mol">the molecule</param>
         /// <param name="opts">set of the expr types to match</param>
         /// <returns>the query molecule</returns>

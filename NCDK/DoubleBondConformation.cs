@@ -50,7 +50,7 @@ namespace NCDK
 
         /// <summary>
         /// Invert this conformation.
-        /// <see cref="Together"/>.Invert() = <see cref="Opposite"/>, <see cref="Opposite"/>.Invert() = <see cref="Together"/>.
+        /// <see cref="DoubleBondConformation.Together"/>.Invert() = <see cref="DoubleBondConformation.Opposite"/>, <see cref="DoubleBondConformation.Opposite"/>.Invert() = <see cref="DoubleBondConformation.Together"/>.
         /// </summary>
         /// <returns>the inverse conformation</returns>
         public static DoubleBondConformation Invert(this DoubleBondConformation value)

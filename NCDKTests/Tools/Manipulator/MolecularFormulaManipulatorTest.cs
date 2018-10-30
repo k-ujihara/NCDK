@@ -989,7 +989,7 @@ namespace NCDK.Tools.Manipulator
 
             // previously performed inside SmilesParser
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            CDKHydrogenAdder.GetInstance(ChemObjectBuilder.Instance).AddImplicitHydrogens(mol);
+            CDK.HydrogenAdder.AddImplicitHydrogens(mol);
 
             var mf = MolecularFormulaManipulator.GetMolecularFormula(mol);
             var exactMass = MolecularFormulaManipulator.GetTotalExactMass(mf);
@@ -1150,7 +1150,7 @@ namespace NCDK.Tools.Manipulator
             var mol = mols[0];
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            var ha = CDKHydrogenAdder.GetInstance(ChemObjectBuilder.Instance);
+            var ha = CDK.HydrogenAdder;
             ha.AddImplicitHydrogens(mol);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
 
@@ -1185,7 +1185,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestImplicitH()
         {
-            var adder = CDKHydrogenAdder.GetInstance(Silent.ChemObjectBuilder.Instance);
+            var adder = CDK.HydrogenAdder;
             var mol = TestMoleculeFactory.MakeBenzene();
             var f = MolecularFormulaManipulator.GetMolecularFormula(mol);
             Assert.AreEqual("C6", MolecularFormulaManipulator.GetString(f));

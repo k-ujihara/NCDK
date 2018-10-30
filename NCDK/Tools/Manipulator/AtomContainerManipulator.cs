@@ -1320,7 +1320,7 @@ namespace NCDK.Tools.Manipulator
         /// <param name="container"></param>
         public static void PercieveAtomTypesAndConfigureAtoms(IAtomContainer container)
         {
-            var matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+            var matcher = CDK.AtomTypeMatcher;
             foreach (var atom in container.Atoms)
             {
                 var matched = matcher.FindMatchingAtomType(container, atom);
@@ -1339,7 +1339,7 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         public static void PercieveAtomTypesAndConfigureUnsetProperties(IAtomContainer container)
         {
-            var matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+            var matcher = CDK.AtomTypeMatcher;
             foreach (var atom in container.Atoms)
             {
                 var matched = matcher.FindMatchingAtomType(container, atom);

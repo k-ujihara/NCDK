@@ -68,7 +68,7 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void TestGlycine()
         {
-            SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser parser = CDK.SilentSmilesParser;
             var atomContainer = parser.ParseSmiles("C(C(=O)O)N");
             long[] numbers = InChINumbersTools.GetNumbers(atomContainer);
             Assert.AreEqual(5, numbers.Length);
@@ -82,7 +82,7 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void TestGlycine_uSmiles()
         {
-            SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser parser = CDK.SilentSmilesParser;
             var atomContainer = parser.ParseSmiles("C(C(=O)O)N");
             long[] numbers = InChINumbersTools.GetNumbers(atomContainer);
             Assert.AreEqual(5, numbers.Length);
@@ -96,7 +96,7 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void FixedH()
         {
-            SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser parser = CDK.SilentSmilesParser;
             var atomContainer = parser.ParseSmiles("N1C=NC2=CC=CC=C12");
             string auxInfo = InChINumbersTools.AuxInfo(atomContainer, InChIOption.FixedH);
             string expected = "AuxInfo=1/1/" + "N:6,7,5,8,2,4,9,3,1/" + "E:(1,2)(3,4)(6,7)(8,9)/" + "F:7,6,8,5,2,9,4,1,3/"
@@ -162,14 +162,14 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void FavorCarbonyl()
         {
-            IAtomContainer container = new SmilesParser(Silent.ChemObjectBuilder.Instance).ParseSmiles("P([O-])=O");
+            IAtomContainer container = CDK.SilentSmilesParser.ParseSmiles("P([O-])=O");
             Assert.IsTrue(Compares.AreEqual(new long[] { 3, 2, 1 }, InChINumbersTools.GetUSmilesNumbers(container)));
         }
 
         [TestMethod()]
         public void UnlabelledHydrogens()
         {
-            IAtomContainer container = new SmilesParser(Silent.ChemObjectBuilder.Instance)
+            IAtomContainer container = CDK.SilentSmilesParser
                     .ParseSmiles("[H]C([H])([H])[H]");
             Assert.IsTrue(Compares.AreEqual(new long[] { 2, 1, 3, 4, 5 }, InChINumbersTools.GetUSmilesNumbers(container)));
         }
@@ -177,7 +177,7 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void Bug1370()
         {
-            IAtomContainer container = new SmilesParser(Silent.ChemObjectBuilder.Instance)
+            IAtomContainer container = CDK.SilentSmilesParser
                     .ParseSmiles("O=[Bi]Cl");
             Assert.IsTrue(Compares.AreEqual(new long[] { 3, 1, 2 }, InChINumbersTools.GetUSmilesNumbers(container)));
         }
@@ -185,7 +185,7 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void Protons()
         {
-            IAtomContainer container = new SmilesParser(Silent.ChemObjectBuilder.Instance)
+            IAtomContainer container = CDK.SilentSmilesParser
                 .ParseSmiles("[H+].[H+].F[Si-2](F)(F)(F)(F)F");
             Assert.IsTrue(Compares.AreDeepEqual(new long[] { 8, 9, 1, 7, 2, 3, 4, 5, 6 }, InChINumbersTools.GetUSmilesNumbers(container)));
         }

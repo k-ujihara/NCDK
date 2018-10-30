@@ -503,7 +503,7 @@ namespace NCDK.Smiles
                 int implicitH = 0;
                 if (!molecule.Atoms[j].ImplicitHydrogenCount.HasValue)
                 {
-                    CDKHydrogenAdder ha = CDKHydrogenAdder.GetInstance(molecule.Builder);
+                    var ha = CDK.HydrogenAdder;
                     try
                     {
                         ha.AddImplicitHydrogens(molecule, molecule.Atoms[j]);

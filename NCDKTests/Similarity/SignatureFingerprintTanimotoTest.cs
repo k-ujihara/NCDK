@@ -38,7 +38,7 @@ namespace NCDK.Similarity
         [TestMethod()]
         public void TestRawTanimotoBetween0and1()
         {
-            var smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var smilesParser = CDK.SilentSmilesParser;
             var mol1 = smilesParser.ParseSmiles("Cc1nc(C(=O)NC23CC4CC(CC(C4)C2)C3)c(C)n1C5CCCCC5");
             var mol2 = smilesParser.ParseSmiles("CS(=O)(=O)Nc1ccc(Cc2onc(n2)c3ccc(cc3)S(=O)(=O)Nc4ccc(CCNC[C@H](O)c5cccnc5)cc4)cc1");
             var fingerprinter = new SignatureFingerprinter(0);

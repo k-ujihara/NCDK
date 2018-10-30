@@ -96,7 +96,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private void AssertSmiles(string smi, int expected)
         {
-            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            SmilesParser smipar = CDK.SilentSmilesParser;
             var mol = smipar.ParseSmiles(smi);
             Descriptor.Parameters = new object[] { true };
             Assert.AreEqual(expected.ToString(), Descriptor.Calculate(mol).Value.ToString());

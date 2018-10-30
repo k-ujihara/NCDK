@@ -29,7 +29,7 @@ namespace NCDK.Tools
     public class SaturationCheckerTest
         : CDKTestCase
     {
-        private static readonly SaturationChecker satcheck = CDK.SaturationChecker;
+        private static readonly ISaturationChecker satcheck = CDK.SaturationChecker;
 
         [TestMethod()]
         public void TestAllSaturated()

@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.AtomTypes;
 using NCDK.Tools.Manipulator;
 using System;
@@ -24,34 +25,26 @@ using System.Linq;
 
 namespace NCDK.Reactions.Mechanisms
 {
-    /**
-     * This mechanism extracts a single electron from a non-bonding orbital which located in
-     * a ILonePair container. It returns the reaction mechanism which has been cloned the
-     * <see cref="IAtomContainer"/> with an ILonPair electron less and an ISingleElectron more.
-     *
-     * @author         miguelrojasch
-     * @cdk.created    2008-02-10
-     * @cdk.module     reaction
-     * @cdk.githash
-     */
+    /// <summary>
+    /// This mechanism extracts a single electron from a non-bonding orbital which located in
+    /// a ILonePair container. It returns the reaction mechanism which has been cloned the
+    /// <see cref="IAtomContainer"/> with an ILonPair electron less and an ISingleElectron more.
+    /// </summary>
+    // @author         miguelrojasch
+    // @cdk.created    2008-02-10
+    // @cdk.module     reaction
     public class RemovingSEofNBMechanism : IReactionMechanism
-    {
-
-        /**
-         * Initiates the process for the given mechanism. The atoms to apply are mapped between
-         * reactants and products.
-         *
-         *
-         * @param atomContainerSet
-         * @param atomList    The list of atoms taking part in the mechanism. Only allowed one atom
-         * @param bondList    The list of bonds taking part in the mechanism. Only allowed one Bond
-         * @return            The Reaction mechanism
-         *
-         */
-
+    {      
+         /// <summary>
+         /// Initiates the process for the given mechanism. The atoms to apply are mapped between reactants and products.
+         /// </summary>
+         /// <param name="atomContainerSet"></param>
+         /// <param name="atomList">The list of atoms taking part in the mechanism. Only allowed one atom</param>
+         /// <param name="bondList">The list of bonds taking part in the mechanism. Only allowed one Bond</param>
+         /// <returns>The Reaction mechanism</returns>
         public IReaction Initiate(IChemObjectSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
         {
-            CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.GetInstance(atomContainerSet.Builder);
+            var atMatcher = CDK.AtomTypeMatcher;
             if (atomContainerSet.Count != 1)
             {
                 throw new CDKException("RemovingSEofNBMechanism only expects one IAtomContainer");
@@ -64,9 +57,8 @@ namespace NCDK.Reactions.Mechanisms
             {
                 throw new CDKException("RemovingSEofNBMechanism don't expect any bond in the List");
             }
-            IAtomContainer molecule = atomContainerSet[0];
-            IAtomContainer reactantCloned;
-            reactantCloned = (IAtomContainer)molecule.Clone();
+            var molecule = atomContainerSet[0];
+            var reactantCloned = (IAtomContainer)molecule.Clone();
 
             // remove one lone pair electron and substitute with one single electron and charge 1.
             int posAtom = molecule.Atoms.IndexOf(atomList[0]);
@@ -80,18 +72,17 @@ namespace NCDK.Reactions.Mechanisms
             // check if resulting atom type is reasonable
             reactantCloned.Atoms[posAtom].Hybridization = Hybridization.Unset;
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactantCloned);
-            IAtomType type = atMatcher.FindMatchingAtomType(reactantCloned, reactantCloned.Atoms[posAtom]);
+            var type = atMatcher.FindMatchingAtomType(reactantCloned, reactantCloned.Atoms[posAtom]);
             if (type == null || type.AtomTypeName.Equals("X", StringComparison.Ordinal))
                 return null;
 
-            IReaction reaction = molecule.Builder.NewReaction();
+            var reaction = molecule.Builder.NewReaction();
             reaction.Reactants.Add(molecule);
 
             /* mapping */
             foreach (var atom in molecule.Atoms)
             {
-                IMapping mapping = molecule.Builder.NewMapping(atom,
-                        reactantCloned.Atoms[molecule.Atoms.IndexOf(atom)]);
+                var mapping = molecule.Builder.NewMapping(atom, reactantCloned.Atoms[molecule.Atoms.IndexOf(atom)]);
                 reaction.Mappings.Add(mapping);
             }
             reaction.Products.Add(reactantCloned);

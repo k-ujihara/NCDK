@@ -42,7 +42,7 @@ namespace NCDK.StructGen.Stochastic
     // @cdk.githash
     public class PartialFilledStructureMerger
     {
-        private static readonly SaturationChecker satCheck = CDK.SaturationChecker;
+        private static readonly ISaturationChecker satCheck = CDK.SaturationChecker;
 
         public PartialFilledStructureMerger()
         {

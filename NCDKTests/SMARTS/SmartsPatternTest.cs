@@ -31,8 +31,8 @@ namespace NCDK.SMARTS
     [TestClass()]
     public class SmartsPatternTest
     {
-        readonly IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
-        
+        IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+
         [TestMethod()]
         public void Isotopes()
         {
@@ -208,12 +208,12 @@ namespace NCDK.SMARTS
 
         IAtomContainer Smi(string smi)
         {
-            return new SmilesParser(bldr).ParseSmiles(smi);
+            return CDK.SilentSmilesParser.ParseSmiles(smi);
         }
 
         IReaction Rsmi(string smi)
         {
-            return new SmilesParser(bldr).ParseReactionSmiles(smi);
+            return CDK.SilentSmilesParser.ParseReactionSmiles(smi);
         }
     }
 }

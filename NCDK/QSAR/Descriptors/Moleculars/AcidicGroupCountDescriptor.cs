@@ -23,6 +23,7 @@ using NCDK.Smiles.SMARTS;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -42,16 +43,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     public class AcidicGroupCountDescriptor 
         : AbstractMolecularDescriptor, IMolecularDescriptor
     {
-        private readonly static string[] SMARTS_STRINGS =
-        {
-            "[$([O;H1]-[C,S,P]=O)]",
-            "[$([*;-;!$(*~[*;+])])]",
-            "[$([NH](S(=O)=O)C(F)(F)F)]",
-            "[$(n1nnnc1)]"
-        };
         private readonly static string[] NAMES = { "nAcid" };
 
-        private static readonly List<SmartsPattern> tools = new List<SmartsPattern>();
+        private static readonly SmartsPattern[] tools = MakeTools();
+
         private bool checkAromaticity;
 
         public AcidicGroupCountDescriptor()
@@ -59,12 +54,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             this.checkAromaticity = true;
         }
 
-        static AcidicGroupCountDescriptor()
+        static SmartsPattern[] MakeTools()
         {
-            foreach (var smarts in SMARTS_STRINGS)
-            {
-                tools.Add(SmartsPattern.Create(smarts));
-            }
+            string[] SMARTS_STRINGS =
+                {
+                    "[$([O;H1]-[C,S,P]=O)]",
+                    "[$([*;-;!$(*~[*;+])])]",
+                    "[$([NH](S(=O)=O)C(F)(F)F)]",
+                    "[$(n1nnnc1)]"
+                };
+            return SMARTS_STRINGS.Select(n => SmartsPattern.Create(n)).ToArray();
         }
 
         public override IImplementationSpecification Specification => specification;

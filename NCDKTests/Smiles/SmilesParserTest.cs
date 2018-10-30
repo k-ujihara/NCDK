@@ -955,10 +955,10 @@ namespace NCDK.Smiles
         [Timeout(1000)]
         public void TestSFBug1274464()
         {
-            IAtomContainer fromSmiles = new SmilesParser(ChemObjectBuilder.Instance).ParseSmiles("C1=CC=CC=C1");
+            IAtomContainer fromSmiles = CDK.SilentSmilesParser.ParseSmiles("C1=CC=CC=C1");
             IAtomContainer fromFactory = TestMoleculeFactory.MakeBenzene();
-            CDKHydrogenAdder hAdder = CDKHydrogenAdder.GetInstance(fromFactory.Builder);
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(fromFactory.Builder);
+            var hAdder = CDK.HydrogenAdder;
+            var matcher = CDK.AtomTypeMatcher;
             foreach (var atom in fromFactory.Atoms)
             {
                 IAtomType type = matcher.FindMatchingAtomType(fromFactory, atom);
@@ -1826,7 +1826,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Test1456139()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             var mol = p.ParseSmiles("Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N");
             IAtomContainer mol2 = ChemObjectBuilder.Instance.NewAtomContainer(mol);
             Assert.IsNotNull(mol2);
@@ -1836,7 +1836,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestExplicitH()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             IAtomContainer mol;
 
             mol = p.ParseSmiles("CO[H]");
@@ -1884,7 +1884,7 @@ namespace NCDK.Smiles
         [ExpectedException(typeof(InvalidSmilesException))]
         public void TestBadRingClosure1()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             p.ParseSmiles("c1ccccc1Cc1ccccc");
         }
 
@@ -1893,7 +1893,7 @@ namespace NCDK.Smiles
         [ExpectedException(typeof(InvalidSmilesException))]
         public void TestBadRingClosure2()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             p.ParseSmiles("NC1=CC=C(N)C=C");
         }
 
@@ -1904,7 +1904,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestPyrrole_2()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             var mol = p.ParseSmiles("c1c[nH]cc1");
 
             Assert.AreEqual(BondOrder.Double, mol.GetBond(mol.Atoms[0], mol.Atoms[1]).Order);
@@ -1940,7 +1940,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestCeParsing()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             var mol = p.ParseSmiles("Cl[Ce](Cl)Cl");
             Assert.AreEqual("Ce", mol.Atoms[1].Symbol);
         }
@@ -1949,7 +1949,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestErParsing()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             var mol = p.ParseSmiles("Cl[Er](Cl)Cl");
             Assert.AreEqual("Er", mol.Atoms[1].Symbol);
         }
@@ -1958,7 +1958,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestGdParsing()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             var mol = p.ParseSmiles("Cl[Gd](Cl)Cl");
             Assert.AreEqual("Gd", mol.Atoms[1].Symbol);
         }
@@ -1967,7 +1967,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestSmParsing()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             var mol = p.ParseSmiles("Cl[Sm](Cl)Cl");
             Assert.AreEqual("Sm", mol.Atoms[1].Symbol);
         }
@@ -1976,7 +1976,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestLaParsing()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             var mol = p.ParseSmiles("[Cl-].[Cl-].[Cl-].[La+3]");
             Assert.AreEqual("La", mol.Atoms[3].Symbol);
         }
@@ -1985,7 +1985,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestAcParsing()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             var mol = p.ParseSmiles("[255Ac]");
             Assert.AreEqual("Ac", mol.Atoms[0].Symbol);
         }
@@ -1994,7 +1994,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestPuParsing()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             var mol = p.ParseSmiles("[Pu]");
             Assert.AreEqual("Pu", mol.Atoms[0].Symbol);
         }
@@ -2003,7 +2003,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestPrParsing()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             var mol = p.ParseSmiles("[Pr]");
             Assert.AreEqual("Pr", mol.Atoms[0].Symbol);
         }
@@ -2012,7 +2012,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestPaParsing()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             var mol = p.ParseSmiles("[Pa]");
             Assert.AreEqual("Pa", mol.Atoms[0].Symbol);
         }
@@ -2021,7 +2021,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestTbParsing()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             var mol = p.ParseSmiles("[Tb]");
             Assert.AreEqual("Tb", mol.Atoms[0].Symbol);
         }
@@ -2030,7 +2030,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestAmParsing()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             var mol = p.ParseSmiles("[Am]");
             Assert.AreEqual("Am", mol.Atoms[0].Symbol);
         }
@@ -2039,7 +2039,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestPmParsing()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             var mol = p.ParseSmiles("[Pm]");
             Assert.AreEqual("Pm", mol.Atoms[0].Symbol);
         }
@@ -2048,7 +2048,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestHoParsing()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             var mol = p.ParseSmiles("[Ho]");
             Assert.AreEqual("Ho", mol.Atoms[0].Symbol);
         }
@@ -2057,7 +2057,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestCfParsing()
         {
-            SmilesParser p = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser p = CDK.SilentSmilesParser;
             var mol = p.ParseSmiles("[Cf]");
             Assert.AreEqual("Cf", mol.Atoms[0].Symbol);
         }

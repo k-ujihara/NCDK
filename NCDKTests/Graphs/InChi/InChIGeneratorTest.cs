@@ -54,7 +54,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIFromChlorineAtom()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("ClH"));
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
             Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
@@ -64,7 +64,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetLog()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("Cl"));
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
             Assert.IsNotNull(gen.Log);
@@ -73,7 +73,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetAuxInfo()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             IAtom a1 = new Atom("C");
             IAtom a2 = new Atom("C");
             a1.ImplicitHydrogenCount = 3;
@@ -89,7 +89,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetMessage()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("Cl"));
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
             Assert.IsNull(gen.Message, "Because this generation should work, I expected a null message string.");
@@ -98,7 +98,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetWarningMessage()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             var cl = new Atom("Cl");
             var h = new Atom("H");
             ac.Atoms.Add(cl);
@@ -115,7 +115,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIFromLithiumIon()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             IAtom a = new Atom("Li");
             a.FormalCharge = +1;
             ac.Atoms.Add(a);
@@ -130,7 +130,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIFromChlorine37Atom()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             IAtom a = new Atom("ClH");
             a.MassNumber = 37;
             ac.Atoms.Add(a);
@@ -145,7 +145,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIFromHydrogenChlorideImplicitH()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             IAtom a = new Atom("Cl");
             a.ImplicitHydrogenCount = 1;
             ac.Atoms.Add(a);
@@ -160,7 +160,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIFromMethylRadical()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             IAtom a = new Atom("C");
             a.ImplicitHydrogenCount = 3;
             ac.Atoms.Add(a);
@@ -176,7 +176,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIFromEthane()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             IAtom a1 = new Atom("C");
             IAtom a2 = new Atom("C");
             a1.ImplicitHydrogenCount = 3;
@@ -199,7 +199,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void NonStandardInChIWithEnumOptions()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             IAtom a1 = new Atom("C");
             IAtom a2 = new Atom("C");
             a1.ImplicitHydrogenCount = 3;
@@ -226,7 +226,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIFromEthene()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             IAtom a1 = new Atom("C");
             IAtom a2 = new Atom("C");
             a1.ImplicitHydrogenCount = 2;
@@ -245,7 +245,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIFromEthyne()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             IAtom a1 = new Atom("C");
             IAtom a2 = new Atom("C");
             a1.ImplicitHydrogenCount = 1;
@@ -378,7 +378,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void ZeroHydrogenCount()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("O"));
             ac.Atoms[0].ImplicitHydrogenCount = 0;
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
@@ -392,7 +392,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetStandardInChIFromChlorineAtom()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("ClH"));
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
             Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
@@ -405,7 +405,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetStandardInChIFromLithiumIon()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             IAtom a = new Atom("Li");
             a.FormalCharge = +1;
             ac.Atoms.Add(a);
@@ -420,7 +420,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetStandardInChIFromChlorine37Atom()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             IAtom a = new Atom("ClH");
             a.MassNumber = 37;
             ac.Atoms.Add(a);
@@ -435,7 +435,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetStandardInChIFromHydrogenChlorideImplicitH()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             IAtom a = new Atom("Cl");
             a.ImplicitHydrogenCount = 1;
             ac.Atoms.Add(a);
@@ -450,7 +450,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetStandardInChIFromMethylRadical()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             IAtom a = new Atom("C");
             a.ImplicitHydrogenCount = 3;
             ac.Atoms.Add(a);
@@ -466,7 +466,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetStandardInChIFromEthane()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             IAtom a1 = new Atom("C");
             IAtom a2 = new Atom("C");
             a1.ImplicitHydrogenCount = 3;
@@ -486,7 +486,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetStandardInChIFromEthene()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             IAtom a1 = new Atom("C");
             IAtom a2 = new Atom("C");
             a1.ImplicitHydrogenCount = 2;
@@ -505,7 +505,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetStandardInChIFromEthyne()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             IAtom a1 = new Atom("C");
             IAtom a2 = new Atom("C");
             a1.ImplicitHydrogenCount = 1;
@@ -989,7 +989,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestFiveSecondTimeoutFlag()
         {
-            IAtomContainer ac = new AtomContainer();
+            var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("C"));
             InChIGeneratorFactory factory = InChIGeneratorFactory.Instance;
             InChIGenerator generator = factory.GetInChIGenerator(ac);

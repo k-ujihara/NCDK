@@ -154,8 +154,8 @@ namespace NCDK.Fingerprints
             // hydrogens loaded from MDL mol files if non-query. Structure 2 has
             // query aromatic bonds and the hydrogen counts are not assigned - ensure
             // this is done here.
-            CDKHydrogenAdder.GetInstance(structure1.Builder).AddImplicitHydrogens(structure1);
-            CDKHydrogenAdder.GetInstance(structure2.Builder).AddImplicitHydrogens(structure2);
+            CDK.HydrogenAdder.AddImplicitHydrogens(structure1);
+            CDK.HydrogenAdder.AddImplicitHydrogens(structure2);
 
             IFingerprinter fingerprinter = GetBitFingerprinter();
             BitArray superBS = fingerprinter.GetBitFingerprint(structure2).AsBitSet();

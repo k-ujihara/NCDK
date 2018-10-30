@@ -86,7 +86,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
             var localAtomContainer = AtomContainerManipulator.RemoveHydrogens(container);
-            var matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+            var matcher = CDK.AtomTypeMatcher;
             foreach (var atom in localAtomContainer.Atoms)
             {
                 try
@@ -99,7 +99,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     return GetDummyDescriptorValue(new CDKException("Error in atom typing: " + e.Message));
                 }
             }
-            var hAdder = CDKHydrogenAdder.GetInstance(container.Builder);
+            var hAdder = CDK.HydrogenAdder;
             try
             {
                 hAdder.AddImplicitHydrogens(localAtomContainer);

@@ -94,7 +94,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSmilesFiles()
         {
-            CDKAtomTypeMatcher atomTypeMatcher = CDKAtomTypeMatcher.GetInstance(Silent.ChemObjectBuilder.Instance);
+            var atomTypeMatcher = CDK.AtomTypeMatcher;
 
             // Read the first file
             string filename = "NCDK.Data.CML.smiles1.cml";

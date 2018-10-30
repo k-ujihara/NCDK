@@ -264,7 +264,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     {
                         for (int k = 0; k < local.Bonds.Count; k++)
                         {
-                            IBond bond = local.Bonds[k];
+                            var bond = local.Bonds[k];
                             if (bond.Contains(local.Atoms[i]) && bond.Contains(local.Atoms[j]))
                             {
                                 if (bond.IsAromatic)
@@ -320,7 +320,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             try
             {
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-                CDKHydrogenAdder hAdder = CDKHydrogenAdder.GetInstance(molecule.Builder);
+                var hAdder = CDK.HydrogenAdder;
                 hAdder.AddImplicitHydrogens(molecule);
                 AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(molecule);
             }

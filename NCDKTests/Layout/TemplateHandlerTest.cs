@@ -40,7 +40,7 @@ namespace NCDK.Layout
         static TemplateHandlerTest()
         {
             sdg = new StructureDiagramGenerator();
-            sp = new SmilesParser(ChemObjectBuilder.Instance);
+            sp = CDK.SilentSmilesParser;
         }
 
         [TestMethod()]

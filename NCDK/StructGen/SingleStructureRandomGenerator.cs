@@ -63,7 +63,7 @@ namespace NCDK.StructGen
     // @cdk.githash
     public class SingleStructureRandomGenerator
     {
-        private static readonly SaturationChecker satCheck = CDK.SaturationChecker;
+        private static readonly ISaturationChecker satCheck = CDK.SaturationChecker;
 
         IAtomContainer atomContainer;
         Maths.Random random = null;

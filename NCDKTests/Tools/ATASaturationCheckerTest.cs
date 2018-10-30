@@ -34,7 +34,7 @@ namespace NCDK.Tools
     [TestClass()]
     public class ATASaturationCheckerTest : CDKTestCase
     {
-        private static readonly SaturationChecker satcheck = CDK.SaturationChecker;
+        private static readonly ISaturationChecker satcheck = CDK.SaturationChecker;
 
         private static SmilesParser sp = CDK.SilentSmilesParser;
         private AtomTypeAwareSaturationChecker atasc = new AtomTypeAwareSaturationChecker();

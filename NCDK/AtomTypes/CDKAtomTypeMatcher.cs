@@ -19,13 +19,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System.Linq;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using NCDK.Config;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.AtomTypes
 {
@@ -50,33 +49,27 @@ namespace NCDK.AtomTypes
         private static readonly AtomTypeFactory factory = CDK.CdkAtomTypeFactory;
         private readonly Mode mode;
         private static readonly object syncLock = new object();
-        private static Dictionary<Mode, IDictionary<IChemObjectBuilder, CDKAtomTypeMatcher>> factories = new Dictionary<Mode, IDictionary<IChemObjectBuilder, CDKAtomTypeMatcher>>();
+        private static Dictionary<Mode, CDKAtomTypeMatcher> factories = new Dictionary<Mode, CDKAtomTypeMatcher>(2);
 
-        private CDKAtomTypeMatcher(IChemObjectBuilder builder, Mode mode)
+        private CDKAtomTypeMatcher(Mode mode)
         {
             this.mode = mode;
         }
 
-        public static CDKAtomTypeMatcher GetInstance(IChemObjectBuilder builder)
+        public static CDKAtomTypeMatcher GetInstance()
         {
-            return GetInstance(builder, Mode.RequireNothing);
+            return GetInstance(Mode.RequireNothing);
         }
 
-        public static CDKAtomTypeMatcher GetInstance(IChemObjectBuilder builder, Mode mode)
+        public static CDKAtomTypeMatcher GetInstance(Mode mode)
         {
             if (!factories.ContainsKey(mode))
                 lock (syncLock)
                 {
                     if (!factories.ContainsKey(mode))
-                        factories.Add(mode, new Dictionary<IChemObjectBuilder, CDKAtomTypeMatcher>(1));
+                        factories.Add(mode, new CDKAtomTypeMatcher(mode));
                 }
-            if (!factories[mode].ContainsKey(builder))
-                lock (syncLock)
-                {
-                    if (!factories[mode].ContainsKey(builder))
-                        factories[mode].Add(builder, new CDKAtomTypeMatcher(builder, mode));
-                }
-            return factories[mode][builder];
+            return factories[mode];
         }
 
         public IEnumerable<IAtomType> FindMatchingAtomTypes(IAtomContainer atomContainer)
@@ -90,12 +83,12 @@ namespace NCDK.AtomTypes
             if (searcher == null)
                 searcher = new RingSearch(atomContainer);
             // cache atom bonds
-            var connectedBonds = new Dictionary<IAtom, IList<IBond>>(atomContainer.Atoms.Count);
+            var connectedBonds = new Dictionary<IAtom, List<IBond>>(atomContainer.Atoms.Count);
             foreach (var bond in atomContainer.Bonds)
             {
                 foreach (var atom in bond.Atoms)
                 {
-                    if (!connectedBonds.TryGetValue(atom, out IList<IBond> atomBonds))
+                    if (!connectedBonds.TryGetValue(atom, out List<IBond> atomBonds))
                     {
                         atomBonds = new List<IBond>();
                         connectedBonds.Add(atom, atomBonds);
@@ -116,7 +109,7 @@ namespace NCDK.AtomTypes
             return FindMatchingAtomType(atomContainer, atom, null, null);
         }
 
-        private IAtomType FindMatchingAtomType(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, IList<IBond> connectedBonds)
+        private IAtomType FindMatchingAtomType(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, List<IBond> connectedBonds)
         {
             IAtomType type = null;
             if (atom is IPseudoAtom)
@@ -292,16 +285,16 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveGallium(IAtomContainer atomContainer, IAtom atom)
         {
-            BondOrder maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
+            var maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
             if (!IsCharged(atom) && maxBondOrder == BondOrder.Single && atomContainer.GetConnectedBonds(atom).Count() <= 3)
             {
-                IAtomType type = GetAtomType("Ga");
+                var type = GetAtomType("Ga");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if (atom.FormalCharge == 3)
             {
-                IAtomType type = GetAtomType("Ga.3plus");
+                var type = GetAtomType("Ga.3plus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
@@ -310,27 +303,28 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveGermanium(IAtomContainer atomContainer, IAtom atom)
         {
-            BondOrder maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
+            var maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
             if (!IsCharged(atom) && maxBondOrder == BondOrder.Single && atomContainer.GetConnectedBonds(atom).Count() <= 4)
             {
-                IAtomType type = GetAtomType("Ge");
+                var type = GetAtomType("Ge");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             if (atom.FormalCharge == 0 && atomContainer.GetConnectedBonds(atom).Count() == 3)
             {
-                IAtomType type = GetAtomType("Ge.3");
+                var type = GetAtomType("Ge.3");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             return null;
         }
 
-        private IAtomType PerceiveSelenium(IAtomContainer atomContainer, IAtom atom, IList<IBond> connectedBonds)
+        private IAtomType PerceiveSelenium(IAtomContainer atomContainer, IAtom atom, List<IBond> connectedBonds)
         {
             if (string.Equals("Se", atom.Symbol, StringComparison.Ordinal))
             {
-                if (connectedBonds == null) connectedBonds = atomContainer.GetConnectedBonds(atom).ToList();
+                if (connectedBonds == null)
+                    connectedBonds = atomContainer.GetConnectedBonds(atom).ToList();
                 int doublebondcount = CountAttachedDoubleBonds(connectedBonds, atom);
                 if (atom.FormalCharge != null && atom.FormalCharge == 0)
                 {
@@ -338,13 +332,13 @@ namespace NCDK.AtomTypes
                     {
                         if (atom.ImplicitHydrogenCount != null && atom.ImplicitHydrogenCount == 0)
                         {
-                            IAtomType type = GetAtomType("Se.2");
+                            var type = GetAtomType("Se.2");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
                         else
                         {
-                            IAtomType type = GetAtomType("Se.3");
+                            var type = GetAtomType("Se.3");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
@@ -353,13 +347,13 @@ namespace NCDK.AtomTypes
                     {
                         if (doublebondcount == 1)
                         {
-                            IAtomType type = GetAtomType("Se.1");
+                            var type = GetAtomType("Se.1");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
                         else if (doublebondcount == 0)
                         {
-                            IAtomType type = GetAtomType("Se.3");
+                            var type = GetAtomType("Se.3");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
@@ -368,20 +362,20 @@ namespace NCDK.AtomTypes
                     {
                         if (doublebondcount == 0)
                         {
-                            IAtomType type = GetAtomType("Se.3");
+                            var type = GetAtomType("Se.3");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
                         else if (doublebondcount == 2)
                         {
-                            IAtomType type = GetAtomType("Se.sp2.2");
+                            var type = GetAtomType("Se.sp2.2");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
                     }
                     else if (atomContainer.GetConnectedBonds(atom).Count() == 3)
                     {
-                        IAtomType type = GetAtomType("Se.sp3.3");
+                        var type = GetAtomType("Se.sp3.3");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
@@ -389,20 +383,20 @@ namespace NCDK.AtomTypes
                     {
                         if (doublebondcount == 2)
                         {
-                            IAtomType type = GetAtomType("Se.sp3.4");
+                            var type = GetAtomType("Se.sp3.4");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
                         else if (doublebondcount == 0)
                         {
-                            IAtomType type = GetAtomType("Se.sp3d1.4");
+                            var type = GetAtomType("Se.sp3d1.4");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
                     }
                     else if (atomContainer.GetConnectedBonds(atom).Count() == 5)
                     {
-                        IAtomType type = GetAtomType("Se.5");
+                        var type = GetAtomType("Se.5");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
@@ -410,21 +404,21 @@ namespace NCDK.AtomTypes
                 else if ((atom.FormalCharge != null && atom.FormalCharge == 4)
                       && atomContainer.GetConnectedBonds(atom).Count() == 0)
                 {
-                    IAtomType type = GetAtomType("Se.4plus");
+                    var type = GetAtomType("Se.4plus");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if ((atom.FormalCharge != null && atom.FormalCharge == 1)
                       && atomContainer.GetConnectedBonds(atom).Count() == 3)
                 {
-                    IAtomType type = GetAtomType("Se.plus.3");
+                    var type = GetAtomType("Se.plus.3");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if ((atom.FormalCharge != null && atom.FormalCharge == -2)
                       && atomContainer.GetConnectedBonds(atom).Count() == 0)
                 {
-                    IAtomType type = GetAtomType("Se.2minus");
+                    var type = GetAtomType("Se.2minus");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -434,10 +428,10 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveTellurium(IAtomContainer atomContainer, IAtom atom)
         {
-            BondOrder maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
+            var maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
             if (!IsCharged(atom) && maxBondOrder == BondOrder.Single && atomContainer.GetConnectedBonds(atom).Count() <= 2)
             {
-                IAtomType type = GetAtomType("Te.3");
+                var type = GetAtomType("Te.3");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
@@ -445,7 +439,7 @@ namespace NCDK.AtomTypes
             {
                 if (atomContainer.GetConnectedBonds(atom).Count() == 0)
                 {
-                    IAtomType type = GetAtomType("Te.4plus");
+                    var type = GetAtomType("Te.4plus");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
@@ -455,23 +449,23 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveBorons(IAtomContainer atomContainer, IAtom atom)
         {
-            BondOrder maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
+            var maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
             if (atom.FormalCharge == -1 && maxBondOrder == BondOrder.Single
                     && atomContainer.GetConnectedBonds(atom).Count() <= 4)
             {
-                IAtomType type = GetAtomType("B.minus");
+                var type = GetAtomType("B.minus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if (atom.FormalCharge == +3 && atomContainer.GetConnectedBonds(atom).Count() == 4)
             {
-                IAtomType type = GetAtomType("B.3plus");
+                var type = GetAtomType("B.3plus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if (atomContainer.GetConnectedBonds(atom).Count() <= 3)
             {
-                IAtomType type = GetAtomType("B");
+                var type = GetAtomType("B");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
@@ -480,16 +474,17 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveBeryllium(IAtomContainer atomContainer, IAtom atom)
         {
-            if (atom.FormalCharge == -2 && atomContainer.GetMaximumBondOrder(atom) == BondOrder.Single
-                    && atomContainer.GetConnectedBonds(atom).Count() <= 4)
+            if (atom.FormalCharge == -2
+             && atomContainer.GetMaximumBondOrder(atom) == BondOrder.Single
+             && atomContainer.GetConnectedBonds(atom).Count() <= 4)
             {
-                IAtomType type = GetAtomType("Be.2minus");
+                var type = GetAtomType("Be.2minus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if (atom.FormalCharge == 0 && atomContainer.GetConnectedBonds(atom).Count() == 0)
             {
-                IAtomType type = GetAtomType("Be.neutral");
+                var type = GetAtomType("Be.neutral");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
@@ -500,28 +495,28 @@ namespace NCDK.AtomTypes
         {
             if (atomContainer.GetConnectedBonds(atom).Count() == 0)
             {
-                IAtomType type = GetAtomType("C.radical.planar");
+                var type = GetAtomType("C.radical.planar");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if (atomContainer.GetConnectedBonds(atom).Count() <= 3)
             {
-                BondOrder maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
+                var maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
                 if (maxBondOrder == BondOrder.Single)
                 {
-                    IAtomType type = GetAtomType("C.radical.planar");
+                    var type = GetAtomType("C.radical.planar");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (maxBondOrder == BondOrder.Double)
                 {
-                    IAtomType type = GetAtomType("C.radical.sp2");
+                    var type = GetAtomType("C.radical.sp2");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (maxBondOrder == BondOrder.Triple)
                 {
-                    IAtomType type = GetAtomType("C.radical.sp1");
+                    var type = GetAtomType("C.radical.sp1");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
@@ -529,8 +524,7 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private IAtomType PerceiveCarbons(IAtomContainer atomContainer, IAtom atom,
-                                          RingSearch searcher, IList<IBond> connectedBonds)
+        private IAtomType PerceiveCarbons(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, List<IBond> connectedBonds)
         {
             if (HasOneSingleElectron(atomContainer, atom))
             {
@@ -543,28 +537,28 @@ namespace NCDK.AtomTypes
             {
                 if (atom.Hybridization == Hybridization.SP2)
                 {
-                    IAtomType type = GetAtomType("C.sp2");
+                    var type = GetAtomType("C.sp2");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (atom.Hybridization == Hybridization.SP3)
                 {
-                    IAtomType type = GetAtomType("C.sp3");
+                    var type = GetAtomType("C.sp3");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (atom.Hybridization == Hybridization.SP1)
                 {
-                    BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+                    var maxBondOrder = GetMaximumBondOrder(connectedBonds);
                     if (maxBondOrder == BondOrder.Triple)
                     {
-                        IAtomType type = GetAtomType("C.sp");
+                        var type = GetAtomType("C.sp");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else
                     {
-                        IAtomType type = GetAtomType("C.allene");
+                        var type = GetAtomType("C.allene");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
@@ -574,30 +568,30 @@ namespace NCDK.AtomTypes
             {
                 if (atom.FormalCharge == 1)
                 {
-                    if (connectedBonds.Count == 0)
+                    if (!connectedBonds.Any())
                     {
-                        IAtomType type = GetAtomType("C.plus.sp2");
+                        var type = GetAtomType("C.plus.sp2");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else
                     {
-                        BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+                        var maxBondOrder = GetMaximumBondOrder(connectedBonds);
                         if (maxBondOrder == BondOrder.Triple)
                         {
-                            IAtomType type = GetAtomType("C.plus.sp1");
+                            var type = GetAtomType("C.plus.sp1");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
                         else if (maxBondOrder == BondOrder.Double)
                         {
-                            IAtomType type = GetAtomType("C.plus.sp2");
+                            var type = GetAtomType("C.plus.sp2");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
                         else if (maxBondOrder == BondOrder.Single)
                         {
-                            IAtomType type = GetAtomType("C.plus.planar");
+                            var type = GetAtomType("C.plus.planar");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
@@ -605,30 +599,33 @@ namespace NCDK.AtomTypes
                 }
                 else if (atom.FormalCharge == -1)
                 {
-                    BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
-                    if (maxBondOrder == BondOrder.Single && connectedBonds.Count <= 3)
+                    var maxBondOrder = GetMaximumBondOrder(connectedBonds);
+                    var connectedBondList = connectedBonds.ToList();
+                    if (maxBondOrder == BondOrder.Single && connectedBondList.Count <= 3)
                     {
                         if (BothNeighborsAreSp2(atom, atomContainer, connectedBonds) && IsRingAtom(atom, atomContainer, searcher))
                         {
-                            IAtomType type = GetAtomType("C.minus.planar");
+                            var type = GetAtomType("C.minus.planar");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
-                        IAtomType typee = GetAtomType("C.minus.sp3");
-                        if (IsAcceptable(atom, atomContainer, typee, connectedBonds))
-                            return typee;
+                        {
+                            var type = GetAtomType("C.minus.sp3");
+                            if (IsAcceptable(atom, atomContainer, type, connectedBonds))
+                                return type;
+                        }
                     }
                     else if (maxBondOrder == BondOrder.Double
-                          && connectedBonds.Count <= 3)
+                          && connectedBondList.Count <= 3)
                     {
-                        IAtomType type = GetAtomType("C.minus.sp2");
+                        var type = GetAtomType("C.minus.sp2");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else if (maxBondOrder == BondOrder.Triple
-                          && connectedBonds.Count <= 1)
+                          && connectedBondList.Count <= 1)
                     {
-                        IAtomType type = GetAtomType("C.minus.sp1");
+                        var type = GetAtomType("C.minus.sp1");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
@@ -637,13 +634,13 @@ namespace NCDK.AtomTypes
             }
             else if (atom.IsAromatic)
             {
-                IAtomType type = GetAtomType("C.sp2");
+                var type = GetAtomType("C.sp2");
                 if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                     return type;
             }
             else if (HasOneOrMoreSingleOrDoubleBonds(connectedBonds))
             {
-                IAtomType type = GetAtomType("C.sp2");
+                var type = GetAtomType("C.sp2");
                 if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                     return type;
             }
@@ -654,7 +651,7 @@ namespace NCDK.AtomTypes
             }
             else
             { // OK, use bond order info
-                BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+                var maxBondOrder = GetMaximumBondOrder(connectedBonds);
                 if (maxBondOrder == BondOrder.Quadruple)
                 {
                     // WTF??
@@ -662,7 +659,7 @@ namespace NCDK.AtomTypes
                 }
                 else if (maxBondOrder == BondOrder.Triple)
                 {
-                    IAtomType type = GetAtomType("C.sp");
+                    var type = GetAtomType("C.sp");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -672,13 +669,13 @@ namespace NCDK.AtomTypes
                     int doubleBondCount = CountAttachedDoubleBonds(connectedBonds, atom);
                     if (doubleBondCount == 2)
                     {
-                        IAtomType type = GetAtomType("C.allene");
+                        var type = GetAtomType("C.allene");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else if (doubleBondCount == 1)
                     {
-                        IAtomType type = GetAtomType("C.sp2");
+                        var type = GetAtomType("C.sp2");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
@@ -687,21 +684,23 @@ namespace NCDK.AtomTypes
                 {
                     if (HasAromaticBond(connectedBonds))
                     {
-                        IAtomType type = GetAtomType("C.sp2");
+                        var type = GetAtomType("C.sp2");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
-                    IAtomType typee = GetAtomType("C.sp3");
-                    if (IsAcceptable(atom, atomContainer, typee, connectedBonds))
-                        return typee;
+                    {
+                        var type = GetAtomType("C.sp3");
+                        if (IsAcceptable(atom, atomContainer, type, connectedBonds))
+                            return type;
+                    }
                 }
             }
             return null;
         }
 
-        private static BondOrder GetMaximumBondOrder(IList<IBond> connectedBonds)
+        private static BondOrder GetMaximumBondOrder(List<IBond> connectedBonds)
         {
-            BondOrder max = BondOrder.Single;
+            var max = BondOrder.Single;
             foreach (var bond in connectedBonds)
             {
                 if (bond.Order.Numeric() > max.Numeric())
@@ -710,7 +709,7 @@ namespace NCDK.AtomTypes
             return max;
         }
 
-        private static bool HasOneOrMoreSingleOrDoubleBonds(IList<IBond> bonds)
+        private static bool HasOneOrMoreSingleOrDoubleBonds(List<IBond> bonds)
         {
             foreach (var bond in bonds)
             {
@@ -736,7 +735,7 @@ namespace NCDK.AtomTypes
             {
                 if (atomContainer.GetConnectedBonds(atom).Count() <= 1)
                 {
-                    IAtomType type = GetAtomType("O.sp3.radical");
+                    var type = GetAtomType("O.sp3.radical");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
@@ -745,22 +744,22 @@ namespace NCDK.AtomTypes
             {
                 if (atomContainer.GetConnectedBonds(atom).Count() == 0)
                 {
-                    IAtomType type = GetAtomType("O.plus.radical");
+                    var type = GetAtomType("O.plus.radical");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (atomContainer.GetConnectedBonds(atom).Count() <= 2)
                 {
-                    BondOrder maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
+                    var maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
                     if (maxBondOrder == BondOrder.Single)
                     {
-                        IAtomType type = GetAtomType("O.plus.radical");
+                        var type = GetAtomType("O.plus.radical");
                         if (IsAcceptable(atom, atomContainer, type))
                             return type;
                     }
                     else if (maxBondOrder == BondOrder.Double)
                     {
-                        IAtomType type = GetAtomType("O.plus.sp2.radical");
+                        var type = GetAtomType("O.plus.sp2.radical");
                         if (IsAcceptable(atom, atomContainer, type))
                             return type;
                     }
@@ -779,16 +778,14 @@ namespace NCDK.AtomTypes
             return !atom.Hybridization.IsUnset();
         }
 
-        private IAtomType PerceiveOxygens(IAtomContainer atomContainer, IAtom atom,
-                                          RingSearch searcher, IList<IBond> connectedBonds)
+        private IAtomType PerceiveOxygens(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, List<IBond> connectedBonds)
         {
             if (HasOneSingleElectron(atomContainer, atom))
-            {
                 return PerceiveOxygenRadicals(atomContainer, atom);
-            }
 
             // if hybridization is given, use that
-            if (connectedBonds == null) connectedBonds = atomContainer.GetConnectedBonds(atom).ToList();
+            if (connectedBonds == null)
+                connectedBonds = atomContainer.GetConnectedBonds(atom).ToList();
             if (HasHybridization(atom) && !IsCharged(atom))
             {
                 if (atom.Hybridization == Hybridization.SP2)
@@ -798,33 +795,33 @@ namespace NCDK.AtomTypes
                     {
                         if (IsCarboxylate(atomContainer, atom, connectedBonds))
                         {
-                            IAtomType type = GetAtomType("O.sp2.co2");
+                            var type = GetAtomType("O.sp2.co2");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
                         else
                         {
-                            IAtomType type = GetAtomType("O.sp2");
+                            var type = GetAtomType("O.sp2");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
                     }
                     else if (connectedAtomsCount == 2)
                     {
-                        IAtomType type = GetAtomType("O.planar3");
+                        var type = GetAtomType("O.planar3");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                 }
                 else if (atom.Hybridization == Hybridization.SP3)
                 {
-                    IAtomType type = GetAtomType("O.sp3");
+                    var type = GetAtomType("O.sp3");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (atom.Hybridization == Hybridization.Planar3)
                 {
-                    IAtomType type = GetAtomType("O.planar3");
+                    var type = GetAtomType("O.planar3");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -835,20 +832,20 @@ namespace NCDK.AtomTypes
                 {
                     if (IsCarboxylate(atomContainer, atom, connectedBonds))
                     {
-                        IAtomType type = GetAtomType("O.minus.co2");
+                        var type = GetAtomType("O.minus.co2");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else
                     {
-                        IAtomType type = GetAtomType("O.minus");
+                        var type = GetAtomType("O.minus");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                 }
                 else if (atom.FormalCharge == -2 && connectedBonds.Count == 0)
                 {
-                    IAtomType type = GetAtomType("O.minus2");
+                    var type = GetAtomType("O.minus2");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -856,26 +853,26 @@ namespace NCDK.AtomTypes
                 {
                     if (connectedBonds.Count == 0)
                     {
-                        IAtomType type = GetAtomType("O.plus");
+                        var type = GetAtomType("O.plus");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
-                    BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+                    var maxBondOrder = GetMaximumBondOrder(connectedBonds);
                     if (maxBondOrder == BondOrder.Double)
                     {
-                        IAtomType type = GetAtomType("O.plus.sp2");
+                        var type = GetAtomType("O.plus.sp2");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else if (maxBondOrder == BondOrder.Triple)
                     {
-                        IAtomType type = GetAtomType("O.plus.sp1");
+                        var type = GetAtomType("O.plus.sp1");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else
                     {
-                        IAtomType type = GetAtomType("O.plus");
+                        var type = GetAtomType("O.plus");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
@@ -889,24 +886,24 @@ namespace NCDK.AtomTypes
             }
             else if (connectedBonds.Count == 0)
             {
-                IAtomType type = GetAtomType("O.sp3");
+                var type = GetAtomType("O.sp3");
                 if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                     return type;
             }
             else
             { // OK, use bond order info
-                BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+                var maxBondOrder = GetMaximumBondOrder(connectedBonds);
                 if (maxBondOrder == BondOrder.Double)
                 {
                     if (IsCarboxylate(atomContainer, atom, connectedBonds))
                     {
-                        IAtomType type = GetAtomType("O.sp2.co2");
+                        var type = GetAtomType("O.sp2.co2");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else
                     {
-                        IAtomType type = GetAtomType("O.sp2");
+                        var type = GetAtomType("O.sp2");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
@@ -920,17 +917,19 @@ namespace NCDK.AtomTypes
                         // a O.sp3 which is expected to take part in an aromatic system
                         if (BothNeighborsAreSp2(atom, atomContainer, connectedBonds) && IsRingAtom(atom, atomContainer, searcher))
                         {
-                            IAtomType type = GetAtomType("O.planar3");
+                            var type = GetAtomType("O.planar3");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
-                        IAtomType typee = GetAtomType("O.sp3");
-                        if (IsAcceptable(atom, atomContainer, typee, connectedBonds))
-                            return typee;
+                        {
+                            var type = GetAtomType("O.sp3");
+                            if (IsAcceptable(atom, atomContainer, type, connectedBonds))
+                                return type;
+                        }
                     }
                     else
                     {
-                        IAtomType type = GetAtomType("O.sp3");
+                        var type = GetAtomType("O.sp3");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
@@ -939,12 +938,12 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private static bool IsCarboxylate(IAtomContainer container, IAtom atom, IList<IBond> connectedBonds)
+        private static bool IsCarboxylate(IAtomContainer container, IAtom atom, List<IBond> connectedBonds)
         {
             // assumes that the oxygen only has one neighbor (C=O, or C-[O-])
             if (connectedBonds.Count != 1)
                 return false;
-            IAtom carbon = connectedBonds.First().GetOther(atom);
+            var carbon = connectedBonds.First().GetOther(atom);
             if (!string.Equals("C", carbon.Symbol, StringComparison.Ordinal))
                 return false;
 
@@ -956,12 +955,12 @@ namespace NCDK.AtomTypes
             int doubleBondedOxygenCount = 0;
             foreach (var cBond in carbonBonds)
             {
-                IAtom neighbor = cBond.GetOther(carbon);
+                var neighbor = cBond.GetOther(carbon);
                 if (string.Equals("O", neighbor.Symbol, StringComparison.Ordinal))
                 {
                     oxygenCount++;
-                    BondOrder order = cBond.Order;
-                    int? charge = neighbor.FormalCharge;
+                    var order = cBond.Order;
+                    var charge = neighbor.FormalCharge;
                     if (order == BondOrder.Single && charge.HasValue && charge.Value == -1)
                     {
                         singleBondedNegativeOxygenCount++;
@@ -975,7 +974,7 @@ namespace NCDK.AtomTypes
             return (oxygenCount == 2) && (singleBondedNegativeOxygenCount == 1) && (doubleBondedOxygenCount == 1);
         }
 
-        private static bool AtLeastTwoNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer, IList<IBond> connectedBonds)
+        private static bool AtLeastTwoNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer, List<IBond> connectedBonds)
         {
             int count = 0;
             foreach (var bond in connectedBonds)
@@ -986,7 +985,7 @@ namespace NCDK.AtomTypes
                 }
                 else
                 {
-                    IAtom nextAtom = bond.GetOther(atom);
+                    var nextAtom = bond.GetOther(atom);
                     if (nextAtom.Hybridization == Hybridization.SP2)
                     {
                         // OK, it's SP2
@@ -1002,12 +1001,13 @@ namespace NCDK.AtomTypes
                         }
                     }
                 }
-                if (count >= 2) return true;
+                if (count >= 2)
+                    return true;
             }
             return false;
         }
 
-        private static bool BothNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer, IList<IBond> connectedBonds)
+        private static bool BothNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer, List<IBond> connectedBonds)
         {
             return AtLeastTwoNeighborsAreSp2(atom, atomContainer, connectedBonds);
         }
@@ -1016,18 +1016,18 @@ namespace NCDK.AtomTypes
         {
             if (atomContainer.GetConnectedBonds(atom).Count() >= 1 && atomContainer.GetConnectedBonds(atom).Count() <= 2)
             {
-                BondOrder maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
+                var maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
                 if (atom.FormalCharge != null && atom.FormalCharge == +1)
                 {
                     if (maxBondOrder == BondOrder.Double)
                     {
-                        IAtomType type = GetAtomType("N.plus.sp2.radical");
+                        var type = GetAtomType("N.plus.sp2.radical");
                         if (IsAcceptable(atom, atomContainer, type))
                             return type;
                     }
                     else if (maxBondOrder == BondOrder.Single)
                     {
-                        IAtomType type = GetAtomType("N.plus.sp3.radical");
+                        var type = GetAtomType("N.plus.sp3.radical");
                         if (IsAcceptable(atom, atomContainer, type))
                             return type;
                     }
@@ -1036,13 +1036,13 @@ namespace NCDK.AtomTypes
                 {
                     if (maxBondOrder == BondOrder.Single)
                     {
-                        IAtomType type = GetAtomType("N.sp3.radical");
+                        var type = GetAtomType("N.sp3.radical");
                         if (IsAcceptable(atom, atomContainer, type))
                             return type;
                     }
                     else if (maxBondOrder == BondOrder.Double)
                     {
-                        IAtomType type = GetAtomType("N.sp2.radical");
+                        var type = GetAtomType("N.sp2.radical");
                         if (IsAcceptable(atom, atomContainer, type))
                             return type;
                     }
@@ -1050,11 +1050,11 @@ namespace NCDK.AtomTypes
             }
             else
             {
-                BondOrder maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
+                var maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
                 if (atom.FormalCharge != null && atom.FormalCharge == +1
                         && maxBondOrder == BondOrder.Single)
                 {
-                    IAtomType type = GetAtomType("N.plus.sp3.radical");
+                    var type = GetAtomType("N.plus.sp3.radical");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
@@ -1069,7 +1069,7 @@ namespace NCDK.AtomTypes
                 int neighbors = atomContainer.GetConnectedBonds(atom).Count();
                 if (neighbors == 4)
                 {
-                    IAtomType type = GetAtomType("Mo.4");
+                    var type = GetAtomType("Mo.4");
                     if (IsAcceptable(atom, atomContainer, type))
                     {
                         return type;
@@ -1084,7 +1084,7 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private IAtomType PerceiveNitrogens(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, IList<IBond> connectedBonds)
+        private IAtomType PerceiveNitrogens(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, List<IBond> connectedBonds)
         {
             // if hybridization is given, use that
             if (HasOneSingleElectron(atomContainer, atom))
@@ -1092,7 +1092,8 @@ namespace NCDK.AtomTypes
                 return PerceiveNitrogenRadicals(atomContainer, atom);
             }
 
-            if (connectedBonds == null) connectedBonds = atomContainer.GetConnectedBonds(atom).ToList();
+            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToList();
+
             if (HasHybridization(atom) && !IsCharged(atom))
             {
                 if (atom.Hybridization == Hybridization.SP1)
@@ -1100,13 +1101,13 @@ namespace NCDK.AtomTypes
                     int neighborCount = connectedBonds.Count;
                     if (neighborCount > 1)
                     {
-                        IAtomType type = GetAtomType("N.sp1.2");
+                        var type = GetAtomType("N.sp1.2");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else
                     {
-                        IAtomType type = GetAtomType("N.sp1");
+                        var type = GetAtomType("N.sp1");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
@@ -1115,13 +1116,13 @@ namespace NCDK.AtomTypes
                 {
                     if (IsAmide(atom, atomContainer, connectedBonds))
                     {
-                        IAtomType type = GetAtomType("N.amide");
+                        var type = GetAtomType("N.amide");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else if (IsThioAmide(atom, atomContainer, connectedBonds))
                     {
-                        IAtomType type = GetAtomType("N.thioamide");
+                        var type = GetAtomType("N.thioamide");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
@@ -1129,7 +1130,7 @@ namespace NCDK.AtomTypes
                     int neighborCount = connectedBonds.Count;
                     if (neighborCount == 4 && BondOrder.Double == GetMaximumBondOrder(connectedBonds))
                     {
-                        IAtomType type = GetAtomType("N.oxide");
+                        var type = GetAtomType("N.oxide");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
@@ -1142,13 +1143,13 @@ namespace NCDK.AtomTypes
                                 BondOrder maxOrder = GetMaximumBondOrder(connectedBonds);
                                 if (maxOrder == BondOrder.Double)
                                 {
-                                    IAtomType type = GetAtomType("N.sp2.3");
+                                    var type = GetAtomType("N.sp2.3");
                                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                         return type;
                                 }
                                 else if (maxOrder == BondOrder.Single)
                                 {
-                                    IAtomType type = GetAtomType("N.planar3");
+                                    var type = GetAtomType("N.planar3");
                                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                         return type;
                                 }
@@ -1161,80 +1162,86 @@ namespace NCDK.AtomTypes
                                     if (atom.ImplicitHydrogenCount != null
                                             && atom.ImplicitHydrogenCount == 1)
                                     {
-                                        IAtomType type = GetAtomType("N.planar3");
+                                        var type = GetAtomType("N.planar3");
                                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                             return type;
                                     }
                                     else
                                     {
-                                        IAtomType type = GetAtomType("N.sp2");
+                                        var type = GetAtomType("N.sp2");
                                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                             return type;
                                     }
                                 }
                                 else if (maxOrder == BondOrder.Double)
                                 {
-                                    IAtomType type = GetAtomType("N.sp2");
+                                    var type = GetAtomType("N.sp2");
                                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                         return type;
                                 }
                             }
                         }
                     }
-                    IAtomType typee = GetAtomType("N.sp2");
-                    if (IsAcceptable(atom, atomContainer, typee, connectedBonds))
-                        return typee;
+                    {
+                        var type = GetAtomType("N.sp2");
+                        if (IsAcceptable(atom, atomContainer, type, connectedBonds))
+                            return type;
+                    }
                 }
                 else if (atom.Hybridization == Hybridization.SP3)
                 {
-                    IAtomType type = GetAtomType("N.sp3");
+                    var type = GetAtomType("N.sp3");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (atom.Hybridization == Hybridization.Planar3)
                 {
-                    BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+                    var maxBondOrder = GetMaximumBondOrder(connectedBonds);
                     if (connectedBonds.Count == 3 && maxBondOrder == BondOrder.Double
                             && CountAttachedDoubleBonds(connectedBonds, atom, "O") == 2)
                     {
-                        IAtomType type = GetAtomType("N.nitro");
+                        var type = GetAtomType("N.nitro");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
-                    IAtomType typee = GetAtomType("N.planar3");
-                    if (IsAcceptable(atom, atomContainer, typee, connectedBonds))
-                        return typee;
+                    {
+                        var type = GetAtomType("N.planar3");
+                        if (IsAcceptable(atom, atomContainer, type, connectedBonds))
+                            return type;
+                    }
                 }
             }
             else if (IsCharged(atom))
             {
                 if (atom.FormalCharge == 1)
                 {
-                    BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+                    var maxBondOrder = GetMaximumBondOrder(connectedBonds);
                     if (maxBondOrder == BondOrder.Single || connectedBonds.Count == 0)
                     {
                         if (atom.Hybridization == Hybridization.SP2)
                         {
-                            IAtomType type = GetAtomType("N.plus.sp2");
+                            var type = GetAtomType("N.plus.sp2");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
-                        IAtomType typee = GetAtomType("N.plus");
-                        if (IsAcceptable(atom, atomContainer, typee, connectedBonds))
-                            return typee;
+                        {
+                            var type = GetAtomType("N.plus");
+                            if (IsAcceptable(atom, atomContainer, type, connectedBonds))
+                                return type;
+                        }
                     }
                     else if (maxBondOrder == BondOrder.Double)
                     {
                         int doubleBonds = CountAttachedDoubleBonds(connectedBonds, atom);
                         if (doubleBonds == 1)
                         {
-                            IAtomType type = GetAtomType("N.plus.sp2");
+                            var type = GetAtomType("N.plus.sp2");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
                         else if (doubleBonds == 2)
                         {
-                            IAtomType type = GetAtomType("N.plus.sp1");
+                            var type = GetAtomType("N.plus.sp1");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
@@ -1243,7 +1250,7 @@ namespace NCDK.AtomTypes
                     {
                         if (connectedBonds.Count == 2)
                         {
-                            IAtomType type = GetAtomType("N.plus.sp1");
+                            var type = GetAtomType("N.plus.sp1");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
@@ -1251,19 +1258,19 @@ namespace NCDK.AtomTypes
                 }
                 else if (atom.FormalCharge == -1)
                 {
-                    BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+                    var maxBondOrder = GetMaximumBondOrder(connectedBonds);
                     if (maxBondOrder == BondOrder.Single)
                     {
                         if (connectedBonds.Count >= 2 && BothNeighborsAreSp2(atom, atomContainer, connectedBonds)
                                 && IsRingAtom(atom, atomContainer, searcher))
                         {
-                            IAtomType type = GetAtomType("N.minus.planar3");
+                            var type = GetAtomType("N.minus.planar3");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
                         else if (connectedBonds.Count <= 2)
                         {
-                            IAtomType type = GetAtomType("N.minus.sp3");
+                            var type = GetAtomType("N.minus.sp3");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
@@ -1272,7 +1279,7 @@ namespace NCDK.AtomTypes
                     {
                         if (connectedBonds.Count <= 1)
                         {
-                            IAtomType type = GetAtomType("N.minus.sp2");
+                            var type = GetAtomType("N.minus.sp2");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
@@ -1283,7 +1290,7 @@ namespace NCDK.AtomTypes
             {
                 if (connectedBonds.Count == 4 && CountAttachedDoubleBonds(connectedBonds, atom) == 1)
                 {
-                    IAtomType type = GetAtomType("N.oxide");
+                    var type = GetAtomType("N.oxide");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -1291,7 +1298,7 @@ namespace NCDK.AtomTypes
             }
             else if (connectedBonds.Count == 0)
             {
-                IAtomType type = GetAtomType("N.sp3");
+                var type = GetAtomType("N.sp3");
                 if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                     return type;
             }
@@ -1301,33 +1308,35 @@ namespace NCDK.AtomTypes
                         + atom.ImplicitHydrogenCount ?? 0;
                 if (connectedAtoms == 3)
                 {
-                    IAtomType type = GetAtomType("N.planar3");
+                    var type = GetAtomType("N.planar3");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
-                IAtomType typee = GetAtomType("N.sp2");
-                if (IsAcceptable(atom, atomContainer, typee, connectedBonds))
-                    return typee;
+                {
+                    var type = GetAtomType("N.sp2");
+                    if (IsAcceptable(atom, atomContainer, type, connectedBonds))
+                        return type;
+                }
             }
             else
             { // OK, use bond order info
-                BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+                var maxBondOrder = GetMaximumBondOrder(connectedBonds);
                 if (maxBondOrder == BondOrder.Single)
                 {
                     if (IsAmide(atom, atomContainer, connectedBonds))
                     {
-                        IAtomType type = GetAtomType("N.amide");
+                        var type = GetAtomType("N.amide");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else if (IsThioAmide(atom, atomContainer, connectedBonds))
                     {
-                        IAtomType type = GetAtomType("N.thioamide");
+                        var type = GetAtomType("N.thioamide");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
 
-                    IList<IBond> heavy = HeavyBonds(connectedBonds);
+                    var heavy = HeavyBonds(connectedBonds);
 
                     int expHCount = heavy.Count - connectedBonds.Count;
 
@@ -1342,20 +1351,20 @@ namespace NCDK.AtomTypes
                                 if (maxBondOrder == BondOrder.Single
                                         && IsSingleHeteroAtom(atom, atomContainer))
                                 {
-                                    IAtomType type = GetAtomType("N.planar3");
+                                    var type = GetAtomType("N.planar3");
                                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                         return type;
                                 }
                                 else
                                 {
-                                    IAtomType type = GetAtomType("N.sp2");
+                                    var type = GetAtomType("N.sp2");
                                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                         return type;
                                 }
                             }
                             else if (hCount == 1)
                             {
-                                IAtomType type = GetAtomType("N.planar3");
+                                var type = GetAtomType("N.planar3");
                                 if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                     return type;
                             }
@@ -1363,38 +1372,40 @@ namespace NCDK.AtomTypes
                         else if (BothNeighborsAreSp2(atom, atomContainer, connectedBonds) && IsRingAtom(atom, atomContainer, searcher))
                         {
                             // a N.sp3 which is expected to take part in an aromatic system
-                            IAtomType type = GetAtomType("N.planar3");
+                            var type = GetAtomType("N.planar3");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
                         else
                         {
-                            IAtomType type = GetAtomType("N.sp3");
+                            var type = GetAtomType("N.sp3");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
                     }
-                    else if (heavy.Count() == 3)
+                    else if (heavy.Count == 3)
                     {
                         if (BothNeighborsAreSp2(atom, atomContainer, connectedBonds) && IsRingAtom(atom, atomContainer, searcher))
                         {
-                            IAtomType type = GetAtomType("N.planar3");
+                            var type = GetAtomType("N.planar3");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
-                        IAtomType typee = GetAtomType("N.sp3");
-                        if (IsAcceptable(atom, atomContainer, typee, connectedBonds))
-                            return typee;
+                        {
+                            var type = GetAtomType("N.sp3");
+                            if (IsAcceptable(atom, atomContainer, type, connectedBonds))
+                                return type;
+                        }
                     }
-                    else if (heavy.Count() == 1)
+                    else if (heavy.Count == 1)
                     {
-                        IAtomType type = GetAtomType("N.sp3");
+                        var type = GetAtomType("N.sp3");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
-                    else if (heavy.Count() == 0)
+                    else if (heavy.Count == 0)
                     {
-                        IAtomType type = GetAtomType("N.sp3");
+                        var type = GetAtomType("N.sp3");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
@@ -1404,33 +1415,35 @@ namespace NCDK.AtomTypes
                     if (connectedBonds.Count == 3
                             && CountAttachedDoubleBonds(connectedBonds, atom, "O") == 2)
                     {
-                        IAtomType type = GetAtomType("N.nitro");
+                        var type = GetAtomType("N.nitro");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else if (connectedBonds.Count == 3
                           && CountAttachedDoubleBonds(connectedBonds, atom) > 0)
                     {
-                        IAtomType type = GetAtomType("N.sp2.3");
+                        var type = GetAtomType("N.sp2.3");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
-                    IAtomType typee = GetAtomType("N.sp2");
-                    if (IsAcceptable(atom, atomContainer, typee, connectedBonds))
-                        return typee;
+                    {
+                        var type = GetAtomType("N.sp2");
+                        if (IsAcceptable(atom, atomContainer, type, connectedBonds))
+                            return type;
+                    }
                 }
                 else if (maxBondOrder == BondOrder.Triple)
                 {
                     int neighborCount = connectedBonds.Count;
                     if (neighborCount > 1)
                     {
-                        IAtomType type = GetAtomType("N.sp1.2");
+                        var type = GetAtomType("N.sp1.2");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else
                     {
-                        IAtomType type = GetAtomType("N.sp1");
+                        var type = GetAtomType("N.sp1");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
@@ -1446,7 +1459,7 @@ namespace NCDK.AtomTypes
         /// <param name="atom">an atom to test</param>
         /// <param name="container">container of the atom</param>
         /// <returns>whether the atom's only bonds are to heteroatoms</returns>
-        /// <seealso cref="PerceiveNitrogens(IAtomContainer, IAtom, RingSearch, IList{IBond})"/>
+        /// <seealso cref="PerceiveNitrogens(IAtomContainer, IAtom, RingSearch, List{IBond})"/>
         private static bool IsSingleHeteroAtom(IAtom atom, IAtomContainer container)
         {
             var connected = container.GetConnectedAtoms(atom);
@@ -1465,8 +1478,9 @@ namespace NCDK.AtomTypes
                 // check the second sphere
                 foreach (var atom2 in container.GetConnectedAtoms(atom1))
                 {
-                    if (!atom2.Equals(atom) && container.GetBond(atom1, atom2).IsAromatic
-                            && !string.Equals("C", atom2.Symbol, StringComparison.Ordinal))
+                    if (!atom2.Equals(atom) 
+                     && container.GetBond(atom1, atom2).IsAromatic
+                     && !string.Equals("C", atom2.Symbol, StringComparison.Ordinal))
                     {
                         return false;
                     }
@@ -1482,40 +1496,43 @@ namespace NCDK.AtomTypes
             return searcher.Cyclic(atom);
         }
 
-        private static bool IsAmide(IAtom atom, IAtomContainer atomContainer, IList<IBond> connectedBonds)
+        private static bool IsAmide(IAtom atom, IAtomContainer atomContainer, List<IBond> connectedBonds)
         {
-            if (connectedBonds.Count < 1) return false;
+            if (connectedBonds.Count < 1)
+                return false;
             foreach (var bond in connectedBonds)
             {
-                IAtom neighbor = bond.GetOther(atom);
+                var neighbor = bond.GetOther(atom);
                 if (string.Equals("C", neighbor.Symbol, StringComparison.Ordinal))
                 {
-                    if (CountAttachedDoubleBonds(atomContainer.GetConnectedBonds(neighbor).ToList(), neighbor, "O") == 1) return true;
+                    if (CountAttachedDoubleBonds(atomContainer.GetConnectedBonds(neighbor).ToList(), neighbor, "O") == 1)
+                        return true;
                 }
             }
             return false;
         }
 
-        private static bool IsThioAmide(IAtom atom, IAtomContainer atomContainer, IList<IBond> connectedBonds)
+        private static bool IsThioAmide(IAtom atom, IAtomContainer atomContainer, List<IBond> connectedBonds)
         {
             if (connectedBonds.Count < 1) return false;
             foreach (var bond in connectedBonds)
             {
-                IAtom neighbor = bond.GetOther(atom);
+                var neighbor = bond.GetOther(atom);
                 if (string.Equals("C", neighbor.Symbol, StringComparison.Ordinal))
                 {
-                    if (CountAttachedDoubleBonds(atomContainer.GetConnectedBonds(neighbor).ToList(), neighbor, "S") == 1) return true;
+                    if (CountAttachedDoubleBonds(atomContainer.GetConnectedBonds(neighbor).ToList(), neighbor, "S") == 1)
+                        return true;
                 }
             }
             return false;
         }
 
-        private static int CountExplicitHydrogens(IAtom atom, IList<IBond> connectedBonds)
+        private static int CountExplicitHydrogens(IAtom atom, List<IBond> connectedBonds)
         {
             int count = 0;
             foreach (var bond in connectedBonds)
             {
-                IAtom aAtom = bond.GetOther(atom);
+                var aAtom = bond.GetOther(atom);
                 if (string.Equals(aAtom.Symbol, "H", StringComparison.Ordinal))
                 {
                     count++;
@@ -1529,16 +1546,12 @@ namespace NCDK.AtomTypes
         /// </summary>
         /// <param name="bonds">a list of bond</param>
         /// <returns>the bond list only with heavy bonds</returns>
-        private static IList<IBond> HeavyBonds(IList<IBond> bonds)
+        private static List<IBond> HeavyBonds(List<IBond> bonds)
         {
-            IList<IBond> heavy = new List<IBond>(bonds.Count);
+            var heavy = new List<IBond>();
             foreach (var bond in bonds)
-            {
                 if (!(string.Equals(bond.Begin.Symbol, "H", StringComparison.Ordinal) && string.Equals(bond.End.Symbol, "H", StringComparison.Ordinal)))
-                {
                     heavy.Add(bond);
-                }
-            }
             return heavy;
         }
 
@@ -1556,7 +1569,7 @@ namespace NCDK.AtomTypes
                     int neighbors = atomContainer.GetConnectedBonds(atom).Count();
                     if (neighbors == 0)
                     {
-                        IAtomType type = GetAtomType("Fe.metallic");
+                        var type = GetAtomType("Fe.metallic");
                         if (IsAcceptable(atom, atomContainer, type))
                         {
                             return type;
@@ -1608,7 +1621,7 @@ namespace NCDK.AtomTypes
                     int neighbors = atomContainer.GetConnectedBonds(atom).Count();
                     if (neighbors <= 1)
                     {
-                        IAtomType type = GetAtomType("Fe.2plus");
+                        var type = GetAtomType("Fe.2plus");
                         if (IsAcceptable(atom, atomContainer, type))
                         {
                             return type;
@@ -1675,7 +1688,7 @@ namespace NCDK.AtomTypes
                 }
                 else if ((atom.FormalCharge != null && atom.FormalCharge == -1))
                 {
-                    IAtomType type = GetAtomType("Hg.minus");
+                    var type = GetAtomType("Hg.minus");
                     if (IsAcceptable(atom, atomContainer, type))
                     {
                         return type;
@@ -1683,7 +1696,7 @@ namespace NCDK.AtomTypes
                 }
                 else if ((atom.FormalCharge != null && atom.FormalCharge == 2))
                 {
-                    IAtomType type = GetAtomType("Hg.2plus");
+                    var type = GetAtomType("Hg.2plus");
                     if (IsAcceptable(atom, atomContainer, type))
                     {
                         return type;
@@ -1694,7 +1707,7 @@ namespace NCDK.AtomTypes
                     int neighbors = atomContainer.GetConnectedBonds(atom).Count();
                     if (neighbors <= 1)
                     {
-                        IAtomType type = GetAtomType("Hg.plus");
+                        var type = GetAtomType("Hg.plus");
                         if (IsAcceptable(atom, atomContainer, type))
                         {
                             return type;
@@ -1706,7 +1719,7 @@ namespace NCDK.AtomTypes
                     int neighbors = atomContainer.GetConnectedBonds(atom).Count();
                     if (neighbors == 2)
                     {
-                        IAtomType type = GetAtomType("Hg.2");
+                        var type = GetAtomType("Hg.2");
                         if (IsAcceptable(atom, atomContainer, type))
                         {
                             return type;
@@ -1714,7 +1727,7 @@ namespace NCDK.AtomTypes
                     }
                     else if (neighbors == 1)
                     {
-                        IAtomType type = GetAtomType("Hg.1");
+                        var type = GetAtomType("Hg.1");
                         if (IsAcceptable(atom, atomContainer, type))
                         {
                             return type;
@@ -1722,7 +1735,7 @@ namespace NCDK.AtomTypes
                     }
                     else if (neighbors == 0)
                     {
-                        IAtomType type = GetAtomType("Hg.metallic");
+                        var type = GetAtomType("Hg.metallic");
                         if (IsAcceptable(atom, atomContainer, type))
                         {
                             return type;
@@ -1733,11 +1746,10 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private IAtomType PerceiveSulphurs(IAtomContainer atomContainer, IAtom atom,
-                                           RingSearch searcher, IList<IBond> connectedBonds)
+        private IAtomType PerceiveSulphurs(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, List<IBond> connectedBonds)
         {
-            if (connectedBonds == null) connectedBonds = atomContainer.GetConnectedBonds(atom).ToList();
-            BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToList();
+            var maxBondOrder = GetMaximumBondOrder(connectedBonds);
             int neighborcount = connectedBonds.Count;
             if (HasOneSingleElectron(atomContainer, atom))
             {
@@ -1749,13 +1761,13 @@ namespace NCDK.AtomTypes
             {
                 if (neighborcount == 3)
                 {
-                    IAtomType type = GetAtomType("S.inyl.charged");
+                    var type = GetAtomType("S.inyl.charged");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else
                 {
-                    IAtomType type = GetAtomType("S.plus");
+                    var type = GetAtomType("S.plus");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -1765,31 +1777,31 @@ namespace NCDK.AtomTypes
 
                 if (atom.FormalCharge == -1 && neighborcount == 1)
                 {
-                    IAtomType type = GetAtomType("S.minus");
+                    var type = GetAtomType("S.minus");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (atom.FormalCharge == +1 && neighborcount == 2)
                 {
-                    IAtomType type = GetAtomType("S.plus");
+                    var type = GetAtomType("S.plus");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (atom.FormalCharge == +1 && neighborcount == 3)
                 {
-                    IAtomType type = GetAtomType("S.inyl.charged");
+                    var type = GetAtomType("S.inyl.charged");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (atom.FormalCharge == +2 && neighborcount == 4)
                 {
-                    IAtomType type = GetAtomType("S.onyl.charged");
+                    var type = GetAtomType("S.onyl.charged");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (atom.FormalCharge == -2 && neighborcount == 0)
                 {
-                    IAtomType type = GetAtomType("S.2minus");
+                    var type = GetAtomType("S.2minus");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -1798,7 +1810,7 @@ namespace NCDK.AtomTypes
             {
                 if (atom.FormalCharge != null && atom.FormalCharge == 0)
                 {
-                    IAtomType type = GetAtomType("S.3");
+                    var type = GetAtomType("S.3");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -1807,13 +1819,13 @@ namespace NCDK.AtomTypes
             {
                 if (connectedBonds.First().Order == BondOrder.Double)
                 {
-                    IAtomType type = GetAtomType("S.2");
+                    var type = GetAtomType("S.2");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (connectedBonds.First().Order == BondOrder.Single)
                 {
-                    IAtomType type = GetAtomType("S.3");
+                    var type = GetAtomType("S.3");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -1824,39 +1836,39 @@ namespace NCDK.AtomTypes
                 {
                     if (CountAttachedDoubleBonds(connectedBonds, atom) == 2)
                     {
-                        IAtomType type = GetAtomType("S.inyl.2");
+                        var type = GetAtomType("S.inyl.2");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else
                     {
-                        IAtomType type = GetAtomType("S.planar3");
+                        var type = GetAtomType("S.planar3");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                 }
                 else if (CountAttachedDoubleBonds(connectedBonds, atom, "O") == 2)
                 {
-                    IAtomType type = GetAtomType("S.oxide");
+                    var type = GetAtomType("S.oxide");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (CountAttachedDoubleBonds(connectedBonds, atom) == 2)
                 {
-                    IAtomType type = GetAtomType("S.inyl.2");
+                    var type = GetAtomType("S.inyl.2");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (CountAttachedDoubleBonds(connectedBonds, atom) <= 1)
                 {
-                    IAtomType type = GetAtomType("S.3");
+                    var type = GetAtomType("S.3");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (CountAttachedDoubleBonds(connectedBonds, atom) == 0
                       && CountAttachedSingleBonds(connectedBonds, atom) == 2)
                 {
-                    IAtomType type = GetAtomType("S.octahedral");
+                    var type = GetAtomType("S.octahedral");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -1866,19 +1878,19 @@ namespace NCDK.AtomTypes
                 int doubleBondedAtoms = CountAttachedDoubleBonds(connectedBonds, atom);
                 if (doubleBondedAtoms == 1)
                 {
-                    IAtomType type = GetAtomType("S.inyl");
+                    var type = GetAtomType("S.inyl");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (doubleBondedAtoms == 3)
                 {
-                    IAtomType type = GetAtomType("S.trioxide");
+                    var type = GetAtomType("S.trioxide");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (doubleBondedAtoms == 0)
                 {
-                    IAtomType type = GetAtomType("S.anyl");
+                    var type = GetAtomType("S.anyl");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -1893,31 +1905,31 @@ namespace NCDK.AtomTypes
 
                 if (doubleBondedOxygens + doubleBondedNitrogens == 2)
                 {
-                    IAtomType type = GetAtomType("S.onyl");
+                    var type = GetAtomType("S.onyl");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (doubleBondedSulphurs == 1 && doubleBondedOxygens == 1)
                 {
-                    IAtomType type = GetAtomType("S.thionyl");
+                    var type = GetAtomType("S.thionyl");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (maxBondOrder == BondOrder.Single)
                 {
-                    IAtomType type = GetAtomType("S.anyl");
+                    var type = GetAtomType("S.anyl");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (doubleBondedOxygens == 1 && countAttachedDoubleBonds == 1)
                 {
-                    IAtomType type = GetAtomType("S.sp3d1");
+                    var type = GetAtomType("S.sp3d1");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (countAttachedDoubleBonds == 2 && maxBondOrder == BondOrder.Double)
                 {
-                    IAtomType type = GetAtomType("S.sp3.4");
+                    var type = GetAtomType("S.sp3.4");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -1929,13 +1941,13 @@ namespace NCDK.AtomTypes
                 if (maxBondOrder == BondOrder.Double)
                 {
 
-                    IAtomType type = GetAtomType("S.sp3d1");
+                    var type = GetAtomType("S.sp3d1");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (maxBondOrder == BondOrder.Single)
                 {
-                    IAtomType type = GetAtomType("S.octahedral");
+                    var type = GetAtomType("S.octahedral");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -1944,7 +1956,7 @@ namespace NCDK.AtomTypes
             {
                 if (maxBondOrder == BondOrder.Single)
                 {
-                    IAtomType type = GetAtomType("S.octahedral");
+                    var type = GetAtomType("S.octahedral");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -1952,14 +1964,14 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private IAtomType PerceivePhosphors(IAtomContainer atomContainer, IAtom atom, IList<IBond> connectedBonds)
+        private IAtomType PerceivePhosphors(IAtomContainer atomContainer, IAtom atom, List<IBond> connectedBonds)
         {
-            if (connectedBonds == null) connectedBonds = atomContainer.GetConnectedBonds(atom).ToList();
+            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToList();
             int neighborcount = connectedBonds.Count;
-            BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+            var maxBondOrder = GetMaximumBondOrder(connectedBonds);
             if (CountSingleElectrons(atomContainer, atom) == 3)
             {
-                IAtomType type = GetAtomType("P.se.3");
+                var type = GetAtomType("P.se.3");
                 if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                     return type;
             }
@@ -1972,7 +1984,7 @@ namespace NCDK.AtomTypes
             {
                 if (atom.FormalCharge == null || atom.FormalCharge.Value == 0)
                 {
-                    IAtomType type = GetAtomType("P.ine");
+                    var type = GetAtomType("P.ine");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -1981,7 +1993,7 @@ namespace NCDK.AtomTypes
             {
                 if (atom.FormalCharge == null || atom.FormalCharge.Value == 0)
                 {
-                    IAtomType type = GetAtomType("P.ide");
+                    var type = GetAtomType("P.ide");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -1991,19 +2003,19 @@ namespace NCDK.AtomTypes
                 int doubleBonds = CountAttachedDoubleBonds(connectedBonds, atom);
                 if (atom.FormalCharge != null && atom.FormalCharge.Value == 1)
                 {
-                    IAtomType type = GetAtomType("P.anium");
+                    var type = GetAtomType("P.anium");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (doubleBonds == 1)
                 {
-                    IAtomType type = GetAtomType("P.ate");
+                    var type = GetAtomType("P.ate");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else
                 {
-                    IAtomType type = GetAtomType("P.ine");
+                    var type = GetAtomType("P.ine");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -2014,20 +2026,20 @@ namespace NCDK.AtomTypes
                 {
                     if (atom.FormalCharge != null && atom.FormalCharge.Value == 1)
                     {
-                        IAtomType type = GetAtomType("P.sp1.plus");
+                        var type = GetAtomType("P.sp1.plus");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else
                     {
-                        IAtomType type = GetAtomType("P.irane");
+                        var type = GetAtomType("P.irane");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                 }
                 else if (maxBondOrder == BondOrder.Single)
                 {
-                    IAtomType type = GetAtomType("P.ine");
+                    var type = GetAtomType("P.ine");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -2038,13 +2050,13 @@ namespace NCDK.AtomTypes
                 int doubleBonds = CountAttachedDoubleBonds(connectedBonds, atom);
                 if (atom.FormalCharge == 1 && doubleBonds == 0)
                 {
-                    IAtomType type = GetAtomType("P.ate.charged");
+                    var type = GetAtomType("P.ate.charged");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (doubleBonds == 1)
                 {
-                    IAtomType type = GetAtomType("P.ate");
+                    var type = GetAtomType("P.ate");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -2053,7 +2065,7 @@ namespace NCDK.AtomTypes
             {
                 if (atom.FormalCharge == null || atom.FormalCharge.Value == 0)
                 {
-                    IAtomType type = GetAtomType("P.ane");
+                    var type = GetAtomType("P.ane");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -2061,15 +2073,15 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private IAtomType PerceiveHydrogens(IAtomContainer atomContainer, IAtom atom, IList<IBond> connectedBonds)
+        private IAtomType PerceiveHydrogens(IAtomContainer atomContainer, IAtom atom, List<IBond> connectedBonds)
         {
-            if (connectedBonds == null) connectedBonds = atomContainer.GetConnectedBonds(atom).ToList();
+            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToList();
             int neighborcount = connectedBonds.Count;
             if (HasOneSingleElectron(atomContainer, atom))
             {
                 if ((atom.FormalCharge == null || atom.FormalCharge == 0) && neighborcount == 0)
                 {
-                    IAtomType type = GetAtomType("H.radical");
+                    var type = GetAtomType("H.radical");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -2084,7 +2096,7 @@ namespace NCDK.AtomTypes
             {
                 if (atom.FormalCharge == null || atom.FormalCharge == 0)
                 {
-                    IAtomType type = GetAtomType("H");
+                    var type = GetAtomType("H");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -2093,19 +2105,19 @@ namespace NCDK.AtomTypes
             {
                 if (atom.FormalCharge == null || atom.FormalCharge == 0)
                 {
-                    IAtomType type = GetAtomType("H");
+                    var type = GetAtomType("H");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (atom.FormalCharge == 1)
                 {
-                    IAtomType type = GetAtomType("H.plus");
+                    var type = GetAtomType("H.plus");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (atom.FormalCharge == -1)
                 {
-                    IAtomType type = GetAtomType("H.minus");
+                    var type = GetAtomType("H.minus");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -2115,34 +2127,37 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveLithium(IAtomContainer atomContainer, IAtom atom)
         {
-            int neighborcount = atomContainer.GetConnectedBonds(atom).Count();
+            var neighborcount = atomContainer.GetConnectedBonds(atom).Count();
             if (neighborcount == 1)
             {
                 if (atom.FormalCharge == null || atom.FormalCharge == 0)
                 {
-                    IAtomType type = GetAtomType("Li");
-                    if (IsAcceptable(atom, atomContainer, type)) return type;
+                    var type = GetAtomType("Li");
+                    if (IsAcceptable(atom, atomContainer, type))
+                        return type;
                 }
             }
             else if (neighborcount == 0)
             {
                 if (atom.FormalCharge == null || atom.FormalCharge == 0)
                 {
-                    IAtomType type = GetAtomType("Li.neutral");
-                    if (IsAcceptable(atom, atomContainer, type)) return type;
+                    var type = GetAtomType("Li.neutral");
+                    if (IsAcceptable(atom, atomContainer, type))
+                        return type;
                 }
                 if (atom.FormalCharge == null || atom.FormalCharge == +1)
                 {
-                    IAtomType type = GetAtomType("Li.plus");
-                    if (IsAcceptable(atom, atomContainer, type)) return type;
+                    var type = GetAtomType("Li.plus");
+                    if (IsAcceptable(atom, atomContainer, type))
+                        return type;
                 }
             }
             return null;
         }
 
-        private IAtomType PerceiveHalogens(IAtomContainer atomContainer, IAtom atom, IList<IBond> connectedBonds)
+        private IAtomType PerceiveHalogens(IAtomContainer atomContainer, IAtom atom, List<IBond> connectedBonds)
         {
-            if (connectedBonds == null) connectedBonds = atomContainer.GetConnectedBonds(atom).ToList();
+            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToList();
             if (string.Equals("F", atom.Symbol, StringComparison.Ordinal))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
@@ -2151,23 +2166,23 @@ namespace NCDK.AtomTypes
                     {
                         if (atom.FormalCharge != null && atom.FormalCharge == +1)
                         {
-                            IAtomType type = GetAtomType("F.plus.radical");
+                            var type = GetAtomType("F.plus.radical");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
                         else if (atom.FormalCharge == null || atom.FormalCharge == 0)
                         {
-                            IAtomType type = GetAtomType("F.radical");
+                            var type = GetAtomType("F.radical");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
                     }
                     else if (connectedBonds.Count <= 1)
                     {
-                        BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+                        var maxBondOrder = GetMaximumBondOrder(connectedBonds);
                         if (maxBondOrder == BondOrder.Single)
                         {
-                            IAtomType type = GetAtomType("F.plus.radical");
+                            var type = GetAtomType("F.plus.radical");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
@@ -2178,22 +2193,22 @@ namespace NCDK.AtomTypes
                 {
                     if (atom.FormalCharge == -1)
                     {
-                        IAtomType type = GetAtomType("F.minus");
+                        var type = GetAtomType("F.minus");
                         if (IsAcceptable(atom, atomContainer, type))
                             return type;
                     }
                     else if (atom.FormalCharge == 1)
                     {
-                        BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+                        var maxBondOrder = GetMaximumBondOrder(connectedBonds);
                         if (maxBondOrder == BondOrder.Double)
                         {
-                            IAtomType type = GetAtomType("F.plus.sp2");
+                            var type = GetAtomType("F.plus.sp2");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
                         else if (maxBondOrder == BondOrder.Single)
                         {
-                            IAtomType type = GetAtomType("F.plus.sp3");
+                            var type = GetAtomType("F.plus.sp3");
                             if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                                 return type;
                         }
@@ -2201,7 +2216,7 @@ namespace NCDK.AtomTypes
                 }
                 else if (connectedBonds.Count == 1 || connectedBonds.Count == 0)
                 {
-                    IAtomType type = GetAtomType("F");
+                    var type = GetAtomType("F");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -2224,7 +2239,7 @@ namespace NCDK.AtomTypes
             else if ((atom.FormalCharge != null && atom.FormalCharge == +1 && atomContainer
                   .GetConnectedBonds(atom).Count() <= 4))
             {
-                IAtomType type = GetAtomType("As.plus");
+                var type = GetAtomType("As.plus");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -2235,7 +2250,7 @@ namespace NCDK.AtomTypes
                 int neighbors = atomContainer.GetConnectedBonds(atom).Count();
                 if (neighbors == 4)
                 {
-                    IAtomType type = GetAtomType("As.5");
+                    var type = GetAtomType("As.5");
                     if (IsAcceptable(atom, atomContainer, type))
                     {
                         return type;
@@ -2243,21 +2258,23 @@ namespace NCDK.AtomTypes
                 }
                 if (neighbors == 2)
                 {
-                    IAtomType type = GetAtomType("As.2");
+                    var type = GetAtomType("As.2");
                     if (IsAcceptable(atom, atomContainer, type))
                     {
                         return type;
                     }
                 }
-                IAtomType typee = GetAtomType("As");
-                if (IsAcceptable(atom, atomContainer, typee))
                 {
-                    return typee;
+                    var type = GetAtomType("As");
+                    if (IsAcceptable(atom, atomContainer, type))
+                    {
+                        return type;
+                    }
                 }
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == +3))
             {
-                IAtomType type = GetAtomType("As.3plus");
+                var type = GetAtomType("As.3plus");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -2265,7 +2282,7 @@ namespace NCDK.AtomTypes
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == -1))
             {
-                IAtomType type = GetAtomType("As.minus");
+                var type = GetAtomType("As.minus");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -2280,7 +2297,7 @@ namespace NCDK.AtomTypes
             {
                 if (atom.FormalCharge == 0 && atomContainer.GetConnectedBonds(atom).Count() == 0)
                 {
-                    IAtomType type = GetAtomType("Th");
+                    var type = GetAtomType("Th");
                     if (IsAcceptable(atom, atomContainer, type))
                     {
                         return type;
@@ -2298,7 +2315,7 @@ namespace NCDK.AtomTypes
             }
             else if (atom.FormalCharge != null && atom.FormalCharge == +1)
             {
-                IAtomType type = GetAtomType("Rb.plus");
+                var type = GetAtomType("Rb.plus");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -2306,7 +2323,7 @@ namespace NCDK.AtomTypes
             }
             else if (atom.FormalCharge != null && atom.FormalCharge == 0)
             {
-                IAtomType type = GetAtomType("Rb.neutral");
+                var type = GetAtomType("Rb.neutral");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -2326,7 +2343,7 @@ namespace NCDK.AtomTypes
                 }
                 else if ((atom.FormalCharge != null && atom.FormalCharge == +2))
                 {
-                    IAtomType type = GetAtomType("Mg.2plus");
+                    var type = GetAtomType("Mg.2plus");
                     if (IsAcceptable(atom, atomContainer, type)) return type;
                 }
             }
@@ -2339,17 +2356,17 @@ namespace NCDK.AtomTypes
                 }
                 else if ((atom.FormalCharge != null && atom.FormalCharge == +2))
                 {
-                    IAtomType type = GetAtomType("Co.2plus");
+                    var type = GetAtomType("Co.2plus");
                     if (IsAcceptable(atom, atomContainer, type)) return type;
                 }
                 else if ((atom.FormalCharge != null && atom.FormalCharge == +3))
                 {
-                    IAtomType type = GetAtomType("Co.3plus");
+                    var type = GetAtomType("Co.3plus");
                     if (IsAcceptable(atom, atomContainer, type)) return type;
                 }
                 else if ((atom.FormalCharge == null || atom.FormalCharge == 0))
                 {
-                    IAtomType type = GetAtomType("Co.metallic");
+                    var type = GetAtomType("Co.metallic");
                     if (IsAcceptable(atom, atomContainer, type)) return type;
                 }
             }
@@ -2362,7 +2379,7 @@ namespace NCDK.AtomTypes
                 }
                 else if ((atom.FormalCharge == null || atom.FormalCharge == 0))
                 {
-                    IAtomType type = GetAtomType("W.metallic");
+                    var type = GetAtomType("W.metallic");
                     if (IsAcceptable(atom, atomContainer, type)) return type;
                 }
             }
@@ -2378,7 +2395,7 @@ namespace NCDK.AtomTypes
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == +2))
             {
-                IAtomType type = GetAtomType("Cu.2plus");
+                var type = GetAtomType("Cu.2plus");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -2389,7 +2406,7 @@ namespace NCDK.AtomTypes
                 int neighbors = atomContainer.GetConnectedBonds(atom).Count();
                 if (neighbors == 1)
                 {
-                    IAtomType type = GetAtomType("Cu.1");
+                    var type = GetAtomType("Cu.1");
                     if (IsAcceptable(atom, atomContainer, type))
                     {
                         return type;
@@ -2423,7 +2440,7 @@ namespace NCDK.AtomTypes
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == 2))
             {
-                IAtomType type = GetAtomType("Ba.2plus");
+                var type = GetAtomType("Ba.2plus");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -2439,7 +2456,7 @@ namespace NCDK.AtomTypes
                 int connectedBondsCount = atomContainer.GetConnectedBonds(atom).Count();
                 if (connectedBondsCount == 0)
                 {
-                    IAtomType type = GetAtomType("Al.3plus");
+                    var type = GetAtomType("Al.3plus");
                     if (IsAcceptable(atom, atomContainer, type))
                     {
                         return type;
@@ -2449,7 +2466,7 @@ namespace NCDK.AtomTypes
             else if (atom.FormalCharge != null && atom.FormalCharge == 0
                   && atomContainer.GetConnectedBonds(atom).Count() == 3)
             {
-                IAtomType type = GetAtomType("Al");
+                var type = GetAtomType("Al");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -2458,7 +2475,7 @@ namespace NCDK.AtomTypes
             else if (atom.FormalCharge != null && atom.FormalCharge == -3
                   && atomContainer.GetConnectedBonds(atom).Count() == 6)
             {
-                IAtomType type = GetAtomType("Al.3minus");
+                var type = GetAtomType("Al.3minus");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -2477,25 +2494,25 @@ namespace NCDK.AtomTypes
             else if (atomContainer.GetConnectedBonds(atom).Count() == 0
                   && (atom.FormalCharge != null && atom.FormalCharge == 0))
             {
-                IAtomType type = GetAtomType("Zn.metallic");
+                var type = GetAtomType("Zn.metallic");
                 if (IsAcceptable(atom, atomContainer, type)) return type;
             }
             else if (atomContainer.GetConnectedBonds(atom).Count() == 0
                   && (atom.FormalCharge != null && atom.FormalCharge == 2))
             {
-                IAtomType type = GetAtomType("Zn.2plus");
+                var type = GetAtomType("Zn.2plus");
                 if (IsAcceptable(atom, atomContainer, type)) return type;
             }
             else if (atomContainer.GetConnectedBonds(atom).Count() == 1
                   && (atom.FormalCharge != null && atom.FormalCharge == 0))
             {
-                IAtomType type = GetAtomType("Zn.1");
+                var type = GetAtomType("Zn.1");
                 if (IsAcceptable(atom, atomContainer, type)) return type;
             }
             else if (atomContainer.GetConnectedBonds(atom).Count() == 2
                   && (atom.FormalCharge != null && atom.FormalCharge == 0))
             {
-                IAtomType type = GetAtomType("Zn");
+                var type = GetAtomType("Zn");
                 if (IsAcceptable(atom, atomContainer, type)) return type;
             }
             return null;
@@ -2506,7 +2523,7 @@ namespace NCDK.AtomTypes
             if (atom.FormalCharge != null && atom.FormalCharge == 0
                     && atomContainer.GetConnectedBonds(atom).Count() == 6)
             {
-                IAtomType type = GetAtomType("Cr");
+                var type = GetAtomType("Cr");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -2515,7 +2532,7 @@ namespace NCDK.AtomTypes
             else if (atom.FormalCharge != null && atom.FormalCharge == 0
                   && atomContainer.GetConnectedBonds(atom).Count() == 4)
             {
-                IAtomType type = GetAtomType("Cr.4");
+                var type = GetAtomType("Cr.4");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -2524,7 +2541,7 @@ namespace NCDK.AtomTypes
             else if (atom.FormalCharge != null && atom.FormalCharge == 6
                   && atomContainer.GetConnectedBonds(atom).Count() == 0)
             {
-                IAtomType type = GetAtomType("Cr.6plus");
+                var type = GetAtomType("Cr.6plus");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -2533,7 +2550,7 @@ namespace NCDK.AtomTypes
             else if (atom.FormalCharge != null && atom.FormalCharge == 0
                   && atomContainer.GetConnectedBonds(atom).Count() == 0)
             {
-                IAtomType type = GetAtomType("Cr.neutral");
+                var type = GetAtomType("Cr.neutral");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -2544,7 +2561,7 @@ namespace NCDK.AtomTypes
                 if (atom.FormalCharge != null && atom.FormalCharge == 3
                         && atomContainer.GetConnectedBonds(atom).Count() == 0)
                 {
-                    IAtomType type = GetAtomType("Cr.3plus");
+                    var type = GetAtomType("Cr.3plus");
                     if (IsAcceptable(atom, atomContainer, type))
                     {
                         return type;
@@ -2565,7 +2582,7 @@ namespace NCDK.AtomTypes
                 }
                 else if (atomContainer.GetConnectedBonds(atom).Count() == 2)
                 {
-                    IAtomType type = GetAtomType("Po");
+                    var type = GetAtomType("Po");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
@@ -2580,7 +2597,7 @@ namespace NCDK.AtomTypes
                 else if ((atom.FormalCharge != null && atom.FormalCharge == 0 && atomContainer
                       .GetConnectedBonds(atom).Count() <= 4))
                 {
-                    IAtomType type = GetAtomType("Sn.sp3");
+                    var type = GetAtomType("Sn.sp3");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
@@ -2590,7 +2607,7 @@ namespace NCDK.AtomTypes
                 if (atom.FormalCharge != null && atom.FormalCharge == -3
                         && atomContainer.GetConnectedBonds(atom).Count() == 6)
                 {
-                    IAtomType type = GetAtomType("Sc.3minus");
+                    var type = GetAtomType("Sc.3minus");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
@@ -2607,7 +2624,7 @@ namespace NCDK.AtomTypes
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == +2))
             {
-                IAtomType type = GetAtomType("Ni.2plus");
+                var type = GetAtomType("Ni.2plus");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -2616,7 +2633,7 @@ namespace NCDK.AtomTypes
             else if ((atom.FormalCharge != null && atom.FormalCharge == 0)
                   && atomContainer.GetConnectedBonds(atom).Count() == 2)
             {
-                IAtomType type = GetAtomType("Ni");
+                var type = GetAtomType("Ni");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -2625,7 +2642,7 @@ namespace NCDK.AtomTypes
             else if ((atom.FormalCharge != null && atom.FormalCharge == 0)
                   && atomContainer.GetConnectedBonds(atom).Count() == 0)
             {
-                IAtomType type = GetAtomType("Ni.metallic");
+                var type = GetAtomType("Ni.metallic");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -2634,7 +2651,7 @@ namespace NCDK.AtomTypes
             else if ((atom.FormalCharge != null && atom.FormalCharge == 1)
                   && atomContainer.GetConnectedBonds(atom).Count() == 1)
             {
-                IAtomType type = GetAtomType("Ni.plus");
+                var type = GetAtomType("Ni.plus");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -2654,7 +2671,7 @@ namespace NCDK.AtomTypes
                 }
                 else if ((atom.FormalCharge == null || atom.FormalCharge == 0))
                 {
-                    IAtomType type = GetAtomType("He");
+                    var type = GetAtomType("He");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
@@ -2668,7 +2685,7 @@ namespace NCDK.AtomTypes
                 }
                 else if ((atom.FormalCharge == null || atom.FormalCharge == 0))
                 {
-                    IAtomType type = GetAtomType("Ne");
+                    var type = GetAtomType("Ne");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
@@ -2682,7 +2699,7 @@ namespace NCDK.AtomTypes
                 }
                 else if ((atom.FormalCharge == null || atom.FormalCharge == 0))
                 {
-                    IAtomType type = GetAtomType("Ar");
+                    var type = GetAtomType("Ar");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
@@ -2696,7 +2713,7 @@ namespace NCDK.AtomTypes
                 }
                 else if ((atom.FormalCharge == null || atom.FormalCharge == 0))
                 {
-                    IAtomType type = GetAtomType("Kr");
+                    var type = GetAtomType("Kr");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
@@ -2712,13 +2729,13 @@ namespace NCDK.AtomTypes
                 {
                     if (atomContainer.GetConnectedBonds(atom).Count() == 0)
                     {
-                        IAtomType type = GetAtomType("Xe");
+                        var type = GetAtomType("Xe");
                         if (IsAcceptable(atom, atomContainer, type))
                             return type;
                     }
                     else
                     {
-                        IAtomType type = GetAtomType("Xe.3");
+                        var type = GetAtomType("Xe.3");
                         if (IsAcceptable(atom, atomContainer, type))
                             return type;
                     }
@@ -2733,7 +2750,7 @@ namespace NCDK.AtomTypes
                 }
                 else if ((atom.FormalCharge == null || atom.FormalCharge == 0))
                 {
-                    IAtomType type = GetAtomType("Rn");
+                    var type = GetAtomType("Rn");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
@@ -2752,26 +2769,26 @@ namespace NCDK.AtomTypes
             {
                 if (atomContainer.GetConnectedBonds(atom).Count() == 2)
                 {
-                    IAtomType type = GetAtomType("Si.2");
+                    var type = GetAtomType("Si.2");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (atomContainer.GetConnectedBonds(atom).Count() == 3)
                 {
-                    IAtomType type = GetAtomType("Si.3");
+                    var type = GetAtomType("Si.3");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (atomContainer.GetConnectedBonds(atom).Count() == 4)
                 {
-                    IAtomType type = GetAtomType("Si.sp3");
+                    var type = GetAtomType("Si.sp3");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
             }
             else if (atom.FormalCharge != null && atom.FormalCharge == -2)
             {
-                IAtomType type = GetAtomType("Si.2minus.6");
+                var type = GetAtomType("Si.2minus.6");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
@@ -2803,13 +2820,13 @@ namespace NCDK.AtomTypes
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == +2))
             {
-                IAtomType type = GetAtomType("Mn.2plus");
+                var type = GetAtomType("Mn.2plus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == +3))
             {
-                IAtomType type = GetAtomType("Mn.3plus");
+                var type = GetAtomType("Mn.3plus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
@@ -2825,53 +2842,54 @@ namespace NCDK.AtomTypes
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == 1))
             {
-                IAtomType type = GetAtomType("Na.plus");
+                var type = GetAtomType("Na.plus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if ((atom.FormalCharge == null || atom.FormalCharge == 0)
                   && atomContainer.GetConnectedBonds(atom).Count() == 1)
             {
-                IAtomType type = GetAtomType("Na");
+                var type = GetAtomType("Na");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == 0)
                   && atomContainer.GetConnectedBonds(atom).Count() == 0)
             {
-                IAtomType type = GetAtomType("Na.neutral");
+                var type = GetAtomType("Na.neutral");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             return null;
         }
 
-        private IAtomType PerceiveIodine(IAtomContainer atomContainer, IAtom atom, IList<IBond> connectedBonds)
+        private IAtomType PerceiveIodine(IAtomContainer atomContainer, IAtom atom, List<IBond> connectedBonds)
         {
-            if (connectedBonds == null) connectedBonds = atomContainer.GetConnectedBonds(atom).ToList();
+            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToList();
+
             if (HasOneSingleElectron(atomContainer, atom))
             {
                 if (connectedBonds.Count == 0)
                 {
                     if (atom.FormalCharge != null && atom.FormalCharge == +1)
                     {
-                        IAtomType type = GetAtomType("I.plus.radical");
+                        var type = GetAtomType("I.plus.radical");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else if (atom.FormalCharge == null || atom.FormalCharge == 0)
                     {
-                        IAtomType type = GetAtomType("I.radical");
+                        var type = GetAtomType("I.radical");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                 }
                 else if (connectedBonds.Count <= 1)
                 {
-                    BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+                    var maxBondOrder = GetMaximumBondOrder(connectedBonds);
                     if (maxBondOrder == BondOrder.Single)
                     {
-                        IAtomType type = GetAtomType("I.plus.radical");
+                        var type = GetAtomType("I.plus.radical");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
@@ -2884,29 +2902,29 @@ namespace NCDK.AtomTypes
                 {
                     if (connectedBonds.Count == 0)
                     {
-                        IAtomType type = GetAtomType("I.minus");
+                        var type = GetAtomType("I.minus");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else
                     {
-                        IAtomType type = GetAtomType("I.minus.5");
+                        var type = GetAtomType("I.minus.5");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                 }
                 else if (atom.FormalCharge == 1)
                 {
-                    BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+                    var maxBondOrder = GetMaximumBondOrder(connectedBonds);
                     if (maxBondOrder == BondOrder.Double)
                     {
-                        IAtomType type = GetAtomType("I.plus.sp2");
+                        var type = GetAtomType("I.plus.sp2");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else if (maxBondOrder == BondOrder.Single)
                     {
-                        IAtomType type = GetAtomType("I.plus.sp3");
+                        var type = GetAtomType("I.plus.sp3");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
@@ -2917,30 +2935,30 @@ namespace NCDK.AtomTypes
                 int doubleBondCount = CountAttachedDoubleBonds(connectedBonds, atom);
                 if (doubleBondCount == 2)
                 {
-                    IAtomType type = GetAtomType("I.5");
+                    var type = GetAtomType("I.5");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (atom.FormalCharge != null && atom.FormalCharge == 0)
                 {
-                    IAtomType type = GetAtomType("I.sp3d2.3");
+                    var type = GetAtomType("I.sp3d2.3");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
             }
             else if (connectedBonds.Count == 2)
             {
-                BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+                var maxBondOrder = GetMaximumBondOrder(connectedBonds);
                 if (maxBondOrder == BondOrder.Double)
                 {
-                    IAtomType type = GetAtomType("I.3");
+                    var type = GetAtomType("I.3");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
             }
             else if (connectedBonds.Count <= 1)
             {
-                IAtomType type = GetAtomType("I");
+                var type = GetAtomType("I");
                 if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                     return type;
             }
@@ -2951,18 +2969,21 @@ namespace NCDK.AtomTypes
         {
             if (atom.FormalCharge != null && atom.FormalCharge == 0)
             {
-                IAtomType type = GetAtomType("Ru.6");
-                if (IsAcceptable(atom, atomContainer, type)) return type;
+                var type = GetAtomType("Ru.6");
+                if (IsAcceptable(atom, atomContainer, type))
+                    return type;
             }
             else if (atom.FormalCharge != null && atom.FormalCharge == -2)
             {
-                IAtomType type = GetAtomType("Ru.2minus.6");
-                if (IsAcceptable(atom, atomContainer, type)) return type;
+                var type = GetAtomType("Ru.2minus.6");
+                if (IsAcceptable(atom, atomContainer, type))
+                    return type;
             }
             else if (atom.FormalCharge != null && atom.FormalCharge == -3)
             {
-                IAtomType type = GetAtomType("Ru.3minus.6");
-                if (IsAcceptable(atom, atomContainer, type)) return type;
+                var type = GetAtomType("Ru.3minus.6");
+                if (IsAcceptable(atom, atomContainer, type))
+                    return type;
             }
             return null;
         }
@@ -2976,19 +2997,24 @@ namespace NCDK.AtomTypes
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == +1))
             {
-                IAtomType type = GetAtomType("K.plus");
-                if (IsAcceptable(atom, atomContainer, type)) return type;
+                var type = GetAtomType("K.plus");
+                if (IsAcceptable(atom, atomContainer, type))
+                    return type;
             }
             else if (atom.FormalCharge == null || atom.FormalCharge == 0)
             {
                 int neighbors = atomContainer.GetConnectedBonds(atom).Count();
                 if (neighbors == 1)
                 {
-                    IAtomType type = GetAtomType("K.neutral");
-                    if (IsAcceptable(atom, atomContainer, type)) return type;
+                    var type = GetAtomType("K.neutral");
+                    if (IsAcceptable(atom, atomContainer, type))
+                        return type;
                 }
-                IAtomType typee = GetAtomType("K.metallic");
-                if (IsAcceptable(atom, atomContainer, typee)) return typee;
+                {
+                    var type = GetAtomType("K.metallic");
+                    if (IsAcceptable(atom, atomContainer, type))
+                        return type;
+                }
             }
             return null;
         }
@@ -2997,8 +3023,9 @@ namespace NCDK.AtomTypes
         {
             if (atom.FormalCharge == 0 && atomContainer.GetConnectedBonds(atom).Count() == 0)
             {
-                IAtomType type = GetAtomType("Pu");
-                if (IsAcceptable(atom, atomContainer, type)) return type;
+                var type = GetAtomType("Pu");
+                if (IsAcceptable(atom, atomContainer, type))
+                    return type;
             }
             return null;
         }
@@ -3012,7 +3039,7 @@ namespace NCDK.AtomTypes
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == +2))
             {
-                IAtomType type = GetAtomType("Cd.2plus");
+                var type = GetAtomType("Cd.2plus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
@@ -3020,13 +3047,13 @@ namespace NCDK.AtomTypes
             {
                 if (atomContainer.GetConnectedBonds(atom).Count() == 0)
                 {
-                    IAtomType type = GetAtomType("Cd.metallic");
+                    var type = GetAtomType("Cd.metallic");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (atomContainer.GetConnectedBonds(atom).Count() == 2)
                 {
-                    IAtomType type = GetAtomType("Cd.2");
+                    var type = GetAtomType("Cd.2");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
@@ -3038,51 +3065,52 @@ namespace NCDK.AtomTypes
         {
             if (atom.FormalCharge == 0 && atomContainer.GetConnectedBonds(atom).Count() == 3)
             {
-                IAtomType type = GetAtomType("In.3");
+                var type = GetAtomType("In.3");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if (atom.FormalCharge == 3 && atomContainer.GetConnectedBonds(atom).Count() == 0)
             {
-                IAtomType type = GetAtomType("In.3plus");
+                var type = GetAtomType("In.3plus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if (atom.FormalCharge == 0 && atomContainer.GetConnectedBonds(atom).Count() == 1)
             {
-                IAtomType type = GetAtomType("In.1");
+                var type = GetAtomType("In.1");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else
             {
-                IAtomType type = GetAtomType("In");
+                var type = GetAtomType("In");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             return null;
         }
 
-        private IAtomType PerceiveChlorine(IAtomContainer atomContainer, IAtom atom, IList<IBond> connectedBonds)
+        private IAtomType PerceiveChlorine(IAtomContainer atomContainer, IAtom atom, List<IBond> connectedBonds)
         {
-            if (connectedBonds == null) connectedBonds = atomContainer.GetConnectedBonds(atom).ToList();
+            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToList();
+
             if (HasOneSingleElectron(atomContainer, atom))
             {
                 if (connectedBonds.Count > 1)
                 {
                     if (atom.FormalCharge != null && atom.FormalCharge == +1)
                     {
-                        IAtomType type = GetAtomType("Cl.plus.radical");
+                        var type = GetAtomType("Cl.plus.radical");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                 }
                 else if (connectedBonds.Count == 1)
                 {
-                    BondOrder maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
+                    var maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
                     if (maxBondOrder == BondOrder.Single)
                     {
-                        IAtomType type = GetAtomType("Cl.plus.radical");
+                        var type = GetAtomType("Cl.plus.radical");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
@@ -3090,7 +3118,7 @@ namespace NCDK.AtomTypes
                 else if (connectedBonds.Count == 0
                       && (atom.FormalCharge == null || atom.FormalCharge == 0))
                 {
-                    IAtomType type = GetAtomType("Cl.radical");
+                    var type = GetAtomType("Cl.radical");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -3098,54 +3126,54 @@ namespace NCDK.AtomTypes
             else if (atom.FormalCharge == null || atom.FormalCharge == 0)
             {
                 int neighborcount = connectedBonds.Count;
-                BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+                var maxBondOrder = GetMaximumBondOrder(connectedBonds);
 
                 if (maxBondOrder == BondOrder.Double)
                 {
                     if (neighborcount == 2)
                     {
-                        IAtomType type = GetAtomType("Cl.2");
+                        var type = GetAtomType("Cl.2");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else if (neighborcount == 3)
                     {
-                        IAtomType type = GetAtomType("Cl.chlorate");
+                        var type = GetAtomType("Cl.chlorate");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                     else if (neighborcount == 4)
                     {
-                        IAtomType type = GetAtomType("Cl.perchlorate");
+                        var type = GetAtomType("Cl.perchlorate");
                         if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                             return type;
                     }
                 }
                 else if (neighborcount <= 1)
                 {
-                    IAtomType type = GetAtomType("Cl");
+                    var type = GetAtomType("Cl");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == -1))
             {
-                IAtomType type = GetAtomType("Cl.minus");
+                var type = GetAtomType("Cl.minus");
                 if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                     return type;
             }
             else if (atom.FormalCharge != null && atom.FormalCharge == 1)
             {
-                BondOrder maxBondOrder = GetMaximumBondOrder(connectedBonds);
+                var maxBondOrder = GetMaximumBondOrder(connectedBonds);
                 if (maxBondOrder == BondOrder.Double)
                 {
-                    IAtomType type = GetAtomType("Cl.plus.sp2");
+                    var type = GetAtomType("Cl.plus.sp2");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (maxBondOrder == BondOrder.Single)
                 {
-                    IAtomType type = GetAtomType("Cl.plus.sp3");
+                    var type = GetAtomType("Cl.plus.sp3");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -3153,7 +3181,7 @@ namespace NCDK.AtomTypes
             else if ((atom.FormalCharge != null && atom.FormalCharge == +3)
                   && connectedBonds.Count == 4)
             {
-                IAtomType type = GetAtomType("Cl.perchlorate.charged");
+                var type = GetAtomType("Cl.perchlorate.charged");
                 if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                     return type;
             }
@@ -3162,13 +3190,13 @@ namespace NCDK.AtomTypes
                 int doubleBonds = CountAttachedDoubleBonds(connectedBonds, atom);
                 if (connectedBonds.Count == 3 && doubleBonds == 2)
                 {
-                    IAtomType type = GetAtomType("Cl.chlorate");
+                    var type = GetAtomType("Cl.chlorate");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
                 else if (connectedBonds.Count == 4 && doubleBonds == 3)
                 {
-                    IAtomType type = GetAtomType("Cl.perchlorate");
+                    var type = GetAtomType("Cl.perchlorate");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds))
                         return type;
                 }
@@ -3187,17 +3215,19 @@ namespace NCDK.AtomTypes
                 int neighbors = atomContainer.GetConnectedBonds(atom).Count();
                 if (neighbors == 1)
                 {
-                    IAtomType type = GetAtomType("Ag.1");
+                    var type = GetAtomType("Ag.1");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
-                IAtomType typee = GetAtomType("Ag.neutral");
-                if (IsAcceptable(atom, atomContainer, typee))
-                    return typee;
+                {
+                    var type = GetAtomType("Ag.neutral");
+                    if (IsAcceptable(atom, atomContainer, type))
+                        return type;
+                }
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == 1))
             {
-                IAtomType type = GetAtomType("Ag.plus");
+                var type = GetAtomType("Ag.plus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
@@ -3213,7 +3243,7 @@ namespace NCDK.AtomTypes
             int neighbors = atomContainer.GetConnectedBonds(atom).Count();
             if ((atom.FormalCharge != null && atom.FormalCharge == 0) && neighbors == 1)
             {
-                IAtomType type = GetAtomType("Au.1");
+                var type = GetAtomType("Au.1");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
@@ -3228,7 +3258,7 @@ namespace NCDK.AtomTypes
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == 0))
             {
-                IAtomType type = GetAtomType("Ra.neutral");
+                var type = GetAtomType("Ra.neutral");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
@@ -3247,7 +3277,7 @@ namespace NCDK.AtomTypes
                 else if ((atom.FormalCharge != null && atom.FormalCharge == 2 && atomContainer
                       .GetConnectedBonds(atom).Count() == 0))
                 {
-                    IAtomType type = GetAtomType("Ca.2plus");
+                    var type = GetAtomType("Ca.2plus");
                     if (IsAcceptable(atom, atomContainer, type))
                     {
                         return type;
@@ -3256,7 +3286,7 @@ namespace NCDK.AtomTypes
                 else if ((atom.FormalCharge != null && atom.FormalCharge == 0 && atomContainer
                       .GetConnectedBonds(atom).Count() == 2))
                 {
-                    IAtomType type = GetAtomType("Ca.2");
+                    var type = GetAtomType("Ca.2");
                     if (IsAcceptable(atom, atomContainer, type))
                     {
                         return type;
@@ -3265,7 +3295,7 @@ namespace NCDK.AtomTypes
                 else if ((atom.FormalCharge != null && atom.FormalCharge == 0 && atomContainer
                       .GetConnectedBonds(atom).Count() == 1))
                 {
-                    IAtomType type = GetAtomType("Ca.1");
+                    var type = GetAtomType("Ca.1");
                     if (IsAcceptable(atom, atomContainer, type))
                     {
                         return type;
@@ -3287,13 +3317,13 @@ namespace NCDK.AtomTypes
                 int neighbors = atomContainer.GetConnectedBonds(atom).Count();
                 if (neighbors == 4)
                 {
-                    IAtomType type = GetAtomType("Pt.2plus.4");
+                    var type = GetAtomType("Pt.2plus.4");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else
                 {
-                    IAtomType type = GetAtomType("Pt.2plus");
+                    var type = GetAtomType("Pt.2plus");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
@@ -3303,19 +3333,19 @@ namespace NCDK.AtomTypes
                 int neighbors = atomContainer.GetConnectedBonds(atom).Count();
                 if (neighbors == 2)
                 {
-                    IAtomType type = GetAtomType("Pt.2");
+                    var type = GetAtomType("Pt.2");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (neighbors == 4)
                 {
-                    IAtomType type = GetAtomType("Pt.4");
+                    var type = GetAtomType("Pt.4");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (neighbors == 6)
                 {
-                    IAtomType type = GetAtomType("Pt.6");
+                    var type = GetAtomType("Pt.6");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
@@ -3332,13 +3362,13 @@ namespace NCDK.AtomTypes
             else if ((atom.FormalCharge != null && atom.FormalCharge == 0 && atomContainer
                   .GetConnectedBonds(atom).Count() == 3))
             {
-                IAtomType type = GetAtomType("Sb.3");
+                var type = GetAtomType("Sb.3");
                 if (IsAcceptable(atom, atomContainer, type)) return type;
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == 0 && atomContainer
                   .GetConnectedBonds(atom).Count() == 4))
             {
-                IAtomType type = GetAtomType("Sb.4");
+                var type = GetAtomType("Sb.4");
                 if (IsAcceptable(atom, atomContainer, type)) return type;
             }
             return null;
@@ -3349,7 +3379,7 @@ namespace NCDK.AtomTypes
             if (atom.FormalCharge != null && atom.FormalCharge == +3
                     && atomContainer.GetConnectedBonds(atom).Count() == 0)
             {
-                IAtomType type = GetAtomType("Gd.3plus");
+                var type = GetAtomType("Gd.3plus");
                 if (IsAcceptable(atom, atomContainer, type))
                 {
                     return type;
@@ -3370,32 +3400,32 @@ namespace NCDK.AtomTypes
                 int neighbors = atomContainer.GetConnectedBonds(atom).Count();
                 if (neighbors == 4)
                 {
-                    IAtomType type = GetAtomType("Mg.neutral");
+                    var type = GetAtomType("Mg.neutral");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (neighbors == 2)
                 {
-                    IAtomType type = GetAtomType("Mg.neutral.2");
+                    var type = GetAtomType("Mg.neutral.2");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (neighbors == 1)
                 {
-                    IAtomType type = GetAtomType("Mg.neutral.1");
+                    var type = GetAtomType("Mg.neutral.1");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else
                 {
-                    IAtomType type = GetAtomType("Mg.neutral");
+                    var type = GetAtomType("Mg.neutral");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == +2))
             {
-                IAtomType type = GetAtomType("Mg.2plus");
+                var type = GetAtomType("Mg.2plus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
@@ -3407,21 +3437,21 @@ namespace NCDK.AtomTypes
             if (atom.FormalCharge != null && atom.FormalCharge == +1
                     && atomContainer.GetConnectedBonds(atom).Count() == 0)
             {
-                IAtomType type = GetAtomType("Tl.plus");
+                var type = GetAtomType("Tl.plus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if (atom.FormalCharge != null && atom.FormalCharge == 0
                   && atomContainer.GetConnectedBonds(atom).Count() == 0)
             {
-                IAtomType type = GetAtomType("Tl");
+                var type = GetAtomType("Tl");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if (atom.FormalCharge != null && atom.FormalCharge == 0
                   && atomContainer.GetConnectedBonds(atom).Count() == 1)
             {
-                IAtomType type = GetAtomType("Tl.1");
+                var type = GetAtomType("Tl.1");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
@@ -3433,21 +3463,21 @@ namespace NCDK.AtomTypes
             if (atom.FormalCharge != null && atom.FormalCharge == 0
                     && atomContainer.GetConnectedBonds(atom).Count() == 0)
             {
-                IAtomType type = GetAtomType("Pb.neutral");
+                var type = GetAtomType("Pb.neutral");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if (atom.FormalCharge != null && atom.FormalCharge == 2
                   && atomContainer.GetConnectedBonds(atom).Count() == 0)
             {
-                IAtomType type = GetAtomType("Pb.2plus");
+                var type = GetAtomType("Pb.2plus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if (atom.FormalCharge != null && atom.FormalCharge == 0
                   && atomContainer.GetConnectedBonds(atom).Count() == 1)
             {
-                IAtomType type = GetAtomType("Pb.1");
+                var type = GetAtomType("Pb.1");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
@@ -3462,7 +3492,7 @@ namespace NCDK.AtomTypes
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == 2))
             {
-                IAtomType type = GetAtomType("Sr.2plus");
+                var type = GetAtomType("Sr.2plus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
@@ -3474,21 +3504,21 @@ namespace NCDK.AtomTypes
             if (atom.FormalCharge != null && atom.FormalCharge == -3
                     && atomContainer.GetConnectedBonds(atom).Count() == 6)
             {
-                IAtomType type = GetAtomType("Ti.3minus");
+                var type = GetAtomType("Ti.3minus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if ((atom.FormalCharge == null || atom.FormalCharge == 0)
                   && atomContainer.GetConnectedBonds(atom).Count() == 4)
             {
-                IAtomType type = GetAtomType("Ti.sp3");
+                var type = GetAtomType("Ti.sp3");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == 0)
                   && atomContainer.GetConnectedBonds(atom).Count() == 2)
             {
-                IAtomType type = GetAtomType("Ti.2");
+                var type = GetAtomType("Ti.2");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
@@ -3500,14 +3530,14 @@ namespace NCDK.AtomTypes
             if (atom.FormalCharge != null && atom.FormalCharge == -3
                     && atomContainer.GetConnectedBonds(atom).Count() == 6)
             {
-                IAtomType type = GetAtomType("V.3minus");
+                var type = GetAtomType("V.3minus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if (atom.FormalCharge != null && atom.FormalCharge == -3
                   && atomContainer.GetConnectedBonds(atom).Count() == 4)
             {
-                IAtomType type = GetAtomType("V.3minus.4");
+                var type = GetAtomType("V.3minus.4");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
@@ -3522,23 +3552,23 @@ namespace NCDK.AtomTypes
                 {
                     if (atom.FormalCharge != null && atom.FormalCharge == +1)
                     {
-                        IAtomType type = GetAtomType("Br.plus.radical");
+                        var type = GetAtomType("Br.plus.radical");
                         if (IsAcceptable(atom, atomContainer, type))
                             return type;
                     }
                     else if (atom.FormalCharge == null || atom.FormalCharge == 0)
                     {
-                        IAtomType type = GetAtomType("Br.radical");
+                        var type = GetAtomType("Br.radical");
                         if (IsAcceptable(atom, atomContainer, type))
                             return type;
                     }
                 }
                 else if (atomContainer.GetConnectedBonds(atom).Count() <= 1)
                 {
-                    BondOrder maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
+                    var maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
                     if (maxBondOrder == BondOrder.Single)
                     {
-                        IAtomType type = GetAtomType("Br.plus.radical");
+                        var type = GetAtomType("Br.plus.radical");
                         if (IsAcceptable(atom, atomContainer, type))
                             return type;
                     }
@@ -3547,42 +3577,42 @@ namespace NCDK.AtomTypes
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == -1))
             {
-                IAtomType type = GetAtomType("Br.minus");
+                var type = GetAtomType("Br.minus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if (atom.FormalCharge == 1)
             {
-                BondOrder maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
+                var maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
                 if (maxBondOrder == BondOrder.Double)
                 {
-                    IAtomType type = GetAtomType("Br.plus.sp2");
+                    var type = GetAtomType("Br.plus.sp2");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (maxBondOrder == BondOrder.Single)
                 {
-                    IAtomType type = GetAtomType("Br.plus.sp3");
+                    var type = GetAtomType("Br.plus.sp3");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
             }
             else if (atomContainer.GetConnectedBonds(atom).Count() == 1 || atomContainer.GetConnectedBonds(atom).Count() == 0)
             {
-                IAtomType type = GetAtomType("Br");
+                var type = GetAtomType("Br");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if (atomContainer.GetConnectedBonds(atom).Count() == 3)
             {
-                IAtomType type = GetAtomType("Br.3");
+                var type = GetAtomType("Br.3");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             return null;
         }
 
-        private static int CountAttachedDoubleBonds(IList<IBond> connectedAtoms, IAtom atom, string symbol)
+        private static int CountAttachedDoubleBonds(List<IBond> connectedAtoms, IAtom atom, string symbol)
         {
             return CountAttachedBonds(connectedAtoms, atom, BondOrder.Double, symbol);
         }
@@ -3596,13 +3626,13 @@ namespace NCDK.AtomTypes
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == +2))
             {
-                IAtomType type = GetAtomType("Co.2plus");
+                var type = GetAtomType("Co.2plus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
             else if ((atom.FormalCharge != null && atom.FormalCharge == +3))
             {
-                IAtomType type = GetAtomType("Co.3plus");
+                var type = GetAtomType("Co.3plus");
                 if (IsAcceptable(atom, atomContainer, type))
                     return type;
             }
@@ -3611,31 +3641,31 @@ namespace NCDK.AtomTypes
                 int neighbors = atomContainer.GetConnectedBonds(atom).Count();
                 if (neighbors == 2)
                 {
-                    IAtomType type = GetAtomType("Co.2");
+                    var type = GetAtomType("Co.2");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (neighbors == 4)
                 {
-                    IAtomType type = GetAtomType("Co.4");
+                    var type = GetAtomType("Co.4");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (neighbors == 6)
                 {
-                    IAtomType type = GetAtomType("Co.6");
+                    var type = GetAtomType("Co.6");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (neighbors == 1)
                 {
-                    IAtomType type = GetAtomType("Co.1");
+                    var type = GetAtomType("Co.1");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else
                 {
-                    IAtomType type = GetAtomType("Co.metallic");
+                    var type = GetAtomType("Co.metallic");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
@@ -3645,37 +3675,37 @@ namespace NCDK.AtomTypes
                 int neighbors = atomContainer.GetConnectedBonds(atom).Count();
                 if (neighbors == 2)
                 {
-                    IAtomType type = GetAtomType("Co.plus.2");
+                    var type = GetAtomType("Co.plus.2");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (neighbors == 4)
                 {
-                    IAtomType type = GetAtomType("Co.plus.4");
+                    var type = GetAtomType("Co.plus.4");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (neighbors == 1)
                 {
-                    IAtomType type = GetAtomType("Co.plus.1");
+                    var type = GetAtomType("Co.plus.1");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (neighbors == 6)
                 {
-                    IAtomType type = GetAtomType("Co.plus.6");
+                    var type = GetAtomType("Co.plus.6");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else if (neighbors == 5)
                 {
-                    IAtomType type = GetAtomType("Co.plus.5");
+                    var type = GetAtomType("Co.plus.5");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
                 else
                 {
-                    IAtomType type = GetAtomType("Co.plus");
+                    var type = GetAtomType("Co.plus");
                     if (IsAcceptable(atom, atomContainer, type))
                         return type;
                 }
@@ -3683,17 +3713,17 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private static int CountAttachedDoubleBonds(IList<IBond> connectedBonds, IAtom atom)
+        private static int CountAttachedDoubleBonds(List<IBond> connectedBonds, IAtom atom)
         {
             return CountAttachedBonds(connectedBonds, atom, BondOrder.Double, null);
         }
 
-        private static int CountAttachedSingleBonds(IList<IBond> connectedBonds, IAtom atom)
+        private static int CountAttachedSingleBonds(List<IBond> connectedBonds, IAtom atom)
         {
             return CountAttachedBonds(connectedBonds, atom, BondOrder.Single, null);
         }
 
-        private static bool HasAromaticBond(IList<IBond> connectedBonds)
+        private static bool HasAromaticBond(List<IBond> connectedBonds)
         {
             foreach (var bond in connectedBonds)
             {
@@ -3711,14 +3741,12 @@ namespace NCDK.AtomTypes
         /// <param name="order">the desired bond order of the attached bonds</param>
         /// <param name="symbol">If not null, then it only counts the double bonded atoms which match the given symbol.</param>
         /// <returns>the number of doubly bonded atoms</returns>
-        private static int CountAttachedBonds(IList<IBond> connectedBonds, IAtom atom, BondOrder order, string symbol)
+        private static int CountAttachedBonds(List<IBond> connectedBonds, IAtom atom, BondOrder order, string symbol)
         {
             // count the number of double bonded oxygens
-            int neighborcount = connectedBonds.Count;
             int doubleBondedAtoms = 0;
-            for (int i = neighborcount - 1; i >= 0; i--)
+            foreach (var bond in connectedBonds)
             {
-                IBond bond = connectedBonds[i];
                 if (bond.Order == order)
                 {
                     if (bond.Atoms.Count == 2)
@@ -3743,7 +3771,7 @@ namespace NCDK.AtomTypes
 
         private IAtomType GetAtomType(string identifier)
         {
-            IAtomType type = factory.GetAtomType(identifier);
+            var type = factory.GetAtomType(identifier);
             return type;
         }
 
@@ -3752,15 +3780,14 @@ namespace NCDK.AtomTypes
             return IsAcceptable(atom, container, type, null);
         }
 
-        private bool IsAcceptable(IAtom atom, IAtomContainer container, IAtomType type, IList<IBond> connectedBonds)
+        private bool IsAcceptable(IAtom atom, IAtomContainer container, IAtomType type, List<IBond> connectedBonds)
         {
-            if (connectedBonds == null)
-                connectedBonds = container.GetConnectedBonds(atom).ToList();
+            connectedBonds = (connectedBonds ?? container.GetConnectedBonds(atom)).ToList();
             if (mode == Mode.RequireExplicitHydrogens)
             {
                 // make sure no implicit hydrogens were assumed
-                int actualContainerCount = connectedBonds.Count;
-                int requiredContainerCount = type.FormalNeighbourCount.Value; // TODO: this can throw exception? 
+                var actualContainerCount = connectedBonds.Count;
+                var requiredContainerCount = type.FormalNeighbourCount.Value; // TODO: this can throw exception? 
                 if (actualContainerCount != requiredContainerCount)
                     return false;
             }
@@ -3776,12 +3803,12 @@ namespace NCDK.AtomTypes
             }
 
             // confirm correct bond orders
-            BondOrder typeOrder = type.MaxBondOrder;
+            var typeOrder = type.MaxBondOrder;
             if (!typeOrder.IsUnset())
             {
                 foreach (var bond in connectedBonds)
                 {
-                    BondOrder order = bond.Order;
+                    var order = bond.Order;
                     if (!order.IsUnset())
                     {
                         if (BondManipulator.IsHigherOrder(order, typeOrder))
@@ -3802,7 +3829,7 @@ namespace NCDK.AtomTypes
             // confirm correct valency
             if (type.Valency != null)
             {
-                double valence = container.GetBondOrderSum(atom);
+                var valence = container.GetBondOrderSum(atom);
                 valence += atom.ImplicitHydrogenCount ?? 0;
                 if (valence > type.Valency)
                     return false;
@@ -3815,7 +3842,7 @@ namespace NCDK.AtomTypes
             // confirm single electron count
             if (type.GetProperty<int?>(CDKPropertyName.SingleElectronCount) != null)
             {
-                int count = CountSingleElectrons(container, atom);
+                var count = CountSingleElectrons(container, atom);
                 if (count != type.GetProperty<int>(CDKPropertyName.SingleElectronCount))
                     return false;
             }

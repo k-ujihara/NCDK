@@ -423,7 +423,7 @@ namespace NCDK.Tools
                 "C-3;*C*C(*C,*C/*C*N,*&/*&*C,*C)", "C-3;*C*C(*C,*C/*C*C,*&/*&*N,*C)",
                 "C-3;*C*C(*C*C,*C/*C*N,*C,*&/*&,*&,*&)"};
 
-            IAtomContainer molecule = (new SmilesParser(ChemObjectBuilder.Instance))
+            IAtomContainer molecule = CDK.SilentSmilesParser
                     .ParseSmiles("C1(C=CN2)=C2C=CC=C1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.CDKLegacy.Apply(molecule);
@@ -449,7 +449,7 @@ namespace NCDK.Tools
             HOSECodeGenerator hcg = null;
             string[] result = { "C-4;C(=C/Y/)", "C-3;=CC(Y,//)", "C-3;=CY(C,//)", "Br-1;C(=C/C/)" };
 
-            molecule = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("CC=CBr");
+            molecule = CDK.SilentSmilesParser.ParseSmiles("CC=CBr");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.CDKLegacy.Apply(molecule);
             hcg = new HOSECodeGenerator();
@@ -473,7 +473,7 @@ namespace NCDK.Tools
             HOSECodeGenerator hcg = null;
             string[] result = { "C-4-;C(=C/Y'+4'/)", "C-3;=CC-(Y'+4',//)", "C-3;=CY'+4'(C-,//)", "Br-1'+4';C(=C/C-/)" };
 
-            molecule = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("CC=CBr");
+            molecule = CDK.SilentSmilesParser.ParseSmiles("CC=CBr");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             bool isAromatic = Aromaticity.CDKLegacy.Apply(molecule);
             Assert.IsFalse(isAromatic);
@@ -495,7 +495,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestGetAtomsOfSphere()
         {
-            IAtomContainer molecule = (new SmilesParser(ChemObjectBuilder.Instance)).ParseSmiles("CC=CBr");
+            IAtomContainer molecule = CDK.SilentSmilesParser.ParseSmiles("CC=CBr");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.CDKLegacy.Apply(molecule);
             HOSECodeGenerator hcg = new HOSECodeGenerator();
@@ -510,7 +510,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestGetAtomsOfSphereWithHydr()
         {
-            IAtomContainer molecule = (new SmilesParser(ChemObjectBuilder.Instance))
+            IAtomContainer molecule = CDK.SilentSmilesParser
                     .ParseSmiles("C([H])([H])([H])C([H])=C([H])Br");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.CDKLegacy.Apply(molecule);

@@ -31,8 +31,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
     [TestClass()]
     public class SigmaElectronegativityDescriptorTest : AtomicDescriptorTest
     {
-        private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-    
         public SigmaElectronegativityDescriptorTest()
         {
             SetDescriptor(typeof(SigmaElectronegativityDescriptor));
@@ -44,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { 8.7177, 11.306 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
-            var sp = new SmilesParser(builder);
+            var sp = CDK.SilentSmilesParser;
             var mol = sp.ParseSmiles("CF");
             AddExplicitHydrogens(mol);
 
@@ -66,7 +64,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { 8.3293, 10.491 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
-            var sp = new SmilesParser(builder);
+            var sp = CDK.SilentSmilesParser;
             var mol = sp.ParseSmiles("CCl");
             AddExplicitHydrogens(mol);
             for (int i = 0; i < 2; i++)
@@ -86,7 +84,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { 7.8677, 8.1073, 8.4452, 10.154 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
-            var sp = new SmilesParser(builder);
+            var sp = CDK.SilentSmilesParser;
             var mol = sp.ParseSmiles("C=CCBr");
             AddExplicitHydrogens(mol);
 
@@ -108,7 +106,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
 
-            var sp = new SmilesParser(builder);
+            var sp = CDK.SilentSmilesParser;
             var mol = sp.ParseSmiles("C(C)(C)CCI");
             AddExplicitHydrogens(mol);
 
@@ -125,7 +123,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { 7.6009, 8.3948, 9.4663, 8.3948, 7.6009 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
-            var sp = new SmilesParser(builder);
+            var sp = CDK.SilentSmilesParser;
             var mol = sp.ParseSmiles("CCOCC");
             AddExplicitHydrogens(mol);
 
@@ -146,7 +144,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { 8.1395, 8.1321, 8.5049, 9.3081 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
-            var sp = new SmilesParser(builder);
+            var sp = CDK.SilentSmilesParser;
             var mol = sp.ParseSmiles("NCCO");
             AddExplicitHydrogens(mol);
 
@@ -168,7 +166,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
 
-            var sp = new SmilesParser(builder);
+            var sp = CDK.SilentSmilesParser;
             var mol = sp.ParseSmiles("C=CCS");
             AddExplicitHydrogens(mol);
 
@@ -187,7 +185,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestCompareIonized()
         {
-            IAtomContainer molA = builder.NewAtomContainer();
+            var builder = Silent.ChemObjectBuilder.Instance;
+            var molA = builder.NewAtomContainer();
             molA.Atoms.Add(builder.NewAtom("C"));
             molA.Atoms.Add(builder.NewAtom("C"));
             molA.AddBond(molA.Atoms[0], molA.Atoms[1], BondOrder.Single);

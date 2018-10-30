@@ -46,7 +46,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @author         Miguel Rojas
     // @cdk.created    2006-05-17
     // @cdk.module     qsaratomic
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:covalentradius
     public partial class CovalentRadiusDescriptor : IAtomicDescriptor
     {
@@ -62,14 +61,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 typeof(CovalentRadiusDescriptor).FullName, "The Chemistry Development Kit");
 
         /// <summary>
-        ///  The parameters attribute of the VdWRadiusDescriptor object.
+        /// The parameters attribute of the VdWRadiusDescriptor object.
         /// </summary>
         public IReadOnlyList<object> Parameters { get { return null; } set { } }
 
         public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "covalentRadius" };
 
         /// <summary>
-        ///  This method calculates the Covalent radius of an atom.
+        /// This method calculates the Covalent radius of an atom.
         /// </summary>
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
         /// <param name="container">The <see cref="IAtomContainer"/> for which the descriptor is to be calculated</param>
@@ -79,8 +78,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double covalentradius;
             try
             {
-                string symbol = atom.Symbol;
-                IAtomType type = factory.GetAtomType(symbol);
+                var symbol = atom.Symbol;
+                var type = factory.GetAtomType(symbol);
                 covalentradius = type.CovalentRadius.Value;
                 return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(
                         covalentradius), DescriptorNames);

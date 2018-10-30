@@ -49,7 +49,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private IAtomContainer MakeEthane()
         {
-            IAtomContainer container = new AtomContainer();
+            var container = new AtomContainer();
             container.Atoms.Add(container.Builder.NewAtom(ChemicalElements.Carbon.ToIElement()));
             container.Atoms.Add(container.Builder.NewAtom(ChemicalElements.Carbon.ToIElement()));
             container.AddBond(container.Atoms[0], container.Atoms[1], BondOrder.Single);
@@ -58,7 +58,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private IAtomContainer MakeButane()
         {
-            IAtomContainer container = MakeEthane();
+            var container = MakeEthane();
             container.Atoms.Add(container.Builder.NewAtom(ChemicalElements.Carbon.ToIElement()));
             container.Atoms.Add(container.Builder.NewAtom(ChemicalElements.Carbon.ToIElement()));
             container.AddBond(container.Atoms[1], container.Atoms[2], BondOrder.Single);
@@ -69,9 +69,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestEthaneIncludeTerminals()
         {
-            IAtomContainer container = MakeEthane();
-            IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
-            Descriptor.Parameters = new object[] { true, false };
+            var container = MakeEthane();
+            var Descriptor = new RotatableBondsCountDescriptor
+            {
+                Parameters = new object[] { true, false }
+            };
             var result = Descriptor.Calculate(container);
             Assert.AreEqual(1, ((Result<int>)result.Value).Value);
         }
@@ -79,9 +81,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestEthane()
         {
-            IAtomContainer container = MakeEthane();
-            IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
-            Descriptor.Parameters = new object[] { false, false };
+            var container = MakeEthane();
+            var Descriptor = new RotatableBondsCountDescriptor
+            {
+                Parameters = new object[] { false, false }
+            };
             var result = Descriptor.Calculate(container);
             Assert.AreEqual(0, ((Result<int>)result.Value).Value);
         }
@@ -89,9 +93,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestButaneIncludeTerminals()
         {
-            IAtomContainer container = MakeButane();
-            IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
-            Descriptor.Parameters = new object[] { true, false };
+            var container = MakeButane();
+            var Descriptor = new RotatableBondsCountDescriptor
+            {
+                Parameters = new object[] { true, false }
+            };
             var result = Descriptor.Calculate(container);
             Assert.AreEqual(3, ((Result<int>)result.Value).Value);
         }
@@ -99,9 +105,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestButane()
         {
-            IAtomContainer container = MakeButane();
-            IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
-            Descriptor.Parameters = new object[] { false, false };
+            var container = MakeButane();
+            var Descriptor = new RotatableBondsCountDescriptor
+            {
+                Parameters = new object[] { false, false }
+            };
             var result = Descriptor.Calculate(container);
             Assert.AreEqual(1, ((Result<int>)result.Value).Value);
         }
@@ -110,13 +118,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestEthaneIncludeTerminalsExplicitH()
         {
-            IAtomContainer container = MakeEthane();
+            var container = MakeEthane();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(container.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(container);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
-            IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
-            Descriptor.Parameters = new object[] { true, false };
+            var Descriptor = new RotatableBondsCountDescriptor
+            {
+                Parameters = new object[] { true, false }
+            };
             var result = Descriptor.Calculate(container);
             Assert.AreEqual(1, ((Result<int>)result.Value).Value);
         }
@@ -125,13 +135,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestEthaneExplicitH()
         {
-            IAtomContainer container = MakeEthane();
+            var container = MakeEthane();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(container.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(container);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
-            IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
-            Descriptor.Parameters = new object[] { false, false };
+            var Descriptor = new RotatableBondsCountDescriptor
+            {
+                Parameters = new object[] { false, false }
+            };
             var result = Descriptor.Calculate(container);
             Assert.AreEqual(0, ((Result<int>)result.Value).Value);
         }
@@ -140,13 +152,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestButaneIncludeTerminalsExplicitH()
         {
-            IAtomContainer container = MakeButane();
+            var container = MakeButane();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(container.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(container);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
-            IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
-            Descriptor.Parameters = new object[] { true, false };
+            var Descriptor = new RotatableBondsCountDescriptor
+            {
+                Parameters = new object[] { true, false }
+            };
             var result = Descriptor.Calculate(container);
             Assert.AreEqual(3, ((Result<int>)result.Value).Value);
         }
@@ -155,13 +169,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestButaneExplicitH()
         {
-            IAtomContainer container = MakeButane();
+            var container = MakeButane();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(container.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(container);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
-            IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
-            Descriptor.Parameters = new object[] { false, false };
+            var Descriptor = new RotatableBondsCountDescriptor
+            {
+                Parameters = new object[] { false, false }
+            };
             var result = Descriptor.Calculate(container);
             Assert.AreEqual(1, ((Result<int>)result.Value).Value);
         }
@@ -174,8 +190,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var mol = sp.ParseSmiles(amide);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
-            IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
-            Descriptor.Parameters = new object[] { false, false };
+            var Descriptor = new RotatableBondsCountDescriptor
+            {
+                Parameters = new object[] { false, false }
+            };
             var result = Descriptor.Calculate(mol);
             Assert.AreEqual(4, ((Result<int>)result.Value).Value);
         }
@@ -188,8 +206,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var mol = sp.ParseSmiles(amide);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
-            IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
-            Descriptor.Parameters = new object[] { false, true };
+            var Descriptor = new RotatableBondsCountDescriptor
+            {
+                Parameters = new object[] { false, true }
+            };
             var result = Descriptor.Calculate(mol);
             Assert.AreEqual(3, ((Result<int>)result.Value).Value);
         }

@@ -46,13 +46,13 @@ namespace NCDK.Charges
         {
             try
             {
-                CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+                var matcher = CDK.AtomTypeMatcher;
                 foreach (var atom in container.Atoms)
                 {
-                    IAtomType type = matcher.FindMatchingAtomType(container, atom);
+                    var type = matcher.FindMatchingAtomType(container, atom);
                     AtomTypeManipulator.Configure(atom, type);
                 }
-                CDKHydrogenAdder hAdder = CDKHydrogenAdder.GetInstance(container.Builder);
+                var hAdder = CDK.HydrogenAdder;
                 hAdder.AddImplicitHydrogens(container);
                 AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
             }
@@ -70,7 +70,7 @@ namespace NCDK.Charges
         /// <returns>The polarizabilitiy factor for atom</returns>
         public static double GetPolarizabilitiyFactorForAtom(IAtomContainer atomContainer, IAtom atom)
         {
-            IAtomContainer acH = atomContainer.Builder.NewAtomContainer(atomContainer);
+            var acH = atomContainer.Builder.NewAtomContainer(atomContainer);
             AddExplicitHydrogens(acH);
             return GetKJPolarizabilityFactor(acH, atom);
         }
@@ -198,7 +198,7 @@ namespace NCDK.Charges
         public static double CalculateBondPolarizability(IAtomContainer atomContainer, IBond bond)
         {
             double polarizabilitiy = 0;
-            IAtomContainer acH = atomContainer.Builder.NewAtomContainer(atomContainer);
+            var acH = atomContainer.Builder.NewAtomContainer(atomContainer);
             AddExplicitHydrogens(acH);
             if (bond.Atoms.Count == 2)
             {

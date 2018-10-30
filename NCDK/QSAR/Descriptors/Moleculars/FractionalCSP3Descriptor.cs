@@ -63,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 int nC = 0;
                 int nCSP3 = 0;
-                var matcher = CDK.CdkAtomTypeMatcher;
+                var matcher = CDK.AtomTypeMatcher;
                 foreach (var atom in mol.Atoms)
                 {
                     if (atom.AtomicNumber == 6)

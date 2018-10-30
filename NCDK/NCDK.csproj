@@ -204,6 +204,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="CDK.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CDK.tt.cs</LastGenOutput>
+    </None>
     <None Update="cheminf.tokens">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -455,6 +459,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Configuration.tt</DependentUpon>
+    </Compile>
+    <Compile Update="CDK.tt.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CDK.tt</DependentUpon>
     </Compile>
     <Compile Update="Config\ChemicalElement.tt.cs">
       <DesignTime>True</DesignTime>

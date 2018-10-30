@@ -83,7 +83,7 @@ namespace NCDK.Smiles
         public void TestLargeRingSystem()
         {
             string smiles = "O=C1Oc6ccccc6(C(O)C1C5c2ccccc2CC(c3ccc(cc3)c4ccccc4)C5)";
-            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser smilesParser = CDK.SilentSmilesParser;
             var molecule = smilesParser.ParseSmiles(smiles);
 
             molecule = FixBondOrdersTool.KekuliseAromaticRings(molecule);
@@ -107,7 +107,7 @@ namespace NCDK.Smiles
         public void TestLargeBioclipseUseCase()
         {
             string smiles = "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@@H]6COc7cc(OC)ccc7[C@H]56";
-            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser smilesParser = CDK.SilentSmilesParser;
             var molecule = smilesParser.ParseSmiles(smiles);
 
             molecule = FixBondOrdersTool.KekuliseAromaticRings(molecule);
@@ -327,7 +327,7 @@ namespace NCDK.Smiles
         public void TestAcyclic()
         {
             string smiles = "CCCCCCC";
-            SmilesParser smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            SmilesParser smilesParser = CDK.SilentSmilesParser;
             var molecule = smilesParser.ParseSmiles(smiles);
 
             molecule = FixBondOrdersTool.KekuliseAromaticRings(molecule);

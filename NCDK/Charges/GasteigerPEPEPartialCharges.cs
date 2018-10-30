@@ -490,7 +490,7 @@ namespace NCDK.Charges
 
             setOfReactants.Add(ac);
 
-            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            var paramList = new List<IParameterReaction>();
             IParameterReaction param = new SetReactionCenter
             {
                 IsSetParameter = true

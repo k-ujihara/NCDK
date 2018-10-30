@@ -24,7 +24,6 @@
  */
 
 using NCDK.Aromaticities;
-using NCDK.AtomTypes;
 using NCDK.Graphs;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
@@ -57,7 +56,7 @@ namespace NCDK.Smiles
     {
         private AllRingsFinder allRingsFinder;
 
-        private IList<int[]> listOfRings = null;
+        private List<int[]> listOfRings = null;
 
         /// <summary>
         /// <see langword="true"/> if the next or running calculation should be interrupted.
@@ -92,14 +91,15 @@ namespace NCDK.Smiles
         {
             // OK, we take advantage here from the fact that this class does not take
             // into account rings larger than 7 atoms. See FixAromaticBondOrders().
-            IRingSet rs = allRingsFinder.FindAllRings(m, 7);
+            var rs = allRingsFinder.FindAllRings(m, 7);
             StoreRingSystem(m, rs);
-            bool StructureOK = IsStructureOK(m);
-            IRingSet irs = RemoveExtraRings(m);
+            var StructureOK = IsStructureOK(m);
+            var irs = RemoveExtraRings(m);
 
-            if (irs == null) throw new CDKException("error in AllRingsFinder.findAllRings");
+            if (irs == null)
+                throw new CDKException("error in AllRingsFinder.findAllRings");
 
-            int count = GetBadCount(m, irs);
+            var count = GetBadCount(m, irs);
 
             return StructureOK && count == 0;
         }
@@ -121,17 +121,17 @@ namespace NCDK.Smiles
 
             // OK, we take advantage here from the fact that this class does not take
             // into account rings larger than 7 atoms. See FixAromaticBondOrders().
-            IRingSet rs = allRingsFinder.FindAllRings(atomContainer, 7);
+            var rs = allRingsFinder.FindAllRings(atomContainer, 7);
             StoreRingSystem(atomContainer, rs);
 
-            IRingSet ringSet;
 
             // TODO remove rings with nonsp2 Carbons(?) and rings larger than 7 atoms
-            ringSet = RemoveExtraRings(atomContainer);
+            var ringSet = RemoveExtraRings(atomContainer);
 
-            if (ringSet == null) throw new CDKException("failure in AllRingsFinder.findAllRings");
+            if (ringSet == null)
+                throw new CDKException("failure in AllRingsFinder.findAllRings");
 
-            IList<IList<IList<string>>> MasterList = new List<IList<IList<string>>>();
+            var MasterList = new List<IList<IList<string>>>();
 
             //this.counter=0;// counter which keeps track of all current possibilities for placing double bonds
 
@@ -139,8 +139,7 @@ namespace NCDK.Smiles
 
             for (int i = 0; i <= ringSet.Count - 1; i++)
             {
-
-                IRing ring = (IRing)ringSet[i];
+                var ring = ringSet[i];
 
                 // only takes into account rings up to 7 atoms... if that changes,
                 // make sure to update the FindAllRings() calls too!
@@ -164,16 +163,15 @@ namespace NCDK.Smiles
                 }
             }
 
-            IChemObjectSet<IAtomContainer> som = atomContainer.Builder.NewAtomContainerSet();
+            var som = atomContainer.Builder.NewAtomContainerSet();
 
-            int[] choices;
-
-            choices = new int[MasterList.Count];
+            var choices = new int[MasterList.Count];
 
             if (MasterList.Count > 0)
             {
-                IAtomContainer iAtomContainer = Loop(DateTime.Now.Ticks, atomContainer, 0, MasterList, choices, som);
-                if (iAtomContainer != null) return iAtomContainer;
+                var iAtomContainer = Loop(DateTime.Now.Ticks, atomContainer, 0, MasterList, choices, som);
+                if (iAtomContainer != null)
+                    return iAtomContainer;
             }
 
             int mincount = 99999999;
@@ -184,7 +182,7 @@ namespace NCDK.Smiles
 
             for (int i = 0; i <= som.Count - 1; i++)
             {
-                IAtomContainer mol = som[i];
+                var mol = som[i];
                 ringSet = RemoveExtraRings(mol);
                 if (ringSet == null)
                     continue;
@@ -197,7 +195,8 @@ namespace NCDK.Smiles
                 }
             }
 
-            if (som.Count > 0) return som[best];
+            if (som.Count > 0)
+                return som[best];
             return atomContainer;
         }
 
@@ -206,14 +205,14 @@ namespace NCDK.Smiles
             //convert n(=O) to [n+][O-]
             for (int i = 0; i < atomContainer.Atoms.Count; i++)
             {
-                IAtom ai = atomContainer.Atoms[i];
+                var ai = atomContainer.Atoms[i];
 
                 if (string.Equals(ai.Symbol, "N", StringComparison.Ordinal)
                  && (ai.FormalCharge == null || ai.FormalCharge == 0))
                 {
                     if (InRingSet(ai, ringSet))
                     {
-                        IEnumerable<IAtom> ca = atomContainer.GetConnectedAtoms(ai);
+                        var ca = atomContainer.GetConnectedAtoms(ai);
                         foreach (var caj in ca)
                         {
                             if (caj.Symbol.Equals("O", StringComparison.Ordinal) 
@@ -233,14 +232,14 @@ namespace NCDK.Smiles
         {
             for (int i = 0; i <= al.Count - 1; i++)
             {
-                string s = al[i];
-                string s1 = s.Substring(0, s.IndexOf('-'));
-                string s2 = s.Substring(s.IndexOf('-') + 1);
+                var s = al[i];
+                var s1 = s.Substring(0, s.IndexOf('-'));
+                var s2 = s.Substring(s.IndexOf('-') + 1);
 
-                int i1 = int.Parse(s1, NumberFormatInfo.InvariantInfo);
-                int i2 = int.Parse(s2, NumberFormatInfo.InvariantInfo);
+                var i1 = int.Parse(s1, NumberFormatInfo.InvariantInfo);
+                var i2 = int.Parse(s2, NumberFormatInfo.InvariantInfo);
 
-                IBond b = m.GetBond(m.Atoms[i1], m.Atoms[i2]);
+                var b = m.GetBond(m.Atoms[i1], m.Atoms[i2]);
                 b.Order = BondOrder.Double;
             }
         }
@@ -290,7 +289,7 @@ namespace NCDK.Smiles
             al9.Add(num[3] + "-" + num[4]);
             al10.Add(num[4] + "-" + num[0]);
 
-            List<IList<string>> mal = new List<IList<string>>
+            var mal = new List<IList<string>>
             {
                 al1,
                 al2,
@@ -313,11 +312,11 @@ namespace NCDK.Smiles
             // 6 possibilities for placing 2 double bonds
             // 6 possibilities for placing 1 double bonds
 
-            IAtom[] ringatoms = new IAtom[6];
+            var ringatoms = new IAtom[6];
 
             ringatoms[0] = r.Atoms[0];
 
-            int[] num = new int[6];
+            var num = new int[6];
 
             for (int j = 0; j <= 5; j++)
             {
@@ -388,7 +387,7 @@ namespace NCDK.Smiles
             al16.Add(num[4] + "-" + num[5]);
             al17.Add(num[5] + "-" + num[0]);
 
-            List<IList<string>> mal = new List<IList<string>>
+            var mal = new List<IList<string>>
             {
                 al1,
                 al2,
@@ -417,11 +416,11 @@ namespace NCDK.Smiles
         {
             // for now only consider case where have 3 double bonds
 
-            IAtom[] ringatoms = new IAtom[7];
+            var ringatoms = new IAtom[7];
 
             ringatoms[0] = r.Atoms[0];
 
-            int[] num = new int[7];
+            var num = new int[7];
 
             for (int j = 0; j <= 6; j++)
             {
@@ -454,7 +453,7 @@ namespace NCDK.Smiles
             al5.Add(num[4] + "-" + num[5]);
             al5.Add(num[6] + "-" + num[0]);
 
-            List<IList<string>> mal = new List<IList<string>>
+            var mal = new List<IList<string>>
             {
                 al1,
                 al2,
@@ -478,11 +477,10 @@ namespace NCDK.Smiles
 
             for (int j = 0; j <= atomContainer.Atoms.Count - 1; j++)
             {
-                IAtom atom = atomContainer.Atoms[j];
+                var atom = atomContainer.Atoms[j];
 
                 if (InRingSet(atom, ringSet))
                 {
-
                     if (string.Equals(atom.Symbol, "N", StringComparison.Ordinal))
                     {
                         if (atom.FormalCharge == 0)
@@ -495,7 +493,7 @@ namespace NCDK.Smiles
                             {
                                 // check if have 2 double bonds to atom in ring
                                 int doublebondcount = 0;
-                                IEnumerable<IAtom> ca = atomContainer.GetConnectedAtoms(atom);
+                                var ca = atomContainer.GetConnectedAtoms(atom);
 
                                 foreach (var a in ca)
                                 {
@@ -538,14 +536,15 @@ namespace NCDK.Smiles
         {
             for (int i = 0; i < ringSet.Count; i++)
             {
-                IRing ring = (IRing)ringSet[i];
-                if (ring.Contains(atom)) return true;
+                var ring = (IRing)ringSet[i];
+                if (ring.Contains(atom))
+                    return true;
             }
             return false;
         }
 
         private IAtomContainer Loop(long starttime, IAtomContainer atomContainer, int index,
-                IList<IList<IList<string>>> MasterList, int[] choices, IChemObjectSet<IAtomContainer> som)
+            IList<IList<IList<string>>> MasterList, int[] choices, IChemObjectSet<IAtomContainer> som)
         {
             long time = DateTime.Now.Ticks;
 
@@ -563,7 +562,7 @@ namespace NCDK.Smiles
                 throw new CDKException("Process was interrupted.");
             }
 
-            IList<IList<string>> ringlist = MasterList[index];
+            var ringlist = MasterList[index];
 
             IAtomContainer mnew2 = null;
 
@@ -586,8 +585,8 @@ namespace NCDK.Smiles
 
                     for (int j = 0; j <= MasterList.Count - 1; j++)
                     {
-                        IList<IList<string>> ringlist2 = MasterList[j];
-                        IList<string> bondlist = ringlist2[choices[j]];
+                        var ringlist2 = MasterList[j];
+                        var bondlist = ringlist2[choices[j]];
                         ApplyBonds(mnew, bondlist);
                     }
 
@@ -613,7 +612,6 @@ namespace NCDK.Smiles
 
                 if (index + 1 <= MasterList.Count - 1)
                 {
-                    // Debug.WriteLine("here3="+counter);
                     mnew2 = Loop(starttime, atomContainer, index + 1, MasterList, choices, som); //recursive def
                 }
 
@@ -629,16 +627,15 @@ namespace NCDK.Smiles
         {
             try
             {
-                CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(atomContainer.Builder);
+                var matcher = CDK.AtomTypeMatcher;
                 foreach (var atom in atomContainer.Atoms)
                 {
-                    IAtomType matched = matcher.FindMatchingAtomType(atomContainer, atom);
+                    var matched = matcher.FindMatchingAtomType(atomContainer, atom);
                     if (matched == null || matched.AtomTypeName.Equals("X", StringComparison.Ordinal))
                         return false;
                 }
 
-                IRingSet ringSet = RecoverRingSystem(atomContainer);
-                //Debug.WriteLine("Rs size= "+rs.Count);
+                var ringSet = RecoverRingSystem(atomContainer);
 
                 // clear aromaticity flags
                 for (int i = 0; i <= atomContainer.Atoms.Count - 1; i++)
@@ -647,31 +644,30 @@ namespace NCDK.Smiles
                 }
                 for (int i = 0; i <= ringSet.Count - 1; i++)
                 {
-                    IRing r = (IRing)ringSet[i];
+                    var r = ringSet[i];
                     r.IsAromatic = false;
                 }
                 // now, detect aromaticity from cratch, and mark rings as aromatic too (if ...)
                 Aromaticity.CDKLegacy.Apply(atomContainer);
                 for (int i = 0; i <= ringSet.Count - 1; i++)
                 {
-                    IRing ring = (IRing)ringSet[i];
+                    var ring = ringSet[i];
                     RingManipulator.MarkAromaticRings(ring);
                 }
 
-                //            Figure out which rings we want to make sure are aromatic:
-                bool[] Check = FindRingsToCheck(ringSet);
+                // Figure out which rings we want to make sure are aromatic:
+                var Check = FindRingsToCheck(ringSet);
 
                 for (int i = 0; i <= ringSet.Count - 1; i++)
                 {
-                    IRing ring = (IRing)ringSet[i];
+                    var ring = ringSet[i];
 
                     if (Check[i])
                     {
-
                         for (int j = 0; j <= ring.Atoms.Count - 1; j++)
                         {
                             if (ring.Atoms[j].ImplicitHydrogenCount.HasValue
-                                    && ring.Atoms[j].ImplicitHydrogenCount.Value < 0)
+                             && ring.Atoms[j].ImplicitHydrogenCount.Value < 0)
                             {
                                 return false;
                             }
@@ -679,7 +675,6 @@ namespace NCDK.Smiles
 
                         if (!ring.IsAromatic)
                         {
-                            //                        Debug.WriteLine(counter+"\t"+"ring not aromatic"+"\t"+r.Atoms.Count);
                             return false;
                         }
                     }
@@ -706,11 +701,11 @@ namespace NCDK.Smiles
         {
             try
             {
-                IRingSet rs = Cycles.FindSSSR(m).ToRingSet();
+                var rs = Cycles.FindSSSR(m).ToRingSet();
 
                 for (int i = 0; i <= rs.Count - 1; i++)
                 {
-                    IRing r = (IRing)rs[i];
+                    var r = rs[i];
 
                     if (r.Atoms.Count > 7 || r.Atoms.Count < 5)
                     {
@@ -719,11 +714,8 @@ namespace NCDK.Smiles
                         goto iloop;
                     }
 
-                    //int NonSP2Count = 0;
-
                     for (int j = 0; j <= r.Atoms.Count - 1; j++)
                     {
-                        //Debug.WriteLine(j+"\t"+r.GetAtomAt(j).Symbol+"\t"+r.GetAtomAt(j).Hybridization);
                         if (r.Atoms[j].Hybridization.IsUnset()
                                 || !(r.Atoms[j].Hybridization == Hybridization.SP2 ||
                                       r.Atoms[j].Hybridization == Hybridization.Planar3))
@@ -731,22 +723,10 @@ namespace NCDK.Smiles
                             rs.RemoveAt(i);
                             i--; // go back
                             goto iloop;
-                            //                        NonSP2Count++;
-                            //                        if (string.Equals(r.Atoms[j].Symbol, "C", StringComparison.Ordinal)) {
-                            //                            rs.RemoveAtomContainer(i);
-                            //                            i--; // go back
-                            //                            continue iloop;
-                            //                        }
                         }
                     }
 
-                    //                if (NonSP2Count > 1) {
-                    //                    rs.RemoveAtomContainer(i);
-                    //                    i--; // go back
-                    //                    continue iloop;
-                    //                }
-
-                    iloop:
+                iloop:
                     ;
                 }
                 return rs;
@@ -759,7 +739,7 @@ namespace NCDK.Smiles
 
         private static bool[] FindRingsToCheck(IRingSet rs)
         {
-            bool[] Check = new bool[rs.Count];
+            var Check = new bool[rs.Count];
 
             for (int i = 0; i <= Check.Length - 1; i++)
             {
@@ -768,7 +748,7 @@ namespace NCDK.Smiles
 
             for (int i = 0; i <= rs.Count - 1; i++)
             {
-                IRing r = (IRing)rs[i];
+                var r = rs[i];
 
                 if (r.Atoms.Count > 7)
                 {
@@ -780,10 +760,8 @@ namespace NCDK.Smiles
 
                 for (int j = 0; j <= r.Atoms.Count - 1; j++)
                 {
-                    // Debug.WriteLine(j+"\t"+r.GetAtomAt(j).Symbol+"\t"+r.GetAtomAt(j).Hybridization);
-
-                    if (r.Atoms[j].Hybridization.IsUnset() ||
-                        r.Atoms[j].Hybridization != Hybridization.SP2)
+                    if (r.Atoms[j].Hybridization.IsUnset() 
+                     || r.Atoms[j].Hybridization != Hybridization.SP2)
                     {
                         NonSP2Count++;
                         if (string.Equals(r.Atoms[j].Symbol, "C", StringComparison.Ordinal))
@@ -799,7 +777,7 @@ namespace NCDK.Smiles
                     Check[i] = false;
                     continue;
                 }
-                iloop:
+            iloop:
                 ;
             }
 
@@ -816,8 +794,8 @@ namespace NCDK.Smiles
             listOfRings = new List<int[]>(); // this is a list of int arrays
             for (int r = 0; r < ringSet.Count; ++r)
             {
-                IRing ring = (IRing)ringSet[r];
-                int[] bondNumbers = new int[ring.Bonds.Count];
+                var ring = ringSet[r];
+                var bondNumbers = new int[ring.Bonds.Count];
                 for (int i = 0; i < ring.Bonds.Count; ++i)
                     bondNumbers[i] = mol.Bonds.IndexOf(ring.Bonds[i]);
                 listOfRings.Add(bondNumbers);
@@ -831,13 +809,13 @@ namespace NCDK.Smiles
         /// <param name="mol">The IAtomContainer for which to recover the IRingSet.</param>
         private IRingSet RecoverRingSystem(IAtomContainer mol)
         {
-            IRingSet ringSet = mol.Builder.NewRingSet();
+            var ringSet = mol.Builder.NewRingSet();
             foreach (var bondNumbers in listOfRings)
             {
-                IRing ring = mol.Builder.NewRing();
+                var ring = mol.Builder.NewRing();
                 foreach (var bondNumber in bondNumbers)
                 {
-                    IBond bond = mol.Bonds[bondNumber];
+                    var bond = mol.Bonds[bondNumber];
                     ring.Bonds.Add(bond);
                     if (!ring.Contains(bond.Atoms[0])) ring.Atoms.Add(bond.Atoms[0]);
                     if (!ring.Contains(bond.Atoms[1])) ring.Atoms.Add(bond.Atoms[1]);

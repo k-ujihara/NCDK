@@ -175,7 +175,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 ac = (IAtomContainer)atomContainer.Clone();
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureUnsetProperties(ac);
-                CDKHydrogenAdder hAdder = CDKHydrogenAdder.GetInstance(ac.Builder);
+                var hAdder = CDK.HydrogenAdder;
                 hAdder.AddImplicitHydrogens(ac);
                 AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(ac);
             }

@@ -139,7 +139,7 @@ namespace NCDK.AtomTypes
 
         private TestResults TestFile(string dir, string filename, Type readerType)
         {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(ChemObjectBuilder.Instance);
+            var matcher = CDK.AtomTypeMatcher;
             var ins = ResourceLoader.GetAsStream(dir + filename);
             var reader = (ISimpleChemObjectReader)readerType.GetConstructor(new Type[] { typeof(Stream) }).Invoke(new object[] { ins });
             IAtomContainer mol = null;

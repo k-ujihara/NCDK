@@ -38,7 +38,7 @@ namespace NCDK.Fragments
 
         static FragmentUtilsTest()
         {
-            smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
+            smilesParser = CDK.SilentSmilesParser;
         }
 
         [TestMethod()]

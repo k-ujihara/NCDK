@@ -52,7 +52,7 @@ namespace NCDK.Fingerprints
         [TestInitialize()]
         public void Setup()
         {
-            parser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            parser = CDK.SilentSmilesParser;
         }
 
         [TestMethod()]
@@ -66,7 +66,7 @@ namespace NCDK.Fingerprints
         public void TestFingerprint()
         {
             IFingerprinter printer = new PubchemFingerprinter(ChemObjectBuilder.Instance);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(ChemObjectBuilder.Instance);
+            var adder = CDK.HydrogenAdder;
 
             var mol1 = parser.ParseSmiles("c1ccccc1CCc1ccccc1");
             var mol2 = parser.ParseSmiles("c1ccccc1CC");
@@ -127,7 +127,7 @@ namespace NCDK.Fingerprints
         {
             var mol = parser.ParseSmiles("COC1C(C(C(C(O1)CO)OC2C(C(C(C(O2)CO)S)O)O)O)O");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(mol.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(mol);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
             Aromaticity.CDKLegacy.Apply(mol);
@@ -150,7 +150,7 @@ namespace NCDK.Fingerprints
         {
             var mol = parser.ParseSmiles("C1=CC=C(C=C1)C[N+]2=C(C=C(C=C2C=CC3=CC=CC=C3)C4=CC=CC=C4)C5=CC=CC=C5");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(mol.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(mol);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
             Aromaticity.CDKLegacy.Apply(mol);
@@ -172,7 +172,7 @@ namespace NCDK.Fingerprints
         {
             var mol = parser.ParseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(mol.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(mol);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
             Aromaticity.CDKLegacy.Apply(mol);
@@ -192,7 +192,7 @@ namespace NCDK.Fingerprints
             var mol = parser.ParseSmiles("C=C(C1=CC=C(C=C1)O)NNC2=C(C(=NC(=C2Cl)Cl)C(=O)O)Cl");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(mol.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(mol);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
             Aromaticity.CDKLegacy.Apply(mol);
@@ -246,7 +246,7 @@ namespace NCDK.Fingerprints
         {
             var mol = parser.ParseSmiles("c1ccccc1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(mol.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(mol);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
 
@@ -261,7 +261,7 @@ namespace NCDK.Fingerprints
 
         class FpRunner
         {
-            IAtomContainer mol;
+            readonly IAtomContainer mol;
 
             public BitArray Result { get; private set; }
 
@@ -297,7 +297,7 @@ namespace NCDK.Fingerprints
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);
 
-            CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(mol1.Builder);
+            var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(mol1);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol1);
             Aromaticity.CDKLegacy.Apply(mol1);

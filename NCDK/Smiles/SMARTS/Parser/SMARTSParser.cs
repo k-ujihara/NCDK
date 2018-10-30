@@ -45,7 +45,7 @@ namespace NCDK.Smiles.SMARTS.Parser
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SMARTS.Parser.SMARTSParser_Example.cs+2"]/*' />
     /// </para>
     /// </remarks>
-    /// <seealso cref="Isomorphisms.Matchers.SMARTS.SMARTSAtom"/>
+    /// <seealso cref="SMARTSAtom"/>
     // @author      Dazhi Jiao
     // @cdk.created 2007-04-23
     // @cdk.githash

@@ -16,7 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.AtomTypes;
+
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -46,7 +46,7 @@ namespace NCDK.Reactions.Mechanisms
         /// <returns>The Reaction mechanism</returns>
         public IReaction Initiate(IChemObjectSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
         {
-            CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.GetInstance(atomContainerSet.Builder);
+            var atMatcher = CDK.AtomTypeMatcher;
             if (atomContainerSet.Count != 1)
             {
                 throw new CDKException("TautomerizationMechanism only expects one IAtomContainer");
@@ -59,7 +59,7 @@ namespace NCDK.Reactions.Mechanisms
             {
                 throw new CDKException("TautomerizationMechanism expects three bonds in the List");
             }
-            IAtomContainer molecule = atomContainerSet[0];
+            var molecule = atomContainerSet[0];
             IAtomContainer reactantCloned;
             reactantCloned = (IAtomContainer)molecule.Clone();
             IAtom atom1 = atomList[0];// Atom to be added the hydrogen

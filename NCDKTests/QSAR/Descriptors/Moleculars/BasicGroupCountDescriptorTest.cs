@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestAmine()
         {
-            var sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var sp = CDK.SilentSmilesParser;
             var mol = sp.ParseSmiles("NC");
             Result<int> result = (Result<int>)Descriptor.Calculate(mol).Value;
             Assert.AreEqual(1, result.Value);

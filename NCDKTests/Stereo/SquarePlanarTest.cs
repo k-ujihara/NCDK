@@ -36,7 +36,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Normalize()
         {
-            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            SmilesParser smipar = CDK.SilentSmilesParser;
             var mol = smipar.ParseSmiles("Cl[Pt@SP3](Cl)([NH3])[NH3]");
             var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(SquarePlanar));

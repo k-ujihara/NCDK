@@ -2315,7 +2315,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 container = (IAtomContainer)atomContainer.Clone();
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-                var hAdder = CDKHydrogenAdder.GetInstance(container.Builder);
+                var hAdder = CDK.HydrogenAdder;
                 hAdder.AddImplicitHydrogens(container);
                 AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
             }

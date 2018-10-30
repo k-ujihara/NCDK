@@ -937,7 +937,7 @@ namespace NCDK.Smiles
         {
             string smiles = "c1(c2ccc(c8ccccc8)cc2)" + "c(c3ccc(c9ccccc9)cc3)" + "c(c4ccc(c%10ccccc%10)cc4)"
                 + "c(c5ccc(c%11ccccc%11)cc5)" + "c(c6ccc(c%12ccccc%12)cc6)" + "c1(c7ccc(c%13ccccc%13)cc7)";
-            var smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
+            var smilesParser = CDK.SilentSmilesParser;
             var cdkMol = smilesParser.ParseSmiles(smiles);
             var smilesGenerator = new SmilesGenerator();
             string genSmiles = smilesGenerator.Create(cdkMol);
@@ -1060,7 +1060,7 @@ namespace NCDK.Smiles
         {
             var adenine = TestMoleculeFactory.MakeAdenine();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(adenine);
-            CDKHydrogenAdder.GetInstance(Silent.ChemObjectBuilder.Instance).AddImplicitHydrogens(adenine);
+            CDK.HydrogenAdder.AddImplicitHydrogens(adenine);
 
             var sg = SmilesGenerator.Generic();
             var order = new int[adenine.Atoms.Count];
@@ -1077,7 +1077,7 @@ namespace NCDK.Smiles
             var sp = CDK.SilentSmilesParser;
             var adenine2 = sp.ParseSmiles(smi);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(adenine2);
-            CDKHydrogenAdder.GetInstance(Silent.ChemObjectBuilder.Instance).AddImplicitHydrogens(adenine2);
+            CDK.HydrogenAdder.AddImplicitHydrogens(adenine2);
 
             // check atom types
             for (int i = 0; i < adenine2.Atoms.Count; i++)
@@ -1091,7 +1091,7 @@ namespace NCDK.Smiles
         {
             var adenine = TestMoleculeFactory.MakeAdenine();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(adenine);
-            CDKHydrogenAdder.GetInstance(Silent.ChemObjectBuilder.Instance).AddImplicitHydrogens(adenine);
+            CDK.HydrogenAdder.AddImplicitHydrogens(adenine);
 
             var sg = SmilesGenerator.Unique();
             var order = new int[adenine.Atoms.Count];
@@ -1108,7 +1108,7 @@ namespace NCDK.Smiles
             var sp = CDK.SilentSmilesParser;
             var adenine2 = sp.ParseSmiles(smi);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(adenine2);
-            CDKHydrogenAdder.GetInstance(Silent.ChemObjectBuilder.Instance).AddImplicitHydrogens(adenine2);
+            CDK.HydrogenAdder.AddImplicitHydrogens(adenine2);
 
             // check atom types
             for (int i = 0; i < adenine2.Atoms.Count; i++)
@@ -1120,8 +1120,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void AtomClasses()
         {
-            var bldr = Silent.ChemObjectBuilder.Instance;
-            var ethanol = new SmilesParser(bldr).ParseSmiles("C[CH2:6]O");
+            var ethanol = CDK.SilentSmilesParser.ParseSmiles("C[CH2:6]O");
             Assert.AreEqual("CCO", SmilesGenerator.Generic().Create(ethanol));
             Assert.AreEqual("C[CH2:6]O", SmilesGenerator.Generic().WithAtomClasses().Create(ethanol));
         }
@@ -1232,7 +1231,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void canonAtomMaps()
+        public void CanonAtomMaps()
         {
             var smipar = CDK.SilentSmilesParser;
             var mol = smipar.ParseSmiles("[*:2]C(CC[*:3])[*:1]");
@@ -1242,7 +1241,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void canonAtomMapsRenumber()
+        public void CanonAtomMapsRenumber()
         {
             var smipar = CDK.SilentSmilesParser;
             var mol = smipar.ParseSmiles("[*:2]C(CC[*:3])[*:1]");
@@ -1274,8 +1273,7 @@ namespace NCDK.Smiles
 
         static string Canon(string smi)
         {
-            var bldr = Silent.ChemObjectBuilder.Instance;
-            var smipar = new SmilesParser(bldr);
+            var smipar = CDK.SilentSmilesParser;
             var container = smipar.ParseSmiles(smi);
             AtomContainerManipulator.SuppressHydrogens(container);
             var arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllSimpleFinder);

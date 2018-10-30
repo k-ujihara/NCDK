@@ -47,15 +47,14 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestGetInstance_IChemObjectBuilder()
         {
-            var matcher = CDKAtomTypeMatcher.GetInstance(ChemObjectBuilder.Instance);
+            var matcher = CDK.AtomTypeMatcher;
             Assert.IsNotNull(matcher);
         }
 
         [TestMethod()]
         public void TestGetInstance_IChemObjectBuilder_int()
         {
-            var matcher = CDKAtomTypeMatcher.GetInstance(ChemObjectBuilder.Instance,
-                    CDKAtomTypeMatcher.Mode.RequireExplicitHydrogens);
+            var matcher = CDKAtomTypeMatcher.GetInstance(CDKAtomTypeMatcher.Mode.RequireExplicitHydrogens);
             Assert.IsNotNull(matcher);
         }
 
@@ -82,7 +81,7 @@ namespace NCDK.AtomTypes
             mol.Atoms.Add(atom);
 
             // just check consistency; other methods do perception testing
-            var matcher = CDKAtomTypeMatcher.GetInstance(ChemObjectBuilder.Instance);
+            var matcher = CDK.AtomTypeMatcher;
             var types = matcher.FindMatchingAtomTypes(mol).ToList();
             for (int i = 0; i < types.Count; i++)
             {
@@ -109,7 +108,7 @@ namespace NCDK.AtomTypes
             IAtomContainer mol = new AtomContainer();
             IAtom atom = new Atom();
             mol.Atoms.Add(atom);
-            var matcher = CDKAtomTypeMatcher.GetInstance(ChemObjectBuilder.Instance);
+            var matcher = CDK.AtomTypeMatcher;
             var type = matcher.FindMatchingAtomType(mol, atom);
             Assert.IsNotNull(type);
             Assert.AreEqual("X", type.AtomTypeName);
@@ -3123,8 +3122,7 @@ namespace NCDK.AtomTypes
         public void TestAssumeExplicitHydrogens()
         {
             IAtomContainer mol = new AtomContainer();
-            CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.GetInstance(mol.Builder,
-                    CDKAtomTypeMatcher.Mode.RequireExplicitHydrogens);
+            CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.GetInstance(CDKAtomTypeMatcher.Mode.RequireExplicitHydrogens);
 
             mol.Atoms.Add(new Atom("O"));
             mol.Atoms[0].FormalCharge = +1;
@@ -3143,7 +3141,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestStructGenMatcher()
         {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(ChemObjectBuilder.Instance);
+            var matcher = CDK.AtomTypeMatcher;
             Assert.IsNotNull(matcher);
         }
 
@@ -3803,7 +3801,7 @@ namespace NCDK.AtomTypes
             IAtomType type = null;
             foreach (var atom in ac.Atoms)
             {
-                type = CDKAtomTypeMatcher.GetInstance(ac.Builder).FindMatchingAtomType(ac, atom);
+                type = CDK.AtomTypeMatcher.FindMatchingAtomType(ac, atom);
                 Assert.IsNotNull(type);
             }
         }

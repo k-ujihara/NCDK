@@ -32,8 +32,8 @@ namespace NCDK.AtomTypes
     [TestClass()]
     public class RepeatedCDKAtomTypeMatcherSMILESTest : CDKTestCase
     {
-        private static SmilesParser smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-        private static CDKAtomTypeMatcher atomTypeMatcher = CDKAtomTypeMatcher.GetInstance(Silent.ChemObjectBuilder.Instance);
+        private static SmilesParser smilesParser = CDK.SilentSmilesParser;
+        private static IAtomTypeMatcher atomTypeMatcher = CDK.AtomTypeMatcher;
 
         [TestMethod()]
         public void TestSMILES()

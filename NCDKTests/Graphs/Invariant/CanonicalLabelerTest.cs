@@ -37,7 +37,7 @@ namespace NCDK.Graphs.Invariant
     [TestClass()]
     public class CanonicalLabelerTest : CDKTestCase
     {
-        private SmilesParser parser = new SmilesParser(ChemObjectBuilder.Instance);
+        private SmilesParser parser = CDK.SilentSmilesParser;
         private CanonicalLabeler labeler = new CanonicalLabeler();
 
         public CanonicalLabelerTest()
@@ -130,13 +130,13 @@ namespace NCDK.Graphs.Invariant
         /// <param name="container">to which implicit hydrogens are added.</param>
         protected override void AddImplicitHydrogens(IAtomContainer container)
         {
-            var matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
+            var matcher = CDK.AtomTypeMatcher;
             foreach (var atom in container.Atoms)
             {
                 var type = matcher.FindMatchingAtomType(container, atom);
                 AtomTypeManipulator.Configure(atom, type);
             }
-            var hAdder = CDKHydrogenAdder.GetInstance(container.Builder);
+            var hAdder = CDK.HydrogenAdder;
             hAdder.AddImplicitHydrogens(container);
         }
 

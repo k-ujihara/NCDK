@@ -39,8 +39,8 @@ namespace NCDK.Tools
     [TestClass()]
     public class CDKHydrogenAdderTest : CDKTestCase
     {
-        private readonly static CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(Silent.ChemObjectBuilder.Instance);
-        private readonly static CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(Silent.ChemObjectBuilder.Instance);
+        private readonly static IHydrogenAdder adder = CDK.HydrogenAdder;
+        private readonly static IAtomTypeMatcher matcher = CDK.AtomTypeMatcher;
 
         [TestMethod()]
         public void TestInstance()
@@ -768,7 +768,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestMercaptan()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(mol.Builder.NewAtom("C"));
             mol.Atoms.Add(mol.Builder.NewAtom("C"));
             mol.Atoms.Add(mol.Builder.NewAtom("C"));
@@ -810,10 +810,10 @@ namespace NCDK.Tools
         [TestMethod()]
         public void UnknownAtomTypeLeavesHydrogenCountAlone()
         {
-            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
-            CDKHydrogenAdder hydrogenAdder = CDKHydrogenAdder.GetInstance(bldr);
-            IAtomContainer container = bldr.NewAtomContainer();
-            IAtom atom = bldr.NewAtom("C");
+            var bldr = Silent.ChemObjectBuilder.Instance;
+            var hydrogenAdder = CDK.HydrogenAdder;
+            var container = bldr.NewAtomContainer();
+            var atom = bldr.NewAtom("C");
             atom.ImplicitHydrogenCount = 3;
             atom.AtomTypeName = "X";
             container.Atoms.Add(atom);
@@ -824,10 +824,10 @@ namespace NCDK.Tools
         [TestMethod()]
         public void UnknownAtomTypeLeavesHydrogenCountAloneUnlessNull()
         {
-            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
-            CDKHydrogenAdder hydrogenAdder = CDKHydrogenAdder.GetInstance(bldr);
-            IAtomContainer container = bldr.NewAtomContainer();
-            IAtom atom = bldr.NewAtom("C");
+            var bldr = Silent.ChemObjectBuilder.Instance;
+            var hydrogenAdder = CDK.HydrogenAdder;
+            var container = bldr.NewAtomContainer();
+            var atom = bldr.NewAtom("C");
             atom.ImplicitHydrogenCount = null;
             atom.AtomTypeName = "X";
             container.Atoms.Add(atom);
@@ -837,11 +837,11 @@ namespace NCDK.Tools
 
         private void FindAndConfigureAtomTypesForAllAtoms(IAtomContainer container)
         {
-            IEnumerator<IAtom> atoms = container.Atoms.GetEnumerator();
+            var atoms = container.Atoms.GetEnumerator();
             while (atoms.MoveNext())
             {
-                IAtom atom = atoms.Current;
-                IAtomType type = matcher.FindMatchingAtomType(container, atom);
+                var atom = atoms.Current;
+                var type = matcher.FindMatchingAtomType(container, atom);
                 Assert.IsNotNull(type);
                 AtomTypeManipulator.Configure(atom, type);
             }

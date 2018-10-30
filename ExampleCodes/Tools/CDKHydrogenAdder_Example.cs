@@ -13,13 +13,13 @@ namespace NCDK.Tools
                 IAtomContainer methane = new AtomContainer();
                 IAtom carbon = new Atom("C");
                 methane.Atoms.Add(carbon);
-                CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(methane.Builder);
+                CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance();
                 foreach (var atom in methane.Atoms)
                 {
                     IAtomType type = matcher.FindMatchingAtomType(methane, atom);
                     AtomTypeManipulator.Configure(atom, type);
                 }
-                CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(methane.Builder);
+                var adder = CDK.HydrogenAdder;
                 adder.AddImplicitHydrogens(methane);
                 #endregion
             }
@@ -30,10 +30,10 @@ namespace NCDK.Tools
                 IAtom carbon2 = new Atom("C");
                 ethane.Atoms.Add(carbon1);
                 ethane.Atoms.Add(carbon2);
-                CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(ethane.Builder);
+                CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance();
                 IAtomType type = matcher.FindMatchingAtomType(ethane, carbon1);
                 AtomTypeManipulator.Configure(carbon1, type);
-                CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(ethane.Builder);
+                var adder = CDK.HydrogenAdder;
                 adder.AddImplicitHydrogens(ethane, carbon1);
                 #endregion
             }
