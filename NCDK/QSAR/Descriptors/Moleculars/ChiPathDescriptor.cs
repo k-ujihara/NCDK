@@ -17,10 +17,8 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.AtomTypes;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.QSAR.Results;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -187,9 +185,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </remarks>
         public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(16);
 
-        private static List<IReadOnlyList<int>> Order0(IAtomContainer atomContainer)
+        private static List<List<int>> Order0(IAtomContainer atomContainer)
         {
-            var fragments = new List<IReadOnlyList<int>>();
+            var fragments = new List<List<int>>();
             foreach (var atom in atomContainer.Atoms)
             {
                 var tmp = new List<int> { atomContainer.Atoms.IndexOf(atom) };
@@ -198,9 +196,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return fragments;
         }
 
-        private static List<IReadOnlyList<int>> Order1(IAtomContainer atomContainer)
+        private static List<List<int>> Order1(IAtomContainer atomContainer)
         {
-            var fragments = new List<IReadOnlyList<int>>();
+            var fragments = new List<List<int>>();
             foreach (var bond in atomContainer.Bonds)
             {
                 if (bond.Atoms.Count != 2)
@@ -222,7 +220,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private static readonly IAtomContainer C7 = CDK.SilentSmilesParser.ParseSmiles("CCCCCCC");
         private static readonly IAtomContainer C8 = CDK.SilentSmilesParser.ParseSmiles("CCCCCCCC");
 
-        private static IEnumerable<IReadOnlyList<int>> Order2(IAtomContainer atomContainer)
+        private static List<List<int>> Order2(IAtomContainer atomContainer)
         {
             var queries = new QueryAtomContainer[1];
             try
@@ -236,7 +234,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ChiIndexUtils.GetFragments(atomContainer, queries);
         }
 
-        private static IEnumerable<IReadOnlyList<int>> Order3(IAtomContainer atomContainer)
+        private static List<List<int>> Order3(IAtomContainer atomContainer)
         {
             var queries = new QueryAtomContainer[1];
             try
@@ -250,7 +248,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ChiIndexUtils.GetFragments(atomContainer, queries);
         }
 
-        private static IEnumerable<IReadOnlyList<int>> Order4(IAtomContainer atomContainer)
+        private static List<List<int>> Order4(IAtomContainer atomContainer)
         {
             var queries = new QueryAtomContainer[1];
             try
@@ -264,7 +262,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ChiIndexUtils.GetFragments(atomContainer, queries);
         }
 
-        private static IEnumerable<IReadOnlyList<int>> Order5(IAtomContainer atomContainer)
+        private static List<List<int>> Order5(IAtomContainer atomContainer)
         {
             var queries = new QueryAtomContainer[1];
             try
@@ -278,7 +276,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ChiIndexUtils.GetFragments(atomContainer, queries);
         }
 
-        private static IEnumerable<IReadOnlyList<int>> Order6(IAtomContainer atomContainer)
+        private static List<List<int>> Order6(IAtomContainer atomContainer)
         {
             var queries = new QueryAtomContainer[1];
             try
@@ -292,7 +290,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ChiIndexUtils.GetFragments(atomContainer, queries);
         }
 
-        private static IEnumerable<IReadOnlyList<int>> Order7(IAtomContainer atomContainer)
+        private static List<List<int>> Order7(IAtomContainer atomContainer)
         {
             var queries = new QueryAtomContainer[1];
             try

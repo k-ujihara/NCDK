@@ -118,8 +118,8 @@ namespace NCDK.Isomorphisms
         {
             bool isQuery = query is IQueryAtomContainer;
             return FindSubstructure(query,
-                                    isQuery ? AtomMatcher.CreateQueryMatcher() : AtomMatcher.CreateElementMatcher(),
-                                    isQuery ? BondMatcher.CreateQueryMatcher() : BondMatcher.CreateOrderMatcher());
+                isQuery ? AtomMatcher.CreateQueryMatcher() : AtomMatcher.CreateElementMatcher(),
+                isQuery ? BondMatcher.CreateQueryMatcher() : BondMatcher.CreateOrderMatcher());
         }
 
         /// <summary>

@@ -54,17 +54,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="atomContainer">The target <see cref="IAtomContainer"/></param>
         /// <param name="queries">An array of query fragments</param>
         /// <returns>A list of lists, each list being the atoms that match the query fragments</returns>
-        public static IEnumerable<IReadOnlyList<int>> GetFragments(IAtomContainer atomContainer, QueryAtomContainer[] queries)
+        public static List<List<int>> GetFragments(IAtomContainer atomContainer, QueryAtomContainer[] queries)
         {
             var universalIsomorphismTester = new UniversalIsomorphismTester();
-            var uniqueSubgraphs = new List<IReadOnlyList<int>>();
+            var uniqueSubgraphs = new List<List<int>>();
             foreach (var query in queries)
             {
-                IEnumerable<IReadOnlyList<RMap>> subgraphMaps = null;
+                List<IReadOnlyList<RMap>> subgraphMaps = null;
                 try
                 {
                     // we get the list of bond mappings
-                    subgraphMaps = universalIsomorphismTester.GetSubgraphMaps(atomContainer, query);
+                    subgraphMaps = universalIsomorphismTester.GetSubgraphMaps(atomContainer, query).ToList();
                 }
                 catch (CDKException e)
                 {
@@ -86,18 +86,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             // will have number of atoms equal to the number of bonds+1. So we need to check
             // fragment size against all unique query sizes - I get lazy and don't check
             // unique query sizes, but the size of each query
+            var ret = new List<List<int>>(uniqueSubgraphs.Count);
             foreach (var fragment in uniqueSubgraphs)
             {
                 foreach (var query in queries)
                 {
                     if (fragment.Count == query.Atoms.Count)
                     {
-                        yield return fragment;
+                        ret.Add(fragment);
                         break;
                     }
                 }
             }
-            yield break;
+            return ret;
         }
 
         /// <summary>
@@ -135,7 +136,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="fragList">A list of fragments</param>
         /// <returns>The valence corrected chi index</returns>
         /// <exception cref="CDKException"> if the <see cref="IsotopeFactory"/> cannot be created</exception>
-        public static double EvalValenceIndex(IAtomContainer atomContainer, IEnumerable<IReadOnlyList<int>> fragList)
+        public static double EvalValenceIndex(IAtomContainer atomContainer, List<List<int>> fragList)
         {
             try
             {
@@ -287,7 +288,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="subgraphs">A <see cref="IList{T}"/> of bon mappings</param>
         /// <param name="ac">The molecule we are examining</param>
         /// <returns>A unique <see cref="IList{T}"/> of atom paths</returns>
-        private static List<IReadOnlyList<int>> GetUniqueBondSubgraphs(IEnumerable<IReadOnlyList<RMap>> subgraphs, IAtomContainer ac)
+        private static List<List<int>> GetUniqueBondSubgraphs(IEnumerable<IReadOnlyList<RMap>> subgraphs, IAtomContainer ac)
         {
             var bondList = new List<List<int>>();
             foreach (var subgraph in subgraphs)
@@ -311,7 +312,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 ;
             }
 
-            var paths = new List<IReadOnlyList<int>>();
+            var paths = new List<List<int>>();
             foreach (var aBondList1 in bondList)
             {
                 var aBondList = aBondList1;
@@ -321,7 +322,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     foreach (var atom in ac.Bonds[bondNumber].Atoms)
                     {
                         int atomInt = ac.Atoms.IndexOf(atom);
-                        if (!tmp.Contains(atomInt)) tmp.Add(atomInt);
+                        if (!tmp.Contains(atomInt))
+                            tmp.Add(atomInt);
                     }
                 }
                 paths.Add(tmp);

@@ -27,6 +27,7 @@ using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Smiles;
 using System.IO;
+using System.Linq;
 
 namespace NCDK.SMARTS
 {
@@ -394,23 +395,23 @@ namespace NCDK.SMARTS
 
         void AssertMatch(IAtomContainer query, IAtomContainer target, int count)
         {
-            Assert.AreEqual(count, Create(query).MatchAll(target).Count(), query.Title + " should match " + target.Title + " " + count + " times");
+            Assert.AreEqual(count, Create(query).MatchAll(target).Count(), $"{query.Title} should match {target.Title} {count} times");
         }
 
         void AssertMatch(IAtomContainer query, IAtomContainer target)
         {
-            Assert.IsTrue(Create(query).Matches(target), query.Title + " should match " + target.Title);
+            Assert.IsTrue(Create(query).Matches(target), $"{query.Title} should match {target.Title}");
         }
 
         void AssertMismatch(IAtomContainer query, IAtomContainer target)
         {
-            Assert.IsFalse(Create(query).Matches(target), query.Title + " should not matched " + target.Title);
+            Assert.IsFalse(Create(query).Matches(target), $"{query.Title} should not matched {target.Title}");
         }
 
         private static readonly SmilesParser sp = CDK.SilentSmilesParser;
 
         // create a container from a smiles string
-        IAtomContainer Smi(string smi)
+        protected static IAtomContainer Smi(string smi)
         {
             var container = sp.ParseSmiles(smi);
             container.Title = smi;
@@ -420,7 +421,7 @@ namespace NCDK.SMARTS
         // create a query container from a smarts pattern
         // Note: only use simple constructs! the target properties will not
         // currently be initialised. avoid aromaticity, rings etc.
-        IAtomContainer Sma(string sma)
+        protected static IAtomContainer Sma(string sma)
         {
             var query = new QueryAtomContainer(Silent.ChemObjectBuilder.Instance);
             if (!Smarts.Parse(query, sma))

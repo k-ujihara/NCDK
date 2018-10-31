@@ -5,7 +5,7 @@ NCDK is .NET port of [the Chemistry Development Project (CDK)](https://github.co
 
 NCDK is covered under LGPL v2.1. The modules are free and open-source and is easily integrated with other open-source or in-house projects.
 
-The current release is based on [cdk 2018-10-26](https://github.com/cdk/cdk/tree/a8db1a8b79c5aaf574052139c19cd7938ee85c43) snapshot.
+The current release is based on [cdk Release 2.2](https://github.com/cdk/cdk/tree/f7fe4d5f93f75250c1e29473b8f8f35862b51e0b) snapshot.
 
 Getting Started
 ---------------
@@ -31,7 +31,7 @@ Test from Command Line
 
 Windows: Launch "vstest.console.exe NCDKTests\bin\Release\netcoreapp2.1\NCDKTests.dll" and "vstest.console.exe NCDKDisplayTests\bin\Release\NCDKDisplayTests.dll".
 
-Linux: Launch "dotnet build" to build assemblies and copy libinchi.so.#.## to output directory of NCDKTests, and make a link of libinchi.so to the libinchi.so.#.##. 
+Linux: Launch "dotnet build" to build assemblies and copy libinchi.so.#.## to output directory of NCDKTests, and make a link of libinchi.so to the libinchi.so.#.##.
 And then, launch "dotnet test" in NCDKTests directory to test it.
 
 NuGet Packages

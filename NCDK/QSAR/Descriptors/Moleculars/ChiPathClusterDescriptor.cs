@@ -155,7 +155,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(6);
 
-        private IEnumerable<IReadOnlyList<int>> Order4(IAtomContainer atomContainer)
+        private List<List<int>> Order4(IAtomContainer atomContainer)
         {
             var queries = new QueryAtomContainer[1];
             try
@@ -169,7 +169,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ChiIndexUtils.GetFragments(atomContainer, queries);
         }
 
-        private IEnumerable<IReadOnlyList<int>> Order5(IAtomContainer atomContainer)
+        private List<List<int>> Order5(IAtomContainer atomContainer)
         {
             var queries = new QueryAtomContainer[3];
             try
@@ -185,7 +185,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ChiIndexUtils.GetFragments(atomContainer, queries);
         }
 
-        private IEnumerable<IReadOnlyList<int>> Order6(IAtomContainer atomContainer)
+        private List<List<int>> Order6(IAtomContainer atomContainer)
         {
             var queries = new QueryAtomContainer[6];
             try

@@ -23,7 +23,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Smiles;
+using System.Linq;
 
 namespace NCDK.SMARTS
 {
@@ -31,7 +31,7 @@ namespace NCDK.SMARTS
     [TestClass()]
     public class SmartsPatternTest
     {
-        IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+        readonly IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
 
         [TestMethod()]
         public void Isotopes()

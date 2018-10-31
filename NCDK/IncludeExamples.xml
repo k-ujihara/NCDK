@@ -1091,7 +1091,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.IO.CMLWriter_Example.cs">
-    <code>                using (CMLWriter cmlwriter = new CMLWriter(new FileStream("molecule.cml", FileMode.Create)))
+    <code>                using (var cmlwriter = new CMLWriter(new FileStream("molecule.cml", FileMode.Create)))
                 {
                     cmlwriter.Write(molecule);
                 }
@@ -1103,23 +1103,25 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.IO.MDLRXNWriter_Example.cs">
-    <code>                using (MDLRXNWriter writer = new MDLRXNWriter(new FileStream("output.mol", FileMode.Create)))
+    <code>                using (var writer = new MDLRXNWriter(new FileStream("output.mol", FileMode.Create)))
                 {
                     writer.Write(molecule);
                 }
 </code>
   </Codes>
   <Codes id="NCDK.IO.MDLV2000Writer_Example.cs">
-    <code>                using (MDLV2000Writer writer = new MDLV2000Writer(new FileStream("output.mol", FileMode.Create)))
+    <code>                using (var writer = new MDLV2000Writer(new FileStream("output.mol", FileMode.Create)))
                 {
                     writer.Write((IAtomContainer)molecule);
                 }
 </code>
   </Codes>
   <Codes id="NCDK.IO.MDLV2000Writer_Example.cs+listener">
-    <code>                var customSettings = new NameValueCollection();
-                customSettings["ForceWriteAs2DCoordinates"] = "true";
-                PropertiesListener listener = new PropertiesListener(customSettings);
+    <code>                var customSettings = new NameValueCollection
+                {
+                    ["ForceWriteAs2DCoordinates"] = "true"
+                };
+                var listener = new PropertiesListener(customSettings);
                 writer.Listeners.Add(listener);
 </code>
   </Codes>
@@ -2106,7 +2108,7 @@ namespace NCDK.Smiles
     <code>                IAtomContainer methane = new AtomContainer();
                 IAtom carbon = new Atom("C");
                 methane.Atoms.Add(carbon);
-                CDKAtomTypeMatcher matcher = CDK.CdkAtomTypeMatcher;
+                CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance();
                 foreach (var atom in methane.Atoms)
                 {
                     IAtomType type = matcher.FindMatchingAtomType(methane, atom);
@@ -2122,7 +2124,7 @@ namespace NCDK.Smiles
                 IAtom carbon2 = new Atom("C");
                 ethane.Atoms.Add(carbon1);
                 ethane.Atoms.Add(carbon2);
-                CDKAtomTypeMatcher matcher = CDK.CdkAtomTypeMatcher;
+                CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance();
                 IAtomType type = matcher.FindMatchingAtomType(ethane, carbon1);
                 AtomTypeManipulator.Configure(carbon1, type);
                 var adder = CDK.HydrogenAdder;

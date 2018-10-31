@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 John Mayfield <jwmay@users.sf.net>
+ * Copyright (c) 2018 NextMove Software
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -1437,7 +1437,8 @@ namespace NCDK.SMARTS
             bool ParseBondExpr()
             {
                 bond = new QueryBond(mol.Builder) { Expression = new Expr(ExprType.None) };
-                bond.Atoms.Add(null); bond.Atoms.Add(null);
+                while (bond.Atoms.Count < 2)
+                    bond.Atoms.Add(null);
 
                 if (!ParseBondExpr(bond.Expression, bond, '\0'))
                 {
@@ -1502,7 +1503,8 @@ namespace NCDK.SMARTS
                 if (bond == null)
                 {
                     bond = new QueryBond(null) { Expression = null };
-                    bond.Atoms.Add(null); bond.Atoms.Add(null);
+                    while (bond.Atoms.Count < 2)
+                        bond.Atoms.Add(null);
                 }
                 bond.Atoms[0] = prev;
                 rings[rnum] = AddBond(prev, bond);
@@ -1791,7 +1793,8 @@ namespace NCDK.SMARTS
                     if (bond == null)
                     {
                         bond = new QueryBond(mol.Builder) { Expression = new Expr(ExprType.SingleOrAromatic) };
-                        bond.Atoms.Add(null); bond.Atoms.Add(null);
+                        while (bond.Atoms.Count < 2)
+                            bond.Atoms.Add(null);
                     }
                     bond.Atoms[0] = prev;
                     bond.Atoms[1] = atom;

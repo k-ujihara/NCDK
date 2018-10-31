@@ -23,10 +23,11 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NCDK.Smiles;
-using System.Collections.Generic;
-using System;
 using NCDK.Common.Base;
+using NCDK.Smiles;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.Isomorphisms
 {
@@ -118,7 +119,7 @@ namespace NCDK.Isomorphisms
             m_iterator.SetupSequence(n => n.MoveNext()).Returns(true).Returns(true).Returns(true).Returns(true).Returns(true).Returns(false);
             m_iterator.SetupGet(n => n.Current).Returns(Array.Empty<int>());
 
-            Mappings ms = new Mappings(new Mock<IAtomContainer>().Object, new Mock<IAtomContainer>().Object, iterable);
+            var ms = new Mappings(new Mock<IAtomContainer>().Object, new Mock<IAtomContainer>().Object, iterable);
             Assert.AreEqual(2, ms.Limit(2).Count());
             m_iterator.Verify(n => n.Current, Times.AtMost(2)); // was only called twice
         }

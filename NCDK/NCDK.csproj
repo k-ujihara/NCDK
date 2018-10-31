@@ -7,18 +7,18 @@
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
     <Company>Kazuya Ujihara</Company>
     <Copyright>Copyright © 2016-2018 Kazuya Ujihara</Copyright>
-    <AssemblyVersion>1.4.0.0</AssemblyVersion>
-    <FileVersion>1.4.0.0</FileVersion>
+    <AssemblyVersion>1.5.0.0</AssemblyVersion>
+    <FileVersion>1.5.0.0</FileVersion>
     <Product>NCDK: Chemistry Development Kit for .NET Framework</Product>
     <PackageProjectUrl>https://github.com/kazuyaujihara/NCDK</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/kazuyaujihara/NCDK/blob/master/LICENSE</PackageLicenseUrl>
     <Description>NCDK is C# implementation of The Chemistry Development Kit (CDK), which is an open-source library of algorithms for structural chemo- and bioinformatics.</Description>
-    <Version>1.4.0-alpha</Version>
+    <Version>1.5.0-alpha</Version>
     <Authors>Kazuya Ujihara</Authors>
     <RepositoryUrl>https://github.com/kazuyaujihara/NCDK</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>cdk cheminformatics chemistry toolkit</PackageTags>
-    <PackageReleaseNotes>This release is based on https://github.com/cdk/cdk/tree/6fade7b5470669955835046d9fb09c48f658efde snapshot.</PackageReleaseNotes>
+    <PackageReleaseNotes>This release is based on [cdk Release 2.2](https://github.com/cdk/cdk/tree/f7fe4d5f93f75250c1e29473b8f8f35862b51e0b) snapshot.</PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>NCDK</PackageId>
   </PropertyGroup>

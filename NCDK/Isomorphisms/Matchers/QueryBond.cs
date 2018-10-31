@@ -56,8 +56,8 @@ namespace NCDK.Isomorphisms.Matchers
             : this(beg, end, BondOrder.Unset, BondStereo.None, beg.Builder)
         {
             this.Expression.Set(expr);
-            Atoms.Add(null);
-            Atoms.Add(null);
+            while (Atoms.Count < 2)
+                Atoms.Add(null);
         }
 
         /// <summary>
@@ -73,8 +73,8 @@ namespace NCDK.Isomorphisms.Matchers
             : this(beg, end, BondOrder.Unset, BondStereo.None, beg.Builder)
         {
             this.Expression.SetPrimitive(type);
-            Atoms.Add(null);
-            Atoms.Add(null);
+            while (Atoms.Count < 2)
+                Atoms.Add(null);
         }
         /// <summary>
         /// Constructs an query bond from an expression type and value.
@@ -89,8 +89,8 @@ namespace NCDK.Isomorphisms.Matchers
             : this(beg, end, BondOrder.Unset, BondStereo.None, beg.Builder)
         {
             this.Expression.SetPrimitive(type, val);
-            Atoms.Add(null);
-            Atoms.Add(null);
+            while (Atoms.Count < 2)
+                Atoms.Add(null);
         }
 
         /// <summary>

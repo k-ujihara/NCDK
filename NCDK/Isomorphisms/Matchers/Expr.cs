@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 John Mayfield <jwmay@users.sf.net>
+ * Copyright (c) 2018 NextMove Software
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -119,6 +119,7 @@ namespace NCDK.Isomorphisms.Matchers
         private Expr left, right;
         // user for recursive expression types
         private IAtomContainer query;
+        private DfPattern ptrn;
 
         /// <summary>
         /// Creates an atom expression that will always match (<see cref="ExprType.True"/>).
@@ -387,12 +388,9 @@ namespace NCDK.Isomorphisms.Matchers
                           || left.type == ExprType.Or 
                           && left.left.type == ExprType.Stereochemistry));
                 case ExprType.Recursive:
-                    foreach (var match in Pattern.FindSubstructure(query).MatchAll(atom.Container))
-                    {
-                        if (match[0] == atom.Index)
-                            return true;
-                    }
-                    return false;
+                    if (ptrn == null)
+                        ptrn = DfPattern.FindSubstructure(query);
+                    return ptrn.MatchesRoot(atom);
                 default:
                     throw new ArgumentException($"Cannot match AtomExpr, type={type}", nameof(type));
             }
@@ -680,6 +678,7 @@ namespace NCDK.Isomorphisms.Matchers
                     this.left = null;
                     this.right = null;
                     this.query = mol;
+                    this.ptrn = null;
                     break;
                 default:
                     throw new ArgumentException();

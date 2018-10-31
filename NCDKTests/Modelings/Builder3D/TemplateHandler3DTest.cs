@@ -111,14 +111,14 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestMapTemplates_IAtomContainer_Double()
         {
-            IAtomContainer ac = TestMoleculeFactory.MakeBicycloRings();
-            TemplateHandler3D th3d = TemplateHandler3D.Instance;
-            ForceFieldConfigurator ffc = new ForceFieldConfigurator();
+            var ac = TestMoleculeFactory.MakeBicycloRings();
+            var th3d = TemplateHandler3D.Instance;
+            var ffc = new ForceFieldConfigurator();
             ffc.SetForceFieldConfigurator("mm2", ac.Builder);
-            IRingSet ringSetMolecule = ffc.AssignAtomTyps(ac);
+            var ringSetMolecule = ffc.AssignAtomTyps(ac);
             var ringSystems = RingPartitioner.PartitionRings(ringSetMolecule);
-            IRingSet largestRingSet = RingSetManipulator.GetLargestRingSet(ringSystems);
-            IAtomContainer largestRingSetContainer = RingSetManipulator.GetAllInOneContainer(largestRingSet);
+            var largestRingSet = RingSetManipulator.GetLargestRingSet(ringSystems);
+            var largestRingSetContainer = RingSetManipulator.GetAllInOneContainer(largestRingSet);
             th3d.MapTemplates(largestRingSetContainer, largestRingSetContainer.Atoms.Count);
             for (int i = 0; i < ac.Atoms.Count; i++)
             {

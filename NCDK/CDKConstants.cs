@@ -85,6 +85,16 @@ namespace NCDK
         public const string NMRShiftSulfer = "sulfur nmr shift";
 
         /// <summary>
+        /// NMR signal multiplicity constant for use as a key in the IChemObject.physicalProperties hashtable.
+        /// </summary>
+        public const string NMRSignalMultiplicity = "nmr signal multiplicity";
+
+        /// <summary>
+        /// NMR signal intensity constant for use as a key in the IChemObject.physicalProperties hashtable.
+        /// </summary>
+        public const string NMRSignalIntensity = "nmr signal intensity";
+
+        /// <summary>
         /// NMR spectrum type constant for use as key for an arbitrary 1-dimensional
         /// NMR experiment.
         /// </summary>

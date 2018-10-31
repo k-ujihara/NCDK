@@ -182,9 +182,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(10);
 
-        private static List<IReadOnlyList<int>> Order3(IAtomContainer container)
+        private static List<List<int>> Order3(IAtomContainer container)
         {
-            var ret = new List<IReadOnlyList<int>>();
+            var ret = new List<List<int>>();
 
             var rings = Cycles.FindSSSR(container).ToRingSet();
 
@@ -205,7 +205,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ret;
         }
 
-        private IEnumerable<IReadOnlyList<int>> Order4(IAtomContainer atomContainer)
+        private List<List<int>> Order4(IAtomContainer atomContainer)
         {
             var queries = new QueryAtomContainer[2];
             try
@@ -220,7 +220,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ChiIndexUtils.GetFragments(atomContainer, queries);
         }
 
-        private IEnumerable<IReadOnlyList<int>> Order5(IAtomContainer atomContainer)
+        private List<List<int>> Order5(IAtomContainer atomContainer)
         {
             var queries = new QueryAtomContainer[3];
             try
@@ -236,7 +236,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ChiIndexUtils.GetFragments(atomContainer, queries);
         }
 
-        private IEnumerable<IReadOnlyList<int>> Order6(IAtomContainer atomContainer)
+        private List<List<int>> Order6(IAtomContainer atomContainer)
         {
             var queries = new QueryAtomContainer[9];
             try
@@ -258,7 +258,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ChiIndexUtils.GetFragments(atomContainer, queries);
         }
 
-        private IEnumerable<IReadOnlyList<int>> Order7(IAtomContainer atomContainer)
+        private List<List<int>> Order7(IAtomContainer atomContainer)
         {
             string[] smiles = {
                 "C1CCCCC1C",
@@ -271,7 +271,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 // 3-ring cases
                 "C1(C)C(C)C1(CC)", "C1C(C)(C)C1(C)(C)", "C1CC1CCCC", "C1C(C)C1(CCC)", "C1C(CC)C1(CC)",
                 "C1C(C)C1C(C)(C)", "C1C(C)C1(C)(CC)", "C1CC1CC(C)(C)", "C1CC1C(C)CC", "C1CC1C(C)(C)(C)"};
-            QueryAtomContainer[] queries = new QueryAtomContainer[smiles.Length];
+            var queries = new QueryAtomContainer[smiles.Length];
             try
             {
                 for (int i = 0; i < smiles.Length; i++)

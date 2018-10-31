@@ -140,7 +140,8 @@ namespace NCDK.Isomorphisms
         public Mappings GetStereochemistry()
         {
             // query structures currently have special requirements (i.e. SMARTS)
-            if (query is IQueryAtomContainer) return this;
+            if (query is IQueryAtomContainer)
+                return this;
             var match = new StereoMatch(query, target);
             return Filter(n => match.Apply(n));
         }
@@ -259,7 +260,7 @@ namespace NCDK.Isomorphisms
             var mapper = new AtomBondMaper(query, target);
             return GetMapping(n => mapper.Apply(n)).Select(map =>
             {
-                IAtomContainer submol = target.Builder.NewAtomContainer();
+                var submol = target.Builder.NewAtomContainer();
                 foreach (var atom in query.Atoms)
                     submol.Atoms.Add((IAtom)map[atom]);
                 foreach (var bond in query.Bonds)
@@ -293,26 +294,18 @@ namespace NCDK.Isomorphisms
         }
 
         /// <summary>
-        /// Convenience method to count the number mappings. Note mappings are lazily
-        /// generated and checking the count and then iterating over the mappings
-        /// currently performs two searches. If the mappings are also needed, it is
-        /// more efficient to check the mappings and count manually.
+        /// Convenience method to count the number of unique atom mappings. 
         /// </summary>
-        /// <returns>number of matches</returns>
-        public int Count()
-        {
-            return iterable.Count();
-        }
-
-        /// <summary>
-        /// Convenience method to count the number of unique atom mappings. Note
+        /// <remarks>
+        /// Note
         /// mappings are lazily generated and checking the count and then iterating
         /// over the mappings currently performs two searches. If the mappings are
         /// also needed, it is more efficient to check the mappings and count
         /// manually.
-        ///
-        /// The method is simply invokes <c>mappings.GetUniqueAtoms().Count()</c>.
-        /// </summary>
+        /// <para>
+        /// The method is simply invokes <c>Mappings.GetUniqueAtoms().Count()</c>.
+        /// </para>
+        /// </remarks>
         /// <returns>number of matches</returns>
         public int CountUnique()
         {

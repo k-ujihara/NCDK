@@ -65,7 +65,7 @@ namespace NCDK.Modelings.Builder3D
         private void AddTemplateMol(IAtomContainer mol)
         {
             templates.Add(mol);
-            QueryAtomContainer query = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(mol, false);
+            var query = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(mol, false);
             queries.Add(query);
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
@@ -84,7 +84,7 @@ namespace NCDK.Modelings.Builder3D
             {
                 using (var gin = GetType().Assembly.GetManifestResourceStream(GetType(), TemplatePath))
                 using (var ins = new GZipStream(gin, CompressionMode.Decompress))
-                using (EnumerableSDFReader sdfr = new EnumerableSDFReader(ins, builder))
+                using (var sdfr = new EnumerableSDFReader(ins, builder))
                 {
                     foreach (var mol in sdfr)
                     {
@@ -173,7 +173,7 @@ namespace NCDK.Modelings.Builder3D
 
             for (int i = 0; i < templates.Count; i++)
             {
-                IAtomContainer query = queries[i];
+                var query = queries[i];
 
                 //if the atom count is different, it can't be right anyway
                 if (query.Atoms.Count != mol.Atoms.Count)
@@ -181,7 +181,7 @@ namespace NCDK.Modelings.Builder3D
                     continue;
                 }
 
-                Mappings mappings = patterns[i].MatchAll(mol);
+                var mappings = patterns[i].MatchAll(mol);
                 foreach (var map in mappings.ToAtomBondMap())
                 {
                     if (IsExactMatch(query, map))
