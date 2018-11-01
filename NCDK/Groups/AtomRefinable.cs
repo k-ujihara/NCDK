@@ -48,13 +48,13 @@ namespace NCDK.Groups
         /// <summary>
         /// Ignore the elements when creating the initial partition.
         /// </summary>
-        private bool ignoreElements;
+        private readonly bool ignoreElements;
 
         /// <summary>
         /// Specialised option to allow generating automorphisms
         /// that ignore the bond order.
         /// </summary>
-        private bool ignoreBondOrders;
+        private readonly bool ignoreBondOrders;
 
         private int maxBondOrder;
 
@@ -230,8 +230,8 @@ namespace NCDK.Groups
             }
             for (int atomIndex = 0; atomIndex < atomCount; atomIndex++)
             {
-                IAtom atom = atomContainer.Atoms[atomIndex];
-                var connectedAtoms = atomContainer.GetConnectedAtoms(atom).ToList();
+                var atom = atomContainer.Atoms[atomIndex];
+                var connectedAtoms = atomContainer.GetConnectedAtoms(atom).ToReadOnlyList();
                 int numConnAtoms = connectedAtoms.Count;
                 connectionTable[atomIndex] = new int[numConnAtoms];
                 if (!ignoreBondOrders)

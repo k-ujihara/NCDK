@@ -397,7 +397,7 @@ namespace NCDK.Geometries
         /// <returns>true=is square planar, false=is not</returns>
         public static int IsTrigonalBipyramidalOrOctahedral(IAtomContainer container, IAtom atom)
         {
-            var atoms = container.GetConnectedAtoms(atom).ToList();
+            var atoms = container.GetConnectedAtoms(atom).ToReadOnlyList();
             if (atoms.Count < 5 || atoms.Count > 6)
             {
                 return (0);
@@ -439,7 +439,7 @@ namespace NCDK.Geometries
         /// <returns>true=is a stereo atom, false=is not</returns>
         public static bool IsStereo(IAtomContainer container, IAtom stereoAtom)
         {
-            var atoms = container.GetConnectedAtoms(stereoAtom).ToList();
+            var atoms = container.GetConnectedAtoms(stereoAtom).ToReadOnlyList();
             if (atoms.Count < 4 || atoms.Count > 6)
             {
                 return (false);
@@ -553,12 +553,12 @@ namespace NCDK.Geometries
         /// <returns>true=is square planar, false=is not</returns>
         public static bool IsSquarePlanar(IAtomContainer container, IAtom atom)
         {
-            List<IAtom> atoms = container.GetConnectedAtoms(atom).ToList();
-            if (atoms.Count != 4)
+            var atoms = container.GetConnectedAtoms(atom);
+            if (atoms.Count() != 4)
             {
                 return (false);
             }
-            List<IBond> bonds = container.GetConnectedBonds(atom).ToList();
+            var bonds = container.GetConnectedBonds(atom);
             int up = 0;
             int down = 0;
             foreach (var bond in bonds)
@@ -588,15 +588,15 @@ namespace NCDK.Geometries
         /// <returns>true=are opposite, false=are not</returns>
         public static bool StereosAreOpposite(IAtomContainer container, IAtom atom)
         {
-            List<IAtom> atoms = container.GetConnectedAtoms(atom).ToList();
-            SortedDictionary<double, int> hm = new SortedDictionary<double, int>();
+            var atoms = container.GetConnectedAtoms(atom).ToReadOnlyList();
+            var hm = new SortedDictionary<double, int>();
             for (int i = 1; i < atoms.Count; i++)
             {
                 hm.Add(GiveAngle(atom, atoms[0], atoms[i]), i);
             }
             var ohere = hm.Values.ToArray();
-            BondStereo stereoOne = container.GetBond(atom, atoms[0]).Stereo;
-            BondStereo stereoOpposite = container.GetBond(atom, atoms[ohere[1]]).Stereo;
+            var stereoOne = container.GetBond(atom, atoms[0]).Stereo;
+            var stereoOpposite = container.GetBond(atom, atoms[ohere[1]]).Stereo;
             return stereoOpposite == stereoOne;
         }
 
@@ -628,8 +628,8 @@ namespace NCDK.Geometries
         {
             for (int i = 0; i < container.Atoms.Count; i++)
             {
-                IAtom a = container.Atoms[i];
-                var connectedAtoms = container.GetConnectedAtoms(a).ToList();
+                var a = container.Atoms[i];
+                var connectedAtoms = container.GetConnectedAtoms(a).ToReadOnlyList();
                 if (connectedAtoms.Count == 4)
                 {
                     int up = 0;

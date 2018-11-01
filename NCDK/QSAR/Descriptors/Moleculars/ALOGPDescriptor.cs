@@ -807,9 +807,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private void CalcGroup021_to_023_040(int i)
         {
-
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]).ToList();
-            IAtom ai = atomContainer.Atoms[i];
+            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]).ToReadOnlyList();
+            var ai = atomContainer.Atoms[i];
 
             if (string.Equals(fragment[i], "StCH", StringComparison.Ordinal))
             {
@@ -882,9 +881,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             // 42: C in X--CH...X
 
             if (!string.Equals(fragment[i], "SaaCH", StringComparison.Ordinal)) return;
-            // Debug.WriteLine("here");
-            //IAtom ai = atomContainer.Atoms[i];
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]).ToList();
+            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]).ToReadOnlyList();
             int htype = GetHAtomType(atomContainer.Atoms[i], ca);
             frags[htype]++;
             IAtom ca0;
@@ -1022,10 +1019,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             else
             { // sameringsatomscount==3
               // arbitrarily assign atoms: (no way to decide consistently)
-                var caa = ca.ToList();
-                sameringatoms[0] = (IAtom)caa[0];
-                sameringatoms[1] = (IAtom)caa[1];
-                nonringatom = (IAtom)caa[2];
+                var caa = ca.ToReadOnlyList();
+                sameringatoms[0] = caa[0];
+                sameringatoms[1] = caa[1];
+                nonringatom = caa[2];
             }
 
             // check if both hetero atoms have at least one double bond
@@ -1271,12 +1268,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             // enol = HO-C=C-
             // carboxyl= HO-C(=O)-
 
-            if (!string.Equals(fragment[i], "SsOH", StringComparison.Ordinal)) return;
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]).ToList();
+            if (!string.Equals(fragment[i], "SsOH", StringComparison.Ordinal))
+                return;
+            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]).ToReadOnlyList();
             frags[50]++; //H atom attached to a hetero atom
 
-            IAtom ca0 = (IAtom)ca[0];
-            if (string.Equals(ca0.Symbol, "H", StringComparison.Ordinal)) ca0 = (IAtom)ca[1];
+            var ca0 = (IAtom)ca[0];
+            if (string.Equals(ca0.Symbol, "H", StringComparison.Ordinal)) ca0 = ca[1];
 
             if (ca0.IsAromatic)
             { // phenol
@@ -1301,16 +1299,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private void CalcGroup058_61(int i)
         {
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]).ToList();
+            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]).ToReadOnlyList();
 
             // 58: O in =O
             // 61: --O in nitro, N-oxides
             // 62: O in O-
-            IAtom ca0 = (IAtom)ca[0];
+            var ca0 = ca[0];
 
             if (string.Equals(fragment[i], "SsOm", StringComparison.Ordinal))
             {
-
                 if (string.Equals(ca0.Symbol, "N", StringComparison.Ordinal) && ca0.FormalCharge == 1)
                 {
                     frags[61]++;
@@ -1321,7 +1318,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     frags[62]++;
                     alogpfrag[i] = 62;
                 }
-
             }
             else if (string.Equals(fragment[i], "SdO", StringComparison.Ordinal))
             {
@@ -1336,7 +1332,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     alogpfrag[i] = 58;
                 }
             }
-
         }
 
         private void CalcGroup059_060_063(int i)
@@ -1347,9 +1342,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return;
 
             // Al-O-Ar, Ar2O
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]).ToList();
-            IAtom ca0 = (IAtom)ca[0];
-            IAtom ca1 = (IAtom)ca[1];
+            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]).ToReadOnlyList();
+            var ca0 = ca[0];
+            var ca1 = ca[1];
 
             if (string.Equals(fragment[i], "SssO", StringComparison.Ordinal))
             {
@@ -1357,14 +1352,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     frags[60]++;
                     alogpfrag[i] = 60;
-
                 }
                 else
                 {
-
                     foreach (var a in ca)
                     {
-                        // if (((IAtom)ca[j]).string.Equals(Symbol, "C", StringComparison.Ordinal)) { // for malathion
                         // O-P(=S)
                         // was considered to count as group 60
 
@@ -1381,7 +1373,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                 }
                             }
                         }
-
                     } // end j ca loop
 
                     if (string.Equals(ca0.Symbol, "O", StringComparison.Ordinal) || string.Equals(ca1.Symbol, "O", StringComparison.Ordinal))
@@ -1393,9 +1384,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     {
                         frags[59]++;
                         alogpfrag[i] = 59;
-
                     }
-
                 }
             }
             else if (string.Equals(fragment[i], "SaaO", StringComparison.Ordinal))
@@ -1409,11 +1398,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             int nAr = 0;
             int nAl = 0;
-            IAtom ai = atomContainer.Atoms[i];
+            var ai = atomContainer.Atoms[i];
             if (!string.Equals(ai.Symbol, "N", StringComparison.Ordinal)) return;
             var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-            //IAtom ca0 = (IAtom)ca[0];
-            //IAtom ca1 = (IAtom)ca[1];
 
             foreach (var a in ca)
             {
@@ -1427,18 +1414,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             // first check if have RC(=O)N or NX=X
             foreach (var a in ca)
             {
-                if (string.Equals(a.Symbol, "H", StringComparison.Ordinal)) continue;
+                if (string.Equals(a.Symbol, "H", StringComparison.Ordinal))
+                    continue;
                 var ca2 = atomContainer.GetConnectedAtoms(a);
                 foreach (var a2 in ca2)
                 {
-                    IAtom ca2k = a2;
+                    var ca2k = a2;
                     if (atomContainer.Atoms.IndexOf(ca2k) != i)
                     {
                         if (!string.Equals(ca2k.Symbol, "C", StringComparison.Ordinal))
                         {
                             if (!ca2k.IsAromatic
-                                    && !a.IsAromatic
-                                    && !ai.IsAromatic)
+                             && !a.IsAromatic
+                             && !ai.IsAromatic)
                             {
                                 if (atomContainer.GetBond(a, ca2k).Order == BondOrder.Double)
                                 {
@@ -1572,7 +1560,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             else if (string.Equals(fragment[i], "StN", StringComparison.Ordinal))
             {
-                IAtom ca0 = (IAtom)ca.ElementAt(0);
+                var ca0 = (IAtom)ca.ElementAt(0);
                 if (string.Equals(ca0.Symbol, "C", StringComparison.Ordinal))
                 { // R#N
                     frags[74]++;
@@ -1584,9 +1572,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 // test for RO-NO
                 if (string.Equals(fragment[i], "SdsN", StringComparison.Ordinal))
                 {
-                    var caa = ca.ToList();
-                    IAtom ca0 = (IAtom)caa[0];
-                    IAtom ca1 = (IAtom)caa[1];
+                    var caa = ca.ToReadOnlyList();
+                    var ca0 = caa[0];
+                    var ca1 = caa[1];
                     if (string.Equals(ca0.Symbol, "O", StringComparison.Ordinal) && string.Equals(ca1.Symbol, "O", StringComparison.Ordinal))
                     {
                         frags[76]++;
@@ -1600,7 +1588,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
                 foreach (var a in ca)
                 {
-                    if (string.Equals(a.Symbol, "H", StringComparison.Ordinal)) continue;
+                    if (string.Equals(a.Symbol, "H", StringComparison.Ordinal))
+                        continue;
                     if (atomContainer.GetBond(ai, a).Order == BondOrder.Double)
                     {
                         if (string.Equals(a.Symbol, "C", StringComparison.Ordinal))
@@ -1649,11 +1638,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private void CalcGroup081_to_085(int i)
         {
-
-            if (!string.Equals(fragment[i], "SsF", StringComparison.Ordinal)) return;
+            if (!string.Equals(fragment[i], "SsF", StringComparison.Ordinal))
+                return;
 
             var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-            IAtom ca0 = (IAtom)ca.ElementAt(0);
+            var ca0 = (IAtom)ca.ElementAt(0);
 
             var bonds = atomContainer.GetConnectedBonds(ca0);
 
@@ -1664,17 +1653,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             foreach (var bond in bonds)
             {
-                IBond bj = bond;
+                var bj = bond;
                 if (bj.Order == BondOrder.Double)
                 {
                     doublebondcount++;
                 }
-
                 else if (bj.Order == BondOrder.Triple)
                 {
                     triplebondcount++;
                 }
-
             }
 
             if (doublebondcount == 0 && triplebondcount == 0)
@@ -1736,16 +1723,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 frags[85]++;
                 alogpfrag[i] = 85;
             }
-
         }
 
         private void CalcGroup086_to_090(int i)
         {
-
-            if (!string.Equals(fragment[i], "SsCl", StringComparison.Ordinal)) return;
+            if (!string.Equals(fragment[i], "SsCl", StringComparison.Ordinal))
+                return;
 
             var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-            IAtom ca0 = (IAtom)ca.ElementAt(0);
+            var ca0 = (IAtom)ca.ElementAt(0);
 
             var bonds = atomContainer.GetConnectedBonds(ca0);
 
@@ -1756,17 +1742,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             foreach (var bond in bonds)
             {
-                IBond bj = bond;
+                var bj = bond;
                 if (bj.Order == BondOrder.Double)
                 {
                     doublebondcount++;
                 }
-
                 else if (bj.Order == BondOrder.Triple)
                 {
                     triplebondcount++;
                 }
-
             }
 
             if (doublebondcount == 0 && triplebondcount == 0)
@@ -1788,11 +1772,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             foreach (var a2 in ca2)
             {
-                IAtom ca2j = a2;
+                var ca2j = a2;
                 string s = ca2j.Symbol;
-
-                // if (s.Equals("F") || s.Equals("O") || s.Equals("Cl")
-                // || s.Equals("Br") || s.Equals("N") || s.Equals("S"))
 
                 if (ap.GetNormalizedElectronegativity(s) > 1)
                 {
@@ -1832,11 +1813,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private void CalcGroup091_to_095(int i)
         {
-
-            if (!string.Equals(fragment[i], "SsBr", StringComparison.Ordinal)) return;
+            if (!string.Equals(fragment[i], "SsBr", StringComparison.Ordinal))
+                return;
 
             var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-            IAtom ca0 = (IAtom)ca.ElementAt(0);
+            var ca0 = (IAtom)ca.ElementAt(0);
 
             var bonds = atomContainer.GetConnectedBonds(ca0);
 
@@ -1847,17 +1828,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             foreach (var bond in bonds)
             {
-                IBond bj = bond;
+                var bj = bond;
                 if (bj.Order == BondOrder.Double)
                 {
                     doublebondcount++;
                 }
-
                 if (bj.Order == BondOrder.Triple)
                 {
                     triplebondcount++;
                 }
-
             }
 
             if (doublebondcount == 0 && triplebondcount == 0)
@@ -1879,18 +1858,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             foreach (var a2 in ca2)
             {
-                IAtom ca2j = a2;
+                var ca2j = a2;
 
                 // // F,O,Cl,Br,N
-
-                // if (s.Equals("F") || s.Equals("O") || s.Equals("Cl")
-                // || s.Equals("Br") || s.Equals("N") || s.Equals("S"))
 
                 if (ap.GetNormalizedElectronegativity(ca2j.Symbol) > 1)
                 {
                     oxNum += (int)BondManipulator.DestroyBondOrder(atomContainer.GetBond(ca0, ca2j).Order);
                 }
-
             }
 
             if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 1)
@@ -1924,11 +1899,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private void CalcGroup096_to_100(int i)
         {
-
-            if (!string.Equals(fragment[i], "SsI", StringComparison.Ordinal)) return;
+            if (!string.Equals(fragment[i], "SsI", StringComparison.Ordinal))
+                return;
 
             var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-            IAtom ca0 = (IAtom)ca.ElementAt(0);
+            var ca0 = (IAtom)ca.ElementAt(0);
 
             var bonds = atomContainer.GetConnectedBonds(ca0);
 
@@ -1939,17 +1914,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             foreach (var bond in bonds)
             {
-                IBond bj = bond;
+                var bj = bond;
                 if (bj.Order == BondOrder.Double)
                 {
                     doublebondcount++;
                 }
-
                 else if (bj.Order == BondOrder.Triple)
                 {
                     triplebondcount++;
                 }
-
             }
 
             if (doublebondcount == 0 && triplebondcount == 0)
@@ -1971,18 +1944,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             foreach (var a2 in ca2)
             {
-                IAtom ca2j = a2;
+                var ca2j = a2;
 
                 // // F,O,Cl,Br,N
-
-                // if (s.Equals("F") || s.Equals("O") || s.Equals("Cl")
-                // || s.Equals("Br") || s.Equals("N") || s.Equals("S"))
 
                 if (ap.GetNormalizedElectronegativity(ca2j.Symbol) > 1)
                 {
                     oxNum += (int)BondManipulator.DestroyBondOrder(atomContainer.GetBond(ca0, ca2j).Order);
                 }
-
             }
 
             if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 1)
@@ -2041,9 +2010,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     frags[104]++;
                     alogpfrag[i] = 104;
                 }
-
             }
-
         }
 
         private void CalcGroup106(int i)
@@ -2061,7 +2028,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             // S in R2S, RS-SR
             // R = any group linked through C
-            // if (!string.Equals(Fragment[i], "SssS", StringComparison.Ordinal)) return;
 
             // In ALOGP, for malathion PSC is consider to have group 107 (even
             // though has P instead of R)
@@ -2073,15 +2039,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 frags[107]++;
                 alogpfrag[i] = 107;
             }
-            // IAtom [] ca=atomContainer.GetConnectedAtoms(atomContainer.GetAtomAt(i));
-            //
-            // if ((ca.ElementAt(0).string.Equals(Symbol, "C", StringComparison.Ordinal) && string.Equals(ca[1].Symbol, "C", StringComparison.Ordinal))
-            // ||
-            // (ca.ElementAt(0).string.Equals(Symbol, "C", StringComparison.Ordinal) && string.Equals(ca[1].Symbol, "S", StringComparison.Ordinal)) ||
-            // (ca.ElementAt(0).string.Equals(Symbol, "S", StringComparison.Ordinal) && string.Equals(ca[1].Symbol, "C", StringComparison.Ordinal))) {
-            // frags[107]++;
-            // alogpfrag[i]=107;
-            // }
         }
 
         private void CalcGroup108(int i)
@@ -2100,7 +2057,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             // for now S in O-S(=O)-O is assigned to this group
             // (it doesn't check which atoms are singly bonded to S
-            if (!string.Equals(fragment[i], "SdssS", StringComparison.Ordinal)) return;
+            if (!string.Equals(fragment[i], "SdssS", StringComparison.Ordinal))
+                return;
 
             var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
             IAtom ai = atomContainer.Atoms[i];
@@ -2133,10 +2091,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private void CalcGroup110(int i)
         {
-            if (!string.Equals(fragment[i], "SddssS", StringComparison.Ordinal)) return;
+            if (!string.Equals(fragment[i], "SddssS", StringComparison.Ordinal))
+                return;
 
             var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-            IAtom ai = atomContainer.Atoms[i];
+            var ai = atomContainer.Atoms[i];
             int sdOCount = 0;
             int ssCCount = 0;
 
@@ -2162,7 +2121,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 frags[110]++;
                 alogpfrag[i] = 110;
             }
-
         }
 
         private void CalcGroup111(int i)
@@ -2176,17 +2134,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private void CalcGroup116_117_120(int i)
         {
-
             // S in R=S
 
             var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-            IAtom ai = atomContainer.Atoms[i];
+            var ai = atomContainer.Atoms[i];
 
             int xCount = 0;
             int rCount = 0;
             bool pdX = false;
 
-            if (!string.Equals(fragment[i], "SdsssP", StringComparison.Ordinal)) return;
+            if (!string.Equals(fragment[i], "SdsssP", StringComparison.Ordinal))
+                return;
 
             foreach (var a in ca)
             {
@@ -2233,10 +2191,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private void CalcGroup118_119(int i)
         {
-            if (!string.Equals(fragment[i], "SsssP", StringComparison.Ordinal)) return;
+            if (!string.Equals(fragment[i], "SsssP", StringComparison.Ordinal))
+                return;
 
             var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-            IAtom ai = atomContainer.Atoms[i];
+            var ai = atomContainer.Atoms[i];
             int xCount = 0;
             int rCount = 0;
 
@@ -2265,7 +2224,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 frags[119]++;
                 alogpfrag[i] = 119;
             }
-
         }
 
         private static bool InSameAromaticRing(IAtomContainer atomContainer, IAtom atom1, IAtom atom2, IRingSet rs)
@@ -2274,9 +2232,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             for (int i = 0; i <= rs.Count - 1; i++)
             {
-                IRing r = (IRing)rs[i];
+                var r = rs[i];
 
-                if (!r.IsAromatic) continue;
+                if (!r.IsAromatic)
+                    continue;
 
                 // ArrayList al=new ArrayList();
 
@@ -2285,8 +2244,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
                 for (int j = 0; j <= r.Atoms.Count - 1; j++)
                 {
-                    if (atomContainer.Atoms.IndexOf(r.Atoms[j]) == atomContainer.Atoms.IndexOf(atom1)) haveOne = true;
-                    if (atomContainer.Atoms.IndexOf(r.Atoms[j]) == atomContainer.Atoms.IndexOf(atom2)) haveTwo = true;
+                    if (atomContainer.Atoms.IndexOf(r.Atoms[j]) == atomContainer.Atoms.IndexOf(atom1))
+                        haveOne = true;
+                    if (atomContainer.Atoms.IndexOf(r.Atoms[j]) == atomContainer.Atoms.IndexOf(atom2))
+                        haveTwo = true;
                 }
 
                 if (haveOne && haveTwo)
@@ -2336,7 +2297,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
 
             var fragment = new string[container.Atoms.Count];
-            EStateAtomTypeMatcher eStateMatcher = new EStateAtomTypeMatcher { RingSet = rs };
+            var eStateMatcher = new EStateAtomTypeMatcher { RingSet = rs };
 
             for (int i = 0; i < container.Atoms.Count; i++)
             {
@@ -2351,7 +2312,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            double[] ret = Array.Empty<double>();
+            var ret = Array.Empty<double>();
             try
             {
                 ret = Calculate(container, fragment, rs);
@@ -2361,21 +2322,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(new CDKException(e.Message));
             }
 
-            ArrayResult<double> results = new ArrayResult<double>(ret);
+            var results = new ArrayResult<double>(ret);
 
             return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results, DescriptorNames);
         }
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
-            ArrayResult<double> results = new ArrayResult<double>
+            var results = new ArrayResult<double>
             {
                 double.NaN,
                 double.NaN,
                 double.NaN
             };
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results,
-                    DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results, DescriptorNames, e);
         }
 
         /// <inheritdoc/>

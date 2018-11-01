@@ -555,26 +555,21 @@ namespace NCDK.Tools.Manipulator
             return hCount;
         }
 
-        public static IList<string> GetAllIDs(IAtomContainer mol)
+        public static IEnumerable<string> GetAllIDs(IAtomContainer mol)
         {
-            var idList = new List<string>();
             if (mol != null)
             {
                 if (mol.Id != null)
-                    idList.Add(mol.Id);
+                    yield return mol.Id;
                 foreach (var atom in mol.Atoms)
-                {
                     if (atom.Id != null)
-                        idList.Add(atom.Id);
-                }
+                        yield return atom.Id;
 
                 foreach (var bond in mol.Bonds)
-                {
                     if (bond.Id != null)
-                        idList.Add(bond.Id);
-                }
+                        yield return bond.Id;
             }
-            return idList;
+            yield break;
         }
 
         /// <summary>
@@ -1060,7 +1055,7 @@ namespace NCDK.Tools.Manipulator
             if (atom.ImplicitHydrogenCount != null && atom.ImplicitHydrogenCount != 0)
                 return false;
             // molecule hydrogen
-            var neighbors = container.GetConnectedAtoms(atom).ToList();
+            var neighbors = container.GetConnectedAtoms(atom).ToReadOnlyList();
             if (neighbors.Count == 1 && (neighbors[0].Symbol.Equals("H", StringComparison.Ordinal) || neighbors[0] is IPseudoAtom))
                 return false;
             // what about bridging hydrogens?

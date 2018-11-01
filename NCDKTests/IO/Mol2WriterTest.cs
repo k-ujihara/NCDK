@@ -115,7 +115,7 @@ namespace NCDK.IO
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IChemFile fileContents = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
-            var molecules = ChemFileManipulator.GetAllAtomContainers(fileContents).ToList();
+            var molecules = ChemFileManipulator.GetAllAtomContainers(fileContents).ToReadOnlyList();
             IAtomContainer mol = molecules[0];
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);

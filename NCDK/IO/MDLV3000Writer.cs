@@ -680,7 +680,7 @@ namespace NCDK.IO
 
             WriteAtomBlock(mol, atoms, idxs, atomToStereo);
             WriteBondBlock(mol, idxs);
-            WriteSgroupBlock(sgroups.ToList(), idxs);
+            WriteSgroupBlock(sgroups.ToReadOnlyList(), idxs);
 
             writer.Write("END CTAB\n");
             writer.WriteDirect("M  END\n");
@@ -894,7 +894,7 @@ namespace NCDK.IO
             /// <exception cref="IOException">low-level IO error</exception>
             public V30LineWriter Write(IEnumerable<IChemObject> chemObjects, IReadOnlyDictionary<IChemObject, int> idxs)
             {
-                var chemObjectList = chemObjects.ToList();
+                var chemObjectList = chemObjects.ToReadOnlyList();
                 this.Write(chemObjectList.Count);
                 var integers = new List<int>();
                 foreach (var chemObject in chemObjectList)

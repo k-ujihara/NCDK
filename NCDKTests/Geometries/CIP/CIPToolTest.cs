@@ -293,7 +293,7 @@ namespace NCDK.Geometries.CIP
 
             foreach (var atom in mol.Atoms)
             {
-                var neighbors = mol.GetConnectedAtoms(atom).ToList();
+                var neighbors = mol.GetConnectedAtoms(atom).ToReadOnlyList();
                 if (neighbors.Count == 4)
                 {
                     var stereo = StereoTool.GetStereo(neighbors[0], neighbors[1], neighbors[2], neighbors[3]);

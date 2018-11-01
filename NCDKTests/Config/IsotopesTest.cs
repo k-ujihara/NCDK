@@ -125,7 +125,7 @@ namespace NCDK.Config
         public void TestGetIsotopesDoubleDouble()
         {
             var isofac = BODRIsotopeFactory.Instance;
-            var list = isofac.GetIsotopes(87.90, 0.01).ToList();
+            var list = isofac.GetIsotopes(87.90, 0.01).ToReadOnlyList();
             //        should return:
             //        Isotope match: 88Sr has mass 87.9056121
             //        Isotope match: 88Y has mass 87.9095011

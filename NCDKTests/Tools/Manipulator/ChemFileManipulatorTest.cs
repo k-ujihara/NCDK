@@ -57,26 +57,38 @@ namespace NCDK.Tools.Manipulator
             bondInMol1 = new Bond(atomInMol1, molecule1.Atoms[1]);
             molecule1.Bonds.Add(bondInMol1);
             molecule2 = new AtomContainer();
-            atomInMol2 = new Atom("O");
-            atomInMol2.ImplicitHydrogenCount = 2;
+            atomInMol2 = new Atom("O")
+            {
+                ImplicitHydrogenCount = 2
+            };
             molecule2.Atoms.Add(atomInMol2);
-            moleculeSet = new ChemObjectSet<IAtomContainer>();
-            moleculeSet.Add(molecule1);
-            moleculeSet.Add(molecule2);
+            moleculeSet = new ChemObjectSet<IAtomContainer>
+            {
+                molecule1,
+                molecule2
+            };
             reaction = new Reaction();
             reaction.Reactants.Add(molecule1);
             reaction.Products.Add(molecule2);
-            reactionSet = new ReactionSet();
-            reactionSet.Add(reaction);
-            chemModel = new ChemModel();
-            chemModel.MoleculeSet = moleculeSet;
-            chemModel.ReactionSet = reactionSet;
-            chemSequence1 = new ChemSequence();
-            chemSequence1.Add(chemModel);
+            reactionSet = new ReactionSet
+            {
+                reaction
+            };
+            chemModel = new ChemModel
+            {
+                MoleculeSet = moleculeSet,
+                ReactionSet = reactionSet
+            };
+            chemSequence1 = new ChemSequence
+            {
+                chemModel
+            };
             chemSequence2 = new ChemSequence();
-            chemFile = new ChemFile();
-            chemFile.Add(chemSequence1);
-            chemFile.Add(chemSequence2);
+            chemFile = new ChemFile
+            {
+                chemSequence1,
+                chemSequence2
+            };
         }
 
         [TestMethod()]
@@ -86,10 +98,10 @@ namespace NCDK.Tools.Manipulator
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
 
-            MDLReader reader = new MDLReader(ins, ChemObjectReaderMode.Strict);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new MDLReader(ins, ChemObjectReaderMode.Strict);
+            var chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(2, containersList.Count);
         }
 
@@ -107,21 +119,21 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAtomCount_IChemFile()
         {
-            int count = ChemFileManipulator.GetAtomCount(chemFile);
+            var count = ChemFileManipulator.GetAtomCount(chemFile);
             Assert.AreEqual(6, count);
         }
 
         [TestMethod()]
         public void TestGetBondCount_IChemFile()
         {
-            int count = ChemFileManipulator.GetBondCount(chemFile);
+            var count = ChemFileManipulator.GetBondCount(chemFile);
             Assert.AreEqual(2, count);
         }
 
         [TestMethod()]
         public void TestGetAllChemObjects_IChemFile()
         {
-            List<IChemObject> list = ChemFileManipulator.GetAllChemObjects(chemFile).ToList();
+            var list = ChemFileManipulator.GetAllChemObjects(chemFile).ToReadOnlyList();
             Assert.AreEqual(8, list.Count); // not the file itself
             int atomCount = 0;
             int bondCount = 0;
@@ -163,14 +175,14 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllChemModels_IChemFile()
         {
-            IList<IChemModel> list = ChemFileManipulator.GetAllChemModels(chemFile).ToList();
+            var list = ChemFileManipulator.GetAllChemModels(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, list.Count);
         }
 
         [TestMethod()]
         public void TestGetAllReactions_IChemFile()
         {
-            IList<IReaction> list = ChemFileManipulator.GetAllReactions(chemFile).ToList();
+            var list = ChemFileManipulator.GetAllReactions(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, list.Count);
         }
     }

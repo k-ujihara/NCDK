@@ -68,8 +68,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             try
             {
                 fragmenter.GenerateFragments(container);
-                var framework = fragmenter.GetFrameworksAsContainers().ToList();
-                var ringSystems = fragmenter.GetRingSystemsAsContainers().ToList();
+                var framework = fragmenter.GetFrameworksAsContainers().ToReadOnlyList();
+                var ringSystems = fragmenter.GetRingSystemsAsContainers().ToReadOnlyList();
                 if (framework.Count == 1)
                 {
                     result = new Result<double>(framework[0].Atoms.Count / (double)container.Atoms.Count);

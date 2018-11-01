@@ -63,7 +63,7 @@ namespace NCDK.QSAR
         private EntryDictionary dict = null;
         private List<string> classNames = new List<string>(200);
         private List<IDescriptor> descriptors = new List<IDescriptor>(200);
-        private List<IImplementationSpecification> speclist = null;
+        private IReadOnlyList<IImplementationSpecification> speclist = null;
         private readonly IChemObjectBuilder builder;
 
         private DescriptorEngine()
@@ -89,8 +89,8 @@ namespace NCDK.QSAR
             : this(builder)
         {
             this.classNames = classNames.ToList();
-            descriptors = InstantiateDescriptors(classNames).ToList();
-            speclist = ToSpecifications(descriptors).ToList();
+            this.descriptors = InstantiateDescriptors(classNames).ToList();
+            speclist = ToSpecifications(descriptors).ToReadOnlyList();
 
             // get the dictionary for the descriptors
             var dictDB = new DictionaryDatabase();
@@ -116,7 +116,7 @@ namespace NCDK.QSAR
                 o.classNames.Add(descriptor.GetType().FullName);
             }
 
-            o.speclist = ToSpecifications(o.descriptors).ToList();
+            o.speclist = ToSpecifications(o.descriptors).ToReadOnlyList();
             Debug.WriteLine($"Found #descriptors: {o.classNames.Count}");
 
             // get the dictionary for the descriptors
@@ -478,7 +478,7 @@ namespace NCDK.QSAR
         /// <seealso cref="GetDescriptorSpecifications"/>
         public void SetDescriptorSpecifications(IEnumerable<IImplementationSpecification> specs)
         {
-            speclist = specs.ToList();
+            speclist = specs.ToReadOnlyList();
         }
 
         /// <summary>

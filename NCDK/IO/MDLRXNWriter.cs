@@ -197,7 +197,7 @@ namespace NCDK.IO
                 int i = 0;
                 foreach (var mapping in reaction.Mappings)
                 {
-                    var it = mapping.GetRelatedChemObjects().ToList();
+                    var it = mapping.GetRelatedChemObjects().ToReadOnlyList();
                     it[0].SetProperty(CDKPropertyName.AtomAtomMapping, i + 1);
                     it[1].SetProperty(CDKPropertyName.AtomAtomMapping, i + 1);
                     i++;

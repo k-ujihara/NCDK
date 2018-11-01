@@ -372,7 +372,7 @@ namespace NCDK.IO
         /// <param name="labelLine"></param>
         private void ReadNMRData(IChemModel model, string labelLine)
         {
-            var containers = ChemModelManipulator.GetAllAtomContainers(model).ToList();
+            var containers = ChemModelManipulator.GetAllAtomContainers(model).ToReadOnlyList();
             if (containers.Count == 0)
             {
                 // nothing to store the results into

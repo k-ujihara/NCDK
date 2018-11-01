@@ -82,7 +82,7 @@ namespace NCDK.Hash
                 new Bond(atoms[5], atoms[9], BondOrder.Single), new Bond(atoms[6], atoms[7], BondOrder.Single),
                 new Bond(atoms[7], atoms[8], BondOrder.Single), new Bond(atoms[8], atoms[9], BondOrder.Single),
                 new Bond(atoms[8], atoms[0], BondOrder.Single),};
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.SetAtoms(atoms);
             mol.SetBonds(bonds);
             return mol;
@@ -99,7 +99,7 @@ namespace NCDK.Hash
                 new Bond(atoms[5], atoms[4], BondOrder.Single), new Bond(atoms[4], atoms[7], BondOrder.Single),
                 new Bond(atoms[6], atoms[9], BondOrder.Single), new Bond(atoms[7], atoms[8], BondOrder.Single),
                 new Bond(atoms[8], atoms[9], BondOrder.Single),};
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.SetAtoms(atoms);
             mol.SetBonds(bonds);
             return mol;

@@ -162,7 +162,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The molecularFormula with the isotopes removed</returns>
         public static IMolecularFormula RemoveElement(IMolecularFormula formula, IElement element)
         {
-            foreach (var isotope in GetIsotopes(formula, element).ToList())
+            foreach (var isotope in GetIsotopes(formula, element).ToReadOnlyList())
             {
                 formula.Remove(isotope);
             }

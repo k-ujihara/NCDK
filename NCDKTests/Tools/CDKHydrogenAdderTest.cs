@@ -187,7 +187,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestSulphur()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("S");
             mol.Atoms.Add(atom);
             IAtomType type = matcher.FindMatchingAtomType(mol, atom);
@@ -204,7 +204,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestProton()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom proton = new Atom("H") { FormalCharge = +1 };
             mol.Atoms.Add(proton);
             IAtomType type = matcher.FindMatchingAtomType(mol, proton);
@@ -225,7 +225,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestHydrogen()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom proton = new Atom("H");
             mol.Atoms.Add(proton);
             IAtomType type = matcher.FindMatchingAtomType(mol, proton);
@@ -245,7 +245,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestAmmonia()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom nitrogen = new Atom("N");
             mol.Atoms.Add(nitrogen);
             IAtomType type = matcher.FindMatchingAtomType(mol, nitrogen);
@@ -260,7 +260,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestAmmonium()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom nitrogen = new Atom("N") { FormalCharge = +1 };
             mol.Atoms.Add(nitrogen);
             IAtomType type = matcher.FindMatchingAtomType(mol, nitrogen);
@@ -275,7 +275,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestWater()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom oxygen = new Atom("O");
             mol.Atoms.Add(oxygen);
             IAtomType type = matcher.FindMatchingAtomType(mol, oxygen);
@@ -290,7 +290,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestHydroxonium()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom oxygen = new Atom("O") { FormalCharge = +1 };
             mol.Atoms.Add(oxygen);
             IAtomType type = matcher.FindMatchingAtomType(mol, oxygen);
@@ -305,7 +305,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestHydroxyl()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom oxygen = new Atom("O") { FormalCharge = -1 };
             mol.Atoms.Add(oxygen);
             IAtomType type = matcher.FindMatchingAtomType(mol, oxygen);
@@ -337,7 +337,7 @@ namespace NCDK.Tools
 
         private void HalogenTest(string halogen)
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom(halogen);
             mol.Atoms.Add(atom);
             IAtomType type = matcher.FindMatchingAtomType(mol, atom);
@@ -352,7 +352,7 @@ namespace NCDK.Tools
 
         private void NegativeHalogenTest(string halogen)
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom(halogen) { FormalCharge = -1 };
             mol.Atoms.Add(atom);
             IAtomType type = matcher.FindMatchingAtomType(mol, atom);
@@ -368,7 +368,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestSulfite()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom s = new Atom("S");
             Atom o1 = new Atom("O");
             Atom o2 = new Atom("O");
@@ -414,7 +414,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestAceticAcid()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom carbonylOxygen = new Atom("O");
             Atom hydroxylOxygen = new Atom("O");
             Atom methylCarbon = new Atom("C");
@@ -443,7 +443,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestEthane()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom carbon1 = new Atom("C");
             Atom carbon2 = new Atom("C");
             Bond b = new Bond(carbon1, carbon2, BondOrder.Single);
@@ -462,7 +462,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestEthaneWithPReSetImplicitHCount()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom carbon1 = new Atom("C");
             Atom carbon2 = new Atom("C");
             Bond b = new Bond(carbon1, carbon2, BondOrder.Single);
@@ -484,7 +484,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestEthene()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom carbon1 = new Atom("C");
             Atom carbon2 = new Atom("C");
             Bond b = new Bond(carbon1, carbon2, BondOrder.Double);
@@ -503,7 +503,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestEthyne()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom carbon1 = new Atom("C");
             Atom carbon2 = new Atom("C");
             Bond b = new Bond(carbon1, carbon2, BondOrder.Triple);
@@ -522,7 +522,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestAromaticSaturation()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -555,7 +555,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestaddImplicitHydrogensToSatisfyValency_OldValue()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             Atom oxygen = new Atom("O");
             mol.Atoms.Add(oxygen);
@@ -574,7 +574,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestAdenine()
         {
-            IAtomContainer mol = new AtomContainer(); // Adenine
+            var mol = new AtomContainer(); // Adenine
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(21.0223, -17.2946);
             mol.Atoms.Add(a1);
@@ -696,7 +696,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestNaCl()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom cl = new Atom("Cl") { FormalCharge = -1 };
             mol.Atoms.Add(cl);
             Atom na = new Atom("Na") { FormalCharge = +1 };
@@ -718,23 +718,21 @@ namespace NCDK.Tools
         {
             string filename = "NCDK.Data.MDL.sulfurCompound.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
-            IList<IAtomContainer> containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var reader = new MDLV2000Reader(ins);
+            var chemFile = (IChemFile)reader.Read(new ChemFile());
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
 
-            IAtomContainer atomContainer_0 = (IAtomContainer)containersList[0];
+            var atomContainer_0 = (IAtomContainer)containersList[0];
             Assert.AreEqual(10, atomContainer_0.Atoms.Count);
-            IAtom sulfur = atomContainer_0.Atoms[1];
+            var sulfur = atomContainer_0.Atoms[1];
             FindAndConfigureAtomTypesForAllAtoms(atomContainer_0);
             adder.AddImplicitHydrogens(atomContainer_0);
             Assert.AreEqual("S", sulfur.Symbol);
             Assert.IsNotNull(sulfur.ImplicitHydrogenCount);
             Assert.AreEqual(0, sulfur.ImplicitHydrogenCount.Value);
             Assert.AreEqual(3, atomContainer_0.GetConnectedBonds(sulfur).Count());
-
             Assert.AreEqual(10, atomContainer_0.Atoms.Count);
-
             Assert.IsNotNull(sulfur.ImplicitHydrogenCount);
             Assert.AreEqual(0, sulfur.ImplicitHydrogenCount.Value);
             Assert.AreEqual(3, atomContainer_0.GetConnectedBonds(sulfur).Count());
@@ -744,7 +742,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestBug1627763()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(mol.Builder.NewAtom("C"));
             mol.Atoms.Add(mol.Builder.NewAtom("O"));
             mol.Bonds.Add(mol.Builder.NewBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single));

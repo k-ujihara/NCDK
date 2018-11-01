@@ -124,13 +124,12 @@ namespace NCDK.Graphs.Invariant
         {
             var atoms = atomContainer.Atoms;
             StringBuilder inv;
-            List<InvPair> vect = new List<InvPair>();
+            var vect = new List<InvPair>();
             foreach (var a in atoms)
             {
                 inv = new StringBuilder();
-                var connectedAtoms = atomContainer.GetConnectedAtoms(a).ToList();
-                inv.Append(connectedAtoms.Count
-                        + (a.ImplicitHydrogenCount ?? 0)); //Num connections
+                var connectedAtoms = atomContainer.GetConnectedAtoms(a).ToReadOnlyList();
+                inv.Append(connectedAtoms.Count + (a.ImplicitHydrogenCount ?? 0)); //Num connections
                 inv.Append(connectedAtoms.Count); //Num of non H bonds
                 inv.Append(PeriodicTable.GetAtomicNumber(a.Symbol));
 

@@ -179,12 +179,12 @@ namespace NCDK.Fingerprints
         private string EncodePath(IAtomContainer mol, IDictionary<IAtom, List<IBond>> cache, List<IAtom> path, StringBuilder buffer)
         {
             buffer.Clear();
-            IAtom prev = path[0];
+            var prev = path[0];
             buffer.Append(GetAtomSymbol(prev));
             for (int i = 1; i < path.Count; i++)
             {
                 IAtom next = path[i];
-                List<IBond> bonds = cache[prev];
+                var bonds = cache[prev];
 
                 if (bonds == null)
                 {
@@ -192,7 +192,7 @@ namespace NCDK.Fingerprints
                     cache[prev] = bonds;
                 }
 
-                IBond bond = FindBond(bonds, next, prev);
+                var bond = FindBond(bonds, next, prev);
                 if (bond == null)
                     throw new InvalidOperationException("FATAL - Atoms in patch were connected?");
                 buffer.Append(GetBondSymbol(bond));

@@ -131,7 +131,7 @@ namespace NCDK.IO
             ISimpleChemObjectReader reader = new HINReader(ins);
             IChemFile content = reader.Read(new ChemFile());
             reader.Close();
-            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
+            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             IAtomContainer ac = cList[0];
             Assert.AreEqual(57, ac.Atoms.Count);
             Assert.AreEqual(59, ac.Bonds.Count);
@@ -146,7 +146,7 @@ namespace NCDK.IO
             ISimpleChemObjectReader reader = new HINReader(ins);
             IChemFile content = reader.Read(new ChemFile());
             reader.Close();
-            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
+            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             Assert.AreEqual(1, cList.Count);
         }
 
@@ -159,7 +159,7 @@ namespace NCDK.IO
             ISimpleChemObjectReader reader = new HINReader(ins);
             IChemFile content = reader.Read(new ChemFile());
             reader.Close();
-            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
+            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             Assert.AreEqual(1, cList.Count);
 
             IAtomContainer mol = cList[0];

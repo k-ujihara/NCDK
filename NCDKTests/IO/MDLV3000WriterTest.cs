@@ -37,7 +37,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void OutputValencyWhenNeeded()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("Na"));
             mol.Atoms.Add(new Atom("Na"));
             mol.Atoms[0].ImplicitHydrogenCount = 0; // Na metal
@@ -50,7 +50,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void OutputFormalCharge()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("O"));
             mol.Atoms.Add(new Atom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
@@ -65,7 +65,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void OutputMassNumber()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("H"));
             mol.Atoms.Add(new Atom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
@@ -81,7 +81,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void OutputRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms[0].ImplicitHydrogenCount = 3;
             mol.AddSingleElectronTo(mol.Atoms[0]);
@@ -93,7 +93,7 @@ namespace NCDK.IO
         [ExpectedException(typeof(CDKException))]
         public void NullBondOrder()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("H"));
             mol.Atoms.Add(new Atom("C"));
             mol.Bonds.Add(new Bond(mol.Atoms[0], mol.Atoms[1], BondOrder.Unset));
@@ -107,7 +107,7 @@ namespace NCDK.IO
         [ExpectedException(typeof(CDKException))]
         public void UnSetBondOrder()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("H"));
             mol.Atoms.Add(new Atom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Unset);
@@ -120,7 +120,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void SolidWedgeBonds()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("O"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single, BondStereo.Up);
@@ -133,7 +133,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void HashedWedgeBonds()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("O"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single, BondStereo.Down);
@@ -146,7 +146,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void SolidWedgeInvBonds()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("O"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single, BondStereo.UpInverted);
@@ -159,7 +159,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void HashedWedgeInvBonds()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("O"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single, BondStereo.DownInverted);
@@ -172,7 +172,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void WriteLeadingZero()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("C")
             {
                 Point2D = new Vector2(0.5, 1.2)
@@ -184,7 +184,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void WriteParity()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("O"));
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
@@ -215,7 +215,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void WriteParityHNotLast()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("O"));
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
@@ -248,7 +248,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void WriteParityImplH()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("O"));
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
@@ -276,7 +276,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void WriteParityImplHInverted()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("O"));
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
@@ -304,7 +304,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void WriteSRUs()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("O"));
@@ -335,7 +335,7 @@ namespace NCDK.IO
         public void WriteMultipleGroup()
         {
             int repeatAtoms = 50;
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             for (int i = 0; i < repeatAtoms; i++)
                 mol.Atoms.Add(new Atom("C"));

@@ -365,7 +365,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestNonZZeroPlaner()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom[] atoms = new Atom[] {
                 new Atom("C"),
                 new Atom("F"),

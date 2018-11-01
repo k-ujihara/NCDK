@@ -60,11 +60,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var uniqueSubgraphs = new List<List<int>>();
             foreach (var query in queries)
             {
-                List<IReadOnlyList<RMap>> subgraphMaps = null;
+                IReadOnlyList<IReadOnlyList<RMap>> subgraphMaps = null;
                 try
                 {
                     // we get the list of bond mappings
-                    subgraphMaps = universalIsomorphismTester.GetSubgraphMaps(atomContainer, query).ToList();
+                    subgraphMaps = universalIsomorphismTester.GetSubgraphMaps(atomContainer, query).ToReadOnlyList();
                 }
                 catch (CDKException e)
                 {

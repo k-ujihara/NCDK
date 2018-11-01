@@ -80,7 +80,7 @@ namespace NCDK.Charges
             Vector3 h2_coord = new Vector3(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
             Vector3 h3_coord = new Vector3(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 
-            IAtomContainer mol = new AtomContainer(); // molecule is CF
+            var mol = new AtomContainer(); // molecule is CF
 
             Atom c = new Atom("C");
             mol.Atoms.Add(c);
@@ -129,7 +129,7 @@ namespace NCDK.Charges
             Vector3 h2_coord = new Vector3(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
             Vector3 h3_coord = new Vector3(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 
-            IAtomContainer mol = new AtomContainer(); // molecule is CF
+            var mol = new AtomContainer(); // molecule is CF
 
             Atom c = new Atom("C");
             mol.Atoms.Add(c);

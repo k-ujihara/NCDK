@@ -62,7 +62,7 @@ namespace NCDK.Stereo
                                                                    graph,
                                                                    bondMap,
                                                                    Stereocenters.Of(m));
-            var elements = recogniser.Recognise(new[] { Projection.Fischer }).ToList();
+            var elements = recogniser.Recognise(new[] { Projection.Fischer }).ToReadOnlyList();
             Assert.AreEqual(1, elements.Count);
             AssertTetrahedralCenter(elements[0],
                                     m.Atoms[1],
@@ -97,7 +97,7 @@ namespace NCDK.Stereo
                                                                    graph,
                                                                    bondMap,
                                                                    Stereocenters.Of(m));
-            var elements = recogniser.Recognise(new[] { Projection.Fischer }).ToList();
+            var elements = recogniser.Recognise(new[] { Projection.Fischer }).ToReadOnlyList();
             Assert.AreEqual(1, elements.Count);
             AssertTetrahedralCenter(elements[0],
                                     m.Atoms[1],
@@ -130,7 +130,7 @@ namespace NCDK.Stereo
                                                                    graph,
                                                                    bondMap,
                                                                    Stereocenters.Of(m));
-            var elements = recogniser.Recognise(new[] { Projection.Fischer }).ToList();
+            var elements = recogniser.Recognise(new[] { Projection.Fischer }).ToReadOnlyList();
             Assert.AreEqual(1, elements.Count);
             AssertTetrahedralCenter(elements[0],
                                     m.Atoms[1],
@@ -173,7 +173,7 @@ namespace NCDK.Stereo
                                                                    graph,
                                                                    bondMap,
                                                                    Stereocenters.Of(m));
-            var elements = recogniser.Recognise(new[] { Projection.Fischer }).ToList();
+            var elements = recogniser.Recognise(new[] { Projection.Fischer }).ToReadOnlyList();
 
             Assert.AreEqual(4, elements.Count);
             AssertTetrahedralCenter(elements[0],

@@ -45,7 +45,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new HINReader(ins);
             ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
-            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
+            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             IAtomContainer ac = (IAtomContainer)cList[0];
 
             ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(ac).Value;

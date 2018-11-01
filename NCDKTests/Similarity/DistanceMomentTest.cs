@@ -18,7 +18,7 @@ namespace NCDK.Similarity
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             return (IAtomContainer)containersList[0];
         }
 

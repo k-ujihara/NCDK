@@ -118,10 +118,10 @@ namespace NCDK.Charges
             gR1.Reactions = reactionList1;
 
             // according G. should be integrated the breaking bonding
-            StructureResonanceGenerator gR2 = new StructureResonanceGenerator { MaximalStructures = MaxResonanceStructures };
-            List<IReactionProcess> reactionList2 = gR2.Reactions.ToList();
+            var gR2 = new StructureResonanceGenerator { MaximalStructures = MaxResonanceStructures };
+            var reactionList2 = gR2.Reactions.ToList();
             var paramList = new List<IParameterReaction>();
-            IParameterReaction paramA = new SetReactionCenter { IsSetParameter = true };
+            var paramA = new SetReactionCenter { IsSetParameter = true };
             paramList.Add(paramA);
             reactionList2.Add(new HeterolyticCleavagePBReaction());
             reactionList2.Add(new SharingAnionReaction());

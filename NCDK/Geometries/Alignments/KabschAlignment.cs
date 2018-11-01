@@ -172,8 +172,8 @@ namespace NCDK.Geometries.Alignments
         /// <exception cref="CDKException">if the number of Atom's are not the same in the two arrays</exception>
         public KabschAlignment(IEnumerable<IAtom> al1, IEnumerable<IAtom> al2)
         {
-            var _al1 = al1.ToList();
-            var _al2 = al2.ToList();
+            var _al1 = al1.ToReadOnlyList();
+            var _al2 = al2.ToReadOnlyList();
 
             if (_al1.Count != _al2.Count)
             {
@@ -202,9 +202,9 @@ namespace NCDK.Geometries.Alignments
         ///                         length of the weight vector is not the same as the Atom arrays</exception>
         public KabschAlignment(IEnumerable<IAtom> al1, IEnumerable<IAtom> al2, IEnumerable<double> wts)
         {
-            var _al1 = al1.ToList();
-            var _al2 = al2.ToList();
-            var _wts = wts.ToList();
+            var _al1 = al1.ToReadOnlyList();
+            var _al2 = al2.ToReadOnlyList();
+            var _wts = wts.ToReadOnlyList();
 
             if (_al1.Count != _al2.Count)
             {

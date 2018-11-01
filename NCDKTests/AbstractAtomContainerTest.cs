@@ -1082,7 +1082,7 @@ namespace NCDK
             container.AddBond(container.Atoms[0], container.Atoms[2], BondOrder.Single);
             container.AddBond(container.Atoms[0], container.Atoms[3], BondOrder.Single);
             container.AddBond(container.Atoms[0], container.Atoms[4], BondOrder.Single);
-            container.StereoElements.Add(new TetrahedralChirality(container.Atoms[0], container.Atoms.Skip(1).Take(4).ToList(), TetrahedralStereo.Clockwise));
+            container.StereoElements.Add(new TetrahedralChirality(container.Atoms[0], container.Atoms.Skip(1).Take(4).ToReadOnlyList(), TetrahedralStereo.Clockwise));
 
             IAtom aNew = bldr.NewAtom();
             container.Atoms[2] = aNew;
@@ -1585,7 +1585,7 @@ namespace NCDK
             acetone.LonePairs.Add(lp1);
             acetone.LonePairs.Add(lp2);
 
-            var electronContainers = acetone.GetElectronContainers()?.ToList();
+            var electronContainers = acetone.GetElectronContainers()?.ToReadOnlyList();
             Assert.IsNotNull(electronContainers);
             Assert.IsTrue(electronContainers.Count > 0);
             IElectronContainer ec = (IElectronContainer)electronContainers[2];
@@ -2671,7 +2671,7 @@ namespace NCDK
             mol.AddSingleElectronTo(mol.Atoms[1]);
             Assert.AreEqual(2, mol.SingleElectrons.Count);
             Assert.IsNotNull(mol.SingleElectrons[1]);
-            var singles = mol.SingleElectrons.ToList();
+            var singles = mol.SingleElectrons.ToReadOnlyList();
             ISingleElectron singleElectron = singles[0];
             Assert.IsNotNull(singleElectron);
             Assert.AreEqual(c1, singleElectron.Atom);

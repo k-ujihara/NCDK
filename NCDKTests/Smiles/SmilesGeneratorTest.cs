@@ -924,7 +924,7 @@ namespace NCDK.Smiles
             var chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             var container = containersList[0];
             var smilesGenerator = new SmilesGenerator();

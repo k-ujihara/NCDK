@@ -104,18 +104,18 @@ namespace NCDK.AtomTypes
         private static void TypeAndRetype(string smiles)
         {
             var mol = smilesParser.ParseSmiles(smiles);
-            var types = atomTypeMatcher.FindMatchingAtomTypes(mol).ToList();
+            var types = atomTypeMatcher.FindMatchingAtomTypes(mol).ToReadOnlyList();
             for (int i = 0; i < types.Count; i++)
             {
                 AtomTypeManipulator.Configure(mol.Atoms[i], types[i]);
             }
-            var retyped = atomTypeMatcher.FindMatchingAtomTypes(mol).ToList();
+            var retyped = atomTypeMatcher.FindMatchingAtomTypes(mol).ToReadOnlyList();
             for (int i = 0; i < types.Count; i++)
             {
                 Assert.AreEqual(types[i], retyped[i],
                     $"First perception resulted in {types[i]} but the second perception gave {retyped[i]}");
             }
-            retyped = atomTypeMatcher.FindMatchingAtomTypes(mol).ToList();
+            retyped = atomTypeMatcher.FindMatchingAtomTypes(mol).ToReadOnlyList();
             for (int i = 0; i < types.Count; i++)
             {
                 Assert.AreEqual(types[i], retyped[i],

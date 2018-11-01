@@ -263,7 +263,7 @@ namespace NCDK.RingSearches
             mock_container.Setup(n => n.Atoms[It.IsAny<int>()]).Returns(new Mock<IAtom>().Object);
             mock_builder.Setup(n => n.NewAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>())).Returns(new Mock<IAtomContainer>().Object);
 
-            ringSearch.IsolatedRingFragments().ToList();
+            ringSearch.IsolatedRingFragments().ToReadOnlyList();
 
             mock_cyclicSearch.Verify(n => n.Isolated(), Times.Once());
 
@@ -292,7 +292,7 @@ namespace NCDK.RingSearches
             mock_container.Setup(n => n.Bonds).Returns(new List<IBond>());
             mock_container.Setup(n => n.Atoms[It.IsAny<int>()]).Returns(new Mock<IAtom>().Object);
 
-            ringSearch.FusedRingFragments().ToList();
+            ringSearch.FusedRingFragments().ToReadOnlyList();
 
             mock_cyclicSearch.Verify(n => n.Fused(), Times.Once());
 

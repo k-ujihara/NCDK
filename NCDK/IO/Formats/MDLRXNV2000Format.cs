@@ -64,7 +64,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public MatchResult Matches(IEnumerable<string> lines)
         {
-            var _lines = lines.ToList();
+            var _lines = lines.ToReadOnlyList();
 
             // if the first line doesn't have '$RXN' then it can't match
             if (_lines.Count < 1 || _lines[0].Trim() != "$RXN")

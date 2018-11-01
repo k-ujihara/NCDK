@@ -46,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
-            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
+            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             IAtomContainer ac = (IAtomContainer)cList[0];
 
             var result = Descriptor.Calculate(ac);

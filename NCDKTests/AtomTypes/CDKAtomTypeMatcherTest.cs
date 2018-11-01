@@ -61,7 +61,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestFindMatchingAtomType_IAtomContainer_IAtom()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             var thisHybridization = Hybridization.SP3;
             atom.Hybridization = thisHybridization;
@@ -74,7 +74,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestFindMatchingAtomType_IAtomContainer()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             var thisHybridization = Hybridization.SP3;
             atom.Hybridization = thisHybridization;
@@ -82,7 +82,7 @@ namespace NCDK.AtomTypes
 
             // just check consistency; other methods do perception testing
             var matcher = CDK.AtomTypeMatcher;
-            var types = matcher.FindMatchingAtomTypes(mol).ToList();
+            var types = matcher.FindMatchingAtomTypes(mol).ToReadOnlyList();
             for (int i = 0; i < types.Count; i++)
             {
                 var type = matcher.FindMatchingAtomType(mol, mol.Atoms[i]);
@@ -93,7 +93,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestDummy()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new PseudoAtom("R");
             mol.Atoms.Add(atom);
 
@@ -105,7 +105,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestNonExistingType()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom();
             mol.Atoms.Add(atom);
             var matcher = CDK.AtomTypeMatcher;
@@ -117,7 +117,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestEthene()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("C");
             mol.Atoms.Add(atom);
@@ -131,7 +131,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestEthyneKation()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("C") { FormalCharge = +1 };
             mol.Atoms.Add(atom);
@@ -145,7 +145,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestEthyneRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("C");
             mol.Atoms.Add(atom);
@@ -160,7 +160,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestImine()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("N");
             mol.Atoms.Add(atom);
@@ -174,7 +174,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestImineRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("N");
             mol.Atoms.Add(atom);
@@ -189,7 +189,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestEtheneRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("C");
             mol.Atoms.Add(atom);
@@ -204,7 +204,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestGuanineMethyl()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom1 = new Atom("C");
             IAtom atom2 = new Atom("N");
             IAtom atom3 = new Atom("C");
@@ -251,7 +251,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPropyne()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("C");
             IAtom atom3 = new Atom("C");
@@ -268,7 +268,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestFormaldehyde()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom2 = new Atom("C");
             mol.Atoms.Add(atom);
@@ -282,7 +282,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestCarboxylate()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom1 = new Atom("C");
             IAtom atom2 = new Atom("O") { FormalCharge = -1 };
@@ -302,7 +302,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestFormaldehydeRadicalKation()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O") { FormalCharge = +1 };
             IAtom atom2 = new Atom("C");
             mol.Atoms.Add(atom);
@@ -344,7 +344,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethanol()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom2 = new Atom("C");
             mol.Atoms.Add(atom);
@@ -358,7 +358,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestLithiumMethanoxide()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom2 = new Atom("C");
             IAtom atom3 = new Atom("Li");
@@ -375,7 +375,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHCN()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("N");
             IAtom atom2 = new Atom("C");
             mol.Atoms.Add(atom);
@@ -389,7 +389,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHNO2()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("N");
             IAtom atom2 = new Atom("O");
             IAtom atom3 = new Atom("O");
@@ -411,7 +411,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestNitromethane()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("N");
             IAtom atom2 = new Atom("O");
             IAtom atom3 = new Atom("O");
@@ -431,7 +431,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethylAmine()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("N");
             IAtom atom2 = new Atom("C");
             mol.Atoms.Add(atom);
@@ -445,7 +445,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethylAmineRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("N");
             IAtom atom2 = new Atom("C");
             mol.Atoms.Add(atom);
@@ -461,7 +461,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethyleneImine()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("N");
             IAtom atom2 = new Atom("C");
             mol.Atoms.Add(atom);
@@ -475,7 +475,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestEthene_withHybridInfo()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("C");
             Hybridization thisHybridization = Hybridization.SP2;
@@ -649,7 +649,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestDMSOCharged()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O") { FormalCharge = -1 };
             IAtom atom2 = new Atom("S") { FormalCharge = 1 };
             IAtom atom3 = new Atom("C");
@@ -669,7 +669,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestDMSO()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom2 = new Atom("S");
             IAtom atom3 = new Atom("C");
@@ -689,7 +689,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestDMSOO()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom1 = new Atom("O");
             IAtom atom2 = new Atom("S");
@@ -712,7 +712,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestStrioxide()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom1 = new Atom("O");
             IAtom atom2 = new Atom("S");
@@ -732,7 +732,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAmide()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom2 = new Atom("C");
             IAtom atom3 = new Atom("N");
@@ -749,7 +749,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAmineOxide()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom2 = new Atom("N");
             IAtom atom3 = new Atom("C");
@@ -772,7 +772,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestThioAmide()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("S");
             IAtom atom2 = new Atom("C");
             IAtom atom3 = new Atom("N");
@@ -798,7 +798,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAmide2()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom1 = new Atom("C");
             IAtom atom2 = new Atom("N");
@@ -818,7 +818,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAmide3()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom1 = new Atom("C");
             IAtom atom2 = new Atom("N");
@@ -841,7 +841,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestLactam()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom1 = new Atom("C");
             IAtom atom2 = new Atom("N");
@@ -868,7 +868,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestThioAcetone()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("S");
             IAtom atom2 = new Atom("C");
             IAtom atom3 = new Atom("C");
@@ -888,7 +888,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSulphuricAcid()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom2 = new Atom("S");
             IAtom atom3 = new Atom("O");
@@ -940,7 +940,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSulphuricAcid_Charged()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom2 = new Atom("S");
             IAtom atom3 = new Atom("O");
@@ -966,7 +966,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSF6()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("F");
             IAtom atom2 = new Atom("S");
             IAtom atom3 = new Atom("F");
@@ -995,7 +995,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMnF4()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("F");
             IAtom atom2 = new Atom("Mn");
             IAtom atom3 = new Atom("F");
@@ -1019,7 +1019,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestCrF6()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("F");
             IAtom atom2 = new Atom("Cr");
             IAtom atom3 = new Atom("F");
@@ -1048,7 +1048,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestXeF4()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("F");
             IAtom atom2 = new Atom("Xe");
             IAtom atom3 = new Atom("F");
@@ -1071,7 +1071,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPhosphate()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom2 = new Atom("P");
             IAtom atom3 = new Atom("O");
@@ -1095,7 +1095,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHydroxyTriMethylPhophanium()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("P") { FormalCharge = +1 };
             IAtom atom3 = new Atom("C");
@@ -1118,7 +1118,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPhosphateCharged()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O") { FormalCharge = -1 };
             IAtom atom2 = new Atom("P") { FormalCharge = 1 };
             IAtom atom3 = new Atom("O");
@@ -1141,7 +1141,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPhosphorusTriradical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("P");
             mol.Atoms.Add(atom);
             mol.AddSingleElectronTo(mol.Atoms[0]);
@@ -1155,7 +1155,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAmmonia()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("H");
             IAtom atom2 = new Atom("N");
             IAtom atom3 = new Atom("H");
@@ -1179,7 +1179,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestNitrogenRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("H");
             IAtom atom2 = new Atom("N");
             IAtom atom3 = new Atom("H");
@@ -1197,7 +1197,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestTMS()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("Si");
             IAtom atom3 = new Atom("C");
@@ -1220,7 +1220,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestTinCompound()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("Sn");
             IAtom atom3 = new Atom("C");
@@ -1243,7 +1243,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestArsenicPlus()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("As") { FormalCharge = +1 };
             IAtom atom3 = new Atom("C");
@@ -1266,7 +1266,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPhosphine()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("H");
             IAtom atom2 = new Atom("P");
             IAtom atom3 = new Atom("H");
@@ -1287,7 +1287,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPhosphorousAcid()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IChemObjectBuilder builder = mol.Builder;
             IAtom a1 = builder.NewAtom("P");
             a1.FormalCharge = 1;
@@ -1320,7 +1320,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestDiethylPhosphine()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("P");
             IAtom atom3 = new Atom("C");
@@ -1338,7 +1338,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPhosphorCompound()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("P");
             IAtom atom3 = new Atom("C");
@@ -1355,7 +1355,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestCarbokation()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("H");
             IAtom atom2 = new Atom("C") { FormalCharge = +1 };
             IAtom atom3 = new Atom("H");
@@ -1375,7 +1375,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestCarbokation_implicitHydrogen()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom2 = new Atom("C") { FormalCharge = +1 };
             mol.Atoms.Add(atom2);
 
@@ -1386,7 +1386,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHydrogen()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("H");
             mol.Atoms.Add(atom);
 
@@ -1397,7 +1397,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHydroxyl()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("H");
             IAtom oxygen = new Atom("O") { FormalCharge = -1 };
             mol.Atoms.Add(atom);
@@ -1411,7 +1411,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHydroxyl2()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom oxygen = new Atom("O") { FormalCharge = -1 };
             mol.Atoms.Add(oxygen);
 
@@ -1422,7 +1422,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHydroxonium()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("H");
             IAtom atom1 = new Atom("H");
             IAtom atom2 = new Atom("H");
@@ -1442,7 +1442,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPositiveCarbonyl()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("H");
             IAtom atom1 = new Atom("H");
             IAtom atom2 = new Atom("H");
@@ -1466,7 +1466,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestProton()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("H") { FormalCharge = 1 };
             mol.Atoms.Add(atom);
 
@@ -1477,7 +1477,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHalides()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
 
             IAtom atom = new Atom("Cl") { FormalCharge = -1 };
             mol.Atoms.Add(atom);
@@ -1506,7 +1506,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHalogens()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
 
             IAtom atom = new Atom("Cl");
             IAtom hydrogen = new Atom("H");
@@ -1544,7 +1544,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestFluorRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("F");
             mol.Atoms.Add(atom);
             mol.AddSingleElectronTo(mol.Atoms[0]);
@@ -1556,7 +1556,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestChlorRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("Cl");
             mol.Atoms.Add(atom);
             mol.AddSingleElectronTo(mol.Atoms[0]);
@@ -1568,7 +1568,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestBromRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("Br");
             mol.Atoms.Add(atom);
             mol.AddSingleElectronTo(mol.Atoms[0]);
@@ -1580,7 +1580,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestIodRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("I");
             mol.Atoms.Add(atom);
             mol.AddSingleElectronTo(mol.Atoms[0]);
@@ -1592,7 +1592,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestIMinusF2()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("F");
             IAtom atom2 = new Atom("I");
             IAtom atom3 = new Atom("F");
@@ -1610,7 +1610,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHydride()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("H") { FormalCharge = -1 };
             mol.Atoms.Add(atom);
 
@@ -1621,7 +1621,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHydrogenRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("H");
             mol.Atoms.Add(atom);
             mol.AddSingleElectronTo(mol.Atoms[0]);
@@ -1633,7 +1633,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAzide()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("N") { FormalCharge = -1 };
             IAtom atom3 = new Atom("N") { FormalCharge = +1 };
@@ -1653,7 +1653,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAllene()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom1 = new Atom("C");
             IAtom atom2 = new Atom("C");
             IAtom atom3 = new Atom("C");
@@ -1670,7 +1670,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAzide2()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("N");
             IAtom atom3 = new Atom("N") { FormalCharge = +1 };
@@ -1690,7 +1690,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMercuryComplex()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
 
             IAtom atom = new Atom("Hg") { FormalCharge = -1 };
             IAtom atom1 = new Atom("O") { FormalCharge = +1 };
@@ -1799,7 +1799,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPoloniumComplex()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
 
             IAtom atom = new Atom("O");
             IAtom atom1 = new Atom("Po");
@@ -1819,7 +1819,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestStronglyBoundKations()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("O"));
             mol.Atoms[1].FormalCharge = +1;
@@ -1835,7 +1835,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMetallics()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
 
             IAtom atom = new Atom("W");
             mol.Atoms.Add(atom);
@@ -1858,7 +1858,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSalts()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
 
             IAtom atom = new Atom("Na") { FormalCharge = +1 };
             mol.Atoms.Add(atom);
@@ -2049,7 +2049,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPerchlorate()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom2 = new Atom("Cl");
             IAtom atom3 = new Atom("O");
@@ -2075,7 +2075,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestGallate()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O") { FormalCharge = -1 };
             IAtom atom2 = new Atom("Ga") { FormalCharge = +3 };
             IAtom atom3 = new Atom("O") { FormalCharge = -1 };
@@ -2097,7 +2097,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestGallateCovalent()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom2 = new Atom("Ga");
             IAtom atom3 = new Atom("O");
@@ -2117,7 +2117,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPerchlorate_ChargedBonds()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom2 = new Atom("Cl");
             IAtom atom3 = new Atom("O");
@@ -2144,7 +2144,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestChlorate()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom2 = new Atom("Cl");
             IAtom atom3 = new Atom("O");
@@ -2164,7 +2164,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestOxide()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O") { FormalCharge = -2 };
             mol.Atoms.Add(atom);
 
@@ -2378,7 +2378,7 @@ namespace NCDK.AtomTypes
         public void TestPyridineDirect()
         {
             string[] expectedTypes = { "N.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2" };
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("N"));
             mol.Atoms.Add(new Atom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
@@ -2399,7 +2399,7 @@ namespace NCDK.AtomTypes
         public void TestPyridineWithSP2()
         {
             string[] expectedTypes = { "N.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2" };
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("N");
             IAtom a2 = mol.Builder.NewAtom("C");
             IAtom a3 = mol.Builder.NewAtom("C");
@@ -2452,7 +2452,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPyridineOxide()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("N")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -2476,7 +2476,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPyridineOxide_SP2()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms[0].Hybridization = Hybridization.SP2;
             mol.Atoms.Add(new Atom("N")); // 1
@@ -2558,7 +2558,7 @@ namespace NCDK.AtomTypes
         public void TestNiCovalentlyBound()
         {
             string[] expectedTypes = { "C.sp3", "C.sp3", "S.3", "Ni", "S.3" };
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
@@ -2575,7 +2575,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHaloniumsF()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
 
             IAtom carbon1 = new Atom("C");
             IAtom carbon2 = new Atom("C");
@@ -2594,7 +2594,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHaloniumsCl()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
 
             IAtom carbon1 = new Atom("C");
             IAtom carbon2 = new Atom("C");
@@ -2613,7 +2613,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHaloniumsBr()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
 
             IAtom carbon1 = new Atom("C");
             IAtom carbon2 = new Atom("C");
@@ -2632,7 +2632,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHaloniumsI()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
 
             IAtom carbon1 = new Atom("C");
             IAtom carbon2 = new Atom("C");
@@ -2651,7 +2651,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestRearrangementCarbokation()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
 
             IAtom carbon1 = new Atom("C") { FormalCharge = +1 };
             IAtom carbon2 = new Atom("C");
@@ -2670,7 +2670,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestChargedSpecies()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
 
             IAtom atom1 = new Atom("C") { FormalCharge = -1 };
             IAtom atom2 = new Atom("O") { FormalCharge = +1 };
@@ -2687,7 +2687,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestChargedSpecies2()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
 
             IAtom atom1 = new Atom("O") { FormalCharge = +1 };
             IAtom atom2 = new Atom("C");
@@ -2707,7 +2707,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestChargedSpecies3()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
 
             IAtom atom1 = new Atom("C") { FormalCharge = -1 };
             IAtom atom2 = new Atom("C");
@@ -2727,7 +2727,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestIsonitrile()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
 
             IAtom atom1 = new Atom("C");
             IAtom atom2 = new Atom("N") { FormalCharge = +1 };
@@ -2747,7 +2747,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestNobleGases()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
 
             mol.Atoms.Add(new Atom("He"));
             mol.Atoms.Add(new Atom("Ne"));
@@ -2763,7 +2763,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestZincChloride()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("Zn"));
             mol.Atoms.Add(new Atom("Cl"));
             mol.Atoms.Add(new Atom("Cl"));
@@ -2777,7 +2777,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestZinc()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("Zn"));
             mol.Atoms[0].FormalCharge = +2;
 
@@ -2788,7 +2788,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSilicon()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("Si");
             mol.Atoms.Add(a1);
             IAtom a2 = mol.Builder.NewAtom("O");
@@ -2864,7 +2864,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestScandium()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("Sc"));
             mol.Atoms[0].FormalCharge = -3;
             mol.Atoms.Add(new Atom("O"));
@@ -2900,7 +2900,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestVanadium()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("V"));
             mol.Atoms[0].FormalCharge = -3;
             mol.Atoms.Add(new Atom("C"));
@@ -2936,7 +2936,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestTitanium()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("Ti"));
             mol.Atoms[0].FormalCharge = -3;
             mol.Atoms.Add(new Atom("C"));
@@ -2972,7 +2972,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestBoronTetraFluoride()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("B"));
             mol.Atoms[0].FormalCharge = -1;
             mol.Atoms.Add(new Atom("F"));
@@ -2991,7 +2991,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestBerylliumTetraFluoride()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("Be"));
             mol.Atoms[0].FormalCharge = -2;
             mol.Atoms.Add(new Atom("F"));
@@ -3010,7 +3010,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestArsine()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("As"));
             mol.Atoms.Add(new Atom("H"));
             mol.Atoms.Add(new Atom("H"));
@@ -3026,7 +3026,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestBoron()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("B"));
             mol.Atoms.Add(new Atom("H"));
             mol.Atoms.Add(new Atom("H"));
@@ -3042,7 +3042,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestCarbonMonoxide()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms[0].FormalCharge = -1;
             mol.Atoms.Add(new Atom("O"));
@@ -3056,7 +3056,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestTitaniumFourCoordinate()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("Ti"));
             mol.Atoms.Add(new Atom("Cl"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
@@ -3075,7 +3075,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Bug1872969()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("S"));
             mol.Atoms.Add(new Atom("O"));
@@ -3121,7 +3121,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAssumeExplicitHydrogens()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.GetInstance(CDKAtomTypeMatcher.Mode.RequireExplicitHydrogens);
 
             mol.Atoms.Add(new Atom("O"));
@@ -3148,7 +3148,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestCarbonRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("C");
             IAtom atom3 = new Atom("C");
@@ -3170,7 +3170,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestCarbonDiradical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             mol.Atoms.Add(atom);
             mol.AddSingleElectronTo(mol.Atoms[0]);
@@ -3184,7 +3184,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestEthoxyEthaneRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom2 = new Atom("C");
             IAtom atom3 = new Atom("C");
@@ -3203,7 +3203,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethylFluorRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("F");
             mol.Atoms.Add(atom);
@@ -3219,7 +3219,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethylChloroRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("Cl");
             mol.Atoms.Add(atom);
@@ -3235,7 +3235,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethylBromoRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("Br");
             mol.Atoms.Add(atom);
@@ -3251,7 +3251,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethylIodoRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("I");
             mol.Atoms.Add(atom);
@@ -3267,7 +3267,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethyleneFluorKation()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("F");
             mol.Atoms.Add(atom);
@@ -3282,7 +3282,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethyleneChlorKation()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("Cl");
             mol.Atoms.Add(atom);
@@ -3297,7 +3297,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethyleneBromKation()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("Br");
             mol.Atoms.Add(atom);
@@ -3312,7 +3312,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethyleneIodKation()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("I");
             mol.Atoms.Add(atom);
@@ -3327,7 +3327,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethanolRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("O");
             mol.Atoms.Add(atom);
@@ -3342,7 +3342,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethylMethylimineRadical()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("N");
             IAtom atom2 = new Atom("C");
             IAtom atom3 = new Atom("C");
@@ -3361,7 +3361,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestChargeSeparatedFluoroEthane()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("F");
             IAtom atom2 = new Atom("C") { FormalCharge = +1 };
             IAtom atom3 = new Atom("C") { FormalCharge = -1 };
@@ -3379,7 +3379,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSulphurCompound()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("S");
             mol.Atoms.Add(a1);
             IAtom a2 = mol.Builder.NewAtom("N");
@@ -3402,7 +3402,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAluminumChloride()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("Cl");
             mol.Atoms.Add(a1);
             IAtom a2 = mol.Builder.NewAtom("Cl");
@@ -3426,7 +3426,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Cid1145()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("O");
             mol.Atoms.Add(a1);
             a1.FormalCharge = -1;
@@ -3492,7 +3492,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestChiPathFail()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a1);
             IAtom a2 = mol.Builder.NewAtom("C");
@@ -3576,7 +3576,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestDimethylThiirane()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(mol.Builder.NewAtom("C"));
             mol.Atoms.Add(mol.Builder.NewAtom("C"));
             mol.Atoms.Add(mol.Builder.NewAtom("C"));
@@ -3596,7 +3596,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSulphonylLookalike()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(mol.Builder.NewAtom("C"));
             mol.Atoms.Add(mol.Builder.NewAtom("C"));
             mol.Atoms.Add(mol.Builder.NewAtom("C"));
@@ -3612,7 +3612,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestNOxide()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             IAtom a2 = mol.Builder.NewAtom("C");
             IAtom a3 = mol.Builder.NewAtom("N");
@@ -3637,7 +3637,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestGermaniumFourCoordinate()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("Ge"));
             mol.Atoms.Add(new Atom("Cl"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
@@ -3655,7 +3655,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPlatinumFourCoordinate()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("Pt"));
             mol.Atoms.Add(new Atom("Cl"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
@@ -3673,7 +3673,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPlatinumSixCoordinate()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("Pt"));
             mol.Atoms.Add(new Atom("Cl"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
@@ -3696,7 +3696,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestWeirdNitrogen()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("N"));
             mol.Atoms.Add(new Atom("C"));
@@ -3716,7 +3716,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAnotherNitrogen()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms[0].Hybridization = Hybridization.SP2;
             mol.Atoms.Add(new Atom("C"));
@@ -3756,7 +3756,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestFormalChargeRepresentation()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             Hybridization thisHybridization = Hybridization.SP3;
             atom.Hybridization = thisHybridization;
@@ -3781,7 +3781,7 @@ namespace NCDK.AtomTypes
         public void TestP()
         {
             IAtom atomP = new Atom("P");
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(atomP);
             string[] expectedTypes = { "P.ine" };
 
@@ -5012,7 +5012,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAzoCompound()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("N");
             a1.FormalCharge = 1;
             mol.Atoms.Add(a1);

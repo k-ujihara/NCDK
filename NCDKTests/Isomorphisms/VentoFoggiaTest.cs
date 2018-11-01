@@ -44,7 +44,7 @@ namespace NCDK.Isomorphisms
         {
             int[] match = VentoFoggia.FindIdentical(TestMoleculeFactory.MakeBenzene()).Match(TestMoleculeFactory.MakeBenzene());
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 1, 2, 3, 4, 5 }, match));
-            int count = VentoFoggia.FindIdentical(TestMoleculeFactory.MakeBenzene()).MatchAll(TestMoleculeFactory.MakeBenzene()).ToList().Count;
+            int count = VentoFoggia.FindIdentical(TestMoleculeFactory.MakeBenzene()).MatchAll(TestMoleculeFactory.MakeBenzene()).ToReadOnlyList().Count;
             Assert.AreEqual(6, count); // note: aromatic one would be 12
         }
 
@@ -53,7 +53,7 @@ namespace NCDK.Isomorphisms
         {
             int[] match = VentoFoggia.FindIdentical(TestMoleculeFactory.MakeBenzene()).Match(TestMoleculeFactory.MakeNaphthalene());
             Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), match));
-            int count = VentoFoggia.FindIdentical(TestMoleculeFactory.MakeBenzene()).MatchAll(TestMoleculeFactory.MakeNaphthalene()).ToList().Count;
+            int count = VentoFoggia.FindIdentical(TestMoleculeFactory.MakeBenzene()).MatchAll(TestMoleculeFactory.MakeNaphthalene()).ToReadOnlyList().Count;
             Assert.AreEqual(0, count);
         }
 
@@ -64,7 +64,7 @@ namespace NCDK.Isomorphisms
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 2, 7, 6, 5, 4, 3 }, match));
             int count =
                     VentoFoggia.FindSubstructure(TestMoleculeFactory.MakeBenzene()).MatchAll(
-                            TestMoleculeFactory.MakeNaphthalene()).ToList().Count;
+                            TestMoleculeFactory.MakeNaphthalene()).ToReadOnlyList().Count;
             Assert.AreEqual(6, count); // note: aromatic one would be 24
         }
 
@@ -76,7 +76,7 @@ namespace NCDK.Isomorphisms
             Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), match));
             int count =
                 VentoFoggia.FindSubstructure(TestMoleculeFactory.MakeNaphthalene()).MatchAll(
-                        TestMoleculeFactory.MakeBenzene()).ToList().Count;
+                        TestMoleculeFactory.MakeBenzene()).ToReadOnlyList().Count;
             Assert.AreEqual(0, count);
         }
     }

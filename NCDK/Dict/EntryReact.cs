@@ -118,7 +118,7 @@ namespace NCDK.Dict
         /// <param name="param">Strings containing the information about this parameter.</param>
         public void AddParameter(IEnumerable<string> param)
         {
-            this.parameterClass.Add(param.ToList());
+            this.parameterClass.Add(param.ToReadOnlyList());
         }
 
         /// <summary>

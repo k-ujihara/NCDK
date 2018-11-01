@@ -49,7 +49,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestAtom()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("N");
             mol.Atoms.Add(atom);
 
@@ -63,7 +63,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestAtomId()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("N") { Id = "N1" };
             mol.Atoms.Add(atom);
 
@@ -77,7 +77,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestAtom2D()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("N");
             Vector2 p2d = new Vector2(1.3, 1.4);
             atom.Point2D = p2d;
@@ -93,7 +93,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestAtom3D()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("N");
             Vector3 p3d = new Vector3(1.3, 1.4, 0.9);
             atom.Point3D = p3d;
@@ -109,7 +109,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestAtom2DAnd3D()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("N");
             Vector2 p2d = new Vector2(1.3, 1.4);
             atom.Point2D = p2d;
@@ -128,7 +128,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestAtomFract3D()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("N");
             Vector3 p3d = new Vector3(0.3, 0.4, 0.9);
             atom.FractionalPoint3D = p3d;
@@ -144,7 +144,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestPseudoAtom()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             PseudoAtom atom = new PseudoAtom("N") { Label = "Glu55" };
             mol.Atoms.Add(atom);
 
@@ -163,7 +163,7 @@ namespace NCDK.IO.CML
         {
             ChemModel model = new ChemModel();
             var moleculeSet = new ChemObjectSet<IAtomContainer>();
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             PseudoAtom atom = new PseudoAtom("N");
             mol.Atoms.Add(atom);
             moleculeSet.Add(mol);
@@ -182,7 +182,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestAtomFormalCharge()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("N");
             int formalCharge = +1;
             atom.FormalCharge = formalCharge;
@@ -199,7 +199,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestHydrogenCount()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("N") { ImplicitHydrogenCount = 3 };
             mol.Atoms.Add(atom);
 
@@ -214,7 +214,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestHydrogenCount_UNSET()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("N") { ImplicitHydrogenCount = null };
             mol.Atoms.Add(atom);
 
@@ -228,7 +228,7 @@ namespace NCDK.IO.CML
         [TestMethod(), Ignore()] // Have to figure out how to store partial charges in CML2
         public void TestAtomPartialCharge()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("N");
             double partialCharge = 0.5;
             atom.Charge = partialCharge;
@@ -244,7 +244,7 @@ namespace NCDK.IO.CML
         [TestMethod(), Ignore()] // Have to figure out how to store atom parity in CML2
         public void TestAtomStereoParity()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("C");
             var stereo = StereoAtomParities.Plus;
             atom.StereoParity = stereo;
@@ -260,7 +260,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestIsotope()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("C") { MassNumber = 13 };
             mol.Atoms.Add(atom);
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
@@ -274,7 +274,7 @@ namespace NCDK.IO.CML
         [TestMethod(), Ignore()] // Functionality not yet implemented - exact mass can not be written/read
         public void TestIsotope_ExactMass()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("C") { ExactMass = 13.0 };
             mol.Atoms.Add(atom);
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
@@ -290,7 +290,7 @@ namespace NCDK.IO.CML
         [TestMethod(), Ignore()] // Functionality not yet implemented - natural abundance can not be written/read
         public void TestIsotope_Abundance()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("C") { NaturalAbundance = 1.0 };
             mol.Atoms.Add(atom);
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
@@ -308,7 +308,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestMassNumber()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("C") { MassNumber = 12 };
             mol.Atoms.Add(atom);
             Assert.AreEqual(12, atom.MassNumber.Value);
@@ -323,7 +323,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestBond()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("C");
             Atom atom2 = new Atom("O");
             mol.Atoms.Add(atom);
@@ -345,7 +345,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestBondID()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("C");
             Atom atom2 = new Atom("O");
             mol.Atoms.Add(atom);
@@ -361,7 +361,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestBondStereo()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("C");
             Atom atom2 = new Atom("O");
             mol.Atoms.Add(atom);
@@ -382,7 +382,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestBondAromatic()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             // surely, this bond is not aromatic... but fortunately, file formats do not care about chemistry
             Atom atom = new Atom("C");
             Atom atom2 = new Atom("C");
@@ -404,7 +404,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestBondAromatic_Double()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             // surely, this bond is not aromatic... but fortunately, file formats do not care about chemistry
             Atom atom = new Atom("C");
             Atom atom2 = new Atom("C");
@@ -425,7 +425,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestPartialCharge()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("C");
             mol.Atoms.Add(atom);
             double charge = -0.267;
@@ -441,7 +441,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestInChI()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             string inchi = "InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)";
             mol.SetProperty(CDKPropertyName.InChI, inchi);
 
@@ -454,7 +454,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestSpinMultiplicity()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("C");
             mol.Atoms.Add(atom);
             mol.SingleElectrons.Add(new SingleElectron(atom));
@@ -704,7 +704,7 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestUnSetHydrogenCount()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("C") { ImplicitHydrogenCount = null };
             Assert.IsNull(atom.ImplicitHydrogenCount);
             mol.Atoms.Add(atom);

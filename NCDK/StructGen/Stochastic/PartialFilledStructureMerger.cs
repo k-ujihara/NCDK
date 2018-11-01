@@ -39,7 +39,6 @@ namespace NCDK.StructGen.Stochastic
     // @author     steinbeck
     // @cdk.created    2001-09-04
     // @cdk.module     structgen
-    // @cdk.githash
     public class PartialFilledStructureMerger
     {
         private static readonly ISaturationChecker satCheck = CDK.SaturationChecker;
@@ -87,7 +86,7 @@ namespace NCDK.StructGen.Stochastic
                         if (ac == null)
                             continue;
 
-                        foreach (var atom in ac.Atoms.ToList())
+                        foreach (var atom in ac.Atoms.ToReadOnlyList()) // ToReadOnlyList is requied
                         {
                             if (!satCheck.IsSaturated(atom, ac))
                             {
@@ -138,8 +137,6 @@ namespace NCDK.StructGen.Stochastic
         /// <returns>The unsaturated atom.</returns>
         private IAtom GetAnotherUnsaturatedNode(IAtom exclusionAtom, IAtomContainer exclusionAtomContainer, IChemObjectSet<IAtomContainer> atomContainers)
         {
-            IAtom atom;
-
             foreach (var ac in atomContainers)
             {
                 if (ac != exclusionAtomContainer)
@@ -147,7 +144,7 @@ namespace NCDK.StructGen.Stochastic
                     int next = 0;//(int) (Math.Random() * ac.Atoms.Count);
                     for (int f = next; f < ac.Atoms.Count; f++)
                     {
-                        atom = ac.Atoms[f];
+                        var atom = ac.Atoms[f];
                         if (!satCheck.IsSaturated(atom, ac) && exclusionAtom != atom)
                         {
                             return atom;
@@ -159,7 +156,7 @@ namespace NCDK.StructGen.Stochastic
                 var next = exclusionAtomContainer.Atoms.Count;//(int) (Math.random() * ac.getAtomCount());
                 for (int f = 0; f < next; f++)
                 {
-                    atom = exclusionAtomContainer.Atoms[f];
+                    var atom = exclusionAtomContainer.Atoms[f];
                     if (!satCheck.IsSaturated(atom, exclusionAtomContainer) 
                      && exclusionAtom != atom
                      && !exclusionAtomContainer.GetConnectedAtoms(exclusionAtom).Contains(atom))

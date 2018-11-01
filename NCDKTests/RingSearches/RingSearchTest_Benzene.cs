@@ -81,7 +81,7 @@ namespace NCDK.RingSearches
         public void TestIsolatedRingFragments()
         {
             var search = new RingSearch(benzene);
-            var isolated = search.IsolatedRingFragments().ToList();
+            var isolated = search.IsolatedRingFragments().ToReadOnlyList();
             Assert.AreEqual(1, isolated.Count);
             Assert.AreEqual(6, isolated[0].Atoms.Count);
             Assert.AreEqual(6, isolated[0].Bonds.Count);

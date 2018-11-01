@@ -109,7 +109,7 @@ namespace NCDK.Fragments
         {
             var mol = smilesParser.ParseSmiles("C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1");
             fragmenter.GenerateFragments(mol);
-            var frags = fragmenter.GetFragments().ToList();
+            var frags = fragmenter.GetFragments().ToReadOnlyList();
             Assert.IsNotNull(frags);
             Assert.AreEqual(25, frags.Count);
 

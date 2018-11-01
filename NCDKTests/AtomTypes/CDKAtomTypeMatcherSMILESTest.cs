@@ -50,8 +50,8 @@ namespace NCDK.AtomTypes
             Assert.AreEqual(mol1.Atoms.Count, mol2.Atoms.Count);
             Assert.AreEqual(mol1.Bonds.Count, mol2.Bonds.Count);
 
-            var types1 = atomTypeMatcher.FindMatchingAtomTypes(mol1).ToList();
-            var types2 = atomTypeMatcher.FindMatchingAtomTypes(mol2).ToList();
+            var types1 = atomTypeMatcher.FindMatchingAtomTypes(mol1).ToReadOnlyList();
+            var types2 = atomTypeMatcher.FindMatchingAtomTypes(mol2).ToReadOnlyList();
             for (int i = 0; i < mol1.Atoms.Count; i++)
             {
                 Assert.AreEqual(types1[i].AtomTypeName, types2[i].AtomTypeName);
@@ -117,8 +117,8 @@ namespace NCDK.AtomTypes
             Assert.AreEqual(mol1.Atoms.Count, mol2.Atoms.Count);
             Assert.AreEqual(mol1.Bonds.Count, mol2.Bonds.Count);
 
-            var types1 = atomTypeMatcher.FindMatchingAtomTypes(mol1).ToList();
-            var types2 = atomTypeMatcher.FindMatchingAtomTypes(mol2).ToList();
+            var types1 = atomTypeMatcher.FindMatchingAtomTypes(mol1).ToReadOnlyList();
+            var types2 = atomTypeMatcher.FindMatchingAtomTypes(mol2).ToReadOnlyList();
             for (int i = 0; i < mol1.Atoms.Count; i++)
             {
                 Assert.AreEqual(types1[i].AtomTypeName, types2[i].AtomTypeName);

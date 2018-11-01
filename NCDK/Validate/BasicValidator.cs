@@ -356,7 +356,7 @@ namespace NCDK.Validate
             {
                 var structgenATF = CDK.CdkAtomTypeFactory;
                 int bos = (int)molecule.GetBondOrderSum(atom);
-                var atomTypes = structgenATF.GetAtomTypes(atom.Symbol).ToList();
+                var atomTypes = structgenATF.GetAtomTypes(atom.Symbol).ToReadOnlyList();
                 if (atomTypes.Count == 0)
                 {
                     checkBondSum.Details = $"Cannot validate bond order sum for atom not in valency atom type list: {atom.Symbol}";

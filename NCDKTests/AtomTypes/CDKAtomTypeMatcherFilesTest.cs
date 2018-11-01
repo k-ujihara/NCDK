@@ -112,8 +112,8 @@ namespace NCDK.AtomTypes
             Assert.IsNotNull(chemFile);
             IAtomContainer mol2 = ChemFileManipulator.GetAllAtomContainers(chemFile).First();
 
-            var types1 = atomTypeMatcher.FindMatchingAtomTypes(mol1).ToList();
-            var types2 = atomTypeMatcher.FindMatchingAtomTypes(mol2).ToList();
+            var types1 = atomTypeMatcher.FindMatchingAtomTypes(mol1).ToReadOnlyList();
+            var types2 = atomTypeMatcher.FindMatchingAtomTypes(mol2).ToReadOnlyList();
             for (int i = 0; i < mol1.Atoms.Count; i++)
             {
                 Assert.IsNotNull(types1[i], "Atom typing in mol1 failed for atom " + (i + 1));

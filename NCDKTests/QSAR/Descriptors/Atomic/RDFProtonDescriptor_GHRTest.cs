@@ -49,7 +49,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestReturnsNaNForNonHydrogen()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("O");
             mol.Atoms.Add(atom);
             var dv = descriptor.Calculate(atom, mol);

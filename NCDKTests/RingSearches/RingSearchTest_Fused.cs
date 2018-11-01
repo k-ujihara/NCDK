@@ -85,7 +85,7 @@ namespace NCDK.RingSearches
         public void TestFusedRingFragments()
         {
             var ringSearch = new RingSearch(fusedRings);
-            var fragments = ringSearch.FusedRingFragments().ToList();
+            var fragments = ringSearch.FusedRingFragments().ToReadOnlyList();
             Assert.AreEqual(1, fragments.Count);
             IAtomContainer fragment = fragments[0];
             foreach (var atom in fusedRings.Atoms)

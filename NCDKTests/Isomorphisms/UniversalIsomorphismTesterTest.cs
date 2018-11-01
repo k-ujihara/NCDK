@@ -152,7 +152,7 @@ namespace NCDK.Isomorphisms
             Aromaticity.CDKLegacy.Apply(mol);
             Aromaticity.CDKLegacy.Apply(frag1);
 
-            var list = uiTester.GetSubgraphAtomsMaps(mol, frag1).ToList();
+            var list = uiTester.GetSubgraphAtomsMaps(mol, frag1).ToReadOnlyList();
             var first = list[0];
             for (int i = 0; i < first.Count; i++)
             {
@@ -282,7 +282,7 @@ namespace NCDK.Isomorphisms
             var mol2 = smilesParser.ParseSmiles("CCC(=CC)C(=O)NC(N)=O");
 
             //Test for atom mapping between the mols
-            var list = uiTester.Search(mol1, mol2, new BitArray(mol1.Atoms.Count), new BitArray(mol2.Atoms.Count), true, true).ToList();
+            var list = uiTester.Search(mol1, mol2, new BitArray(mol1.Atoms.Count), new BitArray(mol2.Atoms.Count), true, true).ToReadOnlyList();
             Assert.AreEqual(3, list.Count);
             for (int i = 0; i < list.Count; i++)
             {
@@ -290,7 +290,7 @@ namespace NCDK.Isomorphisms
                 Assert.AreNotSame(0, first.Count);
             }
 
-            list = uiTester.Search(mol1, mol2, new BitArray(mol1.Atoms.Count), new BitArray(mol2.Atoms.Count), false, false).ToList();
+            list = uiTester.Search(mol1, mol2, new BitArray(mol1.Atoms.Count), new BitArray(mol2.Atoms.Count), false, false).ToReadOnlyList();
             Assert.AreEqual(1, list.Count);
             for (int i = 0; i < list.Count; i++)
             {
@@ -307,7 +307,7 @@ namespace NCDK.Isomorphisms
             var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             var mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
 
-            var list = uiTester.GetSubgraphAtomsMaps(mol1, mol2).ToList();
+            var list = uiTester.GetSubgraphAtomsMaps(mol1, mol2).ToReadOnlyList();
             Assert.IsNotNull(list);
             Assert.AreNotSame(0, list.Count);
             for (int i = 0; i < list.Count; i++)
@@ -340,7 +340,7 @@ namespace NCDK.Isomorphisms
             var mol1 = TestMoleculeFactory.MakeAlkane(4);
             var mol2 = TestMoleculeFactory.MakeAlkane(4);
 
-            var list = uiTester.GetSubgraphAtomsMaps(mol1, mol2).ToList();
+            var list = uiTester.GetSubgraphAtomsMaps(mol1, mol2).ToReadOnlyList();
             Assert.IsNotNull(list);
             Assert.AreEqual(2, list.Count);
             for (int i = 0; i < list.Count; i++)
@@ -470,7 +470,7 @@ namespace NCDK.Isomorphisms
             var queryac = sp.ParseSmiles("[H]");
             var query = QueryAtomContainerCreator.CreateSymbolAndBondOrderQueryContainer(queryac);
 
-            var matches = uiTester.GetIsomorphMaps(target, query).ToList();
+            var matches = uiTester.GetIsomorphMaps(target, query).ToReadOnlyList();
             Assert.AreEqual(1, matches.Count);
             Assert.AreEqual(1, matches[0].Count);
             var mapping = matches[0][0];
@@ -489,7 +489,7 @@ namespace NCDK.Isomorphisms
             var queryac = sp.ParseSmiles("C");
             var query = QueryAtomContainerCreator.CreateSymbolAndBondOrderQueryContainer(queryac);
 
-            var matches = uiTester.GetIsomorphMaps(target, query).ToList();
+            var matches = uiTester.GetIsomorphMaps(target, query).ToReadOnlyList();
             Assert.AreEqual(2, matches.Count);
             Assert.AreEqual(1, matches[0].Count);
             Assert.AreEqual(1, matches[1].Count);
@@ -514,7 +514,7 @@ namespace NCDK.Isomorphisms
             var target = sp.ParseSmiles("CNC");
             var queryac = sp.ParseSmiles("C");
 
-            var matches = uiTester.GetIsomorphMaps(target, queryac).ToList();
+            var matches = uiTester.GetIsomorphMaps(target, queryac).ToReadOnlyList();
             Assert.AreEqual(2, matches.Count);
             Assert.AreEqual(1, matches[0].Count);
             Assert.AreEqual(1, matches[1].Count);
@@ -539,7 +539,7 @@ namespace NCDK.Isomorphisms
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new MDLV2000Reader(ins);
             var content = (ChemFile)reader.Read(new ChemFile());
-            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
+            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             var molecules = new IAtomContainer[2];
             for (int j = 0; j < 2; j++)
             {

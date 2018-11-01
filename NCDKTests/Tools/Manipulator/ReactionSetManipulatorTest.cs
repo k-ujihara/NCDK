@@ -221,7 +221,7 @@ namespace NCDK.Tools.Manipulator
 
             var ids = ReactionSetManipulator.GetAllIDs(set);
             Assert.IsNotNull(ids);
-            Assert.AreEqual(6, ids.Count);
+            Assert.AreEqual(6, ids.Count());
         }
 
         [TestMethod()]

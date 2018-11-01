@@ -30,7 +30,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPossibleAtomTypes_IAtomContainer_IAtom()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("C") { ImplicitHydrogenCount = 3 };
             Atom atom2 = new Atom("N") { ImplicitHydrogenCount = 2 };
             mol.Atoms.Add(atom);

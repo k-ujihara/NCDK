@@ -91,7 +91,7 @@ namespace NCDK.RingSearches
         public void TestIsolatedRingFragments()
         {
             var search = new RingSearch(benzylbenzene);
-            var isolated = search.IsolatedRingFragments().ToList();
+            var isolated = search.IsolatedRingFragments().ToReadOnlyList();
             Assert.AreEqual(2, isolated.Count);
             Assert.AreEqual(6, isolated[0].Atoms.Count);
             Assert.AreEqual(6, isolated[0].Bonds.Count);
@@ -110,7 +110,7 @@ namespace NCDK.RingSearches
         // @cdk.inchi InChI=1S/C13H12/c1-3-7-12(8-4-1)11-13-9-5-2-6-10-13/h1-10H,11H2
         public static IAtomContainer Benzylbenzene()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom a1 = new Atom("C");
             mol.Atoms.Add(a1);
             IAtom a2 = new Atom("C");

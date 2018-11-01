@@ -263,7 +263,7 @@ namespace NCDK.Pharmacophore
                 upper = lower;
 
             // now get the two groups for this distance
-            var grouprefs = child.Elements().ToList();
+            var grouprefs = child.Elements().ToReadOnlyList();
             if (grouprefs.Count != 2) throw new CDKException("A distance constraint can only refer to 2 groups.");
             string id1 = grouprefs[0].Attribute("id")?.Value;
             string id2 = grouprefs[1].Attribute("id")?.Value;
@@ -328,7 +328,7 @@ namespace NCDK.Pharmacophore
                 upper = lower;
 
             // now get the three groups for this distance
-            var grouprefs = child.Elements().ToList();
+            var grouprefs = child.Elements().ToReadOnlyList();
             if (grouprefs.Count != 3) throw new CDKException("An angle constraint can only refer to 3 groups.");
             string id1 = grouprefs[0].Attribute("id")?.Value;
             string id2 = grouprefs[1].Attribute("id")?.Value;

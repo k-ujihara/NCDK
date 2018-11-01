@@ -402,7 +402,7 @@ namespace NCDK.Tools
                     if (string.Equals(node.Symbol, "H", StringComparison.Ordinal))
                         continue;
 
-                    var conAtoms = atomContainer.GetConnectedAtoms(node).ToList();
+                    var conAtoms = atomContainer.GetConnectedAtoms(node).ToReadOnlyList();
                     if (conAtoms.Count == 1)
                     {
                         nextSphereNodes.Add(new TreeNode(this, ",", treeNode, null, 0, 0, treeNode.score));

@@ -35,7 +35,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestCreateIDs_IChemObject()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom1 = new Atom("C");
             Atom atom2 = new Atom("C");
             mol.Atoms.Add(atom1);
@@ -47,13 +47,13 @@ namespace NCDK.Tools
             Assert.AreEqual("a1", atom1.Id);
             Assert.AreEqual("b1", bond.Id);
             var ids = AtomContainerManipulator.GetAllIDs(mol);
-            Assert.AreEqual(4, ids.Count);
+            Assert.AreEqual(4, ids.Count());
         }
 
         [TestMethod()]
         public void TestKeepingIDs()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("C") { Id = "atom1" };
             mol.Atoms.Add(atom);
 
@@ -62,13 +62,13 @@ namespace NCDK.Tools
             Assert.AreEqual("atom1", atom.Id);
             Assert.IsNotNull(mol.Id);
             var ids = AtomContainerManipulator.GetAllIDs(mol);
-            Assert.AreEqual(2, ids.Count);
+            Assert.AreEqual(2, ids.Count());
         }
 
         [TestMethod()]
         public void TestNoDuplicateCreation()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom1 = new Atom("C") { Id = "a1" };
             Atom atom2 = new Atom("C");
             mol.Atoms.Add(atom2);
@@ -77,7 +77,7 @@ namespace NCDK.Tools
             IDCreator.CreateIDs(mol);
             Assert.AreEqual("a2", atom2.Id);
             var ids = AtomContainerManipulator.GetAllIDs(mol);
-            Assert.AreEqual(3, ids.Count);
+            Assert.AreEqual(3, ids.Count());
         }
 
         // @cdk.bug 1455341
@@ -85,7 +85,7 @@ namespace NCDK.Tools
         public void TestCallingTwice()
         {
             var molSet = new ChemObjectSet<IAtomContainer>();
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom0 = new Atom("C") { Id = "a1" };
             Atom atom2 = new Atom("C");
             mol.Atoms.Add(atom2);

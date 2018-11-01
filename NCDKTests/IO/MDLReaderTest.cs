@@ -47,8 +47,10 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestAccepts()
         {
-            MDLReader reader = new MDLReader(new StringReader(""));
-            reader.ReaderMode = ChemObjectReaderMode.Strict;
+            var reader = new MDLReader(new StringReader(""))
+            {
+                ReaderMode = ChemObjectReaderMode.Strict
+            };
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
             Assert.IsTrue(reader.Accepts(typeof(ChemModel)));
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
@@ -100,7 +102,7 @@ namespace NCDK.IO
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            IList<IAtomContainer> containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             Assert.IsTrue((containersList[0]).Atoms.Count > 0);
             Assert.IsTrue((containersList[0]).Bonds.Count > 0);
@@ -134,7 +136,7 @@ namespace NCDK.IO
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            IList<IAtomContainer> containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(2, containersList.Count);
             Assert.AreEqual(39, (containersList[0]).Atoms.Count);
             Assert.AreEqual(41, (containersList[0]).Bonds.Count);
@@ -156,7 +158,7 @@ namespace NCDK.IO
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            IList<IAtomContainer> containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(2, containersList.Count);
             IAtomContainer container = containersList[0];
             Assert.AreEqual(BondStereo.None, container.Bonds[0].Stereo);

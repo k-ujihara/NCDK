@@ -80,7 +80,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
                 var list = container.GetConnectedAtoms(atom);
                 if (list != null)
                 {
-                    connectedTargetAtomListMap[atom] = list.ToList();
+                    connectedTargetAtomListMap[atom] = list.ToReadOnlyList();
                 }
                 else
                 {

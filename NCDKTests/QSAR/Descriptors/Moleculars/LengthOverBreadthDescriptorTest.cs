@@ -27,7 +27,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read(new ChemFile());
-            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
+            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             IAtomContainer ac = (IAtomContainer)cList[0];
             BODRIsotopeFactory.Instance.ConfigureAtoms(ac);
 
@@ -44,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read(new ChemFile());
-            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
+            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             IAtomContainer ac = (IAtomContainer)cList[1];
             BODRIsotopeFactory.Instance.ConfigureAtoms(ac);
 
@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read(new ChemFile());
-            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
+            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             IAtomContainer ac = (IAtomContainer)cList[2];
 
             BODRIsotopeFactory.Instance.ConfigureAtoms(ac);
@@ -79,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read(new ChemFile());
-            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
+            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             IAtomContainer ac = (IAtomContainer)cList[3];
             BODRIsotopeFactory.Instance.ConfigureAtoms(ac);
 
@@ -97,7 +97,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read(new ChemFile());
-            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
+            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             IAtomContainer ac = (IAtomContainer)cList[0];
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
 

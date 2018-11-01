@@ -71,7 +71,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestN3()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("N") { ImplicitHydrogenCount = 3 };
             mol.Atoms.Add(atom);
 
@@ -793,7 +793,7 @@ namespace NCDK.AtomTypes
         //    AtomTypeFactory factory = AtomTypeFactory.GetInstance(
         //            "NCDK.Config.Data.structgen_atomtypes.xml", Silent.ChemObjectBuilder.Instance);
 
-        //    var expectedTypes = factory.GetAllAtomTypes().ToList();
+        //    var expectedTypes = factory.GetAllAtomTypes().ToReadOnlyList();
         //    if (expectedTypes.Count != testedAtomTypes.Count)
         //    {
         //        string errorMessage = "Atom types not tested:";

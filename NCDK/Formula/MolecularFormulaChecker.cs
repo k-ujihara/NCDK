@@ -51,7 +51,7 @@ namespace NCDK.Formula
         /// <param name="rules"><see cref="IRule"/>s to be applied</param>
         public MolecularFormulaChecker(IEnumerable<IRule> rules)
         {
-            this.rules = rules.ToList();
+            this.rules = rules.ToReadOnlyList();
         }
 
         /// <summary>

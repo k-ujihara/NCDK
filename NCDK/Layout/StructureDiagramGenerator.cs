@@ -358,7 +358,7 @@ namespace NCDK.Layout
                                     if (parts2[mol.Atoms.IndexOf(atom)] != best)
                                     {
                                         afixToRemove.Add(atom);
-                                        foreach (var bond in mol.GetConnectedBonds(atom))
+                                        foreach (var bond in mol.GetConnectedBonds(atom).ToReadOnlyList())
                                             mol.Bonds.Remove(bond);
                                     }
                                 }

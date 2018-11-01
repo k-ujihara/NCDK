@@ -105,7 +105,7 @@ namespace NCDK.IO.CML
         public void TestMassNumber()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom atom = new Atom("C");
             atom.MassNumber = 12;
             mol.Atoms.Add(atom);

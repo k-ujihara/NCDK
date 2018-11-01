@@ -52,7 +52,7 @@ namespace NCDK.Stereo
         // internal, find a neighbor connected to 'atom' that is not 'other'
         private static IAtom GetOtherAtom(IAtomContainer mol, IAtom atom, IAtom other)
         {
-            var bonds = mol.GetConnectedBonds(atom).ToList();
+            var bonds = mol.GetConnectedBonds(atom).ToReadOnlyList();
             if (bonds.Count != 2)
                 return null;
             if (bonds[0].Contains(other))

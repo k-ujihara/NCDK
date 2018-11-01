@@ -82,7 +82,7 @@ namespace NCDK.Tools
         /// </summary>
         public bool Saturate(IEnumerable<IBond> bonds, IAtomContainer atomContainer)
         {
-            var _bonds = bonds.ToList();
+            var _bonds = bonds.ToReadOnlyList();
             Debug.WriteLine($"Saturating bond set of size: {_bonds.Count}");
             var bondsAreFullySaturated = false;
             if (_bonds.Count > 0)

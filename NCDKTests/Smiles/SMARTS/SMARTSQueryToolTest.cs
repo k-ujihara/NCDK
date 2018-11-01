@@ -62,14 +62,14 @@ namespace NCDK.Smiles.SMARTS
             List<int> map1 = new List<int> { 1, 2, 3, };
             List<int> map2 = new List<int> { 3, 4, 5, };
 
-            var mappings = querytool.GetMatchingAtoms().ToList();
-            var ret1 = mappings[0].OrderBy(n => n).ToList();
+            var mappings = querytool.GetMatchingAtoms().ToReadOnlyList();
+            var ret1 = mappings[0].OrderBy(n => n).ToReadOnlyList();
             for (int i = 0; i < 3; i++)
             {
                 Assert.IsTrue(Compares.AreDeepEqual(map1[i], ret1[i]));
             }
 
-            var ret2 = mappings[1].OrderBy(n => n).ToList();
+            var ret2 = mappings[1].OrderBy(n => n).ToReadOnlyList();
             for (int i = 0; i < 3; i++)
             {
                 Assert.AreEqual(map2[i], ret2[i]);

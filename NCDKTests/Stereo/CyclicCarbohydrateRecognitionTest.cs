@@ -168,7 +168,7 @@ namespace NCDK.Stereo
             CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
                                                                                     stereocenters);
 
-            var elements = recon.Recognise(new[] { Projection.Haworth }).ToList();
+            var elements = recon.Recognise(new[] { Projection.Haworth }).ToReadOnlyList();
             AssertTetrahedralCenter(elements[0],
                                     m.Atoms[1],
                                     TetrahedralStereo.AntiClockwise,
@@ -230,7 +230,7 @@ namespace NCDK.Stereo
             CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
                                                                                     stereocenters);
 
-            var elements = recon.Recognise(new[] { Projection.Chair }).ToList();
+            var elements = recon.Recognise(new[] { Projection.Chair }).ToReadOnlyList();
             AssertTetrahedralCenter(elements[0],
                                     m.Atoms[1],
                                     TetrahedralStereo.Clockwise,
@@ -303,7 +303,7 @@ namespace NCDK.Stereo
             CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
                                                                                     stereocenters);
 
-            var elements = recon.Recognise(new[] { Projection.Haworth }).ToList();
+            var elements = recon.Recognise(new[] { Projection.Haworth }).ToReadOnlyList();
             AssertTetrahedralCenter(elements[0],
                                     m.Atoms[1],
                                     TetrahedralStereo.AntiClockwise,
@@ -379,7 +379,7 @@ namespace NCDK.Stereo
             CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
                                                                                     stereocenters);
 
-            var elements = recon.Recognise(new[] { Projection.Haworth }).ToList();
+            var elements = recon.Recognise(new[] { Projection.Haworth }).ToReadOnlyList();
             AssertTetrahedralCenter(elements[0],
                                     m.Atoms[2],
                                     TetrahedralStereo.AntiClockwise,
@@ -482,7 +482,7 @@ namespace NCDK.Stereo
             CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
                                                                                     stereocenters);
 
-            var elements = recon.Recognise(new[] { Projection.Haworth }).ToList();
+            var elements = recon.Recognise(new[] { Projection.Haworth }).ToReadOnlyList();
             AssertTetrahedralCenter(elements[0],
                                     m.Atoms[1],
                                     TetrahedralStereo.AntiClockwise,
@@ -594,7 +594,7 @@ namespace NCDK.Stereo
                 CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
                                                                                         stereocenters);
 
-                var elements = recon.Recognise(new[] { Projection.Chair }).ToList();
+                var elements = recon.Recognise(new[] { Projection.Chair }).ToReadOnlyList();
                 m.SetStereoElements(elements);
 
                 AssertTetrahedralCenter(elements[0],
@@ -656,7 +656,7 @@ namespace NCDK.Stereo
             CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
                                                                                     stereocenters);
 
-            var elements = recon.Recognise(new[] { Projection.Haworth }).ToList();
+            var elements = recon.Recognise(new[] { Projection.Haworth }).ToReadOnlyList();
             Assert.IsTrue(elements.Count == 0);
         }
 
@@ -691,7 +691,7 @@ namespace NCDK.Stereo
             CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
                                                                                     stereocenters);
 
-            var elements = recon.Recognise(new[] { Projection.Haworth }).ToList();
+            var elements = recon.Recognise(new[] { Projection.Haworth }).ToReadOnlyList();
             Assert.IsTrue(elements.Count == 0);
         }
 

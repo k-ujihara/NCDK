@@ -158,7 +158,8 @@ namespace NCDK.Default
             if (multipliers.Count() == atomContainers.Count)
             {
                 this.multipliers = multipliers.ToList();
-                 NotifyChanged();                 return true;
+                 NotifyChanged();
+                return true;
             }
             return false;
         }

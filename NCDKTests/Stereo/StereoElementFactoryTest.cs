@@ -43,7 +43,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Benzene()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(Atom("C", 1, 1.30, -0.75));
             mol.Atoms.Add(Atom("C", 1, -0.00, -1.50));
             mol.Atoms.Add(Atom("C", 1, -1.30, -0.75));
@@ -64,7 +64,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Cyclooctatetraene()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(Atom("C", 1, -10.46, 6.36));
             mol.Atoms.Add(Atom("C", 1, -11.34, 5.15));
             mol.Atoms.Add(Atom("C", 1, -10.46, 3.93));
@@ -89,7 +89,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void DoubleBondInSevenMemberedRing()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(Atom("C", 1, -10.46, 6.36));
             mol.Atoms.Add(Atom("C", 1, -11.34, 5.15));
             mol.Atoms.Add(Atom("C", 1, -10.46, 3.93));
@@ -111,7 +111,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void HydrogenIsotope()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(Atom("C", 3, 0.00, 0.00));
             mol.Atoms.Add(Atom("C", 1, 1.30, -0.75));
             mol.Atoms.Add(Atom("C", 1, 2.60, -0.00));
@@ -127,7 +127,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void BridgeHeadNitrogen()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(Atom("C", 2, 1.23, 0.75));
             mol.Atoms.Add(Atom("C", 2, 1.23, -0.75));
             mol.Atoms.Add(Atom("N", 0, -0.07, -1.50));
@@ -193,7 +193,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void E_hexa234triene()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(Atom("C", 1, 2.48d, 0.00d));
             mol.Atoms.Add(Atom("C", 0, 1.65d, 0.00d));
             mol.Atoms.Add(Atom("C", 0, 0.83d, 0.00d));
@@ -222,7 +222,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void z_hexa234triene()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(Atom("C", 1, 2.48d, 0.00d));
             mol.Atoms.Add(Atom("C", 0, 1.65d, 0.00d));
             mol.Atoms.Add(Atom("C", 0, 0.83d, 0.00d));
@@ -251,7 +251,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void E_hexa234triene_3D()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(Atom("C", 1, 0.29d, 0.01d, 0.02d));
             mol.Atoms.Add(Atom("C", 0, -0.56d, -0.90d, 0.25d));
             mol.Atoms.Add(Atom("C", 0, -1.37d, -1.75d, 0.46d));
@@ -280,7 +280,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Z_hexa234triene_3D()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(Atom("C", 1, -0.09d, -0.45d, -1.07d));
             mol.Atoms.Add(Atom("C", 0, -0.67d, -1.04d, -0.11d));
             mol.Atoms.Add(Atom("C", 0, -1.23d, -1.59d, 0.79d));
@@ -775,7 +775,7 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[1], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[5], BondOrder.Single);
 
-            var stereos = StereoElementFactory.Using3DCoordinates(m).CreateAll().ToList();
+            var stereos = StereoElementFactory.Using3DCoordinates(m).CreateAll().ToReadOnlyList();
             Assert.AreEqual(1, stereos.Count);
             Assert.IsInstanceOfType(stereos[0], typeof(ExtendedTetrahedral));
             ExtendedTetrahedral et = (ExtendedTetrahedral)stereos[0];
@@ -802,7 +802,7 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[1], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[5], BondOrder.Single);
 
-            var stereos = StereoElementFactory.Using3DCoordinates(m).CreateAll().ToList();
+            var stereos = StereoElementFactory.Using3DCoordinates(m).CreateAll().ToReadOnlyList();
             Assert.AreEqual(1, stereos.Count);
             Assert.IsInstanceOfType(stereos[0], typeof(ExtendedTetrahedral));
             ExtendedTetrahedral et = (ExtendedTetrahedral)stereos[0];
@@ -923,7 +923,7 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[0], m.Atoms[2], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[3], BondOrder.Double);
             m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Single);
-            var elements = StereoElementFactory.Using3DCoordinates(m).CreateAll().ToList();
+            var elements = StereoElementFactory.Using3DCoordinates(m).CreateAll().ToReadOnlyList();
             Assert.AreEqual(0, elements.Count);
         }
 
@@ -947,7 +947,7 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[2], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[7], BondOrder.Single);
 
-            var elements = StereoElementFactory.Using3DCoordinates(m).CreateAll().ToList();
+            var elements = StereoElementFactory.Using3DCoordinates(m).CreateAll().ToReadOnlyList();
             // XXX: really 3 but we can't tell the middle centre is one ATM, see
             //      'dontCreateStereoForNonStereogenicIn3D'
             Assert.AreEqual(2, elements.Count);
@@ -967,7 +967,7 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[0], m.Atoms[3], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
 
-            var elements = StereoElementFactory.Using3DCoordinates(m).CreateAll().ToList();
+            var elements = StereoElementFactory.Using3DCoordinates(m).CreateAll().ToReadOnlyList();
 
             // methane carbon is of course non-stereogenic
             Assert.AreEqual(0, elements.Count);
@@ -1293,13 +1293,13 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[18], m.Atoms[21], BondOrder.Double);
             m.AddBond(m.Atoms[4], m.Atoms[19], BondOrder.Single);
             m.AddBond(m.Atoms[18], m.Atoms[5], BondOrder.Single);
-            var stereo = StereoElementFactory.Using2DCoordinates(m).CreateAll().ToList();
+            var stereo = StereoElementFactory.Using2DCoordinates(m).CreateAll().ToReadOnlyList();
             Assert.AreEqual(0, stereo.Count);
             m.Bonds[12].Stereo = BondStereo.Up;
-            var stereoUp = StereoElementFactory.Using2DCoordinates(m).CreateAll().ToList();
+            var stereoUp = StereoElementFactory.Using2DCoordinates(m).CreateAll().ToReadOnlyList();
             Assert.AreEqual(1, stereoUp.Count);
             m.Bonds[12].Stereo = BondStereo.Down;
-            var stereoDown = StereoElementFactory.Using2DCoordinates(m).CreateAll().ToList();
+            var stereoDown = StereoElementFactory.Using2DCoordinates(m).CreateAll().ToReadOnlyList();
             Assert.AreEqual(1, stereoDown.Count);
             var s1 = stereoUp[0];
             var s2 = stereoDown[0];
@@ -1311,7 +1311,7 @@ namespace NCDK.Stereo
             // now test placement of wedges else where
             m.Bonds[12].Stereo = BondStereo.None;
             m.GetBond(m.Atoms[9], m.Atoms[12]).Stereo = BondStereo.Up;
-            var stereoUpOther = StereoElementFactory.Using2DCoordinates(m).CreateAll().ToList();
+            var stereoUpOther = StereoElementFactory.Using2DCoordinates(m).CreateAll().ToReadOnlyList();
             Assert.AreEqual(1, stereoUpOther.Count);
             var s3 = stereoUpOther[0];
             Assert.AreEqual(s2.Focus, s3.Focus);
@@ -1319,7 +1319,7 @@ namespace NCDK.Stereo
             Assert.AreEqual(s2.Configure, s3.Configure);
 
             m.GetBond(m.Atoms[9], m.Atoms[12]).Stereo = BondStereo.Down;
-            var stereoDownOther = StereoElementFactory.Using2DCoordinates(m).CreateAll().ToList();
+            var stereoDownOther = StereoElementFactory.Using2DCoordinates(m).CreateAll().ToReadOnlyList();
             Assert.AreEqual(1, stereoDownOther.Count);
             var s4 = stereoDownOther[0];
             Assert.AreEqual(s1.Focus, s4.Focus);

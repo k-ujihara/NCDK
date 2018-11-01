@@ -24,7 +24,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Graphs;
-using NCDK.Smiles;
 using NCDK.Tools.Diff;
 using NCDK.Tools.Manipulator;
 using System.Linq;

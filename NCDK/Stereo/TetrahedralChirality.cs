@@ -43,7 +43,7 @@ namespace NCDK.Stereo
         }
 
         public TetrahedralChirality(IAtom chiralAtom, IReadOnlyList<IAtom> ligands, StereoConfigurations configure)
-            : base(chiralAtom, ligands.ToList(), new StereoElement(StereoClass.Tetrahedral, configure))
+            : base(chiralAtom, ligands.ToReadOnlyList(), new StereoElement(StereoClass.Tetrahedral, configure))
         {
         }
 

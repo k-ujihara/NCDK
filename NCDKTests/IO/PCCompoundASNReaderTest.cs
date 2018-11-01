@@ -54,7 +54,7 @@ namespace NCDK.IO
             PCCompoundASNReader reader = new PCCompoundASNReader(ins);
             IChemFile cFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
-            var containers = ChemFileManipulator.GetAllAtomContainers(cFile).ToList();
+            var containers = ChemFileManipulator.GetAllAtomContainers(cFile).ToReadOnlyList();
             Assert.AreEqual(1, containers.Count);
             Assert.IsTrue(containers[0] is IAtomContainer);
             IAtomContainer molecule = containers[0];

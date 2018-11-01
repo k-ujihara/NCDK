@@ -64,6 +64,7 @@ namespace NCDK.Isomorphisms
     ///     {
     ///     }
     /// }
+    /// </code>
     /// </example>
     /// <seealso cref="DfPattern"/>
     /// <seealso cref="Mappings"/>

@@ -18,8 +18,8 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.IO;
+using NCDK.Silent;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -49,17 +49,21 @@ namespace NCDK.Tools.Manipulator
         public void SetUp()
         {
             molecule1 = new AtomContainer();
-            atomInMol1 = new Atom("Cl");
-            atomInMol1.Charge = -1.0;
-            atomInMol1.FormalCharge = -1;
-            atomInMol1.ImplicitHydrogenCount = 1;
+            atomInMol1 = new Atom("Cl")
+            {
+                Charge = -1.0,
+                FormalCharge = -1,
+                ImplicitHydrogenCount = 1
+            };
             molecule1.Atoms.Add(atomInMol1);
             molecule1.Atoms.Add(new Atom("Cl"));
             bondInMol1 = new Bond(atomInMol1, molecule1.Atoms[1]);
             molecule1.Bonds.Add(bondInMol1);
             molecule2 = new AtomContainer();
-            atomInMol2 = new Atom("O");
-            atomInMol2.ImplicitHydrogenCount = 2;
+            atomInMol2 = new Atom("O")
+            {
+                ImplicitHydrogenCount = 2
+            };
             molecule2.Atoms.Add(atomInMol2);
             moleculeSet = ChemObjectBuilder.Instance.NewAtomContainerSet();
             moleculeSet.Add(molecule1);
@@ -67,11 +71,15 @@ namespace NCDK.Tools.Manipulator
             reaction = new Reaction();
             reaction.Reactants.Add(molecule1);
             reaction.Products.Add(molecule2);
-            reactionSet = new ReactionSet();
-            reactionSet.Add(reaction);
-            chemModel = new ChemModel();
-            chemModel.MoleculeSet = moleculeSet;
-            chemModel.ReactionSet = reactionSet;
+            reactionSet = new ReactionSet
+            {
+                reaction
+            };
+            chemModel = new ChemModel
+            {
+                MoleculeSet = moleculeSet,
+                ReactionSet = reactionSet
+            };
         }
 
         [TestMethod()]
@@ -145,11 +153,15 @@ namespace NCDK.Tools.Manipulator
             molSet.Add(mol1);
             IReaction r = new Reaction();
             r.Products.Add(mol2);
-            IReactionSet rSet = new ReactionSet();
-            rSet.Add(r);
-            IChemModel model = new ChemModel();
-            model.MoleculeSet = molSet;
-            model.ReactionSet = rSet;
+            IReactionSet rSet = new ReactionSet
+            {
+                r
+            };
+            IChemModel model = new ChemModel
+            {
+                MoleculeSet = molSet,
+                ReactionSet = rSet
+            };
             IBond otherBond = new Bond();
             Assert.AreEqual(2, ChemModelManipulator.GetBondCount(model));
             ChemModelManipulator.RemoveElectronContainer(model, otherBond);
@@ -179,11 +191,15 @@ namespace NCDK.Tools.Manipulator
             molSet.Add(mol1);
             IReaction r = new Reaction();
             r.Products.Add(mol2);
-            IReactionSet rSet = new ReactionSet();
-            rSet.Add(r);
-            IChemModel model = new ChemModel();
-            model.MoleculeSet = molSet;
-            model.ReactionSet = rSet;
+            IReactionSet rSet = new ReactionSet
+            {
+                r
+            };
+            IChemModel model = new ChemModel
+            {
+                MoleculeSet = molSet,
+                ReactionSet = rSet
+            };
             IAtom otherAtom = new Atom("Cl");
             Assert.AreEqual(2, ChemModelManipulator.GetBondCount(model));
             Assert.AreEqual(4, ChemModelManipulator.GetAtomCount(model));
@@ -278,10 +294,10 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllIDs_IChemModel()
         {
-            Assert.AreEqual(0, ChemModelManipulator.GetAllIDs(chemModel).Count);
+            Assert.AreEqual(0, ChemModelManipulator.GetAllIDs(chemModel).Count());
             IDCreator.CreateIDs(chemModel);
             var allIDs = ChemModelManipulator.GetAllIDs(chemModel);
-            Assert.AreEqual(16, ChemModelManipulator.GetAllIDs(chemModel).Count);
+            Assert.AreEqual(16, ChemModelManipulator.GetAllIDs(chemModel).Count());
             var uniq = new HashSet<string>(allIDs);
             Assert.AreEqual(10, uniq.Count);
         }

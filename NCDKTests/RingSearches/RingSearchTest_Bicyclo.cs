@@ -86,7 +86,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestFusedRingFragments()
         {
-            var fragments = new RingSearch(bicyclo).FusedRingFragments().ToList();
+            var fragments = new RingSearch(bicyclo).FusedRingFragments().ToReadOnlyList();
             Assert.AreEqual(1, fragments.Count);
             IAtomContainer fragment = fragments[0];
             Assert.AreEqual(bicyclo.Atoms.Count, fragment.Atoms.Count);

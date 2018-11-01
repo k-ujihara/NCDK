@@ -339,7 +339,7 @@ namespace NCDK.Layout
         public virtual void PlaceSpiroRing(IRing ring, IAtomContainer sharedAtoms, Vector2 sharedAtomsCenter, Vector2 ringCenterVector, double bondLength)
         {
             var startAtom = sharedAtoms.Atoms[0];
-            var mBonds = Molecule.GetConnectedBonds(sharedAtoms.Atoms[0]).ToList();
+            var mBonds = Molecule.GetConnectedBonds(sharedAtoms.Atoms[0]).ToReadOnlyList();
             var degree = mBonds.Count;
             Debug.WriteLine($"placeSpiroRing: D={degree}");
             // recalculate the ringCentreVector

@@ -129,7 +129,7 @@ namespace NCDK.IO
 
         private IAtomContainer SingleAtomMolecule(string id, int? formalCharge)
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C", new Vector3(0.0, 0.0, 0.0));
             mol.Atoms.Add(atom);
             mol.Id = id;
@@ -142,7 +142,7 @@ namespace NCDK.IO
 
         private IAtomContainer SingleBondMolecule()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C", new Vector3(0.0, 0.0, 0.0)));
             mol.Atoms.Add(new Atom("O", new Vector3(1.0, 1.0, 1.0)));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);

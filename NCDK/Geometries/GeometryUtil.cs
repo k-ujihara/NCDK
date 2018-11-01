@@ -1402,10 +1402,9 @@ namespace NCDK.Geometries
             foreach (var firstAtomNumber in firstAtoms)
             {
                 centerAtomfirstAC = firstAtomContainer.Atoms[firstAtomNumber];
-                var connectedAtoms = firstAtomContainer.GetConnectedAtoms(centerAtomfirstAC).ToList();
+                var connectedAtoms = firstAtomContainer.GetConnectedAtoms(centerAtomfirstAC).ToReadOnlyList();
                 if (connectedAtoms.Count > 1)
                 {
-                    //Debug.WriteLine("If "+centerAtomfirstAC.Symbol+" is the center atom :");
                     for (int i = 0; i < connectedAtoms.Count - 1; i++)
                     {
                         firstAtomfirstAC = connectedAtoms[i];
@@ -1421,7 +1420,6 @@ namespace NCDK.Geometries
                             angleSecondMolecule = GetAngle(centerAtomsecondAC, firstAtomsecondAC, secondAtomsecondAC);
                             sum = sum + Math.Pow(angleFirstMolecule - angleSecondMolecule, 2);
                             n++;
-                            //Debug.WriteLine("Error for the "+firstAtomfirstAC.Symbol.ToLowerInvariant()+"-"+centerAtomfirstAC.Symbol+"-"+connectedAtoms[j].Symbol.ToLowerInvariant()+" Angle :"+deltaAngle+" degrees");
                         }
                     }
                 }//if

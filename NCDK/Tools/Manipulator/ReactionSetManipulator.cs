@@ -98,15 +98,14 @@ namespace NCDK.Tools.Manipulator
             return moleculeSet;
         }
 
-        public static IList<string> GetAllIDs(IReactionSet set)
+        public static IEnumerable<string> GetAllIDs(IReactionSet set)
         {
-            var IDlist = new List<string>();
-            if (set.Id != null) IDlist.Add(set.Id);
+            if (set.Id != null)
+                yield return set.Id;
             foreach (var reaction in set)
-            {
-                IDlist.AddRange(ReactionManipulator.GetAllIDs(reaction));
-            }
-            return IDlist;
+                foreach (var e in ReactionManipulator.GetAllIDs(reaction))
+                    yield return e;
+            yield break;
         }
 
         /// <summary>

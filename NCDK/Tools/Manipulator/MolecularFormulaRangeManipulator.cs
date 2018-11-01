@@ -77,7 +77,7 @@ namespace NCDK.Tools.Manipulator
             {
                 if (mf.IsotopesCount != mfRange.Count)
                 {
-                    foreach (var isotope in mfRange.GetIsotopes().ToList())
+                    foreach (var isotope in mfRange.GetIsotopes().ToReadOnlyList())
                     {
                         if (!mf.Contains(isotope))
                         {

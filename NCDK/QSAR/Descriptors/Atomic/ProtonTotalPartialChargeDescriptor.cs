@@ -41,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     public partial class ProtonTotalPartialChargeDescriptor : IAtomicDescriptor
     {
         private GasteigerMarsiliPartialCharges peoe = null;
-        private List<IAtom> neighboors;
+        private IReadOnlyList<IAtom> neighboors;
         private const int MAX_PROTON_COUNT = 5;
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
-            ArrayResult<double> result = new ArrayResult<double>(MAX_PROTON_COUNT);
+            var result = new ArrayResult<double>(MAX_PROTON_COUNT);
             for (int i = 0; i < neighboors.Count + 1; i++)
                 result.Add(double.NaN);
             return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, DescriptorNames, e);
@@ -91,18 +91,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>an array of doubles with partial charges of [heavy, proton_1 ... proton_n]</returns>
         public DescriptorValue<ArrayResult<double>> Calculate(IAtom atom, IAtomContainer ac)
         {
-            neighboors = ac.GetConnectedAtoms(atom).ToList();
-
-            IAtomContainer clone = (IAtomContainer)ac.Clone();
-
+            var clone = (IAtomContainer)ac.Clone();
             try
             {
-                peoe = new GasteigerMarsiliPartialCharges
-                {
-                    MaxGasteigerIterations = 6
-                };
-                //    HydrogenAdder hAdder = new HydrogenAdder();
-                //    hAdder.AddExplicitHydrogensToSatisfyValency(mol);
+                peoe = new GasteigerMarsiliPartialCharges { MaxGasteigerIterations = 6 };
                 peoe.AssignGasteigerMarsiliSigmaPartialCharges(clone, true);
             }
             catch (Exception exception)
@@ -110,12 +102,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 return GetDummyDescriptorValue(exception);
             }
 
-            IAtom localAtom = clone.Atoms[ac.Atoms.IndexOf(atom)];
-            neighboors = clone.GetConnectedAtoms(localAtom).ToList();
+            var localAtom = clone.Atoms[ac.Atoms.IndexOf(atom)];
+            neighboors = clone.GetConnectedAtoms(localAtom).ToReadOnlyList();
 
             // we assume that an atom has a max number of protons = MAX_PROTON_COUNT
             // if it has less, we pad with NaN
-            ArrayResult<double> protonPartialCharge = new ArrayResult<double>(MAX_PROTON_COUNT);
+            var protonPartialCharge = new ArrayResult<double>(MAX_PROTON_COUNT);
             Trace.Assert(neighboors.Count < MAX_PROTON_COUNT);
 
             protonPartialCharge.Add(localAtom.Charge.Value);
@@ -128,7 +120,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     protonPartialCharge.Add(neighboor.Charge.Value);
                 }
             }
-            int remainder = MAX_PROTON_COUNT - (hydrogenNeighbors + 1);
+            var remainder = MAX_PROTON_COUNT - (hydrogenNeighbors + 1);
             for (int i = 0; i < remainder; i++)
                 protonPartialCharge.Add(double.NaN);
 

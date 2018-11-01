@@ -82,7 +82,7 @@ namespace NCDK.RingSearches
         public void TestIsolatedRingFragments()
         {
             var search = new RingSearch(spiro);
-            var isolated = search.IsolatedRingFragments().ToList();
+            var isolated = search.IsolatedRingFragments().ToReadOnlyList();
             Assert.AreEqual(2, isolated.Count);
             Assert.IsTrue(Compares.AreOrderLessDeepEqual(new[] { 4, 7 }, new int[] { isolated[0].Atoms.Count, isolated[1].Atoms.Count }));
         }

@@ -407,7 +407,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 double result = ((Result<double>)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
-                //            Debug.WriteLine(mol.Atoms[i].Symbol+"-result: "+result);
                 if (result == 0.0)
                     Assert.AreEqual(testResult[i], result, 0.0001);
                 else

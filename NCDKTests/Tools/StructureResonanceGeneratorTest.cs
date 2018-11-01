@@ -461,7 +461,7 @@ namespace NCDK.Tools
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             CDK.LonePairElectronChecker.Saturate(molecule);
 
-            StructureResonanceGenerator gR = new StructureResonanceGenerator();
+            var gR = new StructureResonanceGenerator();
             var reactionList = gR.Reactions.ToList();
             reactionList.Add(new HeterolyticCleavagePBReaction());
             gR.Reactions = reactionList;

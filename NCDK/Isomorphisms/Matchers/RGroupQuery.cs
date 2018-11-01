@@ -107,7 +107,7 @@ namespace NCDK.Isomorphisms.Matchers
 
                 for (int i = 0; i < RootStructure.Atoms.Count; i++)
                 {
-                    IAtom atom = RootStructure.Atoms[i];
+                    var atom = RootStructure.Atoms[i];
                     if (atom is IPseudoAtom rGroup)
                     {
                         if (!string.Equals(rGroup.Label, "R", StringComparison.Ordinal)
@@ -151,7 +151,6 @@ namespace NCDK.Isomorphisms.Matchers
             }
             return false;
         }
-
 
         public bool AreSubstituentsDefined()
         {
@@ -222,17 +221,17 @@ namespace NCDK.Isomorphisms.Matchers
             //                 indicating which atom in an atom series belonging to a particular
             //                 R# group is present (1) or absent (0).
             var distributions = new List<int[]>();
-            var substitutes = new List<IList<RGroup>>();
+            var substitutes = new List<IReadOnlyList<RGroup>>();
 
             //Valid occurrences for each R# group
-            var occurrences = new List<IList<int>>();
+            var occurrences = new List<IReadOnlyList<int>>();
             var occurIndexes = new List<int>();
 
             //Build up each R# group data before recursively finding configurations.
             foreach (var r in RGroupDefinitions.Keys)
             {
                 rGroupNumbers.Add(r);
-                var validOcc = RGroupDefinitions[r].MatchOccurence(GetRgroupQueryAtoms(r).Count).ToList();
+                var validOcc = RGroupDefinitions[r].MatchOccurence(GetRgroupQueryAtoms(r).Count).ToReadOnlyList();
                 if (validOcc.Count == 0)
                 {
                     throw new CDKException($"Occurrence '{RGroupDefinitions[r].Occurrence}' defined for Rgroup {r} results in no subsititute options for this R-group.");
@@ -259,15 +258,14 @@ namespace NCDK.Isomorphisms.Matchers
         /// <summary>
         /// Recursive function to produce valid configurations for <see cref="GetAllConfigurations"/>. 
         /// </summary>
-        private void FindConfigurationsRecursively(IList<int> rGroupNumbers, IList<IList<int>> occurrences,
-                IList<int> occurIndexes, IList<int[]> distributions, IList<IList<RGroup>> substitutes, int level,
+        private void FindConfigurationsRecursively(IReadOnlyList<int> rGroupNumbers, IReadOnlyList<IReadOnlyList<int>> occurrences,
+                IList<int> occurIndexes, List<int[]> distributions, List<IReadOnlyList<RGroup>> substitutes, int level,
                 IList<IAtomContainer> result)
         {
-
             if (level == rGroupNumbers.Count)
             {
-
-                if (!CheckIfThenConditionsMet(rGroupNumbers, distributions)) return;
+                if (!CheckIfThenConditionsMet(rGroupNumbers, distributions))
+                    return;
 
                 // Clone the root to get a scaffold to plug the substitutes into.
                 IAtomContainer root = this.RootStructure;
@@ -284,11 +282,10 @@ namespace NCDK.Isomorphisms.Matchers
 
                 for (int rgpIdx = 0; rgpIdx < rGroupNumbers.Count; rgpIdx++)
                 {
-
                     int rNum = rGroupNumbers[rgpIdx];
                     int pos = 0;
 
-                    IList<RGroup> mapped = substitutes[rgpIdx];
+                    var mapped = substitutes[rgpIdx];
                     foreach (var substitute in mapped)
                     {
                         IAtom rAtom = this.GetRgroupQueryAtoms(rNum)[pos];
@@ -414,7 +411,6 @@ namespace NCDK.Isomorphisms.Matchers
                 }
                 //Add to result list
                 result.Add(rootClone);
-
             }
             else
             {
@@ -430,24 +426,21 @@ namespace NCDK.Isomorphisms.Matchers
                     {
                         candidate[j] = 0;
                     }
-                    List<int[]> rgrpDistributions = new List<int[]>();
+                    var rgrpDistributions = new List<int[]>();
                     FindDistributions(occurrence, candidate, rgrpDistributions, 0);
 
                     foreach (var distribution in rgrpDistributions)
                     {
                         distributions[level] = distribution;
 
-                        RGroup[] mapping = new RGroup[distribution.Length];
-                        List<IList<RGroup>> mappedSubstitutes = new List<IList<RGroup>>();
-                        MapSubstitutes(this.RGroupDefinitions[rGroupNumbers[level]], 0, distribution, mapping,
-                                mappedSubstitutes);
+                        var mapping = new RGroup[distribution.Length];
+                        var mappedSubstitutes = new List<List<RGroup>>();
+                        MapSubstitutes(this.RGroupDefinitions[rGroupNumbers[level]], 0, distribution, mapping, mappedSubstitutes);
 
                         foreach (var mappings in mappedSubstitutes)
                         {
                             substitutes[level] = mappings;
-                            FindConfigurationsRecursively(rGroupNumbers, occurrences, occurIndexes, distributions,
-                                    substitutes, level + 1, result);
-
+                            FindConfigurationsRecursively(rGroupNumbers, occurrences, occurIndexes, distributions, substitutes, level + 1, result);
                         }
                     }
                 }
@@ -515,7 +508,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// <param name="distribution"></param>
         /// <param name="mapping"></param>
         /// <param name="result"></param>
-        private void MapSubstitutes(RGroupList rgpList, int listOffset, int[] distribution, RGroup[] mapping, IList<IList<RGroup>> result)
+        private void MapSubstitutes(RGroupList rgpList, int listOffset, int[] distribution, RGroup[] mapping, List<List<RGroup>> result)
         {
             if (listOffset == distribution.Length)
             {
@@ -594,7 +587,7 @@ namespace NCDK.Isomorphisms.Matchers
 
         /// <summary>
         /// Checks whether IF..THEN conditions that can be set for the R-groups are met.
-        /// It is used to filter away invalid configurations in <see cref="FindConfigurationsRecursively(IList{int}, IList{IList{int}}, IList{int}, IList{int[]}, IList{IList{RGroup}}, int, IList{IAtomContainer})"/>.
+        /// It is used to filter away invalid configurations in <see cref="FindConfigurationsRecursively(IReadOnlyList{int}, IReadOnlyList{IReadOnlyList{int}}, IList{int}, List{int[]}, List{IReadOnlyList{RGroup}}, int, IList{IAtomContainer})"/>.
         /// </summary>
         /// <remarks>
         /// Scenario: suppose R1 is substituted 0 times, whereas R2 is substituted.
@@ -605,7 +598,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// <param name="rGroupNumbers"></param>
         /// <param name="distributions"></param>
         /// <returns>true if all IF..THEN RGroup conditions are met.</returns>
-        private bool CheckIfThenConditionsMet(IList<int> rGroupNumbers, IList<int[]> distributions)
+        private bool CheckIfThenConditionsMet(IReadOnlyList<int> rGroupNumbers, List<int[]> distributions)
         {
             for (int outer = 0; outer < rGroupNumbers.Count; outer++)
             {
@@ -617,7 +610,7 @@ namespace NCDK.Isomorphisms.Matchers
                         int rgroupNum2 = rGroupNumbers[inner];
                         if (!AllZeroArray(distributions[inner]))
                         {
-                            RGroupList rgrpList = RGroupDefinitions[rgroupNum2];
+                            var rgrpList = RGroupDefinitions[rgroupNum2];
                             if (rgrpList.RequiredRGroupNumber == rgroupNum)
                             {
                                 Trace.TraceInformation(" Rejecting >> all 0 for " + rgroupNum + " but requirement found from "

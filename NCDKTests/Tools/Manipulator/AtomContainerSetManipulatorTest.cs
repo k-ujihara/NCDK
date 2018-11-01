@@ -82,7 +82,7 @@ namespace NCDK.Tools.Manipulator
         public void TestRemoveElectronContainer_IAtomContainerSet_IElectronContainer()
         {
             var ms = new ChemObjectSet<IAtomContainer>();
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("O"));
             mol.Atoms.Add(new Atom("O"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
@@ -99,7 +99,7 @@ namespace NCDK.Tools.Manipulator
         public void TestRemoveAtomAndConnectedElectronContainers_IAtomContainerSet_IAtom()
         {
             var ms = new ChemObjectSet<IAtomContainer>();
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("O"));
             mol.Atoms.Add(new Atom("O"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);

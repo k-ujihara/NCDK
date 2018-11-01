@@ -161,7 +161,7 @@ namespace NCDK.LibIO.CML
             // atomArray
             CMLAtomArray atomArray = null;
             string atomArray2Concise = null;
-            var atomArrays = this.Elements(XName_CML_atomArray).Cast<CMLAtomArray>().ToList();
+            var atomArrays = this.Elements(XName_CML_atomArray).Cast<CMLAtomArray>().ToReadOnlyList();
             if (atomArrays.Count > 1)
             {
                 throw new ApplicationException($"Only one atomArray child allowed for formula; found: {atomArrays.Count}");

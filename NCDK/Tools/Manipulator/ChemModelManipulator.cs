@@ -353,26 +353,23 @@ namespace NCDK.Tools.Manipulator
             return list;
         }
 
-        public static List<string> GetAllIDs(IChemModel chemModel)
+        public static IEnumerable<string> GetAllIDs(IChemModel chemModel)
         {
-            var list = new List<string>();
-            if (chemModel.Id != null) list.Add(chemModel.Id);
-            ICrystal crystal = chemModel.Crystal;
+            if (chemModel.Id != null)
+                yield return chemModel.Id;
+            var crystal = chemModel.Crystal;
             if (crystal != null)
-            {
-                list.AddRange(AtomContainerManipulator.GetAllIDs(crystal));
-            }
-            IChemObjectSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
+                foreach (var e in AtomContainerManipulator.GetAllIDs(crystal))
+                    yield return e;
+            var moleculeSet = chemModel.MoleculeSet;
             if (moleculeSet != null)
-            {
-                list.AddRange(MoleculeSetManipulator.GetAllIDs(moleculeSet));
-            }
-            IReactionSet reactionSet = chemModel.ReactionSet;
+                foreach (var e in MoleculeSetManipulator.GetAllIDs(moleculeSet))
+                    yield return e;
+            var reactionSet = chemModel.ReactionSet;
             if (reactionSet != null)
-            {
-                list.AddRange(ReactionSetManipulator.GetAllIDs(reactionSet));
-            }
-            return list;
+                foreach (var e in ReactionSetManipulator.GetAllIDs(reactionSet))
+                    yield return e;
+            yield break;
         }
     }
 }

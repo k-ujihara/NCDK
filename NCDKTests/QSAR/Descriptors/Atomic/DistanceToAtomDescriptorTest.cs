@@ -41,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             IAtomicDescriptor descriptor = new DistanceToAtomDescriptor();
             descriptor.Parameters = new object[] { 2 };
 
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom a0 = new Atom("C");
             mol.Atoms.Add(a0);
             a0.Point3D = new Vector3(1.2492, -0.2810, 0.0000);

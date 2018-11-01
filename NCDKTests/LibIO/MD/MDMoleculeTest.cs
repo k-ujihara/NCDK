@@ -162,7 +162,7 @@ namespace NCDK.LibIO.MD
             reader.RegisterConvention("md:mdMolecule", new MDMoleculeConvention(new ChemFile()));
             IChemFile file = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
-            var containers = ChemFileManipulator.GetAllAtomContainers(file).ToList();
+            var containers = ChemFileManipulator.GetAllAtomContainers(file).ToReadOnlyList();
             Assert.AreEqual(1, containers.Count);
 
             var molecule2 = containers[0];

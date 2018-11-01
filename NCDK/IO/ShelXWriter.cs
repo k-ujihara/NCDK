@@ -147,7 +147,7 @@ namespace NCDK.IO
             string elemNames = "";
             string elemCounts = "";
             IMolecularFormula formula = MolecularFormulaManipulator.GetMolecularFormula(crystal);
-            var asortedElements = MolecularFormulaManipulator.Elements(formula).ToList();
+            var asortedElements = MolecularFormulaManipulator.Elements(formula).ToReadOnlyList();
             foreach (var element in asortedElements)
             {
                 string symbol = element.Symbol;

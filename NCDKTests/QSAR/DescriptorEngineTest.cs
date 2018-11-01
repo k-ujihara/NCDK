@@ -98,12 +98,12 @@ namespace NCDK.QSAR
                     this.GetType().FullName,
                     "The Chemistry Development Kit");
 
-            var dictClass = engine.GetDictionaryClass(className).ToList();
+            var dictClass = engine.GetDictionaryClass(className).ToReadOnlyList();
             Assert.AreEqual(2, dictClass.Count);
             Assert.AreEqual("topologicalDescriptor", dictClass[0]);
             Assert.AreEqual("electronicDescriptor", dictClass[1]);
 
-            dictClass = engine.GetDictionaryClass(specRef).ToList();
+            dictClass = engine.GetDictionaryClass(specRef).ToReadOnlyList();
             Assert.AreEqual(2, dictClass.Count);
             Assert.AreEqual("topologicalDescriptor", dictClass[0]);
             Assert.AreEqual("electronicDescriptor", dictClass[1]);

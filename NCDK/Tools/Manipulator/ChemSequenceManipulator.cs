@@ -68,46 +68,44 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// Returns all the AtomContainer's of a ChemSequence.
         /// </summary>
-        public static List<IAtomContainer> GetAllAtomContainers(IChemSequence sequence)
+        public static IEnumerable<IAtomContainer> GetAllAtomContainers(IChemSequence sequence)
         {
-            var acList = new List<IAtomContainer>();
             foreach (var model in sequence)
-            {
-                acList.AddRange(ChemModelManipulator.GetAllAtomContainers(model));
-            }
-            return acList;
+                foreach (var e in ChemModelManipulator.GetAllAtomContainers(model))
+                    yield return e;
+            yield break;
         }
 
         /// <summary>
-        /// Returns a List of all IChemObject inside a ChemSequence.
+        /// An enumerable of all IChemObject inside a ChemSequence.
         /// </summary>
-        /// <returns>A List of all ChemObjects.</returns>
-        public static List<IChemObject> GetAllChemObjects(IChemSequence sequence)
+        /// <returns>An enumerable of all ChemObjects.</returns>
+        public static IEnumerable<IChemObject> GetAllChemObjects(IChemSequence sequence)
         {
             List<IChemObject> list = new List<IChemObject>();
             // list.Add(sequence);
             for (int i = 0; i < sequence.Count; i++)
             {
-                list.Add(sequence[i]);
-                List<IChemObject> current = ChemModelManipulator.GetAllChemObjects(sequence[i]);
+                yield return sequence[i];
+                var current = ChemModelManipulator.GetAllChemObjects(sequence[i]);
                 foreach (var chemObject in current)
-                {
-                    if (!list.Contains(chemObject)) list.Add(chemObject);
-                }
-
+                    if (!list.Contains(chemObject))
+                    {
+                        list.Add(chemObject);
+                        yield return chemObject;
+                    }
             }
-            return list;
+            yield break;
         }
 
-        public static IList<string> GetAllIDs(IChemSequence sequence)
+        public static IEnumerable<string> GetAllIDs(IChemSequence sequence)
         {
-            var list = new List<string>();
-            if (sequence.Id != null) list.Add(sequence.Id);
+            if (sequence.Id != null)
+                yield return sequence.Id;
             for (int i = 0; i < sequence.Count; i++)
-            {
-                list.AddRange(ChemModelManipulator.GetAllIDs(sequence[i]));
-            }
-            return list;
+                foreach (var e in ChemModelManipulator.GetAllIDs(sequence[i]))
+                    yield return e;
+            yield break;
         }
     }
 }

@@ -44,7 +44,7 @@ namespace NCDK.Tools
         public void TestIsSaturated_IAtomContainer()
         {
             // test methane with explicit hydrogen
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             CDKValencyChecker checker = CDKValencyChecker.GetInstance(mol.Builder);
             Atom c = new Atom("C");
             Atom h1 = new Atom("H");
@@ -75,7 +75,7 @@ namespace NCDK.Tools
         public void TestIsSaturatedPerAtom()
         {
             // test methane with explicit hydrogen
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             CDKValencyChecker checker = CDKValencyChecker.GetInstance(mol.Builder);
             Atom c = new Atom("C");
             Atom h1 = new Atom("H");
@@ -109,7 +109,7 @@ namespace NCDK.Tools
         public void TestIsSaturated_MissingHydrogens_Methane()
         {
             // test methane with explicit hydrogen
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             CDKValencyChecker checker = CDKValencyChecker.GetInstance(mol.Builder);
             Atom c = new Atom("C");
             mol.Atoms.Add(c);
@@ -125,7 +125,7 @@ namespace NCDK.Tools
         public void TestIsSaturated_NegativelyChargedOxygen()
         {
             // test methane with explicit hydrogen
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             CDKValencyChecker checker = CDKValencyChecker.GetInstance(mol.Builder);
             Atom c = new Atom("C");
             Atom h1 = new Atom("H");
@@ -153,7 +153,7 @@ namespace NCDK.Tools
         public void TestIsSaturated_PositivelyChargedNitrogen()
         {
             // test methane with explicit hydrogen
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             CDKValencyChecker checker = CDKValencyChecker.GetInstance(mol.Builder);
             Atom n = new Atom("N");
             Atom h1 = new Atom("H");
@@ -181,7 +181,7 @@ namespace NCDK.Tools
         public void TestBug772316()
         {
             // test methane with explicit hydrogen
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             CDKValencyChecker checker = CDKValencyChecker.GetInstance(mol.Builder);
             Atom sulphur = new Atom("S");
             Atom o1 = new Atom("O");
@@ -214,7 +214,7 @@ namespace NCDK.Tools
         public void TestIsSaturated_Proton()
         {
             // test H+
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             CDKValencyChecker checker = CDKValencyChecker.GetInstance(mol.Builder);
             Atom hydrogen = new Atom("H") { FormalCharge = +1 };
             mol.Atoms.Add(hydrogen);
@@ -228,7 +228,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void Test1()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom f1 = new Atom("F");
             Atom c2 = new Atom("C");
             Atom c3 = new Atom("C");
@@ -248,7 +248,7 @@ namespace NCDK.Tools
         public void TestIsSaturated_MissingBondOrders_Ethane()
         {
             // test ethane with explicit hydrogen
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             CDKValencyChecker checker = CDKValencyChecker.GetInstance(mol.Builder);
             Atom c1 = new Atom("C")
             {

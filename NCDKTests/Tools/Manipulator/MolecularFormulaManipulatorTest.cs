@@ -939,7 +939,7 @@ namespace NCDK.Tools.Manipulator
                 "R"};
 
             var arrayGenerated = MolecularFormulaManipulator.OrderEle;
-            var listGenerated = arrayGenerated.ToList();
+            var listGenerated = arrayGenerated.ToReadOnlyList();
             Assert.AreEqual(113, listGenerated.Count());
 
             for (int i = 0; i < listElements.Length; i++)
@@ -1146,7 +1146,7 @@ namespace NCDK.Tools.Manipulator
                 chemFile = reader.Read(new ChemFile());
             }
             Assert.IsNotNull(chemFile);
-            var mols = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var mols = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             var mol = mols[0];
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);

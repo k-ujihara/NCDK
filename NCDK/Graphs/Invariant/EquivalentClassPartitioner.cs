@@ -116,7 +116,7 @@ namespace NCDK.Graphs.Invariant
             {
                 string symbol = atom.Symbol;
 
-                var bonds = atomContainer.GetConnectedBonds(atom).ToList();
+                var bonds = atomContainer.GetConnectedBonds(atom).ToReadOnlyList();
                 if (bonds.Count == 1)
                 {
                     IBond bond0 = bonds[0];

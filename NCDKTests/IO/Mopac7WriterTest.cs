@@ -51,7 +51,7 @@ namespace NCDK.IO
             StringWriter strWriter = new StringWriter();
             Mopac7Writer writer = new Mopac7Writer(strWriter);
 
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("Cr"));
             writer.Write(mol);
             writer.Close();
@@ -64,7 +64,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestWriteWithOptimizationTrue()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("Cr"));
 
             StringWriter strWriter = new StringWriter();
@@ -80,7 +80,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestWriteWithOptimizationFalse()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("Cr"));
 
             StringWriter strWriter = new StringWriter();
@@ -96,7 +96,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestWriteWithCustomCommands()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("Cr"));
 
             StringWriter strWriter = new StringWriter();
@@ -112,7 +112,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestChargedCompounds()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom aluminum = new Atom("Al");
             aluminum.FormalCharge = +3;
             mol.Atoms.Add(aluminum);

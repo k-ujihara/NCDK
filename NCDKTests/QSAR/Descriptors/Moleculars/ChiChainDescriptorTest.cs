@@ -22,7 +22,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestDan64()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.7500000000000004, 2.799038105676658);
             mol.Atoms.Add(a1);
@@ -59,7 +59,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestDan80()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.0, 1.5);
             mol.Atoms.Add(a1);
@@ -101,7 +101,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestDan81()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.0, 1.5);
             mol.Atoms.Add(a1);
@@ -143,7 +143,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestDan82()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.0, 1.5);
             mol.Atoms.Add(a1);
@@ -185,7 +185,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestDan154()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.0, 1.5);
             mol.Atoms.Add(a1);

@@ -101,7 +101,7 @@ namespace NCDK.Graphs.InChI
 
             try
             {
-                input = new NInchiInputInchi(inchi, options.Select(n => InChIOption.ValueOfIgnoreCase(n)).ToList());
+                input = new NInchiInputInchi(inchi, options.Select(n => InChIOption.ValueOfIgnoreCase(n)));
             }
             catch (NInchiException jie)
             {

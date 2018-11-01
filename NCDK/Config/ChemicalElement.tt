@@ -89,6 +89,16 @@ namespace NCDK.Config
 <#
         }
 #>
+<#
+        foreach (var nn in name_and_numbers)
+        {
+            if (nn.Number == 0)
+                continue;
+#>
+            internal const int <#= nn.Symbol #> = <#= nn.Number #>;
+<#
+        }
+#>
         }
 
         private static IReadOnlyDictionary<string, ChemicalElement> symbolMap;

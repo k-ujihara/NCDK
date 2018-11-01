@@ -157,7 +157,8 @@ namespace NCDK.Tools.Manipulator
         {
             if (set != null)
             {
-                if (set.Id != null) yield return set.Id; 
+                if (set.Id != null)
+                    yield return set.Id; 
                 foreach (var atomContainer in set)
                 {
                     foreach (var id in AtomContainerManipulator.GetAllIDs(atomContainer))

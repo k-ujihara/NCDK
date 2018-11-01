@@ -211,7 +211,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 atomi = (IAtom)ac.Atoms[i];
                 // Problem fused ring systems
-                IList<IRing> atomRingSet = rs.GetRings(atomi).ToList();
+                var atomRingSet = rs.GetRings(atomi).ToList();
                 atomi.SetProperty("IS_IN_AROMATIC_RING", false);
                 atomi.SetProperty(CDKPropertyName.PartOfRingOfSize, 0);
                 if (atomRingSet.Count > 0)
@@ -219,7 +219,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     if (atomRingSet.Count > 1)
                     {
                         var containers = RingSetManipulator.GetAllAtomContainers(atomRingSet);
-                        atomRingSet = rs.Builder.NewRingSet();
+                        atomRingSet = rs.Builder.NewRingSet().ToList();
                         foreach (var container in containers)
                         {
                             // XXX: we're already in the SSSR, but then get the esential cycles
@@ -233,19 +233,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     {
                         if (j == 0)
                         {
-                            atomi.SetProperty(CDKPropertyName.PartOfRingOfSize, ((IRing)atomRingSet[j]).RingSize);
+                            atomi.SetProperty(CDKPropertyName.PartOfRingOfSize, (atomRingSet[j]).RingSize);
                         }
 
-                        if (((IRing)atomRingSet[j]).Contains(atomi))
+                        if ((atomRingSet[j]).Contains(atomi))
                         {
-                            if (((IRing)atomRingSet[j]).RingSize >= 6
+                            if ((atomRingSet[j]).RingSize >= 6
                                     && atomi.IsAromatic)
                             {
                                 atomi.SetProperty("IS_IN_AROMATIC_RING", true);
                             }
-                            if (((IRing)atomRingSet[j]).RingSize < (int)atomi.GetProperty<int>(CDKPropertyName.PartOfRingOfSize))
+                            if ((atomRingSet[j]).RingSize < atomi.GetProperty<int>(CDKPropertyName.PartOfRingOfSize))
                             {
-                                atomi.SetProperty(CDKPropertyName.PartOfRingOfSize, ((IRing)atomRingSet[j]).RingSize);
+                                atomi.SetProperty(CDKPropertyName.PartOfRingOfSize, (atomRingSet[j]).RingSize);
                             }
                         }
                     }

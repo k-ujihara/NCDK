@@ -87,11 +87,11 @@ namespace NCDK.QSAR.Results
             Assert.IsNotNull(result);
             Assert.AreEqual("", result.ToString());
             result.Add(5);
-            Assert.IsTrue(new[] { "5.0", "5" }.ToList().Contains(result.ToString()));
+            Assert.IsTrue(new[] { "5.0", "5" }.ToReadOnlyList().Contains(result.ToString()));
             result.Add(2);
-            Assert.IsTrue(new[] { "5.0,2.0", "5,2" }.ToList().Contains(result.ToString()));
+            Assert.IsTrue(new[] { "5.0,2.0", "5,2" }.ToReadOnlyList().Contains(result.ToString()));
             result.Add(-3);
-            Assert.IsTrue(new[] { "5.0,2.0,-3.0", "5,2,-3" }.ToList().Contains(result.ToString()));
+            Assert.IsTrue(new[] { "5.0,2.0,-3.0", "5,2,-3" }.ToReadOnlyList().Contains(result.ToString()));
         }
 
         [TestMethod()]

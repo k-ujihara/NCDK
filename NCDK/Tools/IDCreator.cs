@@ -115,7 +115,8 @@ namespace NCDK.Tools
         /// <param name="chemObject">IChemObject to create IDs for.</param>
         public static void CreateIDs(IChemObject chemObject)
         {
-            if (chemObject == null) return;
+            if (chemObject == null)
+                return;
 
             ResetCounters();
 
@@ -173,7 +174,7 @@ namespace NCDK.Tools
         /// <param name="identifier"></param>
         /// <param name="obj">IChemObject to set the ID for</param>
         /// <param name="tabuList">Tabu list to add the ID to</param>
-        private static int SetId(string prefix, int identifier, IChemObject obj, IList<string> tabuList)
+        private static int SetId(string prefix, int identifier, IChemObject obj, List<string> tabuList)
         {
             identifier += 1;
             while (tabuList.Contains(prefix + identifier))
@@ -190,9 +191,10 @@ namespace NCDK.Tools
         /// scheme often used in CML.
         /// </summary>
         /// <seealso cref="CreateIDs(IChemObject)"/>
-        private static void CreateIDsForAtomContainer(IAtomContainer container, IList<string> tabuList)
+        private static void CreateIDsForAtomContainer(IAtomContainer container, List<string> tabuList)
         {
-            if (tabuList == null) tabuList = AtomContainerManipulator.GetAllIDs(container);
+            if (tabuList == null)
+                tabuList = AtomContainerManipulator.GetAllIDs(container).ToList();
 
             if (null == container.Id)
             {
@@ -202,7 +204,7 @@ namespace NCDK.Tools
 
             // the tabu list for the container should force singularity
             // within a container only!
-            IList<string> internalTabuList = AtomContainerManipulator.GetAllIDs(container);
+            var internalTabuList = AtomContainerManipulator.GetAllIDs(container).ToList();
             if (policy == UniquePolicy.Object)
             {
                 // start atom and bond indices within a container set always from 1
@@ -237,9 +239,10 @@ namespace NCDK.Tools
         /// them m1, m2, etc.
         /// It will not the AtomContainerSet itself.
         /// </summary>
-        private static void CreateIDsForAtomContainerSet(IChemObjectSet<IAtomContainer> containerSet, IList<string> tabuList)
+        private static void CreateIDsForAtomContainerSet(IChemObjectSet<IAtomContainer> containerSet, List<string> tabuList)
         {
-            if (tabuList == null) tabuList = AtomContainerSetManipulator.GetAllIDs(containerSet).ToList();
+            if (tabuList == null)
+                tabuList = AtomContainerSetManipulator.GetAllIDs(containerSet).ToList();
 
             if (null == containerSet.Id)
             {
@@ -263,7 +266,7 @@ namespace NCDK.Tools
         /// Labels the reactants and products in the Reaction m1, m2, etc, and the atoms
         /// accordingly, when no ID is given.
         /// </summary>
-        private static void CreateIDsForReaction(IReaction reaction, IList<string> tabuList)
+        private static void CreateIDsForReaction(IReaction reaction, List<string> tabuList)
         {
             if (tabuList == null)
                 tabuList = ReactionManipulator.GetAllIDs(reaction).ToList();
@@ -295,9 +298,10 @@ namespace NCDK.Tools
             }
         }
 
-        private static void CreateIDsForReactionSet(IReactionSet reactionSet, IList<string> tabuList)
+        private static void CreateIDsForReactionSet(IReactionSet reactionSet, List<string> tabuList)
         {
-            if (tabuList == null) tabuList = ReactionSetManipulator.GetAllIDs(reactionSet);
+            if (tabuList == null)
+                tabuList = ReactionSetManipulator.GetAllIDs(reactionSet).ToList();
 
             if (null == reactionSet.Id)
             {
@@ -311,9 +315,10 @@ namespace NCDK.Tools
             }
         }
 
-        private static void CreateIDsForChemFile(IChemFile file, IList<string> tabuList)
+        private static void CreateIDsForChemFile(IChemFile file, List<string> tabuList)
         {
-            if (tabuList == null) tabuList = ChemFileManipulator.GetAllIDs(file).ToList();
+            if (tabuList == null)
+                tabuList = ChemFileManipulator.GetAllIDs(file).ToList();
 
             if (null == file.Id)
             {
@@ -332,9 +337,10 @@ namespace NCDK.Tools
             }
         }
 
-        private static void CreateIDsForChemSequence(IChemSequence sequence, IList<string> tabuList)
+        private static void CreateIDsForChemSequence(IChemSequence sequence, List<string> tabuList)
         {
-            if (tabuList == null) tabuList = ChemSequenceManipulator.GetAllIDs(sequence);
+            if (tabuList == null)
+                tabuList = ChemSequenceManipulator.GetAllIDs(sequence).ToList();
 
             if (null == sequence.Id)
             {
@@ -353,16 +359,17 @@ namespace NCDK.Tools
             }
         }
 
-        private static void CreateIDsForChemModel(IChemModel model, IList<string> tabuList)
+        private static void CreateIDsForChemModel(IChemModel model, List<string> tabuList)
         {
-            if (tabuList == null) tabuList = ChemModelManipulator.GetAllIDs(model);
+            if (tabuList == null)
+                tabuList = ChemModelManipulator.GetAllIDs(model).ToList();
 
             if (null == model.Id)
             {
                 chemModelCount = SetId(CHEMMODEL_PREFIX, chemModelCount, model, tabuList);
             }
 
-            ICrystal crystal = model.Crystal;
+            var crystal = model.Crystal;
             if (crystal != null)
             {
                 if (policy == UniquePolicy.Object)

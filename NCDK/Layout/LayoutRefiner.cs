@@ -1137,7 +1137,7 @@ namespace NCDK.Layout
             /// <returns>the bond code</returns>
             static int BondCode(IEnumerable<IBond> enumBonds)
             {
-                var bonds = enumBonds.ToList();
+                var bonds = enumBonds.ToReadOnlyList();
                 int code = bonds.Count & 0x1;
                 for (int i = 0; i < bonds.Count; i++)
                 {

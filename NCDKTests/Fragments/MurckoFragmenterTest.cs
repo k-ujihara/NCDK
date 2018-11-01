@@ -115,7 +115,7 @@ namespace NCDK.Fragments
             var rings = fragmenter.GetRingSystems();
             Assert.AreEqual(3, rings.Count());
 
-            var frameworks = fragmenter.GetFrameworks().ToList();
+            var frameworks = fragmenter.GetFrameworks().ToReadOnlyList();
             Assert.AreEqual(7, frameworks.Count);
 
             var ar = new[] { "c1ccc(cc1)CCC2CCC(CC3C=CC=C3)C2", "c1ccc(cc1)CCC2CCCC2", "C=1C=CC(C1)CC2CCCC2",
@@ -143,7 +143,7 @@ namespace NCDK.Fragments
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             fragmenter.GenerateFragments(mol);
 
-            var frameworks = fragmenter.GetFrameworks().ToList();
+            var frameworks = fragmenter.GetFrameworks().ToReadOnlyList();
             Assert.AreEqual(3, frameworks.Count);
             var ar = new[] { "n1coc(c1)-c2ccccc2", "n1coc(-c2ccccc2)c1-c3ccccc3", "n1cocc1-c2ccccc2" };
             foreach (var s in ar)
@@ -211,8 +211,8 @@ namespace NCDK.Fragments
             var fragmenter = new MurckoFragmenter(true, 6);
             fragmenter.GenerateFragments(mol);
 
-            var f = fragmenter.GetFrameworks().ToList();
-            var fc = fragmenter.GetFrameworksAsContainers().ToList();
+            var f = fragmenter.GetFrameworks().ToReadOnlyList();
+            var fc = fragmenter.GetFrameworksAsContainers().ToReadOnlyList();
             Assert.AreEqual(1, f.Count);
             Assert.AreEqual(f.Count, fc.Count);
             Assert.AreEqual("n1ccccc1Cc2ccccc2", f[0]);
@@ -239,8 +239,8 @@ namespace NCDK.Fragments
             var fragmenter = new MurckoFragmenter(true, 6);
             fragmenter.GenerateFragments(mol);
 
-            var f = fragmenter.GetFrameworks().ToList();
-            var fc = fragmenter.GetFrameworksAsContainers().ToList();
+            var f = fragmenter.GetFrameworks().ToReadOnlyList();
+            var fc = fragmenter.GetFrameworksAsContainers().ToReadOnlyList();
 
             Assert.AreEqual(1, f.Count);
             Assert.AreEqual(f.Count, fc.Count);
@@ -271,8 +271,8 @@ namespace NCDK.Fragments
             var fragmenter = new MurckoFragmenter(true, 6);
             fragmenter.GenerateFragments(mol);
 
-            var f = fragmenter.GetFrameworks().ToList();
-            var fc = fragmenter.GetFrameworksAsContainers().ToList();
+            var f = fragmenter.GetFrameworks().ToReadOnlyList();
+            var fc = fragmenter.GetFrameworksAsContainers().ToReadOnlyList();
             Assert.AreEqual(1, f.Count);
             Assert.AreEqual(f.Count, fc.Count);
             Assert.AreEqual("c1ccc(cc1)-n2cccc2", f[0]);
@@ -294,7 +294,7 @@ namespace NCDK.Fragments
 
             var fragmenter = new MurckoFragmenter(true, 6);
             fragmenter.GenerateFragments(biphenyl);
-            var fragments = fragmenter.GetFragmentsAsContainers().ToList();
+            var fragments = fragmenter.GetFragmentsAsContainers().ToReadOnlyList();
 
             Assert.AreEqual(2, fragments.Count);
             Assert.AreEqual(12, fragments[0].Atoms.Count);

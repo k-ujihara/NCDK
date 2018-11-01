@@ -250,7 +250,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             else if (connectedBond.Order == BondOrder.Triple) tripleBondCount++;
                         }
                         int formalCharge = atom.FormalCharge.Value;
-                        var connectedAtoms = ac.GetConnectedAtoms(atom).ToList();
+                        var connectedAtoms = ac.GetConnectedAtoms(atom).ToReadOnlyList();
                         int numberOfNeighbours = connectedAtoms.Count;
 
                         // EXPLICIT hydrogens: count the number of hydrogen atoms

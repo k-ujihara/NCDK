@@ -36,7 +36,7 @@ namespace NCDK.Default
             ChemSequence cs = new ChemSequence();
             ChemModel cm = new ChemModel();
             IChemObjectSet<IAtomContainer> som = new ChemObjectSet<IAtomContainer>();
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom a1 = new Atom("C");
             Atom a2 = new Atom("C");
             Bond b1 = new Bond(a1, a2);

@@ -942,7 +942,7 @@ namespace NCDK.IO
                 }
 
                 // Sgroup Parent List
-                foreach (var parents in Wrap(sgroup.Parents.ToList(), 8))
+                foreach (var parents in Wrap(sgroup.Parents.ToReadOnlyList(), 8))
                 {
                     writer.Write("M  SPL");
                     writer.Write(FormatMDLInt(parents.Count, 3));
@@ -1023,7 +1023,7 @@ namespace NCDK.IO
                             break;
                         case SgroupKey.CtabParentAtomList:
                             var parentAtomList = (IEnumerable<IAtom>)sgroup.GetValue(key);
-                            foreach (var atoms in Wrap(parentAtomList.ToList(), 15))
+                            foreach (var atoms in Wrap(parentAtomList.ToReadOnlyList(), 15))
                             {
                                 writer.Write("M  SPA ");
                                 writer.Write(FormatMDLInt(id, 3));
@@ -1051,11 +1051,11 @@ namespace NCDK.IO
             }
         }
 
-        private static IList<IList<T>> Wrap<T>(ICollection<T> set, int lim)
+        private static IList<List<T>> Wrap<T>(IEnumerable<T> set, int lim)
         {
-            var wrapped = new List<IList<T>>();
+            var wrapped = new List<List<T>>();
             var list = new List<T>(set);
-            if (set.Count <= lim)
+            if (list.Count <= lim)
             {
                 if (list.Count != 0)
                     wrapped.Add(list);
@@ -1063,7 +1063,7 @@ namespace NCDK.IO
             else
             {
                 int i = 0;
-                for (; (i + lim) < set.Count; i += lim)
+                for (; (i + lim) < list.Count; i += lim)
                 {
                     wrapped.Add(list.GetRange(i, lim));
                 }

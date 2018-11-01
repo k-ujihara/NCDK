@@ -49,7 +49,7 @@ namespace NCDK.QSAR
             var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read(new ChemFile());
-            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
+            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             IAtomContainer ac = (IAtomContainer)cList[0];
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
             BODRIsotopeFactory.Instance.ConfigureAtoms(ac);

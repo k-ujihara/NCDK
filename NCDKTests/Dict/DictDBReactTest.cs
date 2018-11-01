@@ -43,7 +43,7 @@ namespace NCDK.Dict
         {
             DictionaryDatabase db = new DictionaryDatabase();
             var dict = db.GetDictionary("reaction-processes");
-            var entries = dict.Entries.ToList();
+            var entries = dict.Entries.ToReadOnlyList();
             var idList = new List<string>();
             idList.Add(entries[0].Id);
             for (int i = 1; i < entries.Count; i++)

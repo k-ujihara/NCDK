@@ -58,7 +58,7 @@ namespace NCDK.Geometries
                 // is this atom without 3D coords, and has only one ligand?
                 if (atom.Point3D == null)
                 {
-                    var connectedAtoms = atomContainer.GetConnectedAtoms(atom).ToList();
+                    var connectedAtoms = atomContainer.GetConnectedAtoms(atom).ToReadOnlyList();
                     if (connectedAtoms.Count == 1)
                     {
                         IAtom refAtom = (IAtom)connectedAtoms[0];
@@ -81,10 +81,10 @@ namespace NCDK.Geometries
             double angle = TypicalTetrahedralAngle;
             foreach (var refAtom in refAtoms.Atoms)
             {
-                var noCoordLigands = noCoords.GetConnectedAtoms(refAtom).ToList();
-                int nLigands = noCoordLigands.Count();
+                var noCoordLigands = noCoords.GetConnectedAtoms(refAtom).ToReadOnlyList();
+                int nLigands = noCoordLigands.Count;
                 int nwanted = nLigands;
-                string elementType = refAtom.Symbol;
+                var elementType = refAtom.Symbol;
                 // try to deal with lone pairs on small hetero
                 switch (elementType)
                 {
@@ -97,8 +97,8 @@ namespace NCDK.Geometries
                 var newPoints = Calculate3DCoordinatesForLigands(atomContainer, refAtom, nwanted, length, angle);
                 for (int j = 0; j < nLigands; j++)
                 {
-                    IAtom ligand = (IAtom)noCoordLigands[j];
-                    Vector3 newPoint = RescaleBondLength(refAtom, ligand, newPoints[j].Value);
+                    var ligand = noCoordLigands[j];
+                    var newPoint = RescaleBondLength(refAtom, ligand, newPoints[j].Value);
                     ligand.Point3D = newPoint;
                 }
             }

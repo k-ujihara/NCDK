@@ -1396,7 +1396,7 @@ namespace NCDK.Graphs
         {
             get
             {
-                IAtomContainer mol = new AtomContainer();
+                var mol = new AtomContainer();
                 IAtom a1 = new Atom("C");
                 mol.Atoms.Add(a1);
                 IAtom a2 = new Atom("C");
@@ -1764,7 +1764,7 @@ namespace NCDK.Graphs
         {
             get
             {
-                IAtomContainer mol = new AtomContainer();
+                var mol = new AtomContainer();
                 IAtom a1 = new Atom("C");
                 mol.Atoms.Add(a1);
                 IAtom a2 = new Atom("C");

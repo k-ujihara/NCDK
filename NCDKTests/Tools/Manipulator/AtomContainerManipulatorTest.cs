@@ -51,7 +51,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalHydrogenCount_IAtomContainer()
         {
-            IAtomContainer mol = new AtomContainer(); // ethene
+            var mol = new AtomContainer(); // ethene
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("H"));
@@ -72,7 +72,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestConvertImplicitToExplicitHydrogens_IAtomContainer()
         {
-            IAtomContainer mol = new AtomContainer(); // ethene
+            var mol = new AtomContainer(); // ethene
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms[0].ImplicitHydrogenCount = 2;
             mol.Atoms.Add(new Atom("C"));
@@ -89,7 +89,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestConvertImplicitToExplicitHydrogens_IAtomContainer2()
         {
-            IAtomContainer mol = new AtomContainer(); // ethane
+            var mol = new AtomContainer(); // ethane
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms[0].ImplicitHydrogenCount = 3;
@@ -106,7 +106,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalHydrogenCount_IAtomContainer_zeroImplicit()
         {
-            IAtomContainer mol = new AtomContainer(); // ethene
+            var mol = new AtomContainer(); // ethene
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms[0].ImplicitHydrogenCount = 0;
             mol.Atoms.Add(new Atom("C"));
@@ -131,7 +131,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalHydrogenCount_IAtomContainer_nullImplicit()
         {
-            IAtomContainer mol = new AtomContainer(); // ethene
+            var mol = new AtomContainer(); // ethene
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms[0].ImplicitHydrogenCount = null;
             mol.Atoms.Add(new Atom("C"));
@@ -156,7 +156,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalHydrogenCount_ImplicitHydrogens()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom carbon = new Atom("C") { ImplicitHydrogenCount = 4 };
             mol.Atoms.Add(carbon);
             Assert.AreEqual(4, AtomContainerManipulator.GetTotalHydrogenCount(mol));
@@ -165,7 +165,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveHydrogens_IAtomContainer()
         {
-            IAtomContainer mol = new AtomContainer(); // ethene
+            var mol = new AtomContainer(); // ethene
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("H"));
@@ -190,7 +190,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void DontSuppressHydrogensOnPseudoAtoms()
         {
-            IAtomContainer mol = new AtomContainer(); // *[H]
+            var mol = new AtomContainer(); // *[H]
             mol.Atoms.Add(new PseudoAtom("*"));
             mol.Atoms.Add(new Atom("H"));
             mol.Atoms[0].ImplicitHydrogenCount = 0;
@@ -204,7 +204,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void SuppressHydrogensKeepsRadicals()
         {
-            IAtomContainer mol = new AtomContainer(); // *[H]
+            var mol = new AtomContainer(); // *[H]
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("H"));
             mol.Atoms.Add(new Atom("H"));
@@ -309,7 +309,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveHydrogensZeroHydrogenCounts()
         {
-            IAtomContainer mol = new AtomContainer(); // ethene
+            var mol = new AtomContainer(); // ethene
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("Br"));
@@ -345,7 +345,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllIDs_IAtomContainer()
         {
-            IAtomContainer mol = new AtomContainer(); // ethene
+            var mol = new AtomContainer(); // ethene
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms[0].Id = "a1";
             mol.Atoms.Add(new Atom("C"));
@@ -359,7 +359,7 @@ namespace NCDK.Tools.Manipulator
             mol.Atoms.Add(new Atom("H"));
             mol.Atoms[5].Id = "a6";
 
-            IList<string> ids = AtomContainerManipulator.GetAllIDs(mol);
+            var ids = AtomContainerManipulator.GetAllIDs(mol).ToReadOnlyList();
             Assert.AreEqual(6, ids.Count);
             Assert.IsTrue(ids.Contains("a1"));
             Assert.IsTrue(ids.Contains("a2"));
@@ -372,7 +372,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAtomArray_IAtomContainer()
         {
-            IAtomContainer mol = new AtomContainer(); // ethene
+            var mol = new AtomContainer(); // ethene
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("H"));
@@ -393,7 +393,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAtomArray_List()
         {
-            IAtomContainer mol = new AtomContainer(); // ethene
+            var mol = new AtomContainer(); // ethene
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("H"));
@@ -417,7 +417,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetBondArray_List()
         {
-            IAtomContainer mol = new AtomContainer(); // ethene
+            var mol = new AtomContainer(); // ethene
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("H"));
@@ -441,7 +441,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetBondArray_IAtomContainer()
         {
-            IAtomContainer mol = new AtomContainer(); // ethene
+            var mol = new AtomContainer(); // ethene
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("H"));
@@ -467,7 +467,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAtomById_IAtomContainer_String()
         {
-            IAtomContainer mol = new AtomContainer(); // ethene
+            var mol = new AtomContainer(); // ethene
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms[0].Id = "a1";
             mol.Atoms.Add(new Atom("C"));
@@ -566,7 +566,7 @@ namespace NCDK.Tools.Manipulator
         [ExpectedException(typeof(ArgumentException))]
         public void GetNaturalExactMassNeedsHydrogens()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C") { ImplicitHydrogenCount = null };
             mol.Atoms.Add(atom);
             AtomContainerManipulator.GetNaturalExactMass(mol);
@@ -576,7 +576,7 @@ namespace NCDK.Tools.Manipulator
         [ExpectedException(typeof(ArgumentException))]
         public void GetNaturalExactMassNeedsAtomicNumber()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms[0].AtomicNumber = null;
             AtomContainerManipulator.GetNaturalExactMass(mol);
@@ -1019,7 +1019,7 @@ namespace NCDK.Tools.Manipulator
                         // Each B has two explicit and two implicit H.
                         b++;
                         Assert.AreEqual(2, atom.ImplicitHydrogenCount.Value, "incorrect hydrogen count");
-                        var nbs = ac.GetConnectedAtoms(atom).ToList();
+                        var nbs = ac.GetConnectedAtoms(atom).ToReadOnlyList();
                         Assert.AreEqual(2, nbs.Count, "incorrect connected count");
                         Assert.AreEqual("H", ((IAtom)nbs[0]).Symbol, "incorrect bond");
                         Assert.AreEqual("H", ((IAtom)nbs[1]).Symbol, "incorrect bond");
@@ -1098,10 +1098,10 @@ namespace NCDK.Tools.Manipulator
         {
             string filename = "NCDK.Data.MDL.lobtest2.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-            ChemFile content = (ChemFile)reader.Read(new ChemFile());
-            IList<IAtomContainer> cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
-            IAtomContainer ac = cList[0];
+            var reader = new MDLV2000Reader(ins);
+            var content = reader.Read(new ChemFile());
+            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
+            var ac = cList[0];
 
             var exactMass = new Dictionary<IAtom, double?>();
 
@@ -1163,7 +1163,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveHydrogensFromMolecularHydrogen()
         {
-            IAtomContainer mol = new AtomContainer(); // molecular hydrogen
+            var mol = new AtomContainer(); // molecular hydrogen
             mol.Atoms.Add(new Atom("H"));
             mol.Atoms.Add(new Atom("H"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);

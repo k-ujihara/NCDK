@@ -841,8 +841,8 @@ namespace NCDK.Smiles
 
             public int Compare(IAtom a, IAtom b)
             {
-                var aBonds = mol.GetConnectedBonds(a).ToList();
-                var bBonds = mol.GetConnectedBonds(b).ToList();
+                var aBonds = mol.GetConnectedBonds(a).ToReadOnlyList();
+                var bBonds = mol.GetConnectedBonds(b).ToReadOnlyList();
                 var aH = Unbox(a.ImplicitHydrogenCount);
                 var bH = Unbox(b.ImplicitHydrogenCount);
                 int cmp;

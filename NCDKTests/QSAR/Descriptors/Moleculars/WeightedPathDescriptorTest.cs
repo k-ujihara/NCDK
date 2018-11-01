@@ -59,7 +59,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             IChemFile content = (IChemFile)reader.Read(new ChemFile());
-            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
+            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             mol = (IAtomContainer)cList[0];
             mol = AtomContainerManipulator.RemoveHydrogens(mol);
 
@@ -75,7 +75,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLV2000Reader(ins);
             content = (IChemFile)reader.Read(new ChemFile());
-            cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
+            cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             mol = (IAtomContainer)cList[0];
             mol = AtomContainerManipulator.RemoveHydrogens(mol);
             value = Descriptor.Calculate(mol);

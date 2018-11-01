@@ -36,7 +36,6 @@ namespace NCDK.AtomTypes
     // @author         egonw
     // @cdk.created    2007-07-20
     // @cdk.module     core
-    // @cdk.githash
     public class CDKAtomTypeMatcher
         : IAtomTypeMatcher
     {
@@ -109,7 +108,7 @@ namespace NCDK.AtomTypes
             return FindMatchingAtomType(atomContainer, atom, null, null);
         }
 
-        private IAtomType FindMatchingAtomType(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, List<IBond> connectedBonds)
+        private IAtomType FindMatchingAtomType(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, IReadOnlyList<IBond> connectedBonds)
         {
             IAtomType type = null;
             if (atom is IPseudoAtom)
@@ -319,12 +318,12 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private IAtomType PerceiveSelenium(IAtomContainer atomContainer, IAtom atom, List<IBond> connectedBonds)
+        private IAtomType PerceiveSelenium(IAtomContainer atomContainer, IAtom atom, IReadOnlyList<IBond> connectedBonds)
         {
             if (string.Equals("Se", atom.Symbol, StringComparison.Ordinal))
             {
                 if (connectedBonds == null)
-                    connectedBonds = atomContainer.GetConnectedBonds(atom).ToList();
+                    connectedBonds = atomContainer.GetConnectedBonds(atom).ToReadOnlyList();
                 int doublebondcount = CountAttachedDoubleBonds(connectedBonds, atom);
                 if (atom.FormalCharge != null && atom.FormalCharge == 0)
                 {
@@ -524,14 +523,14 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private IAtomType PerceiveCarbons(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, List<IBond> connectedBonds)
+        private IAtomType PerceiveCarbons(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, IReadOnlyList<IBond> connectedBonds)
         {
             if (HasOneSingleElectron(atomContainer, atom))
             {
                 return PerceiveCarbonRadicals(atomContainer, atom);
             }
             if (connectedBonds == null)
-                connectedBonds = atomContainer.GetConnectedBonds(atom).ToList();
+                connectedBonds = atomContainer.GetConnectedBonds(atom).ToReadOnlyList();
             // if hybridization is given, use that
             if (HasHybridization(atom) && !IsCharged(atom))
             {
@@ -600,7 +599,7 @@ namespace NCDK.AtomTypes
                 else if (atom.FormalCharge == -1)
                 {
                     var maxBondOrder = GetMaximumBondOrder(connectedBonds);
-                    var connectedBondList = connectedBonds.ToList();
+                    var connectedBondList = connectedBonds.ToReadOnlyList();
                     if (maxBondOrder == BondOrder.Single && connectedBondList.Count <= 3)
                     {
                         if (BothNeighborsAreSp2(atom, atomContainer, connectedBonds) && IsRingAtom(atom, atomContainer, searcher))
@@ -698,7 +697,7 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private static BondOrder GetMaximumBondOrder(List<IBond> connectedBonds)
+        private static BondOrder GetMaximumBondOrder(IReadOnlyList<IBond> connectedBonds)
         {
             var max = BondOrder.Single;
             foreach (var bond in connectedBonds)
@@ -709,7 +708,7 @@ namespace NCDK.AtomTypes
             return max;
         }
 
-        private static bool HasOneOrMoreSingleOrDoubleBonds(List<IBond> bonds)
+        private static bool HasOneOrMoreSingleOrDoubleBonds(IReadOnlyList<IBond> bonds)
         {
             foreach (var bond in bonds)
             {
@@ -778,14 +777,14 @@ namespace NCDK.AtomTypes
             return !atom.Hybridization.IsUnset();
         }
 
-        private IAtomType PerceiveOxygens(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, List<IBond> connectedBonds)
+        private IAtomType PerceiveOxygens(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, IReadOnlyList<IBond> connectedBonds)
         {
             if (HasOneSingleElectron(atomContainer, atom))
                 return PerceiveOxygenRadicals(atomContainer, atom);
 
             // if hybridization is given, use that
             if (connectedBonds == null)
-                connectedBonds = atomContainer.GetConnectedBonds(atom).ToList();
+                connectedBonds = atomContainer.GetConnectedBonds(atom).ToReadOnlyList();
             if (HasHybridization(atom) && !IsCharged(atom))
             {
                 if (atom.Hybridization == Hybridization.SP2)
@@ -938,7 +937,7 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private static bool IsCarboxylate(IAtomContainer container, IAtom atom, List<IBond> connectedBonds)
+        private static bool IsCarboxylate(IAtomContainer container, IAtom atom, IReadOnlyList<IBond> connectedBonds)
         {
             // assumes that the oxygen only has one neighbor (C=O, or C-[O-])
             if (connectedBonds.Count != 1)
@@ -947,7 +946,7 @@ namespace NCDK.AtomTypes
             if (!string.Equals("C", carbon.Symbol, StringComparison.Ordinal))
                 return false;
 
-            var carbonBonds = container.GetConnectedBonds(carbon).ToList();
+            var carbonBonds = container.GetConnectedBonds(carbon).ToReadOnlyList();
             if (carbonBonds.Count < 2)
                 return false;
             int oxygenCount = 0;
@@ -974,7 +973,7 @@ namespace NCDK.AtomTypes
             return (oxygenCount == 2) && (singleBondedNegativeOxygenCount == 1) && (doubleBondedOxygenCount == 1);
         }
 
-        private static bool AtLeastTwoNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer, List<IBond> connectedBonds)
+        private static bool AtLeastTwoNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer, IReadOnlyList<IBond> connectedBonds)
         {
             int count = 0;
             foreach (var bond in connectedBonds)
@@ -993,7 +992,7 @@ namespace NCDK.AtomTypes
                     }
                     else
                     {
-                        var nextConnectBonds = atomContainer.GetConnectedBonds(nextAtom).ToList();
+                        var nextConnectBonds = atomContainer.GetConnectedBonds(nextAtom).ToReadOnlyList();
                         if (CountAttachedDoubleBonds(nextConnectBonds, nextAtom) > 0)
                         {
                             // OK, it's SP2
@@ -1007,7 +1006,7 @@ namespace NCDK.AtomTypes
             return false;
         }
 
-        private static bool BothNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer, List<IBond> connectedBonds)
+        private static bool BothNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer, IReadOnlyList<IBond> connectedBonds)
         {
             return AtLeastTwoNeighborsAreSp2(atom, atomContainer, connectedBonds);
         }
@@ -1084,7 +1083,7 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private IAtomType PerceiveNitrogens(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, List<IBond> connectedBonds)
+        private IAtomType PerceiveNitrogens(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, IReadOnlyList<IBond> connectedBonds)
         {
             // if hybridization is given, use that
             if (HasOneSingleElectron(atomContainer, atom))
@@ -1092,7 +1091,7 @@ namespace NCDK.AtomTypes
                 return PerceiveNitrogenRadicals(atomContainer, atom);
             }
 
-            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToList();
+            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToReadOnlyList();
 
             if (HasHybridization(atom) && !IsCharged(atom))
             {
@@ -1459,7 +1458,7 @@ namespace NCDK.AtomTypes
         /// <param name="atom">an atom to test</param>
         /// <param name="container">container of the atom</param>
         /// <returns>whether the atom's only bonds are to heteroatoms</returns>
-        /// <seealso cref="PerceiveNitrogens(IAtomContainer, IAtom, RingSearch, List{IBond})"/>
+        /// <seealso cref="PerceiveNitrogens(IAtomContainer, IAtom, RingSearch, IReadOnlyList{IBond})"/>
         private static bool IsSingleHeteroAtom(IAtom atom, IAtomContainer container)
         {
             var connected = container.GetConnectedAtoms(atom);
@@ -1496,7 +1495,7 @@ namespace NCDK.AtomTypes
             return searcher.Cyclic(atom);
         }
 
-        private static bool IsAmide(IAtom atom, IAtomContainer atomContainer, List<IBond> connectedBonds)
+        private static bool IsAmide(IAtom atom, IAtomContainer atomContainer, IReadOnlyList<IBond> connectedBonds)
         {
             if (connectedBonds.Count < 1)
                 return false;
@@ -1505,14 +1504,14 @@ namespace NCDK.AtomTypes
                 var neighbor = bond.GetOther(atom);
                 if (string.Equals("C", neighbor.Symbol, StringComparison.Ordinal))
                 {
-                    if (CountAttachedDoubleBonds(atomContainer.GetConnectedBonds(neighbor).ToList(), neighbor, "O") == 1)
+                    if (CountAttachedDoubleBonds(atomContainer.GetConnectedBonds(neighbor).ToReadOnlyList(), neighbor, "O") == 1)
                         return true;
                 }
             }
             return false;
         }
 
-        private static bool IsThioAmide(IAtom atom, IAtomContainer atomContainer, List<IBond> connectedBonds)
+        private static bool IsThioAmide(IAtom atom, IAtomContainer atomContainer, IReadOnlyList<IBond> connectedBonds)
         {
             if (connectedBonds.Count < 1) return false;
             foreach (var bond in connectedBonds)
@@ -1520,14 +1519,14 @@ namespace NCDK.AtomTypes
                 var neighbor = bond.GetOther(atom);
                 if (string.Equals("C", neighbor.Symbol, StringComparison.Ordinal))
                 {
-                    if (CountAttachedDoubleBonds(atomContainer.GetConnectedBonds(neighbor).ToList(), neighbor, "S") == 1)
+                    if (CountAttachedDoubleBonds(atomContainer.GetConnectedBonds(neighbor).ToReadOnlyList(), neighbor, "S") == 1)
                         return true;
                 }
             }
             return false;
         }
 
-        private static int CountExplicitHydrogens(IAtom atom, List<IBond> connectedBonds)
+        private static int CountExplicitHydrogens(IAtom atom, IReadOnlyList<IBond> connectedBonds)
         {
             int count = 0;
             foreach (var bond in connectedBonds)
@@ -1546,7 +1545,7 @@ namespace NCDK.AtomTypes
         /// </summary>
         /// <param name="bonds">a list of bond</param>
         /// <returns>the bond list only with heavy bonds</returns>
-        private static List<IBond> HeavyBonds(List<IBond> bonds)
+        private static List<IBond> HeavyBonds(IReadOnlyList<IBond> bonds)
         {
             var heavy = new List<IBond>();
             foreach (var bond in bonds)
@@ -1746,9 +1745,9 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private IAtomType PerceiveSulphurs(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, List<IBond> connectedBonds)
+        private IAtomType PerceiveSulphurs(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, IReadOnlyList<IBond> connectedBonds)
         {
-            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToList();
+            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToReadOnlyList();
             var maxBondOrder = GetMaximumBondOrder(connectedBonds);
             int neighborcount = connectedBonds.Count;
             if (HasOneSingleElectron(atomContainer, atom))
@@ -1964,9 +1963,9 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private IAtomType PerceivePhosphors(IAtomContainer atomContainer, IAtom atom, List<IBond> connectedBonds)
+        private IAtomType PerceivePhosphors(IAtomContainer atomContainer, IAtom atom, IReadOnlyList<IBond> connectedBonds)
         {
-            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToList();
+            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToReadOnlyList();
             int neighborcount = connectedBonds.Count;
             var maxBondOrder = GetMaximumBondOrder(connectedBonds);
             if (CountSingleElectrons(atomContainer, atom) == 3)
@@ -2073,9 +2072,9 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private IAtomType PerceiveHydrogens(IAtomContainer atomContainer, IAtom atom, List<IBond> connectedBonds)
+        private IAtomType PerceiveHydrogens(IAtomContainer atomContainer, IAtom atom, IReadOnlyList<IBond> connectedBonds)
         {
-            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToList();
+            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToReadOnlyList();
             int neighborcount = connectedBonds.Count;
             if (HasOneSingleElectron(atomContainer, atom))
             {
@@ -2155,9 +2154,9 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private IAtomType PerceiveHalogens(IAtomContainer atomContainer, IAtom atom, List<IBond> connectedBonds)
+        private IAtomType PerceiveHalogens(IAtomContainer atomContainer, IAtom atom, IReadOnlyList<IBond> connectedBonds)
         {
-            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToList();
+            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToReadOnlyList();
             if (string.Equals("F", atom.Symbol, StringComparison.Ordinal))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
@@ -2863,9 +2862,9 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private IAtomType PerceiveIodine(IAtomContainer atomContainer, IAtom atom, List<IBond> connectedBonds)
+        private IAtomType PerceiveIodine(IAtomContainer atomContainer, IAtom atom, IReadOnlyList<IBond> connectedBonds)
         {
-            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToList();
+            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToReadOnlyList();
 
             if (HasOneSingleElectron(atomContainer, atom))
             {
@@ -3090,9 +3089,9 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private IAtomType PerceiveChlorine(IAtomContainer atomContainer, IAtom atom, List<IBond> connectedBonds)
+        private IAtomType PerceiveChlorine(IAtomContainer atomContainer, IAtom atom, IReadOnlyList<IBond> connectedBonds)
         {
-            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToList();
+            connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToReadOnlyList();
 
             if (HasOneSingleElectron(atomContainer, atom))
             {
@@ -3612,7 +3611,7 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private static int CountAttachedDoubleBonds(List<IBond> connectedAtoms, IAtom atom, string symbol)
+        private static int CountAttachedDoubleBonds(IReadOnlyList<IBond> connectedAtoms, IAtom atom, string symbol)
         {
             return CountAttachedBonds(connectedAtoms, atom, BondOrder.Double, symbol);
         }
@@ -3713,17 +3712,17 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private static int CountAttachedDoubleBonds(List<IBond> connectedBonds, IAtom atom)
+        private static int CountAttachedDoubleBonds(IReadOnlyList<IBond> connectedBonds, IAtom atom)
         {
             return CountAttachedBonds(connectedBonds, atom, BondOrder.Double, null);
         }
 
-        private static int CountAttachedSingleBonds(List<IBond> connectedBonds, IAtom atom)
+        private static int CountAttachedSingleBonds(IReadOnlyList<IBond> connectedBonds, IAtom atom)
         {
             return CountAttachedBonds(connectedBonds, atom, BondOrder.Single, null);
         }
 
-        private static bool HasAromaticBond(List<IBond> connectedBonds)
+        private static bool HasAromaticBond(IReadOnlyList<IBond> connectedBonds)
         {
             foreach (var bond in connectedBonds)
             {
@@ -3741,7 +3740,7 @@ namespace NCDK.AtomTypes
         /// <param name="order">the desired bond order of the attached bonds</param>
         /// <param name="symbol">If not null, then it only counts the double bonded atoms which match the given symbol.</param>
         /// <returns>the number of doubly bonded atoms</returns>
-        private static int CountAttachedBonds(List<IBond> connectedBonds, IAtom atom, BondOrder order, string symbol)
+        private static int CountAttachedBonds(IReadOnlyList<IBond> connectedBonds, IAtom atom, BondOrder order, string symbol)
         {
             // count the number of double bonded oxygens
             int doubleBondedAtoms = 0;
@@ -3780,9 +3779,9 @@ namespace NCDK.AtomTypes
             return IsAcceptable(atom, container, type, null);
         }
 
-        private bool IsAcceptable(IAtom atom, IAtomContainer container, IAtomType type, List<IBond> connectedBonds)
+        private bool IsAcceptable(IAtom atom, IAtomContainer container, IAtomType type, IReadOnlyList<IBond> connectedBonds)
         {
-            connectedBonds = (connectedBonds ?? container.GetConnectedBonds(atom)).ToList();
+            connectedBonds = (connectedBonds ?? container.GetConnectedBonds(atom)).ToReadOnlyList();
             if (mode == Mode.RequireExplicitHydrogens)
             {
                 // make sure no implicit hydrogens were assumed
@@ -3791,7 +3790,7 @@ namespace NCDK.AtomTypes
                 if (actualContainerCount != requiredContainerCount)
                     return false;
             }
-            else if (atom.ImplicitHydrogenCount.HasValue)
+            else if (atom.ImplicitHydrogenCount != null)
             {
                 // confirm correct neighbour count
                 int connectedAtoms = connectedBonds.Count;

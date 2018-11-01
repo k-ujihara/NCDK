@@ -226,7 +226,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void GenerateLabelledSmiles()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms[0].ImplicitHydrogenCount = 3;
             mol.Atoms.Add(new Atom("C"));
@@ -243,7 +243,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void GenerateCanonLabelledSmiles()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms[0].ImplicitHydrogenCount = 3;
             mol.Atoms.Add(new Atom("C"));

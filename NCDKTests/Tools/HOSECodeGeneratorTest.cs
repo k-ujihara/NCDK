@@ -83,7 +83,7 @@ namespace NCDK.Tools
                 "C-3;*C*C(//)", "C-3;*C*CO(//)", "O-2;CC(//)", "C-3;*C*CO(//)", "C-3;*C*CO(//)", "O-2;CC(//)",
                 "C-4;O(//)", "C-3;*C*C(//)", "C-3;*C*CC(//)", "C-3;*C*C*C(//)", "C-3;*C*C*C(//)"};
 
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("O");
             a1.Point2D = new Vector2(502.88457268119913, 730.4999999999999);
             mol.Atoms.Add(a1);
@@ -271,7 +271,7 @@ namespace NCDK.Tools
                 "C-3;*C*C*C(*C*C,*CC,*CC/*C,*CC,O,*&,=OC,*&,=&/*&O,*&,*C*C,&,,=&)",
                 "C-3;*C*C*C(*C*C,*C,*CC,O/*CC,*CC,*&O,*&,*C*C,&/*&,=OC,*&,=&,C,*C&,*C)"};
 
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom a1 = mol.Builder.NewAtom("O");
             a1.Point2D = new Vector2(502.88457268119913, 730.4999999999999);
             mol.Atoms.Add(a1);
@@ -501,7 +501,7 @@ namespace NCDK.Tools
             HOSECodeGenerator hcg = new HOSECodeGenerator();
 
             hcg.GetSpheres(molecule, molecule.Atoms[0], 4, true);
-            var atoms = hcg.GetNodesInSphere(3).ToList();
+            var atoms = hcg.GetNodesInSphere(3).ToReadOnlyList();
 
             Assert.AreEqual(1, atoms.Count);
             Assert.AreEqual("Br", atoms[0].Symbol);
@@ -517,7 +517,7 @@ namespace NCDK.Tools
             HOSECodeGenerator hcg = new HOSECodeGenerator();
 
             hcg.GetSpheres(molecule, molecule.Atoms[0], 3, true);
-            var atoms = hcg.GetNodesInSphere(3).ToList();
+            var atoms = hcg.GetNodesInSphere(3).ToReadOnlyList();
 
             Assert.AreEqual(2, atoms.Count);
 

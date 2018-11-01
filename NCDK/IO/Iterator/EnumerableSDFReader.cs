@@ -153,7 +153,7 @@ namespace NCDK.IO.Iterator
         public override IEnumerator<IAtomContainer> GetEnumerator()
         {
             // buffer to store pre-read Mol records in
-            StringBuilder buffer = new StringBuilder(10000);
+            var buffer = new StringBuilder(10000);
 
             // now try to parse the next Molecule
             currentFormat = (IChemFormat)MDLFormat.Instance;
@@ -285,7 +285,7 @@ namespace NCDK.IO.Iterator
                 currentLine = input.ReadLine();
             }
             // trim trailing newline
-            int len = data.Length;
+            var len = data.Length;
             if (len > 1 && data[len - 1] == '\n')
                 data.Length = len - 1;
             return data.ToString();
@@ -304,7 +304,7 @@ namespace NCDK.IO.Iterator
 
         private static string ExtractFieldName(string str)
         {
-            int index = str.IndexOf('<');
+            var index = str.IndexOf('<');
             if (index != -1)
             {
                 int index2 = str.IndexOf('>', index);

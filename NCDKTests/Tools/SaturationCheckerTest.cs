@@ -189,7 +189,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestSaturate_ParaDiOxygenBenzene()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             Atom a1 = new Atom("C");
             mol.Atoms.Add(a1);
             Atom a2 = new Atom("O");

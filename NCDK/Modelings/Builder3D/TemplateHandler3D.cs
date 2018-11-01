@@ -27,7 +27,6 @@ using NCDK.IO.Iterator;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Tools.Manipulator;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -100,7 +99,7 @@ namespace NCDK.Modelings.Builder3D
 
         public static BitArray GetBitSetFromFile(IEnumerable<string> st)
         {
-            BitArray bitSet = new BitArray(1024);
+            var bitSet = new BitArray(1024);
             foreach (var s in st)
                 bitSet.Set(int.Parse(s, NumberFormatInfo.InvariantInfo), true);
             return bitSet;
@@ -130,7 +129,7 @@ namespace NCDK.Modelings.Builder3D
 
         private static IAtomContainer GetAllInOneContainer(IRingSet ringSet)
         {
-            IAtomContainer resultContainer = ringSet.Builder.NewAtomContainer();
+            var resultContainer = ringSet.Builder.NewAtomContainer();
             var containers = RingSetManipulator.GetAllAtomContainers(ringSet);
             foreach (var container in containers)
                 resultContainer.Add(container);
@@ -141,13 +140,13 @@ namespace NCDK.Modelings.Builder3D
         {
             foreach (IAtom src in query.Atoms)
             {
-                IAtom dst = (IAtom)mapping[src];
+                var dst = (IAtom)mapping[src];
                 if (src.Symbol != dst.Symbol)
                     return false;
             }
             foreach (IBond src in query.Bonds)
             {
-                IBond dst = (IBond)mapping[src];
+                var dst = (IBond)mapping[src];
                 if (src.Order != dst.Order)
                     return false;
             }
@@ -222,9 +221,9 @@ namespace NCDK.Modelings.Builder3D
 
         private static void AssignCoords(IAtomContainer template, IReadOnlyDictionary<IChemObject, IChemObject> map)
         {
-            foreach (IAtom src in template.Atoms)
+            foreach (var src in template.Atoms)
             {
-                IAtom dst = (IAtom)map[src];
+                var dst = (IAtom)map[src];
                 dst.Point3D = src.Point3D;
             }
         }

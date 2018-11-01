@@ -155,19 +155,22 @@ namespace NCDK.AtomTypes
 
         private static bool IsCarbonyl(IAtomContainer atomContainer, IAtom atom)
         {
-            var neighbors = atomContainer.GetConnectedBonds(atom).ToList();
-            if (neighbors.Count != 1) return false;
-            IBond neighbor = neighbors[0];
-            IAtom neighborAtom = neighbor.GetOther(atom);
+            var neighbors = atomContainer.GetConnectedBonds(atom).ToReadOnlyList();
+            if (neighbors.Count != 1)
+                return false;
+            var neighbor = neighbors[0];
+            var neighborAtom = neighbor.GetOther(atom);
             if (string.Equals(neighborAtom.Symbol, "C", StringComparison.Ordinal))
             {
                 if (neighbor.Order == BondOrder.Single)
                 {
-                    if (CountAttachedBonds(atomContainer, neighborAtom, BondOrder.Double, "O") == 1) return true;
+                    if (CountAttachedBonds(atomContainer, neighborAtom, BondOrder.Double, "O") == 1)
+                        return true;
                 }
                 else if (neighbor.Order == BondOrder.Double)
                 {
-                    if (CountAttachedBonds(atomContainer, neighborAtom, BondOrder.Single, "O") == 1) return true;
+                    if (CountAttachedBonds(atomContainer, neighborAtom, BondOrder.Single, "O") == 1)
+                        return true;
                 }
             }
             return false;
@@ -175,8 +178,9 @@ namespace NCDK.AtomTypes
 
         private static bool IsNitro(IAtomContainer atomContainer, IAtom atom)
         {
-            var neighbors = atomContainer.GetConnectedAtoms(atom).ToList();
-            if (neighbors.Count != 3) return false;
+            var neighbors = atomContainer.GetConnectedAtoms(atom).ToReadOnlyList();
+            if (neighbors.Count != 3)
+                return false;
             int oxygenCount = 0;
             foreach (var neighbor in neighbors)
                 if (string.Equals("O", neighbor.Symbol, StringComparison.Ordinal))
@@ -186,19 +190,19 @@ namespace NCDK.AtomTypes
 
         private static int CountAttachedBonds(IAtomContainer container, IAtom atom, BondOrder order, string symbol)
         {
-            var neighbors = container.GetConnectedBonds(atom).ToList();
+            var neighbors = container.GetConnectedBonds(atom).ToReadOnlyList();
             int neighborcount = neighbors.Count;
             int doubleBondedAtoms = 0;
             for (int i = neighborcount - 1; i >= 0; i--)
             {
-                IBond bond = neighbors[i];
+                var bond = neighbors[i];
                 if (bond.Order == order)
                 {
                     if (bond.Atoms.Count == 2 && bond.Contains(atom))
                     {
                         if (symbol != null)
                         {
-                            IAtom neighbor = bond.GetOther(atom);
+                            var neighbor = bond.GetOther(atom);
                             if (string.Equals(neighbor.Symbol, symbol, StringComparison.Ordinal))
                             {
                                 doubleBondedAtoms++;

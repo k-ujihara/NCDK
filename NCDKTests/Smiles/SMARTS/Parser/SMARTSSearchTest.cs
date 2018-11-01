@@ -92,7 +92,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             DefaultChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content;
             content = (ChemFile)reader.Read((ChemObject)new ChemFile());
-            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
+            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             IAtomContainer atomContainer = cList[0];
 
             SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;h1,h2,H1,H2;!$(NC=O)]", ChemObjectBuilder.Instance);

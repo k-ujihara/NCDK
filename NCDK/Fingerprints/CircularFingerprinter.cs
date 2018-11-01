@@ -57,7 +57,7 @@ namespace NCDK.Fingerprints
         {
             this.Hash = hashCode;
             this.Iteration = iteration;
-            this.Atoms = atoms.ToList();
+            this.Atoms = atoms.ToReadOnlyList();
         }
 
         public int Hash { get; }

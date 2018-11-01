@@ -115,7 +115,7 @@ namespace NCDK.IO
         /// <param name="som">MoleculeSet that is written to an Stream</param>
         public void WriteAtomContainerSet(IEnumerable<IAtomContainer> som)
         {
-            var listSom = som.ToList(); 
+            var listSom = som.ToReadOnlyList(); 
             WriteAtomContainer(listSom[0]);
             for (int i = 1; i <= listSom.Count - 1; i++)
             {

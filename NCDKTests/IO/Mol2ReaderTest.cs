@@ -141,7 +141,7 @@ namespace NCDK.IO
             Mol2Reader reader = new Mol2Reader(ins);
             IChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
-            var mols = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var mols = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(30, mols.Count);
             Assert.AreEqual(25, mols[0].Atoms.Count);
             Assert.AreEqual(24, mols[29].Atoms.Count);
@@ -157,7 +157,7 @@ namespace NCDK.IO
             Mol2Reader reader = new Mol2Reader(ins);
             IChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
-            var mols = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var mols = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, mols.Count);
             Assert.AreEqual(12, mols[0].Atoms.Count);
         }

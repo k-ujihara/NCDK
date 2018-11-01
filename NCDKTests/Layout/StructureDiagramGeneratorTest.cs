@@ -101,7 +101,7 @@ namespace NCDK.Layout
         [Timeout(5000)]
         public void TestBridgedHydrogen()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom carbon1 = new Atom("C");
             IAtom carbon2 = new Atom("C");
             IAtom bridgingHydrogen = new Atom("H");
@@ -236,7 +236,7 @@ namespace NCDK.Layout
         [Timeout(5000)]
         public void TestBug780545()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             IAtomContainer ac = Layout(mol);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));

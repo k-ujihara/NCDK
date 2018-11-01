@@ -20,6 +20,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Silent;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
@@ -53,8 +54,10 @@ namespace NCDK.Tools.Manipulator
             bondInMol1 = new Bond(atomInMol1, molecule1.Atoms[1]);
             molecule1.Bonds.Add(bondInMol1);
             molecule2 = new AtomContainer();
-            atomInMol2 = new Atom("O");
-            atomInMol2.ImplicitHydrogenCount = 2;
+            atomInMol2 = new Atom("O")
+            {
+                ImplicitHydrogenCount = 2
+            };
             molecule2.Atoms.Add(atomInMol2);
             moleculeSet = ChemObjectBuilder.Instance.NewAtomContainerSet();
             moleculeSet.Add(molecule1);
@@ -62,15 +65,23 @@ namespace NCDK.Tools.Manipulator
             reaction = new Reaction();
             reaction.Reactants.Add(molecule1);
             reaction.Products.Add(molecule2);
-            reactionSet = new ReactionSet();
-            reactionSet.Add(reaction);
-            chemModel1 = new ChemModel();
-            chemModel1.MoleculeSet = moleculeSet;
-            chemModel2 = new ChemModel();
-            chemModel2.ReactionSet = reactionSet;
-            chemSequence = new ChemSequence();
-            chemSequence.Add(chemModel1);
-            chemSequence.Add(chemModel2);
+            reactionSet = new ReactionSet
+            {
+                reaction
+            };
+            chemModel1 = new ChemModel
+            {
+                MoleculeSet = moleculeSet
+            };
+            chemModel2 = new ChemModel
+            {
+                ReactionSet = reactionSet
+            };
+            chemSequence = new ChemSequence
+            {
+                chemModel1,
+                chemModel2
+            };
         }
 
         [TestMethod()]
@@ -91,7 +102,7 @@ namespace NCDK.Tools.Manipulator
         public void TestGetAllAtomContainers_IChemSequence()
         {
             var list = ChemSequenceManipulator.GetAllAtomContainers(chemSequence);
-            Assert.AreEqual(4, list.Count);
+            Assert.AreEqual(4, list.Count());
         }
 
         [TestMethod()]
@@ -132,10 +143,10 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllIDs_IChemSequence()
         {
-            Assert.AreEqual(0, ChemSequenceManipulator.GetAllIDs(chemSequence).Count);
+            Assert.AreEqual(0, ChemSequenceManipulator.GetAllIDs(chemSequence).Count());
             IDCreator.CreateIDs(chemSequence);
             var allIDs = ChemSequenceManipulator.GetAllIDs(chemSequence);
-            Assert.AreEqual(18, ChemSequenceManipulator.GetAllIDs(chemSequence).Count);
+            Assert.AreEqual(18, ChemSequenceManipulator.GetAllIDs(chemSequence).Count());
             var uniq = new HashSet<string>(allIDs);
             Assert.AreEqual(12, uniq.Count);
         }

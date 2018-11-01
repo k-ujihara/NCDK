@@ -68,7 +68,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             try
             {
                 var cliqueList = ExtractCliqueMapping(compGraphNodes, cliqueListOrg);
-                mappings.Add(cliqueList.ToList());
+                mappings.Add(cliqueList.ToReadOnlyList());
             }
             catch (Exception e)
             {

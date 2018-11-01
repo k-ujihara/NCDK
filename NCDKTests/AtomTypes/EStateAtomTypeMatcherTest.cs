@@ -68,14 +68,14 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestFindMatchingAtomType_IAtomContainer()
         {
-            IAtomContainer mol = new AtomContainer();
+            var mol = new AtomContainer();
             IAtom atom = new Atom("C");
             Hybridization thisHybridization = Hybridization.SP3;
             atom.Hybridization = thisHybridization;
             mol.Atoms.Add(atom);
 
             // just check consistency; other methods do perception testing
-            var types = matcher.FindMatchingAtomTypes(mol).ToList();
+            var types = matcher.FindMatchingAtomTypes(mol).ToReadOnlyList();
             for (int i = 0; i < types.Count; i++)
             {
                 IAtomType type = matcher.FindMatchingAtomType(mol, mol.Atoms[i]);

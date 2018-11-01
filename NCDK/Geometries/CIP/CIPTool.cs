@@ -167,10 +167,10 @@ namespace NCDK.Geometries.CIP
             //                        \
             //                         y
             //
-            IAtom u = stereoBond.Begin;
-            IAtom v = stereoBond.End;
-            IAtom x = leftBond.GetOther(u);
-            IAtom y = rightBond.GetOther(v);
+            var u = stereoBond.Begin;
+            var v = stereoBond.End;
+            var x = leftBond.GetOther(u);
+            var y = rightBond.GetOther(v);
 
             var conformation = stereoCenter.Stereo;
 

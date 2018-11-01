@@ -65,8 +65,8 @@ namespace NCDK.Graphs.Invariant
                 {
                     //bool AddAtom = false;
                     IAtom currentAtom = stack.Pop();
-                    var atoms = ac.GetConnectedAtoms(currentAtom).ToList();
-                    var bonds = ac.GetConnectedBonds(currentAtom).ToList();
+                    var atoms = ac.GetConnectedAtoms(currentAtom).ToReadOnlyList();
+                    var bonds = ac.GetConnectedBonds(currentAtom).ToReadOnlyList();
 
                     for (int j = 0; j < atoms.Count; j++)
                     {
@@ -116,8 +116,8 @@ namespace NCDK.Graphs.Invariant
         private static int CheckAtom(IAtomContainer ac, IAtom currentAtom)
         {
             int check = -1;
-            var atoms = ac.GetConnectedAtoms(currentAtom).ToList();
-            var bonds = ac.GetConnectedBonds(currentAtom).ToList();
+            var atoms = ac.GetConnectedAtoms(currentAtom).ToReadOnlyList();
+            var bonds = ac.GetConnectedBonds(currentAtom).ToReadOnlyList();
             if (currentAtom.IsAromatic)
             {
                 check = 0;
@@ -157,7 +157,7 @@ namespace NCDK.Graphs.Invariant
                     int highOrderBondCount = 0;
                     for (int j = 0; j < atoms.Count; j++)
                     {
-                        IBond bond = bonds[j];
+                        var bond = bonds[j];
                         if (bond == null || bond.Order != BondOrder.Single)
                         {
                             highOrderBondCount++;

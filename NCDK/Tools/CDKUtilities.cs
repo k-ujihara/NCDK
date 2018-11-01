@@ -58,7 +58,7 @@ namespace NCDK.Tools
                     IAtom a = m.Atoms[i];
                     if (string.Equals(a.Symbol, "N", StringComparison.Ordinal))
                     {
-                        var ca = m.GetConnectedAtoms(a).ToList();
+                        var ca = m.GetConnectedAtoms(a).ToReadOnlyList();
 
                         if (ca.Count == 3)
                         {
@@ -129,7 +129,7 @@ namespace NCDK.Tools
                     IAtom a = m.Atoms[i];
                     if (string.Equals(a.Symbol, "N", StringComparison.Ordinal))
                     {
-                        var ca = m.GetConnectedAtoms(a).ToList();
+                        var ca = m.GetConnectedAtoms(a).ToReadOnlyList();
 
                         if (ca.Count == 3)
                         {
@@ -165,13 +165,8 @@ namespace NCDK.Tools
                                 BondOrder order1 = m.GetBond(a, cao[0]).Order;
                                 BondOrder order2 = m.GetBond(a, cao[1]).Order;
 
-                                //int totalobonds=0;
-                                //totalobonds+=m.Bonds[a,cao[0]].Order;
-                                //                        totalobonds+=m.Bonds[a,cao[1]].Order;
-
-                                //if (totalobonds==4) { // need to fix
                                 if ((order1 == BondOrder.Single && order2 == BondOrder.Double)
-                                        || (order1 == BondOrder.Double && order2 == BondOrder.Single))
+                                 || (order1 == BondOrder.Double && order2 == BondOrder.Single))
                                 {
                                     a.FormalCharge = 0;
                                     cao[0].FormalCharge = 0; // pick first O arbitrarily
@@ -181,11 +176,8 @@ namespace NCDK.Tools
                                     changed = true;
                                 }
                             } // end if count>1
-
                         }// end ca==3 if
-
                     } // end symbol == N
-
                 }
 
                 return changed;

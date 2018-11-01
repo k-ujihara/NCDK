@@ -76,10 +76,10 @@ namespace NCDK.IO
 
             Assert.IsNotNull(chemFile);
 
-            IList<IAtomContainer> mols = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var mols = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(10, mols.Count);
 
-            IAtomContainer mol = mols[0];
+            var mol = mols[0];
             var props = mol.GetProperties();
             Assert.IsNotNull(props);
             Assert.AreEqual(5, props.Count());
@@ -148,7 +148,7 @@ namespace NCDK.IO
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            IList<IAtomContainer> containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             Assert.IsTrue(containersList[0].Atoms.Count > 0);
             Assert.IsTrue(containersList[0].Bonds.Count > 0);
@@ -164,7 +164,7 @@ namespace NCDK.IO
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             Assert.IsTrue(containersList[0].Atoms.Count > 0);
             Assert.AreEqual(210, containersList[0].Atoms[0].MassNumber.Value);
@@ -181,7 +181,7 @@ namespace NCDK.IO
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             Assert.AreEqual(3, containersList[0].Atoms.Count);
             Assert.AreEqual(2, containersList[0].Atoms[1].MassNumber.Value);
@@ -198,7 +198,7 @@ namespace NCDK.IO
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             IAtomContainer container = containersList[0];
             Assert.AreEqual(10, container.Atoms.Count);
@@ -231,7 +231,7 @@ namespace NCDK.IO
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             Assert.IsTrue(containersList[0].Atoms.Count > 0);
             Assert.IsTrue(containersList[0].Bonds.Count > 0);
@@ -247,7 +247,7 @@ namespace NCDK.IO
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             Assert.IsTrue(containersList[0].Atoms.Count > 0);
             Assert.IsTrue(containersList[0].Bonds.Count > 0);
@@ -263,7 +263,7 @@ namespace NCDK.IO
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             Assert.IsTrue(containersList[0].Atoms.Count > 0);
             Assert.IsTrue(containersList[0].Bonds.Count > 0);
@@ -279,7 +279,7 @@ namespace NCDK.IO
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             Assert.IsTrue(containersList[0].Atoms.Count > 0);
             Assert.IsTrue(containersList[0].Bonds.Count > 0);
@@ -295,7 +295,7 @@ namespace NCDK.IO
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             Assert.IsTrue(containersList[0].Atoms.Count > 0);
             Assert.IsTrue(containersList[0].Bonds.Count > 0);
@@ -311,7 +311,7 @@ namespace NCDK.IO
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             Assert.IsTrue(containersList[0].Atoms.Count > 0);
             Assert.IsTrue(containersList[0].Bonds.Count > 0);
@@ -327,7 +327,7 @@ namespace NCDK.IO
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             Assert.IsTrue(containersList[0].Atoms.Count > 0);
             Assert.IsTrue(containersList[0].Bonds.Count > 0);
@@ -343,7 +343,7 @@ namespace NCDK.IO
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             Assert.IsTrue(containersList[0].Atoms.Count > 0);
             Assert.IsTrue(containersList[0].Bonds.Count > 0);
@@ -438,7 +438,7 @@ namespace NCDK.IO
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             Assert.AreEqual(15, containersList[0].Atoms.Count);
             Assert.AreEqual(16, containersList[0].Bonds.Count);
@@ -494,7 +494,7 @@ namespace NCDK.IO
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
 
             IAtomContainer container = containersList[0];
@@ -587,7 +587,7 @@ namespace NCDK.IO
             IChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.IsNotNull(containersList[0]);
             Assert.IsFalse((containersList[0]).Atoms[1] is IPseudoAtom);
             Assert.IsFalse((containersList[0]).Atoms[2] is IPseudoAtom);
@@ -603,7 +603,7 @@ namespace NCDK.IO
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             Assert.IsTrue((containersList[0]).Atoms.Count > 0);
             Assert.IsTrue((containersList[0]).Bonds.Count > 0);
@@ -680,7 +680,7 @@ namespace NCDK.IO
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             IAtomContainer container = containersList[0];
             Assert.AreEqual(BondStereo.None, container.Bonds[0].Stereo);
@@ -722,7 +722,7 @@ namespace NCDK.IO
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, containersList.Count);
             IAtomContainer container = containersList[0];
             Assert.AreEqual(BondStereo.EZByCoordinates, container.Bonds[0].Stereo);

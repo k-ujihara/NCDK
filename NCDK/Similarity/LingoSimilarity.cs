@@ -48,7 +48,7 @@ namespace NCDK.Similarity
         /// <returns>similarity</returns>
         public static double Calculate(IReadOnlyDictionary<string, int> features1, IReadOnlyDictionary<string, int> features2)
         {
-            var keys = features1.Keys.Union(features2.Keys).ToList();
+            var keys = features1.Keys.Union(features2.Keys).ToReadOnlyList();
 
             double sum = 0;
             foreach (var key in keys)

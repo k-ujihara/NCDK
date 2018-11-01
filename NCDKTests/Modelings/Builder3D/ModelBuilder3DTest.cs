@@ -200,7 +200,7 @@ namespace NCDK.Modelings.Builder3D
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             var chemFile = reader.Read(new ChemFile());
             reader.Close();
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             IAtomContainer ac = new Silent.AtomContainer(containersList[0]);
             AddExplicitHydrogens(ac);
             ac = mb3d.Generate3DCoordinates(ac, false);
@@ -360,13 +360,13 @@ namespace NCDK.Modelings.Builder3D
         [TestCategory("SlowTest")]
         public void TestModelBuilder3D_bug_1241421()
         {
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(ChemObjectBuilder.Instance);
+            var mb3d = ModelBuilder3D.GetInstance(ChemObjectBuilder.Instance);
             string filename = "NCDK.Data.MDL.bug1241421.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
+            var reader = new MDLV2000Reader(ins);
             var chemFile = reader.Read(new ChemFile());
             reader.Close();
-            List<IAtomContainer> containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             IAtomContainer ac = new Silent.AtomContainer(containersList[0]);
             ac = mb3d.Generate3DCoordinates(ac, false);
             CheckAverageBondLength(ac);
@@ -382,7 +382,7 @@ namespace NCDK.Modelings.Builder3D
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             var chemFile = reader.Read(new ChemFile());
             reader.Close();
-            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
+            var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             IAtomContainer ac = new Silent.AtomContainer(containersList[0]);
             ac = mb3d.Generate3DCoordinates(ac, false);
             for (int i = 0; i < ac.Atoms.Count; i++)
