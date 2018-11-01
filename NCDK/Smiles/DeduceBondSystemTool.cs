@@ -24,6 +24,7 @@
  */
 
 using NCDK.Aromaticities;
+using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
@@ -207,7 +208,7 @@ namespace NCDK.Smiles
             {
                 var ai = atomContainer.Atoms[i];
 
-                if (string.Equals(ai.Symbol, "N", StringComparison.Ordinal)
+                if (ai.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N)
                  && (ai.FormalCharge == null || ai.FormalCharge == 0))
                 {
                     if (InRingSet(ai, ringSet))
@@ -215,7 +216,7 @@ namespace NCDK.Smiles
                         var ca = atomContainer.GetConnectedAtoms(ai);
                         foreach (var caj in ca)
                         {
-                            if (caj.Symbol.Equals("O", StringComparison.Ordinal) 
+                            if (caj.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O) 
                              && atomContainer.GetBond(ai, caj).Order == BondOrder.Double)
                             {
                                 ai.FormalCharge = 1;
@@ -481,7 +482,7 @@ namespace NCDK.Smiles
 
                 if (InRingSet(atom, ringSet))
                 {
-                    if (string.Equals(atom.Symbol, "N", StringComparison.Ordinal))
+                    if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N))
                     {
                         if (atom.FormalCharge == 0)
                         {
@@ -519,7 +520,7 @@ namespace NCDK.Smiles
                             }
                         }
                     }
-                    else if (string.Equals(atom.Symbol, "S", StringComparison.Ordinal))
+                    else if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.S))
                     {
                         if (atomContainer.GetBondOrderSum(atom) > 2)
                         {
@@ -764,7 +765,7 @@ namespace NCDK.Smiles
                      || r.Atoms[j].Hybridization != Hybridization.SP2)
                     {
                         NonSP2Count++;
-                        if (string.Equals(r.Atoms[j].Symbol, "C", StringComparison.Ordinal))
+                        if (r.Atoms[j].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.C))
                         {
                             Check[i] = false;
                             goto iloop;

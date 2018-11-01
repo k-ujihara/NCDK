@@ -25,6 +25,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Silent;
 using NCDK.IO;
 using System;
+using NCDK.Config;
 
 namespace NCDK.Tools
 {
@@ -156,9 +157,9 @@ namespace NCDK.Tools
             do
             {
                 atom = ac.Atoms[f];
-                switch (atom.Symbol)
+                switch (atom.AtomicNumber)
                 {
-                    case "H":
+                    case ChemicalElement.AtomicNumbers.H:
                         ac.RemoveAtom(atom);
                         break;
                 }

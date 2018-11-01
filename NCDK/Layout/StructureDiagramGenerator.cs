@@ -546,7 +546,7 @@ namespace NCDK.Layout
             // delete single-bonded H's from
             foreach (var curAtom in shallowCopy.Atoms)
             {
-                if (string.Equals(curAtom.Symbol, "H", StringComparison.Ordinal))
+                if (curAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                 {
                     if (shallowCopy.GetConnectedBonds(curAtom).Count() < 2)
                     {
@@ -1645,7 +1645,7 @@ namespace NCDK.Layout
         {
             if (atom.AtomicNumber != null)
                 return atom.AtomicNumber == 1;
-            return string.Equals("H", atom.Symbol, StringComparison.Ordinal);
+            return ChemicalElement.AtomicNumbers.H.Equals(atom.AtomicNumber);
         }
 
         /// <summary>

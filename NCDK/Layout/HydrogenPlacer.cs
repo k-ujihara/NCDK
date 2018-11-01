@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.Geometries;
 using NCDK.Numerics;
 using System;
@@ -107,7 +108,7 @@ namespace NCDK.Layout
             {
                 if (conAtom.Point2D == null)
                 {
-                    if (string.Equals(conAtom.Symbol, "H", StringComparison.Ordinal))
+                    if (conAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                     {
                         unplaced.Atoms.Add(conAtom);
                     }

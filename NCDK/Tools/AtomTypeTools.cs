@@ -18,6 +18,7 @@
  */
 
 using NCDK.Aromaticities;
+using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
@@ -214,7 +215,7 @@ namespace NCDK.Tools
             int ncount = 0;
             foreach (var atom in ring.Atoms)
             {
-                if (string.Equals(atom.Symbol, "N", StringComparison.Ordinal))
+                if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N))
                 {
                     ncount = ncount + 1;
                 }

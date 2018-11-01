@@ -18,6 +18,7 @@
  */
 
 using NCDK.Common.Collections;
+using NCDK.Config;
 using NCDK.Graphs.Matrix;
 using System;
 using System.Diagnostics;
@@ -114,60 +115,65 @@ namespace NCDK.Graphs.Invariant
             int i = 0;
             foreach (var atom in atomContainer.Atoms)
             {
-                string symbol = atom.Symbol;
-
                 var bonds = atomContainer.GetConnectedBonds(atom).ToReadOnlyList();
                 if (bonds.Count == 1)
                 {
-                    IBond bond0 = bonds[0];
-                    BondOrder order = bond0.Order;
-                    if (string.Equals(symbol, "C", StringComparison.Ordinal))
+                    var bond0 = bonds[0];
+                    var order = bond0.Order;
+                    switch (atom.AtomicNumber)
                     {
-                        if (order == BondOrder.Single)
-                            nodeSequence[i] = 1;// CH3-
-                        else if (order == BondOrder.Double)
-                            nodeSequence[i] = 3;// CH2=
-                        else if (order == BondOrder.Triple) nodeSequence[i] = 6;// CH#
-                    }
-                    else if (string.Equals(symbol, "O", StringComparison.Ordinal))
-                    {
-                        if (order == BondOrder.Single)
-                            nodeSequence[i] = 14;// HO-
-                        else if (order == BondOrder.Double) nodeSequence[i] = 16;// O=
-                                                                                 // missing the case of an aromatic double bond
-                    }
-                    else if (string.Equals(symbol, "N", StringComparison.Ordinal))
-                    {
-                        if (order == BondOrder.Single)
-                            nodeSequence[i] = 18;// NH2-
-                        else if (order == BondOrder.Double)
-                        {
-                            if (atom.Charge == -1.0)
-                                nodeSequence[i] = 27;// N= contains -1 charge
-                            else
-                                nodeSequence[i] = 20;// NH=
-                        }
-                        else if (order == BondOrder.Triple) nodeSequence[i] = 23;// N#
-                    }
-                    else if (string.Equals(symbol, "S", StringComparison.Ordinal))
-                    {
-                        if (order == BondOrder.Single)
-                            nodeSequence[i] = 31;// HS-
-                        else if (order == BondOrder.Double) nodeSequence[i] = 33;// S=
-                    }
-                    else if (string.Equals(symbol, "P", StringComparison.Ordinal))
-                        nodeSequence[i] = 38;// PH2-
-                    else if (string.Equals(symbol, "F", StringComparison.Ordinal))
-                        nodeSequence[i] = 42;// F-
-                    else if (string.Equals(symbol, "Cl", StringComparison.Ordinal))
-                        nodeSequence[i] = 43;// Cl-
-                    else if (string.Equals(symbol, "Br", StringComparison.Ordinal))
-                        nodeSequence[i] = 44;// Br-
-                    else if (string.Equals(symbol, "I", StringComparison.Ordinal))
-                        nodeSequence[i] = 45;// I-
-                    else
-                    {
-                        Debug.WriteLine("in case of a new node, please " + "report this bug to cdk-devel@lists.sf.net.");
+                        case ChemicalElement.AtomicNumbers.C:
+                            if (order == BondOrder.Single)
+                                nodeSequence[i] = 1;// CH3-
+                            else if (order == BondOrder.Double)
+                                nodeSequence[i] = 3;// CH2=
+                            else if (order == BondOrder.Triple)
+                                nodeSequence[i] = 6;// CH#
+                            break;
+                        case ChemicalElement.AtomicNumbers.O:
+                            if (order == BondOrder.Single)
+                                nodeSequence[i] = 14;// HO-
+                            else if (order == BondOrder.Double)
+                                nodeSequence[i] = 16;// O=
+                                                     // missing the case of an aromatic double bond
+                            break;
+                        case ChemicalElement.AtomicNumbers.N:
+                            if (order == BondOrder.Single)
+                                nodeSequence[i] = 18;// NH2-
+                            else if (order == BondOrder.Double)
+                            {
+                                if (atom.Charge == -1.0)
+                                    nodeSequence[i] = 27;// N= contains -1 charge
+                                else
+                                    nodeSequence[i] = 20;// NH=
+                            }
+                            else if (order == BondOrder.Triple)
+                                nodeSequence[i] = 23;// N#
+                            break;
+                        case ChemicalElement.AtomicNumbers.S:
+                            if (order == BondOrder.Single)
+                                nodeSequence[i] = 31;// HS-
+                            else if (order == BondOrder.Double)
+                                nodeSequence[i] = 33;// S=
+                            break;
+                        case ChemicalElement.AtomicNumbers.P:
+                            nodeSequence[i] = 38;// PH2-
+                            break;
+                        case ChemicalElement.AtomicNumbers.F:
+                            nodeSequence[i] = 42;// F-
+                            break;
+                        case ChemicalElement.AtomicNumbers.Cl:
+                            nodeSequence[i] = 43;// Cl-
+                            break;
+                        case ChemicalElement.AtomicNumbers.Br:
+                            nodeSequence[i] = 44;// Br-
+                            break;
+                        case ChemicalElement.AtomicNumbers.I:
+                            nodeSequence[i] = 45;// I-
+                            break;
+                        default:
+                            Debug.WriteLine("in case of a new node, please " + "report this bug to cdk-devel@lists.sf.net.");
+                            break;
                     }
                 }
                 else if (bonds.Count == 2)
@@ -176,131 +182,132 @@ namespace NCDK.Graphs.Invariant
                     IBond bond1 = (IBond)bonds[1];
                     BondOrder order0 = bond0.Order;
                     BondOrder order1 = bond1.Order;
-                    if (string.Equals(symbol, "C", StringComparison.Ordinal))
+                    switch (atom.AtomicNumber)
                     {
-                        if (order0 == BondOrder.Single && order1 == BondOrder.Single)
-                            nodeSequence[i] = 2;// -CH2-
-                        else if (order0 == BondOrder.Double && order1 == BondOrder.Double)
-                            nodeSequence[i] = 10;// =C=
-                        else if ((order0 == BondOrder.Single || bond1.Order == BondOrder.Single)
-                                && (order0 == BondOrder.Double || bond1.Order == BondOrder.Double))
-                            nodeSequence[i] = 5;// -CH=
-                        else if ((order0 == BondOrder.Single || bond1.Order == BondOrder.Triple)
-                                && (order0 == BondOrder.Triple || bond1.Order == BondOrder.Triple))
-                            nodeSequence[i] = 9;// -C#
-                                                // case 3 would not allow to reach this statement as there
-                                                // is no aromatic bond order
-                        if (bond0.IsAromatic && bond1.IsAromatic)
-                            nodeSequence[i] = 11;// ArCH
-                    }
-                    else if (string.Equals(symbol, "N", StringComparison.Ordinal))
-                    {
-                        if (order0 == BondOrder.Single && order1 == BondOrder.Single)
-                            nodeSequence[i] = 19;// -NH-
-                        else if (order0 == BondOrder.Double && order1 == BondOrder.Double)
-                            nodeSequence[i] = 28;// =N= with charge=-1
-                        else if ((order0 == BondOrder.Single || bond1.Order == BondOrder.Single)
-                                && (order0 == BondOrder.Double || bond1.Order == BondOrder.Double))
-                            nodeSequence[i] = 22;// -N=
-                        else if ((order0 == BondOrder.Double || bond1.Order == BondOrder.Double)
-                                && (order0 == BondOrder.Triple || bond1.Order == BondOrder.Triple))
-                            nodeSequence[i] = 26;// =N#
-                        else if ((order0 == BondOrder.Single || bond1.Order == BondOrder.Single)
-                                && (order0 == BondOrder.Triple || bond1.Order == BondOrder.Triple))
-                            nodeSequence[i] = 29;// -N# with charge=+1
-                                                 // case 3 would not allow to reach this statement as there
-                                                 // is no aromatic bond order
-                        if (bond0.IsAromatic && bond1.IsAromatic)
-                            nodeSequence[i] = 30;// ArN
-                                                 // there is no way to distinguish between ArNH and ArN as
-                                                 // bonds to protons are not considered
-                    }
-                    else if (string.Equals(symbol, "O", StringComparison.Ordinal))
-                    {
-                        if (order0 == BondOrder.Single && order1 == BondOrder.Single)
-                            nodeSequence[i] = 15;// -O-
-                        else if (bond0.IsAromatic && bond1.IsAromatic)
-                            nodeSequence[i] = 17;// ArO
-                    }
-                    else if (string.Equals(symbol, "S", StringComparison.Ordinal))
-                    {
-                        if (order0 == BondOrder.Single && order1 == BondOrder.Single)
-                            nodeSequence[i] = 32;// -S-
-                        else if (order0 == BondOrder.Double && order1 == BondOrder.Double)
-                            nodeSequence[i] = 35;// =S=
-                        else if (bond0.IsAromatic && bond1.IsAromatic)
-                            nodeSequence[i] = 37;// ArS
-                    }
-                    else if (string.Equals(symbol, "P", StringComparison.Ordinal))
-                    {
-                        if (order0 == BondOrder.Single && order1 == BondOrder.Single) nodeSequence[i] = 39;// -PH-
-                    }
-                    else
-                    {
-                        Debug.WriteLine("in case of a new node, " + "please report this bug to cdk-devel@lists.sf.net.");
+                        case ChemicalElement.AtomicNumbers.C:
+                            if (order0 == BondOrder.Single && order1 == BondOrder.Single)
+                                nodeSequence[i] = 2;// -CH2-
+                            else if (order0 == BondOrder.Double && order1 == BondOrder.Double)
+                                nodeSequence[i] = 10;// =C=
+                            else if ((order0 == BondOrder.Single || bond1.Order == BondOrder.Single)
+                                    && (order0 == BondOrder.Double || bond1.Order == BondOrder.Double))
+                                nodeSequence[i] = 5;// -CH=
+                            else if ((order0 == BondOrder.Single || bond1.Order == BondOrder.Triple)
+                                    && (order0 == BondOrder.Triple || bond1.Order == BondOrder.Triple))
+                                nodeSequence[i] = 9;// -C#
+                                                    // case 3 would not allow to reach this statement as there
+                                                    // is no aromatic bond order
+                            if (bond0.IsAromatic && bond1.IsAromatic)
+                                nodeSequence[i] = 11;// ArCH
+                            break;
+                        case ChemicalElement.AtomicNumbers.N:
+                            if (order0 == BondOrder.Single && order1 == BondOrder.Single)
+                                nodeSequence[i] = 19;// -NH-
+                            else if (order0 == BondOrder.Double && order1 == BondOrder.Double)
+                                nodeSequence[i] = 28;// =N= with charge=-1
+                            else if ((order0 == BondOrder.Single || bond1.Order == BondOrder.Single)
+                                    && (order0 == BondOrder.Double || bond1.Order == BondOrder.Double))
+                                nodeSequence[i] = 22;// -N=
+                            else if ((order0 == BondOrder.Double || bond1.Order == BondOrder.Double)
+                                    && (order0 == BondOrder.Triple || bond1.Order == BondOrder.Triple))
+                                nodeSequence[i] = 26;// =N#
+                            else if ((order0 == BondOrder.Single || bond1.Order == BondOrder.Single)
+                                    && (order0 == BondOrder.Triple || bond1.Order == BondOrder.Triple))
+                                nodeSequence[i] = 29;// -N# with charge=+1
+                                                     // case 3 would not allow to reach this statement as there
+                                                     // is no aromatic bond order
+                            if (bond0.IsAromatic && bond1.IsAromatic)
+                                nodeSequence[i] = 30;// ArN
+                                                     // there is no way to distinguish between ArNH and ArN as
+                                                     // bonds to protons are not considered
+                            break;
+                        case ChemicalElement.AtomicNumbers.O:
+                            if (order0 == BondOrder.Single && order1 == BondOrder.Single)
+                                nodeSequence[i] = 15;// -O-
+                            else if (bond0.IsAromatic && bond1.IsAromatic)
+                                nodeSequence[i] = 17;// ArO
+                            break;
+                        case ChemicalElement.AtomicNumbers.S:
+                            if (order0 == BondOrder.Single && order1 == BondOrder.Single)
+                                nodeSequence[i] = 32;// -S-
+                            else if (order0 == BondOrder.Double && order1 == BondOrder.Double)
+                                nodeSequence[i] = 35;// =S=
+                            else if (bond0.IsAromatic && bond1.IsAromatic)
+                                nodeSequence[i] = 37;// ArS
+                            break;
+                        case ChemicalElement.AtomicNumbers.P:
+                            if (order0 == BondOrder.Single && order1 == BondOrder.Single)
+                                nodeSequence[i] = 39;// -PH-
+                            break;
+                        default:
+                            Debug.WriteLine("in case of a new node, " + "please report this bug to cdk-devel@lists.sf.net.");
+                            break;
                     }
                 }
                 else if (bonds.Count == 3)
                 {
-                    IBond bond0 = (IBond)bonds[0];
-                    IBond bond1 = (IBond)bonds[1];
-                    IBond bond2 = (IBond)bonds[2];
-                    BondOrder order0 = bond0.Order;
-                    BondOrder order1 = bond1.Order;
-                    BondOrder order2 = bond2.Order;
-
-                    if (string.Equals(symbol, "C", StringComparison.Ordinal))
+                    var bond0 = (IBond)bonds[0];
+                    var bond1 = (IBond)bonds[1];
+                    var bond2 = (IBond)bonds[2];
+                    var order0 = bond0.Order;
+                    var order1 = bond1.Order;
+                    var order2 = bond2.Order;
+                    switch (atom.AtomicNumber)
                     {
-                        if (order0 == BondOrder.Single && order1 == BondOrder.Single && order2 == BondOrder.Single)
-                            nodeSequence[i] = 4;// >C-
-                        else if (order0 == BondOrder.Double || order1 == BondOrder.Double
-                                || order2 == BondOrder.Double) nodeSequence[i] = 8;// >C=
-                                                                                   // case 2 would not allow to reach this statement because
-                                                                                   // there is always a double bond (pi system) around an
-                                                                                   // aromatic atom
-                        if ((bond0.IsAromatic || bond1.IsAromatic || bond2
-                                .IsAromatic)
-                                && (order0 == BondOrder.Single || order1 == BondOrder.Single || bond2.Order == BondOrder.Single))
-                            nodeSequence[i] = 12;// ArC-
-                                                 // case 3 would not allow to reach this statement
-                        if (bond0.IsAromatic && bond1.IsAromatic
-                                && bond2.IsAromatic) nodeSequence[i] = 13;// ArC
-                    }
-                    else if (string.Equals(symbol, "N", StringComparison.Ordinal))
-                    {
-                        if (order0 == BondOrder.Single && order1 == BondOrder.Single && order2 == BondOrder.Single)
-                            nodeSequence[i] = 21;// >N-
-                        else if (order0 == BondOrder.Single || order1 == BondOrder.Single
-                                || order2 == BondOrder.Single) nodeSequence[i] = 25;// -N(=)=
-                    }
-                    else if (string.Equals(symbol, "S", StringComparison.Ordinal))
-                    {
-                        if (order0 == BondOrder.Double || order1 == BondOrder.Double || order2 == BondOrder.Double)
-                            nodeSequence[i] = 34;// >S=
-                    }
-                    else if (string.Equals(symbol, "P", StringComparison.Ordinal))
-                    {
-                        if (order0 == BondOrder.Single && order1 == BondOrder.Single && order2 == BondOrder.Single)
-                            nodeSequence[i] = 40;// >P-
-                    }
-                    else
-                    {
-                        Debug.WriteLine("in case of a new node, " + "please report this bug to cdk-devel@lists.sf.net.");
+                        case ChemicalElement.AtomicNumbers.C:
+                            if (order0 == BondOrder.Single && order1 == BondOrder.Single && order2 == BondOrder.Single)
+                                nodeSequence[i] = 4;// >C-
+                            else if (order0 == BondOrder.Double || order1 == BondOrder.Double
+                                    || order2 == BondOrder.Double) nodeSequence[i] = 8;// >C=
+                                                                                       // case 2 would not allow to reach this statement because
+                                                                                       // there is always a double bond (pi system) around an
+                                                                                       // aromatic atom
+                            if ((bond0.IsAromatic || bond1.IsAromatic || bond2
+                                    .IsAromatic)
+                                    && (order0 == BondOrder.Single || order1 == BondOrder.Single || bond2.Order == BondOrder.Single))
+                                nodeSequence[i] = 12;// ArC-
+                                                     // case 3 would not allow to reach this statement
+                            if (bond0.IsAromatic && bond1.IsAromatic
+                                    && bond2.IsAromatic) nodeSequence[i] = 13;// ArC
+                            break;
+                        case ChemicalElement.AtomicNumbers.N:
+                            if (order0 == BondOrder.Single && order1 == BondOrder.Single && order2 == BondOrder.Single)
+                                nodeSequence[i] = 21;// >N-
+                            else if (order0 == BondOrder.Single || order1 == BondOrder.Single
+                                    || order2 == BondOrder.Single) nodeSequence[i] = 25;// -N(=)=
+                            break;
+                        case ChemicalElement.AtomicNumbers.S:
+                            if (order0 == BondOrder.Double || order1 == BondOrder.Double || order2 == BondOrder.Double)
+                                nodeSequence[i] = 34;// >S=
+                            break;
+                        case ChemicalElement.AtomicNumbers.P:
+                            if (order0 == BondOrder.Single && order1 == BondOrder.Single && order2 == BondOrder.Single)
+                                nodeSequence[i] = 40;// >P-
+                            break;
+                        default:
+                            Debug.WriteLine("in case of a new node, " + "please report this bug to cdk-devel@lists.sf.net.");
+                            break;
                     }
                 }
                 else if (bonds.Count == 4)
                 {
-                    if (string.Equals(atom.Symbol, "C", StringComparison.Ordinal))
-                        nodeSequence[i] = 7;// >C<
-                    else if (string.Equals(atom.Symbol, "N", StringComparison.Ordinal))
-                        nodeSequence[i] = 24;// >N(=)-
-                    else if (string.Equals(atom.Symbol, "S", StringComparison.Ordinal))
-                        nodeSequence[i] = 36;// >S(=)=
-                    else if (string.Equals(atom.Symbol, "P", StringComparison.Ordinal))
-                        nodeSequence[i] = 41;// =P<-
-                    else
+                    switch (atom.AtomicNumber)
                     {
-                        Debug.WriteLine("in case of a new node, " + "please report this bug to cdk-devel@lists.sf.net.");
+                        case ChemicalElement.AtomicNumbers.C:
+                            nodeSequence[i] = 7;// >C<
+                            break;
+                        case ChemicalElement.AtomicNumbers.N:
+                            nodeSequence[i] = 24;// >N(=)-
+                            break;
+                        case ChemicalElement.AtomicNumbers.S:
+                            nodeSequence[i] = 36;// >S(=)=
+                            break;
+                        case ChemicalElement.AtomicNumbers.P:
+                            nodeSequence[i] = 41;// =P<-
+                            break;
+                        default:
+                            Debug.WriteLine("in case of a new node, " + "please report this bug to cdk-devel@lists.sf.net.");
+                            break;
                     }
                 }
                 i++;

@@ -175,16 +175,17 @@ namespace NCDK.Fingerprints.Model
         // make sure that for a single molecule, the way that the hashes are created & folded is consistent with a reference
         private static void CheckFP(string molstr, CircularFingerprinterClass classType, int folding, int[] refHash)
         {
-            string strType = classType == CircularFingerprinterClass.ECFP6 ? "ECFP6" : "FCFP6";
-            WriteLine("Comparing hash codes for " + strType + "/folding=" + folding);
+            var strType = classType == CircularFingerprinterClass.ECFP6 ? "ECFP6" : "FCFP6";
+            WriteLine($"Comparing hash codes for {strType}/folding={folding}");
 
-            IAtomContainer mol = new EnumerableSDFReader(new StringReader(molstr), ChemObjectBuilder.Instance).First();
-            Bayesian model = new Bayesian(classType, folding);
+            var mol = new EnumerableSDFReader(new StringReader(molstr), ChemObjectBuilder.Instance).First();
+            var model = new Bayesian(classType, folding);
             model.AddMolecule(mol, false);
 
-            int[] calcHash = model.Training[0];
-            bool same = calcHash.Length == refHash.Length;
-            if (same) for (int n = 0; n < calcHash.Length; n++)
+            var calcHash = model.Training[0];
+            var same = calcHash.Length == refHash.Length;
+            if (same)
+                for (int n = 0; n < calcHash.Length; n++)
                     if (calcHash[n] != refHash[n])
                     {
                         same = false;
@@ -192,8 +193,8 @@ namespace NCDK.Fingerprints.Model
                     }
             if (!same)
             {
-                WriteLine("    ///* calculated: " + ArrayStr(calcHash));
-                WriteLine("    ///* reference:  " + ArrayStr(refHash));
+                WriteLine($"    ** calculated: {ArrayStr(calcHash)}");
+                WriteLine($"    ** reference:  {ArrayStr(refHash)}");
                 throw new CDKException("Hashes differ.");
             }
         }
@@ -203,10 +204,11 @@ namespace NCDK.Fingerprints.Model
         {
             WriteLine("Checking integrity of text fields");
 
-            string dummyTitle = "some title", dummyOrigin = "some origin";
-            string[] dummyComments = new string[] { "comment1", "comment2" };
+            var dummyTitle = "some title";
+            var dummyOrigin = "some origin";
+            var dummyComments = new string[] { "comment1", "comment2" };
 
-            Bayesian model1 = new Bayesian(CircularFingerprinterClass.ECFP6)
+            var model1 = new Bayesian(CircularFingerprinterClass.ECFP6)
             {
                 NoteTitle = dummyTitle,
                 NoteOrigin = dummyOrigin,
@@ -233,7 +235,7 @@ namespace NCDK.Fingerprints.Model
             var comments2 = model2.NoteComments;
             if (comments1.Count != dummyComments.Length
              || comments2.Count != dummyComments.Length
-             || !comments1[0].Equals(dummyComments[0], StringComparison.Ordinal) 
+             || !comments1[0].Equals(dummyComments[0], StringComparison.Ordinal)
              || !comments2[0].Equals(dummyComments[0], StringComparison.Ordinal)
              || !comments1[1].Equals(dummyComments[1], StringComparison.Ordinal)
              || !comments2[1].Equals(dummyComments[1], StringComparison.Ordinal))
@@ -243,11 +245,11 @@ namespace NCDK.Fingerprints.Model
         // builds a model and uses the scaled predictions to rack up a confusion matrix, for comparison
         private static void ConfirmPredictions(string sdfile, int truePos, int trueNeg, int falsePos, int falseNeg)
         {
-            WriteLine("[" + sdfile + "] comparing confusion matrix");
+            WriteLine($"[{sdfile}] comparing confusion matrix");
 
-            List<IAtomContainer> molecules = new List<IAtomContainer>();
-            List<bool> activities = new List<bool>();
-            Bayesian model = new Bayesian(CircularFingerprinterClass.ECFP6, 1024);
+            var molecules = new List<IAtomContainer>();
+            var activities = new List<bool>();
+            var model = new Bayesian(CircularFingerprinterClass.ECFP6, 1024);
 
             try
             {
@@ -310,50 +312,26 @@ namespace NCDK.Fingerprints.Model
         // compares a series of molecules for folding fingerprints being literally identical
         private static void CompareFolding(string sdfile, string fpField, CircularFingerprinterClass classType, int folding)
         {
-            WriteLine("[" + sdfile + "] calculation of: " + fpField);
+            WriteLine($"[{sdfile}] calculation of: {fpField}");
 
-            bool failed = false;
-            try
+            using (var ins = ResourceLoader.GetAsStream($"NCDK.Data.CDD.{sdfile}"))
             {
-                using (var ins = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile))
+                var rdr = new EnumerableSDFReader(ins, ChemObjectBuilder.Instance);
+
+                int row = 0;
+                foreach (var mol in rdr)
                 {
-                    EnumerableSDFReader rdr = new EnumerableSDFReader(ins, ChemObjectBuilder.Instance);
-
-                    int row = 0;
-                    foreach (var mol in rdr)
-                    {
-                        row++;
-
-                        Bayesian model = new Bayesian(classType, folding);
-                        model.AddMolecule(mol, false);
-                        int[] hashes = model.Training[0];
-
-                        string gotHashes = ArrayStr(hashes);
-                        string reqHashes = (string)mol.GetProperties()[fpField];
-
-                        if (gotHashes != reqHashes)
-                        {
-                            WriteLine($"    ///* mismatch at row {row}");
-                            WriteLine($"    ///* calc: {gotHashes}");
-                            WriteLine($"    ///* want: {reqHashes}");
-                            failed = true;
-                        }
-                    }
-
+                    row++;
+                    var model = new Bayesian(classType, folding);
+                    model.AddMolecule(mol, false);
+                    var hashes = model.Training[0];
+                    var gotHashes = ArrayStr(hashes);
+                    var reqHashes = (string)mol.GetProperties()[fpField];
+                    Assert.AreEqual(reqHashes, gotHashes, $"Folded hashes do not match reference at {row}.");
                 }
             }
-            catch (CDKException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                throw new CDKException("Test failed", ex);
-            }
-
-            if (failed) throw new CDKException("Folded hashes do not match reference.");
         }
-
+    
         // performs a bulk test: loads an SDfile, builds a model with the given parameters, and compares it to a reference model
         // that has been previously serialised
         private void RunTest(string sdfile, string actvField, CircularFingerprinterClass classType, int folding, int xval, string modelFN)
@@ -368,21 +346,16 @@ namespace NCDK.Fingerprints.Model
 
             try
             {
-                Bayesian model = new Bayesian(classType, folding)
-                {
-                    PerceiveStereo = perceiveStereo
-                };
+                var model = new Bayesian(classType, folding) { PerceiveStereo = perceiveStereo };
 
                 int row = 0, numActives = 0;
-                using (
-                    EnumerableSDFReader rdr = new EnumerableSDFReader(
-                        ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile), ChemObjectBuilder.Instance))
+                using (var rdr = new EnumerableSDFReader(ResourceLoader.GetAsStream($"NCDK.Data.CDD.{sdfile}"), ChemObjectBuilder.Instance))
                 {
                     foreach (var mol in rdr)
                     {
                         row++;
 
-                        string stractv = (string)mol.GetProperties()[actvField];
+                        var stractv = (string)mol.GetProperties()[actvField];
                         int active = stractv.Equals("true", StringComparison.Ordinal) ? 1 : stractv.Equals("false", StringComparison.Ordinal) ? 0 : int.Parse(stractv, NumberFormatInfo.InvariantInfo);
                         if (active != 0 && active != 1)
                             throw new CDKException("Activity field not found or invalid");
@@ -392,7 +365,7 @@ namespace NCDK.Fingerprints.Model
                     }
                 }
 
-                WriteLine("    Training with " + row + " rows, " + numActives + " actives, " + (row - numActives) + " inactives");
+                WriteLine($"    Training with {row} rows, {numActives} actives, {(row - numActives)} inactives");
 
                 model.Build();
                 if (xval == 3)
@@ -402,13 +375,12 @@ namespace NCDK.Fingerprints.Model
                 else
                     model.ValidateLeaveOneOut();
 
-                WriteLine("    Validation: ROC AUC=" + model.RocAUC);
-
-                WriteLine("    Parsing reference model");
+                WriteLine($"    Validation: ROC AUC={model.RocAUC}");
+                WriteLine($"    Parsing reference model");
 
                 //FileReader frdr=new FileReader(modelFN);
                 Bayesian reference;
-                using (var mrdr = new StreamReader(ResourceLoader.GetAsStream("NCDK.Data.CDD." + modelFN)))
+                using (var mrdr = new StreamReader(ResourceLoader.GetAsStream($"NCDK.Data.CDD.{modelFN}")))
                 {
                     reference = Bayesian.Deserialise(mrdr);
                 }
@@ -418,37 +390,37 @@ namespace NCDK.Fingerprints.Model
                 bool failed = false;
                 if (model.Folding != reference.Folding)
                 {
-                    WriteLine("    ** reference folding size=" + reference.Folding);
+                    WriteLine($"    ** reference folding size={reference.Folding}");
                     failed = true;
                 }
                 if (model.TrainingSize != reference.TrainingSize)
                 {
-                    WriteLine("    ** reference training size=" + reference.TrainingSize);
+                    WriteLine($"    ** reference training size={reference.TrainingSize}");
                     failed = true;
                 }
                 if (model.TrainingActives != reference.TrainingActives)
                 {
-                    WriteLine("    ** reference training actives=" + reference.TrainingActives);
+                    WriteLine($"    ** reference training actives={reference.TrainingActives}");
                     failed = true;
                 }
                 if (model.RocType != reference.RocType)
                 {
-                    WriteLine("    ** reference ROC type=" + reference.RocType);
+                    WriteLine($"    ** reference ROC type={reference.RocType}");
                     failed = true;
                 }
                 if (!DblEqual(model.RocAUC, reference.RocAUC))
                 {
-                    WriteLine("    ** reference ROC AUC=" + reference.RocAUC);
+                    WriteLine($"    ** reference ROC AUC={reference.RocAUC}");
                     failed = true;
                 }
                 if (Math.Abs(model.LowThreshold - reference.LowThreshold) > 0.00000000000001)
                 {
-                    WriteLine("    ** reference lowThresh=" + reference.LowThreshold + " different to calculated " + model.LowThreshold);
+                    WriteLine($"    ** reference lowThresh={reference.LowThreshold} different to calculated {model.LowThreshold}");
                     failed = true;
                 }
                 if (Math.Abs(model.HighThreshold - reference.HighThreshold) > 0.00000000000001)
                 {
-                    WriteLine("    ** reference highThresh=" + reference.HighThreshold + " different to calculated " + model.HighThreshold);
+                    WriteLine($"    ** reference highThresh={reference.HighThreshold} different to calculated {model.HighThreshold}");
                     failed = true;
                 }
 
@@ -457,20 +429,20 @@ namespace NCDK.Fingerprints.Model
                 var rbits = reference.Contributions;
                 if (mbits.Count != rbits.Count)
                 {
-                    WriteLine("    ///* model has " + mbits.Count + " contribution bits, reference has " + rbits.Count);
+                    WriteLine($"    ** model has {mbits.Count} contribution bits, reference has {rbits.Count}");
                     failed = true;
                 }
                 foreach (var h in mbits.Keys)
                     if (!rbits.ContainsKey(h))
                     {
-                        WriteLine("    ///* model hash bit " + h + " not found in reference");
+                        WriteLine($"    ** model hash bit {h} not found in reference");
                         failed = true;
                         break; // one is enough
                     }
                 foreach (var h in rbits.Keys)
                     if (!mbits.ContainsKey(h))
                     {
-                        WriteLine("    ///* reference hash bit " + h + " not found in model");
+                        WriteLine($"    ** reference hash bit {h} not found in model");
                         failed = true;
                         break; // one is enough
                     }
@@ -480,7 +452,7 @@ namespace NCDK.Fingerprints.Model
                         double c1 = mbits[h], c2 = rbits[h];
                         if (!DblEqual(c1, c2))
                         {
-                            WriteLine("    ///* contribution for bit " + h + ": model=" + c1 + ", reference=" + c2);
+                            WriteLine($"    ** contribution for bit {h}: model={c1}, reference={c2}");
                             failed = true;
                             break; // one is enough
                         }
@@ -513,7 +485,8 @@ namespace NCDK.Fingerprints.Model
 
         private static string ArrayStr(int[] A)
         {
-            if (A == null) return "{null}";
+            if (A == null)
+                return "{null}";
             string str = "";
             for (int n = 0; n < A.Length; n++)
                 str += (n > 0 ? "," : "") + A[n];

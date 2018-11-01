@@ -210,27 +210,31 @@ namespace NCDK.Tautomers
             foreach (Match match in formulaPattern.Matches(formula))
             {
                 string elementSymbol = match.Groups["symbol"].Value;
-                if (!string.Equals(elementSymbol, "H", StringComparison.Ordinal))
+                switch (elementSymbol)
                 {
-                    int elementCnt = 1;
-                    {
-                        string cnt = match.Groups["cnt"].Value;
-                        if (cnt.Length != 0)
-                            elementCnt = int.Parse(cnt, NumberFormatInfo.InvariantInfo);
-                    }
+                    case "H":
+                        break;
+                    default:
+                        int elementCnt = 1;
+                        {
+                            string cnt = match.Groups["cnt"].Value;
+                            if (cnt.Length != 0)
+                                elementCnt = int.Parse(cnt, NumberFormatInfo.InvariantInfo);
+                        }
 
-                    for (int i = 0; i < elementCnt; i++)
-                    {
-                        position++;
-                        IAtom atom = inputMolecule.Builder.NewAtom(elementSymbol);
+                        for (int i = 0; i < elementCnt; i++)
+                        {
+                            position++;
+                            IAtom atom = inputMolecule.Builder.NewAtom(elementSymbol);
 
-                        // This class uses the atom's ID attribute to keep track of
-                        // atom positions defined in the InChi. So if for example
-                        // atom.ID=14, it means this atom has position 14 in the
-                        // InChI connection table.
-                        atom.Id = position + "";
-                        inchiAtomsByPosition[position] = atom;
-                    }
+                            // This class uses the atom's ID attribute to keep track of
+                            // atom positions defined in the InChi. So if for example
+                            // atom.ID=14, it means this atom has position 14 in the
+                            // InChI connection table.
+                            atom.Id = position + "";
+                            inchiAtomsByPosition[position] = atom;
+                        }
+                        break;
                 }
             }
             return inchiAtomsByPosition;

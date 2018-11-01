@@ -43,8 +43,8 @@ namespace NCDK.Formula
     // @cdk.githash
     public class MolecularFormulaRange
     {
-        private IDictionary<IIsotope, int> isotopesMax;
-        private IDictionary<IIsotope, int> isotopesMin;
+        private Dictionary<IIsotope, int> isotopesMax;
+        private Dictionary<IIsotope, int> isotopesMin;
 
         /// <summary>
         /// Constructs an empty MolecularFormulaExpand.

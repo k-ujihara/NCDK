@@ -18,6 +18,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
@@ -83,7 +84,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 int nsp3 = 0;
                 foreach (var atom in clone.Atoms)
                 {
-                    if (!string.Equals(atom.Symbol, "C", StringComparison.Ordinal))
+                    if (!atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.C))
                         continue;
                     if (atom.Hybridization == Hybridization.SP2)
                         nsp2++;

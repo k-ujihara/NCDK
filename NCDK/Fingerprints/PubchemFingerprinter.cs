@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.SMARTS;
 using NCDK.Tools;
@@ -172,7 +173,7 @@ namespace NCDK.Fingerprints
             {
                 foreach (var ringAtom in ring.Atoms)
                 {
-                    if (!string.Equals(ringAtom.Symbol, "C", StringComparison.Ordinal))
+                    if (!ringAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.C))
                         return false;
                 }
                 return true;
@@ -198,7 +199,7 @@ namespace NCDK.Fingerprints
                 int c = 0;
                 foreach (var ringAtom in ring.Atoms)
                 {
-                    if (string.Equals(ringAtom.Symbol, "N", StringComparison.Ordinal)) c++;
+                    if (ringAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N)) c++;
                 }
                 return c;
             }
@@ -208,10 +209,10 @@ namespace NCDK.Fingerprints
                 int c = 0;
                 foreach (var ringAtom in ring.Atoms)
                 {
-                    switch (ringAtom.Symbol)
+                    switch (ringAtom.AtomicNumber)
                     {
-                        case "C":
-                        case "H":
+                        case ChemicalElement.AtomicNumbers.C:
+                        case ChemicalElement.AtomicNumbers.H:
                             break;
                         default:
                             c++;
@@ -468,7 +469,7 @@ namespace NCDK.Fingerprints
         private static void CountElements(byte[] fp, IAtomContainer mol)
         {
             int b;
-            ElementsCounter ce = new ElementsCounter(mol);
+            var ce = new ElementsCounter(mol);
 
             b = 0;
             if (ce.GetCount("H") >= 4) fp[b >> 3] |= (byte)Mask[b % 8];

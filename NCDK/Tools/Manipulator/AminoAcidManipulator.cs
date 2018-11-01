@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using System;
 using System.Collections.Generic;
 
@@ -53,7 +54,7 @@ namespace NCDK.Tools.Manipulator
                 {
                     for (int j = 0; j < bond.Atoms.Count; j++)
                     {
-                        if (string.Equals(bond.Atoms[j].Symbol, "O", StringComparison.Ordinal))
+                        if (bond.Atoms[j].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O))
                         {
                             // yes, we found a singly bonded oxygen!
                             atomsToRemove.Add(bond.Atoms[j]);

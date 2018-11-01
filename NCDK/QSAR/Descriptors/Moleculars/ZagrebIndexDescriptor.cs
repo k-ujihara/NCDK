@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
@@ -64,12 +65,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double zagreb = 0;
             foreach (var atom in atomContainer.Atoms)
             {
-                if (string.Equals(atom.Symbol, "H", StringComparison.Ordinal)) continue;
+                if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                    continue;
                 int atomDegree = 0;
                 var neighbours = atomContainer.GetConnectedAtoms(atom);
                 foreach (var neighbour in neighbours)
                 {
-                    if (!string.Equals(neighbour.Symbol, "H", StringComparison.Ordinal))
+                    if (!neighbour.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                     {
                         atomDegree += 1;
                     }

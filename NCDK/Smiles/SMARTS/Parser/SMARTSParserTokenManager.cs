@@ -935,35 +935,38 @@ namespace NCDK.Smiles.SMARTS.Parser
         static readonly int[] jjnextStates = System.Array.Empty<int>();
 
         /// <summary>Token literal values.</summary>
-        public static readonly string[] jjstrLiteralImages = new string[] {
-    "", null, ";", "&", ",", "!", "-", "/", "\\", "/?",
-    "\\?", "=", "#", ":", "~", "@", "c", "n", "o", "s", "p",
-    "as", "se", "B", "C", "N", "O", "F", "P", "S",
-    "Cl", "Br", "I", "*", "a", "A", "^", "?", null, "[", "(",
-    ")", "]", "$", "+", "h", "D", "R", "r", "v", "X", "x",
-    "G", "#X", "H", "He", "Li", "Be", "Ne", "Na",
-    "Mg", "Al", "Si", "Ar", "K", "Ca", "Ti", "V",
-    "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn",
-    "Ga", "Ge", "As", "Se", "Kr", "Rb", "Sr",
-    "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh",
-    "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te",
-    "Xe", "Cs", "Ba", "La", "Hf", "Ta", "W",
-    "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl",
-    "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra",
-    "Ac", "Th", "Pa", "U", "Pu", "Am", "Cm",
-    "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr",
-    "Np", "Ce", "Nd", "Pm", "Sm", "Eu", "Gd",
-    "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu",
-    "Pr", "Sc", ">", ".", "%", "--", "---", "----",
-    "-----", "------", "-------", "--------",
-     "++", "+++", "++++", "+++++", "++++++",
-    "+++++++", "++++++++", };
+        public static readonly string[] jjstrLiteralImages = new string[] 
+        {
+            "", null, ";", "&", ",", "!", "-", "/", "\\", "/?",
+            "\\?", "=", "#", ":", "~", "@", "c", "n", "o", "s", "p",
+            "as", "se", "B", "C", "N", "O", "F", "P", "S",
+            "Cl", "Br", "I", "*", "a", "A", "^", "?", null, "[", "(",
+            ")", "]", "$", "+", "h", "D", "R", "r", "v", "X", "x",
+            "G", "#X", "H", "He", "Li", "Be", "Ne", "Na",
+            "Mg", "Al", "Si", "Ar", "K", "Ca", "Ti", "V",
+            "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn",
+            "Ga", "Ge", "As", "Se", "Kr", "Rb", "Sr",
+            "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh",
+            "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te",
+            "Xe", "Cs", "Ba", "La", "Hf", "Ta", "W",
+            "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl",
+            "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra",
+            "Ac", "Th", "Pa", "U", "Pu", "Am", "Cm",
+            "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr",
+            "Np", "Ce", "Nd", "Pm", "Sm", "Eu", "Gd",
+            "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu",
+            "Pr", "Sc", ">", ".", "%", "--", "---", "----",
+            "-----", "------", "-------", "--------",
+             "++", "+++", "++++", "+++++", "++++++",
+            "+++++++", "++++++++",
+        };
 
         /// <summary>Lexer state names.</summary>
-        public static readonly string[] lexStateNames = new string[]{
-       "ATOM_EXPRESSION",
-       "Default",
-    };
+        public static readonly string[] lexStateNames = new string[]
+        {
+            "ATOM_EXPRESSION",
+            "Default",
+        };
 
         /// <summary>Lex State array.</summary>
         public static readonly int[] jjnewLexState = new int[]

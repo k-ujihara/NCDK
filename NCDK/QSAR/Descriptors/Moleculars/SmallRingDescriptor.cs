@@ -27,6 +27,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
+using NCDK.Fingerprints;
 using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
@@ -193,28 +195,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             // calculate implicit hydrogens, using a very conservative formula
             implicitH = new int[na];
-            string[] HYVALENCE_EL = { "C", "N", "O", "S", "P" };
-            int[] HYVALENCE_VAL = { 4, 3, 2, 2, 3 };
             for (int n = 0; n < na; n++)
             {
                 var atom = mol.Atoms[n];
-                var el = atom.Symbol;
-                int hy = 0;
-                for (int i = 0; i < HYVALENCE_EL.Length; i++)
-                    if (el.Equals(HYVALENCE_EL[i], StringComparison.Ordinal))
-                    {
-                        hy = HYVALENCE_VAL[i];
-                        break;
-                    }
-                if (hy == 0)
+                if (!CircularFingerprinter.HYVALENCES.TryGetValue(atom.AtomicNumber, out int hy))
                     continue;
                 int ch = atom.FormalCharge.Value;
-                if (string.Equals(el, "C", StringComparison.Ordinal))
+                if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.C))
                     ch = -Math.Abs(ch);
                 int unpaired = 0; // (not current available, maybe introduce later)
                 hy += ch - unpaired;
-                for (int i = 0; i < bondAdj[n].Length; i++)
-                    hy -= bondOrder[bondAdj[n][i]];
+                foreach (var ba in bondAdj[n])
+                    hy -= bondOrder[ba];
                 implicitH[n] = Math.Max(0, hy);
             }
 

@@ -23,9 +23,9 @@ namespace NCDK.Fingerprints
             // Since the max distance for this fingerprint is 10, the final C-C fingerprint slot
             // at distance 10 should return false, while all the other C-C fingerprint slots
             // should return true.
-            IFingerprinter printer = new AtomPairs2DFingerprinter();
+            var printer = new AtomPairs2DFingerprinter();
             var mol1 = parser.ParseSmiles("cccccccccc");
-            BitSetFingerprint bsfp = (BitSetFingerprint)printer.GetBitFingerprint(mol1);
+            var bsfp = (BitSetFingerprint)printer.GetBitFingerprint(mol1);
             Assert.AreEqual(9, bsfp.Cardinality);
             Assert.AreEqual(true, bsfp[0]);        //Distance 1
             Assert.AreEqual(true, bsfp[78]);    //Distance 2
@@ -42,7 +42,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestHalogen()
         {
-            IFingerprinter printer = new AtomPairs2DFingerprinter();
+            var printer = new AtomPairs2DFingerprinter();
             var mol1 = parser.ParseSmiles("Clc1ccccc1");
             var map = printer.GetRawFingerprint(mol1);
             Assert.IsTrue(map.ContainsKey("1_X_C"));
@@ -58,7 +58,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void IgnoredAtom()
         {
-            IFingerprinter printer = new AtomPairs2DFingerprinter();
+            var printer = new AtomPairs2DFingerprinter();
             var mol1 = parser.ParseSmiles("[Te]1cccc1");
             var map = printer.GetRawFingerprint(mol1);
             Assert.IsTrue(map.ContainsKey("1_C_C"));
@@ -68,7 +68,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestGetCountFingerprint()
         {
-            IFingerprinter printer = new AtomPairs2DFingerprinter();
+            var printer = new AtomPairs2DFingerprinter();
             var mol1 = parser.ParseSmiles("cccccccccc");
             ICountFingerprint icfp = printer.GetCountFingerprint(mol1);
             Assert.AreEqual(9, icfp.GetNumberOfPopulatedBins());
@@ -77,7 +77,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestGetRawFingerprint()
         {
-            IFingerprinter printer = new AtomPairs2DFingerprinter();
+            var printer = new AtomPairs2DFingerprinter();
         }
     }
 }

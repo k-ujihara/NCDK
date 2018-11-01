@@ -33,7 +33,6 @@ namespace NCDK.Config
     // @author      egonw
     // @author      john may
     // @cdk.module  core
-    // @cdk.githash
     public sealed partial class ChemicalElement
     {
         public string Name { get; private set; }

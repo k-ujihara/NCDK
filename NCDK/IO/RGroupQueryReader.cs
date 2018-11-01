@@ -252,8 +252,9 @@ namespace NCDK.IO
                 {
                     if (atom is IPseudoAtom rGroup)
                     {
-                        if (rGroup.Label.StartsWithChar('R') && !string.Equals(rGroup.Label, "R", StringComparison.Ordinal) && // only numbered ones
-                                !attachmentPoints.ContainsKey(rGroup))
+                        if (rGroup.Label.StartsWithChar('R') 
+                         && !rGroup.Label.Equals("R") // only numbered ones
+                         && !attachmentPoints.ContainsKey(rGroup))
                         {
                             //Order reflects the order of atoms in the Atom Block
                             int order = 0;
@@ -267,7 +268,7 @@ namespace NCDK.IO
                                         if (bond.Contains(atom) && bond.Contains(atom2))
                                         {
                                             bondMap[++order] = bond;
-                                            Trace.TraceInformation("Def " + order + " " + rGroup.Label + "-" + atom2.Symbol);
+                                            Trace.TraceInformation($"Def {order} {rGroup.Label}-{atom2.Symbol}");
                                             break;
                                         }
                                     }
@@ -282,7 +283,7 @@ namespace NCDK.IO
                 }
                 //Done with attachment points
                 rGroupQuery.RootAttachmentPoints = attachmentPoints;
-                Trace.TraceInformation("Attachm.points defined for " + attachmentPoints.Count + " R# atoms");
+                Trace.TraceInformation($"Attachm.points defined for {attachmentPoints.Count} R# atoms");
 
                 //Process each Rgroup's $CTAB block(s)_____________________________
                 //__________________________________________________________________
@@ -297,10 +298,10 @@ namespace NCDK.IO
                         if (RGroupQuery.IsValidRgroupQueryLabel(rGroup.Label))
                         {
                             int rgroupNum = int.Parse(rGroup.Label.Substring(1), NumberFormatInfo.InvariantInfo);
-                            RGroupList rgroupList = new RGroupList(rgroupNum);
+                            var rgroupList = new RGroupList(rgroupNum);
                             if (!rGroupDefinitions.ContainsKey(rgroupNum))
                             {
-                                Trace.TraceInformation("Define Rgroup R" + rgroupNum);
+                                Trace.TraceInformation($"Define Rgroup R{rgroupNum}");
                                 RGroupLogic logic = logicDefinitions[rgroupNum];
                                 if (logic != null)
                                 {

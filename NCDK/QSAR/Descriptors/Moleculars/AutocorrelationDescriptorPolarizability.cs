@@ -20,6 +20,7 @@
 using NCDK.Aromaticities;
 using NCDK.AtomTypes;
 using NCDK.Charges;
+using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Graphs.Matrix;
 using NCDK.QSAR.Results;
@@ -119,14 +120,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     for (int i = 0; i < natom; i++)
                     {
-                        if (string.Equals(molecule.Atoms[i].Symbol, "H", StringComparison.Ordinal)) continue;
+                        if (molecule.Atoms[i].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                            continue;
                         for (int j = 0; j < natom; j++)
                         {
-                            if (string.Equals(molecule.Atoms[j].Symbol, "H", StringComparison.Ordinal)) continue;
+                            if (molecule.Atoms[j].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                                continue;
                             if (distancematrix[i][j] == k)
-                            {
                                 polarizabilitySum[k] += w[i] * w[j];
-                            }
                             else
                                 polarizabilitySum[k] += 0.0;
                         }

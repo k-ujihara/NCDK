@@ -23,7 +23,6 @@ namespace NCDK
     /// Implements the idea of an element in the periodic table.
     /// </summary>
     // @cdk.module interfaces
-    // @cdk.githash
     // @cdk.keyword element
     // @cdk.keyword atomic number
     // @cdk.keyword number, atomic

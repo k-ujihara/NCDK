@@ -18,6 +18,7 @@
  */
 
 using NCDK.Aromaticities;
+using NCDK.Config;
 using NCDK.QSAR.Results;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
@@ -222,12 +223,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             // iterate over all atoms of ac
             foreach (var atom in ac.Atoms)
             {
-                switch (atom.Symbol)
+                switch (atom.AtomicNumber)
                 {
-                    case "N":
-                    case "O":
-                    case "S":
-                    case "P":
+                    case ChemicalElement.AtomicNumbers.N:
+                    case ChemicalElement.AtomicNumbers.O:
+                    case ChemicalElement.AtomicNumbers.S:
+                    case ChemicalElement.AtomicNumbers.P:
                         int singleBondCount = 0;
                         int doubleBondCount = 0;
                         int tripleBondCount = 0;
@@ -255,7 +256,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
                         // EXPLICIT hydrogens: count the number of hydrogen atoms
                         for (int neighbourIndex = 0; neighbourIndex < numberOfNeighbours; neighbourIndex++)
-                            if (((IAtom)connectedAtoms[neighbourIndex]).Symbol.Equals("H", StringComparison.Ordinal))
+                            if (((IAtom)connectedAtoms[neighbourIndex]).AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                                 hCount++;
                         // IMPLICIT hydrogens: count the number of hydrogen atoms and adjust other atom profile properties
                         int implicitHAtoms = atom.ImplicitHydrogenCount ?? 0;

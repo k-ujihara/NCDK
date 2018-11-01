@@ -13,8 +13,8 @@ namespace NCDK.FaulonSignatures.Chemistry
     {
         public void AddRing(int atomToAttachTo, int ringSize, Molecule molecule)
         {
-            int numberOfAtoms = molecule.GetAtomCount();
-            int previous = atomToAttachTo;
+            var numberOfAtoms = molecule.GetAtomCount();
+            var previous = atomToAttachTo;
             for (int i = 0; i < ringSize; i++)
             {
                 molecule.AddAtom("C");
@@ -27,7 +27,7 @@ namespace NCDK.FaulonSignatures.Chemistry
 
         public Molecule MakeMinimalMultiRing(int ringCount, int ringSize)
         {
-            Molecule mol = new Molecule();
+            var mol = new Molecule();
             mol.AddAtom("C");
             for (int i = 0; i < ringCount; i++)
             {
@@ -38,7 +38,7 @@ namespace NCDK.FaulonSignatures.Chemistry
 
         public Molecule MakeTetrakisTriphenylPhosphoranylRhodium()
         {
-            Molecule ttpr = new Molecule();
+            var ttpr = new Molecule();
             ttpr.AddAtom("Rh");
             int phosphateCount = 3;
             for (int i = 1; i <= phosphateCount; i++)
@@ -61,7 +61,7 @@ namespace NCDK.FaulonSignatures.Chemistry
         [TestMethod()]
         public void DodecahedraneTest()
         {
-            Molecule mol = new Molecule();
+            var mol = new Molecule();
             for (int i = 0; i < 20; i++) { mol.AddAtom("C"); }
             mol.AddSingleBond(0, 1);
             mol.AddSingleBond(0, 4);
@@ -100,41 +100,36 @@ namespace NCDK.FaulonSignatures.Chemistry
                 Assert.AreEqual(4, mol.GetTotalOrder(i), "Atom " + i + " has wrong order");
             }
 
-            MoleculeQuotientGraph mqg = new MoleculeQuotientGraph(mol);
+            var mqg = new MoleculeQuotientGraph(mol);
             Console.Out.WriteLine(mqg);
             Assert.AreEqual(5, mqg.GetVertexCount());
             Assert.AreEqual(9, mqg.GetEdgeCount());
             Assert.AreEqual(3, mqg.NumberOfLoopEdges());
-            //        string directoryPath = "tmp5";
-            //        DrawTrees(mqg, directoryPath);
         }
 
         [TestMethod()]
         public void TtprTest()
         {
-            Molecule ttpr = MakeTetrakisTriphenylPhosphoranylRhodium();
-            MoleculeSignature molSig = new MoleculeSignature(ttpr);
-            //        string sigString = molSig.ToCanonicalString();
-            string sigString = molSig.SignatureStringForVertex(0);
+            var ttpr = MakeTetrakisTriphenylPhosphoranylRhodium();
+            var molSig = new MoleculeSignature(ttpr);
+            var sigString = molSig.SignatureStringForVertex(0);
             Console.Out.WriteLine(sigString);
         }
 
         [TestMethod()]
         public void TestMinimalMol()
         {
-            Molecule mol = MakeMinimalMultiRing(6, 3);
-            MoleculeSignature molSig = new MoleculeSignature(mol);
-            //        string sigString = molSig.ToCanonicalString();
+            var mol = MakeMinimalMultiRing(6, 3);
+            var molSig = new MoleculeSignature(mol);
             string sigString = molSig.SignatureStringForVertex(0);
             Console.Out.WriteLine(sigString);
-
             Console.Out.WriteLine(mol);
             Console.Out.WriteLine("result " + sigString);
         }
 
         public Molecule MakeChain(int length)
         {
-            Molecule chain = new Molecule();
+            var chain = new Molecule();
             int previous = -1;
             for (int i = 0; i < length; i++)
             {
@@ -152,8 +147,8 @@ namespace NCDK.FaulonSignatures.Chemistry
         public void TestLongChains()
         {
             int length = 10;
-            Molecule chain = MakeChain(length);
-            MoleculeSignature molSig = new MoleculeSignature(chain);
+            var chain = MakeChain(length);
+            var molSig = new MoleculeSignature(chain);
             string sigString = molSig.ToCanonicalString();
             Console.Out.WriteLine(sigString);
         }
@@ -161,22 +156,15 @@ namespace NCDK.FaulonSignatures.Chemistry
         public void DrawTrees(MoleculeQuotientGraph mqg, string directoryPath)
         {
             var signatureStrings = mqg.GetVertexSignatureStrings();
-            //int w = 1200;
-            //int h = 400;
-
-            //TreeDrawer.MakeTreeImages(signatureStrings, directoryPath, w, h);
             Trace.TraceWarning("TreeDrawer is not implemented yet.");
         }
 
         [TestMethod()]
         public void BuckyballTest()
         {
-            Molecule molecule = MoleculeReader.ReadMolfile("NCDK.FaulonSignatures.Data.buckyball.mol");
-            MoleculeQuotientGraph mqg = new MoleculeQuotientGraph(molecule);
+            var mol = MoleculeReader.ReadMolfile("NCDK.FaulonSignatures.Data.buckyball.mol");
+            var mqg = new MoleculeQuotientGraph(mol);
             Console.Out.WriteLine(mqg);
-
-            //        DrawTrees(mqg, "tmp");
-
             Assert.AreEqual(32, mqg.GetVertexCount());
             Assert.AreEqual(49, mqg.GetEdgeCount());
             Assert.AreEqual(6, mqg.NumberOfLoopEdges());
@@ -185,13 +173,12 @@ namespace NCDK.FaulonSignatures.Chemistry
         [TestMethod()]
         public void BuckyballWithoutMultipleBonds()
         {
-            Molecule molecule = MoleculeReader.ReadMolfile("NCDK.FaulonSignatures.Data.buckyball.mol");
-            foreach (Molecule.Bond bond in molecule.Bonds())
+            var mol = MoleculeReader.ReadMolfile("NCDK.FaulonSignatures.Data.buckyball.mol");
+            foreach (Molecule.Bond bond in mol.Bonds())
             {
                 bond.order = Molecule.BondOrder.Single;
             }
-            MoleculeQuotientGraph mqg = new MoleculeQuotientGraph(molecule);
-            //        DrawTrees(mqg, "tmp3");
+            var mqg = new MoleculeQuotientGraph(mol);
             Console.Out.WriteLine(mqg);
             Assert.AreEqual(1, mqg.GetVertexCount());
             Assert.AreEqual(1, mqg.GetEdgeCount());
@@ -201,17 +188,13 @@ namespace NCDK.FaulonSignatures.Chemistry
         [TestMethod()]
         public void FaulonsBuckySignatures()
         {
-            Molecule mol = MoleculeReader.ReadMolfile("data/buckyball.mol");
+            var mol = MoleculeReader.ReadMolfile("data/buckyball.mol");
             try
             {
-                //            string filename = "data/buckysigs.txt";
-                string filename = "data/buckysigs3.txt";
+                var filename = "data/buckysigs3.txt";
                 var sigs = ReadSigs2(filename);
-                MoleculeQuotientGraph mqg = new MoleculeQuotientGraph(mol, sigs);
+                var mqg = new MoleculeQuotientGraph(mol, sigs);
                 Console.Out.WriteLine(mqg);
-
-                //            DrawTrees(mqg, "tmp2");
-
                 Assert.AreEqual(32, mqg.GetVertexCount());
                 Assert.AreEqual(49, mqg.GetEdgeCount());
                 Assert.AreEqual(6, mqg.NumberOfLoopEdges());
@@ -231,9 +214,9 @@ namespace NCDK.FaulonSignatures.Chemistry
                 var sigs = new List<string>();
                 while ((line = reader.ReadLine()) != null)
                 {
-                    int index = line.IndexOf(" ") + 1;
-                    int count = int.Parse(line.Substring(0, index - 1));
-                    string sig = line.Substring(index);
+                    var index = line.IndexOf(" ") + 1;
+                    var count = int.Parse(line.Substring(0, index - 1));
+                    var sig = line.Substring(index);
                     Console.Out.WriteLine(count);
                     sigs.Add(sig);
                 }
@@ -249,8 +232,8 @@ namespace NCDK.FaulonSignatures.Chemistry
                 var sigs = new List<string>();
                 while ((line = reader.ReadLine()) != null)
                 {
-                    string[] bits = Strings.Tokenize(line).ToArray();
-                    string sig = bits[3];
+                    var bits = Strings.Tokenize(line).ToArray();
+                    var sig = bits[3];
                     sigs.Add(sig);
                 }
                 reader.Close();

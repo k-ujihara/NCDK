@@ -132,11 +132,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     // we assume that UNSET is equivalent to 0 implicit H's
                     var hcount = container.Atoms[i].ImplicitHydrogenCount;
-                    if (hcount != null) atomCount += hcount.Value;
+                    if (hcount != null)
+                        atomCount += hcount.Value;
                 }
                 atomCount += container.Atoms.Count;
             }
-            else if (string.Equals(elementName, "H", StringComparison.Ordinal))
+            else if (elementName.Equals("H", StringComparison.Ordinal))
             {
                 for (int i = 0; i < container.Atoms.Count; i++)
                 {

@@ -549,7 +549,7 @@ namespace NCDK.IO.CML
                     string symbol = (string)ElSym[i];
                     switch (symbol)
                     {
-                        case "Du":
+                        case"Du":
                         case "Dummy":
                             symbol = "R";
                             break;

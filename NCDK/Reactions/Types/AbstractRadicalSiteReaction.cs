@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Aromaticities;
+using NCDK.Config;
 using NCDK.Reactions.Types.Parameters;
 using NCDK.RingSearches;
 using NCDK.Tools;
@@ -80,10 +81,12 @@ namespace NCDK.Reactions.Types
                     hcg.GetSpheres(reactant, atomi, length, true);
                     foreach (var atoml in hcg.GetNodesInSphere(length))
                     {
-                        if (atoml != null && atoml.IsReactiveCenter
-                                && !atoml.IsInRing
-                                && (atoml.FormalCharge ?? 0) == 0
-                                && !atoml.Equals("H") && reactant.GetMaximumBondOrder(atoml) == BondOrder.Single)
+                        if (atoml != null 
+                         && atoml.IsReactiveCenter
+                         && !atoml.IsInRing
+                         && (atoml.FormalCharge ?? 0) == 0
+                         && !atoml.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H) 
+                         && reactant.GetMaximumBondOrder(atoml) == BondOrder.Single)
                         {
                             foreach (var atomR in reactant.GetConnectedAtoms(atoml))
                             {
@@ -91,8 +94,8 @@ namespace NCDK.Reactions.Types
                                     continue;
 
                                 if (reactant.GetBond(atomR, atoml).IsReactiveCenter
-                                        && atomR.IsReactiveCenter
-                                        && atomCheck(atomR))
+                                 && atomR.IsReactiveCenter
+                                 && atomCheck(atomR))
                                 {
                                     var atomList = new List<IAtom>
                                     {
@@ -105,10 +108,9 @@ namespace NCDK.Reactions.Types
                                         reactant.GetBond(atomR, atoml)
                                     };
 
-                                    IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewChemObjectSet<IAtomContainer>();
-
+                                    var moleculeSet = reactant.Builder.NewChemObjectSet<IAtomContainer>();
                                     moleculeSet.Add(reactant);
-                                    IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);
+                                    var reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);
                                     if (reaction == null)
                                         continue;
                                     else
@@ -124,7 +126,7 @@ namespace NCDK.Reactions.Types
         
         private static void SetActiveCenters(IAtomContainer reactant, int length, bool checkPrev, AtomCheck atomCheck)
         {
-            HOSECodeGenerator hcg = new HOSECodeGenerator();
+            var hcg = new HOSECodeGenerator();
             foreach (var atomi in reactant.Atoms)
             {
                 if (reactant.GetConnectedSingleElectrons(atomi).Count() == 1)
@@ -142,7 +144,7 @@ namespace NCDK.Reactions.Types
                         if (atoml != null 
                          && !atoml.IsInRing
                          && (atoml.FormalCharge ?? 0) == 0
-                         && !atoml.Symbol.Equals("H", StringComparison.Ordinal)
+                         && !atoml.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H)
                          && reactant.GetMaximumBondOrder(atoml) == BondOrder.Single)
                         {
                             foreach (var atomR in reactant.GetConnectedAtoms(atoml))

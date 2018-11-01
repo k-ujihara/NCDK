@@ -21,6 +21,7 @@ using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace NCDK.Formula.Rules
 {
@@ -109,22 +110,26 @@ namespace NCDK.Formula.Rules
             }
         }
 
+
+
         /// <summary>
         /// Get the number of other elements which affect to the calculation of the nominal mass.
         /// For example Fe, Co, Hg, Pt, As.
         /// </summary>
-        /// <param name="formula">The IMolecularFormula to analyze</param>
+        /// <param name="formula">The <see cref="IMolecularFormula"/> to analyze</param>
         /// <returns>Number of elements</returns>
         private static int GetOthers(IMolecularFormula formula)
         {
-            int number = 0;
-            string[] elements = { "Co", "Hg", "Pt", "As" };
-            for (int i = 0; i < elements.Length; i++)
-                number += MolecularFormulaManipulator.GetElementCount(formula,
-                        formula.Builder.NewElement(elements[i]));
-
-            return number;
+            return NominalMassAffectables.Sum(n => MolecularFormulaManipulator.GetElementCount(formula, n));
         }
+
+        private static readonly Config.ImmutableAtomType[] NominalMassAffectables = new Config.ImmutableAtomType[]
+        {
+            new Config.ImmutableAtomType(Silent.ChemObjectBuilder.Instance.NewAtom("Co")),
+            new Config.ImmutableAtomType(Silent.ChemObjectBuilder.Instance.NewAtom("Hg")),
+            new Config.ImmutableAtomType(Silent.ChemObjectBuilder.Instance.NewAtom("Pt")),
+            new Config.ImmutableAtomType(Silent.ChemObjectBuilder.Instance.NewAtom("As")),
+        };
 
         /// <summary>
         /// Determine if a integer is odd.

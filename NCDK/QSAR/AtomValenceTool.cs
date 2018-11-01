@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using System.Collections.Generic;
 
 namespace NCDK.QSAR
@@ -32,61 +33,61 @@ namespace NCDK.QSAR
     // @cdk.dictref valence, atom
     public static class AtomValenceTool
     {
-        private static Dictionary<string, int> valencesTable = new Dictionary<string, int>
+        private static readonly Dictionary<int, int> valencesTable = new Dictionary<int, int>
         {
-            { "H", 1 },
-            { "He", 8 },
-            { "Ne", 8 },
-            { "Ar", 8 },
-            { "Kr", 8 },
-            { "Xe", 8 },
-            { "Hg", 2 },
-            { "Rn", 8 },
-            { "Li", 1 },
-            { "Be", 2 },
-            { "B", 3 },
-            { "C", 4 },
-            { "N", 5 },
-            { "O", 6 },
-            { "F", 7 },
-            { "Na", 1 },
-            { "Mg", 2 },
-            { "Al", 3 },
-            { "Si", 4 },
-            { "P", 5 },
-            { "S", 6 },
-            { "Cl", 7 },
-            { "K", 1 },
-            { "Ca", 2 },
-            { "Ga", 3 },
-            { "Ge", 4 },
-            { "As", 5 },
-            { "Se", 6 },
-            { "Br", 7 },
-            { "Rb", 1 },
-            { "Sr", 2 },
-            { "In", 3 },
-            { "Sn", 4 },
-            { "Sb", 5 },
-            { "Te", 6 },
-            { "I", 7 },
-            { "Cs", 1 },
-            { "Ba", 2 },
-            { "Tl", 3 },
-            { "Pb", 4 },
-            { "Bi", 5 },
-            { "Po", 6 },
-            { "At", 7 },
-            { "Fr", 1 },
-            { "Ra", 2 },
-            { "Cu", 2 },
-            { "Mn", 2 },
-            { "Co", 2 }
+            { ChemicalElement.AtomicNumbers.H, 1 },
+            { ChemicalElement.AtomicNumbers.He, 8 },
+            { ChemicalElement.AtomicNumbers.Ne, 8 },
+            { ChemicalElement.AtomicNumbers.Ar, 8 },
+            { ChemicalElement.AtomicNumbers.Kr, 8 },
+            { ChemicalElement.AtomicNumbers.Xe, 8 },
+            { ChemicalElement.AtomicNumbers.Hg, 2 },
+            { ChemicalElement.AtomicNumbers.Rn, 8 },
+            { ChemicalElement.AtomicNumbers.Li, 1 },
+            { ChemicalElement.AtomicNumbers.Be, 2 },
+            { ChemicalElement.AtomicNumbers.B, 3 },
+            { ChemicalElement.AtomicNumbers.C, 4 },
+            { ChemicalElement.AtomicNumbers.N, 5 },
+            { ChemicalElement.AtomicNumbers.O, 6 },
+            { ChemicalElement.AtomicNumbers.F, 7 },
+            { ChemicalElement.AtomicNumbers.Na, 1 },
+            { ChemicalElement.AtomicNumbers.Mg, 2 },
+            { ChemicalElement.AtomicNumbers.Al, 3 },
+            { ChemicalElement.AtomicNumbers.Si, 4 },
+            { ChemicalElement.AtomicNumbers.P, 5 },
+            { ChemicalElement.AtomicNumbers.S, 6 },
+            { ChemicalElement.AtomicNumbers.Cl, 7 },
+            { ChemicalElement.AtomicNumbers.K, 1 },
+            { ChemicalElement.AtomicNumbers.Ca, 2 },
+            { ChemicalElement.AtomicNumbers.Ga, 3 },
+            { ChemicalElement.AtomicNumbers.Ge, 4 },
+            { ChemicalElement.AtomicNumbers.As, 5 },
+            { ChemicalElement.AtomicNumbers.Se, 6 },
+            { ChemicalElement.AtomicNumbers.Br, 7 },
+            { ChemicalElement.AtomicNumbers.Rb, 1 },
+            { ChemicalElement.AtomicNumbers.Sr, 2 },
+            { ChemicalElement.AtomicNumbers.In, 3 },
+            { ChemicalElement.AtomicNumbers.Sn, 4 },
+            { ChemicalElement.AtomicNumbers.Sb, 5 },
+            { ChemicalElement.AtomicNumbers.Te, 6 },
+            { ChemicalElement.AtomicNumbers.I, 7 },
+            { ChemicalElement.AtomicNumbers.Cs, 1 },
+            { ChemicalElement.AtomicNumbers.Ba, 2 },
+            { ChemicalElement.AtomicNumbers.Tl, 3 },
+            { ChemicalElement.AtomicNumbers.Pb, 4 },
+            { ChemicalElement.AtomicNumbers.Bi, 5 },
+            { ChemicalElement.AtomicNumbers.Po, 6 },
+            { ChemicalElement.AtomicNumbers.At, 7 },
+            { ChemicalElement.AtomicNumbers.Fr, 1 },
+            { ChemicalElement.AtomicNumbers.Ra, 2 },
+            { ChemicalElement.AtomicNumbers.Cu, 2 },
+            { ChemicalElement.AtomicNumbers.Mn, 2 },
+            { ChemicalElement.AtomicNumbers.Co, 2 }
         };
 
         public static int GetValence(IAtom atom)
         {
-            if (!valencesTable.TryGetValue(atom.Symbol, out int ret))
+            if (!valencesTable.TryGetValue(atom.AtomicNumber.Value, out int ret))
                 throw new NoSuchAtomException();
             return ret;
         }

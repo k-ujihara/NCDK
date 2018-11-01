@@ -53,7 +53,7 @@ namespace NCDK.IO.InChI
                 {
                     var symbol = match.Groups[1].Value;
                     Debug.WriteLine($"Atom symbol: {symbol}");
-                    if (string.Equals(symbol, "H", StringComparison.Ordinal))
+                    if (symbol.Equals("H", StringComparison.Ordinal))
                     {
                         // don't add explicit hydrogens
                     }

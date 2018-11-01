@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using System;
 using System.Collections.Generic;
 
@@ -68,12 +69,13 @@ namespace NCDK.AtomTypes
                 int NumAromaticBondsTotal2 = 0;
 
                 string element = atom.Symbol;
+                var n = atom.AtomicNumber;
 
                 var attachedAtoms = atomContainer.GetConnectedAtoms(atom);
                 foreach (var attached in attachedAtoms)
                 {
-                    IBond b = atomContainer.GetBond(atom, attached);
-                    if (string.Equals(attached.Symbol, "H", StringComparison.Ordinal)) NumHAtoms++;
+                    var b = atomContainer.GetBond(atom, attached);
+                    if (attached.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H)) NumHAtoms++;
 
                     if (atom.IsAromatic && attached.IsAromatic)
                     {
@@ -82,7 +84,7 @@ namespace NCDK.AtomTypes
                         if (SameRing)
                         {
                             NumAromaticBonds2++;
-                            if (string.Equals(element, "N", StringComparison.Ordinal))
+                            if (n.Equals(ChemicalElement.AtomicNumbers.N))
                             {
                                 if (b.Order == BondOrder.Single) NumAromaticBondsTotal2++;
                                 if (b.Order == BondOrder.Double)
@@ -95,7 +97,6 @@ namespace NCDK.AtomTypes
                             if (b.Order == BondOrder.Double) NumDoubleBonds2++;
                             if (b.Order == BondOrder.Triple) NumTripleBonds2++;
                         }
-
                     }
                     else
                     {
@@ -146,8 +147,8 @@ namespace NCDK.AtomTypes
 
                 atomType = atom.Builder.NewAtomType(fragment, atom.Symbol);
                 atomType.FormalCharge = atom.FormalCharge;
-                if (atom.IsAromatic) atomType.IsAromatic = true;
-
+                if (atom.IsAromatic)
+                    atomType.IsAromatic = true;
             }
             catch (Exception e)
             {
@@ -159,12 +160,14 @@ namespace NCDK.AtomTypes
 
         public static bool InSameAromaticRing(IAtomContainer m, IAtom atom1, IAtom atom2, IRingSet rs)
         {
-            if (rs == null) return false;
+            if (rs == null)
+                return false;
             foreach (var r in rs)
             {
                 if (r.Contains(atom1) && r.Contains(atom2))
                 {
-                    if (IsAromaticRing(r)) return (true);
+                    if (IsAromaticRing(r))
+                        return true;
                 }
             }
             return false;
@@ -173,9 +176,10 @@ namespace NCDK.AtomTypes
         static bool IsAromaticRing(IRing ring)
         {
             for (int i = 0; i < ring.Atoms.Count; i++)
-                if (!ring.Atoms[i].IsAromatic) return (false);
+                if (!ring.Atoms[i].IsAromatic)
+                    return false;
 
-            return (true);
+            return true;
         }
     }
 }

@@ -21,6 +21,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
+
 namespace NCDK.Dict
 {
     /// <summary>
@@ -106,24 +108,24 @@ namespace NCDK.Dict
             element.SetProperty(prefix + ":field:symbol", "chemical:atomSymbol");
             element.SetProperty(prefix + ":field:atomicNumber", "chemical:atomicNumber");
 
-            switch (element.Symbol)
+            switch (element.AtomicNumber)
             {
-                case "C":
+                case ChemicalElement.AtomicNumbers.C:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:carbon");
                     break;
-                case "N":
+                case ChemicalElement.AtomicNumbers.N:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:nitrogen");
                     break;
-                case "O":
+                case ChemicalElement.AtomicNumbers.O:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:oxygen");
                     break;
-                case "H":
+                case ChemicalElement.AtomicNumbers.H:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:hydrogen");
                     break;
-                case "S":
+                case ChemicalElement.AtomicNumbers.S:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:sulphur");
                     break;
-                case "P":
+                case ChemicalElement.AtomicNumbers.P:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:phosphorus");
                     break;
                 default:

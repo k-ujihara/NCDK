@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.Numerics;
 using System;
 using System.Linq;
@@ -86,11 +87,11 @@ namespace NCDK.Geometries
                 int nwanted = nLigands;
                 var elementType = refAtom.Symbol;
                 // try to deal with lone pairs on small hetero
-                switch (elementType)
+                switch (refAtom.AtomicNumber)
                 {
-                    case "N":
-                    case "O":
-                    case "S":
+                    case ChemicalElement.AtomicNumbers.N:
+                    case ChemicalElement.AtomicNumbers.O:
+                    case ChemicalElement.AtomicNumbers.S:
                         nwanted = 3;
                         break;
                 }

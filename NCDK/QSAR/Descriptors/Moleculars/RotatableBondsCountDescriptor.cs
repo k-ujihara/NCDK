@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
@@ -134,7 +135,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 var atom0 = bond.Atoms[0];
                 var atom1 = bond.Atoms[1];
-                if (atom0.Symbol.Equals("H", StringComparison.Ordinal) || atom1.Symbol.Equals("H", StringComparison.Ordinal))
+                if (atom0.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H) || atom1.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                     continue;
                 if (bond.Order == BondOrder.Single)
                 {
@@ -182,11 +183,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>if both partners are involved in an amide C-N bond</returns>
         private static bool IsAmide(IAtom atom0, IAtom atom1, IAtomContainer ac)
         {
-            if (atom0.Symbol.Equals("C", StringComparison.Ordinal) && atom1.Symbol.Equals("N", StringComparison.Ordinal))
+            if (atom0.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.C) && atom1.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N))
             {
                 foreach (var neighbor in ac.GetConnectedAtoms(atom0))
                 {
-                    if (neighbor.Symbol.Equals("O", StringComparison.Ordinal)
+                    if (neighbor.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O)
                      && ac.GetBond(atom0, neighbor).Order == BondOrder.Double)
                     {
                         return true;
@@ -201,7 +202,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var connectedAtoms = atomContainer.GetConnectedAtoms(atom);
             int n = 0;
             foreach (var anAtom in connectedAtoms)
-                if (string.Equals(anAtom.Symbol, "H", StringComparison.Ordinal))
+                if (anAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                     n++;
             return n;
         }

@@ -17,6 +17,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Common.Primitives;
+using NCDK.Config;
 using NCDK.QSAR.Results;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
@@ -140,12 +141,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>True, if it belongs</returns>
         internal static bool FamilyHalogen(IAtom atom)
         {
-            switch (atom.Symbol)
+            switch (atom.AtomicNumber)
             {
-                case "F":
-                case "Cl":
-                case "Br":
-                case "I":
+                case ChemicalElement.AtomicNumbers.F:
+                case ChemicalElement.AtomicNumbers.Cl:
+                case ChemicalElement.AtomicNumbers.Br:
+                case ChemicalElement.AtomicNumbers.I:
                     return true;
                 default:
                     return false;

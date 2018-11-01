@@ -702,7 +702,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTChirality node, object data)
         {
-            ChiralityAtom atom = new ChiralityAtom(builder)
+            var atom = new ChiralityAtom(builder)
             {
                 IsClockwise = node.IsClockwise,
                 IsUnspecified = node.IsUnspecified
@@ -713,10 +713,10 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTLowAndExpression node, object data)
         {
-            IAtom expr = (IAtom)node.JjtGetChild(0).JjtAccept(this, data);
+            var expr = (IAtom)node.JjtGetChild(0).JjtAccept(this, data);
             if (node.JjtGetNumChildren() > 1)
             {
-                IQueryAtom right = (IQueryAtom)node.JjtGetChild(1).JjtAccept(this, data);
+                var right = (IQueryAtom)node.JjtGetChild(1).JjtAccept(this, data);
                 expr = LogicalOperatorAtom.And((IQueryAtom)expr, right);
             }
             if (node.GetMapIdx() > 0)
@@ -731,7 +731,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 return left;
             }
-            IQueryAtom right = (IQueryAtom)node.JjtGetChild(1).JjtAccept(this, data);
+            var right = (IQueryAtom)node.JjtGetChild(1).JjtAccept(this, data);
             return LogicalOperatorAtom.Or((IQueryAtom)left, right);
         }
 
@@ -752,7 +752,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 return left;
             }
-            IQueryAtom right = (IQueryAtom)node.JjtGetChild(1).JjtAccept(this, data);
+            var right = (IQueryAtom)node.JjtGetChild(1).JjtAccept(this, data);
             return LogicalOperatorAtom.And((IQueryAtom)left, right);
         }
 
@@ -763,14 +763,14 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 return left;
             }
-            IQueryAtom right = (IQueryAtom)node.JjtGetChild(1).JjtAccept(this, data);
+            var right = (IQueryAtom)node.JjtGetChild(1).JjtAccept(this, data);
             return LogicalOperatorAtom.And((IQueryAtom)left, right);
         }
 
         public object Visit(ASTExplicitAtom node, object data)
         {
             IQueryAtom atom = null;
-            string symbol = node.Symbol;
+            var symbol = node.Symbol;
             switch (symbol)
             {
                 case "*":
@@ -789,7 +789,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 case "p":
                 case "as":
                 case "se":
-                    string atomSymbol = symbol.Substring(0, 1).ToUpperInvariant() + symbol.Substring(1);
+                    var atomSymbol = symbol.Substring(0, 1).ToUpperInvariant() + symbol.Substring(1);
                     atom = new AromaticSymbolAtom(atomSymbol, builder);
                     break;
                 case "H":

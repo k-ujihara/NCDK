@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+using NCDK.Config;
 using NCDK.Reactions.Types.Parameters;
 using System;
 using System.Collections.Generic;
@@ -98,7 +99,7 @@ namespace NCDK.Reactions.Types
                                         if (atomk.IsReactiveCenter
                                                 && (atomk.FormalCharge ?? 0) == 0
                                                 && !reactant.GetConnectedSingleElectrons(atomk).Any()
-                                                && atomk.Symbol.Equals("H", StringComparison.Ordinal)
+                                                && atomk.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H)
                                         )
                                         {
                                             var atomList = new List<IAtom>
@@ -164,7 +165,7 @@ namespace NCDK.Reactions.Types
                                         IAtom atomk = bondj.GetOther(atomj);
                                         if ((atomk.FormalCharge ?? 0) == 0
                                                 && !reactant.GetConnectedSingleElectrons(atomk).Any()
-                                                && atomk.Symbol.Equals("H", StringComparison.Ordinal)
+                                                && atomk.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H)
                                         )
                                         {
                                             atomi.IsReactiveCenter = true;

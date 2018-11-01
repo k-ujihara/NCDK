@@ -22,6 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.Dict;
 using NCDK.Geometries;
 using NCDK.Tools;
@@ -660,7 +661,7 @@ namespace NCDK.LibIO.CML
                     {
                         foreach (var atom in bond.Atoms)
                         {
-                            if (string.Equals("H", atom.Symbol, StringComparison.Ordinal) && atom != cdkAtom)
+                            if (ChemicalElement.AtomicNumbers.H.Equals(atom.AtomicNumber) && atom != cdkAtom)
                                 totalHydrogen++;
                         }
                     }

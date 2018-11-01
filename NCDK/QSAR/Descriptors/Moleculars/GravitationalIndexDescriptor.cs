@@ -159,7 +159,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     return GetDummyDescriptorValue(new CDKException("GravitationalIndex: Only handles 2 center bonds"));
                 }
 
-                if (b.Atoms[0].Symbol.Equals("H", StringComparison.Ordinal) || b.Atoms[1].Symbol.Equals("H", StringComparison.Ordinal))
+                if (b.Atoms[0].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H) || b.Atoms[1].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                     continue;
 
                 mass1 = factory.GetMajorIsotope(b.Atoms[0].Symbol).MassNumber.Value;
@@ -183,7 +183,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var x = new List<int>();
             for (int i = 0; i < container.Atoms.Count; i++)
             {
-                if (!string.Equals(container.Atoms[i].Symbol, "H", StringComparison.Ordinal))
+                if (!container.Atoms[i].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                     x.Add(i);
             }
             var npair = x.Count * (x.Count - 1) / 2;

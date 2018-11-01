@@ -982,7 +982,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveHydrogensPreserveMultiplyBonded()
         {
-            IAtomContainer borane = new AtomContainer();
+            var borane = new AtomContainer();
             borane.Atoms.Add(borane.Builder.NewAtom("H"));
             borane.Atoms.Add(borane.Builder.NewAtom("H"));
             borane.Atoms.Add(borane.Builder.NewAtom("B"));
@@ -1001,7 +1001,7 @@ namespace NCDK.Tools.Manipulator
             borane.AddBond(borane.Atoms[5], borane.Atoms[7], BondOrder.Single);
             foreach (var atom in borane.Atoms)
                 atom.ImplicitHydrogenCount = 0;
-            IAtomContainer ac = AtomContainerManipulator.RemoveHydrogens(borane);
+            var ac = AtomContainerManipulator.RemoveHydrogens(borane);
 
             // Should be two connected Bs with H-count == 2 and two explicit Hs.
             Assert.AreEqual(4, ac.Atoms.Count, "incorrect atom count");
@@ -1011,7 +1011,7 @@ namespace NCDK.Tools.Manipulator
             int h = 0;
             for (int i = 0; i < ac.Atoms.Count; i++)
             {
-                IAtom atom = ac.Atoms[i];
+                var atom = ac.Atoms[i];
                 string sym = atom.Symbol;
                 switch (sym)
                 {
@@ -1021,8 +1021,8 @@ namespace NCDK.Tools.Manipulator
                         Assert.AreEqual(2, atom.ImplicitHydrogenCount.Value, "incorrect hydrogen count");
                         var nbs = ac.GetConnectedAtoms(atom).ToReadOnlyList();
                         Assert.AreEqual(2, nbs.Count, "incorrect connected count");
-                        Assert.AreEqual("H", ((IAtom)nbs[0]).Symbol, "incorrect bond");
-                        Assert.AreEqual("H", ((IAtom)nbs[1]).Symbol, "incorrect bond");
+                        Assert.AreEqual("H", (nbs[0]).Symbol, "incorrect bond");
+                        Assert.AreEqual("H", (nbs[1]).Symbol, "incorrect bond");
                         break;
                     case "H":
                         h++;

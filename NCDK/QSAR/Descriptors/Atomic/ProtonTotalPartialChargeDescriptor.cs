@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Charges;
+using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
@@ -114,7 +115,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int hydrogenNeighbors = 0;
             foreach (var neighboor in neighboors)
             {
-                if (string.Equals(neighboor.Symbol, "H", StringComparison.Ordinal))
+                if (neighboor.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                 {
                     hydrogenNeighbors++;
                     protonPartialCharge.Add(neighboor.Charge.Value);

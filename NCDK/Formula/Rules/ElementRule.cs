@@ -95,7 +95,7 @@ namespace NCDK.Formula.Rules
             foreach (var element in MolecularFormulaManipulator.Elements(formula))
             {
                 int occur = MolecularFormulaManipulator.GetElementCount(formula, element);
-                IIsotope elemIsotope = formula.Builder.NewIsotope(element.Symbol);
+                var elemIsotope = formula.Builder.NewIsotope(element.Symbol);
                 if ((occur < mfRange.GetIsotopeCountMin(elemIsotope)) || (occur > mfRange.GetIsotopeCountMax(elemIsotope)))
                 {
                     isValid = 0.0;

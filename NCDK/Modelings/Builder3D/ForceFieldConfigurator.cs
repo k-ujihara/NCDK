@@ -22,6 +22,7 @@
  */
 
 using NCDK.Aromaticities;
+using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
@@ -344,10 +345,10 @@ namespace NCDK.Modelings.Builder3D
             {
                 for (int i = 0; i < ac.Atoms.Count; i++)
                 {
-                    switch (ac.Atoms[i].Symbol)
+                    switch (ac.Atoms[i].AtomicNumber)
                     {
-                        case "H":
-                        case "C":
+                        case ChemicalElement.AtomicNumbers.H:
+                        case ChemicalElement.AtomicNumbers.C:
                             break;
                         default:
                             return true;

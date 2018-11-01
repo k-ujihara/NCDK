@@ -564,12 +564,12 @@ namespace NCDK.Smiles
                 atom = mol.Atoms[f];
                 bondCount = mol.GetBondOrderSum(atom);
                 int correction = (int)(bondCount - (atom.Charge ?? 0));
-                switch (atom.Symbol)
+                switch (atom.AtomicNumber)
                 {
-                    case "C":
+                    case ChemicalElement.AtomicNumbers.C:
                         atom.ImplicitHydrogenCount = 4 - correction;
                         break;
-                    case "N":
+                    case ChemicalElement.AtomicNumbers.N:
                         atom.ImplicitHydrogenCount = 3 - correction;
                         break;
                 }

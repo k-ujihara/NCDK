@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
@@ -117,12 +118,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             //atomloop:
             for (int atomIndex = 0; atomIndex < ac.Atoms.Count; atomIndex++)
             {
-                var atom = (IAtom)ac.Atoms[atomIndex];
+                var atom = ac.Atoms[atomIndex];
                 // checking for O and N atoms where the formal charge is >= 0
-                switch (atom.Symbol)
+                switch (atom.AtomicNumber)
                 {
-                    case "O":
-                    case "N":
+                    case ChemicalElement.AtomicNumbers.O:
+                    case ChemicalElement.AtomicNumbers.N:
                         if (atom.FormalCharge >= 0)
                         {
                             // implicit hydrogens
@@ -136,7 +137,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             var neighbours = ac.GetConnectedAtoms(atom);
                             foreach (var neighbour in neighbours)
                             {
-                                if ((neighbour).Symbol.Equals("H", StringComparison.Ordinal))
+                                if ((neighbour).AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                                 {
                                     hBondDonors++;
                                     goto continue_atomloop;

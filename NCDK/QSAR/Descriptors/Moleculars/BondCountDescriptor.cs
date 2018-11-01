@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
@@ -131,7 +132,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     bool hasHydrogen = false;
                     for (int i = 0; i < bond.Atoms.Count; i++)
                     {
-                        if (string.Equals(bond.Atoms[i].Symbol, "H", StringComparison.Ordinal))
+                        if (bond.Atoms[i].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                         {
                             hasHydrogen = true;
                             break;

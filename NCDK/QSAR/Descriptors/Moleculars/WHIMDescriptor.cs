@@ -19,6 +19,7 @@
 
 using MathNet.Numerics.LinearAlgebra;
 using NCDK.Common.Collections;
+using NCDK.Config;
 using NCDK.Geometries;
 using NCDK.QSAR.Results;
 using System;
@@ -113,10 +114,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     public class WHIMDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         string type = "";
-        private readonly Dictionary<string, double> hashatwt;
-        private readonly Dictionary<string, double> hashvdw;
-        private readonly Dictionary<string, double> hasheneg;
-        private readonly Dictionary<string, double> hashpol;
+        private readonly Dictionary<int, double> hashatwt;
+        private readonly Dictionary<int, double> hashvdw;
+        private readonly Dictionary<int, double> hasheneg;
+        private readonly Dictionary<int, double> hashpol;
 
         public WHIMDescriptor()
         {
@@ -124,96 +125,96 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             // set up the values from TOD98
 
-            this.hashatwt = new Dictionary<string, double>
+            this.hashatwt = new Dictionary<int, double>
             {
-                ["H"] = 0.084,
-                ["B"] = 0.900,
-                ["C"] = 1.000,
-                ["N"] = 1.166,
-                ["O"] = 1.332,
-                ["F"] = 1.582,
-                ["Al"] = 2.246,
-                ["Si"] = 2.339,
-                ["P"] = 2.579,
-                ["S"] = 2.670,
-                ["Cl"] = 2.952,
-                ["Fe"] = 4.650,
-                ["Co"] = 4.907,
-                ["Ni"] = 4.887,
-                ["Cu"] = 5.291,
-                ["Zn"] = 5.445,
-                ["Br"] = 6.653,
-                ["Sn"] = 9.884,
-                ["I"] = 10.566
+                [ChemicalElement.AtomicNumbers.H] = 0.084,
+                [ChemicalElement.AtomicNumbers.B] = 0.900,
+                [ChemicalElement.AtomicNumbers.C] = 1.000,
+                [ChemicalElement.AtomicNumbers.N] = 1.166,
+                [ChemicalElement.AtomicNumbers.O] = 1.332,
+                [ChemicalElement.AtomicNumbers.F] = 1.582,
+                [ChemicalElement.AtomicNumbers.Al] = 2.246,
+                [ChemicalElement.AtomicNumbers.Si] = 2.339,
+                [ChemicalElement.AtomicNumbers.P] = 2.579,
+                [ChemicalElement.AtomicNumbers.S] = 2.670,
+                [ChemicalElement.AtomicNumbers.Cl] = 2.952,
+                [ChemicalElement.AtomicNumbers.Fe] = 4.650,
+                [ChemicalElement.AtomicNumbers.Co] = 4.907,
+                [ChemicalElement.AtomicNumbers.Ni] = 4.887,
+                [ChemicalElement.AtomicNumbers.Cu] = 5.291,
+                [ChemicalElement.AtomicNumbers.Zn] = 5.445,
+                [ChemicalElement.AtomicNumbers.Br] = 6.653,
+                [ChemicalElement.AtomicNumbers.Sn] = 9.884,
+                [ChemicalElement.AtomicNumbers.I] = 10.566,
             };
 
-            this.hashvdw = new Dictionary<string, double>
+            this.hashvdw = new Dictionary<int, double>
             {
-                ["H"] = 0.299,
-                ["B"] = 0.796,
-                ["C"] = 1.000,
-                ["N"] = 0.695,
-                ["O"] = 0.512,
-                ["F"] = 0.410,
-                ["Al"] = 1.626,
-                ["Si"] = 1.424,
-                ["P"] = 1.181,
-                ["S"] = 1.088,
-                ["Cl"] = 1.035,
-                ["Fe"] = 1.829,
-                ["Co"] = 1.561,
-                ["Ni"] = 0.764,
-                ["Cu"] = 0.512,
-                ["Zn"] = 1.708,
-                ["Br"] = 1.384,
-                ["Sn"] = 2.042,
-                ["I"] = 1.728
+                [ChemicalElement.AtomicNumbers.H] = 0.299,
+                [ChemicalElement.AtomicNumbers.B] = 0.796,
+                [ChemicalElement.AtomicNumbers.C] = 1.000,
+                [ChemicalElement.AtomicNumbers.N] = 0.695,
+                [ChemicalElement.AtomicNumbers.O] = 0.512,
+                [ChemicalElement.AtomicNumbers.F] = 0.410,
+                [ChemicalElement.AtomicNumbers.Al] = 1.626,
+                [ChemicalElement.AtomicNumbers.Si] = 1.424,
+                [ChemicalElement.AtomicNumbers.P] = 1.181,
+                [ChemicalElement.AtomicNumbers.S] = 1.088,
+                [ChemicalElement.AtomicNumbers.Cl] = 1.035,
+                [ChemicalElement.AtomicNumbers.Fe] = 1.829,
+                [ChemicalElement.AtomicNumbers.Co] = 1.561,
+                [ChemicalElement.AtomicNumbers.Ni] = 0.764,
+                [ChemicalElement.AtomicNumbers.Cu] = 0.512,
+                [ChemicalElement.AtomicNumbers.Zn] = 1.708,
+                [ChemicalElement.AtomicNumbers.Br] = 1.384,
+                [ChemicalElement.AtomicNumbers.Sn] = 2.042,
+                [ChemicalElement.AtomicNumbers.I] = 1.728,
             };
 
-            this.hasheneg = new Dictionary<string, double>
+            this.hasheneg = new Dictionary<int, double>
             {
-                ["H"] = 0.944,
-                ["B"] = 0.828,
-                ["C"] = 1.000,
-                ["N"] = 1.163,
-                ["O"] = 1.331,
-                ["F"] = 1.457,
-                ["Al"] = 0.624,
-                ["Si"] = 0.779,
-                ["P"] = 0.916,
-                ["S"] = 1.077,
-                ["Cl"] = 1.265,
-                ["Fe"] = 0.728,
-                ["Co"] = 0.728,
-                ["Ni"] = 0.728,
-                ["Cu"] = 0.740,
-                ["Zn"] = 0.810,
-                ["Br"] = 1.172,
-                ["Sn"] = 0.837,
-                ["I"] = 1.012
+                [ChemicalElement.AtomicNumbers.H] = 0.944,
+                [ChemicalElement.AtomicNumbers.B] = 0.828,
+                [ChemicalElement.AtomicNumbers.C] = 1.000,
+                [ChemicalElement.AtomicNumbers.N] = 1.163,
+                [ChemicalElement.AtomicNumbers.O] = 1.331,
+                [ChemicalElement.AtomicNumbers.F] = 1.457,
+                [ChemicalElement.AtomicNumbers.Al] = 0.624,
+                [ChemicalElement.AtomicNumbers.Si] = 0.779,
+                [ChemicalElement.AtomicNumbers.P] = 0.916,
+                [ChemicalElement.AtomicNumbers.S] = 1.077,
+                [ChemicalElement.AtomicNumbers.Cl] = 1.265,
+                [ChemicalElement.AtomicNumbers.Fe] = 0.728,
+                [ChemicalElement.AtomicNumbers.Co] = 0.728,
+                [ChemicalElement.AtomicNumbers.Ni] = 0.728,
+                [ChemicalElement.AtomicNumbers.Cu] = 0.740,
+                [ChemicalElement.AtomicNumbers.Zn] = 0.810,
+                [ChemicalElement.AtomicNumbers.Br] = 1.172,
+                [ChemicalElement.AtomicNumbers.Sn] = 0.837,
+                [ChemicalElement.AtomicNumbers.I] = 1.012,
             };
 
-            this.hashpol = new Dictionary<string, double>
+            this.hashpol = new Dictionary<int, double>
             {
-                ["H"] = 0.379,
-                ["B"] = 1.722,
-                ["C"] = 1.000,
-                ["N"] = 0.625,
-                ["O"] = 0.456,
-                ["F"] = 0.316,
-                ["Al"] = 3.864,
-                ["Si"] = 3.057,
-                ["P"] = 2.063,
-                ["S"] = 1.648,
-                ["Cl"] = 1.239,
-                ["Fe"] = 4.773,
-                ["Co"] = 4.261,
-                ["Ni"] = 3.864,
-                ["Cu"] = 3.466,
-                ["Zn"] = 4.034,
-                ["Br"] = 1.733,
-                ["Sn"] = 4.375,
-                ["I"] = 3.040
+                [ChemicalElement.AtomicNumbers.H] = 0.379,
+                [ChemicalElement.AtomicNumbers.B] = 1.722,
+                [ChemicalElement.AtomicNumbers.C] = 1.000,
+                [ChemicalElement.AtomicNumbers.N] = 0.625,
+                [ChemicalElement.AtomicNumbers.O] = 0.456,
+                [ChemicalElement.AtomicNumbers.F] = 0.316,
+                [ChemicalElement.AtomicNumbers.Al] = 3.864,
+                [ChemicalElement.AtomicNumbers.Si] = 3.057,
+                [ChemicalElement.AtomicNumbers.P] = 2.063,
+                [ChemicalElement.AtomicNumbers.S] = 1.648,
+                [ChemicalElement.AtomicNumbers.Cl] = 1.239,
+                [ChemicalElement.AtomicNumbers.Fe] = 4.773,
+                [ChemicalElement.AtomicNumbers.Co] = 4.261,
+                [ChemicalElement.AtomicNumbers.Ni] = 3.864,
+                [ChemicalElement.AtomicNumbers.Cu] = 3.466,
+                [ChemicalElement.AtomicNumbers.Zn] = 4.034,
+                [ChemicalElement.AtomicNumbers.Br] = 1.733,
+                [ChemicalElement.AtomicNumbers.Sn] = 4.375,
+                [ChemicalElement.AtomicNumbers.I] = 3.040,
             };
         }
 
@@ -276,12 +277,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
-            int ndesc = DescriptorNames.Count;
-            ArrayResult<double> results = new ArrayResult<double>(ndesc);
+            var ndesc = DescriptorNames.Count;
+            var results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results,
-                    DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results, DescriptorNames, e);
         }
 
         /// <summary>
@@ -296,14 +296,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
 
             double sum = 0.0;
-            IAtomContainer ac = (IAtomContainer)container.Clone();
+            var ac = (IAtomContainer)container.Clone();
 
             // do aromaticity detecttion for calculating polarizability later on
             //HueckelAromaticityDetector had = new HueckelAromaticityDetector();
             //had.DetectAromaticity(ac);
 
             // get the coordinate matrix
-            double[][] cmat = Arrays.CreateJagged<double>(ac.Atoms.Count, 3);
+            var cmat = Arrays.CreateJagged<double>(ac.Atoms.Count, 3);
             for (int i = 0; i < ac.Atoms.Count; i++)
             {
                 var coords = ac.Atoms[i].Point3D.Value;
@@ -313,8 +313,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
 
             // set up the weight vector
-            IDictionary<string, double> hash = null;
-            double[] wt = new double[ac.Atoms.Count];
+            Dictionary<int, double> hash = null;
+            var wt = new double[ac.Atoms.Count];
 
             if (string.Equals(this.type, "unity", StringComparison.Ordinal))
             {
@@ -342,8 +342,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
                 for (int i = 0; i < ac.Atoms.Count; i++)
                 {
-                    string sym = ac.Atoms[i].Symbol;
-                    wt[i] = (Double)hash[sym];
+                    wt[i] = hash[ac.Atoms[i].AtomicNumber.Value];
                 }
             }
 
@@ -358,17 +357,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
 
             // directional WHIM's
-            double[] lambda = pcaobject.GetEigenvalues();
-            double[] gamma = new double[3];
-            double[] nu = new double[3];
-            double[] eta = new double[3];
+            var lambda = pcaobject.GetEigenvalues();
+            var gamma = new double[3];
+            var nu = new double[3];
+            var eta = new double[3];
 
             for (int i = 0; i < 3; i++)
                 sum += lambda[i];
             for (int i = 0; i < 3; i++)
                 nu[i] = lambda[i] / sum;
 
-            double[][] scores = pcaobject.GetScores();
+            var scores = pcaobject.GetScores();
             for (int i = 0; i < 3; i++)
             {
                 sum = 0.0;
@@ -388,7 +387,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     bool foundmatch = false;
                     for (int k = 0; k < ac.Atoms.Count; k++)
                     {
-                        if (k == j) continue;
+                        if (k == j)
+                            continue;
                         if (scores[j][i] == -1 * scores[k][i])
                         {
                             ns++;
@@ -398,16 +398,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     }
                     if (!foundmatch) na++;
                 }
-                double n = (double)ac.Atoms.Count;
+                var n = (double)ac.Atoms.Count;
                 gamma[i] = -1.0 * ((ns / n) * Math.Log(ns / n) / Math.Log(2.0) + (na / n) * Math.Log(1.0 / n) / Math.Log(2.0));
                 gamma[i] = 1.0 / (1.0 + gamma[i]);
                 //Debug.WriteLine("ns = "+ns+" na = "+na+"  gamma = "+gamma[i]);
             }
             {
                 // non directional WHIMS's
-                double t = lambda[0] + lambda[1] + lambda[2];
-                double a = lambda[0] * lambda[1] + lambda[0] * lambda[2] + lambda[1] * lambda[2];
-                double v = t + a + lambda[0] * lambda[1] * lambda[2];
+                var t = lambda[0] + lambda[1] + lambda[2];
+                var a = lambda[0] * lambda[1] + lambda[0] * lambda[2] + lambda[1] * lambda[2];
+                var v = t + a + lambda[0] * lambda[1] * lambda[2];
 
                 double k = 0.0;
                 sum = 0.0;
@@ -417,11 +417,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     k = (lambda[i] / sum) - (1.0 / 3.0);
                 k = k / (4.0 / 3.0);
 
-                double g = Math.Pow(gamma[0] * gamma[1] * gamma[2], 1.0 / 3.0);
-                double d = eta[0] + eta[1] + eta[2];
+                var g = Math.Pow(gamma[0] * gamma[1] * gamma[2], 1.0 / 3.0);
+                var d = eta[0] + eta[1] + eta[2];
 
                 // return all the stuff we calculated
-                ArrayResult<double> retval = new ArrayResult<double>(11 + 6)
+                var retval = new ArrayResult<double>(11 + 6)
                 {
                     lambda[0],
                     lambda[1],
@@ -473,7 +473,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
 
                 // make a copy of the coordinate matrix
-                double[][] d = Arrays.CreateJagged<double>(nrow, ncol);
+                var d = Arrays.CreateJagged<double>(nrow, ncol);
                 for (int i = 0; i < nrow; i++)
                 {
                     for (int j = 0; j < ncol; j++)
@@ -493,7 +493,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
 
                 // get the covariance matrix
-                double[][] covmat = Arrays.CreateJagged<double>(ncol, ncol);
+                var covmat = Arrays.CreateJagged<double>(ncol, ncol);
                 double sumwt = 0;
                 for (int i = 0; i < nrow; i++)
                     sumwt += wt[i];

@@ -56,23 +56,24 @@ namespace NCDK.IO
                 {
                     string symbol = match.Groups[1].Value;
                     Debug.WriteLine($"Atom symbol: {symbol}");
-                    if (string.Equals(symbol, "H", StringComparison.Ordinal))
+                    switch (symbol)
                     {
-                        // don't add explicit hydrogens
-                    }
-                    else
-                    {
-                        string occurenceStr = match.Groups[2].Value;
-                        int occurence = 1;
-                        if (!string.IsNullOrEmpty(occurenceStr))
-                        {
-                            occurence = int.Parse(occurenceStr, NumberFormatInfo.InvariantInfo);
-                        }
-                        Debug.WriteLine($"  occurence: {occurence}");
-                        for (int i = 1; i <= occurence; i++)
-                        {
-                            parsedContent.Atoms.Add(parsedContent.Builder.NewAtom(symbol));
-                        }
+                        case "H":
+                            // don't add explicit hydrogens
+                            break;
+                        default:
+                            string occurenceStr = match.Groups[2].Value;
+                            int occurence = 1;
+                            if (!string.IsNullOrEmpty(occurenceStr))
+                            {
+                                occurence = int.Parse(occurenceStr, NumberFormatInfo.InvariantInfo);
+                            }
+                            Debug.WriteLine($"  occurence: {occurence}");
+                            for (int i = 1; i <= occurence; i++)
+                            {
+                                parsedContent.Atoms.Add(parsedContent.Builder.NewAtom(symbol));
+                            }
+                            break;
                     }
                     remainder = match.Groups[3].Value;
                     if (remainder == null) remainder = "";

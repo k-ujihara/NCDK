@@ -19,6 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.Graphs.Matrix;
 using System;
 using System.Diagnostics;
@@ -138,7 +139,7 @@ namespace NCDK.Graphs.Invariant
                 }
 
                 //weightArray[k] = atom.GetValenceElectronsCount() - atom.GetHydrogenCount(); // method unfinished
-                if (string.Equals("O", atom.Symbol, StringComparison.Ordinal))
+                if (ChemicalElement.AtomicNumbers.O.Equals(atom.AtomicNumber))
                     weightArray[i] = 6 - atom.ImplicitHydrogenCount.Value;
                 else
                     weightArray[i] = 4 - atom.ImplicitHydrogenCount.Value;

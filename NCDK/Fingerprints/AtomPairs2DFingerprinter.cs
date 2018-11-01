@@ -5,7 +5,6 @@
  * Author: Lyle D. Burgoon, Ph.D. (lyle.d.burgoon@usace.army.mil)
  * 
  * This is the work of a US Government employee. This code is in the public domain.
- * 
  */
 
 using NCDK.Graphs;
@@ -25,7 +24,6 @@ namespace NCDK.Fingerprints
     // @cdk.keyword fingerprint
     // @cdk.keyword similarity
     // @cdk.module fingerprint
-    // @cdk.githash
     public class AtomPairs2DFingerprinter : AbstractFingerprinter, IFingerprinter
     {
         private const int MAX_DISTANCE = 10;
@@ -42,7 +40,7 @@ namespace NCDK.Fingerprints
                 {
                     for (int j = i; j < atypes.Length; j++)
                     {
-                        string key_name = dist + "_" + atypes[i] + "_" + atypes[j];
+                        string key_name = $"{dist}_{atypes[i]}_{atypes[j]}";
                         pathToBit[key_name] = pathToBit.Count;
                         bitToPath[bitToPath.Count] = key_name;
                     }
@@ -118,18 +116,15 @@ namespace NCDK.Fingerprints
         /// <returns></returns>
         private static string EncodeHalPath(int dist, IAtom a, IAtom b)
         {
-            return dist + "_" + (IsHalogen(a) ? "X" : a.Symbol) + "_" +
-                   (IsHalogen(b) ? "X" : b.Symbol);
+            return $"{dist}_{(IsHalogen(a) ? "X" : a.Symbol)}_{(IsHalogen(b) ? "X" : b.Symbol)}";
         }
 
         /// <summary>
         /// This performs the calculations used to generate the fingerprint 
         /// </summary>
-        /// <param name="paths"></param>
-        /// <param name="mol"></param>
         private static void Calculate(IList<string> paths, IAtomContainer mol)
         {
-            AllPairsShortestPaths apsp = new AllPairsShortestPaths(mol);
+            var apsp = new AllPairsShortestPaths(mol);
             int numAtoms = mol.Atoms.Count;
             for (int i = 0; i < numAtoms; i++)
             {
@@ -142,8 +137,8 @@ namespace NCDK.Fingerprints
                     int dist = apsp.From(i).GetDistanceTo(j);
                     if (dist > MAX_DISTANCE)
                         continue;
-                    IAtom beg = mol.Atoms[i];
-                    IAtom end = mol.Atoms[j];
+                    var beg = mol.Atoms[i];
+                    var end = mol.Atoms[j];
                     paths.Add(EncodePath(dist, beg, end));
                     paths.Add(EncodePath(dist, end, beg));
                     if (IsHalogen(mol.Atoms[i]) || IsHalogen(mol.Atoms[j]))
@@ -157,7 +152,7 @@ namespace NCDK.Fingerprints
 
         public override IBitFingerprint GetBitFingerprint(IAtomContainer container)
         {
-            BitArray fp = new BitArray(pathToBit.Count);
+            var fp = new BitArray(pathToBit.Count);
             var paths = new List<string>();
             Calculate(paths, container);
             foreach (string path in paths)

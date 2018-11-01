@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
@@ -90,15 +91,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double h = 0;
             foreach (var atom in container.Atoms)
             {
-                switch (atom.Symbol)
+                switch (atom.AtomicNumber)
                 {
                     default:
                         h++;
-                        goto case "C";
-                    case "C":
+                        goto case ChemicalElement.AtomicNumbers.C;
+                    case ChemicalElement.AtomicNumbers.C:
                         a++;
-                        goto case "H";
-                    case "H":
+                        goto case ChemicalElement.AtomicNumbers.H;
+                    case ChemicalElement.AtomicNumbers.H:
                         break;
                 }
             }

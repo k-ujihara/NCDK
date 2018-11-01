@@ -377,10 +377,9 @@ namespace NCDK.IO
                         label = "";
 
                     // firstly check if it's a numbered R group
-                    Match matcher = NUMERED_R_GROUP.Match(label);
+                    var matcher = NUMERED_R_GROUP.Match(label);
                     if (pseudoAtom.Symbol.Equals("R", StringComparison.Ordinal) && !string.IsNullOrEmpty(label) && matcher.Success)
                     {
-
                         line.Append("R# ");
                         if (rgroups == null)
                         {

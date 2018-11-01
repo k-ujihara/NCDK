@@ -780,11 +780,11 @@ namespace NCDK.Smiles.SMARTS.Parser
                         token_source.SwitchTo(SMARTSParserConstants.Default); rightBracket = token;
                         Token HToken = null;
                         // If the LowAndExpression is "[H]", change it to an ExplicitAtom
-                        if (string.Equals(firstToken.image, "H", StringComparison.Ordinal))
+                        if (firstToken.image.Equals("H", StringComparison.Ordinal))
                         {
                             HToken = firstToken;
                         }
-                        else if (massNode != null && massNode.Mass <= 3 && secondToken != null && string.Equals(secondToken.image, "H", StringComparison.Ordinal))
+                        else if (massNode != null && massNode.Mass <= 3 && secondToken != null && secondToken.image.Equals("H", StringComparison.Ordinal))
                         {
                             HToken = secondToken;
                         }

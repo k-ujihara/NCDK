@@ -467,11 +467,11 @@ namespace NCDK.Charges
                         if (!ati.Equals(ac))
                             for (int k = 0; k < ati.Bonds.Count; k++)
                             {
-                                IAtom a0 = ati.Bonds[k].Atoms[0];
-                                IAtom a1 = ati.Bonds[k].Atoms[1];
-                                if (!a0.Symbol.Equals("H", StringComparison.Ordinal) || !a1.Symbol.Equals("H", StringComparison.Ordinal))
+                                var a0 = ati.Bonds[k].Atoms[0];
+                                var a1 = ati.Bonds[k].Atoms[1];
+                                if (!a0.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H) || !a1.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                                     if ((a0.Id.Equals(ac.Bonds[i].Atoms[0].Id, StringComparison.Ordinal) && a1.Id.Equals(ac.Bonds[i].Atoms[1].Id, StringComparison.Ordinal))
-                                            || (a1.Id.Equals(ac.Bonds[i].Atoms[0].Id, StringComparison.Ordinal) && a0.Id.Equals(ac.Bonds[i].Atoms[1].Id, StringComparison.Ordinal)))
+                                     || (a1.Id.Equals(ac.Bonds[i].Atoms[0].Id, StringComparison.Ordinal) && a0.Id.Equals(ac.Bonds[i].Atoms[1].Id, StringComparison.Ordinal)))
                                     {
                                         if (a0.FormalCharge != 0 || a1.FormalCharge != 0)
                                             goto continue_out;
@@ -483,21 +483,22 @@ namespace NCDK.Charges
                     ac.Bonds[i].IsReactiveCenter = true;
                     found = true;
                 }
-                continue_out:
+            continue_out:
                 ;
             }
-            if (!found) return null;
+            if (!found)
+                return null;
 
             setOfReactants.Add(ac);
 
             var paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter
+            var param = new SetReactionCenter
             {
                 IsSetParameter = true
             };
             paramList.Add(param);
             type.ParameterList = paramList;
-            IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
+            var setOfReactions = type.Initiate(setOfReactants, null);
             for (int i = 0; i < setOfReactions.Count; i++)
             {
                 type = new HyperconjugationReaction();
@@ -632,100 +633,92 @@ namespace NCDK.Charges
         {
             //a,b,c,denom,chi,q
             double[][] gasteigerFactors = Arrays.CreateJagged<double>(setAc.Count, (setAc[0].Atoms.Count * (StepSize + 1)));
-            string AtomSymbol = "";
             double[] factors = new double[] { 0.0, 0.0, 0.0 };
             for (int k = 1; k < setAc.Count; k++)
             {
-                IAtomContainer ac = setAc[k];
+                var ac = setAc[k];
                 for (int i = 0; i < ac.Atoms.Count; i++)
                 {
                     factors[0] = 0.0;
                     factors[1] = 0.0;
                     factors[2] = 0.0;
-                    AtomSymbol = ac.Atoms[i].Symbol;
-                    if (string.Equals(AtomSymbol, "H", StringComparison.Ordinal))
+                    switch (ac.Atoms[i].AtomicNumber)
                     {
-                        factors[0] = 0.0;
-                        factors[1] = 0.0;
-                        factors[2] = 0.0;
-                    }
-                    else if (string.Equals(AtomSymbol, "C", StringComparison.Ordinal))
-                    {
-                        // if(ac.Atoms[i].GetFlag(ISCHANGEDFC))
-                        {
-                            factors[0] = 5.60;
-                            factors[1] = 8.93;
-                            factors[2] = 2.94;
-                        }
-                    }
-                    else if (string.Equals(AtomSymbol, "O", StringComparison.Ordinal))
-                    {
-                        if (ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Single)
-                        {
-                            factors[0] = 10.0;
+                        case ChemicalElement.AtomicNumbers.H:
+                            factors[0] = 0.0;
+                            factors[1] = 0.0;
+                            factors[2] = 0.0;
+                            break;
+                        case ChemicalElement.AtomicNumbers.C:
+                            // if(ac.Atoms[i].GetFlag(ISCHANGEDFC))
+                            {
+                                factors[0] = 5.60;
+                                factors[1] = 8.93;
+                                factors[2] = 2.94;
+                            }
+                            break;
+                        case ChemicalElement.AtomicNumbers.O:
+                            if (ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Single)
+                            {
+                                factors[0] = 10.0;
+                                factors[1] = 13.86;
+                                factors[2] = 9.68;
+                            }
+                            else
+                            {
+                                factors[0] = 7.91;
+                                factors[1] = 14.76;
+                                factors[2] = 6.85;
+                            }
+                            break;
+                        case ChemicalElement.AtomicNumbers.N:
+                            if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
+                            {
+                                factors[0] = 7.95;/* 7.95 */
+                                factors[1] = 9.73;/* 9.73 */
+                                factors[2] = 2.67;/* 2.67 */
+                            }
+                            else
+                            {
+                                factors[0] = 4.54;/* 4.54 *//* 5.5 */
+                                factors[1] = 11.86;/* 11.86 *//* 10.86 */
+                                factors[2] = 7.32;/* 7.32 *//* 7.99 */
+                            }
+                            break;
+                        case ChemicalElement.AtomicNumbers.S:
+                            if (ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Single)
+                            {
+                                factors[0] = 7.73;
+                                factors[1] = 8.16;
+                                factors[2] = 1.81;
+                            }
+                            else
+                            {
+                                factors[0] = 6.60;
+                                factors[1] = 10.32;
+                                factors[2] = 3.72;
+                            }
+                            break;
+                        case ChemicalElement.AtomicNumbers.F:
+                            factors[0] = 7.34;
                             factors[1] = 13.86;
                             factors[2] = 9.68;
-                        }
-                        else
-                        {
-                            factors[0] = 7.91;
-                            factors[1] = 14.76;
-                            factors[2] = 6.85;
-                        }
-                    }
-                    else if (string.Equals(AtomSymbol, "N", StringComparison.Ordinal))
-                    {
-                        if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
-                        {
-                            factors[0] = 7.95;/* 7.95 */
-                            factors[1] = 9.73;/* 9.73 */
-                            factors[2] = 2.67;/* 2.67 */
-                        }
-                        else
-                        {
-                            factors[0] = 4.54;/* 4.54 *//* 5.5 */
-                            factors[1] = 11.86;/* 11.86 *//* 10.86 */
-                            factors[2] = 7.32;/* 7.32 *//* 7.99 */
-                        }
-                    }
-                    else if (string.Equals(AtomSymbol, "S", StringComparison.Ordinal))
-                    {
-                        if (ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Single)
-                        {
-                            factors[0] = 7.73;
-                            factors[1] = 8.16;
-                            factors[2] = 1.81;
-                        }
-                        else
-                        {
-                            factors[0] = 6.60;
-                            factors[1] = 10.32;
-                            factors[2] = 3.72;
-                        }
-                    }
-                    else if (string.Equals(AtomSymbol, "F", StringComparison.Ordinal))
-                    {
-                        factors[0] = 7.34;
-                        factors[1] = 13.86;
-                        factors[2] = 9.68;
-                    }
-                    else if (string.Equals(AtomSymbol, "Cl", StringComparison.Ordinal))
-                    {
-                        factors[0] = 6.50;
-                        factors[1] = 11.02;
-                        factors[2] = 4.52;
-                    }
-                    else if (string.Equals(AtomSymbol, "Br", StringComparison.Ordinal))
-                    {
-                        factors[0] = 5.20;
-                        factors[1] = 9.68;
-                        factors[2] = 4.48;
-                    }
-                    else if (string.Equals(AtomSymbol, "I", StringComparison.Ordinal))
-                    {
-                        factors[0] = 4.95;
-                        factors[1] = 8.81;
-                        factors[2] = 3.86;
+                            break;
+                        case ChemicalElement.AtomicNumbers.Cl:
+                            factors[0] = 6.50;
+                            factors[1] = 11.02;
+                            factors[2] = 4.52;
+                            break;
+                        case ChemicalElement.AtomicNumbers.Br:
+                            factors[0] = 5.20;
+                            factors[1] = 9.68;
+                            factors[2] = 4.48;
+                            break;
+                        case ChemicalElement.AtomicNumbers.I:
+                            factors[0] = 4.95;
+                            factors[1] = 8.81;
+                            factors[2] = 3.86;
+                            break;
                     }
 
                     gasteigerFactors[k][StepSize * i + i] = factors[0];
@@ -756,7 +749,6 @@ namespace NCDK.Charges
         {
             //a,b,c,denom,chi,q
             double[][] gasteigerFactors = Arrays.CreateJagged<double>(setAc.Count, (setAc[0].Atoms.Count * (StepSize + 1)));
-            string AtomSymbol = "";
             double[] factors = new double[] { 0.0, 0.0, 0.0 };
             for (int k = 1; k < setAc.Count; k++)
             {
@@ -767,104 +759,98 @@ namespace NCDK.Charges
                     factors[0] = 0.0;
                     factors[1] = 0.0;
                     factors[2] = 0.0;
-                    AtomSymbol = ac.Atoms[i].Symbol;
-                    if (string.Equals(AtomSymbol, "H", StringComparison.Ordinal))
+                    switch (ac.Atoms[i].AtomicNumber)
                     {
-                        factors[0] = 0.0;
-                        factors[1] = 0.0;
-                        factors[2] = 0.0;
-                    }
-                    else if (string.Equals(AtomSymbol, "C", StringComparison.Ordinal))
-                    {
-                        factors[0] = 5.98;/* 5.98-5.60 */
-                        factors[1] = 7.93;/* 7.93-8.93 */
-                        factors[2] = 1.94;
-                    }
-                    else if (string.Equals(AtomSymbol, "O", StringComparison.Ordinal))
-                    {
-                        if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
-                        {
-                            factors[0] = 11.2;/* 11.2-10.0 */
-                            factors[1] = 13.24;/* 13.24-13.86 */
-                            factors[2] = 9.68;
-                        }
-                        else
-                        {
-                            factors[0] = 7.91;
-                            factors[1] = 14.76;
-                            factors[2] = 6.85;
-                        }
-                    }
-                    else if (string.Equals(AtomSymbol, "N", StringComparison.Ordinal))
-                    {
-                        if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
-                        {
+                        case ChemicalElement.AtomicNumbers.H:
+                            factors[0] = 0.0;
+                            factors[1] = 0.0;
+                            factors[2] = 0.0;
+                            break;
+                        case ChemicalElement.AtomicNumbers.C:
+                            factors[0] = 5.98;/* 5.98-5.60 */
+                            factors[1] = 7.93;/* 7.93-8.93 */
+                            factors[2] = 1.94;
+                            break;
+                        case ChemicalElement.AtomicNumbers.O:
+                            if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
+                            {
+                                factors[0] = 11.2;/* 11.2-10.0 */
+                                factors[1] = 13.24;/* 13.24-13.86 */
+                                factors[2] = 9.68;
+                            }
+                            else
+                            {
+                                factors[0] = 7.91;
+                                factors[1] = 14.76;
+                                factors[2] = 6.85;
+                            }
+                            break;
+                        case ChemicalElement.AtomicNumbers.N:
+                            if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
+                            {
 
-                            factors[0] = 8.95;/* 7.95 */
-                            factors[1] = 9.73;/* 9.73 */
-                            factors[2] = 2.67;/* 2.67 */
-                        }
-                        else
-                        {
-                            factors[0] = 4.54;
-                            factors[1] = 11.86;
-                            factors[2] = 7.32;
-                        }
-                    }
-                    else if (string.Equals(AtomSymbol, "P", StringComparison.Ordinal))
-                    {// <--No correct
-                        if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
-                        {
-                            factors[0] = 10.73;// <--No correct
-                            factors[1] = 11.16;// <--No correct
-                            factors[2] = 6.81;// <--No correct
-                        }
-                        else
-                        {
-                            factors[0] = 9.60;// <--No correct
-                            factors[1] = 13.32;// <--No correct
-                            factors[2] = 2.72;// <--No correct
-                        }
-                    }
-                    else if (string.Equals(AtomSymbol, "S", StringComparison.Ordinal))
-                    {
-                        if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
-                        {
+                                factors[0] = 8.95;/* 7.95 */
+                                factors[1] = 9.73;/* 9.73 */
+                                factors[2] = 2.67;/* 2.67 */
+                            }
+                            else
+                            {
+                                factors[0] = 4.54;
+                                factors[1] = 11.86;
+                                factors[2] = 7.32;
+                            }
+                            break;
+                        case ChemicalElement.AtomicNumbers.P:
+                            {// <--No correct
+                                if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
+                                {
+                                    factors[0] = 10.73;// <--No correct
+                                    factors[1] = 11.16;// <--No correct
+                                    factors[2] = 6.81;// <--No correct
+                                }
+                                else
+                                {
+                                    factors[0] = 9.60;// <--No correct
+                                    factors[1] = 13.32;// <--No correct
+                                    factors[2] = 2.72;// <--No correct
+                                }
+                            }
+                            break;
+                        case ChemicalElement.AtomicNumbers.S:
+                            if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
+                            {
 
-                            factors[0] = 7.73;
-                            factors[1] = 8.16;
-                            factors[2] = 1.81;
-                        }
-                        else
-                        {
-                            factors[0] = 6.60;
-                            factors[1] = 10.32;
-                            factors[2] = 3.72;
-                        }
-                    }
-                    else if (string.Equals(AtomSymbol, "F", StringComparison.Ordinal))
-                    {
-                        factors[0] = 7.14/* 7.34 */;
-                        factors[1] = 13.86;
-                        factors[2] = 5.68;
-                    }
-                    else if (string.Equals(AtomSymbol, "Cl", StringComparison.Ordinal))
-                    {
-                        factors[0] = 6.51;/* 6.50 */
-                        factors[1] = 11.02;
-                        factors[2] = 4.52;
-                    }
-                    else if (string.Equals(AtomSymbol, "Br", StringComparison.Ordinal))
-                    {
-                        factors[0] = 5.20;
-                        factors[1] = 9.68;
-                        factors[2] = 4.48;
-                    }
-                    else if (string.Equals(AtomSymbol, "I", StringComparison.Ordinal))
-                    {
-                        factors[0] = 4.95;
-                        factors[1] = 8.81;
-                        factors[2] = 3.86;
+                                factors[0] = 7.73;
+                                factors[1] = 8.16;
+                                factors[2] = 1.81;
+                            }
+                            else
+                            {
+                                factors[0] = 6.60;
+                                factors[1] = 10.32;
+                                factors[2] = 3.72;
+                            }
+                            break;
+                        case ChemicalElement.AtomicNumbers.F:
+                            factors[0] = 7.14/* 7.34 */;
+                            factors[1] = 13.86;
+                            factors[2] = 5.68;
+                            break;
+                        case ChemicalElement.AtomicNumbers.Cl:
+                            factors[0] = 6.51;/* 6.50 */
+                            factors[1] = 11.02;
+                            factors[2] = 4.52;
+                            break;
+                        case ChemicalElement.AtomicNumbers.Br:
+                            factors[0] = 5.20;
+                            factors[1] = 9.68;
+                            factors[2] = 4.48;
+                            break;
+                        case ChemicalElement.AtomicNumbers.I:
+                            factors[0] = 4.95;
+                            factors[1] = 8.81;
+                            factors[2] = 3.86;
+                            break;
                     }
 
                     gasteigerFactors[k][StepSize * i + i] = factors[0];

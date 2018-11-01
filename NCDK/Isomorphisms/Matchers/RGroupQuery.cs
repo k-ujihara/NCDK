@@ -110,7 +110,7 @@ namespace NCDK.Isomorphisms.Matchers
                     var atom = RootStructure.Atoms[i];
                     if (atom is IPseudoAtom rGroup)
                     {
-                        if (!string.Equals(rGroup.Label, "R", StringComparison.Ordinal)
+                        if (!rGroup.Label.Equals("R", StringComparison.Ordinal)
                                 && // just "R" is not a proper query atom
                                 rGroup.Label.StartsWithChar('R')
                                 && (rgroupNumber == null 

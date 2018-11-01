@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using NCDK.Numerics;
 using System.Diagnostics;
+using NCDK.Config;
 
 namespace NCDK.Modelings.Builder3D
 {
@@ -723,7 +724,7 @@ namespace NCDK.Modelings.Builder3D
         /// <returns><see langword="true"/> if the atom is heavy, typically non-hydrogen</returns>
         public virtual bool IsHeavyAtom(IAtom atom)
         {
-            return !string.Equals(atom.Symbol, "H", StringComparison.Ordinal);
+            return !atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H);
         }
     }
 }

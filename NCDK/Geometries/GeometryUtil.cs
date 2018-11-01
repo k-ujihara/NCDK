@@ -1515,13 +1515,13 @@ namespace NCDK.Geometries
             foreach (var firstAtomNumber in firstAtoms)
             {
                 secondAtomNumber = mappedAtoms[firstAtomNumber];
-                IAtom firstAtom = firstAtomContainer.Atoms[firstAtomNumber];
+                var firstAtom = firstAtomContainer.Atoms[firstAtomNumber];
                 if (hetAtomOnly)
                 {
-                    switch (firstAtom.Symbol)
+                    switch (firstAtom.AtomicNumber)
                     {
-                        case "H":
-                        case "C":
+                        case ChemicalElement.AtomicNumbers.H:
+                        case ChemicalElement.AtomicNumbers.C:
                             break;
                         default:
                             if (Coords3d)
@@ -1539,9 +1539,9 @@ namespace NCDK.Geometries
                 }
                 else
                 {
-                    switch (firstAtom.Symbol)
+                    switch (firstAtom.AtomicNumber)
                     {
-                        case "H":
+                        case ChemicalElement.AtomicNumbers.H:
                             break;
                         default:
                             if (Coords3d)

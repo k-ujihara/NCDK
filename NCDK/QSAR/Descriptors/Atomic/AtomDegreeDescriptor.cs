@@ -21,6 +21,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
@@ -77,7 +78,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             var neighboors = container.GetConnectedAtoms(atom);
             foreach (var neighboor in neighboors)
             {
-                if (!string.Equals(neighboor.Symbol, "H", StringComparison.Ordinal))
+                if (!neighboor.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                     atomDegree += 1;
             }
             return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(atomDegree), DescriptorNames);

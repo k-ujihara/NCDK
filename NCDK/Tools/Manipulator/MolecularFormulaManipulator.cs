@@ -71,7 +71,7 @@ namespace NCDK.Tools.Manipulator
             int count = 0;
             foreach (var isotope in formula.Isotopes)
             {
-                if (isotope.Symbol.Equals(element.Symbol, StringComparison.Ordinal))
+                if (isotope.AtomicNumber.Equals(element.AtomicNumber))
                     count += formula.GetCount(isotope);
             }
             return count;
@@ -1165,7 +1165,7 @@ namespace NCDK.Tools.Manipulator
         {
             foreach (var element in Elements(formula))
             {
-                if (!string.Equals(element.Symbol, "H", StringComparison.Ordinal))
+                if (!element.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                 {
                     yield return element;
                 }
@@ -1436,7 +1436,7 @@ namespace NCDK.Tools.Manipulator
 
             foreach (IIsotope iso in mf.Isotopes)
             {
-                if (string.Equals("H", iso.Symbol, StringComparison.Ordinal))
+                if (ChemicalElement.AtomicNumbers.H.Equals(iso.AtomicNumber))
                 {
                     var count = mf.GetCount(iso);
                     if (count < hcnt)

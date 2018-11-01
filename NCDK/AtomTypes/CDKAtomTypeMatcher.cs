@@ -115,153 +115,153 @@ namespace NCDK.AtomTypes
             {
                 return factory.GetAtomType("X");
             }
-            switch (atom.Symbol)
+            switch (atom.AtomicNumber)
             {
-                case "C":
+                case ChemicalElement.AtomicNumbers.C:
                     type = PerceiveCarbons(atomContainer, atom, searcher, connectedBonds);
                     break;
-                case "H":
+                case ChemicalElement.AtomicNumbers.H:
                     type = PerceiveHydrogens(atomContainer, atom, connectedBonds);
                     break;
-                case "O":
+                case ChemicalElement.AtomicNumbers.O:
                     type = PerceiveOxygens(atomContainer, atom, searcher, connectedBonds);
                     break;
-                case "N":
+                case ChemicalElement.AtomicNumbers.N:
                     type = PerceiveNitrogens(atomContainer, atom, searcher, connectedBonds);
                     break;
-                case "S":
+                case ChemicalElement.AtomicNumbers.S:
                     type = PerceiveSulphurs(atomContainer, atom, searcher, connectedBonds);
                     break;
-                case "P":
+                case ChemicalElement.AtomicNumbers.P:
                     type = PerceivePhosphors(atomContainer, atom, connectedBonds);
                     break;
-                case "Si":
+                case ChemicalElement.AtomicNumbers.Si:
                     type = PerceiveSilicon(atomContainer, atom);
                     break;
-                case "Li":
+                case ChemicalElement.AtomicNumbers.Li:
                     type = PerceiveLithium(atomContainer, atom);
                     break;
-                case "B":
+                case ChemicalElement.AtomicNumbers.B:
                     type = PerceiveBorons(atomContainer, atom);
                     break;
-                case "Be":
+                case ChemicalElement.AtomicNumbers.Be:
                     type = PerceiveBeryllium(atomContainer, atom);
                     break;
-                case "Cr":
+                case ChemicalElement.AtomicNumbers.Cr:
                     type = PerceiveChromium(atomContainer, atom);
                     break;
-                case "Se":
+                case ChemicalElement.AtomicNumbers.Se:
                     type = PerceiveSelenium(atomContainer, atom, connectedBonds);
                     break;
-                case "Mo":
+                case ChemicalElement.AtomicNumbers.Mo:
                     type = PerceiveMolybdenum(atomContainer, atom);
                     break;
-                case "Rb":
+                case ChemicalElement.AtomicNumbers.Rb:
                     type = PerceiveRubidium(atomContainer, atom);
                     break;
-                case "Te":
+                case ChemicalElement.AtomicNumbers.Te:
                     type = PerceiveTellurium(atomContainer, atom);
                     break;
-                case "Cu":
+                case ChemicalElement.AtomicNumbers.Cu:
                     type = PerceiveCopper(atomContainer, atom);
                     break;
-                case "Ba":
+                case ChemicalElement.AtomicNumbers.Ba:
                     type = PerceiveBarium(atomContainer, atom);
                     break;
-                case "Ga":
+                case ChemicalElement.AtomicNumbers.Ga:
                     type = PerceiveGallium(atomContainer, atom);
                     break;
-                case "Ru":
+                case ChemicalElement.AtomicNumbers.Ru:
                     type = PerceiveRuthenium(atomContainer, atom);
                     break;
-                case "Zn":
+                case ChemicalElement.AtomicNumbers.Zn:
                     type = PerceiveZinc(atomContainer, atom);
                     break;
-                case "Al":
+                case ChemicalElement.AtomicNumbers.Al:
                     type = PerceiveAluminium(atomContainer, atom);
                     break;
-                case "Ni":
+                case ChemicalElement.AtomicNumbers.Ni:
                     type = PerceiveNickel(atomContainer, atom);
                     break;
-                case "Gd":
+                case ChemicalElement.AtomicNumbers.Gd:
                     type = PerceiveGadolinum(atomContainer, atom);
                     break;
-                case "Ge":
+                case ChemicalElement.AtomicNumbers.Ge:
                     type = PerceiveGermanium(atomContainer, atom);
                     break;
-                case "Co":
+                case ChemicalElement.AtomicNumbers.Co:
                     type = PerceiveCobalt(atomContainer, atom);
                     break;
-                case "Br":
+                case ChemicalElement.AtomicNumbers.Br:
                     type = PerceiveBromine(atomContainer, atom);
                     break;
-                case "V":
+                case ChemicalElement.AtomicNumbers.V:
                     type = PerceiveVanadium(atomContainer, atom);
                     break;
-                case "Ti":
+                case ChemicalElement.AtomicNumbers.Ti:
                     type = PerceiveTitanium(atomContainer, atom);
                     break;
-                case "Sr":
+                case ChemicalElement.AtomicNumbers.Sr:
                     type = PerceiveStrontium(atomContainer, atom);
                     break;
-                case "Pb":
+                case ChemicalElement.AtomicNumbers.Pb:
                     type = PerceiveLead(atomContainer, atom);
                     break;
-                case "Tl":
+                case ChemicalElement.AtomicNumbers.Tl:
                     type = PerceiveThallium(atomContainer, atom);
                     break;
-                case "Sb":
+                case ChemicalElement.AtomicNumbers.Sb:
                     type = PerceiveAntimony(atomContainer, atom);
                     break;
-                case "Pt":
+                case ChemicalElement.AtomicNumbers.Pt:
                     type = PerceivePlatinum(atomContainer, atom);
                     break;
-                case "Hg":
+                case ChemicalElement.AtomicNumbers.Hg:
                     type = PerceiveMercury(atomContainer, atom);
                     break;
-                case "Fe":
+                case ChemicalElement.AtomicNumbers.Fe:
                     type = PerceiveIron(atomContainer, atom);
                     break;
-                case "Ra":
+                case ChemicalElement.AtomicNumbers.Ra:
                     type = PerceiveRadium(atomContainer, atom);
                     break;
-                case "Au":
+                case ChemicalElement.AtomicNumbers.Au:
                     type = PerceiveGold(atomContainer, atom);
                     break;
-                case "Ag":
+                case ChemicalElement.AtomicNumbers.Ag:
                     type = PerceiveSilver(atomContainer, atom);
                     break;
-                case "Cl":
+                case ChemicalElement.AtomicNumbers.Cl:
                     type = PerceiveChlorine(atomContainer, atom, connectedBonds);
                     break;
-                case "In":
+                case ChemicalElement.AtomicNumbers.In:
                     type = PerceiveIndium(atomContainer, atom);
                     break;
-                case "Pu":
+                case ChemicalElement.AtomicNumbers.Pu:
                     type = PerceivePlutonium(atomContainer, atom);
                     break;
-                case "Th":
+                case ChemicalElement.AtomicNumbers.Th:
                     type = PerceiveThorium(atomContainer, atom);
                     break;
-                case "K":
+                case ChemicalElement.AtomicNumbers.K:
                     type = PerceivePotassium(atomContainer, atom);
                     break;
-                case "Mn":
+                case ChemicalElement.AtomicNumbers.Mn:
                     type = PerceiveManganese(atomContainer, atom);
                     break;
-                case "Mg":
+                case ChemicalElement.AtomicNumbers.Mg:
                     type = PerceiveMagnesium(atomContainer, atom);
                     break;
-                case "Na":
+                case ChemicalElement.AtomicNumbers.Na:
                     type = PerceiveSodium(atomContainer, atom);
                     break;
-                case "As":
+                case ChemicalElement.AtomicNumbers.As:
                     type = PerceiveArsenic(atomContainer, atom);
                     break;
-                case "Cd":
+                case ChemicalElement.AtomicNumbers.Cd:
                     type = PerceiveCadmium(atomContainer, atom);
                     break;
-                case "Ca":
+                case ChemicalElement.AtomicNumbers.Ca:
                     type = PerceiveCalcium(atomContainer, atom);
                     break;
                 default:
@@ -320,7 +320,7 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveSelenium(IAtomContainer atomContainer, IAtom atom, IReadOnlyList<IBond> connectedBonds)
         {
-            if (string.Equals("Se", atom.Symbol, StringComparison.Ordinal))
+            if (ChemicalElement.AtomicNumbers.Se.Equals(atom.AtomicNumber))
             {
                 if (connectedBonds == null)
                     connectedBonds = atomContainer.GetConnectedBonds(atom).ToReadOnlyList();
@@ -943,7 +943,7 @@ namespace NCDK.AtomTypes
             if (connectedBonds.Count != 1)
                 return false;
             var carbon = connectedBonds.First().GetOther(atom);
-            if (!string.Equals("C", carbon.Symbol, StringComparison.Ordinal))
+            if (!ChemicalElement.AtomicNumbers.C.Equals(carbon.AtomicNumber))
                 return false;
 
             var carbonBonds = container.GetConnectedBonds(carbon).ToReadOnlyList();
@@ -955,7 +955,7 @@ namespace NCDK.AtomTypes
             foreach (var cBond in carbonBonds)
             {
                 var neighbor = cBond.GetOther(carbon);
-                if (string.Equals("O", neighbor.Symbol, StringComparison.Ordinal))
+                if (ChemicalElement.AtomicNumbers.O.Equals(neighbor.AtomicNumber))
                 {
                     oxygenCount++;
                     var order = cBond.Order;
@@ -1471,7 +1471,7 @@ namespace NCDK.AtomTypes
                 if (!aromatic) continue;
 
                 // found a hetroatom - we're not a single hetroatom
-                if (!string.Equals("C", atom1.Symbol, StringComparison.Ordinal))
+                if (!ChemicalElement.AtomicNumbers.C.Equals(atom1.AtomicNumber))
                     return false;
 
                 // check the second sphere
@@ -1479,7 +1479,7 @@ namespace NCDK.AtomTypes
                 {
                     if (!atom2.Equals(atom) 
                      && container.GetBond(atom1, atom2).IsAromatic
-                     && !string.Equals("C", atom2.Symbol, StringComparison.Ordinal))
+                     && !ChemicalElement.AtomicNumbers.C.Equals(atom2.AtomicNumber))
                     {
                         return false;
                     }
@@ -1502,7 +1502,7 @@ namespace NCDK.AtomTypes
             foreach (var bond in connectedBonds)
             {
                 var neighbor = bond.GetOther(atom);
-                if (string.Equals("C", neighbor.Symbol, StringComparison.Ordinal))
+                if (ChemicalElement.AtomicNumbers.C.Equals(neighbor.AtomicNumber))
                 {
                     if (CountAttachedDoubleBonds(atomContainer.GetConnectedBonds(neighbor).ToReadOnlyList(), neighbor, "O") == 1)
                         return true;
@@ -1517,7 +1517,7 @@ namespace NCDK.AtomTypes
             foreach (var bond in connectedBonds)
             {
                 var neighbor = bond.GetOther(atom);
-                if (string.Equals("C", neighbor.Symbol, StringComparison.Ordinal))
+                if (ChemicalElement.AtomicNumbers.C.Equals(neighbor.AtomicNumber))
                 {
                     if (CountAttachedDoubleBonds(atomContainer.GetConnectedBonds(neighbor).ToReadOnlyList(), neighbor, "S") == 1)
                         return true;
@@ -1532,7 +1532,7 @@ namespace NCDK.AtomTypes
             foreach (var bond in connectedBonds)
             {
                 var aAtom = bond.GetOther(atom);
-                if (string.Equals(aAtom.Symbol, "H", StringComparison.Ordinal))
+                if (aAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                 {
                     count++;
                 }
@@ -1549,14 +1549,14 @@ namespace NCDK.AtomTypes
         {
             var heavy = new List<IBond>();
             foreach (var bond in bonds)
-                if (!(string.Equals(bond.Begin.Symbol, "H", StringComparison.Ordinal) && string.Equals(bond.End.Symbol, "H", StringComparison.Ordinal)))
+                if (!(bond.Begin.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H) && bond.End.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H)))
                     heavy.Add(bond);
             return heavy;
         }
 
         private IAtomType PerceiveIron(IAtomContainer atomContainer, IAtom atom)
         {
-            if (string.Equals("Fe", atom.Symbol, StringComparison.Ordinal))
+            if (ChemicalElement.AtomicNumbers.Fe.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -1678,7 +1678,7 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveMercury(IAtomContainer atomContainer, IAtom atom)
         {
-            if (string.Equals("Hg", atom.Symbol, StringComparison.Ordinal))
+            if (ChemicalElement.AtomicNumbers.Hg.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2157,7 +2157,7 @@ namespace NCDK.AtomTypes
         private IAtomType PerceiveHalogens(IAtomContainer atomContainer, IAtom atom, IReadOnlyList<IBond> connectedBonds)
         {
             connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToReadOnlyList();
-            if (string.Equals("F", atom.Symbol, StringComparison.Ordinal))
+            if (ChemicalElement.AtomicNumbers.F.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2220,7 +2220,7 @@ namespace NCDK.AtomTypes
                         return type;
                 }
             }
-            else if (string.Equals("I", atom.Symbol, StringComparison.Ordinal))
+            else if (ChemicalElement.AtomicNumbers.I.Equals(atom.AtomicNumber))
             {
                 return PerceiveIodine(atomContainer, atom, connectedBonds);
             }
@@ -2292,7 +2292,7 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveThorium(IAtomContainer atomContainer, IAtom atom)
         {
-            if (string.Equals("Th", atom.Symbol, StringComparison.Ordinal))
+            if (ChemicalElement.AtomicNumbers.Th.Equals(atom.AtomicNumber))
             {
                 if (atom.FormalCharge == 0 && atomContainer.GetConnectedBonds(atom).Count() == 0)
                 {
@@ -2333,7 +2333,7 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveCommonSalts(IAtomContainer atomContainer, IAtom atom)
         {
-            if (string.Equals("Mg", atom.Symbol, StringComparison.Ordinal))
+            if (ChemicalElement.AtomicNumbers.Mg.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2346,7 +2346,7 @@ namespace NCDK.AtomTypes
                     if (IsAcceptable(atom, atomContainer, type)) return type;
                 }
             }
-            else if (string.Equals("Co", atom.Symbol, StringComparison.Ordinal))
+            else if (ChemicalElement.AtomicNumbers.Co.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2369,7 +2369,7 @@ namespace NCDK.AtomTypes
                     if (IsAcceptable(atom, atomContainer, type)) return type;
                 }
             }
-            else if (string.Equals("W", atom.Symbol, StringComparison.Ordinal))
+            else if (ChemicalElement.AtomicNumbers.W.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2555,7 +2555,7 @@ namespace NCDK.AtomTypes
                     return type;
                 }
             }
-            else if (string.Equals("Cr", atom.Symbol, StringComparison.Ordinal))
+            else if (ChemicalElement.AtomicNumbers.Cr.Equals(atom.AtomicNumber))
             {
                 if (atom.FormalCharge != null && atom.FormalCharge == 3
                         && atomContainer.GetConnectedBonds(atom).Count() == 0)
@@ -2572,7 +2572,7 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveOrganometallicCenters(IAtomContainer atomContainer, IAtom atom)
         {
-            if (string.Equals("Po", atom.Symbol, StringComparison.Ordinal))
+            if (ChemicalElement.AtomicNumbers.Po.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2586,7 +2586,7 @@ namespace NCDK.AtomTypes
                         return type;
                 }
             }
-            else if (string.Equals("Sn", atom.Symbol, StringComparison.Ordinal))
+            else if (ChemicalElement.AtomicNumbers.Sn.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2601,7 +2601,7 @@ namespace NCDK.AtomTypes
                         return type;
                 }
             }
-            else if (string.Equals("Sc", atom.Symbol, StringComparison.Ordinal))
+            else if (ChemicalElement.AtomicNumbers.Sc.Equals(atom.AtomicNumber))
             {
                 if (atom.FormalCharge != null && atom.FormalCharge == -3
                         && atomContainer.GetConnectedBonds(atom).Count() == 6)
@@ -2661,7 +2661,7 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveNobelGases(IAtomContainer atomContainer, IAtom atom)
         {
-            if (string.Equals("He", atom.Symbol, StringComparison.Ordinal))
+            if (ChemicalElement.AtomicNumbers.He.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2675,7 +2675,7 @@ namespace NCDK.AtomTypes
                         return type;
                 }
             }
-            else if (string.Equals("Ne", atom.Symbol, StringComparison.Ordinal))
+            else if (ChemicalElement.AtomicNumbers.Ne.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2689,7 +2689,7 @@ namespace NCDK.AtomTypes
                         return type;
                 }
             }
-            else if (string.Equals("Ar", atom.Symbol, StringComparison.Ordinal))
+            else if (ChemicalElement.AtomicNumbers.Ar.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2703,7 +2703,7 @@ namespace NCDK.AtomTypes
                         return type;
                 }
             }
-            else if (string.Equals("Kr", atom.Symbol, StringComparison.Ordinal))
+            else if (ChemicalElement.AtomicNumbers.Kr.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2717,7 +2717,7 @@ namespace NCDK.AtomTypes
                         return type;
                 }
             }
-            else if (string.Equals("Xe", atom.Symbol, StringComparison.Ordinal))
+            else if (ChemicalElement.AtomicNumbers.Xe.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2740,7 +2740,7 @@ namespace NCDK.AtomTypes
                     }
                 }
             }
-            else if (string.Equals("Rn", atom.Symbol, StringComparison.Ordinal))
+            else if (ChemicalElement.AtomicNumbers.Rn.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -3266,7 +3266,7 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveCalcium(IAtomContainer atomContainer, IAtom atom)
         {
-            if (string.Equals("Ca", atom.Symbol, StringComparison.Ordinal))
+            if (ChemicalElement.AtomicNumbers.Ca.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {

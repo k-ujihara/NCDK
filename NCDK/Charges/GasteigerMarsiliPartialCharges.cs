@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using System;
 
 namespace NCDK.Charges
@@ -100,7 +101,7 @@ namespace NCDK.Charges
 
                     if (gasteigerFactors[StepSize * atom1 + atom1 + 4] >= gasteigerFactors[StepSize * atom2 + atom2 + 4])
                     {
-                        if (string.Equals(ac.Atoms[atom2].Symbol, "H", StringComparison.Ordinal))
+                        if (ac.Atoms[atom2].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                         {
                             deoc = ChiCatHydrogen;
                         }
@@ -111,7 +112,7 @@ namespace NCDK.Charges
                     }
                     else
                     {
-                        if (string.Equals(ac.Atoms[atom1].Symbol, "H", StringComparison.Ordinal))
+                        if (ac.Atoms[atom1].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                         {
                             deoc = ChiCatHydrogen;
                         }
@@ -164,18 +165,18 @@ namespace NCDK.Charges
                 factors[0] = 0.0;
                 factors[1] = 0.0;
                 factors[2] = 0.0;
-                IAtom atom = ac.Atoms[i];
-                string symbol = atom.Symbol;
-                BondOrder maxBondOrder = ac.GetMaximumBondOrder(atom);
+                var atom = ac.Atoms[i];
+                var symbol = atom.Symbol;
+                var maxBondOrder = ac.GetMaximumBondOrder(atom);
                 var charge = atom.FormalCharge;
-                switch (symbol)
+                switch (atom.AtomicNumber)
                 {
-                    case "H":
+                    case ChemicalElement.AtomicNumbers.H:
                         factors[0] = 7.17;
                         factors[1] = 6.24;
                         factors[2] = -0.56;
                         break;
-                    case "C":
+                    case ChemicalElement.AtomicNumbers.C:
                         if (maxBondOrder == BondOrder.Double 
                          || (maxBondOrder == BondOrder.Single && (charge == -1 || charge == +1)))
                         {
@@ -197,7 +198,7 @@ namespace NCDK.Charges
                             factors[2] = 0.73;
                         }
                         break;
-                    case "N":
+                    case ChemicalElement.AtomicNumbers.N:
                         if ((maxBondOrder == BondOrder.Single)
                          && (charge != -1))
                         {
@@ -220,7 +221,7 @@ namespace NCDK.Charges
                             factors[2] = -0.27;/*-0.27*/
                         }
                         break;
-                    case "O":
+                    case ChemicalElement.AtomicNumbers.O:
                         if ((maxBondOrder == BondOrder.Single)
                          && (charge != -1))
                         {
@@ -236,37 +237,37 @@ namespace NCDK.Charges
                             factors[2] = 0.47;/* 0.47 */
                         }
                         break;
-                    case "Si": // <--not correct
+                    case ChemicalElement.AtomicNumbers.Si: // <--not correct
                         factors[0] = 8.10;// <--not correct
                         factors[1] = 7.92;// <--not correct
                         factors[2] = 1.78;// <--not correct
                         break;
-                    case "P":
+                    case ChemicalElement.AtomicNumbers.P:
                         factors[0] = 8.90;
                         factors[1] = 8.32;
                         factors[2] = 1.58;
                         break;
-                    case "S":
+                    case ChemicalElement.AtomicNumbers.S:
                         factors[0] = 10.14;/* 10.14 */
                         factors[1] = 9.13;/* 9.13 */
                         factors[2] = 1.38;/* 1.38 */
                         break;
-                    case "F":
+                    case ChemicalElement.AtomicNumbers.F:
                         factors[0] = 14.66;
                         factors[1] = 13.85;
                         factors[2] = 2.31;
                         break;
-                    case "Cl":
+                    case ChemicalElement.AtomicNumbers.Cl:
                         factors[0] = 12.31;/* 11.0 *//* 12.31 */
                         factors[1] = 10.84;/* 9.69 *//* 10.84 */
                         factors[2] = 1.512;/* 1.35 *//* 1.512 */
                         break;
-                    case "Br":
+                    case ChemicalElement.AtomicNumbers.Br:
                         factors[0] = 11.44;/* 10.08 *//* 11.2 */
                         factors[1] = 9.63;/* 8.47 *//* 9.4 */
                         factors[2] = 1.31;/* 1.16 *//* 1.29 */
                         break;
-                    case "I":
+                    case ChemicalElement.AtomicNumbers.I:
                         factors[0] = 9.88;/* 9.90 */
                         factors[1] = 7.95;/* 7.96 */
                         factors[2] = 0.945;/* 0.96 */

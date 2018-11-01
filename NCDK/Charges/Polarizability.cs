@@ -18,6 +18,7 @@
  */
 
 using NCDK.AtomTypes;
+using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
@@ -217,126 +218,117 @@ namespace NCDK.Charges
         private static double GetKJPolarizabilityFactor(IAtomContainer atomContainer, IAtom atom)
         {
             double polarizabilitiyFactor = 0;
-            string AtomSymbol;
-            AtomSymbol = atom.Symbol;
-            if (string.Equals(AtomSymbol, "H", StringComparison.Ordinal))
+            switch (atom.AtomicNumber)
             {
-                polarizabilitiyFactor = 0.387;
-            }
-            else if (string.Equals(AtomSymbol, "C", StringComparison.Ordinal))
-            {
-                if (atom.IsAromatic)
-                {
-                    polarizabilitiyFactor = 1.230;
-                }
-                else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Single)
-                {
-                    polarizabilitiyFactor = 1.064;/* 1.064 */
-                }
-                else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Double)
-                {
-                    if (GetNumberOfHydrogen(atomContainer, atom) == 0)
+                case ChemicalElement.AtomicNumbers.H:
+                    polarizabilitiyFactor = 0.387;
+                    break;
+                case ChemicalElement.AtomicNumbers.C:
+                    if (atom.IsAromatic)
                     {
-                        polarizabilitiyFactor = 1.382;
+                        polarizabilitiyFactor = 1.230;
+                    }
+                    else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Single)
+                    {
+                        polarizabilitiyFactor = 1.064;/* 1.064 */
+                    }
+                    else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Double)
+                    {
+                        if (GetNumberOfHydrogen(atomContainer, atom) == 0)
+                        {
+                            polarizabilitiyFactor = 1.382;
+                        }
+                        else
+                        {
+                            polarizabilitiyFactor = 1.37;
+                        }
+                    }
+                    else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Triple
+                          || atomContainer.GetMaximumBondOrder(atom) == BondOrder.Quadruple)
+                    {
+                        polarizabilitiyFactor = 1.279;
+                    }
+                    break;
+                case ChemicalElement.AtomicNumbers.N:
+                    if (atom.Charge != null && atom.Charge < 0)
+                    {
+                        polarizabilitiyFactor = 1.090;
+                    }
+                    else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Single)
+                    {
+                        polarizabilitiyFactor = 1.094;
+                    }
+                    else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Double)
+                    {
+                        polarizabilitiyFactor = 1.030;
                     }
                     else
                     {
-                        polarizabilitiyFactor = 1.37;
+                        polarizabilitiyFactor = 0.852;
                     }
-                }
-                else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Triple
-                      || atomContainer.GetMaximumBondOrder(atom) == BondOrder.Quadruple)
-                {
-                    polarizabilitiyFactor = 1.279;
-                }
-            }
-            else if (string.Equals(AtomSymbol, "N", StringComparison.Ordinal))
-            {
-                if (atom.Charge != null && atom.Charge < 0)
-                {
-                    polarizabilitiyFactor = 1.090;
-                }
-                else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Single)
-                {
-                    polarizabilitiyFactor = 1.094;
-                }
-                else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Double)
-                {
-                    polarizabilitiyFactor = 1.030;
-                }
-                else
-                {
-                    polarizabilitiyFactor = 0.852;
-                }
-            }
-            else if (string.Equals(AtomSymbol, "O", StringComparison.Ordinal))
-            {
-                if (atom.Charge != null && atom.Charge == -1)
-                {
-                    polarizabilitiyFactor = 1.791;
-                }
-                else if (atom.Charge != null && atom.Charge == 1)
-                {
-                    polarizabilitiyFactor = 0.422;
-                }
-                else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Single)
-                {
-                    polarizabilitiyFactor = 0.664;
-                }
-                else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Double)
-                {
-                    polarizabilitiyFactor = 0.460;
-                }
-            }
-            else if (string.Equals(AtomSymbol, "P", StringComparison.Ordinal))
-            {
-                if (atomContainer.GetConnectedBonds(atom).Count() == 4
-                        && atomContainer.GetMaximumBondOrder(atom) == BondOrder.Double)
-                {
-                    polarizabilitiyFactor = 0;
-                }
-            }
-            else if (string.Equals(AtomSymbol, "S", StringComparison.Ordinal))
-            {
-                if (atom.IsAromatic)
-                {
-                    polarizabilitiyFactor = 3.38;
-                }
-                else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Single)
-                {
-                    polarizabilitiyFactor = 3.20;/* 3.19 */
-                }
-                else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Double)
-                {
-                    if (GetNumberOfHydrogen(atomContainer, atom) == 0)
+                    break;
+                case ChemicalElement.AtomicNumbers.O:
+                    if (atom.Charge != null && atom.Charge == -1)
                     {
-                        polarizabilitiyFactor = 3.51;
+                        polarizabilitiyFactor = 1.791;
+                    }
+                    else if (atom.Charge != null && atom.Charge == 1)
+                    {
+                        polarizabilitiyFactor = 0.422;
+                    }
+                    else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Single)
+                    {
+                        polarizabilitiyFactor = 0.664;
+                    }
+                    else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Double)
+                    {
+                        polarizabilitiyFactor = 0.460;
+                    }
+                    break;
+                case ChemicalElement.AtomicNumbers.P:
+                    if (atomContainer.GetConnectedBonds(atom).Count() == 4
+                            && atomContainer.GetMaximumBondOrder(atom) == BondOrder.Double)
+                    {
+                        polarizabilitiyFactor = 0;
+                    }
+                    break;
+                case ChemicalElement.AtomicNumbers.S:
+                    if (atom.IsAromatic)
+                    {
+                        polarizabilitiyFactor = 3.38;
+                    }
+                    else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Single)
+                    {
+                        polarizabilitiyFactor = 3.20;/* 3.19 */
+                    }
+                    else if (atomContainer.GetMaximumBondOrder(atom) == BondOrder.Double)
+                    {
+                        if (GetNumberOfHydrogen(atomContainer, atom) == 0)
+                        {
+                            polarizabilitiyFactor = 3.51;
+                        }
+                        else
+                        {
+                            polarizabilitiyFactor = 3.50;
+                        }
                     }
                     else
                     {
-                        polarizabilitiyFactor = 3.50;
+                        polarizabilitiyFactor = 3.42;
                     }
-                }
-                else
-                {
-                    polarizabilitiyFactor = 3.42;
-                }
-            }
-            else if (string.Equals(AtomSymbol, "F", StringComparison.Ordinal))
-            {
-                polarizabilitiyFactor = 0.296;
-            }
-            else if (string.Equals(AtomSymbol, "Cl", StringComparison.Ordinal))
-            {
-                polarizabilitiyFactor = 2.343;
-            }
-            else if (string.Equals(AtomSymbol, "Br", StringComparison.Ordinal))
-            {
-                polarizabilitiyFactor = 3.5;
-            }
-            else if (string.Equals(AtomSymbol, "I", StringComparison.Ordinal))
-            {
-                polarizabilitiyFactor = 5.79;
+                    break;
+                case ChemicalElement.AtomicNumbers.F:
+                    polarizabilitiyFactor = 0.296;
+                    break;
+                case ChemicalElement.AtomicNumbers.Cl:
+                    polarizabilitiyFactor = 2.343;
+                    break;
+                case ChemicalElement.AtomicNumbers.Br:
+                    polarizabilitiyFactor = 3.5;
+                    break;
+                case ChemicalElement.AtomicNumbers.I:
+                    polarizabilitiyFactor = 5.79;
+                    break;
             }
             return polarizabilitiyFactor;
         }
@@ -355,7 +347,7 @@ namespace NCDK.Charges
             foreach (var bond in bonds)
             {
                 connectedAtom = bond.GetOther(atom);
-                if (string.Equals(connectedAtom.Symbol, "H", StringComparison.Ordinal))
+                if (connectedAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                 {
                     hCounter += 1;
                 }

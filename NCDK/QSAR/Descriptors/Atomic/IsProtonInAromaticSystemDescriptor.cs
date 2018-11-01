@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Aromaticities;
+using NCDK.Config;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
@@ -124,8 +125,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
             }
             var neighboor = mol.GetConnectedAtoms(clonedAtom);
-            IAtom neighbour0 = (IAtom)neighboor.First();
-            if (string.Equals(atom.Symbol, "H", StringComparison.Ordinal))
+            var neighbour0 = neighboor.First();
+            if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
             {
                 //Debug.WriteLine("aromatic proton");
                 if (neighbour0.IsAromatic)

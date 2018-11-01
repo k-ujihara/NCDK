@@ -19,6 +19,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.Geometries;
 using NCDK.Graphs;
 using NCDK.Numerics;
@@ -58,12 +59,12 @@ namespace NCDK.Renderers.Generators
         /// <summary>
         /// The ideal ring size for the given center proportion.
         /// </summary>
-        private int IDEAL_RINGSIZE = 6;
+        private readonly int IDEAL_RINGSIZE = 6;
 
         /// <summary>
         /// The minimum ring size factor to ensure a minimum gap.
         /// </summary>
-        private double MIN_RINGSIZE_FACTOR = 2.5;
+        private readonly double MIN_RINGSIZE_FACTOR = 2.5;
 
         /// <summary>
         /// An empty constructor necessary for reflection.
@@ -407,8 +408,9 @@ namespace NCDK.Renderers.Generators
         {
             for (int i = 0; i < bond.Atoms.Count; i++)
             {
-                IAtom atom = bond.Atoms[i];
-                if (string.Equals("H", atom.Symbol, StringComparison.Ordinal)) return true;
+                var atom = bond.Atoms[i];
+                if (atom.AtomicNumber == 1)
+                    return true;
             }
             return false;
         }

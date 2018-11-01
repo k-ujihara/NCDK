@@ -85,7 +85,7 @@ namespace NCDK.Pharmacophore
         /// <returns>true if the current query group has the same symbol as the target group</returns>
         public bool Matches(IAtom atom)
         {
-            PharmacophoreAtom patom = PharmacophoreAtom.Get(atom);
+            var patom = PharmacophoreAtom.Get(atom);
             return patom.Symbol.Equals(Symbol, StringComparison.Ordinal);
         }
 

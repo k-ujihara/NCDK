@@ -18,6 +18,7 @@
  */
 
 using NCDK.Aromaticities;
+using NCDK.Config;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
 using System;
@@ -40,8 +41,6 @@ namespace NCDK.Tools
         {
             Smiles = Smiles.Replace("CL", "Cl");
             Smiles = Smiles.Replace("(H)", "([H])");
-            //        Smiles=Smiles.Replace("N=N#N","N=[N+]=[N-]");
-            //        Smiles=Smiles.Replace("#N=O","#[N+][O-]");
             Smiles = Smiles.Trim();
 
             return Smiles;
@@ -56,7 +55,7 @@ namespace NCDK.Tools
                 for (int i = 0; i <= m.Atoms.Count - 1; i++)
                 {
                     IAtom a = m.Atoms[i];
-                    if (string.Equals(a.Symbol, "N", StringComparison.Ordinal))
+                    if (a.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N))
                     {
                         var ca = m.GetConnectedAtoms(a).ToReadOnlyList();
 
@@ -68,7 +67,7 @@ namespace NCDK.Tools
 
                             for (int j = 0; j <= 2; j++)
                             {
-                                if ((ca[j]).Symbol.Equals("O", StringComparison.Ordinal))
+                                if ((ca[j]).AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O))
                                 {
                                     count++;
                                 }
@@ -81,7 +80,7 @@ namespace NCDK.Tools
                                 for (int j = 0; j <= 2; j++)
                                 {
                                     IAtom caj = (IAtom)ca[j];
-                                    if (string.Equals(caj.Symbol, "O", StringComparison.Ordinal))
+                                    if (caj.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O))
                                     {
                                         if (m.GetConnectedBonds(caj).Count() == 1)
                                         {// account for possibility of ONO2
@@ -127,7 +126,7 @@ namespace NCDK.Tools
                 for (int i = 0; i <= m.Atoms.Count - 1; i++)
                 {
                     IAtom a = m.Atoms[i];
-                    if (string.Equals(a.Symbol, "N", StringComparison.Ordinal))
+                    if (a.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N))
                     {
                         var ca = m.GetConnectedAtoms(a).ToReadOnlyList();
 
@@ -140,7 +139,7 @@ namespace NCDK.Tools
                             for (int j = 0; j <= 2; j++)
                             {
                                 IAtom caj = ca[j];
-                                if (string.Equals(caj.Symbol, "O", StringComparison.Ordinal))
+                                if (caj.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O))
                                 {
                                     count++;
                                 }
@@ -152,7 +151,7 @@ namespace NCDK.Tools
                                 for (int j = 0; j <= 2; j++)
                                 {
                                     IAtom caj = (IAtom)ca[j];
-                                    if (string.Equals(caj.Symbol, "O", StringComparison.Ordinal))
+                                    if (caj.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O))
                                     {
                                         if (m.GetConnectedBonds(caj).Count() == 1)
                                         {// account for possibility of ONO2
@@ -260,7 +259,7 @@ namespace NCDK.Tools
             {
                 IAtom a = m.Atoms[i];
 
-                if (string.Equals(a.Symbol, "S", StringComparison.Ordinal))
+                if (a.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.S))
                 {
                     var connectedAtoms = m.GetConnectedAtoms(a);
 
@@ -268,7 +267,7 @@ namespace NCDK.Tools
 
                     foreach (var conAtom in connectedAtoms)
                     {
-                        if (!string.Equals(conAtom.Symbol, "H", StringComparison.Ordinal))
+                        if (!conAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                         {
                             IBond bond = m.GetBond(a, conAtom);
                             if (bond.Order == BondOrder.Single)
@@ -294,7 +293,7 @@ namespace NCDK.Tools
                     {
                         foreach (var conAtom in connectedAtoms)
                         {
-                            if (string.Equals(conAtom.Symbol, "H", StringComparison.Ordinal))
+                            if (conAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                             {
                                 m.RemoveAtom(conAtom);
                             }

@@ -25,6 +25,7 @@
  *
  */
 
+using NCDK.Config;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Isomorphisms.MCSS;
 using NCDK.Tools.Manipulator;
@@ -1093,42 +1094,42 @@ namespace NCDK.Isomorphisms
             for (int i = 0; i < ac1.Atoms.Count; i++)
             {
                 atom = ac1.Atoms[i];
-                if (string.Equals(atom.Symbol, "S", StringComparison.Ordinal))
+                if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.S))
                     ac1SCount++;
-                else if (string.Equals(atom.Symbol, "N", StringComparison.Ordinal))
+                else if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N))
                     ac1NCount++;
-                else if (string.Equals(atom.Symbol, "O", StringComparison.Ordinal))
+                else if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O))
                     ac1OCount++;
-                else if (string.Equals(atom.Symbol, "F", StringComparison.Ordinal))
+                else if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.F))
                     ac1FCount++;
-                else if (string.Equals(atom.Symbol, "Cl", StringComparison.Ordinal))
+                else if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.Cl))
                     ac1ClCount++;
-                else if (string.Equals(atom.Symbol, "Br", StringComparison.Ordinal))
+                else if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.Br))
                     ac1BrCount++;
-                else if (string.Equals(atom.Symbol, "I", StringComparison.Ordinal))
+                else if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.I))
                     ac1ICount++;
-                else if (string.Equals(atom.Symbol, "C", StringComparison.Ordinal))
+                else if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.C))
                     ac1CCount++;
             }
             for (int i = 0; i < ac2.Atoms.Count; i++)
             {
                 atom = ac2.Atoms[i];
                 if (atom is IQueryAtom) continue;
-                if (string.Equals(atom.Symbol, "S", StringComparison.Ordinal))
+                if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.S))
                     ac2SCount++;
-                else if (string.Equals(atom.Symbol, "N", StringComparison.Ordinal))
+                else if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N))
                     ac2NCount++;
-                else if (string.Equals(atom.Symbol, "O", StringComparison.Ordinal))
+                else if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O))
                     ac2OCount++;
-                else if (string.Equals(atom.Symbol, "F", StringComparison.Ordinal))
+                else if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.F))
                     ac2FCount++;
-                else if (string.Equals(atom.Symbol, "Cl", StringComparison.Ordinal))
+                else if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.Cl))
                     ac2ClCount++;
-                else if (string.Equals(atom.Symbol, "Br", StringComparison.Ordinal))
+                else if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.Br))
                     ac2BrCount++;
-                else if (string.Equals(atom.Symbol, "I", StringComparison.Ordinal))
+                else if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.I))
                     ac2ICount++;
-                else if (string.Equals(atom.Symbol, "C", StringComparison.Ordinal))
+                else if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.C))
                     ac2CCount++;
             }
 

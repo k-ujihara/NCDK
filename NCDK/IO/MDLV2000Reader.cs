@@ -586,7 +586,7 @@ namespace NCDK.IO
                     {
                         case "D":
                             {
-                                IAtom newAtom = molecule.Builder.NewAtom(atom);
+                                var newAtom = molecule.Builder.NewAtom(atom);
                                 newAtom.Symbol = "H";
                                 newAtom.AtomicNumber = 1;
                                 isotopeFactory.Configure(newAtom, isotopeFactory.GetIsotope("H", 2));
@@ -595,7 +595,7 @@ namespace NCDK.IO
                             break;
                         case "T":
                             {
-                                IAtom newAtom = molecule.Builder.NewAtom(atom);
+                                var newAtom = molecule.Builder.NewAtom(atom);
                                 newAtom.Symbol = "H";
                                 newAtom.AtomicNumber = 1;
                                 isotopeFactory.Configure(newAtom, isotopeFactory.GetIsotope("H", 3));
@@ -1744,55 +1744,58 @@ namespace NCDK.IO
             {
                 atom = isotopeFactory.Configure(builder.NewAtom(element));
             }
-            else if (string.Equals("A", element, StringComparison.Ordinal))
-            {
-                atom = builder.NewPseudoAtom(element);
-            }
-            else if (string.Equals("Q", element, StringComparison.Ordinal))
-            {
-                atom = builder.NewPseudoAtom(element);
-            }
-            else if (string.Equals("*", element, StringComparison.Ordinal))
-            {
-                atom = builder.NewPseudoAtom(element);
-            }
-            else if (string.Equals("LP", element, StringComparison.Ordinal))
-            {
-                atom = builder.NewPseudoAtom(element);
-            }
-            else if (string.Equals("L", element, StringComparison.Ordinal))
-            {
-                atom = builder.NewPseudoAtom(element);
-            }
-            else if (string.Equals(element, "R", StringComparison.Ordinal) || (element.Length > 0 && element[0] == 'R'))
-            {
-                Debug.WriteLine("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
-                //check if the element is R
-                if (element.Length > 1 && element[0] == 'R')
-                {
-                    try
-                    {
-                        element = "R" + int.Parse(element.Substring(1), NumberFormatInfo.InvariantInfo);
-                        atom = builder.NewPseudoAtom(element);
-                    }
-                    catch (Exception)
-                    {
-                        // This happens for atoms labeled "R#".
-                        // The Rnumber may be set later on, using RGP line
-                        atom = builder.NewPseudoAtom("R");
-                    }
-                }
-                else
-                {
-                    atom = builder.NewPseudoAtom(element);
-                }
-            }
             else
             {
-                HandleError("Invalid element type. Must be an existing " + "element, or one in: A, Q, L, LP, *.",
-                        linecount, 32, 35);
-                atom = builder.NewPseudoAtom(element);
-                atom.Symbol = element;
+                switch (element)
+                {
+                    case "A":
+                        atom = builder.NewPseudoAtom(element);
+                        break;
+                    case "O":
+                        atom = builder.NewPseudoAtom(element);
+                        break;
+                    case "*":
+                        atom = builder.NewPseudoAtom(element);
+                        break;
+                    case "LP":
+                        atom = builder.NewPseudoAtom(element);
+                        break;
+                    case "L":
+                        atom = builder.NewPseudoAtom(element);
+                        break;
+                    default:
+                        if (element.StartsWith("R", StringComparison.Ordinal))
+                        {
+                            Debug.WriteLine("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
+                            //check if the element is R
+                            if (element.Length > 1 && element[0] == 'R')
+                            {
+                                try
+                                {
+                                    element = "R" + int.Parse(element.Substring(1), NumberFormatInfo.InvariantInfo);
+                                    atom = builder.NewPseudoAtom(element);
+                                }
+                                catch (Exception)
+                                {
+                                    // This happens for atoms labeled "R#".
+                                    // The Rnumber may be set later on, using RGP line
+                                    atom = builder.NewPseudoAtom("R");
+                                }
+                            }
+                            else
+                            {
+                                atom = builder.NewPseudoAtom(element);
+                            }
+                        }
+                        else
+                        {
+                            HandleError("Invalid element type. Must be an existing " + "element, or one in: A, Q, L, LP, *.",
+                                    linecount, 32, 35);
+                            atom = builder.NewPseudoAtom(element);
+                            atom.Symbol = element;
+                        }
+                        break;
+                }
             }
 
             // store as 3D for now, convert to 2D (if totalZ == 0.0) later
@@ -2155,7 +2158,7 @@ namespace NCDK.IO
                             int absMass = int.Parse(st.Current.Trim(), NumberFormatInfo.InvariantInfo);
                             if (absMass != 0)
                             {
-                                IAtom isotope = container.Atoms[atomNumber - 1];
+                                var isotope = container.Atoms[atomNumber - 1];
                                 isotope.MassNumber = absMass;
                             }
                         }

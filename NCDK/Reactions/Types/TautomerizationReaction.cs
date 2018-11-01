@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.Reactions.Types.Parameters;
 using System;
 using System.Collections.Generic;
@@ -93,7 +94,7 @@ namespace NCDK.Reactions.Types
                                                 if (bondk.IsReactiveCenter && bondk.Order == BondOrder.Single)
                                                 {
                                                     IAtom atoml = bondk.GetOther(atomk); // Atom pos 4
-                                                    if (atoml.IsReactiveCenter && atoml.Symbol.Equals("H", StringComparison.Ordinal))
+                                                    if (atoml.IsReactiveCenter && atoml.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                                                     {
                                                         var atomList = new List<IAtom>
                                                         {
@@ -177,7 +178,7 @@ namespace NCDK.Reactions.Types
                                                 if (bondk.Order == BondOrder.Single)
                                                 {
                                                     IAtom atoml = bondk.GetOther(atomk); // Atom pos 4
-                                                    if (string.Equals(atoml.Symbol, "H", StringComparison.Ordinal))
+                                                    if (atoml.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                                                     {
                                                         atomi.IsReactiveCenter = true;
                                                         atomj.IsReactiveCenter = true;

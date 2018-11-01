@@ -22,6 +22,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.Graphs.Invariant;
 using NCDK.Numerics;
 using System;
@@ -225,8 +226,8 @@ namespace NCDK.Geometries
             if (container.GetBond(atom, parent) != null)
             {
                 if (container.GetBond(atom, parent).Order == BondOrder.Double
-                        && (lengthAtom == 3 || (lengthAtom == 2 && atom.Symbol.Equals("N", StringComparison.Ordinal)))
-                        && (lengthParent == 3 || (lengthParent == 2 && parent.Symbol.Equals("N", StringComparison.Ordinal))))
+                        && (lengthAtom == 3 || (lengthAtom == 2 && atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N)))
+                        && (lengthParent == 3 || (lengthParent == 2 && parent.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N))))
                 {
                     var atoms = container.GetConnectedAtoms(atom);
                     IAtom one = null;
@@ -244,9 +245,9 @@ namespace NCDK.Geometries
                     }
                     string[] morgannumbers = MorganNumbersTools.GetMorganNumbersWithElementSymbol(container);
                     if ((one != null && two == null 
-                      && atom.Symbol.Equals("N", StringComparison.Ordinal) 
+                      && atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N) 
                       && Math.Abs(GiveAngleBothMethods(parent, atom, one, true)) > Math.PI / 10)
-                     || (!atom.Symbol.Equals("N", StringComparison.Ordinal) 
+                     || (!atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N) 
                       && one != null && two != null 
                       && !morgannumbers[container.Atoms.IndexOf(one)].Equals(morgannumbers[container.Atoms.IndexOf(two)], StringComparison.Ordinal)))
                     {
@@ -278,7 +279,7 @@ namespace NCDK.Geometries
 
             int lengthAtom = container.GetConnectedAtoms(a).Count() + hcount;
 
-            if (lengthAtom != 3 && (lengthAtom != 2 && !(a.Symbol.Equals("N", StringComparison.Ordinal))))
+            if (lengthAtom != 3 && (lengthAtom != 2 && !(a.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N))))
             {
                 return (false);
             }
@@ -306,12 +307,12 @@ namespace NCDK.Geometries
             }
             string[] morgannumbers = MorganNumbersTools.GetMorganNumbersWithElementSymbol(container);
             if (one != null
-                    && ((!a.Symbol.Equals("N", StringComparison.Ordinal)
+                    && ((!a.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N)
                             && two != null
                             && !morgannumbers[container.Atoms.IndexOf(one)].Equals(morgannumbers[container.Atoms.IndexOf(two)], StringComparison.Ordinal)
                             && doubleBond
                             && doubleBondConfiguration[container.Bonds.IndexOf(container.GetBond(a, nextAtom))])
-                            || (doubleBond && a.Symbol.Equals("N", StringComparison.Ordinal)
+                            || (doubleBond && a.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N)
                             && Math.Abs(GiveAngleBothMethods(nextAtom, a, parent, true)) > Math.PI / 10)))
             {
                 return (true);
@@ -648,7 +649,7 @@ namespace NCDK.Geometries
                         {
                             down++;
                         }
-                        else if (stereo == BondStereo.None && conAtom.Symbol.Equals("H", StringComparison.Ordinal))
+                        else if (stereo == BondStereo.None && conAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                         {
                             h = conAtom;
                             hs++;

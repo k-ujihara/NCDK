@@ -24,6 +24,7 @@
  */
 
 using NCDK.Aromaticities;
+using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.RingSearches;
 using NCDK.Silent;
@@ -52,7 +53,7 @@ namespace NCDK.SMSD.Tools
             bool isMarkush = false;
             foreach (var atom in molecule.Atoms)
             {
-                if (string.Equals(atom.Symbol, "R", StringComparison.Ordinal))
+                if (atom.Symbol.Equals("R", StringComparison.Ordinal))
                 {
                     isMarkush = true;
                     break;

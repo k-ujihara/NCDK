@@ -20,6 +20,7 @@
 
 using NCDK.Common.Collections;
 using NCDK.Common.Primitives;
+using NCDK.Config;
 using NCDK.Graphs.Invariant;
 using System;
 
@@ -68,7 +69,7 @@ namespace NCDK.Graphs.Invariant
             int[] nonHydrogens = new int[order];
 
             for (int v = 0; v < order; v++)
-                nonHydrogens[v] = "H".Equals(molecule.Atoms[v].Symbol, StringComparison.Ordinal) ? 0 : 1;
+                nonHydrogens[v] = molecule.Atoms[v].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H) ? 0 : 1;
 
             // build the graph and initialise the current connectivity
             // value to the number of connected non-hydrogens

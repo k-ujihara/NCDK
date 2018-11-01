@@ -23,6 +23,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.Geometries;
 using NCDK.Graphs;
 using NCDK.Layout;
@@ -471,7 +472,7 @@ namespace NCDK.Modelings.Builder3D
                 var atoms = molecule.GetConnectedAtoms(chain.Atoms[i]);
                 foreach (var atom in atoms)
                 {
-                    if (!atom.Symbol.Equals("H", StringComparison.Ordinal) & !atom.IsPlaced & !atom.IsInRing)
+                    if (!atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H) & !atom.IsPlaced & !atom.IsInRing)
                     {
                         connectedAtoms.Add(ap3d.GetPlacedHeavyAtoms(molecule, chain.Atoms[i]));
                         try

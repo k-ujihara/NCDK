@@ -34,7 +34,7 @@ namespace NCDK.Hash
         [TestMethod()]
         public void TestGetUnsuppressed()
         {
-            AtomSuppression suppression = AtomSuppression.Unsuppressed;
+            var suppression = AtomSuppression.Unsuppressed;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
             Suppressed suppressed = suppression.Suppress(container);
             Assert.IsFalse(suppressed.Contains(0));
@@ -47,7 +47,7 @@ namespace NCDK.Hash
         [TestMethod()]
         public void TestAnyHydrogens()
         {
-            AtomSuppression suppression = AtomSuppression.AnyHydrogens;
+            var suppression = AtomSuppression.AnyHydrogens;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
             m_container.SetupGet(n => n.Atoms.Count).Returns(5);
 
@@ -56,6 +56,8 @@ namespace NCDK.Hash
 
             m_carbon.SetupGet(n => n.Symbol).Returns("C");
             m_hydrogen.SetupGet(n => n.Symbol).Returns("H");
+            m_carbon.SetupGet(n => n.AtomicNumber).Returns(6);
+            m_hydrogen.SetupGet(n => n.AtomicNumber).Returns(1);
 
             m_container.SetupGet(n => n.Atoms[0]).Returns(carbon);
             m_container.SetupGet(n => n.Atoms[1]).Returns(hydrogen);
@@ -63,7 +65,7 @@ namespace NCDK.Hash
             m_container.SetupGet(n => n.Atoms[3]).Returns(carbon);
             m_container.SetupGet(n => n.Atoms[4]).Returns(hydrogen);
 
-            Suppressed suppressed = suppression.Suppress(container);
+            var suppressed = suppression.Suppress(container);
             Assert.IsFalse(suppressed.Contains(0));
             Assert.IsTrue(suppressed.Contains(1));
             Assert.IsFalse(suppressed.Contains(2));
@@ -74,7 +76,7 @@ namespace NCDK.Hash
         [TestMethod()]
         public void TestAnyPseudos()
         {
-            AtomSuppression suppression = AtomSuppression.AnyPseudos;
+            var suppression = AtomSuppression.AnyPseudos;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
             m_container.SetupGet(n => n.Atoms.Count).Returns(5);
 

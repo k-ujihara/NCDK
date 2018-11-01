@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.SMSD.Tools;
 using System;
@@ -104,7 +105,7 @@ namespace NCDK.SMSD.Algorithms.Singles
             foreach (var sourceAtom in source.Atoms)
             {
                 var smartAtom = (IQueryAtom)sourceAtom;
-                if ((removeHydrogen && !smartAtom.Symbol.Equals("H", StringComparison.Ordinal)) || (!removeHydrogen))
+                if ((removeHydrogen && !smartAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H)) || (!removeHydrogen))
                 {
                     foreach (var targetAtom in target.Atoms)
                     {
@@ -142,7 +143,7 @@ namespace NCDK.SMSD.Algorithms.Singles
             BondEnergies be = BondEnergies.Instance;
             foreach (var sourceAtom in source.Atoms)
             {
-                if ((removeHydrogen && !sourceAtom.Symbol.Equals("H", StringComparison.Ordinal)) || (!removeHydrogen))
+                if ((removeHydrogen && !sourceAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H)) || (!removeHydrogen))
                 {
                     foreach (var targetAtom in target.Atoms)
                     {
@@ -180,7 +181,7 @@ namespace NCDK.SMSD.Algorithms.Singles
             BondEnergies be = BondEnergies.Instance;
             foreach (var targetAtom in target.Atoms)
             {
-                if ((removeHydrogen && !targetAtom.Symbol.Equals("H", StringComparison.Ordinal)) || (!removeHydrogen))
+                if ((removeHydrogen && !targetAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H)) || (!removeHydrogen))
                 {
                     foreach (var sourceAtoms in source.Atoms)
                     {

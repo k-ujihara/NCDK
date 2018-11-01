@@ -23,6 +23,7 @@
  */
 
 using NCDK.Common.Primitives;
+using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Isomorphisms;
 using NCDK.SMARTS;
@@ -177,7 +178,7 @@ namespace NCDK.ForceFields
         {
             for (int v = 0; v < graph.Length; v++)
             {
-                if (container.Atoms[v].Symbol.Equals("H", StringComparison.Ordinal) && graph[v].Length == 1)
+                if (container.Atoms[v].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H) && graph[v].Length == 1)
                 {
                     int w = graph[v][0];
                     var symb = symbs[w];

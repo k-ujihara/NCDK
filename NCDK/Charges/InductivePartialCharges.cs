@@ -130,21 +130,21 @@ namespace NCDK.Charges
                     atomicNumber = element.AtomicNumber.Value;
                     if (modified)
                     {
-                        switch (symbol)
+                        switch (atom.AtomicNumber)
                         {
-                            case "Cl":
+                            case ChemicalElement.AtomicNumbers.Cl:
                                 paulingElectronegativities[i] = 3.28;
                                 break;
-                            case "Br":
+                            case ChemicalElement.AtomicNumbers.Br:
                                 paulingElectronegativities[i] = 3.13;
                                 break;
-                            case "I":
+                            case ChemicalElement.AtomicNumbers.I:
                                 paulingElectronegativities[i] = 2.93;
                                 break;
-                            case "H":
+                            case ChemicalElement.AtomicNumbers.H:
                                 paulingElectronegativities[i] = 2.10;
                                 break;
-                            case "C":
+                            case ChemicalElement.AtomicNumbers.C:
                                 if (ac.GetMaximumBondOrder(atom) == BondOrder.Single)
                                 {
                                     // Csp3
@@ -159,7 +159,7 @@ namespace NCDK.Charges
                                     paulingElectronegativities[i] = 3.15;
                                 }
                                 break;
-                            case "O":
+                            case ChemicalElement.AtomicNumbers.O:
                                 if (ac.GetMaximumBondOrder(atom) == BondOrder.Single)
                                 {
                                     // Osp3
@@ -170,13 +170,13 @@ namespace NCDK.Charges
                                     paulingElectronegativities[i] = 4.34;
                                 }
                                 break;
-                            case "Si":
+                            case ChemicalElement.AtomicNumbers.Si:
                                 paulingElectronegativities[i] = 1.99;
                                 break;
-                            case "S":
+                            case ChemicalElement.AtomicNumbers.S:
                                 paulingElectronegativities[i] = 2.74;
                                 break;
-                            case "N":
+                            case ChemicalElement.AtomicNumbers.N:
                                 paulingElectronegativities[i] = 2.59;
                                 break;
                             default:
@@ -218,15 +218,14 @@ namespace NCDK.Charges
             target = ac.Atoms[atomPosition];
             double partial = 0;
             double radius = 0;
-            string symbol = null;
             IAtomType type = null;
             try
             {
-                symbol = ac.Atoms[atomPosition].Symbol;
-                type = factory.GetAtomType(symbol);
-                if (GetCovalentRadius(symbol, ac.GetMaximumBondOrder(target)) > 0)
+                type = factory.GetAtomType(ac.Atoms[atomPosition].Symbol);
+                var n = ac.Atoms[atomPosition].AtomicNumber;
+                if (GetCovalentRadius(n, ac.GetMaximumBondOrder(target)) > 0)
                 {
-                    radiusTarget = GetCovalentRadius(symbol, ac.GetMaximumBondOrder(target));
+                    radiusTarget = GetCovalentRadius(n, ac.GetMaximumBondOrder(target));
                 }
                 else
                 {
@@ -244,20 +243,19 @@ namespace NCDK.Charges
             {
                 if (!target.Equals(atom))
                 {
-                    symbol = atom.Symbol;
                     partial = 0;
                     try
                     {
-                        type = factory.GetAtomType(symbol);
+                        type = factory.GetAtomType(atom.Symbol);
                     }
                     catch (Exception ex1)
                     {
                         Debug.WriteLine(ex1);
                         throw new CDKException($"Problems with AtomTypeFactory due to {ex1.Message}", ex1);
                     }
-                    if (GetCovalentRadius(symbol, ac.GetMaximumBondOrder(atom)) > 0)
+                    if (GetCovalentRadius(atom.AtomicNumber, ac.GetMaximumBondOrder(atom)) > 0)
                     {
-                        radius = GetCovalentRadius(symbol, ac.GetMaximumBondOrder(atom));
+                        radius = GetCovalentRadius(atom.AtomicNumber, ac.GetMaximumBondOrder(atom));
                     }
                     else
                     {
@@ -294,15 +292,13 @@ namespace NCDK.Charges
             allAtoms = ac.Atoms.ToArray();
             double tmp = 0;
             double radius = 0;
-            string symbol = null;
             IAtomType type = null;
             try
             {
-                symbol = target.Symbol;
-                type = factory.GetAtomType(symbol);
-                if (GetCovalentRadius(symbol, ac.GetMaximumBondOrder(target)) > 0)
+                type = factory.GetAtomType(target.Symbol);
+                if (GetCovalentRadius(target.AtomicNumber, ac.GetMaximumBondOrder(target)) > 0)
                 {
-                    radiusTarget = GetCovalentRadius(symbol, ac.GetMaximumBondOrder(target));
+                    radiusTarget = GetCovalentRadius(target.AtomicNumber, ac.GetMaximumBondOrder(target));
                 }
                 else
                 {
@@ -320,19 +316,19 @@ namespace NCDK.Charges
                 if (!target.Equals(allAtoms[a]))
                 {
                     tmp = 0;
-                    symbol = allAtoms[a].Symbol;
+                    var atom = allAtoms[a];
                     try
                     {
-                        type = factory.GetAtomType(symbol);
+                        type = factory.GetAtomType(atom.Symbol);
                     }
                     catch (Exception ex1)
                     {
                         Debug.WriteLine(ex1);
                         throw new CDKException("Problems with AtomTypeFactory due to " + ex1.Message, ex1);
                     }
-                    if (GetCovalentRadius(symbol, ac.GetMaximumBondOrder(allAtoms[a])) > 0)
+                    if (GetCovalentRadius(atom.AtomicNumber, ac.GetMaximumBondOrder(allAtoms[a])) > 0)
                     {
-                        radius = GetCovalentRadius(symbol, ac.GetMaximumBondOrder(allAtoms[a]));
+                        radius = GetCovalentRadius(atom.AtomicNumber, ac.GetMaximumBondOrder(allAtoms[a]));
                     }
                     else
                     {
@@ -351,30 +347,30 @@ namespace NCDK.Charges
         /// <summary>
         /// Gets the covalentRadius attribute of the InductivePartialCharges object.
         /// </summary>
-        /// <param name="symbol">symbol of the atom</param>
+        /// <param name="atomicNumber">atomic number of the atom</param>
         /// <param name="maxBondOrder">its max bond order</param>
         /// <returns>The covalentRadius value given by the reference</returns>
-        private static double GetCovalentRadius(string symbol, BondOrder maxBondOrder)
+        private static double GetCovalentRadius(int? atomicNumber, BondOrder maxBondOrder)
         {
             double radiusTarget = 0;
-            switch (symbol)
+            switch (atomicNumber)
             {
-                case "F":
+                case ChemicalElement.AtomicNumbers.F:
                     radiusTarget = 0.64;
                     break;
-                case "Cl":
+                case ChemicalElement.AtomicNumbers.Cl:
                     radiusTarget = 0.99;
                     break;
-                case "Br":
+                case ChemicalElement.AtomicNumbers.Br:
                     radiusTarget = 1.14;
                     break;
-                case "I":
+                case ChemicalElement.AtomicNumbers.I:
                     radiusTarget = 1.33;
                     break;
-                case "H":
+                case ChemicalElement.AtomicNumbers.H:
                     radiusTarget = 0.30;
                     break;
-                case "C":
+                case ChemicalElement.AtomicNumbers.C:
                     if (maxBondOrder == BondOrder.Single)
                     {
                         // Csp3
@@ -389,7 +385,7 @@ namespace NCDK.Charges
                         radiusTarget = 0.60;
                     }
                     break;
-                case "O":
+                case ChemicalElement.AtomicNumbers.O:
                     if (maxBondOrder == BondOrder.Single)
                     {
                         // Csp3
@@ -400,13 +396,13 @@ namespace NCDK.Charges
                         radiusTarget = 0.60;
                     }
                     break;
-                case "Si":
+                case ChemicalElement.AtomicNumbers.Si:
                     radiusTarget = 1.11;
                     break;
-                case "S":
+                case ChemicalElement.AtomicNumbers.S:
                     radiusTarget = 1.04;
                     break;
-                case "N":
+                case ChemicalElement.AtomicNumbers.N:
                     radiusTarget = 0.70;
                     break;
                 default:

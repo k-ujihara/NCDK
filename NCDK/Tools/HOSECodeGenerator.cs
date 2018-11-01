@@ -108,7 +108,7 @@ namespace NCDK.Tools
         /// <summary>
         /// The rank order for the given element symbols.
         /// </summary>
-        private static readonly string[] rankedSymbols = new string[] {"C", "O", "N", "S", "P", "Si", "B", "F", "Cl", "Br", ";", "I", "#", "&", "," };
+        private static readonly string[] rankedSymbols = new string[] { "C", "O", "N", "S", "P", "Si", "B", "F", "Cl", "Br", ";", "I", "#", "&", "," };
 
         /// <summary>
         /// The ranking values to be used for the symbols above.
@@ -340,7 +340,7 @@ namespace NCDK.Tools
             {
                 try
                 {
-                    if (string.Equals(atom.Symbol, "H", StringComparison.Ordinal)) continue;
+                    if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H)) continue;
                     bond = atomContainer.GetBond(root, atom);
                     
                     // In the first sphere the atoms are labeled with their own atom
@@ -399,7 +399,7 @@ namespace NCDK.Tools
                 if (!("&;#:,".IndexOf(treeNode.symbol, StringComparison.Ordinal) >= 0))
                 {
                     node = treeNode.Atom;
-                    if (string.Equals(node.Symbol, "H", StringComparison.Ordinal))
+                    if (node.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                         continue;
 
                     var conAtoms = atomContainer.GetConnectedAtoms(node).ToReadOnlyList();

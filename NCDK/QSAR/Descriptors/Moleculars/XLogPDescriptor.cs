@@ -21,6 +21,7 @@
 
 using NCDK.Aromaticities;
 using NCDK.Common.Collections;
+using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
@@ -254,28 +255,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             for (int i = 0; i < atomCount; i++)
             {
-                atomi = (IAtom)ac.Atoms[i];
-#if DEBUG
-                if (xlogPOld == xlogP && i > 0 & !symbol.Equals("H", StringComparison.Ordinal))
-                {
-                    //System.Diagnostics.Debug.WriteLine($"\nXlogPAssignmentError: Could not assign atom number:{i-1}");
-                }
-#endif
-
+                atomi = ac.Atoms[i];
                 xlogPOld = xlogP;
                 symbol = atomi.Symbol;
                 bondCount = ac.GetConnectedBonds(atomi).Count();
                 hsCount = GetHydrogenCount(ac, atomi);
                 maxBondOrder = ac.GetMaximumBondOrder(atomi);
-#if DEBUG
-                if (!string.Equals(symbol, "H", StringComparison.Ordinal))
+                switch (atomi.AtomicNumber)
                 {
-                    //Debug.WriteLine("i:"+i+" Symbol:"+symbol+" "+" bondC:"+bondCount+" Charge:"+atoms[i].FormalCharge+" hsC:"+hsCount+" maxBO:"+maxBondOrder+" Arom:"+atoms[i].IsAromatic+" AtomTypeX:"+GetAtomTypeXCount(ac, atoms[i])+" PiSys:"+GetPiSystemsCount(ac, atoms[i])+" C=:"+GetDoubleBondedCarbonsCount(ac, atoms[i])+" AromCc:"+GetAromaticCarbonsCount(ac,atoms[i])+" RS:"+((int)atoms[i].GetProperty(CDKPropertyName.PART_OF_RING_OF_SIZE)).IntValue()+"\t");
-                }
-#endif
-                switch (symbol)
-                {
-                    case "C":
+                    case ChemicalElement.AtomicNumbers.C:
                         switch (bondCount)
                         {
                             case 2:
@@ -533,7 +521,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                 break;
                         }
                         break;//C
-                    case "N":
+                    case ChemicalElement.AtomicNumbers.N:
                         //NO2
                         if (ac.GetBondOrderSum(atomi) >= 3.0 && GetOxygenCount(ac, atomi) >= 2
                                 && maxBondOrder == BondOrder.Double)
@@ -753,7 +741,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             }
                         }
                         break;
-                    case "O":
+                    case ChemicalElement.AtomicNumbers.O:
                         if (bondCount == 1 && maxBondOrder == BondOrder.Double)
                         {
                             xlogP -= 0.399;
@@ -818,7 +806,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             }
                         }
                         break;
-                    case "S":
+                    case ChemicalElement.AtomicNumbers.S:
                         if ((bondCount == 1 && maxBondOrder == BondOrder.Double)
                                 || (bondCount == 1 && atomi.FormalCharge == -1))
                         {
@@ -850,7 +838,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             }
                         }
                         break;
-                    case "P":
+                    case ChemicalElement.AtomicNumbers.P:
                         if (GetDoubleBondedSulfurCount(ac, atomi) >= 1 && bondCount >= 4)
                         {
                             xlogP += 1.253;
@@ -861,7 +849,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             xlogP -= 0.447;
                         }
                         break;
-                    case "F":
+                    case ChemicalElement.AtomicNumbers.F:
                         if (GetPiSystemsCount(ac, atomi) == 0)
                         {
                             xlogP += 0.375;
@@ -871,7 +859,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             xlogP += 0.202;
                         }
                         break;
-                    case "Cl":
+                    case ChemicalElement.AtomicNumbers.Cl:
                         if (GetPiSystemsCount(ac, atomi) == 0)
                         {
                             xlogP += 0.512;
@@ -881,7 +869,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             xlogP += 0.663;
                         }
                         break;
-                    case "Br":
+                    case ChemicalElement.AtomicNumbers.Br:
                         if (GetPiSystemsCount(ac, atomi) == 0)
                         {
                             xlogP += 0.85;
@@ -891,7 +879,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             xlogP += 0.839;
                         }
                         break;
-                    case "I":
+                    case ChemicalElement.AtomicNumbers.I:
                         if (GetPiSystemsCount(ac, atomi) == 0)
                         {
                             xlogP += 1.05;
@@ -977,8 +965,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     bondAtom0 = bond.Atoms[0];
                     bondAtom1 = bond.Atoms[1];
-                    if ((bondAtom0.Symbol.Equals("C", StringComparison.Ordinal) && bondAtom1.Symbol.Equals("N", StringComparison.Ordinal))
-                     || (bondAtom0.Symbol.Equals("N", StringComparison.Ordinal) && bondAtom1.Symbol.Equals("C", StringComparison.Ordinal))
+                    if ((bondAtom0.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.C) && bondAtom1.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N))
+                     || (bondAtom0.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N) && bondAtom1.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.C))
                      && bond.Order == BondOrder.Single)
                     {
                         aminoAcid.RemoveBond(bondAtom0, bondAtom1);
@@ -999,7 +987,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         {
                             map = (RMap)list[j];
                             atom1_ = ac.Atoms[map.Id1];
-                            if (atom1_.Symbol.Equals("O", StringComparison.Ordinal) && ac.GetMaximumBondOrder(atom1_) == BondOrder.Single)
+                            if (atom1_.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O) && ac.GetMaximumBondOrder(atom1_) == BondOrder.Single)
                             {
                                 if (ac.GetConnectedBonds(atom1_).Count() == 2 && GetHydrogenCount(ac, atom1_) == 0)
                                 {
@@ -1125,7 +1113,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int hcounter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (string.Equals(neighbour.Symbol, "H", StringComparison.Ordinal))
+                if (neighbour.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                 {
                     hcounter += 1;
                 }
@@ -1145,12 +1133,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int acounter = 0;
             foreach (var neighbour in neighbours)
             {
-                switch (neighbour.Symbol)
+                switch (neighbour.AtomicNumber)
                 {
-                    case "F":
-                    case "I":
-                    case "Cl":
-                    case "Br":
+                    case ChemicalElement.AtomicNumbers.F:
+                    case ChemicalElement.AtomicNumbers.I:
+                    case ChemicalElement.AtomicNumbers.Cl:
+                    case ChemicalElement.AtomicNumbers.Br:
                         acounter += 1;
                         break;
                 }
@@ -1171,10 +1159,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond bond;
             foreach (var neighbour in neighbours)
             {
-                switch (neighbour.Symbol)
+                switch (neighbour.AtomicNumber)
                 {
-                    case "N":
-                    case "O":
+                    case ChemicalElement.AtomicNumbers.N:
+                    case ChemicalElement.AtomicNumbers.O:
                         if (!neighbour.GetProperty<bool>("IS_IN_AROMATIC_RING"))
                         {
                             bond = ac.GetBond(neighbour, atom);
@@ -1201,9 +1189,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int carocounter = 0;
             foreach (var neighbour in neighbours)
             {
-                switch (neighbour.Symbol)
+                switch (neighbour.AtomicNumber)
                 {
-                    case "C":
+                    case ChemicalElement.AtomicNumbers.C:
                         if (neighbour.IsAromatic)
                         {
                             carocounter += 1;
@@ -1226,7 +1214,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int ccounter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (string.Equals(neighbour.Symbol, "C", StringComparison.Ordinal))
+                if (neighbour.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.C))
                 {
                     if (!neighbour.IsAromatic)
                     {
@@ -1249,9 +1237,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int ocounter = 0;
             foreach (var neighbour in neighbours)
             {
-                switch (neighbour.Symbol)
+                switch (neighbour.AtomicNumber)
                 {
-                    case "O":
+                    case ChemicalElement.AtomicNumbers.O:
                         if (!neighbour.IsAromatic)
                         {
                             ocounter += 1;
@@ -1275,9 +1263,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int cdbcounter = 0;
             foreach (var neighbour in neighbours)
             {
-                switch (neighbour.Symbol)
+                switch (neighbour.AtomicNumber)
                 {
-                    case "C":
+                    case ChemicalElement.AtomicNumbers.C:
                         bond = ac.GetBond(neighbour, atom);
                         if (bond.Order == BondOrder.Double)
                         {
@@ -1307,9 +1295,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             foreach (var neighbour in neighbours)
             {
-                switch (neighbour.Symbol)
+                switch (neighbour.AtomicNumber)
                 {
-                    case "O":
+                    case ChemicalElement.AtomicNumbers.O:
                         bond = ac.GetBond(neighbour, atom);
                         if (chargeFlag && neighbour.FormalCharge == -1 && bond.Order == BondOrder.Single)
                         {
@@ -1341,9 +1329,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int sdbcounter = 0;
             foreach (var neighbour in neighbours)
             {
-                switch (neighbour.Symbol)
+                switch (neighbour.AtomicNumber)
                 {
-                    case "S":
+                    case ChemicalElement.AtomicNumbers.S:
                         if (atom.FormalCharge == 1 && neighbour.FormalCharge == -1)
                         {
                             sdbcounter += 1;
@@ -1375,9 +1363,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int ndbcounter = 0;
             foreach (var neighbour in neighbours)
             {
-                switch (neighbour.Symbol)
+                switch (neighbour.AtomicNumber)
                 {
-                    case "N":
+                    case ChemicalElement.AtomicNumbers.N:
                         bond = ac.GetBond(neighbour, atom);
                         if (!neighbour.IsAromatic)
                         {
@@ -1404,9 +1392,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int narocounter = 0;
             foreach (var neighbour in neighbours)
             {
-                switch (neighbour.Symbol)
+                switch (neighbour.AtomicNumber)
                 {
-                    case "N":
+                    case ChemicalElement.AtomicNumbers.N:
                         if (neighbour.GetProperty<bool>("IS_IN_AROMATIC_RING"))
                         {
                             narocounter += 1;
@@ -1436,10 +1424,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     if (bond.Order != BondOrder.Single && !bond.GetConnectedAtom(neighbour).Equals(atom))
                     {
-                        switch (neighbour.Symbol)
+                        switch (neighbour.AtomicNumber)
                         {
-                            case "P":
-                            case "S":
+                            case ChemicalElement.AtomicNumbers.P:
+                            case ChemicalElement.AtomicNumbers.S:
                                 break;
                             default:
                                 picounter += 1;
@@ -1460,12 +1448,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private static bool GetPresenceOfHydroxy(IAtomContainer ac, IAtom atom)
         {
             IAtom neighbour0 = (IAtom)ac.GetConnectedAtoms(atom).First();
-            if (string.Equals(neighbour0.Symbol, "C", StringComparison.Ordinal))
+            if (neighbour0.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.C))
             {
                 var first = ac.GetConnectedAtoms(neighbour0);
                 foreach (var conAtom in first)
                 {
-                    if (string.Equals(conAtom.Symbol, "O", StringComparison.Ordinal))
+                    if (conAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O))
                     {
                         if (ac.GetBond(neighbour0, conAtom).Order == BondOrder.Single)
                         {
@@ -1496,12 +1484,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             //int counter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (string.Equals(neighbour.Symbol, "N", StringComparison.Ordinal))
+                if (neighbour.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N))
                 {
                     var second = ac.GetConnectedAtoms(neighbour);
                     foreach (var conAtom in second)
                     {
-                        if (string.Equals(conAtom.Symbol, "O", StringComparison.Ordinal))
+                        if (conAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O))
                         {
                             var bond = ac.GetBond(neighbour, conAtom);
                             if (bond.Order == BondOrder.Double)
@@ -1526,7 +1514,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var neighbours = ac.GetConnectedAtoms(atom);
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.Symbol.Equals("S", StringComparison.Ordinal) && GetOxygenCount(ac, neighbour) >= 2
+                if (neighbour.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.S) && GetOxygenCount(ac, neighbour) >= 2
                         && ac.GetConnectedBonds(neighbour).Count() == 4)
                 {
                     return true;
@@ -1547,12 +1535,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int counter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (string.Equals(neighbour.Symbol, "C", StringComparison.Ordinal))
+                if (neighbour.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.C))
                 {
                     var second = ac.GetConnectedAtoms(neighbour);
                     foreach (var conAtom in second)
                     {
-                        if (string.Equals(conAtom.Symbol, "O", StringComparison.Ordinal))
+                        if (conAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O))
                         {
                             var bond = ac.GetBond(neighbour, conAtom);
                             if (bond.Order == BondOrder.Double)
@@ -1581,10 +1569,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 foreach (var firstAtom in first)
                 {
-                    switch (firstAtom.Symbol)
+                    switch (firstAtom.AtomicNumber)
                     {
-                        case "C":
-                        case "H":
+                        case ChemicalElement.AtomicNumbers.C:
+                        case ChemicalElement.AtomicNumbers.H:
                             break;
                         default:
                             return false;
@@ -1594,10 +1582,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     {
                         foreach (var secondAtom in second)
                         {
-                            switch (secondAtom.Symbol)
+                            switch (secondAtom.AtomicNumber)
                             {
-                                case "C":
-                                case "H":
+                                case ChemicalElement.AtomicNumbers.C:
+                                case ChemicalElement.AtomicNumbers.H:
                                     break;
                                 default:
                                     return false;
@@ -1607,10 +1595,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             {
                                 foreach (var thirdAtom in third)
                                 {
-                                    switch (thirdAtom.Symbol)
+                                    switch (thirdAtom.AtomicNumber)
                                     {
-                                        case "C":
-                                        case "H":
+                                        case ChemicalElement.AtomicNumbers.C:
+                                        case ChemicalElement.AtomicNumbers.H:
                                             break;
                                         default:
                                             return false;

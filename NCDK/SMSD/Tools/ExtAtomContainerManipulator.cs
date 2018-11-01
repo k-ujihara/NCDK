@@ -25,6 +25,7 @@
 
 using NCDK.Aromaticities;
 using NCDK.AtomTypes;
+using NCDK.Config;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
 using System;
@@ -155,7 +156,7 @@ namespace NCDK.SMSD.Tools
             foreach (var iAtom in atomContainer.GetConnectedAtoms(atom))
             {
                 IAtom connectedAtom = iAtom;
-                if (string.Equals(connectedAtom.Symbol, "H", StringComparison.Ordinal))
+                if (connectedAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                 {
                     hCount++;
                 }
@@ -199,7 +200,7 @@ namespace NCDK.SMSD.Tools
                 List<IAtom> remove = new List<IAtom>(); // lists removed Hs.
                 foreach (var atom in atomContainer.Atoms)
                 {
-                    if (string.Equals(atom.Symbol, "H", StringComparison.Ordinal))
+                    if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
                         remove.Add(atom);
                 }
                 foreach (var a in remove)
