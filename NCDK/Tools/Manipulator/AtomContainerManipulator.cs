@@ -219,7 +219,7 @@ namespace NCDK.Tools.Manipulator
             try
             {
                 var isotopes = BODRIsotopeFactory.Instance;
-                double hmass = isotopes.GetNaturalMass(ChemicalElements.Hydrogen.ToIElement());
+                double hmass = isotopes.GetNaturalMass(ChemicalElements.Hydrogen.Element);
                 double mw = 0.0;
                 foreach (IAtom atom in mol.Atoms)
                 {
@@ -261,7 +261,7 @@ namespace NCDK.Tools.Manipulator
             try
             {
                 var isotopes = BODRIsotopeFactory.Instance;
-                var hydgrogenMass = isotopes.GetNaturalMass(ChemicalElements.Hydrogen.ToIElement());
+                var hydgrogenMass = isotopes.GetNaturalMass(ChemicalElements.Hydrogen.Element);
 
                 double mass = 0.0;
                 foreach (var atom in atomContainer.Atoms)
@@ -272,7 +272,7 @@ namespace NCDK.Tools.Manipulator
                     if (atom.ImplicitHydrogenCount == null)
                         throw new ArgumentException("an atom had with unknown (null) implicit hydrogens");
 
-                    mass += isotopes.GetNaturalMass(ChemicalElement.OfNumber(atom.AtomicNumber.Value).ToIElement());
+                    mass += isotopes.GetNaturalMass(ChemicalElement.OfNumber(atom.AtomicNumber.Value).Element);
                     mass += hydgrogenMass * atom.ImplicitHydrogenCount.Value;
                 }
                 return mass;

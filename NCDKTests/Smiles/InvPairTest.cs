@@ -42,7 +42,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestInvPairLongIAtom()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
+            IAtom atom = new Atom(ChemicalElements.Carbon.Element);
             InvPair pair = new InvPair(5L, atom);
             Assert.IsNotNull(pair);
             Assert.AreEqual(5L, pair.Curr);
@@ -52,7 +52,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestEqualsObject()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
+            IAtom atom = new Atom(ChemicalElements.Carbon.Element);
             InvPair pair = new InvPair(5L, atom);
             Assert.AreEqual(pair, pair);
             Assert.AreNotSame("NotSame", pair);
@@ -62,7 +62,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestToString()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
+            IAtom atom = new Atom(ChemicalElements.Carbon.Element);
             InvPair pair = new InvPair(5L, atom);
             Assert.IsNotNull(pair.ToString());
             Assert.IsTrue(pair.ToString().Length > 0);
@@ -71,7 +71,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestSetAtomIAtom()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
+            IAtom atom = new Atom(ChemicalElements.Carbon.Element);
             InvPair pair = new InvPair();
             Assert.AreNotSame(atom, pair.Atom);
             pair.Atom = atom;
@@ -83,7 +83,7 @@ namespace NCDK.Smiles
         {
             InvPair pair = new InvPair();
             Assert.IsNull(pair.Atom);
-            pair.Atom = new Atom(ChemicalElements.Carbon.ToIElement());
+            pair.Atom = new Atom(ChemicalElements.Carbon.Element);
             Assert.IsNotNull(pair.Atom);
         }
 
@@ -91,7 +91,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestGetPrime()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
+            IAtom atom = new Atom(ChemicalElements.Carbon.Element);
             InvPair pair = new InvPair(5, atom);
             pair.SetPrime();
             int prime = pair.Prime;
@@ -120,7 +120,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestCommit()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
+            IAtom atom = new Atom(ChemicalElements.Carbon.Element);
             InvPair pair = new InvPair(5L, atom);
             pair.Commit();
             Assert.IsNotNull(atom.GetProperty<long>(InvPair.CanonicalLabelPropertyKey));
@@ -130,7 +130,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestSetCurrLong()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
+            IAtom atom = new Atom(ChemicalElements.Carbon.Element);
             InvPair pair = new InvPair(5L, atom);
             Assert.AreEqual(5L, pair.Curr);
             pair.Curr = 4L;
@@ -140,7 +140,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestGetCurr()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
+            IAtom atom = new Atom(ChemicalElements.Carbon.Element);
             InvPair pair = new InvPair(5L, atom);
             Assert.AreEqual(5L, pair.Curr);
         }
@@ -148,7 +148,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestSetLastLong()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
+            IAtom atom = new Atom(ChemicalElements.Carbon.Element);
             InvPair pair = new InvPair(5L, atom);
             Assert.AreEqual(0L, pair.Last);
             pair.Last = 4L;
@@ -158,7 +158,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestGetLast()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
+            IAtom atom = new Atom(ChemicalElements.Carbon.Element);
             InvPair pair = new InvPair(5L, atom);
             Assert.AreEqual(0L, pair.Last);
         }

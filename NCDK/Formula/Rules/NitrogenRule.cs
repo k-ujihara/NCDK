@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -123,12 +124,12 @@ namespace NCDK.Formula.Rules
             return NominalMassAffectables.Sum(n => MolecularFormulaManipulator.GetElementCount(formula, n));
         }
 
-        private static readonly Config.ImmutableAtomType[] NominalMassAffectables = new Config.ImmutableAtomType[]
+        private static readonly IElement[] NominalMassAffectables = new IElement[]
         {
-            new Config.ImmutableAtomType(Silent.ChemObjectBuilder.Instance.NewAtom("Co")),
-            new Config.ImmutableAtomType(Silent.ChemObjectBuilder.Instance.NewAtom("Hg")),
-            new Config.ImmutableAtomType(Silent.ChemObjectBuilder.Instance.NewAtom("Pt")),
-            new Config.ImmutableAtomType(Silent.ChemObjectBuilder.Instance.NewAtom("As")),
+            ChemicalElements.Cobalt.Element,
+            ChemicalElements.Mercury.Element,
+            ChemicalElements.Platinum.Element,
+            ChemicalElements.Arsenic.Element,
         };
 
         /// <summary>

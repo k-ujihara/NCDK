@@ -87,9 +87,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int heteroCount = 0;
             foreach (var atom in ac.Atoms)
             {
-                if (!ChemicalElements.Hydrogen.ToIElement().Symbol.Equals(atom.Symbol, StringComparison.Ordinal))
+                if (!ChemicalElements.Hydrogen.Element.Symbol.Equals(atom.Symbol, StringComparison.Ordinal))
                 {
-                    if (ChemicalElements.Carbon.ToIElement().Symbol.Equals(atom.Symbol, StringComparison.Ordinal))
+                    if (ChemicalElements.Carbon.Element.Symbol.Equals(atom.Symbol, StringComparison.Ordinal))
                     {
                         carbonCount++;
                     }

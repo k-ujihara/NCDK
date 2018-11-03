@@ -48,7 +48,7 @@ namespace NCDK.Tools
         {
             // First we create a simple carbon ring to play with...
             var mol = new AtomContainer();
-            var carbon = new AtomType(ChemicalElements.Carbon.ToIElement());
+            var carbon = new AtomType(ChemicalElements.Carbon.Element);
 
             var a0 = new Atom("C")
             {
@@ -620,7 +620,7 @@ namespace NCDK.Tools
         public void TestButadiene()
         {
             var mol = new AtomContainer();
-            var carbon = new AtomType(ChemicalElements.Carbon.ToIElement());
+            var carbon = new AtomType(ChemicalElements.Carbon.Element);
 
             var a0 = new Atom("C")
             {

@@ -23,7 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace NCDK.Config
 {
@@ -32,14 +31,13 @@ namespace NCDK.Config
     /// </summary>
     // @author      egonw
     // @cdk.module  core
-    // @cdk.githash
-    internal sealed class NaturalElement 
+    internal sealed class ImmutableElement 
         : IElement
     {
         private readonly string  symbol;
         private readonly int? atomicNumber;
 
-        public NaturalElement(string element, int? atomicNumber)
+        internal ImmutableElement(string element, int? atomicNumber)
         {
             this.symbol = element;
             this.atomicNumber = atomicNumber;

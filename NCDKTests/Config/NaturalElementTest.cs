@@ -35,7 +35,7 @@ namespace NCDK.Config
         [TestMethod()]
         public void TestGetFlagValueZeroDefault()
         {
-            IChemObject chemObject = new NaturalElement("C", 12);
+            IChemObject chemObject = new ImmutableElement("C", 12);
             Assert.AreEqual(false, chemObject.IsVisited);
             Assert.AreEqual(false, chemObject.IsPlaced);
         }
@@ -43,14 +43,14 @@ namespace NCDK.Config
         [TestMethod()]
         public void TestSymbol()
         {
-            IElement chemObject = new NaturalElement("C", 12);
+            IElement chemObject = new ImmutableElement("C", 12);
             Assert.AreEqual("C", chemObject.Symbol);
         }
 
         [TestMethod()]
         public void TestMassNumber()
         {
-            IElement chemObject = new NaturalElement("C", 12);
+            IElement chemObject = new ImmutableElement("C", 12);
             Assert.AreEqual(12, chemObject.AtomicNumber.Value);
         }
     }

@@ -52,7 +52,7 @@ namespace NCDK.Tools
         public void TestMethane()
         {
             IAtomContainer molecule = new AtomContainer();
-            IAtom newAtom = new Atom(ChemicalElements.Carbon.ToIElement());
+            IAtom newAtom = new Atom(ChemicalElements.Carbon.Element);
             molecule.Atoms.Add(newAtom);
             IAtomType type = matcher.FindMatchingAtomType(molecule, newAtom);
             Assert.IsNotNull(type);
@@ -68,8 +68,8 @@ namespace NCDK.Tools
         public void TestFormaldehyde()
         {
             IAtomContainer molecule = new AtomContainer();
-            IAtom newAtom = new Atom(ChemicalElements.Carbon.ToIElement());
-            IAtom newAtom2 = new Atom(ChemicalElements.Oxygen.ToIElement());
+            IAtom newAtom = new Atom(ChemicalElements.Carbon.Element);
+            IAtom newAtom2 = new Atom(ChemicalElements.Oxygen.Element);
             molecule.Atoms.Add(newAtom);
             molecule.Atoms.Add(newAtom2);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
@@ -92,8 +92,8 @@ namespace NCDK.Tools
         public void TestMethanol()
         {
             IAtomContainer molecule = new AtomContainer();
-            IAtom newAtom = new Atom(ChemicalElements.Carbon.ToIElement());
-            IAtom newAtom2 = new Atom(ChemicalElements.Oxygen.ToIElement());
+            IAtom newAtom = new Atom(ChemicalElements.Carbon.Element);
+            IAtom newAtom2 = new Atom(ChemicalElements.Oxygen.Element);
             molecule.Atoms.Add(newAtom);
             molecule.Atoms.Add(newAtom2);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
@@ -116,8 +116,8 @@ namespace NCDK.Tools
         public void TestHCN()
         {
             IAtomContainer molecule = new AtomContainer();
-            IAtom newAtom = new Atom(ChemicalElements.Carbon.ToIElement());
-            IAtom newAtom2 = new Atom(ChemicalElements.Nitrogen.ToIElement());
+            IAtom newAtom = new Atom(ChemicalElements.Carbon.Element);
+            IAtom newAtom2 = new Atom(ChemicalElements.Nitrogen.Element);
             molecule.Atoms.Add(newAtom);
             molecule.Atoms.Add(newAtom2);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Triple);
@@ -140,8 +140,8 @@ namespace NCDK.Tools
         public void TestMethylAmine()
         {
             IAtomContainer molecule = new AtomContainer();
-            IAtom newAtom = new Atom(ChemicalElements.Carbon.ToIElement());
-            IAtom newAtom2 = new Atom(ChemicalElements.Nitrogen.ToIElement());
+            IAtom newAtom = new Atom(ChemicalElements.Carbon.Element);
+            IAtom newAtom2 = new Atom(ChemicalElements.Nitrogen.Element);
             molecule.Atoms.Add(newAtom);
             molecule.Atoms.Add(newAtom2);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
@@ -164,8 +164,8 @@ namespace NCDK.Tools
         public void TestMethyleneImine()
         {
             IAtomContainer molecule = new AtomContainer();
-            IAtom newAtom = new Atom(ChemicalElements.Carbon.ToIElement());
-            IAtom newAtom2 = new Atom(ChemicalElements.Nitrogen.ToIElement());
+            IAtom newAtom = new Atom(ChemicalElements.Carbon.Element);
+            IAtom newAtom2 = new Atom(ChemicalElements.Nitrogen.Element);
             molecule.Atoms.Add(newAtom);
             molecule.Atoms.Add(newAtom2);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);

@@ -849,9 +849,9 @@ namespace NCDK.Smiles
         public void TestPreservingFormalCharge()
         {
             AtomContainer mol = new AtomContainer();
-            mol.Atoms.Add(new Atom(ChemicalElements.Oxygen.ToIElement()));
+            mol.Atoms.Add(new Atom(ChemicalElements.Oxygen.Element));
             mol.Atoms[0].FormalCharge = -1;
-            mol.Atoms.Add(new Atom(ChemicalElements.Carbon.ToIElement()));
+            mol.Atoms.Add(new Atom(ChemicalElements.Carbon.Element));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             AddImplicitHydrogens(mol);
             SmilesGenerator generator = new SmilesGenerator();

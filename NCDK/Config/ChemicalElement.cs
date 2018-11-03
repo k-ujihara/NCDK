@@ -108,17 +108,14 @@ namespace NCDK.Config
             this.CovalentRadius = rCov;
             this.VdwRadius = rW;
             this.Electronegativity = electronegativity;
-            this.instance = new NaturalElement(symbol, number);
+            this.instance = new ImmutableElement(symbol, number);
         }
 
         /// <summary>
         /// Access an  <see cref="IElement"/> instance of the chemical element.
         /// </summary>
         /// <returns>an instance</returns>
-        public IElement ToIElement()
-        {
-            return instance;
-        }
+        public IElement Element => instance;
 
         /// <summary>
         /// Obtain the element with the specified atomic number. If no element had

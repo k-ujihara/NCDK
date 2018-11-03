@@ -50,8 +50,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private IAtomContainer MakeEthane()
         {
             var container = new AtomContainer();
-            container.Atoms.Add(container.Builder.NewAtom(ChemicalElements.Carbon.ToIElement()));
-            container.Atoms.Add(container.Builder.NewAtom(ChemicalElements.Carbon.ToIElement()));
+            container.Atoms.Add(container.Builder.NewAtom(ChemicalElements.Carbon.Element));
+            container.Atoms.Add(container.Builder.NewAtom(ChemicalElements.Carbon.Element));
             container.AddBond(container.Atoms[0], container.Atoms[1], BondOrder.Single);
             return container;
         }
@@ -59,8 +59,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private IAtomContainer MakeButane()
         {
             var container = MakeEthane();
-            container.Atoms.Add(container.Builder.NewAtom(ChemicalElements.Carbon.ToIElement()));
-            container.Atoms.Add(container.Builder.NewAtom(ChemicalElements.Carbon.ToIElement()));
+            container.Atoms.Add(container.Builder.NewAtom(ChemicalElements.Carbon.Element));
+            container.Atoms.Add(container.Builder.NewAtom(ChemicalElements.Carbon.Element));
             container.AddBond(container.Atoms[1], container.Atoms[2], BondOrder.Single);
             container.AddBond(container.Atoms[2], container.Atoms[3], BondOrder.Single);
             return container;
