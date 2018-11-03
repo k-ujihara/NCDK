@@ -142,19 +142,19 @@ namespace NCDK.Config
         public static readonly ChemicalElement Roentgenium = new ChemicalElement("Roentgenium", 111, "Rg", 7, 11, null, null, null);
         public static readonly ChemicalElement Copernicium = new ChemicalElement("Copernicium", 112, "Cn", 7, 12, null, null, null);
         [Obsolete("Use " + nameof(Nihonium))]
-        public static readonly ChemicalElement Ununtrium = new ChemicalElement("Ununtrium", 113, "Uut", 0, 0, null, null, null);
-        public static readonly ChemicalElement Nihonium = new ChemicalElement("Nihonium", 113, "Nh", 0, 0, null, null, null);
-        public static readonly ChemicalElement Flerovium = new ChemicalElement("Flerovium", 114, "Fl", 0, 0, null, null, null);
+        public static readonly ChemicalElement Ununtrium = new ChemicalElement("Ununtrium", 113, "Uut", 7, 13, null, null, null);
+        public static readonly ChemicalElement Nihonium = new ChemicalElement("Nihonium", 113, "Nh", 7, 13, null, null, null);
+        public static readonly ChemicalElement Flerovium = new ChemicalElement("Flerovium", 114, "Fl", 7, 14, null, null, null);
         [Obsolete("Use " + nameof(Moscovium))]
-        public static readonly ChemicalElement Ununpentium = new ChemicalElement("Ununpentium", 115, "Uup", 0, 0, null, null, null);
-        public static readonly ChemicalElement Moscovium = new ChemicalElement("Moscovium", 115, "Mc", 0, 0, null, null, null);
-        public static readonly ChemicalElement Livermorium = new ChemicalElement("Livermorium", 116, "Lv", 0, 0, null, null, null);
+        public static readonly ChemicalElement Ununpentium = new ChemicalElement("Ununpentium", 115, "Uup", 7, 15, null, null, null);
+        public static readonly ChemicalElement Moscovium = new ChemicalElement("Moscovium", 115, "Mc", 7, 15, null, null, null);
+        public static readonly ChemicalElement Livermorium = new ChemicalElement("Livermorium", 116, "Lv", 7, 16, null, null, null);
         [Obsolete("Use " + nameof(Tennessine))]
-        public static readonly ChemicalElement Ununseptium = new ChemicalElement("Ununseptium", 117, "Uus", 0, 0, null, null, null);
-        public static readonly ChemicalElement Tennessine = new ChemicalElement("Tennessine", 117, "Ts", 0, 0, null, null, null);
+        public static readonly ChemicalElement Ununseptium = new ChemicalElement("Ununseptium", 117, "Uus", 7, 17, null, null, null);
+        public static readonly ChemicalElement Tennessine = new ChemicalElement("Tennessine", 117, "Ts", 7, 17, null, null, null);
         [Obsolete("Use " + nameof(Oganesson))]
-        public static readonly ChemicalElement Ununoctium = new ChemicalElement("Ununoctium", 118, "Uuo", 0, 0, null, null, null);
-        public static readonly ChemicalElement Oganesson = new ChemicalElement("Oganesson", 118, "Og", 0, 0, null, null, null);
+        public static readonly ChemicalElement Ununoctium = new ChemicalElement("Ununoctium", 118, "Uuo", 7, 18, null, null, null);
+        public static readonly ChemicalElement Oganesson = new ChemicalElement("Oganesson", 118, "Og", 7, 18, null, null, null);
     }
     public sealed partial class ChemicalElement
     {
