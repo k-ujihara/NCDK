@@ -50,7 +50,7 @@ namespace NCDK.IO.PubChemXml
         public PubChemXMLHelper(IChemObjectBuilder builder)
         {
             this.builder = builder;
-            factory = BODRIsotopeFactory.Instance;
+            factory = CDK.IsotopeFactory;
         }
 
         // general elements
@@ -228,16 +228,16 @@ namespace NCDK.IO.PubChemXml
             {
                 if (Name_EL_ELEMENT.Equals(elm.Name))
                 {
-                    int atomicNumber = int.Parse(elm.Value, NumberFormatInfo.InvariantInfo);
-                    IElement element = factory.GetElement(atomicNumber);
+                    var atomicNumber = int.Parse(elm.Value, NumberFormatInfo.InvariantInfo);
+                    var element = factory.GetElement(atomicNumber);
                     if (element == null)
                     {
-                        IAtom atom = molecule.Builder.NewPseudoAtom();
+                        var atom = molecule.Builder.NewPseudoAtom();
                         molecule.Atoms.Add(atom);
                     }
                     else
                     {
-                        IAtom atom = molecule.Builder.NewAtom(element.Symbol);
+                        var atom = molecule.Builder.NewAtom(element.Symbol);
                         atom.AtomicNumber = element.AtomicNumber;
                         molecule.Atoms.Add(atom);
                     }

@@ -44,7 +44,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestFingerprint()
         {
-            SmilesParser parser = CDK.SilentSmilesParser;
+            SmilesParser parser = CDK.SmilesParser;
             IFingerprinter printer = new GraphOnlyFingerprinter();
 
             IBitFingerprint bs1 = printer.GetBitFingerprint(parser.ParseSmiles("C=C-C#N"));

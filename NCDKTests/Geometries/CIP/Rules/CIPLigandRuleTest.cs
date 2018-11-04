@@ -31,7 +31,7 @@ namespace NCDK.Geometries.CIP.Rules
     [TestClass()]
     public class CIPLigandRuleTest : CDKTestCase
     {
-        static SmilesParser smiles = CDK.SilentSmilesParser;
+        static SmilesParser smiles = CDK.SmilesParser;
 
         [TestMethod()]
         public void TestCBrIFCl()

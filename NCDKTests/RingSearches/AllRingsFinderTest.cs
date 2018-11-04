@@ -231,7 +231,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestRingFlags1()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var molecule = sp.ParseSmiles("c1ccccc1");
             foreach (var a in molecule.Atoms)
                 a.IsInRing = false;
@@ -249,7 +249,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestRingFlags2()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var molecule = sp.ParseSmiles("C1CCCC1CC");
             foreach (var a in molecule.Atoms)
                 a.IsInRing = false;

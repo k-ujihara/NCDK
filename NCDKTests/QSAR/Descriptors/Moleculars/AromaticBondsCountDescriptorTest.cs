@@ -41,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             object[] parameters = new object[] { true };
             Descriptor.Parameters = parameters;
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCOc1ccccc1"); // ethanol
             Assert.AreEqual(6, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }

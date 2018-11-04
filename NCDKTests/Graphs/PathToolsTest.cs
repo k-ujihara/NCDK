@@ -32,7 +32,7 @@ namespace NCDK.Graphs
     public class PathToolsTest : CDKTestCase
     {
         private static IAtomContainer molecule = TestMoleculeFactory.MakeAlphaPinene();
-        private static SmilesParser sp = CDK.SilentSmilesParser;
+        private static SmilesParser sp = CDK.SmilesParser;
 
         [TestMethod()]
         public virtual void TestBreadthFirstTargetSearch_IAtomContainer_List_IAtom_int_int()
@@ -85,7 +85,7 @@ namespace NCDK.Graphs
             IAtomContainer atomContainer = null;
             IAtom start = null;
             IAtom end = null;
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             atomContainer = sp.ParseSmiles("CCCC");
             start = atomContainer.Atoms[0];
             end = atomContainer.Atoms[3];

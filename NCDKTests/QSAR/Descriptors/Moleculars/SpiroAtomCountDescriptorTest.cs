@@ -25,7 +25,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [TestClass]
     public class SpiroAtomCountDescriptorTest : MolecularDescriptorTest
     {
-        Smiles.SmilesParser sp = CDK.SilentSmilesParser;
+        Smiles.SmilesParser sp = CDK.SmilesParser;
 
         public SpiroAtomCountDescriptorTest()
         {

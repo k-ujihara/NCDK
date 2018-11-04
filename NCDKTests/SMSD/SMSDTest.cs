@@ -46,7 +46,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestInit_3args_1()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/OCC=C");
             var queryac = sp.ParseSmiles("CCCOCC(C)=C");
 
@@ -63,7 +63,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestInit_3args_2()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/OCC=C");
             var queryac = sp.ParseSmiles("CCCOCC(C)=C");
 
@@ -109,7 +109,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestSet_IAtomContainer_IAtomContainer()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -151,7 +151,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestSet_MolHandler_MolHandler()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
 
             var target1 = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
@@ -220,7 +220,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetFirstAtomMapping()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -238,7 +238,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetFirstMapping()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -256,7 +256,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestSetChemFilters()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/OCC=C");
             var queryac = sp.ParseSmiles("CCCOCC(C)=C");
 
@@ -272,7 +272,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetFragmentSize()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -289,7 +289,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetStereoScore()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/OCC=C");
             var queryac = sp.ParseSmiles("CCCOCC(C)=C");
 
@@ -306,7 +306,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetEnergyScore()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -323,7 +323,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetReactantMolecule()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -340,7 +340,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetProductMolecule()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -357,7 +357,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetTanimotoSimilarity()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -375,7 +375,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestIsStereoMisMatch()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -391,7 +391,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestIsSubgraph()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -407,7 +407,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestGetEuclideanDistance()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -429,7 +429,7 @@ namespace NCDK.SMSD
         public void TestQueryAtomContainerDefault()
         {
             Isomorphism smsd = new Isomorphism(Algorithm.Default, true);
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var query = sp.ParseSmiles("CC");
             var target = sp.ParseSmiles("C1CCC12CCCC2");
 
@@ -447,7 +447,7 @@ namespace NCDK.SMSD
         public void TestQueryAtomContainerMCSPLUS()
         {
             Isomorphism smsd = new Isomorphism(Algorithm.MCSPlus, true);
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var query = sp.ParseSmiles("CC");
             var target = sp.ParseSmiles("C1CCC12CCCC2");
 
@@ -464,7 +464,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestQueryAtomContainerSubstructure()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var query = sp.ParseSmiles("CC");
             var target = sp.ParseSmiles("C1CCC12CCCC2");
 
@@ -493,7 +493,7 @@ namespace NCDK.SMSD
         public void TestQueryAtomCount()
         {
             Isomorphism smsd = new Isomorphism(Algorithm.Default, true);
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var query = sp.ParseSmiles("CC");
             var target = sp.ParseSmiles("C1CCC12CCCC2");
 
@@ -512,7 +512,7 @@ namespace NCDK.SMSD
         public void TestMatchCount()
         {
             Isomorphism smsd = new Isomorphism(Algorithm.Default, true);
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var query = sp.ParseSmiles("CC");
             var target = sp.ParseSmiles("C1CCC12CCCC2");
 
@@ -531,7 +531,7 @@ namespace NCDK.SMSD
         public void TestMatchCountCDKMCS()
         {
             Isomorphism smsd = new Isomorphism(Algorithm.CDKMCS, true);
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var query = sp.ParseSmiles("CC");
             var target = sp.ParseSmiles("C1CCC12CCCC2");
 
@@ -550,7 +550,7 @@ namespace NCDK.SMSD
         public void TestImpossibleQuery()
         {
             Isomorphism smsd = new Isomorphism(Algorithm.Default, true);
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var query = sp.ParseSmiles("CC");
             var target = sp.ParseSmiles("C");
 

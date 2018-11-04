@@ -131,7 +131,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestBasicQueryAtomContainer()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
             var SMILESquery = sp.ParseSmiles("CC"); // acetic acid anhydride
             var query = QueryAtomContainerCreator.CreateBasicQueryContainer(SMILESquery);
@@ -180,7 +180,7 @@ namespace NCDK.Isomorphisms
             reader.Read(temp);
             query1 = QueryAtomContainerCreator.CreateBasicQueryContainer(temp);
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles("C1CCCCC1");
             query2 = QueryAtomContainerCreator.CreateBasicQueryContainer(atomContainer);
 
@@ -218,7 +218,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestBug2944080()
         {
-            var smilesParser = CDK.SilentSmilesParser;
+            var smilesParser = CDK.SmilesParser;
             var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             var mol2 = smilesParser.ParseSmiles("CCC(=CC)C(=O)NC(N)=O");
 
@@ -235,7 +235,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestGetSubgraphAtomsMap2944080()
         {
-            var smilesParser = CDK.SilentSmilesParser;
+            var smilesParser = CDK.SmilesParser;
             var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             var mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
 
@@ -249,7 +249,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestGetSubgraphMap2944080()
         {
-            var smilesParser = CDK.SilentSmilesParser;
+            var smilesParser = CDK.SmilesParser;
             var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             var mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
 
@@ -263,7 +263,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSearchNoConditions2944080()
         {
-            var smilesParser = CDK.SilentSmilesParser;
+            var smilesParser = CDK.SmilesParser;
             var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             var mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
 
@@ -277,7 +277,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSearch2944080()
         {
-            var smilesParser = CDK.SilentSmilesParser;
+            var smilesParser = CDK.SmilesParser;
             var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             var mol2 = smilesParser.ParseSmiles("CCC(=CC)C(=O)NC(N)=O");
 
@@ -303,7 +303,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestGetSubgraphAtomsMaps2944080()
         {
-            var smilesParser = CDK.SilentSmilesParser;
+            var smilesParser = CDK.SmilesParser;
             var mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             var mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
 
@@ -379,8 +379,8 @@ namespace NCDK.Isomorphisms
         public void TestItself()
         {
             var smiles = "C1CCCCCCC1CC";
-            var query = QueryAtomContainerCreator.CreateAnyAtomContainer(CDK.SilentSmilesParser.ParseSmiles(smiles), true);
-            var ac = CDK.SilentSmilesParser.ParseSmiles(smiles);
+            var query = QueryAtomContainerCreator.CreateAnyAtomContainer(CDK.SmilesParser.ParseSmiles(smiles), true);
+            var ac = CDK.SmilesParser.ParseSmiles(smiles);
             if (standAlone)
             {
                 Console.Out.WriteLine("AtomCount of query: " + query.Atoms.Count);
@@ -408,7 +408,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestAnyAtomAnyBondCase()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("O1C=CC=C1");
             var queryac = sp.ParseSmiles("C1CCCC1");
             var query = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(queryac, false);
@@ -421,7 +421,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestFirstArgumentMustNotBeAnQueryAtomContainer()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("O1C=CC=C1");
             var queryac = sp.ParseSmiles("C1CCCC1");
             var query = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(queryac, false);
@@ -440,7 +440,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSingleAtomMatching()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C");
             var query = sp.ParseSmiles("C");
 
@@ -452,7 +452,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSingleAtomMismatching()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C");
             var query = sp.ParseSmiles("N");
 
@@ -465,7 +465,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSingleAtomMatching1()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("[H]");
             var queryac = sp.ParseSmiles("[H]");
             var query = QueryAtomContainerCreator.CreateSymbolAndBondOrderQueryContainer(queryac);
@@ -484,7 +484,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSingleAtomMatching2()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("CNC");
             var queryac = sp.ParseSmiles("C");
             var query = QueryAtomContainerCreator.CreateSymbolAndBondOrderQueryContainer(queryac);
@@ -510,7 +510,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSingleAtomMatching3()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("CNC");
             var queryac = sp.ParseSmiles("C");
 

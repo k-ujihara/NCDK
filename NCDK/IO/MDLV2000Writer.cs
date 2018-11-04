@@ -23,7 +23,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
 using NCDK.Isomorphisms.Matchers;
@@ -753,7 +752,7 @@ namespace NCDK.IO
                 return 0;
             try
             {
-                major = BODRIsotopeFactory.Instance.GetMajorIsotope(atom.Symbol);
+                major = CDK.IsotopeFactory.GetMajorIsotope(atom.Symbol);
             }
             catch (IOException)
             {
@@ -870,7 +869,7 @@ namespace NCDK.IO
             if (atom.MassNumber == null)
                 return false;
 
-            var major = BODRIsotopeFactory.Instance.GetMajorIsotope(atom.Symbol);
+            var major = CDK.IsotopeFactory.GetMajorIsotope(atom.Symbol);
             return major != null && major.MassNumber.Equals(atom.MassNumber);
         }
 

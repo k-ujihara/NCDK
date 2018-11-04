@@ -937,7 +937,7 @@ namespace NCDK.Smiles
         {
             string smiles = "c1(c2ccc(c8ccccc8)cc2)" + "c(c3ccc(c9ccccc9)cc3)" + "c(c4ccc(c%10ccccc%10)cc4)"
                 + "c(c5ccc(c%11ccccc%11)cc5)" + "c(c6ccc(c%12ccccc%12)cc6)" + "c1(c7ccc(c%13ccccc%13)cc7)";
-            var smilesParser = CDK.SilentSmilesParser;
+            var smilesParser = CDK.SmilesParser;
             var cdkMol = smilesParser.ParseSmiles(smiles);
             var smilesGenerator = new SmilesGenerator();
             string genSmiles = smilesGenerator.Create(cdkMol);
@@ -958,7 +958,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestRoundTripPseudoAtom()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             string smiles = "[12*H2-]";
             var mol = sp.ParseSmiles(smiles);
             var smilesGenerator = SmilesGenerator.Isomeric();
@@ -970,7 +970,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestBug2781199()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             string smiles = "n1ncn(c1)CC";
             var mol = sp.ParseSmiles(smiles);
             var smilesGenerator = new SmilesGenerator().Aromatic();
@@ -982,7 +982,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestCanSmiWithoutConfiguredAtoms()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             string s1 = "OC(=O)C(Br)(Cl)N";
             string s2 = "ClC(Br)(N)C(=O)O";
 
@@ -1000,7 +1000,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestCanSmiWithConfiguredAtoms()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             string s1 = "OC(=O)C(Br)(Cl)N";
             string s2 = "ClC(Br)(N)C(=O)O";
 
@@ -1022,7 +1022,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestBug3040273()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var testSmiles = "C1(C(C(C(C(C1Br)Br)Br)Br)Br)Br";
             var mol = sp.ParseSmiles(testSmiles);
             var fact = BODRIsotopeFactory.Instance;
@@ -1074,7 +1074,7 @@ namespace NCDK.Smiles
             }
 
             // read in the SMILES
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var adenine2 = sp.ParseSmiles(smi);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(adenine2);
             CDK.HydrogenAdder.AddImplicitHydrogens(adenine2);
@@ -1105,7 +1105,7 @@ namespace NCDK.Smiles
             }
 
             // read in the SMILES
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var adenine2 = sp.ParseSmiles(smi);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(adenine2);
             CDK.HydrogenAdder.AddImplicitHydrogens(adenine2);
@@ -1120,7 +1120,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void AtomClasses()
         {
-            var ethanol = CDK.SilentSmilesParser.ParseSmiles("C[CH2:6]O");
+            var ethanol = CDK.SmilesParser.ParseSmiles("C[CH2:6]O");
             Assert.AreEqual("CCO", SmilesGenerator.Generic().Create(ethanol));
             Assert.AreEqual("C[CH2:6]O", SmilesGenerator.Generic().WithAtomClasses().Create(ethanol));
         }
@@ -1155,7 +1155,7 @@ namespace NCDK.Smiles
         public void AssignDbStereo()
         {
             string ins = "C(/N)=C\\C=C\\1/N=C1";
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles(ins);
             Assert.AreEqual("C(\\N)=C/C=C/1N=C1", SmilesGenerator.Isomeric().Create(mol));
         }
@@ -1163,7 +1163,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void CanonicalReactions()
         {
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var r1 = smipar.ParseReactionSmiles("CC(C)C1=CC=CC=C1.C(CC(=O)Cl)CCl>[Al+3].[Cl-].[Cl-].[Cl-].C(Cl)Cl>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
             var r2 = smipar.ParseReactionSmiles("C(CC(=O)Cl)CCl.CC(C)C1=CC=CC=C1>[Al+3].[Cl-].[Cl-].[Cl-].C(Cl)Cl>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
             var r3 = smipar.ParseReactionSmiles("CC(C)C1=CC=CC=C1.C(CC(=O)Cl)CCl>C(Cl)Cl.[Al+3].[Cl-].[Cl-].[Cl-]>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
@@ -1177,7 +1177,7 @@ namespace NCDK.Smiles
         {
             try
             {
-                var smipar = CDK.SilentSmilesParser;
+                var smipar = CDK.SmilesParser;
                 var mol = smipar.ParseSmiles("c1ccccc1");
                 foreach (IAtom atom in mol.Atoms)
                     atom.IsAromatic = false;
@@ -1192,7 +1192,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void StrictIsotopes()
         {
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles("[12CH3]C");
             Assert.AreEqual("[12CH3]C", new SmilesGenerator(SmiFlavors.AtomicMassStrict).Create(mol));
         }
@@ -1200,7 +1200,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestIsotopes()
         {
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles("[12CH3]C");
             Assert.AreEqual("[12CH3]C", new SmilesGenerator(SmiFlavors.AtomicMass).Create(mol));
         }
@@ -1208,7 +1208,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Cyclobutene()
         {
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles("C1(C)=C(c2ccccc2)C=C1.C1(C)C(c2ccccc2)=CC=1");
             // by default we generate SMILES that allows all double bonds to move
             // and remove differences just because of kekule assignment. This matches
@@ -1222,7 +1222,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void RoundTripExtendedCisTrans()
         {
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles("C/C=C=C=C/C");
             Assert.AreEqual("C/C=C=C=C/C", new SmilesGenerator(SmiFlavors.Stereo).Create(mol));
             foreach (var se in mol.StereoElements)
@@ -1233,7 +1233,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void CanonAtomMaps()
         {
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles("[*:2]C(CC[*:3])[*:1]");
             Assert.AreEqual("[*:1]C([*:2])CC[*:3]", new SmilesGenerator(SmiFlavors.Canonical | SmiFlavors.AtomAtomMap).Create(mol));
             var mol2 = smipar.ParseSmiles("[*:2]C(CC[*:1])[*:2]");
@@ -1243,7 +1243,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void CanonAtomMapsRenumber()
         {
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles("[*:2]C(CC[*:3])[*:1]");
             Assert.AreEqual("[*:1]CCC([*:2])[*:3]", new SmilesGenerator(SmiFlavors.Canonical | SmiFlavors.AtomAtomMapRenumber).Create(mol));
             var mol2 = smipar.ParseSmiles("[*:3]C(CC[*:1])[*:2]");
@@ -1273,7 +1273,7 @@ namespace NCDK.Smiles
 
         static string Canon(string smi)
         {
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var container = smipar.ParseSmiles(smi);
             AtomContainerManipulator.SuppressHydrogens(container);
             var arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllSimpleFinder);

@@ -36,7 +36,7 @@ namespace NCDK.Tools
     {
         private static readonly ISaturationChecker satcheck = CDK.SaturationChecker;
 
-        private static SmilesParser sp = CDK.SilentSmilesParser;
+        private static SmilesParser sp = CDK.SmilesParser;
         private AtomTypeAwareSaturationChecker atasc = new AtomTypeAwareSaturationChecker();
 
         /// <summary>

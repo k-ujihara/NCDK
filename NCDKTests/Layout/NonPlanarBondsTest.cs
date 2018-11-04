@@ -610,7 +610,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void Testosterone()
         {
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles("O=C4C=C2[C@]([C@@]1([H])CC[C@@]3([C@@]([H])(O)CC[C@@]3([H])[C@]1([H])CC2)C)(C)CC4");
             var sdg = new StructureDiagramGenerator();
             sdg.GenerateCoordinates(mol);
@@ -627,7 +627,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void NoWavyBondForCisTransNv5()
         {
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles("CN(C)(C)=CC");
             var sdg = new StructureDiagramGenerator();
             sdg.GenerateCoordinates(mol);
@@ -641,7 +641,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void AtropisomerWedgeBonds()
         {
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles("OC1=CC=C2C=CC=CC2=C1C1=C(O)C=CC2=C1C=CC=C2");
 
             var focus = mol.GetBond(mol.Atoms[10], mol.Atoms[11]);
@@ -670,7 +670,7 @@ namespace NCDK.Layout
             try
             {
                 var smi = "O[C@]([H])(C)CCC";
-                var smipar = CDK.SilentSmilesParser;
+                var smipar = CDK.SmilesParser;
                 var mol = smipar.ParseSmiles(smi);
                 mol.Remove(mol.Bonds[1]);
                 mol.Atoms.RemoveAt(2); // unsafe-removes
@@ -687,7 +687,7 @@ namespace NCDK.Layout
         public void AvoidBondsToOtherStereoCentres()
         {
             var smi = "[H][C@@]([C@H](C)N)([C@@H](C)O)[C@@H](C)OC";
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles(smi);
             var sdg = new StructureDiagramGenerator();
             sdg.GenerateCoordinates(mol);
@@ -711,7 +711,7 @@ namespace NCDK.Layout
         public void AvoidWedgingRingBond()
         {
             var smi = "CC(C)[C@@H]1CCCCO1";
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles(smi);
             var sdg = new StructureDiagramGenerator();
             sdg.GenerateCoordinates(mol);
@@ -737,7 +737,7 @@ namespace NCDK.Layout
         public void WedgeExtendedTetrahedral()
         {
             var smi = "C(=C=C=[C@@]=C=C=CC)C";
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles(smi);
             var sdg = new StructureDiagramGenerator();
             sdg.GenerateCoordinates(mol);
@@ -763,7 +763,7 @@ namespace NCDK.Layout
         public void MinWedges()
         {
             var smi = "[C@](([C@@H](C)Cl)([C@H](C)Cl)[C@H](O)[C@](([C@@H](C)Cl)[C@H](C)Cl)[H])[H]";
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles(smi);
             var sdg = new StructureDiagramGenerator();
             sdg.GenerateCoordinates(mol);

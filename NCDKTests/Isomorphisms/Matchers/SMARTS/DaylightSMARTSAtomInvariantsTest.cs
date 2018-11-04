@@ -185,7 +185,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             }
         }
 
-        static readonly SmilesParser sp = CDK.SilentSmilesParser;
+        static readonly SmilesParser sp = CDK.SmilesParser;
 
         // compute the invariants for the first atom in a SMILES string
         static SMARTSAtomInvariants InvariantOfFirstAtom(string smiles) {

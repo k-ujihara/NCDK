@@ -140,7 +140,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             try
             {
-                var ifac = BODRIsotopeFactory.Instance;
+                var ifac = CDK.IsotopeFactory;
                 ifac.ConfigureAtoms(atomContainer);
             }
             catch (IOException e)

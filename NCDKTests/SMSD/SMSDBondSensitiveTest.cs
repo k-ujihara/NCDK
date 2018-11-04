@@ -57,7 +57,7 @@ namespace NCDK.SMSD
         public void TestMatchCount()
         {
             Isomorphism smsd = new Isomorphism(Algorithm.VFLibMCS, true);
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var query = sp.ParseSmiles("CC");
             var target = sp.ParseSmiles("C1CCC12CCCC2");
 
@@ -246,7 +246,7 @@ namespace NCDK.SMSD
         [TestCategory("SlowTest")]
         public void TestSMSDAdpAtpSubgraph()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             string adp = "NC1=NC=NC2=C1N=CN2[C@@H]1O[C@H](COP(O)(=O)OP(O)(O)=O)[C@@H](O)[C@H]1O";
             string atp = "NC1=NC=NC2=C1N=CN2[C@@H]1O[C@H](COP(O)(=O)OP(O)(=O)OP(O)(O)=O)[C@@H](O)[C@H]1O";
             var mol1 = sp.ParseSmiles(adp);
@@ -280,7 +280,7 @@ namespace NCDK.SMSD
         [TestCategory("SlowTest")]
         public void TestSMSDLargeSubgraph()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             string c03374 = "CC1=C(C=C)\\C(NC1=O)=C" + "\\C1=C(C)C(CCC(=O)O[C@@H]2O[C@@H]"
                     + "([C@@H](O)[C@H](O)[C@H]2O)C(O)=O)" + "=C(CC2=C(CCC(O)=O)C(C)=C(N2)" + "\\C=C2NC(=O)C(C=C)=C/2C)N1";
 

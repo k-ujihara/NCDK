@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         public void TestAtomDegreeDescriptor()
         {
             IAtomicDescriptor descriptor = new AtomDegreeDescriptor();
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CC(C)CCCC"); //
             Assert.AreEqual(3, ((Result<int>)descriptor.Calculate(mol.Atoms[1], mol).Value).Value);
         }

@@ -20,7 +20,6 @@
 
 using MathNet.Numerics.LinearAlgebra;
 using NCDK.Common.Collections;
-using NCDK.Config;
 using NCDK.Geometries;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
@@ -114,7 +113,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
 
             var clone = (IAtomContainer)container.Clone();
-            var factory = BODRIsotopeFactory.Instance;
+            var factory = CDK.IsotopeFactory;
             factory.ConfigureAtoms(clone);
 
             ArrayResult<double> retval = new ArrayResult<double>(7);

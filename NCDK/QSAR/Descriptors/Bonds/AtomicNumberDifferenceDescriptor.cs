@@ -17,12 +17,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Config;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace NCDK.QSAR.Descriptors.Bonds
 {
@@ -37,28 +37,12 @@ namespace NCDK.QSAR.Descriptors.Bonds
     public partial class AtomicNumberDifferenceDescriptor
         : IBondDescriptor
     {
-        private static IsotopeFactory factory = null;
+        private static IsotopeFactory factory = CDK.IsotopeFactory;
 
         private readonly static string[] NAMES = { "MNDiff" };
 
         public AtomicNumberDifferenceDescriptor()
         {
-        }
-
-        private static void EnsureIsotopeFactory()
-        {
-            if (factory == null)
-            {
-                try
-                {
-                    factory = BODRIsotopeFactory.Instance;
-                }
-                catch (IOException e)
-                {
-                    // TODO Auto-generated catch block
-                    Console.Error.WriteLine(e.StackTrace);
-                }
-            }
         }
 
         public IImplementationSpecification Specification => specification;
@@ -73,14 +57,13 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
         public DescriptorValue<Result<double>> Calculate(IBond bond, IAtomContainer ac)
         {
-            EnsureIsotopeFactory();
             if (bond.Atoms.Count != 2)
             {
                 return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(
                         double.NaN), NAMES, new CDKException("Only 2-center bonds are considered"));
             }
 
-            IAtom[] atoms = BondManipulator.GetAtomArray(bond);
+            var atoms = BondManipulator.GetAtomArray(bond);
 
             return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(
                     Math.Abs(factory.GetElement(atoms[0].Symbol).AtomicNumber.Value - factory.GetElement(atoms[1].Symbol).AtomicNumber.Value)), NAMES);

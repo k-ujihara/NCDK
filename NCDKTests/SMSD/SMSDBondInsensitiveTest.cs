@@ -168,7 +168,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestSingleMappingTesting()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles("C");
 
             IAtomContainer mol2 = Create4Toluene();
@@ -196,7 +196,7 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestSMSDFragHetSubgraph()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             string file1 = "O=C1NC(=O)C2=C(N1)NC(=O)C=N2";
             string file2 = "OC[C@@H](O)[C@@H](O)[C@@H](O)CN1C(O)C(CCC(O)O)NC2C(O)NC(O)NC12";
 

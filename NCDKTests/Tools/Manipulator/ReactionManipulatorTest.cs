@@ -87,8 +87,8 @@ namespace NCDK.Tools.Manipulator
         {
             var builder = ChemObjectBuilder.Instance;
             IReaction reaction = builder.NewReaction();
-            IAtomContainer reactant = CDK.SilentSmilesParser.ParseSmiles("[C+]-C=C");
-            IAtomContainer product = CDK.SilentSmilesParser.ParseSmiles("C=C=C");
+            IAtomContainer reactant = CDK.SmilesParser.ParseSmiles("[C+]-C=C");
+            IAtomContainer product = CDK.SmilesParser.ParseSmiles("C=C=C");
 
             IMapping mapping = builder.NewMapping(reactant.Atoms[0], product.Atoms[0]);
             reaction.Mappings.Add(mapping);
@@ -116,8 +116,8 @@ namespace NCDK.Tools.Manipulator
         {
             var builder = ChemObjectBuilder.Instance;
             IReaction reaction = builder.NewReaction();
-            IAtomContainer reactant = CDK.SilentSmilesParser.ParseSmiles("[C+]-C=C");
-            IAtomContainer product = CDK.SilentSmilesParser.ParseSmiles("C=C=C");
+            IAtomContainer reactant = CDK.SmilesParser.ParseSmiles("[C+]-C=C");
+            IAtomContainer product = CDK.SmilesParser.ParseSmiles("C=C=C");
 
             IMapping mapping = builder.NewMapping(reactant.Atoms[0], product.Atoms[0]);
             reaction.Mappings.Add(mapping);

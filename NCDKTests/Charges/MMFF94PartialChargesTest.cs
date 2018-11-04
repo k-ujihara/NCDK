@@ -39,7 +39,7 @@ namespace NCDK.Charges
         public void TestMMFF94PartialCharges()
         {
             double[] testResult = { -0.99, 0.314, 0.66, -0.57, -0.65, 0.36, 0.36, 0, 0, 0.5 };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var ac = sp.ParseSmiles("NCC(=O)O");
             AddExplicitHydrogens(ac);
             MMFF94PartialCharges mmff = new MMFF94PartialCharges();

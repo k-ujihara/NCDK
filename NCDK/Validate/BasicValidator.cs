@@ -22,7 +22,6 @@ using NCDK.Config;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Diagnostics;
-using System.Linq;
 
 namespace NCDK.Validate
 {
@@ -216,7 +215,7 @@ namespace NCDK.Validate
                 // check whether atom is really an element
                 try
                 {
-                    var isotopeFactory = BODRIsotopeFactory.Instance;
+                    var isotopeFactory = CDK.IsotopeFactory;
                     var element = isotopeFactory.GetElement(atom.Symbol);
                     if (element == null)
                     {
@@ -316,7 +315,7 @@ namespace NCDK.Validate
             var isotopeExists = new ValidationTest(isotope, "Isotope with this mass number is not known for this element.");
             try
             {
-                var isotopeFac = BODRIsotopeFactory.Instance;
+                var isotopeFac = CDK.IsotopeFactory;
                 var isotopes = isotopeFac.GetIsotopes(isotope.Symbol);
                 bool foundKnownIsotope = false;
                 if (isotope.MassNumber != null && isotope.MassNumber != 0)

@@ -40,7 +40,7 @@ namespace NCDK.Normalizers
         public void TestMakeDeepCopy()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var container = sp.ParseSmiles(rawMolSmiles);
 
             int counter = 0;
@@ -64,7 +64,7 @@ namespace NCDK.Normalizers
         public void TestAromatizeMolecule()
         {
             string rawMolSmiles = "C1=CC2=C(C=C1)C=CC=C2";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles(rawMolSmiles);
             SMSDNormalizer.AromatizeMolecule(mol);
             int count = 0;
@@ -85,7 +85,7 @@ namespace NCDK.Normalizers
         public void TestGetExplicitHydrogenCount()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles(rawMolSmiles);
             IAtom atom = null;
             foreach (var a in atomContainer.Atoms)
@@ -109,7 +109,7 @@ namespace NCDK.Normalizers
         public void TestGetImplicitHydrogenCount()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles(rawMolSmiles);
             IAtom atom = null;
             foreach (var a in atomContainer.Atoms)
@@ -134,7 +134,7 @@ namespace NCDK.Normalizers
         public void TestGetHydrogenCount()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles(rawMolSmiles);
             IAtom atom = null;
             foreach (var a in atomContainer.Atoms)
@@ -157,7 +157,7 @@ namespace NCDK.Normalizers
         public void TestRemoveHydrogensAndPreserveAtomID()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles(rawMolSmiles);
             IAtom beforeAtom = null;
             IAtom afterAtom = null;
@@ -191,7 +191,7 @@ namespace NCDK.Normalizers
         public void TestConvertExplicitToImplicitHydrogens()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles(rawMolSmiles);
             int expResult = 11;
             IAtomContainer result = SMSDNormalizer.ConvertExplicitToImplicitHydrogens(atomContainer);
@@ -205,7 +205,7 @@ namespace NCDK.Normalizers
         public void TestPercieveAtomTypesAndConfigureAtoms()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles(rawMolSmiles);
             SMSDNormalizer.PercieveAtomTypesAndConfigureAtoms(atomContainer);
             Assert.IsNotNull(atomContainer);

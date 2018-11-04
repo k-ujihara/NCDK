@@ -62,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             foreach (var e in table)
             {
-                var mol = CDK.SilentSmilesParser.ParseSmiles(e.Smiles);
+                var mol = CDK.SmilesParser.ParseSmiles(e.Smiles);
                 Assert.AreEqual(e.Value, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.01);
             }
         }

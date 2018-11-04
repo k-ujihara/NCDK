@@ -561,7 +561,7 @@ namespace NCDK.IO.CML
                     CurrentAtom.Symbol = symbol;
                     try
                     {
-                        BODRIsotopeFactory.Instance.Configure(CurrentAtom);
+                        CDK.IsotopeFactory.Configure(CurrentAtom);
                     }
                     catch (Exception e)
                     {

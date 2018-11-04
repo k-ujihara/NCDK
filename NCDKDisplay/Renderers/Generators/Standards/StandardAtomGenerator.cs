@@ -22,7 +22,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -543,7 +542,7 @@ namespace NCDK.Renderers.Generators.Standards
         {
             try
             {
-                IIsotope isotope = BODRIsotopeFactory.Instance.GetMajorIsotope(number);
+                var isotope = CDK.IsotopeFactory.GetMajorIsotope(number);
                 return isotope != null && isotope.MassNumber.Equals(mass);
             }
             catch (IOException)

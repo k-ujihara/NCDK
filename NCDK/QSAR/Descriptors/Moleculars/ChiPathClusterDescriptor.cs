@@ -84,7 +84,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
             if (sp == null)
-                sp = CDK.SilentSmilesParser;
+                sp = CDK.SmilesParser;
             
             var localAtomContainer = AtomContainerManipulator.RemoveHydrogens(container);
             var matcher = CDK.AtomTypeMatcher;

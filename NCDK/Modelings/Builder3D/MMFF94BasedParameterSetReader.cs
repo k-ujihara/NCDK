@@ -22,7 +22,6 @@
  */
 
 using NCDK.Common.Primitives;
-using NCDK.Config;
 using NCDK.Tools;
 using System;
 using System.Collections.Generic;
@@ -622,8 +621,8 @@ namespace NCDK.Modelings.Builder3D
         /// <exception cref="IOException">isotope configuration could not be loaded</exception>
         private static int? MassNumber(int atomicNumber, double exactMass)
         {
-            string symbol = PeriodicTable.GetSymbol(atomicNumber);
-            IIsotope isotope = BODRIsotopeFactory.Instance.GetIsotope(symbol, exactMass, 0.001);
+            var symbol = PeriodicTable.GetSymbol(atomicNumber);
+            var isotope = CDK.IsotopeFactory.GetIsotope(symbol, exactMass, 0.001);
             return isotope?.MassNumber;
         }
     }

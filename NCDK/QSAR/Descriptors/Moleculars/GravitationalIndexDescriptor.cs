@@ -22,7 +22,6 @@ using NCDK.Geometries;
 using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -113,18 +112,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             if (!GeometryUtil.Has3DCoordinates(container))
                 return GetDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
 
-            IsotopeFactory factory = null;
+            var factory = CDK.IsotopeFactory;
             double mass1;
             double mass2;
-            try
-            {
-                factory = BODRIsotopeFactory.Instance;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
-
             double sum = 0;
             foreach (var bond in container.Bonds)
             {

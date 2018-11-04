@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             double[] testResult = { 0.0, 0.0 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CF");
             AddExplicitHydrogens(mol);
 
@@ -63,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             descriptor = new BondPartialPiChargeDescriptor();
             double[] testResult = { 0.0022, 0.0011, 0.0011, 0.0011, 0.0011, 0.0, 0.0, 0.0 }; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C=CCBr");
             AddExplicitHydrogens(mol);
 
@@ -83,7 +83,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             descriptor = new BondPartialPiChargeDescriptor();
             double testResult = 0.0; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C(C)(C)CCI");
             AddExplicitHydrogens(mol);
             for (int i = 0; i < 6; i++)
@@ -102,7 +102,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             descriptor = new BondPartialPiChargeDescriptor();
             double[] testResult = { 0.0006, 0.0003, 0.0003, 0.0003, 0.0003, 0.0, 0.0, 0.0, 0.0 }; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C=CCS");
             AddExplicitHydrogens(mol);
 

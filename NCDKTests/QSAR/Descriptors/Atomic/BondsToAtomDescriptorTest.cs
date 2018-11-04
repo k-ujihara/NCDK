@@ -40,7 +40,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             BondsToAtomDescriptor descriptor = new BondsToAtomDescriptor();
             descriptor.Parameters = new object[] { 5 };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCCCC"); //
             Assert.AreEqual(5, ((Result<int>)descriptor.Calculate(mol.Atoms[0], mol).Value).Value);
         }

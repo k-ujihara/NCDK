@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestAtomHybridizationDescriptorTest()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C#CC=CC"); //
             AddExplicitHydrogens(mol);
             var expectedStates = new Hybridization[]
@@ -64,7 +64,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 "C(#CN1CCCCC1)[Sn](C)(C)C", "c1([As+](c2ccccc2)(c2ccccc2)C)ccccc1.[I-]",
                 "c1(noc(n1)CCC(=O)N(CC)CC)c1ccc(cc1)C", "c1c(c(ccc1)O)/C=N/CCCC", "c1(ccc(cc1)C#Cc1ccc(cc1)C#C)OC"};
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             IAtomContainer mol;
 
             foreach (var smile in smiles)

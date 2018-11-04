@@ -34,7 +34,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public TPSADescriptorTest()
         {
-            sp = CDK.SilentSmilesParser;
+            sp = CDK.SmilesParser;
             SetDescriptor(typeof(TPSADescriptor));
             Descriptor.Parameters = new object[] { true };
         }
@@ -106,7 +106,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestRing()
         {
-            sp = CDK.SilentSmilesParser;
+            sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C1CCCC1CCC2CCCNC2");
             AddExplicitHydrogens(mol);
             var dv = Descriptor.Calculate(mol);

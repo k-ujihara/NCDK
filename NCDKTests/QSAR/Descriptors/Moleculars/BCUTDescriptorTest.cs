@@ -123,7 +123,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             string smiles1 = "c1ccccc1";
             string smiles2 = "C1=CC=CC=C1";
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol1 = sp.ParseSmiles(smiles1);
             var mol2 = sp.ParseSmiles(smiles2);
 
@@ -148,7 +148,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestHAddition()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
             ArrayResult<double> result1 = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
             for (int i = 0; i < result1.Length; i++)

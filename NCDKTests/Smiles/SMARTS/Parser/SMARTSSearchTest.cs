@@ -115,7 +115,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             var query = SMARTSParser.Parse("CC=O", ChemObjectBuilder.Instance);
             Debug.WriteLine("Query c:c: " + query.ToString());
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
 
             var atomContainer = sp.ParseSmiles("CCC=O"); // benzene, aromatic
             Assert.IsTrue(uiTester.IsSubgraph(atomContainer, query));
@@ -139,7 +139,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             var query = SMARTSParser.Parse("C-C", ChemObjectBuilder.Instance);
             Debug.WriteLine("Query C-C: " + query.ToString());
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
 
             var atomContainer = sp.ParseSmiles("CCC");
             Assert.IsTrue(uiTester.IsSubgraph(atomContainer, query));
@@ -156,7 +156,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             var query = SMARTSParser.Parse("C=C", ChemObjectBuilder.Instance);
             Debug.WriteLine("Query C=C: " + query.ToString());
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
 
             var atomContainer = sp.ParseSmiles("CCC");
             Assert.IsFalse(uiTester.IsSubgraph(atomContainer, query));
@@ -173,7 +173,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             var query = SMARTSParser.Parse("C#C", ChemObjectBuilder.Instance);
             Debug.WriteLine("Query C#C: " + query.ToString());
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
 
             var atomContainer = sp.ParseSmiles("CCC");
             Assert.IsFalse(uiTester.IsSubgraph(atomContainer, query));
@@ -190,7 +190,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             var query = SMARTSParser.Parse("C~C", ChemObjectBuilder.Instance);
             Debug.WriteLine("Query C~C: " + query.ToString());
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
 
             var atomContainer = sp.ParseSmiles("CCC");
             Assert.IsTrue(uiTester.IsSubgraph(atomContainer, query));
@@ -207,7 +207,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             var query = SMARTSParser.Parse("C*C", ChemObjectBuilder.Instance);
             Debug.WriteLine("Query C*C: " + query.ToString());
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
 
             var atomContainer = sp.ParseSmiles("CCC");
             Assert.IsTrue(uiTester.IsSubgraph(atomContainer, query));
@@ -224,7 +224,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             var query = SMARTSParser.Parse("CAC", ChemObjectBuilder.Instance);
             Debug.WriteLine("Query CAC: " + query.ToString());
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
 
             var atomContainer = sp.ParseSmiles("CCC");
             Assert.IsTrue(uiTester.IsSubgraph(atomContainer, query));
@@ -255,7 +255,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             var query = SMARTSParser.Parse("CCC", ChemObjectBuilder.Instance);
             Debug.WriteLine("Query CAC: " + query.ToString());
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
 
             var atomContainer = sp.ParseSmiles("CCC");
             Assert.IsTrue(uiTester.IsSubgraph(atomContainer, query));

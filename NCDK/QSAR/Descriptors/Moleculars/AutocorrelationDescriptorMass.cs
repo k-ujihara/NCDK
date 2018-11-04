@@ -17,7 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.Graphs.Matrix;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
@@ -42,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private static double ScaledAtomicMasses(IElement element)
         {
-            IsotopeFactory isofac = BODRIsotopeFactory.Instance;
+            var isofac = CDK.IsotopeFactory;
             double realmasses = isofac.GetNaturalMass(element);
             return (realmasses / CarbonMass);
         }

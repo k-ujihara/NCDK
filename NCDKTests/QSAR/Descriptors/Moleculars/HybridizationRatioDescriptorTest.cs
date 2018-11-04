@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestHybRatioDescriptor1()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCC");
             Assert.AreEqual(1.0, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
         }
@@ -47,7 +47,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestHybRatioDescriptor2()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("c1ccccc1");
             Assert.AreEqual(0.0, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
         }
@@ -55,7 +55,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestHybRatioDescriptor3()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[H]C#N");
             Assert.AreEqual(double.NaN, ((Result<double>)Descriptor.Calculate(mol).Value).Value);
         }

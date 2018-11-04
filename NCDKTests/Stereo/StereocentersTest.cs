@@ -794,28 +794,28 @@ namespace NCDK.Stereo
         // assert the first atom of the SMILES is accepted as a tetrahedral center
         static void CreateTetrahedral(string smi)
         {
-            SmilesParser sp = CDK.SilentSmilesParser;
+            SmilesParser sp = CDK.SmilesParser;
             Test(sp.ParseSmiles(smi), CoordinateType.Tetracoordinate, smi + " was not accepted", true);
         }
 
         // assert the first atom of the SMILES is accepted as a geometric center
         static void Geometric(string smi)
         {
-            SmilesParser sp = CDK.SilentSmilesParser;
+            SmilesParser sp = CDK.SmilesParser;
             Test(sp.ParseSmiles(smi), CoordinateType.Tricoordinate, smi + " was not accepted", true);
         }
 
         // assert the first atom of the SMILES is accepted as a bicoordinate center
         static void Bicoordinate(string smi)
         {
-            SmilesParser sp = CDK.SilentSmilesParser;
+            SmilesParser sp = CDK.SmilesParser;
             Test(sp.ParseSmiles(smi), CoordinateType.Bicoordinate, smi + " was not accepted", true);
         }
 
         // assert the first atom of the SMILES is non stereogenic
         static void None(string smi)
         {
-            SmilesParser sp = CDK.SilentSmilesParser;
+            SmilesParser sp = CDK.SmilesParser;
             Test(sp.ParseSmiles(smi), CoordinateType.None, smi + " was not rejected", true);
         }
 
@@ -832,7 +832,7 @@ namespace NCDK.Stereo
 
         static void Test(string smi, CoordinateType type, bool hnorm)
         {
-            SmilesParser sp = CDK.SilentSmilesParser;
+            SmilesParser sp = CDK.SmilesParser;
             Test(sp.ParseSmiles(smi), type, smi + " was not accepted", hnorm);
         }
     }

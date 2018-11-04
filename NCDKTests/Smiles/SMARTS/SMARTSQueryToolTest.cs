@@ -49,7 +49,7 @@ namespace NCDK.Smiles.SMARTS
         [TestMethod()]
         public void TestQueryTool()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C");
             SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO", ChemObjectBuilder.Instance);
 
@@ -79,7 +79,7 @@ namespace NCDK.Smiles.SMARTS
         [TestMethod()]
         public void TestQueryToolSingleAtomCase()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles("C1CCC12CCCC2");
             SMARTSQueryTool querytool = new SMARTSQueryTool("C", ChemObjectBuilder.Instance);
 
@@ -93,7 +93,7 @@ namespace NCDK.Smiles.SMARTS
         [TestMethod()]
         public void TestQueryToolReSetSmarts()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles("C1CCC12CCCC2");
             SMARTSQueryTool querytool = new SMARTSQueryTool("C", ChemObjectBuilder.Instance);
 
@@ -117,7 +117,7 @@ namespace NCDK.Smiles.SMARTS
         [TestMethod()]
         public void TestUniqueQueries()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles("c1ccccc1CCCNCCCc1ccccc1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);
             Aromaticity.CDKLegacy.Apply(atomContainer);
@@ -136,7 +136,7 @@ namespace NCDK.Smiles.SMARTS
         [TestMethod()]
         public void TestQuery()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles("c12cc(CCN)ccc1c(COC)ccc2");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);
             Aromaticity.CDKLegacy.Apply(atomContainer);
@@ -168,7 +168,7 @@ namespace NCDK.Smiles.SMARTS
             Aromaticity.CDKLegacy.Apply(indole);
             SmilesGenerator generator = new SmilesGenerator().Aromatic();
             string indoleSmiles = generator.Create(indole);
-            SmilesParser smilesParser = CDK.SilentSmilesParser;
+            SmilesParser smilesParser = CDK.SmilesParser;
             indole = smilesParser.ParseSmiles(indoleSmiles);
 
             SMARTSQueryTool querytool = new SMARTSQueryTool(indoleSmiles, ChemObjectBuilder.Instance);
@@ -215,7 +215,7 @@ namespace NCDK.Smiles.SMARTS
 
         static IAtomContainer CreateFromSmiles(string smi)
         {
-            return CDK.SilentSmilesParser.ParseSmiles(smi);
+            return CDK.SmilesParser.ParseSmiles(smi);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace NCDK.Graphs.Matrix
     [TestClass()]
     public class AdjacencyMatrixTest : CDKTestCase
     {
-        private static SmilesParser sp = CDK.SilentSmilesParser;
+        private static SmilesParser sp = CDK.SmilesParser;
 
         [TestMethod()]
         public void TestGetMatrix_IAtomContainer()

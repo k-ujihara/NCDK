@@ -40,7 +40,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             IAtomicDescriptor descriptor = new IsProtonInAromaticSystemDescriptor();
             descriptor.Parameters = new object[] { true };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("Oc1cc(OC)c(cc1Br)Br");
             AddExplicitHydrogens(mol);
             Assert.AreEqual("H", mol.Atoms[11].Symbol);

@@ -307,7 +307,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         public static IAtomContainer CreatePyridazine()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             string smiles = "C1=CN=NC=C1";
             var result = sp.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
@@ -319,7 +319,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         public static IAtomContainer CreateChloroIsoquinoline4()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             string smiles = "ClC1=CC=NC2=C1C=CC=C2";
             var result = sp.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);
@@ -331,7 +331,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         public static IAtomContainer CreateChlorobenzene()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             string smiles = "Clc1ccccc1";
             var result = sp.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(result);

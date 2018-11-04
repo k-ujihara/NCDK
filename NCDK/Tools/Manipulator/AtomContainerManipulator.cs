@@ -26,7 +26,6 @@
 using NCDK.AtomTypes;
 using NCDK.Config;
 using NCDK.Graphs;
-using NCDK.Numerics;
 using NCDK.RingSearches;
 using NCDK.Sgroups;
 using NCDK.Stereo;
@@ -124,7 +123,7 @@ namespace NCDK.Tools.Manipulator
             {
                 bool updated = false;
                 var replaced = new List<Sgroup>();
-                foreach (Sgroup org in sgrougs)
+                foreach (var org in sgrougs)
                 {
                     if (org.Atoms.Contains(oldAtom))
                     {
@@ -137,11 +136,11 @@ namespace NCDK.Tools.Manipulator
                             else
                                 cpy.Atoms.Add(newAtom);
                         }
-                        foreach (IBond bond in org.Bonds)
+                        foreach (var bond in org.Bonds)
                             cpy.Bonds.Add(bond);
-                        foreach (Sgroup parent in org.Parents)
+                        foreach (var parent in org.Parents)
                             cpy.AddParent(parent);
-                        foreach (SgroupKey key in org.AttributeKeys)
+                        foreach (var key in org.AttributeKeys)
                             cpy.PutValue(key, org.GetValue(key));
                         replaced.Add(cpy);
                     }
@@ -191,7 +190,7 @@ namespace NCDK.Tools.Manipulator
         {
             try
             {
-                var isotopes = BODRIsotopeFactory.Instance;
+                var isotopes = CDK.IsotopeFactory;
                 double mass = 0.0;
                 var hExactMass = isotopes.GetMajorIsotope(1).ExactMass.Value;
                 foreach (var atom in atomContainer.Atoms)
@@ -218,10 +217,10 @@ namespace NCDK.Tools.Manipulator
         {
             try
             {
-                var isotopes = BODRIsotopeFactory.Instance;
+                var isotopes = CDK.IsotopeFactory;
                 double hmass = isotopes.GetNaturalMass(NaturalElements.Hydrogen.Element);
                 double mw = 0.0;
-                foreach (IAtom atom in mol.Atoms)
+                foreach (var atom in mol.Atoms)
                 {
                     if (atom.AtomicNumber == null || atom.AtomicNumber == 0)
                         throw new ArgumentException("An atom had with unknown (null) atomic number");
@@ -260,7 +259,7 @@ namespace NCDK.Tools.Manipulator
         {
             try
             {
-                var isotopes = BODRIsotopeFactory.Instance;
+                var isotopes = CDK.IsotopeFactory;
                 var hydgrogenMass = isotopes.GetNaturalMass(NaturalElements.Hydrogen.Element);
 
                 double mass = 0.0;
@@ -292,7 +291,7 @@ namespace NCDK.Tools.Manipulator
         {
             try
             {
-                var isotopes = BODRIsotopeFactory.Instance;
+                var isotopes = CDK.IsotopeFactory;
                 double abundance = 1.0;
                 var hAbundance = isotopes.GetMajorIsotope(1).NaturalAbundance.Value;
 

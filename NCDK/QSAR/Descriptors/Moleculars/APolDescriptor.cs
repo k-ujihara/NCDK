@@ -100,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int atomicNumber;
             try
             {
-                var ifac = BODRIsotopeFactory.Instance;
+                var ifac = CDK.IsotopeFactory;
                 IElement element;
                 string symbol;
                 foreach (var atom in container.Atoms)

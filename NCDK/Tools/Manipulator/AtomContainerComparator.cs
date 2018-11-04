@@ -22,7 +22,6 @@
  */
 
 using NCDK.Config;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -144,7 +143,7 @@ namespace NCDK.Tools.Manipulator
             double mw = 0.0;
             try
             {
-                IsotopeFactory isotopeFactory = BODRIsotopeFactory.Instance;
+                var isotopeFactory = CDK.IsotopeFactory;
 
                 foreach (var atom in atomContainer.Atoms)
                 {

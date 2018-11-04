@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestWeightDescriptor()
         {
             Descriptor.Parameters = new object[] { "*" };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCC");
             Assert.AreEqual(44.06, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
         }

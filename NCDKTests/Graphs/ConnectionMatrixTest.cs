@@ -28,7 +28,7 @@ namespace NCDK.Graphs
     [TestClass()]
     public class ConnectionMatrixTest : CDKTestCase
     {
-        private readonly static SmilesParser sp = CDK.SilentSmilesParser;
+        private readonly static SmilesParser sp = CDK.SmilesParser;
 
         public ConnectionMatrixTest()
                 : base()

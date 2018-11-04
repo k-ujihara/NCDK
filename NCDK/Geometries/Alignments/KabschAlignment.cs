@@ -20,11 +20,9 @@
 
 using MathNet.Numerics.LinearAlgebra;
 using NCDK.Common.Collections;
-using NCDK.Config;
 using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace NCDK.Geometries.Alignments
@@ -106,44 +104,18 @@ namespace NCDK.Geometries.Alignments
         private static double[] GetAtomicMasses(IReadOnlyList<IAtom> a)
         {
             var am = new double[a.Count];
-            IsotopeFactory factory = null;
-            try
-            {
-                factory = BODRIsotopeFactory.Instance;
-            }
-            catch (Exception e)
-            {
-                Trace.TraceError($"Error while instantiating the isotope factory: {e.Message}");
-                Debug.WriteLine(e);
-            }
-
-            Trace.Assert(factory != null);
+            var factory = CDK.IsotopeFactory;
             for (int i = 0; i < a.Count; i++)
-            {
                 am[i] = factory.GetMajorIsotope(a[i].Symbol).ExactMass.Value;
-            }
             return am;
         }
 
         private static double[] GetAtomicMasses(IAtomContainer ac)
         {
             var am = new double[ac.Atoms.Count];
-            IsotopeFactory factory = null;
-            try
-            {
-                factory = BODRIsotopeFactory.Instance;
-            }
-            catch (Exception e)
-            {
-                Trace.TraceError($"Error while instantiating the isotope factory: {e.Message}");
-                Debug.WriteLine(e);
-            }
-
-            Trace.Assert(factory != null);
+            var factory = CDK.IsotopeFactory;
             for (int i = 0; i < ac.Atoms.Count; i++)
-            {
                 am[i] = factory.GetMajorIsotope(ac.Atoms[i].Symbol).ExactMass.Value;
-            }
             return am;
         }
 
@@ -160,7 +132,7 @@ namespace NCDK.Geometries.Alignments
                 z += atwt[i] * p[i].Z;
                 totalmass += atwt[i];
             }
-            return (new Vector3(x / totalmass, y / totalmass, z / totalmass));
+            return new Vector3(x / totalmass, y / totalmass, z / totalmass);
         }
 
         /// <summary>
@@ -280,10 +252,11 @@ namespace NCDK.Geometries.Alignments
 
         /// <summary>
         /// Perform an alignment.
-        ///
+        /// </summary>
+        /// <remarks>
         /// This method aligns to set of atoms which should have been specified
         /// prior to this call
-        /// </summary>
+        /// </remarks>
         public void Align()
         {
             Matrix<double> tmp;
@@ -308,7 +281,7 @@ namespace NCDK.Geometries.Alignments
             }
 
             // get the R matrix
-            double[][] tR = Arrays.CreateJagged<double>(3, 3);
+            var tR = Arrays.CreateJagged<double>(3, 3);
             for (int i = 0; i < this.npoint; i++)
             {
                 wts[i] = 1.0;
@@ -332,20 +305,20 @@ namespace NCDK.Geometries.Alignments
             R = tmp.Transpose().ToColumnArrays();
 
             // now get the RtR (=R'R) matrix
-            double[][] RtR = Arrays.CreateJagged<double>(3, 3);
-            Matrix<double> jamaR = Matrix<double>.Build.DenseOfColumnArrays(R);
+            var RtR = Arrays.CreateJagged<double>(3, 3);
+            var jamaR = Matrix<double>.Build.DenseOfColumnArrays(R);
             tmp = jamaR * tmp;
             RtR = tmp.ToColumnArrays();
 
             // get eigenvalues of RRt (a's)
-            Matrix<double> jamaRtR = Matrix<double>.Build.DenseOfColumnArrays(RtR);
+            var jamaRtR = Matrix<double>.Build.DenseOfColumnArrays(RtR);
             var ed = jamaRtR.Evd();
-            double[] mu = ed.EigenValues.Select(n => n.Real).ToArray();
-            double[][] a = ed.EigenVectors.ToRowArrays();
+            var mu = ed.EigenValues.Select(n => n.Real).ToArray();
+            var a = ed.EigenVectors.ToRowArrays();
 
             // Jama returns the eigenvalues in increasing order so
             // swap the eigenvalues and vectors
-            double tmp2 = mu[2];
+            var tmp2 = mu[2];
             mu[2] = mu[0];
             mu[0] = tmp2;
             for (int i = 0; i < 3; i++)
@@ -361,7 +334,7 @@ namespace NCDK.Geometries.Alignments
             a[2][2] = (a[0][0] * a[1][1]) - (a[0][1] * a[1][0]);
 
             // lets work out the b vectors
-            double[][] b = Arrays.CreateJagged<double>(3, 3);
+            var b = Arrays.CreateJagged<double>(3, 3);
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
@@ -465,7 +438,7 @@ namespace NCDK.Geometries.Alignments
         /// <param name="ac">The <see cref="IAtomContainer"/> whose coordinates are to be rotated</param>
         public void RotateAtomContainer(IAtomContainer ac)
         {
-            Vector3[] p = GetPoint3DArray(ac);
+            var p = GetPoint3DArray(ac);
             for (int i = 0; i < ac.Atoms.Count; i++)
             {
                 // translate the the origin we have calculated

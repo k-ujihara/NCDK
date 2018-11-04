@@ -31,7 +31,7 @@ namespace NCDK.SMARTS
     [TestClass()]
     public class MolToQueryTest
     {
-        private readonly SmilesParser smipar = CDK.SilentSmilesParser;
+        private readonly SmilesParser smipar = CDK.SmilesParser;
 
         private void Test(string expected, string smi, params ExprType[] opts)
         {

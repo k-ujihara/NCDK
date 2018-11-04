@@ -51,7 +51,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestFingerprint()
         {
-            SmilesParser parser = CDK.SilentSmilesParser;
+            SmilesParser parser = CDK.SmilesParser;
             IFingerprinter printer = new MACCSFingerprinter();
 
             var mol1 = parser.ParseSmiles("c1ccccc1CCc1ccccc1");
@@ -84,7 +84,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void Testfp2()
         {
-            SmilesParser parser = CDK.SilentSmilesParser;
+            SmilesParser parser = CDK.SmilesParser;
             IFingerprinter printer = new MACCSFingerprinter();
 
             var mol1 = parser.ParseSmiles("CC(N)CCCN");

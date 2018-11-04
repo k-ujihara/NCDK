@@ -35,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         [TestMethod()]
         public void TestDescriptor1()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol1 = sp.ParseSmiles("CC");
             double value = ((Result<double>)descriptor.Calculate(mol1.Bonds[0], mol1).Value).Value;
             Assert.AreEqual(0, value, 0.0000);
@@ -44,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         [TestMethod()]
         public void TestDescriptor2()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol1 = sp.ParseSmiles("CO");
             double value = ((Result<double>)descriptor.Calculate(mol1.Bonds[0], mol1).Value).Value;
             Assert.AreEqual(2, value, 0.0000);

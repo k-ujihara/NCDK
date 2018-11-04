@@ -749,7 +749,7 @@ namespace NCDK.IO
             // if there was a mass difference, set the mass number
             if (massDiff != 0 && atom.AtomicNumber > 0)
             {
-                var majorIsotope = BODRIsotopeFactory.Instance.GetMajorIsotope(atom.AtomicNumber.Value);
+                var majorIsotope = CDK.IsotopeFactory.GetMajorIsotope(atom.AtomicNumber.Value);
                 if (majorIsotope == null)
                     atom.MassNumber = -1; // checked after M ISO is processed
                 else
@@ -1731,11 +1731,11 @@ namespace NCDK.IO
                 HandleError("Trailing space found", linecount, match.Index, match.Index + match.Length);
                 return "";
             });
-            double x = double.Parse(Strings.Substring(line, 0, 10).Trim(), NumberFormatInfo.InvariantInfo);
-            double y = double.Parse(Strings.Substring(line, 10, 10).Trim(), NumberFormatInfo.InvariantInfo);
-            double z = double.Parse(Strings.Substring(line, 20, 10).Trim(), NumberFormatInfo.InvariantInfo);
+            var x = double.Parse(Strings.Substring(line, 0, 10).Trim(), NumberFormatInfo.InvariantInfo);
+            var y = double.Parse(Strings.Substring(line, 10, 10).Trim(), NumberFormatInfo.InvariantInfo);
+            var z = double.Parse(Strings.Substring(line, 20, 10).Trim(), NumberFormatInfo.InvariantInfo);
 
-            string element = Strings.Substring(line, 31, 3).Trim();
+            var element = Strings.Substring(line, 31, 3).Trim();
             if (line.Length < 34)
             {
                 HandleError("Element atom type does not follow V2000 format type should of length three"
@@ -1743,7 +1743,7 @@ namespace NCDK.IO
             }
 
             Debug.WriteLine($"Atom type: {element}");
-            IsotopeFactory isotopeFactory = BODRIsotopeFactory.Instance;
+            var isotopeFactory = CDK.IsotopeFactory;
             if (isotopeFactory.IsElement(element))
             {
                 atom = isotopeFactory.Configure(builder.NewAtom(element));
@@ -1808,16 +1808,16 @@ namespace NCDK.IO
             // parse further fields
             if (line.Length >= 36)
             {
-                string massDiffString = Strings.Substring(line, 34, 2).Trim();
+                var massDiffString = Strings.Substring(line, 34, 2).Trim();
                 Debug.WriteLine($"Mass difference: {massDiffString}");
                 if (!(atom is IPseudoAtom))
                 {
                     try
                     {
-                        int massDiff = int.Parse(massDiffString, NumberFormatInfo.InvariantInfo);
+                        var massDiff = int.Parse(massDiffString, NumberFormatInfo.InvariantInfo);
                         if (massDiff != 0)
                         {
-                            IIsotope major = BODRIsotopeFactory.Instance.GetMajorIsotope(element);
+                            var major = CDK.IsotopeFactory.GetMajorIsotope(element);
                             atom.MassNumber = major.MassNumber + massDiff;
                         }
                     }
@@ -1846,7 +1846,7 @@ namespace NCDK.IO
 
             if (line.Length >= 51)
             {
-                string valenceString = RemoveNonDigits(Strings.Substring(line, 48, 3));
+                var valenceString = RemoveNonDigits(Strings.Substring(line, 48, 3));
                 Debug.WriteLine($"Valence: {valenceString}");
                 if (!(atom is IPseudoAtom))
                 {
@@ -1875,7 +1875,7 @@ namespace NCDK.IO
 
             if (line.Length >= 39)
             {
-                string chargeCodeString = Strings.Substring(line, 36, 3).Trim();
+                var chargeCodeString = Strings.Substring(line, 36, 3).Trim();
                 Debug.WriteLine($"Atom charge code: {chargeCodeString}");
                 int chargeCode = int.Parse(chargeCodeString, NumberFormatInfo.InvariantInfo);
                 if (chargeCode == 0)
@@ -1918,7 +1918,7 @@ namespace NCDK.IO
             try
             {
                 // read the mmm field as position 61-63
-                string reactionAtomIDString = Strings.Substring(line, 60, 3).Trim();
+                var reactionAtomIDString = Strings.Substring(line, 60, 3).Trim();
                 Debug.WriteLine($"Parsing mapping id: {reactionAtomIDString}");
                 try
                 {
@@ -1943,12 +1943,12 @@ namespace NCDK.IO
             //shk3: This reads shifts from after the molecule. I don't think this is an official format, but I saw it frequently 80=>78 for alk
             if (line.Length >= 78)
             {
-                double shift = double.Parse(Strings.Substring(line, 69, 11).Trim(), NumberFormatInfo.InvariantInfo);
+                var shift = double.Parse(Strings.Substring(line, 69, 11).Trim(), NumberFormatInfo.InvariantInfo);
                 atom.SetProperty("first shift", shift);
             }
             if (line.Length >= 87)
             {
-                double shift = double.Parse(Strings.Substring(line, 79, 8).Trim(), NumberFormatInfo.InvariantInfo);
+                var shift = double.Parse(Strings.Substring(line, 79, 8).Trim(), NumberFormatInfo.InvariantInfo);
                 atom.SetProperty("second shift", shift);
             }
 
@@ -1968,10 +1968,10 @@ namespace NCDK.IO
         /// <exception cref="CDKException">the bond line could not be parsed</exception>
         private IBond ReadBondSlow(string line, IChemObjectBuilder builder, IAtom[] atoms, int[] explicitValence, int linecount)
         {
-            int atom1 = int.Parse(Strings.Substring(line, 0, 3).Trim(), NumberFormatInfo.InvariantInfo);
-            int atom2 = int.Parse(Strings.Substring(line, 3, 3).Trim(), NumberFormatInfo.InvariantInfo);
-            int order = int.Parse(Strings.Substring(line, 6, 3).Trim(), NumberFormatInfo.InvariantInfo);
-            BondStereo stereo = BondStereo.None;
+            var atom1 = int.Parse(Strings.Substring(line, 0, 3).Trim(), NumberFormatInfo.InvariantInfo);
+            var atom2 = int.Parse(Strings.Substring(line, 3, 3).Trim(), NumberFormatInfo.InvariantInfo);
+            var order = int.Parse(Strings.Substring(line, 6, 3).Trim(), NumberFormatInfo.InvariantInfo);
+            var stereo = BondStereo.None;
             if (line.Length >= 12)
             {
                 int mdlStereo = line.Length > 12 
@@ -2015,18 +2015,18 @@ namespace NCDK.IO
             {
                 HandleError("Missing expected stereo field at line: ", linecount, 10, 12);
             }
-#if DEBUG
-            Debug.WriteLine("Bond: " + atom1 + " - " + atom2 + "; order " + order);
-#endif
+            Debug.WriteLine($"Bond: {atom1} - {atom2}; order {order}");
             // interpret CTfile's special bond orders
-            IAtom a1 = atoms[atom1 - 1];
-            IAtom a2 = atoms[atom2 - 1];
+            var a1 = atoms[atom1 - 1];
+            var a2 = atoms[atom2 - 1];
             IBond newBond;
             if (order >= 1 && order <= 3)
             {
-                BondOrder cdkOrder = BondOrder.Single;
-                if (order == 2) cdkOrder = BondOrder.Double;
-                if (order == 3) cdkOrder = BondOrder.Triple;
+                var cdkOrder = BondOrder.Single;
+                if (order == 2)
+                    cdkOrder = BondOrder.Double;
+                if (order == 3)
+                    cdkOrder = BondOrder.Triple;
                 if (stereo != BondStereo.None)
                 {
                     newBond = builder.NewBond(a1, a2, cdkOrder, stereo);
@@ -2111,7 +2111,7 @@ namespace NCDK.IO
                 {
                     // FIXME: if this is encountered for the first time, all
                     // atom charges should be set to zero first!
-                    int infoCount = int.Parse(Strings.Substring(line, 6, 3).Trim(), NumberFormatInfo.InvariantInfo);
+                    var infoCount = int.Parse(Strings.Substring(line, 6, 3).Trim(), NumberFormatInfo.InvariantInfo);
 
                     var st = ((IEnumerable<string>)Strings.Substring(line, 9).Split(' ', '\t')).GetEnumerator();
                     for (int i = 1; i <= infoCount; i++)
@@ -2130,10 +2130,10 @@ namespace NCDK.IO
                     // Reads the pseudo atom property from the mol file
 
                     // The atom number of the to replaced atom
-                    int aliasAtomNumber = int.Parse(Regex_A_d.Replace(line, "", 1), NumberFormatInfo.InvariantInfo);
-                    string alias = input.ReadLine();
+                    var aliasAtomNumber = int.Parse(Regex_A_d.Replace(line, "", 1), NumberFormatInfo.InvariantInfo);
+                    var alias = input.ReadLine();
                     linecount++;
-                    IAtom aliasAtom = container.Atoms[aliasAtomNumber - 1];
+                    var aliasAtom = container.Atoms[aliasAtomNumber - 1];
 
                     // skip if already a pseudoatom
                     if (aliasAtom is IPseudoAtom)
@@ -2142,7 +2142,7 @@ namespace NCDK.IO
                         continue;
                     }
 
-                    IAtom newPseudoAtom = container.Builder.NewPseudoAtom(alias);
+                    var newPseudoAtom = container.Builder.NewPseudoAtom(alias);
                     if (aliasAtom.Point2D != null) newPseudoAtom.Point2D = aliasAtom.Point2D;
                     if (aliasAtom.Point3D != null) newPseudoAtom.Point3D = aliasAtom.Point3D;
                     AtomContainerManipulator.ReplaceAtomByAtom(container, aliasAtom, newPseudoAtom);
@@ -2151,15 +2151,15 @@ namespace NCDK.IO
                 {
                     try
                     {
-                        string countString = Strings.Substring(line, 6, 4).Trim();
-                        int infoCount = int.Parse(countString, NumberFormatInfo.InvariantInfo);
+                        var countString = Strings.Substring(line, 6, 4).Trim();
+                        var infoCount = int.Parse(countString, NumberFormatInfo.InvariantInfo);
                         var st = ((IEnumerable<string>)Strings.Substring(line, 10).Split(' ', '\t')).GetEnumerator();
                         for (int i = 1; i <= infoCount; i++)
                         {
                             st.MoveNext();
-                            int atomNumber = int.Parse(st.Current.Trim(), NumberFormatInfo.InvariantInfo);
+                            var atomNumber = int.Parse(st.Current.Trim(), NumberFormatInfo.InvariantInfo);
                             st.MoveNext();
-                            int absMass = int.Parse(st.Current.Trim(), NumberFormatInfo.InvariantInfo);
+                            var absMass = int.Parse(st.Current.Trim(), NumberFormatInfo.InvariantInfo);
                             if (absMass != 0)
                             {
                                 var isotope = container.Atoms[atomNumber - 1];
@@ -2169,8 +2169,7 @@ namespace NCDK.IO
                     }
                     catch (FormatException exception)
                     {
-                        string error = "Error (" + exception.Message + ") while parsing line " + linecount + ": "
-                                + line + " in property block.";
+                        var error = $"Error ({exception.Message}) while parsing line {linecount}: {line} in property block.";
                         Trace.TraceError(error);
                         HandleError("FormatException in isotope information.", linecount, 7, 11, exception);
                     }
@@ -2179,16 +2178,16 @@ namespace NCDK.IO
                 {
                     try
                     {
-                        string countString = Strings.Substring(line, 6, 3).Trim();
-                        int infoCount = int.Parse(countString, NumberFormatInfo.InvariantInfo);
+                        var countString = Strings.Substring(line, 6, 3).Trim();
+                        var infoCount = int.Parse(countString, NumberFormatInfo.InvariantInfo);
                         var st = ((IEnumerable<string>)Strings.Substring(line, 9).Split(' ', '\t')).GetEnumerator();
                         for (int i = 1; i <= infoCount; i++)
                         {
                             st.MoveNext();
-                            int atomNumber = int.Parse(st.Current.Trim(), NumberFormatInfo.InvariantInfo);
+                            var atomNumber = int.Parse(st.Current.Trim(), NumberFormatInfo.InvariantInfo);
                             st.MoveNext();
-                            int rad = int.Parse(st.Current.Trim(), NumberFormatInfo.InvariantInfo);
-                            MDLV2000Writer.SpinMultiplicity spin = MDLV2000Writer.SpinMultiplicity.None;
+                            var rad = int.Parse(st.Current.Trim(), NumberFormatInfo.InvariantInfo);
+                            var spin = MDLV2000Writer.SpinMultiplicity.None;
                             if (rad > 0)
                             {
                                 IAtom radical = container.Atoms[atomNumber - 1];
@@ -2202,8 +2201,7 @@ namespace NCDK.IO
                     }
                     catch (FormatException exception)
                     {
-                        string error = "Error (" + exception.Message + ") while parsing line " + linecount + ": "
-                                + line + " in property block.";
+                        var error = $"Error ({exception.Message}) while parsing line {linecount}: {line} in property block.";
                         Trace.TraceError(error);
                         HandleError("FormatException in radical information", linecount, 7, 10, exception);
                     }
@@ -2212,15 +2210,15 @@ namespace NCDK.IO
                 {
                     try
                     {
-                        string atomNumberString = Strings.Substring(line, 3, 3).Trim();
-                        int atomNumber = int.Parse(atomNumberString, NumberFormatInfo.InvariantInfo);
+                        var atomNumberString = Strings.Substring(line, 3, 3).Trim();
+                        var atomNumber = int.Parse(atomNumberString, NumberFormatInfo.InvariantInfo);
                         //string whatIsThisString = line.Substring(6,9).Trim();
 
-                        string atomName = input.ReadLine();
+                        var atomName = input.ReadLine();
 
                         // convert Atom into a PseudoAtom
-                        IAtom prevAtom = container.Atoms[atomNumber - 1];
-                        IPseudoAtom pseudoAtom = container.Builder.NewPseudoAtom(atomName);
+                        var prevAtom = container.Atoms[atomNumber - 1];
+                        var pseudoAtom = container.Builder.NewPseudoAtom(atomName);
                         if (prevAtom.Point2D != null)
                         {
                             pseudoAtom.Point2D = prevAtom.Point2D;
@@ -2233,8 +2231,7 @@ namespace NCDK.IO
                     }
                     catch (FormatException exception)
                     {
-                        string error = "Error (" + exception.ToString() + ") while parsing line " + linecount + ": " + line
-                                + " in property block.";
+                        var error = $"Error ({exception.ToString()}) while parsing line {linecount}: {line} in property block.";
                         Trace.TraceError(error);
                         HandleError("FormatException in group information", linecount, 4, 7, exception);
                     }
@@ -2249,22 +2246,22 @@ namespace NCDK.IO
                     //Process the R group numbers as defined in RGP line.
                     while (st.MoveNext())
                     {
-                        int position = int.Parse(st.Current, NumberFormatInfo.InvariantInfo);
+                        var position = int.Parse(st.Current, NumberFormatInfo.InvariantInfo);
                         st.MoveNext();
-                        int rNumber = int.Parse(st.Current, NumberFormatInfo.InvariantInfo);
+                        var rNumber = int.Parse(st.Current, NumberFormatInfo.InvariantInfo);
                         // the container may have already had atoms before the new atoms were read
-                        int index = container.Atoms.Count - nAtoms + position - 1;
-                        IPseudoAtom pseudoAtom = (IPseudoAtom)container.Atoms[index];
+                        var index = container.Atoms.Count - nAtoms + position - 1;
+                        var pseudoAtom = (IPseudoAtom)container.Atoms[index];
                         if (pseudoAtom != null)
                         {
-                            pseudoAtom.Label = "R" + rNumber;
+                            pseudoAtom.Label = $"R{rNumber}";
                         }
                     }
                 }
                 if (line.StartsWith("V  ", StringComparison.Ordinal))
                 {
-                    int atomNumber = int.Parse(Strings.Substring(line, 3, 3).Trim(), NumberFormatInfo.InvariantInfo);
-                    IAtom atomWithComment = container.Atoms[atomNumber - 1];
+                    var atomNumber = int.Parse(Strings.Substring(line, 3, 3).Trim(), NumberFormatInfo.InvariantInfo);
+                    var atomWithComment = container.Atoms[atomNumber - 1];
                     atomWithComment.SetProperty(CDKPropertyName.Comment, Strings.Substring(line, 7));
                 }
 
@@ -2308,15 +2305,16 @@ namespace NCDK.IO
             string line, header = null;
             bool wrap = false;
 
-            StringBuilder data = new StringBuilder(80);
+            var data = new StringBuilder(80);
 
             while (!EndOfRecord(line = input.ReadLine()))
             {
-                string newHeader = DataHeader(line);
+                var newHeader = DataHeader(line);
 
                 if (newHeader != null)
                 {
-                    if (header != null) container.SetProperty(header, data.ToString());
+                    if (header != null)
+                        container.SetProperty(header, data.ToString());
 
                     header = newHeader;
                     wrap = false;
@@ -2356,9 +2354,11 @@ namespace NCDK.IO
             if (line.Length < 2)
                 return null;
             int i = line.IndexOf('<', 2);
-            if (i < 0) return null;
+            if (i < 0)
+                return null;
             int j = line.IndexOf('>', i);
-            if (j < 0) return null;
+            if (j < 0)
+                return null;
             return Strings.Substring(line, i + 1, j - (i + 1));
         }
 
@@ -2537,13 +2537,14 @@ namespace NCDK.IO
             };
 
             /// <summary>Index of 'M XXX' properties for quick lookup.</summary>
-            private static IDictionary<string, PropertyKey> mSuffix = new Dictionary<string, PropertyKey>(60);
+            private static Dictionary<string, PropertyKey> mSuffix = new Dictionary<string, PropertyKey>(60);
 
             static PropertyKey()
             {
                 foreach (var p in Values)
                 {
-                    if (p.Name[0] == 'M') mSuffix[p.Name.Substring(2, 3)] = p;
+                    if (p.Name[0] == 'M')
+                        mSuffix[p.Name.Substring(2, 3)] = p;
                 }
             }
 
@@ -2565,24 +2566,26 @@ namespace NCDK.IO
                 switch (line[0])
                 {
                     case 'A':
-                        if (line[1] == ' ' && line[2] == ' ') return ATOM_ALIAS;
+                        if (line[1] == ' ' && line[2] == ' ')
+                            return ATOM_ALIAS;
                         return Unknown;
                     case 'G':
-                        if (line[1] == ' ' && line[2] == ' ') return GROUP_ABBREVIATION;
+                        if (line[1] == ' ' && line[2] == ' ')
+                            return GROUP_ABBREVIATION;
                         return Unknown;
                     case 'S':
-                        if (line[1] == ' ' && line[2] == ' ') return SKIP;
+                        if (line[1] == ' ' && line[2] == ' ')
+                            return SKIP;
                         return Unknown;
                     case 'V':
-                        if (line[1] == ' ' && line[2] == ' ') return ATOM_VALUE;
+                        if (line[1] == ' ' && line[2] == ' ')
+                            return ATOM_VALUE;
                         return Unknown;
                     case 'M':
-                        if (line[1] != ' ' || line[2] != ' ') return Unknown;
-                        PropertyKey property;
-                        if (mSuffix.TryGetValue(Strings.Substring(line, 3, 3), out property))
-                        {
+                        if (line[1] != ' ' || line[2] != ' ')
+                            return Unknown;
+                        if (mSuffix.TryGetValue(Strings.Substring(line, 3, 3), out PropertyKey property))
                             return property;
-                        }
                         return Unknown;
                 }
                 return Unknown;
@@ -2618,9 +2621,11 @@ namespace NCDK.IO
             /// <returns>the CTab version</returns>
             public static CTabVersion OfHeader(string header)
             {
-                if (header.Length < 39) return Unspecified;
+                if (header.Length < 39)
+                    return Unspecified;
                 char c = header[34];
-                if (c != 'v' && c != 'V') return Unspecified;
+                if (c != 'v' && c != 'V')
+                    return Unspecified;
                 if (header[35] == '2') // could check for '000'
                     return V2000;
                 if (header[35] == '3') // could check for '000'

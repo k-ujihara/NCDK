@@ -30,7 +30,6 @@ using NCDK.Smiles;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -129,22 +128,7 @@ namespace NCDK.Tools
         }
 
         [NonSerialized]
-        private IsotopeFactory isotopeFac = null;
-
-        private void EnsureIsotopeFactory()
-        {
-            if (isotopeFac == null)
-            {
-                try
-                {
-                    isotopeFac = BODRIsotopeFactory.Instance;
-                }
-                catch (IOException e)
-                {
-                    throw new CDKException($"Could not instantiate the {nameof(IsotopeFactory)}: {e.Message}", e);
-                }
-            }
-        }
+        private IsotopeFactory isotopeFac = CDK.IsotopeFactory;
 
         /// <summary>
         /// This method is intended to be used to get the atoms around an atom in spheres. It is not used in this class, but is provided for other classes to use.
@@ -157,7 +141,6 @@ namespace NCDK.Tools
         /// <returns>An array <see cref="IList{T}"/> of <see cref="IAtom"/>. The list at i-1 contains the atoms at sphere i as <see cref="TreeNode"/>s.</returns>
         public IReadOnlyList<IAtom>[] GetSpheres(IAtomContainer ac, IAtom root, int noOfSpheres, bool ringsize)
         {
-            EnsureIsotopeFactory();
             centerCode = "";
             this.atomContainer = ac;
             maxSphere = noOfSpheres;
@@ -233,8 +216,7 @@ namespace NCDK.Tools
         /// <exception cref="CDKException">Thrown if something is wrong</exception>
         public string GetHOSECode(IAtomContainer ac, IAtom root, int noOfSpheres, bool ringsize)
         {
-            EnsureIsotopeFactory();
-            CanonicalLabeler canLabler = new CanonicalLabeler();
+            var canLabler = new CanonicalLabeler();
             canLabler.CanonLabel(ac);
             centerCode = "";
             this.atomContainer = ac;

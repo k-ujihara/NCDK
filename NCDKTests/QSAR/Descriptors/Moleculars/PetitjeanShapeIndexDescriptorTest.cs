@@ -65,7 +65,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestPetiteJeanShapeNo3D()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles("CCCOCCC(O)=O");
             var result = Descriptor.Calculate(atomContainer);
             ArrayResult<double> dar = (ArrayResult<double>)result.Value;

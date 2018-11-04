@@ -54,7 +54,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void Test1()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCO");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void Test2()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("c1c(CN)cc(CCNC)cc1C(CO)CC(=O)CCOCCCO");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -90,7 +90,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void Test3()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C#CC(C)(C)C(C)(C)C#C");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);

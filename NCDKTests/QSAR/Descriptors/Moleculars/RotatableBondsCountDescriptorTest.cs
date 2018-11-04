@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestRotatableBondsCount()
         {
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CC2CCC(C1CCCCC1)CC2"); // molecule with 2 bridged cicloexane and 1 methyl
             Assert.AreEqual(2, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
@@ -186,7 +186,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestAmideIncluded()
         {
             string amide = "CCNC(=O)CC(C)C"; // N-ethyl-3-methylbutanamide
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles(amide);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
@@ -202,7 +202,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestAmideExcluded()
         {
             string amide = "CCNC(=O)CC(C)C"; // N-ethyl-3-methylbutanamide
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles(amide);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);

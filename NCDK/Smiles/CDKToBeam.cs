@@ -23,7 +23,6 @@
  */
 
 using NCDK.Beam;
-using NCDK.Config;
 using NCDK.Stereo;
 using System;
 using System.Collections.Generic;
@@ -166,7 +165,7 @@ namespace NCDK.Smiles
                     case 17: return 35;
                     case 53: return 127;
                     default:
-                        var isotopes = BODRIsotopeFactory.Instance;
+                        var isotopes = CDK.IsotopeFactory;
                         var isotope = isotopes.GetMajorIsotope(e.Symbol);
                         if (isotope != null)
                             return isotope.MassNumber;

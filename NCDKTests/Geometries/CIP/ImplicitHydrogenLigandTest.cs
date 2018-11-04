@@ -33,7 +33,7 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void TestConstructorAndGetMethods()
         {
-            SmilesParser smiles = CDK.SilentSmilesParser;
+            SmilesParser smiles = CDK.SmilesParser;
             var molecule = smiles.ParseSmiles("ClC(Br)(I)");
 
             ILigand ligand = new ImplicitHydrogenLigand(molecule, new VisitedAtoms(), molecule.Atoms[1]);

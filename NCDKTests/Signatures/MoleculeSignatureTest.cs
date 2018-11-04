@@ -43,7 +43,7 @@ namespace NCDK.Signatures
 
         public MoleculeSignatureTest()
         {
-            this.parser = CDK.SilentSmilesParser;
+            this.parser = CDK.SmilesParser;
             this.builder = ChemObjectBuilder.Instance;
             mol = builder.NewAtomContainer();
             mol.Atoms.Add(builder.NewAtom("C"));

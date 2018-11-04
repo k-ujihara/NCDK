@@ -212,7 +212,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { -0.0458, -0.0623, -0.0623, -0.0415, 0.0003, -0.0855 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C(C)(C)CCI");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
@@ -316,7 +316,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { -0.2138, 0.079, 0.0942, -0.072, 0.0563, 0.0563 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[F+]=C([H])[C-]([H])[H]");
 
             for (int i = 0; i < mol.Atoms.Count; i++)
@@ -331,7 +331,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { -0.3855, -0.0454, 0.0634, -0.0544, -0.0391, -0.0391 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=C([H])[C-]([H])[H]");
             descriptor.Parameters = new object[] { 6 };
             for (int i = 0; i < mol.Atoms.Count; i++)
@@ -346,7 +346,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { -0.3855, -0.0454, 0.0634, -0.0544, -0.0391, -0.0391 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[O-]C([H])=C([H])[H]");
 
             for (int i = 0; i < mol.Atoms.Count; i++)
@@ -420,7 +420,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { -0.4331, -0.1067, 0.0133, 0.0133, 0.0133 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[O-]C([H])([H])[H]");
             descriptor.Parameters = new object[] { 6 };
             for (int i = 0; i < mol.Atoms.Count; i++)
@@ -439,7 +439,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             // from Petra online: http://www2.chemi.uni.erlange.de/services/petra/smiles.pthml
             double[] testResult = { 0.0835, 0.0265, -0.2622, 0.0265, 0.0835, -0.0444, 0.064, -0.0596, 0.0626, -0.0444, 0.064 };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[H]c1[n-][c+]([H])c([H])c([H])c1([H])");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);

@@ -36,14 +36,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
 namespace NCDK
 {
     /// <summary>
     /// Helper class to provide general information about this CDK library.
     /// </summary>
     // @cdk.module core
-    // @cdk.githash
     public static class CDK
     {
         /// <summary>
@@ -51,7 +49,6 @@ namespace NCDK
         /// </summary>
         /// <returns>The library version</returns>
         public static string Version => typeof(CDK).Assembly.GetName().Version.ToString();
-
 <#
     foreach (var nc in NCs)
     {
@@ -65,38 +62,40 @@ namespace NCDK
     /// <summary>Name and creation<summary>
     public class NC
     {
+        public string Modifier { get; private set; }
         public string Name { get; private set; }
         public string Type { get; private set; }
         public string Creation { get; private set; }
 
-        public NC(string name, string type, string creation)
+        public NC(string modifier, string name, string type, string creation)
         {
-            Name = name;
-            Type = type;
-            Creation = creation;
+            this.Modifier = modifier;
+            this.Name = name;
+            this.Type = type;
+            this.Creation = creation;
         }
     }
 
     public NC[] NCs { get; } = new NC[] 
     {
-        new NC("JmolAtomTypeFactory", "Config.AtomTypeFactory", "Config.AtomTypeFactory.GetInstance(\"NCDK.Config.Data.jmol_atomtypes.txt\", Silent.ChemObjectBuilder.Instance)"),
-        new NC("CdkAtomTypeFactory", "Config.AtomTypeFactory", "Config.AtomTypeFactory.GetInstance(\"NCDK.Dict.Data.cdk-atom-types.owl\", Silent.ChemObjectBuilder.Instance)"),
-        new NC("StructgenAtomTypeFactory", "Config.AtomTypeFactory", "Config.AtomTypeFactory.GetInstance(\"NCDK.Config.Data.structgen_atomtypes.xml\", Silent.ChemObjectBuilder.Instance)"),
-        new NC("SilentSmilesParser", "Smiles.SmilesParser", "new Smiles.SmilesParser(Silent.ChemObjectBuilder.Instance)"),
-        new NC("SaturationChecker", "Tools.ISaturationChecker", "new Tools.SaturationChecker()"),
-        new NC("LonePairElectronChecker", "Tools.ILonePairElectronChecker", "new Tools.LonePairElectronChecker()"),
-        new NC("AtomTypeMatcher", "AtomTypes.IAtomTypeMatcher", "AtomTypes.CDKAtomTypeMatcher.GetInstance()"),
-        new NC("HydrogenAdder", "Tools.IHydrogenAdder", "Tools.CDKHydrogenAdder.Instance"),
-        new NC("PartialFilledStructureMerger", "StructGen.Stochastic.PartialFilledStructureMerger", "new StructGen.Stochastic.PartialFilledStructureMerger()"),
+        new NC("internal", "JmolAtomTypeFactory", "Config.AtomTypeFactory", "Config.AtomTypeFactory.GetInstance(\"NCDK.Config.Data.jmol_atomtypes.txt\", Silent.ChemObjectBuilder.Instance)"),
+        new NC("internal", "CdkAtomTypeFactory", "Config.AtomTypeFactory", "Config.AtomTypeFactory.GetInstance(\"NCDK.Dict.Data.cdk-atom-types.owl\", Silent.ChemObjectBuilder.Instance)"),
+        new NC("internal", "StructgenAtomTypeFactory", "Config.AtomTypeFactory", "Config.AtomTypeFactory.GetInstance(\"NCDK.Config.Data.structgen_atomtypes.xml\", Silent.ChemObjectBuilder.Instance)"),
+        new NC("public", "SaturationChecker", "Tools.ISaturationChecker", "new Tools.SaturationChecker()"),
+        new NC("public", "SmilesParser", "Smiles.SmilesParser", "new Smiles.SmilesParser(Silent.ChemObjectBuilder.Instance)"),
+        new NC("public", "IsotopeFactory", "Config.IsotopeFactory", "Config.BODRIsotopeFactory.Instance"),
+        new NC("public", "LonePairElectronChecker", "Tools.ILonePairElectronChecker", "new Tools.LonePairElectronChecker()"),
+        new NC("public", "AtomTypeMatcher", "AtomTypes.IAtomTypeMatcher", "AtomTypes.CDKAtomTypeMatcher.GetInstance()"),
+        new NC("public", "HydrogenAdder", "Tools.IHydrogenAdder", "Tools.CDKHydrogenAdder.Instance"),
+        new NC("internal", "PartialFilledStructureMerger", "StructGen.Stochastic.PartialFilledStructureMerger", "new StructGen.Stochastic.PartialFilledStructureMerger()"),
     };
 
     public void MakeVar(NC nc)
     {
 #>
-
         private static <#= nc.Type #> local<#= nc.Name #> = null;
         private static readonly object lock<#= nc.Name #> = new object();
-        internal static <#= nc.Type #> <#= nc.Name #>
+        <#= nc.Modifier #> static <#= nc.Type #> <#= nc.Name #>
         {
             get
             {

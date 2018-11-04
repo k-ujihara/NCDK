@@ -37,7 +37,7 @@ namespace NCDK.Geometries.CIP
     [TestClass()]
     public class CIPToolTest : CDKTestCase
     {
-        static SmilesParser smiles = CDK.SilentSmilesParser;
+        static SmilesParser smiles = CDK.SmilesParser;
         static IAtomContainer molecule;
         static IReadOnlyList<ILigand> ligands = MakeLigands();
 
@@ -120,7 +120,7 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void TestGetCIPChiralityDoubleBondTogether()
         {
-            var container = CDK.SilentSmilesParser.ParseSmiles("CCC(C)=C(C)CC");
+            var container = CDK.SmilesParser.ParseSmiles("CCC(C)=C(C)CC");
             CIPTool.CIPChirality label = CIPTool.GetCIPChirality(
                     container,
                     new DoubleBondStereochemistry(container.GetBond(container.Atoms[2], container.Atoms[4]),
@@ -133,7 +133,7 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void TestGetCIPChiralityDoubleBondOpposite()
         {
-            var container = CDK.SilentSmilesParser.ParseSmiles("CCC(C)=C(C)CC");
+            var container = CDK.SmilesParser.ParseSmiles("CCC(C)=C(C)CC");
             var label = CIPTool.GetCIPChirality(
                 container,
                 new DoubleBondStereochemistry(
@@ -146,7 +146,7 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void Label()
         {
-            var container = CDK.SilentSmilesParser.ParseSmiles("C/C=C/[C@@H](C)C(/C)=C(/C)C[C@H](C)O");
+            var container = CDK.SmilesParser.ParseSmiles("C/C=C/[C@@H](C)C(/C)=C(/C)C[C@H](C)O");
             CIPTool.Label(container);
             Assert.AreEqual("R", container.Atoms[3].GetCIPDescriptor());
             Assert.AreEqual("S", container.Atoms[10].GetCIPDescriptor());

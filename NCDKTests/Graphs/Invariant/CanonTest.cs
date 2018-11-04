@@ -188,7 +188,7 @@ namespace NCDK.Graphs.Invariant
                 labels));
         }
 
-        static readonly SmilesParser sp = CDK.SilentSmilesParser;
+        static readonly SmilesParser sp = CDK.SmilesParser;
         static readonly SmilesGenerator sg = new SmilesGenerator(SmiFlavors.Isomeric | SmiFlavors.AtomAtomMap);
 
         static IAtomContainer Smi(string smi)

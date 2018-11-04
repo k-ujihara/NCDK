@@ -31,7 +31,7 @@ namespace NCDK.SMARTS
     {
         private static string Generate(string smi, SubstructureSelectionMode mode, int[] idxs)
         {
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles(smi);
             var subsmarts = new SmartsFragmentExtractor(mol);
             subsmarts.SetMode(mode);

@@ -26,10 +26,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.AtomTypes;
-using NCDK.Config;
 using NCDK.QSAR.Results;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -106,14 +103,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 adder.AddImplicitHydrogens(mol);
 
                 // polar surface area: chain it off the TPSADescriptor
-                TPSADescriptor tpsa = new TPSADescriptor();
+                var tpsa = new TPSADescriptor();
                 var value = tpsa.Calculate(mol);
                 polar = value.Value.Value;
 
                 //  molecular weight
                 foreach (var atom in mol.Atoms)
                 {
-                    weight += BODRIsotopeFactory.Instance.GetMajorIsotope(atom.Symbol).ExactMass.Value;
+                    weight += CDK.IsotopeFactory.GetMajorIsotope(atom.Symbol).ExactMass.Value;
                     weight += (atom.ImplicitHydrogenCount ?? 0) * 1.00782504;
                 }
             }

@@ -17,7 +17,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
@@ -103,7 +102,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double difference;
             try
             {
-                var ifac = BODRIsotopeFactory.Instance;
+                var ifac = CDK.IsotopeFactory;
                 IElement element0;
                 IElement element1;
 

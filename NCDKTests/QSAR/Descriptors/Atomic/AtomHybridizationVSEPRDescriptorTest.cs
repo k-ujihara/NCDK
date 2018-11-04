@@ -233,7 +233,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("F-C=C");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -265,7 +265,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[F+]=C-[C-]");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);

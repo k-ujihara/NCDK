@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         public void TestPeriodicTablePositionDescriptor()
         {
             IAtomicDescriptor descriptor = new PeriodicTablePositionDescriptor();
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCl"); //
             Assert.AreEqual(3, ((Result<int>)descriptor.Calculate(mol.Atoms[2], mol).Value).Value);
         }

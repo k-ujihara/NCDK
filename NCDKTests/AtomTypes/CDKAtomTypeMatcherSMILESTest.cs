@@ -32,7 +32,7 @@ namespace NCDK.AtomTypes
     [TestClass()]
     public class CDKAtomTypeMatcherSMILESTest : AbstractCDKAtomTypeTest
     {
-        private static SmilesParser smilesParser = CDK.SilentSmilesParser;
+        private static SmilesParser smilesParser = CDK.SmilesParser;
         private static IAtomTypeMatcher atomTypeMatcher = CDK.AtomTypeMatcher;
 
         /// <summary>

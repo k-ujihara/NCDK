@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestCyclic()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C1CCC2CCCCC2C1");
             Assert.AreEqual(4.459, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.001);
         }
@@ -51,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestLinear()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCCCCCCCC");
             Assert.AreEqual(4.17, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.001);
         }
@@ -59,7 +59,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestCompound()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCCC1CCCCC1");
             Assert.AreEqual(4.322, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.001);
         }

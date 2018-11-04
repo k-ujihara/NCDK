@@ -213,12 +213,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return fragments;
         }
 
-        private static readonly IAtomContainer C3 = CDK.SilentSmilesParser.ParseSmiles("CCC");
-        private static readonly IAtomContainer C4 = CDK.SilentSmilesParser.ParseSmiles("CCCC");
-        private static readonly IAtomContainer C5 = CDK.SilentSmilesParser.ParseSmiles("CCCCC");
-        private static readonly IAtomContainer C6 = CDK.SilentSmilesParser.ParseSmiles("CCCCCC");
-        private static readonly IAtomContainer C7 = CDK.SilentSmilesParser.ParseSmiles("CCCCCCC");
-        private static readonly IAtomContainer C8 = CDK.SilentSmilesParser.ParseSmiles("CCCCCCCC");
+        private static readonly IAtomContainer C3 = CDK.SmilesParser.ParseSmiles("CCC");
+        private static readonly IAtomContainer C4 = CDK.SmilesParser.ParseSmiles("CCCC");
+        private static readonly IAtomContainer C5 = CDK.SmilesParser.ParseSmiles("CCCCC");
+        private static readonly IAtomContainer C6 = CDK.SmilesParser.ParseSmiles("CCCCCC");
+        private static readonly IAtomContainer C7 = CDK.SmilesParser.ParseSmiles("CCCCCCC");
+        private static readonly IAtomContainer C8 = CDK.SmilesParser.ParseSmiles("CCCCCCCC");
 
         private static List<List<int>> Order2(IAtomContainer atomContainer)
         {

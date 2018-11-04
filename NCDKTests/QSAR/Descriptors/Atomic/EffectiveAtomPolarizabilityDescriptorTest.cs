@@ -44,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { 4.7253, 6.1345, 6.763, 6.925, 5.41, 5.41 };
             IAtomicDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("NCCN(C)(C)");
             AddExplicitHydrogens(mol);
 
@@ -66,7 +66,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCl");
             AddExplicitHydrogens(mol);
             for (int i = 0; i < 3; i++)
@@ -85,7 +85,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double testResult = 6.1745; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C=CCBr");
             AddExplicitHydrogens(mol);
 
@@ -102,7 +102,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { 8.3585, 6.1118, 6.1118, 9.081, 10.526, 8.69 }; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C(C)(C)CCI");
             AddExplicitHydrogens(mol);
 
@@ -122,7 +122,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double testResult = 5.207;  // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCOCC");
             AddExplicitHydrogens(mol);
 
@@ -139,7 +139,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { 4.2552, 5.1945, 4.883, 3.595 }; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("NCCO");
             AddExplicitHydrogens(mol);
             for (int i = 0; i < 4; i++)
@@ -158,7 +158,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { 5.2995, 6.677, 7.677, 6.2545 }; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C=CCS");
             AddExplicitHydrogens(mol);
             for (int i = 0; i < 4; i++)

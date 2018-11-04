@@ -22,14 +22,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
 namespace NCDK
 {
     /// <summary>
     /// Helper class to provide general information about this CDK library.
     /// </summary>
     // @cdk.module core
-    // @cdk.githash
     public static class CDK
     {
         /// <summary>
@@ -37,8 +35,6 @@ namespace NCDK
         /// </summary>
         /// <returns>The library version</returns>
         public static string Version => typeof(CDK).Assembly.GetName().Version.ToString();
-
-
         private static Config.AtomTypeFactory localJmolAtomTypeFactory = null;
         private static readonly object lockJmolAtomTypeFactory = new object();
         internal static Config.AtomTypeFactory JmolAtomTypeFactory
@@ -54,7 +50,6 @@ namespace NCDK
                 return localJmolAtomTypeFactory;
             }
         }
-
         private static Config.AtomTypeFactory localCdkAtomTypeFactory = null;
         private static readonly object lockCdkAtomTypeFactory = new object();
         internal static Config.AtomTypeFactory CdkAtomTypeFactory
@@ -70,7 +65,6 @@ namespace NCDK
                 return localCdkAtomTypeFactory;
             }
         }
-
         private static Config.AtomTypeFactory localStructgenAtomTypeFactory = null;
         private static readonly object lockStructgenAtomTypeFactory = new object();
         internal static Config.AtomTypeFactory StructgenAtomTypeFactory
@@ -86,26 +80,9 @@ namespace NCDK
                 return localStructgenAtomTypeFactory;
             }
         }
-
-        private static Smiles.SmilesParser localSilentSmilesParser = null;
-        private static readonly object lockSilentSmilesParser = new object();
-        internal static Smiles.SmilesParser SilentSmilesParser
-        {
-            get
-            {
-                if (localSilentSmilesParser == null)
-                    lock (lockSilentSmilesParser)
-                    {
-                        if (localSilentSmilesParser == null)
-                            localSilentSmilesParser = new Smiles.SmilesParser(Silent.ChemObjectBuilder.Instance);
-                    }
-                return localSilentSmilesParser;
-            }
-        }
-
         private static Tools.ISaturationChecker localSaturationChecker = null;
         private static readonly object lockSaturationChecker = new object();
-        internal static Tools.ISaturationChecker SaturationChecker
+        public static Tools.ISaturationChecker SaturationChecker
         {
             get
             {
@@ -118,10 +95,39 @@ namespace NCDK
                 return localSaturationChecker;
             }
         }
-
+        private static Smiles.SmilesParser localSmilesParser = null;
+        private static readonly object lockSmilesParser = new object();
+        public static Smiles.SmilesParser SmilesParser
+        {
+            get
+            {
+                if (localSmilesParser == null)
+                    lock (lockSmilesParser)
+                    {
+                        if (localSmilesParser == null)
+                            localSmilesParser = new Smiles.SmilesParser(Silent.ChemObjectBuilder.Instance);
+                    }
+                return localSmilesParser;
+            }
+        }
+        private static Config.IsotopeFactory localIsotopeFactory = null;
+        private static readonly object lockIsotopeFactory = new object();
+        public static Config.IsotopeFactory IsotopeFactory
+        {
+            get
+            {
+                if (localIsotopeFactory == null)
+                    lock (lockIsotopeFactory)
+                    {
+                        if (localIsotopeFactory == null)
+                            localIsotopeFactory = Config.BODRIsotopeFactory.Instance;
+                    }
+                return localIsotopeFactory;
+            }
+        }
         private static Tools.ILonePairElectronChecker localLonePairElectronChecker = null;
         private static readonly object lockLonePairElectronChecker = new object();
-        internal static Tools.ILonePairElectronChecker LonePairElectronChecker
+        public static Tools.ILonePairElectronChecker LonePairElectronChecker
         {
             get
             {
@@ -134,10 +140,9 @@ namespace NCDK
                 return localLonePairElectronChecker;
             }
         }
-
         private static AtomTypes.IAtomTypeMatcher localAtomTypeMatcher = null;
         private static readonly object lockAtomTypeMatcher = new object();
-        internal static AtomTypes.IAtomTypeMatcher AtomTypeMatcher
+        public static AtomTypes.IAtomTypeMatcher AtomTypeMatcher
         {
             get
             {
@@ -150,10 +155,9 @@ namespace NCDK
                 return localAtomTypeMatcher;
             }
         }
-
         private static Tools.IHydrogenAdder localHydrogenAdder = null;
         private static readonly object lockHydrogenAdder = new object();
-        internal static Tools.IHydrogenAdder HydrogenAdder
+        public static Tools.IHydrogenAdder HydrogenAdder
         {
             get
             {
@@ -166,7 +170,6 @@ namespace NCDK
                 return localHydrogenAdder;
             }
         }
-
         private static StructGen.Stochastic.PartialFilledStructureMerger localPartialFilledStructureMerger = null;
         private static readonly object lockPartialFilledStructureMerger = new object();
         internal static StructGen.Stochastic.PartialFilledStructureMerger PartialFilledStructureMerger

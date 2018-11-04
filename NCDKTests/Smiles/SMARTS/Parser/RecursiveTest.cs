@@ -45,7 +45,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         public void Match(string smarts, string smiles)
         {
             SMARTSQueryTool sqt = new SMARTSQueryTool(smarts, ChemObjectBuilder.Instance);
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);
             Aromaticity.CDKLegacy.Apply(atomContainer);
@@ -489,7 +489,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
             // iterating SMILES reader doesn't allow us to turn off automatic aromaticity
             // perception
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
 
             int nmatch = 0;
             int nmol = 0;

@@ -31,7 +31,7 @@ namespace NCDK.Geometries.CIP.Rules
     [TestClass()]
     public class MassNumberRuleTest : CDKTestCase
     {
-        static SmilesParser smiles = CDK.SilentSmilesParser;
+        static SmilesParser smiles = CDK.SmilesParser;
         static IAtomContainer molecule = smiles.ParseSmiles("CC([13C])([2H])[H]");
 
         [TestMethod()]

@@ -19,7 +19,6 @@
 
 using NCDK.Config;
 using NCDK.Numerics;
-using NCDK.Tools.Manipulator;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -121,7 +120,7 @@ namespace NCDK.Charges
             int atomicNumber = 0;
             try
             {
-                ifac = BODRIsotopeFactory.Instance;
+                ifac = CDK.IsotopeFactory;
                 for (int i = 0; i < ac.Atoms.Count; i++)
                 {
                     var atom = ac.Atoms[i];

@@ -25,7 +25,6 @@ using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Graphs.Matrix;
 using NCDK.QSAR.Results;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -369,8 +368,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 for (int i = 0; i < molecule.Atoms.Count; i++)
                 {
-                    if (molecule.Atoms[i].AtomicNumber.Equals(NaturalElement.AtomicNumbers.H)) continue;
-                    diagvalue[counter] = BODRIsotopeFactory.Instance.GetMajorIsotope(molecule.Atoms[i].Symbol).ExactMass.Value;
+                    if (molecule.Atoms[i].AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+                        continue;
+                    diagvalue[counter] = CDK.IsotopeFactory.GetMajorIsotope(molecule.Atoms[i].Symbol).ExactMass.Value;
                     counter++;
                 }
             }
@@ -382,8 +382,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var burdenMatrix = BurdenMatrix.EvalMatrix(molecule, diagvalue);
             if (HasUndefined(burdenMatrix))
                 return GetDummyDescriptorValue(new CDKException("Burden matrix has undefined values"));
-            Matrix<double> matrix;
-            matrix = Matrix<double>.Build.DenseOfColumnArrays(burdenMatrix);
+            var matrix = Matrix<double>.Build.DenseOfColumnArrays(burdenMatrix);
             var eigenDecomposition = matrix.Evd().EigenValues;
             var eval1 = eigenDecomposition.Select(n => n.Real).ToArray();
 

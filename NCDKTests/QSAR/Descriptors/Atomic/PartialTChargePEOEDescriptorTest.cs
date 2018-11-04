@@ -80,7 +80,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new PartialTChargePEOEDescriptor();
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("F-C=C");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);

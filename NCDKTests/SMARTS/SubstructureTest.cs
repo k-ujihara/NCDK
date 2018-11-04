@@ -408,7 +408,7 @@ namespace NCDK.SMARTS
             Assert.IsFalse(Create(query).Matches(target), $"{query.Title} should not matched {target.Title}");
         }
 
-        private static readonly SmilesParser sp = CDK.SilentSmilesParser;
+        private static readonly SmilesParser sp = CDK.SmilesParser;
 
         // create a container from a smiles string
         protected static IAtomContainer Smi(string smi)

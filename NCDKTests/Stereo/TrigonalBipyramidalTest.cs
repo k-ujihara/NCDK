@@ -36,7 +36,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Normalize()
         {
-            SmilesParser smipar = CDK.SilentSmilesParser;
+            SmilesParser smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles("C[As@TB3](Cl)(Cl)(C)Cl");
             var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(TrigonalBipyramidal));

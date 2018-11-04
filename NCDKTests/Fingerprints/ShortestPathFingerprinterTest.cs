@@ -77,7 +77,7 @@ namespace NCDK.Fingerprints
         public void TestGenerateFingerprint()
         {
             string smiles = "CCCCC1C(=O)N(N(C1=O)C1=CC=CC=C1)C1=CC=CC=C1";
-            SmilesParser smilesParser = CDK.SilentSmilesParser;
+            SmilesParser smilesParser = CDK.SmilesParser;
             var molecule = smilesParser.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.CDKLegacy.Apply(molecule);
@@ -97,7 +97,7 @@ namespace NCDK.Fingerprints
         {
             string smilesT = "NC(=O)C1=C2C=CC(Br)=CC2=C(Cl)C=C1";
             string smilesQ = "CC1=C2C=CC(Br)=CC2=C(Cl)C=C1";
-            SmilesParser smilesParser = CDK.SilentSmilesParser;
+            SmilesParser smilesParser = CDK.SmilesParser;
             var moleculeQ = smilesParser.ParseSmiles(smilesQ);
             var moleculeT = smilesParser.ParseSmiles(smilesT);
 
@@ -141,7 +141,7 @@ namespace NCDK.Fingerprints
         public void TestGenerateFingerprintAnthracene()
         {
             string smiles = "C1=CC2=CC3=CC=CC=C3C=C2C=C1";
-            SmilesParser smilesParser = CDK.SilentSmilesParser;
+            SmilesParser smilesParser = CDK.SmilesParser;
             var molecule = smilesParser.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.CDKLegacy.Apply(molecule);
@@ -155,7 +155,7 @@ namespace NCDK.Fingerprints
         public void TestGenerateFingerprintNaphthalene()
         {
             string smiles = "C1=CC2=CC=CC=C2C=C1";
-            SmilesParser smilesParser = CDK.SilentSmilesParser;
+            SmilesParser smilesParser = CDK.SmilesParser;
             var molecule = smilesParser.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.CDKLegacy.Apply(molecule);
@@ -169,7 +169,7 @@ namespace NCDK.Fingerprints
         public void TestGenerateFingerprintMultiphtalene()
         {
             string smiles = "C1=CC2=CC=C3C4=CC5=CC6=CC=CC=C6C=C5C=C4C=CC3=C2C=C1";
-            SmilesParser smilesParser = CDK.SilentSmilesParser;
+            SmilesParser smilesParser = CDK.SmilesParser;
             var molecule = smilesParser.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 

@@ -44,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestMOIFromSmiles()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCC");
             var value = Descriptor.Calculate(mol);
             Assert.IsNotNull(value.Exception, "The Exception should be non-null since we don't have 3D coords");

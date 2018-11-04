@@ -20,7 +20,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestButane()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCC");
 
             ArrayResult<int> ret = (ArrayResult<int>)Descriptor.Calculate(mol).Value;
@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestComplex1()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C(C)(C)C=C(C)C");
 
             ArrayResult<int> ret = (ArrayResult<int>)Descriptor.Calculate(mol).Value;
@@ -58,7 +58,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestComplex2()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C#CC(C)=C");
 
             ArrayResult<int> ret = (ArrayResult<int>)Descriptor.Calculate(mol).Value;

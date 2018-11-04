@@ -32,7 +32,7 @@ namespace NCDK.StructGen.Stochastic
         [TestMethod()]
         public void TestGenerate_IAtomContainerSet()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var acs = ChemObjectBuilder.Instance.NewAtomContainerSet();
             acs.Add(sp.ParseSmiles("[CH2]CCC[CH2]"));
             acs.Add(sp.ParseSmiles("[C]1=C(C1)C[CH2]"));
@@ -45,7 +45,7 @@ namespace NCDK.StructGen.Stochastic
         [TestMethod()]
         public void TestPartialFilledStructureMerger2()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var acs = ChemObjectBuilder.Instance.NewAtomContainerSet();
             acs.Add(sp.ParseSmiles("[C]=[C]CC[CH2]"));
             acs.Add(sp.ParseSmiles("[C]([CH2])=C1CC1"));
@@ -58,7 +58,7 @@ namespace NCDK.StructGen.Stochastic
         [TestMethod()]
         public void TestPartialFilledStructureMerger3()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var acs = ChemObjectBuilder.Instance.NewAtomContainerSet();
             acs.Add(sp.ParseSmiles("[CH2]CCC[CH2]"));
             acs.Add(sp.ParseSmiles("[CH2]C[CH2]"));
@@ -72,7 +72,7 @@ namespace NCDK.StructGen.Stochastic
         [TestMethod()]
         public void TestPartialFilledStructureMerger4()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var acs = ChemObjectBuilder.Instance.NewAtomContainerSet();
             acs.Add(sp.ParseSmiles("[C]CCC[CH2]"));
             acs.Add(sp.ParseSmiles("[C]CC[CH2]"));
@@ -86,7 +86,7 @@ namespace NCDK.StructGen.Stochastic
         [TestMethod()]
         public void TestPartialFilledStructureMerger5()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var acs = ChemObjectBuilder.Instance.NewAtomContainerSet();
             acs.Add(sp.ParseSmiles("[C]1CCC1"));
             acs.Add(sp.ParseSmiles("[C]([CH2])CC[CH2]"));

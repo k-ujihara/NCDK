@@ -37,7 +37,7 @@ namespace NCDK.Graphs.Invariant
     [TestClass()]
     public class CanonicalLabelerTest : CDKTestCase
     {
-        private SmilesParser parser = CDK.SilentSmilesParser;
+        private SmilesParser parser = CDK.SmilesParser;
         private CanonicalLabeler labeler = new CanonicalLabeler();
 
         public CanonicalLabelerTest()

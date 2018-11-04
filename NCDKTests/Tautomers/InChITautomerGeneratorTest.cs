@@ -40,7 +40,7 @@ namespace NCDK.Tautomers
     [TestClass()]
     public class InChITautomerGeneratorTest : CDKTestCase
     {
-        private SmilesParser smilesParser = CDK.SilentSmilesParser;
+        private SmilesParser smilesParser = CDK.SmilesParser;
         private InChITautomerGenerator tautomerGenerator = new InChITautomerGenerator();
 
         public InChITautomerGeneratorTest()

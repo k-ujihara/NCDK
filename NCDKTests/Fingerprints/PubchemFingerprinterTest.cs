@@ -52,7 +52,7 @@ namespace NCDK.Fingerprints
         [TestInitialize()]
         public void Setup()
         {
-            parser = CDK.SilentSmilesParser;
+            parser = CDK.SmilesParser;
         }
 
         [TestMethod()]

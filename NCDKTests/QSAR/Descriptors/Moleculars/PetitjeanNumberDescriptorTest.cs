@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestPetitjeanNumberDescriptor()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=C(O)CC");
             AtomContainerManipulator.RemoveHydrogens(mol);
             Assert.AreEqual(0.33333334, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.01);
@@ -48,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestSingleAtomCase()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O");
             Assert.AreEqual(0, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.01);
         }

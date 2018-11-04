@@ -18,7 +18,6 @@
  */
 
 using NCDK.Common.Primitives;
-using NCDK.Config;
 using NCDK.IO.Formats;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Numerics;
@@ -210,15 +209,7 @@ namespace NCDK.IO
         public void ReadAtomBlock(IAtomContainer readData)
         {
             Trace.TraceInformation("Reading ATOM block");
-            IsotopeFactory isotopeFactory;
-            try
-            {
-                isotopeFactory = BODRIsotopeFactory.Instance;
-            }
-            catch (IOException exception)
-            {
-                throw new CDKException("Could not initiate the IsotopeFactory.", exception);
-            }
+            var isotopeFactory = CDK.IsotopeFactory;
 
             int RGroupCounter = 1;
             int Rnumber = 0;

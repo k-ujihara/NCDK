@@ -20,7 +20,6 @@
 
 using NCDK.Common.Collections;
 using NCDK.Common.Primitives;
-using NCDK.Config;
 using NCDK.IO.Formats;
 using NCDK.Numerics;
 using System;
@@ -185,8 +184,8 @@ namespace NCDK.IO
                     }
 
                 // Get atomic position
-                int[] atomType = new int[natom];
-                double[][] xred = Arrays.CreateJagged<double>(natom, 3);
+                var atomType = new int[natom];
+                var xred = Arrays.CreateJagged<double>(natom, 3);
                 int atomIndex = 0;
 
                 for (int i = 0; i < ntype; i++)
@@ -195,7 +194,7 @@ namespace NCDK.IO
                     {
                         try
                         {
-                            atomType[atomIndex] = BODRIsotopeFactory.Instance.GetElement(anames[i]).AtomicNumber.Value;
+                            atomType[atomIndex] = CDK.IsotopeFactory.GetElement(anames[i]).AtomicNumber.Value;
                         }
                         catch (Exception exception)
                         {
@@ -224,16 +223,16 @@ namespace NCDK.IO
                     string symbol = "Du";
                     try
                     {
-                        symbol = BODRIsotopeFactory.Instance.GetElement(atomType[i]).Symbol;
+                        symbol = CDK.IsotopeFactory.GetElement(atomType[i]).Symbol;
                     }
                     catch (Exception exception)
                     {
                         throw new CDKException("Could not determine element symbol!", exception);
                     }
-                    IAtom atom = sequence.Builder.NewAtom(symbol);
+                    var atom = sequence.Builder.NewAtom(symbol);
                     atom.AtomicNumber = atomType[i];
                     // convert fractional to cartesian
-                    double[] frac = new double[3];
+                    var frac = new double[3];
                     frac[0] = xred[i][0];
                     frac[1] = xred[i][1];
                     frac[2] = xred[i][2];

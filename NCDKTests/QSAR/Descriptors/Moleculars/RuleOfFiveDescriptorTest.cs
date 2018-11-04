@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestRuleOfFiveDescriptor()
         {
             Descriptor.Parameters = new object[] { true };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCC(OCC)OCC(c1cccc2ccccc12)C4CCC(CCCO)C(CC3CNCNC3)C4"); //
             AddExplicitHydrogens(mol);
             Assert.AreEqual(2, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
@@ -49,7 +49,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestRuleOfFiveRotatableBonds()
         {
             Descriptor.Parameters = new object[] { true };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCC1=CC(NC(=O)CC)=CC(CCC)=C1"); // nRot = 10 (excl. amide C-N bond)
             AddExplicitHydrogens(mol);
             Assert.AreEqual(0, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
@@ -59,7 +59,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestRuleOfFiveRotatableBondsViolated()
         {
             Descriptor.Parameters = new object[] { true };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCCC1=CC(CCC)=CC(NC(=O)CC)=C1"); // nRot = 11 (excl. amide C-N bond)
             AddExplicitHydrogens(mol);
             Assert.AreEqual(1, ((Result<int>)Descriptor.Calculate(mol).Value).Value);

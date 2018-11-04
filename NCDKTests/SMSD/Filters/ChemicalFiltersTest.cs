@@ -41,7 +41,7 @@ namespace NCDK.SMSD.Filters
         [TestMethod()]
         public void TestSortResultsByStereoAndBondMatch()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/OCC=C");
             var queryac = sp.ParseSmiles("CCCOCC(C)=C");
 
@@ -62,7 +62,7 @@ namespace NCDK.SMSD.Filters
         [TestMethod()]
         public void TestSortResultsByFragments()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -83,7 +83,7 @@ namespace NCDK.SMSD.Filters
         [TestMethod()]
         public void TestSortResultsByEnergies()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -164,7 +164,7 @@ namespace NCDK.SMSD.Filters
         [TestMethod()]
         public void TestGetSortedEnergy()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -181,7 +181,7 @@ namespace NCDK.SMSD.Filters
         [TestMethod()]
         public void TestGetSortedFragment()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -198,7 +198,7 @@ namespace NCDK.SMSD.Filters
         [TestMethod()]
         public void TestGetStereoMatches()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/OCC=C");
             var queryac = sp.ParseSmiles("CCCOCC(C)=C");
 

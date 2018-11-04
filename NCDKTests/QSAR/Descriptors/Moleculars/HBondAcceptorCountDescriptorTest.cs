@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestHBondAcceptorCountDescriptor()
         {
             Descriptor.Parameters = new object[] { true };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             // original molecule O=N(=O)c1cccc2cn[nH]c12 - correct kekulisation will give
             // the same result. this test though should depend on kekulisation working
             var mol = sp.ParseSmiles("O=N(=O)C1=C2NN=CC2=CC=C1");
@@ -112,7 +112,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void ExocyclicOxygenInAromaticRing()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var m = sp.ParseSmiles("Cn1c2nc([nH]c2c(=O)n(c1=O)C)C1CCCC1");
             var hbond_acceptor_desc = new HBondAcceptorCountDescriptor();
             int actual = hbond_acceptor_desc.Calculate(m).Value.Value;

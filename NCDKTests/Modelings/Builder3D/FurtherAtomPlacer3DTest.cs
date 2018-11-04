@@ -308,7 +308,7 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestGetAngleValue_String_String_String()
         {
-            SmilesParser parser = CDK.SilentSmilesParser;
+            SmilesParser parser = CDK.SmilesParser;
             string smiles = "CCCCCC";
             var molecule = parser.ParseSmiles(smiles);
             Assert.IsNotNull(molecule);
@@ -330,7 +330,7 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestGetBondLengthValue_String_String()
         {
-            SmilesParser parser = CDK.SilentSmilesParser;
+            SmilesParser parser = CDK.SmilesParser;
             string smiles = "CCCCCC";
             var molecule = parser.ParseSmiles(smiles);
             Assert.IsNotNull(molecule);
@@ -354,7 +354,7 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestGetBondLengthValue_bug_CNBond()
         {
-            SmilesParser parser = CDK.SilentSmilesParser;
+            SmilesParser parser = CDK.SmilesParser;
             string smiles = "CCCN";
             var molecule = parser.ParseSmiles(smiles);
             Assert.IsNotNull(molecule);
@@ -379,7 +379,7 @@ namespace NCDK.Modelings.Builder3D
         public void InvalidChain()
         {
             string input = "CCCCCC(CCCC)CCCC";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var m = sp.ParseSmiles(input);
 
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();

@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void Testno688()
         {
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=C(O)c1[nH0]cccc1"); // xlogp training set molecule no688
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -55,7 +55,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             // the xlogp program value is 0.44 because of paralleled donor pair correction factor
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("Nc2ccc(S(=O)(=O)c1ccc(N)cc1)cc2"); // xlogp training set molecule no1596
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -67,7 +67,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void Testno367()
         {
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=C(O)C(N)CCCN"); // xlogp training set molecule no367
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -79,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void Testno1837()
         {
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=P(N1CC1)(N2CC2)N3CC3"); // xlogp training set molecule no1837
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -91,7 +91,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void Testno87()
         {
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("c1cc2ccc3ccc4ccc5cccc6c(c1)c2c3c4c56"); // xlogp training set molecule no87
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -103,7 +103,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void Testno1782()
         {
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("S1C2N(C(=O)C2NC(=O)C(c2ccccc2)C(=O)O)C(C(=O)O)C1(C)C"); // xlogp training set molecule no30
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -115,7 +115,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void Testno30()
         {
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C(#Cc1ccccc1)c1ccccc1"); // xlogp training set molecule no30
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -127,7 +127,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void Testno937()
         {
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("ClCC(O)C[nH0]1c([nH0]cc1[N+](=O)[O-])C"); // xlogp training set molecule no937
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -139,7 +139,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void Testno990()
         {
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("FC(F)(F)c1ccc(cc1)C(=O)N"); // xlogp training set molecule no990
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -151,7 +151,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void Testno1000()
         {
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("Clc1cccc(c1)/C=C/[N+](=O)[O-]"); // xlogp training set molecule no1000
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -163,7 +163,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestApirinBug1296383()
         {
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CC(=O)OC1=CC=CC=C1C(=O)O"); // aspirin
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -175,7 +175,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void Testno1429()
         {
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=C(OC)CNC(=O)c1ccc(N)cc1"); // xlogp training set molecule no1429
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -187,7 +187,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void Testno1274()
         {
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=[N+]([O-])c1ccc(cc1)CC(N)C(=O)O"); // xlogp training set molecule no1274
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -202,7 +202,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             //if one takes a 5 or 7 ring than the program assignes amid ... strange
             //sometimes amid is O=C-N-C=O sometimes not...
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=C1NC(=O)C=CN1C1OC(CO)C(O)C1O"); // xlogp training set molecule no454
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -215,7 +215,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             //even here the amid assignment is very strange
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=C1N(C)C=CC(=O)N1C"); // xlogp training set molecule no498
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -228,7 +228,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             //even here the amid assignment is very strange
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCN(CC)CCCN(C2Cc1ccccc1C2)c3ccccc3"); // xlogp training set molecule Aprindine
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -240,7 +240,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void Test1844()
         {
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             // SMILES is in octet-rule version, PubChem has normalized one
             var mol = sp.ParseSmiles("Brc1cc(Cl)c(O[P+]([S-])(OC)OC)cc1Cl"); // xlogp training set molecule 1844
             AssertAtomTypesPerceived(mol);
@@ -253,7 +253,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void Test1810()
         {
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("Clc1ccc2Sc3ccccc3N(CCCN3CCN(C)CC3)c2c1"); // xlogp training set molecule 1810
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -268,7 +268,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void Test1822()
         {
             Descriptor.Parameters = new object[] { true, false };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[S+]([O-])(CCC1C(=O)N(N(c2ccccc2)C1=O)c1ccccc1)c1ccccc1"); // xlogp training set molecule 1822
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -280,7 +280,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestAromaticBenzene()
         {
             Descriptor.Parameters = new object[] { false, true };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C1=CC=CC=C1"); // benzene
             Aromaticity aromaticity = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllSimpleFinder);
             aromaticity.Apply(mol);
@@ -293,7 +293,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestNonAromaticBenzene()
         {
             Descriptor.Parameters = new object[] { false, true };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C1=CC=CC=C1"); // benzene
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
@@ -305,7 +305,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestPerceivedAromaticBenzene()
         {
             Descriptor.Parameters = new object[] { true, true };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C1=CC=CC=C1"); // benzene
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);

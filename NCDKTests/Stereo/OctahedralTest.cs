@@ -36,7 +36,7 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void NormalizeOh()
         {
-            SmilesParser smipar = CDK.SilentSmilesParser;
+            SmilesParser smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles("C[Co@OH8](F)(Br)(Cl)(I)S");
             var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(Octahedral));

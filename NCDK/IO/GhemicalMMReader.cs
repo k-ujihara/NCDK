@@ -19,7 +19,6 @@
  */
 
 using NCDK.Common.Primitives;
-using NCDK.Config;
 using NCDK.IO.Formats;
 using NCDK.Numerics;
 using System;
@@ -260,7 +259,7 @@ namespace NCDK.IO
                         {
                             try
                             {
-                                IAtom atom = model.Builder.NewAtom(BODRIsotopeFactory.Instance.GetElementSymbol(atoms[i]));
+                                var atom = model.Builder.NewAtom(CDK.IsotopeFactory.GetElementSymbol(atoms[i]));
                                 atom.AtomicNumber = atoms[i];
                                 atom.Point3D = new Vector3(atomxs[i], atomys[i], atomzs[i]);
                                 atom.Charge = atomcharges[i];

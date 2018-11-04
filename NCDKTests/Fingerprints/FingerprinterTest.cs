@@ -356,7 +356,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void PseudoAtomFingerprint()
         {
-            SmilesParser smipar = CDK.SilentSmilesParser;
+            SmilesParser smipar = CDK.SmilesParser;
             string query = "*1CCCC1";
             string indole = "N1CCCC1";
             var queryMol = smipar.ParseSmiles(query);
@@ -376,7 +376,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void PseudoAtomFingerprintArom()
         {
-            SmilesParser smipar = CDK.SilentSmilesParser;
+            SmilesParser smipar = CDK.SmilesParser;
             string query = "*1cccc1";
             string indole = "o1cccc1";
             var queryMol = smipar.ParseSmiles(query);

@@ -70,7 +70,7 @@ namespace NCDK.Charges
             GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
             string smiles1 = "c1ccccc1";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol1 = sp.ParseSmiles(smiles1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             Aromaticity.CDKLegacy.Apply(mol1);
@@ -102,7 +102,7 @@ namespace NCDK.Charges
             string smiles1 = "c1ccccc1";
             string smiles2 = "C1=CC=CC=C1";
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol1 = sp.ParseSmiles(smiles1);
             var mol2 = sp.ParseSmiles(smiles2);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);

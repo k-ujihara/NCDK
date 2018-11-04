@@ -43,7 +43,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
         [TestMethod()]
         public override void TestIsSubgraph()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -60,7 +60,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
         [TestMethod()]
         public void TestSet_IAtomContainer_IAtomContainer()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -102,7 +102,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
         [TestMethod()]
         public void TestSet_MolHandler_MolHandler()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
 
             var target1 = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
@@ -119,7 +119,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
         [TestMethod()]
         public void TestGetAllAtomMapping()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -138,7 +138,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
         [TestMethod()]
         public void TestGetAllMapping()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -157,7 +157,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
         [TestMethod()]
         public void TestGetFirstAtomMapping()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 
@@ -176,7 +176,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
         [TestMethod()]
         public void TestGetFirstMapping()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             var queryac = sp.ParseSmiles("Nc1ccccc1");
 

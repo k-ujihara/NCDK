@@ -37,7 +37,7 @@ namespace NCDK.StructGen
 
         static VicinitySamplerTest()
         {
-            parser = CDK.SilentSmilesParser;
+            parser = CDK.SmilesParser;
         }
 
         [TestMethod()]

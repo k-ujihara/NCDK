@@ -31,7 +31,7 @@ namespace NCDK.Smiles
     [TestClass()]
     public class CxSmilesTest
     {
-        private readonly SmilesParser smipar = CDK.SilentSmilesParser;
+        private readonly SmilesParser smipar = CDK.SmilesParser;
 
         [TestMethod()]
         public void FragmentGroupingReactants()

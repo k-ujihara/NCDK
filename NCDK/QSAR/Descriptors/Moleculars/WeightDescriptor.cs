@@ -17,7 +17,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
@@ -131,7 +130,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     {
                         for (int i = 0; i < container.Atoms.Count; i++)
                         {
-                            weight += BODRIsotopeFactory.Instance.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
+                            weight += CDK.IsotopeFactory.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
                             int hcount = container.Atoms[i].ImplicitHydrogenCount ?? 0;
                             weight += (hcount * 1.00782504);
                         }
@@ -144,12 +143,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 case "H":
                     try
                     {
-                        IIsotope h = BODRIsotopeFactory.Instance.GetMajorIsotope("H");
+                        var h = CDK.IsotopeFactory.GetMajorIsotope("H");
                         for (int i = 0; i < container.Atoms.Count; i++)
                         {
                             if (container.Atoms[i].Symbol.Equals(elementName, StringComparison.Ordinal))
                             {
-                                weight += BODRIsotopeFactory.Instance.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
+                                weight += CDK.IsotopeFactory.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
                             }
                             else
                             {
@@ -169,7 +168,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         {
                             if (container.Atoms[i].Symbol.Equals(elementName, StringComparison.Ordinal))
                             {
-                                weight += BODRIsotopeFactory.Instance.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
+                                weight += CDK.IsotopeFactory.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
                             }
                         }
                     }

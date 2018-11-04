@@ -49,7 +49,7 @@ namespace NCDK.Fingerprints
         public override void TestGetCountFingerprint()
         {
             var fpr = new LingoFingerprinter(4);
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("Oc1ccccc1");
             ICountFingerprint fp = fpr.GetCountFingerprint(mol);
             Assert.AreEqual(2, fp.GetCountForHash("cccc".GetHashCode()));
@@ -63,7 +63,7 @@ namespace NCDK.Fingerprints
         public override void TestGetRawFingerprint()
         {
             var lfp = new LingoFingerprinter(3);
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("SPONC");
             var map = lfp.GetRawFingerprint(mol);
             Assert.AreEqual(3, map.Count);

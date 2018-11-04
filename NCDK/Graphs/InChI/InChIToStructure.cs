@@ -157,7 +157,7 @@ namespace NCDK.Graphs.InChI
                     {
                         try
                         {
-                            var massNumber = BODRIsotopeFactory.Instance.GetMajorIsotope(cAt.AtomicNumber.Value).MassNumber.Value;
+                            var massNumber = CDK.IsotopeFactory.GetMajorIsotope(cAt.AtomicNumber.Value).MassNumber.Value;
                             cAt.MassNumber = massNumber + (isotopicMass - ISOTOPIC_SHIFT_FLAG);
                         }
                         catch (IOException e)

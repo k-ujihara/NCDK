@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     [TestClass()]
     public class IPAtomicHOSEDescriptorTest : AtomicDescriptorTest
     {
-        private SmilesParser sp = CDK.SilentSmilesParser;
+        private SmilesParser sp = CDK.SmilesParser;
         
         /// <summary>
         /// Constructor for the IPAtomicHOSEDescriptorTest object

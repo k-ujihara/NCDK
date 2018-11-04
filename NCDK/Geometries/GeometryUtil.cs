@@ -23,15 +23,14 @@
 
 using NCDK.Common.Collections;
 using NCDK.Common.Mathematics;
+using NCDK.Config;
+using NCDK.Numerics;
 using NCDK.Sgroups;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using NCDK.Numerics;
-using System.IO;
-using NCDK.Config;
 
 namespace NCDK.Geometries
 {
@@ -97,7 +96,7 @@ namespace NCDK.Geometries
                     }
                 }
             }
-            Debug.WriteLine("Translating: minx=" + minX + ", minY=" + minY);
+            Debug.WriteLine($"Translating: minx={minX}, minY={minY}");
             Translate2D(atomCon, minX * -1, minY * -1);
         }
 
@@ -337,7 +336,7 @@ namespace NCDK.Geometries
                     }
                 }
             }
-            double[] minmax = new double[4];
+            var minmax = new double[4];
             minmax[0] = minX;
             minmax[1] = minY;
             minmax[2] = maxX;
@@ -491,11 +490,11 @@ namespace NCDK.Geometries
 
             double totalmass = 0.0;
 
-            var isotopes = BODRIsotopeFactory.Instance;
+            var isotopes = CDK.IsotopeFactory;
 
             foreach (var a in ac.Atoms)
             {
-                double? mass = a.ExactMass;
+                var mass = a.ExactMass;
                 // some sanity checking
                 if (a.Point3D == null)
                     return null;
@@ -675,13 +674,13 @@ namespace NCDK.Geometries
         {
             IAtom closestAtom = null;
             double min = double.MaxValue;
-            Vector2 atomPosition = atom.Point2D.Value;
+            var atomPosition = atom.Point2D.Value;
             for (int i = 0; i < atomCon.Atoms.Count; i++)
             {
-                IAtom currentAtom = atomCon.Atoms[i];
+                var currentAtom = atomCon.Atoms[i];
                 if (currentAtom != atom)
                 {
-                    double d = Vector2.Distance(atomPosition, currentAtom.Point2D.Value);
+                    var d = Vector2.Distance(atomPosition, currentAtom.Point2D.Value);
                     if (d < min)
                     {
                         min = d;

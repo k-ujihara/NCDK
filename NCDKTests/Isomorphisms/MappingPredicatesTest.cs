@@ -85,7 +85,7 @@ namespace NCDK.Isomorphisms
             Assert.AreEqual(1, mappings.GetUniqueBonds().Count()); // re-iteration
         }
 
-        SmilesParser smipar = CDK.SilentSmilesParser;
+        SmilesParser smipar = CDK.SmilesParser;
 
         IAtomContainer Smi(string smi)
         {

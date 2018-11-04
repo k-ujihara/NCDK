@@ -104,7 +104,7 @@ namespace NCDK.Similarity
         [TestMethod()]
         public void KeggR00258()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             string smiles1 = "O=C(O)CCC(=O)C(=O)O";
             string smiles2 = "O=C(O)C(N)CCC(=O)O";
             string smiles3 = "O=C(O)C(N)C";

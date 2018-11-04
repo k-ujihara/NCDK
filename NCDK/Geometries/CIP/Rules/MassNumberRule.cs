@@ -23,8 +23,6 @@
  */
 
 using NCDK.Config;
-using System.Diagnostics;
-using System.IO;
 
 namespace NCDK.Geometries.CIP.Rules
 {
@@ -35,27 +33,11 @@ namespace NCDK.Geometries.CIP.Rules
     // @cdk.githash
     internal class MassNumberRule : ISequenceSubRule<ILigand>
     {
-        IsotopeFactory factory;
+        IsotopeFactory factory = CDK.IsotopeFactory;
 
         public int Compare(ILigand ligand1, ILigand ligand2)
         {
-            EnsureFactory();
             return GetMassNumber(ligand1).CompareTo(GetMassNumber(ligand2));
-        }
-
-        private void EnsureFactory()
-        {
-            if (factory == null)
-            {
-                try
-                {
-                    factory = BODRIsotopeFactory.Instance;
-                }
-                catch (IOException exception)
-                {
-                    Trace.TraceError($"Could not load the IsotopeFactory: {exception.Message}");
-                }
-            }
         }
 
         private int GetMassNumber(ILigand ligand)
@@ -63,9 +45,7 @@ namespace NCDK.Geometries.CIP.Rules
             var massNumber = ligand.LigandAtom.MassNumber;
             if (massNumber != null)
                 return massNumber.Value;
-            if (factory == null) return 0;
             return factory.GetMajorIsotope(ligand.LigandAtom.Symbol).MassNumber.Value;
         }
     }
 }
-

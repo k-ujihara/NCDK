@@ -37,7 +37,7 @@ namespace NCDK.Formula
     public class IsotopePatternGenerator
     {
         private IChemObjectBuilder builder = null;
-        private IsotopeFactory isoFactory = BODRIsotopeFactory.Instance;
+        private IsotopeFactory isoFactory = CDK.IsotopeFactory;
 
         /// <summary>
         /// Minimal abundance of the isotopes to be added in the combinatorial search.
@@ -118,7 +118,7 @@ namespace NCDK.Formula
             {
                 try
                 {
-                    isoFactory = BODRIsotopeFactory.Instance;
+                    isoFactory = CDK.IsotopeFactory;
                     builder = molFor.Builder;
                 }
                 catch (Exception e)
@@ -126,7 +126,7 @@ namespace NCDK.Formula
                     Console.WriteLine(e.StackTrace);
                 }
             }
-            string mf = MolecularFormulaManipulator.GetString(molFor, true);
+            var mf = MolecularFormulaManipulator.GetString(molFor, true);
 
             var molecularFormula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula(mf, builder);
 
@@ -134,8 +134,8 @@ namespace NCDK.Formula
 
             foreach (var isos in molecularFormula.Isotopes)
             {
-                string elementSymbol = isos.Symbol;
-                int atomCount = molecularFormula.GetCount(isos);
+                var elementSymbol = isos.Symbol;
+                var atomCount = molecularFormula.GetCount(isos);
 
                 // Generate possible isotope containers for the current atom's
                 // these will then me 'multiplied' with the existing patten
@@ -170,7 +170,7 @@ namespace NCDK.Formula
 
         private IMolecularFormula Union(IMolecularFormula a, IMolecularFormula b)
         {
-            IMolecularFormula mf = builder.NewMolecularFormula();
+            var mf = builder.NewMolecularFormula();
             mf.Add(a);
             mf.Add(b);
             return mf;
@@ -226,15 +226,14 @@ namespace NCDK.Formula
                 {
                     foreach (IsotopeContainer other in additional)
                     {
-
-                        double abundance = container.Intensity * other.Intensity * 0.01;
-                        double mass = container.Mass + other.Mass;
+                        var abundance = container.Intensity * other.Intensity * 0.01;
+                        var mass = container.Mass + other.Mass;
 
                         // merge duplicates with some resolution
-                        IsotopeContainer existing = FindExisting(containers, mass, resolution);
+                        var existing = FindExisting(containers, mass, resolution);
                         if (existing != null)
                         {
-                            double newIntensity = existing.Intensity + abundance;
+                            var newIntensity = existing.Intensity + abundance;
                             // moving weighted avg
                             existing.Mass = (existing.Mass * existing.Intensity +
                                              mass * abundance) / newIntensity;
@@ -250,7 +249,7 @@ namespace NCDK.Formula
                         // Filter isotopes too small
                         if (abundance > minAbundance)
                         {
-                            IsotopeContainer newcontainer = new IsotopeContainer(mass, abundance);
+                            var newcontainer = new IsotopeContainer(mass, abundance);
                             if (storeFormula)
                             {
                                 foreach (var mf in container.Formulas)
@@ -307,7 +306,7 @@ namespace NCDK.Formula
             {
                 if (isopattern.Isotopes[i].Intensity >= (minIntensity))
                 {
-                    IsotopeContainer container = new IsotopeContainer(isopattern.Isotopes[i]);
+                    var container = new IsotopeContainer(isopattern.Isotopes[i]);
                     sortedIsoPattern.isotopes.Add(container);
                 }
             }

@@ -29,7 +29,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [TestClass()]
     public class BondCountDescriptorTest : MolecularDescriptorTest
     {
-        private static readonly SmilesParser sp = CDK.SilentSmilesParser;
+        private static readonly SmilesParser sp = CDK.SmilesParser;
         
         public BondCountDescriptorTest()
         {

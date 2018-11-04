@@ -705,7 +705,7 @@ namespace NCDK.Tools.Manipulator
                     var exactMass = isotope.ExactMass;
                     if (massNum == null || massNum == 0)
                     {
-                        var majorIsotope = BODRIsotopeFactory.Instance.GetMajorIsotope(isotope.Symbol);
+                        var majorIsotope = CDK.IsotopeFactory.GetMajorIsotope(isotope.Symbol);
                         if (majorIsotope != null)
                             exactMass = majorIsotope.ExactMass;
                     }
@@ -713,7 +713,7 @@ namespace NCDK.Tools.Manipulator
                     {
                         if (exactMass == null)
                         {
-                            var temp = BODRIsotopeFactory.Instance.GetIsotope(isotope.Symbol, massNum.Value);
+                            var temp = CDK.IsotopeFactory.GetIsotope(isotope.Symbol, massNum.Value);
                             if (temp != null)
                                 exactMass = temp.ExactMass;
                         }
@@ -761,7 +761,7 @@ namespace NCDK.Tools.Manipulator
             {
                 try
                 {
-                    var isotope2 = BODRIsotopeFactory.Instance.GetMajorIsotope(isotope.Symbol);
+                    var isotope2 = CDK.IsotopeFactory.GetMajorIsotope(isotope.Symbol);
                     if (isotope2 != null)
                     {
                         mass += isotope2.MassNumber.Value * formula.GetCount(isotope);
@@ -783,7 +783,7 @@ namespace NCDK.Tools.Manipulator
         public static double GetNaturalExactMass(IMolecularFormula formula)
         {
             double mass = 0.0;
-            var factory = BODRIsotopeFactory.Instance;
+            var factory = CDK.IsotopeFactory;
             foreach (var isotope in formula.Isotopes)
             {
                 var isotopesElement = formula.Builder.NewElement(isotope);
@@ -800,7 +800,7 @@ namespace NCDK.Tools.Manipulator
         public static double GetMajorIsotopeMass(IMolecularFormula formula)
         {
             double mass = 0.0;
-            var factory = BODRIsotopeFactory.Instance;
+            var factory = CDK.IsotopeFactory;
             foreach (var isotope in formula.Isotopes)
             {
                 var major = factory.GetMajorIsotope(isotope.Symbol);
@@ -994,7 +994,7 @@ namespace NCDK.Tools.Manipulator
             {
                 try
                 {
-                    var major = BODRIsotopeFactory.Instance.GetMajorIsotope(elem.AtomicNumber);
+                    var major = CDK.IsotopeFactory.GetMajorIsotope(elem.AtomicNumber);
                     if (major != null)
                         isotope.MassNumber = major.MassNumber;
                 }

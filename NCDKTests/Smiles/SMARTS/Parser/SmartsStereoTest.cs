@@ -164,6 +164,6 @@ namespace NCDK.Smiles.SMARTS.Parser
             return new SMARTSQueryTool(smarts, ChemObjectBuilder.Instance);
         }
 
-        private static readonly SmilesParser sp = CDK.SilentSmilesParser;
+        private static readonly SmilesParser sp = CDK.SmilesParser;
     }
 }

@@ -37,7 +37,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestHBondDonorCountDescriptor()
         {
             Descriptor.Parameters = new object[] { true };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("Oc1ccccc1"); //
             Assert.AreEqual(1, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }

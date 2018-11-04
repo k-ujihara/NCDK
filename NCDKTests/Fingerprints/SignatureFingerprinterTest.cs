@@ -48,7 +48,7 @@ namespace NCDK.Fingerprints
         public override void TestGetRawFingerprint()
         {
             var fingerprinter = new SignatureFingerprinter(0);
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O(NC)CC");
             var map = fingerprinter.GetRawFingerprint(mol);
             Assert.AreEqual(3, map.Count);
@@ -63,7 +63,7 @@ namespace NCDK.Fingerprints
         public void TestBitFingerprint()
         {
             var fingerprinter = new SignatureFingerprinter(0);
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O(NC)CC");
             var bitFP = fingerprinter.GetBitFingerprint(mol);
             Assert.IsNotNull(bitFP);
@@ -74,7 +74,7 @@ namespace NCDK.Fingerprints
         public override void TestGetCountFingerprint()
         {
             var fingerprinter = new SignatureFingerprinter(0);
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O(NC)CC");
             ICountFingerprint bitFP = fingerprinter.GetCountFingerprint(mol);
             Assert.IsNotNull(bitFP);

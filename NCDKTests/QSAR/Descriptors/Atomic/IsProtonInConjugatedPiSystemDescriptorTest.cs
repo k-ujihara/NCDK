@@ -40,7 +40,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             IAtomicDescriptor descriptor = new IsProtonInConjugatedPiSystemDescriptor();
             descriptor.Parameters = new object[] { true };
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CNC=CC=C");
             AddExplicitHydrogens(mol);
             Assert.IsTrue(((Result<bool>)descriptor.Calculate(mol.Atoms[13], mol).Value).Value);

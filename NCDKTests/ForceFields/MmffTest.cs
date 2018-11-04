@@ -37,7 +37,7 @@ namespace NCDK.ForceFields
 
         static MmffTest()
         {
-            smipar = CDK.SilentSmilesParser;
+            smipar = CDK.SmilesParser;
             mmff = new Mmff();
         }
 

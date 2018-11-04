@@ -208,12 +208,12 @@ namespace NCDK.SMARTS
 
         IAtomContainer Smi(string smi)
         {
-            return CDK.SilentSmilesParser.ParseSmiles(smi);
+            return CDK.SmilesParser.ParseSmiles(smi);
         }
 
         IReaction Rsmi(string smi)
         {
-            return CDK.SilentSmilesParser.ParseReactionSmiles(smi);
+            return CDK.SmilesParser.ParseReactionSmiles(smi);
         }
     }
 }

@@ -152,7 +152,7 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestBasicQueryAtomContainer()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
             var SMILESquery = sp.ParseSmiles("CC"); // acetic acid anhydride
             var query = QueryAtomContainerCreator.CreateBasicQueryContainer(SMILESquery);
@@ -205,7 +205,7 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             reader.Read(temp);
             query1 = QueryAtomContainerCreator.CreateBasicQueryContainer(temp);
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles("C1CCCCC1");
             query2 = QueryAtomContainerCreator.CreateBasicQueryContainer(atomContainer);
 
@@ -291,8 +291,8 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         public void TestItself()
         {
             string smiles = "C1CCCCCCC1CC";
-            var query = QueryAtomContainerCreator.CreateAnyAtomContainer(CDK.SilentSmilesParser.ParseSmiles(smiles), true);
-            IAtomContainer ac = CDK.SilentSmilesParser.ParseSmiles(smiles);
+            var query = QueryAtomContainerCreator.CreateAnyAtomContainer(CDK.SmilesParser.ParseSmiles(smiles), true);
+            IAtomContainer ac = CDK.SmilesParser.ParseSmiles(smiles);
             if (standAlone)
             {
                 Console.Out.WriteLine("AtomCount of query: " + query.Atoms.Count);
@@ -324,7 +324,7 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestAnyAtomAnyBondCase()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("O1C=CC=C1");
             var queryac = sp.ParseSmiles("C1CCCC1");
             var query = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(queryac, false);
@@ -337,7 +337,7 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestFirstArgumentMustNotBeAnQueryAtomContainer()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("O1C=CC=C1");
             var queryac = sp.ParseSmiles("C1CCCC1");
             var query = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(queryac, false);
@@ -357,7 +357,7 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestSingleAtomMatching1()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("[H]");
             var queryac = sp.ParseSmiles("[H]");
             var query = QueryAtomContainerCreator.CreateSymbolAndBondOrderQueryContainer(queryac);
@@ -376,7 +376,7 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestSingleAtomMatching2()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var target = sp.ParseSmiles("CNC");
             var queryac = sp.ParseSmiles("C");
             var query = QueryAtomContainerCreator.CreateSymbolAndBondOrderQueryContainer(queryac);

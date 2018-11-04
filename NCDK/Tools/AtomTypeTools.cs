@@ -48,12 +48,12 @@ namespace NCDK.Tools
         public const int BenzeneRing = 5;
         static HOSECodeGenerator hcg = new HOSECodeGenerator();
 
-        private static readonly string PyrroleSmi = Cansmi(CDK.SilentSmilesParser.ParseSmiles("c1cc[nH]c1"));
-        private static readonly string FuranSmi = Cansmi(CDK.SilentSmilesParser.ParseSmiles("o1cccc1"));
-        private static readonly string ThiopheneSmi = Cansmi(CDK.SilentSmilesParser.ParseSmiles("c1ccsc1"));
-        private static readonly string PyridineSmi = Cansmi(CDK.SilentSmilesParser.ParseSmiles("c1ccncc1"));
-        private static readonly string PyrimidineSmi = Cansmi(CDK.SilentSmilesParser.ParseSmiles("c1cncnc1"));
-        private static readonly string BenzeneSmi = Cansmi(CDK.SilentSmilesParser.ParseSmiles("c1ccccc1"));
+        private static readonly string PyrroleSmi = Cansmi(CDK.SmilesParser.ParseSmiles("c1cc[nH]c1"));
+        private static readonly string FuranSmi = Cansmi(CDK.SmilesParser.ParseSmiles("o1cccc1"));
+        private static readonly string ThiopheneSmi = Cansmi(CDK.SmilesParser.ParseSmiles("c1ccsc1"));
+        private static readonly string PyridineSmi = Cansmi(CDK.SmilesParser.ParseSmiles("c1ccncc1"));
+        private static readonly string PyrimidineSmi = Cansmi(CDK.SmilesParser.ParseSmiles("c1cncnc1"));
+        private static readonly string BenzeneSmi = Cansmi(CDK.SmilesParser.ParseSmiles("c1ccccc1"));
         
         public static IRingSet AssignAtomTypePropertiesToAtom(IAtomContainer molecule)
         {

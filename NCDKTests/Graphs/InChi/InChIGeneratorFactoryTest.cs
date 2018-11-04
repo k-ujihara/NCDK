@@ -146,7 +146,7 @@ namespace NCDK.Graphs.InChI
         public void TestSMILESConversion_TopologicalCentre()
         {
             // (2R,3R,4S,5R,6S)-3,5-dimethylheptane-2,4,6-triol
-            SmilesParser parser = CDK.SilentSmilesParser;
+            SmilesParser parser = CDK.SmilesParser;
             var container = parser.ParseSmiles("C[C@@H](O)[C@@H](C)[C@@H](O)[C@H](C)[C@H](C)O");
 
             InChIGenerator generator = InChIGeneratorFactory.Instance.GetInChIGenerator(container);
@@ -160,7 +160,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void DontIgnoreMajorIsotopes()
         {
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var inchifact = InChIGeneratorFactory.Instance;
             Assert.IsTrue(inchifact.GetInChIGenerator(smipar.ParseSmiles("[12CH4]")).InChI.Contains("/i"));
             Assert.IsFalse(inchifact.GetInChIGenerator(smipar.ParseSmiles("C")).InChI.Contains("/i"));
@@ -171,7 +171,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void LongerExtendedTetrahedralsIgnored()
         {
-            var smipar = CDK.SilentSmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles("CC=C=C=[C@]=C=C=CC");
             var gen = InChIGeneratorFactory.Instance.GetInChIGenerator(mol);
             Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);

@@ -163,7 +163,7 @@ namespace NCDK.Aromaticities
 
         static IAtomContainer CreateFromSmiles(string smi)
         {
-            return CDK.SilentSmilesParser.ParseSmiles(smi);
+            return CDK.SmilesParser.ParseSmiles(smi);
         }
 
         static IAtomContainer Percieve(IAtomContainer molecule)

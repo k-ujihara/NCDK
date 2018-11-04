@@ -90,7 +90,7 @@ namespace NCDK.Fingerprints
             var printer = new SubstructureFingerprinter(smarts);
             Assert.AreEqual(3, printer.Length);
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol1 = sp.ParseSmiles("c1ccccc1CCC");
             IBitFingerprint fp = printer.GetBitFingerprint(mol1);
             Assert.IsNotNull(fp);
@@ -113,7 +113,7 @@ namespace NCDK.Fingerprints
             var printer = new SubstructureFingerprinter();
             Assert.AreEqual(307, printer.Length);
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol1 = sp.ParseSmiles("c1ccccc1CCC");
             IBitFingerprint fp = printer.GetBitFingerprint(mol1);
             Assert.IsNotNull(fp);
@@ -133,7 +133,7 @@ namespace NCDK.Fingerprints
         public void TestCountableMACCSBinary()
         {
             // Tests are modified copy of the test included in the MACCS-FPs class
-            var parser = CDK.SilentSmilesParser;
+            var parser = CDK.SmilesParser;
             var printer = new SubstructureFingerprinter(StandardSubstructureSets.GetCountableMACCSSMARTS());
             Assert.AreEqual(142, printer.Length);
             var mol0 = parser.ParseSmiles("CC(N)CCCN");
@@ -171,7 +171,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestCountableMACCSBinary2()
         {
-            var parser = CDK.SilentSmilesParser;
+            var parser = CDK.SmilesParser;
             var printer = new SubstructureFingerprinter(StandardSubstructureSets.GetCountableMACCSSMARTS());
             IAtomContainer mol;
             BitArray bs;
@@ -214,7 +214,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestCountableMACCSCount2()
         {
-            var parser = CDK.SilentSmilesParser;
+            var parser = CDK.SmilesParser;
             var printer = new SubstructureFingerprinter(StandardSubstructureSets.GetCountableMACCSSMARTS());
             IAtomContainer mol;
             ICountFingerprint cfp;
@@ -251,7 +251,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestCountableMACCSCount_Rings()
         {
-            var parser = CDK.SilentSmilesParser;
+            var parser = CDK.SmilesParser;
             var printer = new SubstructureFingerprinter(StandardSubstructureSets.GetCountableMACCSSMARTS());
             IAtomContainer mol;
             ICountFingerprint cfp;
@@ -300,7 +300,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestCountableMACCSBinary_Rings()
         {
-            var parser = CDK.SilentSmilesParser;
+            var parser = CDK.SmilesParser;
             var printer = new SubstructureFingerprinter(StandardSubstructureSets.GetCountableMACCSSMARTS());
             IAtomContainer mol;
             BitArray bs;
@@ -358,7 +358,7 @@ namespace NCDK.Fingerprints
         {
             string benzaldehyde = "c1ccccc1C=O";
             IFingerprinter fprinter = new SubstructureFingerprinter();
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             IBitFingerprint fp = fprinter.GetBitFingerprint(sp.ParseSmiles(benzaldehyde));
             Assert.IsFalse(fp[136], "Bit 136 (vinylogous ester) is set to true");
         }

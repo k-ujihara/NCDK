@@ -38,7 +38,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { 0.07915, 0.05783, 0.05783, 0.05783 };
             IAtomicDescriptor descriptor = new ProtonTotalPartialChargeDescriptor();
 
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CF");
             AddExplicitHydrogens(mol);
             ArrayResult<double> retval = (ArrayResult<double>)descriptor.Calculate(mol.Atoms[0], mol).Value;
@@ -53,7 +53,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         public void TestNaNs()
         {
             IAtomicDescriptor descriptor = new ProtonTotalPartialChargeDescriptor();
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C(F)(F)");
             AddExplicitHydrogens(mol);
             ArrayResult<double> retval = (ArrayResult<double>)descriptor.Calculate(mol.Atoms[0], mol).Value;

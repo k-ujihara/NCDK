@@ -232,7 +232,7 @@ namespace NCDK.Tools
         public void TestNewSaturate_withHAdded()
         {
             // O=C([H])[C+]([H])[C-]([H])[H]
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             CDK.LonePairElectronChecker.Saturate(mol);

@@ -22,7 +22,6 @@
  */
 
 using NCDK.Common.Primitives;
-using NCDK.Config;
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
 using NCDK.Numerics;
@@ -313,8 +312,7 @@ namespace NCDK.IO
 
             try
             {
-                IsotopeFactory isotopeFactory = BODRIsotopeFactory.Instance;
-
+                var isotopeFactory = CDK.IsotopeFactory;
                 Trace.TraceInformation("Reading header");
                 line = input.ReadLine();
                 linecount++;
@@ -458,7 +456,7 @@ namespace NCDK.IO
                                 int massDiff = int.Parse(massDiffString, NumberFormatInfo.InvariantInfo);
                                 if (massDiff != 0)
                                 {
-                                    IIsotope major = BODRIsotopeFactory.Instance.GetMajorIsotope(element);
+                                    var major = CDK.IsotopeFactory.GetMajorIsotope(element);
                                     atom.AtomicNumber = major.AtomicNumber + massDiff;
                                 }
                             }

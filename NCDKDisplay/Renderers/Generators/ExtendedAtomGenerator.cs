@@ -18,7 +18,6 @@
  */
 
 using NCDK.Common.Collections;
-using NCDK.Config;
 using NCDK.Renderers.Elements;
 using System.IO;
 using System.Linq;
@@ -32,7 +31,6 @@ namespace NCDK.Renderers.Generators
     /// </summary>
     // @author maclean
     // @cdk.module renderextra
-    // @cdk.githash
     public class ExtendedAtomGenerator : BasicAtomGenerator
     {
         /// <inheritdoc/>
@@ -69,7 +67,7 @@ namespace NCDK.Renderers.Generators
                 }
                 var point = atom.Point2D.Value;
                 var ccolor = GetAtomColor(atom, model);
-                TextGroupElement textGroup = new TextGroupElement(ToPoint(point), text, ccolor);
+                var textGroup = new TextGroupElement(ToPoint(point), text, ccolor);
                 Decorate(textGroup, container, atom, model);
                 return textGroup;
             }
@@ -77,15 +75,15 @@ namespace NCDK.Renderers.Generators
 
         private void Decorate(TextGroupElement textGroup, IAtomContainer container, IAtom atom, RendererModel model)
         {
-            Deque<Position> unused = GetUnusedPositions(container, atom);
+            var unused = GetUnusedPositions(container, atom);
 
             if (model.HasWillDrawAtomNumbers())
             {
                 bool drawNumbers = model.GetWillDrawAtomNumbers();
                 if (!InvisibleCarbon(atom, container, model) && drawNumbers)
                 {
-                    Position position = GetNextPosition(unused);
-                    string number = (container.Atoms.IndexOf(atom) + 1).ToString();
+                    var position = GetNextPosition(unused);
+                    var number = (container.Atoms.IndexOf(atom) + 1).ToString();
                     textGroup.AddChild(number, position);
                 }
             }
@@ -97,7 +95,7 @@ namespace NCDK.Renderers.Generators
                     int hCount = atom.ImplicitHydrogenCount.Value;
                     if (hCount > 0)
                     {
-                        Position position = GetNextPosition(unused);
+                        var position = GetNextPosition(unused);
                         if (hCount == 1)
                         {
                             textGroup.AddChild("H", position);
@@ -115,11 +113,11 @@ namespace NCDK.Renderers.Generators
             {
                 try
                 {
-                    IsotopeFactory factory = BODRIsotopeFactory.Instance;
+                    var factory = CDK.IsotopeFactory;
                     int majorMass = factory.GetMajorIsotope(atom.Symbol).MassNumber.Value;
                     if (massNumber.Value != majorMass)
                     {
-                        Position position = GetNextPosition(unused);
+                        var position = GetNextPosition(unused);
                         textGroup.AddChild(massNumber.ToString(), position);
                     }
                 }
@@ -144,7 +142,7 @@ namespace NCDK.Renderers.Generators
 
         private Deque<Position> GetUnusedPositions(IAtomContainer container, IAtom atom)
         {
-            Deque<Position> unused = new Deque<Position>();
+            var unused = new Deque<Position>();
             foreach (var p in PositionTools.Values)
             {
                 unused.Push(p);
@@ -152,7 +150,7 @@ namespace NCDK.Renderers.Generators
 
             foreach (var connectedAtom in container.GetConnectedAtoms(atom))
             {
-                Position used = GetPosition(atom, connectedAtom);
+                var used = GetPosition(atom, connectedAtom);
                 if (unused.Contains(used))
                 {
                     unused.Remove(used);

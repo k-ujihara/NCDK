@@ -326,7 +326,7 @@ namespace NCDK.Isomorphisms
             Assert.AreSame(iterator, ms.GetEnumerator());
         }
 
-        SmilesParser smipar = CDK.SilentSmilesParser;
+        SmilesParser smipar = CDK.SmilesParser;
 
         IAtomContainer Smi(string smi)
         {

@@ -41,7 +41,7 @@ namespace NCDK.SMSD.Tools
         public void TestMakeDeepCopy()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var container = sp.ParseSmiles(rawMolSmiles);
 
             int counter = 0;
@@ -65,7 +65,7 @@ namespace NCDK.SMSD.Tools
         public void TestAromatizeMolecule()
         {
             string rawMolSmiles = "C1=CC2=C(C=C1)C=CC=C2";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles(rawMolSmiles);
             ExtAtomContainerManipulator.AromatizeMolecule(mol);
             int count = 0;
@@ -86,7 +86,7 @@ namespace NCDK.SMSD.Tools
         public void TestGetExplicitHydrogenCount()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles(rawMolSmiles);
             IAtom atom = null;
             foreach (var a in atomContainer.Atoms)
@@ -110,7 +110,7 @@ namespace NCDK.SMSD.Tools
         public void TestGetImplicitHydrogenCount()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles(rawMolSmiles);
             IAtom atom = null;
             foreach (var a in atomContainer.Atoms)
@@ -134,7 +134,7 @@ namespace NCDK.SMSD.Tools
         public void TestGetHydrogenCount()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles(rawMolSmiles);
             IAtom atom = null;
             foreach (var a in atomContainer.Atoms)
@@ -157,7 +157,7 @@ namespace NCDK.SMSD.Tools
         public void TestRemoveHydrogensAndPreserveAtomID()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles(rawMolSmiles);
             IAtom beforeAtom = null;
             IAtom afterAtom = null;
@@ -191,7 +191,7 @@ namespace NCDK.SMSD.Tools
         public void TestConvertExplicitToImplicitHydrogens()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles(rawMolSmiles);
             int expResult = 11;
             IAtomContainer result = ExtAtomContainerManipulator.ConvertExplicitToImplicitHydrogens(atomContainer);
@@ -205,7 +205,7 @@ namespace NCDK.SMSD.Tools
         public void TestPercieveAtomTypesAndConfigureAtoms()
         {
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles(rawMolSmiles);
             ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);
             Assert.IsNotNull(atomContainer);

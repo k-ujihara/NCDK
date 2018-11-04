@@ -258,7 +258,7 @@ namespace NCDK.Graphs.Invariant
         public void TestAceticAcid()
         {
             IAtomContainer mol = null;
-            mol = CDK.SilentSmilesParser.ParseSmiles("CC(=O)O");
+            mol = CDK.SmilesParser.ParseSmiles("CC(=O)O");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
@@ -310,7 +310,7 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void Test1_fluorobutadienene()
         {
-            IAtomContainer mol = CDK.SilentSmilesParser.ParseSmiles("FC=CC=C");
+            IAtomContainer mol = CDK.SmilesParser.ParseSmiles("FC=CC=C");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
@@ -330,7 +330,7 @@ namespace NCDK.Graphs.Invariant
         public void TestEthyne_difluoro()
         {
             IAtomContainer mol = null;
-            mol = CDK.SilentSmilesParser.ParseSmiles("FC#CF");
+            mol = CDK.SmilesParser.ParseSmiles("FC#CF");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
@@ -416,7 +416,7 @@ namespace NCDK.Graphs.Invariant
         public void TestCyanoallene()
         {
             IAtomContainer mol = null;
-            mol = CDK.SilentSmilesParser.ParseSmiles("C=C=CC#N");
+            mol = CDK.SmilesParser.ParseSmiles("C=C=CC#N");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
@@ -445,7 +445,7 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void TestChargeWithProtonExplicit()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[H]C([H])=C([H])[C+]([H])[H]");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
@@ -473,7 +473,7 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void TestChargeWithProtonImplicit()
         {
-            var sp = CDK.SilentSmilesParser;
+            var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C=C[C+]");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
