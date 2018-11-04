@@ -93,10 +93,10 @@ namespace NCDK.Renderers
             public override bool Visible(IAtom atom, IEnumerable<IBond> bonds_, RendererModel model)
             {
                 var bonds = bonds_.ToList();
-                var element = Config.ChemicalElement.OfNumber(atom.AtomicNumber.Value);
+                var element = Config.NaturalElement.OfNumber(atom.AtomicNumber.Value);
 
                 // all non-carbons are displayed
-                if (element != ChemicalElements.Carbon) return true;
+                if (element != NaturalElements.Carbon) return true;
 
                 // methane
                 if (bonds.Count == 0) return true;

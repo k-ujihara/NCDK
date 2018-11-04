@@ -340,7 +340,7 @@ namespace NCDK.Tools
             {
                 try
                 {
-                    if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H)) continue;
+                    if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H)) continue;
                     bond = atomContainer.GetBond(root, atom);
                     
                     // In the first sphere the atoms are labeled with their own atom
@@ -399,7 +399,7 @@ namespace NCDK.Tools
                 if (!("&;#:,".IndexOf(treeNode.symbol, StringComparison.Ordinal) >= 0))
                 {
                     node = treeNode.Atom;
-                    if (node.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                    if (node.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
                         continue;
 
                     var conAtoms = atomContainer.GetConnectedAtoms(node).ToReadOnlyList();

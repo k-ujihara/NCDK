@@ -724,7 +724,7 @@ namespace NCDK.Modelings.Builder3D
         /// <returns><see langword="true"/> if the atom is heavy, typically non-hydrogen</returns>
         public virtual bool IsHeavyAtom(IAtom atom)
         {
-            return !atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H);
+            return !atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H);
         }
     }
 }

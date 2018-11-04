@@ -36,7 +36,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using static NCDK.Config.ChemicalElement;
+using static NCDK.Config.NaturalElement;
 
 namespace NCDK.Layout
 {
@@ -546,7 +546,7 @@ namespace NCDK.Layout
             // delete single-bonded H's from
             foreach (var curAtom in shallowCopy.Atoms)
             {
-                if (curAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                if (curAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
                 {
                     if (shallowCopy.GetConnectedBonds(curAtom).Count() < 2)
                     {
@@ -1070,7 +1070,7 @@ namespace NCDK.Layout
             // isolated atoms, HCl vs NH4+ etc
             if (!bonds.Any())
             {
-                var elem = ChemicalElement.OfNumber(atom.AtomicNumber.Value);
+                var elem = NaturalElement.OfNumber(atom.AtomicNumber.Value);
                 // see HydrogenPosition for canonical list
                 switch (elem.AtomicNumber)
                 {
@@ -1645,7 +1645,7 @@ namespace NCDK.Layout
         {
             if (atom.AtomicNumber != null)
                 return atom.AtomicNumber == 1;
-            return ChemicalElement.AtomicNumbers.H.Equals(atom.AtomicNumber);
+            return NaturalElement.AtomicNumbers.H.Equals(atom.AtomicNumber);
         }
 
         /// <summary>

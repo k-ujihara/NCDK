@@ -173,12 +173,12 @@ namespace NCDK.IO
 
         private IChemModel ReadChemModel(IChemModel chemModel)
         {
-            IChemObjectSet<IAtomContainer> setOfMolecules = chemModel.MoleculeSet;
+            var setOfMolecules = chemModel.MoleculeSet;
             if (setOfMolecules == null)
             {
                 setOfMolecules = chemModel.Builder.NewAtomContainerSet();
             }
-            IAtomContainer m = ReadAtomContainer(chemModel.Builder.NewAtomContainer());
+            var m = ReadAtomContainer(chemModel.Builder.NewAtomContainer());
             if (m != null)
             {
                 setOfMolecules.Add(m);
@@ -194,8 +194,8 @@ namespace NCDK.IO
         /// <returns>The <see cref="IChemFile"/> that was read from the MDL file.</returns>
         private IChemFile ReadChemFile(IChemFile chemFile)
         {
-            IChemObjectBuilder builder = chemFile.Builder;
-            IChemSequence sequence = builder.NewChemSequence();
+            var builder = chemFile.Builder;
+            var sequence = builder.NewChemSequence();
 
             try
             {
@@ -238,11 +238,12 @@ namespace NCDK.IO
         /// <returns>a new <see cref="IChemModel"/></returns>
         private static IChemModel NewModel(IAtomContainer container)
         {
-            if (container == null) throw new NullReferenceException("cannot create chem model for a null container");
+            if (container == null)
+                throw new NullReferenceException("cannot create chem model for a null container");
 
-            IChemObjectBuilder builder = container.Builder;
-            IChemModel model = builder.NewChemModel();
-            IChemObjectSet<IAtomContainer> containers = builder.NewAtomContainerSet();
+            var builder = container.Builder;
+            var model = builder.NewChemModel();
+            var containers = builder.NewAtomContainerSet();
 
             containers.Add(container);
             model.MoleculeSet = containers;
@@ -317,7 +318,7 @@ namespace NCDK.IO
                     }
                 }
 
-                CTabVersion version = CTabVersion.OfHeader(line);
+                var version = CTabVersion.OfHeader(line);
 
                 // check the CT block version
                 if (version == CTabVersion.V3000)
@@ -332,11 +333,11 @@ namespace NCDK.IO
                     // okay to read in relaxed mode
                 }
 
-                int nAtoms = ReadMolfileInt(line, 0);
-                int nBonds = ReadMolfileInt(line, 3);
+                var nAtoms = ReadMolfileInt(line, 0);
+                var nBonds = ReadMolfileInt(line, 3);
 
-                IAtom[] atoms = new IAtom[nAtoms];
-                IBond[] bonds = new IBond[nBonds];
+                var atoms = new IAtom[nAtoms];
+                var bonds = new IBond[nBonds];
 
                 // used for applying the MDL valence model
                 int[] explicitValence = new int[nAtoms];
@@ -348,11 +349,11 @@ namespace NCDK.IO
                     line = input.ReadLine();
                     linecount++;
 
-                    IAtom atom = ReadAtomFast(line, molecule.Builder, parities, linecount);
+                    var atom = ReadAtomFast(line, molecule.Builder, parities, linecount);
 
                     atoms[i] = atom;
 
-                    Vector3 p = atom.Point3D.Value;
+                    var p = atom.Point3D.Value;
                     hasX = hasX || p.X != 0d;
                     hasY = hasY || p.Y != 0d;
                     hasZ = hasZ || p.Z != 0d;
@@ -385,7 +386,7 @@ namespace NCDK.IO
                     {
                         foreach (var atomToUpdate in atoms)
                         {
-                            Vector3 p3d = atomToUpdate.Point3D.Value;
+                            var p3d = atomToUpdate.Point3D.Value;
                             if (p3d != null)
                             {
                                 atomToUpdate.Point2D = new Vector2(p3d.X, p3d.Y);
@@ -403,7 +404,7 @@ namespace NCDK.IO
 
                     bonds[i] = ReadBondFast(line, molecule.Builder, atoms, explicitValence, linecount);
                     hasQueryBonds = hasQueryBonds
-                            || (bonds[i].Order == BondOrder.Unset && !bonds[i].IsAromatic);
+                                 || (bonds[i].Order == BondOrder.Unset && !bonds[i].IsAromatic);
                 }
 
                 if (!hasQueryBonds)
@@ -439,8 +440,8 @@ namespace NCDK.IO
                         if (parity != 1 && parity != 2)
                             continue; // 3=unspec
                         int idx = 0;
-                        IAtom focus = e.Key;
-                        IAtom[] carriers = new IAtom[4];
+                        var focus = e.Key;
+                        var carriers = new IAtom[4];
                         int hidx = -1;
                         foreach (var nbr in outputContainer.GetConnectedAtoms(focus))
                         {
@@ -462,7 +463,7 @@ namespace NCDK.IO
 
                         if (idx == 4)
                         {
-                            TetrahedralStereo winding = parity == 1 ? TetrahedralStereo.Clockwise : TetrahedralStereo.AntiClockwise;
+                            var winding = parity == 1 ? TetrahedralStereo.Clockwise : TetrahedralStereo.AntiClockwise;
                             // H is always at back, even if explicit! At least this seems to be the case.
                             // we adjust the winding as needed
                             if (hidx == 0 || hidx == 2)
@@ -493,7 +494,7 @@ namespace NCDK.IO
                     }
                     else
                     {
-                        int unpaired = outputContainer.GetConnectedSingleElectrons(outputContainer.Atoms[i]).Count();
+                        var unpaired = outputContainer.GetConnectedSingleElectrons(outputContainer.Atoms[i]).Count();
                         ApplyMDLValenceModel(outputContainer.Atoms[i], valence + unpaired, unpaired);
                     }
                 }
@@ -518,16 +519,14 @@ namespace NCDK.IO
             }
             catch (CDKException exception)
             {
-                string error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.Message;
-                Trace.TraceError(error);
+                Trace.TraceError($"Error while parsing line {linecount}: {line} -> {exception.Message}");
                 throw;
             }
             catch (IOException exception)
             {
                 Console.Error.WriteLine(exception.StackTrace);
-                string error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.Message;
-                Trace.TraceError(error);
-                HandleError("Error while parsing line: " + line, linecount, 0, 0, exception);
+                Trace.TraceError($"Error while parsing line {linecount}: {line} -> {exception.Message}");
+                HandleError($"Error while parsing line: {line}", linecount, 0, 0, exception);
             }
 
             return outputContainer;
@@ -559,9 +558,7 @@ namespace NCDK.IO
             else
             {
                 int element = atom.AtomicNumber ?? 0;
-
                 int charge = atom.FormalCharge ?? 0;
-
                 int implicitValence = MDLValence.ImplicitValence(element, charge, explicitValence);
                 if (implicitValence < explicitValence)
                 {
@@ -742,8 +739,7 @@ namespace NCDK.IO
                     throw new CDKException("invalid line length, " + length + ": " + line);
             }
 
-            IAtom atom = CreateAtom(symbol, builder, lineNum);
-
+            var atom = CreateAtom(symbol, builder, lineNum);
             atom.Point3D = new Vector3(x, y, z);
             atom.FormalCharge = charge;
             atom.StereoParity = parity;
@@ -753,16 +749,17 @@ namespace NCDK.IO
             // if there was a mass difference, set the mass number
             if (massDiff != 0 && atom.AtomicNumber > 0)
             {
-                IIsotope majorIsotope = BODRIsotopeFactory.Instance.GetMajorIsotope(atom.AtomicNumber.Value);
+                var majorIsotope = BODRIsotopeFactory.Instance.GetMajorIsotope(atom.AtomicNumber.Value);
                 if (majorIsotope == null)
                     atom.MassNumber = -1; // checked after M ISO is processed
                 else
                     atom.MassNumber = majorIsotope.MassNumber + massDiff;
             }
 
-            if (valence > 0 && valence < 16) atom.Valency = valence == 15 ? 0 : valence;
-
-            if (mapping != 0) atom.SetProperty(CDKPropertyName.AtomAtomMapping, mapping);
+            if (valence > 0 && valence < 16)
+                atom.Valency = valence == 15 ? 0 : valence;
+            if (mapping != 0)
+                atom.SetProperty(CDKPropertyName.AtomAtomMapping, mapping);
 
             return atom;
         }
@@ -796,7 +793,8 @@ namespace NCDK.IO
             // 111222tttsssxxxrrrccc
 
             int length = GetLength(line);
-            if (length > 21) length = 21;
+            if (length > 21)
+                length = 21;
 
             int u, v, type, stereo = 0;
 
@@ -814,10 +812,10 @@ namespace NCDK.IO
                     type = ReadMolfileInt(line, 6);
                     break;
                 default:
-                    throw new CDKException("invalid line length: " + length + " " + line);
+                    throw new CDKException($"invalid line length: {length} {line}");
             }
 
-            IBond bond = builder.NewBond();
+            var bond = builder.NewBond();
             bond.SetAtoms(new IAtom[] { atoms[u], atoms[v] });
 
             switch (type)
@@ -892,7 +890,7 @@ namespace NCDK.IO
                 int index, count, lnOffset;
                 Sgroup sgroup;
                 int length = line.Length;
-                PropertyKey key = PropertyKey.Of(line);
+                var key = PropertyKey.Of(line);
 
                 if (key == PropertyKey.ATOM_ALIAS)
                 {
@@ -901,8 +899,9 @@ namespace NCDK.IO
                     //
                     // atom alias is stored as label on a pseudo atom
                     index = ReadMolfileInt(line, 3) - 1;
-                    string label = input.ReadLine();
-                    if (label == null) return;
+                    var label = input.ReadLine();
+                    if (label == null)
+                        return;
                     Label(container, offset + index, label);
                 }
                 else if (key == PropertyKey.ATOM_VALUE)
@@ -911,7 +910,7 @@ namespace NCDK.IO
                     //
                     // an atom value is stored as comment on an atom
                     index = ReadMolfileInt(line, 3) - 1;
-                    string comment = Strings.Substring(line, 7);
+                    var comment = Strings.Substring(line, 7);
                     container.Atoms[offset + index].SetProperty(CDKPropertyName.Comment, comment);
                 }
                 else if (key == PropertyKey.GROUP_ABBREVIATION)
@@ -932,8 +931,9 @@ namespace NCDK.IO
                     // mentioned in the specification above
                     // final int    from  = ReadMolfileInt(line, 3) - 1;
                     // final int    to    = ReadMolfileInt(line, 6) - 1;
-                    string group = input.ReadLine();
-                    if (group == null) return;
+                    var group = input.ReadLine();
+                    if (group == null)
+                        return;
                 }
                 else if (key == PropertyKey.M_CHG)
                 {
@@ -946,7 +946,7 @@ namespace NCDK.IO
                     for (int i = 0, st = 10; i < count && st + 7 <= length; i++, st += 8) //
                     {
                         index = ReadMolfileInt(line, st) - 1;
-                        int charge = ReadMolfileInt(line, st + 4);
+                        var charge = ReadMolfileInt(line, st + 4);
                         container.Atoms[offset + index].FormalCharge = charge;
                     }
                 }
@@ -963,9 +963,9 @@ namespace NCDK.IO
                     for (int i = 0, st = 10; i < count && st + 7 <= length; i++, st += 8)
                     {
                         index = ReadMolfileInt(line, st) - 1;
-                        int mass = ReadMolfileInt(line, st + 4);
+                        var mass = ReadMolfileInt(line, st + 4);
                         if (mass < 0)
-                            HandleError("Absolute mass number should be >= 0, " + line);
+                            HandleError($"Absolute mass number should be >= 0, {line}");
                         else
                             container.Atoms[offset + index].MassNumber = mass;
                     }
@@ -982,8 +982,8 @@ namespace NCDK.IO
                     for (int i = 0, st = 10; i < count && st + 7 <= length; i++, st += 8)
                     {
                         index = ReadMolfileInt(line, st) - 1;
-                        int value = ReadMolfileInt(line, st + 4);
-                        SpinMultiplicity multiplicity = SpinMultiplicity.OfValue(value);
+                        var value = ReadMolfileInt(line, st + 4);
+                        var multiplicity = SpinMultiplicity.OfValue(value);
 
                         for (int e = 0; e < multiplicity.SingleElectrons; e++)
                             container.AddSingleElectronTo(container.Atoms[offset + index]);
@@ -1000,8 +1000,8 @@ namespace NCDK.IO
                     for (int i = 0, st = 10; i < count && st + 7 <= length; i++, st += 8)
                     {
                         index = ReadMolfileInt(line, st) - 1;
-                        int number = ReadMolfileInt(line, st + 4);
-                        Label(container, offset + index, "R" + number);
+                        var number = ReadMolfileInt(line, st + 4);
+                        Label(container, offset + index, $"R{number}");
                     }
                 }
                 else if (key == PropertyKey.M_ZZC)
@@ -1041,7 +1041,7 @@ namespace NCDK.IO
                         throw new CDKException("Atom property ZZC is illegal in Strict mode");
                     }
                     index = ReadMolfileInt(line, 7) - 1;
-                    string atomLabel = Strings.Substring(line, 11);  // DO NOT TRIM
+                    var atomLabel = Strings.Substring(line, 11);  // DO NOT TRIM
                     container.Atoms[offset + index].SetProperty(CDKPropertyName.ACDLabsAtomLabel, atomLabel);
                 }
                 else if (key == PropertyKey.M_STY)
@@ -1090,7 +1090,7 @@ namespace NCDK.IO
                         if (ReaderMode == ChemObjectReaderMode.Strict && sgroup.Type != SgroupType.CtabCopolymer)
                             HandleError("SST (Sgroup Subtype) specified for a non co-polymer group");
 
-                        string sst = Strings.Substring(line, st + 4, 3);
+                        var sst = Strings.Substring(line, st + 4, 3);
 
                         if (ReaderMode == ChemObjectReaderMode.Strict)
                         {
@@ -1101,7 +1101,7 @@ namespace NCDK.IO
                                 case "BLO":
                                     break;
                                 default:
-                                    HandleError("Invalid sgroup subtype: " + sst + " expected (ALT, RAN, or BLO)");
+                                    HandleError($"Invalid sgroup subtype: {sst} expected (ALT, RAN, or BLO)");
                                     break;
                             }
                         }
@@ -1161,7 +1161,7 @@ namespace NCDK.IO
                     {
                         sgroup = EnsureSgroup(sgroups,
                                               ReadMolfileInt(line, st));
-                        string con = Strings.Substring(line, st + 4, 3).Trim();
+                        var con = Strings.Substring(line, st + 4, 3).Trim();
                         if (ReaderMode == ChemObjectReaderMode.Strict)
                         {
                             switch (con)
@@ -1252,7 +1252,7 @@ namespace NCDK.IO
                     //       Sgroup Atom List M SAL entry.
                     sgroup = EnsureSgroup(sgroups, ReadMolfileInt(line, 7));
                     count = ReadMolfileInt(line, 10);
-                    ICollection<IAtom> parentAtomList = (ICollection<IAtom>)sgroup.GetValue(SgroupKey.CtabParentAtomList);
+                    var parentAtomList = (ICollection<IAtom>)sgroup.GetValue(SgroupKey.CtabParentAtomList);
                     if (parentAtomList == null)
                     {
                         sgroup.PutValue(SgroupKey.CtabParentAtomList, parentAtomList = new HashSet<IAtom>());
@@ -1290,11 +1290,11 @@ namespace NCDK.IO
             GoNext_LINES:
 
             // check of ill specified atomic mass
-            foreach (IAtom atom in container.Atoms)
+            foreach (var atom in container.Atoms)
             {
                 if (atom.MassNumber != null && atom.MassNumber < 0)
                 {
-                    HandleError("Unstable use of mass delta on " + atom.Symbol + " please use M  ISO");
+                    HandleError($"Unstable use of mass delta on {atom.Symbol} please use M  ISO");
                     atom.MassNumber = null;
                 }
             }
@@ -1306,14 +1306,14 @@ namespace NCDK.IO
                 var sgroupCpyList = new List<Sgroup>(sgroupOrgList.Count);
                 for (int i = 0; i < sgroupOrgList.Count; i++)
                 {
-                    Sgroup cpy = sgroupOrgList[i].Downcast<Sgroup>();
+                    var cpy = sgroupOrgList[i].Downcast<Sgroup>();
                     sgroupCpyList.Add(cpy);
                 }
                 // update replaced parents
                 for (int i = 0; i < sgroupOrgList.Count; i++)
                 {
-                    Sgroup newSgroup = sgroupCpyList[i];
-                    ICollection<Sgroup> oldParents = new HashSet<Sgroup>(newSgroup.Parents);
+                    var newSgroup = sgroupCpyList[i];
+                    var oldParents = new HashSet<Sgroup>(newSgroup.Parents);
                     newSgroup.RemoveParents(oldParents);
                     foreach (var parent in oldParents)
                     {
@@ -1367,7 +1367,8 @@ namespace NCDK.IO
                         throw new CDKException("stereo flag was 'down' but bond order was 2");
                     return BondStereo.Down;
             }
-            if (ReaderMode == ChemObjectReaderMode.Strict) throw new CDKException("unknown bond stereo type: " + stereo);
+            if (ReaderMode == ChemObjectReaderMode.Strict)
+                throw new CDKException("unknown bond stereo type: " + stereo);
             return BondStereo.None;
         }
 
@@ -1399,10 +1400,10 @@ namespace NCDK.IO
         /// <exception cref="CDKException">the symbol is not allowed</exception>
         private IAtom CreateAtom(string symbol, IChemObjectBuilder builder, int lineNum)
         {
-            ChemicalElement elem = ChemicalElement.OfString(symbol);
-            if (elem != ChemicalElements.Unknown)
+            var elem = NaturalElement.OfString(symbol);
+            if (elem != NaturalElements.Unknown)
             {
-                IAtom atom = builder.NewAtom();
+                var atom = builder.NewAtom();
                 atom.Symbol = elem.Symbol;
                 atom.AtomicNumber = elem.AtomicNumber;
                 return atom;
@@ -1412,8 +1413,9 @@ namespace NCDK.IO
                 case "D":
                     if (interpretHydrogenIsotopes.IsSet)
                     {
-                        if (ReaderMode == ChemObjectReaderMode.Strict) throw new CDKException("invalid symbol: " + symbol);
-                        IAtom atom = builder.NewAtom("H");
+                        if (ReaderMode == ChemObjectReaderMode.Strict)
+                            throw new CDKException("invalid symbol: " + symbol);
+                        var atom = builder.NewAtom("H");
                         atom.MassNumber = 2;
                         return atom;
                     }
@@ -1421,8 +1423,9 @@ namespace NCDK.IO
                 case "T":
                     if (interpretHydrogenIsotopes.IsSet)
                     {
-                        if (ReaderMode == ChemObjectReaderMode.Strict) throw new CDKException("invalid symbol: " + symbol);
-                        IAtom atom = builder.NewAtom("H");
+                        if (ReaderMode == ChemObjectReaderMode.Strict)
+                            throw new CDKException("invalid symbol: " + symbol);
+                        var atom = builder.NewAtom("H");
                         atom.MassNumber = 3;
                         return atom;
                     }
@@ -1432,7 +1435,8 @@ namespace NCDK.IO
             {
                 HandleError("invalid symbol: " + symbol, lineNum, 31, 34);
                 // when strict only accept labels from the specification
-                if (ReaderMode == ChemObjectReaderMode.Strict) throw new CDKException("invalid symbol: " + symbol);
+                if (ReaderMode == ChemObjectReaderMode.Strict)
+                    throw new CDKException("invalid symbol: " + symbol);
             }
             {
                 // will be renumbered later by RGP if R1, R2 etc. if not renumbered then
@@ -1440,7 +1444,7 @@ namespace NCDK.IO
                 if (string.Equals(symbol, "R#", StringComparison.Ordinal))
                     symbol = "R";
 
-                IAtom atom = builder.NewPseudoAtom(symbol);
+                var atom = builder.NewPseudoAtom(symbol);
                 atom.Symbol = symbol;
                 atom.AtomicNumber = 0; // avoid NPE downstream
 

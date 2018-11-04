@@ -122,8 +122,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 // checking for O and N atoms where the formal charge is >= 0
                 switch (atom.AtomicNumber)
                 {
-                    case ChemicalElement.AtomicNumbers.O:
-                    case ChemicalElement.AtomicNumbers.N:
+                    case NaturalElement.AtomicNumbers.O:
+                    case NaturalElement.AtomicNumbers.N:
                         if (atom.FormalCharge >= 0)
                         {
                             // implicit hydrogens
@@ -137,7 +137,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             var neighbours = ac.GetConnectedAtoms(atom);
                             foreach (var neighbour in neighbours)
                             {
-                                if ((neighbour).AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                                if ((neighbour).AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
                                 {
                                     hBondDonors++;
                                     goto continue_atomloop;

@@ -3792,8 +3792,8 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPine()
         {
-            IAtom atomP = new Atom(ChemicalElements.Phosphorus.Element);
-            IAtomType atomTypeP = new AtomType(ChemicalElements.Phosphorus.Element);
+            IAtom atomP = new Atom(NaturalElements.Phosphorus.Element);
+            IAtomType atomTypeP = new AtomType(NaturalElements.Phosphorus.Element);
             AtomTypeManipulator.Configure(atomP, atomTypeP);
 
             IAtomContainer ac = atomP.Builder.NewAtomContainer();

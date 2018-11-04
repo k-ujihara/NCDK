@@ -180,21 +180,21 @@ namespace NCDK.Smiles
             IAtomContainer enol = new AtomContainer();
 
             // atom block
-            IAtom atom1 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom1 = new Atom(NaturalElements.Carbon.Element);
             atom1.Hybridization = Hybridization.SP2;
-            IAtom atom2 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom2 = new Atom(NaturalElements.Carbon.Element);
             atom2.Hybridization = Hybridization.SP2;
-            IAtom atom3 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom3 = new Atom(NaturalElements.Carbon.Element);
             atom3.Hybridization = Hybridization.SP2;
-            IAtom atom4 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom4 = new Atom(NaturalElements.Carbon.Element);
             atom4.Hybridization = Hybridization.SP2;
-            IAtom atom5 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom5 = new Atom(NaturalElements.Carbon.Element);
             atom5.Hybridization = Hybridization.SP2;
-            IAtom atom6 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom6 = new Atom(NaturalElements.Carbon.Element);
             atom6.Hybridization = Hybridization.SP2;
-            IAtom atom7 = new Atom(ChemicalElements.Oxygen.Element);
+            IAtom atom7 = new Atom(NaturalElements.Oxygen.Element);
             atom7.Hybridization = Hybridization.SP2;
-            IAtom atom8 = new Atom(ChemicalElements.Oxygen.Element);
+            IAtom atom8 = new Atom(NaturalElements.Oxygen.Element);
             atom8.Hybridization = Hybridization.SP2;
 
             // bond block
@@ -250,15 +250,15 @@ namespace NCDK.Smiles
             IAtomContainer enol = new AtomContainer();
 
             // atom block
-            IAtom atom1 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom1 = new Atom(NaturalElements.Carbon.Element);
             atom1.Hybridization = Hybridization.SP2;
-            IAtom atom2 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom2 = new Atom(NaturalElements.Carbon.Element);
             atom2.Hybridization = Hybridization.SP2;
-            IAtom atom3 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom3 = new Atom(NaturalElements.Carbon.Element);
             atom3.Hybridization = Hybridization.SP2;
-            IAtom atom4 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom4 = new Atom(NaturalElements.Carbon.Element);
             atom4.Hybridization = Hybridization.SP2;
-            IAtom atom5 = new Atom(ChemicalElements.Nitrogen.Element);
+            IAtom atom5 = new Atom(NaturalElements.Nitrogen.Element);
             atom5.Hybridization = Hybridization.SP2;
             atom5.ImplicitHydrogenCount = 1;
 
@@ -302,17 +302,17 @@ namespace NCDK.Smiles
             IAtomContainer enol = new AtomContainer();
 
             // atom block
-            IAtom atom1 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom1 = new Atom(NaturalElements.Carbon.Element);
             atom1.Hybridization = Hybridization.SP2;
-            IAtom atom2 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom2 = new Atom(NaturalElements.Carbon.Element);
             atom2.Hybridization = Hybridization.SP2;
-            IAtom atom3 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom3 = new Atom(NaturalElements.Carbon.Element);
             atom3.Hybridization = Hybridization.SP2;
-            IAtom atom4 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom4 = new Atom(NaturalElements.Carbon.Element);
             atom4.Hybridization = Hybridization.SP2;
-            IAtom atom5 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom5 = new Atom(NaturalElements.Carbon.Element);
             atom5.Hybridization = Hybridization.SP2;
-            IAtom atom6 = new Atom(ChemicalElements.Nitrogen.Element);
+            IAtom atom6 = new Atom(NaturalElements.Nitrogen.Element);
             atom6.Hybridization = Hybridization.SP2;
 
             // bond block
@@ -373,17 +373,17 @@ namespace NCDK.Smiles
             IAtomContainer enol = new AtomContainer();
 
             // atom block
-            IAtom atom1 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom1 = new Atom(NaturalElements.Carbon.Element);
             atom1.Hybridization = Hybridization.SP2;
-            IAtom atom2 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom2 = new Atom(NaturalElements.Carbon.Element);
             atom2.Hybridization = Hybridization.SP2;
-            IAtom atom3 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom3 = new Atom(NaturalElements.Carbon.Element);
             atom3.Hybridization = Hybridization.SP2;
-            IAtom atom4 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom4 = new Atom(NaturalElements.Carbon.Element);
             atom4.Hybridization = Hybridization.SP2;
-            IAtom atom5 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom5 = new Atom(NaturalElements.Carbon.Element);
             atom5.Hybridization = Hybridization.SP2;
-            IAtom atom6 = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom6 = new Atom(NaturalElements.Carbon.Element);
             atom6.Hybridization = Hybridization.SP2;
 
             // bond block

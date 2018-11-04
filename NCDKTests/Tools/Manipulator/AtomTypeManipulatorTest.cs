@@ -35,8 +35,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestConfigure_IAtom_IAtomType()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.Element);
-            IAtomType atomType = new AtomType(ChemicalElements.Carbon.Element) { IsHydrogenBondAcceptor = true };
+            IAtom atom = new Atom(NaturalElements.Carbon.Element);
+            IAtomType atomType = new AtomType(NaturalElements.Carbon.Element) { IsHydrogenBondAcceptor = true };
             AtomTypeManipulator.Configure(atom, atomType);
             Assert.AreEqual(atomType.IsHydrogenBondAcceptor, atom.IsHydrogenBondAcceptor);
         }
@@ -44,8 +44,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestConfigureUnSetProperties_DontOverwriterSetProperties()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.Element) { ExactMass = 13.0 };
-            IAtomType atomType = new AtomType(ChemicalElements.Carbon.Element) { ExactMass = 12.0 };
+            IAtom atom = new Atom(NaturalElements.Carbon.Element) { ExactMass = 13.0 };
+            IAtomType atomType = new AtomType(NaturalElements.Carbon.Element) { ExactMass = 12.0 };
             AtomTypeManipulator.ConfigureUnsetProperties(atom, atomType);
             Assert.AreEqual(13.0, atom.ExactMass.Value, 0.1);
         }
@@ -53,8 +53,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestConfigureUnSetProperties()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.Element);
-            IAtomType atomType = new AtomType(ChemicalElements.Carbon.Element) { ExactMass = 12.0 };
+            IAtom atom = new Atom(NaturalElements.Carbon.Element);
+            IAtomType atomType = new AtomType(NaturalElements.Carbon.Element) { ExactMass = 12.0 };
             AtomTypeManipulator.ConfigureUnsetProperties(atom, atomType);
             Assert.AreEqual(12.0, atom.ExactMass.Value, 0.1);
         }
@@ -63,7 +63,7 @@ namespace NCDK.Tools.Manipulator
         [ExpectedException(typeof(ArgumentException))]
         public void TestConfigure_IAtom_Null()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.Element);
+            IAtom atom = new Atom(NaturalElements.Carbon.Element);
             IAtomType atomType = null;
             AtomTypeManipulator.Configure(atom, atomType);
         }
@@ -71,8 +71,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void UnknownAtomTypeDoesNotModifyProperties()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.Element);
-            IAtomType atomType = new AtomType(ChemicalElements.Unknown.Element)
+            IAtom atom = new Atom(NaturalElements.Carbon.Element);
+            IAtomType atomType = new AtomType(NaturalElements.Unknown.Element)
             {
                 AtomTypeName = "X"
             };
@@ -85,11 +85,11 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void AromaticityIsNotOverwritten()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.Element)
+            IAtom atom = new Atom(NaturalElements.Carbon.Element)
             {
                 IsAromatic = true
             };
-            IAtomType atomType = new AtomType(ChemicalElements.Unknown.Element)
+            IAtomType atomType = new AtomType(NaturalElements.Unknown.Element)
             {
                 IsAromatic = false,
                 AtomTypeName = "C.sp3"
@@ -102,11 +102,11 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void AromaticitySetIfForType()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.Element)
+            IAtom atom = new Atom(NaturalElements.Carbon.Element)
             {
                 IsAromatic = false
             };
-            IAtomType atomType = new AtomType(ChemicalElements.Unknown.Element)
+            IAtomType atomType = new AtomType(NaturalElements.Unknown.Element)
             {
                 IsAromatic = true,
                 AtomTypeName = "C.am"

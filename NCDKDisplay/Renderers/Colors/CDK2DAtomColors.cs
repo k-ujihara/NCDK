@@ -20,8 +20,8 @@
 using NCDK.Config;
 using System;
 using System.Windows.Media;
-using static NCDK.Config.ChemicalElement;
-using static NCDK.Config.ChemicalElements;
+using static NCDK.Config.NaturalElement;
+using static NCDK.Config.NaturalElements;
 using WPF = System.Windows;
 
 namespace NCDK.Renderers.Colors
@@ -158,9 +158,9 @@ namespace NCDK.Renderers.Colors
 
         public Color GetAtomColor(IAtom atom, Color defaultColor)
         {
-            var elem = ChemicalElement.OfString(atom.Symbol);
-            if (elem == ChemicalElements.Unknown)
-                elem = ChemicalElement.OfNumber(atom.AtomicNumber.Value);
+            var elem = NaturalElement.OfString(atom.Symbol);
+            if (elem == NaturalElements.Unknown)
+                elem = NaturalElement.OfNumber(atom.AtomicNumber.Value);
             switch (elem.AtomicNumber)
             {
                 case AtomicNumbers.Helium:

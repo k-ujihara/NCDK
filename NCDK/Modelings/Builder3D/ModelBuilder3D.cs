@@ -472,7 +472,7 @@ namespace NCDK.Modelings.Builder3D
                 var atoms = molecule.GetConnectedAtoms(chain.Atoms[i]);
                 foreach (var atom in atoms)
                 {
-                    if (!atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H) & !atom.IsPlaced & !atom.IsInRing)
+                    if (!atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H) & !atom.IsPlaced & !atom.IsInRing)
                     {
                         connectedAtoms.Add(ap3d.GetPlacedHeavyAtoms(molecule, chain.Atoms[i]));
                         try

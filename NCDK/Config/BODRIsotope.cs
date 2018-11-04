@@ -36,10 +36,10 @@ namespace NCDK.Config
         : IIsotope
     {
         private readonly string element;
-        private int? atomicNumber;
-        private double? naturalAbundance;
-        private double? exactMass;
-        private int? massNumber;
+        private readonly int? atomicNumber;
+        private readonly double? naturalAbundance;
+        private readonly double? exactMass;
+        private readonly int? massNumber;
 
         public BODRIsotope(string element, int? atomicNumber, int? massNumber, double? exactMass, double? naturalAbundance)
         {

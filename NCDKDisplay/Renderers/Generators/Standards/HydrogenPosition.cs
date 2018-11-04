@@ -74,17 +74,17 @@ namespace NCDK.Renderers.Generators.Standards
         /// right unless the element is listed here. This allows us to correctly
         /// displayed H2O not OH2 and CH4 not H4C.
         /// </summary>
-        private static readonly ISet<ChemicalElement> PrefixedH
-            = new HashSet<ChemicalElement>()
+        private static readonly ISet<NaturalElement> PrefixedH
+            = new HashSet<NaturalElement>()
                 {
-                    ChemicalElements.Oxygen,
-                    ChemicalElements.Sulfur,
-                    ChemicalElements.Selenium,
-                    ChemicalElements.Tellurium,
-                    ChemicalElements.Fluorine,
-                    ChemicalElements.Chlorine,
-                    ChemicalElements.Bromine,
-                    ChemicalElements.Iodine,
+                    NaturalElements.Oxygen,
+                    NaturalElements.Sulfur,
+                    NaturalElements.Selenium,
+                    NaturalElements.Tellurium,
+                    NaturalElements.Fluorine,
+                    NaturalElements.Chlorine,
+                    NaturalElements.Bromine,
+                    NaturalElements.Iodine,
                 };
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the position</returns>
         internal static HydrogenPosition UsingDefaultPlacement(IAtom atom)
         {
-            if (PrefixedH.Contains(ChemicalElement.OfNumber(atom.AtomicNumber.Value))) return Left;
+            if (PrefixedH.Contains(NaturalElement.OfNumber(atom.AtomicNumber.Value))) return Left;
             return Right;
         }
     }

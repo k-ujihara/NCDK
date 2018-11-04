@@ -126,7 +126,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
             var neighboor = mol.GetConnectedAtoms(clonedAtom);
             var neighbour0 = neighboor.First();
-            if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+            if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
             {
                 //Debug.WriteLine("aromatic proton");
                 if (neighbour0.IsAromatic)

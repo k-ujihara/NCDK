@@ -110,22 +110,22 @@ namespace NCDK.Dict
 
             switch (element.AtomicNumber)
             {
-                case ChemicalElement.AtomicNumbers.C:
+                case NaturalElement.AtomicNumbers.C:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:carbon");
                     break;
-                case ChemicalElement.AtomicNumbers.N:
+                case NaturalElement.AtomicNumbers.N:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:nitrogen");
                     break;
-                case ChemicalElement.AtomicNumbers.O:
+                case NaturalElement.AtomicNumbers.O:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:oxygen");
                     break;
-                case ChemicalElement.AtomicNumbers.H:
+                case NaturalElement.AtomicNumbers.H:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:hydrogen");
                     break;
-                case ChemicalElement.AtomicNumbers.S:
+                case NaturalElement.AtomicNumbers.S:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:sulphur");
                     break;
-                case ChemicalElement.AtomicNumbers.P:
+                case NaturalElement.AtomicNumbers.P:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:phosphorus");
                     break;
                 default:

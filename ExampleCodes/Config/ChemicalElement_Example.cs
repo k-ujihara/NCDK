@@ -9,17 +9,17 @@ namespace NCDK.Config
             {
                 #region OfNumber
                 // carbon
-                var c = ChemicalElement.OfNumber(6);
+                var c = NaturalElement.OfNumber(6);
                 // oxygen
-                var o = ChemicalElement.OfNumber(8);
+                var o = NaturalElement.OfNumber(8);
                 #endregion
             }
             {
                 #region OfString
-                var a = ChemicalElement.OfString("c");
-                var b = ChemicalElement.OfString("C");
-                var c = ChemicalElement.OfString("Carbon");
-                var d = ChemicalElement.OfString("carbon");
+                var a = NaturalElement.OfString("c");
+                var b = NaturalElement.OfString("C");
+                var c = NaturalElement.OfString("Carbon");
+                var d = NaturalElement.OfString("carbon");
                 #endregion
             }
         }

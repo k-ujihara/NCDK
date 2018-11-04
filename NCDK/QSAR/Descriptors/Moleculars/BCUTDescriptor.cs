@@ -354,7 +354,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int nheavy = 0;
             for (int i = 0; i < molecule.Atoms.Count; i++)
             {
-                if (!molecule.Atoms[i].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                if (!molecule.Atoms[i].AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
                     nheavy++;
             }
 
@@ -369,7 +369,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 for (int i = 0; i < molecule.Atoms.Count; i++)
                 {
-                    if (molecule.Atoms[i].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H)) continue;
+                    if (molecule.Atoms[i].AtomicNumber.Equals(NaturalElement.AtomicNumbers.H)) continue;
                     diagvalue[counter] = BODRIsotopeFactory.Instance.GetMajorIsotope(molecule.Atoms[i].Symbol).ExactMass.Value;
                     counter++;
                 }
@@ -409,7 +409,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             counter = 0;
             for (int i = 0; i < molecule.Atoms.Count; i++)
             {
-                if (molecule.Atoms[i].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                if (molecule.Atoms[i].AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
                     continue;
                 diagvalue[counter] = molecule.Atoms[i].Charge.Value;
                 counter++;
@@ -427,7 +427,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             counter = 0;
             for (int i = 0; i < molecule.Atoms.Count; i++)
             {
-                if (molecule.Atoms[i].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                if (molecule.Atoms[i].AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
                     continue;
                 diagvalue[counter] = Polarizability.CalculateGHEffectiveAtomPolarizability(molecule, molecule.Atoms[i], false, topoDistance);
                 counter++;

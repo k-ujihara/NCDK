@@ -219,7 +219,7 @@ namespace NCDK.Tools.Manipulator
             try
             {
                 var isotopes = BODRIsotopeFactory.Instance;
-                double hmass = isotopes.GetNaturalMass(ChemicalElements.Hydrogen.Element);
+                double hmass = isotopes.GetNaturalMass(NaturalElements.Hydrogen.Element);
                 double mw = 0.0;
                 foreach (IAtom atom in mol.Atoms)
                 {
@@ -261,7 +261,7 @@ namespace NCDK.Tools.Manipulator
             try
             {
                 var isotopes = BODRIsotopeFactory.Instance;
-                var hydgrogenMass = isotopes.GetNaturalMass(ChemicalElements.Hydrogen.Element);
+                var hydgrogenMass = isotopes.GetNaturalMass(NaturalElements.Hydrogen.Element);
 
                 double mass = 0.0;
                 foreach (var atom in atomContainer.Atoms)
@@ -272,7 +272,7 @@ namespace NCDK.Tools.Manipulator
                     if (atom.ImplicitHydrogenCount == null)
                         throw new ArgumentException("an atom had with unknown (null) implicit hydrogens");
 
-                    mass += isotopes.GetNaturalMass(ChemicalElement.OfNumber(atom.AtomicNumber.Value).Element);
+                    mass += isotopes.GetNaturalMass(NaturalElement.OfNumber(atom.AtomicNumber.Value).Element);
                     mass += hydgrogenMass * atom.ImplicitHydrogenCount.Value;
                 }
                 return mass;
@@ -380,7 +380,7 @@ namespace NCDK.Tools.Manipulator
             int hydrogens = 0;
             foreach (var atom in container.Atoms)
             {
-                if (ChemicalElements.Hydrogen.Symbol.Equals(atom.Symbol, StringComparison.Ordinal))
+                if (NaturalElement.AtomicNumbers.H.Equals(atom.AtomicNumber))
                 {
                     hydrogens++;
                 }
@@ -435,7 +435,7 @@ namespace NCDK.Tools.Manipulator
             int hCount = 0;
             foreach (var connected in atomContainer.GetConnectedAtoms(atom))
             {
-                if (ChemicalElements.Hydrogen.Symbol.Equals(connected.Symbol, StringComparison.Ordinal))
+                if (NaturalElement.AtomicNumbers.H.Equals(connected.AtomicNumber))
                 {
                     hCount++;
                 }
@@ -468,7 +468,7 @@ namespace NCDK.Tools.Manipulator
 
             foreach (var atom in atomContainer.Atoms)
             {
-                if (!atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                if (!atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
                 {
                     var hCount = atom.ImplicitHydrogenCount;
                     if (hCount != null)
@@ -611,7 +611,7 @@ namespace NCDK.Tools.Manipulator
                                     addToRemove = false;
                                 var neighboursNeighbour = bond.GetOther(neighbour);
                                 // remove in any case if the hetero atom is connected to more than one hydrogen
-                                if (neighboursNeighbour.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H) && neighboursNeighbour != atom)
+                                if (neighboursNeighbour.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H) && neighboursNeighbour != atom)
                                 {
                                     addToRemove = true;
                                     break;
@@ -635,7 +635,7 @@ namespace NCDK.Tools.Manipulator
                         {
                             foreach (var atom in tetChirality.Ligands)
                             {
-                                if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H) && orgAtomsToRemove.Contains(atom))
+                                if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H) && orgAtomsToRemove.Contains(atom))
                                 {
                                     orgAtomsToRemove.Remove(atom);
                                 }
@@ -709,7 +709,7 @@ namespace NCDK.Tools.Manipulator
             bool anyHydrogenPresent = false;
             foreach (var atom in org.Atoms)
             {
-                if (ChemicalElement.AtomicNumbers.H.Equals(atom.AtomicNumber))
+                if (NaturalElement.AtomicNumbers.H.Equals(atom.AtomicNumber))
                 {
                     anyHydrogenPresent = true;
                     break;
@@ -1043,7 +1043,7 @@ namespace NCDK.Tools.Manipulator
         private static bool SuppressibleHydrogen(IAtomContainer container, IAtom atom)
         {
             // is the atom a hydrogen
-            if (!atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+            if (!atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
                 return false;
             // is the hydrogen an ion?
             if (atom.FormalCharge != null && atom.FormalCharge != 0)
@@ -1056,7 +1056,7 @@ namespace NCDK.Tools.Manipulator
                 return false;
             // molecule hydrogen
             var neighbors = container.GetConnectedAtoms(atom).ToReadOnlyList();
-            if (neighbors.Count == 1 && (neighbors[0].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H) || neighbors[0] is IPseudoAtom))
+            if (neighbors.Count == 1 && (neighbors[0].AtomicNumber.Equals(NaturalElement.AtomicNumbers.H) || neighbors[0] is IPseudoAtom))
                 return false;
             // what about bridging hydrogens?
             // hydrogens with atom-atom mapping?
@@ -1098,7 +1098,7 @@ namespace NCDK.Tools.Manipulator
             var atom = container.Atoms[v];
 
             // is the atom a hydrogen
-            if (!atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+            if (!atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
                 return false;
             // is the hydrogen an ion?
             if (atom.FormalCharge != null && atom.FormalCharge != 0)
@@ -1410,7 +1410,7 @@ namespace NCDK.Tools.Manipulator
             var newAc = new List<IAtom>();
             for (int f = 0; f < container.Atoms.Count; f++)
             {
-                if (!container.Atoms[f].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                if (!container.Atoms[f].AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
                 {
                     newAc.Add(container.Atoms[f]);
                 }

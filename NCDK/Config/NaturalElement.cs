@@ -33,19 +33,19 @@ namespace NCDK.Config
     // @author      egonw
     // @author      john may
     // @cdk.module  core
-    public sealed partial class ChemicalElement
+    public sealed partial class NaturalElement
     {
         public string Name { get; private set; }
 
         /// <summary>
-        /// The atomic number of the element. An <see cref="ChemicalElements.Unknown"/> element
+        /// The atomic number of the element. An <see cref="NaturalElements.Unknown"/> element
         /// has an atomic number of '0'.
         /// </summary>
         public int AtomicNumber { get; private set; }
 
         /// <summary>
         /// Return the period in the periodic table this element belongs to. If
-        /// the element is <see cref="ChemicalElements.Unknown"/> it's period is 0.
+        /// the element is <see cref="NaturalElements.Unknown"/> it's period is 0.
         /// </summary>
         public int Period { get; private set; }
 
@@ -57,7 +57,7 @@ namespace NCDK.Config
 
         /// <summary>
         /// The element symbol, C for carbon, N for nitrogen, Na for sodium, etc. An
-        /// <see cref="ChemicalElements.Unknown"/> element has no symbol.
+        /// <see cref="NaturalElements.Unknown"/> element has no symbol.
         /// </summary>
         public string Symbol { get; private set; }
 
@@ -98,7 +98,7 @@ namespace NCDK.Config
         /// <param name="rCov">covalent radius</param>
         /// <param name="rW">van der Waals radius</param>
         /// <param name="electronegativity">Pauling electronegativity</param>
-        internal ChemicalElement(string name, int number, string symbol, int period, int group, double? rCov, double? rW, double? electronegativity)
+        internal NaturalElement(string name, int number, string symbol, int period, int group, double? rCov, double? rW, double? electronegativity)
         {
             this.Name = name;
             this.AtomicNumber = number;
@@ -119,36 +119,36 @@ namespace NCDK.Config
 
         /// <summary>
         /// Obtain the element with the specified atomic number. If no element had
-        /// the specified atomic number then <see cref="ChemicalElements.Unknown"/> is returned.
+        /// the specified atomic number then <see cref="NaturalElements.Unknown"/> is returned.
         /// </summary>
         /// <example>
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Config.ChemicalElement_Example.cs+OfNumber"]/*' />
         /// </example>
         /// <param name="number">atomic number</param>
-        /// <returns>an element, or <see cref="ChemicalElements.Unknown"/></returns>
-        public static ChemicalElement OfNumber(int number)
+        /// <returns>an element, or <see cref="NaturalElements.Unknown"/></returns>
+        public static NaturalElement OfNumber(int number)
         {
             if (number < 0 || number >= Values.Count)
-                return ChemicalElements.Unknown;
+                return NaturalElements.Unknown;
             return Values[number];
         }
 
         /// <summary>
         /// Obtain the element with the specified symbol or name. If no element had
-        /// the specified symbol or name then <see cref="ChemicalElements.Unknown"/> is returned. The
+        /// the specified symbol or name then <see cref="NaturalElements.Unknown"/> is returned. The
         /// input is case-insensitive.
         /// </summary>
         /// <example>
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Config.ChemicalElement_Example.cs+OfString"]/*' />
         /// </example>
         /// <param name="str">input string</param>
-        /// <returns>an element, or <see cref="ChemicalElements.Unknown"/></returns>
-        public static ChemicalElement OfString(string str)
+        /// <returns>an element, or <see cref="NaturalElements.Unknown"/></returns>
+        public static NaturalElement OfString(string str)
         {
             if (str == null)
-                return ChemicalElements.Unknown;
-            if (!SymbolMap.TryGetValue(str.ToLowerInvariant(), out ChemicalElement e))
-                e = ChemicalElements.Unknown;
+                return NaturalElements.Unknown;
+            if (!SymbolMap.TryGetValue(str.ToLowerInvariant(), out NaturalElement e))
+                e = NaturalElements.Unknown;
             return e;
         }
     }

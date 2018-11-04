@@ -89,9 +89,9 @@ namespace NCDK.Geometries
                 // try to deal with lone pairs on small hetero
                 switch (refAtom.AtomicNumber)
                 {
-                    case ChemicalElement.AtomicNumbers.N:
-                    case ChemicalElement.AtomicNumbers.O:
-                    case ChemicalElement.AtomicNumbers.S:
+                    case NaturalElement.AtomicNumbers.N:
+                    case NaturalElement.AtomicNumbers.O:
+                    case NaturalElement.AtomicNumbers.S:
                         nwanted = 3;
                         break;
                 }

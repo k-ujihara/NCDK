@@ -84,7 +84,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 int nsp3 = 0;
                 foreach (var atom in clone.Atoms)
                 {
-                    if (!atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.C))
+                    if (!atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.C))
                         continue;
                     if (atom.Hybridization == Hybridization.SP2)
                         nsp2++;

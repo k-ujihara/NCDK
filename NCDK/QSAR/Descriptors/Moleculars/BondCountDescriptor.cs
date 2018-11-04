@@ -132,7 +132,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     bool hasHydrogen = false;
                     for (int i = 0; i < bond.Atoms.Count; i++)
                     {
-                        if (bond.Atoms[i].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                        if (bond.Atoms[i].AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
                         {
                             hasHydrogen = true;
                             break;

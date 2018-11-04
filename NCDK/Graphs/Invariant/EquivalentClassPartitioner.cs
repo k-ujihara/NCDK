@@ -122,7 +122,7 @@ namespace NCDK.Graphs.Invariant
                     var order = bond0.Order;
                     switch (atom.AtomicNumber)
                     {
-                        case ChemicalElement.AtomicNumbers.C:
+                        case NaturalElement.AtomicNumbers.C:
                             if (order == BondOrder.Single)
                                 nodeSequence[i] = 1;// CH3-
                             else if (order == BondOrder.Double)
@@ -130,14 +130,14 @@ namespace NCDK.Graphs.Invariant
                             else if (order == BondOrder.Triple)
                                 nodeSequence[i] = 6;// CH#
                             break;
-                        case ChemicalElement.AtomicNumbers.O:
+                        case NaturalElement.AtomicNumbers.O:
                             if (order == BondOrder.Single)
                                 nodeSequence[i] = 14;// HO-
                             else if (order == BondOrder.Double)
                                 nodeSequence[i] = 16;// O=
                                                      // missing the case of an aromatic double bond
                             break;
-                        case ChemicalElement.AtomicNumbers.N:
+                        case NaturalElement.AtomicNumbers.N:
                             if (order == BondOrder.Single)
                                 nodeSequence[i] = 18;// NH2-
                             else if (order == BondOrder.Double)
@@ -150,25 +150,25 @@ namespace NCDK.Graphs.Invariant
                             else if (order == BondOrder.Triple)
                                 nodeSequence[i] = 23;// N#
                             break;
-                        case ChemicalElement.AtomicNumbers.S:
+                        case NaturalElement.AtomicNumbers.S:
                             if (order == BondOrder.Single)
                                 nodeSequence[i] = 31;// HS-
                             else if (order == BondOrder.Double)
                                 nodeSequence[i] = 33;// S=
                             break;
-                        case ChemicalElement.AtomicNumbers.P:
+                        case NaturalElement.AtomicNumbers.P:
                             nodeSequence[i] = 38;// PH2-
                             break;
-                        case ChemicalElement.AtomicNumbers.F:
+                        case NaturalElement.AtomicNumbers.F:
                             nodeSequence[i] = 42;// F-
                             break;
-                        case ChemicalElement.AtomicNumbers.Cl:
+                        case NaturalElement.AtomicNumbers.Cl:
                             nodeSequence[i] = 43;// Cl-
                             break;
-                        case ChemicalElement.AtomicNumbers.Br:
+                        case NaturalElement.AtomicNumbers.Br:
                             nodeSequence[i] = 44;// Br-
                             break;
-                        case ChemicalElement.AtomicNumbers.I:
+                        case NaturalElement.AtomicNumbers.I:
                             nodeSequence[i] = 45;// I-
                             break;
                         default:
@@ -184,7 +184,7 @@ namespace NCDK.Graphs.Invariant
                     BondOrder order1 = bond1.Order;
                     switch (atom.AtomicNumber)
                     {
-                        case ChemicalElement.AtomicNumbers.C:
+                        case NaturalElement.AtomicNumbers.C:
                             if (order0 == BondOrder.Single && order1 == BondOrder.Single)
                                 nodeSequence[i] = 2;// -CH2-
                             else if (order0 == BondOrder.Double && order1 == BondOrder.Double)
@@ -200,7 +200,7 @@ namespace NCDK.Graphs.Invariant
                             if (bond0.IsAromatic && bond1.IsAromatic)
                                 nodeSequence[i] = 11;// ArCH
                             break;
-                        case ChemicalElement.AtomicNumbers.N:
+                        case NaturalElement.AtomicNumbers.N:
                             if (order0 == BondOrder.Single && order1 == BondOrder.Single)
                                 nodeSequence[i] = 19;// -NH-
                             else if (order0 == BondOrder.Double && order1 == BondOrder.Double)
@@ -221,13 +221,13 @@ namespace NCDK.Graphs.Invariant
                                                      // there is no way to distinguish between ArNH and ArN as
                                                      // bonds to protons are not considered
                             break;
-                        case ChemicalElement.AtomicNumbers.O:
+                        case NaturalElement.AtomicNumbers.O:
                             if (order0 == BondOrder.Single && order1 == BondOrder.Single)
                                 nodeSequence[i] = 15;// -O-
                             else if (bond0.IsAromatic && bond1.IsAromatic)
                                 nodeSequence[i] = 17;// ArO
                             break;
-                        case ChemicalElement.AtomicNumbers.S:
+                        case NaturalElement.AtomicNumbers.S:
                             if (order0 == BondOrder.Single && order1 == BondOrder.Single)
                                 nodeSequence[i] = 32;// -S-
                             else if (order0 == BondOrder.Double && order1 == BondOrder.Double)
@@ -235,7 +235,7 @@ namespace NCDK.Graphs.Invariant
                             else if (bond0.IsAromatic && bond1.IsAromatic)
                                 nodeSequence[i] = 37;// ArS
                             break;
-                        case ChemicalElement.AtomicNumbers.P:
+                        case NaturalElement.AtomicNumbers.P:
                             if (order0 == BondOrder.Single && order1 == BondOrder.Single)
                                 nodeSequence[i] = 39;// -PH-
                             break;
@@ -254,7 +254,7 @@ namespace NCDK.Graphs.Invariant
                     var order2 = bond2.Order;
                     switch (atom.AtomicNumber)
                     {
-                        case ChemicalElement.AtomicNumbers.C:
+                        case NaturalElement.AtomicNumbers.C:
                             if (order0 == BondOrder.Single && order1 == BondOrder.Single && order2 == BondOrder.Single)
                                 nodeSequence[i] = 4;// >C-
                             else if (order0 == BondOrder.Double || order1 == BondOrder.Double
@@ -270,17 +270,17 @@ namespace NCDK.Graphs.Invariant
                             if (bond0.IsAromatic && bond1.IsAromatic
                                     && bond2.IsAromatic) nodeSequence[i] = 13;// ArC
                             break;
-                        case ChemicalElement.AtomicNumbers.N:
+                        case NaturalElement.AtomicNumbers.N:
                             if (order0 == BondOrder.Single && order1 == BondOrder.Single && order2 == BondOrder.Single)
                                 nodeSequence[i] = 21;// >N-
                             else if (order0 == BondOrder.Single || order1 == BondOrder.Single
                                     || order2 == BondOrder.Single) nodeSequence[i] = 25;// -N(=)=
                             break;
-                        case ChemicalElement.AtomicNumbers.S:
+                        case NaturalElement.AtomicNumbers.S:
                             if (order0 == BondOrder.Double || order1 == BondOrder.Double || order2 == BondOrder.Double)
                                 nodeSequence[i] = 34;// >S=
                             break;
-                        case ChemicalElement.AtomicNumbers.P:
+                        case NaturalElement.AtomicNumbers.P:
                             if (order0 == BondOrder.Single && order1 == BondOrder.Single && order2 == BondOrder.Single)
                                 nodeSequence[i] = 40;// >P-
                             break;
@@ -293,16 +293,16 @@ namespace NCDK.Graphs.Invariant
                 {
                     switch (atom.AtomicNumber)
                     {
-                        case ChemicalElement.AtomicNumbers.C:
+                        case NaturalElement.AtomicNumbers.C:
                             nodeSequence[i] = 7;// >C<
                             break;
-                        case ChemicalElement.AtomicNumbers.N:
+                        case NaturalElement.AtomicNumbers.N:
                             nodeSequence[i] = 24;// >N(=)-
                             break;
-                        case ChemicalElement.AtomicNumbers.S:
+                        case NaturalElement.AtomicNumbers.S:
                             nodeSequence[i] = 36;// >S(=)=
                             break;
-                        case ChemicalElement.AtomicNumbers.P:
+                        case NaturalElement.AtomicNumbers.P:
                             nodeSequence[i] = 41;// =P<-
                             break;
                         default:

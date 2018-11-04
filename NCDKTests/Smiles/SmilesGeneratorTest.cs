@@ -566,10 +566,10 @@ namespace NCDK.Smiles
                 int correction = (int)(bondCount - (atom.Charge ?? 0));
                 switch (atom.AtomicNumber)
                 {
-                    case ChemicalElement.AtomicNumbers.C:
+                    case NaturalElement.AtomicNumbers.C:
                         atom.ImplicitHydrogenCount = 4 - correction;
                         break;
-                    case ChemicalElement.AtomicNumbers.N:
+                    case NaturalElement.AtomicNumbers.N:
                         atom.ImplicitHydrogenCount = 3 - correction;
                         break;
                 }
@@ -849,9 +849,9 @@ namespace NCDK.Smiles
         public void TestPreservingFormalCharge()
         {
             AtomContainer mol = new AtomContainer();
-            mol.Atoms.Add(new Atom(ChemicalElements.Oxygen.Element));
+            mol.Atoms.Add(new Atom(NaturalElements.Oxygen.Element));
             mol.Atoms[0].FormalCharge = -1;
-            mol.Atoms.Add(new Atom(ChemicalElements.Carbon.Element));
+            mol.Atoms.Add(new Atom(NaturalElements.Carbon.Element));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             AddImplicitHydrogens(mol);
             SmilesGenerator generator = new SmilesGenerator();

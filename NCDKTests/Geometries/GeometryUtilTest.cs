@@ -167,7 +167,7 @@ namespace NCDK.Geometries
         public void TestTranslateAllPositiveIAtomContainer()
         {
             IAtomContainer container = new AtomContainer();
-            IAtom atom = new Atom(ChemicalElements.Carbon.Element)
+            IAtom atom = new Atom(NaturalElements.Carbon.Element)
                 { Point2D = new Vector2(-3, -2) };
             container.Atoms.Add(atom);
             GeometryUtil.TranslateAllPositive(container);

@@ -77,7 +77,7 @@ namespace NCDK.Config
         /// <returns><see cref="IIsotope"/>s that matches the given element symbol</returns>
         public virtual IEnumerable<IIsotope> GetIsotopes(string symbol)
         {
-            int elem = ChemicalElement.OfString(symbol).AtomicNumber;
+            int elem = NaturalElement.OfString(symbol).AtomicNumber;
             if (isotopes[elem] == null)
                 yield break;
             foreach (IIsotope isotope in isotopes[elem])
@@ -134,7 +134,7 @@ namespace NCDK.Config
         /// <returns>the corresponding isotope</returns>
         public virtual IIsotope GetIsotope(string symbol, int massNumber)
         {
-            int elem = ChemicalElement.OfString(symbol).AtomicNumber;
+            int elem = NaturalElement.OfString(symbol).AtomicNumber;
             var isotopes = this.isotopes[elem];
             if (isotopes == null)
                 return null;
@@ -159,7 +159,7 @@ namespace NCDK.Config
         {
             IIsotope ret = null;
             double minDiff = double.MaxValue;
-            int elem = ChemicalElement.OfString(symbol).AtomicNumber;
+            int elem = NaturalElement.OfString(symbol).AtomicNumber;
             List<IIsotope> isotopes = this.isotopes[elem];
             if (isotopes == null)
                 return null;
@@ -239,7 +239,7 @@ namespace NCDK.Config
         /// <returns>The Major Isotope value</returns>
         public virtual IIsotope GetMajorIsotope(string symbol)
         {
-            return GetMajorIsotope(ChemicalElement.OfString(symbol).AtomicNumber);
+            return GetMajorIsotope(NaturalElement.OfString(symbol).AtomicNumber);
         }
 
         /// <summary>

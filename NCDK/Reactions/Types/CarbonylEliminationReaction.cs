@@ -70,7 +70,7 @@ namespace NCDK.Reactions.Types
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
             foreach (var atomi in reactant.Atoms)
             {
-                if (atomi.IsReactiveCenter && atomi.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O)
+                if (atomi.IsReactiveCenter && atomi.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O)
                     && atomi.FormalCharge == 1)
                 {
                     foreach (var bondi in reactant.GetConnectedBonds(atomi))
@@ -135,7 +135,7 @@ namespace NCDK.Reactions.Types
         {
             foreach (var atomi in reactant.Atoms)
             {
-                if (atomi.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O) && atomi.FormalCharge == 1)
+                if (atomi.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O) && atomi.FormalCharge == 1)
                 {
                     foreach (var bondi in reactant.GetConnectedBonds(atomi))
                     {

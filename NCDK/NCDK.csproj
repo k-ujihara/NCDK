@@ -56,7 +56,7 @@
     <None Remove="Config\Data\radii-vdw.txt" />
     <None Remove="Config\Data\structgen_atomtypes.xml" />
     <None Remove="Config\Data\whim_weights.txt" />
-    <None Remove="Config\Element.txt" />
+    <None Remove="Config\NaturalElements.txt" />
     <None Remove="Dict\Data\atom-type-mappings.owl" />
     <None Remove="Dict\Data\atom-types.owl" />
     <None Remove="Dict\Data\cdk-atom-types.owl" />
@@ -130,7 +130,7 @@
     <EmbeddedResource Include="Config\Data\radii-vdw.txt" />
     <EmbeddedResource Include="Config\Data\structgen_atomtypes.xml" />
     <EmbeddedResource Include="Config\Data\whim_weights.txt" />
-    <EmbeddedResource Include="Config\Element.txt" />
+    <EmbeddedResource Include="Config\NaturalElements.txt" />
     <EmbeddedResource Include="Dict\Data\atom-type-mappings.owl" />
     <EmbeddedResource Include="Dict\Data\atom-types.owl" />
     <EmbeddedResource Include="Dict\Data\cdk-atom-types.owl" />
@@ -230,9 +230,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Configuration.tt.cs</LastGenOutput>
     </None>
-    <None Update="Config\ChemicalElement.tt">
+    <None Update="Config\NaturalElements.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ChemicalElement.tt.cs</LastGenOutput>
+      <LastGenOutput>NaturalElements.tt.cs</LastGenOutput>
     </None>
     <None Update="Formula\MolecularFormula.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -465,10 +465,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CDK.tt</DependentUpon>
     </Compile>
-    <Compile Update="Config\ChemicalElement.tt.cs">
+    <Compile Update="Config\NaturalElements.tt.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ChemicalElement.tt</DependentUpon>
+      <DependentUpon>NaturalElements.tt</DependentUpon>
     </Compile>
     <Compile Update="Formula\MolecularFormula.tt.cs">
       <DesignTime>True</DesignTime>

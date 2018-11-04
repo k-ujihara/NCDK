@@ -215,7 +215,7 @@ namespace NCDK.Tools
             int ncount = 0;
             foreach (var atom in ring.Atoms)
             {
-                if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N))
+                if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N))
                 {
                     ncount = ncount + 1;
                 }

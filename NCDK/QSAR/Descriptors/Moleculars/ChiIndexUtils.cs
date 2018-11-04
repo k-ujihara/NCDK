@@ -160,7 +160,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     string sym = atom.Symbol;
                     switch (atom.AtomicNumber)
                     {
-                        case ChemicalElement.AtomicNumbers.S:
+                        case NaturalElement.AtomicNumbers.S:
                             { // check for some special S environments
                                 var tmp = DeltavSulphur(atom, atomContainer);
                                 if (tmp != -1)
@@ -170,7 +170,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                 }
                             }
                             break;
-                        case ChemicalElement.AtomicNumbers.P:
+                        case NaturalElement.AtomicNumbers.P:
                             { // check for some special P environments
                                 var tmp = DeltavPhosphorous(atom, atomContainer);
                                 if (tmp != -1)
@@ -217,14 +217,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>The empirical delta V if it is present in one of the above environments, -1 otherwise</returns>
         protected internal static double DeltavSulphur(IAtom atom, IAtomContainer atomContainer)
         {
-            if (!atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.S))
+            if (!atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.S))
                 return -1;
 
             // check whether it's a S in S-S
             var connected = atomContainer.GetConnectedAtoms(atom);
             foreach (var connectedAtom in connected)
             {
-                if (connectedAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.S)
+                if (connectedAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.S)
                  && atomContainer.GetBond(atom, connectedAtom).Order == BondOrder.Single)
                     return 0.89;
             }
@@ -232,7 +232,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int count = 0;
             foreach (var connectedAtom in connected)
             {
-                if (connectedAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O)
+                if (connectedAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O)
                  && atomContainer.GetBond(atom, connectedAtom).Order == BondOrder.Double)
                     count++;
             }
@@ -255,7 +255,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>The empirical delta V if present in the above environment, -1 otherwise</returns>
         private static double DeltavPhosphorous(IAtom atom, IAtomContainer atomContainer)
         {
-            if (!atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.P))
+            if (!atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.P))
                 return -1;
 
             var connected = atomContainer.GetConnectedAtoms(atom);
@@ -266,7 +266,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             foreach (var connectedAtom in connected)
             {
-                if (connectedAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O)
+                if (connectedAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O)
                  && atomContainer.GetBond(atom, connectedAtom).Order == BondOrder.Double)
                     conditions++;
                 if (atomContainer.GetBond(atom, connectedAtom).Order == BondOrder.Single)

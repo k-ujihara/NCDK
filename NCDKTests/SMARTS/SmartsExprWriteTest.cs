@@ -170,9 +170,9 @@ namespace NCDK.Isomorphisms
             Assert.AreEqual("[Na]", Smarts.GenerateAtom(GetExpr(Element, 11)));
             Assert.AreEqual("[Mg]", Smarts.GenerateAtom(GetExpr(Element, 12)));
             // Ds, Ts and Nh etc write as #<num>
-            Assert.AreEqual("[#110]", Smarts.GenerateAtom(GetExpr(Element, ChemicalElements.Darmstadtium.AtomicNumber)));
-            Assert.AreEqual("[#117]", Smarts.GenerateAtom(GetExpr(Element, ChemicalElements.Tennessine.AtomicNumber)));
-            Assert.AreEqual("[#113]", Smarts.GenerateAtom(GetExpr(Element, ChemicalElements.Nihonium.AtomicNumber)));
+            Assert.AreEqual("[#110]", Smarts.GenerateAtom(GetExpr(Element, NaturalElements.Darmstadtium.AtomicNumber)));
+            Assert.AreEqual("[#117]", Smarts.GenerateAtom(GetExpr(Element, NaturalElements.Tennessine.AtomicNumber)));
+            Assert.AreEqual("[#113]", Smarts.GenerateAtom(GetExpr(Element, NaturalElements.Nihonium.AtomicNumber)));
         }
 
         // Ds, Ts and Nh etc can be ambiguous - we write anything above radon as
@@ -180,12 +180,12 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void AtomicNumHighWeightElements()
         {
-            Assert.AreEqual("[#110]", Smarts.GenerateAtom(GetExpr(Element, ChemicalElements.Darmstadtium.AtomicNumber)));
-            Assert.AreEqual("[#117]", Smarts.GenerateAtom(GetExpr(Element, ChemicalElements.Tennessine.AtomicNumber)));
-            Assert.AreEqual("[#113]", Smarts.GenerateAtom(GetExpr(Element, ChemicalElements.Nihonium.AtomicNumber)));
-            Assert.AreEqual("[#110]", Smarts.GenerateAtom(GetExpr(AliphaticElement, ChemicalElements.Darmstadtium.AtomicNumber)));
-            Assert.AreEqual("[#117]", Smarts.GenerateAtom(GetExpr(AliphaticElement, ChemicalElements.Tennessine.AtomicNumber)));
-            Assert.AreEqual("[#113]", Smarts.GenerateAtom(GetExpr(AliphaticElement, ChemicalElements.Nihonium.AtomicNumber)));
+            Assert.AreEqual("[#110]", Smarts.GenerateAtom(GetExpr(Element, NaturalElements.Darmstadtium.AtomicNumber)));
+            Assert.AreEqual("[#117]", Smarts.GenerateAtom(GetExpr(Element, NaturalElements.Tennessine.AtomicNumber)));
+            Assert.AreEqual("[#113]", Smarts.GenerateAtom(GetExpr(Element, NaturalElements.Nihonium.AtomicNumber)));
+            Assert.AreEqual("[#110]", Smarts.GenerateAtom(GetExpr(AliphaticElement, NaturalElements.Darmstadtium.AtomicNumber)));
+            Assert.AreEqual("[#117]", Smarts.GenerateAtom(GetExpr(AliphaticElement, NaturalElements.Tennessine.AtomicNumber)));
+            Assert.AreEqual("[#113]", Smarts.GenerateAtom(GetExpr(AliphaticElement, NaturalElements.Nihonium.AtomicNumber)));
         }
 
         [TestMethod()]

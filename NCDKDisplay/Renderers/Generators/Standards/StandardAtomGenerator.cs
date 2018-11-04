@@ -115,7 +115,7 @@ namespace NCDK.Renderers.Generators.Standards
             }
             else
             {
-                int number = UnboxSafely(atom.AtomicNumber, Config.ChemicalElement.OfString(atom.Symbol).AtomicNumber);
+                int number = UnboxSafely(atom.AtomicNumber, Config.NaturalElement.OfString(atom.Symbol).AtomicNumber);
 
                 if (number == 0)
                     return GeneratePseudoSymbol("?", position);
@@ -365,7 +365,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>laid out atom symbol</returns>
         public AtomSymbol GeneratePeriodicSymbol(int number, int hydrogens, int mass, int charge, int unpaired, HydrogenPosition position)
         {
-            TextOutline element = new TextOutline(Config.ChemicalElement.OfNumber(number).Symbol, font, emSize);
+            TextOutline element = new TextOutline(Config.NaturalElement.OfNumber(number).Symbol, font, emSize);
             TextOutline hydrogenAdjunct = defaultHydrogenLabel;
 
             // the hydrogen count, charge, and mass adjuncts are script size

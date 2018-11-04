@@ -27,7 +27,7 @@ using System.Collections.Generic;
 namespace NCDK.Config
 {
     /// <summary>
-    /// A read-only class used by <see cref="ChemicalElement"/> for the natural elements. This class is not to be used than by only <see cref="ChemicalElement"/>.
+    /// A read-only class used by <see cref="NaturalElement"/> for the natural elements. This class is not to be used than by only <see cref="NaturalElement"/>.
     /// </summary>
     // @author      egonw
     // @cdk.module  core

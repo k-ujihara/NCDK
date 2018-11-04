@@ -259,7 +259,7 @@ namespace NCDK.ForceFields
                                 foreach (var w in adjList[v])
                                 {
                                     int elem = mol.Atoms[w].AtomicNumber.Value;
-                                    if (elem == ChemicalElements.Sulfur.AtomicNumber || elem == ChemicalElements.Phosphorus.AtomicNumber)
+                                    if (elem == NaturalElements.Sulfur.AtomicNumber || elem == NaturalElements.Phosphorus.AtomicNumber)
                                     {
                                         if (focus >= 0)
                                         {

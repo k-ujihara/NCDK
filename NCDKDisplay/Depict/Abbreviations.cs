@@ -35,7 +35,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using static NCDK.Config.ChemicalElement;
+using static NCDK.Config.NaturalElement;
 using static NCDK.Isomorphisms.Matchers.SMARTS.LogicalOperatorAtom;
 
 namespace NCDK.Depict
@@ -601,8 +601,8 @@ namespace NCDK.Depict
         private static string NewSymbol(int atomnum, int hcount, bool prefix)
         {
             var sb = new StringBuilder();
-            var elem = ChemicalElement.OfNumber(atomnum);
-            if (elem == ChemicalElements.Carbon && hcount == 3)
+            var elem = NaturalElement.OfNumber(atomnum);
+            if (elem == NaturalElements.Carbon && hcount == 3)
                 return "Me";
             if (prefix)
             {
@@ -854,7 +854,7 @@ namespace NCDK.Depict
             var hcnt = atom.ImplicitHydrogenCount;
             if (hcnt == null)
                 return null;
-            var elem = ChemicalElement.OfNumber(atom.AtomicNumber.Value);
+            var elem = NaturalElement.OfNumber(atom.AtomicNumber.Value);
             var hsym = (hcnt > 0) ? ((hcnt > 1) ? ("H" + hcnt) : "H") : "";
             // see HydrogenPosition for canonical list
             switch (elem.AtomicNumber)

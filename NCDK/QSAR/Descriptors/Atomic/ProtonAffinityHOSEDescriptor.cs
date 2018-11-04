@@ -122,10 +122,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
             string symbol = atom.Symbol;
             switch (atom.AtomicNumber)
             {
-                case ChemicalElement.AtomicNumbers.F:
-                case ChemicalElement.AtomicNumbers.Cl:
-                case ChemicalElement.AtomicNumbers.Br:
-                case ChemicalElement.AtomicNumbers.I:
+                case NaturalElement.AtomicNumbers.F:
+                case NaturalElement.AtomicNumbers.Cl:
+                case NaturalElement.AtomicNumbers.Br:
+                case NaturalElement.AtomicNumbers.I:
                     return true;
                 default:
                     return false;

@@ -95,11 +95,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     default:
                         h++;
-                        goto case ChemicalElement.AtomicNumbers.C;
-                    case ChemicalElement.AtomicNumbers.C:
+                        goto case NaturalElement.AtomicNumbers.C;
+                    case NaturalElement.AtomicNumbers.C:
                         a++;
-                        goto case ChemicalElement.AtomicNumbers.H;
-                    case ChemicalElement.AtomicNumbers.H:
+                        goto case NaturalElement.AtomicNumbers.H;
+                    case NaturalElement.AtomicNumbers.H:
                         break;
                 }
             }

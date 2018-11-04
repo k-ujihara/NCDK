@@ -65,7 +65,7 @@ namespace NCDK.Hash
                 for (int i = 0; i < container.Atoms.Count; i++)
                 {
                     IAtom atom = container.Atoms[i];
-                    hydrogens.Set(i, atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H));
+                    hydrogens.Set(i, atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H));
                 }
                 return Suppressed.FromBitSet(hydrogens);
             }

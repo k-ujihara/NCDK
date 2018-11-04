@@ -148,7 +148,7 @@ namespace NCDK.Tools.Manipulator
 
                 foreach (var atom in atomContainer.Atoms)
                 {
-                    if (!atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                    if (!atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
                     {
                         IIsotope majorIsotope = isotopeFactory.GetMajorIsotope(atom.Symbol);
 

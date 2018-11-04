@@ -68,7 +68,7 @@ namespace NCDK.IO.CML
         {
             StringWriter writer = new StringWriter();
             IAtomContainer molecule = new AtomContainer(); // methane
-            molecule.Atoms.Add(molecule.Builder.NewAtom(ChemicalElements.Carbon.Element));
+            molecule.Atoms.Add(molecule.Builder.NewAtom(NaturalElements.Carbon.Element));
             molecule.Atoms[0].ImplicitHydrogenCount = 4;
             CMLWriter cmlWriter = new CMLWriter(writer);
 
@@ -85,7 +85,7 @@ namespace NCDK.IO.CML
         {
             StringWriter writer = new StringWriter();
             IAtomContainer molecule = new AtomContainer(); // methane
-            molecule.Atoms.Add(molecule.Builder.NewAtom(ChemicalElements.Carbon.Element));
+            molecule.Atoms.Add(molecule.Builder.NewAtom(NaturalElements.Carbon.Element));
             molecule.Atoms[0].FormalCharge = null;
             CMLWriter cmlWriter = new CMLWriter(writer);
 
@@ -129,8 +129,8 @@ namespace NCDK.IO.CML
         {
             StringWriter writer = new StringWriter();
             IAtomContainer molecule = new AtomContainer(); // methane
-            molecule.Atoms.Add(molecule.Builder.NewAtom(ChemicalElements.Carbon.Element));
-            molecule.Atoms.Add(molecule.Builder.NewAtom(ChemicalElements.Hydrogen.Element));
+            molecule.Atoms.Add(molecule.Builder.NewAtom(NaturalElements.Carbon.Element));
+            molecule.Atoms.Add(molecule.Builder.NewAtom(NaturalElements.Hydrogen.Element));
             molecule.Atoms[0].ImplicitHydrogenCount = 3;
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
             CMLWriter cmlWriter = new CMLWriter(writer);

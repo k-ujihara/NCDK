@@ -139,7 +139,7 @@ namespace NCDK.Graphs.Invariant
                 }
 
                 //weightArray[k] = atom.GetValenceElectronsCount() - atom.GetHydrogenCount(); // method unfinished
-                if (ChemicalElement.AtomicNumbers.O.Equals(atom.AtomicNumber))
+                if (NaturalElement.AtomicNumbers.O.Equals(atom.AtomicNumber))
                     weightArray[i] = 6 - atom.ImplicitHydrogenCount.Value;
                 else
                     weightArray[i] = 4 - atom.ImplicitHydrogenCount.Value;

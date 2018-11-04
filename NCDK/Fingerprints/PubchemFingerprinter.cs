@@ -173,7 +173,7 @@ namespace NCDK.Fingerprints
             {
                 foreach (var ringAtom in ring.Atoms)
                 {
-                    if (!ringAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.C))
+                    if (!ringAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.C))
                         return false;
                 }
                 return true;
@@ -199,7 +199,7 @@ namespace NCDK.Fingerprints
                 int c = 0;
                 foreach (var ringAtom in ring.Atoms)
                 {
-                    if (ringAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N)) c++;
+                    if (ringAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N)) c++;
                 }
                 return c;
             }
@@ -211,8 +211,8 @@ namespace NCDK.Fingerprints
                 {
                     switch (ringAtom.AtomicNumber)
                     {
-                        case ChemicalElement.AtomicNumbers.C:
-                        case ChemicalElement.AtomicNumbers.H:
+                        case NaturalElement.AtomicNumbers.C:
+                        case NaturalElement.AtomicNumbers.H:
                             break;
                         default:
                             c++;

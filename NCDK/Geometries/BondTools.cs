@@ -226,8 +226,8 @@ namespace NCDK.Geometries
             if (container.GetBond(atom, parent) != null)
             {
                 if (container.GetBond(atom, parent).Order == BondOrder.Double
-                        && (lengthAtom == 3 || (lengthAtom == 2 && atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N)))
-                        && (lengthParent == 3 || (lengthParent == 2 && parent.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N))))
+                        && (lengthAtom == 3 || (lengthAtom == 2 && atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N)))
+                        && (lengthParent == 3 || (lengthParent == 2 && parent.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N))))
                 {
                     var atoms = container.GetConnectedAtoms(atom);
                     IAtom one = null;
@@ -245,9 +245,9 @@ namespace NCDK.Geometries
                     }
                     string[] morgannumbers = MorganNumbersTools.GetMorganNumbersWithElementSymbol(container);
                     if ((one != null && two == null 
-                      && atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N) 
+                      && atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N) 
                       && Math.Abs(GiveAngleBothMethods(parent, atom, one, true)) > Math.PI / 10)
-                     || (!atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N) 
+                     || (!atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N) 
                       && one != null && two != null 
                       && !morgannumbers[container.Atoms.IndexOf(one)].Equals(morgannumbers[container.Atoms.IndexOf(two)], StringComparison.Ordinal)))
                     {
@@ -279,7 +279,7 @@ namespace NCDK.Geometries
 
             int lengthAtom = container.GetConnectedAtoms(a).Count() + hcount;
 
-            if (lengthAtom != 3 && (lengthAtom != 2 && !(a.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N))))
+            if (lengthAtom != 3 && (lengthAtom != 2 && !(a.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N))))
             {
                 return (false);
             }
@@ -307,12 +307,12 @@ namespace NCDK.Geometries
             }
             string[] morgannumbers = MorganNumbersTools.GetMorganNumbersWithElementSymbol(container);
             if (one != null
-                    && ((!a.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N)
+                    && ((!a.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N)
                             && two != null
                             && !morgannumbers[container.Atoms.IndexOf(one)].Equals(morgannumbers[container.Atoms.IndexOf(two)], StringComparison.Ordinal)
                             && doubleBond
                             && doubleBondConfiguration[container.Bonds.IndexOf(container.GetBond(a, nextAtom))])
-                            || (doubleBond && a.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N)
+                            || (doubleBond && a.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N)
                             && Math.Abs(GiveAngleBothMethods(nextAtom, a, parent, true)) > Math.PI / 10)))
             {
                 return (true);
@@ -649,7 +649,7 @@ namespace NCDK.Geometries
                         {
                             down++;
                         }
-                        else if (stereo == BondStereo.None && conAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                        else if (stereo == BondStereo.None && conAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
                         {
                             h = conAtom;
                             hs++;

@@ -135,7 +135,7 @@ namespace NCDK.Default
                     return null;
                 if (atomicNumber.Value == 0)
                     return "R";
-                return ChemicalElement.OfNumber(atomicNumber.Value).Symbol;
+                return NaturalElement.OfNumber(atomicNumber.Value).Symbol;
             }
 
             set
@@ -150,7 +150,7 @@ namespace NCDK.Default
             if (symbol == null)
                 return null;
             else
-                return ChemicalElement.OfString(symbol).AtomicNumber;
+                return NaturalElement.OfString(symbol).AtomicNumber;
         }
 
         public override string ToString()
@@ -285,7 +285,7 @@ namespace NCDK.Silent
                     return null;
                 if (atomicNumber.Value == 0)
                     return "R";
-                return ChemicalElement.OfNumber(atomicNumber.Value).Symbol;
+                return NaturalElement.OfNumber(atomicNumber.Value).Symbol;
             }
 
             set
@@ -299,7 +299,7 @@ namespace NCDK.Silent
             if (symbol == null)
                 return null;
             else
-                return ChemicalElement.OfString(symbol).AtomicNumber;
+                return NaturalElement.OfString(symbol).AtomicNumber;
         }
 
         public override string ToString()

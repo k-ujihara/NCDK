@@ -34,11 +34,11 @@ using System.Collections.Generic;
 
 namespace NCDK.Config
 {
-    public static class ChemicalElements
+    public static class NaturalElements
     {
 <#
         var name_and_numbers = new List<NameAndNumber>();
-        var fn = Path.Combine(new FileInfo(this.Host.TemplateFile).Directory.FullName, "Element.txt");
+        var fn = Path.Combine(new FileInfo(this.Host.TemplateFile).Directory.FullName, "NaturalElements.txt");
         string prevLine = null;
         using (var reader = new StreamReader(fn))
         {
@@ -63,7 +63,7 @@ namespace NCDK.Config
                     var symbol = match.Groups["symbol"].Value;
                     var isObsolete = prevLine != null && prevLine.StartsWith("[Obsolete", StringComparison.Ordinal);
                     name_and_numbers.Add(new NameAndNumber(name, number, symbol, isObsolete));
-                    line = "public static readonly ChemicalElement " + name + " = new ChemicalElement(\"" + name + "\", " + inner + ");";
+                    line = "public static readonly NaturalElement " + name + " = new NaturalElement(\"" + name + "\", " + inner + ");";
 #>
         <#= line #>
 <#
@@ -75,7 +75,7 @@ namespace NCDK.Config
 <#
     }
 #>
-    public sealed partial class ChemicalElement
+    public sealed partial class NaturalElement
     {
 #pragma warning disable CA1034 // Nested types should not be visible
         public static class AtomicNumbers
@@ -101,44 +101,32 @@ namespace NCDK.Config
 #>
         }
 
-        private static IReadOnlyDictionary<string, ChemicalElement> symbolMap;
-        
         /// <summary>
         /// Lookup elements by symbol / name.
         /// </summary>
-        internal static IReadOnlyDictionary<string, ChemicalElement> SymbolMap
-        {
-            get
+        internal static IReadOnlyDictionary<string, NaturalElement> SymbolMap { get; } = new Dictionary<string, NaturalElement>()
             {
-                if (symbolMap == null)
-                {
-                    symbolMap = new Dictionary<string, ChemicalElement>()
-                    {
 <#
         foreach (var nn in name_and_numbers)
         {
 #>
-                        ["<#= nn.Name.ToLowerInvariant() #>"] = ChemicalElements.<#= nn.Name #>,
-                        ["<#= nn.Symbol.ToLowerInvariant() #>"] = ChemicalElements.<#= nn.Name #>,
+                ["<#= nn.Name.ToLowerInvariant() #>"] = NaturalElements.<#= nn.Name #>,
+                ["<#= nn.Symbol.ToLowerInvariant() #>"] = NaturalElements.<#= nn.Name #>,
 <#
         }
 #>
-                        // recently named elements
-                        ["uub"] = ChemicalElements.Copernicium, // 2009
-                        ["ununbium"] = ChemicalElements.Copernicium,
-                        ["uuq"] = ChemicalElements.Flerovium, // 2012
-                        ["ununquadium"] = ChemicalElements.Flerovium,
-                        ["uuh"] = ChemicalElements.Livermorium, // 2012
-                        ["ununhexium"] = ChemicalElements.Livermorium,
-                        // alternative spellings
-                        ["sulphur"] = ChemicalElements.Sulfur,
-                        ["cesium"] = ChemicalElements.Caesium,
-                        ["aluminum"] = ChemicalElements.Aluminium,
-                    };
-                }
-                return symbolMap;
-            }
-        }
+                // recently named elements
+                ["uub"] = NaturalElements.Copernicium, // 2009
+                ["ununbium"] = NaturalElements.Copernicium,
+                ["uuq"] = NaturalElements.Flerovium, // 2012
+                ["ununquadium"] = NaturalElements.Flerovium,
+                ["uuh"] = NaturalElements.Livermorium, // 2012
+                ["ununhexium"] = NaturalElements.Livermorium,
+                // alternative spellings
+                ["sulphur"] = NaturalElements.Sulfur,
+                ["cesium"] = NaturalElements.Caesium,
+                ["aluminum"] = NaturalElements.Aluminium,
+            };
 <#
         int maxAtomicNumber = name_and_numbers.Select(n => n.Number).Max();
         string[] uniq_atoms = new string[maxAtomicNumber + 1];
@@ -151,32 +139,21 @@ namespace NCDK.Config
         }
 #>
 
-        private static IReadOnlyList<ChemicalElement> values;
 
         /// <summary>
         /// Lookup elements by atomic number.
         /// </summary>
-        public static IReadOnlyList<ChemicalElement> Values
-        {
-            get
+        public static IReadOnlyList<NaturalElement> Values { get; } = new NaturalElement[] 
             {
-                if (values == null)
-                {
-                    values = new ChemicalElement[] 
-                    {
 <#
         foreach (var name in uniq_atoms)
         {
 #>
-                    <#= name == null ? "null" : "ChemicalElements." + name #>,
+                <#= name == null ? "null" : "NaturalElements." + name #>,
 <#
         }
 #>
-                    };
-                }
-                return values;
-            }
-        }
+            };
     }
 }
 

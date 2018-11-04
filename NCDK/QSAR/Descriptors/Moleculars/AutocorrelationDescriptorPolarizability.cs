@@ -120,11 +120,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     for (int i = 0; i < natom; i++)
                     {
-                        if (molecule.Atoms[i].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                        if (molecule.Atoms[i].AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
                             continue;
                         for (int j = 0; j < natom; j++)
                         {
-                            if (molecule.Atoms[j].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                            if (molecule.Atoms[j].AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
                                 continue;
                             if (distancematrix[i][j] == k)
                                 polarizabilitySum[k] += w[i] * w[j];

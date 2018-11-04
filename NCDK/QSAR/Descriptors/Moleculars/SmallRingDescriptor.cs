@@ -201,7 +201,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 if (!CircularFingerprinter.HYVALENCES.TryGetValue(atom.AtomicNumber, out int hy))
                     continue;
                 int ch = atom.FormalCharge.Value;
-                if (atom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.C))
+                if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.C))
                     ch = -Math.Abs(ch);
                 int unpaired = 0; // (not current available, maybe introduce later)
                 hy += ch - unpaired;

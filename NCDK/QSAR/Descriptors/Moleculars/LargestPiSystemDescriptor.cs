@@ -153,8 +153,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 if ((container.GetMaximumBondOrder(container.Atoms[i]) != BondOrder.Single
                   || Math.Abs(container.Atoms[i].FormalCharge.Value) >= 1
                   || container.Atoms[i].IsAromatic
-                  || container.Atoms[i].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N) 
-                  || container.Atoms[i].AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O))
+                  || container.Atoms[i].AtomicNumber.Equals(NaturalElement.AtomicNumbers.N) 
+                  || container.Atoms[i].AtomicNumber.Equals(NaturalElement.AtomicNumbers.O))
                  && !container.Atoms[i].IsVisited)
                 {
                     //Debug.WriteLine("...... -> Accepted");
@@ -210,8 +210,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     nextAtom = ((IBond)bond).GetConnectedAtom(atom);
                     if ((container.GetMaximumBondOrder(nextAtom) != BondOrder.Single
                       || Math.Abs(nextAtom.FormalCharge.Value) >= 1 || nextAtom.IsAromatic
-                      || nextAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.N) 
-                      || nextAtom.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.O))
+                      || nextAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N) 
+                      || nextAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O))
                      && !nextAtom.IsVisited)
                     {
                         //Debug.WriteLine("BDS> AtomNr:"+container.Atoms.IndexOf(nextAtom)+" maxBondOrder:"+container.GetMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.IsAromatic+" FormalCharge:"+nextAtom.FormalCharge+" Charge:"+nextAtom.Charge+" Flag:"+nextAtom.IsVisited);

@@ -126,10 +126,10 @@ namespace NCDK.Formula.Rules
 
         private static readonly IElement[] NominalMassAffectables = new IElement[]
         {
-            ChemicalElements.Cobalt.Element,
-            ChemicalElements.Mercury.Element,
-            ChemicalElements.Platinum.Element,
-            ChemicalElements.Arsenic.Element,
+            NaturalElements.Cobalt.Element,
+            NaturalElements.Mercury.Element,
+            NaturalElements.Platinum.Element,
+            NaturalElements.Arsenic.Element,
         };
 
         /// <summary>

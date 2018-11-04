@@ -1408,13 +1408,13 @@ namespace NCDK.Renderers.Generators.Standards
             public RingBondOffsetComparator()
             { }
 
-            private static readonly Config.ChemicalElement[] preferedElements = new []
+            private static readonly Config.NaturalElement[] preferedElements = new []
             {
-                ChemicalElements.Carbon,
-                ChemicalElements.Nitrogen,
-                ChemicalElements.Oxygen,
-                ChemicalElements.Sulfur,
-                ChemicalElements.Phosphorus
+                NaturalElements.Carbon,
+                NaturalElements.Nitrogen,
+                NaturalElements.Oxygen,
+                NaturalElements.Sulfur,
+                NaturalElements.Phosphorus
             };
 
             /// <inheritdoc/>

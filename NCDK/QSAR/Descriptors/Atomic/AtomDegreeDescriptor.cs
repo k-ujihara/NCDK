@@ -78,7 +78,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             var neighboors = container.GetConnectedAtoms(atom);
             foreach (var neighboor in neighboors)
             {
-                if (!neighboor.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                if (!neighboor.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
                     atomDegree += 1;
             }
             return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(atomDegree), DescriptorNames);

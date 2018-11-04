@@ -208,9 +208,9 @@ namespace NCDK.Tools.Manipulator
                 sb.Append('[')
                   .Append(mass)
                   .Append(']')
-                  .Append(ChemicalElement.OfNumber(elem).Symbol);
+                  .Append(NaturalElement.OfNumber(elem).Symbol);
             else
-                sb.Append(ChemicalElement.OfNumber(elem).Symbol);
+                sb.Append(NaturalElement.OfNumber(elem).Symbol);
             if (count != 0)
                 sb.Append(count);
         }
@@ -959,7 +959,7 @@ namespace NCDK.Tools.Manipulator
                                             IMolecularFormula mf,
                                             bool setMajor)
         {
-            ChemicalElement elem = null;
+            NaturalElement elem = null;
             int mass = 0;
             int count = 0;
             if (iter.NextIf('['))
@@ -975,13 +975,13 @@ namespace NCDK.Tools.Manipulator
             if (!IsLower(c2))
             {
                 // could use a switch, see SMARTS parser
-                elem = ChemicalElement.OfString("" + c1);
+                elem = NaturalElement.OfString("" + c1);
                 if (c2 != '\0')
                     iter.pos--;
             }
             else
             {
-                elem = ChemicalElement.OfString("" + c1 + c2);
+                elem = NaturalElement.OfString("" + c1 + c2);
             }
             count = iter.NextUInt();
             if (count < 0)
@@ -1165,7 +1165,7 @@ namespace NCDK.Tools.Manipulator
         {
             foreach (var element in Elements(formula))
             {
-                if (!element.AtomicNumber.Equals(ChemicalElement.AtomicNumbers.H))
+                if (!element.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
                 {
                     yield return element;
                 }
@@ -1436,7 +1436,7 @@ namespace NCDK.Tools.Manipulator
 
             foreach (IIsotope iso in mf.Isotopes)
             {
-                if (ChemicalElement.AtomicNumbers.H.Equals(iso.AtomicNumber))
+                if (NaturalElement.AtomicNumbers.H.Equals(iso.AtomicNumber))
                 {
                     var count = mf.GetCount(iso);
                     if (count < hcnt)

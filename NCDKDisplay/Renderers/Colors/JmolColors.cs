@@ -22,8 +22,8 @@
  */
 
 using System.Windows.Media;
-using static NCDK.Config.ChemicalElement;
-using static NCDK.Config.ChemicalElements;
+using static NCDK.Config.NaturalElement;
+using static NCDK.Config.NaturalElements;
 
 namespace NCDK.Renderers.Colors
 {

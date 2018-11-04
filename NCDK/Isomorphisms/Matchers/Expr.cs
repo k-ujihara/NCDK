@@ -368,7 +368,7 @@ namespace NCDK.Isomorphisms.Matchers
                     }
                 case ExprType.PeriodicGroup:
                     return atom.AtomicNumber != null 
-                        && ChemicalElement.OfNumber(atom.AtomicNumber.Value).Group == value;
+                        && NaturalElement.OfNumber(atom.AtomicNumber.Value).Group == value;
                 case ExprType.Stereochemistry:
                     return stereo == UnknownStereo || stereo == value;
                 case ExprType.ReactionRole:

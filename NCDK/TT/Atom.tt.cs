@@ -138,7 +138,7 @@ namespace NCDK.Default
         public Atom(int elem, int hcnt, int fchg) : base((string)null)
         {
             AtomicNumber = elem;
-            Symbol = ChemicalElement.OfNumber(elem).Symbol;
+            Symbol = NaturalElement.OfNumber(elem).Symbol;
             ImplicitHydrogenCount = hcnt;
             FormalCharge = fchg;
         }
@@ -391,7 +391,7 @@ namespace NCDK.Default
 
         private static bool ParseAtomSymbol(IAtom atom, string str)
         {
-            ChemicalElement elem;
+            NaturalElement elem;
 
             int len = str.Length;
             int pos = 0;
@@ -440,8 +440,8 @@ namespace NCDK.Default
                 pos++;
                 while (pos < len && IsLower(str[pos]))
                     pos++;
-                elem = ChemicalElement.OfString(str.Substring(beg, pos - beg));
-                if (elem == ChemicalElements.Unknown)
+                elem = NaturalElement.OfString(str.Substring(beg, pos - beg));
+                if (elem == NaturalElements.Unknown)
                     return false;
                 anum = elem.AtomicNumber;
 
@@ -504,7 +504,7 @@ namespace NCDK.Default
             else
                 atom.MassNumber = mass;
             atom.AtomicNumber = anum;
-            atom.Symbol = ChemicalElement.OfNumber(anum).Symbol;
+            atom.Symbol = NaturalElement.OfNumber(anum).Symbol;
             atom.ImplicitHydrogenCount = hcnt;
             atom.FormalCharge = chg;
 
@@ -628,7 +628,7 @@ namespace NCDK.Silent
         public Atom(int elem, int hcnt, int fchg) : base((string)null)
         {
             AtomicNumber = elem;
-            Symbol = ChemicalElement.OfNumber(elem).Symbol;
+            Symbol = NaturalElement.OfNumber(elem).Symbol;
             ImplicitHydrogenCount = hcnt;
             FormalCharge = fchg;
         }
@@ -874,7 +874,7 @@ namespace NCDK.Silent
 
         private static bool ParseAtomSymbol(IAtom atom, string str)
         {
-            ChemicalElement elem;
+            NaturalElement elem;
 
             int len = str.Length;
             int pos = 0;
@@ -923,8 +923,8 @@ namespace NCDK.Silent
                 pos++;
                 while (pos < len && IsLower(str[pos]))
                     pos++;
-                elem = ChemicalElement.OfString(str.Substring(beg, pos - beg));
-                if (elem == ChemicalElements.Unknown)
+                elem = NaturalElement.OfString(str.Substring(beg, pos - beg));
+                if (elem == NaturalElements.Unknown)
                     return false;
                 anum = elem.AtomicNumber;
 
@@ -987,7 +987,7 @@ namespace NCDK.Silent
             else
                 atom.MassNumber = mass;
             atom.AtomicNumber = anum;
-            atom.Symbol = ChemicalElement.OfNumber(anum).Symbol;
+            atom.Symbol = NaturalElement.OfNumber(anum).Symbol;
             atom.ImplicitHydrogenCount = hcnt;
             atom.FormalCharge = chg;
 

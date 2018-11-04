@@ -63,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Substances
                 {
                     foreach (var atom in container.Atoms)
                     {
-                        if (ChemicalElement.AtomicNumbers.O.Equals(atom.AtomicNumber) || 8 == atom.AtomicNumber)
+                        if (NaturalElement.AtomicNumbers.O.Equals(atom.AtomicNumber) || 8 == atom.AtomicNumber)
                             count++;
                     }
                 }

@@ -327,7 +327,7 @@ namespace NCDK.IO
         {
             if (atom is IPseudoAtom)
                 return ((IPseudoAtom)atom).Label;
-            string symbol = ChemicalElement.OfNumber(elem).Symbol;
+            string symbol = NaturalElement.OfNumber(elem).Symbol;
             if (symbol.Length == 0)
                 symbol = atom.Symbol;
             if (symbol == null)

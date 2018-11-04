@@ -448,7 +448,7 @@ namespace NCDK.SMARTS
         public void Chromium()
         {
             Expr actual = GetAtomExpr("[Cr]");
-            Expr expected = GetExpr(ExprType.Element, ChemicalElements.Chromium.AtomicNumber);
+            Expr expected = GetExpr(ExprType.Element, NaturalElements.Chromium.AtomicNumber);
             Assert.AreEqual(expected, actual);
         }
 
@@ -898,7 +898,7 @@ namespace NCDK.SMARTS
         [TestMethod()]
         public void TestAliphaticSymbols()
         {
-            foreach (var e in ChemicalElement.Values)
+            foreach (var e in NaturalElement.Values)
             {
                 int len = e.Symbol.Length;
                 if (len == 1 || len == 2)
