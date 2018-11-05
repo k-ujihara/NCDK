@@ -208,7 +208,7 @@ namespace NCDK.Smiles
             {
                 var ai = atomContainer.Atoms[i];
 
-                if (ai.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N)
+                if (ai.AtomicNumber.Equals(NaturalElements.N.AtomicNumber)
                  && (ai.FormalCharge == null || ai.FormalCharge == 0))
                 {
                     if (InRingSet(ai, ringSet))
@@ -216,7 +216,7 @@ namespace NCDK.Smiles
                         var ca = atomContainer.GetConnectedAtoms(ai);
                         foreach (var caj in ca)
                         {
-                            if (caj.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O) 
+                            if (caj.AtomicNumber.Equals(NaturalElements.O.AtomicNumber) 
                              && atomContainer.GetBond(ai, caj).Order == BondOrder.Double)
                             {
                                 ai.FormalCharge = 1;
@@ -482,7 +482,7 @@ namespace NCDK.Smiles
 
                 if (InRingSet(atom, ringSet))
                 {
-                    if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N))
+                    if (atom.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
                     {
                         if (atom.FormalCharge == 0)
                         {
@@ -520,7 +520,7 @@ namespace NCDK.Smiles
                             }
                         }
                     }
-                    else if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.S))
+                    else if (atom.AtomicNumber.Equals(NaturalElements.S.AtomicNumber))
                     {
                         if (atomContainer.GetBondOrderSum(atom) > 2)
                         {
@@ -765,7 +765,7 @@ namespace NCDK.Smiles
                      || r.Atoms[j].Hybridization != Hybridization.SP2)
                     {
                         NonSP2Count++;
-                        if (r.Atoms[j].AtomicNumber.Equals(NaturalElement.AtomicNumbers.C))
+                        if (r.Atoms[j].AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
                         {
                             Check[i] = false;
                             goto iloop;

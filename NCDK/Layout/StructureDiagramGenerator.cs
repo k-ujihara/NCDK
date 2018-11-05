@@ -546,7 +546,7 @@ namespace NCDK.Layout
             // delete single-bonded H's from
             foreach (var curAtom in shallowCopy.Atoms)
             {
-                if (curAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+                if (curAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                 {
                     if (shallowCopy.GetConnectedBonds(curAtom).Count() < 2)
                     {
@@ -1074,14 +1074,14 @@ namespace NCDK.Layout
                 // see HydrogenPosition for canonical list
                 switch (elem.AtomicNumber)
                 {
-                    case AtomicNumbers.Oxygen:
-                    case AtomicNumbers.Sulfur:
-                    case AtomicNumbers.Selenium:
-                    case AtomicNumbers.Tellurium:
-                    case AtomicNumbers.Fluorine:
-                    case AtomicNumbers.Chlorine:
-                    case AtomicNumbers.Bromine:
-                    case AtomicNumbers.Iodine:
+                    case NaturalElements.Oxygen.AtomicNumber:
+                    case NaturalElements.Sulfur.AtomicNumber:
+                    case NaturalElements.Selenium.AtomicNumber:
+                    case NaturalElements.Tellurium.AtomicNumber:
+                    case NaturalElements.Fluorine.AtomicNumber:
+                    case NaturalElements.Chlorine.AtomicNumber:
+                    case NaturalElements.Bromine.AtomicNumber:
+                    case NaturalElements.Iodine.AtomicNumber:
                         pos = -1; // left
                         break;
                     default:
@@ -1645,7 +1645,7 @@ namespace NCDK.Layout
         {
             if (atom.AtomicNumber != null)
                 return atom.AtomicNumber == 1;
-            return NaturalElement.AtomicNumbers.H.Equals(atom.AtomicNumber);
+            return NaturalElements.H.AtomicNumber.Equals(atom.AtomicNumber);
         }
 
         /// <summary>

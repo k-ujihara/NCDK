@@ -150,7 +150,7 @@ namespace NCDK.Default
             if (symbol == null)
                 return null;
             else
-                return NaturalElement.OfString(symbol).AtomicNumber;
+                return NaturalElement.ToAtomicNumber(symbol);
         }
 
         public override string ToString()
@@ -299,7 +299,7 @@ namespace NCDK.Silent
             if (symbol == null)
                 return null;
             else
-                return NaturalElement.OfString(symbol).AtomicNumber;
+                return NaturalElement.ToAtomicNumber(symbol);
         }
 
         public override string ToString()

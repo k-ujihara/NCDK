@@ -225,8 +225,8 @@ namespace NCDK.Beam
         [TestMethod()]
         public void OfNumber()
         {
-            Assert.AreEqual(NaturalElement.OfNumber(6), NaturalElements.Carbon);
-            Assert.AreEqual(NaturalElement.OfNumber(8), NaturalElements.Oxygen);
+            Assert.AreEqual(NaturalElement.OfNumber(6), NaturalElements.Carbon.Element);
+            Assert.AreEqual(NaturalElement.OfNumber(8), NaturalElements.Oxygen.Element);
         }
 
         // Read() is no longer used.

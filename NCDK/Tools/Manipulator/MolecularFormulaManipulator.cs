@@ -959,7 +959,7 @@ namespace NCDK.Tools.Manipulator
                                             IMolecularFormula mf,
                                             bool setMajor)
         {
-            NaturalElement elem = null;
+            int elemNumber = 0;
             int mass = 0;
             int count = 0;
             if (iter.NextIf('['))
@@ -975,26 +975,25 @@ namespace NCDK.Tools.Manipulator
             if (!IsLower(c2))
             {
                 // could use a switch, see SMARTS parser
-                elem = NaturalElement.OfString("" + c1);
+                elemNumber = NaturalElement.ToAtomicNumber("" + c1);
                 if (c2 != '\0')
                     iter.pos--;
             }
             else
             {
-                elem = NaturalElement.OfString("" + c1 + c2);
+                elemNumber = NaturalElement.ToAtomicNumber("" + c1 + c2);
             }
             count = iter.NextUInt();
             if (count < 0)
                 count = 1;
-            var isotope = mf.Builder.NewIsotope(elem.Symbol);
-            isotope.AtomicNumber = elem.AtomicNumber;
+            var isotope = mf.Builder.NewIsotope(NaturalElement.Elements[elemNumber]);
             if (mass != 0)
                 isotope.MassNumber = mass;
             else if (setMajor)
             {
                 try
                 {
-                    var major = CDK.IsotopeFactory.GetMajorIsotope(elem.AtomicNumber);
+                    var major = CDK.IsotopeFactory.GetMajorIsotope(elemNumber);
                     if (major != null)
                         isotope.MassNumber = major.MassNumber;
                 }
@@ -1165,7 +1164,7 @@ namespace NCDK.Tools.Manipulator
         {
             foreach (var element in Elements(formula))
             {
-                if (!element.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+                if (!element.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                 {
                     yield return element;
                 }
@@ -1436,7 +1435,7 @@ namespace NCDK.Tools.Manipulator
 
             foreach (IIsotope iso in mf.Isotopes)
             {
-                if (NaturalElement.AtomicNumbers.H.Equals(iso.AtomicNumber))
+                if (NaturalElements.H.AtomicNumber.Equals(iso.AtomicNumber))
                 {
                     var count = mf.GetCount(iso);
                     if (count < hcnt)

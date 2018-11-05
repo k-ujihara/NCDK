@@ -2798,7 +2798,7 @@ namespace NCDK.SMARTS
                                 {
                                     // can't be aromatic, just emit the upper case symbol
                                     var elem = NaturalElement.OfNumber(expr.Value);
-                                    if (elem == NaturalElements.Unknown)
+                                    if (elem == NaturalElements.Unknown.Element)
                                         throw new ArgumentException($"No element with atomic number: {expr.Value}", nameof(expr));
                                     // portability for older matchers, write very high atomic
                                     // num elements as #<num>
@@ -2822,7 +2822,7 @@ namespace NCDK.SMARTS
                             default:
                                 // can't be aromatic, just emit the symbol
                                 var elem = NaturalElement.OfNumber(expr.Value);
-                                if (elem == NaturalElements.Unknown)
+                                if (elem == NaturalElements.Unknown.Element)
                                     throw new ArgumentException($"No element with atomic number: {expr.Value}");
                                 // portability for older matchers, write very high atomic
                                 // num elements as #<num>
@@ -2856,13 +2856,13 @@ namespace NCDK.SMARTS
                             case 51: // Sb
                             case 52: // Te
                                 var elem = NaturalElement.OfNumber(expr.Value);
-                                if (elem == NaturalElements.Unknown)
+                                if (elem == NaturalElements.Unknown.Element)
                                     throw new ArgumentException($"No element with atomic number: {expr.Value}");
                                 sb.Append(elem.Symbol.ToLowerInvariant());
                                 break;
                             default:
                                 elem = NaturalElement.OfNumber(expr.Value);
-                                if (elem == NaturalElements.Unknown)
+                                if (elem == NaturalElements.Unknown.Element)
                                     throw new ArgumentException($"No element with atomic number: {expr.Value}");
                                 // portability for older matchers, write very high atomic
                                 // num elements as #<num>

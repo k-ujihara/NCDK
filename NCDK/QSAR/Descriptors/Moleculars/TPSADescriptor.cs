@@ -225,10 +225,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 switch (atom.AtomicNumber)
                 {
-                    case NaturalElement.AtomicNumbers.N:
-                    case NaturalElement.AtomicNumbers.O:
-                    case NaturalElement.AtomicNumbers.S:
-                    case NaturalElement.AtomicNumbers.P:
+                    case NaturalElements.N.AtomicNumber:
+                    case NaturalElements.O.AtomicNumber:
+                    case NaturalElements.S.AtomicNumber:
+                    case NaturalElements.P.AtomicNumber:
                         int singleBondCount = 0;
                         int doubleBondCount = 0;
                         int tripleBondCount = 0;
@@ -256,7 +256,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
                         // EXPLICIT hydrogens: count the number of hydrogen atoms
                         for (int neighbourIndex = 0; neighbourIndex < numberOfNeighbours; neighbourIndex++)
-                            if (((IAtom)connectedAtoms[neighbourIndex]).AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+                            if (((IAtom)connectedAtoms[neighbourIndex]).AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                                 hCount++;
                         // IMPLICIT hydrogens: count the number of hydrogen atoms and adjust other atom profile properties
                         int implicitHAtoms = atom.ImplicitHydrogenCount ?? 0;

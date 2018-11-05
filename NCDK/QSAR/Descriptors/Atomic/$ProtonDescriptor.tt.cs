@@ -1,16 +1,16 @@
 ﻿
-using NCDK.Common.Mathematics;
-using NCDK.Numerics;
 using NCDK.Aromaticities;
 using NCDK.Charges;
+using NCDK.Common.Mathematics;
+using NCDK.Config;
 using NCDK.Graphs.Invariant;
+using NCDK.Numerics;
 using NCDK.QSAR.Results;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NCDK.Config;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
@@ -62,12 +62,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         public DescriptorValue<ArrayResult<double>> Calculate(IAtom atom, IAtomContainer atomContainer, IRingSet precalculatedringset)
         {
-            var varAtomContainer = (IAtomContainer)atomContainer.Clone();
+            IAtomContainer varAtomContainer = (IAtomContainer)atomContainer.Clone();
 
             int atomPosition = atomContainer.Atoms.IndexOf(atom);
-            var clonedAtom = varAtomContainer.Atoms[atomPosition];
-            var rdfProtonCalculatedValues = new ArrayResult<double>(desc_length);
-            if (!atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+            IAtom clonedAtom = varAtomContainer.Atoms[atomPosition];
+            ArrayResult<double> rdfProtonCalculatedValues = new ArrayResult<double>(desc_length);
+            if (!atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
             {
                 return GetDummyDescriptorValue(new CDKException("Invalid atom specified"));
             }
@@ -317,7 +317,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 else
                 {
-                    if (atom1.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+                    if (atom1.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                         counter += 1;
                     else
                         counter += 0;
@@ -343,7 +343,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int counter = 0;
             foreach (var neighbour in neighToCarbon)
             {
-                if (neighbour.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O))
+                if (neighbour.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
                 {
                     tmpBond = mol.GetBond(neighbour, carbonAtom);
                     if (tmpBond.Order == BondOrder.Double) counter += 1;
@@ -511,7 +511,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int atomPosition = atomContainer.Atoms.IndexOf(atom);
             IAtom clonedAtom = varAtomContainer.Atoms[atomPosition];
             ArrayResult<double> rdfProtonCalculatedValues = new ArrayResult<double>(desc_length);
-            if (!atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+            if (!atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
             {
                 return GetDummyDescriptorValue(new CDKException("Invalid atom specified"));
             }
@@ -761,7 +761,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 else
                 {
-                    if (atom1.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+                    if (atom1.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                         counter += 1;
                     else
                         counter += 0;
@@ -787,7 +787,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int counter = 0;
             foreach (var neighbour in neighToCarbon)
             {
-                if (neighbour.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O))
+                if (neighbour.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
                 {
                     tmpBond = mol.GetBond(neighbour, carbonAtom);
                     if (tmpBond.Order == BondOrder.Double) counter += 1;
@@ -955,7 +955,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int atomPosition = atomContainer.Atoms.IndexOf(atom);
             IAtom clonedAtom = varAtomContainer.Atoms[atomPosition];
             ArrayResult<double> rdfProtonCalculatedValues = new ArrayResult<double>(desc_length);
-            if (!atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+            if (!atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
             {
                 return GetDummyDescriptorValue(new CDKException("Invalid atom specified"));
             }
@@ -1205,7 +1205,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 else
                 {
-                    if (atom1.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+                    if (atom1.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                         counter += 1;
                     else
                         counter += 0;
@@ -1231,7 +1231,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int counter = 0;
             foreach (var neighbour in neighToCarbon)
             {
-                if (neighbour.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O))
+                if (neighbour.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
                 {
                     tmpBond = mol.GetBond(neighbour, carbonAtom);
                     if (tmpBond.Order == BondOrder.Double) counter += 1;
@@ -1399,7 +1399,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int atomPosition = atomContainer.Atoms.IndexOf(atom);
             IAtom clonedAtom = varAtomContainer.Atoms[atomPosition];
             ArrayResult<double> rdfProtonCalculatedValues = new ArrayResult<double>(desc_length);
-            if (!atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+            if (!atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
             {
                 return GetDummyDescriptorValue(new CDKException("Invalid atom specified"));
             }
@@ -1649,7 +1649,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 else
                 {
-                    if (atom1.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+                    if (atom1.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                         counter += 1;
                     else
                         counter += 0;
@@ -1675,7 +1675,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int counter = 0;
             foreach (var neighbour in neighToCarbon)
             {
-                if (neighbour.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O))
+                if (neighbour.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
                 {
                     tmpBond = mol.GetBond(neighbour, carbonAtom);
                     if (tmpBond.Order == BondOrder.Double) counter += 1;
@@ -1843,7 +1843,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int atomPosition = atomContainer.Atoms.IndexOf(atom);
             IAtom clonedAtom = varAtomContainer.Atoms[atomPosition];
             ArrayResult<double> rdfProtonCalculatedValues = new ArrayResult<double>(desc_length);
-            if (!atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+            if (!atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
             {
                 return GetDummyDescriptorValue(new CDKException("Invalid atom specified"));
             }
@@ -2093,7 +2093,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 else
                 {
-                    if (atom1.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+                    if (atom1.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                         counter += 1;
                     else
                         counter += 0;
@@ -2119,7 +2119,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int counter = 0;
             foreach (var neighbour in neighToCarbon)
             {
-                if (neighbour.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O))
+                if (neighbour.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
                 {
                     tmpBond = mol.GetBond(neighbour, carbonAtom);
                     if (tmpBond.Order == BondOrder.Double) counter += 1;

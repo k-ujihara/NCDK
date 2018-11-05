@@ -82,7 +82,7 @@ namespace NCDK.Renderers
         /// </summary>
         private sealed class IupacVisibility : SymbolVisibility
         {
-            private bool terminal = false;
+            private readonly bool terminal = false;
 
             internal IupacVisibility(bool terminal)
             {
@@ -93,34 +93,39 @@ namespace NCDK.Renderers
             public override bool Visible(IAtom atom, IEnumerable<IBond> bonds_, RendererModel model)
             {
                 var bonds = bonds_.ToList();
-                var element = Config.NaturalElement.OfNumber(atom.AtomicNumber.Value);
 
                 // all non-carbons are displayed
-                if (element != NaturalElements.Carbon) return true;
+                if (atom.AtomicNumber != NaturalElements.Carbon.AtomicNumber)
+                    return true;
 
                 // methane
-                if (bonds.Count == 0) return true;
+                if (bonds.Count == 0)
+                    return true;
 
                 // methyl (optional)
-                if (bonds.Count == 1 && terminal) return true;
+                if (bonds.Count == 1 && terminal)
+                    return true;
 
                 // abnormal valence, could be due to charge or unpaired electrons
-                if (!IsFourValent(atom, bonds)) return true;
+                if (!IsFourValent(atom, bonds))
+                    return true;
 
                 // charge, normally caught by previous rule but can have bad input: C=[CH-]C
                 if (atom.FormalCharge != null &&
-                    atom.FormalCharge != 0) return true;
+                    atom.FormalCharge != 0)
+                    return true;
 
                 // carbon isotopes are displayed
                 var mass = atom.MassNumber;
-                if (mass != null) return true;
+                if (mass != null)
+                    return true;
 
                 // no kink between bonds to imply the presence of a carbon and it must
                 // be displayed if the bonds have the same bond order
                 if (bonds.Count == 2 &&
                         bonds[0].Order == bonds[1].Order)
                 {
-                    BondOrder bndord = bonds[0].Order;
+                    var bndord = bonds[0].Order;
                     if (bndord == BondOrder.Double || HasParallelBonds(atom, bonds))
                         return true;
                 }
@@ -129,7 +134,7 @@ namespace NCDK.Renderers
                 if (bonds.Count == 1)
                 {
                     var begHcnt = atom.ImplicitHydrogenCount;
-                    IAtom end = bonds[0].GetOther(atom);
+                    var end = bonds[0].GetOther(atom);
                     var endHcnt = end.ImplicitHydrogenCount;
                     if (begHcnt != null && endHcnt != null && begHcnt == 3 && endHcnt == 3)
                         return true;
@@ -173,7 +178,7 @@ namespace NCDK.Renderers
                 }
                 else
                 {
-                    foreach (IBond bond in bonds)
+                    foreach (var bond in bonds)
                         valence += bond.Order.Numeric();
                 }
                 return valence == 4;
@@ -187,7 +192,8 @@ namespace NCDK.Renderers
             /// <returns>whether the atom has parallel bonds</returns>
             private static bool HasParallelBonds(IAtom atom, IList<IBond> bonds)
             {
-                if (bonds.Count != 2) return false;
+                if (bonds.Count != 2)
+                    return false;
                 var thetaInRad = GetAngle(atom, bonds[0], bonds[1]);
                 var thetaInDeg = Common.Mathematics.Vectors.RadianToDegree(thetaInRad);
                 var delta = Math.Abs(thetaInDeg - 180);

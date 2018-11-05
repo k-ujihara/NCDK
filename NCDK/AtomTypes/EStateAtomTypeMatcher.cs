@@ -75,7 +75,7 @@ namespace NCDK.AtomTypes
                 foreach (var attached in attachedAtoms)
                 {
                     var b = atomContainer.GetBond(atom, attached);
-                    if (attached.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H)) NumHAtoms++;
+                    if (attached.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)) NumHAtoms++;
 
                     if (atom.IsAromatic && attached.IsAromatic)
                     {
@@ -84,7 +84,7 @@ namespace NCDK.AtomTypes
                         if (SameRing)
                         {
                             NumAromaticBonds2++;
-                            if (n.Equals(NaturalElement.AtomicNumbers.N))
+                            if (n.Equals(NaturalElements.N.AtomicNumber))
                             {
                                 if (b.Order == BondOrder.Single) NumAromaticBondsTotal2++;
                                 if (b.Order == BondOrder.Double)

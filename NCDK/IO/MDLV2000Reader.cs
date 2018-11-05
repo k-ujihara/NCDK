@@ -1400,12 +1400,10 @@ namespace NCDK.IO
         /// <exception cref="CDKException">the symbol is not allowed</exception>
         private IAtom CreateAtom(string symbol, IChemObjectBuilder builder, int lineNum)
         {
-            var elem = NaturalElement.OfString(symbol);
-            if (elem != NaturalElements.Unknown)
+            var elem = NaturalElement.ToAtomicNumber(symbol);
+            if (elem != 0)
             {
-                var atom = builder.NewAtom();
-                atom.Symbol = elem.Symbol;
-                atom.AtomicNumber = elem.AtomicNumber;
+                var atom = builder.NewAtom(elem);
                 return atom;
             }
             switch (symbol)

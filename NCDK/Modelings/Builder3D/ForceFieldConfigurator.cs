@@ -347,8 +347,8 @@ namespace NCDK.Modelings.Builder3D
                 {
                     switch (ac.Atoms[i].AtomicNumber)
                     {
-                        case NaturalElement.AtomicNumbers.H:
-                        case NaturalElement.AtomicNumbers.C:
+                        case NaturalElements.H.AtomicNumber:
+                        case NaturalElements.C.AtomicNumber:
                             break;
                         default:
                             return true;

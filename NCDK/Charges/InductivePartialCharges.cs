@@ -131,19 +131,19 @@ namespace NCDK.Charges
                     {
                         switch (atom.AtomicNumber)
                         {
-                            case NaturalElement.AtomicNumbers.Cl:
+                            case NaturalElements.Cl.AtomicNumber:
                                 paulingElectronegativities[i] = 3.28;
                                 break;
-                            case NaturalElement.AtomicNumbers.Br:
+                            case NaturalElements.Br.AtomicNumber:
                                 paulingElectronegativities[i] = 3.13;
                                 break;
-                            case NaturalElement.AtomicNumbers.I:
+                            case NaturalElements.I.AtomicNumber:
                                 paulingElectronegativities[i] = 2.93;
                                 break;
-                            case NaturalElement.AtomicNumbers.H:
+                            case NaturalElements.H.AtomicNumber:
                                 paulingElectronegativities[i] = 2.10;
                                 break;
-                            case NaturalElement.AtomicNumbers.C:
+                            case NaturalElements.C.AtomicNumber:
                                 if (ac.GetMaximumBondOrder(atom) == BondOrder.Single)
                                 {
                                     // Csp3
@@ -158,7 +158,7 @@ namespace NCDK.Charges
                                     paulingElectronegativities[i] = 3.15;
                                 }
                                 break;
-                            case NaturalElement.AtomicNumbers.O:
+                            case NaturalElements.O.AtomicNumber:
                                 if (ac.GetMaximumBondOrder(atom) == BondOrder.Single)
                                 {
                                     // Osp3
@@ -169,13 +169,13 @@ namespace NCDK.Charges
                                     paulingElectronegativities[i] = 4.34;
                                 }
                                 break;
-                            case NaturalElement.AtomicNumbers.Si:
+                            case NaturalElements.Si.AtomicNumber:
                                 paulingElectronegativities[i] = 1.99;
                                 break;
-                            case NaturalElement.AtomicNumbers.S:
+                            case NaturalElements.S.AtomicNumber:
                                 paulingElectronegativities[i] = 2.74;
                                 break;
-                            case NaturalElement.AtomicNumbers.N:
+                            case NaturalElements.N.AtomicNumber:
                                 paulingElectronegativities[i] = 2.59;
                                 break;
                             default:
@@ -354,22 +354,22 @@ namespace NCDK.Charges
             double radiusTarget = 0;
             switch (atomicNumber)
             {
-                case NaturalElement.AtomicNumbers.F:
+                case NaturalElements.F.AtomicNumber:
                     radiusTarget = 0.64;
                     break;
-                case NaturalElement.AtomicNumbers.Cl:
+                case NaturalElements.Cl.AtomicNumber:
                     radiusTarget = 0.99;
                     break;
-                case NaturalElement.AtomicNumbers.Br:
+                case NaturalElements.Br.AtomicNumber:
                     radiusTarget = 1.14;
                     break;
-                case NaturalElement.AtomicNumbers.I:
+                case NaturalElements.I.AtomicNumber:
                     radiusTarget = 1.33;
                     break;
-                case NaturalElement.AtomicNumbers.H:
+                case NaturalElements.H.AtomicNumber:
                     radiusTarget = 0.30;
                     break;
-                case NaturalElement.AtomicNumbers.C:
+                case NaturalElements.C.AtomicNumber:
                     if (maxBondOrder == BondOrder.Single)
                     {
                         // Csp3
@@ -384,7 +384,7 @@ namespace NCDK.Charges
                         radiusTarget = 0.60;
                     }
                     break;
-                case NaturalElement.AtomicNumbers.O:
+                case NaturalElements.O.AtomicNumber:
                     if (maxBondOrder == BondOrder.Single)
                     {
                         // Csp3
@@ -395,13 +395,13 @@ namespace NCDK.Charges
                         radiusTarget = 0.60;
                     }
                     break;
-                case NaturalElement.AtomicNumbers.Si:
+                case NaturalElements.Si.AtomicNumber:
                     radiusTarget = 1.11;
                     break;
-                case NaturalElement.AtomicNumbers.S:
+                case NaturalElements.S.AtomicNumber:
                     radiusTarget = 1.04;
                     break;
-                case NaturalElement.AtomicNumbers.N:
+                case NaturalElements.N.AtomicNumber:
                     radiusTarget = 0.70;
                     break;
                 default:

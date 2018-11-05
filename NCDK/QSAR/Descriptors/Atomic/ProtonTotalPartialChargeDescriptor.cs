@@ -115,7 +115,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int hydrogenNeighbors = 0;
             foreach (var neighboor in neighboors)
             {
-                if (neighboor.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+                if (neighboor.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                 {
                     hydrogenNeighbors++;
                     protonPartialCharge.Add(neighboor.Charge.Value);

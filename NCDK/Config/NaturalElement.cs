@@ -33,90 +33,8 @@ namespace NCDK.Config
     // @author      egonw
     // @author      john may
     // @cdk.module  core
-    public sealed partial class NaturalElement
+    public static partial class NaturalElement
     {
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// The atomic number of the element. An <see cref="NaturalElements.Unknown"/> element
-        /// has an atomic number of '0'.
-        /// </summary>
-        public int AtomicNumber { get; private set; }
-
-        /// <summary>
-        /// Return the period in the periodic table this element belongs to. If
-        /// the element is <see cref="NaturalElements.Unknown"/> it's period is 0.
-        /// </summary>
-        public int Period { get; private set; }
-
-        /// <summary>
-        /// Return the group in the periodic table this element belongs to. If
-        /// the element does not belong to a group then it's group is '0'.
-        /// </summary>
-        public int Group { get; private set; }
-
-        /// <summary>
-        /// The element symbol, C for carbon, N for nitrogen, Na for sodium, etc. An
-        /// <see cref="NaturalElements.Unknown"/> element has no symbol.
-        /// </summary>
-        public string Symbol { get; private set; }
-
-        /// <summary>
-        /// Covalent radius (<i>r<sub>cov</sub></i>).
-        /// </summary>
-        /// <seealso href="http://en.wikipedia.org/wiki/Covalent_radius">Covalent radius</seealso>
-        public double? CovalentRadius { get; private set; }
-
-        /// <summary>
-        /// van der Waals radius (<i>r<sub>w</sub></i>).
-        /// </summary>
-        public double? VdwRadius { get; private set; }
-
-        /// <summary>
-        /// Pauling electronegativity, symbol χ, is a chemical property that describes
-        /// the tendency of an atom or a functional group to attract electrons
-        /// (or electron density) towards itself. This method provides access to the
-        /// Pauling electronegativity value for a chemical element. If no value is
-        /// available <see langword="null"/> is returned.
-        /// </summary>
-        /// <seealso href="http://en.wikipedia.org/wiki/Electronegativity#Pauling_electronegativity">Pauling Electronegativity</seealso>
-        public double? Electronegativity { get; private set; }
-
-        /// <summary>
-        /// An <see cref="IElement"/> instance of this element.
-        /// </summary>
-        private readonly IElement instance;
-
-        /// <summary>
-        /// Internal constructor.
-        /// </summary>
-        /// <param name="name">name</param>
-        /// <param name="number">atomic number</param>
-        /// <param name="symbol">symbol</param>
-        /// <param name="period">periodic table period</param>
-        /// <param name="group">periodic table group</param>
-        /// <param name="rCov">covalent radius</param>
-        /// <param name="rW">van der Waals radius</param>
-        /// <param name="electronegativity">Pauling electronegativity</param>
-        internal NaturalElement(string name, int number, string symbol, int period, int group, double? rCov, double? rW, double? electronegativity)
-        {
-            this.Name = name;
-            this.AtomicNumber = number;
-            this.Period = period;
-            this.Group = group;
-            this.Symbol = symbol;
-            this.CovalentRadius = rCov;
-            this.VdwRadius = rW;
-            this.Electronegativity = electronegativity;
-            this.instance = new ImmutableElement(symbol, number);
-        }
-
-        /// <summary>
-        /// Access an  <see cref="IElement"/> instance of the chemical element.
-        /// </summary>
-        /// <returns>an instance</returns>
-        public IElement Element => instance;
-
         /// <summary>
         /// Obtain the element with the specified atomic number. If no element had
         /// the specified atomic number then <see cref="NaturalElements.Unknown"/> is returned.
@@ -126,29 +44,29 @@ namespace NCDK.Config
         /// </example>
         /// <param name="number">atomic number</param>
         /// <returns>an element, or <see cref="NaturalElements.Unknown"/></returns>
-        public static NaturalElement OfNumber(int number)
+        public static IElement OfNumber(int number)
         {
-            if (number < 0 || number >= Values.Count)
-                return NaturalElements.Unknown;
-            return Values[number];
+            if (number < 0 || number >= Elements.Count)
+                return NaturalElements.Unknown.Element;
+            return Elements[number];
         }
 
         /// <summary>
         /// Obtain the element with the specified symbol or name. If no element had
-        /// the specified symbol or name then <see cref="NaturalElements.Unknown"/> is returned. The
+        /// the specified symbol or name then <see cref="NaturalElements.Unknown.AtomicNumber"/> is returned. The
         /// input is case-insensitive.
         /// </summary>
         /// <example>
-        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Config.ChemicalElement_Example.cs+OfString"]/*' />
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Config.ChemicalElement_Example.cs+ToAtomicNumber"]/*' />
         /// </example>
-        /// <param name="str">input string</param>
-        /// <returns>an element, or <see cref="NaturalElements.Unknown"/></returns>
-        public static NaturalElement OfString(string str)
+        /// <param name="text">input string</param>
+        /// <returns>An atomic number, or <see cref="NaturalElements.Unknown.AtomicNumber"/></returns>
+        public static int ToAtomicNumber(string text)
         {
-            if (str == null)
-                return NaturalElements.Unknown;
-            if (!SymbolMap.TryGetValue(str.ToLowerInvariant(), out NaturalElement e))
-                e = NaturalElements.Unknown;
+            if (text == null)
+                return NaturalElements.Unknown.AtomicNumber;
+            if (!SymbolMap.TryGetValue(text.ToLowerInvariant(), out int e))
+                e = NaturalElements.Unknown.AtomicNumber;
             return e;
         }
     }

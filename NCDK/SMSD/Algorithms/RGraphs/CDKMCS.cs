@@ -1210,35 +1210,35 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             for (int i = 0; i < ac1.Atoms.Count; i++)
             {
                 atom = ac1.Atoms[i];
-                if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.S))
+                if (atom.AtomicNumber.Equals(NaturalElements.S.AtomicNumber))
                 {
                     ac1SCount++;
                 }
-                else if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N))
+                else if (atom.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
                 {
                     ac1NCount++;
                 }
-                else if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O))
+                else if (atom.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
                 {
                     ac1OCount++;
                 }
-                else if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.F))
+                else if (atom.AtomicNumber.Equals(NaturalElements.F.AtomicNumber))
                 {
                     ac1FCount++;
                 }
-                else if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.Cl))
+                else if (atom.AtomicNumber.Equals(NaturalElements.Cl.AtomicNumber))
                 {
                     ac1ClCount++;
                 }
-                else if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.Br))
+                else if (atom.AtomicNumber.Equals(NaturalElements.Br.AtomicNumber))
                 {
                     ac1BrCount++;
                 }
-                else if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.I))
+                else if (atom.AtomicNumber.Equals(NaturalElements.I.AtomicNumber))
                 {
                     ac1ICount++;
                 }
-                else if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.C))
+                else if (atom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
                 {
                     ac1CCount++;
                 }
@@ -1250,35 +1250,35 @@ namespace NCDK.SMSD.Algorithms.RGraphs
                 {
                     continue;
                 }
-                if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.S))
+                if (atom.AtomicNumber.Equals(NaturalElements.S.AtomicNumber))
                 {
                     ac2SCount++;
                 }
-                else if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N))
+                else if (atom.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
                 {
                     ac2NCount++;
                 }
-                else if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O))
+                else if (atom.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
                 {
                     ac2OCount++;
                 }
-                else if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.F))
+                else if (atom.AtomicNumber.Equals(NaturalElements.F.AtomicNumber))
                 {
                     ac2FCount++;
                 }
-                else if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.Cl))
+                else if (atom.AtomicNumber.Equals(NaturalElements.Cl.AtomicNumber))
                 {
                     ac2ClCount++;
                 }
-                else if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.Br))
+                else if (atom.AtomicNumber.Equals(NaturalElements.Br.AtomicNumber))
                 {
                     ac2BrCount++;
                 }
-                else if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.I))
+                else if (atom.AtomicNumber.Equals(NaturalElements.I.AtomicNumber))
                 {
                     ac2ICount++;
                 }
-                else if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.C))
+                else if (atom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
                 {
                     ac2CCount++;
                 }

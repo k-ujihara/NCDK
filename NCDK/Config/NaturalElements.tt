@@ -29,13 +29,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
-using System.Collections.Generic;
-
-namespace NCDK.Config
-{
-    public static class NaturalElements
-    {
 <#
         var name_and_numbers = new List<NameAndNumber>();
         var fn = Path.Combine(new FileInfo(this.Host.TemplateFile).Directory.FullName, "NaturalElements.txt");
@@ -45,87 +38,90 @@ namespace NCDK.Config
             string line;
             while ((line = reader.ReadLine()) != null)
             {
-                var match = re.Match(line);
-                if (!match.Success)
-                {
-                    line = line.Trim();
+                var nn = NameAndNumber.Make(prevLine, line);
+                if (nn != null)
+                    name_and_numbers.Add(nn);
+                prevLine = line;
+            }
+        }
 #>
-        <#= line #>
+
+using System;
+using System.Collections.Generic;
+
+namespace NCDK.Config
+{
+    public static class NaturalElements
+    {
 <#
-                    prevLine = line;
-                    continue;
-                }
-                else
-                {
-                    var name = match.Groups["name"].Value;
-                    var inner = match.Groups["inner"].Value;
-                    var number = int.Parse(match.Groups["number"].Value);
-                    var symbol = match.Groups["symbol"].Value;
-                    var isObsolete = prevLine != null && prevLine.StartsWith("[Obsolete", StringComparison.Ordinal);
-                    name_and_numbers.Add(new NameAndNumber(name, number, symbol, isObsolete));
-                    line = "public static readonly NaturalElement " + name + " = new NaturalElement(\"" + name + "\", " + inner + ");";
+        foreach (var nn in name_and_numbers)
+        {
+            if (nn.IsObsolete)
+            {
 #>
-        <#= line #>
+        <#= nn.ObsoleteLine #>
 <#
-                    prevLine = line;
-                }
             }
 #>
-    }
-<#
-    }
-#>
-    public sealed partial class NaturalElement
-    {
-#pragma warning disable CA1034 // Nested types should not be visible
-        public static class AtomicNumbers
-#pragma warning restore CA1034 // Nested types should not be visible
+        public static class <#= nn.Name #>
         {
-<#
-        foreach (var nn in name_and_numbers)
-        {
-#>
-            public const int <#= nn.Name #> = <#= nn.Number #>;
-<#
+            public const string Name = "<#= nn.Name #>";
+            public const string Symbol = "<#= nn.Symbol #>";
+            public const int AtomicNumber = <#= nn.Number #>;
+            public static IElement Element { get; } = new ImmutableElement(Symbol, AtomicNumber);
         }
-#>
 <#
-        foreach (var nn in name_and_numbers)
-        {
-            if (nn.Number == 0)
+            if (string.IsNullOrEmpty(nn.Symbol))
                 continue;
+            if (nn.IsObsolete)
+            {
 #>
-            internal const int <#= nn.Symbol #> = <#= nn.Number #>;
+        <#= nn.ObsoleteLine #>
+<#
+            }
+#>
+        public static class <#= nn.Symbol #>
+        {
+            public const string Name = <#= nn.Name #>.Name;
+            public const string Symbol = <#= nn.Name #>.Symbol;
+            public const int AtomicNumber = <#= nn.Name #>.AtomicNumber;
+            public static IElement Element { get; } = <#= nn.Name #>.Element;
+        }
 <#
         }
 #>
-        }
+    }
+}
 
+namespace NCDK.Config
+{
+    public static partial class NaturalElement
+    {
         /// <summary>
         /// Lookup elements by symbol / name.
         /// </summary>
-        internal static IReadOnlyDictionary<string, NaturalElement> SymbolMap { get; } = new Dictionary<string, NaturalElement>()
+        internal static IReadOnlyDictionary<string, int> SymbolMap { get; } = new Dictionary<string, int>()
             {
 <#
         foreach (var nn in name_and_numbers)
         {
 #>
-                ["<#= nn.Name.ToLowerInvariant() #>"] = NaturalElements.<#= nn.Name #>,
-                ["<#= nn.Symbol.ToLowerInvariant() #>"] = NaturalElements.<#= nn.Name #>,
+                ["<#= nn.Name.ToLowerInvariant() #>"] = NaturalElements.<#= nn.Name #>.AtomicNumber,
+                ["<#= nn.Symbol.ToLowerInvariant() #>"] = NaturalElements.<#= nn.Name #>.AtomicNumber,
 <#
         }
 #>
                 // recently named elements
-                ["uub"] = NaturalElements.Copernicium, // 2009
-                ["ununbium"] = NaturalElements.Copernicium,
-                ["uuq"] = NaturalElements.Flerovium, // 2012
-                ["ununquadium"] = NaturalElements.Flerovium,
-                ["uuh"] = NaturalElements.Livermorium, // 2012
-                ["ununhexium"] = NaturalElements.Livermorium,
+                ["uub"] = NaturalElements.Copernicium.AtomicNumber, // 2009
+                ["ununbium"] = NaturalElements.Copernicium.AtomicNumber,
+                ["uuq"] = NaturalElements.Flerovium.AtomicNumber, // 2012
+                ["ununquadium"] = NaturalElements.Flerovium.AtomicNumber,
+                ["uuh"] = NaturalElements.Livermorium.AtomicNumber, // 2012
+                ["ununhexium"] = NaturalElements.Livermorium.AtomicNumber,
                 // alternative spellings
-                ["sulphur"] = NaturalElements.Sulfur,
-                ["cesium"] = NaturalElements.Caesium,
-                ["aluminum"] = NaturalElements.Aluminium,
+                ["sulphur"] = NaturalElements.Sulfur.AtomicNumber,
+                ["cesium"] = NaturalElements.Caesium.AtomicNumber,
+                ["aluminum"] = NaturalElements.Aluminium.AtomicNumber,
             };
 <#
         int maxAtomicNumber = name_and_numbers.Select(n => n.Number).Max();
@@ -139,41 +135,119 @@ namespace NCDK.Config
         }
 #>
 
-
         /// <summary>
         /// Lookup elements by atomic number.
         /// </summary>
-        public static IReadOnlyList<NaturalElement> Values { get; } = new NaturalElement[] 
-            {
-<#
-        foreach (var name in uniq_atoms)
-        {
-#>
-                <#= name == null ? "null" : "NaturalElements." + name #>,
-<#
-        }
-#>
+        public static IReadOnlyList<IElement> Elements { get; } = new IElement[] 
+            { 
+<# foreach (var nn in name_and_numbers.Where(n => !n.IsObsolete)) { #>
+                NaturalElements.<#= nn.Name #>.Element, 
+<# } #>
+<# foreach (var nn in name_and_numbers.Where(n => n.IsObsolete)) { #>
+                NaturalElements.<#= nn.Name #>.Element, 
+<# } #>
             };
+
+        internal static IReadOnlyList<string> Names { get; } = new string[]
+            { 
+<# foreach (var nn in name_and_numbers.Where(n => !n.IsObsolete)) { #>
+                NaturalElements.<#= nn.Name #>.Name,
+<# } #> 
+            };
+
+        /// <summary>
+        /// Return the period in the periodic table this element belongs to. If
+        /// the element is <see cref="NaturalElements.Unknown"/> it's period is 0.
+        /// </summary>
+        internal static IReadOnlyList<int> Periods { get; } = new int[] 
+            { <# foreach (var nn in name_and_numbers.Where(n => !n.IsObsolete)) { #><#= nn.Period #>, <# } #> };
+
+        /// <summary>
+        /// Return the group in the periodic table this element belongs to. If
+        /// the element does not belong to a group then it's group is '0'.
+        /// </summary>
+        internal static IReadOnlyList<int> Groups { get; } = new int[] 
+            { <# foreach (var nn in name_and_numbers.Where(n => !n.IsObsolete)) { #><#= nn.Group #>, <# } #> };
+
+        /// <summary>
+        /// Covalent radius (<i>r<sub>cov</sub></i>).
+        /// </summary>
+        /// <seealso href="http://en.wikipedia.org/wiki/Covalent_radius">Covalent radius</seealso>
+        internal static IReadOnlyList<double?> CovalentRadiuses { get; } = new double?[] 
+            { <# foreach (var nn in name_and_numbers.Where(n => !n.IsObsolete)) { #><#= nn.RCov #>, <# } #> };
+
+        /// <summary>
+        /// van der Waals radius (<i>r<sub>w</sub></i>).
+        /// </summary>
+        internal static IReadOnlyList<double?> VdwRadiuses { get; } = new double?[] 
+            { <# foreach (var nn in name_and_numbers.Where(n => !n.IsObsolete)) { #><#= nn.RW #>, <# } #> };
+
+        /// <summary>
+        /// Pauling electronegativity, symbol χ, is a chemical property that describes
+        /// the tendency of an atom or a functional group to attract electrons
+        /// (or electron density) towards itself. This method provides access to the
+        /// Pauling electronegativity value for a chemical element. If no value is
+        /// available <see langword="null"/> is returned.
+        /// </summary>
+        /// <seealso href="http://en.wikipedia.org/wiki/Electronegativity#Pauling_electronegativity">Pauling Electronegativity</seealso>
+        internal static IReadOnlyList<double?> Electronegativities { get; } = new double?[] 
+            { <# foreach (var nn in name_and_numbers.Where(n => !n.IsObsolete)) { #><#= nn.Electronegativity #>, <# } #> };
     }
 }
 
 <#+
-    static Regex re = new Regex(@"(?<name>\w+)\((?<inner>(?<number>\d+)\, " + "\"" + @"(?<symbol>|[A-Z][a-z]{0,2})" + "\"" + @"\, .*)\)", RegexOptions.Compiled);
+ static Regex re = new Regex(
+    @"(?<name>\w+)" 
+    + @"\((?<inner>" 
+    + @"(?<number>\d+)\, " 
+    + "\"" + @"(?<symbol>|[A-Z][a-z]{0,2})" + "\"" + @"\, " 
+    + @"(?<period>\d+)\, " 
+    + @"(?<group>\d+)\, " 
+    + @"(?<rCov>\d+(\.\d*)|null)\, " 
+    + @"(?<rW>\d+(\.\d*)|null)\, " 
+    + @"(?<electronegativity>\d+(\.\d*)|null)"
+    + @")\)",
+    RegexOptions.Compiled);
     // Magnesium(12, "Mg", 3, 2, 1.30, 2.20, 1.31)
 
     public class NameAndNumber
     {
-        public NameAndNumber(string name, int number, string symbol, bool isObsolete)
-        {
-            this.Name = name;
-            this.Number = number;
-            this.Symbol = symbol;
-            this.IsObsolete = isObsolete;
-        }
-
+        public bool IsObsolete { get; set; } 
+        public string ObsoleteLine { get; set; } 
         public string Name { get; set; }
         public int Number { get; set; }
-        public string Symbol　{ get; set; }
-        public bool IsObsolete { get; set; } 
+        public string Symbol { get; set; }
+        public int Period { get; set; }
+        public int Group { get; set; }
+        public string RCov { get; set; }
+        public string RW { get; set; }
+        public string Electronegativity { get; set; }
+
+        public NameAndNumber()
+        {
+        }
+
+        public static NameAndNumber Make(string prevLine, string line)
+        {
+            if (prevLine != null)
+                prevLine = prevLine.Trim();
+            var match = re.Match(line);
+            if (!match.Success)
+                return null;
+
+            var r = new NameAndNumber();
+            var inner = match.Groups["inner"].Value;
+            r.IsObsolete = prevLine != null && prevLine.StartsWith("[Obsolete", StringComparison.Ordinal);
+            r.ObsoleteLine = prevLine;
+            r.Name = match.Groups["name"].Value;
+            r.Number = int.Parse(match.Groups["number"].Value);
+            r.Symbol = match.Groups["symbol"].Value;
+            r.Period = int.Parse(match.Groups["period"].Value);
+            r.Group = int.Parse(match.Groups["group"].Value);
+            r.RCov = match.Groups["rCov"].Value;
+            r.RW = match.Groups["rW"].Value;
+            r.Electronegativity = match.Groups["electronegativity"].Value;
+            return r;
+        }
     }
 #>

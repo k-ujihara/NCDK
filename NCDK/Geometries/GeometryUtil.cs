@@ -1519,8 +1519,8 @@ namespace NCDK.Geometries
                 {
                     switch (firstAtom.AtomicNumber)
                     {
-                        case NaturalElement.AtomicNumbers.H:
-                        case NaturalElement.AtomicNumbers.C:
+                        case NaturalElements.H.AtomicNumber:
+                        case NaturalElements.C.AtomicNumber:
                             break;
                         default:
                             if (Coords3d)
@@ -1540,7 +1540,7 @@ namespace NCDK.Geometries
                 {
                     switch (firstAtom.AtomicNumber)
                     {
-                        case NaturalElement.AtomicNumbers.H:
+                        case NaturalElements.H.AtomicNumber:
                             break;
                         default:
                             if (Coords3d)

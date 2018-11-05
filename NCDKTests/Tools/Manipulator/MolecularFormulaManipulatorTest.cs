@@ -786,9 +786,9 @@ namespace NCDK.Tools.Manipulator
             Assert.IsNotNull(ac.Atoms[0].AtomicNumber);
             foreach (var atom in ac.Atoms)
             {
-                if (NaturalElement.AtomicNumbers.C.Equals(atom.AtomicNumber))
+                if (NaturalElements.C.AtomicNumber.Equals(atom.AtomicNumber))
                     Assert.AreEqual(6, atom.AtomicNumber.Value);
-                else if (NaturalElement.AtomicNumbers.H.Equals(atom.AtomicNumber))
+                else if (NaturalElements.H.AtomicNumber.Equals(atom.AtomicNumber))
                     Assert.AreEqual(1, atom.AtomicNumber.Value);
                 else
                     Assert.Fail("Unexpected element: " + atom.Symbol);

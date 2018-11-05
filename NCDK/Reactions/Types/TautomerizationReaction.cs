@@ -94,7 +94,7 @@ namespace NCDK.Reactions.Types
                                                 if (bondk.IsReactiveCenter && bondk.Order == BondOrder.Single)
                                                 {
                                                     IAtom atoml = bondk.GetOther(atomk); // Atom pos 4
-                                                    if (atoml.IsReactiveCenter && atoml.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+                                                    if (atoml.IsReactiveCenter && atoml.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                                                     {
                                                         var atomList = new List<IAtom>
                                                         {
@@ -178,7 +178,7 @@ namespace NCDK.Reactions.Types
                                                 if (bondk.Order == BondOrder.Single)
                                                 {
                                                     IAtom atoml = bondk.GetOther(atomk); // Atom pos 4
-                                                    if (atoml.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+                                                    if (atoml.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                                                     {
                                                         atomi.IsReactiveCenter = true;
                                                         atomj.IsReactiveCenter = true;

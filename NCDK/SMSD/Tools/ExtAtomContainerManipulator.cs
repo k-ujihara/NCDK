@@ -156,7 +156,7 @@ namespace NCDK.SMSD.Tools
             foreach (var iAtom in atomContainer.GetConnectedAtoms(atom))
             {
                 IAtom connectedAtom = iAtom;
-                if (connectedAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+                if (connectedAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                 {
                     hCount++;
                 }
@@ -200,7 +200,7 @@ namespace NCDK.SMSD.Tools
                 List<IAtom> remove = new List<IAtom>(); // lists removed Hs.
                 foreach (var atom in atomContainer.Atoms)
                 {
-                    if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+                    if (atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                         remove.Add(atom);
                 }
                 foreach (var a in remove)

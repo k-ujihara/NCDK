@@ -581,7 +581,7 @@ namespace NCDK.Smiles
         /// <exception cref="CDKException">the inchi numbers could not be obtained</exception>
         private static long[] InChINumbers(IAtomContainer container)
         {
-            var rgrps = GetRgrps(container, NaturalElements.Rutherfordium);
+            var rgrps = GetRgrps(container, NaturalElements.Rutherfordium.AtomicNumber);
             foreach (var rgrp in rgrps)
             {
                 rgrp.AtomicNumber = NaturalElements.Rutherfordium.AtomicNumber;
@@ -597,16 +597,16 @@ namespace NCDK.Smiles
             return numbers;
         }
 
-        private static IList<IAtom> GetRgrps(IAtomContainer container, Config.NaturalElement reversed)
+        private static IList<IAtom> GetRgrps(IAtomContainer container, int reversedAtomicNumber)
         {
-            List<IAtom> res = new List<IAtom>();
-            foreach (IAtom atom in container.Atoms)
+            var res = new List<IAtom>();
+            foreach (var atom in container.Atoms)
             {
                 if (atom.AtomicNumber == 0)
                 {
                     res.Add(atom);
                 }
-                else if (atom.AtomicNumber == reversed.AtomicNumber)
+                else if (atom.AtomicNumber == reversedAtomicNumber)
                 {
                     return Array.Empty<IAtom>();
                 }

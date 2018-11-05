@@ -85,7 +85,7 @@ namespace NCDK.Reactions.Types
                          && atoml.IsReactiveCenter
                          && !atoml.IsInRing
                          && (atoml.FormalCharge ?? 0) == 0
-                         && !atoml.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H) 
+                         && !atoml.AtomicNumber.Equals(NaturalElements.H.AtomicNumber) 
                          && reactant.GetMaximumBondOrder(atoml) == BondOrder.Single)
                         {
                             foreach (var atomR in reactant.GetConnectedAtoms(atoml))
@@ -144,7 +144,7 @@ namespace NCDK.Reactions.Types
                         if (atoml != null 
                          && !atoml.IsInRing
                          && (atoml.FormalCharge ?? 0) == 0
-                         && !atoml.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H)
+                         && !atoml.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)
                          && reactant.GetMaximumBondOrder(atoml) == BondOrder.Single)
                         {
                             foreach (var atomR in reactant.GetConnectedAtoms(atoml))

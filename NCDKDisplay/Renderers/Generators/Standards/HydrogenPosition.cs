@@ -48,15 +48,13 @@ namespace NCDK.Renderers.Generators.Standards
 
     public static class HydrogenPositionTools
     {
-        private static readonly HydrogenPosition[] values = new[]
+        internal static HydrogenPosition[] Values { get; } = new[]
         {
              Right,
              Left,
              Above,
              Below,
         };
-
-        internal static HydrogenPosition[] Values => values;
 
         private static readonly string[] names = new string[]
         {
@@ -74,17 +72,17 @@ namespace NCDK.Renderers.Generators.Standards
         /// right unless the element is listed here. This allows us to correctly
         /// displayed H2O not OH2 and CH4 not H4C.
         /// </summary>
-        private static readonly ISet<NaturalElement> PrefixedH
-            = new HashSet<NaturalElement>()
+        private static readonly ISet<int> PrefixedH
+            = new HashSet<int>()
                 {
-                    NaturalElements.Oxygen,
-                    NaturalElements.Sulfur,
-                    NaturalElements.Selenium,
-                    NaturalElements.Tellurium,
-                    NaturalElements.Fluorine,
-                    NaturalElements.Chlorine,
-                    NaturalElements.Bromine,
-                    NaturalElements.Iodine,
+                    NaturalElements.Oxygen.AtomicNumber,
+                    NaturalElements.Sulfur.AtomicNumber,
+                    NaturalElements.Selenium.AtomicNumber,
+                    NaturalElements.Tellurium.AtomicNumber,
+                    NaturalElements.Fluorine.AtomicNumber,
+                    NaturalElements.Chlorine.AtomicNumber,
+                    NaturalElements.Bromine.AtomicNumber,
+                    NaturalElements.Iodine.AtomicNumber,
                 };
 
         /// <summary>
@@ -132,7 +130,7 @@ namespace NCDK.Renderers.Generators.Standards
             }
         }
 
-        static C[] V = new[]
+        static readonly C[] V = new[]
         {
             new C(0, new Vector2(1, 0)),
             new C(Math.PI, new Vector2(-1, 0)),
@@ -195,7 +193,7 @@ namespace NCDK.Renderers.Generators.Standards
                 double before = extents[i];
                 double after = extents[(i + 1) % extents.Length];
 
-                foreach (var position in values)
+                foreach (var position in Values)
                 {
                     // adjust the extents such that this position is '0'
                     double bias = Tau - V[(int)position].Direction;
@@ -330,7 +328,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the position</returns>
         internal static HydrogenPosition UsingDefaultPlacement(IAtom atom)
         {
-            if (PrefixedH.Contains(NaturalElement.OfNumber(atom.AtomicNumber.Value))) return Left;
+            if (PrefixedH.Contains(atom.AtomicNumber.Value))
+                return Left;
             return Right;
         }
     }

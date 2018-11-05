@@ -55,7 +55,7 @@ namespace NCDK.Tools
                 for (int i = 0; i <= m.Atoms.Count - 1; i++)
                 {
                     IAtom a = m.Atoms[i];
-                    if (a.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N))
+                    if (a.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
                     {
                         var ca = m.GetConnectedAtoms(a).ToReadOnlyList();
 
@@ -67,7 +67,7 @@ namespace NCDK.Tools
 
                             for (int j = 0; j <= 2; j++)
                             {
-                                if ((ca[j]).AtomicNumber.Equals(NaturalElement.AtomicNumbers.O))
+                                if ((ca[j]).AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
                                 {
                                     count++;
                                 }
@@ -80,7 +80,7 @@ namespace NCDK.Tools
                                 for (int j = 0; j <= 2; j++)
                                 {
                                     IAtom caj = (IAtom)ca[j];
-                                    if (caj.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O))
+                                    if (caj.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
                                     {
                                         if (m.GetConnectedBonds(caj).Count() == 1)
                                         {// account for possibility of ONO2
@@ -126,7 +126,7 @@ namespace NCDK.Tools
                 for (int i = 0; i <= m.Atoms.Count - 1; i++)
                 {
                     IAtom a = m.Atoms[i];
-                    if (a.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N))
+                    if (a.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
                     {
                         var ca = m.GetConnectedAtoms(a).ToReadOnlyList();
 
@@ -139,7 +139,7 @@ namespace NCDK.Tools
                             for (int j = 0; j <= 2; j++)
                             {
                                 IAtom caj = ca[j];
-                                if (caj.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O))
+                                if (caj.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
                                 {
                                     count++;
                                 }
@@ -151,7 +151,7 @@ namespace NCDK.Tools
                                 for (int j = 0; j <= 2; j++)
                                 {
                                     IAtom caj = (IAtom)ca[j];
-                                    if (caj.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O))
+                                    if (caj.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
                                     {
                                         if (m.GetConnectedBonds(caj).Count() == 1)
                                         {// account for possibility of ONO2
@@ -259,7 +259,7 @@ namespace NCDK.Tools
             {
                 IAtom a = m.Atoms[i];
 
-                if (a.AtomicNumber.Equals(NaturalElement.AtomicNumbers.S))
+                if (a.AtomicNumber.Equals(NaturalElements.S.AtomicNumber))
                 {
                     var connectedAtoms = m.GetConnectedAtoms(a);
 
@@ -267,7 +267,7 @@ namespace NCDK.Tools
 
                     foreach (var conAtom in connectedAtoms)
                     {
-                        if (!conAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+                        if (!conAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                         {
                             IBond bond = m.GetBond(a, conAtom);
                             if (bond.Order == BondOrder.Single)
@@ -293,7 +293,7 @@ namespace NCDK.Tools
                     {
                         foreach (var conAtom in connectedAtoms)
                         {
-                            if (conAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+                            if (conAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                             {
                                 m.RemoveAtom(conAtom);
                             }

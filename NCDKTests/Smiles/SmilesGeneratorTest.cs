@@ -566,10 +566,10 @@ namespace NCDK.Smiles
                 int correction = (int)(bondCount - (atom.Charge ?? 0));
                 switch (atom.AtomicNumber)
                 {
-                    case NaturalElement.AtomicNumbers.C:
+                    case NaturalElements.C.AtomicNumber:
                         atom.ImplicitHydrogenCount = 4 - correction;
                         break;
-                    case NaturalElement.AtomicNumbers.N:
+                    case NaturalElements.N.AtomicNumber:
                         atom.ImplicitHydrogenCount = 3 - correction;
                         break;
                 }

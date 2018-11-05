@@ -15,11 +15,11 @@ namespace NCDK.Config
                 #endregion
             }
             {
-                #region OfString
-                var a = NaturalElement.OfString("c");
-                var b = NaturalElement.OfString("C");
-                var c = NaturalElement.OfString("Carbon");
-                var d = NaturalElement.OfString("carbon");
+                #region ToAtomicNumber
+                var a = NaturalElement.ToAtomicNumber("c");
+                var b = NaturalElement.ToAtomicNumber("C");
+                var c = NaturalElement.ToAtomicNumber("Carbon");
+                var d = NaturalElement.ToAtomicNumber("carbon");
                 #endregion
             }
         }

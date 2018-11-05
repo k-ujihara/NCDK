@@ -263,7 +263,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 maxBondOrder = ac.GetMaximumBondOrder(atomi);
                 switch (atomi.AtomicNumber)
                 {
-                    case NaturalElement.AtomicNumbers.C:
+                    case NaturalElements.C.AtomicNumber:
                         switch (bondCount)
                         {
                             case 2:
@@ -521,7 +521,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                 break;
                         }
                         break;//C
-                    case NaturalElement.AtomicNumbers.N:
+                    case NaturalElements.N.AtomicNumber:
                         //NO2
                         if (ac.GetBondOrderSum(atomi) >= 3.0 && GetOxygenCount(ac, atomi) >= 2
                                 && maxBondOrder == BondOrder.Double)
@@ -741,7 +741,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             }
                         }
                         break;
-                    case NaturalElement.AtomicNumbers.O:
+                    case NaturalElements.O.AtomicNumber:
                         if (bondCount == 1 && maxBondOrder == BondOrder.Double)
                         {
                             xlogP -= 0.399;
@@ -806,7 +806,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             }
                         }
                         break;
-                    case NaturalElement.AtomicNumbers.S:
+                    case NaturalElements.S.AtomicNumber:
                         if ((bondCount == 1 && maxBondOrder == BondOrder.Double)
                                 || (bondCount == 1 && atomi.FormalCharge == -1))
                         {
@@ -838,7 +838,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             }
                         }
                         break;
-                    case NaturalElement.AtomicNumbers.P:
+                    case NaturalElements.P.AtomicNumber:
                         if (GetDoubleBondedSulfurCount(ac, atomi) >= 1 && bondCount >= 4)
                         {
                             xlogP += 1.253;
@@ -849,7 +849,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             xlogP -= 0.447;
                         }
                         break;
-                    case NaturalElement.AtomicNumbers.F:
+                    case NaturalElements.F.AtomicNumber:
                         if (GetPiSystemsCount(ac, atomi) == 0)
                         {
                             xlogP += 0.375;
@@ -859,7 +859,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             xlogP += 0.202;
                         }
                         break;
-                    case NaturalElement.AtomicNumbers.Cl:
+                    case NaturalElements.Cl.AtomicNumber:
                         if (GetPiSystemsCount(ac, atomi) == 0)
                         {
                             xlogP += 0.512;
@@ -869,7 +869,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             xlogP += 0.663;
                         }
                         break;
-                    case NaturalElement.AtomicNumbers.Br:
+                    case NaturalElements.Br.AtomicNumber:
                         if (GetPiSystemsCount(ac, atomi) == 0)
                         {
                             xlogP += 0.85;
@@ -879,7 +879,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             xlogP += 0.839;
                         }
                         break;
-                    case NaturalElement.AtomicNumbers.I:
+                    case NaturalElements.I.AtomicNumber:
                         if (GetPiSystemsCount(ac, atomi) == 0)
                         {
                             xlogP += 1.05;
@@ -965,8 +965,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     bondAtom0 = bond.Atoms[0];
                     bondAtom1 = bond.Atoms[1];
-                    if ((bondAtom0.AtomicNumber.Equals(NaturalElement.AtomicNumbers.C) && bondAtom1.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N))
-                     || (bondAtom0.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N) && bondAtom1.AtomicNumber.Equals(NaturalElement.AtomicNumbers.C))
+                    if ((bondAtom0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && bondAtom1.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
+                     || (bondAtom0.AtomicNumber.Equals(NaturalElements.N.AtomicNumber) && bondAtom1.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
                      && bond.Order == BondOrder.Single)
                     {
                         aminoAcid.RemoveBond(bondAtom0, bondAtom1);
@@ -987,7 +987,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         {
                             map = (RMap)list[j];
                             atom1_ = ac.Atoms[map.Id1];
-                            if (atom1_.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O) && ac.GetMaximumBondOrder(atom1_) == BondOrder.Single)
+                            if (atom1_.AtomicNumber.Equals(NaturalElements.O.AtomicNumber) && ac.GetMaximumBondOrder(atom1_) == BondOrder.Single)
                             {
                                 if (ac.GetConnectedBonds(atom1_).Count() == 2 && GetHydrogenCount(ac, atom1_) == 0)
                                 {
@@ -1113,7 +1113,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int hcounter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+                if (neighbour.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                 {
                     hcounter += 1;
                 }
@@ -1135,10 +1135,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 switch (neighbour.AtomicNumber)
                 {
-                    case NaturalElement.AtomicNumbers.F:
-                    case NaturalElement.AtomicNumbers.I:
-                    case NaturalElement.AtomicNumbers.Cl:
-                    case NaturalElement.AtomicNumbers.Br:
+                    case NaturalElements.F.AtomicNumber:
+                    case NaturalElements.I.AtomicNumber:
+                    case NaturalElements.Cl.AtomicNumber:
+                    case NaturalElements.Br.AtomicNumber:
                         acounter += 1;
                         break;
                 }
@@ -1161,8 +1161,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 switch (neighbour.AtomicNumber)
                 {
-                    case NaturalElement.AtomicNumbers.N:
-                    case NaturalElement.AtomicNumbers.O:
+                    case NaturalElements.N.AtomicNumber:
+                    case NaturalElements.O.AtomicNumber:
                         if (!neighbour.GetProperty<bool>("IS_IN_AROMATIC_RING"))
                         {
                             bond = ac.GetBond(neighbour, atom);
@@ -1191,7 +1191,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 switch (neighbour.AtomicNumber)
                 {
-                    case NaturalElement.AtomicNumbers.C:
+                    case NaturalElements.C.AtomicNumber:
                         if (neighbour.IsAromatic)
                         {
                             carocounter += 1;
@@ -1214,7 +1214,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int ccounter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.AtomicNumber.Equals(NaturalElement.AtomicNumbers.C))
+                if (neighbour.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
                 {
                     if (!neighbour.IsAromatic)
                     {
@@ -1239,7 +1239,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 switch (neighbour.AtomicNumber)
                 {
-                    case NaturalElement.AtomicNumbers.O:
+                    case NaturalElements.O.AtomicNumber:
                         if (!neighbour.IsAromatic)
                         {
                             ocounter += 1;
@@ -1265,7 +1265,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 switch (neighbour.AtomicNumber)
                 {
-                    case NaturalElement.AtomicNumbers.C:
+                    case NaturalElements.C.AtomicNumber:
                         bond = ac.GetBond(neighbour, atom);
                         if (bond.Order == BondOrder.Double)
                         {
@@ -1297,7 +1297,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 switch (neighbour.AtomicNumber)
                 {
-                    case NaturalElement.AtomicNumbers.O:
+                    case NaturalElements.O.AtomicNumber:
                         bond = ac.GetBond(neighbour, atom);
                         if (chargeFlag && neighbour.FormalCharge == -1 && bond.Order == BondOrder.Single)
                         {
@@ -1331,7 +1331,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 switch (neighbour.AtomicNumber)
                 {
-                    case NaturalElement.AtomicNumbers.S:
+                    case NaturalElements.S.AtomicNumber:
                         if (atom.FormalCharge == 1 && neighbour.FormalCharge == -1)
                         {
                             sdbcounter += 1;
@@ -1365,7 +1365,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 switch (neighbour.AtomicNumber)
                 {
-                    case NaturalElement.AtomicNumbers.N:
+                    case NaturalElements.N.AtomicNumber:
                         bond = ac.GetBond(neighbour, atom);
                         if (!neighbour.IsAromatic)
                         {
@@ -1394,7 +1394,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 switch (neighbour.AtomicNumber)
                 {
-                    case NaturalElement.AtomicNumbers.N:
+                    case NaturalElements.N.AtomicNumber:
                         if (neighbour.GetProperty<bool>("IS_IN_AROMATIC_RING"))
                         {
                             narocounter += 1;
@@ -1426,8 +1426,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     {
                         switch (neighbour.AtomicNumber)
                         {
-                            case NaturalElement.AtomicNumbers.P:
-                            case NaturalElement.AtomicNumbers.S:
+                            case NaturalElements.P.AtomicNumber:
+                            case NaturalElements.S.AtomicNumber:
                                 break;
                             default:
                                 picounter += 1;
@@ -1448,12 +1448,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private static bool GetPresenceOfHydroxy(IAtomContainer ac, IAtom atom)
         {
             IAtom neighbour0 = (IAtom)ac.GetConnectedAtoms(atom).First();
-            if (neighbour0.AtomicNumber.Equals(NaturalElement.AtomicNumbers.C))
+            if (neighbour0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
             {
                 var first = ac.GetConnectedAtoms(neighbour0);
                 foreach (var conAtom in first)
                 {
-                    if (conAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O))
+                    if (conAtom.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
                     {
                         if (ac.GetBond(neighbour0, conAtom).Order == BondOrder.Single)
                         {
@@ -1484,12 +1484,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             //int counter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N))
+                if (neighbour.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
                 {
                     var second = ac.GetConnectedAtoms(neighbour);
                     foreach (var conAtom in second)
                     {
-                        if (conAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O))
+                        if (conAtom.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
                         {
                             var bond = ac.GetBond(neighbour, conAtom);
                             if (bond.Order == BondOrder.Double)
@@ -1514,7 +1514,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var neighbours = ac.GetConnectedAtoms(atom);
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.AtomicNumber.Equals(NaturalElement.AtomicNumbers.S) && GetOxygenCount(ac, neighbour) >= 2
+                if (neighbour.AtomicNumber.Equals(NaturalElements.S.AtomicNumber) && GetOxygenCount(ac, neighbour) >= 2
                         && ac.GetConnectedBonds(neighbour).Count() == 4)
                 {
                     return true;
@@ -1535,12 +1535,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int counter = 0;
             foreach (var neighbour in neighbours)
             {
-                if (neighbour.AtomicNumber.Equals(NaturalElement.AtomicNumbers.C))
+                if (neighbour.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
                 {
                     var second = ac.GetConnectedAtoms(neighbour);
                     foreach (var conAtom in second)
                     {
-                        if (conAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O))
+                        if (conAtom.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
                         {
                             var bond = ac.GetBond(neighbour, conAtom);
                             if (bond.Order == BondOrder.Double)
@@ -1571,8 +1571,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     switch (firstAtom.AtomicNumber)
                     {
-                        case NaturalElement.AtomicNumbers.C:
-                        case NaturalElement.AtomicNumbers.H:
+                        case NaturalElements.C.AtomicNumber:
+                        case NaturalElements.H.AtomicNumber:
                             break;
                         default:
                             return false;
@@ -1584,8 +1584,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         {
                             switch (secondAtom.AtomicNumber)
                             {
-                                case NaturalElement.AtomicNumbers.C:
-                                case NaturalElement.AtomicNumbers.H:
+                                case NaturalElements.C.AtomicNumber:
+                                case NaturalElements.H.AtomicNumber:
                                     break;
                                 default:
                                     return false;
@@ -1597,8 +1597,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                 {
                                     switch (thirdAtom.AtomicNumber)
                                     {
-                                        case NaturalElement.AtomicNumbers.C:
-                                        case NaturalElement.AtomicNumbers.H:
+                                        case NaturalElements.C.AtomicNumber:
+                                        case NaturalElements.H.AtomicNumber:
                                             break;
                                         default:
                                             return false;

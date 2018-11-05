@@ -120,7 +120,7 @@ namespace NCDK.Renderers.Generators.Standards
                 Insert(PREFIX_TRIE, str, 0);
             foreach (var str in ITAL_PREFIX)
                 Insert(ITAL_PREFIX_TRIE, str, 0);
-            foreach (var elem in Config.NaturalElement.Values)
+            foreach (var elem in Config.NaturalElement.Elements)
                 if (!string.IsNullOrEmpty(elem.Symbol))
                     Insert(SYMBOL_TRIE, elem.Symbol, 0);
             foreach (var str in SYMBOL_LIST)

@@ -898,17 +898,17 @@ namespace NCDK.SMARTS
         [TestMethod()]
         public void TestAliphaticSymbols()
         {
-            foreach (var e in NaturalElement.Values)
+            foreach (var e in NaturalElement.Elements)
             {
                 int len = e.Symbol.Length;
                 if (len == 1 || len == 2)
                 {
-                    string smarts = "[" + e.Symbol + "]";
-                    QueryAtomContainer mol = new QueryAtomContainer(null);
+                    string smarts = $"[{e.Symbol}]";
+                    var mol = new QueryAtomContainer(null);
                     Assert.IsTrue(Smarts.Parse(mol, smarts), smarts);
-                    Expr expr = GetAtomExpr(mol.Atoms[0]);
-                    var ee = new Expr(ExprType.Element, e.AtomicNumber);
-                    var ea = new Expr(AliphaticElement, e.AtomicNumber);
+                    var expr = GetAtomExpr(mol.Atoms[0]);
+                    var ee = new Expr(ExprType.Element, e.AtomicNumber.Value);
+                    var ea = new Expr(AliphaticElement, e.AtomicNumber.Value);
                     Assert.IsTrue(expr.Equals(ee) || expr.Equals(ea));
                 }
             }

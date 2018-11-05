@@ -231,8 +231,8 @@ namespace NCDK.LibIO.CML
                 for (int i = 0; i < nelement; i++)
                 {
                     string elem = tokens[2 * i];
-                    var ce = Config.NaturalElement.OfString(elem);
-                    if (ce == NaturalElements.Unknown)
+                    var ce = Config.NaturalElement.ToAtomicNumber(elem);
+                    if (ce == NaturalElements.Unknown.AtomicNumber)
                     {
                         throw new ApplicationException($"Unknown chemical element: {elem}");
                     }

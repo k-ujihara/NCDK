@@ -295,8 +295,8 @@ namespace NCDK.Tools
                 {
                     if (bonds[i].Order == BondOrder.Double 
                      && bonds[i].IsAromatic
-                     && bonds[i].Begin.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N) 
-                     && bonds[i].End.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N))
+                     && bonds[i].Begin.AtomicNumber.Equals(NaturalElements.N.AtomicNumber) 
+                     && bonds[i].End.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
                     {
                         int atomtohandle = 0;
                         if (string.Equals(bonds[i].Begin.Symbol, "N", StringComparison.Ordinal))
@@ -632,7 +632,7 @@ namespace NCDK.Tools
             {
                 // don't figure it out... it simply does not lack H's
             }
-            else if (atom.AtomicNumber != null && atom.AtomicNumber == 1 || atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H))
+            else if (atom.AtomicNumber != null && atom.AtomicNumber == 1 || atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
             {
                 missingHydrogen = (int)(1 - bondOrderSum - singleElectronSum - atom.FormalCharge);
             }

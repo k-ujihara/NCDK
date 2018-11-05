@@ -71,9 +71,8 @@ namespace NCDK.Renderers.Generators.Standards
 
         /// <summary>
         /// Create a standard atom generator using the specified font.
-        ///
-        /// <param name="font">the symbol font</param>
         /// </summary>
+        /// <param name="font">the symbol font</param>
         public StandardAtomGenerator(Typeface font, double emSize)
                 : this(font, emSize, DefaultAdjunctSpacingRatio, DefaultSubscriptSize)
         {
@@ -114,7 +113,7 @@ namespace NCDK.Renderers.Generators.Standards
             }
             else
             {
-                int number = UnboxSafely(atom.AtomicNumber, Config.NaturalElement.OfString(atom.Symbol).AtomicNumber);
+                int number = UnboxSafely(atom.AtomicNumber, Config.NaturalElement.ToAtomicNumber(atom.Symbol));
 
                 if (number == 0)
                     return GeneratePseudoSymbol("?", position);
@@ -122,9 +121,9 @@ namespace NCDK.Renderers.Generators.Standards
                 // unset the mass if it's the major isotope (could be an option)
                 var mass = atom.MassNumber;
                 if (mass != null &&
-                              model != null &&
-                              model.GetOmitMajorIsotopes() &&
-                              IsMajorIsotope(number, mass.Value))
+                    model != null &&
+                    model.GetOmitMajorIsotopes() &&
+                    IsMajorIsotope(number, mass.Value))
                 {
                     mass = null;
                 }

@@ -124,9 +124,7 @@ namespace NCDK.Stereo
             for (int v = 0; v < container.Atoms.Count; v++)
             {
                 var focus = container.Atoms[v];
-                var elem = NaturalElement.OfNumber(focus.AtomicNumber.Value);
-
-                if (elem != NaturalElements.Carbon)
+                if (!focus.AtomicNumber.Equals(NaturalElements.Carbon.AtomicNumber))
                     continue;
                 if (ringSearch.Cyclic(v))
                     continue;

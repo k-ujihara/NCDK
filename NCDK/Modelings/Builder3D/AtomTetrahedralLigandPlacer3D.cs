@@ -75,7 +75,7 @@ namespace NCDK.Modelings.Builder3D
             for (int i = 0; i < atomContainer.Atoms.Count; i++)
             {
                 refAtom = atomContainer.Atoms[i];
-                if (!refAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H) && HasUnsetNeighbour(refAtom, atomContainer))
+                if (!refAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber) && HasUnsetNeighbour(refAtom, atomContainer))
                 {
                     IAtomContainer noCoords = GetUnsetAtomsInAtomContainer(refAtom, atomContainer);
                     IAtomContainer withCoords = GetPlacedAtomsInAtomContainer(refAtom, atomContainer);
@@ -83,11 +83,11 @@ namespace NCDK.Modelings.Builder3D
                     {
                         atomC = GetPlacedHeavyAtomInAtomContainer(withCoords.Atoms[0], refAtom, atomContainer);
                     }
-                    if (refAtom.FormalNeighbourCount == 0 && refAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.C))
+                    if (refAtom.FormalNeighbourCount == 0 && refAtom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
                     {
                         nwanted = noCoords.Atoms.Count;
                     }
-                    else if (refAtom.FormalNeighbourCount == 0 && !refAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.C))
+                    else if (refAtom.FormalNeighbourCount == 0 && !refAtom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
                     {
                         nwanted = 4;
                     }
@@ -858,7 +858,7 @@ namespace NCDK.Modelings.Builder3D
             IAtom atom = null;
             foreach (var curAtom in atoms)
             {
-                if (curAtom.IsPlaced && !curAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.H) && curAtom != atomB)
+                if (curAtom.IsPlaced && !curAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber) && curAtom != atomB)
                 {
                     return curAtom;
                 }

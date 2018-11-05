@@ -151,14 +151,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             foreach (var atom in ac.Atoms)
             {
                 // looking for suitable nitrogen atoms
-                if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.N) && atom.FormalCharge <= 0)
+                if (atom.AtomicNumber.Equals(NaturalElements.N.AtomicNumber) && atom.FormalCharge <= 0)
                 {
                     // excluding nitrogens that are adjacent to an oxygen
                     var bonds = ac.GetConnectedBonds(atom);
                     int nPiBonds = 0;
                     foreach (var bond in bonds)
                     {
-                        if (bond.GetConnectedAtom(atom).AtomicNumber.Equals(NaturalElement.AtomicNumbers.O))
+                        if (bond.GetConnectedAtom(atom).AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
                             goto continue_atomloop;
                         if (BondOrder.Double.Equals(bond.Order))
                             nPiBonds++;
@@ -172,7 +172,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     hBondAcceptors++;
                 }
                 // looking for suitable oxygen atoms
-                else if (atom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.O) && atom.FormalCharge <= 0)
+                else if (atom.AtomicNumber.Equals(NaturalElements.O.AtomicNumber) && atom.FormalCharge <= 0)
                 {
                     //excluding oxygens that are adjacent to a nitrogen or to an aromatic carbon
                     var neighbours = ac.GetConnectedBonds(atom);
@@ -181,9 +181,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         var neighbor = bond.GetOther(atom);
                         switch (neighbor.AtomicNumber)
                         {
-                            case NaturalElement.AtomicNumbers.N:
+                            case NaturalElements.N.AtomicNumber:
                                 goto continue_atomloop;
-                            case NaturalElement.AtomicNumbers.C:
+                            case NaturalElements.C.AtomicNumber:
                                 if (neighbor.IsAromatic && bond.Order != BondOrder.Double)
                                     goto continue_atomloop;
                                 break;

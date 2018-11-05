@@ -122,10 +122,10 @@ namespace NCDK.Validate
             var tooCharged = new ValidationTest(atom, "Atom has an unlikely large positive or negative charge");
             switch (atom.AtomicNumber)
             {
-                case NaturalElement.AtomicNumbers.O:
-                case NaturalElement.AtomicNumbers.N:
-                case NaturalElement.AtomicNumbers.C:
-                case NaturalElement.AtomicNumbers.H:
+                case NaturalElements.O.AtomicNumber:
+                case NaturalElements.N.AtomicNumber:
+                case NaturalElements.C.AtomicNumber:
+                case NaturalElements.H.AtomicNumber:
                     if (atom.FormalCharge == 0)
                     {
                         report.OKs.Add(tooCharged);

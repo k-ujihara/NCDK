@@ -140,7 +140,7 @@ namespace <#= ns.NS #>
         public Atom(int elem, int hcnt, int fchg) : base((string)null)
         {
             AtomicNumber = elem;
-            Symbol = ChemicalElement.OfNumber(elem).Symbol;
+            Symbol = NaturalElement.OfNumber(elem).Symbol;
             ImplicitHydrogenCount = hcnt;
             FormalCharge = fchg;
         }
@@ -407,8 +407,6 @@ namespace <#= ns.NS #>
 
         private static bool ParseAtomSymbol(IAtom atom, string str)
         {
-            ChemicalElement elem;
-
             int len = str.Length;
             int pos = 0;
 
@@ -456,10 +454,9 @@ namespace <#= ns.NS #>
                 pos++;
                 while (pos < len && IsLower(str[pos]))
                     pos++;
-                elem = ChemicalElement.OfString(str.Substring(beg, pos - beg));
-                if (elem == ChemicalElements.Unknown)
+                anum = NaturalElement.ToAtomicNumber(str.Substring(beg, pos - beg));
+                if (anum == NaturalElements.Unknown.AtomicNumber)
                     return false;
-                anum = elem.AtomicNumber;
 
                 // optional fields after atom symbol
                 while (pos < len)
@@ -520,7 +517,7 @@ namespace <#= ns.NS #>
             else
                 atom.MassNumber = mass;
             atom.AtomicNumber = anum;
-            atom.Symbol = ChemicalElement.OfNumber(anum).Symbol;
+            atom.Symbol = NaturalElement.OfNumber(anum).Symbol;
             atom.ImplicitHydrogenCount = hcnt;
             atom.FormalCharge = chg;
 

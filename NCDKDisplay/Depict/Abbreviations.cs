@@ -602,7 +602,7 @@ namespace NCDK.Depict
         {
             var sb = new StringBuilder();
             var elem = NaturalElement.OfNumber(atomnum);
-            if (elem == NaturalElements.Carbon && hcount == 3)
+            if (elem == NaturalElements.Carbon.Element && hcount == 3)
                 return "Me";
             if (prefix)
             {
@@ -859,14 +859,14 @@ namespace NCDK.Depict
             // see HydrogenPosition for canonical list
             switch (elem.AtomicNumber)
             {
-                case AtomicNumbers.Oxygen:
-                case AtomicNumbers.Sulfur:
-                case AtomicNumbers.Selenium:
-                case AtomicNumbers.Tellurium:
-                case AtomicNumbers.Fluorine:
-                case AtomicNumbers.Chlorine:
-                case AtomicNumbers.Bromine:
-                case AtomicNumbers.Iodine:
+                case NaturalElements.Oxygen.AtomicNumber:
+                case NaturalElements.Sulfur.AtomicNumber:
+                case NaturalElements.Selenium.AtomicNumber:
+                case NaturalElements.Tellurium.AtomicNumber:
+                case NaturalElements.Fluorine.AtomicNumber:
+                case NaturalElements.Chlorine.AtomicNumber:
+                case NaturalElements.Bromine.AtomicNumber:
+                case NaturalElements.Iodine.AtomicNumber:
                     return hsym + elem.Symbol;
                 default:
                     return elem.Symbol + hsym;

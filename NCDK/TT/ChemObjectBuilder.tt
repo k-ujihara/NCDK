@@ -74,7 +74,7 @@ namespace <#= ns.NS #>
                     case "1":
                         LegacyAtomContainer = true;
                         break;
-                    case ChemicalElement.AtomicNumbers.F:
+                    case "F":
                     case "FALSE":
                     case "0":
                         LegacyAtomContainer = false;

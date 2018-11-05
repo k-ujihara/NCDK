@@ -1408,13 +1408,13 @@ namespace NCDK.Renderers.Generators.Standards
             public RingBondOffsetComparator()
             { }
 
-            private static readonly Config.NaturalElement[] preferedElements = new []
+            private static readonly int[] preferedElements = new int[]
             {
-                NaturalElements.Carbon,
-                NaturalElements.Nitrogen,
-                NaturalElements.Oxygen,
-                NaturalElements.Sulfur,
-                NaturalElements.Phosphorus
+                NaturalElements.Carbon.AtomicNumber,
+                NaturalElements.Nitrogen.AtomicNumber,
+                NaturalElements.Oxygen.AtomicNumber,
+                NaturalElements.Sulfur.AtomicNumber,
+                NaturalElements.Phosphorus.AtomicNumber,
             };
 
             /// <inheritdoc/>
@@ -1435,7 +1435,7 @@ namespace NCDK.Renderers.Generators.Standards
 
                 foreach (var element in preferedElements)
                 {
-                    int elemCmp = Ints.Compare(freqA[element.AtomicNumber], freqB[element.AtomicNumber]);
+                    int elemCmp = Ints.Compare(freqA[element], freqB[element]);
                     if (elemCmp != 0) return -elemCmp;
                 }
 

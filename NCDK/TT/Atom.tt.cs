@@ -391,8 +391,6 @@ namespace NCDK.Default
 
         private static bool ParseAtomSymbol(IAtom atom, string str)
         {
-            NaturalElement elem;
-
             int len = str.Length;
             int pos = 0;
 
@@ -440,10 +438,9 @@ namespace NCDK.Default
                 pos++;
                 while (pos < len && IsLower(str[pos]))
                     pos++;
-                elem = NaturalElement.OfString(str.Substring(beg, pos - beg));
-                if (elem == NaturalElements.Unknown)
+                anum = NaturalElement.ToAtomicNumber(str.Substring(beg, pos - beg));
+                if (anum == NaturalElements.Unknown.AtomicNumber)
                     return false;
-                anum = elem.AtomicNumber;
 
                 // optional fields after atom symbol
                 while (pos < len)
@@ -874,8 +871,6 @@ namespace NCDK.Silent
 
         private static bool ParseAtomSymbol(IAtom atom, string str)
         {
-            NaturalElement elem;
-
             int len = str.Length;
             int pos = 0;
 
@@ -923,10 +918,9 @@ namespace NCDK.Silent
                 pos++;
                 while (pos < len && IsLower(str[pos]))
                     pos++;
-                elem = NaturalElement.OfString(str.Substring(beg, pos - beg));
-                if (elem == NaturalElements.Unknown)
+                anum = NaturalElement.ToAtomicNumber(str.Substring(beg, pos - beg));
+                if (anum == NaturalElements.Unknown.AtomicNumber)
                     return false;
-                anum = elem.AtomicNumber;
 
                 // optional fields after atom symbol
                 while (pos < len)

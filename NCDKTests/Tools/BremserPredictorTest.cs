@@ -159,7 +159,7 @@ namespace NCDK.Tools
                 atom = ac.Atoms[f];
                 switch (atom.AtomicNumber)
                 {
-                    case NaturalElement.AtomicNumbers.H:
+                    case NaturalElements.H.AtomicNumber:
                         ac.RemoveAtom(atom);
                         break;
                 }

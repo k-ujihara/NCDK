@@ -178,7 +178,7 @@ namespace NCDK.ForceFields
         {
             for (int v = 0; v < graph.Length; v++)
             {
-                if (container.Atoms[v].AtomicNumber.Equals(NaturalElement.AtomicNumbers.H) && graph[v].Length == 1)
+                if (container.Atoms[v].AtomicNumber.Equals(NaturalElements.H.AtomicNumber) && graph[v].Length == 1)
                 {
                     int w = graph[v][0];
                     var symb = symbs[w];

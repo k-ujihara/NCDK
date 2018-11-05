@@ -108,7 +108,7 @@ namespace NCDK.AtomTypes
 
             switch (atom.AtomicNumber)
             {
-                case NaturalElement.AtomicNumbers.Cr:
+                case NaturalElements.Cr.AtomicNumber:
                     {
                         // if only I had good descriptions of the Sybyl atom types
                         int neighbors = atomContainer.GetConnectedBonds(atom).Count();
@@ -118,7 +118,7 @@ namespace NCDK.AtomTypes
                             return factory.GetAtomType("Cr.th");
                     }
                     break;
-                case NaturalElement.AtomicNumbers.Co:
+                case NaturalElements.Co.AtomicNumber:
                     {
                         // if only I had good descriptions of the Sybyl atom types
                         int neibors = atomContainer.GetConnectedBonds(atom).Count();
@@ -160,7 +160,7 @@ namespace NCDK.AtomTypes
                 return false;
             var neighbor = neighbors[0];
             var neighborAtom = neighbor.GetOther(atom);
-            if (neighborAtom.AtomicNumber.Equals(NaturalElement.AtomicNumbers.C))
+            if (neighborAtom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
             {
                 if (neighbor.Order == BondOrder.Single)
                 {
@@ -183,7 +183,7 @@ namespace NCDK.AtomTypes
                 return false;
             int oxygenCount = 0;
             foreach (var neighbor in neighbors)
-                if (NaturalElement.AtomicNumbers.O.Equals(neighbor.AtomicNumber))
+                if (NaturalElements.O.AtomicNumber.Equals(neighbor.AtomicNumber))
                     oxygenCount++;
             return (oxygenCount == 2);
         }
