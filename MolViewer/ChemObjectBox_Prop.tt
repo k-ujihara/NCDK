@@ -55,6 +55,8 @@ namespace NCDK.MolViewer
             "}"
             );
 
+        P("HighlightingObjects", "string", "\"\"", "o._HighlightObjects = (string)e.NewValue;");
+
         P("AtomColorer", "IAtomColorer", "new UniColor(WPF.Media.Colors.Black)", "o.Generator.AtomColorer = (IAtomColorer)e.NewValue;");
         P("BackgroundColor", "WPF.Media.Color", "WPF.Media.Colors.Transparent", "o.Generator.BackgroundColor = (WPF.Media.Color)e.NewValue;");
         P("Highlighting", "HighlightStyle", "HighlightStyle.None", "o.Generator.Highlighting = (HighlightStyle)e.NewValue;");

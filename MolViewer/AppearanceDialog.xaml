@@ -10,6 +10,7 @@
         <local:Power10Converter x:Key="Power10Converter"/>
         <local:F2Converter x:Key="F2Converter"/>
         <local:ColoringStyleToStringConverter x:Key="ColoringStyleToStringConverter"/>
+        <local:HighlightingStyleToStringConverter x:Key="HighlightingStyleToStringConverter"/>
     </Window.Resources>
     <StackPanel VerticalAlignment="Top">
         <StackPanel>
@@ -21,7 +22,7 @@
         </StackPanel>
         <StackPanel>
             <Grid>
-                <Label Content="Coloring:" HorizontalAlignment="Left" />
+                <Label Content="Coloring:" HorizontalAlignment="Left" Width="58" />
                 <ComboBox Text="{Binding Coloring, Converter={StaticResource ColoringStyleToStringConverter}}" x:Name="coloring" Margin="63,0,0.333,0">
                     <ComboBoxItem Content="COW"/>
                     <ComboBoxItem Content="COT"/>
@@ -31,6 +32,17 @@
                     <ComboBoxItem Content="COB"/>
                     <ComboBoxItem Content="NOB"/>
                 </ComboBox>
+            </Grid>
+            <Grid>
+                <Label Content="Highlighting:" HorizontalAlignment="Left" Width="78" />
+                <ComboBox Text="{Binding Highlighting, Converter={StaticResource HighlightingStyleToStringConverter}}" x:Name="highlighting" Margin="83,0,0.333,0">
+                    <ComboBoxItem Content="None"/>
+                    <ComboBoxItem Content="Colored"/>
+                    <ComboBoxItem Content="OuterGlow"/>
+                </ComboBox>
+            </Grid>
+            <Grid>
+                <TextBox Text="{Binding HighlightingObjects}" x:Name="highlightings" />
             </Grid>
         </StackPanel>
     </StackPanel>

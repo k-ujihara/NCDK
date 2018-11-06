@@ -31,6 +31,12 @@ namespace NCDK.MolViewer
 {
     partial class AppearanceViewModel : BindableBase
     {
+        private string _HighlightingObjects = "";
+        public string HighlightingObjects
+        {
+            get { return _HighlightingObjects; }
+            set { this.SetProperty(ref this._HighlightingObjects, value); }
+        }
         private double _Zoom = 1;
         public double Zoom
         {

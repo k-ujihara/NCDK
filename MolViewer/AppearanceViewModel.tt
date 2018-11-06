@@ -49,6 +49,7 @@ namespace NCDK.MolViewer
     partial class AppearanceViewModel : BindableBase
     {
 <#
+        P("HighlightingObjects", "string", "\"\"");
         P("Zoom", "double", "1");
         P("AlignMappedReaction", "bool", "true");
         P("BackgroundColor", "WPF.Media.Color", "WPF.Media.Colors.Transparent");

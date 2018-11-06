@@ -34,6 +34,29 @@ namespace NCDK.MolViewer
                 o.UpdateVisual();
             }
         }
+        public static readonly DependencyProperty HighlightingObjectsProperty =
+            DependencyProperty.Register(
+                "HighlightingObjects",
+                typeof(string),
+                typeof(ChemObjectBox),
+                new FrameworkPropertyMetadata(
+                    (string)(""),
+                    new PropertyChangedCallback(OnHighlightingObjectsPropertyChanged)));
+
+        public string HighlightingObjects
+        {
+            get { return (string)GetValue(HighlightingObjectsProperty); }
+            set { SetValue(HighlightingObjectsProperty, value); }
+        }
+
+        private static void OnHighlightingObjectsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ChemObjectBox o)
+            {
+                o._HighlightObjects = (string)e.NewValue;
+                o.UpdateVisual();
+            }
+        }
         public static readonly DependencyProperty AtomColorerProperty =
             DependencyProperty.Register(
                 "AtomColorer",

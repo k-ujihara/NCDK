@@ -234,7 +234,7 @@ namespace NCDK.MolViewer
                 try
                 {
                     // Get InChIToStructure
-                    InChIToStructure converter =  InChIToStructure.FromInChI(text, builder);
+                    var converter =  InChIToStructure.FromInChI(text, builder);
                     mol = converter.AtomContainer;
                 }
                 catch (Exception)
@@ -357,6 +357,26 @@ namespace NCDK.MolViewer
             if (parameter is string p)
                 return (ColoringStyle)Enum.Parse(typeof(ColoringStyle), p);
             return (ColoringStyle)0;
+        }
+    }
+
+    public class HighlightingStyleToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ((HighlightStyle)value).ToString();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ToEnum(value);
+        }
+
+        private static HighlightStyle ToEnum(object parameter)
+        {
+            if (parameter is string p)
+                return (HighlightStyle)Enum.Parse(typeof(HighlightStyle), p);
+            return (HighlightStyle)0;
         }
     }
 

@@ -21,6 +21,10 @@
  */
 
 using NCDK.Depict;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Media;
 
 namespace NCDK.MolViewer
@@ -33,6 +37,7 @@ namespace NCDK.MolViewer
 
         internal Depiction depiction;
         private IChemObject _ChemObject = null;
+        private string _HighlightObjects = "";
 
         public ChemObjectBox()
         {
@@ -51,12 +56,47 @@ namespace NCDK.MolViewer
             }
         }
 
+        private static readonly Regex reSplitHL = new Regex(@"(?<ab>Atoms|Bonds)\[(?<nn>\d+)\]", RegexOptions.Compiled);
+
+        private static IEnumerable<IChemObject> SplitHighlightinhObjects(IAtomContainer mol, string text)
+        {
+            var abs = text.Split(',').Select(n => n.Trim());
+            foreach (var ab in abs)
+            {
+                var match = reSplitHL.Match(ab);
+                int nn;
+                try
+                {
+                    nn = int.Parse(match.Groups["nn"].Value);
+                }
+                catch (Exception)
+                {
+                    yield break;
+                }
+                switch (match.Groups["ab"].Value)
+                {
+                    case "Atoms":
+                        yield return mol.Atoms[nn];
+                        break;
+                    case "Bonds":
+                        yield return mol.Bonds[nn];
+                        break;
+                }
+            }
+            yield break;
+        }
+
         private void UpdateVisual()
         {
             switch (_ChemObject)
             {
                 case IAtomContainer mol:
-                    depiction = Generator.Depict(mol);
+                    var sss = new Dictionary<IChemObject, Color>();
+                    foreach (var o in SplitHighlightinhObjects(mol, this.HighlightingObjects))
+                    {
+                        sss.Add(o, Colors.Aqua);
+                    }
+                    depiction = Generator.Depict(mol, sss);
                     break;
                 case IReaction rxn:
                     depiction = Generator.Depict(rxn);
