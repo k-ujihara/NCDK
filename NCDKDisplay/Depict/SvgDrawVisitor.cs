@@ -222,7 +222,7 @@ namespace NCDK.Depict
         /// <param name="elements">elements to be visited</param>
         public void Previsit(IEnumerable<IRenderingElement> elements)
         {
-            Deque<IRenderingElement> queue = new ArrayDeque<IRenderingElement>();
+            var queue = new ArrayDeque<IRenderingElement>();
             queue.AddRange(elements);
 
             var strokeFreq = new FreqMap<Color>();
@@ -231,7 +231,7 @@ namespace NCDK.Depict
 
             while (queue.Any())
             {
-                IRenderingElement element = queue.Poll();
+                var element = queue.Poll();
                 // wrappers first
                 if (element is Bounds)
                 {
@@ -286,7 +286,7 @@ namespace NCDK.Depict
             if (cls != null)
                 sb.Append(" class='").Append(cls).Append("'");
             sb.Append(" d='");
-            Point currPoint = new Point(0, 0);
+            var currPoint = new Point(0, 0);
 
             var g = elem.Elements;
             var tran = g.Transform ?? Transform.Identity;
@@ -452,11 +452,11 @@ namespace NCDK.Depict
 
         private void Visit(MarkedElement elem)
         {
-            string id = elem.Id;
+            var id = elem.Id;
             var classes = elem.GetClasses();
-            string cls = !classes.Any() ? null : string.Join(" ", classes);
+            var cls = !classes.Any() ? null : string.Join(" ", classes);
 
-            IRenderingElement marked = elem.Element();
+            var marked = elem.Element();
 
             // unpack singletons
             while (marked is ElementGroup)
@@ -550,7 +550,7 @@ namespace NCDK.Depict
         private void Visit(TextElement elem)
         {
             AppendIdent();
-            Point[] points = new Point[] { elem.Coord };
+            var points = new Point[] { elem.Coord };
             TransformPoints(points);
             sb.Append("<text ");
             sb.Append(" x='").Append(ToString(points[0].X)).Append("'");
@@ -590,13 +590,10 @@ namespace NCDK.Depict
                 defaultsWritten = true;
             }
 
-            Deque<IRenderingElement> queue = new ArrayDeque<IRenderingElement>
-            {
-                root
-            };
+            var queue = new ArrayDeque<IRenderingElement> { root };
             while (queue.Any())
             {
-                IRenderingElement elem = queue.Poll();
+                var elem = queue.Poll();
                 if (elem is ElementGroup)
                 {
                     foreach (var child in (ElementGroup)elem)

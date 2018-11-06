@@ -93,10 +93,10 @@ namespace NCDK.Depict
             // each other. By default determineGrid tries to make the grid
             // wide but we want it tall
             this.sideComps.AddRange(agents);
-            Dimension sideGrid = Dimensions.DetermineGrid(sideComps.Count);
-            Dimensions prelimSideDim = Dimensions.OfGrid(sideComps,
-                                                         yOffsetSide = new double[sideGrid.Width + 1],
-                                                         xOffsetSide = new double[sideGrid.Height + 1]);
+            var sideGrid = Dimensions.DetermineGrid(sideComps.Count);
+            var prelimSideDim = Dimensions.OfGrid(sideComps,
+                                                  yOffsetSide = new double[sideGrid.Width + 1],
+                                                  xOffsetSide = new double[sideGrid.Height + 1]);
 
             // build the main components, we add a 'plus' between each molecule
             foreach (var reactant in reactants)
@@ -130,7 +130,7 @@ namespace NCDK.Depict
                     throw new ArgumentException("Number of reactant titles differed from number of reactants");
                 if (productTitles.Any() && productTitles.Count != products.Count)
                     throw new ArgumentException("Number of product titles differed from number of products");
-                List<Bounds> mainTitles = new List<Bounds>();
+                var mainTitles = new List<Bounds>();
                 foreach (var reactantTitle in reactantTitles)
                 {
                     mainTitles.Add(reactantTitle);
@@ -215,33 +215,32 @@ namespace NCDK.Depict
             // fractional strokes can be figured out by interpolation, without
             // when we shrink diagrams bonds can look too bold/chubby
             // format margins and padding for raster images
-            double scale = model.GetScale();
-            double zoom = model.GetZoomFactor();
-            double margin = GetMarginValue(DepictionGenerator.DefaultPixelMargin);
-            double padding = GetPaddingValue(DefaultPaddingFactor * margin);
+            var scale = model.GetScale();
+            var zoom = model.GetZoomFactor();
+            var margin = GetMarginValue(DepictionGenerator.DefaultPixelMargin);
+            var padding = GetPaddingValue(DefaultPaddingFactor * margin);
 
             // work out the required space of the main and side components separately
             // will draw these in two passes (main then side) hence want different offsets for each
-            int nSideCol = xOffsetSide.Length - 1;
-            int nSideRow = yOffsetSide.Length - 1;
+            var nSideCol = xOffsetSide.Length - 1;
+            var nSideRow = yOffsetSide.Length - 1;
 
-            Dimensions sideRequired = sideDim.Scale(scale * zoom);
-            Dimensions mainRequired = mainDim.Scale(scale * zoom);
-            Dimensions condRequired = condDim.Scale(scale * zoom);
+            var sideRequired = sideDim.Scale(scale * zoom);
+            var mainRequired = mainDim.Scale(scale * zoom);
+            var condRequired = condDim.Scale(scale * zoom);
+            var titleRequired = new Dimensions(title.Width, title.Height).Scale(scale * zoom);
 
-            Dimensions titleRequired = new Dimensions(title.Width, title.Height).Scale(scale * zoom);
+            var firstRowHeight = scale * zoom * yOffsets[1];
+            var total = CalcTotalDimensions(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, null);
+            var fitting = CalcFitting(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, null);
 
-            double firstRowHeight = scale * zoom * yOffsets[1];
-            Dimensions total = CalcTotalDimensions(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, null);
-            double fitting = CalcFitting(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, null);
-
-            IDrawVisitor visitor = WPFDrawVisitor.ForVectorGraphics(g2);
+            var visitor = WPFDrawVisitor.ForVectorGraphics(g2);
 
             if (model.GetBackgroundColor() != Colors.Transparent)
                 visitor.Visit(new RectangleElement(new Point(0, 0), total.width, total.height, true, model.GetBackgroundColor()), Transform.Identity);
 
             // compound the zoom, fitting and scaling into a single value
-            double rescale = zoom * fitting * scale;
+            var rescale = zoom * fitting * scale;
             double mainCompOffset = 0;
 
             // shift product x-offset to make room for the arrow / side components
@@ -253,22 +252,22 @@ namespace NCDK.Depict
 
             // MAIN COMPONENTS DRAW
             // x,y base coordinates include the margin and centering (only if fitting to a size)
-            double totalRequiredWidth = 2 * margin + Math.Max(0, nCol - 1) * padding + Math.Max(0, nSideCol - 1) * padding + (rescale * xOffsets[nCol]);
-            double totalRequiredHeight = 2 * margin + Math.Max(0, nRow - 1) * padding + (!title.IsEmpty() ? padding : 0) + Math.Max(mainCompOffset, 0) + fitting * mainRequired.height + fitting * Math.Max(0, titleRequired.height);
-            double xBase = margin + (total.width - totalRequiredWidth) / 2;
-            double yBase = margin + Math.Max(mainCompOffset, 0) + (total.height - totalRequiredHeight) / 2;
+            var totalRequiredWidth = 2 * margin + Math.Max(0, nCol - 1) * padding + Math.Max(0, nSideCol - 1) * padding + (rescale * xOffsets[nCol]);
+            var totalRequiredHeight = 2 * margin + Math.Max(0, nRow - 1) * padding + (!title.IsEmpty() ? padding : 0) + Math.Max(mainCompOffset, 0) + fitting * mainRequired.height + fitting * Math.Max(0, titleRequired.height);
+            var xBase = margin + (total.width - totalRequiredWidth) / 2;
+            var yBase = margin + Math.Max(mainCompOffset, 0) + (total.height - totalRequiredHeight) / 2;
             for (int i = 0; i < mainComp.Count; i++)
             {
-                int row = i / nCol;
-                int col = i % nCol;
+                var row = i / nCol;
+                var col = i % nCol;
 
                 // calculate the 'view' bounds:
                 //  amount of padding depends on which row or column we are in.
                 //  the width/height of this col/row can be determined by the next offset
-                double x = xBase + col * padding + rescale * xOffsets[col];
-                double y = yBase + row * padding + rescale * yOffsets[row];
-                double w = rescale * (xOffsets[col + 1] - xOffsets[col]);
-                double h = rescale * (yOffsets[row + 1] - yOffsets[row]);
+                var x = xBase + col * padding + rescale * xOffsets[col];
+                var y = yBase + row * padding + rescale * yOffsets[row];
+                var w = rescale * (xOffsets[col + 1] - xOffsets[col]);
+                var h = rescale * (yOffsets[row + 1] - yOffsets[row]);
 
                 // intercept arrow draw and make it as big as need
                 if (i == arrowIdx)
@@ -296,8 +295,8 @@ namespace NCDK.Depict
             // RXN TITLE DRAW
             if (!title.IsEmpty())
             {
-                double y = yBase + nRow * padding + rescale * yOffsets[nRow];
-                double h = rescale * title.Height;
+                var y = yBase + nRow * padding + rescale * yOffsets[nRow];
+                var h = rescale * title.Height;
                 Draw(visitor, zoom, title, MakeRect(0, y, total.width, h));
             }
 
@@ -306,16 +305,16 @@ namespace NCDK.Depict
             yBase -= mainCompOffset;
             for (int i = 0; i < sideComps.Count; i++)
             {
-                int row = i / nSideCol;
-                int col = i % nSideCol;
+                var row = i / nSideCol;
+                var col = i % nSideCol;
 
                 // calculate the 'view' bounds:
                 //  amount of padding depends on which row or column we are in.
                 //  the width/height of this col/row can be determined by the next offset
-                double x = xBase + col * padding + rescale * xOffsetSide[col];
-                double y = yBase + row * padding + rescale * yOffsetSide[row];
-                double w = rescale * (xOffsetSide[col + 1] - xOffsetSide[col]);
-                double h = rescale * (yOffsetSide[row + 1] - yOffsetSide[row]);
+                var x = xBase + col * padding + rescale * xOffsetSide[col];
+                var y = yBase + row * padding + rescale * yOffsetSide[row];
+                var w = rescale * (xOffsetSide[col + 1] - xOffsetSide[col]);
+                var h = rescale * (yOffsetSide[row + 1] - yOffsetSide[row]);
 
                 Draw(visitor, zoom, sideComps[i], MakeRect(x, y, w, h));
             }
@@ -357,20 +356,19 @@ namespace NCDK.Depict
 
             // work out the required space of the main and side components separately
             // will draw these in two passes (main then side) hence want different offsets for each
-            int nSideCol = xOffsetSide.Length - 1;
-            int nSideRow = yOffsetSide.Length - 1;
+            var nSideCol = xOffsetSide.Length - 1;
+            var nSideRow = yOffsetSide.Length - 1;
 
-            Dimensions sideRequired = sideDim.Scale(scale * zoom);
-            Dimensions mainRequired = mainDim.Scale(scale * zoom);
-            Dimensions condRequired = condDim.Scale(scale * zoom);
+            var sideRequired = sideDim.Scale(scale * zoom);
+            var mainRequired = mainDim.Scale(scale * zoom);
+            var condRequired = condDim.Scale(scale * zoom);
+            var titleRequired = new Dimensions(title.Width, title.Height).Scale(scale * zoom);
 
-            Dimensions titleRequired = new Dimensions(title.Width, title.Height).Scale(scale * zoom);
+            var firstRowHeight = scale * zoom * yOffsets[1];
+            var total = CalcTotalDimensions(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, fmt);
+            var fitting = CalcFitting(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, fmt);
 
-            double firstRowHeight = scale * zoom * yOffsets[1];
-            Dimensions total = CalcTotalDimensions(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, fmt);
-            double fitting = CalcFitting(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, fmt);
-
-            IDrawVisitor visitor = new SvgDrawVisitor(total.width, total.height, units);
+            var visitor = new SvgDrawVisitor(total.width, total.height, units);
             if (fmt.Equals(SvgFormatKey))
             {
                 SvgPrevisit(fmt, scale * zoom * fitting, (SvgDrawVisitor)visitor, mainComp);
@@ -386,7 +384,7 @@ namespace NCDK.Depict
             visitor.Visit(new RectangleElement(new Point(0, -total.height), total.width, total.height, true, model.GetBackgroundColor()), new ScaleTransform(1, -1));
 
             // compound the zoom, fitting and scaling into a single value
-            double rescale = zoom * fitting * scale;
+            var rescale = zoom * fitting * scale;
             double mainCompOffset = 0;
 
             // shift product x-offset to make room for the arrow / side components
@@ -398,22 +396,22 @@ namespace NCDK.Depict
 
             // MAIN COMPONENTS DRAW
             // x,y base coordinates include the margin and centering (only if fitting to a size)
-            double totalRequiredWidth = 2 * margin + Math.Max(0, nCol - 1) * padding + Math.Max(0, nSideCol - 1) * padding + (rescale * xOffsets[nCol]);
-            double totalRequiredHeight = 2 * margin + Math.Max(0, nRow - 1) * padding + (!title.IsEmpty() ? padding : 0) + Math.Max(mainCompOffset, 0) + fitting * mainRequired.height + fitting * Math.Max(0, titleRequired.height);
-            double xBase = margin + (total.width - totalRequiredWidth) / 2;
-            double yBase = margin + Math.Max(mainCompOffset, 0) + (total.height - totalRequiredHeight) / 2;
+            var totalRequiredWidth = 2 * margin + Math.Max(0, nCol - 1) * padding + Math.Max(0, nSideCol - 1) * padding + (rescale * xOffsets[nCol]);
+            var totalRequiredHeight = 2 * margin + Math.Max(0, nRow - 1) * padding + (!title.IsEmpty() ? padding : 0) + Math.Max(mainCompOffset, 0) + fitting * mainRequired.height + fitting * Math.Max(0, titleRequired.height);
+            var xBase = margin + (total.width - totalRequiredWidth) / 2;
+            var yBase = margin + Math.Max(mainCompOffset, 0) + (total.height - totalRequiredHeight) / 2;
             for (int i = 0; i < mainComp.Count; i++)
             {
-                int row = i / nCol;
-                int col = i % nCol;
+                var row = i / nCol;
+                var col = i % nCol;
 
                 // calculate the 'view' bounds:
                 //  amount of padding depends on which row or column we are in.
                 //  the width/height of this col/row can be determined by the next offset
-                double x = xBase + col * padding + rescale * xOffsets[col];
-                double y = yBase + row * padding + rescale * yOffsets[row];
-                double w = rescale * (xOffsets[col + 1] - xOffsets[col]);
-                double h = rescale * (yOffsets[row + 1] - yOffsets[row]);
+                var x = xBase + col * padding + rescale * xOffsets[col];
+                var y = yBase + row * padding + rescale * yOffsets[row];
+                var w = rescale * (xOffsets[col + 1] - xOffsets[col]);
+                var h = rescale * (yOffsets[row + 1] - yOffsets[row]);
 
                 // intercept arrow draw and make it as big as need
                 if (i == arrowIdx)
@@ -431,7 +429,7 @@ namespace NCDK.Depict
                     x += Math.Max(0, nSideCol - 1) * padding;
 
                 // skip empty elements
-                Bounds bounds = this.mainComp[i];
+                var bounds = this.mainComp[i];
                 if (bounds.IsEmpty())
                     continue;
 
@@ -441,8 +439,8 @@ namespace NCDK.Depict
             // RXN TITLE DRAW
             if (!title.IsEmpty())
             {
-                double y = yBase + nRow * padding + rescale * yOffsets[nRow];
-                double h = rescale * title.Height;
+                var y = yBase + nRow * padding + rescale * yOffsets[nRow];
+                var h = rescale * title.Height;
                 Draw(visitor, zoom, title, MakeRect(0, y, total.width, h));
             }
 
@@ -457,10 +455,10 @@ namespace NCDK.Depict
                 // calculate the 'view' bounds:
                 //  amount of padding depends on which row or column we are in.
                 //  the width/height of this col/row can be determined by the next offset
-                double x = xBase + col * padding + rescale * xOffsetSide[col];
-                double y = yBase + row * padding + rescale * yOffsetSide[row];
-                double w = rescale * (xOffsetSide[col + 1] - xOffsetSide[col]);
-                double h = rescale * (yOffsetSide[row + 1] - yOffsetSide[row]);
+                var x = xBase + col * padding + rescale * xOffsetSide[col];
+                var y = yBase + row * padding + rescale * yOffsetSide[row];
+                var w = rescale * (xOffsetSide[col + 1] - xOffsetSide[col]);
+                var h = rescale * (yOffsetSide[row + 1] - yOffsetSide[row]);
 
                 Draw(visitor, zoom, sideComps[i], MakeRect(x, y, w, h));
             }
@@ -493,11 +491,11 @@ namespace NCDK.Depict
             if (dimensions == Dimensions.Automatic)
                 return 1; // no fitting
 
-            int nSideCol = xOffsetSide.Length - 1;
-            int nSideRow = yOffsetSide.Length - 1;
+            var nSideCol = xOffsetSide.Length - 1;
+            var nSideRow = yOffsetSide.Length - 1;
 
             // need padding in calculation
-            double mainCompOffset = sideRequired.height > 0 ? sideRequired.height + (nSideRow * padding) - (firstRowHeight / 2) : 0;
+            var mainCompOffset = sideRequired.height > 0 ? sideRequired.height + (nSideRow * padding) - (firstRowHeight / 2) : 0;
             if (mainCompOffset < 0)
                 mainCompOffset = 0;
 
@@ -509,15 +507,15 @@ namespace NCDK.Depict
             // tall we won't normally bit fitting by this parameter. If do fit by this
             // parameter we might make the depiction smaller then it needs to be but thats
             // better than cutting bits off
-            Dimensions targetDim = dimensions;
+            var targetDim = dimensions;
 
             targetDim = targetDim.Add(-2 * margin, -2 * margin)
                                  .Add(-((nCol - 1) * padding), -((nRow - 1) * padding))
                                  .Add(-(nSideCol - 1) * padding, -(nSideRow - 1) * padding)
                                  .Add(0, titleRequired.height > 0 ? -padding : 0);
 
-            double resize = Math.Min(targetDim.width / required.width,
-                                     targetDim.height / required.height);
+            var resize = Math.Min(targetDim.width / required.width,
+                                  targetDim.height / required.height);
 
             if (resize > 1 && !model.GetFitToScreen())
                 resize = 1;
@@ -531,15 +529,14 @@ namespace NCDK.Depict
         {
             if (dimensions == Dimensions.Automatic)
             {
+                var nSideCol = xOffsetSide.Length - 1;
+                var nSideRow = yOffsetSide.Length - 1;
 
-                int nSideCol = xOffsetSide.Length - 1;
-                int nSideRow = yOffsetSide.Length - 1;
-
-                double mainCompOffset = sideRequired.height + (nSideRow * padding) - (firstRowHeight / 2);
+                var mainCompOffset = sideRequired.height + (nSideRow * padding) - (firstRowHeight / 2);
                 if (mainCompOffset < 0)
                     mainCompOffset = 0;
 
-                double titleExtra = Math.Max(0, titleRequired.height);
+                var titleExtra = Math.Max(0, titleRequired.height);
                 if (titleExtra > 0)
                     titleExtra += padding;
 
@@ -564,10 +561,10 @@ namespace NCDK.Depict
 
         private Bounds CreateArrow(double minWidth, double minHeight)
         {
-            Bounds arrow = new Bounds();
-            double headThickness = minHeight / 3;
-            double inset = 0.8;
-            double headLength = minHeight;
+            var arrow = new Bounds();
+            var headThickness = minHeight / 3;
+            var inset = 0.8;
+            var headLength = minHeight;
             switch (direction)
             {
                 case ReactionDirection.Forward:

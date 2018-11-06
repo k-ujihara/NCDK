@@ -1478,7 +1478,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Layout.StructureDiagramGenerator_Example.cs">
-    <code>            StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+    <code>            var sdg = new StructureDiagramGenerator();
              sdg.Molecule = someMolecule;
              sdg.GenerateCoordinates();
             IAtomContainer layedOutMol = sdg.Molecule;

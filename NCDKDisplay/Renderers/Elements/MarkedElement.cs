@@ -46,7 +46,7 @@ namespace NCDK.Renderers.Elements
         public const string ClassKey = nameof(MarkedElement) + "_CLS";
 
         readonly IRenderingElement elem;
-        private readonly IList<string> classes = new List<string>(5);
+        private readonly List<string> classes = new List<string>(5);
 
         private MarkedElement(IRenderingElement elem)
         {
@@ -105,7 +105,7 @@ namespace NCDK.Renderers.Elements
         public static MarkedElement Markup(IRenderingElement elem, params string[] classes)
         {
             Debug.Assert(elem != null);
-            MarkedElement tagElem = new MarkedElement(elem);
+            var tagElem = new MarkedElement(elem);
             foreach (var cls in classes)
                 tagElem.AddClass(cls);
             return tagElem;
@@ -114,7 +114,7 @@ namespace NCDK.Renderers.Elements
         private static MarkedElement MarkupChemObj(IRenderingElement elem, IChemObject chemObj)
         {
             Debug.Assert(elem != null);
-            MarkedElement tagElem = new MarkedElement(elem);
+            var tagElem = new MarkedElement(elem);
             if (chemObj != null)
             {
                 tagElem.Id = chemObj.GetProperty<string>(IdKey);
@@ -133,7 +133,7 @@ namespace NCDK.Renderers.Elements
         public static MarkedElement MarkupMol(IRenderingElement elem, IAtomContainer mol)
         {
             Debug.Assert(elem != null);
-            MarkedElement tagElem = MarkupChemObj(elem, mol);
+            var tagElem = MarkupChemObj(elem, mol);
             tagElem.AddClass("mol");
             return tagElem;
         }
@@ -149,7 +149,7 @@ namespace NCDK.Renderers.Elements
         {
             if (elem == null)
                 return null;
-            MarkedElement tagElem = MarkupChemObj(elem, atom);
+            var tagElem = MarkupChemObj(elem, atom);
             tagElem.AddClass("atom");
             return tagElem;
         }
@@ -165,7 +165,7 @@ namespace NCDK.Renderers.Elements
         {
             if (elem == null)
                 throw new ArgumentNullException(nameof(elem));
-            MarkedElement tagElem = MarkupChemObj(elem, bond);
+            var tagElem = MarkupChemObj(elem, bond);
             tagElem.AddClass("bond");
             return tagElem;
         }

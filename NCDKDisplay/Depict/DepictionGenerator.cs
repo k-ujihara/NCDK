@@ -271,7 +271,7 @@ namespace NCDK.Depict
                 e.Key.SetProperty(StandardGenerator.HighlightColorKey, e.Value);
 
             // generate bound rendering elements
-            RendererModel model = CreateModel();
+            var model = CreateModel();
             // setup the model scale
             var molList = mols.ToList();
             model.SetScale(CaclModelScale(molList));
@@ -360,7 +360,7 @@ namespace NCDK.Depict
 
             Ensure2DLayout(rxn); // can reorder components!
 
-            Color fgcol = templateModel.GetAtomColorer().GetAtomColor(rxn.Builder.NewAtom("C"));
+            var fgcol = templateModel.GetAtomColorer().GetAtomColor(rxn.Builder.NewAtom("C"));
 
             var reactants = rxn.Reactants.ToList();
             var products = rxn.Products.ToList();
@@ -407,28 +407,28 @@ namespace NCDK.Depict
                 e.Key.SetProperty(StandardGenerator.HighlightColorKey, e.Value);
 
             // setup the model scale based on bond length
-            double scale = this.CaclModelScale(rxn);
-            RendererModel model = CreateModel();
+            var scale = this.CaclModelScale(rxn);
+            var model = CreateModel();
             model.SetScale(scale);
 
             // reactant/product/agent element generation, we number the reactants, then products then agents
-            List<Bounds> reactantBounds = Generate(reactants, model, 1);
-            List<Bounds> productBounds = Generate(rxn.Products.ToList(), model, rxn.Reactants.Count);
-            List<Bounds> agentBounds = Generate(rxn.Agents.ToList(), model, rxn.Reactants.Count + rxn.Products.Count);
+            var reactantBounds = Generate(reactants, model, 1);
+            var productBounds = Generate(rxn.Products.ToList(), model, rxn.Reactants.Count);
+            var agentBounds = Generate(rxn.Agents.ToList(), model, rxn.Reactants.Count + rxn.Products.Count);
 
             // remove current highlight buffer
             foreach (var obj in myHighlight.Keys)
                 obj.RemoveProperty(StandardGenerator.HighlightColorKey);
 
             // generate a 'plus' element
-            Bounds plus = GeneratePlusSymbol(scale, fgcol);
+            var plus = GeneratePlusSymbol(scale, fgcol);
 
             // reset the coordinates to how they were before we invoked depict
             foreach (LayoutBackup backup in layoutBackups)
                 backup.Reset();
 
-            Bounds emptyBounds = new Bounds();
-            Bounds title = model.GetShowReactionTitle() ? GenerateTitle(model, rxn, scale) : emptyBounds;
+            var emptyBounds = new Bounds();
+            var title = model.GetShowReactionTitle() ? GenerateTitle(model, rxn, scale) : emptyBounds;
             var reactantTitles = new List<Bounds>();
             var productTitles = new List<Bounds>();
             if (model.GetShowMoleculeTitle())
@@ -477,7 +477,7 @@ namespace NCDK.Depict
                             if (colorIdx >= atomMapColors.Count)
                                 throw new ArgumentException("Not enough colors to highlight atom mapping, please provide mode");
                         }
-                        Color color = atomMapColors[colorIdx];
+                        var color = atomMapColors[colorIdx];
                         colorMap[atom] = color;
                         mapToColor[mapidx] = color;
                     }
@@ -486,10 +486,10 @@ namespace NCDK.Depict
                 {
                     foreach (var bond in mol.Bonds)
                     {
-                        IAtom a1 = bond.Begin;
-                        IAtom a2 = bond.End;
-                        Color c1 = colorMap[a1];
-                        Color c2 = colorMap[a2];
+                        var a1 = bond.Begin;
+                        var a2 = bond.End;
+                        var c1 = colorMap[a1];
+                        var c2 = colorMap[a2];
                         if (c1 != null && c1 == c2)
                             colorMap[bond] = c1;
                     }
@@ -508,10 +508,10 @@ namespace NCDK.Depict
                 }
                 foreach (var bond in mol.Bonds)
                 {
-                    IAtom a1 = bond.Begin;
-                    IAtom a2 = bond.End;
-                    Color c1 = colorMap[a1];
-                    Color c2 = colorMap[a2];
+                    var a1 = bond.Begin;
+                    var a2 = bond.End;
+                    var c1 = colorMap[a1];
+                    var c2 = colorMap[a2];
                     if (c1 != null && c1 == c2)
                         colorMap[bond] = c1;
                 }
@@ -557,7 +557,7 @@ namespace NCDK.Depict
             }
             else if (annotateAtomValues)
             {
-                foreach (IAtom atom in molecule.Atoms)
+                foreach (var atom in molecule.Atoms)
                 {
                     if (atom.GetProperty<string>(StandardGenerator.AnnotationLabelKey) != null)
                         throw new NotSupportedException("Multiple annotation labels are not supported.");
@@ -579,7 +579,7 @@ namespace NCDK.Depict
                 }
             }
 
-            ElementGroup grp = new ElementGroup();
+            var grp = new ElementGroup();
             foreach (var gen in generators)
                 grp.Add(gen.Generate(molecule, model));
 
@@ -614,7 +614,7 @@ namespace NCDK.Depict
         /// <returns>bound element</returns>
         private Bounds GenerateTitle(RendererModel model, IChemObject chemObj, double scale)
         {
-            string title = chemObj.GetProperty<string>(CDKPropertyName.Title);
+            var title = chemObj.GetProperty<string>(CDKPropertyName.Title);
             if (string.IsNullOrEmpty(title))
                 return new Bounds();
             scale = 1 / scale * model.GetTitleFontScale();
@@ -623,7 +623,7 @@ namespace NCDK.Depict
 
         private Bounds GenerateReactionConditions(IReaction chemObj, Color fg, double scale)
         {
-            string title = chemObj.GetProperty<string>(CDKPropertyName.ReactionConditions);
+            var title = chemObj.GetProperty<string>(CDKPropertyName.ReactionConditions);
             if (string.IsNullOrEmpty(title))
                 return new Bounds();
             return new Bounds(MarkedElement.Markup(StandardGenerator.EmbedText(font, emSize, title, fg, 1 / scale), "conditions"));
@@ -639,7 +639,7 @@ namespace NCDK.Depict
         {
             if (!GeometryUtil.Has2DCoordinates(container))
             {
-                StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+                var sdg = new StructureDiagramGenerator();
                 sdg.GenerateCoordinates(container);
                 return true;
             }
@@ -655,7 +655,7 @@ namespace NCDK.Depict
         {
             if (!GeometryUtil.Has2DCoordinates(rxn))
             {
-                StructureDiagramGenerator sdg = new StructureDiagramGenerator { AlignMappedReaction = alignMappedReactions };
+                var sdg = new StructureDiagramGenerator { AlignMappedReaction = alignMappedReactions };
                 sdg.GenerateCoordinates(rxn);
             }
         }
@@ -1007,29 +1007,29 @@ namespace NCDK.Depict
 
             public LayoutBackup(IAtomContainer mol)
             {
-                int numAtoms = mol.Atoms.Count;
-                int numBonds = mol.Bonds.Count;
+                var numAtoms = mol.Atoms.Count;
+                var numBonds = mol.Bonds.Count;
                 this.coords = new Vector2?[numAtoms];
                 this.btypes = new BondStereo[numBonds];
                 this.mol = mol;
                 for (int i = 0; i < numAtoms; i++)
                 {
-                    IAtom atom = mol.Atoms[i];
+                    var atom = mol.Atoms[i];
                     coords[i] = atom.Point2D;
                     if (coords[i] != null)
                         atom.Point2D = coords[i]; // copy
                 }
                 for (int i = 0; i < numBonds; i++)
                 {
-                    IBond bond = mol.Bonds[i];
+                    var bond = mol.Bonds[i];
                     btypes[i] = bond.Stereo;
                 }
             }
 
             internal void Reset()
             {
-                int numAtoms = mol.Atoms.Count;
-                int numBonds = mol.Bonds.Count;
+                var numAtoms = mol.Atoms.Count;
+                var numBonds = mol.Bonds.Count;
                 for (int i = 0; i < numAtoms; i++)
                     mol.Atoms[i].Point2D = coords[i];
                 for (int i = 0; i < numBonds; i++)

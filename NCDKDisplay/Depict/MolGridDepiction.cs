@@ -91,10 +91,10 @@ namespace NCDK.Depict
         public override Size Draw(DrawingContext drawingContext)
         {
             // format margins and padding for raster images
-            double margin = GetMarginValue(DepictionGenerator.DefaultPixelMargin);
-            double padding = GetPaddingValue(DefaultPaddingFactor * margin);
-            double scale = model.GetScale();
-            double zoom = model.GetZoomFactor();
+            var margin = GetMarginValue(DepictionGenerator.DefaultPixelMargin);
+            var padding = GetPaddingValue(DefaultPaddingFactor * margin);
+            var scale = model.GetScale();
+            var zoom = model.GetZoomFactor();
 
             // row and col offsets for alignment
             var yOffset = new double[nRow + 1];
@@ -110,16 +110,16 @@ namespace NCDK.Depict
                 visitor.Visit(new RectangleElement(new Point(0, 0), total.width, total.height, true, model.GetBackgroundColor()), Transform.Identity);
 
             // compound the zoom, fitting and scaling into a single value
-            double rescale = zoom * fitting * scale;
+            var rescale = zoom * fitting * scale;
 
             // x,y base coordinates include the margin and centering (only if fitting to a size)
-            double xBase = margin + (total.width - 2 * margin - (nCol - 1) * padding - (rescale * xOffset[nCol])) / 2;
-            double yBase = margin + (total.height - 2 * margin - (nRow - 1) * padding - (rescale * yOffset[nRow])) / 2;
+            var xBase = margin + (total.width - 2 * margin - (nCol - 1) * padding - (rescale * xOffset[nCol])) / 2;
+            var yBase = margin + (total.height - 2 * margin - (nRow - 1) * padding - (rescale * yOffset[nRow])) / 2;
 
             for (int i = 0; i < elements.Count; i++)
             {
-                int row = i / nCol;
-                int col = i % nCol;
+                var row = i / nCol;
+                var col = i % nCol;
 
                 // skip empty elements
                 var bounds = this.elements[i];
@@ -129,10 +129,10 @@ namespace NCDK.Depict
                 // calculate the 'view' bounds:
                 //  amount of padding depends on which row or column we are in.
                 //  the width/height of this col/row can be determined by the next offset
-                double x = xBase + col * padding + rescale * xOffset[col];
-                double y = yBase + row * padding + rescale * yOffset[row];
-                double w = rescale * (xOffset[col + 1] - xOffset[col]);
-                double h = rescale * (yOffset[row + 1] - yOffset[row]);
+                var x = xBase + col * padding + rescale * xOffset[col];
+                var y = yBase + row * padding + rescale * yOffset[row];
+                var w = rescale * (xOffset[col + 1] - xOffset[col]);
+                var h = rescale * (yOffset[row + 1] - yOffset[row]);
 
                 Draw(visitor, zoom, bounds, new Rect(x, y, w, h));
             }
@@ -144,7 +144,7 @@ namespace NCDK.Depict
         {
             if (dimensions == Dimensions.Automatic)
                 return 1; // no fitting
-            Dimensions targetDim = dimensions;
+            var targetDim = dimensions;
 
             targetDim = targetDim.Add(-2 * margin, -2 * margin).Add(-((nCol - 1) * padding), -((nRow - 1) * padding));
             double resize = Math.Min(targetDim.width / required.width,
@@ -171,14 +171,14 @@ namespace NCDK.Depict
         internal override string ToVectorString(string fmt, string units)
         {
             // format margins and padding for raster images
-            double margin = GetMarginValue(
+            var margin = GetMarginValue(
                 units.Equals(Depiction.UnitsMM) ? 
                     DepictionGenerator.DefaultMillimeterMargin : 
                     DepictionGenerator.DefaultPixelMargin);
-            double padding = GetPaddingValue(DefaultPaddingFactor * margin);
-            double scale = model.GetScale();
+            var padding = GetPaddingValue(DefaultPaddingFactor * margin);
+            var scale = model.GetScale();
 
-            double zoom = model.GetZoomFactor();
+            var zoom = model.GetZoomFactor();
 
             // All vector graphics will be written in mm not px to we need to
             // adjust the size of the molecules accordingly. For now the rescaling
@@ -187,16 +187,15 @@ namespace NCDK.Depict
                 zoom *= RescaleForBondLength(Depiction.ACS1996BondLength);
 
             // row and col offsets for alignment
-            double[] yOffset = new double[nRow + 1];
-            double[] xOffset = new double[nCol + 1];
+            var yOffset = new double[nRow + 1];
+            var xOffset = new double[nCol + 1];
 
-            Dimensions required = Dimensions.OfGrid(elements, yOffset, xOffset).Scale(zoom * scale);
-
-            Dimensions total = CalcTotalDimensions(margin, padding, required, fmt);
-            double fitting = CalcFitting(margin, padding, required, fmt);
+            var required = Dimensions.OfGrid(elements, yOffset, xOffset).Scale(zoom * scale);
+            var total = CalcTotalDimensions(margin, padding, required, fmt);
+            var fitting = CalcFitting(margin, padding, required, fmt);
 
             // create the image for rendering
-            IDrawVisitor visitor = new SvgDrawVisitor(total.width, total.height, units);
+            var visitor = new SvgDrawVisitor(total.width, total.height, units);
 
             if (fmt.Equals(SvgFormatKey))
             {
@@ -212,24 +211,24 @@ namespace NCDK.Depict
             visitor.Visit(new RectangleElement(new Point(0, -total.height), total.width, total.height, true, model.GetBackgroundColor()), new ScaleTransform(1, -1));
 
             // compound the fitting and scaling into a single value
-            double rescale = zoom * fitting * scale;
+            var rescale = zoom * fitting * scale;
 
             // x,y base coordinates include the margin and centering (only if fitting to a size)
-            double xBase = margin + (total.width - 2 * margin - (nCol - 1) * padding - (rescale * xOffset[nCol])) / 2;
-            double yBase = margin + (total.height - 2 * margin - (nRow - 1) * padding - (rescale * yOffset[nRow])) / 2;
+            var xBase = margin + (total.width - 2 * margin - (nCol - 1) * padding - (rescale * xOffset[nCol])) / 2;
+            var yBase = margin + (total.height - 2 * margin - (nRow - 1) * padding - (rescale * yOffset[nRow])) / 2;
 
             for (int i = 0; i < elements.Count; i++)
             {
-                int row = i / nCol;
-                int col = i % nCol;
+                var row = i / nCol;
+                var col = i % nCol;
 
                 // calculate the 'view' bounds:
                 //  amount of padding depends on which row or column we are in.
                 //  the width/height of this col/row can be determined by the next offset
-                double x = xBase + col * padding + rescale * xOffset[col];
-                double y = yBase + row * padding + rescale * yOffset[row];
-                double w = rescale * (xOffset[col + 1] - xOffset[col]);
-                double h = rescale * (yOffset[row + 1] - yOffset[row]);
+                var x = xBase + col * padding + rescale * xOffset[col];
+                var y = yBase + row * padding + rescale * yOffset[row];
+                var w = rescale * (xOffset[col + 1] - xOffset[col]);
+                var h = rescale * (yOffset[row + 1] - yOffset[row]);
 
                 Draw(visitor, zoom, elements[i], new Rect(x, y, w, h));
             }

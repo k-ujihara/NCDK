@@ -12,7 +12,7 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void NoHighlightOrGlow()
         {
-            IAtomContainer methyl = new AtomContainer();
+            var methyl = new AtomContainer();
             methyl.Atoms.Add(AtomAt("C", new Vector2(0, 0)));
             methyl.Atoms.Add(AtomAt("H", new Vector2(0, 1)));
             methyl.Atoms.Add(AtomAt("H", new Vector2(0, -1)));
@@ -22,14 +22,14 @@ namespace NCDK.Renderers.Generators.Standards
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[2], BondOrder.Single);
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[3], BondOrder.Single);
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[4], BondOrder.Single);
-            SymbolVisibility visibility = SelectionVisibility.GetAll(SymbolVisibility.IupacRecommendations);
+            var visibility = SelectionVisibility.GetAll(SymbolVisibility.IupacRecommendations);
             Assert.IsFalse(visibility.Visible(methyl.Atoms[0], methyl.GetConnectedBonds(methyl.Atoms[0]), new RendererModel()));
         }
 
         [TestMethod()]
         public void WithHighlight()
         {
-            IAtomContainer methyl = new AtomContainer();
+            var methyl = new AtomContainer();
             methyl.Atoms.Add(AtomAt("C", new Vector2(0, 0)));
             methyl.Atoms.Add(AtomAt("H", new Vector2(0, 1)));
             methyl.Atoms.Add(AtomAt("H", new Vector2(0, -1)));
@@ -40,15 +40,14 @@ namespace NCDK.Renderers.Generators.Standards
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[2], BondOrder.Single);
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[3], BondOrder.Single);
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[4], BondOrder.Single);
-            SymbolVisibility visibility = SelectionVisibility.GetAll(SymbolVisibility.IupacRecommendations);
-            Assert.IsTrue(visibility.Visible(methyl.Atoms[0], methyl.GetConnectedBonds(methyl.Atoms[0]),
-                    new RendererModel()));
+            var visibility = SelectionVisibility.GetAll(SymbolVisibility.IupacRecommendations);
+            Assert.IsTrue(visibility.Visible(methyl.Atoms[0], methyl.GetConnectedBonds(methyl.Atoms[0]), new RendererModel()));
         }
 
         [TestMethod()]
         public void Isolated()
         {
-            IAtomContainer methyl = new AtomContainer();
+            var methyl = new AtomContainer();
             methyl.Atoms.Add(AtomAt("C", new Vector2(0, 0)));
             methyl.Atoms.Add(AtomAt("H", new Vector2(0, 1)));
             methyl.Atoms.Add(AtomAt("H", new Vector2(0, -1)));
@@ -59,14 +58,14 @@ namespace NCDK.Renderers.Generators.Standards
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[3], BondOrder.Single);
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[4], BondOrder.Single);
             methyl.Atoms[0].SetProperty(StandardGenerator.HighlightColorKey, WPF::Media.Colors.Red);
-            SymbolVisibility visibility = SelectionVisibility.Disconnected(SymbolVisibility.IupacRecommendations);
+            var visibility = SelectionVisibility.Disconnected(SymbolVisibility.IupacRecommendations);
             Assert.IsTrue(visibility.Visible(methyl.Atoms[0], methyl.GetConnectedBonds(methyl.Atoms[0]), new RendererModel()));
         }
 
         [TestMethod()]
         public void UnIsolated()
         {
-            IAtomContainer methyl = new AtomContainer();
+            var methyl = new AtomContainer();
             methyl.Atoms.Add(AtomAt("C", new Vector2(0, 0)));
             methyl.Atoms.Add(AtomAt("H", new Vector2(0, 1)));
             methyl.Atoms.Add(AtomAt("H", new Vector2(0, -1)));
@@ -78,9 +77,8 @@ namespace NCDK.Renderers.Generators.Standards
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[4], BondOrder.Single);
             methyl.Atoms[0].SetProperty(StandardGenerator.HighlightColorKey, WPF::Media.Colors.Red);
             methyl.Bonds[0].SetProperty(StandardGenerator.HighlightColorKey, WPF::Media.Colors.Red);
-            SymbolVisibility visibility = SelectionVisibility.Disconnected(SymbolVisibility.IupacRecommendations);
-            Assert.IsFalse(visibility.Visible(methyl.Atoms[0], methyl.GetConnectedBonds(methyl.Atoms[0]),
-                    new RendererModel()));
+            var visibility = SelectionVisibility.Disconnected(SymbolVisibility.IupacRecommendations);
+            Assert.IsFalse(visibility.Visible(methyl.Atoms[0], methyl.GetConnectedBonds(methyl.Atoms[0]), new RendererModel()));
         }
 
         [TestMethod()]
@@ -93,7 +91,7 @@ namespace NCDK.Renderers.Generators.Standards
 
         static IAtom AtomAt(string symb, Vector2 p)
         {
-            IAtom atom = new Atom(symb)
+            var atom = new Atom(symb)
             {
                 Point2D = p
             };

@@ -122,34 +122,34 @@ namespace NCDK.Renderers.Generators.Standards
             var symbolRemap = new Dictionary<IAtom, string>();
             StandardSgroupGenerator.PrepareDisplayShortcuts(container, symbolRemap);
 
-            double scale = parameters.GetScale();
+            var scale = parameters.GetScale();
 
-            SymbolVisibility visibility = parameters.GetVisibility();
-            IAtomColorer coloring = parameters.GetAtomColorer();
-            Color annotationColor = parameters.GetAnnotationColor();
+            var visibility = parameters.GetVisibility();
+            var coloring = parameters.GetAtomColorer();
+            var annotationColor = parameters.GetAnnotationColor();
             var foreground = coloring.GetAtomColor(container.Builder.NewAtom("C"));
 
             // the stroke width is based on the font. a better method is needed to get
             // the exact font stroke but for now we use the width of the pipe character.
-            double fontStroke = new TextOutline("|", font, emSize).Resize(1 / scale, 1 / scale).GetBounds().Width;
-            double stroke = parameters.GetStrokeRatio() * fontStroke;
+            var fontStroke = new TextOutline("|", font, emSize).Resize(1 / scale, 1 / scale).GetBounds().Width;
+            var stroke = parameters.GetStrokeRatio() * fontStroke;
 
-            ElementGroup annotations = new ElementGroup();
+            var annotations = new ElementGroup();
 
-            AtomSymbol[] symbols = GenerateAtomSymbols(container, symbolRemap, visibility, parameters, annotations, foreground, stroke);
-            IRenderingElement[] bondElements = StandardBondGenerator.GenerateBonds(container, symbols, parameters, stroke, font, emSize, annotations);
+            var symbols = GenerateAtomSymbols(container, symbolRemap, visibility, parameters, annotations, foreground, stroke);
+            var bondElements = StandardBondGenerator.GenerateBonds(container, symbols, parameters, stroke, font, emSize, annotations);
 
             var style = parameters.GetHighlighting();
-            double glowWidth = parameters.GetOuterGlowWidth();
+            var glowWidth = parameters.GetOuterGlowWidth();
 
-            ElementGroup backLayer = new ElementGroup();
-            ElementGroup middleLayer = new ElementGroup();
-            ElementGroup frontLayer = new ElementGroup();
+            var backLayer = new ElementGroup();
+            var middleLayer = new ElementGroup();
+            var frontLayer = new ElementGroup();
 
             // bond elements can simply be added to the element group
             for (int i = 0; i < container.Bonds.Count; i++)
             {
-                IBond bond = container.Bonds[i];
+                var bond = container.Bonds[i];
 
                 if (IsHidden(bond))
                     continue;
@@ -172,13 +172,13 @@ namespace NCDK.Renderers.Generators.Standards
             // convert the atom symbols to IRenderingElements
             for (int i = 0; i < container.Atoms.Count; i++)
             {
-                IAtom atom = container.Atoms[i];
+                var atom = container.Atoms[i];
 
                 if (IsHidden(atom))
                     continue;
 
                 var highlight = GetHighlightColor(atom, parameters);
-                Color color = GetColorOfAtom(symbolRemap, coloring, foreground, style, atom, highlight);
+                var color = GetColorOfAtom(symbolRemap, coloring, foreground, style, atom, highlight);
 
                 if (symbols[i] == null)
                 {
@@ -190,7 +190,7 @@ namespace NCDK.Renderers.Generators.Standards
                     continue;
                 }
 
-                ElementGroup symbolElements = new ElementGroup();
+                var symbolElements = new ElementGroup();
                 foreach (var shape in symbols[i].GetOutlines())
                 {
                     GeneralPath path = GeneralPath.ShapeOf(shape, color);
@@ -219,13 +219,13 @@ namespace NCDK.Renderers.Generators.Standards
             }
 
             // Add the Sgroups display elements to the front layer
-            IRenderingElement sgroups = StandardSgroupGenerator.Generate(parameters, stroke, font, emSize, foreground, atomGenerator, symbols, container);
+            var sgroups = StandardSgroupGenerator.Generate(parameters, stroke, font, emSize, foreground, atomGenerator, symbols, container);
             frontLayer.Add(sgroups);
 
             // Annotations are added to the front layer.
             frontLayer.Add(annotations);
 
-            ElementGroup group = new ElementGroup
+            var group = new ElementGroup
             {
                 backLayer,
                 middleLayer,
@@ -257,21 +257,21 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="parameters">render model parameters</param>
         /// <returns>generated atom symbols (can contain <see langword="null"/>)</returns>
         private AtomSymbol[] GenerateAtomSymbols(IAtomContainer container,
-                                                IDictionary<IAtom, string> symbolRemap,
+                                                Dictionary<IAtom, string> symbolRemap,
                                                 SymbolVisibility visibility,
                                                 RendererModel parameters, 
                                                 ElementGroup annotations,
                                                 Color foreground,
                                                 double stroke)
         {
-            double scale = parameters.GetScale();
-            double annDist = parameters.GetAnnotationDistance() * (parameters.GetBondLength() / scale);
-            double annScale = (1 / scale) * parameters.GetAnnotationFontScale();
-            Color annColor = parameters.GetAnnotationColor();
-            double halfStroke = stroke / 2;
+            var scale = parameters.GetScale();
+            var annDist = parameters.GetAnnotationDistance() * (parameters.GetBondLength() / scale);
+            var annScale = (1 / scale) * parameters.GetAnnotationFontScale();
+            var annColor = parameters.GetAnnotationColor();
+            var halfStroke = stroke / 2;
 
-            AtomSymbol[] symbols = new AtomSymbol[container.Atoms.Count];
-            IChemObjectBuilder builder = container.Builder;
+            var symbols = new AtomSymbol[container.Atoms.Count];
+            var builder = container.Builder;
 
             // check if we should annotate attachment point numbers (maxAttach>1)
             // and queue them all up for processing
@@ -287,14 +287,14 @@ namespace NCDK.Renderers.Generators.Standards
 
                 if (atom is IPseudoAtom)
                 {
-                    int attachNum = ((IPseudoAtom)atom).AttachPointNum;
+                    var attachNum = ((IPseudoAtom)atom).AttachPointNum;
                     if (attachNum > 0)
                         attachPoints.Add((IPseudoAtom)atom);
                     if (attachNum > maxAttach)
                         maxAttach = attachNum;
                 }
 
-                bool remapped = symbolRemap.ContainsKey(atom);
+                var remapped = symbolRemap.ContainsKey(atom);
                 var bonds = container.GetConnectedBonds(atom);
                 var neighbors = container.GetConnectedAtoms(atom);
                 var visNeighbors = new List<IAtom>();
@@ -313,7 +313,7 @@ namespace NCDK.Renderers.Generators.Standards
                 // only generate if the symbol is visible
                 if (visibility.Visible(atom, bonds, parameters) || remapped)
                 {
-                    HydrogenPosition hPosition = HydrogenPositionTools.Position(atom, visNeighbors);
+                    var hPosition = HydrogenPositionTools.Position(atom, visNeighbors);
 
                     if (atom.ImplicitHydrogenCount != null && atom.ImplicitHydrogenCount > 0)
                         auxVectors.Add(hPosition.Vector());
@@ -352,7 +352,7 @@ namespace NCDK.Renderers.Generators.Standards
                     }
                 }
 
-                string label = GetAnnotationLabel(atom);
+                var label = GetAnnotationLabel(atom);
 
                 if (label != null)
                 {
@@ -389,7 +389,7 @@ namespace NCDK.Renderers.Generators.Standards
 
                     // to ensure consistent draw distance we need to adjust the annotation distance
                     // depending on whether we are drawing next to an atom symbol or not.
-                    double strokeAdjust = -halfStroke;
+                    var strokeAdjust = -halfStroke;
 
                     var vector = NewAttachPointAnnotationVector(
                         atom,
@@ -407,17 +407,17 @@ namespace NCDK.Renderers.Generators.Standards
 
                     attachNumOutlines.Add(outline);
 
-                    double w = outline.GetBounds().Width;
-                    double h = outline.GetBounds().Height;
-                    double r = Math.Sqrt(w * w + h * h) / 2;
+                    var w = outline.GetBounds().Width;
+                    var h = outline.GetBounds().Height;
+                    var r = Math.Sqrt(w * w + h * h) / 2;
                     if (r > maxRadius)
                         maxRadius = r;
                 }
 
-                foreach (TextOutline outline in attachNumOutlines)
+                foreach (var outline in attachNumOutlines)
                 {
-                    ElementGroup group = new ElementGroup();
-                    double radius = 2 * stroke + maxRadius;
+                    var group = new ElementGroup();
+                    var radius = 2 * stroke + maxRadius;
                     var shape = new EllipseGeometry(outline.GetCenter(), radius, radius);
                     var area1 = Geometry.Combine(shape, outline.GetOutline(), GeometryCombineMode.Exclude, Transform.Identity);
                     group.Add(GeneralPath.ShapeOf(area1, foreground));
@@ -442,13 +442,10 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the position text outline for the annotation</returns>
         internal static TextOutline GenerateAnnotation(Vector2 basePoint, string label, Vector2 direction, double distance, double scale, Typeface font, double emSize, AtomSymbol symbol)
         {
-            bool italicHint = label.StartsWith(ItalicDisplayPrefix);
-
+            var italicHint = label.StartsWith(ItalicDisplayPrefix);
             label = italicHint ? label.Substring(ItalicDisplayPrefix.Length) : label;
-
             var annFont = italicHint ? new Typeface(font.FontFamily, WPF.FontStyles.Italic, font.Weight, font.Stretch) : font;
-
-            TextOutline annOutline = new TextOutline(label, annFont, emSize).Resize(scale, -scale);
+            var annOutline = new TextOutline(label, annFont, emSize).Resize(scale, -scale);
 
             // align to the first or last character of the annotation depending on the direction
             var center = direction.X > 0.3 ? annOutline.GetFirstGlyphCenter() : direction.X < -0.3 ? annOutline.GetLastGlyphCenter() : annOutline.GetCenter();
@@ -456,10 +453,10 @@ namespace NCDK.Renderers.Generators.Standards
             // Avoid atom symbol
             if (symbol != null)
             {
-                var intersect = symbol.GetConvexHull().Intersect(VecmathUtil.ToPoint(basePoint),
-                       VecmathUtil.ToPoint(VecmathUtil.Sum(basePoint, direction)));
+                var intersect = symbol.GetConvexHull().Intersect(VecmathUtil.ToPoint(basePoint), VecmathUtil.ToPoint(VecmathUtil.Sum(basePoint, direction)));
                 // intersect should never be null be check against this
-                if (intersect != null) basePoint = VecmathUtil.ToVector(intersect);
+                if (intersect != null)
+                    basePoint = VecmathUtil.ToVector(intersect);
             }
 
             direction *= distance;
@@ -480,16 +477,15 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>pre-rendered element</returns>
         public static IRenderingElement EmbedText(Typeface font, double emSize, string text, Color color, double scale)
         {
-            string[] lines = text.Split('\n');
-
-            ElementGroup group = new ElementGroup();
+            var lines = text.Split('\n');
+            var group = new ElementGroup();
 
             double yOffset = 0;
             double lineHeight = 1.4d;
 
             foreach (var line in lines)
             {
-                TextOutline outline = new TextOutline(line, font, emSize).Resize(scale, -scale);
+                var outline = new TextOutline(line, font, emSize).Resize(scale, -scale);
                 var center = outline.GetCenter();
                 outline = outline.Translate(-center.X, -(center.Y + yOffset));
 
@@ -551,22 +547,19 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>recolored rendering element</returns>
         private static IRenderingElement Recolor(IRenderingElement element, Color color)
         {
-            if (element is ElementGroup orgGroup)
+            switch (element)
             {
-                ElementGroup newGroup = new ElementGroup();
-                foreach (var child in orgGroup)
-                {
-                    newGroup.Add(Recolor(child, color));
-                }
-                return newGroup;
-            }
-            else if (element is LineElement lineElement)
-            {
-                return new LineElement(lineElement.FirstPoint, lineElement.SecondPoint, lineElement.Width, color);
-            }
-            else if (element is GeneralPath)
-            {
-                return ((GeneralPath)element).Recolor(color);
+                case ElementGroup orgGroup:
+                    var newGroup = new ElementGroup();
+                    foreach (var child in orgGroup)
+                    {
+                        newGroup.Add(Recolor(child, color));
+                    }
+                    return newGroup;
+                case LineElement lineElement:
+                    return new LineElement(lineElement.FirstPoint, lineElement.SecondPoint, lineElement.Width, color);
+                case GeneralPath generalPath:
+                    return generalPath.Recolor(color);
             }
             throw new ArgumentException($"Cannot highlight rendering element, {element.GetType()}");
         }
@@ -585,7 +578,7 @@ namespace NCDK.Renderers.Generators.Standards
             switch (element)
             {
                 case ElementGroup orgGroup:
-                    ElementGroup newGroup = new ElementGroup();
+                    var newGroup = new ElementGroup();
                     foreach (var child in orgGroup)
                     {
                         newGroup.Add(OuterGlow(child, color, glowWidth, stroke));
@@ -630,15 +623,18 @@ namespace NCDK.Renderers.Generators.Standards
             if (vectors.Count == 0)
             {
                 // no bonds, place below
-                if (auxVectors.Count == 0) return new Vector2(0, -1);
-                if (auxVectors.Count == 1) return VecmathUtil.Negate(auxVectors[0]);
+                if (auxVectors.Count == 0)
+                    return new Vector2(0, -1);
+                if (auxVectors.Count == 1)
+                    return VecmathUtil.Negate(auxVectors[0]);
                 return VecmathUtil.NewVectorInLargestGap(auxVectors);
             }
             else if (vectors.Count == 1)
             {
                 // 1 bond connected
                 // H0, then label simply appears on the opposite side
-                if (auxVectors.Count == 0) return VecmathUtil.Negate(vectors[0]);
+                if (auxVectors.Count == 0)
+                    return VecmathUtil.Negate(vectors[0]);
                 // !H0, then place it in the largest gap
                 vectors.AddRange(auxVectors);
                 return VecmathUtil.NewVectorInLargestGap(vectors);
@@ -648,12 +644,11 @@ namespace NCDK.Renderers.Generators.Standards
                 // 2 bonds connected to an atom with no hydrogen labels
 
                 // sum the vectors such that the label appears in the acute/nook of the two bonds
-                Vector2 combined = VecmathUtil.Sum(vectors[0], vectors[1]);
+                var combined = VecmathUtil.Sum(vectors[0], vectors[1]);
 
                 // shallow angle (< 30 deg) means the label probably won't fit
                 if (Vectors.Angle(vectors[0], vectors[1]) < Vectors.DegreeToRadian(65))
                     combined = Vector2.Negate(combined);
-
                 else
                 {
                     // flip vector if either bond is a non-single bond or a wedge, this will
@@ -662,13 +657,14 @@ namespace NCDK.Renderers.Generators.Standards
                     // keep the label in the nook of the wedges
                     var bonds_ = bonds.ToList();
                     if ((!IsPlainBond(bonds_[0]) || !IsPlainBond(bonds_[1]))
-                        && !(IsWedged(bonds_[0]) && IsWedged(bonds_[1]))) combined = Vector2.Negate(combined);
+                     && !(IsWedged(bonds_[0]) && IsWedged(bonds_[1]))) combined = Vector2.Negate(combined);
                 }
 
                 combined = Vector2.Normalize(combined);
 
                 // did we divide by 0? whoops - this happens when the bonds are collinear
-                if (double.IsNaN(combined.Length())) return VecmathUtil.NewVectorInLargestGap(vectors);
+                if (double.IsNaN(combined.Length()))
+                    return VecmathUtil.NewVectorInLargestGap(vectors);
 
                 return combined;
             }
@@ -682,13 +678,15 @@ namespace NCDK.Renderers.Generators.Standards
                     // (i.e. non-stereo sigma bonds) and use those. This gives good
                     // placement for fused conjugated rings
 
-                    List<Vector2> plainVectors = new List<Vector2>();
-                    List<Vector2> wedgeVectors = new List<Vector2>();
+                    var plainVectors = new List<Vector2>();
+                    var wedgeVectors = new List<Vector2>();
 
                     foreach (var bond in bonds)
                     {
-                        if (IsPlainBond(bond)) plainVectors.Add(VecmathUtil.NewUnitVector(atom, bond));
-                        if (IsWedged(bond)) wedgeVectors.Add(VecmathUtil.NewUnitVector(atom, bond));
+                        if (IsPlainBond(bond))
+                            plainVectors.Add(VecmathUtil.NewUnitVector(atom, bond));
+                        if (IsWedged(bond))
+                            wedgeVectors.Add(VecmathUtil.NewUnitVector(atom, bond));
                     }
 
                     if (plainVectors.Count == 2)
@@ -703,7 +701,8 @@ namespace NCDK.Renderers.Generators.Standards
                 }
 
                 // the default option is to find the largest gap
-                if (auxVectors.Count > 0) vectors.AddRange(auxVectors);
+                if (auxVectors.Count > 0)
+                    vectors.AddRange(auxVectors);
                 return VecmathUtil.NewVectorInLargestGap(vectors);
             }
         }
@@ -724,7 +723,7 @@ namespace NCDK.Renderers.Generators.Standards
                 perpVector = -perpVector;
 
             var vector = new Vector2((bondVector.X + perpVector.X) / 2,
-                                           (bondVector.Y + perpVector.Y) / 2);
+                                     (bondVector.Y + perpVector.Y) / 2);
             vector = Vector2.Normalize(vector);
             return vector;
         }
@@ -737,7 +736,7 @@ namespace NCDK.Renderers.Generators.Standards
         internal static bool IsPlainBond(IBond bond)
         {
             return bond.Order == BondOrder.Single
-                    && (bond.Stereo == BondStereo.None || bond.Stereo == BondStereo.None);
+                && (bond.Stereo == BondStereo.None || bond.Stereo == BondStereo.None);
         }
 
         /// <summary>
@@ -747,8 +746,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the bond is wedge (bold or hashed)</returns>
         internal static bool IsWedged(IBond bond)
         {
-            return (bond.Stereo == BondStereo.Up || bond.Stereo == BondStereo.Down
-                    || bond.Stereo == BondStereo.UpInverted || bond.Stereo == BondStereo.DownInverted);
+            return bond.Stereo == BondStereo.Up || bond.Stereo == BondStereo.Down
+                || bond.Stereo == BondStereo.UpInverted || bond.Stereo == BondStereo.DownInverted;
         }
 
         /// <summary>

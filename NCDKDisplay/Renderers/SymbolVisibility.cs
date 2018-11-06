@@ -36,7 +36,7 @@ namespace NCDK.Renderers
     /// </summary>
     /// <example>
     /// <code>
-    /// SymbolVisibility visibility = SymbolVisibility.IUPACRecommendations;
+    /// var visibility = SymbolVisibility.IUPACRecommendations;
     /// </code>
     /// </example>
     // @author John May
@@ -159,7 +159,7 @@ namespace NCDK.Renderers
                 if (atom.IsAromatic)
                 {
                     bool hasUnsetArom = false;
-                    foreach (IBond bond in bonds)
+                    foreach (var bond in bonds)
                     {
                         if (bond.Order == BondOrder.Unset && bond.IsAromatic)
                         {

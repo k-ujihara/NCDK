@@ -129,7 +129,7 @@ namespace NCDK.Depict
         /// <returns>padding</returns>
         internal double GetPaddingValue(double defaultPadding)
         {
-            double padding = model.GetPadding();
+            var padding = model.GetPadding();
             if (padding == DepictionGenerator.Automatic)
                 padding = defaultPadding;
             return padding;
@@ -143,7 +143,7 @@ namespace NCDK.Depict
         /// <returns>margin</returns>
         internal double GetMarginValue(double defaultMargin)
         {
-            double margin = model.GetMargin();
+            var margin = model.GetMargin();
             if (margin == DepictionGenerator.Automatic)
                 margin = defaultMargin;
             return margin;
@@ -162,7 +162,7 @@ namespace NCDK.Depict
         /// List the available formats that can be rendered.
         /// </summary>
         /// <returns>supported formats</returns>
-        public virtual IList<string> ListFormats()
+        public virtual IReadOnlyList<string> ListFormats()
         {
             var formats = new List<string>
             {
@@ -329,9 +329,9 @@ namespace NCDK.Depict
         /// <param name="viewBounds">the view bounds - the root will be centered in the bounds</param>
         protected void Draw(IDrawVisitor visitor, double zoom, Bounds bounds, Rect viewBounds)
         {
-            double modelScale = zoom * model.GetScale();
-            double zoomToFit = Math.Min(viewBounds.Width / (bounds.Width * modelScale), viewBounds.Height / (bounds.Height * modelScale));
-            Matrix transform = Matrix.Identity;
+            var modelScale = zoom * model.GetScale();
+            var zoomToFit = Math.Min(viewBounds.Width / (bounds.Width * modelScale), viewBounds.Height / (bounds.Height * modelScale));
+            var transform = Matrix.Identity;
 
             // setup up transform
             transform.TranslatePrepend(viewBounds.CenterX(), viewBounds.CenterY());

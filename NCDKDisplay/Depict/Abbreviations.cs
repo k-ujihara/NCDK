@@ -25,7 +25,6 @@ using NCDK.Common.Collections;
 using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Isomorphisms.Matchers;
-using NCDK.Isomorphisms.Matchers.SMARTS;
 using NCDK.Sgroups;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
@@ -35,8 +34,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using static NCDK.Config.NaturalElement;
-using static NCDK.Isomorphisms.Matchers.SMARTS.LogicalOperatorAtom;
 
 namespace NCDK.Depict
 {
@@ -118,19 +115,19 @@ namespace NCDK.Depict
         private static ISet<IBond> FindCutBonds(IAtomContainer mol, EdgeToBondMap bmap, int[][] adjlist)
         {
             var cuts = new HashSet<IBond>();
-            int numAtoms = mol.Atoms.Count;
+            var numAtoms = mol.Atoms.Count;
             for (int i = 0; i < numAtoms; i++)
             {
                 var atom = mol.Atoms[i];
-                int deg = adjlist[i].Length;
-                int elem = atom.AtomicNumber.Value;
+                var deg = adjlist[i].Length;
+                var elem = atom.AtomicNumber.Value;
 
                 if (elem == 6 && deg <= 2 || deg < 2)
                     continue;
 
                 foreach (var w in adjlist[i])
                 {
-                    IBond bond = bmap[i, w];
+                    var bond = bmap[i, w];
                     if (adjlist[w].Length >= 2 && !bond.IsInRing)
                     {
                         cuts.Add(bond);
@@ -513,9 +510,9 @@ namespace NCDK.Depict
                     Type = SgroupType.CtabAbbreviation,
                     Subscript = sb.ToString()
                 };
-                foreach (IBond bond in newbonds)
+                foreach (var bond in newbonds)
                     newSgroup.Bonds.Add(bond);
-                foreach (IAtom atom in xatoms)
+                foreach (var atom in xatoms)
                     newSgroup.Atoms.Add(atom);
 
                 newSgroups.Add(newSgroup);
@@ -581,7 +578,7 @@ namespace NCDK.Depict
         {
             for (int i = 0; i < str.Length; i++)
             {
-                char c = str[i];
+                var c = str[i];
                 if (c == '-' || c == '+')
                     return true;
             }
@@ -627,7 +624,7 @@ namespace NCDK.Depict
             return sb.ToString();
         }
 
-        private static void AppendGroup(StringBuilder sb, String group, int coef, bool useParen)
+        private static void AppendGroup(StringBuilder sb, string group, int coef, bool useParen)
         {
             if (coef <= 0 || group == null || !group.Any())
                 return;
@@ -661,10 +658,10 @@ namespace NCDK.Depict
             else
                 sgroups = new List<Sgroup>(sgroups);
 
-            int prev = sgroups.Count;
+            var prev = sgroups.Count;
             foreach (var sgroup in newSgroups)
             {
-                double coverage = sgroup.Atoms.Count / (double)mol.Atoms.Count;
+                var coverage = sgroup.Atoms.Count / (double)mol.Atoms.Count;
                 // update xml comment if changed!
                 if (!sgroup.Bonds.Any() || coverage < 0.4d)
                     sgroups.Add(sgroup);
@@ -685,7 +682,7 @@ namespace NCDK.Depict
         {
             var bldr = atom.Builder;
 
-            int elem = atom.AtomicNumber.Value;
+            var elem = atom.AtomicNumber.Value;
 
             // attach atom skipped
             if (elem == 0)
@@ -743,7 +740,7 @@ namespace NCDK.Depict
                 if (beg == null || end == null)
                     continue;
 
-                IQueryBond qbond = new QueryBond(beg, end, ExprType.True);
+                var qbond = new QueryBond(beg, end, ExprType.True);
                 qry.Bonds.Add(qbond);
             }
 
@@ -754,7 +751,7 @@ namespace NCDK.Depict
         {
             try
             {
-                string cansmi = SmilesGenerator.Unique().Create(mol);
+                var cansmi = SmilesGenerator.Unique().Create(mol);
                 disconnectedAbbreviations[cansmi] = label;
                 labels.Add(label);
                 return true;
