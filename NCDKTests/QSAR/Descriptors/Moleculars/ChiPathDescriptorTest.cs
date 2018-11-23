@@ -1,28 +1,16 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.Numerics;
-using NCDK.QSAR.Results;
-using NCDK.Smiles;
-using System;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class ChiPathDescriptorTest : MolecularDescriptorTest
+    public partial class ChiPathDescriptorTest : MolecularDescriptorTest<ChiPathDescriptor>
     {
-        public ChiPathDescriptorTest()
-        {
-            SetDescriptor(typeof(ChiPathDescriptor));
-        }
-
         [TestMethod()]
         public void TestDan64()
         {
-            var mol = new AtomContainer();
+            var mol = CDK.Builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.7500000000000004, 2.799038105676658);
             mol.Atoms.Add(a1);
@@ -44,7 +32,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b4 = mol.Builder.NewBond(a4, a2, BondOrder.Single);
             mol.Bonds.Add(b4);
 
-            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
+            var ret = CreateDescriptor(mol).Calculate().Values;
 
             Assert.AreEqual(2.9916, ret[0], 0.0001);
             Assert.AreEqual(1.8938, ret[1], 0.0001);
@@ -62,7 +50,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestDan80()
         {
-            var mol = new AtomContainer();
+            var mol = CDK.Builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.0, 1.5);
             mol.Atoms.Add(a1);
@@ -89,7 +77,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b5 = mol.Builder.NewBond(a5, a1, BondOrder.Single);
             mol.Bonds.Add(b5);
 
-            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
+            var ret = CreateDescriptor(mol).Calculate().Values;
 
             Assert.AreEqual(3.5355, ret[0], 0.0001);
             Assert.AreEqual(2.5000, ret[1], 0.0001);
@@ -105,7 +93,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestDan81()
         {
-            var mol = new AtomContainer();
+            var mol = CDK.Builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.0, 1.5);
             mol.Atoms.Add(a1);
@@ -132,7 +120,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b5 = mol.Builder.NewBond(a5, a1, BondOrder.Single);
             mol.Bonds.Add(b5);
 
-            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
+            var ret = CreateDescriptor(mol).Calculate().Values;
 
             Assert.AreEqual(3.5355, ret[0], 0.0001);
             Assert.AreEqual(2.5000, ret[1], 0.0001);
@@ -148,7 +136,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestDan82()
         {
-            var mol = new AtomContainer();
+            var mol = CDK.Builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.0, 1.5);
             mol.Atoms.Add(a1);
@@ -175,7 +163,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b5 = mol.Builder.NewBond(a5, a1, BondOrder.Single);
             mol.Bonds.Add(b5);
 
-            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
+            var ret = CreateDescriptor(mol).Calculate().Values;
 
             Assert.AreEqual(3.5355, ret[0], 0.0001);
             Assert.AreEqual(2.5000, ret[1], 0.0001);
@@ -191,7 +179,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestDan154()
         {
-            var mol = new AtomContainer();
+            var mol = CDK.Builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.0, 1.5);
             mol.Atoms.Add(a1);
@@ -233,7 +221,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b8 = mol.Builder.NewBond(a8, a2, BondOrder.Single);
             mol.Bonds.Add(b8);
 
-            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
+            var ret = CreateDescriptor(mol).Calculate().Values;
 
             Assert.AreEqual(5.9831, ret[0], 0.0001);
             Assert.AreEqual(3.7877, ret[1], 0.0001);
@@ -245,46 +233,5 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Assert.AreEqual(0.0000, ret[7], 0.0001);
             Assert.AreEqual(5.5772, ret[8], 0.0001);
         }
-
-        // @cdk.bug 3023326
-        [TestMethod()]
-        public void TestCovalentMetal()
-        {
-            var sp = CDK.SmilesParser;
-            var mol = sp.ParseSmiles("CCCC[Sn](CCCC)(CCCC)c1cc(Cl)c(Nc2nc(C)nc(N(CCC)CC3CC3)c2Cl)c(Cl)c1");
-            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
-            Assert.IsNotNull(ret);
-        }
-
-        // @cdk.bug 3023326
-        [TestMethod()]
-        public void TestCovalentPlatinum()
-        {
-            var sp = CDK.SmilesParser;
-            var mol = sp.ParseSmiles("CC1CN[Pt]2(N1)OC(=O)C(C)P(=O)(O)O2");
-            var dummy = Descriptor.Calculate(mol).Value;
-            if (dummy is ArrayResult<double> result)
-                Assert.IsTrue(double.IsNaN(result[0]));
-            else
-                Assert.Fail();
-
-        }
-
-        //    [TestMethod()] public void TestDan277() {
-        //
-        //        IAtomContainer molecule = null;
-        //        ChiPathDescriptor desc = new ChiPathDescriptor();
-        //        ArrayResult<double> ret = (ArrayResult<double>) desc.Calculate(mol).Value;
-        //
-        //        Assert.AreEqual(4.1069, ret[0], 0.0001);
-        //        Assert.AreEqual(3.5527, ret[1], 0.0001);
-        //        Assert.AreEqual(2.0065, ret[2], 0.0001);
-        //        Assert.AreEqual(1.3853, ret[3], 0.00001);
-        //
-        //        Assert.AreEqual(2.6211, ret[5], 0.0001);
-        //        Assert.AreEqual(2.3405, ret[6], 0.0001);
-        //        Assert.AreEqual(0.88578, ret[7], 0.00001);
-        //        Assert.AreEqual(0.489996, ret[8], 0.00001);
-        //    }
     }
 }

@@ -45,7 +45,6 @@ namespace NCDK.Tools
     /// </note>
     /// </remarks>
     // @author     steinbeck
-    // @cdk.githash
     // @cdk.keyword    HOSE code, spherical atom search
     // @cdk.created    2002-05-10
     // @cdk.module     standard
@@ -147,11 +146,9 @@ namespace NCDK.Tools
             spheres = new List<TreeNode>[noOfSpheres + 1];
             spheresWithAtoms = new List<IAtom>[noOfSpheres + 1];
             for (int i = 0; i < ac.Atoms.Count; i++)
-            {
                 ac.Atoms[i].IsVisited = false;
-            }
             root.IsVisited = true;
-            rootNode = new TreeNode(this, root.Symbol, null, root, (double)0, atomContainer.GetConnectedBonds(root).Count(), 0);
+            rootNode = new TreeNode(this, root.Symbol, null, root, 0, atomContainer.GetConnectedBonds(root).Count(), 0);
             
             // All we need to observe is how the ranking of substituents in the
             // subsequent spheres of the root nodes influences the ranking of the

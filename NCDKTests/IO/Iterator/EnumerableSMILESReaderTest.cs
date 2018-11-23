@@ -166,7 +166,7 @@ namespace NCDK.IO.Iterator
         public void IsEmptyTest()
         {
             TextReader reader = new StringReader(" empty1\n empty2");
-            var smis = new EnumerableSMILESReader(reader, Silent.ChemObjectBuilder.Instance).GetEnumerator();
+            var smis = new EnumerableSMILESReader(reader, CDK.Builder).GetEnumerator();
             Assert.IsTrue(smis.MoveNext());
             IAtomContainer m1 = smis.Current;
             Assert.AreEqual(0, m1.Atoms.Count);
@@ -183,7 +183,7 @@ namespace NCDK.IO.Iterator
         {
 
             TextReader reader = new StringReader(" okay\nn1cccc1 bad\n okay");
-            var smis = new EnumerableSMILESReader(reader, Silent.ChemObjectBuilder.Instance).GetEnumerator();
+            var smis = new EnumerableSMILESReader(reader, CDK.Builder).GetEnumerator();
             Assert.IsTrue(smis.MoveNext());
             IAtomContainer m1 = smis.Current;
             Assert.AreEqual(0, m1.Atoms.Count);

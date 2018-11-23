@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace NCDK.Common.Base
 {
-    public static class Compares
+    internal static class Compares
     {
         public static bool DeepEquals(IEnumerable expected, IEnumerable sets)
         {

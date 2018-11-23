@@ -20,8 +20,8 @@
 
 using MathNet.Numerics.LinearAlgebra;
 using NCDK.Common.Collections;
+using NCDK.Config;
 using NCDK.Geometries;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -39,90 +39,102 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// along the X, Y and Z axes as well as the ratio's X/Y, X/Z and Y/Z. Finally it also
     /// calculates the radius of gyration of the molecule.
     /// <para>
-    /// The descriptor generates 7 values in the following order
-    /// <list type="bullet"> 
-    /// <item>MOMI-X - MI along X axis</item>
-    /// <item>MOMI-Y - MI along Y axis</item>
-    /// <item>MOMI-Z - MI along Z axis</item>
-    /// <item>MOMI-XY - X/Y</item>
-    /// <item>MOMI-XZ - X/Z</item>
-    /// <item>MOMI-YZ Y/Z</item>
-    /// <item>MOMI-R - Radius of gyration</item>
-    /// </list>
-    /// </para>
-    /// <para>
     /// One important aspect of the algorithm is that if the eigenvalues of the MI tensor
     /// are below 1e-3, then the ratio's are set to a default of 1000.
-    /// </para>
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    /// <item>
-    /// <term>Name</term>
-    /// <term>Default</term>
-    /// <term>Description</term>
-    /// </item>
-    /// <item>
-    /// <term></term>
-    /// <term></term>
-    /// <term>no parameters</term>
-    /// </item>
-    /// </list>
     /// </para>
     /// </remarks>
     // @author           Rajarshi Guha
     // @cdk.created      2005-02-07
     // @cdk.module       qsarmolecular
-    // @cdk.githash
     // @cdk.dictref      qsar-descriptors:momentOfInertia
     // @cdk.keyword      moment of inertia
-    public class MomentOfInertiaDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia")]
+    public class MomentOfInertiaDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private static readonly string[] NAMES = { "MOMI-X", "MOMI-Y", "MOMI-Z", "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R" };
+        private readonly IsotopeFactory factory;
 
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia",
-                typeof(MomentOfInertiaDescriptor).FullName, "The Chemistry Development Kit");
+        private readonly IAtomContainer container;
 
-        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
-        public override IReadOnlyList<string> ParameterNames => null;
-        public override object GetParameterType(string name) => null;
-
-        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
+        public MomentOfInertiaDescriptor(IAtomContainer container)
         {
-            int ndesc = DescriptorNames.Count;
-            ArrayResult<double> results = new ArrayResult<double>(ndesc);
-            for (int i = 0; i < ndesc; i++)
-                results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results,
-                    DescriptorNames, e);
+            container = (IAtomContainer)container.Clone();
+
+            factory = CDK.IsotopeFactory;
+            factory.ConfigureAtoms(container);
+
+            this.container = container;
+        }
+
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public new IReadOnlyList<double> Values { get; private set; }
+
+            public Result(IReadOnlyList<double> values)
+            {
+                this.Values = values;
+            }
+
+            /// <summary>
+            /// MI along X axis
+            /// </summary>
+            [DescriptorResultProperty("MOMI-X")]
+            public double MOMIX => Values[0];
+
+            /// <summary>
+            /// MI along Y axis
+            /// </summary>
+            [DescriptorResultProperty("MOMI-Y")]
+            public double MOMIY => Values[1];
+
+            /// <summary>
+            /// MI along Z axis
+            /// </summary>
+            [DescriptorResultProperty("MOMI-Z")]
+            public double MOMIZ => Values[2];
+
+            /// <summary>
+            /// X/Y
+            /// </summary>
+            [DescriptorResultProperty("MOMI-XY")]
+            public double MOMIXY => Values[3];
+
+            /// <summary>
+            /// X/Z
+            /// </summary>
+            [DescriptorResultProperty("MOMI-XZ")]
+            public double MOMIXZ => Values[4];
+
+            /// <summary>
+            /// Y/Z
+            /// </summary>
+            [DescriptorResultProperty("MOMI-YZ")]
+            public double MOMIYZ => Values[5];
+
+            /// <summary>
+            /// Radius of gyration
+            /// </summary>
+            [DescriptorResultProperty("MOMI-R")]
+            public double MOMIR => Values[6];
         }
 
         /// <summary>
         /// Calculates the 3 MI's, 3 ration and the R_gyr value.
-        /// 
-        /// The molecule should have hydrogens
+        /// The molecule should have hydrogens.
         /// </summary>
-        /// <param name="container">Parameter is the atom container.</param>
-        /// <returns>An ArrayList containing 7 elements in the order described above</returns>
-        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
+        /// <returns>An <see cref="Result"/> containing 7 elements in the order described above</returns>
+        public Result Calculate()
         {
             if (!GeometryUtil.Has3DCoordinates(container))
-                return GetDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
+                throw new ThreeDRequiredException("Molecule must have 3D coordinates");
 
-            var clone = (IAtomContainer)container.Clone();
-            var factory = CDK.IsotopeFactory;
-            factory.ConfigureAtoms(clone);
-
-            ArrayResult<double> retval = new ArrayResult<double>(7);
+            var retval = new List<double>(7);
 
             double ccf = 1.000138;
             double eps = 1e-5;
 
             var imat = Arrays.CreateJagged<double>(3, 3);
-            var centerOfMass = GeometryUtil.Get3DCentreOfMass(clone).Value;
+            var centerOfMass = GeometryUtil.Get3DCentreOfMass(container).Value;
 
             double xdif;
             double ydif;
@@ -130,9 +142,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double xsq;
             double ysq;
             double zsq;
-            for (int i = 0; i < clone.Atoms.Count; i++)
+            for (int i = 0; i < container.Atoms.Count; i++)
             {
-                var currentAtom = clone.Atoms[i];
+                var currentAtom = container.Atoms[i];
 
                 var _mass = factory.GetMajorIsotope(currentAtom.Symbol).ExactMass;
                 double mass = _mass == null ? factory.GetNaturalMass(currentAtom) : _mass.Value;
@@ -190,19 +202,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             // finally get the radius of gyration
             double pri;
-            var formula = MolecularFormulaManipulator.GetMolecularFormula(clone);
+            var formula = MolecularFormulaManipulator.GetMolecularFormula(container);
             if (Math.Abs(eval[2]) > eps)
                 pri = Math.Pow(eval[0] * eval[1] * eval[2], 1.0 / 3.0);
             else
                 pri = Math.Sqrt(eval[0] * ccf / MolecularFormulaManipulator.GetTotalExactMass(formula));
             retval.Add(Math.Sqrt(Math.PI * 2 * pri * ccf / MolecularFormulaManipulator.GetTotalExactMass(formula)));
 
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval, DescriptorNames);
+            return new Result(retval);
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(7);
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

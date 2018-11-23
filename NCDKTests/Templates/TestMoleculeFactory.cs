@@ -1902,6 +1902,23 @@ namespace NCDK.Templates
             return mol;
         }
 
+        public static IAtomContainer MakeWater()
+        {
+            var mol = CDK.Builder.NewAtomContainer();
+            var c1 = CDK.Builder.NewAtom("O");
+            c1.Point3D = new Vector3(0.0, 0.0, 0.0);
+            var h1 = CDK.Builder.NewAtom("H");
+            h1.Point3D = new Vector3(1.0, 0.0, 0.0);
+            var h2 = CDK.Builder.NewAtom("H");
+            h2.Point3D = new Vector3(-1.0, 0.0, 0.0);
+            mol.Atoms.Add(c1);
+            mol.Atoms.Add(h1);
+            mol.Atoms.Add(h2);
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
+            mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
+            return mol;
+        }
+
         private static void ConfigureAtoms(IAtomContainer mol)
         {
             try

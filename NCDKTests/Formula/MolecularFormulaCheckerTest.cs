@@ -33,7 +33,7 @@ namespace NCDK.Formula
     [TestClass()]
     public class MolecularFormulaCheckerTest : CDKTestCase
     {
-        private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
         private IsotopeFactory ifac;
 
         public MolecularFormulaCheckerTest()

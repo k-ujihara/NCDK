@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace NCDK.Common.Collections
 {
-    public static class Lists
+    internal static class Lists
     {
         public static int GetDeepHashCode(IEnumerable list)
         {

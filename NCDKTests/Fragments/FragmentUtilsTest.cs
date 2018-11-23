@@ -72,7 +72,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestMakeAtomContainer()
         {
-            var builder = Silent.ChemObjectBuilder.Instance;
+            var builder = CDK.Builder;
 
             IAtom atom = builder.NewAtom("C");
             IAtom exclude = builder.NewAtom("C");
@@ -101,7 +101,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestTraversal_Chain()
         {
-            var builder = Silent.ChemObjectBuilder.Instance;
+            var builder = CDK.Builder;
 
             IAtom[] atoms = new IAtom[]{builder.NewAtom("C"), builder.NewAtom("C"),
                 builder.NewAtom("C"), builder.NewAtom("C"),

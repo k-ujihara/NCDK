@@ -179,7 +179,7 @@ namespace NCDK.Smiles.SMARTS
         [TestMethod()]
         public void TestMethane()
         {
-            IAtomContainer methane = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer methane = CDK.Builder.NewAtomContainer();
             IAtom carbon = methane.Builder.NewAtom(NaturalElements.Carbon.Element);
             carbon.ImplicitHydrogenCount = 4;
             methane.Atoms.Add(carbon);

@@ -18,9 +18,8 @@
  */
 
 using NCDK.Aromaticities;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -28,73 +27,41 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// This Class contains a method that returns the number of aromatic atoms in an AtomContainer.
     /// </summary>
     /// <remarks>
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    ///   <item>
-    ///     <term>Name</term>
-    ///     <term>Default</term>
-    ///     <term>Description</term>
-    ///   </item>
-    ///   <item>
-    ///     <term>checkAromaticity</term>
-    ///     <term>false</term>
-    ///     <term>True is the aromaticity has to be checked</term>
-    ///   </item>
-    /// </list>
-    /// </para>
     /// Returns a single value with name <i>nAromBond</i>
     /// </remarks>
     // @author      mfe4
     // @cdk.created 2004-11-03
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:aromaticBondsCount
-    public class AromaticBondsCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount")]
+    public class AromaticBondsCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private bool checkAromaticity = false;
-        private static readonly string[] NAMES = { "nAromBond" };
+        private readonly IAtomContainer container;
 
-        public AromaticBondsCountDescriptor() { }
-
-        /// <inheritdoc/>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount",
-                typeof(AromaticBondsCountDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        /// <summary>
-        /// The parameters attribute of the <see cref="AromaticBondsCountDescriptor"/> object.
-        /// </summary>
-        /// <remarks>
-        /// This descriptor takes one parameter, which should be boolean to indicate whether
-        /// aromaticity has been checked (<see langword="true"/>) or not (<see langword="false"/>).
-        /// </remarks>
-        /// <exception cref="CDKException">if more than one parameter or a non-boolean parameter is specified</exception>
-        public override IReadOnlyList<object> Parameters
+        public AromaticBondsCountDescriptor(IAtomContainer container, bool checkAromaticity = false)
         {
-            set
+            if (checkAromaticity)
             {
-                if (value.Count != 1)
-                {
-                    throw new CDKException($"{nameof(AromaticBondsCountDescriptor)} expects one parameter");
-                }
-                if (!(value[0] is bool))
-                {
-                    throw new CDKException($"The first parameter must be of type {nameof(System.Boolean)}");
-                }
-                // ok, all should be fine
-                checkAromaticity = (bool)value[0];
+                container = (IAtomContainer)container.Clone();
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+                Aromaticity.CDKLegacy.Apply(container);
             }
-            get
-            {
-                // return the parameters as used for the descriptor calculation
-                return new object[] { checkAromaticity };
-            }
+            this.container = container;
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(int value)
+            {
+                this.NumberOfAromaticBonds = value;
+            }
+
+            [DescriptorResultProperty("nAromBond")]
+            public int NumberOfAromaticBonds { get; private set; }
+
+            public int Value => NumberOfAromaticBonds;
+        }
 
         /// <summary>
         /// Calculate the count of aromatic atoms in the supplied <see cref="IAtomContainer"/>.
@@ -103,61 +70,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The method take a boolean checkAromaticity: if the boolean is <see langword="true"/>, it means that
         /// aromaticity has to be checked.
         /// </remarks>
-        /// <param name="atomContainer">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated</param>
-        /// <returns>the number of aromatic atoms of this AtomContainer</returns>
-        /// <seealso cref="Parameters"/>
-        public DescriptorValue<Result<int>> Calculate(IAtomContainer atomContainer)
+        /// <returns>the number of aromatic bonds</returns>
+        public Result Calculate()
         {
-            IAtomContainer ac = (IAtomContainer)atomContainer.Clone();
+            var count = container.Bonds.Count(bond => bond.IsAromatic);
 
-            int aromaticBondsCount = 0;
-            if (checkAromaticity)
-            {
-                try
-                {
-                    AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
-                }
-                catch (CDKException)
-                {
-                    return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters,
-                        new Result<int>(0), DescriptorNames, new CDKException("Error during atom type perception"));
-                }
-                try
-                {
-                    Aromaticity.CDKLegacy.Apply(ac);
-                }
-                catch (CDKException e)
-                {
-                    return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters,
-                        new Result<int>(0), DescriptorNames,
-                        new CDKException($"Error during aromaticity detection: {e.Message}"));
-                }
-            }
-            foreach (var bond in ac.Bonds)
-            {
-                if (bond.IsAromatic)
-                {
-                    aromaticBondsCount += 1;
-                }
-            }
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(aromaticBondsCount), DescriptorNames);
+            return new Result(count);
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
-
-        /// <summary>
-        ///  The parameterNames attribute of the AromaticBondsCountDescriptor object.
-        /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
-
-        /// <summary>
-        ///  Gets the parameterType attribute of the AromaticBondsCountDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name) => true;
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

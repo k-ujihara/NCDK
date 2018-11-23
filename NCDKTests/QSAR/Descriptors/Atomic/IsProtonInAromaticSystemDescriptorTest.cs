@@ -16,30 +16,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsaratomic
     [TestClass()]
-    public class IsProtonInAromaticSystemDescriptorTest : AtomicDescriptorTest
+    public class IsProtonInAromaticSystemDescriptorTest : AtomicDescriptorTest<IsProtonInAromaticSystemDescriptor>
     {
-        public IsProtonInAromaticSystemDescriptorTest()
-        {
-            SetDescriptor(typeof(IsProtonInAromaticSystemDescriptor));
-        }
+        public IsProtonInAromaticSystemDescriptor CreateDescriptor(IAtomContainer mol, bool CheckAromaticity) => new IsProtonInAromaticSystemDescriptor(mol, CheckAromaticity);
 
         [TestMethod()]
         public void TestIsProtonInAromaticSystemDescriptor()
         {
-            IAtomicDescriptor descriptor = new IsProtonInAromaticSystemDescriptor();
-            descriptor.Parameters = new object[] { true };
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("Oc1cc(OC)c(cc1Br)Br");
             AddExplicitHydrogens(mol);
@@ -49,12 +39,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
             Assert.AreEqual("H", mol.Atoms[14].Symbol);
             Assert.AreEqual("H", mol.Atoms[15].Symbol);
             Assert.AreEqual("H", mol.Atoms[16].Symbol);
-            Assert.AreEqual(0, ((Result<int>)descriptor.Calculate(mol.Atoms[11], mol).Value).Value);
-            Assert.AreEqual(1, ((Result<int>)descriptor.Calculate(mol.Atoms[12], mol).Value).Value);
-            Assert.AreEqual(0, ((Result<int>)descriptor.Calculate(mol.Atoms[13], mol).Value).Value);
-            Assert.AreEqual(0, ((Result<int>)descriptor.Calculate(mol.Atoms[14], mol).Value).Value);
-            Assert.AreEqual(0, ((Result<int>)descriptor.Calculate(mol.Atoms[15], mol).Value).Value);
-            Assert.AreEqual(1, ((Result<int>)descriptor.Calculate(mol.Atoms[16], mol).Value).Value);
+            var descriptor = CreateDescriptor(mol, true);
+            Assert.AreEqual(0, descriptor.Calculate(mol.Atoms[11]).Value);
+            Assert.AreEqual(1, descriptor.Calculate(mol.Atoms[12]).Value);
+            Assert.AreEqual(0, descriptor.Calculate(mol.Atoms[13]).Value);
+            Assert.AreEqual(0, descriptor.Calculate(mol.Atoms[14]).Value);
+            Assert.AreEqual(0, descriptor.Calculate(mol.Atoms[15]).Value);
+            Assert.AreEqual(1, descriptor.Calculate(mol.Atoms[16]).Value);
         }
     }
 }

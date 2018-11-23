@@ -31,7 +31,7 @@ namespace NCDK.AtomTypes
 
         static ResonanceStructuresTest()
         {
-            builder = Silent.ChemObjectBuilder.Instance;
+            builder = CDK.Builder;
             matcher = CDK.AtomTypeMatcher;
         }
 

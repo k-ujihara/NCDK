@@ -28,26 +28,17 @@ namespace NCDK.QSAR
     /// Exception that is thrown by descriptor routines when a problem has occurred.
     /// </summary>
     // @cdk.module qsar
-    // @cdk.githash
     public class DescriptorException : CDKException
     {
         public DescriptorException()
         {
         }
 
-        /// <summary>
-        /// Constructs a new DescriptorException with the given message.
-        /// </summary>
         /// <param name="message">for the constructed exception</param>
         public DescriptorException(string message)
             : base(message)
         { }
 
-        /// <summary>
-        /// Constructs a new DescriptorException with from the supplied descriptor name and associated message.
-        /// </summary>
-        /// <param name="name">Name of the descriptor raising the exception</param>
-        /// <param name="message">The message associated with the exception</param>
         public DescriptorException(string name, string message)
             : base(name + ": " + message)
         { }

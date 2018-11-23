@@ -31,7 +31,7 @@ namespace NCDK.Groups
     [TestClass()]
     public class BondGroupTests : CDKTestCase
     {
-        private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
 
         public static IAtomContainer GetMol(string smiles)
         {
@@ -75,7 +75,7 @@ namespace NCDK.Groups
         public void NapthaleneB()
         {
             Test(AtomContainerPrinter.FromString("C0C1C2C3C4C5C6C7C8C9 0:1(1),1:2(2),2:3(1),3:4(1),4:5(2),"
-                    + "5:6(1),6:7(2),7:8(1),3:8(2),8:9(1),0:9(2)", Silent.ChemObjectBuilder.Instance), 4);
+                    + "5:6(1),6:7(2),7:8(1),3:8(2),8:9(1),0:9(2)", CDK.Builder), 4);
         }
     }
 }

@@ -24,9 +24,9 @@ using NCDK.Common.Collections;
 using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Graphs.Matrix;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -69,32 +69,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// Given the above description, if the aim is to gt all the eigenvalues for a molecule, you should
     /// set nlow to 0 and specify the number of heavy atoms (or some large number) for nhigh (or vice versa).
     /// </para>
-    /// <para>
-    /// This descriptor uses these parameters:
-    /// <list type="table">
-    /// <item>
-    /// <term>Name</term>
-    /// <term>Default</term>
-    /// <term>Description</term>
-    /// </item>
-    /// <item>
-    /// <term>nhigh</term>
-    /// <term>1</term>
-    /// <term>The number of highest eigenvalue</term>
-    /// </item>
-    /// <item>
-    /// <term>nlow</term>
-    /// <term>1</term>
-    /// <term>The number of lowest eigenvalue</term>
-    /// </item>
-    /// <item>
-    /// <term>checkAromaticity</term>
-    /// <term>true</term>
-    /// <term>Whether aromaticity should be checked</term>
-    /// </item>
-    /// </list>
-    /// </para>
-    /// <para>
     /// Returns an array of values in the following order
     /// <list type="bullet">
     /// <item>BCUTw-1l, BCUTw-2l ... - <i>nhigh</i> lowest atom weighted BCUTS</item>
@@ -103,130 +77,128 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <item>BCUTc-1h, BCUTc-2h ... - <i>nlow</i> highest partial charge weighted BCUTS</item>
     /// <item>BCUTp-1l, BCUTp-2l ... - <i>nhigh</i> lowest polarizability weighted BCUTS</item>
     /// <item>BCUTp-1h, BCUTp-2h ... - <i>nlow</i> highest polarizability weighted BCUTS</item>
-    /// </list> 
-    /// </para>
+    /// </list>
     /// </remarks>
     // @author Rajarshi Guha
     // @cdk.created 2004-11-30
     // @cdk.module qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:BCUT
     // @cdk.keyword BCUT
     // @cdk.keyword descriptor
-    public class BCUTDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT")]
+    public class BCUTDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        // the number of negative & positive eigenvalues
-        // to return for each class of BCUT descriptor
-        private int nhigh;
-        private int nlow;
-        private bool checkAromaticity;
+        private readonly IAtomContainer container;
 
-        public BCUTDescriptor()
+        public BCUTDescriptor(IAtomContainer container, bool checkAromaticity = false)
         {
-            // set the default number of BCUT's
-            this.nhigh = 1;
-            this.nlow = 1;
-            this.checkAromaticity = true;
+            container = (IAtomContainer)container.Clone();
+
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+            var hAdder = CDK.HydrogenAdder;
+            hAdder.AddImplicitHydrogens(container);
+            AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
+            if (checkAromaticity)
+            {
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+                Aromaticity.CDKLegacy.Apply(container);
+            }
+
+            this.container = container;
         }
 
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT",
-               typeof(BCUTDescriptor).FullName, "The Chemistry Development Kit");
-
-        /// <summary>
-        /// The parameters attribute of the BCUTDescriptor object.
-        /// Three element array of Integer and one bool representing number of highest and lowest eigenvalues and the checkAromaticity flag to return respectively
-        /// The new parameter values. This descriptor takes 3 parameters: number of highest
-        ///               eigenvalues and number of lowest eigenvalues. If 0 is specified for either (the default)
-        ///               then all calculated eigenvalues are returned. The third parameter checkAromaticity is a bool.
-        ///               If checkAromaticity is true, the method check the aromaticity, if false, means that the aromaticity has
-        ///               already been checked.
-        /// </summary>
-        /// <exception cref="CDKException">if the parameters are of the wrong type</exception>
-        public override IReadOnlyList<object> Parameters
+        public class Result : IDescriptorResult
         {
-            set
+            private readonly List<string> keys;
+            public IReadOnlyList<double> Values { get; private set; }
+
+            public int NumberOfHigh { get; private set; }
+            public int NumberOfLow { get; private set; }
+
+            public Result(IReadOnlyList<double> values, int nhigh, int nlow)
             {
-                // we expect 3 parameters
-                if (value.Count != 3)
-                {
-                    throw new CDKException("BCUTDescriptor requires 3 parameters");
-                }
-                if (!(value[0] is int) || !(value[1] is int))
-                {
-                    throw new CDKException("Parameters must be of type Integer");
-                }
-                else if (!(value[2] is bool))
-                {
-                    throw new CDKException("The third parameter must be of type bool");
-                }
-                // ok, all should be fine
-
-                this.nhigh = (int)value[0];
-                this.nlow = (int)value[1];
-                this.checkAromaticity = (bool)value[2];
-
-                if (this.nhigh < 0 || this.nlow < 0)
-                {
-                    throw new CDKException("Number of eigenvalues to return must be zero or more");
-                }
+                if ((3 * nhigh + 3 * nlow) != values.Count)
+                    throw new ArgumentException();
+                this.Values = values;
+                this.NumberOfHigh = nhigh;
+                this.NumberOfLow = nlow;
+                this.keys = MakeKeys(nhigh, nlow);
             }
-            get
-            {
-                return new object[]
-                {
-                    this.nhigh,
-                    this.nlow,
-                    this.checkAromaticity,
-                };
-            }
-        }
 
-        public override IReadOnlyList<string> DescriptorNames
-        {
-            get
+            public Exception Exception { get; private set; }
+
+            public Result(Exception e)
             {
-                string[] names;
+                this.Exception = e;
+            }
+
+            static List<string> MakeKeys(int nhigh, int nlow)
+            {
                 string[] suffix = { "w", "c", "p" };
-                names = new string[3 * nhigh + 3 * nlow];
+                var names = new List<string>(3 * nhigh + 3 * nlow);
                 int counter = 0;
                 foreach (var aSuffix in suffix)
                 {
                     for (int i = 0; i < nhigh; i++)
-                    {
-                        names[counter++] = $"BCUT{aSuffix}-{i + 1}l";
-                    }
+                        names.Add($"BCUT{aSuffix}-{i + 1}l");
                     for (int i = 0; i < nlow; i++)
-                    {
-                        names[counter++] = $"BCUT{aSuffix}-{i + 1}h";
-                    }
+                        names.Add($"BCUT{aSuffix}-{i + 1}h");
                 }
                 return names;
             }
-        }
 
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "nhigh", "nlow", "checkAromaticity" };
+            public bool ContainsKey(string key) => keys.Contains(key);
 
-        /// <summary>
-        /// Gets the parameterType attribute of the BCUTDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter (can be either 'nhigh' or 'nlow' or checkAromaticity)</param>
-        /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name)
-        {
-            switch (name)
+            public bool TryGetValue(string key, out double value)
             {
-                case "nhigh":
-                case "nlow":
-                    return 1;
-                case "checkAromaticity":
-                    return true;
-                default:
-                    return null;
+                var i = keys.IndexOf(key);
+                if (i == -1)
+                {
+                    value = default(double);
+                    return false;
+                }
+                value = Values[i];
+                return true;
             }
-        }
 
+            public int Count => keys.Count;
+
+            public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+            {
+                for (int i = 0; i < Count; i++)
+                    yield return new KeyValuePair<string, object>(keys[i], Values[i]);
+                yield break;
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            public bool TryGetValue(string key, out object value)
+            {
+                if (TryGetValue(key, out double v))
+                {
+                    value = v;
+                    return true;
+                }
+                value = null;
+                return false;
+            }
+
+            public object this[string key]
+            {
+                get
+                {
+                    var i = keys.IndexOf(key);
+                    if (i == -1)
+                        throw new KeyNotFoundException();
+                    return Values[i];
+                }
+            }
+
+            public IEnumerable<string> Keys => keys;
+
+            IEnumerable<object> IReadOnlyDictionary<string, object>.Values => Values.Cast<object>();
+        }
+       
         private static bool HasUndefined(double[][] m)
         {
             foreach (var aM in m)
@@ -304,142 +276,107 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// Calculates the three classes of BCUT descriptors.
         /// </summary>
-        /// <param name="container">Parameter is the atom container.</param>
         /// <returns>An ArrayList containing the descriptors. The default is to return
-        ///         all calculated eigenvalues of the Burden matrices in the order described
-        ///         above. If a parameter list was supplied, then only the specified number
-        ///         of highest and lowest eigenvalues (for each class of BCUT) will be returned.
-        ///         </returns>
-        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
+        /// all calculated eigenvalues of the Burden matrices in the order described
+        /// above. If a parameter list was supplied, then only the specified number
+        /// of highest and lowest eigenvalues (for each class of BCUT) will be returned.
+        /// </returns>
+        /// <param name="nhigh">The number of highest eigenvalue</param>         
+        /// <param name="nlow">The number of lowest eigenvalue</param>
+        public Result Calculate(int nhigh = 1, int nlow = 1)
         {
-            int counter;
-            var molecule = (IAtomContainer)container.Clone();
-
-            // add H's in case they're not present
             try
             {
-                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-                var hAdder = CDK.HydrogenAdder;
-                hAdder.AddImplicitHydrogens(molecule);
-                AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(molecule);
+                return CalculateMain(nhigh, nlow);
             }
-            catch (Exception e)
+            catch (CDKException e)
             {
-                return GetDummyDescriptorValue(new CDKException($"Could not add hydrogens: {e.Message}", e));
+                return new Result(e);
             }
+        }
 
-            // do aromaticity detecttion for calculating polarizability later on
-            if (this.checkAromaticity)
-            {
-                try
-                {
-                    AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-                }
-                catch (CDKException e)
-                {
-                    return GetDummyDescriptorValue(new CDKException($"Error in atom typing: {e.Message}", e));
-                }
-                try
-                {
-                    Aromaticity.CDKLegacy.Apply(molecule);
-                }
-                catch (CDKException e)
-                {
-                    return GetDummyDescriptorValue(new CDKException($"Error in aromaticity perception: {e.Message}"));
-                }
-            }
+        private Result CalculateMain(int nhigh, int nlow)
+        {
+            var iso = CDK.IsotopeFactory;
+            int nheavy = 0;
 
             // find number of heavy atoms
-            int nheavy = 0;
-            for (int i = 0; i < molecule.Atoms.Count; i++)
-            {
-                if (!molecule.Atoms[i].AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
-                    nheavy++;
-            }
-
+            nheavy += container.Atoms.Count(atom => !atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber));
             if (nheavy == 0)
-                return GetDummyDescriptorValue(new CDKException("No heavy atoms in the molecule"));
+                throw new CDKException("No heavy atoms in the container");
 
             var diagvalue = new double[nheavy];
 
             // get atomic mass weighted BCUT
-            counter = 0;
             try
             {
-                for (int i = 0; i < molecule.Atoms.Count; i++)
+                var counter = 0;
+                foreach (var atom in container.Atoms.Where(atom => !atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)))
                 {
-                    if (molecule.Atoms[i].AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
-                        continue;
-                    diagvalue[counter] = CDK.IsotopeFactory.GetMajorIsotope(molecule.Atoms[i].Symbol).ExactMass.Value;
+                    diagvalue[counter] = iso.GetMajorIsotope(atom.AtomicNumber.Value).ExactMass.Value;
                     counter++;
                 }
             }
             catch (Exception e)
             {
-                return GetDummyDescriptorValue(new CDKException($"Could not calculate weight: {e.Message}", e));
+                throw new CDKException($"Could not calculate weight: {e.Message}", e);
             }
 
-            var burdenMatrix = BurdenMatrix.EvalMatrix(molecule, diagvalue);
-            if (HasUndefined(burdenMatrix))
-                return GetDummyDescriptorValue(new CDKException("Burden matrix has undefined values"));
-            var matrix = Matrix<double>.Build.DenseOfColumnArrays(burdenMatrix);
-            var eigenDecomposition = matrix.Evd().EigenValues;
-            var eval1 = eigenDecomposition.Select(n => n.Real).ToArray();
-
-            // get charge weighted BCUT
-            GasteigerMarsiliPartialCharges peoe;
+            double[] eval1, eval2, eval3;
+            {
+                var burdenMatrix = BurdenMatrix.EvalMatrix(container, diagvalue);
+                if (HasUndefined(burdenMatrix))
+                    throw new CDKException("Burden matrix has undefined values");
+                var matrix = Matrix<double>.Build.DenseOfColumnArrays(burdenMatrix);
+                var eigenDecomposition = matrix.Evd().EigenValues;
+                eval1 = eigenDecomposition.Select(n => n.Real).ToArray();
+            }
             try
             {
-                CDK.LonePairElectronChecker.Saturate(molecule);
-                var charges = new double[molecule.Atoms.Count];
-                peoe = new GasteigerMarsiliPartialCharges();
-                peoe.AssignGasteigerMarsiliSigmaPartialCharges(molecule, true);
-                for (int i = 0; i < molecule.Atoms.Count; i++)
-                    charges[i] += molecule.Atoms[i].Charge.Value;
-                for (int i = 0; i < molecule.Atoms.Count; i++)
-                {
-                    molecule.Atoms[i].Charge = charges[i];
-                }
+                // get charge weighted BCUT
+                CDK.LonePairElectronChecker.Saturate(container);
+                var charges = new double[container.Atoms.Count];
+                var peoe = new GasteigerMarsiliPartialCharges();
+                peoe.AssignGasteigerMarsiliSigmaPartialCharges(container, true);
+                for (int i = 0; i < container.Atoms.Count; i++)
+                    charges[i] += container.Atoms[i].Charge.Value;
+                for (int i = 0; i < container.Atoms.Count; i++)
+                    container.Atoms[i].Charge = charges[i];
             }
             catch (Exception e)
             {
-                return GetDummyDescriptorValue(new CDKException("Could not calculate partial charges: " + e.Message, e));
+                throw new CDKException("Could not calculate partial charges: " + e.Message, e);
             }
-            counter = 0;
-            for (int i = 0; i < molecule.Atoms.Count; i++)
             {
-                if (molecule.Atoms[i].AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
-                    continue;
-                diagvalue[counter] = molecule.Atoms[i].Charge.Value;
-                counter++;
+                var counter = 0;
+                foreach (var atom in container.Atoms.Where(atom => !atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)))
+                    diagvalue[counter++] = atom.Charge.Value;
             }
-            burdenMatrix = BurdenMatrix.EvalMatrix(molecule, diagvalue);
-            if (HasUndefined(burdenMatrix))
-                return GetDummyDescriptorValue(new CDKException("Burden matrix has undefined values"));
-            matrix = Matrix<double>.Build.DenseOfColumnArrays(burdenMatrix);
-            eigenDecomposition = matrix.Evd().EigenValues;
-            var eval2 = eigenDecomposition.Select(n => n.Real).ToArray();
+            {
+                var burdenMatrix = BurdenMatrix.EvalMatrix(container, diagvalue);
+                if (HasUndefined(burdenMatrix))
+                    throw new CDKException("Burden matrix has undefined values");
+                var matrix = Matrix<double>.Build.DenseOfColumnArrays(burdenMatrix);
+                var eigenDecomposition = matrix.Evd().EigenValues;
+                eval2 = eigenDecomposition.Select(n => n.Real).ToArray();
+            }
 
-            var topoDistance = PathTools.ComputeFloydAPSP(AdjacencyMatrix.GetMatrix(molecule));
+            var topoDistance = PathTools.ComputeFloydAPSP(AdjacencyMatrix.GetMatrix(container));
 
             // get polarizability weighted BCUT
-            counter = 0;
-            for (int i = 0; i < molecule.Atoms.Count; i++)
             {
-                if (molecule.Atoms[i].AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
-                    continue;
-                diagvalue[counter] = Polarizability.CalculateGHEffectiveAtomPolarizability(molecule, molecule.Atoms[i], false, topoDistance);
-                counter++;
+                var counter = 0;
+                foreach (var atom in container.Atoms.Where(atom => !atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)))
+                    diagvalue[counter++] = Polarizability.CalculateGHEffectiveAtomPolarizability(container, atom, false, topoDistance);
             }
-            burdenMatrix = BurdenMatrix.EvalMatrix(molecule, diagvalue);
-            if (HasUndefined(burdenMatrix))
-                return GetDummyDescriptorValue(new CDKException("Burden matrix has undefined values"));
-            matrix = Matrix<double>.Build.DenseOfColumnArrays(burdenMatrix);
-            eigenDecomposition = matrix.Evd().EigenValues;
-            var eval3 = eigenDecomposition.Select(n => n.Real).ToArray();
-
-            string[] names;
-            string[] suffix = { "w", "c", "p" };
+            {
+                var burdenMatrix = BurdenMatrix.EvalMatrix(container, diagvalue);
+                if (HasUndefined(burdenMatrix))
+                    throw new CDKException("Burden matrix has undefined values");
+                var matrix = Matrix<double>.Build.DenseOfColumnArrays(burdenMatrix);
+                var eigenDecomposition = matrix.Evd().EigenValues;
+                eval3 = eigenDecomposition.Select(n => n.Real).ToArray();
+            }
 
             // return only the n highest & lowest eigenvalues
             int lnlow, lnhigh, enlow, enhigh;
@@ -465,7 +402,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 enhigh = 0;
             }
 
-            ArrayResult<double> retval = new ArrayResult<double>((lnlow + enlow + lnhigh + enhigh) * 3);
+            var retval = new List<double>((lnlow + enlow + lnhigh + enhigh) * 3);
 
             for (int i = 0; i < lnlow; i++)
                 retval.Add(eval1[i]);
@@ -494,36 +431,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             for (int i = 0; i < enhigh; i++)
                 retval.Add(double.NaN);
 
-            names = new string[3 * nhigh + 3 * nlow];
-            counter = 0;
-            foreach (var aSuffix in suffix)
-            {
-                for (int i = 0; i < nhigh; i++)
-                {
-                    names[counter++] = "BCUT" + aSuffix + "-" + (i + 1) + "l";
-                }
-                for (int i = 0; i < nlow; i++)
-                {
-                    names[counter++] = "BCUT" + aSuffix + "-" + (i + 1) + "h";
-                }
-            }
-
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval,
-                    DescriptorNames);
+            return new Result(retval, nhigh, nlow);
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(6);
-
-        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
-        {
-            ArrayResult<double> results = new ArrayResult<double>(6);
-            for (int i = 0; i < 6; i++)
-                results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results,
-                    DescriptorNames, e);
-        }
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

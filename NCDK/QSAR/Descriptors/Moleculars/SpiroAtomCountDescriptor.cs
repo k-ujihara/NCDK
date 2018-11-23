@@ -18,8 +18,6 @@
  */
 
 using NCDK.Graphs;
-using NCDK.QSAR.Results;
-using System;
 using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -29,35 +27,30 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </summary>
     // @author rguha
     // @cdk.dictref qsar-descriptors:nSpiroAtom
-    public class SpiroAtomCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#nSpiroAtom")]
+    public class SpiroAtomCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly static string[] NAMES = { "nSpiroAtoms" };
+        private readonly IAtomContainer container;
 
-        public SpiroAtomCountDescriptor()
+        public SpiroAtomCountDescriptor(IAtomContainer container)
         {
+            container = (IAtomContainer)container.Clone();
+            this.container = container;
         }
 
-        public override void Initialise(IChemObjectBuilder builder)
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
+            public Result(int value)
+            {
+                this.NumberOfSpiroAtoms = value;
+            }
+
+            [DescriptorResultProperty("nSpiroAtoms")]
+            public int NumberOfSpiroAtoms { get; private set; }
+
+            public int Value => NumberOfSpiroAtoms;
         }
-
-        /// <inheritdoc/>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#nSpiroAtom",
-                typeof(KierHallSmartsDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<object> Parameters
-        {
-            get => null;
-            set { }
-        }
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private static void TraverseRings(IAtomContainer mol, IAtom atom, IBond prev)
         {
@@ -104,29 +97,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return degree < 2 ? 0 : degree;
         }
 
-        public DescriptorValue<Result<int>> Calculate(IAtomContainer atomContainer)
+        public Result Calculate()
         {
             int nSpiro = 0;
 
-            var local = (IAtomContainer)atomContainer.Clone();
-            Cycles.MarkRingAtomsAndBonds(local);
-            foreach (var atom in local.Atoms)
+            Cycles.MarkRingAtomsAndBonds(container);
+            foreach (var atom in container.Atoms)
             {
-                if (GetSpiroDegree(local, atom) != 0)
+                if (GetSpiroDegree(container, atom) != 0)
                     nSpiro++;
             }
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(nSpiro), DescriptorNames);
+
+            return new Result(nSpiro);
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>();
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<string> ParameterNames => Array.Empty<string>();
-
-        /// <inheritdoc/>
-        public override object GetParameterType(string name) => null;
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

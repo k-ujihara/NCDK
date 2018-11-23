@@ -42,6 +42,14 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <Compile Remove="QSAR\Descriptors\Atomic\%24AtomicDescriptor.tt.cs" />
+    <Compile Remove="QSAR\Descriptors\Atomic\%24ProtonDescriptor.tt.cs" />
+    <Compile Remove="QSAR\Descriptors\Atomic\IPAtomicHOSEDescriptor.cs" />
+    <Compile Remove="QSAR\Descriptors\Atomic\ProtonAffinityHOSEDescriptor.cs" />
+    <Compile Remove="QSAR\Descriptors\Moleculars\AminoAcidCountDescriptor.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <None Remove="Beam\element-defaults.txt" />
     <None Remove="Config\Data\electroneg-pauling.txt" />
     <None Remove="Config\Data\isotopes.dat" />
@@ -101,15 +109,14 @@
     <None Remove="NCDK.nuspec" />
     <None Remove="NCDK.targets" />
     <None Remove="qsar-descriptors.set" />
+    <None Remove="QSAR\Descriptors\Atomic\%24AtomicDescriptor.tt" />
+    <None Remove="QSAR\Descriptors\Atomic\%24ProtonDescriptor.tt" />
     <None Remove="QSAR\Descriptors\Atomic\Data\X_AffiProton_HOSE.db" />
     <None Remove="QSAR\Descriptors\Atomic\Data\X_AffiProton_HOSE_S.db" />
     <None Remove="QSAR\Descriptors\Atomic\Data\X_IP_HOSE.db" />
     <None Remove="QSAR\Descriptors\Atomic\Data\X_IP_HOSE_S.db" />
+    <None Remove="QSAR\Descriptors\Bonds\%24BondDescriptor.tt" />
     <None Remove="QSAR\Descriptors\Data\taepeptides.txt" />
-    <None Remove="QSAR\IAtomicDescriptor" />
-    <None Remove="QSAR\IAtomPairDescriptor" />
-    <None Remove="QSAR\IBondDescriptor" />
-    <None Remove="QSAR\IMolecularDescriptor" />
     <None Remove="reaction-types.set" />
     <None Remove="Smiles\Normalize\fixsmiles.xml" />
     <None Remove="Templates\Data\list_aminoacids.cml" />
@@ -184,10 +191,6 @@
     <EmbeddedResource Include="QSAR\Descriptors\Atomic\Data\X_IP_HOSE.db" />
     <EmbeddedResource Include="QSAR\Descriptors\Atomic\Data\X_IP_HOSE_S.db" />
     <EmbeddedResource Include="QSAR\Descriptors\Data\taepeptides.txt" />
-    <EmbeddedResource Include="QSAR\IAtomicDescriptor" />
-    <EmbeddedResource Include="QSAR\IAtomPairDescriptor" />
-    <EmbeddedResource Include="QSAR\IBondDescriptor" />
-    <EmbeddedResource Include="QSAR\IMolecularDescriptor" />
     <EmbeddedResource Include="reaction-types.set" />
     <EmbeddedResource Include="Smiles\Normalize\fixsmiles.xml" />
     <EmbeddedResource Include="Templates\Data\list_aminoacids.cml" />
@@ -216,6 +219,10 @@
     <None Update="cheminf.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>cheminf.tokens</LastGenOutput>
+    </None>
+    <None Update="Config\Fragments\EStateFragments.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EStateFragments.tt.cs</LastGenOutput>
     </None>
     <None Update="IncludeExamples.xml">
       <DesignTime>True</DesignTime>
@@ -266,17 +273,21 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Vector.tt.cs</LastGenOutput>
     </None>
-    <None Update="QSAR\Descriptors\Atomic\%24AtomicDescriptor.tt">
+    <None Update="QSAR\Descriptors\Atomic\RDFProtonDescriptors.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>$AtomicDescriptor.tt.cs</LastGenOutput>
+      <LastGenOutput>RDFProtonDescriptors.tt.cs</LastGenOutput>
     </None>
-    <None Update="QSAR\Descriptors\Atomic\%24ProtonDescriptor.tt">
+    <None Update="QSAR\Descriptors\AtomPair\%24ProtonDescriptor.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>$ProtonDescriptor.tt.cs</LastGenOutput>
     </None>
-    <None Update="QSAR\Descriptors\Bonds\%24BondDescriptor.tt">
+    <None Update="QSAR\Descriptors\Moleculars\AminoAcidCountDescriptor.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>$BondDescriptor.tt.cs</LastGenOutput>
+      <LastGenOutput>AminoAcidCountDescriptor.tt.cs</LastGenOutput>
+    </None>
+    <None Update="QSAR\Descriptors\Moleculars\KierHallSmartsDescriptor.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>KierHallSmartsDescriptor.tt.cs</LastGenOutput>
     </None>
     <None Update="Reactions\Types\%24ExampleCodes.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -465,6 +476,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CDK.tt</DependentUpon>
     </Compile>
+    <Compile Update="Config\Fragments\EStateFragments.tt.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EStateFragments.tt</DependentUpon>
+    </Compile>
     <Compile Update="Config\NaturalElements.tt.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -510,20 +526,25 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Vector.tt</DependentUpon>
     </Compile>
-    <Compile Update="QSAR\Descriptors\Atomic\%24AtomicDescriptor.tt.cs">
+    <Compile Update="QSAR\Descriptors\Atomic\RDFProtonDescriptors.tt.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>$AtomicDescriptor.tt</DependentUpon>
+      <DependentUpon>RDFProtonDescriptors.tt</DependentUpon>
     </Compile>
-    <Compile Update="QSAR\Descriptors\Atomic\%24ProtonDescriptor.tt.cs">
+    <Compile Update="QSAR\Descriptors\AtomPair\%24ProtonDescriptor.tt.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>$ProtonDescriptor.tt</DependentUpon>
     </Compile>
-    <Compile Update="QSAR\Descriptors\Bonds\%24BondDescriptor.tt.cs">
+    <Compile Update="QSAR\Descriptors\Moleculars\AminoAcidCountDescriptor.tt.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>$BondDescriptor.tt</DependentUpon>
+      <DependentUpon>AminoAcidCountDescriptor.tt</DependentUpon>
+    </Compile>
+    <Compile Update="QSAR\Descriptors\Moleculars\KierHallSmartsDescriptor.tt.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>KierHallSmartsDescriptor.tt</DependentUpon>
     </Compile>
     <Compile Update="Reactions\Types\%24ExampleCodes.cs">
       <DesignTime>True</DesignTime>

@@ -407,7 +407,7 @@ namespace NCDK.Isomorphisms
 
         static IAtomContainer Sma(string smarts)
         {
-            return SMARTSParser.Parse(smarts, Silent.ChemObjectBuilder.Instance);
+            return SMARTSParser.Parse(smarts, CDK.Builder);
         }
     }
 }

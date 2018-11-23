@@ -17,7 +17,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.QSAR.Results;
+
 using System;
 using System.Collections.Generic;
 
@@ -31,53 +31,42 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @author      mfe4
     // @cdk.created 2004-11-13
     // @cdk.module  qsaratomic
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:atomValence
-    public partial class AtomValenceDescriptor : IAtomicDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomValence")]
+    public partial class AtomValenceDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
-        /// <summary>
-        /// Constructor for the AtomValenceDescriptor object
-        /// </summary>
-        public AtomValenceDescriptor() { }
+        IAtomContainer container;
 
-        /// <summary>
-        /// The specification attribute of the AtomValenceDescriptor object
-        /// </summary>
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomValence",
-                typeof(AtomValenceDescriptor).FullName, "The Chemistry Development Kit");
+        public AtomValenceDescriptor(IAtomContainer container)
+        {
+            this.container = container;
+        }
 
-        /// <summary>
-        ///  The parameters attribute of the VdWRadiusDescriptor object.
-        /// </summary>
-        public IReadOnlyList<object> Parameters { get { return null; } set { } }
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(int value)
+            {
+                this.AtomValence = value;
+            }
 
-        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "val" };
+            [DescriptorResultProperty("val")]
+            public int AtomValence { get; private set; }
 
+            public int Value => AtomValence;
+        }
+        
         /// <summary>
         /// This method calculates the valence of an atom.
         /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
-        /// <param name="container">Parameter is the atom container.</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="Result"/> is requested</param>
         /// <returns>The valence of an atom</returns>
-        public DescriptorValue<Result<int>> Calculate(IAtom atom, IAtomContainer container)
+        public Result Calculate(IAtom atom)
         {
             int atomValence = AtomValenceTool.GetValence(atom);
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(atomValence), DescriptorNames);
+            return new Result(atomValence);
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the VdWRadiusDescriptor object.
-        /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
-
-        /// <summary>
-        /// Gets the parameterType attribute of the VdWRadiusDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public object GetParameterType(string name) => null;
+        IDescriptorResult IAtomicDescriptor.Calculate(IAtom atom) => Calculate(atom);
     }
 }

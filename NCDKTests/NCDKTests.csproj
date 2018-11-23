@@ -1085,6 +1085,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="QSAR\Descriptors\Moleculars\AutocorrelationDescriptorTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AutocorrelationDescriptorTest.tt.cs</LastGenOutput>
+    </None>
+    <None Update="QSAR\Descriptors\Moleculars\ChiDescriptorTests.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ChiDescriptorTests.tt.cs</LastGenOutput>
+    </None>
     <None Update="TT\AdductFormulaTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AdductFormulaTest.tt.cs</LastGenOutput>
@@ -1245,6 +1253,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SubstanceTest.tt.cs</LastGenOutput>
     </None>
+    <Compile Update="QSAR\Descriptors\Moleculars\AutocorrelationDescriptorTest.tt.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AutocorrelationDescriptorTest.tt</DependentUpon>
+    </Compile>
+    <Compile Update="QSAR\Descriptors\Moleculars\ChiDescriptorTests.tt.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ChiDescriptorTests.tt</DependentUpon>
+    </Compile>
     <Compile Update="TT\AdductFormulaTest.tt.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

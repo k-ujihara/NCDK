@@ -48,13 +48,13 @@ namespace NCDK.Graphs.Invariant
 
             for (int i = 0; i < ac.Atoms.Count; i++)
             {
-                IAtom firstAtom = ac.Atoms[i];
+                var firstAtom = ac.Atoms[i];
                 // if this atom was already visited in a previous DFS, continue
                 if (firstAtom.IsVisited || CheckAtom(ac, firstAtom) == -1)
                 {
                     continue;
                 }
-                IAtomContainer piSystem = ac.Builder.NewAtomContainer();
+                var piSystem = ac.Builder.NewAtomContainer();
                 var stack = new Stack<IAtom>();
 
                 piSystem.Atoms.Add(firstAtom);
@@ -64,17 +64,17 @@ namespace NCDK.Graphs.Invariant
                 while (stack.Count != 0)
                 {
                     //bool AddAtom = false;
-                    IAtom currentAtom = stack.Pop();
+                    var currentAtom = stack.Pop();
                     var atoms = ac.GetConnectedAtoms(currentAtom).ToReadOnlyList();
                     var bonds = ac.GetConnectedBonds(currentAtom).ToReadOnlyList();
 
                     for (int j = 0; j < atoms.Count; j++)
                     {
-                        IAtom atom = atoms[j];
-                        IBond bond = bonds[j];
+                        var atom = atoms[j];
+                        var bond = bonds[j];
                         if (!atom.IsVisited)
                         {
-                            int check = CheckAtom(ac, atom);
+                            var check = CheckAtom(ac, atom);
                             if (check == 1)
                             {
                                 piSystem.Atoms.Add(atom);

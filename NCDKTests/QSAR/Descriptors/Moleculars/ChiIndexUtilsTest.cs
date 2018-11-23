@@ -18,7 +18,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -26,49 +25,44 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [TestClass()]
     public class ChiIndexUtilsTest : CDKTestCase
     {
-        ChemObjectBuilder builder;
-
-        public ChiIndexUtilsTest()
-        {
-            builder = (ChemObjectBuilder)ChemObjectBuilder.Instance;
-        }
+        IChemObjectBuilder builder = CDK.Builder;
 
         [TestMethod()]
         public void TestDeltaVSulphurSO()
         {
-            IAtom s = builder.NewAtom("S");
-            IAtom o = builder.NewAtom("O");
-            IBond b = builder.NewBond(s, o);
+            var s = builder.NewAtom("S");
+            var o = builder.NewAtom("O");
+            var b = builder.NewBond(s, o);
             b.Order = BondOrder.Double;
 
-            IAtomContainer m = builder.NewAtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(s);
             m.Atoms.Add(o);
             m.Bonds.Add(b);
 
-            double deltav = ChiIndexUtils.DeltavSulphur(s, m);
+            var deltav = ChiIndexUtils.DeltavSulphur(s, m);
             Assert.AreEqual(1.33, deltav, 0.01);
         }
 
         [TestMethod()]
         public void TestDeltaVSulphurSO2()
         {
-            IAtom s = builder.NewAtom("S");
-            IAtom o1 = builder.NewAtom("O");
-            IAtom o2 = builder.NewAtom("O");
-            IBond b1 = builder.NewBond(s, o1);
-            IBond b2 = builder.NewBond(s, o2);
+            var s = builder.NewAtom("S");
+            var o1 = builder.NewAtom("O");
+            var o2 = builder.NewAtom("O");
+            var b1 = builder.NewBond(s, o1);
+            var b2 = builder.NewBond(s, o2);
             b1.Order = BondOrder.Double;
             b2.Order = BondOrder.Double;
 
-            IAtomContainer m = builder.NewAtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(s);
             m.Atoms.Add(o1);
             m.Bonds.Add(b1);
             m.Atoms.Add(o2);
             m.Bonds.Add(b2);
 
-            double deltav = ChiIndexUtils.DeltavSulphur(s, m);
+            var deltav = ChiIndexUtils.DeltavSulphur(s, m);
             Assert.AreEqual(2.67, deltav, 0.01);
         }
     }

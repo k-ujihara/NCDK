@@ -16,54 +16,35 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.QSAR.Results;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsaratomic
     [TestClass()]
-    public class ProtonAffinityHOSEDescriptorTest : AtomicDescriptorTest
+    public class ProtonAffinityHOSEDescriptorTest : AtomicDescriptorTest<ProtonAffinityHOSEDescriptor>
     {
-        private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-
-        public ProtonAffinityHOSEDescriptorTest()
-        {
-            descriptor = new ProtonAffinityHOSEDescriptor();
-            SetDescriptor(typeof(ProtonAffinityHOSEDescriptor));
-        }
-
-        [TestMethod()]
-        public void TestProtonAffinityHOSEDescriptor()
-        {
-            IAtomicDescriptor descriptor = new ProtonAffinityHOSEDescriptor();
-            Assert.IsNotNull(descriptor);
-        }
-
         // @cdk.inchi InChI=1/C6H5Cl/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
         public void TestAffinityDescriptor1()
         {
-            IAtomContainer mol = builder.NewAtomContainer();
-            mol.Atoms.Add(builder.NewAtom("C"));
-            mol.Atoms.Add(builder.NewAtom("C"));
+            var mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
-            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
-            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Double);
-            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
-            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[4], mol.Atoms[5], BondOrder.Double);
             mol.AddBond(mol.Atoms[5], mol.Atoms[0], BondOrder.Single);
-            mol.Atoms.Add(builder.NewAtom("Cl"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("Cl"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[6], BondOrder.Single);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -71,8 +52,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
 
-            double result = ((Result<double>)descriptor.Calculate(mol.Atoms[6], mol).Value).Value;
-            double resultAccordingNIST = 753.1;
+            var descriptor = CreateDescriptor(mol);
+            var result = descriptor.Calculate(mol.Atoms[6]).Value;
+            var resultAccordingNIST = 753.1;
 
             Assert.AreEqual(resultAccordingNIST, result, 0.00001);
         }
@@ -81,19 +63,20 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestAffinityDescriptor2()
         {
-            IAtomContainer mol = builder.NewAtomContainer();
-            mol.Atoms.Add(builder.NewAtom("C"));
-            mol.Atoms.Add(builder.NewAtom("C"));
+            var mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
-            mol.Atoms.Add(builder.NewAtom("Cl"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("Cl"));
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
 
             AddExplicitHydrogens(mol);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
 
-            double result = ((Result<double>)descriptor.Calculate(mol.Atoms[2], mol).Value).Value;
-            double resultAccordingNIST = 693.4;
+            var descriptor = CreateDescriptor(mol);
+            var result = descriptor.Calculate(mol.Atoms[2]).Value;
+            var resultAccordingNIST = 693.4;
 
             Assert.AreEqual(resultAccordingNIST, result, 0.00001);
         }

@@ -31,6 +31,7 @@
 using NCDK.Common.Serialization;
 using NCDK.Config;
 using NCDK.Numerics;
+using NCDK.Tools;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -56,12 +57,10 @@ namespace NCDK.Default
     /// </code>
     /// </example>
     /// <seealso cref="NCDK.Config.XMLIsotopeFactory.GetInstance(IChemObjectBuilder)"/>
-    // @cdk.githash
     // @author     steinbeck
     // @cdk.created    2000-10-02
     // @cdk.keyword    atom
-    public class Atom
-        : AtomType, IAtom, ISerializable
+    public class Atom : AtomType, IAtom, ISerializable
     {
         internal double? charge;
         internal int? implicitHydrogenCount;
@@ -501,7 +500,7 @@ namespace NCDK.Default
             else
                 atom.MassNumber = mass;
             atom.AtomicNumber = anum;
-            atom.Symbol = NaturalElement.OfNumber(anum).Symbol;
+            atom.Symbol = PeriodicTable.GetSymbol(anum);
             atom.ImplicitHydrogenCount = hcnt;
             atom.FormalCharge = chg;
 
@@ -543,12 +542,10 @@ namespace NCDK.Silent
     /// </code>
     /// </example>
     /// <seealso cref="NCDK.Config.XMLIsotopeFactory.GetInstance(IChemObjectBuilder)"/>
-    // @cdk.githash
     // @author     steinbeck
     // @cdk.created    2000-10-02
     // @cdk.keyword    atom
-    public class Atom
-        : AtomType, IAtom, ISerializable
+    public class Atom : AtomType, IAtom, ISerializable
     {
         internal double? charge;
         internal int? implicitHydrogenCount;
@@ -981,7 +978,7 @@ namespace NCDK.Silent
             else
                 atom.MassNumber = mass;
             atom.AtomicNumber = anum;
-            atom.Symbol = NaturalElement.OfNumber(anum).Symbol;
+            atom.Symbol = PeriodicTable.GetSymbol(anum);
             atom.ImplicitHydrogenCount = hcnt;
             atom.FormalCharge = chg;
 

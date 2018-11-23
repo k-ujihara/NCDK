@@ -30,7 +30,7 @@ namespace NCDK.Groups
     // @author maclean  
     public class AtomEquitablePartitionRefinementTests
     {
-        public static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        public static IChemObjectBuilder builder = CDK.Builder;
 
         [TestMethod()]
         public void Cube2eneWithoutBonds()

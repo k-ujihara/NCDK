@@ -16,45 +16,35 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 using NCDK.Templates;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class AromaticAtomsCountDescriptorTest : MolecularDescriptorTest
+    public class AromaticAtomsCountDescriptorTest : MolecularDescriptorTest<AromaticAtomsCountDescriptor>
     {
-        public AromaticAtomsCountDescriptorTest()
-        {
-            SetDescriptor(typeof(AromaticAtomsCountDescriptor));
-        }
+        public AromaticAtomsCountDescriptor CreateDescriptor(IAtomContainer mol, bool checkAromaticity) => new AromaticAtomsCountDescriptor(mol, checkAromaticity);
 
         [TestMethod()]
         public void TestAromaticAtomsCountDescriptor()
         {
-            object[] parameters = new object[] { true };
-            Descriptor.Parameters = parameters;
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCOc1ccccc1"); // ethanol
-            Assert.AreEqual(6, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
+            var result = CreateDescriptor(mol, checkAromaticity: true).Calculate();
+            Assert.AreEqual(6, result.Value);
         }
 
         [TestMethod()]
         public void TestViaFlags()
         {
-            IAtomContainer molecule = TestMoleculeFactory.MakeBenzene();
-            foreach (var atom in molecule.Atoms)
-            {
+            var mol = TestMoleculeFactory.MakeBenzene();
+            foreach (var atom in mol.Atoms)
                 atom.IsAromatic = true;
-            }
-            Assert.AreEqual(6, ((Result<int>)Descriptor.Calculate(molecule).Value).Value);
+
+            Assert.AreEqual(6, CreateDescriptor(mol).Calculate().Value);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace NCDK.Formula
     [TestClass()]
     public class MolecularFormulaRangeTest : CDKTestCase
     {
-        private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
 
         /// <summary>
         ///  Constructor for the MolecularFormulaRangeTest object.

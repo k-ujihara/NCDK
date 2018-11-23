@@ -16,10 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.ForceFields;
-using NCDK.QSAR.Results;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NCDK.QSAR.Descriptors.Atomic
@@ -27,104 +25,63 @@ namespace NCDK.QSAR.Descriptors.Atomic
     /// <summary>
     /// The calculation of total partial charges of an heavy atom is based on MMFF94 model.
     /// </summary>
-    /// <remarks>
-    /// <para>
-    /// This descriptor uses these parameters:
-    /// <list type="table">
-    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
-    /// <item><term></term><term></term><term>no parameters</term></item>
-    /// </list>
-    /// </para> 
-    /// </remarks>
     /// <seealso cref="Charges.MMFF94PartialCharges"/>
     // @author Miguel Rojas
     // @cdk.created 2006-04-11
     // @cdk.module qsaratomic
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:partialTChargeMMFF94
     // @cdk.bug 1628461
-    public partial class PartialTChargeMMFF94Descriptor : IAtomicDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialTChargeMMFF94")]
+    public partial class PartialTChargeMMFF94Descriptor : AbstractDescriptor, IAtomicDescriptor
     {
-        private static readonly string[] NAMES = { "partialTCMMFF94" };
-        private const string Key_ChargeCache = "mmff.qsar.charge.cache";
-        private Mmff mmff;
+        IAtomContainer container;
+        IAtomContainer clonedContainer = null;
 
-        /// <summary>
-        /// Constructor for the PartialTChargeMMFF94Descriptor object
-        /// </summary>
-        public PartialTChargeMMFF94Descriptor()
+        public PartialTChargeMMFF94Descriptor(IAtomContainer container)
         {
-            mmff = new Mmff();
+            foreach (var atom in container.Atoms)
+            {
+                if (atom.ImplicitHydrogenCount == null || atom.ImplicitHydrogenCount != 0)
+                    throw new CDKException("Hydrogens must be explicit for MMFF charge calculation");
+            }
+
+            clonedContainer = (IAtomContainer)container.Clone();
+            var mmff = new Mmff();
+            if (!mmff.AssignAtomTypes(clonedContainer))
+                Trace.TraceWarning("One or more atoms could not be assigned an MMFF atom type");
+            mmff.PartialCharges(clonedContainer);
+            mmff.ClearProps(clonedContainer);
+
+            this.container = container;
         }
 
-        /// <summary>
-        /// The specification attribute of the PartialTChargeMMFF94Descriptor object
-        /// </summary>
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialTChargeMMFF94",
-                typeof(PartialTChargeMMFF94Descriptor).FullName, "The Chemistry Development Kit");
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(double value)
+            {
+                this.TotalPartialCharge = value;
+            }
 
-        /// <summary>
-        /// The parameters attribute of the PartialTChargeMMFF94Descriptor object
-        /// </summary>
-        public IReadOnlyList<object> Parameters { get { return null; } set { } }
+            [DescriptorResultProperty("partialTCMMFF94")]
+            public double TotalPartialCharge { get; private set; }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+            public double Value => TotalPartialCharge;
+        }
 
         /// <summary>
         /// The method returns partial charges assigned to an heavy atom through
         /// MMFF94 method. It is needed to call the addExplicitHydrogensToSatisfyValency
         /// method from the class tools.HydrogenAdder.
         /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
-        /// <param name="org">AtomContainer</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="Result"/> is requested</param>
         /// <returns>partial charge of parameter atom</returns>
-        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer org)
+        public Result Calculate(IAtom atom)
         {
-            if (atom.GetProperty<double?>(Key_ChargeCache) == null)
-            {
-                IAtomContainer copy = (IAtomContainer)org.Clone();
-                foreach (var a in org.Atoms)
-                {
-                    if (a.ImplicitHydrogenCount == null || a.ImplicitHydrogenCount != 0)
-                    {
-                        Trace.TraceError("Hydrogens must be explicit for MMFF charge calculation");
-                        return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters,
-                                                   new Result<double>(double.NaN), NAMES);
-                    }
-                }
-
-                if (!mmff.AssignAtomTypes(copy))
-                    Trace.TraceWarning("One or more atoms could not be assigned an MMFF atom type");
-                mmff.PartialCharges(copy);
-                mmff.ClearProps(copy);
-
-                // cache charges
-                for (int i = 0; i < org.Atoms.Count; i++)
-                {
-                    org.Atoms[i].SetProperty(Key_ChargeCache, copy.Atoms[i].Charge.Value);
-                }
-            }
-
-            return new DescriptorValue<Result<double>>(specification,
-                                       ParameterNames,
-                                       Parameters,
-                                       new Result<double>(atom.GetProperty<double>(Key_ChargeCache)),
-                                       NAMES);
+            var index = container.Atoms.IndexOf(atom);
+            return new Result(clonedContainer.Atoms[index].Charge.Value);
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the PartialTChargeMMFF94Descriptor object
-        /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
-
-        /// <summary>
-        /// Gets the parameterType attribute of the PartialTChargeMMFF94Descriptor object
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name) => null;
+        IDescriptorResult IAtomicDescriptor.Calculate(IAtom atom) => Calculate(atom);
     }
 }

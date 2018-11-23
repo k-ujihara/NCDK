@@ -955,7 +955,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestReplaceAtom_stereochemistry()
         {
-            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            IChemObjectBuilder bldr = CDK.Builder;
             SmilesParser smipar = new SmilesParser(bldr);
             var mol = smipar.ParseSmiles("N[C@H](CC)O");
             IAtom newAtom = bldr.NewAtom("Cl");

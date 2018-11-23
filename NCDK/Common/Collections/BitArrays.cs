@@ -9,7 +9,7 @@ using System.Text;
 
 namespace NCDK.Common.Collections
 {
-    public static class BitArrays
+    internal static class BitArrays
     {
         public static readonly IEqualityComparer<BitArray> EqualityComparer = new BitArrayComparer();
 

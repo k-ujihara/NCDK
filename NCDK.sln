@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		ChemObjectConfig.ttinclude = ChemObjectConfig.ttinclude
 		Config.ttinclude = Config.ttinclude
+		EStateFragments.ttinclude = EStateFragments.ttinclude
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCDKTests", "NCDKTests\NCDKTests.csproj", "{13FC288C-A94A-4A0B-8AFE-2453C2457F7C}"

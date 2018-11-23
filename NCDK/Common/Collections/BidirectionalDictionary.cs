@@ -4,8 +4,7 @@ using System.Linq;
 
 namespace NCDK.Common.Collections
 {
-    public  class BiDiDictionary<TKey, TValue>
-        : Dictionary<TKey, TValue>
+    internal class BiDiDictionary<TKey, TValue> : Dictionary<TKey, TValue>
     {
         public BiDiDictionary()
             : base()

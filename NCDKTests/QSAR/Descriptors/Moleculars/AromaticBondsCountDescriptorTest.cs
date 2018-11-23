@@ -16,34 +16,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 using NCDK.Templates;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class AromaticBondsCountDescriptorTest : MolecularDescriptorTest
+    public class AromaticBondsCountDescriptorTest : MolecularDescriptorTest<AromaticBondsCountDescriptor>
     {
-        public AromaticBondsCountDescriptorTest()
-        {
-            SetDescriptor(typeof(AromaticBondsCountDescriptor));
-        }
+        public AromaticBondsCountDescriptor CreateDescriptor(IAtomContainer mol, bool checkAromaticity) => new AromaticBondsCountDescriptor(mol, checkAromaticity);
 
         [TestMethod()]
         public void TestAromaticBondsCountDescriptor()
         {
-            object[] parameters = new object[] { true };
-            Descriptor.Parameters = parameters;
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCOc1ccccc1"); // ethanol
-            Assert.AreEqual(6, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(6, CreateDescriptor(mol, true).Calculate().Value);
         }
 
         [TestMethod()]
@@ -51,10 +41,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             IAtomContainer molecule = TestMoleculeFactory.MakeBenzene();
             foreach (var bond in molecule.Bonds)
-            {
                 bond.IsAromatic = true;
-            }
-            Assert.AreEqual(6, ((Result<int>)Descriptor.Calculate(molecule).Value).Value);
+            Assert.AreEqual(6, CreateDescriptor(molecule).Calculate().Value);
         }
     }
 }

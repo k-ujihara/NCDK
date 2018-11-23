@@ -16,49 +16,38 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.IO;
-using NCDK.QSAR.Results;
-using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
-using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class PetitjeanShapeIndexDescriptorTest : MolecularDescriptorTest
+    public class PetitjeanShapeIndexDescriptorTest : MolecularDescriptorTest<PetitjeanShapeIndexDescriptor>
     {
-        public PetitjeanShapeIndexDescriptorTest()
-        {
-            SetDescriptor(typeof(PetitjeanShapeIndexDescriptor));
-        }
-
         [TestMethod()]
         public void TestPetitjeanShapeIndexDescriptor()
         {
             // first molecule is nbutane, second is naphthalene
             string filename = "NCDK.Data.MDL.petitejean.sdf";
-            var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-            ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            IChemFile content;
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
+            {
+                content = reader.Read(CDK.Builder.NewChemFile());
+            }
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
-            IAtomContainer ac = (IAtomContainer)cList[0];
+            var ac = cList[0];
 
-            var result = Descriptor.Calculate(ac);
-            ArrayResult<double> dar = (ArrayResult<double>)result.Value;
-            Assert.AreEqual(0.5, dar[0], 0.00001);
-            Assert.AreEqual(0.606477, dar[1], 0.000001);
+            var result = CreateDescriptor(ac).Calculate();
+            Assert.AreEqual(0.5, result.TopologicalShapeIndex, 0.00001);
+            Assert.AreEqual(0.606477, result.GeometricShapeIndex, 0.000001);
 
-            ac = (IAtomContainer)cList[1];
-            result = Descriptor.Calculate(ac);
-            dar = (ArrayResult<double>)result.Value;
-            Assert.AreEqual(0.666666, dar[0], 0.000001);
-            Assert.AreEqual(0.845452, dar[1], 0.000001);
+            ac = cList[1];
+            result = CreateDescriptor(ac).Calculate();
+            Assert.AreEqual(0.666666, result.TopologicalShapeIndex, 0.000001);
+            Assert.AreEqual(0.845452, result.GeometricShapeIndex, 0.000001);
 
         }
 
@@ -67,9 +56,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles("CCCOCCC(O)=O");
-            var result = Descriptor.Calculate(atomContainer);
-            ArrayResult<double> dar = (ArrayResult<double>)result.Value;
-            Assert.IsTrue(double.IsNaN(dar[1]));
+            var result = CreateDescriptor(atomContainer).Calculate();
+            Assert.IsTrue(double.IsNaN(result.GeometricShapeIndex));
         }
     }
 }

@@ -16,108 +16,58 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Graphs;
-using NCDK.QSAR.Results;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
-    ///  This class returns the number of bonds on the shortest path between two atoms.
+    /// This class returns the number of bonds on the shortest path between two atoms.
     /// </summary>
-    /// <remarks>
-    /// This descriptor uses these parameters:
-    /// <list type="table">
-    ///   <item>
-    ///     <term>Name</term>
-    ///     <term>Default</term>
-    ///     <term>Description</term>
-    ///   </item>
-    ///   <item>
-    ///     <term>focusPosition</term>
-    ///     <term>0</term>
-    ///     <term>The position of the second atom</term>
-    ///   </item>
-    /// </list> 
-    /// </remarks>
     // @author         mfe4
     // @cdk.created    2004-11-13
     // @cdk.module     qsaratomic
-    // @cdk.githash
     // @cdk.dictref    qsar-descriptors:bondsToAtom
-    public partial class BondsToAtomDescriptor : IAtomicDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondsToAtom")]
+    public partial class BondsToAtomDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
-        private int focusPosition = 0;
+        IAtomContainer container;
 
-        /// <summary>
-        ///  Constructor for the BondsToAtomDescriptor object
-        /// </summary>
-        public BondsToAtomDescriptor() { }
-
-        /// <summary>
-        /// The specification attribute of the BondsToAtomDescriptor object
-        /// </summary>
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondsToAtom",
-                typeof(BondsToAtomDescriptor).FullName, "The Chemistry Development Kit");
-
-        /// <summary>
-        /// The parameters attribute of the BondsToAtomDescriptor object
-        /// </summary>
-        /// <exception cref="CDKException">Description of the Exception</exception>
-        /// <param name="value">The parameter is the position to focus</param>
-        public IReadOnlyList<object> Parameters
+        public BondsToAtomDescriptor(IAtomContainer container)
         {
-            set
-            {
-                if (value.Count > 1)
-                {
-                    throw new CDKException("BondsToAtomDescriptor only expects one parameters");
-                }
-                if (!(value[0] is int))
-                {
-                    throw new CDKException("The parameter must be of type int");
-                }
-                focusPosition = (int)value[0];
-            }
-            get
-            {
-                return new object[] { focusPosition };
-            }
+            this.container = container;
         }
 
-        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "bondsToAtom" };
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(int value)
+            {
+                this.BondsToAtom = value;
+            }
+
+            [DescriptorResultProperty("bondsToAtom")]
+            public int BondsToAtom { get; private set; }
+
+            public int Value => BondsToAtom;
+        }
 
         /// <summary>
-        ///  This method calculate the number of bonds on the shortest path between two atoms.
+        /// This method calculate the number of bonds on the shortest path between two atoms.
         /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
-        /// <param name="container">Parameter is the atom container.</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="Result"/> is requested</param>
+        /// <param name="focusPosition">The position of the focus atom</param>
         /// <returns>The number of bonds on the shortest path between two atoms</returns>
-        public DescriptorValue<Result<int>> Calculate(IAtom atom, IAtomContainer container)
+        public Result Calculate(IAtom atom, int focusPosition = 0)
         {
-            IAtom focus = container.Atoms[focusPosition];
+            var focus = container.Atoms[focusPosition];
 
             // could be cached
-            int bondsToAtom = new ShortestPaths(container, atom).GetDistanceTo(focus);
+            var bondsToAtom = new ShortestPaths(container, atom).GetDistanceTo(focus);
 
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(
-                    bondsToAtom), DescriptorNames);
+            return new Result(bondsToAtom);
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the BondsToAtomDescriptor object
-        /// </summary>
-        /// <returns>The parameterNames value</returns>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "focusPosition" };
-
-        /// <summary>
-        ///  Gets the parameterType attribute of the BondsToAtomDescriptor object
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name) => 0;
+        IDescriptorResult IAtomicDescriptor.Calculate(IAtom atom) => Calculate(atom);
     }
 }

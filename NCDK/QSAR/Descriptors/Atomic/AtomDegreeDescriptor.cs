@@ -22,57 +22,46 @@
  */
 
 using NCDK.Config;
-using NCDK.QSAR.Results;
-using System;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
     /// This class returns the number of not-Hs substituents of an atom, also defined as "atom degree".
-    ///
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    ///   <item>
-    ///     <term>Name</term>
-    ///     <term>Default</term>
-    ///     <term>Description</term>
-    ///   </item>
-    ///   <item>
-    ///     <term></term>
-    ///     <term></term>
-    ///     <term>no parameters</term>
-    ///   </item>
-    /// </list>
-    /// </para>
     /// </summary>
     // @author      mfe4
     // @cdk.created 2004-11-13
     // @cdk.module  qsaratomic
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:atomDegree
-    public partial class AtomDegreeDescriptor : IAtomicDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomDegree")]
+    public partial class AtomDegreeDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomDegree",
-                typeof(AtomDegreeDescriptor).FullName, "The Chemistry Development Kit");
+        private IAtomContainer container;
 
-        /// <summary>
-        /// The parameters attribute of the AtomDegreeDescriptor object.
-        /// </summary>
-        public IReadOnlyList<object> Parameters { get { return null; } set { } }
+        public AtomDegreeDescriptor(IAtomContainer container)
+        {
+            this.container = container;
+        }
 
-        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "aNeg" };
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(int value)
+            {
+                this.AtomDegree = value;
+            }
+
+            [DescriptorResultProperty("aNeg")]
+            public int AtomDegree { get; private set; }
+
+            public int Value => AtomDegree;
+        }
 
         /// <summary>
         /// This method calculates the number of not-H substituents of an atom.
         /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
-        /// <param name="container">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated for</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorResult"/> is requested</param>
         /// <returns>The number of bonds on the shortest path between two atoms</returns>
-        public DescriptorValue<Result<int>> Calculate(IAtom atom, IAtomContainer container)
+        public Result Calculate(IAtom atom)
         {
             int atomDegree = 0;
             var neighboors = container.GetConnectedAtoms(atom);
@@ -81,20 +70,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 if (!neighboor.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                     atomDegree += 1;
             }
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(atomDegree), DescriptorNames);
+            return new Result(atomDegree);
         }
 
-        /// <summary>
-        /// Gets the parameterNames attribute of the AtomDegreeDescriptor object.
-        /// </summary>
-        /// <returns>The parameterNames value</returns>
-        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
-
-        /// <summary>
-        /// Gets the parameterType attribute of the AtomDegreeDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public object GetParameterType(string name) => null;        
+        IDescriptorResult IAtomicDescriptor.Calculate(IAtom atom) => Calculate(atom);
     }
 }

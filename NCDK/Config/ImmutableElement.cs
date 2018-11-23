@@ -31,8 +31,7 @@ namespace NCDK.Config
     /// </summary>
     // @author      egonw
     // @cdk.module  core
-    internal sealed class ImmutableElement 
-        : IElement
+    internal sealed class ImmutableElement : IElement
     {
         private readonly string  symbol;
         private readonly int? atomicNumber;

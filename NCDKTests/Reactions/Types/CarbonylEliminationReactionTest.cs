@@ -36,7 +36,7 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class CarbonylEliminationReactionTest : ReactionProcessTest
     {
-        private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private IChemObjectBuilder builder = CDK.Builder;
 
         /// <summary>
         ///  The JUnit setup method

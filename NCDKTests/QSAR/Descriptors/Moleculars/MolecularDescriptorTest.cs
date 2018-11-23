@@ -20,13 +20,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Base;
 using NCDK.Dict;
-using NCDK.Numerics;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
 using NCDK.Templates;
 using NCDK.Tools.Diff;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -35,14 +33,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public abstract class MolecularDescriptorTest : DescriptorTest<IMolecularDescriptor>
+    public abstract class MolecularDescriptorTest<T> : DescriptorTest<T> where T : IMolecularDescriptor
     {
-        private static DictionaryDatabase dictDB = new DictionaryDatabase();
-        private static EntryDictionary dict = dictDB.GetDictionary("descriptor-algorithms");
-
-        protected MolecularDescriptorTest()
-        {
-        }
+        private static readonly DictionaryDatabase dictDB = new DictionaryDatabase();
+        private static readonly EntryDictionary dict = dictDB.GetDictionary("descriptor-algorithms");
 
         private static uint FlagsToInt(IAtomContainer mol)
         {
@@ -147,55 +141,38 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var mflags = FlagsToInt(mol);
             var aflags = GetAtomFlags(mol);
             var bflags = GetBondFlags(mol);
-            Descriptor.Calculate(mol);
-            Assert.AreEqual(mflags, FlagsToInt(mol), "Molecule flags were modified by descriptor!");
-            Assert.IsTrue(Compares.AreDeepEqual(aflags, GetAtomFlags(mol)), "Molecule's Atom flags were modified by descriptor!");
-            Assert.IsTrue(Compares.AreDeepEqual(bflags, GetBondFlags(mol)), "Molecule's Bond flags were modified by descriptor!");
-        }
-
-    [TestMethod()]
-        public void TestDescriptorIdentifierExistsInOntology()
-        {
-            Entry ontologyEntry = dict[Descriptor.Specification.SpecificationReference.Substring(dict.NS.ToString().Length).ToLowerInvariant()];
-            Assert.IsNotNull(ontologyEntry);
+            var descriptor = CreateDescriptor(mol);
+            try
+            {
+                descriptor.Calculate();
+            }
+            catch (ThreeDRequiredException)
+            {
+                // ignore
+            }
+            string name = descriptor.GetType().FullName;
+            Assert.AreEqual(mflags, FlagsToInt(mol), $"{name}: Molecule flags were modified by descriptor!");
+            Assert.IsTrue(Compares.AreDeepEqual(aflags, GetAtomFlags(mol)), $"{name}: Molecule's Atom flags were modified by descriptor!");
+            Assert.IsTrue(Compares.AreDeepEqual(bflags, GetBondFlags(mol)), $"{name}: Molecule's Bond flags were modified by descriptor!");
         }
 
         [TestMethod()]
         public void TestCalculate_IAtomContainer()
         {
-            IAtomContainer mol = null;
-            try
-            {
-                mol = SomeoneBringMeSomeWater(ChemObjectBuilder.Instance);
-            }
-            catch (Exception e)
-            {
-                Console.Error.WriteLine(e.StackTrace);
-                Assert.Fail("Error in generating the test molecule");
-            }
-
-            IDescriptorValue v = null;
-            try
-            {
-                v = Descriptor.Calculate(mol);
-            }
-            catch (Exception e)
-            {
-                Assert.Fail("A descriptor must not throw an exception. Exception was:\n" + e.Message);
-            }
+            var mol = SomeoneBringMeSomeWater();
+            var v = CreateDescriptor(mol).Calculate();
             Assert.IsNotNull(v);
-            Assert.IsTrue(0 != v.Value.Length, "The descriptor did not calculate any value.");
+            Assert.AreNotEqual(0, v.Count, "The descriptor did not calculate any value.");
         }
 
         [TestMethod()]
         public void TestCalculate_NoModifications()
         {
-            var mol = SomeoneBringMeSomeWater(ChemObjectBuilder.Instance);
+            var mol = SomeoneBringMeSomeWater();
             var clone = (IAtomContainer)mol.Clone();
-            Descriptor.Calculate(mol);
+            CreateDescriptor(mol).Calculate();
             var diff = AtomContainerDiff.Diff(clone, mol);
-            Assert.AreEqual(0, diff.Length,
-                $"The descriptor must not change the passed molecule in any respect, but found this diff: {diff}");
+            Assert.AreEqual(0, diff.Length, $"The descriptor must not change the passed molecule in any respect, but found this diff: {diff}");
         }
 
         /// <summary>
@@ -205,65 +182,25 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestLabels()
         {
-            var mol = SomeoneBringMeSomeWater(ChemObjectBuilder.Instance);
+            var mol = SomeoneBringMeSomeWater();
 
-            var v = Descriptor.Calculate(mol);
+            var v = CreateDescriptor(mol).Calculate();
             Assert.IsNotNull(v);
-            var names = v.Names;
+            var names = v.Keys.ToReadOnlyList();
             Assert.IsNotNull(names, "The descriptor must return labels using the Names method.");
             Assert.AreNotEqual(0, names.Count, "At least one label must be given.");
-            for (int i = 0; i < names.Count; i++)
+            foreach (var name in names)
             {
-                Assert.IsNotNull(names[i], "A descriptor label may not be null.");
-                Assert.AreNotSame(0, names[i].Length, "The label string must not be empty.");
+                Assert.IsFalse(string.IsNullOrEmpty(name), "A descriptor label must not be null or empty.");
             }
-            Assert.IsNotNull(v.Value);
-            var valueCount = v.Value.Length;
-            Assert.AreEqual(names.Count, valueCount, "The number of labels must equals the number of values.");
-        }
-
-        /// <summary>
-        /// Check if the names obtained directly from the decsriptor without
-        /// calculation match those obtained from the descriptor value object.
-        /// Also ensure that the number of actual values matches the length
-        /// of the names
-        /// </summary>
-        [TestMethod()]
-        public void TestNamesConsistency()
-        {
-            var mol = SomeoneBringMeSomeWater(ChemObjectBuilder.Instance);
-
-            var names1 = Descriptor.DescriptorNames;
-            var v = Descriptor.Calculate(mol);
-            var names2 = v.Names;
-
-            Assert.AreEqual(names1.Count, names2.Count);
-            Assert.IsTrue(Compares.AreDeepEqual(names1, names2));
-
-            var valueCount = v.Value.Length;
-            Assert.AreEqual(valueCount, names1.Count);
-        }
-
-        [TestMethod()]
-        public void TestGetDescriptorResultType()
-        {
-            var result = Descriptor.DescriptorResultType;
-            Assert.IsNotNull(result, $"The {nameof(IMolecularDescriptor.DescriptorResultType)} must not be null.");
-
-            var mol = SomeoneBringMeSomeWater(ChemObjectBuilder.Instance);
-            var v = Descriptor.Calculate(mol);
-
-            Assert.IsTrue(
-                result.GetType().FullName.Contains(v.Value.GetType().FullName),
-                $"The {nameof(IMolecularDescriptor.DescriptorResultType)} is inconsistent with the calculated descriptor results");
-            Assert.AreEqual(v.Value.Length, result.Length,
-                $"The specified {nameof(IMolecularDescriptor.DescriptorResultType)} length does not match the actually calculated result vector length");
+            Assert.IsNotNull(v.Values);
+            Assert.AreEqual(names.Count, v.Values.Count(), "The number of labels must equals the number of values.");
         }
 
         [TestMethod()]
         public void TestTakeIntoAccountImplicitHydrogens()
         {
-            var builder = ChemObjectBuilder.Instance;
+            var builder = CDK.Builder;
             var methane1 = builder.NewAtomContainer();
             var c1 = builder.NewAtom("C");
             c1.ImplicitHydrogenCount = 4;
@@ -290,19 +227,24 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AddImplicitHydrogens(methane1);
             AddImplicitHydrogens(methane2);
 
-            var v1 = Descriptor.Calculate(methane1).Value;
-            var v2 = Descriptor.Calculate(methane2).Value;
+            try
+            {
+                var v1 = CreateDescriptor(methane1).Calculate();
+                var v2 = CreateDescriptor(methane2).Calculate();
 
-            string errorMessage = "("
-                    + Descriptor.GetType().ToString()
-                    + ") The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
-            AssertEqualOutput(v1, v2, errorMessage);
+                var errorMessage = $"({Descriptor.GetType().FullName}) The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
+                AssertEqualOutput(v1, v2, errorMessage);
+            }
+            catch (ThreeDRequiredException)
+            {
+                // ignore
+            }
         }
 
         [TestMethod()]
         public void TestTakeIntoAccountImplicitHydrogensInEthane()
         {
-            var builder = ChemObjectBuilder.Instance;
+            var builder = CDK.Builder;
             var ethane1 = builder.NewAtomContainer();
             var c1 = builder.NewAtom("C");
             var c2 = builder.NewAtom("C");
@@ -346,85 +288,52 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AddImplicitHydrogens(ethane1);
             AddImplicitHydrogens(ethane2);
 
-            var v1 = Descriptor.Calculate(ethane1).Value;
-            var v2 = Descriptor.Calculate(ethane2).Value;
-
-            string errorMessage = "("
-                    + Descriptor.GetType().ToString()
-                    + ") The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
-            AssertEqualOutput(v1, v2, errorMessage);
-        }
-
-        /// <summary>
-        /// Checks that the results of the first and the second descriptor results are identical.
-        /// </summary>
-        /// <param name="v1">first <see cref="IDescriptorResult"/></param>
-        /// <param name="v2">second <see cref="IDescriptorResult"/></param>
-        /// <param name="errorMessage">error message to report when the results are not the same</param>
-        private static void AssertEqualOutput(IDescriptorResult v1, IDescriptorResult v2, string errorMessage)
-        {
-            if (v1 is Result<int>)
+            try
             {
-                Assert.AreEqual(((Result<int>)v1).Value, ((Result<int>)v2).Value, errorMessage);
+                var v1 = CreateDescriptor(ethane1).Calculate();
+                var v2 = CreateDescriptor(ethane2).Calculate();
+                var errorMessage = $"({Descriptor.GetType().FullName}) The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
+                AssertEqualOutput(v1, v2, errorMessage);
             }
-            else if (v1 is Result<double>)
+            catch (ThreeDRequiredException)
             {
-                var p1 = ((Result<double>)v1).Value;
-                var p2 = ((Result<double>)v2).Value;
-                if (!(double.IsNaN(p1) && double.IsNaN(p2)))
-                    Assert.AreEqual(p1, p2, 0.00001, errorMessage);
-            }
-            else if (v1 is Result<bool>)
-            {
-                Assert.AreEqual(((Result<bool>)v1).Value, ((Result<bool>)v2).Value, errorMessage);
-            }
-            else if (v1 is ArrayResult<double>)
-            {
-                ArrayResult<double> da1 = (ArrayResult<double>)v1;
-                ArrayResult<double> da2 = (ArrayResult<double>)v2;
-                for (int i = 0; i < da1.Length; i++)
-                {
-                    if (!(double.IsNaN(da1[i])) && double.IsNaN(da2[i]))
-                        Assert.AreEqual(da1[i], da2[i], 0.00001, errorMessage);
-                }
-            }
-            else if (v1 is ArrayResult<int>)
-            {
-                var da1 = (ArrayResult<int>)v1;
-                var da2 = (ArrayResult<int>)v2;
-                for (int i = 0; i < da1.Length; i++)
-                {
-                    Assert.AreEqual(da1[i], da2[i], errorMessage);
-                }
+                // ignore
             }
         }
 
         [TestMethod()]
         public void TestImplementationIndependence()
         {
-            var water1 = SomeoneBringMeSomeWater(ChemObjectBuilder.Instance);
-            var water2 = SomeoneBringMeSomeWater(Silent.ChemObjectBuilder.Instance);
+            var water1 = SomeoneBringMeSomeWater();
+            var water2 = SomeoneBringMeSomeWater();
 
-            var v1 = Descriptor.Calculate(water1).Value;
-            var v2 = Descriptor.Calculate(water2).Value;
+            var v1 = CreateDescriptor(water1).Calculate();
+            var v2 = CreateDescriptor(water2).Calculate();
 
-            string errorMessage = $"({Descriptor.GetType().ToString()}) The descriptor does not give the same results depending on the actual IChemObject implementation set (data, nonotify).";
+            var errorMessage = $"({Descriptor.GetType().FullName}) The descriptor does not give the same results depending on the actual IChemObject implementation set (data, nonotify).";
             AssertEqualOutput(v1, v2, errorMessage);
         }
 
         [TestMethod()]
         public void TestAtomContainerHandling()
         {
-            var water1 = SomeoneBringMeSomeWater(ChemObjectBuilder.Instance);
+            var water1 = SomeoneBringMeSomeWater();
             // creates an AtomContainer with the atoms / bonds from water1
-            var water2 = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var water2 = CDK.Builder.NewAtomContainer();
             water2.Add(water1);
 
-            var v1 = Descriptor.Calculate(water1).Value;
-            var v2 = Descriptor.Calculate(water2).Value;
+            try
+            {
+                var v1 = CreateDescriptor(water1).Calculate();
+                var v2 = CreateDescriptor(water2).Calculate();
 
-            string errorMessage = $"({Descriptor.GetType().ToString()}) The descriptor does not give the same results depending on it being passed an IAtomContainer or an IAtomContainer.";
-            AssertEqualOutput(v1, v2, errorMessage);
+                var errorMessage = $"({Descriptor.GetType().FullName}) The descriptor does not give the same results depending on it being passed an IAtomContainer or an IAtomContainer.";
+                AssertEqualOutput(v1, v2, errorMessage);
+            }
+            catch (ThreeDRequiredException)
+            {
+                // ignore
+            }
         }
 
         /// <summary>
@@ -433,28 +342,32 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestDisconnectedStructureHandling()
         {
-            var disconnected = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
-            var chloride = new Atom("Cl") { FormalCharge = -1 };
+            var disconnected = CDK.Builder.NewAtomContainer();
+            var chloride = CDK.Builder.NewAtom("Cl");
+            chloride.FormalCharge = -1;
             disconnected.Atoms.Add(chloride);
-            var sodium = new Atom("Na") { FormalCharge = +1 };
+            var sodium = CDK.Builder.NewAtom("Na");
+            sodium.FormalCharge = +1;
             disconnected.Atoms.Add(sodium);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(disconnected);
             AddImplicitHydrogens(disconnected);
 
-            var v1 = Descriptor.Calculate(disconnected).Value;
+            try
+            {
+                var v1 = CreateDescriptor(disconnected).Calculate();
+            }
+            catch (ThreeDRequiredException)
+            {
+                // ignore
+            }
         }
 
-        [TestMethod(), Ignore()]
-        //[TestMethod()]
-        private static int TestMethod()
-        {
-            throw new NotImplementedException();
-        }
-
+        [TestMethod()]
+        [Ignore()]
         public void TestTakeIntoAccountBondHybridization()
         {
-            var builder = ChemObjectBuilder.Instance;
+            var builder = CDK.Builder;
             var ethane1 = builder.NewAtomContainer();
             var c1 = builder.NewAtom("C");
             var c2 = builder.NewAtom("C");
@@ -471,29 +384,65 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             ethane2.Atoms.Add(c4);
             ethane2.AddBond(ethane2.Atoms[0], ethane2.Atoms[1], BondOrder.Single);
 
-            var v1 = Descriptor.Calculate(ethane1).Value;
-            var v2 = Descriptor.Calculate(ethane2).Value;
+            try
+            {
+                var v1 = CreateDescriptor(ethane1).Calculate();
+                var v2 = CreateDescriptor(ethane2).Calculate();
 
-            string errorMessage = "("
-                    + Descriptor.GetType().ToString()
-                    + ") The descriptor does not give the same results depending on whether bond order or atom type are considered.";
-            AssertEqualOutput(v1, v2, errorMessage);
+                string errorMessage = $"({Descriptor.GetType().ToString()}) The descriptor does not give the same results depending on whether bond order or atom type are considered.";
+                AssertEqualOutput(v1, v2, errorMessage);
+            }
+            catch (ThreeDRequiredException)
+            {
+                // ignore
+            }
         }
 
-        private IAtomContainer SomeoneBringMeSomeWater(IChemObjectBuilder builder)
+        /// <summary>
+        /// Checks that the results of the first and the second descriptor results are identical.
+        /// </summary>
+        /// <param name="v1">first <see cref="IDescriptorResult"/></param>
+        /// <param name="v2">second <see cref="IDescriptorResult"/></param>
+        /// <param name="errorMessage">error message to report when the results are not the same</param>
+        private static void AssertEqualOutput(IDescriptorResult v1, IDescriptorResult v2, string errorMessage)
         {
-            var mol = builder.NewAtomContainer();
-            var c1 = builder.NewAtom("O");
-            c1.Point3D = new Vector3(0.0, 0.0, 0.0);
-            var h1 = builder.NewAtom("H");
-            h1.Point3D = new Vector3(1.0, 0.0, 0.0);
-            var h2 = builder.NewAtom("H");
-            h2.Point3D = new Vector3(-1.0, 0.0, 0.0);
-            mol.Atoms.Add(c1);
-            mol.Atoms.Add(h1);
-            mol.Atoms.Add(h2);
-            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
-            mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
+            var vv1 = v1.Values.ToReadOnlyList();
+            var vv2 = v2.Values.ToReadOnlyList();
+
+            Assert.AreEqual(vv1.Count, vv2.Count);
+
+            for (int i = 0; i < vv1.Count; i++)
+            {
+                var p1 = vv1[i];
+                var p2 = vv2[i];
+                switch (p1)
+                {
+                    case int p:
+                        {
+                            var pp = (int)p2;
+                            Assert.AreEqual(p, pp, errorMessage);
+                        }
+                        break;
+                    case double p:
+                        {
+                            var pp = (double)p2;
+                            if (!(double.IsNaN(p) && double.IsNaN(pp)))
+                                Assert.AreEqual(p, pp, 0.00001, errorMessage);
+                        }
+                        break;
+                    case bool p:
+                        {
+                            var pp = (bool)p2;
+                            Assert.AreEqual(p, pp, errorMessage);
+                        }
+                        break;
+                }
+            }
+        }
+
+        protected IAtomContainer SomeoneBringMeSomeWater()
+        {
+            var mol = TestMoleculeFactory.MakeWater();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
             return mol;

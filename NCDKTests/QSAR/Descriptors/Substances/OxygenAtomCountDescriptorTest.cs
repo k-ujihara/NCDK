@@ -14,51 +14,33 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Substances
 {
     [TestClass()]
-    public class OxygenAtomCountDescriptorTest : SubstanceDescriptorTest
+    public class OxygenAtomCountDescriptorTest : SubstanceDescriptorTest<OxygenAtomCountDescriptor>
     {
-        public OxygenAtomCountDescriptorTest()
-        {
-            SetDescriptor(typeof(OxygenAtomCountDescriptor));
-        }
-
         [TestMethod()]
         public void TestCalculate_ZnO()
         {
-            ISubstance material = new Substance();
-            material.Add(
-                MolecularFormulaManipulator.GetAtomContainer(
-                    "ZnO", ChemObjectBuilder.Instance
-                )
-            );
-            var value = descriptor.Calculate(material);
+            var material = CDK.Builder.NewSubstance();
+            material.Add(MolecularFormulaManipulator.GetAtomContainer("ZnO", material.Builder));
+            var value = Descriptor.Calculate(material);
             Assert.IsNotNull(value);
-            IDescriptorResult result = value.Value;
-            Assert.IsNotNull(result);
-            Assert.AreEqual(1, ((Result<int>)result).Value);
+            Assert.AreEqual(1, value.Value);
         }
 
         [TestMethod()]
         public void TestCalculate_IronOxide()
         {
-            ISubstance material = new Substance();
-            material.Add(
-                MolecularFormulaManipulator.GetAtomContainer(
-                    "Fe3O4", ChemObjectBuilder.Instance
-                )
-            );
-            var value = descriptor.Calculate(material);
+            var material = CDK.Builder.NewSubstance();
+            material.Add(MolecularFormulaManipulator.GetAtomContainer("Fe3O4", material.Builder));
+            var value = Descriptor.Calculate(material);
             Assert.IsNotNull(value);
-            IDescriptorResult result = value.Value;
-            Assert.IsNotNull(result);
-            Assert.AreEqual(4, ((Result<int>)result).Value);
+            Assert.AreEqual(4, value.Value);
         }
     }
 }

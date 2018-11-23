@@ -33,7 +33,7 @@ namespace NCDK.Formula
     [TestClass()]
     public class MolecularFormulaGeneratorTest : CDKTestCase
     {
-        private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
 
         /// <summary>
         /// Test the GetNextFormula() method

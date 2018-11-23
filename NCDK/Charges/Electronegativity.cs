@@ -30,7 +30,6 @@ namespace NCDK.Charges
     // @cdk.created    2008-104-31
     // @cdk.module  charges
     // @cdk.keyword electronegativity
-    // @cdk.githash
     public class Electronegativity
     {
         private GasteigerMarsiliPartialCharges peoe = null;
@@ -43,7 +42,7 @@ namespace NCDK.Charges
         /// Constructor for the PiElectronegativity object.
         /// </summary>
         public Electronegativity()
-                : this(6, 50)
+            : this(6, 50)
         { }
 
         /// <summary>
@@ -99,11 +98,12 @@ namespace NCDK.Charges
                 int atomPosition = ac.Atoms.IndexOf(atom);
                 int start = (stepSize * (atomPosition) + atomPosition);
 
-                electronegativity = ((marsiliFactors[start])
-                        + (molSigma.Atoms[atomPosition].Charge.Value * marsiliFactors[start + 1]) + (marsiliFactors[start + 2] * ((molSigma
-                        .Atoms[atomPosition].Charge.Value * molSigma.Atoms[atomPosition].Charge.Value))));
+                electronegativity = 
+                    marsiliFactors[start]
+                  + (molSigma.Atoms[atomPosition].Charge.Value * marsiliFactors[start + 1]) 
+                  + (marsiliFactors[start + 2] 
+                    * (molSigma.Atoms[atomPosition].Charge.Value * molSigma.Atoms[atomPosition].Charge.Value));
                 return electronegativity;
-
             }
             catch (Exception e)
             {

@@ -20,10 +20,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Dict;
-using NCDK.QSAR;
-using NCDK.QSAR.Results;
 using NCDK.Silent;
 using NCDK.Stereo;
 using System.IO;
@@ -453,63 +452,6 @@ namespace NCDK.IO.CML
                 if (next is DictRef) foundDictRefs = true;
             }
             Assert.IsTrue(foundDictRefs);
-        }
-
-        [TestMethod()]
-        public void TestQSAROutput()
-        {
-            string specificationReference = "qsar:weight";
-            string implementationTitle = "NCDK.QSAR.Descriptors.Moleculars.WeightDescriptor";
-            string implementationIdentifier = "$Id$";
-            string implementationVendor = "The Chemistry Development Kit";
-
-            string cmlString = "<molecule xmlns=\"http://www.xml-cml.org/schema\"><atomArray><atom id=\"a5256233\" "
-                    + "elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" /><atom id=\"a26250401\" elementType=\"C\" "
-                    + "formalCharge=\"0\" hydrogenCount=\"0\" /><atom id=\"a16821027\" elementType=\"C\" formalCharge=\"0\" "
-                    + "hydrogenCount=\"0\" /><atom id=\"a14923925\" elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" />"
-                    + "<atom id=\"a7043360\" elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" /><atom id=\"a31278839\" "
-                    + "elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" /></atomArray><bondArray><bond id=\"b6175092\" "
-                    + "atomRefs2=\"a5256233 a26250401\" order=\"S\" /><bond id=\"b914691\" atomRefs2=\"a26250401 a16821027\" "
-                    + "order=\"D\" /><bond id=\"b5298332\" atomRefs2=\"a16821027 a14923925\" order=\"S\" /><bond id=\"b29167060\" "
-                    + "atomRefs2=\"a14923925 a7043360\" order=\"D\" /><bond id=\"b14093690\" atomRefs2=\"a7043360 a31278839\" "
-                    + "order=\"S\" /><bond id=\"b11924794\" atomRefs2=\"a31278839 a5256233\" order=\"D\" /></bondArray>"
-                    + "<propertyList><property xmlns:qsar=\"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/\" "
-                    + "convention=\"qsar:DescriptorValue\"><metadataList><metadata dictRef=\"qsar:specificationReference\" "
-                    + "content=\""
-                    + specificationReference
-                    + "\" /><metadata dictRef=\"qsar:implementationTitle\" content=\""
-                    + implementationTitle
-                    + "\" /><metadata dictRef=\"qsar:implementationIdentifier\" "
-                    + "content=\""
-                    + implementationIdentifier
-                    + "\" /><metadata dictRef=\""
-                    + "qsar:implementationVendor\" content=\""
-                    + implementationVendor
-                    + "\" /><metadataList title=\"qsar:"
-                    + "descriptorParameters\"><metadata title=\"elementSymbol\" content=\"*\" /></metadataList></metadataList>"
-                    + "<scalar dataType=\"xsd:double\" dictRef=\"qsar:weight\">72.0</scalar></property></propertyList></molecule>";
-
-            IChemFile chemFile = ParseCMLString(cmlString);
-            IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
-
-            Assert.IsNotNull(mol);
-            Assert.AreEqual(1, mol.GetProperties().Count);
-            object key = mol.GetProperties().Keys.ToArray()[0];
-            Assert.IsNotNull(key);
-            Assert.IsTrue(key is DescriptorSpecification);
-            DescriptorSpecification spec = (DescriptorSpecification)key;
-            Assert.AreEqual(specificationReference, spec.SpecificationReference);
-            Assert.AreEqual(implementationTitle, spec.ImplementationTitle);
-            Assert.AreEqual(implementationIdentifier, spec.ImplementationIdentifier);
-            Assert.AreEqual(implementationVendor, spec.ImplementationVendor);
-
-            Assert.IsNotNull(mol.GetProperty<object>(key));
-            Assert.IsTrue(mol.GetProperty<IDescriptorValue>(key) is IDescriptorValue);
-            var value = mol.GetProperty<IDescriptorValue>(key);
-            IDescriptorResult result = value.Value;
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result is Result<double>);
-            Assert.AreEqual(72.0, ((Result<double>)result).Value, 0.001);
         }
 
         private IChemFile ParseCMLString(string cmlString)

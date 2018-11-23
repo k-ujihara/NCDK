@@ -17,31 +17,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs a test for the <see cref="HybridizationRatioDescriptor"/>.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class HybridizationRatioDescriptorTest : MolecularDescriptorTest
+    public class HybridizationRatioDescriptorTest : MolecularDescriptorTest<HybridizationRatioDescriptor>
     {
-        public HybridizationRatioDescriptorTest()
-        {
-            SetDescriptor(typeof(HybridizationRatioDescriptor));
-        }
-
         [TestMethod()]
         public void TestHybRatioDescriptor1()
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCC");
-            Assert.AreEqual(1.0, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
+            Assert.AreEqual(1.0, CreateDescriptor(mol).Calculate().Value, 0.1);
         }
 
         [TestMethod()]
@@ -49,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("c1ccccc1");
-            Assert.AreEqual(0.0, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
+            Assert.AreEqual(0.0, CreateDescriptor(mol).Calculate().Value, 0.1);
         }
 
         [TestMethod()]
@@ -57,7 +47,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[H]C#N");
-            Assert.AreEqual(double.NaN, ((Result<double>)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(double.NaN, CreateDescriptor(mol).Calculate().Value);
         }
     }
 }

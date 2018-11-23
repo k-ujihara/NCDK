@@ -16,26 +16,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class VABCDescriptorTest : MolecularDescriptorTest
+    public class VABCDescriptorTest : MolecularDescriptorTest<VABCDescriptor>
     {
-        public VABCDescriptorTest()
-        {
-            SetDescriptor(typeof(VABCDescriptor));
-        }
-
         [TestMethod()]
         public void TestIronChloride()
         {
-            IAtomContainer ironChloride = CDK.SmilesParser.ParseSmiles("Cl[Fe]Cl");
-            Assert.AreEqual(double.NaN, ((Result<double>)Descriptor.Calculate(ironChloride).Value).Value);
+            var ironChloride = CDK.SmilesParser.ParseSmiles("Cl[Fe]Cl");
+            Assert.AreEqual(double.NaN, CreateDescriptor(ironChloride).Calculate().Value);
         }
     }
 }

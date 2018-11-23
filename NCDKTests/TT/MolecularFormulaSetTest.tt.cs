@@ -32,7 +32,7 @@ namespace NCDK.Default
     [TestClass()]
     public class MolecularFormulaSetTest : AbstractMolecularFormulaSetTest
     {
-        protected override IChemObjectBuilder Builder { get; } = Silent.ChemObjectBuilder.Instance;
+        protected override IChemObjectBuilder Builder { get; } = CDK.Builder;
 
         [TestMethod()]
         public void TestMolecularFormulaSet()
@@ -57,7 +57,7 @@ namespace NCDK.Silent
     [TestClass()]
     public class MolecularFormulaSetTest : AbstractMolecularFormulaSetTest
     {
-        protected override IChemObjectBuilder Builder { get; } = Silent.ChemObjectBuilder.Instance;
+        protected override IChemObjectBuilder Builder { get; } = CDK.Builder;
 
         [TestMethod()]
         public void TestMolecularFormulaSet()

@@ -14,24 +14,19 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.QSAR.Results;
 
 namespace NCDK.QSAR.Descriptors.Substances
 {
     /// <summary>
     /// Classes that implement this interface are QSAR substance calculators.
     /// </summary>
-    // @cdk.githash
     public interface ISubstanceDescriptor : IDescriptor
     {
         /// <summary>
         /// Calculates the descriptor value for the given <see cref="ISubstance"/>.
         /// </summary>
         /// <param name="substance">An <see cref="ISubstance"/> for which this descriptor should be calculated</param>
-        /// <returns>An object of <see cref="IDescriptorValue"/> that contain the calculated value as well as specification details</returns>
-        IDescriptorValue Calculate(ISubstance substance);
-
-        /// <inheritdoc/>
-        IDescriptorResult DescriptorResultType { get; }
+        /// <returns>An object contains the calculated value as well as specification details</returns>
+        IDescriptorResult Calculate(ISubstance substance);
     }
 }

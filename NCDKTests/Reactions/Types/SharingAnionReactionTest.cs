@@ -38,7 +38,7 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class SharingAnionReactionTest : ReactionProcessTest
     {
-        private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private IChemObjectBuilder builder = CDK.Builder;
 
         public SharingAnionReactionTest()
         {

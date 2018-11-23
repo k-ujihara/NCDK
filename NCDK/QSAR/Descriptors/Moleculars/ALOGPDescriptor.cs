@@ -21,7 +21,6 @@
 
 using NCDK.AtomTypes;
 using NCDK.Config;
-using NCDK.QSAR.Results;
 using NCDK.RingSearches;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
@@ -48,14 +47,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// Just report sum for other fragments? Or report as -9999 and
     /// then do not use descriptor if have this value for any
     /// chemicals in cluster?</para>
-    /// 
-    /// <para>
-    /// This descriptor uses these parameters:
-    /// <list type="table">
-    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
-    /// <item><term></term><term></term><term>no parameters</term></item>
-    /// </list>
-    /// </para> 
     /// <para>
     /// Returns three values
     /// <list type="bullet">
@@ -67,34 +58,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </remarks>
     // @author     Todd Martin
     // @cdk.module qsarmolecular
-    // @cdk.githash
     // @cdk.keyword logP
     // @cdk.keyword lipophilicity
     // @cdk.keyword refractivity
-    // @see org.openscience.cdk.tools.CDKHydrogenAdder
-    public class ALogPDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ALOGP")]
+    public class ALogPDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        IAtomContainer atomContainer;
-        IRingSet rs;
-        /// <summary>
-        /// estate fragments for each atom
-        /// </summary>
-        string[] fragment; 
-
         /// <summary>
         /// needed to retrieve electronegativities
         /// </summary>
-        AtomicProperties ap;
-
-        /// <summary>
-        /// counts of each type of fragment in the molecule
-        /// </summary>
-        readonly int[] frags = new int[121];
-
-        /// <summary>
-        /// alogp fragments for each atom (used to see which atoms have missing fragments)
-        /// </summary>
-        private int[] alogpfrag;
+        readonly static AtomicProperties ap = Tools.AtomicProperties.Instance;
 
         /// <summary>
         /// coefficients for alogp model
@@ -353,2012 +326,1984 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             REFRACVAL[120] = 5.2806;
         }
 
-        string unassignedAtoms = "";
+        private readonly IAtomContainer container;
 
-        double alogp = 0.0;
-        double amr = 0.0;
-        double alogp2 = 0.0;
-        private static readonly string[] STRINGS = new string[] { "ALogP", "ALogp2", "AMR" };
-
-        public ALogPDescriptor()
+        public ALogPDescriptor(IAtomContainer container)
         {
-            try
-            {
-                ap = AtomicProperties.Instance;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Problem in accessing atomic properties. Can't calculate");
-                throw new CDKException($"Problem in accessing atomic properties. Can't calculate\n{e.Message}", e);
-            }
+            container = (IAtomContainer)container.Clone();
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+            var hAdder = CDK.HydrogenAdder;
+            hAdder.AddImplicitHydrogens(container);
+            AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
+            this.container = container;
         }
 
-        private void FindUnassignedAtoms()
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            unassignedAtoms = "";
+            [DescriptorResultProperty]
+            public double ALogP { get; private set; }
+            [DescriptorResultProperty]
+            public double ALogP2 { get; private set; }
+            [DescriptorResultProperty]
+            public double AMR { get; private set; }
 
-            for (int i = 0; i <= atomContainer.Atoms.Count - 1; i++)
+            public Result(double ALogP, double ALogP2, double AMR)
             {
-                if (alogpfrag[i] == 0) unassignedAtoms += (i + 1) + "(" + fragment[i] + "),";
+                this.ALogP = ALogP;
+                this.ALogP2 = ALogP2;
+                this.AMR = AMR;
             }
+
+            public Result(Exception e)
+                : base(e)
+            {
+            }
+
+            public double Value => ALogP;
         }
 
-        private double[] Calculate(IAtomContainer atomContainer, string[] fragment, IRingSet rs)
+        /// <remarks>
+        /// TODO: Ideally we should explicit H addition should be cached
+        /// </remarks>
+        /// <returns>the result of the calculation</returns>
+        public Result Calculate()
         {
-            this.atomContainer = atomContainer;
-            this.fragment = fragment;
-            this.rs = rs;
-            alogp = 0.0;
-            amr = 0.0;
-            alogp2 = 0.0;
+            return new Calculator(this).Calculate();
+        }
 
-            alogpfrag = new int[atomContainer.Atoms.Count];
+        class Calculator
+        {
+            IAtomContainer container;
 
-            for (int i = 1; i <= 120; i++)
+            /// <summary>
+            /// estate fragments for each atom
+            /// </summary>
+            private readonly string[] fragment;
+
+            IRingSet rs;
+
+            /// <summary>
+            /// counts of each type of fragment in the molecule
+            /// </summary>
+            private readonly int[] frags = new int[121];
+
+            /// <summary>
+            /// alogp fragments for each atom (used to see which atoms have missing fragments)
+            /// </summary>
+            private int[] alogpfrag;
+
+            string unassignedAtoms = "";
+
+            private void FindUnassignedAtoms()
             {
-                frags[i] = 0;
-            }
-
-            for (int i = 0; i <= atomContainer.Atoms.Count - 1; i++)
-            {
-                alogpfrag[i] = 0;
-                try
+                unassignedAtoms = "";
+                for (int i = 0; i <= container.Atoms.Count - 1; i++)
                 {
-                    if (fragment[i] != null)
+                    if (alogpfrag[i] == 0)
+                        unassignedAtoms += $"{i + 1}({fragment[i]}),";
+                }
+            }
+
+            public Calculator(ALogPDescriptor parent)
+            {
+                this.container = parent.container;
+                this.fragment = new string[container.Atoms.Count];
+            }
+
+            /// <summary>
+            /// The AlogP descriptor.
+            /// </summary>
+            /// <remarks>
+            /// TODO: Ideally we should explicit H addition should be cached
+            /// </remarks>
+            /// <returns>the result of the calculation</returns>
+            public Result Calculate()
+            {
+                var arf = new AllRingsFinder();
+                rs = arf.FindAllRings(container);
+
+                var eStateMatcher = new EStateAtomTypeMatcher { RingSet = rs };
+
+                for (int i = 0; i < container.Atoms.Count; i++)
+                {
+                    var atomType = eStateMatcher.FindMatchingAtomType(container, container.Atoms[i]);
+                    if (atomType == null)
                     {
-                        CalcGroup001_005(i);
-                        CalcGroup002_006_007(i);
-                        CalcGroup003_008_009_010(i);
-                        CalcGroup004_011_to_014(i);
-                        CalcGroup015(i);
-                        CalcGroup016_018_036_037(i);
-                        CalcGroup017_019_020_038_to_041(i);
-                        CalcGroup021_to_023_040(i);
-                        CalcGroup024_027_030_033_042(i);
-                        CalcGroup025_026_028_029_031_032_034_035_043_044(i);
-                        CalcGroup056_57(i);
-                        CalcGroup058_61(i);
-                        CalcGroup059_060_063(i);
-                        CalcGroup066_to_079(i);
-                        CalcGroup081_to_085(i);
-                        CalcGroup086_to_090(i);
-                        CalcGroup091_to_095(i);
-                        CalcGroup096_to_100(i);
-                        CalcGroup101_to_104(i);
-                        CalcGroup106(i);
-                        CalcGroup107(i);
-                        CalcGroup108(i);
-                        CalcGroup109(i);
-                        CalcGroup110(i);
-                        CalcGroup111(i);
-                        CalcGroup116_117_120(i);
-                        CalcGroup118_119(i);
-                    }
-                }
-                catch (Exception e)
-                {
-                    throw new CDKException(e.ToString(), e);
-                }
-            } // end i atom loop
-
-            Debug.WriteLine("\nFound fragments and frequencies ");
-
-            for (int i = 1; i <= 120; i++)
-            {
-                alogp += FRAGVAL[i] * frags[i];
-                amr += REFRACVAL[i] * frags[i];
-                if (frags[i] > 0)
-                {
-                    Debug.WriteLine($"frag {i}  --> {frags[i]}");
-                }
-            }
-            alogp2 = alogp * alogp;
-
-            this.FindUnassignedAtoms();
-
-            return new double[] { alogp, alogp2, amr };
-        }
-
-        private void CalcGroup001_005(int i)
-        {
-            // C in CH3R
-            if (string.Equals(fragment[i], "SsCH3", StringComparison.Ordinal))
-            {
-                var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-                int htype = GetHAtomType(atomContainer.Atoms[i], ca);
-                foreach (var a in ca)
-                {
-                    switch (a.AtomicNumber)
-                    {
-                        case NaturalElements.C.AtomicNumber:
-                            frags[1]++;
-                            alogpfrag[i] = 1;
-                            break;
-                        case NaturalElements.H.AtomicNumber:
-                            frags[htype]++;
-                            break;
-                        default:
-                            frags[5]++;
-                            alogpfrag[i] = 5;
-                            break;
-                    }
-                }
-            }
-        }
-
-        private void CalcGroup002_006_007(int i)
-        {
-            // C in CH2RX
-
-            if (string.Equals(fragment[i], "SssCH2", StringComparison.Ordinal))
-            {
-                var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-                int htype = GetHAtomType(atomContainer.Atoms[i], ca);
-                int carbonCount = 0;
-                int heteroCount = 0;
-                // Debug.WriteLine("here");
-                foreach (var a in ca)
-                {
-                    switch (a.AtomicNumber)
-                    {
-                        case NaturalElements.C.AtomicNumber:
-                            carbonCount++;
-                            break;
-                        case NaturalElements.H.AtomicNumber:
-                            frags[htype]++;
-                            break;
-                        default:
-                            heteroCount++;
-                            break;
-                    }
-                }
-
-                if (carbonCount == 2 && heteroCount == 0)
-                {
-                    frags[2]++;
-                    alogpfrag[i] = 2;
-                }
-                else if (carbonCount == 1 && heteroCount == 1)
-                {
-                    frags[6]++;
-                    alogpfrag[i] = 6;
-                }
-                else if (carbonCount == 0 && heteroCount == 2)
-                {
-                    frags[7]++;
-                    alogpfrag[i] = 7;
-                }
-            }
-        }
-
-        private void CalcGroup003_008_009_010(int i)
-        {
-            if (string.Equals(fragment[i], "SsssCH", StringComparison.Ordinal))
-            {
-                var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-                int htype = GetHAtomType(atomContainer.Atoms[i], ca);
-                int carbonCount = 0;
-                int heteroCount = 0;
-                // Debug.WriteLine("here");
-                foreach (var a in ca)
-                {
-                    switch (a.AtomicNumber)
-                    {
-                        case NaturalElements.C.AtomicNumber:
-                            carbonCount++;
-                            break;
-                        case NaturalElements.H.AtomicNumber:
-                            frags[htype]++;
-                            break;
-                        default:
-                            heteroCount++;
-                            break;
-                    }
-                }
-
-                if (carbonCount == 3 && heteroCount == 0)
-                {
-                    frags[3]++;
-                    alogpfrag[i] = 3;
-                }
-                else if (carbonCount == 2 && heteroCount == 1)
-                {
-                    frags[8]++;
-                    alogpfrag[i] = 8;
-                }
-                else if (carbonCount == 1 && heteroCount == 2)
-                {
-                    frags[9]++;
-                    alogpfrag[i] = 9;
-                }
-                else if (carbonCount == 0 && heteroCount == 3)
-                {
-                    frags[10]++;
-                    alogpfrag[i] = 10;
-                }
-            }
-        }
-
-        private void CalcGroup004_011_to_014(int i)
-        {
-            // C in CH2RX
-            if (string.Equals(fragment[i], "SssssC", StringComparison.Ordinal))
-            {
-                var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-                int carbonCount = 0;
-                int heteroCount = 0;
-                // Debug.WriteLine("here");
-                foreach (var a in ca)
-                {
-                    switch (a.AtomicNumber)
-                    {
-                        case NaturalElements.C.AtomicNumber:
-                            carbonCount++;
-                            break;
-                        default:
-                            heteroCount++;
-                            break;
-                    }
-                }
-
-                if (carbonCount == 4 && heteroCount == 0)
-                {
-                    frags[4]++;
-                    alogpfrag[i] = 4;
-                }
-                else if (carbonCount == 3 && heteroCount == 1)
-                {
-                    frags[11]++;
-                    alogpfrag[i] = 11;
-                }
-                else if (carbonCount == 2 && heteroCount == 2)
-                {
-                    frags[12]++;
-                    alogpfrag[i] = 12;
-                }
-                else if (carbonCount == 1 && heteroCount == 3)
-                {
-                    frags[13]++;
-                    alogpfrag[i] = 13;
-                }
-                else if (carbonCount == 0 && heteroCount == 4)
-                {
-                    frags[14]++;
-                    alogpfrag[i] = 14;
-                }
-            }
-        }
-
-        private void CalcGroup015(int i)
-        {
-            if (string.Equals(fragment[i], "SdCH2", StringComparison.Ordinal))
-            {
-                frags[15]++;
-                alogpfrag[i] = 15;
-                int htype = GetHAtomType(atomContainer.Atoms[i], null);
-                frags[htype] += 2;
-            }
-        }
-
-        private void CalcGroup016_018_036_037(int i)
-        {
-
-            IAtom ai = atomContainer.Atoms[i];
-            if (!string.Equals(fragment[i], "SdsCH", StringComparison.Ordinal))
-                return;
-
-            var ca = atomContainer.GetConnectedAtoms(ai);
-            int htype = GetHAtomType(atomContainer.Atoms[i], ca);
-            frags[htype]++;
-
-            bool haveCdX = false;
-            bool haveCsX = false;
-            bool haveCsAr = false;
-
-            foreach (var a in ca)
-            {
-                if (a.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
-                    continue;
-
-                switch (atomContainer.GetBond(ai, a).Order)
-                {
-                    case BondOrder.Single:
-                        if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                        {
-                            haveCsX = true;
-                        }
-
-                        if (a.IsAromatic)
-                        {
-                            haveCsAr = true;
-                        }
-                        break;
-                    case BondOrder.Double:
-                        if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                        {
-                            haveCdX = true;
-                        }
-                        break;
-                }
-            }
-
-            if (haveCdX)
-            {
-                if (haveCsAr)
-                {
-                    frags[37]++;
-                    alogpfrag[i] = 37;
-                }
-                else
-                {
-                    frags[36]++;
-                    alogpfrag[i] = 36;
-                }
-            }
-            else
-            {
-                if (haveCsX)
-                {
-                    frags[18]++;
-                    alogpfrag[i] = 18;
-                }
-                else
-                {
-                    frags[16]++;
-                    alogpfrag[i] = 16;
-                }
-            }
-        }
-
-        private void CalcGroup017_019_020_038_to_041(int i)
-        {
-
-            IAtom ai = atomContainer.Atoms[i];
-
-            if (!string.Equals(fragment[i], "SdssC", StringComparison.Ordinal)) return;
-
-            var ca = atomContainer.GetConnectedAtoms(ai);
-
-            int rCount = 0;
-            int xCount = 0;
-            bool haveCdX = false;
-            int aromaticCount = 0;
-
-            foreach (var a in ca)
-            {
-                if (atomContainer.GetBond(ai, a).Order == BondOrder.Single)
-                {
-                    if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                    {
-                        rCount++;
+                        fragment[i] = null;
                     }
                     else
                     {
-                        xCount++;
-                    }
-
-                    if (a.IsAromatic)
-                    {
-                        aromaticCount++;
-                    }
-
-                }
-                else if (atomContainer.GetBond(ai, a).Order == BondOrder.Double)
-                {
-                    if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                    {
-                        haveCdX = true;
+                        fragment[i] = atomType.AtomTypeName;
                     }
                 }
-            }
 
-            if (haveCdX)
-            {
-                if (aromaticCount >= 1)
-                { // Ar-C(=X)-R
-                  // TODO: add code to check if have R or X for nonaromatic
-                  // attachment to C?
-                  // if we do this check we would have missing fragment for
-                  // Ar-C(=X)-X
-                  // TODO: which fragment to use if we have Ar-C(=X)-Ar? Currently
-                  // this frag is used
+                double alogp = 0.0;
+                double amr = 0.0;
+                double alogp2 = 0.0;
 
-                    frags[39]++;
-                    alogpfrag[i] = 39;
-                }
-                else if (aromaticCount == 0)
+                alogpfrag = new int[container.Atoms.Count];
+
+                for (int i = 1; i <= 120; i++)
                 {
-                    if (rCount == 1 && xCount == 1)
+                    frags[i] = 0;
+                }
+
+                for (int i = 0; i <= container.Atoms.Count - 1; i++)
+                {
+                    alogpfrag[i] = 0;
+                    try
                     {
-                        frags[40]++;
-                        alogpfrag[i] = 40;
-                    }
-                    else if (rCount == 0 && xCount == 2)
-                    {
-                        frags[41]++;
-                        alogpfrag[i] = 41;
-                    }
-                    else
-                    {
-                        frags[38]++;
-                        alogpfrag[i] = 38;
-                    }
-                }
-            }
-            else
-            {
-                if (rCount == 2 && xCount == 0)
-                {
-                    frags[17]++;
-                    alogpfrag[i] = 17;
-                }
-                else if (rCount == 1 && xCount == 1)
-                {
-                    frags[19]++;
-                    alogpfrag[i] = 19;
-                }
-                else if (rCount == 0 && xCount == 2)
-                {
-                    frags[20]++;
-                    alogpfrag[i] = 20;
-                }
-            }
-
-        }
-
-        private void CalcGroup021_to_023_040(int i)
-        {
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]).ToReadOnlyList();
-            var ai = atomContainer.Atoms[i];
-
-            if (string.Equals(fragment[i], "StCH", StringComparison.Ordinal))
-            {
-                frags[21]++;
-                alogpfrag[i] = 21;
-                int htype = GetHAtomType(atomContainer.Atoms[i], ca);
-                frags[htype]++;
-            }
-            else if (string.Equals(fragment[i], "SddC", StringComparison.Ordinal))
-            {
-                if (string.Equals(ca[0].Symbol, "C", StringComparison.Ordinal) && string.Equals(ca[1].Symbol, "C", StringComparison.Ordinal))
-                {// R==C==R
-                    frags[22]++;
-                    alogpfrag[i] = 22;
-                }
-                else if (!string.Equals(ca[0].Symbol, "C", StringComparison.Ordinal) && !string.Equals(ca[1].Symbol, "C", StringComparison.Ordinal))
-                {// X==C==X
-                    frags[40]++;
-                    alogpfrag[i] = 40;
-                }
-            }
-            else if (string.Equals(fragment[i], "StsC", StringComparison.Ordinal))
-            {
-
-                bool haveCtX = false;
-                bool haveCsX = false;
-
-                foreach (var a in ca)
-                {
-                    if (atomContainer.GetBond(ai, a).Order == BondOrder.Single)
-                    {
-                        if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        if (fragment[i] != null)
                         {
-                            haveCsX = true;
+                            CalcGroup001_005(i);
+                            CalcGroup002_006_007(i);
+                            CalcGroup003_008_009_010(i);
+                            CalcGroup004_011_to_014(i);
+                            CalcGroup015(i);
+                            CalcGroup016_018_036_037(i);
+                            CalcGroup017_019_020_038_to_041(i);
+                            CalcGroup021_to_023_040(i);
+                            CalcGroup024_027_030_033_042(i);
+                            CalcGroup025_026_028_029_031_032_034_035_043_044(i);
+                            CalcGroup056_57(i);
+                            CalcGroup058_61(i);
+                            CalcGroup059_060_063(i);
+                            CalcGroup066_to_079(i);
+                            CalcGroup081_to_085(i);
+                            CalcGroup086_to_090(i);
+                            CalcGroup091_to_095(i);
+                            CalcGroup096_to_100(i);
+                            CalcGroup101_to_104(i);
+                            CalcGroup106(i);
+                            CalcGroup107(i);
+                            CalcGroup108(i);
+                            CalcGroup109(i);
+                            CalcGroup110(i);
+                            CalcGroup111(i);
+                            CalcGroup116_117_120(i);
+                            CalcGroup118_119(i);
                         }
                     }
-                    else if (atomContainer.GetBond(ai, a).Order == BondOrder.Triple)
+                    catch (Exception e)
                     {
-                        if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                        {
-                            haveCtX = true;
-                        }
+                        return new Result(e);
                     }
-                }
+                } // end i atom loop
 
-                if (haveCtX && !haveCsX)
+                Debug.WriteLine("\nFound fragments and frequencies ");
+
+                for (int i = 1; i <= 120; i++)
                 {
-                    frags[40]++;
-                    alogpfrag[i] = 40;
-                }
-                else if (haveCsX)
-                {// #C-X
-                    frags[23]++;
-                    alogpfrag[i] = 23;
-                }
-                else if (!haveCsX)
-                { // #C-R
-                    frags[22]++;
-                    alogpfrag[i] = 22;
-                }
-            }
-        }
-
-        private void CalcGroup024_027_030_033_042(int i)
-        {
-            // 24: C in R--CH--R
-            // 27: C in R--CH--X
-            // 30: C in X--CH--X
-            // 33: C in R--CH...X
-            // 42: C in X--CH...X
-
-            if (!string.Equals(fragment[i], "SaaCH", StringComparison.Ordinal)) return;
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]).ToReadOnlyList();
-            int htype = GetHAtomType(atomContainer.Atoms[i], ca);
-            frags[htype]++;
-            IAtom ca0;
-            IAtom ca1;
-            // determining which neigbour is the H atom
-            if (string.Equals(ca[0].Symbol, "H", StringComparison.Ordinal))
-            {
-                ca0 = (IAtom)ca[1];
-                ca1 = (IAtom)ca[2];
-            }
-            else
-            {
-                if (string.Equals(ca[1].Symbol, "H", StringComparison.Ordinal))
-                {
-                    ca0 = (IAtom)ca[0];
-                    ca1 = (IAtom)ca[2];
-                }
-                else
-                {
-                    ca0 = (IAtom)ca[0];
-                    ca1 = (IAtom)ca[1];
-                }
-            }
-
-            if (ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && ca1.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-            {
-                frags[24]++;
-                alogpfrag[i] = 24;
-                return;
-            }
-
-            // check if both hetero atoms have at least one double bond
-            var bonds = atomContainer.GetConnectedBonds(ca0);
-            bool haveDouble1 = false;
-            foreach (var bond in bonds)
-            {
-                if (bond.Order == BondOrder.Double)
-                {
-                    haveDouble1 = true;
-                    break;
-                }
-            }
-
-            bonds = atomContainer.GetConnectedBonds(ca1);
-            bool haveDouble2 = false;
-            foreach (var bond in bonds)
-            {
-                if (bond.Order == BondOrder.Double)
-                {
-                    haveDouble2 = true;
-                    break;
-                }
-            }
-
-            if (!ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && !string.Equals(ca[1].Symbol, "C", StringComparison.Ordinal))
-            {
-                if (haveDouble1 && haveDouble2)
-                { // X--CH--X
-                    frags[30]++;
-                    alogpfrag[i] = 30;
-                }
-                else
-                { // X--CH...X
-                    frags[42]++;
-                    alogpfrag[i] = 42;
-                }
-
-            }
-            else if (ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && !ca1.AtomicNumber.Equals(NaturalElements.C.AtomicNumber)
-                  || (!ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && ca1.AtomicNumber.Equals(NaturalElements.C.AtomicNumber)))
-            {
-
-                if (haveDouble1 && haveDouble2)
-                { // R--CH--X
-                    frags[27]++;
-                    alogpfrag[i] = 27;
-                }
-                else
-                {// R--CH...X
-                    frags[33]++;
-                    alogpfrag[i] = 33;
-
-                }
-            }
-        }
-
-        private void CalcGroup025_026_028_029_031_032_034_035_043_044(int i)
-        {
-            // 25: R--CR--R
-            // 26: R--CX--R
-            // 28: R--CR--X
-            // 29: R--CX--X
-            // 31: X--CR--X
-            // 32: X--CX--X
-            // 34: X--CR...X
-            // 35: X--CX...X
-            // 43: X--CR...X
-            // 43: X--CX...X
-
-            if (!string.Equals(fragment[i], "SsaaC", StringComparison.Ordinal) && !string.Equals(fragment[i], "SaaaC", StringComparison.Ordinal)) return;
-
-            IAtom ai = atomContainer.Atoms[i];
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-
-            IAtom[] sameringatoms = new IAtom[2];
-            IAtom nonringatom = atomContainer.Builder.NewAtom();
-
-            int sameringatomscount = 0;
-            foreach (var a in ca)
-            {
-                if (InSameAromaticRing(atomContainer, ai, a, rs))
-                {
-                    sameringatomscount++;
-                }
-
-            }
-
-            if (sameringatomscount == 2)
-            {
-                int count = 0;
-                foreach (var a in ca)
-                {
-                    if (InSameAromaticRing(atomContainer, ai, a, rs))
+                    alogp += FRAGVAL[i] * frags[i];
+                    amr += REFRACVAL[i] * frags[i];
+                    if (frags[i] > 0)
                     {
-                        sameringatoms[count] = a;
-                        count++;
-                    }
-                    else
-                    {
-                        nonringatom = a;
-                    }
-
-                }
-            }
-            else
-            { // sameringsatomscount==3
-              // arbitrarily assign atoms: (no way to decide consistently)
-                var caa = ca.ToReadOnlyList();
-                sameringatoms[0] = caa[0];
-                sameringatoms[1] = caa[1];
-                nonringatom = caa[2];
-            }
-
-            // check if both hetero atoms have at least one double bond
-            var bonds = atomContainer.GetConnectedBonds(sameringatoms[0]);
-
-            bool haveDouble1 = false;
-
-            foreach (var bond in bonds)
-            {
-                if (bond.Order == BondOrder.Double)
-                {
-                    haveDouble1 = true;
-                    break;
-                }
-
-            }
-
-            bonds = atomContainer.GetConnectedBonds(sameringatoms[1]);
-
-            bool haveDouble2 = false;
-
-            foreach (var bond in bonds)
-            {
-                if (bond.Order == BondOrder.Double)
-                {
-                    haveDouble2 = true;
-                    break;
-                }
-
-            }
-
-            if (!string.Equals(sameringatoms[0].Symbol, "C", StringComparison.Ordinal) && !string.Equals(sameringatoms[1].Symbol, "C", StringComparison.Ordinal))
-            {
-                if (haveDouble1 && haveDouble2)
-                { // X--CR--X
-                    if (nonringatom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                    {
-                        frags[31]++;
-                        alogpfrag[i] = 31;
-                    }
-                    else
-                    { // X--CX--X
-                        frags[32]++;
-                        alogpfrag[i] = 32;
-                    }
-
-                }
-                else
-                {
-
-                    if (nonringatom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                    { // X--CR..X
-                        frags[43]++;
-                        alogpfrag[i] = 43;
-
-                    }
-                    else
-                    { // X--CX...X
-                        frags[44]++;
-                        alogpfrag[i] = 44;
-                    }
-
-                }
-            }
-            else if (string.Equals(sameringatoms[0].Symbol, "C", StringComparison.Ordinal) && string.Equals(sameringatoms[1].Symbol, "C", StringComparison.Ordinal))
-            {
-
-                if (nonringatom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                {// R--CR--R
-                    frags[25]++;
-                    alogpfrag[i] = 25;
-                }
-                else
-                { // R--CX--R
-                    frags[26]++;
-                    alogpfrag[i] = 26;
-                }
-
-            }
-            else if ((string.Equals(sameringatoms[0].Symbol, "C", StringComparison.Ordinal) && !string.Equals(sameringatoms[1].Symbol, "C", StringComparison.Ordinal))
-                  || (!string.Equals(sameringatoms[0].Symbol, "C", StringComparison.Ordinal) && string.Equals(sameringatoms[1].Symbol, "C", StringComparison.Ordinal)))
-            {
-
-                if (haveDouble1 && haveDouble2)
-                { // R--CR--X
-                    if (nonringatom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                    {
-                        frags[28]++;
-                        alogpfrag[i] = 28;
-                    }
-                    else
-                    { // R--CX--X
-                        frags[29]++;
-                        alogpfrag[i] = 29;
-                    }
-
-                }
-                else
-                {
-
-                    if (nonringatom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                    { // R--CR..X
-                        frags[34]++;
-                        alogpfrag[i] = 34;
-
-                    }
-                    else
-                    { // R--CX...X
-                        frags[35]++;
-                        alogpfrag[i] = 35;
+                        Debug.WriteLine($"frag {i}  --> {frags[i]}");
                     }
                 }
-            }
-        }
+                alogp2 = alogp * alogp;
 
-        private int GetHAtomType(IAtom ai, IEnumerable<IAtom> connectedAtoms)
-        {
-            //ai is the atom connected to a H atoms.
-            //ai environment determines what is the H atom type
-            //This procedure is applied only for carbons
-            //i.e. H atom type 50 is never returned
+                this.FindUnassignedAtoms();
 
-            IEnumerable<IAtom> ca;
-            if (connectedAtoms == null)
-                ca = atomContainer.GetConnectedAtoms(ai);
-            else
-                ca = connectedAtoms;
-
-            // first check for alpha carbon:
-            if (ai.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && !ai.IsAromatic)
-            {
-                foreach (var a in ca)
-                {
-                    if (atomContainer.GetBond(ai, a).Order == BondOrder.Single && a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                    { // single bonded
-                        var ca2 = atomContainer.GetConnectedAtoms(a);
-
-                        foreach (var a2 in ca2)
-                        {
-                            IAtom ca2k = a2;
-                            if (!ca2k.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                            {
-                                if (atomContainer.GetBond(a, ca2k).Order != BondOrder.Single)
-                                    return 51;
-
-                                if (a.IsAromatic && ca2k.IsAromatic)
-                                {
-                                    if (InSameAromaticRing(atomContainer, a, ca2k, rs))
-                                    {
-                                        return 51;
-                                    }
-                                }
-                            } // end !string.Equals(ca2[k].Symbol, "C", StringComparison.Ordinal))
-                        } // end k loop
-                    } // end if (atomContainer.GetBond(ai, ((IAtom)ca[j])).Order == BondOrder.Single) {
-                }// end j loop
-            } // end if(ai.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && !ai.IsAromatic)
-
-            var bonds = atomContainer.GetConnectedBonds(ai);
-            int doublebondcount = 0;
-            int triplebondcount = 0;
-            string hybrid = "";
-
-            foreach (var bond in bonds)
-            {
-                if (bond.Order == BondOrder.Double)
-                    doublebondcount++;
-                else if (bond.Order == BondOrder.Triple) triplebondcount++;
+                return new Result(alogp, alogp2, amr);
             }
 
-            if (doublebondcount == 0 && triplebondcount == 0)
-                hybrid = "sp3";
-            else if (doublebondcount == 1 && triplebondcount == 0)
-                hybrid = "sp2";
-            else if (doublebondcount == 2 || triplebondcount == 1) hybrid = "sp";
-            int oxNum = 0;
-            int xCount = 0;
-
-            foreach (var a in ca)
+            private void CalcGroup001_005(int i)
             {
-                if (ap.GetNormalizedElectronegativity(a.Symbol) > 1)
+                // C in CH3R
+                if (string.Equals(fragment[i], "SsCH3", StringComparison.Ordinal))
                 {
-                    var bonds2 = atomContainer.GetConnectedBonds(a);
-                    bool haveDouble = false;
-                    foreach (var bond2 in bonds2)
-                    {
-                        if (bond2.Order == BondOrder.Double)
-                        {
-                            haveDouble = true;
-                            break;
-                        }
-                    }
-                    if (haveDouble && a.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
-                        oxNum += 2; // C-N bond order for pyridine type N's is considered to be 2
-                    else
-                        oxNum += (int)BondManipulator.DestroyBondOrder(atomContainer.GetBond(ai, a).Order);
-                }
-                var ca2 = atomContainer.GetConnectedAtoms(a);
-
-                foreach (var a2 in ca2)
-                {
-                    if (!a2.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                        xCount++;
-                }
-            }// end j loop
-
-            if (oxNum == 0)
-            {
-                if (string.Equals(hybrid, "sp3", StringComparison.Ordinal))
-                {
-                    if (xCount == 0)
-                        return 46;
-                    else if (xCount == 1)
-                        return 52;
-                    else if (xCount == 2)
-                        return 53;
-                    else if (xCount == 3)
-                        return 54;
-                    else if (xCount >= 4)
-                        return 55;
-                }
-                else if (string.Equals(hybrid, "sp2", StringComparison.Ordinal))
-                    return 47;
-            }
-            else if (oxNum == 1 && string.Equals(hybrid, "sp3", StringComparison.Ordinal))
-                return 47;
-            else if ((oxNum == 2 && string.Equals(hybrid, "sp3", StringComparison.Ordinal))
-                  || (oxNum == 1 && string.Equals(hybrid, "sp2", StringComparison.Ordinal))
-                  || (oxNum == 0 && string.Equals(hybrid, "sp", StringComparison.Ordinal)))
-                return 48;
-            else if ((oxNum == 3 && string.Equals(hybrid, "sp3", StringComparison.Ordinal))
-                  || (oxNum >= 2 && string.Equals(hybrid, "sp2", StringComparison.Ordinal))
-                  || (oxNum >= 1 && string.Equals(hybrid, "sp", StringComparison.Ordinal)))
-                return 49;
-            return 0;
-        }
-
-        private void CalcGroup056_57(int i)
-        {
-            // 56: O in =O
-            // 57: O in phenol, enol, and carboxyl
-            // enol : compound containing a hydroxyl group bonded to a carbon atom
-            // that in turn forms a double bond with another carbon atom.
-            // enol = HO-C=C-
-            // carboxyl= HO-C(=O)-
-
-            if (!string.Equals(fragment[i], "SsOH", StringComparison.Ordinal))
-                return;
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]).ToReadOnlyList();
-            frags[50]++; //H atom attached to a hetero atom
-
-            var ca0 = (IAtom)ca[0];
-            if (ca0.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)) ca0 = ca[1];
-
-            if (ca0.IsAromatic)
-            { // phenol
-                frags[57]++;
-                alogpfrag[i] = 57;
-                return;
-            }
-
-            var ca2 = atomContainer.GetConnectedAtoms(ca0);
-            foreach (var a2 in ca2)
-            {
-                if (atomContainer.GetBond(a2, ca0).Order == BondOrder.Double)
-                {
-                    frags[57]++;
-                    alogpfrag[i] = 57;
-                    return;
-                }
-            }
-            frags[56]++;
-            alogpfrag[i] = 56;
-        }
-
-        private void CalcGroup058_61(int i)
-        {
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]).ToReadOnlyList();
-
-            // 58: O in =O
-            // 61: --O in nitro, N-oxides
-            // 62: O in O-
-            var ca0 = ca[0];
-
-            if (string.Equals(fragment[i], "SsOm", StringComparison.Ordinal))
-            {
-                if (ca0.AtomicNumber.Equals(NaturalElements.N.AtomicNumber) && ca0.FormalCharge == 1)
-                {
-                    frags[61]++;
-                    alogpfrag[i] = 61;
-                }
-                else
-                {
-                    frags[62]++;
-                    alogpfrag[i] = 62;
-                }
-            }
-            else if (string.Equals(fragment[i], "SdO", StringComparison.Ordinal))
-            {
-                if (ca0.AtomicNumber.Equals(NaturalElements.N.AtomicNumber) && ca0.FormalCharge == 1)
-                {
-                    frags[61]++;
-                    alogpfrag[i] = 61;
-                }
-                else
-                {
-                    frags[58]++;
-                    alogpfrag[i] = 58;
-                }
-            }
-        }
-
-        private void CalcGroup059_060_063(int i)
-        {
-            // O in Al-O-Ar, Ar2O, R...O...R, ROC=X
-            // ... = aromatic single bonds
-            if (!string.Equals(fragment[i], "SssO", StringComparison.Ordinal) && !string.Equals(fragment[i], "SaaO", StringComparison.Ordinal))
-                return;
-
-            // Al-O-Ar, Ar2O
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]).ToReadOnlyList();
-            var ca0 = ca[0];
-            var ca1 = ca[1];
-
-            if (string.Equals(fragment[i], "SssO", StringComparison.Ordinal))
-            {
-                if (ca0.IsAromatic || ca1.IsAromatic)
-                {
-                    frags[60]++;
-                    alogpfrag[i] = 60;
-                }
-                else
-                {
+                    var ca = container.GetConnectedAtoms(container.Atoms[i]);
+                    int htype = GetHAtomType(container.Atoms[i], ca);
                     foreach (var a in ca)
                     {
-                        // O-P(=S)
-                        // was considered to count as group 60
-
-                        var ca2 = atomContainer.GetConnectedAtoms(a);
-                        foreach (var a2 in ca2)
+                        switch (a.AtomicNumber)
                         {
-                            if (atomContainer.GetBond(a, a2).Order == BondOrder.Double)
-                            {
-                                if (!a2.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                                {
-                                    frags[60]++;
-                                    alogpfrag[i] = 60;
-                                    return;
-                                }
-                            }
+                            case NaturalElements.C.AtomicNumber:
+                                frags[1]++;
+                                alogpfrag[i] = 1;
+                                break;
+                            case NaturalElements.H.AtomicNumber:
+                                frags[htype]++;
+                                break;
+                            default:
+                                frags[5]++;
+                                alogpfrag[i] = 5;
+                                break;
                         }
-                    } // end j ca loop
-
-                    if (ca0.AtomicNumber.Equals(NaturalElements.O.AtomicNumber) || ca1.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
-                    {
-                        frags[63]++;
-                        alogpfrag[i] = 63;
-                    }
-                    else
-                    {
-                        frags[59]++;
-                        alogpfrag[i] = 59;
                     }
                 }
             }
-            else if (string.Equals(fragment[i], "SaaO", StringComparison.Ordinal))
-            {
-                frags[60]++;
-                alogpfrag[i] = 60;
-            }
-        }
 
-        private void CalcGroup066_to_079(int i)
-        {
-            int nAr = 0;
-            int nAl = 0;
-            var ai = atomContainer.Atoms[i];
-            if (!ai.AtomicNumber.Equals(NaturalElements.N.AtomicNumber)) return;
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-
-            foreach (var a in ca)
+            private void CalcGroup002_006_007(int i)
             {
-                if (a.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)) continue;
-                if (a.IsAromatic)
-                    nAr++;
-                else
-                    nAl++;
-            }
+                // C in CH2RX
 
-            // first check if have RC(=O)N or NX=X
-            foreach (var a in ca)
-            {
-                if (a.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
-                    continue;
-                var ca2 = atomContainer.GetConnectedAtoms(a);
-                foreach (var a2 in ca2)
+                if (string.Equals(fragment[i], "SssCH2", StringComparison.Ordinal))
                 {
-                    var ca2k = a2;
-                    if (atomContainer.Atoms.IndexOf(ca2k) != i)
+                    var ca = container.GetConnectedAtoms(container.Atoms[i]);
+                    int htype = GetHAtomType(container.Atoms[i], ca);
+                    int carbonCount = 0;
+                    int heteroCount = 0;
+                    // Debug.WriteLine("here");
+                    foreach (var a in ca)
                     {
-                        if (!ca2k.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        switch (a.AtomicNumber)
                         {
-                            if (!ca2k.IsAromatic
-                             && !a.IsAromatic
-                             && !ai.IsAromatic)
-                            {
-                                if (atomContainer.GetBond(a, ca2k).Order == BondOrder.Double)
-                                {
-                                    frags[72]++;
-                                    alogpfrag[i] = 72;
-                                    return;
-                                }
-                            }
+                            case NaturalElements.C.AtomicNumber:
+                                carbonCount++;
+                                break;
+                            case NaturalElements.H.AtomicNumber:
+                                frags[htype]++;
+                                break;
+                            default:
+                                heteroCount++;
+                                break;
                         }
+                    }
+
+                    if (carbonCount == 2 && heteroCount == 0)
+                    {
+                        frags[2]++;
+                        alogpfrag[i] = 2;
+                    }
+                    else if (carbonCount == 1 && heteroCount == 1)
+                    {
+                        frags[6]++;
+                        alogpfrag[i] = 6;
+                    }
+                    else if (carbonCount == 0 && heteroCount == 2)
+                    {
+                        frags[7]++;
+                        alogpfrag[i] = 7;
                     }
                 }
             }
 
-            if (string.Equals(fragment[i], "SsNH2", StringComparison.Ordinal))
+            private void CalcGroup003_008_009_010(int i)
             {
-                IAtom ca0 = null;
-                //Find which neigbpur is not the hydrogen atom
+                if (string.Equals(fragment[i], "SsssCH", StringComparison.Ordinal))
+                {
+                    var ca = container.GetConnectedAtoms(container.Atoms[i]);
+                    int htype = GetHAtomType(container.Atoms[i], ca);
+                    int carbonCount = 0;
+                    int heteroCount = 0;
+                    // Debug.WriteLine("here");
+                    foreach (var a in ca)
+                    {
+                        switch (a.AtomicNumber)
+                        {
+                            case NaturalElements.C.AtomicNumber:
+                                carbonCount++;
+                                break;
+                            case NaturalElements.H.AtomicNumber:
+                                frags[htype]++;
+                                break;
+                            default:
+                                heteroCount++;
+                                break;
+                        }
+                    }
+
+                    if (carbonCount == 3 && heteroCount == 0)
+                    {
+                        frags[3]++;
+                        alogpfrag[i] = 3;
+                    }
+                    else if (carbonCount == 2 && heteroCount == 1)
+                    {
+                        frags[8]++;
+                        alogpfrag[i] = 8;
+                    }
+                    else if (carbonCount == 1 && heteroCount == 2)
+                    {
+                        frags[9]++;
+                        alogpfrag[i] = 9;
+                    }
+                    else if (carbonCount == 0 && heteroCount == 3)
+                    {
+                        frags[10]++;
+                        alogpfrag[i] = 10;
+                    }
+                }
+            }
+
+            private void CalcGroup004_011_to_014(int i)
+            {
+                // C in CH2RX
+                if (string.Equals(fragment[i], "SssssC", StringComparison.Ordinal))
+                {
+                    var ca = container.GetConnectedAtoms(container.Atoms[i]);
+                    int carbonCount = 0;
+                    int heteroCount = 0;
+                    // Debug.WriteLine("here");
+                    foreach (var a in ca)
+                    {
+                        switch (a.AtomicNumber)
+                        {
+                            case NaturalElements.C.AtomicNumber:
+                                carbonCount++;
+                                break;
+                            default:
+                                heteroCount++;
+                                break;
+                        }
+                    }
+
+                    if (carbonCount == 4 && heteroCount == 0)
+                    {
+                        frags[4]++;
+                        alogpfrag[i] = 4;
+                    }
+                    else if (carbonCount == 3 && heteroCount == 1)
+                    {
+                        frags[11]++;
+                        alogpfrag[i] = 11;
+                    }
+                    else if (carbonCount == 2 && heteroCount == 2)
+                    {
+                        frags[12]++;
+                        alogpfrag[i] = 12;
+                    }
+                    else if (carbonCount == 1 && heteroCount == 3)
+                    {
+                        frags[13]++;
+                        alogpfrag[i] = 13;
+                    }
+                    else if (carbonCount == 0 && heteroCount == 4)
+                    {
+                        frags[14]++;
+                        alogpfrag[i] = 14;
+                    }
+                }
+            }
+
+            private void CalcGroup015(int i)
+            {
+                if (string.Equals(fragment[i], "SdCH2", StringComparison.Ordinal))
+                {
+                    frags[15]++;
+                    alogpfrag[i] = 15;
+                    int htype = GetHAtomType(container.Atoms[i], null);
+                    frags[htype] += 2;
+                }
+            }
+
+            private void CalcGroup016_018_036_037(int i)
+            {
+
+                IAtom ai = container.Atoms[i];
+                if (!string.Equals(fragment[i], "SdsCH", StringComparison.Ordinal))
+                    return;
+
+                var ca = container.GetConnectedAtoms(ai);
+                int htype = GetHAtomType(container.Atoms[i], ca);
+                frags[htype]++;
+
+                bool haveCdX = false;
+                bool haveCsX = false;
+                bool haveCsAr = false;
+
                 foreach (var a in ca)
                 {
                     if (a.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                         continue;
-                    else
+
+                    switch (container.GetBond(ai, a).Order)
                     {
-                        ca0 = a;
-                        break;
+                        case BondOrder.Single:
+                            if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                            {
+                                haveCsX = true;
+                            }
+
+                            if (a.IsAromatic)
+                            {
+                                haveCsAr = true;
+                            }
+                            break;
+                        case BondOrder.Double:
+                            if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                            {
+                                haveCdX = true;
+                            }
+                            break;
                     }
                 }
-                if (ca0.IsAromatic || !ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+
+                if (haveCdX)
                 {
-                    frags[69]++;
-                    alogpfrag[i] = 69;
+                    if (haveCsAr)
+                    {
+                        frags[37]++;
+                        alogpfrag[i] = 37;
+                    }
+                    else
+                    {
+                        frags[36]++;
+                        alogpfrag[i] = 36;
+                    }
                 }
                 else
                 {
-                    frags[66]++;
-                    alogpfrag[i] = 66;
-                }
-                frags[50] += 2; //H atom attached to a hetero atom
-            }
-            else if (string.Equals(fragment[i], "SaaNH", StringComparison.Ordinal) || string.Equals(fragment[i], "SsaaN", StringComparison.Ordinal))
-            { // R...NH...R
-                frags[73]++;
-                alogpfrag[i] = 73;
-                if (string.Equals(fragment[i], "SaaNH", StringComparison.Ordinal)) frags[50]++; //H atom attached to a hetero atom
-            }
-            else if (string.Equals(fragment[i], "SssNH", StringComparison.Ordinal))
-            {
-                if (nAr == 2 && nAl == 0)
-                { // Ar2NH
-                    frags[73]++;
-                    alogpfrag[i] = 73;
-                }
-                else if (nAr == 1 && nAl == 1)
-                { // Ar-NH-Al
-                    frags[70]++;
-                    alogpfrag[i] = 70;
-
-                }
-                else if (nAr == 0 && nAl == 2)
-                { // Al2NH
-                    frags[67]++;
-                    alogpfrag[i] = 67;
-                }
-                frags[50]++; //H atom attached to a hetero atom
-            }
-            else if (string.Equals(fragment[i], "SsssN", StringComparison.Ordinal))
-            {
-                if ((nAr == 3 && nAl == 0) || (nAr == 2 && nAl == 1))
-                { // Ar3N &
-                  // Ar2NAl
-                    frags[73]++;
-                    alogpfrag[i] = 73;
-                }
-                else if (nAr == 1 && nAl == 2)
-                {
-                    frags[71]++;
-                    alogpfrag[i] = 71;
-                }
-                else if (nAr == 0 && nAl == 3)
-                {
-                    frags[68]++;
-                    alogpfrag[i] = 68;
-                }
-            }
-            else if (string.Equals(fragment[i], "SaaN", StringComparison.Ordinal))
-            {
-                frags[75]++;
-                alogpfrag[i] = 75;
-            }
-            else if (string.Equals(fragment[i], "SssdNp", StringComparison.Ordinal))
-            {
-                bool haveSsOm = false;
-                bool haveSdO = false;
-                bool ar = false;
-
-                foreach (var a in ca)
-                {
-                    if (string.Equals(fragment[atomContainer.Atoms.IndexOf(a)], "SsOm", StringComparison.Ordinal))
+                    if (haveCsX)
                     {
-                        haveSsOm = true;
-                    }
-                    else if (string.Equals(fragment[atomContainer.Atoms.IndexOf(a)], "SdO", StringComparison.Ordinal))
-                    {
-                        haveSdO = true;
+                        frags[18]++;
+                        alogpfrag[i] = 18;
                     }
                     else
                     {
+                        frags[16]++;
+                        alogpfrag[i] = 16;
+                    }
+                }
+            }
+
+            private void CalcGroup017_019_020_038_to_041(int i)
+            {
+
+                IAtom ai = container.Atoms[i];
+
+                if (!string.Equals(fragment[i], "SdssC", StringComparison.Ordinal)) return;
+
+                var ca = container.GetConnectedAtoms(ai);
+
+                int rCount = 0;
+                int xCount = 0;
+                bool haveCdX = false;
+                int aromaticCount = 0;
+
+                foreach (var a in ca)
+                {
+                    if (container.GetBond(ai, a).Order == BondOrder.Single)
+                    {
+                        if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        {
+                            rCount++;
+                        }
+                        else
+                        {
+                            xCount++;
+                        }
+
                         if (a.IsAromatic)
                         {
-                            ar = true;
+                            aromaticCount++;
+                        }
+
+                    }
+                    else if (container.GetBond(ai, a).Order == BondOrder.Double)
+                    {
+                        if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        {
+                            haveCdX = true;
                         }
                     }
                 }
 
-                if (haveSsOm && haveSdO && ar)
+                if (haveCdX)
                 {
-                    frags[76]++;
-                    alogpfrag[i] = 76;
-                }
-                else if (haveSsOm && haveSdO && !ar)
-                {
-                    frags[77]++;
-                    alogpfrag[i] = 77;
+                    if (aromaticCount >= 1)
+                    { // Ar-C(=X)-R
+                      // TODO: add code to check if have R or X for nonaromatic
+                      // attachment to C?
+                      // if we do this check we would have missing fragment for
+                      // Ar-C(=X)-X
+                      // TODO: which fragment to use if we have Ar-C(=X)-Ar? Currently
+                      // this frag is used
+
+                        frags[39]++;
+                        alogpfrag[i] = 39;
+                    }
+                    else if (aromaticCount == 0)
+                    {
+                        if (rCount == 1 && xCount == 1)
+                        {
+                            frags[40]++;
+                            alogpfrag[i] = 40;
+                        }
+                        else if (rCount == 0 && xCount == 2)
+                        {
+                            frags[41]++;
+                            alogpfrag[i] = 41;
+                        }
+                        else
+                        {
+                            frags[38]++;
+                            alogpfrag[i] = 38;
+                        }
+                    }
                 }
                 else
+                {
+                    if (rCount == 2 && xCount == 0)
+                    {
+                        frags[17]++;
+                        alogpfrag[i] = 17;
+                    }
+                    else if (rCount == 1 && xCount == 1)
+                    {
+                        frags[19]++;
+                        alogpfrag[i] = 19;
+                    }
+                    else if (rCount == 0 && xCount == 2)
+                    {
+                        frags[20]++;
+                        alogpfrag[i] = 20;
+                    }
+                }
+
+            }
+
+            private void CalcGroup021_to_023_040(int i)
+            {
+                var ca = container.GetConnectedAtoms(container.Atoms[i]).ToReadOnlyList();
+                var ai = container.Atoms[i];
+
+                if (string.Equals(fragment[i], "StCH", StringComparison.Ordinal))
+                {
+                    frags[21]++;
+                    alogpfrag[i] = 21;
+                    int htype = GetHAtomType(container.Atoms[i], ca);
+                    frags[htype]++;
+                }
+                else if (string.Equals(fragment[i], "SddC", StringComparison.Ordinal))
+                {
+                    if (string.Equals(ca[0].Symbol, "C", StringComparison.Ordinal) && string.Equals(ca[1].Symbol, "C", StringComparison.Ordinal))
+                    {// R==C==R
+                        frags[22]++;
+                        alogpfrag[i] = 22;
+                    }
+                    else if (!string.Equals(ca[0].Symbol, "C", StringComparison.Ordinal) && !string.Equals(ca[1].Symbol, "C", StringComparison.Ordinal))
+                    {// X==C==X
+                        frags[40]++;
+                        alogpfrag[i] = 40;
+                    }
+                }
+                else if (string.Equals(fragment[i], "StsC", StringComparison.Ordinal))
+                {
+
+                    bool haveCtX = false;
+                    bool haveCsX = false;
+
+                    foreach (var a in ca)
+                    {
+                        if (container.GetBond(ai, a).Order == BondOrder.Single)
+                        {
+                            if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                            {
+                                haveCsX = true;
+                            }
+                        }
+                        else if (container.GetBond(ai, a).Order == BondOrder.Triple)
+                        {
+                            if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                            {
+                                haveCtX = true;
+                            }
+                        }
+                    }
+
+                    if (haveCtX && !haveCsX)
+                    {
+                        frags[40]++;
+                        alogpfrag[i] = 40;
+                    }
+                    else if (haveCsX)
+                    {// #C-X
+                        frags[23]++;
+                        alogpfrag[i] = 23;
+                    }
+                    else if (!haveCsX)
+                    { // #C-R
+                        frags[22]++;
+                        alogpfrag[i] = 22;
+                    }
+                }
+            }
+
+            private void CalcGroup024_027_030_033_042(int i)
+            {
+                // 24: C in R--CH--R
+                // 27: C in R--CH--X
+                // 30: C in X--CH--X
+                // 33: C in R--CH...X
+                // 42: C in X--CH...X
+
+                if (!string.Equals(fragment[i], "SaaCH", StringComparison.Ordinal)) return;
+                var ca = container.GetConnectedAtoms(container.Atoms[i]).ToReadOnlyList();
+                int htype = GetHAtomType(container.Atoms[i], ca);
+                frags[htype]++;
+                IAtom ca0;
+                IAtom ca1;
+                // determining which neigbour is the H atom
+                if (string.Equals(ca[0].Symbol, "H", StringComparison.Ordinal))
+                {
+                    ca0 = (IAtom)ca[1];
+                    ca1 = (IAtom)ca[2];
+                }
+                else
+                {
+                    if (string.Equals(ca[1].Symbol, "H", StringComparison.Ordinal))
+                    {
+                        ca0 = (IAtom)ca[0];
+                        ca1 = (IAtom)ca[2];
+                    }
+                    else
+                    {
+                        ca0 = (IAtom)ca[0];
+                        ca1 = (IAtom)ca[1];
+                    }
+                }
+
+                if (ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && ca1.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                {
+                    frags[24]++;
+                    alogpfrag[i] = 24;
+                    return;
+                }
+
+                // check if both hetero atoms have at least one double bond
+                var bonds = container.GetConnectedBonds(ca0);
+                bool haveDouble1 = false;
+                foreach (var bond in bonds)
+                {
+                    if (bond.Order == BondOrder.Double)
+                    {
+                        haveDouble1 = true;
+                        break;
+                    }
+                }
+
+                bonds = container.GetConnectedBonds(ca1);
+                bool haveDouble2 = false;
+                foreach (var bond in bonds)
+                {
+                    if (bond.Order == BondOrder.Double)
+                    {
+                        haveDouble2 = true;
+                        break;
+                    }
+                }
+
+                if (!ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && !string.Equals(ca[1].Symbol, "C", StringComparison.Ordinal))
+                {
+                    if (haveDouble1 && haveDouble2)
+                    { // X--CH--X
+                        frags[30]++;
+                        alogpfrag[i] = 30;
+                    }
+                    else
+                    { // X--CH...X
+                        frags[42]++;
+                        alogpfrag[i] = 42;
+                    }
+
+                }
+                else if (ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && !ca1.AtomicNumber.Equals(NaturalElements.C.AtomicNumber)
+                      || (!ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && ca1.AtomicNumber.Equals(NaturalElements.C.AtomicNumber)))
+                {
+
+                    if (haveDouble1 && haveDouble2)
+                    { // R--CH--X
+                        frags[27]++;
+                        alogpfrag[i] = 27;
+                    }
+                    else
+                    {// R--CH...X
+                        frags[33]++;
+                        alogpfrag[i] = 33;
+
+                    }
+                }
+            }
+
+            private void CalcGroup025_026_028_029_031_032_034_035_043_044(int i)
+            {
+                // 25: R--CR--R
+                // 26: R--CX--R
+                // 28: R--CR--X
+                // 29: R--CX--X
+                // 31: X--CR--X
+                // 32: X--CX--X
+                // 34: X--CR...X
+                // 35: X--CX...X
+                // 43: X--CR...X
+                // 43: X--CX...X
+
+                if (!string.Equals(fragment[i], "SsaaC", StringComparison.Ordinal) && !string.Equals(fragment[i], "SaaaC", StringComparison.Ordinal)) return;
+
+                IAtom ai = container.Atoms[i];
+                var ca = container.GetConnectedAtoms(container.Atoms[i]);
+
+                IAtom[] sameringatoms = new IAtom[2];
+                IAtom nonringatom = container.Builder.NewAtom();
+
+                int sameringatomscount = 0;
+                foreach (var a in ca)
+                {
+                    if (InSameAromaticRing(container, ai, a, rs))
+                    {
+                        sameringatomscount++;
+                    }
+
+                }
+
+                if (sameringatomscount == 2)
+                {
+                    int count = 0;
+                    foreach (var a in ca)
+                    {
+                        if (InSameAromaticRing(container, ai, a, rs))
+                        {
+                            sameringatoms[count] = a;
+                            count++;
+                        }
+                        else
+                        {
+                            nonringatom = a;
+                        }
+
+                    }
+                }
+                else
+                { // sameringsatomscount==3
+                  // arbitrarily assign atoms: (no way to decide consistently)
+                    var caa = ca.ToReadOnlyList();
+                    sameringatoms[0] = caa[0];
+                    sameringatoms[1] = caa[1];
+                    nonringatom = caa[2];
+                }
+
+                // check if both hetero atoms have at least one double bond
+                var bonds = container.GetConnectedBonds(sameringatoms[0]);
+
+                bool haveDouble1 = false;
+
+                foreach (var bond in bonds)
+                {
+                    if (bond.Order == BondOrder.Double)
+                    {
+                        haveDouble1 = true;
+                        break;
+                    }
+
+                }
+
+                bonds = container.GetConnectedBonds(sameringatoms[1]);
+
+                bool haveDouble2 = false;
+
+                foreach (var bond in bonds)
+                {
+                    if (bond.Order == BondOrder.Double)
+                    {
+                        haveDouble2 = true;
+                        break;
+                    }
+
+                }
+
+                if (!string.Equals(sameringatoms[0].Symbol, "C", StringComparison.Ordinal) && !string.Equals(sameringatoms[1].Symbol, "C", StringComparison.Ordinal))
+                {
+                    if (haveDouble1 && haveDouble2)
+                    { // X--CR--X
+                        if (nonringatom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        {
+                            frags[31]++;
+                            alogpfrag[i] = 31;
+                        }
+                        else
+                        { // X--CX--X
+                            frags[32]++;
+                            alogpfrag[i] = 32;
+                        }
+
+                    }
+                    else
+                    {
+
+                        if (nonringatom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        { // X--CR..X
+                            frags[43]++;
+                            alogpfrag[i] = 43;
+
+                        }
+                        else
+                        { // X--CX...X
+                            frags[44]++;
+                            alogpfrag[i] = 44;
+                        }
+
+                    }
+                }
+                else if (string.Equals(sameringatoms[0].Symbol, "C", StringComparison.Ordinal) && string.Equals(sameringatoms[1].Symbol, "C", StringComparison.Ordinal))
+                {
+
+                    if (nonringatom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                    {// R--CR--R
+                        frags[25]++;
+                        alogpfrag[i] = 25;
+                    }
+                    else
+                    { // R--CX--R
+                        frags[26]++;
+                        alogpfrag[i] = 26;
+                    }
+
+                }
+                else if ((string.Equals(sameringatoms[0].Symbol, "C", StringComparison.Ordinal) && !string.Equals(sameringatoms[1].Symbol, "C", StringComparison.Ordinal))
+                      || (!string.Equals(sameringatoms[0].Symbol, "C", StringComparison.Ordinal) && string.Equals(sameringatoms[1].Symbol, "C", StringComparison.Ordinal)))
+                {
+
+                    if (haveDouble1 && haveDouble2)
+                    { // R--CR--X
+                        if (nonringatom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        {
+                            frags[28]++;
+                            alogpfrag[i] = 28;
+                        }
+                        else
+                        { // R--CX--X
+                            frags[29]++;
+                            alogpfrag[i] = 29;
+                        }
+
+                    }
+                    else
+                    {
+
+                        if (nonringatom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        { // R--CR..X
+                            frags[34]++;
+                            alogpfrag[i] = 34;
+
+                        }
+                        else
+                        { // R--CX...X
+                            frags[35]++;
+                            alogpfrag[i] = 35;
+                        }
+                    }
+                }
+            }
+
+            private int GetHAtomType(IAtom ai, IEnumerable<IAtom> connectedAtoms)
+            {
+                //ai is the atom connected to a H atoms.
+                //ai environment determines what is the H atom type
+                //This procedure is applied only for carbons
+                //i.e. H atom type 50 is never returned
+
+                IEnumerable<IAtom> ca;
+                if (connectedAtoms == null)
+                    ca = container.GetConnectedAtoms(ai);
+                else
+                    ca = connectedAtoms;
+
+                // first check for alpha carbon:
+                if (ai.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && !ai.IsAromatic)
+                {
+                    foreach (var a in ca)
+                    {
+                        if (container.GetBond(ai, a).Order == BondOrder.Single && a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        { // single bonded
+                            var ca2 = container.GetConnectedAtoms(a);
+
+                            foreach (var a2 in ca2)
+                            {
+                                IAtom ca2k = a2;
+                                if (!ca2k.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                                {
+                                    if (container.GetBond(a, ca2k).Order != BondOrder.Single)
+                                        return 51;
+
+                                    if (a.IsAromatic && ca2k.IsAromatic)
+                                    {
+                                        if (InSameAromaticRing(container, a, ca2k, rs))
+                                        {
+                                            return 51;
+                                        }
+                                    }
+                                } // end !string.Equals(ca2[k].Symbol, "C", StringComparison.Ordinal))
+                            } // end k loop
+                        } // end if (atomContainer.GetBond(ai, ((IAtom)ca[j])).Order == BondOrder.Single) {
+                    }// end j loop
+                } // end if(ai.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && !ai.IsAromatic)
+
+                var bonds = container.GetConnectedBonds(ai);
+                int doublebondcount = 0;
+                int triplebondcount = 0;
+                string hybrid = "";
+
+                foreach (var bond in bonds)
+                {
+                    if (bond.Order == BondOrder.Double)
+                        doublebondcount++;
+                    else if (bond.Order == BondOrder.Triple) triplebondcount++;
+                }
+
+                if (doublebondcount == 0 && triplebondcount == 0)
+                    hybrid = "sp3";
+                else if (doublebondcount == 1 && triplebondcount == 0)
+                    hybrid = "sp2";
+                else if (doublebondcount == 2 || triplebondcount == 1) hybrid = "sp";
+                int oxNum = 0;
+                int xCount = 0;
+
+                foreach (var a in ca)
+                {
+                    if (ap.GetNormalizedElectronegativity(a.Symbol) > 1)
+                    {
+                        var bonds2 = container.GetConnectedBonds(a);
+                        bool haveDouble = false;
+                        foreach (var bond2 in bonds2)
+                        {
+                            if (bond2.Order == BondOrder.Double)
+                            {
+                                haveDouble = true;
+                                break;
+                            }
+                        }
+                        if (haveDouble && a.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
+                            oxNum += 2; // C-N bond order for pyridine type N's is considered to be 2
+                        else
+                            oxNum += (int)BondManipulator.DestroyBondOrder(container.GetBond(ai, a).Order);
+                    }
+                    var ca2 = container.GetConnectedAtoms(a);
+
+                    foreach (var a2 in ca2)
+                    {
+                        if (!a2.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                            xCount++;
+                    }
+                }// end j loop
+
+                if (oxNum == 0)
+                {
+                    if (string.Equals(hybrid, "sp3", StringComparison.Ordinal))
+                    {
+                        if (xCount == 0)
+                            return 46;
+                        else if (xCount == 1)
+                            return 52;
+                        else if (xCount == 2)
+                            return 53;
+                        else if (xCount == 3)
+                            return 54;
+                        else if (xCount >= 4)
+                            return 55;
+                    }
+                    else if (string.Equals(hybrid, "sp2", StringComparison.Ordinal))
+                        return 47;
+                }
+                else if (oxNum == 1 && string.Equals(hybrid, "sp3", StringComparison.Ordinal))
+                    return 47;
+                else if ((oxNum == 2 && string.Equals(hybrid, "sp3", StringComparison.Ordinal))
+                      || (oxNum == 1 && string.Equals(hybrid, "sp2", StringComparison.Ordinal))
+                      || (oxNum == 0 && string.Equals(hybrid, "sp", StringComparison.Ordinal)))
+                    return 48;
+                else if ((oxNum == 3 && string.Equals(hybrid, "sp3", StringComparison.Ordinal))
+                      || (oxNum >= 2 && string.Equals(hybrid, "sp2", StringComparison.Ordinal))
+                      || (oxNum >= 1 && string.Equals(hybrid, "sp", StringComparison.Ordinal)))
+                    return 49;
+                return 0;
+            }
+
+            private void CalcGroup056_57(int i)
+            {
+                // 56: O in =O
+                // 57: O in phenol, enol, and carboxyl
+                // enol : compound containing a hydroxyl group bonded to a carbon atom
+                // that in turn forms a double bond with another carbon atom.
+                // enol = HO-C=C-
+                // carboxyl= HO-C(=O)-
+
+                if (!string.Equals(fragment[i], "SsOH", StringComparison.Ordinal))
+                    return;
+                var ca = container.GetConnectedAtoms(container.Atoms[i]).ToReadOnlyList();
+                frags[50]++; //H atom attached to a hetero atom
+
+                var ca0 = (IAtom)ca[0];
+                if (ca0.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)) ca0 = ca[1];
+
+                if (ca0.IsAromatic)
+                { // phenol
+                    frags[57]++;
+                    alogpfrag[i] = 57;
+                    return;
+                }
+
+                var ca2 = container.GetConnectedAtoms(ca0);
+                foreach (var a2 in ca2)
+                {
+                    if (container.GetBond(a2, ca0).Order == BondOrder.Double)
+                    {
+                        frags[57]++;
+                        alogpfrag[i] = 57;
+                        return;
+                    }
+                }
+                frags[56]++;
+                alogpfrag[i] = 56;
+            }
+
+            private void CalcGroup058_61(int i)
+            {
+                var ca = container.GetConnectedAtoms(container.Atoms[i]).ToReadOnlyList();
+
+                // 58: O in =O
+                // 61: --O in nitro, N-oxides
+                // 62: O in O-
+                var ca0 = ca[0];
+
+                if (string.Equals(fragment[i], "SsOm", StringComparison.Ordinal))
+                {
+                    if (ca0.AtomicNumber.Equals(NaturalElements.N.AtomicNumber) && ca0.FormalCharge == 1)
+                    {
+                        frags[61]++;
+                        alogpfrag[i] = 61;
+                    }
+                    else
+                    {
+                        frags[62]++;
+                        alogpfrag[i] = 62;
+                    }
+                }
+                else if (string.Equals(fragment[i], "SdO", StringComparison.Ordinal))
+                {
+                    if (ca0.AtomicNumber.Equals(NaturalElements.N.AtomicNumber) && ca0.FormalCharge == 1)
+                    {
+                        frags[61]++;
+                        alogpfrag[i] = 61;
+                    }
+                    else
+                    {
+                        frags[58]++;
+                        alogpfrag[i] = 58;
+                    }
+                }
+            }
+
+            private void CalcGroup059_060_063(int i)
+            {
+                // O in Al-O-Ar, Ar2O, R...O...R, ROC=X
+                // ... = aromatic single bonds
+                if (!string.Equals(fragment[i], "SssO", StringComparison.Ordinal) && !string.Equals(fragment[i], "SaaO", StringComparison.Ordinal))
+                    return;
+
+                // Al-O-Ar, Ar2O
+                var ca = container.GetConnectedAtoms(container.Atoms[i]).ToReadOnlyList();
+                var ca0 = ca[0];
+                var ca1 = ca[1];
+
+                if (string.Equals(fragment[i], "SssO", StringComparison.Ordinal))
+                {
+                    if (ca0.IsAromatic || ca1.IsAromatic)
+                    {
+                        frags[60]++;
+                        alogpfrag[i] = 60;
+                    }
+                    else
+                    {
+                        foreach (var a in ca)
+                        {
+                            // O-P(=S)
+                            // was considered to count as group 60
+
+                            var ca2 = container.GetConnectedAtoms(a);
+                            foreach (var a2 in ca2)
+                            {
+                                if (container.GetBond(a, a2).Order == BondOrder.Double)
+                                {
+                                    if (!a2.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                                    {
+                                        frags[60]++;
+                                        alogpfrag[i] = 60;
+                                        return;
+                                    }
+                                }
+                            }
+                        } // end j ca loop
+
+                        if (ca0.AtomicNumber.Equals(NaturalElements.O.AtomicNumber) || ca1.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                        {
+                            frags[63]++;
+                            alogpfrag[i] = 63;
+                        }
+                        else
+                        {
+                            frags[59]++;
+                            alogpfrag[i] = 59;
+                        }
+                    }
+                }
+                else if (string.Equals(fragment[i], "SaaO", StringComparison.Ordinal))
+                {
+                    frags[60]++;
+                    alogpfrag[i] = 60;
+                }
+            }
+
+            private void CalcGroup066_to_079(int i)
+            {
+                int nAr = 0;
+                int nAl = 0;
+                var ai = container.Atoms[i];
+                if (!ai.AtomicNumber.Equals(NaturalElements.N.AtomicNumber)) return;
+                var ca = container.GetConnectedAtoms(container.Atoms[i]);
+
+                foreach (var a in ca)
+                {
+                    if (a.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)) continue;
+                    if (a.IsAromatic)
+                        nAr++;
+                    else
+                        nAl++;
+                }
+
+                // first check if have RC(=O)N or NX=X
+                foreach (var a in ca)
+                {
+                    if (a.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                        continue;
+                    var ca2 = container.GetConnectedAtoms(a);
+                    foreach (var a2 in ca2)
+                    {
+                        var ca2k = a2;
+                        if (container.Atoms.IndexOf(ca2k) != i)
+                        {
+                            if (!ca2k.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                            {
+                                if (!ca2k.IsAromatic
+                                 && !a.IsAromatic
+                                 && !ai.IsAromatic)
+                                {
+                                    if (container.GetBond(a, ca2k).Order == BondOrder.Double)
+                                    {
+                                        frags[72]++;
+                                        alogpfrag[i] = 72;
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (string.Equals(fragment[i], "SsNH2", StringComparison.Ordinal))
+                {
+                    IAtom ca0 = null;
+                    //Find which neigbpur is not the hydrogen atom
+                    foreach (var a in ca)
+                    {
+                        if (a.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                            continue;
+                        else
+                        {
+                            ca0 = a;
+                            break;
+                        }
+                    }
+                    if (ca0.IsAromatic || !ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                    {
+                        frags[69]++;
+                        alogpfrag[i] = 69;
+                    }
+                    else
+                    {
+                        frags[66]++;
+                        alogpfrag[i] = 66;
+                    }
+                    frags[50] += 2; //H atom attached to a hetero atom
+                }
+                else if (string.Equals(fragment[i], "SaaNH", StringComparison.Ordinal) || string.Equals(fragment[i], "SsaaN", StringComparison.Ordinal))
+                { // R...NH...R
+                    frags[73]++;
+                    alogpfrag[i] = 73;
+                    if (string.Equals(fragment[i], "SaaNH", StringComparison.Ordinal)) frags[50]++; //H atom attached to a hetero atom
+                }
+                else if (string.Equals(fragment[i], "SssNH", StringComparison.Ordinal))
+                {
+                    if (nAr == 2 && nAl == 0)
+                    { // Ar2NH
+                        frags[73]++;
+                        alogpfrag[i] = 73;
+                    }
+                    else if (nAr == 1 && nAl == 1)
+                    { // Ar-NH-Al
+                        frags[70]++;
+                        alogpfrag[i] = 70;
+
+                    }
+                    else if (nAr == 0 && nAl == 2)
+                    { // Al2NH
+                        frags[67]++;
+                        alogpfrag[i] = 67;
+                    }
+                    frags[50]++; //H atom attached to a hetero atom
+                }
+                else if (string.Equals(fragment[i], "SsssN", StringComparison.Ordinal))
+                {
+                    if ((nAr == 3 && nAl == 0) || (nAr == 2 && nAl == 1))
+                    { // Ar3N &
+                      // Ar2NAl
+                        frags[73]++;
+                        alogpfrag[i] = 73;
+                    }
+                    else if (nAr == 1 && nAl == 2)
+                    {
+                        frags[71]++;
+                        alogpfrag[i] = 71;
+                    }
+                    else if (nAr == 0 && nAl == 3)
+                    {
+                        frags[68]++;
+                        alogpfrag[i] = 68;
+                    }
+                }
+                else if (string.Equals(fragment[i], "SaaN", StringComparison.Ordinal))
+                {
+                    frags[75]++;
+                    alogpfrag[i] = 75;
+                }
+                else if (string.Equals(fragment[i], "SssdNp", StringComparison.Ordinal))
+                {
+                    bool haveSsOm = false;
+                    bool haveSdO = false;
+                    bool ar = false;
+
+                    foreach (var a in ca)
+                    {
+                        if (string.Equals(fragment[container.Atoms.IndexOf(a)], "SsOm", StringComparison.Ordinal))
+                        {
+                            haveSsOm = true;
+                        }
+                        else if (string.Equals(fragment[container.Atoms.IndexOf(a)], "SdO", StringComparison.Ordinal))
+                        {
+                            haveSdO = true;
+                        }
+                        else
+                        {
+                            if (a.IsAromatic)
+                            {
+                                ar = true;
+                            }
+                        }
+                    }
+
+                    if (haveSsOm && haveSdO && ar)
+                    {
+                        frags[76]++;
+                        alogpfrag[i] = 76;
+                    }
+                    else if (haveSsOm && haveSdO && !ar)
+                    {
+                        frags[77]++;
+                        alogpfrag[i] = 77;
+                    }
+                    else
+                    {
+                        frags[79]++;
+                        alogpfrag[i] = 79;
+                    }
+
+                }
+                else if (string.Equals(fragment[i], "StN", StringComparison.Ordinal))
+                {
+                    var ca0 = (IAtom)ca.ElementAt(0);
+                    if (ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                    { // R#N
+                        frags[74]++;
+                        alogpfrag[i] = 74;
+                    }
+                }
+                else if (string.Equals(fragment[i], "SdNH", StringComparison.Ordinal) || string.Equals(fragment[i], "SdsN", StringComparison.Ordinal))
+                {
+                    // test for RO-NO
+                    if (string.Equals(fragment[i], "SdsN", StringComparison.Ordinal))
+                    {
+                        var caa = ca.ToReadOnlyList();
+                        var ca0 = caa[0];
+                        var ca1 = caa[1];
+                        if (ca0.AtomicNumber.Equals(NaturalElements.O.AtomicNumber) && ca1.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                        {
+                            frags[76]++;
+                            alogpfrag[i] = 76;
+                            return;
+                        }
+                    }
+
+                    bool flag1 = false;
+                    bool flag2 = false;
+
+                    foreach (var a in ca)
+                    {
+                        if (a.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                            continue;
+                        if (container.GetBond(ai, a).Order == BondOrder.Double)
+                        {
+                            if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                            {
+                                frags[74]++;
+                                alogpfrag[i] = 74;
+                                return;
+                            }
+                            else
+                            {
+                                flag1 = true;
+                            }
+                        }
+                        else
+                        {
+                            if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber)
+                                    || a.IsAromatic)
+                            {
+                                flag2 = true;
+                            }
+                        }
+
+                        if (flag1 && flag2)
+                        { // X-N=X or Ar-N=X
+                            frags[78]++;
+                            alogpfrag[i] = 78;
+                        }
+                        else
+                        {
+                            //Debug.WriteLine("missing group: R-N=X");
+                        }
+                    }
+
+                    if (string.Equals(fragment[i], "SdNH", StringComparison.Ordinal)) frags[50]++; //H atom attached to a hetero atom
+                }
+                else if (fragment[i].IndexOf('p') > -1)
                 {
                     frags[79]++;
                     alogpfrag[i] = 79;
                 }
 
+                // TODO add code for R--N(--R)--O
+                // first need to have program correctly read in structures with this
+                // fragment (pyridine-n-oxides)
             }
-            else if (string.Equals(fragment[i], "StN", StringComparison.Ordinal))
+
+            private void CalcGroup081_to_085(int i)
             {
+                if (!string.Equals(fragment[i], "SsF", StringComparison.Ordinal))
+                    return;
+
+                var ca = container.GetConnectedAtoms(container.Atoms[i]);
                 var ca0 = (IAtom)ca.ElementAt(0);
-                if (ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                { // R#N
-                    frags[74]++;
-                    alogpfrag[i] = 74;
-                }
-            }
-            else if (string.Equals(fragment[i], "SdNH", StringComparison.Ordinal) || string.Equals(fragment[i], "SdsN", StringComparison.Ordinal))
-            {
-                // test for RO-NO
-                if (string.Equals(fragment[i], "SdsN", StringComparison.Ordinal))
+
+                var bonds = container.GetConnectedBonds(ca0);
+
+                int doublebondcount = 0;
+                int triplebondcount = 0;
+
+                string hybrid = "";
+
+                foreach (var bond in bonds)
                 {
-                    var caa = ca.ToReadOnlyList();
-                    var ca0 = caa[0];
-                    var ca1 = caa[1];
-                    if (ca0.AtomicNumber.Equals(NaturalElements.O.AtomicNumber) && ca1.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                    var bj = bond;
+                    if (bj.Order == BondOrder.Double)
                     {
-                        frags[76]++;
-                        alogpfrag[i] = 76;
-                        return;
+                        doublebondcount++;
+                    }
+                    else if (bj.Order == BondOrder.Triple)
+                    {
+                        triplebondcount++;
                     }
                 }
 
-                bool flag1 = false;
-                bool flag2 = false;
+                if (doublebondcount == 0 && triplebondcount == 0)
+                {
+                    hybrid = "sp3";
+                }
+                else if (doublebondcount == 1)
+                {
+                    hybrid = "sp2";
+                }
+                else if (doublebondcount == 2 || triplebondcount == 1)
+                {
+                    hybrid = "sp";
+                }
+
+                var ca2 = container.GetConnectedAtoms(ca0);
+
+                int oxNum = 0;
+
+                foreach (var a2 in ca2)
+                {
+                    var ca2j = a2;
+
+                    // // F,O,Cl,Br,N
+                    if (ap.GetNormalizedElectronegativity(ca2j.Symbol) > 1)
+                    {
+                        oxNum += (int)BondManipulator.DestroyBondOrder(container.GetBond(ca0, ca2j).Order);
+                    }
+                }
+
+                if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 1)
+                {
+                    frags[81]++;
+                    alogpfrag[i] = 81;
+                }
+                else if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 2)
+                {
+                    frags[82]++;
+                    alogpfrag[i] = 82;
+                }
+                else if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 3)
+                {
+                    frags[83]++;
+                    alogpfrag[i] = 83;
+                }
+                else if (string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum == 1)
+                {
+                    frags[84]++;
+                    alogpfrag[i] = 84;
+                }
+                else if ((string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum > 1) || (string.Equals(hybrid, "sp", StringComparison.Ordinal) && oxNum >= 1)
+                      || (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 4) || !ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                {
+                    frags[85]++;
+                    alogpfrag[i] = 85;
+                }
+            }
+
+            private void CalcGroup086_to_090(int i)
+            {
+                if (!string.Equals(fragment[i], "SsCl", StringComparison.Ordinal))
+                    return;
+
+                var ca = container.GetConnectedAtoms(container.Atoms[i]);
+                var ca0 = (IAtom)ca.ElementAt(0);
+
+                var bonds = container.GetConnectedBonds(ca0);
+
+                int doublebondcount = 0;
+                int triplebondcount = 0;
+
+                string hybrid = "";
+
+                foreach (var bond in bonds)
+                {
+                    var bj = bond;
+                    if (bj.Order == BondOrder.Double)
+                    {
+                        doublebondcount++;
+                    }
+                    else if (bj.Order == BondOrder.Triple)
+                    {
+                        triplebondcount++;
+                    }
+                }
+
+                if (doublebondcount == 0 && triplebondcount == 0)
+                {
+                    hybrid = "sp3";
+                }
+                else if (doublebondcount == 1)
+                {
+                    hybrid = "sp2";
+                }
+                else if (doublebondcount == 2 || triplebondcount == 1)
+                {
+                    hybrid = "sp";
+                }
+
+                var ca2 = container.GetConnectedAtoms(ca0);
+
+                int oxNum = 0;
+
+                foreach (var a2 in ca2)
+                {
+                    var ca2j = a2;
+                    string s = ca2j.Symbol;
+
+                    if (ap.GetNormalizedElectronegativity(s) > 1)
+                    {
+                        // // F,O,Cl,Br,N
+                        oxNum += (int)BondManipulator.DestroyBondOrder(container.GetBond(ca0, ca2j).Order);
+                    }
+                }
+
+                if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 1)
+                {
+                    frags[86]++;
+                    alogpfrag[i] = 86;
+                }
+                else if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 2)
+                {
+                    frags[87]++;
+                    alogpfrag[i] = 87;
+                }
+                else if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 3)
+                {
+                    frags[88]++;
+                    alogpfrag[i] = 88;
+                }
+                else if (string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum == 1)
+                {
+                    frags[89]++;
+                    alogpfrag[i] = 89;
+                }
+                else if ((string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum > 1) || (string.Equals(hybrid, "sp", StringComparison.Ordinal) && oxNum >= 1)
+                      || (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 4) || !ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                {
+                    frags[90]++;
+                    alogpfrag[i] = 90;
+                }
+            }
+
+            private void CalcGroup091_to_095(int i)
+            {
+                if (!string.Equals(fragment[i], "SsBr", StringComparison.Ordinal))
+                    return;
+
+                var ca = container.GetConnectedAtoms(container.Atoms[i]);
+                var ca0 = (IAtom)ca.ElementAt(0);
+
+                var bonds = container.GetConnectedBonds(ca0);
+
+                int doublebondcount = 0;
+                int triplebondcount = 0;
+
+                string hybrid = "";
+
+                foreach (var bond in bonds)
+                {
+                    var bj = bond;
+                    if (bj.Order == BondOrder.Double)
+                    {
+                        doublebondcount++;
+                    }
+                    if (bj.Order == BondOrder.Triple)
+                    {
+                        triplebondcount++;
+                    }
+                }
+
+                if (doublebondcount == 0 && triplebondcount == 0)
+                {
+                    hybrid = "sp3";
+                }
+                else if (doublebondcount == 1)
+                {
+                    hybrid = "sp2";
+                }
+                else if (doublebondcount == 2 || triplebondcount == 1)
+                {
+                    hybrid = "sp";
+                }
+
+                var ca2 = container.GetConnectedAtoms(ca0);
+
+                int oxNum = 0;
+
+                foreach (var a2 in ca2)
+                {
+                    var ca2j = a2;
+
+                    // // F,O,Cl,Br,N
+                    if (ap.GetNormalizedElectronegativity(ca2j.Symbol) > 1)
+                    {
+                        oxNum += (int)BondManipulator.DestroyBondOrder(container.GetBond(ca0, ca2j).Order);
+                    }
+                }
+
+                if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 1)
+                {
+                    frags[91]++;
+                    alogpfrag[i] = 91;
+                }
+                else if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 2)
+                {
+                    frags[92]++;
+                    alogpfrag[i] = 92;
+                }
+                else if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 3)
+                {
+                    frags[93]++;
+                    alogpfrag[i] = 93;
+                }
+                else if (string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum == 1)
+                {
+                    frags[94]++;
+                    alogpfrag[i] = 94;
+                }
+                else if ((string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum > 1) || (string.Equals(hybrid, "sp", StringComparison.Ordinal) && oxNum >= 1)
+                      || (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 4) || !ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                {
+                    frags[95]++;
+                    alogpfrag[i] = 95;
+                }
+
+            }
+
+            private void CalcGroup096_to_100(int i)
+            {
+                if (!string.Equals(fragment[i], "SsI", StringComparison.Ordinal))
+                    return;
+
+                var ca = container.GetConnectedAtoms(container.Atoms[i]);
+                var ca0 = ca.ElementAt(0);
+
+                var bonds = container.GetConnectedBonds(ca0);
+
+                int doublebondcount = 0;
+                int triplebondcount = 0;
+
+                string hybrid = "";
+
+                foreach (var bond in bonds)
+                {
+                    var bj = bond;
+                    if (bj.Order == BondOrder.Double)
+                    {
+                        doublebondcount++;
+                    }
+                    else if (bj.Order == BondOrder.Triple)
+                    {
+                        triplebondcount++;
+                    }
+                }
+
+                if (doublebondcount == 0 && triplebondcount == 0)
+                {
+                    hybrid = "sp3";
+                }
+                else if (doublebondcount == 1)
+                {
+                    hybrid = "sp2";
+                }
+                else if (doublebondcount == 2 || triplebondcount == 1)
+                {
+                    hybrid = "sp";
+                }
+
+                var ca2 = container.GetConnectedAtoms(ca0);
+
+                int oxNum = 0;
+
+                foreach (var a2 in ca2)
+                {
+                    var ca2j = a2;
+
+                    // // F,O,Cl,Br,N
+                    if (ap.GetNormalizedElectronegativity(ca2j.Symbol) > 1)
+                    {
+                        oxNum += (int)BondManipulator.DestroyBondOrder(container.GetBond(ca0, ca2j).Order);
+                    }
+                }
+
+                if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 1)
+                {
+                    frags[96]++;
+                    alogpfrag[i] = 96;
+                }
+                else if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 2)
+                {
+                    frags[97]++;
+                    alogpfrag[i] = 97;
+                }
+                else if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 3)
+                {
+                    frags[98]++;
+                    alogpfrag[i] = 98;
+                }
+                else if (string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum == 1)
+                {
+                    frags[99]++;
+                    alogpfrag[i] = 99;
+                }
+                else if ((string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum > 1) || (string.Equals(hybrid, "sp", StringComparison.Ordinal) && oxNum >= 1)
+                      || (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 4) || !ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                {
+                    frags[100]++;
+                    alogpfrag[i] = 100;
+                }
+
+            }
+
+            private void CalcGroup101_to_104(int i)
+            {
+                var ai = container.Atoms[i];
+
+                if (ai.FormalCharge == -1)
+                {
+                    switch (ai.AtomicNumber)
+                    {
+                        case NaturalElements.F.AtomicNumber:
+                            frags[101]++;
+                            alogpfrag[i] = 101;
+                            break;
+                        case NaturalElements.Cl.AtomicNumber:
+                            frags[102]++;
+                            alogpfrag[i] = 102;
+                            break;
+                        case NaturalElements.Br.AtomicNumber:
+                            frags[103]++;
+                            alogpfrag[i] = 103;
+                            break;
+                        case NaturalElements.I.AtomicNumber:
+                            frags[104]++;
+                            alogpfrag[i] = 104;
+                            break;
+                    }
+                }
+            }
+
+            private void CalcGroup106(int i)
+            {
+                // S in SH
+                if (string.Equals(fragment[i], "SsSH", StringComparison.Ordinal))
+                {
+                    frags[106]++;
+                    alogpfrag[i] = 106;
+                    frags[50]++; //H atom attached to a hetero atom
+                }
+            }
+
+            private void CalcGroup107(int i)
+            {
+                // S in R2S, RS-SR
+                // R = any group linked through C
+
+                // In ALOGP, for malathion PSC is consider to have group 107 (even
+                // though has P instead of R)
+
+                // for lack of fragment, use this fragment for SaaS
+
+                if (string.Equals(fragment[i], "SssS", StringComparison.Ordinal) || string.Equals(fragment[i], "SaaS", StringComparison.Ordinal))
+                {
+                    frags[107]++;
+                    alogpfrag[i] = 107;
+                }
+            }
+
+            private void CalcGroup108(int i)
+            {
+                // S in R=S
+                // In ALOGP, for malathion P=S is consider to have group 108 (even
+                // though has P instead of R)
+                if (string.Equals(fragment[i], "SdS", StringComparison.Ordinal))
+                {
+                    frags[108]++;
+                    alogpfrag[i] = 108;
+                }
+            }
+
+            private void CalcGroup109(int i)
+            {
+                // for now S in O-S(=O)-O is assigned to this group
+                // (it doesn't check which atoms are singly bonded to S
+                if (!string.Equals(fragment[i], "SdssS", StringComparison.Ordinal))
+                    return;
+
+                var ca = container.GetConnectedAtoms(container.Atoms[i]);
+                var ai = container.Atoms[i];
+                int sdOCount = 0;
+                int ssCCount = 0;
 
                 foreach (var a in ca)
                 {
-                    if (a.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
-                        continue;
-                    if (atomContainer.GetBond(ai, a).Order == BondOrder.Double)
+                    if (container.GetBond(ai, a).Order == BondOrder.Single)
                     {
                         if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
                         {
-                            frags[74]++;
-                            alogpfrag[i] = 74;
-                            return;
+                            ssCCount++;
+                        }
+                    }
+                    else if (container.GetBond(ai, a).Order == BondOrder.Double)
+                    {
+                        if (a.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                        {
+                            sdOCount++;
+                        }
+                    }
+                }
+                if (sdOCount == 1)
+                { // for now dont check if ssCCount==2
+                    frags[109]++;
+                    alogpfrag[i] = 109;
+                }
+            }
+
+            private void CalcGroup110(int i)
+            {
+                if (!string.Equals(fragment[i], "SddssS", StringComparison.Ordinal))
+                    return;
+
+                var ca = container.GetConnectedAtoms(container.Atoms[i]);
+                var ai = container.Atoms[i];
+                int sdOCount = 0;
+                int ssCCount = 0;
+
+                foreach (var a in ca)
+                {
+                    if (container.GetBond(ai, a).Order == BondOrder.Single)
+                    {
+                        if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        {
+                            ssCCount++;
+                        }
+                    }
+                    else if (container.GetBond(ai, a).Order == BondOrder.Double)
+                    {
+                        if (a.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                        {
+                            sdOCount++;
+                        }
+                    }
+                }
+                if (sdOCount == 2)
+                { // for now dont check if ssCCount==2
+                    frags[110]++;
+                    alogpfrag[i] = 110;
+                }
+            }
+
+            private void CalcGroup111(int i)
+            {
+                if (string.Equals(fragment[i], "SssssSi", StringComparison.Ordinal))
+                {
+                    frags[111]++;
+                    alogpfrag[i] = 111;
+                }
+            }
+
+            private void CalcGroup116_117_120(int i)
+            {
+                // S in R=S
+
+                var ca = container.GetConnectedAtoms(container.Atoms[i]);
+                var ai = container.Atoms[i];
+
+                int xCount = 0;
+                int rCount = 0;
+                bool pdX = false;
+
+                if (!string.Equals(fragment[i], "SdsssP", StringComparison.Ordinal))
+                    return;
+
+                foreach (var a in ca)
+                {
+                    if (container.GetBond(ai, a).Order == BondOrder.Single)
+                    {
+                        if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        {
+                            rCount++;
                         }
                         else
                         {
-                            flag1 = true;
+                            xCount++;
                         }
                     }
-                    else
+                    else if (container.GetBond(ai, a).Order == BondOrder.Double)
                     {
-                        if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber)
-                                || a.IsAromatic)
+                        if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
                         {
-                            flag2 = true;
+                            pdX = true;
                         }
                     }
+                }
 
-                    if (flag1 && flag2)
-                    { // X-N=X or Ar-N=X
-                        frags[78]++;
-                        alogpfrag[i] = 78;
-                    }
-                    else
+                if (pdX)
+                {
+                    if (rCount == 3)
                     {
-                        //Debug.WriteLine("missing group: R-N=X");
+                        frags[116]++;
+                        alogpfrag[i] = 116;
                     }
-                }
-
-                if (string.Equals(fragment[i], "SdNH", StringComparison.Ordinal)) frags[50]++; //H atom attached to a hetero atom
-            }
-            else if (fragment[i].IndexOf('p') > -1)
-            {
-                frags[79]++;
-                alogpfrag[i] = 79;
-            }
-
-            // TODO add code for R--N(--R)--O
-            // first need to have program correctly read in structures with this
-            // fragment (pyridine-n-oxides)
-        }
-
-        private void CalcGroup081_to_085(int i)
-        {
-            if (!string.Equals(fragment[i], "SsF", StringComparison.Ordinal))
-                return;
-
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-            var ca0 = (IAtom)ca.ElementAt(0);
-
-            var bonds = atomContainer.GetConnectedBonds(ca0);
-
-            int doublebondcount = 0;
-            int triplebondcount = 0;
-
-            string hybrid = "";
-
-            foreach (var bond in bonds)
-            {
-                var bj = bond;
-                if (bj.Order == BondOrder.Double)
-                {
-                    doublebondcount++;
-                }
-                else if (bj.Order == BondOrder.Triple)
-                {
-                    triplebondcount++;
-                }
-            }
-
-            if (doublebondcount == 0 && triplebondcount == 0)
-            {
-                hybrid = "sp3";
-            }
-            else if (doublebondcount == 1)
-            {
-                hybrid = "sp2";
-            }
-            else if (doublebondcount == 2 || triplebondcount == 1)
-            {
-                hybrid = "sp";
-            }
-
-            var ca2 = atomContainer.GetConnectedAtoms(ca0);
-
-            int oxNum = 0;
-
-            foreach (var a2 in ca2)
-            {
-                IAtom ca2j = a2;
-
-                // // F,O,Cl,Br,N
-
-                // if (s.Equals("F") || s.Equals("O") || s.Equals("Cl")
-                // || s.Equals("Br") || s.Equals("N") || s.Equals("S"))
-
-                if (ap.GetNormalizedElectronegativity(ca2j.Symbol) > 1)
-                {
-                    oxNum += (int)BondManipulator.DestroyBondOrder(atomContainer.GetBond(ca0, ca2j).Order);
-                }
-
-            }
-
-            if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 1)
-            {
-                frags[81]++;
-                alogpfrag[i] = 81;
-            }
-            else if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 2)
-            {
-                frags[82]++;
-                alogpfrag[i] = 82;
-            }
-            else if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 3)
-            {
-                frags[83]++;
-                alogpfrag[i] = 83;
-            }
-            else if (string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum == 1)
-            {
-                frags[84]++;
-                alogpfrag[i] = 84;
-            }
-            else if ((string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum > 1) || (string.Equals(hybrid, "sp", StringComparison.Ordinal) && oxNum >= 1)
-                  || (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 4) || !ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-            {
-                frags[85]++;
-                alogpfrag[i] = 85;
-            }
-        }
-
-        private void CalcGroup086_to_090(int i)
-        {
-            if (!string.Equals(fragment[i], "SsCl", StringComparison.Ordinal))
-                return;
-
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-            var ca0 = (IAtom)ca.ElementAt(0);
-
-            var bonds = atomContainer.GetConnectedBonds(ca0);
-
-            int doublebondcount = 0;
-            int triplebondcount = 0;
-
-            string hybrid = "";
-
-            foreach (var bond in bonds)
-            {
-                var bj = bond;
-                if (bj.Order == BondOrder.Double)
-                {
-                    doublebondcount++;
-                }
-                else if (bj.Order == BondOrder.Triple)
-                {
-                    triplebondcount++;
-                }
-            }
-
-            if (doublebondcount == 0 && triplebondcount == 0)
-            {
-                hybrid = "sp3";
-            }
-            else if (doublebondcount == 1)
-            {
-                hybrid = "sp2";
-            }
-            else if (doublebondcount == 2 || triplebondcount == 1)
-            {
-                hybrid = "sp";
-            }
-
-            var ca2 = atomContainer.GetConnectedAtoms(ca0);
-
-            int oxNum = 0;
-
-            foreach (var a2 in ca2)
-            {
-                var ca2j = a2;
-                string s = ca2j.Symbol;
-
-                if (ap.GetNormalizedElectronegativity(s) > 1)
-                {
-                    // // F,O,Cl,Br,N
-                    oxNum += (int)BondManipulator.DestroyBondOrder(atomContainer.GetBond(ca0, ca2j).Order);
-                }
-            }
-
-            if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 1)
-            {
-                frags[86]++;
-                alogpfrag[i] = 86;
-            }
-            else if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 2)
-            {
-                frags[87]++;
-                alogpfrag[i] = 87;
-            }
-            else if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 3)
-            {
-                frags[88]++;
-                alogpfrag[i] = 88;
-            }
-            else if (string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum == 1)
-            {
-                frags[89]++;
-                alogpfrag[i] = 89;
-            }
-            else if ((string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum > 1) || (string.Equals(hybrid, "sp", StringComparison.Ordinal) && oxNum >= 1)
-                  || (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 4) || !ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-            {
-                frags[90]++;
-                alogpfrag[i] = 90;
-            }
-
-        }
-
-        private void CalcGroup091_to_095(int i)
-        {
-            if (!string.Equals(fragment[i], "SsBr", StringComparison.Ordinal))
-                return;
-
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-            var ca0 = (IAtom)ca.ElementAt(0);
-
-            var bonds = atomContainer.GetConnectedBonds(ca0);
-
-            int doublebondcount = 0;
-            int triplebondcount = 0;
-
-            string hybrid = "";
-
-            foreach (var bond in bonds)
-            {
-                var bj = bond;
-                if (bj.Order == BondOrder.Double)
-                {
-                    doublebondcount++;
-                }
-                if (bj.Order == BondOrder.Triple)
-                {
-                    triplebondcount++;
-                }
-            }
-
-            if (doublebondcount == 0 && triplebondcount == 0)
-            {
-                hybrid = "sp3";
-            }
-            else if (doublebondcount == 1)
-            {
-                hybrid = "sp2";
-            }
-            else if (doublebondcount == 2 || triplebondcount == 1)
-            {
-                hybrid = "sp";
-            }
-
-            var ca2 = atomContainer.GetConnectedAtoms(ca0);
-
-            int oxNum = 0;
-
-            foreach (var a2 in ca2)
-            {
-                var ca2j = a2;
-
-                // // F,O,Cl,Br,N
-
-                if (ap.GetNormalizedElectronegativity(ca2j.Symbol) > 1)
-                {
-                    oxNum += (int)BondManipulator.DestroyBondOrder(atomContainer.GetBond(ca0, ca2j).Order);
-                }
-            }
-
-            if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 1)
-            {
-                frags[91]++;
-                alogpfrag[i] = 91;
-            }
-            else if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 2)
-            {
-                frags[92]++;
-                alogpfrag[i] = 92;
-            }
-            else if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 3)
-            {
-                frags[93]++;
-                alogpfrag[i] = 93;
-            }
-            else if (string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum == 1)
-            {
-                frags[94]++;
-                alogpfrag[i] = 94;
-            }
-            else if ((string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum > 1) || (string.Equals(hybrid, "sp", StringComparison.Ordinal) && oxNum >= 1)
-                  || (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 4) || !ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-            {
-                frags[95]++;
-                alogpfrag[i] = 95;
-            }
-
-        }
-
-        private void CalcGroup096_to_100(int i)
-        {
-            if (!string.Equals(fragment[i], "SsI", StringComparison.Ordinal))
-                return;
-
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-            var ca0 = (IAtom)ca.ElementAt(0);
-
-            var bonds = atomContainer.GetConnectedBonds(ca0);
-
-            int doublebondcount = 0;
-            int triplebondcount = 0;
-
-            string hybrid = "";
-
-            foreach (var bond in bonds)
-            {
-                var bj = bond;
-                if (bj.Order == BondOrder.Double)
-                {
-                    doublebondcount++;
-                }
-                else if (bj.Order == BondOrder.Triple)
-                {
-                    triplebondcount++;
-                }
-            }
-
-            if (doublebondcount == 0 && triplebondcount == 0)
-            {
-                hybrid = "sp3";
-            }
-            else if (doublebondcount == 1)
-            {
-                hybrid = "sp2";
-            }
-            else if (doublebondcount == 2 || triplebondcount == 1)
-            {
-                hybrid = "sp";
-            }
-
-            var ca2 = atomContainer.GetConnectedAtoms(ca0);
-
-            int oxNum = 0;
-
-            foreach (var a2 in ca2)
-            {
-                var ca2j = a2;
-
-                // // F,O,Cl,Br,N
-
-                if (ap.GetNormalizedElectronegativity(ca2j.Symbol) > 1)
-                {
-                    oxNum += (int)BondManipulator.DestroyBondOrder(atomContainer.GetBond(ca0, ca2j).Order);
-                }
-            }
-
-            if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 1)
-            {
-                frags[96]++;
-                alogpfrag[i] = 96;
-            }
-            else if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 2)
-            {
-                frags[97]++;
-                alogpfrag[i] = 97;
-            }
-            else if (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 3)
-            {
-                frags[98]++;
-                alogpfrag[i] = 98;
-            }
-            else if (string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum == 1)
-            {
-                frags[99]++;
-                alogpfrag[i] = 99;
-            }
-            else if ((string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum > 1) || (string.Equals(hybrid, "sp", StringComparison.Ordinal) && oxNum >= 1)
-                  || (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 4) || !ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-            {
-                frags[100]++;
-                alogpfrag[i] = 100;
-            }
-
-        }
-
-        private void CalcGroup101_to_104(int i)
-        {
-            var ai = atomContainer.Atoms[i];
-
-            if (ai.FormalCharge == -1)
-            {
-                switch (ai.AtomicNumber)
-                {
-                    case NaturalElements.F.AtomicNumber:
-                        frags[101]++;
-                        alogpfrag[i] = 101;
-                        break;
-                    case NaturalElements.Cl.AtomicNumber:
-                        frags[102]++;
-                        alogpfrag[i] = 102;
-                        break;
-                    case NaturalElements.Br.AtomicNumber:
-                        frags[103]++;
-                        alogpfrag[i] = 103;
-                        break;
-                    case NaturalElements.I.AtomicNumber:
-                        frags[104]++;
-                        alogpfrag[i] = 104;
-                        break;
-                }
-            }
-        }
-
-        private void CalcGroup106(int i)
-        {
-            // S in SH
-            if (string.Equals(fragment[i], "SsSH", StringComparison.Ordinal))
-            {
-                frags[106]++;
-                alogpfrag[i] = 106;
-                frags[50]++; //H atom attached to a hetero atom
-            }
-        }
-
-        private void CalcGroup107(int i)
-        {
-            // S in R2S, RS-SR
-            // R = any group linked through C
-
-            // In ALOGP, for malathion PSC is consider to have group 107 (even
-            // though has P instead of R)
-
-            // for lack of fragment, use this fragment for SaaS
-
-            if (string.Equals(fragment[i], "SssS", StringComparison.Ordinal) || string.Equals(fragment[i], "SaaS", StringComparison.Ordinal))
-            {
-                frags[107]++;
-                alogpfrag[i] = 107;
-            }
-        }
-
-        private void CalcGroup108(int i)
-        {
-            // S in R=S
-            // In ALOGP, for malathion P=S is consider to have group 108 (even
-            // though has P instead of R)
-            if (string.Equals(fragment[i], "SdS", StringComparison.Ordinal))
-            {
-                frags[108]++;
-                alogpfrag[i] = 108;
-            }
-        }
-
-        private void CalcGroup109(int i)
-        {
-            // for now S in O-S(=O)-O is assigned to this group
-            // (it doesn't check which atoms are singly bonded to S
-            if (!string.Equals(fragment[i], "SdssS", StringComparison.Ordinal))
-                return;
-
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-            IAtom ai = atomContainer.Atoms[i];
-            int sdOCount = 0;
-            int ssCCount = 0;
-
-            foreach (var a in ca)
-            {
-                if (atomContainer.GetBond(ai, a).Order == BondOrder.Single)
-                {
-                    if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                    else if (xCount == 3)
                     {
-                        ssCCount++;
+                        frags[117]++;
+                        alogpfrag[i] = 117;
                     }
-                }
-                else if (atomContainer.GetBond(ai, a).Order == BondOrder.Double)
-                {
-                    if (a.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                    else if (xCount == 2 && rCount == 1)
                     {
-                        sdOCount++;
+                        frags[120]++;
+                        alogpfrag[i] = 120;
                     }
                 }
+
             }
-            if (sdOCount == 1)
-            { // for now dont check if ssCCount==2
-                frags[109]++;
-                alogpfrag[i] = 109;
-            }
-        }
 
-        private void CalcGroup110(int i)
-        {
-            if (!string.Equals(fragment[i], "SddssS", StringComparison.Ordinal))
-                return;
-
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-            var ai = atomContainer.Atoms[i];
-            int sdOCount = 0;
-            int ssCCount = 0;
-
-            foreach (var a in ca)
+            private void CalcGroup118_119(int i)
             {
-                if (atomContainer.GetBond(ai, a).Order == BondOrder.Single)
+                if (!string.Equals(fragment[i], "SsssP", StringComparison.Ordinal))
+                    return;
+
+                var ca = container.GetConnectedAtoms(container.Atoms[i]);
+                var ai = container.Atoms[i];
+                int xCount = 0;
+                int rCount = 0;
+
+                foreach (var a in ca)
                 {
-                    if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                    if (container.GetBond(ai, a).Order == BondOrder.Single)
                     {
-                        ssCCount++;
+                        if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        {
+                            rCount++;
+                        }
+                        else
+                        {
+                            xCount++;
+                        }
                     }
                 }
-                else if (atomContainer.GetBond(ai, a).Order == BondOrder.Double)
+
+                if (xCount == 3)
                 {
-                    if (a.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                    frags[118]++;
+                    alogpfrag[i] = 118;
+                }
+                else if (rCount == 3)
+                {
+                    frags[119]++;
+                    alogpfrag[i] = 119;
+                }
+            }
+
+            private static bool InSameAromaticRing(IAtomContainer atomContainer, IAtom atom1, IAtom atom2, IRingSet rs)
+            {
+                bool sameRing = false;
+
+                for (int i = 0; i <= rs.Count - 1; i++)
+                {
+                    var r = rs[i];
+
+                    if (!r.IsAromatic)
+                        continue;
+
+                    // ArrayList al=new ArrayList();
+
+                    bool haveOne = false;
+                    bool haveTwo = false;
+
+                    for (int j = 0; j <= r.Atoms.Count - 1; j++)
                     {
-                        sdOCount++;
+                        if (atomContainer.Atoms.IndexOf(r.Atoms[j]) == atomContainer.Atoms.IndexOf(atom1))
+                            haveOne = true;
+                        if (atomContainer.Atoms.IndexOf(r.Atoms[j]) == atomContainer.Atoms.IndexOf(atom2))
+                            haveTwo = true;
                     }
-                }
-            }
-            if (sdOCount == 2)
-            { // for now dont check if ssCCount==2
-                frags[110]++;
-                alogpfrag[i] = 110;
-            }
-        }
 
-        private void CalcGroup111(int i)
-        {
-            if (string.Equals(fragment[i], "SssssSi", StringComparison.Ordinal))
-            {
-                frags[111]++;
-                alogpfrag[i] = 111;
-            }
-        }
-
-        private void CalcGroup116_117_120(int i)
-        {
-            // S in R=S
-
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-            var ai = atomContainer.Atoms[i];
-
-            int xCount = 0;
-            int rCount = 0;
-            bool pdX = false;
-
-            if (!string.Equals(fragment[i], "SdsssP", StringComparison.Ordinal))
-                return;
-
-            foreach (var a in ca)
-            {
-                if (atomContainer.GetBond(ai, a).Order == BondOrder.Single)
-                {
-                    if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                    if (haveOne && haveTwo)
                     {
-                        rCount++;
+                        sameRing = true;
+                        return sameRing;
                     }
-                    else
-                    {
-                        xCount++;
-                    }
-                }
-                else if (atomContainer.GetBond(ai, a).Order == BondOrder.Double)
-                {
-                    if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                    {
-                        pdX = true;
-                    }
-                }
-            }
 
-            if (pdX)
-            {
-                if (rCount == 3)
-                {
-                    frags[116]++;
-                    alogpfrag[i] = 116;
-                }
-                else if (xCount == 3)
-                {
-                    frags[117]++;
-                    alogpfrag[i] = 117;
-                }
-                else if (xCount == 2 && rCount == 1)
-                {
-                    frags[120]++;
-                    alogpfrag[i] = 120;
-                }
-            }
+                } // end ring for loop
 
-        }
-
-        private void CalcGroup118_119(int i)
-        {
-            if (!string.Equals(fragment[i], "SsssP", StringComparison.Ordinal))
-                return;
-
-            var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
-            var ai = atomContainer.Atoms[i];
-            int xCount = 0;
-            int rCount = 0;
-
-            foreach (var a in ca)
-            {
-                if (atomContainer.GetBond(ai, a).Order == BondOrder.Single)
-                {
-                    if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                    {
-                        rCount++;
-                    }
-                    else
-                    {
-                        xCount++;
-                    }
-                }
-            }
-
-            if (xCount == 3)
-            {
-                frags[118]++;
-                alogpfrag[i] = 118;
-            }
-            else if (rCount == 3)
-            {
-                frags[119]++;
-                alogpfrag[i] = 119;
+                return sameRing;
             }
         }
 
-        private static bool InSameAromaticRing(IAtomContainer atomContainer, IAtom atom1, IAtom atom2, IRingSet rs)
-        {
-            bool sameRing = false;
-
-            for (int i = 0; i <= rs.Count - 1; i++)
-            {
-                var r = rs[i];
-
-                if (!r.IsAromatic)
-                    continue;
-
-                // ArrayList al=new ArrayList();
-
-                bool haveOne = false;
-                bool haveTwo = false;
-
-                for (int j = 0; j <= r.Atoms.Count - 1; j++)
-                {
-                    if (atomContainer.Atoms.IndexOf(r.Atoms[j]) == atomContainer.Atoms.IndexOf(atom1))
-                        haveOne = true;
-                    if (atomContainer.Atoms.IndexOf(r.Atoms[j]) == atomContainer.Atoms.IndexOf(atom2))
-                        haveTwo = true;
-                }
-
-                if (haveOne && haveTwo)
-                {
-                    sameRing = true;
-                    return sameRing;
-                }
-
-            } // end ring for loop
-
-            return sameRing;
-        }
-
-        /// <summary>
-        /// The AlogP descriptor.
-        /// </summary>
-        /// <remarks>
-        /// TODO: Ideally we should explicit H addition should be cached
-        /// </remarks>
-        /// <param name="atomContainer">the molecule to calculate on</param>
-        /// <returns>the result of the calculation</returns>
-        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer atomContainer)
-        {
-            IAtomContainer container;
-            try
-            {
-                container = (IAtomContainer)atomContainer.Clone();
-                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-                var hAdder = CDK.HydrogenAdder;
-                hAdder.AddImplicitHydrogens(container);
-                AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
-            }
-            catch (CDKException e)
-            {
-                return GetDummyDescriptorValue(new CDKException("Error during atom typing" + e.Message));
-            }
-
-            IRingSet rs;
-            try
-            {
-                AllRingsFinder arf = new AllRingsFinder();
-                rs = arf.FindAllRings(container);
-            }
-            catch (Exception e)
-            {
-                return GetDummyDescriptorValue(new CDKException("Could not find all rings: " + e.Message));
-            }
-
-            var fragment = new string[container.Atoms.Count];
-            var eStateMatcher = new EStateAtomTypeMatcher { RingSet = rs };
-
-            for (int i = 0; i < container.Atoms.Count; i++)
-            {
-                var atomType = eStateMatcher.FindMatchingAtomType(container, container.Atoms[i]);
-                if (atomType == null)
-                {
-                    fragment[i] = null;
-                }
-                else
-                {
-                    fragment[i] = atomType.AtomTypeName;
-                }
-            }
-
-            var ret = Array.Empty<double>();
-            try
-            {
-                ret = Calculate(container, fragment, rs);
-            }
-            catch (CDKException e)
-            {
-                return GetDummyDescriptorValue(new CDKException(e.Message));
-            }
-
-            var results = new ArrayResult<double>(ret);
-
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results, DescriptorNames);
-        }
-
-        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
-        {
-            var results = new ArrayResult<double>
-            {
-                double.NaN,
-                double.NaN,
-                double.NaN
-            };
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results, DescriptorNames, e);
-        }
-
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType => new ArrayResult<double>(3);
-
-        /// <inheritdoc/>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ALOGP",
-                typeof(ALogPDescriptor).FullName, "The Chemistry Development Kit");
-
-        public override IReadOnlyList<string> ParameterNames => Array.Empty<string>();
-
-        public override object GetParameterType(string name) => null;
-
-        public override IReadOnlyList<object> Parameters
-        {
-            get { return null; }
-            set { }
-        }
-
-        public override IReadOnlyList<string> DescriptorNames => STRINGS;
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
-    }// end class
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+    }
 }

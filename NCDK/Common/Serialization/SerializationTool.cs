@@ -2,7 +2,7 @@
 
 namespace NCDK.Common.Serialization
 {
-    public static class SerializationTool
+    internal static class SerializationTool
     {
         public static void AddNullableValue<T>(this SerializationInfo info, string name, T? value) where T : struct
         {

@@ -16,33 +16,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class PetitjeanNumberDescriptorTest : MolecularDescriptorTest
+    public class PetitjeanNumberDescriptorTest : MolecularDescriptorTest<PetitjeanNumberDescriptor>
     {
-        public PetitjeanNumberDescriptorTest()
-        {
-            SetDescriptor(typeof(PetitjeanNumberDescriptor));
-        }
-
         [TestMethod()]
         public void TestPetitjeanNumberDescriptor()
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=C(O)CC");
             AtomContainerManipulator.RemoveHydrogens(mol);
-            Assert.AreEqual(0.33333334, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.01);
+            Assert.AreEqual(0.33333334, CreateDescriptor(mol).Calculate().Value, 0.01);
         }
 
         [TestMethod()]
@@ -50,7 +40,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O");
-            Assert.AreEqual(0, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.01);
+            Assert.AreEqual(0, CreateDescriptor(mol).Calculate().Value, 0.01);
         }
     }
 }

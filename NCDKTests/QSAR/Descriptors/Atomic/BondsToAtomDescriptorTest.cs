@@ -16,33 +16,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsaratomic
     [TestClass()]
-    public class BondsToAtomDescriptorTest : AtomicDescriptorTest
+    public class BondsToAtomDescriptorTest : AtomicDescriptorTest<BondsToAtomDescriptor>
     {
-        public BondsToAtomDescriptorTest()
-        {
-            SetDescriptor(typeof(BondsToAtomDescriptor));
-        }
-
         [TestMethod()]
         public void TestBondsToAtomDescriptor()
         {
-            BondsToAtomDescriptor descriptor = new BondsToAtomDescriptor();
-            descriptor.Parameters = new object[] { 5 };
             var sp = CDK.SmilesParser;
-            var mol = sp.ParseSmiles("CCCCCC"); //
-            Assert.AreEqual(5, ((Result<int>)descriptor.Calculate(mol.Atoms[0], mol).Value).Value);
+            var mol = sp.ParseSmiles("CCCCCC");
+            var descriptor = CreateDescriptor(mol);
+            Assert.AreEqual(5, descriptor.Calculate(mol.Atoms[0], focusPosition: 5).Value);
         }
     }
 }

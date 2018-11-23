@@ -32,7 +32,7 @@ namespace NCDK.Groups
     // @cdk.module group 
     public class AtomRefinableTest
     {
-        public static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        public static IChemObjectBuilder builder = CDK.Builder;
 
         [TestMethod()]
         public void GetVertexCount()

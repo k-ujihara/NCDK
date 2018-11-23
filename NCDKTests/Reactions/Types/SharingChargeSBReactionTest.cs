@@ -38,7 +38,7 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class SharingChargeSBReactionTest : ReactionProcessTest
     {
-        private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private IChemObjectBuilder builder = CDK.Builder;
 
         public SharingChargeSBReactionTest()
         {

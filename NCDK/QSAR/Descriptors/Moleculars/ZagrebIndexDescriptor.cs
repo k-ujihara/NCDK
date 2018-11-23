@@ -18,9 +18,6 @@
  */
 
 using NCDK.Config;
-using NCDK.QSAR.Results;
-using System;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -30,45 +27,49 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @author      mfe4
     // @cdk.created 2004-11-03
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:zagrebIndex
     // @cdk.keyword Zagreb index
     // @cdk.keyword descriptor
-    public class ZagrebIndexDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#zagrebIndex")]
+    public class ZagrebIndexDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private static readonly string[] NAMES = { "Zagreb" };
+        private readonly IAtomContainer container;
 
-        public ZagrebIndexDescriptor() { }
+        public ZagrebIndexDescriptor(IAtomContainer container)
+        {
+            this.container = container;
+        }
 
-        /// <summary>
-        /// The specification attribute of the ZagrebIndexDescriptor object.
-        /// </summary>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#zagrebIndex",
-                typeof(ZagrebIndexDescriptor).FullName,
-                "The Chemistry Development Kit");
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(double value)
+            {
+                this.Zagreb = value;
+            }
 
-        /// <inheritdoc/>
-        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
+            /// <summary>
+            /// Zagreb index
+            /// </summary>
+            [DescriptorResultProperty("Zagreb")]
+            public double Zagreb { get; private set; }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+            public double Value => Zagreb;
+        }
 
         /// <summary>
         /// Evaluate the Zagreb Index for a molecule.
         /// </summary>
-        /// <param name="atomContainer">AtomContainer</param>
-        /// <returns> zagreb index</returns>
-        public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
+        /// <returns>Zagreb index</returns>
+        public Result Calculate()
         {
             double zagreb = 0;
-            foreach (var atom in atomContainer.Atoms)
+            foreach (var atom in container.Atoms)
             {
                 if (atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                     continue;
                 int atomDegree = 0;
-                var neighbours = atomContainer.GetConnectedAtoms(atom);
+                var neighbours = container.GetConnectedAtoms(atom);
                 foreach (var neighbour in neighbours)
                 {
                     if (!neighbour.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
@@ -76,20 +77,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         atomDegree += 1;
                     }
                 }
-                zagreb += (atomDegree * atomDegree);
+                zagreb += atomDegree * atomDegree;
             }
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(zagreb), DescriptorNames);
+
+            return new Result(zagreb);
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<string> ParameterNames => null;
-
-        /// <inheritdoc/>
-        public override object GetParameterType(string name) => null;
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

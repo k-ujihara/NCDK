@@ -17,8 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.QSAR.Results;
-
 namespace NCDK.QSAR
 {
     /// <summary>
@@ -26,34 +24,12 @@ namespace NCDK.QSAR
     /// for <see cref="IAtomContainer"/> objects.
     /// </summary>
     // @cdk.module qsar
-    // @cdk.githash
     public interface IMolecularDescriptor : IDescriptor
     {
         /// <summary>
-        /// Calculates the descriptor value for the given IAtomContainer.
+        /// Calculates the descriptor value.
         /// </summary>
-        /// <param name="container">An <see cref="IAtomContainer"/> for which this descriptor should be calculated</param>
-        /// <returns>An object of <see cref="IDescriptorValue"/> that contain the calculated value as well as specification details</returns>
-        IDescriptorValue Calculate(IAtomContainer container);
-
-        /// <summary>
-        /// Returns the specific type of the <see cref="IDescriptorResult"/> object.
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="IDescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="IDescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// <para>
-        /// Additionally, the length indicated by the result type must match the actual
-        /// length of a descriptor calculated with the current parameters. Typically, the
-        /// length of array result types vary with the values of the parameters. See
-        /// <see cref="IDescriptor"/> for more details.
-        /// </para>
-        /// </summary>
-        /// <value>
-        /// an object that implements the <see cref="IDescriptorResult"/> interface indicating
-        /// the actual type of values returned by the descriptor in the <see cref="IDescriptorValue"/> object
-        /// </value>
-        IDescriptorResult DescriptorResultType { get; }
+        /// <returns>An object contains the calculated value as well as specification details</returns>
+        IDescriptorResult Calculate();
     }
 }
-

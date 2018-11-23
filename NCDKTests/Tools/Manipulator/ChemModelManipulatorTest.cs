@@ -307,8 +307,8 @@ namespace NCDK.Tools.Manipulator
         [ExpectedException(typeof(ArgumentException))]
         public void TestGetRelevantAtomContainer_NonExistentAtom()
         {
-            IChemModel model = Silent.ChemObjectBuilder.Instance.NewChemModel();
-            ChemModelManipulator.GetRelevantAtomContainer(model, Silent.ChemObjectBuilder.Instance.NewAtom());
+            IChemModel model = CDK.Builder.NewChemModel();
+            ChemModelManipulator.GetRelevantAtomContainer(model, CDK.Builder.NewAtom());
         }
     }
 }

@@ -28,7 +28,7 @@ namespace NCDK.Charges
     [TestClass()]
     public class ElectronegativityTest : CDKTestCase
     {
-        private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private IChemObjectBuilder builder = CDK.Builder;
 
         public ElectronegativityTest()
             : base()

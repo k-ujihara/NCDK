@@ -18,94 +18,49 @@
  */
 
 using NCDK.Graphs;
-using NCDK.QSAR.Results;
-using System;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Counts the number of atoms in the longest aliphatic chain.
     /// </summary>
-    /// <remarks>
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    ///   <item>
-    ///     <term>Name</term>
-    ///     <term>Default</term>
-    ///     <term>Description</term>
-    ///   </item>
-    ///   <item>
-    ///     <term>checkRingSystem</term>
-    ///     <term><see langword="false"/></term>
-    ///     <term><see langword="true"/> is <see cref="IMolecularEntity.IsInRing"/> has to be set</term>
-    ///   </item>
-    /// </list>
-    /// </para>
-    /// Returns a single value named <i>nAtomLAC</i>
-    /// </remarks>
     // @author      chhoppe from EUROSCREEN
     // @author John Mayfield
     // @cdk.created 2006-1-03
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:largestAliphaticChain
-    public class LongestAliphaticChainDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#longestAliphaticChain")]
+    public class LongestAliphaticChainDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private const string CHECK_RING_SYSTEM = "checkRingSystem";
-        private bool checkRingSystem = false;
-        private static readonly string[] NAMES = { "nAtomLAC" };
+        private readonly IAtomContainer container;
 
-        public LongestAliphaticChainDescriptor() { }
-
-        /// <inheritdoc/> 
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#longestAliphaticChain",
-                typeof(LongestAliphaticChainDescriptor).FullName, "The Chemistry Development Kit");
-
-        /// <summary>
-        /// Sets the parameters attribute of the LongestAliphaticChainDescriptor object.
-        /// </summary>
-        /// <remarks>
-        /// This descriptor takes one parameter, which should be bool to indicate whether
-        /// aromaticity has been checked <see langword="true"/> or not <see langword="false"/>.
-        /// </remarks>
-        /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public override IReadOnlyList<object> Parameters
+        /// <param name="checkRingSystem"><see langword="true"/> is the <see cref="IMolecularEntity.IsInRing"/> has to be set</param>
+        public LongestAliphaticChainDescriptor(IAtomContainer container, bool checkRingSystem = false)
         {
-            set
+            if (checkRingSystem)
             {
-                if (value.Count > 1)
-                {
-                    throw new CDKException("LongestAliphaticChainDescriptor only expects one parameter");
-                }
-                if (!(value[0] is bool))
-                {
-                    throw new CDKException("Expected parameter of type " + typeof(bool).ToString());
-                }
-                // ok, all should be fine
-                checkRingSystem = (bool)value[0];
+                container = (IAtomContainer)container.Clone();
+                Cycles.MarkRingAtomsAndBonds(container);
             }
-            get
-            {
-                // return the parameters as used for the descriptor calculation
-                return new object[] { checkRingSystem };
-            }
+
+            this.container = container;
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
-
-        private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception e)
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            return new DescriptorValue<Result<int>>(
-                specification,
-                ParameterNames,
-                Parameters,
-                new Result<int>(0),
-                DescriptorNames,
-                e);
+            public Result(int value)
+            {
+                this.NumberOfAtoms = value;
+            }
+
+            /// <summary>
+            /// The number of atoms in the largest chain.
+            /// </summary>
+            [DescriptorResultProperty("nAtomLAC")]
+            public int NumberOfAtoms { get; private set; }
+
+            public int Value => NumberOfAtoms;
         }
 
         private static bool IsAcyclicCarbon(IAtom atom)
@@ -143,24 +98,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The method require one parameter:
         /// if checkRingSyste is true the <see cref="IMolecularEntity.IsInRing"/> will be set
         /// </remarks>
-        /// <param name="mol">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated</param>
         /// <returns>the number of atoms in the longest aliphatic chain of this AtomContainer</returns>
-        /// <seealso cref="Parameters"/>
-        public DescriptorValue<Result<int>> Calculate(IAtomContainer mol)
+        public Result Calculate()
         {
-            if (checkRingSystem)
-                Cycles.MarkRingAtomsAndBonds(mol);
-
-            var aliphaticParts = mol.Builder.NewAtomContainer();
-            foreach (var atom in mol.Atoms)
+            var aliphaticParts = CDK.Builder.NewAtomContainer();
+            foreach (var atom in container.Atoms)
             {
                 if (IsAcyclicCarbon(atom))
                     aliphaticParts.Atoms.Add(atom);
             }
-            foreach (var bond in mol.Bonds)
+            foreach (var bond in container.Bonds)
             {
-                if (IsAcyclicCarbon(bond.Begin) &&
-                    IsAcyclicCarbon(bond.End))
+                if (IsAcyclicCarbon(bond.Begin)
+                 && IsAcyclicCarbon(bond.End))
                     aliphaticParts.Bonds.Add(bond);
             }
 
@@ -176,25 +126,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     longest = length;
             }
 
-            return new DescriptorValue<Result<int>>(
-                specification,
-                ParameterNames,
-                Parameters,
-                new Result<int>(longest),
-                DescriptorNames);
+            return new Result(longest);
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { CHECK_RING_SYSTEM };
-        public override object GetParameterType(string name)
-        {
-            if (name.Equals(CHECK_RING_SYSTEM, StringComparison.Ordinal))
-                return true;
-            else
-                throw new ArgumentException("No parameter for name", nameof(name));
-        }
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

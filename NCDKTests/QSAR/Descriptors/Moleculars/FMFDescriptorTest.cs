@@ -16,24 +16,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class FMFDescriptorTest : MolecularDescriptorTest
+    public class FMFDescriptorTest : MolecularDescriptorTest<FMFDescriptor>
     {
-        public FMFDescriptorTest()
-        {
-            SetDescriptor(typeof(FMFDescriptor));
-        }
-
         [TestMethod()]
         public void TestClenbuterol()
         {
@@ -41,7 +34,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var mol = sp.ParseSmiles("Clc1cc(cc(Cl)c1N)C(O)CNC(C)(C)C");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
-            Result<double> result = (Result<double>)Descriptor.Calculate(mol).Value;
+            var result = CreateDescriptor(mol).Calculate();
             Assert.AreEqual(0.353, result.Value, 0.01);
         }
 
@@ -52,7 +45,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var mol = sp.ParseSmiles("CN(C)CCOC(C1=CC=C(Cl)C=C1)C1=CC=CC=N1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
-            Result<double> result = (Result<double>)Descriptor.Calculate(mol).Value;
+            var result = CreateDescriptor(mol).Calculate();
             Assert.AreEqual(0.65, result.Value, 0.01);
         }
 
@@ -63,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var mol = sp.ParseSmiles("CC(C)NCC(O)COC1=C(C=CC=C1)N1C=CC=C1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
-            Result<double> result = (Result<double>)Descriptor.Calculate(mol).Value;
+            var result = CreateDescriptor(mol).Calculate();
             Assert.AreEqual(0.55, result.Value, 0.01);
         }
 
@@ -74,8 +67,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var mol = sp.ParseSmiles("Fc1ccc(cc1)C(=O)C4CCN(CCC\\3=C(\\N=C2\\C=C/C=C\\N2C/3=O)C)CC4");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
-            Result<double> result = (Result<double>)Descriptor.Calculate(mol).Value;
+            var result = CreateDescriptor(mol).Calculate();
             Assert.AreEqual(0.862, result.Value, 0.001);
         }
     }
 }
+

@@ -16,35 +16,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Silent;
 using NCDK.IO;
-using NCDK.QSAR.Results;
-using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
-using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class ZagrebIndexDescriptorTest : MolecularDescriptorTest
+    public class ZagrebIndexDescriptorTest : MolecularDescriptorTest<ZagrebIndexDescriptor>
     {
-        public ZagrebIndexDescriptorTest()
-        {
-            SetDescriptor(typeof(ZagrebIndexDescriptor));
-        }
-
         [TestMethod()]
         public void TestZagrebIndexDescriptor()
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=C(O)CC");
-            Assert.AreEqual(16, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.0001);
+            Assert.AreEqual(16, CreateDescriptor(mol).Calculate().Value, 0.0001);
         }
 
         [TestMethod()]
@@ -57,18 +46,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
-            double value2D = ((Result<double>)Descriptor.Calculate(mol).Value).Value;
+            double value2D = CreateDescriptor(mol).Calculate().Value;
 
             string filename = "NCDK.Data.MDL.cpsa-uncharged.sdf";
-            var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-            ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            IChemFile content;
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
+            {
+                content = reader.Read(CDK.Builder.NewChemFile());
+            }
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
-            mol = (IAtomContainer)cList[0];
+            mol = cList[0];
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
-            double value3D = ((Result<double>)Descriptor.Calculate(mol).Value).Value;
+            var value3D = CreateDescriptor(mol).Calculate().Value;
 
             Assert.AreEqual(value2D, value3D, 0.001);
         }

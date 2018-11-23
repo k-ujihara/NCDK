@@ -31,7 +31,7 @@ namespace NCDK.StructGen.Stochastic.Operators
     public class CrossoverMachineTest : CDKTestCase
     {
         [TestMethod()]
-        [TestCategory("SlowTest")] // structgen is slow... a single method here currently takes ~6 seconds
+        [TestCategory("VerySlowTest")] // structgen is slow... a single method here currently takes ~6 seconds
         public void TestDoCrossover_IAtomContainer()
         {
             IChemObjectSet<IAtomContainer> som;
@@ -40,7 +40,7 @@ namespace NCDK.StructGen.Stochastic.Operators
             using (var ins = ResourceLoader.GetAsStream(filename))
             using (SMILESReader reader = new SMILESReader(ins))
             {
-                som = reader.Read(Silent.ChemObjectBuilder.Instance.NewAtomContainerSet());
+                som = reader.Read(CDK.Builder.NewAtomContainerSet());
                 Assert.AreEqual(99, som.Count, "We must have read 99 structures");
             }
 

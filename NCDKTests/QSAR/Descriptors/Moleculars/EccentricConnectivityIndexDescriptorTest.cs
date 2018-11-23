@@ -17,44 +17,36 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
-using NCDK.IO;
-using NCDK.QSAR.Results;
-using NCDK.Tools.Manipulator;
 
-using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.IO;
+using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class EccentricConnectivityIndexDescriptorTest : MolecularDescriptorTest
+    public class EccentricConnectivityIndexDescriptorTest : MolecularDescriptorTest<EccentricConnectivityIndexDescriptor>
     {
-        public EccentricConnectivityIndexDescriptorTest()
-        {
-            SetDescriptor(typeof(EccentricConnectivityIndexDescriptor));
-        }
+        IChemObjectBuilder builder = CDK.Builder;
 
         [TestMethod()]
         public void TestEhccentricConnectivityIndex()
         {
             string filename = "NCDK.Data.HIN.gravindex.hin";
-            var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new HINReader(ins);
-            ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            IChemFile content;
+            using (var reader = new HINReader(ResourceLoader.GetAsStream(filename)))
+            {
+                content = reader.Read(builder.NewChemFile());
+            }
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
-            IAtomContainer ac = (IAtomContainer)cList[0];
+            var ac = cList[0];
 
             AddImplicitHydrogens(ac);
 
-            Result<int> retval = (Result<int>)Descriptor.Calculate(ac).Value;
-            //Debug.WriteLine(retval.Value);
+            var retval = CreateDescriptor(ac).Calculate().Value;
 
-            Assert.AreEqual(254, retval.Value, 0);
+            Assert.AreEqual(254, retval, 0);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace NCDK.Tools.Manipulator
     [TestClass()]
     public class MolecularFormulaRangeManipulatorTest : CDKTestCase
     {
-        private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private readonly static IChemObjectBuilder builder = CDK.Builder;
 
         /// <summary>
         ///  Constructor for the MolecularFormulaRangeManipulatorTest object.

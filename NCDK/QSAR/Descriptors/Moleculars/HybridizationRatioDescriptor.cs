@@ -19,10 +19,7 @@
  */
 
 using NCDK.Config;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
-using System;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -38,90 +35,59 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </remarks>
     // @author Rajarshi Guha
     // @cdk.module qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:hybratio
-    public class HybridizationRatioDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hybratio")]
+    public class HybridizationRatioDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        public HybridizationRatioDescriptor() { }
+        private readonly IAtomContainer container;
 
-        /// <summary>
-        /// A <see cref="DescriptorSpecification"/> which specifies which descriptor is implemented by this class.
-        /// </summary>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hybratio",
-                typeof(HybridizationRatioDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        /// <summary>
-        /// The parameters attribute of the HybridizationRatioDescriptor object.
-        /// </summary>
-        /// <remarks>
-        /// This descriptor takes no parameters
-        /// </remarks>
-        public override IReadOnlyList<object> Parameters { get { return Array.Empty<object>(); } set { } }
-
-        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "HybRatio" };
-
-        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
+        public HybridizationRatioDescriptor(IAtomContainer container)
         {
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            container = (IAtomContainer)container.Clone();
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+            this.container = container;
+        }
+
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(double value)
+            {
+                this.HybridizationRatio = value;
+            }
+
+            [DescriptorResultProperty("HybRatio")]
+            public double HybridizationRatio { get; private set; }
+
+            public double Value => HybridizationRatio;
         }
 
         /// <summary>
         /// Calculate sp3/sp2 hybridization ratio in the supplied <see cref="IAtomContainer"/>.
         /// </summary>
-        /// <param name="container">The AtomContainer for which this descriptor is to be calculated.</param>
         /// <returns>The ratio of sp3 to sp2 carbons</returns>
-        public DescriptorValue<Result<double>> Calculate(IAtomContainer container)
+        public Result Calculate()
         {
-            try
+            int nsp2 = 0;
+            int nsp3 = 0;
+            foreach (var atom in container.Atoms)
             {
-                var clone = (IAtomContainer)container.Clone();
-                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(clone);
-                int nsp2 = 0;
-                int nsp3 = 0;
-                foreach (var atom in clone.Atoms)
+                if (!atom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                    continue;
+                switch (atom.Hybridization)
                 {
-                    if (!atom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                        continue;
-                    if (atom.Hybridization == Hybridization.SP2)
+                    case Hybridization.SP2:
                         nsp2++;
-                    else if (atom.Hybridization == Hybridization.SP3)
+                        break;
+                    case Hybridization.SP3:
                         nsp3++;
+                        break;
                 }
-                double ratio = nsp3 / (double)(nsp2 + nsp3);
-                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters,
-                        new Result<double>(ratio), DescriptorNames);
             }
-            catch (CDKException e)
-            {
-                return GetDummyDescriptorValue(e);
-            }
+            double ratio = nsp3 / (double)(nsp2 + nsp3);
+            return new Result(ratio);
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
-
-        /// <summary>
-        /// The parameterNames attribute of the HybridizationRatioDescriptor object.
-        /// </summary>
-        /// <remarks>
-        /// This descriptor takes no parameters
-        /// </remarks>
-        public override IReadOnlyList<string> ParameterNames => Array.Empty<string>();
-
-        /// <summary>
-        /// Gets the parameterType attribute of the HybridizationRatioDescriptor object.
-        /// </summary>
-        /// <remarks>
-        /// This descriptor takes no parameters
-        /// </remarks>
-        /// <param name="name">the parameter name</param>
-        /// <returns>An Object whose class is that of the parameter requested</returns>
-        public override object GetParameterType(string name) => "";
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

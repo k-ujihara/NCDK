@@ -16,33 +16,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Silent;
-using NCDK.QSAR.Results;
-using NCDK.Smiles;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsaratomic
     [TestClass()]
-    public class PartialSigmaChargeDescriptorTest : AtomicDescriptorTest
+    public class PartialSigmaChargeDescriptorTest : AtomicDescriptorTest<PartialSigmaChargeDescriptor>
     {
-        private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-        
-        public PartialSigmaChargeDescriptorTest()
-        {
-            SetDescriptor(typeof(PartialSigmaChargeDescriptor));
-            descriptor.Parameters = new object[] { 6 };
-        }
+        protected override PartialSigmaChargeDescriptor CreateDescriptor(IAtomContainer mol)
+            => new PartialSigmaChargeDescriptor(mol, 6);
+
+        private readonly static IChemObjectBuilder builder = CDK.Builder;
 
         /// <summary>
-        /// A unit test with Fluoroethylene
+        /// Fluoroethylene
         /// </summary>
         /// @cdk.inchi InChI=1/C2H3F/c1-2-3/h2H,1H2
         [TestMethod()]
@@ -50,32 +41,33 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { -0.2138, 0.079, 0.0942, -0.072, 0.0563, 0.0563 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(builder.NewAtom("F"));
-            molecule.Atoms.Add(builder.NewAtom("C"));
-            molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.NewAtom("H"));
-            molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Atoms.Add(builder.NewAtom("C"));
-            molecule.AddBond(molecule.Atoms[1], molecule.Atoms[3], BondOrder.Double);
-            molecule.Atoms.Add(builder.NewAtom("H"));
-            molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Single);
-            molecule.Atoms.Add(builder.NewAtom("H"));
-            molecule.AddBond(molecule.Atoms[3], molecule.Atoms[5], BondOrder.Single);
+            var mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("F"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
+            mol.Atoms.Add(CDK.Builder.NewAtom("H"));
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.AddBond(mol.Atoms[1], mol.Atoms[3], BondOrder.Double);
+            mol.Atoms.Add(CDK.Builder.NewAtom("H"));
+            mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
+            mol.Atoms.Add(CDK.Builder.NewAtom("H"));
+            mol.AddBond(mol.Atoms[3], mol.Atoms[5], BondOrder.Single);
 
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            AddExplicitHydrogens(molecule);
-            CDK.LonePairElectronChecker.Saturate(molecule);
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
+            AddExplicitHydrogens(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
-            for (int i = 0; i < molecule.Atoms.Count; i++)
+            var descriptor = CreateDescriptor(mol);
+            for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(molecule.Atoms[i], molecule).Value).Value;
+                var result = descriptor.Calculate(mol.Atoms[i]).Value;
                 Assert.AreEqual(testResult[i], result, 0.003);
             }
         }
 
         /// <summary>
-        /// A unit test with Ethyl Fluoride
+        /// Ethyl Fluoride
         /// </summary>
         /// @cdk.inchi InChI=1/CH3F/c1-2/h1H3
         [TestMethod()]
@@ -83,26 +75,25 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { 0.07915, -0.25264, 0.05783, 0.05783, 0.05783 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(new Atom("C"));
-            molecule.Atoms.Add(new Atom("F"));
-            molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
+            var mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("F"));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
 
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            AddExplicitHydrogens(molecule);
-            CDK.LonePairElectronChecker.Saturate(molecule);
-
-            AddExplicitHydrogens(molecule);
-            for (int i = 0; i < molecule.Atoms.Count; i++)
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
+            AddExplicitHydrogens(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
+            AddExplicitHydrogens(mol);
+            var descriptor = CreateDescriptor(mol);
+            for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(molecule.Atoms[i], molecule).Value)
-                        .Value;
+                var result = descriptor.Calculate(mol.Atoms[i]).Value;
                 Assert.AreEqual(testResult[i], result, 0.001);
             }
         }
 
         /// <summary>
-        /// A unit test with Methyl chloride
+        /// Methyl chloride
         /// </summary>
         // @cdk.inchi  InChI=1/CH3Cl/c1-2/h1H3
         [TestMethod()]
@@ -110,25 +101,25 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { 0.0382, -0.1755, 0.0457, 0.0457, 0.0457 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(new Atom("C"));
-            molecule.Atoms.Add(new Atom("Cl"));
-            molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
+            var mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("Cl"));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
 
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            AddExplicitHydrogens(molecule);
-            CDK.LonePairElectronChecker.Saturate(molecule);
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
+            AddExplicitHydrogens(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
-            for (int i = 0; i < molecule.Atoms.Count; i++)
+            var descriptor = CreateDescriptor(mol);
+            for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(molecule.Atoms[i], molecule).Value)
-                        .Value;
+                var result = descriptor.Calculate(mol.Atoms[i]).Value;
                 Assert.AreEqual(testResult[i], result, 0.001);
             }
         }
 
         /// <summary>
-        /// A unit test with Methyl chloride
+        /// Methyl chloride
         /// </summary>
         // @cdk.inchi  InChI=1/CH3Br/c1-2/h1H3
         [TestMethod()]
@@ -136,75 +127,77 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { 0.021, -0.1448, 0.0413, 0.0413, 0.0413 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(new Atom("C"));
-            molecule.Atoms.Add(new Atom("Br"));
-            molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
+            var mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("Br"));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
 
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            AddExplicitHydrogens(molecule);
-            CDK.LonePairElectronChecker.Saturate(molecule);
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
+            AddExplicitHydrogens(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
-            for (int i = 0; i < molecule.Atoms.Count; i++)
+            var descriptor = CreateDescriptor(mol);
+            for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(molecule.Atoms[i], molecule).Value)
-                        .Value;
+                var result = descriptor.Calculate(mol.Atoms[i]).Value;
                 Assert.AreEqual(testResult[i], result, 0.01);
             }
         }
 
         /// <summary>
-        /// A unit test with Methyl iodide
+        /// Methyl iodide
         /// </summary>
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor_Methyl_iodide()
         {
             double[] testResult = { -0.0116, -0.0892, 0.0336, 0.0336, 0.0336 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(new Atom("C"));
-            molecule.Atoms.Add(new Atom("I"));
-            molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
+            var mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("I"));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
 
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            AddExplicitHydrogens(molecule);
-            CDK.LonePairElectronChecker.Saturate(molecule);
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
+            AddExplicitHydrogens(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
-            for (int i = 0; i < molecule.Atoms.Count; i++)
+            var descriptor = CreateDescriptor(mol);
+            for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(molecule.Atoms[i], molecule).Value).Value;
+                var result = descriptor.Calculate(mol.Atoms[i]).Value;
                 Assert.AreEqual(testResult[i], result, 0.001);
             }
         }
 
         /// <summary>
-        /// A unit test with Allyl bromide
+        /// Allyl bromide
         /// </summary>
         // @cdk.inchi  InChI=1/C3H5Br/c1-2-3-4/h2H,1,3H2
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor_Allyl_bromide()
         {
-            double testResult = -0.1366;
+            var testResult = -0.1366;
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(builder.NewAtom("C"));
-            molecule.Atoms.Add(builder.NewAtom("C"));
-            molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
-            molecule.Atoms.Add(builder.NewAtom("C"));
-            molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Atoms.Add(builder.NewAtom("Br"));
-            molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
+            var mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
+            mol.Atoms.Add(CDK.Builder.NewAtom("Br"));
+            mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single);
 
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            AddExplicitHydrogens(molecule);
-            CDK.LonePairElectronChecker.Saturate(molecule);
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
+            AddExplicitHydrogens(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
-            double result = ((Result<double>)descriptor.Calculate(molecule.Atoms[3], molecule).Value).Value;
+            var descriptor = CreateDescriptor(mol);
+            var result = descriptor.Calculate(mol.Atoms[3]).Value;
             Assert.AreEqual(testResult, result, 0.01);
         }
 
         /// <summary>
-        /// A unit test with Isopentyl iodide
+        /// Isopentyl iodide
         /// </summary>
         // @cdk.inchi  InChI=1/C5H11I/c1-5(2)3-4-6/h5H,3-4H2,1-2H3
         [TestMethod()]
@@ -217,43 +210,45 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
 
+            var descriptor = CreateDescriptor(mol);
             for (int i = 0; i < 6; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
+                var result = descriptor.Calculate(mol.Atoms[i]).Value;
                 Assert.AreEqual(testResult[i], result, 0.001);
             }
         }
 
         /// <summary>
-        /// A unit test with Ethoxy ethane
+        /// Ethoxy ethane
         /// </summary>
         //  @cdk.inchi  InChI=1/C4H10O/c1-3-5-4-2/h3-4H2,1-2H3
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor_Ethoxy_ethane()
         {
-            double testResult = -0.3809;
+            var testResult = -0.3809;
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(builder.NewAtom("C"));
-            molecule.Atoms.Add(builder.NewAtom("C"));
-            molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.NewAtom("O"));
-            molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Atoms.Add(builder.NewAtom("C"));
-            molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
-            molecule.Atoms.Add(builder.NewAtom("C"));
-            molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Single);
+            var mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
+            mol.Atoms.Add(CDK.Builder.NewAtom("O"));
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single);
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
 
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            AddExplicitHydrogens(molecule);
-            CDK.LonePairElectronChecker.Saturate(molecule);
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
+            AddExplicitHydrogens(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
-            double result = ((Result<double>)descriptor.Calculate(molecule.Atoms[2], molecule).Value).Value;
+            var descriptor = CreateDescriptor(mol);
+            var result = descriptor.Calculate(mol.Atoms[2]).Value;
             Assert.AreEqual(testResult, result, 0.01);
         }
 
         /// <summary>
-        /// A unit test with Ethanolamine
+        /// Ethanolamine
         /// </summary>
         // @cdk.inchi  InChI=1/C2H7NO/c3-1-2-4/h4H,1-3H2
         [TestMethod()]
@@ -261,28 +256,29 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { -0.3293, 0.017, 0.057, -0.3943 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml 
-            IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(builder.NewAtom("N"));
-            molecule.Atoms.Add(builder.NewAtom("C"));
-            molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.NewAtom("C"));
-            molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Atoms.Add(builder.NewAtom("O"));
-            molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
+            var mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("N"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
+            mol.Atoms.Add(CDK.Builder.NewAtom("O"));
+            mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single);
 
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            AddExplicitHydrogens(molecule);
-            CDK.LonePairElectronChecker.Saturate(molecule);
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
+            AddExplicitHydrogens(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
+            var descriptor = CreateDescriptor(mol);
             for (int i = 0; i < 4; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(molecule.Atoms[i], molecule).Value).Value;
+                var result = descriptor.Calculate(mol.Atoms[i]).Value;
                 Assert.AreEqual(testResult[i], result, 0.01);
             }
         }
 
         /// <summary>
-        /// A unit test with Allyl mercaptan
+        /// Allyl mercaptan
         /// </summary>
         // @cdk.inchi  InChI=1/C3H6S/c1-2-3-4/h2,4H,1,3H2
         [TestMethod()]
@@ -290,23 +286,23 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { -0.1031, -0.0828, 0.0093, -0.1742 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(builder.NewAtom("C"));
-            molecule.Atoms.Add(builder.NewAtom("C"));
-            molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
-            molecule.Atoms.Add(builder.NewAtom("C"));
-            molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Atoms.Add(builder.NewAtom("S"));
-            molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
+            var mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
+            mol.Atoms.Add(CDK.Builder.NewAtom("S"));
+            mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single);
 
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            AddExplicitHydrogens(molecule);
-            CDK.LonePairElectronChecker.Saturate(molecule);
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
+            AddExplicitHydrogens(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
+            var descriptor = CreateDescriptor(mol);
             for (int i = 0; i < 4; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(molecule.Atoms[i], molecule).Value)
-                        .Value;
+                var result = descriptor.Calculate(mol.Atoms[i]).Value;
                 Assert.AreEqual(testResult[i], result, 0.01);
             }
         }
@@ -319,9 +315,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[F+]=C([H])[C-]([H])[H]");
 
+            var descriptor = CreateDescriptor(mol);
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
+                var result = descriptor.Calculate(mol.Atoms[i]).Value;
                 Assert.AreEqual(testResult[i], result, 0.003);
             }
         }
@@ -333,10 +330,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=C([H])[C-]([H])[H]");
-            descriptor.Parameters = new object[] { 6 };
+            var descriptor = CreateDescriptor(mol);
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
+                var result = descriptor.Calculate(mol.Atoms[i]).Value;
                 Assert.AreEqual(testResult[i], result, 0.2);
             }
         }
@@ -348,10 +345,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[O-]C([H])=C([H])[H]");
-
+            var descriptor = CreateDescriptor(mol);
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
+                var result = descriptor.Calculate(mol.Atoms[i]).Value;
                 Assert.AreEqual(testResult[i], result, 0.2);
             }
         }
@@ -362,23 +359,22 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { -0.3041, 0.1055, 0.0993, 0.0993 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(builder.NewAtom("O"));
-            molecule.Atoms.Add(builder.NewAtom("C"));
-            molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
-            molecule.Atoms.Add(builder.NewAtom("H"));
-            molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Atoms.Add(builder.NewAtom("H"));
-            molecule.AddBond(molecule.Atoms[1], molecule.Atoms[3], BondOrder.Single);
+            var mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("O"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
+            mol.Atoms.Add(CDK.Builder.NewAtom("H"));
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
+            mol.Atoms.Add(CDK.Builder.NewAtom("H"));
+            mol.AddBond(mol.Atoms[1], mol.Atoms[3], BondOrder.Single);
 
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            AddExplicitHydrogens(molecule);
-            CDK.LonePairElectronChecker.Saturate(molecule);
-
-            for (int i = 0; i < molecule.Atoms.Count; i++)
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
+            AddExplicitHydrogens(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
+            var descriptor = CreateDescriptor(mol);
+            for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(molecule.Atoms[i], molecule).Value)
-                        .Value;
+                var result = descriptor.Calculate(mol.Atoms[i]).Value;
                 Assert.AreEqual(testResult[i], result, 0.003);
             }
         }
@@ -389,28 +385,27 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             double[] testResult = { -0.3291, 0.144, 0.1028, -0.0084, 0.0303, 0.0303, 0.0303 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(builder.NewAtom("O"));
-            molecule.Atoms.Add(builder.NewAtom("C"));
-            molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
-            molecule.Atoms.Add(builder.NewAtom("H"));
-            molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Atoms.Add(builder.NewAtom("C"));
-            molecule.AddBond(molecule.Atoms[1], molecule.Atoms[3], BondOrder.Single);
-            molecule.Atoms.Add(builder.NewAtom("H"));
-            molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Single);
-            molecule.Atoms.Add(builder.NewAtom("H"));
-            molecule.AddBond(molecule.Atoms[3], molecule.Atoms[5], BondOrder.Single);
+            var mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("O"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
+            mol.Atoms.Add(CDK.Builder.NewAtom("H"));
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.AddBond(mol.Atoms[1], mol.Atoms[3], BondOrder.Single);
+            mol.Atoms.Add(CDK.Builder.NewAtom("H"));
+            mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
+            mol.Atoms.Add(CDK.Builder.NewAtom("H"));
+            mol.AddBond(mol.Atoms[3], mol.Atoms[5], BondOrder.Single);
 
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            AddExplicitHydrogens(molecule);
-            CDK.LonePairElectronChecker.Saturate(molecule);
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
+            AddExplicitHydrogens(mol);
+            CDK.LonePairElectronChecker.Saturate(mol);
 
-            descriptor.Parameters = new object[] { 6 };
-
-            for (int i = 0; i < molecule.Atoms.Count; i++)
+            var descriptor = CreateDescriptor(mol);
+            for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(molecule.Atoms[i], molecule).Value).Value;
+                var result = descriptor.Calculate(mol.Atoms[i]).Value;
                 Assert.AreEqual(testResult[i], result, 0.03);
             }
         }
@@ -422,17 +417,17 @@ namespace NCDK.QSAR.Descriptors.Atomic
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[O-]C([H])([H])[H]");
-            descriptor.Parameters = new object[] { 6 };
+            var descriptor = CreateDescriptor(mol);
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
+                var result = descriptor.Calculate(mol.Atoms[i]).Value;
                 //            Debug.WriteLine(mol.Atoms[i].Symbol+",result: "+result);
                 Assert.AreEqual(testResult[i], result, 0.3);
             }
         }
 
         /// <summary>
-        /// A unit test with [H]c1[n-][c+]([H])c([H])c([H])c1([H])
+        /// [H]c1[n-][c+]([H])c([H])c([H])c1([H])
         /// </summary>
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor7()
@@ -443,12 +438,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
             var mol = sp.ParseSmiles("[H]c1[n-][c+]([H])c([H])c([H])c1([H])");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
-            object[] obj = { 6 };
-            descriptor.Parameters = obj;
+            var descriptor = CreateDescriptor(mol);
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
-                //            logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
+                var result = descriptor.Calculate(mol.Atoms[i]).Value;
                 Assert.AreEqual(testResult[i], result, 0.05);
             }
         }

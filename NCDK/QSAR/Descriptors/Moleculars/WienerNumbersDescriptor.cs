@@ -20,7 +20,6 @@
 
 using NCDK.Graphs;
 using NCDK.Graphs.Matrix;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
 
@@ -38,63 +37,64 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// value of 3. For more information see <token>cdk-cite-Wiener1947</token>; <token>cdk-cite-TOD2000</token>.
     /// </para>
     /// <para>
-    /// This descriptor uses no parameters.
-    /// </para>
-    /// <para>
     /// This descriptor works properly with AtomContainers whose atoms contain <b>implicit hydrogens</b>
     /// or <b>explicit hydrogens</b>.
     /// </para>
-    /// <para>
-    /// Returns the following values
-    /// <list type="bullet">
-    /// <item>WPATH - weiner path number</item>
-    /// <item>WPOL - weiner polarity number</item>
-    /// </list>
-    /// </para>
-    /// <para>This descriptor does not have any parameters.</para>
     /// </remarks>
     // @author         mfe4
     // @cdk.created        December 7, 2004
     // @cdk.created    2004-11-03
     // @cdk.module     qsarmolecular
-    // @cdk.githash
     // @cdk.dictref    qsar-descriptors:wienerNumbers
     // @cdk.keyword    Wiener number
-    public class WienerNumbersDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#wienerNumbers")]
+    public class WienerNumbersDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        double[][] matr = null;
-        ArrayResult<double> wienerNumbers = null;
+        private readonly IAtomContainer container;
+        private readonly double[][] matr;
 
-        public WienerNumbersDescriptor()
+        public WienerNumbersDescriptor(IAtomContainer container)
         {
+            // RemoveHydrogens does not break container
+            matr = ConnectionMatrix.GetMatrix(AtomContainerManipulator.RemoveHydrogens(container));
+
+            this.container = container;
         }
 
-        /// <inheritdoc/>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#wienerNumbers",
-                typeof(WienerNumbersDescriptor).FullName,
-                "The Chemistry Development Kit");
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(double path, double polarity)
+            {
+                this.PathNumber = path;
+                this.PolarityNumber = polarity;
+            }
 
-        /// <inheritdoc/>
-        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
+            /// <summary>
+            /// Wiener path number
+            /// </summary>
+            [DescriptorResultProperty("WPATH")]
+            public double PathNumber { get; private set; }
 
-        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "WPATH", "WPOL" };
+            /// <summary>
+            /// Wiener polarity number
+            /// </summary>
+            [DescriptorResultProperty("WPOL")]
+            public double PolarityNumber { get; private set; }
+
+            public double Value => PathNumber;
+        }
 
         /// <summary>
         /// Calculate the Wiener numbers.
         /// </summary>
-        /// <param name="atomContainer">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated</param>
         /// <returns>wiener numbers as array of 2 doubles</returns>
-        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer atomContainer)
+        public Result Calculate()
         {
-            wienerNumbers = new ArrayResult<double>(2);
-            double wienerPathNumber = 0; //wienerPath
-            double wienerPolarityNumber = 0; //wienerPol
+            int wienerPathNumber = 0; //wienerPath
+            int wienerPolarityNumber = 0; //wienerPol
 
-            matr = ConnectionMatrix.GetMatrix(AtomContainerManipulator.RemoveHydrogens(atomContainer));
-            int[][] distances = PathTools.ComputeFloydAPSP(matr);
+            var distances = PathTools.ComputeFloydAPSP(matr);
 
             int partial;
             for (int i = 0; i < distances.Length; i++)
@@ -104,36 +104,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     partial = distances[i][j];
                     wienerPathNumber += partial;
                     if (partial == 3)
-                    {
                         wienerPolarityNumber += 1;
-                    }
                 }
             }
-            wienerPathNumber = wienerPathNumber / 2;
-            wienerPolarityNumber = wienerPolarityNumber / 2;
 
-            wienerNumbers.Add(wienerPathNumber);
-            wienerNumbers.Add(wienerPolarityNumber);
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, wienerNumbers, DescriptorNames);
+            return new Result((double)wienerPathNumber / 2, (double)wienerPolarityNumber / 2);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <para>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="IDescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="IDescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </para>
-        /// </summary>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(2);
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<string> ParameterNames => null;
-
-        /// <inheritdoc/>
-        public override object GetParameterType(string name) => null;
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

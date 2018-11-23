@@ -147,7 +147,7 @@ namespace NCDK.Smiles.SMARTS
         [TestMethod()]
         public void TestUnspecifiedIsotope()
         {
-            IAtom aexpr = Smiles.SMARTS.Parser.SMARTSParser.Parse("[!0]", Silent.ChemObjectBuilder.Instance).Atoms[0];
+            IAtom aexpr = Smiles.SMARTS.Parser.SMARTSParser.Parse("[!0]", CDK.Builder).Atoms[0];
             Assert.IsInstanceOfType(aexpr, typeof(LogicalOperatorAtom));
             Assert.AreEqual("not", ((LogicalOperatorAtom)aexpr).Operator);
             IQueryAtom subexpr = ((LogicalOperatorAtom)aexpr).Left;

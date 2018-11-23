@@ -355,7 +355,7 @@ namespace NCDK.IO
                     + "   130   122   124    1\n" + "   131   122   125    1\n" + "   132    91   126    1\n"
                     + "   133   126   127    1\n" + "   134     4   128    1\n" + "   135   128   129    1\n";
             Mol2Reader r = new Mol2Reader(new StringReader(problematicMol2));
-            IChemModel model = (IChemModel)r.Read(Silent.ChemObjectBuilder.Instance.NewChemModel());
+            IChemModel model = (IChemModel)r.Read(CDK.Builder.NewChemModel());
             r.Close();
             Assert.IsNotNull(model);
             var containers = ChemModelManipulator.GetAllAtomContainers(model);
@@ -374,7 +374,7 @@ namespace NCDK.IO
         {
             StringReader sr = new StringReader(buf.ToString());
             Mol2Reader reader = new Mol2Reader(sr);
-            IChemFile mol = (IChemFile)reader.Read(Silent.ChemObjectBuilder.Instance.NewChemFile());
+            IChemFile mol = (IChemFile)reader.Read(CDK.Builder.NewChemFile());
             reader.Close();
             Assert.IsTrue(mol.Count > 0);
             Assert.IsTrue(mol[0].Count > 0);

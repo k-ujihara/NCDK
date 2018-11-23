@@ -16,32 +16,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class BPolDescriptorTest : MolecularDescriptorTest
+    public class BPolDescriptorTest : MolecularDescriptorTest<BPolDescriptor>
     {
-        public BPolDescriptorTest()
-        {
-            SetDescriptor(typeof(BPolDescriptor));
-        }
-
         [TestMethod()]
         public void TestBPolDescriptor()
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=C(O)CC");
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(7.517242, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.01);
+            Assert.AreEqual(7.517242, CreateDescriptor(mol).Calculate().Value, 0.01);
         }
     }
 }

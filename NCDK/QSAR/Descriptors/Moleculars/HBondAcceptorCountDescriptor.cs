@@ -19,10 +19,7 @@
 
 using NCDK.Aromaticities;
 using NCDK.Config;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
-using System;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -31,37 +28,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <see href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</see>.
     /// </summary>
     /// <remarks>
-    /// <para>
     /// The following groups are counted as hydrogen bond acceptors:
     /// <list type="bullet"> 
     /// <item>any oxygen where the formal charge of the oxygen is non-positive (i.e. formal charge &lt;= 0) <b>except</b></item>
-    /// <list type="bullet"> 
     /// <item>an aromatic ether oxygen (i.e. an ether oxygen that is adjacent to at least one aromatic carbon)</item>
     /// <item>an oxygen that is adjacent to a nitrogen</item>
-    /// </list>
     /// <item>any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge &lt;= 0) <b>except</b></item>
-    /// <list type="bullet"> 
-    /// <item>a nitrogen that is adjacent to an oxygen</item>
     /// </list>
-    /// </list>
-    /// </para>
-    /// <para>
-    /// Returns a single value named <i>nHBAcc</i>.
-    /// </para>
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    ///   <item>
-    ///     <term>Name</term>
-    ///     <term>Default</term>
-    ///     <term>Description</term>
-    ///   </item>
-    ///   <item>
-    ///     <term>checkAromaticity</term>
-    ///     <term>false</term>
-    ///     <term>true if the aromaticity has to be checked</term>
-    ///   </item>
-    /// </list>
-    /// </para>
     /// <para>
     /// This descriptor works properly with AtomContainers whose atoms contain <b>implicit hydrogens</b> or <b>explicit
     /// hydrogens</b>.
@@ -70,91 +43,54 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @author      ulif
     // @cdk.created 2005-22-07
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:hBondacceptors
-    public class HBondAcceptorCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondacceptors")]
+    public class HBondAcceptorCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        // only parameter of this descriptor; true if aromaticity has to be checked prior to descriptor calculation, false otherwise
-        private bool checkAromaticity = false;
-        private static readonly string[] NAMES = { "nHBAcc" };
+        private readonly IAtomContainer container;
 
-        public HBondAcceptorCountDescriptor() { }
-
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondacceptors",
-                typeof(HBondAcceptorCountDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        /// <summary>
-        /// The parameters attribute of the <see cref="HBondAcceptorCountDescriptor"/> object.
-        /// </summary>
-        /// <value>a <see langword="true"/> means that aromaticity has to be checked</value>
-        /// <exception cref="CDKException"></exception>
-        public override IReadOnlyList<object> Parameters
+        public HBondAcceptorCountDescriptor(IAtomContainer container, bool checkAromaticity = false)
         {
-            set
+            // do aromaticity detection
+            if (checkAromaticity)
             {
-                if (value.Count != 1)
-                {
-                    throw new CDKException($"{nameof(HBondAcceptorCountDescriptor)} expects a single parameter");
-                }
-                if (!(value[0] is bool))
-                {
-                    throw new CDKException($"The parameter must be of type {nameof(Boolean)}");
-                }
-                // OK, all should be fine
-                checkAromaticity = (bool)value[0];
+                container = (IAtomContainer)container.Clone(); // don't mod original
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+                Aromaticity.CDKLegacy.Apply(container);
             }
-            get
-            {
-                return new object[] { checkAromaticity };
-                // return the parameters as used for the descriptor calculation
-            }
+            this.container = container;
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
-
-        private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception e)
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+            public Result(int value)
+            {
+                this.NumberOfHBondAcceptor = value;
+            }
+
+            [DescriptorResultProperty("nHBAcc")]
+            public int NumberOfHBondAcceptor { get; private set; }
+
+            public int Value => NumberOfHBondAcceptor;
         }
 
         /// <summary>
         /// Calculates the number of H bond acceptors.
         /// </summary>
-        /// <param name="atomContainer">AtomContainer</param>
         /// <returns>number of H bond acceptors</returns>
-        public DescriptorValue<Result<int>> Calculate(IAtomContainer atomContainer)
+        public Result Calculate()
         {
             int hBondAcceptors = 0;
-            var ac = (IAtomContainer)atomContainer.Clone();
 
-            // aromaticity is detected prior to descriptor calculation if the respective parameter is set to true
-
-            if (checkAromaticity)
-            {
-                try
-                {
-                    AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
-                    Aromaticity.CDKLegacy.Apply(ac);
-                }
-                catch (CDKException e)
-                {
-                    return GetDummyDescriptorValue(e);
-                }
-            }
-
-            //IAtom[] atoms = ac.GetAtoms();
             // labelled for loop to allow for labelled continue statements within the loop
-            foreach (var atom in ac.Atoms)
+            foreach (var atom in container.Atoms)
             {
                 // looking for suitable nitrogen atoms
                 if (atom.AtomicNumber.Equals(NaturalElements.N.AtomicNumber) && atom.FormalCharge <= 0)
                 {
                     // excluding nitrogens that are adjacent to an oxygen
-                    var bonds = ac.GetConnectedBonds(atom);
+                    var bonds = container.GetConnectedBonds(atom);
                     int nPiBonds = 0;
                     foreach (var bond in bonds)
                     {
@@ -175,7 +111,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 else if (atom.AtomicNumber.Equals(NaturalElements.O.AtomicNumber) && atom.FormalCharge <= 0)
                 {
                     //excluding oxygens that are adjacent to a nitrogen or to an aromatic carbon
-                    var neighbours = ac.GetConnectedBonds(atom);
+                    var neighbours = container.GetConnectedBonds(atom);
                     foreach (var bond in neighbours)
                     {
                         var neighbor = bond.GetOther(atom);
@@ -195,14 +131,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 ;
             }
 
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(hBondAcceptors), DescriptorNames);
+            return new Result(hBondAcceptors);
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
-        public override object GetParameterType(string name) => false;
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

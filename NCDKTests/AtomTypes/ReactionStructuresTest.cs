@@ -33,7 +33,7 @@ namespace NCDK.AtomTypes
 
         static ReactionStructuresTest()
         {
-            builder = Silent.ChemObjectBuilder.Instance;
+            builder = CDK.Builder;
             matcher = CDK.AtomTypeMatcher;
         }
 

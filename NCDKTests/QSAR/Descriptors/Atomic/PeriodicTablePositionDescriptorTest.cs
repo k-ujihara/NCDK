@@ -16,32 +16,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsaratomic
     [TestClass()]
-    public class PeriodicTablePositionDescriptorTest : AtomicDescriptorTest
+    public class PeriodicTablePositionDescriptorTest : AtomicDescriptorTest<PeriodicTablePositionDescriptor>
     {
-        public PeriodicTablePositionDescriptorTest()
-        {
-            SetDescriptor(typeof(PeriodicTablePositionDescriptor));
-        }
-
         [TestMethod()]
         public void TestPeriodicTablePositionDescriptor()
         {
-            IAtomicDescriptor descriptor = new PeriodicTablePositionDescriptor();
             var sp = CDK.SmilesParser;
-            var mol = sp.ParseSmiles("CCCl"); //
-            Assert.AreEqual(3, ((Result<int>)descriptor.Calculate(mol.Atoms[2], mol).Value).Value);
+            var mol = sp.ParseSmiles("CCCl");
+            var descriptor = CreateDescriptor(mol);
+            Assert.AreEqual(3, descriptor.Calculate(mol.Atoms[2]).Value);
         }
     }
 }

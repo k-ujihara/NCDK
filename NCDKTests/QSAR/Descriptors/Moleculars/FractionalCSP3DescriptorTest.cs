@@ -20,18 +20,12 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     [TestClass()]
-    public class FractionalCSP3DescriptorTest : MolecularDescriptorTest
+    public class FractionalCSP3DescriptorTest : MolecularDescriptorTest<FractionalCSP3Descriptor>
     {
-        public FractionalCSP3DescriptorTest()
-        {
-            SetDescriptor(typeof(FractionalCSP3Descriptor));
-        }
-
         struct E
         {
             public string Smiles;
@@ -63,7 +57,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             foreach (var e in table)
             {
                 var mol = CDK.SmilesParser.ParseSmiles(e.Smiles);
-                Assert.AreEqual(e.Value, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.01);
+                Assert.AreEqual(e.Value, CreateDescriptor(mol).Calculate().Value, 0.01);
             }
         }
     }

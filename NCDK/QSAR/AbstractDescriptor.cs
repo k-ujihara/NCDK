@@ -21,32 +21,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace NCDK.QSAR
 {
     /// <summary>
-    /// A super class for molecular descriptors allowing default implementations for
+    /// An abstract class for descriptors allowing default implementations for
     /// interface methods.
     /// </summary>
-    // @author John May
-    // @cdk.module qsar
     public abstract class AbstractDescriptor : IDescriptor
     {
-        /// <summary>
-        /// Default implementation of initialise allows optional override.
-        /// </summary>
-        /// <param name="builder">chem object build</param>
-        public virtual void Initialise(IChemObjectBuilder builder)
-        {
-            // do nothing
-        }
-
-        public abstract IImplementationSpecification Specification { get; }
-        public abstract IReadOnlyList<string> ParameterNames { get; }
-        public abstract IReadOnlyList<object> Parameters { get; set; }
-        public abstract IReadOnlyList<string> DescriptorNames { get; }
-        public abstract object GetParameterType(string name);
+        /// <inheritdoc/>
+        public virtual Type ResultType
+            => this.GetType().GetNestedTypes().Where(type => type.GetCustomAttribute<DescriptorResultAttribute>() != null).First();
     }
 }
-

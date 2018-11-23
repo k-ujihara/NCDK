@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NCDK.Common.Collections
 {
-    public static class Arrays
+    internal static class Arrays
     {
         public static object Comparers { get; private set; }
 

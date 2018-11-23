@@ -34,7 +34,7 @@ namespace NCDK
         {
             AtomTypeFactory factory = AtomTypeFactory.GetInstance(
                 "NCDK.Dict.Data.cdk-atom-types.owl",
-                Silent.ChemObjectBuilder.Instance
+                CDK.Builder
             );
             IAtomType type = factory.GetAtomType("C.sp3");
             Assert.IsTrue(type is ImmutableAtomType);

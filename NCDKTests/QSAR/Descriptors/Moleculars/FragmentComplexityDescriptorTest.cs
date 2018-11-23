@@ -1,40 +1,33 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.Fragments;
 using NCDK.IO;
-using NCDK.QSAR.Results;
-
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     // @author      chhoppe from EUROSCREEN
     // @cdk.module  test-qsarmolecular 
     [TestClass()]
-    public class FragmentComplexityDescriptorTest : MolecularDescriptorTest
+    public class FragmentComplexityDescriptorTest : MolecularDescriptorTest<FragmentComplexityDescriptor>
     {
-        public FragmentComplexityDescriptorTest()
-        {
-            SetDescriptor(typeof(FragmentComplexityDescriptor));
-        }
+        IChemObjectBuilder builder = CDK.Builder;
 
         [TestMethod()]
         public void Test1FragmentComplexityDescriptor()
         {
-            IMolecularDescriptor Descriptor = new FragmentComplexityDescriptor();
             string filename = "NCDK.Data.MDL.murckoTest1.mol";
-            //Console.Out.WriteLine("\nFragmentComplexityTest: " + filename);
-            var ins = ResourceLoader.GetAsStream(filename);
-            MurckoFragmenter gf = new MurckoFragmenter();
-            double Complexity = 0;
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-            IAtomContainer mol = reader.Read(new AtomContainer());
+            IAtomContainer mol;
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename), ChemObjectReaderMode.Strict))
+            {
+                mol = reader.Read(builder.NewAtomContainer());
+            }
+            var gf = new MurckoFragmenter();
             gf.GenerateFragments(mol);
             var setOfFragments = gf.GetFrameworksAsContainers();
+            double Complexity = 0;
             foreach (var setOfFragment in setOfFragments)
             {
                 AddExplicitHydrogens(setOfFragment);
-                Complexity = ((Result<double>)Descriptor.Calculate(setOfFragment).Value).Value;
-                //Console.Out.WriteLine("Complexity:"+Complexity);
+                Complexity = CreateDescriptor(setOfFragment).Calculate().Value;
             }
             Assert.AreEqual(659.00, Complexity, 0.01);
         }
@@ -42,19 +35,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void Test2FragmentComplexityDescriptor()
         {
-            IMolecularDescriptor Descriptor = new FragmentComplexityDescriptor();
             string filename = "NCDK.Data.MDL.murckoTest10.mol";
-            var ins = ResourceLoader.GetAsStream(filename);
-            MurckoFragmenter gf = new MurckoFragmenter();
-            double Complexity = 0;
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-            IAtomContainer mol = reader.Read(ChemObjectBuilder.Instance.NewAtomContainer());
+            IAtomContainer mol;
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename), ChemObjectReaderMode.Strict))
+            {
+                mol = reader.Read(builder.NewAtomContainer());
+            }
+            var gf = new MurckoFragmenter();
             gf.GenerateFragments(mol);
             var setOfFragments = gf.GetFrameworksAsContainers();
+            double Complexity = 0;
             foreach (var setOfFragment in setOfFragments)
             {
                 AddExplicitHydrogens(setOfFragment);
-                Complexity = ((Result<double>)Descriptor.Calculate(setOfFragment).Value).Value;
+                Complexity = CreateDescriptor(setOfFragment).Calculate().Value;
             }
             Assert.AreEqual(544.01, Complexity, 0.01);
         }

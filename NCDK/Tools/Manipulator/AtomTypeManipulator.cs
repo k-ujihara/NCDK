@@ -44,9 +44,8 @@ namespace NCDK.Tools.Manipulator
         public static void Configure(IAtom atom, IAtomType atomType)
         {
             if (atomType == null)
-            {
-                throw new ArgumentException("The IAtomType was null.");
-            }
+                throw new ArgumentNullException(nameof(atomType));
+
             if (string.Equals("X", atomType.AtomTypeName, StringComparison.Ordinal))
             {
                 atom.AtomTypeName = "X";

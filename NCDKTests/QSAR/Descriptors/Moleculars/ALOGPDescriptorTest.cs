@@ -19,27 +19,14 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Silent;
-using NCDK.QSAR.Results;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// Test suite for the alogp descriptor
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class ALogPDescriptorTest : MolecularDescriptorTest
+    public class ALogPDescriptorTest : MolecularDescriptorTest<ALogPDescriptor>
     {
-        private readonly IHydrogenAdder hydrogenAdder;
-
-        public ALogPDescriptorTest()
-        {
-            SetDescriptor(typeof(ALogPDescriptor));
-            hydrogenAdder = CDK.HydrogenAdder;
-        }
-
         /// <summary>
         /// This test is actually testing 1-cholorpropane.
         /// </summary>
@@ -47,11 +34,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestChloroButane()
         {
-            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom c1 = ChemObjectBuilder.Instance.NewAtom("C");
-            IAtom c2 = ChemObjectBuilder.Instance.NewAtom("C");
-            IAtom c3 = ChemObjectBuilder.Instance.NewAtom("C");
-            IAtom cl = ChemObjectBuilder.Instance.NewAtom("Cl");
+            var mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            var c1 = ChemObjectBuilder.Instance.NewAtom("C");
+            var c2 = ChemObjectBuilder.Instance.NewAtom("C");
+            var c3 = ChemObjectBuilder.Instance.NewAtom("C");
+            var cl = ChemObjectBuilder.Instance.NewAtom("Cl");
             mol.Atoms.Add(c1);
             mol.Atoms.Add(c2);
             mol.Atoms.Add(c3);
@@ -63,9 +50,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
 
-            var v = Descriptor.Calculate(mol);
-            Assert.AreEqual(0.5192, ((ArrayResult<double>)v.Value)[0], 0.0001);
-            Assert.AreEqual(19.1381, ((ArrayResult<double>)v.Value)[2], 0.0001);
+            var result = CreateDescriptor(mol).Calculate();
+            Assert.AreEqual(0.5192, result.ALogP, 0.0001);
+            Assert.AreEqual(19.1381, result.AMR, 0.0001);
         }
     }
 }

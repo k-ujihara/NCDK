@@ -104,7 +104,7 @@ namespace NCDK.Default
         }
 
         /// <summary>
-        ///  The label of this <see cref="PseudoAtom"/>.
+        /// The label of this <see cref="PseudoAtom"/>.
         /// </summary>
         public virtual string Label
         {
@@ -216,7 +216,7 @@ namespace NCDK.Silent
         }
 
         /// <summary>
-        ///  The label of this <see cref="PseudoAtom"/>.
+        /// The label of this <see cref="PseudoAtom"/>.
         /// </summary>
         public virtual string Label
         {

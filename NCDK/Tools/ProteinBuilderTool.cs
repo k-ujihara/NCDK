@@ -22,7 +22,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Silent;
 using NCDK.Templates;
 using System;
 using System.Diagnostics;
@@ -88,7 +87,7 @@ namespace NCDK.Tools
 
         /// <summary>
         /// Creates a BioPolymer from a sequence of amino acid as identified by a
-        /// the sequence of their one letter codes. It uses the <see cref="ChemObjectBuilder"/> 
+        /// the sequence of their one letter codes. It uses the <see cref="IChemObjectBuilder"/> 
         /// to create a data model.
         /// </summary>
         /// <example>
@@ -100,7 +99,7 @@ namespace NCDK.Tools
         /// <seealso cref="CreateProtein(string)"/>
         public static IBioPolymer CreateProtein(string sequence)
         {
-            return CreateProtein(sequence, ChemObjectBuilder.Instance);
+            return CreateProtein(sequence, CDK.Builder);
         }
 
         /// <summary>

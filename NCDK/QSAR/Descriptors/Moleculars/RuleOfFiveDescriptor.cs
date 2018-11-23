@@ -17,172 +17,99 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.QSAR.Results;
-using System.Collections.Generic;
+using NCDK.Aromaticities;
+using NCDK.Tools.Manipulator;
+using System;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// This Class contains a method that returns the number failures of the
     /// Lipinski's Rule Of 5.
-    /// See <see href="http://en.wikipedia.org/wiki/Lipinski%27s_Rule_of_Five">http://en.wikipedia.org/wiki/Lipinski%27s_Rule_of_Five</see>.
+    /// See <see href="http://en.wikipedia.org/wiki/Lipinski%27s_Rule_of_Five" />.
     /// </summary>
-    /// <remarks>
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    ///   <item>
-    ///     <term>Name</term>
-    ///     <term>Default</term>
-    ///     <term>Description</term>
-    ///   </item>
-    ///   <item>
-    ///     <term>checkAromaticity</term>
-    ///     <term>false</term>
-    ///     <term>True is the aromaticity has to be checked</term>
-    ///   </item>
-    /// </list>
-    /// </para>
-    /// Returns a single value named <i>LipinskiFailures</i>.
-    /// </remarks>
     // @author      mfe4
     // @cdk.created 2004-11-03
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:lipinskifailures
     // @cdk.keyword Lipinski
     // @cdk.keyword rule-of-five
     // @cdk.keyword descriptor
-    public class RuleOfFiveDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lipinskifailures")]
+    public class RuleOfFiveDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private bool checkAromaticity = false;
+        private readonly IAtomContainer container;
 
-        private static readonly string[] NAMES = { "LipinskiFailures" };
-
-        public RuleOfFiveDescriptor() { }
-
-        /// <inheritdoc/>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lipinskifailures",
-                typeof(RuleOfFiveDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        /// <summary>
-        /// The parameters attribute of the RuleOfFiveDescriptor object.
-        /// </summary>
-        /// <remarks>
-        /// There is only one parameter, which should be a bool indicating whether
-        /// aromaticity should be checked or has already been checked. The name of the paramete
-        /// is checkAromaticity.</remarks>
-        /// <exception cref="CDKException">if more than 1 parameter or a non-bool parameter is specified</exception>
-        public override IReadOnlyList<object> Parameters
+        public RuleOfFiveDescriptor(IAtomContainer container, bool checkAromaticity = false)
         {
-            set
+            // do aromaticity detection
+            if (checkAromaticity)
             {
-                if (value.Count != 1)
-                {
-                    throw new CDKException("RuleOfFiveDescriptor expects one parameter");
-                }
-                if (!(value[0] is bool))
-                {
-                    throw new CDKException("The first parameter must be of type bool");
-                }
-                // ok, all should be fine
-                checkAromaticity = (bool)value[0];
+                container = (IAtomContainer)container.Clone(); // don't mod original
+
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+                Aromaticity.CDKLegacy.Apply(container);
             }
-            get
-            {
-                // return the parameters as used for the descriptor calculation
-                return new object[] { checkAromaticity };
-            }
+
+            this.container = container;
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
-
-        /// <summary>
-        /// the method take a bool checkAromaticity: if the bool is true, it means that
-        /// aromaticity has to be checked.
-        /// </summary>
-        /// <param name="mol">AtomContainer for which this descriptor is to be calculated</param>
-        /// <returns>The number of failures of the Lipinski rule</returns>
-        public DescriptorValue<Result<int>> Calculate(IAtomContainer mol)
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            mol = Clone(mol); // don't mod original
+            public Result(int value)
+            {
+                this.LipinskiFailures = value;
+            }
+
+            /// <summary>
+            /// The number of failures of the Lipinski rule
+            /// </summary>
+            [DescriptorResultProperty("LipinskiFailures")]
+            public int LipinskiFailures { get; private set; }
+
+            public int Value => LipinskiFailures;
+        }
+
+        public Result Calculate(
+            Func<IAtomContainer, double> calcLogP = null,
+            Func<IAtomContainer, int> calcHBondAcceptorCount = null,
+            Func<IAtomContainer, int> calcHBondDonorCount = null,
+            Func<IAtomContainer, double> calcWeight = null,
+            Func<IAtomContainer, int> calcRotatableBondsCount = null)
+        {
+            calcLogP = calcLogP ?? (mol => new XLogPDescriptor(mol).Calculate(correctSalicylFactor: true).Value);
+            calcHBondAcceptorCount = calcHBondAcceptorCount ?? (mol => new HBondAcceptorCountDescriptor(mol).Calculate().Value);
+            calcHBondDonorCount = calcHBondDonorCount ?? (mol => new HBondDonorCountDescriptor(mol).Calculate().Value);
+            calcWeight = calcWeight ?? (mol => new WeightDescriptor(mol).Calculate().Value);
+            calcRotatableBondsCount = calcRotatableBondsCount ?? (mol => new RotatableBondsCountDescriptor(mol).Calculate(includeTerminals: false, excludeAmides: true).Value);
+
             int lipinskifailures = 0;
 
-            var xlogP = new XLogPDescriptor();
-            object[] xlogPparams = { checkAromaticity, true, };
+            var xlogPvalue = calcLogP(container);
+            var acceptors = calcHBondAcceptorCount(container);
+            var donors = calcHBondDonorCount(container);
+            var mwvalue = calcWeight(container);
 
-            try
-            {
-                xlogP.Parameters = xlogPparams;
-                double xlogPvalue = ((Result<double>)xlogP.Calculate(mol).Value).Value;
+            // exclude (heavy atom) terminal bonds
+            // exclude amide C-N bonds because of their high rotational barrier
+            // see Veber, D.F. et al., 2002, 45(12), pp.2615–23.
+            var rotatablebonds = calcRotatableBondsCount(container);
 
-                var acc = new HBondAcceptorCountDescriptor();
-                object[] hBondparams = { checkAromaticity };
-                acc.Parameters = hBondparams;
-                var acceptors = ((Result<int>)acc.Calculate(mol).Value).Value;
+            if (xlogPvalue > 5.0)
+                lipinskifailures += 1;
+            if (acceptors > 10)
+                lipinskifailures += 1;
+            if (donors > 5)
+                lipinskifailures += 1;
+            if (mwvalue > 500.0)
+                lipinskifailures += 1;
+            if (rotatablebonds > 10.0)
+                lipinskifailures += 1;
 
-                var don = new HBondDonorCountDescriptor
-                {
-                    Parameters = hBondparams
-                };
-                var donors = don.Calculate(mol).Value.Value;
-
-                var mw = new WeightDescriptor();
-                object[] mwparams = { "" };
-                mw.Parameters = mwparams;
-                var mwvalue = mw.Calculate(mol).Value.Value;
-
-                // exclude (heavy atom) terminal bonds
-                // exclude amide C-N bonds because of their high rotational barrier
-                // see Veber, D.F. et al., 2002, 45(12), pp.2615–23.
-                var rotata = new RotatableBondsCountDescriptor();
-                object[] rotatableBondsParams = { false, true };
-                rotata.Parameters = rotatableBondsParams;
-                var rotatablebonds = rotata.Calculate(mol).Value.Value;
-
-                if (xlogPvalue > 5.0)
-                {
-                    lipinskifailures += 1;
-                }
-                if (acceptors > 10)
-                {
-                    lipinskifailures += 1;
-                }
-                if (donors > 5)
-                {
-                    lipinskifailures += 1;
-                }
-                if (mwvalue > 500.0)
-                {
-                    lipinskifailures += 1;
-                }
-                if (rotatablebonds > 10.0)
-                {
-                    lipinskifailures += 1;
-                }
-            }
-            catch (CDKException e)
-            {
-#pragma warning disable CA1806 // Do not ignore method results
-                new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
-#pragma warning restore CA1806 // Do not ignore method results
-            }
-
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(lipinskifailures), DescriptorNames);
+            return new Result(lipinskifailures);
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
-
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
-        public override object GetParameterType(string name)
-        {
-            return true;
-        }
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

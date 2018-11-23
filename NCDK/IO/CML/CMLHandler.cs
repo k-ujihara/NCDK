@@ -166,9 +166,6 @@ namespace NCDK.IO.CML
                             case "JMOL-ANIMATION":
                                 conv = new JMOLANIMATIONConvention(conv);
                                 break;
-                            case "qsar:DescriptorValue":
-                                conv = new QSARConvention(conv);
-                                break;
                             default:
                                 if (userConventions.ContainsKey(convName))
                                 {

@@ -3100,7 +3100,7 @@ namespace NCDK.AtomTypes
         public void TestAllElementsRepresented()
         {
             AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl",
-                    Silent.ChemObjectBuilder.Instance);
+                    CDK.Builder);
             Assert.IsTrue(factory.Count != 0, "Could not read the atom types");
             string errorMessage = "Elements without atom type(s) defined in the XML:";
             int testUptoAtomicNumber = 36; // TODO: 92 ?
@@ -6694,7 +6694,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_n_planar3_sp2_aromaticity()
         {
-            var builder = Silent.ChemObjectBuilder.Instance;
+            var builder = CDK.Builder;
 
             // simulate an IAtomContainer returned from a SDFile with bond order 4 to indicate aromaticity
             IAtomContainer pyrrole = builder.NewAtomContainer();
@@ -6736,7 +6736,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_n_planar3_sp2_aromaticity_explicitH()
         {
-            var builder = Silent.ChemObjectBuilder.Instance;
+            var builder = CDK.Builder;
 
             // simulate an IAtomContainer returned from a SDFile with bond order 4 to indicate aromaticity
             IAtomContainer pyrrole = builder.NewAtomContainer();

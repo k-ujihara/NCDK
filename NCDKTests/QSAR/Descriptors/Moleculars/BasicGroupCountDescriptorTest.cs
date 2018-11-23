@@ -16,28 +16,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
-using NCDK.QSAR.Results;
-using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
-using System;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class BasicGroupCountDescriptorTest : MolecularDescriptorTest
+    public class BasicGroupCountDescriptorTest : MolecularDescriptorTest<BasicGroupCountDescriptor>
     {
-        public BasicGroupCountDescriptorTest()
-        {
-            SetDescriptor(typeof(BasicGroupCountDescriptor));
-        }
-
         [TestMethod()]
         public void TestConstructor()
         {
-            Assert.IsNotNull(new BasicGroupCountDescriptor());
+            Assert.IsNotNull(new BasicGroupCountDescriptor(Water));
         }
 
         [TestMethod()]
@@ -45,7 +37,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("NC");
-            Result<int> result = (Result<int>)Descriptor.Calculate(mol).Value;
+            var result = CreateDescriptor(mol).Calculate();
             Assert.AreEqual(1, result.Value);
         }
 
@@ -53,8 +45,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void Test()
         {
-            var builder = Silent.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.NewAtomContainer();
+            var builder = CDK.Builder;
+            var mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("N");
             mol.Atoms.Add(a1);
             IAtom a2 = builder.NewAtom("N");
@@ -89,7 +81,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
 
-            Result<int> result = (Result<int>)Descriptor.Calculate(mol).Value;
+            var result = CreateDescriptor(mol).Calculate();
             // two SMARTS matches
             Assert.AreEqual(2, result.Value);
         }

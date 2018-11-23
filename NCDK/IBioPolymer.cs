@@ -26,17 +26,15 @@ using System.Collections.Generic;
 namespace NCDK
 {
     /// <summary>
-    /// A BioPolymer is a subclass of a Polymer which is supposed to store
-    /// additional informations about the Polymer which are connected to BioPolymers.
+    /// A <see cref="IBioPolymer"/> is a subclass of a <see cref="IPolymer"/> which is supposed to store
+    /// additional informations about the <see cref="IPolymer"/> which are connected to <see cref="IBioPolymer"/>s.
     /// </summary>
     // @cdk.module  interfaces
-    // @cdk.githash
     // @author      Edgar Luttmann <edgar@uni-paderborn.de>
     // @cdk.created 2001-08-06
     // @cdk.keyword polymer
     // @cdk.keyword biopolymer
-    public interface IBioPolymer
-        : IPolymer
+    public interface IBioPolymer : IPolymer
     {
         /// <summary>
         /// Adds the atom oAtom to a specified Strand, whereas the Monomer is unspecified. Hence

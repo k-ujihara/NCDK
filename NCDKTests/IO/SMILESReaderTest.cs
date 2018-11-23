@@ -99,7 +99,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void badSmilesLine()
         {
-            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            IChemObjectBuilder bldr = CDK.Builder;
             string input = "C\nn1cccc1\nc1ccccc1\n";
             DefaultChemObjectReader cor = new SMILESReader(new StringReader(input));
             IChemObjectSet<IAtomContainer> mols = cor.Read(bldr.NewAtomContainerSet());

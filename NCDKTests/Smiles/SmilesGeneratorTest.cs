@@ -1139,7 +1139,7 @@ namespace NCDK.Smiles
         {
             try
             {
-                var smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance, false);
+                var smipar = new SmilesParser(CDK.Builder, false);
                 var mol = smipar.ParseSmiles("c1ccccc1");
                 System.Console.Error.WriteLine(SmilesGenerator.Isomeric().Create(mol));
                 Assert.Fail();

@@ -27,8 +27,7 @@ namespace NCDK.Config
 {
     /// <summary>
     /// Enumeration of chemical elements. Data is taken from the Blue Obelisk Data
-    /// Repository, version 3. This enumeration is auto-generated with utilities
-    /// found in the 'cdk-build-utils' project.
+    /// Repository, version 3. 
     /// </summary>
     // @author      egonw
     // @author      john may
@@ -65,7 +64,7 @@ namespace NCDK.Config
         {
             if (text == null)
                 return NaturalElements.Unknown.AtomicNumber;
-            if (!SymbolMap.TryGetValue(text.ToLowerInvariant(), out int e))
+            if (!StringToAtomicNumberMap.TryGetValue(text.ToLowerInvariant(), out int e))
                 e = NaturalElements.Unknown.AtomicNumber;
             return e;
         }

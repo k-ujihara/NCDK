@@ -31,7 +31,6 @@ namespace NCDK.Charges
     // @cdk.created  2008-104-31
     // @cdk.module   charges
     // @cdk.keyword  electronegativity
-    // @cdk.githash
     public class PiElectronegativity
     {
         private GasteigerMarsiliPartialCharges peoe = null;

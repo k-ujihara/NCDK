@@ -126,7 +126,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property_Example.cs" />
-    <Compile Include="QSAR\DescriptorEngine_Example.cs" />
     <Compile Include="Renderers\Elements\MarkedElement_Example.cs" />
     <Compile Include="RingSearches\AllRingsFinder_Example.cs" />
     <Compile Include="RingSearches\RingSearch_Example.cs" />
@@ -174,6 +173,9 @@
       <Project>{b0b5eacf-5f39-42d0-bacd-1ff559ccc8b2}</Project>
       <Name>NCDK</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="QSAR\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

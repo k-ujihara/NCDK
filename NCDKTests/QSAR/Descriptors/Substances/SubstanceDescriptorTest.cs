@@ -14,52 +14,32 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Silent;
-using NCDK.QSAR.Results;
-using System;
 
 namespace NCDK.QSAR.Descriptors.Substances
 {
     [TestClass()]
-    public abstract class SubstanceDescriptorTest
+    public abstract class SubstanceDescriptorTest<T> : DescriptorTest<T> where T: ISubstanceDescriptor, new()
     {
-        protected ISubstanceDescriptor descriptor;
-
-        public void SetDescriptor(Type descriptorClass)
-        {
-            if (descriptor == null)
-            {
-                var descriptor = descriptorClass.GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());
-                if (!(descriptor is ISubstanceDescriptor))
-                {
-                    throw new Exception(
-                        "The passed descriptor class must be a ISubstanceDescriptor"
-                    );
-                }
-                this.descriptor = (ISubstanceDescriptor)descriptor;
-            }
-        }
+        protected override T Descriptor => new T();
 
         [TestMethod()]
         public void TestCalculate_Empty()
         {
-            ISubstance material = new Substance();
-            var value = descriptor.Calculate(material);
+            var material = new Substance();
+            var value = Descriptor.Calculate(material);
             Assert.IsNotNull(value);
-            IDescriptorResult result = value.Value;
-            Assert.IsNotNull(result);
-            Assert.AreNotSame(0, result.Length);
+            Assert.AreNotEqual(0, value.Count);
         }
 
         [TestMethod()]
         public void TestCalculate_Null()
         {
-            var value = descriptor.Calculate(null);
+            var value = Descriptor.Calculate(null);
             Assert.IsNotNull(value);
-            IDescriptorResult result = value.Value;
-            Assert.IsNotNull(result);
-            Assert.AreNotSame(0, result.Length);
+            Assert.AreNotEqual(0, value.Count);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace NCDK.Charges
     [TestClass()]
     public class GasteigerPEPEPartialChargesTest : CDKTestCase
     {
-        private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private IChemObjectBuilder builder = CDK.Builder;
         
         /// <summary>
         /// A unit test for JUnit with methylenfluoride

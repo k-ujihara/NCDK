@@ -18,10 +18,7 @@
  */
 
 using NCDK.Config;
-using NCDK.QSAR.Results;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -30,115 +27,66 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </summary>
     /// <remarks>
     /// Polarizabilities are taken from
-    /// <see href="http://www.sunysccc.edu/academic/mst/ptable/p-table2.htm">http://www.sunysccc.edu/academic/mst/ptable/p-table2.htm</see>.
-    /// <para>
+    /// <see href="http://www.sunysccc.edu/academic/mst/ptable/p-table2.htm" />.
     /// This class need explicit hydrogens.
-    /// </para>
-    /// <para>
-    /// This descriptor uses these parameters:
-    /// <list type="table">
-    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
-    /// <item><term></term><term></term><term>no parameters</term></item>
-    /// </list>
-    /// </para>
-    /// <para>
     /// Returns a single value with name <i>apol</i>.
-    /// </para>
     /// </remarks>
     // @author      mfe4
     // @cdk.created 2004-11-13
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:apol
     // @cdk.keyword polarizability, atomic
-    public class APolDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#apol")]
+    public class APolDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
-        private static double[] polarizabilities;
-        private static readonly string[] NAMES = { "apol" };
-
-        public APolDescriptor()
-        {
-            if (polarizabilities == null)
+        internal static readonly double[] polarizabilities = new double[] 
             {
-                polarizabilities = new double[] {
-                    0, 0.666793, 0.204956, 24.3, 5.6, 3.03, 1.76, 1.1, 0.802, 0.557, 0.3956,
-                    23.6, 10.6, 6.8, 5.38, 3.63, 2.9, 2.18, 1.6411, 43.4, 22.8, 17.8, 14.6, 12.4, 11.6, 9.4, 8.4, 7.5,
-                    6.8, 6.1, 7.1, 8.12, 6.07, 4.31, 3.77, 3.05, 2.4844, 47.3, 27.6, 22.7, 17.9, 15.7, 12.8, 11.4, 9.6,
-                    8.6, 4.8, 7.2, 7.2, 10.2, 7.7, 6.6, 5.5, 5.35, 4.044, 59.6, 39.7, 31.1, 29.6, 28.2, 31.4, 30.1,
-                    28.8, 27.7, 23.5, 25.5, 24.5, 23.6, 22.7, 21.8, 21, 21.9, 16.2, 13.1, 11.1, 9.7, 8.5, 7.6, 6.5,
-                    5.8, 5.7, 7.6, 6.8, 7.4, 6.8, 6, 5.3, 48.7, 38.3, 32.1, 32.1, 25.4, 27.4, 24.8, 24.5, 23.3, 23,
-                    22.7, 20.5, 19.7, 23.8, 18.2, 17.5 };
-            }
+                0, 0.666793, 0.204956, 24.3, 5.6, 3.03, 1.76, 1.1, 0.802, 0.557, 0.3956,
+                23.6, 10.6, 6.8, 5.38, 3.63, 2.9, 2.18, 1.6411, 43.4, 22.8, 17.8, 14.6, 12.4, 11.6, 9.4, 8.4, 7.5,
+                6.8, 6.1, 7.1, 8.12, 6.07, 4.31, 3.77, 3.05, 2.4844, 47.3, 27.6, 22.7, 17.9, 15.7, 12.8, 11.4, 9.6,
+                8.6, 4.8, 7.2, 7.2, 10.2, 7.7, 6.6, 5.5, 5.35, 4.044, 59.6, 39.7, 31.1, 29.6, 28.2, 31.4, 30.1,
+                28.8, 27.7, 23.5, 25.5, 24.5, 23.6, 22.7, 21.8, 21, 21.9, 16.2, 13.1, 11.1, 9.7, 8.5, 7.6, 6.5,
+                5.8, 5.7, 7.6, 6.8, 7.4, 6.8, 6, 5.3, 48.7, 38.3, 32.1, 32.1, 25.4, 27.4, 24.8, 24.5, 23.3, 23,
+                22.7, 20.5, 19.7, 23.8, 18.2, 17.5
+            };
+
+        private readonly IAtomContainer container;
+
+        public APolDescriptor(IAtomContainer container)
+        {
+            this.container = container;
         }
 
-        /// <inheritdoc/>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#apol",
-               typeof(APolDescriptor).FullName, "The Chemistry Development Kit");
-
-        public override IReadOnlyList<object> Parameters
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            get { return null; }
-            set
+            public Result(double value)
             {
-                // no parameters for this descriptor
+                this.AtomicPolarizabilities = value;
             }
-        }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+            [DescriptorResultProperty("apol")]
+            public double AtomicPolarizabilities { get; private set; }
+
+            public double Value => AtomicPolarizabilities;
+        }
 
         /// <summary>
         /// Calculate the sum of atomic polarizabilities in an <see cref="IAtomContainer"/>.
         /// </summary>
-        /// <param name="container">The <see cref="IAtomContainer"/> for which the descriptor is to be calculated</param>
         /// <returns>The sum of atomic polarizabilities <see cref="IsotopeFactory"/></returns>
-        public DescriptorValue<Result<double>> Calculate(IAtomContainer container)
+        public Result Calculate()
         {
-            double apol = 0;
-            int atomicNumber;
-            try
-            {
-                var ifac = CDK.IsotopeFactory;
-                IElement element;
-                string symbol;
-                foreach (var atom in container.Atoms)
-                {
-                    symbol = atom.Symbol;
-                    element = ifac.GetElement(symbol);
-                    atomicNumber = element.AtomicNumber.Value;
-                    apol += polarizabilities[atomicNumber];
-                    if (atom.ImplicitHydrogenCount != null)
-                    {
-                        apol += polarizabilities[1] * atom.ImplicitHydrogenCount.Value;
-                    }
-                }
-                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(apol), DescriptorNames);
-            }
-            catch (Exception ex1)
-            {
-                Debug.WriteLine(ex1);
-                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, 
-                    new CDKException($"Problems with IsotopeFactory due to {ex1.ToString()}", ex1));
-            }
+            var polarizabilitiesH = polarizabilities[NaturalElements.H.AtomicNumber];
+            var apol = container.Atoms
+                .Select(
+                    atom => polarizabilities[atom.AtomicNumber.Value]
+                          + polarizabilitiesH * (atom.ImplicitHydrogenCount ?? 0))
+                .Sum();
+            return new Result(apol);
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
-
-        /// <summary>
-        /// The parameterNames attribute of the APolDescriptor object.
-        /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null;  // no param names to return
-
-        /// <summary>
-        /// Gets the parameterType attribute of the APolDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name) => null;
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

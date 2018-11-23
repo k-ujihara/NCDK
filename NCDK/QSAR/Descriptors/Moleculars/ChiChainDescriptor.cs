@@ -17,15 +17,12 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.AtomTypes;
 using NCDK.Graphs;
 using NCDK.Isomorphisms.Matchers;
-using NCDK.QSAR.Results;
-using NCDK.Smiles;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -51,136 +48,116 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <item>VCH-7 - Valence chain, order 7</item>
     /// </list>
     /// </para>
-    /// <para>
-    /// <b>Note</b>: These descriptors are calculated using graph isomorphism to identify
+    /// <note type="note">
+    /// These descriptors are calculated using graph isomorphism to identify
     /// the various fragments. As a result calculations may be slow. In addition, recent
     /// versions of Molconn-Z use simplified fragment definitions (i.e., rings without
     /// branches etc.) whereas these descriptors use the older more complex fragment
     /// definitions.
-    /// </para>
+    /// </note>
     /// </remarks>
     // @author Rajarshi Guha
     // @cdk.created 2006-11-12
     // @cdk.module qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:chiChain
     // @cdk.keyword chi chain index
     // @cdk.keyword descriptor
-    public class ChiChainDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain")]
+    public class ChiChainDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private static readonly string[] NAMES = { "SCH-3", "SCH-4", "SCH-5", "SCH-6", "SCH-7", "VCH-3", "VCH-4", "VCH-5", "VCH-6", "VCH-7" };
+        private readonly IAtomContainer container;
 
-        public ChiChainDescriptor() { }
-
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain",
-                typeof(ChiChainDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        public override IReadOnlyList<string> ParameterNames => null; //To change body of implemented methods use File | Settings | File Templates.
-
-        public override object GetParameterType(string name)
-        {
-            return null; //To change body of implemented methods use File | Settings | File Templates.
-        }
-
-        public override IReadOnlyList<object> Parameters
-        {
-            set
-            {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-            get
-            {
-                return null; //To change body of implemented methods use File | Settings | File Templates.
-            }
-        }
-
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
-
-        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
-        {
-            var ndesc = DescriptorNames.Count;
-            var results = new ArrayResult<double>(ndesc);
-            for (int i = 0; i < ndesc; i++)
-                results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results, DescriptorNames, e);
-        }
-
-        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
+        public ChiChainDescriptor(IAtomContainer container)
         {
             // we don't make a clone, since removeHydrogens returns a deep copy
-            var localAtomContainer = AtomContainerManipulator.RemoveHydrogens(container);
-            var matcher = CDK.AtomTypeMatcher;
-            foreach (var atom in localAtomContainer.Atoms)
-            {
-                try
-                {
-                    var type = matcher.FindMatchingAtomType(localAtomContainer, atom);
-                    AtomTypeManipulator.Configure(atom, type);
-                }
-                catch (Exception)
-                {
-                    return GetDummyDescriptorValue(new CDKException($"Error in atom typing: {atom}"));
-                }
-            }
-            var hAdder = CDK.HydrogenAdder;
-            try
-            {
-                hAdder.AddImplicitHydrogens(localAtomContainer);
-            }
-            catch (CDKException e)
-            {
-                return GetDummyDescriptorValue(new CDKException($"Error in adding hydrogens: {e.Message}"));
-            }
-
-            var subgraph3 = Order3(localAtomContainer);
-            var subgraph4 = Order4(localAtomContainer);
-            var subgraph5 = Order5(localAtomContainer);
-            var subgraph6 = Order6(localAtomContainer);
-            var subgraph7 = Order7(localAtomContainer);
-
-            var order3s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph3);
-            var order4s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph4);
-            var order5s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph5);
-            var order6s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph6);
-            var order7s = ChiIndexUtils.EvalSimpleIndex(localAtomContainer, subgraph7);
-
-            double order3v, order4v, order5v, order6v, order7v;
-            try
-            {
-                order3v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph3);
-                order4v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph4);
-                order5v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph5);
-                order6v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph6);
-                order7v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph7);
-            }
-            catch (CDKException e)
-            {
-                return GetDummyDescriptorValue(new CDKException("Error in substructure search: " + e.Message));
-            }
-
-            var retval = new ArrayResult<double>
-            {
-                order3s,
-                order4s,
-                order5s,
-                order6s,
-                order7s,
-                order3v,
-                order4v,
-                order5v,
-                order6v,
-                order7v,
-            };
-
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval, DescriptorNames);
+            container = AtomContainerManipulator.RemoveHydrogens(container);
+            this.container = container;
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(10);
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(IReadOnlyList<double> values)
+            {
+                this.Values = values;
+            }
+
+            public Result(Exception e) : base(e) { }
+
+            [DescriptorResultProperty("SCH-3")]
+            public double SCH3 => Values[0];
+            [DescriptorResultProperty("SCH-4")]
+            public double SCH4 => Values[1];
+            [DescriptorResultProperty("SCH-5")]
+            public double SCH5 => Values[2];
+            [DescriptorResultProperty("SCH-6")]
+            public double SCH6 => Values[3];
+            [DescriptorResultProperty("SCH-7")]
+            public double SCH7 => Values[4];
+            [DescriptorResultProperty("SCH-3")]
+            public double VCH3 => Values[5];
+            [DescriptorResultProperty("VCH-4")]
+            public double VCH4 => Values[6];
+            [DescriptorResultProperty("VCH-5")]
+            public double VCH5 => Values[7];
+            [DescriptorResultProperty("VCH-6")]
+            public double VCH6 => Values[8];
+            [DescriptorResultProperty("VCH-7")]
+            public double VCH7 => Values[9];
+
+            public new IReadOnlyList<double> Values { get; private set; }
+        }
+
+        public Result Calculate()
+        {
+            var matcher = CDK.AtomTypeMatcher;
+            foreach (var atom in container.Atoms)
+            {
+                var type = matcher.FindMatchingAtomType(container, atom);
+                AtomTypeManipulator.Configure(atom, type);
+            }
+            var hAdder = CDK.HydrogenAdder;
+            hAdder.AddImplicitHydrogens(container);
+
+            var subgraph3 = Order3(container);
+            var subgraph4 = Order4(container);
+            var subgraph5 = Order5(container);
+            var subgraph6 = Order6(container);
+            var subgraph7 = Order7(container);
+
+            try
+            {
+                var order3s = ChiIndexUtils.EvalSimpleIndex(container, subgraph3);
+                var order4s = ChiIndexUtils.EvalSimpleIndex(container, subgraph4);
+                var order5s = ChiIndexUtils.EvalSimpleIndex(container, subgraph5);
+                var order6s = ChiIndexUtils.EvalSimpleIndex(container, subgraph6);
+                var order7s = ChiIndexUtils.EvalSimpleIndex(container, subgraph7);
+
+                var order3v = ChiIndexUtils.EvalValenceIndex(container, subgraph3);
+                var order4v = ChiIndexUtils.EvalValenceIndex(container, subgraph4);
+                var order5v = ChiIndexUtils.EvalValenceIndex(container, subgraph5);
+                var order6v = ChiIndexUtils.EvalValenceIndex(container, subgraph6);
+                var order7v = ChiIndexUtils.EvalValenceIndex(container, subgraph7);
+
+                return new Result(new double[]
+                    {
+                    order3s,
+                    order4s,
+                    order5s,
+                    order6s,
+                    order7s,
+                    order3v,
+                    order4v,
+                    order5v,
+                    order6v,
+                    order7v,
+                    });
+            }
+            catch (CDKException e)
+            {
+                return new Result(e);
+            }
+        }
 
         private static List<List<int>> Order3(IAtomContainer container)
         {
@@ -205,85 +182,58 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ret;
         }
 
+        private static readonly QueryAtomContainer[] queries4 = ChiIndexUtils.MakeQueries(
+            "C1CCC1",
+            "CC1CC1");
+
         private List<List<int>> Order4(IAtomContainer atomContainer)
         {
-            var queries = new QueryAtomContainer[2];
-            try
-            {
-                queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SmilesParser.ParseSmiles("C1CCC1"), false);
-                queries[1] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SmilesParser.ParseSmiles("CC1CC1"), false);
-            }
-            catch (InvalidSmilesException e)
-            {
-                Console.Error.WriteLine(e.StackTrace); //To change body of catch statement use File | Settings | File Templates.
-            }
-            return ChiIndexUtils.GetFragments(atomContainer, queries);
+            return ChiIndexUtils.GetFragments(atomContainer, queries4);
         }
+
+        private static readonly QueryAtomContainer[] queries5 = ChiIndexUtils.MakeQueries(
+            "C1CCCC1",
+            "CC1CCC1",
+            "CC1CC1(C)");
 
         private List<List<int>> Order5(IAtomContainer atomContainer)
         {
-            var queries = new QueryAtomContainer[3];
-            try
-            {
-                queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SmilesParser.ParseSmiles("C1CCCC1"), false);
-                queries[1] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SmilesParser.ParseSmiles("CC1CCC1"), false);
-                queries[2] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SmilesParser.ParseSmiles("CC1CC1(C)"), false);
-            }
-            catch (InvalidSmilesException e)
-            {
-                Console.Error.WriteLine(e.StackTrace); //To change body of catch statement use File | Settings | File Templates.
-            }
-            return ChiIndexUtils.GetFragments(atomContainer, queries);
+            return ChiIndexUtils.GetFragments(atomContainer, queries5);
         }
+
+        private static readonly QueryAtomContainer[] queries6 = ChiIndexUtils.MakeQueries(
+            "CC1CCCC1",
+            "CC1CC(C)C1",
+            "CC1(C)(CCC1)",
+            "CCC1CCC1",
+            "C1CCCCC1",
+            "CC1CCC1(C)",
+            "CC1C(C)C1(C)",
+            "CCCC1CC1",
+            "CCC1CC1(C)");
 
         private List<List<int>> Order6(IAtomContainer atomContainer)
         {
-            var queries = new QueryAtomContainer[9];
-            try
-            {
-                queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SmilesParser.ParseSmiles("CC1CCCC1"), false);
-                queries[1] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SmilesParser.ParseSmiles("CC1CC(C)C1"), false);
-                queries[2] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SmilesParser.ParseSmiles("CC1(C)(CCC1)"), false);
-                queries[3] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SmilesParser.ParseSmiles("CCC1CCC1"), false);
-                queries[4] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SmilesParser.ParseSmiles("C1CCCCC1"), false);
-                queries[5] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SmilesParser.ParseSmiles("CC1CCC1(C)"), false);
-                queries[6] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SmilesParser.ParseSmiles("CC1C(C)C1(C)"), false);
-                queries[7] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SmilesParser.ParseSmiles("CCCC1CC1"), false);
-                queries[8] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SmilesParser.ParseSmiles("CCC1CC1(C)"), false);
-            }
-            catch (InvalidSmilesException e)
-            {
-                Console.Error.WriteLine(e.StackTrace); //To change body of catch statement use File | Settings | File Templates.
-            }
-            return ChiIndexUtils.GetFragments(atomContainer, queries);
+            return ChiIndexUtils.GetFragments(atomContainer, queries6);
         }
+
+        private static readonly QueryAtomContainer[] queries7 = ChiIndexUtils.MakeQueries(
+            "C1CCCCC1C",
+            // 5-ring cases
+            "C1CCCC1(C)(C)", "C1(C)C(C)CCC1", "C1(C)CC(C)CC1",
+            "C1CCCC1(CC)",
+            // 4-ring cases
+            "C1(C)C(C)C(C)C1", "C1CC(C)C1(CC)", "C1C(C)CC1(CC)", "C1CCC1(CCC)", "C1CCC1C(C)(C)", "C1CCC1(C)(CC)",
+            "C1CC(C)C1(C)(C)", "C1C(C)CC1(C)(C)",
+            // 3-ring cases
+            "C1(C)C(C)C1(CC)", "C1C(C)(C)C1(C)(C)", "C1CC1CCCC", "C1C(C)C1(CCC)", "C1C(CC)C1(CC)",
+            "C1C(C)C1C(C)(C)", "C1C(C)C1(C)(CC)", "C1CC1CC(C)(C)", "C1CC1C(C)CC", "C1CC1C(C)(C)(C)");
 
         private List<List<int>> Order7(IAtomContainer atomContainer)
         {
-            string[] smiles = {
-                "C1CCCCC1C",
-                // 5-ring cases
-                "C1CCCC1(C)(C)", "C1(C)C(C)CCC1", "C1(C)CC(C)CC1",
-                "C1CCCC1(CC)",
-                // 4-ring cases
-                "C1(C)C(C)C(C)C1", "C1CC(C)C1(CC)", "C1C(C)CC1(CC)", "C1CCC1(CCC)", "C1CCC1C(C)(C)", "C1CCC1(C)(CC)",
-                "C1CC(C)C1(C)(C)", "C1C(C)CC1(C)(C)",
-                // 3-ring cases
-                "C1(C)C(C)C1(CC)", "C1C(C)(C)C1(C)(C)", "C1CC1CCCC", "C1C(C)C1(CCC)", "C1C(CC)C1(CC)",
-                "C1C(C)C1C(C)(C)", "C1C(C)C1(C)(CC)", "C1CC1CC(C)(C)", "C1CC1C(C)CC", "C1CC1C(C)(C)(C)"};
-            var queries = new QueryAtomContainer[smiles.Length];
-            try
-            {
-                for (int i = 0; i < smiles.Length; i++)
-                    queries[i] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SmilesParser.ParseSmiles(smiles[i]), false);
-            }
-            catch (InvalidSmilesException e)
-            {
-                Console.Error.WriteLine(e.StackTrace);
-            }
-            return ChiIndexUtils.GetFragments(atomContainer, queries);
+            return ChiIndexUtils.GetFragments(atomContainer, queries7);
         }
 
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

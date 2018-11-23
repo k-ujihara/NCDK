@@ -96,7 +96,7 @@ namespace NCDK.Geometries
             var ins = ResourceLoader.GetAsStream(filename);
             XYZReader reader = new XYZReader(ins);
             AtomTypeFactory atf = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt",
-                    Silent.ChemObjectBuilder.Instance);
+                    CDK.Builder);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IAtomContainer mol = chemFile[0][0].MoleculeSet[0];
             foreach (var atom in mol.Atoms)

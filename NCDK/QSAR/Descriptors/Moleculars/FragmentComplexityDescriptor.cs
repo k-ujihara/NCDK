@@ -18,10 +18,8 @@
  */
 
 using NCDK.Config;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -41,51 +39,37 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @author      chhoppe from EUROSCREEN
     // @cdk.created 2006-8-22
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:NilaComplexity
-    public class FragmentComplexityDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#NilaComplexity")]
+    public class FragmentComplexityDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private static readonly string[] NAMES = { "fragC" };
+        private readonly IAtomContainer container;
 
-        public FragmentComplexityDescriptor() { }
-
-        /// <inheritdoc/>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#NilaComplexity",
-                typeof(FragmentComplexityDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        /// <summary>
-        /// The parameters attribute of the FragmentComplexityDescriptor object.
-        /// </summary>
-        /// <remarks>
-        /// This descriptor takes no parameter.
-        /// </remarks>
-        public override IReadOnlyList<object> Parameters
+        public FragmentComplexityDescriptor(IAtomContainer container)
         {
-            set
-            {
-                if (value.Count > 0)
-                {
-                    throw new CDKException("FragmentComplexityDescriptor expects no parameter");
-                }
-            }
-            get
-            {
-                return Array.Empty<object>();
-            }
+            container = (IAtomContainer)container.Clone();
+            this.container = container;
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(double value)
+            {
+                this.Complexity = value;
+            }
+
+            [DescriptorResultProperty("fragC")]
+            public double Complexity { get; private set; }
+
+            public double Value => Complexity;
+        }
 
         /// <summary>
         /// Calculate the complexity in the supplied <see cref="IAtomContainer"/>.
         /// </summary>
-        /// <param name="container">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated</param>
         /// <returns>the complexity</returns>
-        public DescriptorValue<Result<double>> Calculate(IAtomContainer container)
+        public Result Calculate()
         {
             int a = 0;
             double h = 0;
@@ -105,19 +89,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             var b = container.Bonds.Count + AtomContainerManipulator.GetImplicitHydrogenCount(container);
             var c = Math.Abs(b * b - a * a + a) + (h / 100);
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(c), DescriptorNames);
+
+            return new Result(c);
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
-
-        /// <summary>
-        /// The parameterNames attribute of the FragmentComplexityDescriptor object.
-        /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null;
-
-        public override object GetParameterType(string name) => null;
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

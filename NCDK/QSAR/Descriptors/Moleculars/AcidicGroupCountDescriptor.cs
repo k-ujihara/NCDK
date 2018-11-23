@@ -18,11 +18,8 @@
  */
 
 using NCDK.Aromaticities;
-using NCDK.QSAR.Results;
 using NCDK.Smiles.SMARTS;
 using NCDK.Tools.Manipulator;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -38,108 +35,54 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </summary>
     // @author      egonw
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:acidicGroupCount  
-    public class AcidicGroupCountDescriptor 
-        : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#acidicGroupCount")]
+    public class AcidicGroupCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly static string[] NAMES = { "nAcid" };
-
-        private static readonly SmartsPattern[] tools = MakeTools();
-
-        private bool checkAromaticity;
-
-        public AcidicGroupCountDescriptor()
-        {
-            this.checkAromaticity = true;
-        }
-
-        static SmartsPattern[] MakeTools()
-        {
-            string[] SMARTS_STRINGS =
-                {
-                    "[$([O;H1]-[C,S,P]=O)]",
-                    "[$([*;-;!$(*~[*;+])])]",
-                    "[$([NH](S(=O)=O)C(F)(F)F)]",
-                    "[$(n1nnnc1)]"
-                };
-            return SMARTS_STRINGS.Select(n => SmartsPattern.Create(n)).ToArray();
-        }
-
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-             new DescriptorSpecification(
-                    "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#acidicGroupCount",
-                     typeof(AcidicGroupCountDescriptor).FullName,
-                    "The Chemistry Development Kit");
-
-        public override IReadOnlyList<object> Parameters
-        {
-            set
+        private static readonly SmartsPattern[] tools = new string[]
             {
-                if (value.Count != 1)
-                {
-                    throw new CDKException(nameof(AcidicGroupCountDescriptor) + " requires 1 parameter.");
-                }
-                if (!(value[0] is bool))
-                {
-                    throw new CDKException("The parameter must be of type " + nameof(System.Boolean));
-                }
+                "[$([O;H1]-[C,S,P]=O)]",
+                "[$([*;-;!$(*~[*;+])])]",
+                "[$([NH](S(=O)=O)C(F)(F)F)]",
+                "[$(n1nnnc1)]"
+            }.Select(n => SmartsPattern.Create(n)).ToArray();
 
-                // OK, all should be fine
-                this.checkAromaticity = (bool)value[0];
-            }
-            get
-            {
-                return new object[] { this.checkAromaticity };
-            }
-        }
+        private readonly IAtomContainer container;
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
-
-        public DescriptorValue<Result<int>> Calculate(IAtomContainer atomContainer)
+        public AcidicGroupCountDescriptor(IAtomContainer container, bool checkAromaticity = false)
         {
-            atomContainer = Clone(atomContainer); // don't mod original
+            container = (IAtomContainer)container.Clone(); // don't mod original
 
             // do aromaticity detection
-            if (this.checkAromaticity)
+            if (checkAromaticity)
             {
-                try
-                {
-                    AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);
-                    Aromaticity.CDKLegacy.Apply(atomContainer);
-                }
-                catch (CDKException exception)
-                {
-                    return GetDummyDescriptorValue(exception);
-                }
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+                Aromaticity.CDKLegacy.Apply(container);
             }
 
-            int count = 0;
-            foreach (var tool in tools)
-                count += tool.MatchAll(atomContainer).Count();
-            return new DescriptorValue<Result<int>>(specification, ParameterNames,
-                                       Parameters, new Result<int>(count),
-                                       DescriptorNames);
+            this.container = container;
         }
 
-        public override IDescriptorResult DescriptorResultType => Result.Instance<int>();
-        public override IReadOnlyList<string> ParameterNames { get; } 
-            = new string[] { "checkAromaticity" };
-
-        public override object GetParameterType(string name)
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            object obj = null;
-            if (string.Equals(name, "checkAromaticity", StringComparison.Ordinal)) 
-                obj = true;
-            return obj;
+            public Result(int value)
+            {
+                this.NumberOfAcids = value;
+            }
+
+            [DescriptorResultProperty("nAcid")]
+            public int NumberOfAcids { get; private set; }
+
+            public int Value => NumberOfAcids;
         }
 
-        private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception exception)
+        public Result Calculate()
         {
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(-1), DescriptorNames, exception);
+            var count = tools.Select(n => n.MatchAll(container).Count()).Sum();
+            return new Result(count);
         }
 
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

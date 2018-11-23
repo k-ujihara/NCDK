@@ -17,61 +17,33 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Numerics;
-using NCDK.QSAR.Results;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
-    /// This class calculates GDR proton descriptors used in neural networks for H1 NMR
+    /// This class calculates GSR proton descriptors used in neural networks for H1 NMR
     /// shift <token>cdk-cite-AiresDeSousa2002</token>. It only applies to (explicit) hydrogen atoms,
     /// requires aromaticity to be perceived (possibly done via a parameter), and
     /// needs 3D coordinates for all atoms.
     /// </summary>
-    /// <remarks>
-    ///  This descriptor uses these parameters:
-    /// <list type="table">
-    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
-    /// <item><term>checkAromaticity</term><term>false</term><term>True is the aromaticity has to be checked</term></item>
-    /// </list>
-    /// </remarks>
     // @author      Federico
     // @cdk.created 2006-12-11
     // @cdk.module  qsaratomic
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
     // @cdk.bug     1632419
-    public partial class RDFProtonDescriptorGSR : IAtomicDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues")]
+    public partial class RDFProtonDescriptorGSR : AbstractDescriptor, IAtomicDescriptor
     {
+        private const string prefix = "gSr_";
         private const int desc_length = 7;
 
-        public RDFProtonDescriptorGSR()
-        {
-            names = new string[desc_length];
-            for (int i = 0; i < desc_length; i++)
-            {
-                names[i] = "gSr_" + (i + 1);
-            }
-        }
-
-        private static string[] names;
-        public IReadOnlyList<string> DescriptorNames => names;
-
-        /// <summary>
-        /// The specification attribute of the RDFProtonDescriptorGSR object
-        /// </summary>
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues",
-                typeof(RDFProtonDescriptorGSR).FullName,
-                "The Chemistry Development Kit");
-
         private static bool MakeDescriptorLastStage(
-            ArrayResult<double> rdfProtonCalculatedValues,
+            List<double> rdfProtonCalculatedValues,
             IAtom atom,
             IAtom clonedAtom,
             IAtomContainer mol,
@@ -81,65 +53,39 @@ namespace NCDK.QSAR.Descriptors.Atomic
             List<int> atoms,
             List<int> bondsInCycloex)
         {
-            //Variables
-            double[] values; // for storage of results of other methods
-            double sum;
-            double smooth = -20;
-            double partial;
-            int position;
-            double limitInf;
-            double limitSup;
-            double step;
-
             ////////////////////////THE FOUTH DESCRIPTOR IS gS(r), WHICH TAKES INTO ACCOUNT Single BONDS IN RIGID SYSTEMS
 
-            Vector3 middlePoint = new Vector3();
-            double angle = 0;
-
-            if (singles.Count > 0)
+            if (singles.Any())
             {
-                double dist0;
-                double dist1;
-                IAtom singleBondAtom0;
-                IAtom singleBondAtom1;
-                position = 0;
-                IBond theSingleBond = null;
-                limitInf = 0;
-                limitSup = Math.PI / 2;
-                step = (limitSup - limitInf) / 7;
-                smooth = -1.15;
-                for (double ghs = 0; ghs < limitSup; ghs = ghs + step)
+                const double limitSup = Math.PI / 2;
+                const double smooth = -1.15;
+                for (int c = 0; c < desc_length; c++)
                 {
-                    sum = 0;
+                    var ghs = limitSup * ((double)c / desc_length);
+                    double sum = 0;
                     for (int sing = 0; sing < singles.Count; sing++)
                     {
-                        angle = 0;
-                        partial = 0;
-                        int thisSingleBond = singles[sing];
-                        position = thisSingleBond;
-                        theSingleBond = mol.Bonds[position];
-                        middlePoint = theSingleBond.Geometric3DCenter;
-                        singleBondAtom0 = theSingleBond.Atoms[0];
-                        singleBondAtom1 = theSingleBond.Atoms[1];
-                        dist0 = CalculateDistanceBetweenTwoAtoms(singleBondAtom0, atom);
-                        dist1 = CalculateDistanceBetweenTwoAtoms(singleBondAtom1, atom);
+                        var thisSingleBond = singles[sing];
+                        var position = thisSingleBond;
+                        var theSingleBond = mol.Bonds[position];
+                        var middlePoint = theSingleBond.Geometric3DCenter;
+                        var singleBondAtom0 = theSingleBond.Atoms[0];
+                        var singleBondAtom1 = theSingleBond.Atoms[1];
+                        var dist0 = CalculateDistanceBetweenTwoAtoms(singleBondAtom0, atom);
+                        var dist1 = CalculateDistanceBetweenTwoAtoms(singleBondAtom1, atom);
 
                         var aA = middlePoint;
                         var aB = dist1 > dist0 ? singleBondAtom0.Point3D.Value : singleBondAtom1.Point3D.Value;
                         var bA = middlePoint;
                         var bB = atom.Point3D.Value;
 
-                        values = CalculateDistanceBetweenAtomAndBond(atom, theSingleBond);
-
-                        angle = CalculateAngleBetweenTwoLines(aA, aB, bA, bB);
-                        //Console.Out.WriteLine("ANGLe: "+angle+ " "+ mol.Atoms.IndexOf(atomsInSingleBond[0]) +" " +mol.Atoms.IndexOf(atomsInSingleBond[1]));
-
-                        partial = (1 / (Math.Pow(values[0], 2))) * Math.Exp(smooth * (Math.Pow((ghs - angle), 2)));
+                        var values = CalculateDistanceBetweenAtomAndBond(atom, theSingleBond);
+                        var angle = CalculateAngleBetweenTwoLines(aA, aB, bA, bB);
+                        var partial = (1 / Math.Pow(values[0], 2)) * Math.Exp(smooth * Math.Pow(ghs - angle, 2));
                         sum += partial;
                     }
-                    //gSr_function.Add(new Double(sum));
                     rdfProtonCalculatedValues.Add(sum);
-                    Debug.WriteLine("RDF gSr prob.: " + sum + " at distance " + ghs);
+                    Debug.WriteLine($"RDF gSr prob.: {sum} at distance {ghs}");
                 }
                 return true;
             }

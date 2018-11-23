@@ -16,23 +16,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class WienerNumbersDescriptorTest : MolecularDescriptorTest
+    public class WienerNumbersDescriptorTest : MolecularDescriptorTest<WienerNumbersDescriptor>
     {
-        public WienerNumbersDescriptorTest()
-        {
-            SetDescriptor(typeof(WienerNumbersDescriptor));
-        }
-
         [TestMethod()]
         public void TestWienerNumbersDescriptor()
         {
@@ -40,9 +33,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
             AtomContainerManipulator.RemoveHydrogens(mol);
-            ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
-            Assert.AreEqual(testResult[0], retval[0], 0.0001);
-            Assert.AreEqual(testResult[1], retval[1], 0.0001);
+            var retval = CreateDescriptor(mol).Calculate();
+            Assert.AreEqual(testResult[0], retval.PathNumber, 0.0001);
+            Assert.AreEqual(testResult[1], retval.PolarityNumber, 0.0001);
         }
 
         /// <summary>
@@ -54,9 +47,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double[] testResult = { 18, 2 };
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
-            ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
-            Assert.AreEqual(testResult[0], retval[0], 0.0001);
-            Assert.AreEqual(testResult[1], retval[1], 0.0001);
+            var retval = CreateDescriptor(mol).Calculate();
+            Assert.AreEqual(testResult[0], retval.PathNumber, 0.0001);
+            Assert.AreEqual(testResult[1], retval.PolarityNumber, 0.0001);
         }
 
         /// <summary>
@@ -72,8 +65,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 smiles += "C"; // create the matching paraffin
                 var mol = sp.ParseSmiles(smiles);
-                ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
-                Assert.AreEqual(testResult[i], retval[0], 0.0001);
+                var retval = CreateDescriptor(mol).Calculate();
+                Assert.AreEqual(testResult[i], retval.PathNumber, 0.0001);
             }
         }
     }

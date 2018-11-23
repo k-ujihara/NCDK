@@ -44,8 +44,7 @@ namespace NCDK.Default
     // @author        steinbeck
     // @cdk.githash
     // @cdk.module data
-    public class ChemObject
-        : IChemObject, ISerializable
+    public class ChemObject : IChemObject, ISerializable
     {
         private bool isPlaced;
         private bool isVisited;
@@ -171,7 +170,6 @@ namespace NCDK.Default
         {
             typeof(string),
             typeof(NCDK.Dict.DictRef),
-            typeof(NCDK.QSAR.DescriptorSpecification),
 			typeof(System.Guid),
         };
 #endif
@@ -321,8 +319,7 @@ namespace NCDK.Silent
     // @author        steinbeck
     // @cdk.githash
     // @cdk.module data
-    public class ChemObject
-        : IChemObject, ISerializable
+    public class ChemObject : IChemObject, ISerializable
     {
         private bool isPlaced;
         private bool isVisited;
@@ -437,7 +434,6 @@ namespace NCDK.Silent
         {
             typeof(string),
             typeof(NCDK.Dict.DictRef),
-            typeof(NCDK.QSAR.DescriptorSpecification),
 			typeof(System.Guid),
         };
 #endif

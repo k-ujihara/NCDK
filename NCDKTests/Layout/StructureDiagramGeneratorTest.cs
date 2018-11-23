@@ -493,7 +493,7 @@ namespace NCDK.Layout
                     + "   130   122   124    1\n" + "   131   122   125    1\n" + "   132    91   126    1\n"
                     + "   133   126   127    1\n" + "   134     4   128    1\n" + "   135   128   129    1\n";
             Mol2Reader r = new Mol2Reader(new StringReader(problematicMol2));
-            IChemModel model = (IChemModel)r.Read(Silent.ChemObjectBuilder.Instance.NewChemModel());
+            IChemModel model = (IChemModel)r.Read(CDK.Builder.NewChemModel());
             IAtomContainer mol = model.MoleculeSet[0];
             Layout(mol);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(mol));
@@ -620,7 +620,7 @@ namespace NCDK.Layout
             ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
 
             // read molecule
-            IAtomContainer molecule = (IAtomContainer)molReader.Read(Silent.ChemObjectBuilder.Instance.NewAtomContainer());
+            IAtomContainer molecule = (IAtomContainer)molReader.Read(CDK.Builder.NewAtomContainer());
 
             // rebuild 2D coordinates
             // repeat this 10 times since the bug does only occur by chance
@@ -1050,11 +1050,11 @@ namespace NCDK.Layout
         [TestMethod()]
         public void PlaceCrossingSgroupBrackets()
         {
-            IAtomContainer mol = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
-            mol.Atoms.Add(Silent.ChemObjectBuilder.Instance.NewAtom("C"));
-            mol.Atoms.Add(Silent.ChemObjectBuilder.Instance.NewAtom("C"));
-            mol.Atoms.Add(Silent.ChemObjectBuilder.Instance.NewAtom("C"));
-            mol.Atoms.Add(Silent.ChemObjectBuilder.Instance.NewAtom("O"));
+            IAtomContainer mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("O"));
             mol.Atoms[0].ImplicitHydrogenCount = 3;
             mol.Atoms[1].ImplicitHydrogenCount = 2;
             mol.Atoms[2].ImplicitHydrogenCount = 2;
@@ -1084,11 +1084,11 @@ namespace NCDK.Layout
         [TestMethod()]
         public void PlaceNonCrossingSgroupBrackets()
         {
-            IAtomContainer mol = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
-            mol.Atoms.Add(Silent.ChemObjectBuilder.Instance.NewAtom("C"));
-            mol.Atoms.Add(Silent.ChemObjectBuilder.Instance.NewAtom("C"));
-            mol.Atoms.Add(Silent.ChemObjectBuilder.Instance.NewAtom("C"));
-            mol.Atoms.Add(Silent.ChemObjectBuilder.Instance.NewAtom("O"));
+            IAtomContainer mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("O"));
             mol.Atoms[0].ImplicitHydrogenCount = 3;
             mol.Atoms[1].ImplicitHydrogenCount = 2;
             mol.Atoms[2].ImplicitHydrogenCount = 2;
@@ -1116,12 +1116,12 @@ namespace NCDK.Layout
         [TestMethod()]
         public void PlaceOverlappingCrossingSgroupBrackets()
         {
-            IAtomContainer mol = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
-            mol.Atoms.Add(Silent.ChemObjectBuilder.Instance.NewAtom("C"));
-            mol.Atoms.Add(Silent.ChemObjectBuilder.Instance.NewAtom("C"));
-            mol.Atoms.Add(Silent.ChemObjectBuilder.Instance.NewAtom("C"));
-            mol.Atoms.Add(Silent.ChemObjectBuilder.Instance.NewAtom("C"));
-            mol.Atoms.Add(Silent.ChemObjectBuilder.Instance.NewAtom("O"));
+            IAtomContainer mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("O"));
             mol.Atoms[0].ImplicitHydrogenCount = 3;
             mol.Atoms[1].ImplicitHydrogenCount = 2;
             mol.Atoms[2].ImplicitHydrogenCount = 2;

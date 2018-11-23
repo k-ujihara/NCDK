@@ -17,55 +17,42 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Silent;
 using NCDK.IO;
-using NCDK.QSAR.Results;
-using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
-
 using System;
-using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class BCUTDescriptorTest : MolecularDescriptorTest
+    public class BCUTDescriptorTest : MolecularDescriptorTest<BCUTDescriptor>
     {
-        public BCUTDescriptorTest()
-                : base()
-        {
-            SetDescriptor(typeof(BCUTDescriptor));
-        }
+        public BCUTDescriptor CreateDescriptor(IAtomContainer mol, bool checkAromaticity) => new BCUTDescriptor(mol, checkAromaticity);
 
         [TestMethod()]
         public void TestBCUT()
         {
             string filename = "NCDK.Data.HIN.gravindex.hin";
-            var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new HINReader(ins);
-            ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
-            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
-            IAtomContainer ac = (IAtomContainer)cList[0];
-
-            object[] parameters = new object[] { 2, 2, true };
-            Descriptor.Parameters = parameters;
-            var descriptorValue = Descriptor.Calculate(ac);
-
-            ArrayResult<double> retval = (ArrayResult<double>)descriptorValue.Value;
-            Assert.IsNotNull(retval);
-            /* Console.Out.WriteLine("Num ret = "+retval.Count); */
-            for (int i = 0; i < retval.Length; i++)
+            IChemFile content;
+            using (var reader = new HINReader(ResourceLoader.GetAsStream(filename)))
             {
-                Assert.IsTrue(Math.Abs(0.0 - retval[i]) > 0.0000001, "The returned value must be non-zero");
+                content = reader.Read(CDK.Builder.NewChemFile());
             }
+            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
+            var ac = cList[0];
 
-            var names = descriptorValue.Names;
+            var descriptor = CreateDescriptor(ac, true);
+            var descriptorValue = descriptor.Calculate(2, 2);
+
+            var retval = descriptorValue.Values;
+            Assert.IsNotNull(retval);
+            foreach (var v in retval)
+                Assert.IsTrue(Math.Abs(0.0 - v) > 0.0000001, "The returned value must be non-zero");
+
+            var names = descriptorValue.Keys;
             foreach (var name in names)
                 Assert.IsNotNull(name);
 
@@ -93,22 +80,23 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestExtraEigenvalues()
         {
             string filename = "NCDK.Data.HIN.gravindex.hin";
-            var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new HINReader(ins);
-            ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            IChemFile content;
+            using (var reader = new HINReader(ResourceLoader.GetAsStream(filename)))
+            {
+                content = reader.Read(CDK.Builder.NewChemFile());
+            }
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
-            IAtomContainer ac = (IAtomContainer)cList[0];
+            var ac = cList[0];
 
-            object[] parameters = new object[] { 0, 25, true };
-            Descriptor.Parameters = parameters;
-            var descriptorValue = Descriptor.Calculate(ac);
+            var descriptor = CreateDescriptor(ac, true);
+            var descriptorValue = descriptor.Calculate(0, 25);
 
-            ArrayResult<double> retval = (ArrayResult<double>)descriptorValue.Value;
+            var retval = descriptorValue.Values;
             int nheavy = 20;
 
-            Assert.AreEqual(75, retval.Length);
-            for (int i = 0; i < nheavy; i++)
-                Assert.IsTrue(retval[i] != double.NaN);
+            Assert.AreEqual(75, retval.Count);
+            foreach (var v in retval)
+                Assert.IsTrue(v != double.NaN);
             for (int i = nheavy; i < nheavy + 5; i++)
             {
                 Assert.IsTrue(double.IsNaN(retval[i]), "Extra eigenvalue should have been NaN");
@@ -118,8 +106,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestAromaticity()
         {
-            SetDescriptor(typeof(BCUTDescriptor));
-
             string smiles1 = "c1ccccc1";
             string smiles2 = "C1=CC=CC=C1";
 
@@ -135,11 +121,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Aromaticity.CDKLegacy.Apply(mol1);
             Aromaticity.CDKLegacy.Apply(mol2);
 
-            ArrayResult<double> result1 = (ArrayResult<double>)Descriptor.Calculate(mol1).Value;
-            ArrayResult<double> result2 = (ArrayResult<double>)Descriptor.Calculate(mol2).Value;
+            var result1 = CreateDescriptor(mol1).Calculate().Values;
+            var result2 = CreateDescriptor(mol2).Calculate().Values;
 
-            Assert.AreEqual(result1.Length, result2.Length);
-            for (int i = 0; i < result1.Length; i++)
+            Assert.AreEqual(result1.Count, result2.Count);
+            for (int i = 0; i < result1.Count; i++)
             {
                 Assert.AreEqual(result1[i], result2[i], 0.01, $"element {i} does not match");
             }
@@ -150,9 +136,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
-            ArrayResult<double> result1 = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
-            for (int i = 0; i < result1.Length; i++)
-                Assert.IsTrue(result1[i] != double.NaN);
+            var result1 = CreateDescriptor(mol).Calculate().Values;
+            foreach (var v in result1)
+                Assert.IsTrue(v != double.NaN);
         }
 
         // @cdk.bug 3489559
@@ -160,18 +146,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestUndefinedValues()
         {
             string filename = "NCDK.Data.MDL.burden_undefined.sdf";
-            var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-            ChemFile content = reader.Read(new ChemFile());
+            IChemFile content;
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
+            {
+                content = reader.Read(CDK.Builder.NewChemFile());
+            }
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
-            IAtomContainer ac = (IAtomContainer)cList[0];
+            var ac = cList[0];
 
             Assert.IsNotNull(ac);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
             AddExplicitHydrogens(ac);
             Aromaticity.CDKLegacy.Apply(ac);
 
-            Exception e = Descriptor.Calculate(ac).Exception;
+            var e = CreateDescriptor(ac).Calculate().Exception;
             Assert.IsNotNull(e);
             // make sure exception was a NPE etc.
             Assert.AreEqual("Could not calculate partial charges: Partial charge not-supported for element: 'As'.", e.Message);

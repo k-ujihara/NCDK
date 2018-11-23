@@ -16,104 +16,73 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Charges;
-using NCDK.QSAR.Results;
-using System;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
     /// Effective polarizability of a heavy atom
     /// </summary>
-    /// <remarks>
-    /// This descriptor uses these parameters:
-    /// <list type="table">
-    ///   <item>
-    ///     <term>Name</term>
-    ///     <term>Default</term>
-    ///     <term>Description</term>
-    ///   </item>
-    ///   <item>
-    ///     <term></term>
-    ///     <term></term>
-    ///     <term>no parameters</term>
-    ///   </item>
-    /// </list>
-    /// </remarks>
     /// <seealso cref="Polarizability"/>
     // @author      Miguel Rojas
     // @cdk.created 2006-05-03
     // @cdk.module  qsaratomic
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:effectivePolarizability
-    public partial class EffectiveAtomPolarizabilityDescriptor : IAtomicDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#effectivePolarizability")]
+    public partial class EffectiveAtomPolarizabilityDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
-        /// <summary>
-        /// The specification attribute of the EffectiveAtomPolarizabilityDescriptor object
-        /// </summary>
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#effectivePolarizability",
-                typeof(EffectiveAtomPolarizabilityDescriptor).FullName, "The Chemistry Development Kit");
+        IAtomContainer container;
 
-        /// <summary>
-        /// The parameters attribute of the EffectiveAtomPolarizabilityDescriptor object
-        /// </summary>
-        public IReadOnlyList<object> Parameters { get { return null; } set { } }
-
-        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "effAtomPol" };
-
-        /// <summary>
-        ///  The method calculates the Effective Atom Polarizability of a given atom
-        ///  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
-        /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
-        /// <param name="ac">AtomContainer</param>
-        /// <returns>return the effective polarizability</returns>
-        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer ac)
+        public EffectiveAtomPolarizabilityDescriptor(IAtomContainer container)
         {
-            double polarizability;
-            try
+            this.container = container;
+        }
+
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(double value)
             {
-                // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
-                var originalAtomtypeName = atom.AtomTypeName;
-                var originalNeighborCount = atom.FormalNeighbourCount;
-                var originalHCount = atom.ImplicitHydrogenCount;
-                var originalValency = atom.Valency;
-                var originalHybridization = atom.Hybridization;
-                var originalFlag = atom.IsVisited;
-                var originalBondOrderSum = atom.BondOrderSum;
-                var originalMaxBondOrder = atom.MaxBondOrder;
-                polarizability = Polarizability.CalculateGHEffectiveAtomPolarizability(ac, atom, 100, true);
-                // restore original props
-                atom.AtomTypeName = originalAtomtypeName;
-                atom.FormalNeighbourCount = originalNeighborCount;
-                atom.Valency = originalValency;
-                atom.ImplicitHydrogenCount = originalHCount;
-                atom.IsVisited = originalFlag;
-                atom.Hybridization = originalHybridization;
-                atom.MaxBondOrder = originalMaxBondOrder;
-                atom.BondOrderSum = originalBondOrderSum;
-                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(polarizability), DescriptorNames);
+                this.Polarizability = value;
             }
-            catch (Exception ex1)
-            {
-                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, ex1);
-            }
+
+            [DescriptorResultProperty("effAtomPol")]
+            public double Polarizability { get; private set; }
+
+            public double Value => Polarizability;
         }
 
         /// <summary>
-        /// The parameterNames attribute of the EffectiveAtomPolarizabilityDescriptor object
+        /// The method calculates the Effective Atom Polarizability of a given atom
+        /// It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="Result"/> is requested</param>
+        /// <returns>return the effective polarizability</returns>
+        public Result Calculate(IAtom atom)
+        {
+            // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
+            var originalAtomtypeName = atom.AtomTypeName;
+            var originalNeighborCount = atom.FormalNeighbourCount;
+            var originalHCount = atom.ImplicitHydrogenCount;
+            var originalValency = atom.Valency;
+            var originalHybridization = atom.Hybridization;
+            var originalFlag = atom.IsVisited;
+            var originalBondOrderSum = atom.BondOrderSum;
+            var originalMaxBondOrder = atom.MaxBondOrder;
+            var polarizability = Polarizability.CalculateGHEffectiveAtomPolarizability(container, atom, 100, true);
+            // restore original props
+            atom.AtomTypeName = originalAtomtypeName;
+            atom.FormalNeighbourCount = originalNeighborCount;
+            atom.Valency = originalValency;
+            atom.ImplicitHydrogenCount = originalHCount;
+            atom.IsVisited = originalFlag;
+            atom.Hybridization = originalHybridization;
+            atom.MaxBondOrder = originalMaxBondOrder;
+            atom.BondOrderSum = originalBondOrderSum;
+            return new Result(polarizability);
+        }
 
-        /// <summary>
-        ///  Gets the parameterType attribute of the EffectiveAtomPolarizabilityDescriptor object
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name) => null;
+        IDescriptorResult IAtomicDescriptor.Calculate(IAtom atom) => Calculate(atom);
     }
 }

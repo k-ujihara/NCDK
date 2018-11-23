@@ -17,29 +17,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Bonds
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarbond
     [TestClass()]
-    public class BondPartialPiChargeDescriptorTest : BondDescriptorTest
+    public class BondPartialPiChargeDescriptorTest : BondDescriptorTest<BondPartialPiChargeDescriptor>
     {
-        public BondPartialPiChargeDescriptorTest()
-        {
-            SetDescriptor(typeof(BondPartialPiChargeDescriptor));
-        }
-
         [TestMethod()]
         public void TestBondPiElectronegativityDescriptor()
         {
-            descriptor = new BondPartialPiChargeDescriptor();
             double[] testResult = { 0.0, 0.0 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
@@ -47,68 +36,73 @@ namespace NCDK.QSAR.Descriptors.Bonds
             var mol = sp.ParseSmiles("CF");
             AddExplicitHydrogens(mol);
 
+            var descriptor = CreateDescriptor(mol);
             for (int i = 0; i < 2; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(mol.Bonds[i], mol).Value).Value;
+                var result = descriptor.Calculate(mol.Bonds[i]).Value;
                 Assert.AreEqual(testResult[i], result, 0.01);
             }
         }
 
         /// <summary>
-        /// A unit test for JUnit with Allyl bromide
+        /// A unit test with Allyl bromide
         /// </summary>
         [TestMethod()]
         public void TestBondPiElectronegativityDescriptor_Allyl_bromide()
         {
-            descriptor = new BondPartialPiChargeDescriptor();
-            double[] testResult = { 0.0022, 0.0011, 0.0011, 0.0011, 0.0011, 0.0, 0.0, 0.0 }; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
+            double[] testResult = { 0.0022, 0.0011, 0.0011, 0.0011, 0.0011, 0.0, 0.0, 0.0 }; 
+            // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C=CCBr");
             AddExplicitHydrogens(mol);
 
+            var descriptor = CreateDescriptor(mol);
             for (int i = 0; i < 8; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(mol.Bonds[i], mol).Value).Value;
+                var result = descriptor.Calculate(mol.Bonds[i]).Value;
                 Assert.AreEqual(testResult[i], result, 0.03);
             }
         }
 
         /// <summary>
-        /// A unit test for JUnit with Isopentyl iodide
+        /// A unit test with Isopentyl iodide
         /// </summary>
         [TestMethod()]
         public void TestBondPiElectronegativityDescriptor_Isopentyl_iodide()
         {
-            descriptor = new BondPartialPiChargeDescriptor();
-            double testResult = 0.0; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
+            double testResult = 0.0; 
+            // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C(C)(C)CCI");
             AddExplicitHydrogens(mol);
+
+            var descriptor = CreateDescriptor(mol);
             for (int i = 0; i < 6; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(mol.Bonds[i], mol).Value).Value;
+                var result = descriptor.Calculate(mol.Bonds[i]).Value;
                 Assert.AreEqual(testResult, result, 0.001);
             }
         }
 
         /// <summary>
-        /// A unit test for JUnit with Allyl mercaptan
+        /// A unit test with Allyl mercaptan
         /// </summary>
         [TestMethod()]
         public void TestBondPiElectronegativityDescriptor_Allyl_mercaptan()
         {
-            descriptor = new BondPartialPiChargeDescriptor();
-            double[] testResult = { 0.0006, 0.0003, 0.0003, 0.0003, 0.0003, 0.0, 0.0, 0.0, 0.0 }; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
+            double[] testResult = { 0.0006, 0.0003, 0.0003, 0.0003, 0.0003, 0.0, 0.0, 0.0, 0.0 };
+            // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C=CCS");
             AddExplicitHydrogens(mol);
 
+            var descriptor = CreateDescriptor(mol);
             for (int i = 0; i < 9; i++)
             {
-                double result = ((Result<double>)descriptor.Calculate(mol.Bonds[i], mol).Value).Value;
+                var result = descriptor.Calculate(mol.Bonds[i]).Value;
                 Assert.AreEqual(testResult[i], result, 0.03);
             }
         }

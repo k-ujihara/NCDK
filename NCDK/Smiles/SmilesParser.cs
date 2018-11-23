@@ -57,7 +57,7 @@ namespace NCDK.Smiles
     /// modifying their formula. If there are multiple locations a hydrogen could be
     /// placed the returned structure would differ depending on the atom input order.
     /// If you wish to skip the kekulistation (not recommended) then it can be
-    /// disabled with <see cref="kekulise"/>. SMILES can be verified for validity with the
+    /// disabled with <see cref="Kekulise"/>. SMILES can be verified for validity with the
     /// <see href="http://www.daylight.com/daycgi/depict">DEPICT</see> service.
     /// </para>
     /// Unsupported Features
@@ -100,15 +100,6 @@ namespace NCDK.Smiles
         private readonly BeamToCDK beamToCDK;
 
         /// <summary>
-        /// Kekulise the molecule on load. Generally this is a good idea as a
-        /// lower-case symbols in a SMILES do not really mean 'aromatic' but rather
-        /// 'conjugated'. Loading with kekulise 'on' will automatically assign
-        /// bond orders (if possible) using an efficient algorithm from the
-        /// underlying Beam library (soon to be added to CDK).
-        /// </summary>
-        private readonly bool kekulise = true;
-
-        /// <summary>
         /// Create a new SMILES parser which will create <see cref="IAtomContainer"/>s with
         /// the specified builder.
         /// </summary>
@@ -122,7 +113,7 @@ namespace NCDK.Smiles
         {
             this.builder = builder;
             this.beamToCDK = new BeamToCDK(builder);
-            this.kekulise = kekulise;
+            this.Kekulise = kekulise;
         }
 
         /// <summary>
@@ -135,25 +126,25 @@ namespace NCDK.Smiles
         public IReaction ParseReactionSmiles(string smiles)
         {
             if (!smiles.Contains(">"))
-                throw new NCDK.InvalidSmilesException("Not a reaction SMILES: " + smiles);
+                throw new InvalidSmilesException("Not a reaction SMILES: " + smiles);
 
-            int first = smiles.IndexOf('>');
-            int second = smiles.IndexOf('>', first + 1);
+            var first = smiles.IndexOf('>');
+            var second = smiles.IndexOf('>', first + 1);
 
             if (second < 0)
-                throw new NCDK.InvalidSmilesException("Invalid reaction SMILES:" + smiles);
+                throw new InvalidSmilesException("Invalid reaction SMILES:" + smiles);
 
-            string reactants = smiles.Substring(0, first);
-            string agents = smiles.Substring(first + 1, second - (first + 1));
-            string products = smiles.Substring(second + 1, smiles.Length - (second + 1));
+            var reactants = smiles.Substring(0, first);
+            var agents = smiles.Substring(first + 1, second - (first + 1));
+            var products = smiles.Substring(second + 1, smiles.Length - (second + 1));
 
-            IReaction reaction = builder.NewReaction();
+            var reaction = builder.NewReaction();
 
             // add reactants
             if (!(reactants.Count() == 0))
             {
-                IAtomContainer reactantContainer = ParseSmiles(reactants, true);
-                IChemObjectSet<IAtomContainer> reactantSet = ConnectivityChecker.PartitionIntoMolecules(reactantContainer);
+                var reactantContainer = ParseSmiles(reactants, true);
+                var reactantSet = ConnectivityChecker.PartitionIntoMolecules(reactantContainer);
                 for (int i = 0; i < reactantSet.Count; i++)
                 {
                     reaction.Reactants.Add(reactantSet[i]);
@@ -163,12 +154,10 @@ namespace NCDK.Smiles
             // add agents
             if (!(agents.Count() == 0))
             {
-                IAtomContainer agentContainer = ParseSmiles(agents, true);
-                IChemObjectSet<IAtomContainer> agentSet = ConnectivityChecker.PartitionIntoMolecules(agentContainer);
-                for (int i = 0; i < agentSet.Count; i++)
-                {
-                    reaction.Agents.Add(agentSet[i]);
-                }
+                var agentContainer = ParseSmiles(agents, true);
+                var agentSet = ConnectivityChecker.PartitionIntoMolecules(agentContainer);
+                foreach (var agent in agentSet)
+                    reaction.Agents.Add(agent);
             }
 
             string title = null;
@@ -176,12 +165,10 @@ namespace NCDK.Smiles
             // add products
             if (!(products.Count() == 0))
             {
-                IAtomContainer productContainer = ParseSmiles(products, true);
-                IChemObjectSet<IAtomContainer> productSet = ConnectivityChecker.PartitionIntoMolecules(productContainer);
-                for (int i = 0; i < productSet.Count; i++)
-                {
-                    reaction.Products.Add(productSet[i]);
-                }
+                var productContainer = ParseSmiles(products, true);
+                var productSet = ConnectivityChecker.PartitionIntoMolecules(productContainer);
+                foreach (var product in productSet)
+                    reaction.Products.Add(product);
                 reaction.SetProperty(CDKPropertyName.Title, title = productContainer.Title);
             }
 
@@ -193,7 +180,7 @@ namespace NCDK.Smiles
             catch (Exception e)
             {
                 //e.StackTrace
-                throw new NCDK.InvalidSmilesException("Error parsing CXSMILES:" + e.Message);
+                throw new InvalidSmilesException("Error parsing CXSMILES:" + e.Message);
             }
 
             return reaction;
@@ -219,7 +206,7 @@ namespace NCDK.Smiles
 
                 // convert the Beam object model to the CDK - note exception thrown
                 // if a kekule structure could not be assigned.
-                var mol = beamToCDK.ToAtomContainer(kekulise ? g.Kekule() : g, kekulise);
+                var mol = beamToCDK.ToAtomContainer(Kekulise ? g.Kekule() : g, Kekulise);
 
                 if (!isRxnPart)
                 {
@@ -270,10 +257,10 @@ namespace NCDK.Smiles
         /// <param name="mol">molecule</param>
         private void ParseMolCXSMILES(string title, IAtomContainer mol)
         {
-            CxSmilesState cxstate;
-            int pos;
             if (title != null && title.StartsWithChar('|'))
             {
+                int pos;
+                CxSmilesState cxstate;
                 if ((pos = CxSmilesParser.ProcessCx(title, cxstate = new CxSmilesState())) >= 0)
                 {
                     // set the correct title
@@ -300,10 +287,10 @@ namespace NCDK.Smiles
         /// <param name="rxn">parsed reaction</param>
         private void ParseRxnCXSMILES(string title, IReaction rxn)
         {
-            CxSmilesState cxstate;
-            int pos;
             if (title != null && title.StartsWithChar('|'))
             {
+                int pos;
+                CxSmilesState cxstate;
                 if ((pos = CxSmilesParser.ProcessCx(title, cxstate = new CxSmilesState())) >= 0)
                 {
                     // set the correct title
@@ -355,9 +342,9 @@ namespace NCDK.Smiles
             // repartition/merge fragments
             if (cxstate.fragGroups != null)
             {
-                int reactant = 1;
-                int agent = 2;
-                int product = 3;
+                const int reactant = 1;
+                const int agent = 2;
+                const int product = 3;
 
                 // note we don't use a list for fragmap as the indexes need to stay consistent
                 var fragMap = new SortedDictionary<int, IAtomContainer>();
@@ -456,7 +443,7 @@ namespace NCDK.Smiles
 
                     var old = atoms[e.Key];
                     var pseudo = bldr.NewPseudoAtom();
-                    string val = e.Value;
+                    var val = e.Value;
 
                     // specialised label handling
                     if (val.EndsWith("_p", StringComparison.Ordinal)) // pseudo label
@@ -484,9 +471,9 @@ namespace NCDK.Smiles
             // atom-coordinates
             if (cxstate.atomCoords != null)
             {
-                int numAtoms = atoms.Count;
-                int numCoords = cxstate.atomCoords.Count;
-                int lim = Math.Min(numAtoms, numCoords);
+                var numAtoms = atoms.Count;
+                var numCoords = cxstate.atomCoords.Count;
+                var lim = Math.Min(numAtoms, numCoords);
                 if (cxstate.coordFlag)
                 {
                     for (int i = 0; i < lim; i++)
@@ -664,7 +651,7 @@ namespace NCDK.Smiles
                             break;
                     }
                     sgroupMap.Add(mol, sgroup);
-                    C_PolySgroup:
+                C_PolySgroup:
                     ;
                 }
             }
@@ -675,21 +662,11 @@ namespace NCDK.Smiles
         }
 
         /// <summary>
-        /// The (default false) setting to preserve aromaticity as provided in
-        /// the Smiles itself. Indicating if aromaticity is preserved.
-        /// </summary>
-        [Obsolete]
-        public bool IsPreservingAromaticity
-        {
-            get { return !kekulise; }
-        }
-
-        /// <summary>
         /// Indicated whether structures should be automatically kekulised if they
         /// are provided as aromatic. Kekulisation is on by default but can be
         /// turned off if it is believed the structures can be handled without
         /// assigned bond orders (not recommended).
         /// </summary>
-        public bool Kekulise => this.kekulise;
+        public bool Kekulise { get; private set; } = true;
     }
 }

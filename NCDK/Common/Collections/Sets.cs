@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace NCDK.Common.Collections
 {
-    public static class Sets
+    internal static class Sets
     {
         public static ISet<T> Empty<T>() => EmptySet<T>.instance;
 

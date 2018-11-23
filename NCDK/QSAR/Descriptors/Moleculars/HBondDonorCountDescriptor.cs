@@ -17,10 +17,9 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Aromaticities;
 using NCDK.Config;
-using NCDK.QSAR.Results;
-using System;
-using System.Collections.Generic;
+using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -43,82 +42,50 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// This descriptor works properly with AtomContainers whose atoms contain either <b>implicit</b> or <b>explicit
     /// hydrogen</b> atoms. It does not work with atoms that contain neither implicit nor explicit hydrogens.
     /// </para>
-    /// <para>
-    /// Returns a single value named <i>nHBDon</i>.
-    /// </para>
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    ///   <item>
-    ///     <term>Name</term>
-    ///     <term>Default</term>
-    ///     <term>Description</term>
-    ///   </item>
-    ///   <item>
-    ///     <term></term>
-    ///     <term></term>
-    ///     <term>no parameters</term>
-    ///   </item>
-    /// </list>
-    /// </para>
     /// </remarks>
     // @author      ulif
     // @cdk.created 2005-22-07
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:hBondDonors
-    public class HBondDonorCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondDonors")]
+    public class HBondDonorCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private static readonly string[] NAMES = { "nHBDon" };
+        private readonly IAtomContainer container;
 
-        public HBondDonorCountDescriptor() { }
-
-        /// <summary>
-        /// The specification attribute of the HBondDonorCountDescriptor object
-        /// </summary>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondDonors",
-                typeof(HBondDonorCountDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        public override IReadOnlyList<object> Parameters
+        public HBondDonorCountDescriptor(IAtomContainer container)
         {
-            set
-            {
-                // this descriptor has no parameters; nothing has to be done here
-            }
-            get
-            {
-                // no parameters; thus we return null
-                return null;
-            }
+            container = (IAtomContainer)container.Clone(); // don't mod original
+            this.container = container;
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
-
-        private IDescriptorValue GetDummyDescriptorValue(Exception e)
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+            public Result(int value)
+            {
+                this.NumberOfHBondDonor = value;
+            }
+
+            [DescriptorResultProperty("nHBDon")]
+            public int NumberOfHBondDonor { get; private set; }
+
+            public int Value => NumberOfHBondDonor;
         }
 
         /// <summary>
         /// Calculates the number of H bond donors.
         /// </summary>
-        /// <param name="atomContainer">AtomContainer</param>
         /// <returns>number of H bond donors</returns>
-        public DescriptorValue<Result<int>> Calculate(IAtomContainer atomContainer)
+        public Result Calculate()
         {
             int hBondDonors = 0;
-            var ac = (IAtomContainer)atomContainer.Clone();
 
-            //IAtom[] atoms = ac.GetAtoms();
             // iterate over all atoms of this AtomContainer; use label atomloop to allow for labelled continue
 
             //atomloop:
-            for (int atomIndex = 0; atomIndex < ac.Atoms.Count; atomIndex++)
+            for (int atomIndex = 0; atomIndex < container.Atoms.Count; atomIndex++)
             {
-                var atom = ac.Atoms[atomIndex];
+                var atom = container.Atoms[atomIndex];
                 // checking for O and N atoms where the formal charge is >= 0
                 switch (atom.AtomicNumber)
                 {
@@ -127,14 +94,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         if (atom.FormalCharge >= 0)
                         {
                             // implicit hydrogens
-                            int implicitH = atom.ImplicitHydrogenCount ?? 0;
+                            var implicitH = atom.ImplicitHydrogenCount ?? 0;
                             if (implicitH > 0)
                             {
                                 hBondDonors++;
                                 goto continue_atomloop; // we skip the explicit hydrogens part cause we found implicit hydrogens
                             }
                             // explicit hydrogens
-                            var neighbours = ac.GetConnectedAtoms(atom);
+                            var neighbours = container.GetConnectedAtoms(atom);
                             foreach (var neighbour in neighbours)
                             {
                                 if ((neighbour).AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
@@ -146,26 +113,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         }
                         break;
                 }
-            continue_atomloop:
+                continue_atomloop:
                 ;
             }
 
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(hBondDonors), DescriptorNames);
+            return new Result(hBondDonors);
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
-
-        /// <summary>
-        /// The parameterNames of the HBondDonorCountDescriptor.
-        /// </summary>
-        /// <remarks>
-        /// <see langword="null"/> as this descriptor does not have any parameters.
-        /// </remarks>
-        public override IReadOnlyList<string> ParameterNames => null; // no parameters; thus we return null
-
-        public override object GetParameterType(string name) => null; // no parameters; thus we return null
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

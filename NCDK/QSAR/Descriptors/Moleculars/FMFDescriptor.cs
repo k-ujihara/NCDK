@@ -19,9 +19,6 @@
  */
 
 using NCDK.Fragments;
-using NCDK.QSAR.Results;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -47,105 +44,55 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @author Rajarshi Guha
     // @cdk.module qsarmolecular
     // @cdk.dictref qsar-descriptors:FMF
-    // @cdk.githash
     // @see org.openscience.cdk.fragment.MurckoFragmenter
-    public class FMFDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fmf")]
+    public class FMFDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        public FMFDescriptor() { }
+        private readonly IAtomContainer container;
+
+        public FMFDescriptor(IAtomContainer container)
+        {
+            container = (IAtomContainer)container.Clone();
+            this.container = container;
+        }
+
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(double value)
+            {
+                this.FMF = value;
+            }
+
+            [DescriptorResultProperty("FMF")]
+            public double FMF { get; private set; }
+
+            public double Value => FMF;
+        }
 
         /// <summary>
         /// Calculates the FMF descriptor value for the given <see cref="IAtomContainer"/>.
         /// </summary>
-        /// <param name="container">An <see cref="IAtomContainer"/> for which this descriptor should be calculated</param>
-        /// <returns>An object of <see cref="IDescriptorValue"/> that contains the
-        ///         calculated FMF descriptor value as well as specification details</returns>
-        public DescriptorValue<Result<double>> Calculate(IAtomContainer container)
+        /// <returns>An object of <see cref="Result"/> that contains the
+        /// calculated FMF descriptor value as well as specification details</returns>
+        public Result Calculate()
         {
-            container = Clone(container); // don't mod original
+            double result;
 
             var fragmenter = new MurckoFragmenter(true, 3);
-            Result<double> result;
-            try
-            {
-                fragmenter.GenerateFragments(container);
-                var framework = fragmenter.GetFrameworksAsContainers().ToReadOnlyList();
-                var ringSystems = fragmenter.GetRingSystemsAsContainers().ToReadOnlyList();
-                if (framework.Count == 1)
-                {
-                    result = new Result<double>(framework[0].Atoms.Count / (double)container.Atoms.Count);
-                }
-                else if (framework.Count == 0 && ringSystems.Count == 1)
-                {
-                    result = new Result<double>(ringSystems[0].Atoms.Count / (double)container.Atoms.Count);
-                }
-                else
-                    result = new Result<double>(0.0);
-            }
-            catch (CDKException)
-            {
-                result = new Result<double>(double.NaN);
-            }
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, result, DescriptorNames);
+            fragmenter.GenerateFragments(container);
+            var framework = fragmenter.GetFrameworksAsContainers().ToReadOnlyList();
+            var ringSystems = fragmenter.GetRingSystemsAsContainers().ToReadOnlyList();
+            if (framework.Count == 1)
+                result = framework[0].Atoms.Count / (double)container.Atoms.Count;
+            else if (framework.Count == 0 && ringSystems.Count == 1)
+                result = ringSystems[0].Atoms.Count / (double)container.Atoms.Count;
+            else
+                result = 0;
+
+            return new Result(result);
         }
 
-        /// <summary>
-        /// Returns the specific type of the FMF descriptor value.
-        /// </summary>
-        /// <remarks>
-        /// The FMF descriptor is a single, double value.
-        /// 
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="IDescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="IDescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// <para>
-        /// Additionally, the length indicated by the result type must match the actual
-        /// length of a descriptor calculated with the current parameters. Typically, the
-        /// length of array result types vary with the values of the parameters. See
-        /// <see cref="IDescriptor"/> for more details.</para>
-        /// </remarks>
-        /// <returns>an instance of the <see cref="Result{Double}"/></returns>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>();
-
-        /// <inheritdoc/>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fmf",
-             typeof(FMFDescriptor).FullName,
-             "The Chemistry Development Kit");
-
-        /// <summary>
-        /// Returns the names of the parameters for this descriptor.
-        /// </summary>
-        /// <remarks>
-        /// Since this descriptor takes no parameters, <see langword="null"/> is returned
-        /// </remarks>
-        /// <returns><see langword="null"/>, since there are no parameters</returns>
-        public override IReadOnlyList<string> ParameterNames => null;
-
-        /// <summary>
-        /// Returns a class matching that of the parameter with the given name.
-        /// Since this descriptor has no parameters, <see langword="null"/> is always returned
-        /// </summary>
-        /// <param name="name">The name of the parameter whose type is requested</param>
-        /// <returns><see langword="null"/>, since this descriptor has no parameters</returns>
-        public override object GetParameterType(string name) => null;
-
-        /// <summary>
-        /// The parameters for this descriptor.
-        /// </summary>
-        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
-
-        /// <summary>
-        /// Returns an array of names for each descriptor value calculated.
-        /// <para>
-        /// Since this descriptor returns a single value, the array has a single element, viz., "FMF"
-        /// </para>
-        /// </summary>
-        /// <returns>A 1-element string array, with the value "FMF"</returns>
-        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "FMF" };
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

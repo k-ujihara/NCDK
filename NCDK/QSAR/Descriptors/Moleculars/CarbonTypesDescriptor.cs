@@ -18,9 +18,7 @@
  */
 
 using NCDK.Config;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
-using System;
 using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -32,67 +30,67 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// The class calculates 9 descriptors in the following order
     /// <list type="bullet">
     /// <item>C1SP1 triply hound carbon bound to one other carbon</item>
-    /// <item>C2SP1    triply bound carbon bound to two other carbons</item>
-    /// <item>C1SP2    doubly hound carbon bound to one other carbon</item>
-    /// <item>C2SP2    doubly bound carbon bound to two other carbons</item>
-    /// <item>C3SP2    doubly bound carbon bound to three other carbons</item>
-    /// <item>C1SP3    singly bound carbon bound to one other carbon</item>
-    /// <item>C2SP3    singly bound carbon bound to two other carbons</item>
-    /// <item>C3SP3    singly bound carbon bound to three other carbons</item>
-    /// <item>C4SP3    singly bound carbon bound to four other carbons</item>
+    /// <item>C2SP1 triply bound carbon bound to two other carbons</item>
+    /// <item>C1SP2 doubly hound carbon bound to one other carbon</item>
+    /// <item>C2SP2 doubly bound carbon bound to two other carbons</item>
+    /// <item>C3SP2 doubly bound carbon bound to three other carbons</item>
+    /// <item>C1SP3 singly bound carbon bound to one other carbon</item>
+    /// <item>C2SP3 singly bound carbon bound to two other carbons</item>
+    /// <item>C3SP3 singly bound carbon bound to three other carbons</item>
+    /// <item>C4SP3 singly bound carbon bound to four other carbons</item>
     /// </list>
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
-    /// <item><term></term><term></term><term>no parameters</term></item>
-    /// </list>
-    /// </para>
     /// </remarks>
     // @author Rajarshi Guha
     // @cdk.created 2007-09-28
     // @cdk.module qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:carbonTypes
     // @cdk.keyword topological bond order ctypes
     // @cdk.keyword descriptor
-    public class CarbonTypesDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes")]
+    public class CarbonTypesDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly static string[] NAMES = { "C1SP1", "C2SP1", "C1SP2", "C2SP2", "C3SP2", "C1SP3", "C2SP3", "C3SP3", "C4SP3" };
+        private readonly IAtomContainer container;
 
-        public CarbonTypesDescriptor() { }
-
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes",
-                typeof(CarbonTypesDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        public override IReadOnlyList<object> Parameters
+        public CarbonTypesDescriptor(IAtomContainer container)
         {
-            set
-            {
-                // no parameters for this descriptor
-            }
-            get
-            {
-                // no parameters to return
-                return (null);
-            }
+            this.container = container;
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(IReadOnlyList<int> values)
+            {
+                this.Values = values;
+            }
 
-        public override IReadOnlyList<string> ParameterNames => null; // no param names to return
+            [DescriptorResultProperty]
+            public int C1SP1 => Values[0];
+            [DescriptorResultProperty]
+            public int C2SP1 => Values[1];
+            [DescriptorResultProperty]
+            public int C1SP2 => Values[2];
+            [DescriptorResultProperty]
+            public int C2SP2 => Values[3];
+            [DescriptorResultProperty]
+            public int C3SP2 => Values[4];
+            [DescriptorResultProperty]
+            public int C1SP3 => Values[5];
+            [DescriptorResultProperty]
+            public int C2SP3 => Values[6];
+            [DescriptorResultProperty]
+            public int C3SP3 => Values[7];
+            [DescriptorResultProperty]
+            public int C4SP3 => Values[8];
 
-        public override object GetParameterType(string name) => null;
+            public new IReadOnlyList<int> Values { get; private set; }
+        }
 
         /// <summary>
         /// Calculates the 9 carbon types descriptors
         /// </summary>
-        /// <param name="container">Parameter is the atom container.</param>
         /// <returns>An ArrayList containing 9 elements in the order described above</returns>
-        public DescriptorValue<ArrayResult<int>> Calculate(IAtomContainer container)
+        public Result Calculate()
         {
             int c1sp1 = 0;
             int c2sp1 = 0;
@@ -126,7 +124,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     }
                 }
 
-                BondOrder maxBondOrder = GetHighestBondOrder(container, atom);
+                var maxBondOrder = GetHighestBondOrder(container, atom);
 
                 switch (maxBondOrder)
                 {
@@ -157,20 +155,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            ArrayResult<int> retval = new ArrayResult<int>(9)
-            {
-                c1sp1,
-                c2sp1,
-                c1sp2,
-                c2sp2,
-                c3sp2,
-                c1sp3,
-                c2sp3,
-                c3sp3,
-                c4sp3
-            };
-
-            return new DescriptorValue<ArrayResult<int>>(specification, ParameterNames, Parameters, retval, DescriptorNames);
+            return new Result(new int[]
+                {
+                    c1sp1,
+                    c2sp1,
+                    c1sp2,
+                    c2sp2,
+                    c3sp2,
+                    c1sp3,
+                    c2sp3,
+                    c3sp3,
+                    c4sp3
+                });
         }
 
         private static BondOrder GetHighestBondOrder(IAtomContainer container, IAtom atom)
@@ -185,9 +181,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return maxOrder;
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<int>(9);
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

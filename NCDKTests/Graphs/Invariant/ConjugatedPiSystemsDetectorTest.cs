@@ -21,8 +21,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.IO;
 using NCDK.Silent;
-using NCDK.Smiles;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System.Diagnostics;
 
@@ -349,7 +347,7 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void Test3Aminomethane_cation()
         {
-            var builder = Silent.ChemObjectBuilder.Instance;
+            var builder = CDK.Builder;
             var mol = builder.NewAtomContainer();
             mol.Atoms.Add(builder.NewAtom("N"));
             mol.Atoms.Add(builder.NewAtom("C"));

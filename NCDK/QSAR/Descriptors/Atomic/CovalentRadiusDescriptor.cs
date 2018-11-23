@@ -18,90 +18,55 @@
  */
 
 using NCDK.Config;
-using NCDK.QSAR.Results;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
-    ///  This class returns the covalent radius of a given atom.
+    /// This class returns the covalent radius of a given atom.
     /// </summary>
-    /// <remarks>
-    /// This descriptor uses these parameters:
-    /// <list type="table">
-    ///   <item>
-    ///     <term>Name</term>
-    ///     <term>Default</term>
-    ///     <term>Description</term>
-    ///   </item>
-    ///   <item>
-    ///     <term></term>
-    ///     <term></term>
-    ///     <term>no parameters</term>
-    ///   </item>
-    /// </list>
-    /// </remarks>
     // @author         Miguel Rojas
     // @cdk.created    2006-05-17
     // @cdk.module     qsaratomic
     // @cdk.dictref qsar-descriptors:covalentradius
-    public partial class CovalentRadiusDescriptor : IAtomicDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#covalentradius")]
+    public partial class CovalentRadiusDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
-        private static readonly AtomTypeFactory factory = CDK.JmolAtomTypeFactory;
+        IAtomContainer container;
 
-        public CovalentRadiusDescriptor() { }
+        public CovalentRadiusDescriptor(IAtomContainer container)
+        {
+            this.container = container;
+        }
 
-        /// <inheritdoc/>
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#covalentradius",
-                typeof(CovalentRadiusDescriptor).FullName, "The Chemistry Development Kit");
+        public AtomTypeFactory AtomTypeFactory { get; set; } = CDK.JmolAtomTypeFactory;
 
-        /// <summary>
-        /// The parameters attribute of the VdWRadiusDescriptor object.
-        /// </summary>
-        public IReadOnlyList<object> Parameters { get { return null; } set { } }
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(double value)
+            {
+                this.CovalentRadius = value;
+            }
 
-        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "covalentRadius" };
+            [DescriptorResultProperty("covalentRadius")]
+            public double CovalentRadius { get; private set; }
+
+            public double Value => CovalentRadius;
+        }
 
         /// <summary>
         /// This method calculates the Covalent radius of an atom.
         /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
-        /// <param name="container">The <see cref="IAtomContainer"/> for which the descriptor is to be calculated</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="Result"/> is requested</param>
         /// <returns>The Covalent radius of the atom</returns>
-        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer container)
+        public Result Calculate(IAtom atom)
         {
-            double covalentradius;
-            try
-            {
-                var symbol = atom.Symbol;
-                var type = factory.GetAtomType(symbol);
-                covalentradius = type.CovalentRadius.Value;
-                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(
-                        covalentradius), DescriptorNames);
-            }
-            catch (Exception exception)
-            {
-                Debug.WriteLine(exception);
-                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(
-                        double.NaN), DescriptorNames, exception);
-            }
+            var symbol = atom.Symbol;
+            var type = this.AtomTypeFactory.GetAtomType(symbol);
+            var covalentRadius = type.CovalentRadius.Value;
+            return new Result(covalentRadius);
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the VdWRadiusDescriptor object.
-        /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
-
-        /// <summary>
-        /// Gets the parameterType attribute of the VdWRadiusDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public object GetParameterType(string name) => null;
+        IDescriptorResult IAtomicDescriptor.Calculate(IAtom atom) => Calculate(atom);
     }
 }

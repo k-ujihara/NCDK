@@ -18,167 +18,81 @@
  */
 
 using NCDK.Config;
-using NCDK.QSAR.Results;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    /// <see cref="IDescriptor"/> based on the number of bonds of a certain bond order.
+    /// Descriptor based on the number of bonds of a certain bond order.
     /// </summary>
     /// <remarks>
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    ///   <item>
-    ///     <term>Name</term>
-    ///     <term>Default</term>
-    ///     <term>Description</term>
-    ///   </item>
-    ///   <item>
-    ///     <term>order</term>
-    ///     <term>""</term>
-    ///     <term>The bond order</term>
-    ///   </item>
-    /// </list>
-    /// </para>
-    /// <para>
-    /// Returns a single value with name <i>nBX</i> where <i>X</i> can be
-    /// <list type="bullet">
-    /// <item>s for single bonds</item>
-    /// <item>d for double bonds</item>
-    /// <item>t for triple bonds</item>
-    /// <item>a for aromatic bonds</item>
-    /// <item>"" for all bonds</item>
-    /// </list>
-    /// </para>
     /// Note that the descriptor does not consider bonds to H's.
     /// </remarks>
     // @author      mfe4
     // @cdk.created 2004-11-13
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:bondCount
-    public class BondCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondCount")]
+    public class BondCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        /// <summary>defaults to UNSET, which means: count all bonds </summary>
-        private string order = "";
+        private readonly IAtomContainer container;
 
-        /// <summary>
-        ///  Constructor for the BondCountDescriptor object
-        /// </summary>
-        public BondCountDescriptor() { }
-
-        /// <summary>
-        ///  The specification attribute of the BondCountDescriptor object
-        /// </summary>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondCount",
-                typeof(BondCountDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        public override IReadOnlyList<object> Parameters
+        public BondCountDescriptor(IAtomContainer container)
         {
-            set
-            {
-                if (value.Count > 1)
-                {
-                    throw new CDKException("BondCount only expects one parameter");
-                }
-                if (!(value[0] is string))
-                {
-                    throw new CDKException("The parameter must be of type BondOrder");
-                }
-                string bondType = (string)value[0];
-                if (bondType.Length > 1 || !"sdtq".Contains(bondType))
-                {
-                    throw new CDKException("The only allowed values for this parameter are 's', 'd', 't', 'q' and ''.");
-                }
-                // ok, all should be fine
-                order = bondType;
-            }
-            get
-            {
-                // return the parameters as used for the descriptor calculation
-                return new object[] { order };
-            }
+            this.container = container;
         }
 
-        public override IReadOnlyList<string> DescriptorNames
+        [DescriptorResult]
+        public class Result : AbstractDescriptorSingleResult<int>
         {
-            get
+            public Result(int value, BondOrder order)
+                : base(BondOrderToKey(order), value)
             {
-                if (string.IsNullOrEmpty(order))
-                    return new string[] { "nB" };
-                else
-                    return new string[] { "nB" + order };
+            }
+
+            private static string BondOrderToKey(BondOrder order)
+            {
+                switch (order)
+                {
+                    case BondOrder.Unset:
+                        return "nB";
+                    case BondOrder.Single:
+                        return "nBs";
+                    case BondOrder.Double:
+                        return "nBd";
+                    case BondOrder.Triple:
+                        return "nBt";
+                    case BondOrder.Quadruple:
+                        return "nBq";
+                    default:
+                        throw new ArgumentException(nameof(order), "The only allowed bond types are single, double, truple, and quadruple bonds.");
+                }
             }
         }
 
         /// <summary>
-        /// This method calculate the number of bonds of a given type in an atomContainer
+        /// Calculate the number of bonds of a given type in an atomContainer
         /// </summary>
-        /// <param name="container">AtomContainer</param>
+        /// <param name="order">The bond order. Default is <see cref="BondOrder.Unset"/>, which means count all bonds.</param>
         /// <returns>The number of bonds of a certain type.</returns>
-        public DescriptorValue<Result<int>> Calculate(IAtomContainer container)
+        public Result Calculate(BondOrder order = BondOrder.Unset)
         {
-            if (string.IsNullOrEmpty(order))
+            if (order.IsUnset())
             {
-                int bondCount = 0;
-                foreach (var bond in container.Bonds)
-                {
-                    bool hasHydrogen = false;
-                    for (int i = 0; i < bond.Atoms.Count; i++)
-                    {
-                        if (bond.Atoms[i].AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
-                        {
-                            hasHydrogen = true;
-                            break;
-                        }
-                    }
-                    if (!hasHydrogen) bondCount++;
-                }
-                return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(bondCount), DescriptorNames, null);
+                var count = container.Bonds
+                    .Select(bond => bond.Atoms
+                        .Count(atom => atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)))
+                    .Sum();
+                return new Result(count, order);
             }
             else
             {
-                int bondCount = 0;
-                foreach (var bond in container.Bonds)
-                {
-                    if (BondMatch(bond.Order, order))
-                    {
-                        bondCount += 1;
-                    }
-                }
-                return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(bondCount), DescriptorNames);
+                var count = container.Bonds.Count(bond => bond.Order.Equals(order));
+                return new Result(count, order);
             }
         }
 
-        private static bool BondMatch(BondOrder order, string orderString)
-        {
-            if (order == BondOrder.Single && "s".Equals(orderString, StringComparison.Ordinal))
-                return true;
-            else if (order == BondOrder.Double && "d".Equals(orderString, StringComparison.Ordinal))
-                return true;
-            else if (order == BondOrder.Triple && "t".Equals(orderString, StringComparison.Ordinal))
-                return true;
-            else
-                return (order == BondOrder.Quadruple && "q".Equals(orderString, StringComparison.Ordinal));
-        }
-
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
-
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "order" };
-
-        public override object GetParameterType(string name)
-        {
-            if (string.Equals("order", name, StringComparison.Ordinal)) return "";
-            return null;
-        }
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

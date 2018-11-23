@@ -16,40 +16,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
-using NCDK.Silent;
-using NCDK.QSAR.Results;
-using NCDK.Smiles;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class RotatableBondsCountDescriptorTest : MolecularDescriptorTest
+    public class RotatableBondsCountDescriptorTest : MolecularDescriptorTest<RotatableBondsCountDescriptor>
     {
-        public RotatableBondsCountDescriptorTest()
-        {
-            SetDescriptor(typeof(RotatableBondsCountDescriptor));
-        }
-
         [TestMethod()]
         public void TestRotatableBondsCount()
         {
-            Descriptor.Parameters = new object[] { true, false };
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CC2CCC(C1CCCCC1)CC2"); // molecule with 2 bridged cicloexane and 1 methyl
-            Assert.AreEqual(2, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(2, CreateDescriptor(mol).Calculate(true, false).Value);
         }
 
         private IAtomContainer MakeEthane()
         {
-            var container = new AtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(container.Builder.NewAtom(NaturalElements.Carbon.Element));
             container.Atoms.Add(container.Builder.NewAtom(NaturalElements.Carbon.Element));
             container.AddBond(container.Atoms[0], container.Atoms[1], BondOrder.Single);
@@ -70,48 +58,32 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestEthaneIncludeTerminals()
         {
             var container = MakeEthane();
-            var Descriptor = new RotatableBondsCountDescriptor
-            {
-                Parameters = new object[] { true, false }
-            };
-            var result = Descriptor.Calculate(container);
-            Assert.AreEqual(1, ((Result<int>)result.Value).Value);
+            var result = CreateDescriptor(container).Calculate(true, false);
+            Assert.AreEqual(1, result.Value);
         }
 
         [TestMethod()]
         public void TestEthane()
         {
             var container = MakeEthane();
-            var Descriptor = new RotatableBondsCountDescriptor
-            {
-                Parameters = new object[] { false, false }
-            };
-            var result = Descriptor.Calculate(container);
-            Assert.AreEqual(0, ((Result<int>)result.Value).Value);
+            var result = CreateDescriptor(container).Calculate(false, false);
+            Assert.AreEqual(0, result.Value);
         }
 
         [TestMethod()]
         public void TestButaneIncludeTerminals()
         {
             var container = MakeButane();
-            var Descriptor = new RotatableBondsCountDescriptor
-            {
-                Parameters = new object[] { true, false }
-            };
-            var result = Descriptor.Calculate(container);
-            Assert.AreEqual(3, ((Result<int>)result.Value).Value);
+            var result = CreateDescriptor(container).Calculate(true, false);
+            Assert.AreEqual(3, result.Value);
         }
 
         [TestMethod()]
         public void TestButane()
         {
             var container = MakeButane();
-            var Descriptor = new RotatableBondsCountDescriptor
-            {
-                Parameters = new object[] { false, false }
-            };
-            var result = Descriptor.Calculate(container);
-            Assert.AreEqual(1, ((Result<int>)result.Value).Value);
+            var result = CreateDescriptor(container).Calculate(false, false);
+            Assert.AreEqual(1, result.Value);
         }
 
         // @cdk.bug 2449257
@@ -123,12 +95,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(container);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
-            var Descriptor = new RotatableBondsCountDescriptor
-            {
-                Parameters = new object[] { true, false }
-            };
-            var result = Descriptor.Calculate(container);
-            Assert.AreEqual(1, ((Result<int>)result.Value).Value);
+            var result = CreateDescriptor(container).Calculate(true, false);
+            Assert.AreEqual(1, result.Value);
         }
 
         // @cdk.bug 2449257
@@ -140,12 +108,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(container);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
-            var Descriptor = new RotatableBondsCountDescriptor
-            {
-                Parameters = new object[] { false, false }
-            };
-            var result = Descriptor.Calculate(container);
-            Assert.AreEqual(0, ((Result<int>)result.Value).Value);
+            var result = CreateDescriptor(container).Calculate(false, false);
+            Assert.AreEqual(0, result.Value);
         }
 
         // @cdk.bug 2449257
@@ -157,12 +121,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(container);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
-            var Descriptor = new RotatableBondsCountDescriptor
-            {
-                Parameters = new object[] { true, false }
-            };
-            var result = Descriptor.Calculate(container);
-            Assert.AreEqual(3, ((Result<int>)result.Value).Value);
+            var result = CreateDescriptor(container).Calculate(true, false);
+            Assert.AreEqual(3, result.Value);
         }
 
         // @cdk.bug 2449257
@@ -174,44 +134,32 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var adder = CDK.HydrogenAdder;
             adder.AddImplicitHydrogens(container);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
-            var Descriptor = new RotatableBondsCountDescriptor
-            {
-                Parameters = new object[] { false, false }
-            };
-            var result = Descriptor.Calculate(container);
-            Assert.AreEqual(1, ((Result<int>)result.Value).Value);
+            var result = CreateDescriptor(container).Calculate(false, false);
+            Assert.AreEqual(1, result.Value);
         }
 
         [TestMethod()]
         public void TestAmideIncluded()
         {
-            string amide = "CCNC(=O)CC(C)C"; // N-ethyl-3-methylbutanamide
+            var amide = "CCNC(=O)CC(C)C"; // N-ethyl-3-methylbutanamide
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles(amide);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
-            var Descriptor = new RotatableBondsCountDescriptor
-            {
-                Parameters = new object[] { false, false }
-            };
-            var result = Descriptor.Calculate(mol);
-            Assert.AreEqual(4, ((Result<int>)result.Value).Value);
+            var result = CreateDescriptor(mol).Calculate(false, false);
+            Assert.AreEqual(4, result.Value);
         }
 
         [TestMethod()]
         public void TestAmideExcluded()
         {
-            string amide = "CCNC(=O)CC(C)C"; // N-ethyl-3-methylbutanamide
+            var amide = "CCNC(=O)CC(C)C"; // N-ethyl-3-methylbutanamide
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles(amide);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
-            var Descriptor = new RotatableBondsCountDescriptor
-            {
-                Parameters = new object[] { false, true }
-            };
-            var result = Descriptor.Calculate(mol);
-            Assert.AreEqual(3, ((Result<int>)result.Value).Value);
+            var result = CreateDescriptor(mol).Calculate(false, true);
+            Assert.AreEqual(3, result.Value);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class AdductionProtonLPReactionTest : ReactionProcessTest
     {
-        private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private IChemObjectBuilder builder = CDK.Builder;
         private UniversalIsomorphismTester uiTester = new UniversalIsomorphismTester();
 
         public AdductionProtonLPReactionTest()

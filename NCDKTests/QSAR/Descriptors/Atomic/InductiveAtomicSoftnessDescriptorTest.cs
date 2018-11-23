@@ -16,52 +16,46 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Numerics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
-using NCDK.QSAR.Results;
+using NCDK.Numerics;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
     // @cdk.module test-qsaratomic
     [TestClass()]
-    public class InductiveAtomicSoftnessDescriptorTest : AtomicDescriptorTest
+    public class InductiveAtomicSoftnessDescriptorTest : AtomicDescriptorTest<InductiveAtomicSoftnessDescriptor>
     {
-        public InductiveAtomicSoftnessDescriptorTest()
-        {
-            SetDescriptor(typeof(InductiveAtomicSoftnessDescriptor));
-        }
-
         [TestMethod()]
         public void TestInductiveAtomicSoftnessDescriptor()
         {
             double[] testResult = { 0.78 };
 
-            Vector3 c_coord = new Vector3(1.392, 0.0, 0.0);
-            Vector3 f_coord = new Vector3(0.0, 0.0, 0.0);
-            Vector3 h1_coord = new Vector3(1.7439615035767404, 1.0558845107302222, 0.0);
-            Vector3 h2_coord = new Vector3(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
-            Vector3 h3_coord = new Vector3(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
+            var c_coord = new Vector3(1.392, 0.0, 0.0);
+            var f_coord = new Vector3(0.0, 0.0, 0.0);
+            var h1_coord = new Vector3(1.7439615035767404, 1.0558845107302222, 0.0);
+            var h2_coord = new Vector3(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
+            var h3_coord = new Vector3(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 
-            var mol = new AtomContainer(); // molecule is CF
+            var mol = CDK.Builder.NewAtomContainer(); // molecule is CF
 
-            Atom c = new Atom("C");
+            var c = CDK.Builder.NewAtom("C");
             mol.Atoms.Add(c);
             c.Point3D = c_coord;
 
-            Atom f = new Atom("F");
+            var f = CDK.Builder.NewAtom("F");
             mol.Atoms.Add(f);
             f.Point3D = f_coord;
 
-            Atom h1 = new Atom("H");
+            var h1 = CDK.Builder.NewAtom("H");
             mol.Atoms.Add(h1);
             h1.Point3D = h1_coord;
 
-            Atom h2 = new Atom("H");
+            var h2 = CDK.Builder.NewAtom("H");
             mol.Atoms.Add(h2);
             h2.Point3D = h2_coord;
 
-            Atom h3 = new Atom("H");
+            var h3 = CDK.Builder.NewAtom("H");
             mol.Atoms.Add(h3);
             h3.Point3D = h3_coord;
 
@@ -70,9 +64,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single); // 1
             mol.AddBond(mol.Atoms[0], mol.Atoms[4], BondOrder.Single); // 1
 
-            IAtomicDescriptor descriptor = new InductiveAtomicSoftnessDescriptor();
+            var descriptor = CreateDescriptor(mol);
 
-            double retval = ((Result<double>)descriptor.Calculate(mol.Atoms[0], mol).Value).Value;
+            double retval = descriptor.Calculate(mol.Atoms[0]).Value;
             Assert.AreEqual(testResult[0], retval, 0.1);
 
             // F: expected is 0.32, calculated is 0.35
@@ -83,4 +77,3 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
     }
 }
-

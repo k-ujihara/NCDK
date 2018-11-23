@@ -16,75 +16,69 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.IO;
-using NCDK.QSAR.Results;
-using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
-using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class WeightedPathDescriptorTest : MolecularDescriptorTest
+    public class WeightedPathDescriptorTest : MolecularDescriptorTest<WeightedPathDescriptor>
     {
-        public WeightedPathDescriptorTest()
-        {
-            SetDescriptor(typeof(WeightedPathDescriptor));
-        }
-
         [TestMethod()]
         public void TestWeightedPathDescriptor()
         {
             var sp = CDK.SmilesParser;
-            IAtomContainer mol = null;
-            IDescriptorValue value = null;
-            ArrayResult<double> result = null;
+            {
+                var mol = sp.ParseSmiles("CCCC");
+                var result = CreateDescriptor(mol).Calculate();
+                var values = result.Values;
+                Assert.AreEqual(6.871320, values[0], 0.000001);
+                Assert.AreEqual(1.717830, values[1], 0.000001);
+                Assert.AreEqual(0.0, values[2], 0.000001);
+                Assert.AreEqual(0.0, values[3], 0.000001);
+                Assert.AreEqual(0.0, values[4], 0.000001);
+            }
 
-            mol = sp.ParseSmiles("CCCC");
-            value = Descriptor.Calculate(mol);
-            result = (ArrayResult<double>)value.Value;
-            Assert.AreEqual(6.871320, result[0], 0.000001);
-            Assert.AreEqual(1.717830, result[1], 0.000001);
-            Assert.AreEqual(0.0, result[2], 0.000001);
-            Assert.AreEqual(0.0, result[3], 0.000001);
-            Assert.AreEqual(0.0, result[4], 0.000001);
+            {
+                string filename = "NCDK.Data.MDL.wpo.sdf";
+                IChemFile content;
+                using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
+                {
+                    content = reader.Read(CDK.Builder.NewChemFile());
+                }
+                var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
+                var mol = cList[0];
+                mol = AtomContainerManipulator.RemoveHydrogens(mol);
+                var result = CreateDescriptor(mol).Calculate();
+                var values = result.Values;
+                Assert.AreEqual(18.42026, values[0], 0.00001);
+                Assert.AreEqual(1.842026, values[1], 0.00001);
+                Assert.AreEqual(13.45733, values[2], 0.00001);
+                Assert.AreEqual(13.45733, values[3], 0.00001);
+                Assert.AreEqual(0, values[4], 0.00001);
+            }
 
-            string filename = "NCDK.Data.MDL.wpo.sdf";
-            var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-            IChemFile content = (IChemFile)reader.Read(new ChemFile());
-            var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
-            mol = (IAtomContainer)cList[0];
-            mol = AtomContainerManipulator.RemoveHydrogens(mol);
-
-            value = Descriptor.Calculate(mol);
-            result = (ArrayResult<double>)value.Value;
-            Assert.AreEqual(18.42026, result[0], 0.00001);
-            Assert.AreEqual(1.842026, result[1], 0.00001);
-            Assert.AreEqual(13.45733, result[2], 0.00001);
-            Assert.AreEqual(13.45733, result[3], 0.00001);
-            Assert.AreEqual(0, result[4], 0.00001);
-
-            filename = "NCDK.Data.MDL.wpn.sdf";
-            ins = ResourceLoader.GetAsStream(filename);
-            reader = new MDLV2000Reader(ins);
-            content = (IChemFile)reader.Read(new ChemFile());
-            cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
-            mol = (IAtomContainer)cList[0];
-            mol = AtomContainerManipulator.RemoveHydrogens(mol);
-            value = Descriptor.Calculate(mol);
-            result = (ArrayResult<double>)value.Value;
-            Assert.AreEqual(26.14844, result[0], 0.00001);
-            Assert.AreEqual(1.867746, result[1], 0.00001);
-            Assert.AreEqual(19.02049, result[2], 0.00001);
-            Assert.AreEqual(0, result[3], 0.000001);
-            Assert.AreEqual(19.02049, result[4], 0.00001);
+            {
+                var filename = "NCDK.Data.MDL.wpn.sdf";
+                IChemFile content;
+                using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
+                {
+                    content = reader.Read(CDK.Builder.NewChemFile());
+                }
+                var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
+                var mol = cList[0];
+                mol = AtomContainerManipulator.RemoveHydrogens(mol);
+                var result = CreateDescriptor(mol).Calculate();
+                var values = result.Values;
+                Assert.AreEqual(26.14844, values[0], 0.00001);
+                Assert.AreEqual(1.867746, values[1], 0.00001);
+                Assert.AreEqual(19.02049, values[2], 0.00001);
+                Assert.AreEqual(0, values[3], 0.000001);
+                Assert.AreEqual(19.02049, values[4], 0.00001);
+            }
         }
     }
 }

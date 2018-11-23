@@ -82,12 +82,14 @@ namespace NCDK
         new NC("internal", "CdkAtomTypeFactory", "Config.AtomTypeFactory", "Config.AtomTypeFactory.GetInstance(\"NCDK.Dict.Data.cdk-atom-types.owl\", Silent.ChemObjectBuilder.Instance)"),
         new NC("internal", "StructgenAtomTypeFactory", "Config.AtomTypeFactory", "Config.AtomTypeFactory.GetInstance(\"NCDK.Config.Data.structgen_atomtypes.xml\", Silent.ChemObjectBuilder.Instance)"),
         new NC("public", "SaturationChecker", "Tools.ISaturationChecker", "new Tools.SaturationChecker()"),
+        new NC("public", "Builder", "IChemObjectBuilder", "Silent.ChemObjectBuilder.Instance"),
         new NC("public", "SmilesParser", "Smiles.SmilesParser", "new Smiles.SmilesParser(Silent.ChemObjectBuilder.Instance)"),
         new NC("public", "IsotopeFactory", "Config.IsotopeFactory", "Config.BODRIsotopeFactory.Instance"),
         new NC("public", "LonePairElectronChecker", "Tools.ILonePairElectronChecker", "new Tools.LonePairElectronChecker()"),
         new NC("public", "AtomTypeMatcher", "AtomTypes.IAtomTypeMatcher", "AtomTypes.CDKAtomTypeMatcher.GetInstance()"),
         new NC("public", "HydrogenAdder", "Tools.IHydrogenAdder", "Tools.CDKHydrogenAdder.Instance"),
         new NC("internal", "PartialFilledStructureMerger", "StructGen.Stochastic.PartialFilledStructureMerger", "new StructGen.Stochastic.PartialFilledStructureMerger()"),
+        new NC("internal", "GasteigerMarsiliPartialCharges", "Charges.GasteigerMarsiliPartialCharges", "new Charges.GasteigerMarsiliPartialCharges()"),
     };
 
     public void MakeVar(NC nc)

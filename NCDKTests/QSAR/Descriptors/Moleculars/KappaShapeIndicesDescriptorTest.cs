@@ -18,9 +18,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -30,13 +27,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class KappaShapeIndicesDescriptorTest : MolecularDescriptorTest
+    public class KappaShapeIndicesDescriptorTest : MolecularDescriptorTest<KappaShapeIndicesDescriptor>
     {
-        public KappaShapeIndicesDescriptorTest()
-        {
-            SetDescriptor(typeof(KappaShapeIndicesDescriptor));
-        }
-
         [TestMethod()]
         public void TestKappaShapeIndicesDescriptor()
         {
@@ -44,11 +36,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=C(O)CC");
             AtomContainerManipulator.RemoveHydrogens(mol);
-            ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
-            // position 0 =  kier1
-            // positions 1 = kier2
-            // THIS IS OK: Assert.AreEqual(testResult[1], ((Double)retval[1]).Value, 0.0001);
-            // THIS IS OK: Assert.AreEqual(testResult[0], ((Double)retval[0]).Value, 0.0001);
+            var retval = CreateDescriptor(mol).Calculate().Values;
             Assert.AreEqual(testResult[2], retval[2], 0.0001);
         }
     }

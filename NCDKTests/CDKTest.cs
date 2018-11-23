@@ -31,8 +31,8 @@ namespace NCDK
         [TestMethod()]
         public void TestGetVersion()
         {
-            string version = CDK.Version;
-            Assert.IsNotNull(version);
+            var versionFromAssembly = typeof(CDK).Assembly.GetName().Version;
+            Assert.AreEqual(versionFromAssembly.ToString(), CDK.Version);
         }
     }
 }

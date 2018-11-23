@@ -31,7 +31,7 @@ namespace NCDK.IO.CML
     [TestClass()]
     public class CDKRoundTripTest : CDKTestCase
     {
-        private static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private static IChemObjectBuilder builder = CDK.Builder;
 
         private static Convertor convertor = new Convertor(false, "");
 

@@ -36,7 +36,7 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class RadicalChargeSiteInitiationHReactionTest : ReactionProcessTest
     {
-        private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private IChemObjectBuilder builder = CDK.Builder;
 
         public RadicalChargeSiteInitiationHReactionTest()
         {

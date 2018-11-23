@@ -18,11 +18,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Bonds
 {
@@ -34,43 +31,41 @@ namespace NCDK.QSAR.Descriptors.Bonds
     // @cdk.module  qsarbond
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:bondAtomicNumberImbalance
-    public partial class AtomicNumberDifferenceDescriptor
-        : IBondDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondAtomicNumberImbalance")]
+    public class AtomicNumberDifferenceDescriptor : AbstractDescriptor, IBondDescriptor
     {
-        private static IsotopeFactory factory = CDK.IsotopeFactory;
-
-        private readonly static string[] NAMES = { "MNDiff" };
-
         public AtomicNumberDifferenceDescriptor()
         {
         }
 
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondAtomicNumberImbalance",
-                typeof(AtomicNumberDifferenceDescriptor).FullName, "The Chemistry Development Kit");
+        public AtomicNumberDifferenceDescriptor(IAtomContainer container)
+        {
+        }
 
-        public IReadOnlyList<object> Parameters { get { return null; } set { } }
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(int value)
+            {
+                this.Value = value;
+            }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+            [DescriptorResultProperty("MNDiff")]
+            public int Value { get; private set; }
+        }
 
-        public DescriptorValue<Result<double>> Calculate(IBond bond, IAtomContainer ac)
+        public Result Calculate(IBond bond)
         {
             if (bond.Atoms.Count != 2)
-            {
-                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(
-                        double.NaN), NAMES, new CDKException("Only 2-center bonds are considered"));
-            }
+                throw new CDKException("Only 2-center bonds are considered");
 
             var atoms = BondManipulator.GetAtomArray(bond);
 
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(
-                    Math.Abs(factory.GetElement(atoms[0].Symbol).AtomicNumber.Value - factory.GetElement(atoms[1].Symbol).AtomicNumber.Value)), NAMES);
+            var factory = CDK.IsotopeFactory;
+
+            return new Result(Math.Abs(bond.Begin.AtomicNumber.Value - bond.End.AtomicNumber.Value));
         }
 
-        public IReadOnlyList<string> ParameterNames => Array.Empty<string>();
-
-        public object GetParameterType(string name) => null;
+        IDescriptorResult IBondDescriptor.Calculate(IBond bond) => Calculate(bond);
     }
 }

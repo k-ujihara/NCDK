@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.QSAR.Results;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -31,50 +31,19 @@ namespace NCDK.QSAR.Descriptors.Atomic
     /// requires aromaticity to be perceived (possibly done via a parameter), and
     /// needs 3D coordinates for all atoms.
     /// </summary>
-    /// <remarks>
-    ///  This descriptor uses these parameters:
-    /// <list type="table">
-    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
-    /// <item><term>checkAromaticity</term><term>false</term><term>True is the aromaticity has to be checked</term></item>
-    /// </list>
-    /// </remarks>
     // @author      Federico
     // @cdk.created 2006-12-11
     // @cdk.module  qsaratomic
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
     // @cdk.bug     1632419
-    public partial class RDFProtonDescriptorGHR : IAtomicDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues")]
+    public partial class RDFProtonDescriptorGHR : AbstractDescriptor, IAtomicDescriptor
     {
+        private const string prefix = "gHr_";
         private const int desc_length = 15;
 
-        /// <summary>
-        /// Constructor for the RDFProtonDescriptor object
-        /// </summary>
-        public RDFProtonDescriptorGHR()
-        {
-            names = new string[desc_length];
-            for (int i = 0; i < desc_length; i++)
-            {
-                names[i] = "RDF_GHR_" + i;
-            }
-        }
-
-        private static string[] names;
-        public IReadOnlyList<string> DescriptorNames => names;
-
-        /// <summary>
-        /// The specification attribute of the RDFProtonDescriptorGHR object
-        /// </summary>
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues",
-                typeof(RDFProtonDescriptorGHR).FullName,
-                "The Chemistry Development Kit");
-
         private static bool MakeDescriptorLastStage(
-            ArrayResult<double> rdfProtonCalculatedValues,
+            List<double> rdfProtonCalculatedValues,
             IAtom atom,
             IAtom clonedAtom,
             IAtomContainer mol,
@@ -87,33 +56,26 @@ namespace NCDK.QSAR.Descriptors.Atomic
             ///////////////////////THE FIRST CALCULATED DESCRIPTOR IS g(H)r WITH Partial CHARGES:
             if (atoms.Any())
             {
-                //Variables
-                double distance;
-                double sum;
-                double smooth = -20;
-                double partial;
-                int position;
-                double limitInf = 1.4;
-                double limitSup = 4;
-                double step = (limitSup - limitInf) / 15;
-                IAtom atom2;
-
-                for (double ghr = limitInf; ghr < limitSup; ghr = ghr + step)
+                const double limitInf = 1.4;
+                const double limitSup = 4;
+                const double smooth = -20;
+                for (int c = 0; c < desc_length; c++)
                 {
-                    sum = 0;
+                    var ghr = limitInf + (limitSup - limitInf) * ((double)c / desc_length);
+                    double sum = 0;
                     foreach (var atom1 in atoms)
                     {
-                        distance = 0;
-                        partial = 0;
-                        int thisAtom = (int)atom1;
-                        position = thisAtom;
-                        atom2 = mol.Atoms[position];
+                        double distance = 0;
+                        double partial = 0;
+                        var thisAtom = atom1;
+                        int position = thisAtom;
+                        var atom2 = mol.Atoms[position];
                         distance = CalculateDistanceBetweenTwoAtoms(atom, atom2);
-                        partial = atom2.Charge.Value * Math.Exp(smooth * (Math.Pow((ghr - distance), 2)));
+                        partial = atom2.Charge.Value * Math.Exp(smooth * Math.Pow(ghr - distance, 2));
                         sum += partial;
                     }
                     rdfProtonCalculatedValues.Add(sum);
-                    Debug.WriteLine("RDF gr distance prob.: " + sum + " at distance " + ghr);
+                    Debug.WriteLine($"RDF gr distance prob.: {sum} at distance {ghr}");
                 }
                 return true;
             }

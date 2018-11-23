@@ -16,10 +16,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Charges;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
@@ -29,127 +28,59 @@ namespace NCDK.QSAR.Descriptors.Atomic
     /// the Gasteiger-Marsili parameters and q is the sigma charge. For the actual
     /// calculation it uses the <see cref="Electronegativity"/> class.
     /// </summary>
-    /// <remarks>
-    /// <para>
-    /// This descriptor uses these parameters:
-    /// <list type="table">
-    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
-    /// <item><term>maxIterations</term><term>0</term><term>Number of maximum iterations</term></item>
-    /// </list>
-    /// </para>
-    /// </remarks>
     /// <seealso cref="Electronegativity"/>
     // @author      mfe4
     // @cdk.created 2004-11-03
     // @cdk.module  qsaratomic
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:sigmaElectronegativity
-
-    public partial class SigmaElectronegativityDescriptor : IAtomicDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#sigmaElectronegativity")]
+    public partial class SigmaElectronegativityDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
-        /// <summary>Number of maximum iterations</summary>
-        private int maxIterations = 0;
+        private readonly IAtomContainer container;
+        private readonly IAtomContainer clonedContainer = null;
+        private readonly Electronegativity electronegativity;
 
-        private static readonly string[] NAMES = { "elecSigmA" };
-
-        private Electronegativity electronegativity;
-
-        /// <summary>
-        ///  Constructor for the SigmaElectronegativityDescriptor object
-        /// </summary>
-        public SigmaElectronegativityDescriptor()
+        /// <param name="maxIterations">Number of maximum iterations</param>
+        public SigmaElectronegativityDescriptor(IAtomContainer container, int maxIterations = int.MaxValue)
         {
+            this.clonedContainer = (IAtomContainer)container.Clone();
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(this.clonedContainer);
             electronegativity = new Electronegativity();
+            if (maxIterations != int.MaxValue)
+                electronegativity.MaxIterations = maxIterations;
+
+            this.container = container;
         }
 
-        /// <summary>
-        /// The specification attribute of the SigmaElectronegativityDescriptor object
-        /// </summary>
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#sigmaElectronegativity",
-                typeof(SigmaElectronegativityDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        /// <summary>
-        ///  Sets the parameters attribute of the SigmaElectronegativityDescriptor object
-        ///  <list type="bullet">
-        /// <item>
-        /// <term>1</term>
-        /// <description>max iterations (optional, defaults to 20)</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <exception cref="CDKException"></exception>
-        public IReadOnlyList<object> Parameters
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            set
+            public Result(double value)
             {
-                if (value.Count > 1)
-                {
-                    throw new CDKException("SigmaElectronegativityDescriptor only expects one parameter");
-                }
-                if (!(value[0] is int))
-                {
-                    throw new CDKException("The parameter must be of type int");
-                }
-                if (value.Count == 0)
-                    return;
+                this.SigmaElectronegativity = value;
+            }
 
-                maxIterations = (int)value[0];
-            }
-            get
-            {
-                // return the parameters as used for the descriptor calculation
-                return new object[] { maxIterations };
-            }
+            [DescriptorResultProperty("elecSigmA")]
+            public double SigmaElectronegativity { get; private set; }
+
+            public double Value => SigmaElectronegativity;
         }
 
-        public IReadOnlyList<string> DescriptorNames { get; } = NAMES;
-
         /// <summary>
-        ///  The method calculates the sigma electronegativity of a given atom
-        ///  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
+        /// The method calculates the sigma electronegativity of a given atom
+        /// It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
         /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
-        /// <param name="ac">AtomContainer</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="Result"/> is requested</param>
         /// <returns>return the sigma electronegativity</returns>
-        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer ac)
+        public Result Calculate(IAtom atom)
         {
-            IAtomContainer clone;
-            IAtom localAtom;
-            try
-            {
-                clone = (IAtomContainer)ac.Clone();
-                localAtom = clone.Atoms[ac.Atoms.IndexOf(atom)];
-                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(clone);
-            }
-            catch (CDKException e)
-            {
-                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
-            }
+            var index = container.Atoms.IndexOf(atom);
+            var localAtom = clonedContainer.Atoms[index];
+            var value = electronegativity.CalculateSigmaElectronegativity(clonedContainer, localAtom);
 
-            if (maxIterations != -1 && maxIterations != 0) electronegativity.MaxIterations = maxIterations;
-
-            double result = electronegativity.CalculateSigmaElectronegativity(clone, localAtom);
-
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(result), NAMES);
+            return new Result(value);
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the SigmaElectronegativityDescriptor object
-        /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations" };
-
-        /// <summary>
-        /// Gets the parameterType attribute of the SigmaElectronegativityDescriptor object
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public object GetParameterType(string name)
-        {
-            return 0;
-        }
+        IDescriptorResult IAtomicDescriptor.Calculate(IAtom atom) => Calculate(atom);
     }
 }

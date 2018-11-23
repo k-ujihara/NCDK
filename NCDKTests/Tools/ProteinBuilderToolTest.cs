@@ -29,7 +29,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestCreateProtein()
         {
-            IBioPolymer protein = ProteinBuilderTool.CreateProtein("GAGA", Silent.ChemObjectBuilder.Instance);
+            IBioPolymer protein = ProteinBuilderTool.CreateProtein("GAGA", CDK.Builder);
             Assert.IsNotNull(protein);
             Assert.AreEqual(4, protein.GetMonomerMap().Count());
             Assert.AreEqual(1, protein.GetStrandMap().Count());

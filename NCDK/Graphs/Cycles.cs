@@ -300,7 +300,7 @@ namespace NCDK.Graphs
         /// <seealso href="https://en.wikipedia.org/wiki/Circuit_rank">Circuit Rank</seealso> 
         public static int MarkRingAtomsAndBonds(IAtomContainer mol, int[][] adjList, EdgeToBondMap bondMap)
         {
-            RingSearch ringSearch = new RingSearch(mol, adjList);
+            var ringSearch = new RingSearch(mol, adjList);
             for (int v = 0; v < mol.Atoms.Count; v++)
             {
                 mol.Atoms[v].IsInRing = false;

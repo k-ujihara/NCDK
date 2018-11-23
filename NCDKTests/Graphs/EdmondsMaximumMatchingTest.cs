@@ -46,7 +46,7 @@ namespace NCDK.Graphs
         [TestInitialize()]
         public void SetUp()
         {
-            bldr = Silent.ChemObjectBuilder.Instance;
+            bldr = CDK.Builder;
             smipar = new SmilesParser(bldr);
         }
 

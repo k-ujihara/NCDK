@@ -47,8 +47,7 @@ namespace <#= ns.NS #>
     // @author        steinbeck
     // @cdk.githash
     // @cdk.module data
-    public class ChemObject
-        : IChemObject, ISerializable
+    public class ChemObject : IChemObject, ISerializable
     {
         private bool isPlaced;
         private bool isVisited;

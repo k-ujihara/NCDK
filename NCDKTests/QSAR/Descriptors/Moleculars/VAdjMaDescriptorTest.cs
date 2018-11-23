@@ -16,25 +16,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite for the VAdjMaDescriptor.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class VAdjMaDescriptorTest : MolecularDescriptorTest
+    public class VAdjMaDescriptorTest : MolecularDescriptorTest<VAdjMaDescriptor>
     {
-        public VAdjMaDescriptorTest()
-        {
-            SetDescriptor(typeof(VAdjMaDescriptor));
-        }
-
         public void IgnoreCalculate_IAtomContainer()
         {
             Assert.Fail("Not tested");
@@ -45,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C1CCC2CCCCC2C1");
-            Assert.AreEqual(4.459, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.001);
+            Assert.AreEqual(4.459, CreateDescriptor(mol).Calculate().Value, 0.001);
         }
 
         [TestMethod()]
@@ -53,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCCCCCCCC");
-            Assert.AreEqual(4.17, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.001);
+            Assert.AreEqual(4.17, CreateDescriptor(mol).Calculate().Value, 0.001);
         }
 
         [TestMethod()]
@@ -61,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCCC1CCCCC1");
-            Assert.AreEqual(4.322, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.001);
+            Assert.AreEqual(4.322, CreateDescriptor(mol).Calculate().Value, 0.001);
         }
     }
 }

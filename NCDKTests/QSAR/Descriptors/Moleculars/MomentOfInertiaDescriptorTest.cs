@@ -17,50 +17,46 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.IO;
-using NCDK.QSAR.Results;
-using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
-using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class MomentOfInertiaDescriptorTest : MolecularDescriptorTest
+    public class MomentOfInertiaDescriptorTest : MolecularDescriptorTest<MomentOfInertiaDescriptor>
     {
-        public MomentOfInertiaDescriptorTest()
-        {
-            SetDescriptor(typeof(MomentOfInertiaDescriptor));
-        }
-
         // @cdk.bug 1956139
-        // @throws InvalidSmilesException
         [TestMethod()]
         public void TestMOIFromSmiles()
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCC");
-            var value = Descriptor.Calculate(mol);
-            Assert.IsNotNull(value.Exception, "The Exception should be non-null since we don't have 3D coords");
+            try
+            {
+                var value = CreateDescriptor(mol).Calculate();
+                Assert.Fail();
+            }
+            catch (ThreeDRequiredException)
+            {
+            }
         }
 
         [TestMethod()]
         public void TestMomentOfInertia1()
         {
             string filename = "NCDK.Data.HIN.gravindex.hin";
-            var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new HINReader(ins);
-            ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            IChemFile content;
+            using (var reader = new HINReader(ResourceLoader.GetAsStream(filename)))
+            {
+                content = reader.Read(CDK.Builder.NewChemFile());
+            }
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
-            IAtomContainer ac = (IAtomContainer)cList[0];
+            var ac = cList[0];
 
-            ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(ac).Value;
+            var retval = CreateDescriptor(ac).Calculate().Values;
 
             Assert.AreEqual(1820.692519, retval[0], 0.00001);
             Assert.AreEqual(1274.532522, retval[1], 0.00001);
@@ -75,13 +71,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestMomentOfInertia2()
         {
             string filename = "NCDK.Data.HIN.momi2.hin";
-            var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new HINReader(ins);
-            ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            IChemFile content;
+            using (var reader = new HINReader(ResourceLoader.GetAsStream(filename)))
+            {
+                content = reader.Read(CDK.Builder.NewChemFile());
+            }
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
-            IAtomContainer ac = (IAtomContainer)cList[0];
+            var ac = cList[0];
 
-            ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(ac).Value;
+            var retval = CreateDescriptor(ac).Calculate().Values;
 
             Assert.AreEqual(10068.419360, retval[0], 0.00001);
             Assert.AreEqual(9731.078356, retval[1], 0.00001);

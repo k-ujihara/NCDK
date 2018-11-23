@@ -16,31 +16,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsaratomic
     [TestClass()]
-    public class AtomHybridizationDescriptorTest : AtomicDescriptorTest
+    public class AtomHybridizationDescriptorTest : AtomicDescriptorTest<AtomHybridizationDescriptor>
     {
-        public AtomHybridizationDescriptorTest()
-        {
-            SetDescriptor(typeof(AtomHybridizationDescriptor));
-        }
-
         [TestMethod()]
         public void TestAtomHybridizationDescriptorTest()
         {
             var sp = CDK.SmilesParser;
-            var mol = sp.ParseSmiles("C#CC=CC"); //
+            var mol = sp.ParseSmiles("C#CC=CC");
             AddExplicitHydrogens(mol);
             var expectedStates = new Hybridization[]
             {
@@ -50,31 +40,40 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 Hybridization.SP2,
                 Hybridization.SP3
             };
+            var descriptor = new AtomHybridizationDescriptor(mol);
             for (int i = 0; i < expectedStates.Length; i++)
             {
-                Assert.AreEqual(expectedStates[i], ((Result<Hybridization>)descriptor.Calculate(mol.Atoms[i], mol).Value).Value);
+                Assert.AreEqual(expectedStates[i], descriptor.Calculate(mol.Atoms[i]).Value);
             }
         }
 
         [TestMethod()]
         public void TestBug1701073()
         {
-            string[] smiles = new string[]{"C1CCCC=2[C]1(C(=O)NN2)C", "C1CCCC=2[C]1(C(=O)NN2)O",
-                "C[Si](C)(C)[CH](Br)CC(F)(Br)F", "c1(ccc(cc1)O)C#N", "CCN(CC)C#CC#CC(=O)OC",
-                "C(#CN1CCCCC1)[Sn](C)(C)C", "c1([As+](c2ccccc2)(c2ccccc2)C)ccccc1.[I-]",
-                "c1(noc(n1)CCC(=O)N(CC)CC)c1ccc(cc1)C", "c1c(c(ccc1)O)/C=N/CCCC", "c1(ccc(cc1)C#Cc1ccc(cc1)C#C)OC"};
+            string[] smiles = new string[]
+                {
+                    "C1CCCC=2[C]1(C(=O)NN2)C",
+                    "C1CCCC=2[C]1(C(=O)NN2)O",
+                    "C[Si](C)(C)[CH](Br)CC(F)(Br)F",
+                    "c1(ccc(cc1)O)C#N",
+                    "CCN(CC)C#CC#CC(=O)OC",
+                    "C(#CN1CCCCC1)[Sn](C)(C)C",
+                    "c1([As+](c2ccccc2)(c2ccccc2)C)ccccc1.[I-]",
+                    "c1(noc(n1)CCC(=O)N(CC)CC)c1ccc(cc1)C",
+                    "c1c(c(ccc1)O)/C=N/CCCC",
+                    "c1(ccc(cc1)C#Cc1ccc(cc1)C#C)OC",
+                };
 
             var sp = CDK.SmilesParser;
-            IAtomContainer mol;
-
             foreach (var smile in smiles)
             {
-                mol = sp.ParseSmiles(smile);
+                var mol = sp.ParseSmiles(smile);
                 AddImplicitHydrogens(mol);
                 AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
+                var descriptor = CreateDescriptor(mol);
                 foreach (var atom in mol.Atoms)
                 {
-                    var dummy = ((Result<Hybridization>)descriptor.Calculate(atom, mol).Value).Value;
+                    var dummy = descriptor.Calculate(atom).Value;
                 }
             }
         }

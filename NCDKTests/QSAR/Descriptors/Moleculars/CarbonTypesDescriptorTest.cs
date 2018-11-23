@@ -1,29 +1,18 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class CarbonTypesDescriptorTest : MolecularDescriptorTest
+    public class CarbonTypesDescriptorTest : MolecularDescriptorTest<CarbonTypesDescriptor>
     {
-        public CarbonTypesDescriptorTest()
-        {
-            SetDescriptor(typeof(CarbonTypesDescriptor));
-        }
-
         [TestMethod()]
         public void TestButane()
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCC");
 
-            ArrayResult<int> ret = (ArrayResult<int>)Descriptor.Calculate(mol).Value;
+            var ret = CreateDescriptor(mol).Calculate().Values;
 
             Assert.AreEqual(0, ret[0]);
             Assert.AreEqual(0, ret[1]);
@@ -42,7 +31,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C(C)(C)C=C(C)C");
 
-            ArrayResult<int> ret = (ArrayResult<int>)Descriptor.Calculate(mol).Value;
+            var ret = CreateDescriptor(mol).Calculate().Values;
 
             Assert.AreEqual(0, ret[0]);
             Assert.AreEqual(0, ret[1]);
@@ -61,7 +50,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C#CC(C)=C");
 
-            ArrayResult<int> ret = (ArrayResult<int>)Descriptor.Calculate(mol).Value;
+            var ret = CreateDescriptor(mol).Calculate().Values;
 
             Assert.AreEqual(1, ret[0]);
             Assert.AreEqual(1, ret[1]);

@@ -37,7 +37,7 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class RearrangementCationReactionTest : ReactionProcessTest
     {
-        private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private IChemObjectBuilder builder = CDK.Builder;
 
         public RearrangementCationReactionTest()
         {

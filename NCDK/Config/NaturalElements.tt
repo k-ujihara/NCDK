@@ -97,6 +97,21 @@ namespace NCDK.Config
 {
     public static partial class NaturalElement
     {
+        internal static IReadOnlyDictionary<string, int> Symbol0Map { get; } = new Dictionary<string, int>()
+            {
+<#
+        foreach (var nn in name_and_numbers)
+        {
+            if (nn.Symbol != "")
+            {
+#>
+                ["<#= nn.Symbol #>"] = NaturalElements.<#= nn.Name #>.AtomicNumber,
+<#
+            }
+        }
+#>
+            };
+
         /// <summary>
         /// Lookup elements by symbol / name.
         /// </summary>
@@ -107,8 +122,13 @@ namespace NCDK.Config
         {
 #>
                 ["<#= nn.Name.ToLowerInvariant() #>"] = NaturalElements.<#= nn.Name #>.AtomicNumber,
+<#
+            if (nn.Symbol != "")
+            {
+#>
                 ["<#= nn.Symbol.ToLowerInvariant() #>"] = NaturalElements.<#= nn.Name #>.AtomicNumber,
 <#
+            }
         }
 #>
                 // recently named elements
@@ -138,7 +158,7 @@ namespace NCDK.Config
         /// <summary>
         /// Lookup elements by atomic number.
         /// </summary>
-        public static IReadOnlyList<IElement> Elements { get; } = new IElement[] 
+        internal static IReadOnlyList<IElement> Elements { get; } = new IElement[] 
             { 
 <# foreach (var nn in name_and_numbers.Where(n => !n.IsObsolete)) { #>
                 NaturalElements.<#= nn.Name #>.Element, 
@@ -152,6 +172,13 @@ namespace NCDK.Config
             { 
 <# foreach (var nn in name_and_numbers.Where(n => !n.IsObsolete)) { #>
                 NaturalElements.<#= nn.Name #>.Name,
+<# } #> 
+            };
+
+        internal static IReadOnlyList<string> Symbols { get; } = new string[]
+            { 
+<# foreach (var nn in name_and_numbers.Where(n => !n.IsObsolete)) { #>
+                NaturalElements.<#= nn.Name #>.Symbol,
 <# } #> 
             };
 

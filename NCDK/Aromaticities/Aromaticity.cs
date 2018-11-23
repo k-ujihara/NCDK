@@ -21,12 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using NCDK.Common.Collections;
 using NCDK.Graphs;
 using NCDK.RingSearches;
+using System;
 using System.Collections.Generic;
-using static NCDK.Graphs.GraphUtil;
-using static NCDK.Common.Base.Preconditions;
 
 namespace NCDK.Aromaticities
 {
@@ -119,8 +119,8 @@ namespace NCDK.Aromaticities
         /// <seealso cref="Cycles"/>
         public Aromaticity(ElectronDonation model, ICycleFinder cycles)
         {
-            this.model = CheckNotNull(model);
-            this.cycles = CheckNotNull(cycles);
+            this.model = model ?? throw new ArgumentNullException(nameof(model));
+            this.cycles = cycles ?? throw new ArgumentNullException(nameof(cycles));
         }
 
         /// <summary>

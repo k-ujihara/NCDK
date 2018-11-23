@@ -51,29 +51,18 @@ namespace NCDK.Sgroups
         /// </summary>
         public ISet<Sgroup> Parents { get; private set; }
 
-        private readonly IDictionary<SgroupKey, object> attributes = new SortedDictionary<SgroupKey, object>();
+        private readonly SortedDictionary<SgroupKey, object> attributes;
 
         /// <summary>
         /// Create a new generic Sgroup.
         /// </summary>
         public Sgroup()
         {
+            this.attributes = new SortedDictionary<SgroupKey, object>();
             Atoms = new HashSet<IAtom>();
             Bonds = new HashSet<IBond>();
             Parents = new HashSet<Sgroup>();
             Type = SgroupType.CtabGeneric;
-        }
-
-        /// <summary>
-        /// Copy constructor.
-        /// </summary>
-        /// <param name="org">original Sgroup instance</param>
-        Sgroup(Sgroup org)
-        {
-            Atoms = new HashSet<IAtom>(org.Atoms);
-            Bonds = new HashSet<IBond>(org.Bonds);
-            Parents = new HashSet<Sgroup>(org.Parents);
-            this.attributes = new Dictionary<SgroupKey, object>(org.attributes);
         }
 
         /// <summary>
@@ -190,7 +179,7 @@ namespace NCDK.Sgroups
         /// <param name="bracket">sgroup bracket</param>
         public void AddBracket(SgroupBracket bracket)
         {
-            IList<SgroupBracket> brackets = (IList<SgroupBracket>)GetValue(SgroupKey.CtabBracket);
+            var brackets = (IList<SgroupBracket>)GetValue(SgroupKey.CtabBracket);
             if (brackets == null)
             {
                 brackets = new List<SgroupBracket>(2);

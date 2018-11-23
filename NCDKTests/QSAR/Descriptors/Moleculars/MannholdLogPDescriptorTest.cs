@@ -16,24 +16,16 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs unit tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     // @see MannholdLogPDescriptor
     [TestClass()]
-    public class MannholdLogPDescriptorTest : MolecularDescriptorTest
+    public class MannholdLogPDescriptorTest : MolecularDescriptorTest<MannholdLogPDescriptor>
     {
-        public MannholdLogPDescriptorTest()
-        {
-            SetDescriptor(typeof(MannholdLogPDescriptor));
-        }
-
         [TestMethod()]
         public void TestMethanol()
         {
@@ -42,9 +34,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             methanol.Atoms.Add(builder.NewAtom("C"));
             methanol.Atoms.Add(builder.NewAtom("O"));
             methanol.AddBond(methanol.Atoms[0], methanol.Atoms[1], BondOrder.Single);
-            IDescriptorResult result = Descriptor.Calculate(methanol).Value;
-            Assert.IsTrue(result is Result<double>);
-            Assert.AreEqual(1.46, ((Result<double>)result).Value, 0.01);
+            var result = CreateDescriptor(methanol).Calculate();
+            Assert.IsInstanceOfType(result.Value, typeof(double));
+            Assert.AreEqual(1.46, result.Value, 0.01);
         }
 
         [TestMethod()]
@@ -53,9 +45,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var builder = Silent.ChemObjectBuilder.Instance;
             IAtomContainer methane = builder.NewAtomContainer();
             methane.Atoms.Add(builder.NewAtom("C"));
-            IDescriptorResult result = Descriptor.Calculate(methane).Value;
-            Assert.IsTrue(result is Result<double>);
-            Assert.AreEqual(1.57, ((Result<double>)result).Value, 0.01);
+            var result = CreateDescriptor(methane).Calculate();
+            Assert.IsInstanceOfType(result.Value, typeof(double));
+            Assert.AreEqual(1.57, result.Value, 0.01);
         }
 
         [TestMethod()]
@@ -69,9 +61,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 chloroform.Atoms.Add(builder.NewAtom("Cl"));
                 chloroform.AddBond(chloroform.Atoms[0], chloroform.Atoms[i + 1], BondOrder.Single);
             }
-            IDescriptorResult result = Descriptor.Calculate(chloroform).Value;
-            Assert.IsTrue(result is Result<double>);
-            Assert.AreEqual(1.24, ((Result<double>)result).Value, 0.01);
+            var result = CreateDescriptor(chloroform).Calculate();
+            Assert.IsInstanceOfType(result.Value, typeof(double));
+            Assert.AreEqual(1.24, result.Value, 0.01);
         }
     }
 }

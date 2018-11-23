@@ -16,34 +16,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Numerics;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class HBondAcceptorCountDescriptorTest : MolecularDescriptorTest
+    public class HBondAcceptorCountDescriptorTest : MolecularDescriptorTest<HBondAcceptorCountDescriptor>
     {
-        public HBondAcceptorCountDescriptorTest()
-        {
-            SetDescriptor(typeof(HBondAcceptorCountDescriptor));
-        }
-
+        public HBondAcceptorCountDescriptor CreateDescriptor(IAtomContainer mol, bool checkAromaticity) => new HBondAcceptorCountDescriptor(mol, checkAromaticity);
+            
         [TestMethod()]
         public void TestHBondAcceptorCountDescriptor()
         {
-            Descriptor.Parameters = new object[] { true };
             var sp = CDK.SmilesParser;
             // original molecule O=N(=O)c1cccc2cn[nH]c12 - correct kekulisation will give
             // the same result. this test though should depend on kekulisation working
             var mol = sp.ParseSmiles("O=N(=O)C1=C2NN=CC2=CC=C1");
-            Assert.AreEqual(1, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(1, CreateDescriptor(mol, true).Calculate().Value);
         }
 
         // @cdk.bug   3133610
@@ -51,8 +43,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestCID9257()
         {
-            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.NewAtomContainer();
+            var builder = CDK.Builder;
+            var mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("N");
             a1.FormalCharge = 0;
             a1.Point3D = new Vector3(0.5509, 0.9639, 0.0);
@@ -102,8 +94,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b8 = builder.NewBond(a5, a8, BondOrder.Single);
             mol.Bonds.Add(b8);
 
-            Descriptor.Parameters = new object[] { true };
-            Assert.AreEqual(2, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(2, CreateDescriptor(mol, true).Calculate().Value);
         }
 
         /// <summary>
@@ -114,8 +105,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var m = sp.ParseSmiles("Cn1c2nc([nH]c2c(=O)n(c1=O)C)C1CCCC1");
-            var hbond_acceptor_desc = new HBondAcceptorCountDescriptor();
-            int actual = hbond_acceptor_desc.Calculate(m).Value.Value;
+            int actual = CreateDescriptor(m).Calculate().Value;
             Assert.AreEqual(3, actual);
         }
     }

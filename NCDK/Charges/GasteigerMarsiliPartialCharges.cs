@@ -33,7 +33,6 @@ namespace NCDK.Charges
     // @author      chhoppe
     // @author      rojas
     // @cdk.module  charges
-    // @cdk.githash
     // @cdk.created 2004-11-03
     // @cdk.keyword partial atomic charges
     // @cdk.keyword charge distribution
@@ -88,8 +87,10 @@ namespace NCDK.Charges
                         isDifferent = true;
                     q_old[j] = q;
 
-                    gasteigerFactors[StepSize * j + j + 4] = gasteigerFactors[StepSize * j + j + 2] * q * q
-                            + gasteigerFactors[StepSize * j + j + 1] * q + gasteigerFactors[StepSize * j + j];
+                    gasteigerFactors[StepSize * j + j + 4] =
+                        gasteigerFactors[StepSize * j + j + 2] * q * q
+                      + gasteigerFactors[StepSize * j + j + 1] * q 
+                      + gasteigerFactors[StepSize * j + j];
                 }
                 if (!isDifferent) /* automatically break the maximum iterations */
                     goto break_out;

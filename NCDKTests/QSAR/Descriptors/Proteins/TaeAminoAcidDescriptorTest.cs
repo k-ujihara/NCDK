@@ -18,39 +18,23 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Descriptors.Moleculars;
-using NCDK.QSAR.Results;
 using NCDK.Tools;
 
 namespace NCDK.QSAR.Descriptors.Proteins
 {
-    /// <summary>
-    /// TestSuite that runs test for the TAE descriptors
-    /// </summary>
     // @cdk.module test-qsarprotein
     [TestClass()]
-    public class TaeAminoAcidDescriptorTest : MolecularDescriptorTest
+    public class TaeAminoAcidDescriptorTest : DescriptorTest<TaeAminoAcidDescriptor>
     {
-        private static IMolecularDescriptor descriptor;
-
-        static TaeAminoAcidDescriptorTest()
-        {
-            descriptor = new TaeAminoAcidDescriptor();
-        }
-
-        public TaeAminoAcidDescriptorTest()
-        {
-            base.SetDescriptor(typeof(TaeAminoAcidDescriptor));
-        }
+        protected override IAtomContainer DefaultMolecular { get; } = ProteinBuilderTool.CreateProtein("A", CDK.Builder);
 
         [TestMethod()]
         public void TestTaeAminoAcidDescriptor()
         {
-            IBioPolymer pepseq = ProteinBuilderTool.CreateProtein("ACDEFGH", Silent.ChemObjectBuilder.Instance);
-            var result = descriptor.Calculate(pepseq);
+            var pepseq = ProteinBuilderTool.CreateProtein("ACDEFGH", CDK.Builder);
+            var result = CreateDescriptor(pepseq).Calculate();
 
-            ArrayResult<double> dar = (ArrayResult<double>)result.Value;
-            Assert.AreEqual(147, dar.Length);
+            Assert.AreEqual(147, result.Values.Count);
         }
     }
 }

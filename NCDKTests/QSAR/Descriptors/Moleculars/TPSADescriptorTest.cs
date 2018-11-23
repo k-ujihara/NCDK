@@ -16,35 +16,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
 using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class TPSADescriptorTest : MolecularDescriptorTest
+    public class TPSADescriptorTest : MolecularDescriptorTest<TPSADescriptor>
     {
-        private SmilesParser sp;
+        protected override TPSADescriptor CreateDescriptor(IAtomContainer mol) => new TPSADescriptor(mol, checkAromaticity: true);
 
-        public TPSADescriptorTest()
-        {
-            sp = CDK.SmilesParser;
-            SetDescriptor(typeof(TPSADescriptor));
-            Descriptor.Parameters = new object[] { true };
-        }
+        private SmilesParser sp = CDK.SmilesParser;
 
         [TestMethod()]
         public void TestTPSA1()
         {
             var mol = sp.ParseSmiles("O=C(O)CC");
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(37.29, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.01);
+            Assert.AreEqual(37.29, CreateDescriptor(mol).Calculate().Value, 0.01);
         }
 
         [TestMethod()]
@@ -52,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var mol = sp.ParseSmiles("C=NC(CC#N)N(C)C");
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(39.39, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.01);
+            Assert.AreEqual(39.39, CreateDescriptor(mol).Calculate().Value, 0.01);
         }
 
         [TestMethod()]
@@ -60,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var mol = sp.ParseSmiles("CCCN(=O)=O");
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(45.82, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.01);
+            Assert.AreEqual(45.82, CreateDescriptor(mol).Calculate().Value, 0.01);
         }
 
         [TestMethod()]
@@ -68,7 +59,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var mol = sp.ParseSmiles("C#N=CC(CNC)N1CC1");
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(28.632, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.01);
+            Assert.AreEqual(28.632, CreateDescriptor(mol).Calculate().Value, 0.01);
         }
 
         [TestMethod()]
@@ -76,7 +67,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var mol = sp.ParseSmiles("c1ccncc1");
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(12.892, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.01);
+            Assert.AreEqual(12.892, CreateDescriptor(mol).Calculate().Value, 0.01);
         }
 
         [TestMethod()]
@@ -84,7 +75,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var mol = sp.ParseSmiles("[H][N+]([H])(C)C");//at:  16
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(16.61, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1); //at:  16
+            Assert.AreEqual(16.61, CreateDescriptor(mol).Calculate().Value, 0.1); //at:  16
         }
 
         [TestMethod()]
@@ -92,7 +83,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var mol = sp.ParseSmiles("C(I)I");//at:  16
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(0.0, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1); //at:  16
+            Assert.AreEqual(0.0, CreateDescriptor(mol).Calculate().Value, 0.1); //at:  16
         }
 
         [TestMethod()]
@@ -100,7 +91,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var mol = sp.ParseSmiles("C(O)O");//at:  16
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(40.45, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1); //at:  16
+            Assert.AreEqual(40.45, CreateDescriptor(mol).Calculate().Value, 0.1); //at:  16
         }
 
         [TestMethod()]
@@ -109,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C1CCCC1CCC2CCCNC2");
             AddExplicitHydrogens(mol);
-            var dv = Descriptor.Calculate(mol);
+            var dv = CreateDescriptor(mol).Calculate();
             Assert.IsNotNull(dv);
         }
     }

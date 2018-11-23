@@ -36,7 +36,7 @@ namespace NCDK.Smiles
     [TestClass()]
     public class BeamToCDKTest
     {
-        private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
         private static BeamToCDK g2c = new BeamToCDK(builder);
 
         [TestMethod()]
@@ -518,7 +518,7 @@ namespace NCDK.Smiles
 
         IAtomContainer Convert(string smi)
         {
-            BeamToCDK g2c = new BeamToCDK(Silent.ChemObjectBuilder.Instance);
+            BeamToCDK g2c = new BeamToCDK(CDK.Builder);
             Graph g = Graph.FromSmiles(smi);
             return g2c.ToAtomContainer(g, false);
         }

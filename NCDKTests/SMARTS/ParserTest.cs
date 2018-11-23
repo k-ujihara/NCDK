@@ -32,7 +32,7 @@ namespace NCDK.SMARTS
     {
         private void Parse(string smarts, SmartsFlaver flav)
         {
-            var builder = Silent.ChemObjectBuilder.Instance;
+            var builder = CDK.Builder;
             if (!Smarts.Parse(builder.NewAtomContainer(), smarts, flav))
                 throw new Exception(Smarts.GetLastErrorMessage());
         }
@@ -45,7 +45,7 @@ namespace NCDK.SMARTS
         [TestMethod()]
         public void ErrorHandling()
         {
-            var builder = Silent.ChemObjectBuilder.Instance;
+            var builder = CDK.Builder;
             if (!Smarts.Parse(builder.NewAtomContainer(), "CCCJCCC"))
             {
                 Assert.AreEqual("Unexpected character", Smarts.GetLastErrorMessage());

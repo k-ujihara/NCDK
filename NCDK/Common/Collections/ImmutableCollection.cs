@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace NCDK.Common.Collections
 {
-    public class ImmutableCollection<T>
-        : ICollection<T>
+    internal class ImmutableCollection<T> : ICollection<T>
     {
         public int Count => 0;
         public bool IsReadOnly => true;

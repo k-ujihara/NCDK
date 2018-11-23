@@ -17,20 +17,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class WHIMDescriptorTest : MolecularDescriptorTest
+    public class WHIMDescriptorTest : MolecularDescriptorTest<WHIMDescriptor>
     {
-        public WHIMDescriptorTest()
-        {
-            SetDescriptor(typeof(WHIMDescriptor));
-        }
     }
 }

@@ -18,9 +18,7 @@
  */
 
 using NCDK.Graphs;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -34,70 +32,55 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// If r(i) is the largest matrix entry in row i of the distance matrix D, then the radius is defined as the smallest of the r(i).
     /// The graph diameter D is defined as the largest vertex eccentricity in the graph.
     /// (http://www.edusoft-lc.com/molconn/manuals/400/chaptwo.html)
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    ///   <item>
-    ///     <term>Name</term>
-    ///     <term>Default</term>
-    ///     <term>Description</term>
-    ///   </item>
-    ///   <item>
-    ///     <term></term>
-    ///     <term></term>
-    ///     <term>no parameters</term>
-    ///   </item>
-    /// </list>
-    ///
-    /// Returns a single value named <i>PetitjeanNumber</i>.
-    /// </para>
     /// </remarks>
     // @author         mfe4
     // @cdk.created    December 7, 2004
     // @cdk.created    2004-11-03
     // @cdk.module     qsarmolecular
-    // @cdk.githash
     // @cdk.dictref    qsar-descriptors:petitjeanNumber
     // @cdk.keyword    Petit-Jean, number
-    public class PetitjeanNumberDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanNumber")]
+    public class PetitjeanNumberDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "PetitjeanNumber" };
 
-        public PetitjeanNumberDescriptor() { }
+        private readonly IAtomContainer container;
 
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanNumber",
-                typeof(PetitjeanNumberDescriptor).FullName, "The Chemistry Development Kit");
+        public PetitjeanNumberDescriptor(IAtomContainer container)
+        {
+            container = AtomContainerManipulator.RemoveHydrogens(container);
 
-        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+            this.container = container;
+        }
+
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(double value)
+            {
+                this.PetitjeanNumber = value;
+            }
+
+            [DescriptorResultProperty("PetitjeanNumber")]
+            public double PetitjeanNumber { get; private set; }
+
+            public double Value => PetitjeanNumber;
+        }
 
         /// <summary>
         /// Evaluate the descriptor for the molecule.
         /// </summary>
-        /// <param name="atomContainer">AtomContainer</param>
         /// <returns>petitjean number</returns>
-        public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
+        public Result Calculate()
         {
-            var cloneContainer = AtomContainerManipulator.RemoveHydrogens(atomContainer);
-            double petitjeanNumber; //weinerPath
-            var diameter = PathTools.GetMolecularGraphDiameter(cloneContainer);
-            var radius = PathTools.GetMolecularGraphRadius(cloneContainer);
+            var diameter = PathTools.GetMolecularGraphDiameter(container);
+            var radius = PathTools.GetMolecularGraphRadius(container);
 
-            if (diameter == 0)
-                petitjeanNumber = 0;
-            else
-                petitjeanNumber = (diameter - radius) / (double)diameter;
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(petitjeanNumber), DescriptorNames);
+            var petitjeanNumber = diameter == 0 ? 0 : (diameter - radius) / (double)diameter;
+
+            return new Result(petitjeanNumber);
         }
-
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
-
-        public override IReadOnlyList<string> ParameterNames => null;
-        public override object GetParameterType(string name) => null;
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

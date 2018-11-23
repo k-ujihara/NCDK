@@ -18,60 +18,57 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
+using NCDK.Templates;
 using NCDK.Tools;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summaTestSuite that runs a test for the AtomCountDescriptor.ry>
-    /// TestSuite that runs a test for the AtomCountDescriptor.
-    /// </summary>
     // @cdk.module test-qsarprotein
     [TestClass()]
-    public class AminoAcidCountDescriptorTest : MolecularDescriptorTest
+    public class AminoAcidCountDescriptorTest : MolecularDescriptorTest<AminoAcidCountDescriptor>
     {
-        protected override IMolecularDescriptor Descriptor { get; set; }
-
-        public AminoAcidCountDescriptorTest()
+        [TestMethod()]
+        public void TestKeyName()
         {
-            Descriptor = new AminoAcidCountDescriptor();
-            SetDescriptor(typeof(AminoAcidCountDescriptor));
+            var values = new int[AminoAcids.Proteinogenics.Count];
+            for (int i = 0; i < AminoAcids.Proteinogenics.Count; i++)
+                values[i] = i;
+            var result = new AminoAcidCountDescriptor.Result(values);
+
+            for (int i = 0; i < AminoAcids.Proteinogenics.Count; i++)
+            {
+                var aa = AminoAcids.Proteinogenics[i];
+                var shortName = aa.GetProperty<string>(AminoAcids.ResidueNameShortKey);
+                Assert.AreEqual(values[i], (int)result[$"n{shortName}"]);
+            }
         }
 
         [TestMethod()]
         public void TestAACount()
         {
-            IBioPolymer protein = ProteinBuilderTool.CreateProtein("ARNDCFQEGHIPLKMSTYVW", Silent.ChemObjectBuilder.Instance);
-            IDescriptorResult result = Descriptor.Calculate(protein).Value;
-            Assert.IsTrue(result is ArrayResult<int>);
-            ArrayResult<int> iaResult = (ArrayResult<int>)result;
-            for (int i = 0; i < iaResult.Length; i++)
-            {
-                Assert.IsTrue(iaResult[i] >= 1); // all AAs are found at least once
-            }
-            Assert.AreEqual(20, iaResult[8]); // glycine is in all of them, so 20 times
+            var protein = ProteinBuilderTool.CreateProtein("ARNDCFQEGHIPLKMSTYVW");
+            var result = CreateDescriptor(protein).Calculate();
+            foreach (var n in result.Values)
+                Assert.IsTrue(n >= 1); // all AAs are found at least once
+            Assert.AreEqual(20, result.NumberOfG); // glycine is in all of them, so 20 times
         }
 
         [TestMethod()]
         public void TestFCount()
         {
-            IBioPolymer protein = ProteinBuilderTool.CreateProtein("FF", Silent.ChemObjectBuilder.Instance);
-            IDescriptorResult result = Descriptor.Calculate(protein).Value;
-            Assert.IsTrue(result is ArrayResult<int>);
-            ArrayResult<int> iaResult = (ArrayResult<int>)result;
-            Assert.AreEqual(2, iaResult[8]);
-            Assert.AreEqual(4, iaResult[5]); // thingy is symmetrical, so two mappings at each AA position possible
+            var protein = ProteinBuilderTool.CreateProtein("FF", Silent.ChemObjectBuilder.Instance);
+            var result = CreateDescriptor(protein).Calculate();
+            Assert.AreEqual(2, result.NumberOfG);
+            Assert.AreEqual(4, result.NumberOfF); // thingy is symmetrical, so two mappings at each AA position possible
         }
 
         [TestMethod()]
         public void TestTCount()
         {
-            IBioPolymer protein = ProteinBuilderTool.CreateProtein("TT", Silent.ChemObjectBuilder.Instance);
-            IDescriptorResult result = Descriptor.Calculate(protein).Value;
-            Assert.IsTrue(result is ArrayResult<int>);
-            ArrayResult<int> iaResult = (ArrayResult<int>)result;
-            Assert.AreEqual(2, iaResult[8]);
-            Assert.AreEqual(2, iaResult[16]);
+            var protein = ProteinBuilderTool.CreateProtein("TT");
+            var result = CreateDescriptor(protein).Calculate();
+            Assert.AreEqual(2, result.NumberOfG);
+            Assert.AreEqual(2, result.NumberOfT);
         }
     }
 }

@@ -17,31 +17,20 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsaratomic
     [TestClass()]
-    public class AtomValenceDescriptorTest : AtomicDescriptorTest
+    public class AtomValenceDescriptorTest : AtomicDescriptorTest<AtomValenceDescriptor>
     {
-        public AtomValenceDescriptorTest()
-        {
-            SetDescriptor(typeof(AtomValenceDescriptor));
-        }
-
         [TestMethod()]
         public void TestAtomValenceDescriptor()
         {
-            IAtomicDescriptor descriptor = new AtomValenceDescriptor();
             var sp = CDK.SmilesParser;
-            var mol = sp.ParseSmiles("CCCl"); //
-            Assert.AreEqual(7, ((Result<int>)descriptor.Calculate(mol.Atoms[2], mol).Value).Value);
+            var mol = sp.ParseSmiles("CCCl");
+            var descriptor = CreateDescriptor(mol);
+            Assert.AreEqual(7, descriptor.Calculate(mol.Atoms[2]).Value);
         }
     }
 }

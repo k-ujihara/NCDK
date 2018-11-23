@@ -19,78 +19,62 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.QSAR.Results;
-using System;
-using System.Collections.Generic;
-
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Calculates F<sub>sp</sub><sup>3</sup> (number of sp<sup>3</sup> hybridized carbons/total carbon count) <token>cdk-cite-Lovering2009</token>.
     /// </summary>
-    public class FractionalCSP3Descriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#Fsp3")]
+    public class FractionalCSP3Descriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        public FractionalCSP3Descriptor() { }
+        private readonly IAtomContainer container;
 
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#Fsp3",
-               typeof(FractionalCSP3Descriptor).FullName, 
-               "The Chemistry Development Kit");
-
-        public override IReadOnlyList<object> Parameters
+        public FractionalCSP3Descriptor(IAtomContainer container)
         {
-            set
-            {
-                if (value.Count != 0)
-                    throw new CDKException($"The {nameof(FractionalCSP3Descriptor)} expects zero parameters");
-            }
-
-            get => Array.Empty<object>();
+            this.container = container;
         }
 
-        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "Fsp3" };
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(double value)
+            {
+                this.Fsp3 = value;
+            }
+
+            [DescriptorResultProperty("Fsp3")]
+            public double Fsp3 { get; private set; }
+
+            public double Value => Fsp3;
+        }
 
         /// <summary>
         /// Calculates the fraction of C atoms that are SP3 hybridized.
         /// </summary>
-        /// <param name="mol">The <see cref="IAtomContainer"/> whose F<sub>sp</sub><sup>3</sup> is to be calculated</param>
         /// <returns>F<sub>sp</sub><sup>3</sup></returns>
-        public DescriptorValue<Result<double>> Calculate(IAtomContainer mol)
+        public Result Calculate()
         {
             double v;
-            try
+            int nC = 0;
+            int nCSP3 = 0;
+            var matcher = CDK.AtomTypeMatcher;
+            foreach (var atom in container.Atoms)
             {
-                int nC = 0;
-                int nCSP3 = 0;
-                var matcher = CDK.AtomTypeMatcher;
-                foreach (var atom in mol.Atoms)
+                if (atom.AtomicNumber == 6)
                 {
-                    if (atom.AtomicNumber == 6)
+                    nC++;
+                    var matched = matcher.FindMatchingAtomType(container, atom);
+                    if (matched != null && matched.Hybridization == Hybridization.SP3)
                     {
-                        nC++;
-                        var matched = matcher.FindMatchingAtomType(mol, atom);
-                        if (matched != null && matched.Hybridization == Hybridization.SP3)
-                        {
-                            nCSP3++;
-                        }
+                        nCSP3++;
                     }
                 }
-                v = nC == 0 ? 0 : (double)nCSP3 / nC;
             }
-            catch (CDKException)
-            {
-                v = double.NaN;
-            }
+            v = nC == 0 ? 0 : (double)nCSP3 / nC;
 
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters,
-                new Result<double>(v), DescriptorNames);
+            return new Result(v);
         }
 
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>();
-        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
-        public override object GetParameterType(string name) => null;
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

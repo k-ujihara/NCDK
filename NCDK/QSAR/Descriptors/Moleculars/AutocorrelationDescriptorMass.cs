@@ -18,11 +18,8 @@
  */
 
 using NCDK.Graphs.Matrix;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
-using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -33,17 +30,35 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @author      Federico
     // @cdk.created 2007-02-08
     // @cdk.module  qsarmolecular
-    // @cdk.githash
-    public class AutocorrelationDescriptorMass : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationMass")]
+    public class AutocorrelationDescriptorMass : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly static string[] Names = { "ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5" };
+        private const int DefaultSize = 5;
         private const double CarbonMass = 12.010735896788;
+
+        private readonly IAtomContainer container;
+
+        public AutocorrelationDescriptorMass(IAtomContainer container)
+        {
+            container = (IAtomContainer)container.Clone();
+            container = AtomContainerManipulator.RemoveHydrogens(container);
+            this.container = container;
+        }
+
+        [DescriptorResult(prefix: "ATSm", baseIndex: 1)]
+        public class Result : AbstractDescriptorArrayResult<double>
+        {
+            public Result(IReadOnlyList<double> values)
+                : base(values)
+            {
+            }
+        }
 
         private static double ScaledAtomicMasses(IElement element)
         {
             var isofac = CDK.IsotopeFactory;
             double realmasses = isofac.GetNaturalMass(element);
-            return (realmasses / CarbonMass);
+            return realmasses / CarbonMass;
         }
 
         private static double[] ListConvertion(IAtomContainer container)
@@ -52,85 +67,34 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var scalated = new double[natom];
 
             for (int i = 0; i < natom; i++)
-            {
                 scalated[i] = ScaledAtomicMasses(container.Atoms[i]);
-            }
             return scalated;
         }
 
         /// <summary>
         /// This method calculate the ATS Autocorrelation descriptor.
         /// </summary>
-        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer atomContainer)
+        public Result Calculate(int count = DefaultSize)
         {
-            IAtomContainer container;
-            container = (IAtomContainer)atomContainer.Clone();
-            container = AtomContainerManipulator.RemoveHydrogens(container);
-
-            try
-            {
-                var w = ListConvertion(container);
-                var natom = container.Atoms.Count;
-                var distancematrix = TopologicalMatrix.GetMatrix(container);
-                var masSum = new double[5];
-
-                for (int k = 0; k < 5; k++)
-                {
-                    for (int i = 0; i < natom; i++)
-                    {
-                        for (int j = 0; j < natom; j++)
-                        {
-
-                            if (distancematrix[i][j] == k)
-                            {
-                                masSum[k] += w[i] * w[j];
-                            }
-                            else
-                                masSum[k] += 0.0;
-                        }
-                    }
-                    if (k > 0)
-                        masSum[k] = masSum[k] / 2;
-                }
-                var result = new ArrayResult<double>(5);
-                foreach (var aMasSum in masSum)
-                {
-                    result.Add(aMasSum);
-                }
-
-                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, DescriptorNames);
+            var w = ListConvertion(container);
+            var natom = container.Atoms.Count;
+            var distancematrix = TopologicalMatrix.GetMatrix(container);
+            var masSum = new double[count];
+            for (int k = 0; k < count; k++)
+            { 
+                for (int i = 0; i < natom; i++)
+                    for (int j = 0; j < natom; j++)
+                        if (distancematrix[i][j] == k)
+                            masSum[k] += w[i] * w[j];
+                        else
+                            masSum[k] += 0;
+                if (k > 0)
+                    masSum[k] = masSum[k] / 2;
             }
-            catch (IOException ex)
-            {
-                var result = new ArrayResult<double>(5);
-                for (int i = 0; i < 5; i++)
-                    result.Add(double.NaN);
-                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result,
-                        DescriptorNames, new CDKException("Error while calculating the ATS_mass descriptor: "
-                                + ex.Message, ex));
-            }
+
+            return new Result(masSum);
         }
 
-        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
-        public override object GetParameterType(string name) => null;
-
-        public override IReadOnlyList<object> Parameters
-        {
-            get { return null; }
-            set { }
-        }
-
-        public override IReadOnlyList<string> DescriptorNames => Names;
-
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationMass",
-                typeof(AutocorrelationDescriptorMass).FullName,
-                "The Chemistry Development Kit");
-
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

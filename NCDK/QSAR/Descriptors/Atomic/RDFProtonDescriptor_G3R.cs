@@ -17,11 +17,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Numerics;
-using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
@@ -31,51 +32,19 @@ namespace NCDK.QSAR.Descriptors.Atomic
     /// requires aromaticity to be perceived (possibly done via a parameter), and
     /// needs 3D coordinates for all atoms.
     /// </summary>
-    /// <remarks>
-    ///  This descriptor uses these parameters:
-    /// <list type="table">
-    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
-    /// <item><term>checkAromaticity</term><term>false</term><term>True is the aromaticity has to be checked</term></item>
-    /// </list>
-    /// </remarks>
     // @author      Federico
     // @cdk.created 2006-12-11
     // @cdk.module  qsaratomic
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
     // @cdk.bug     1632419
-    public partial class RDFProtonDescriptorG3R : IAtomicDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues")]
+    public partial class RDFProtonDescriptorG3R : AbstractDescriptor, IAtomicDescriptor
     {
+        private const string prefix = "g3r_";
         private const int desc_length = 13;
-
-        /// <summary>
-        /// Constructor for the RDFProtonDescriptor object
-        /// </summary>
-        public RDFProtonDescriptorG3R()
-        {
-            names = new string[desc_length];
-            for (int i = 0; i < desc_length; i++)
-            {
-                names[i] = "g3r_" + (i + 1);
-            }
-        }
-
-        private static string[] names;
-        public IReadOnlyList<string> DescriptorNames => names;
-
-        /// <summary>
-        /// Gets the specification attribute of the RDFProtonDescriptorG3R object
-        /// </summary>
-        /// <returns>The specification value</returns>
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues",
-                typeof(RDFProtonDescriptorG3R).FullName,
-                "The Chemistry Development Kit");
-
+ 
         private static bool MakeDescriptorLastStage(
-            ArrayResult<double> rdfProtonCalculatedValues,
+            List<double> rdfProtonCalculatedValues,
             IAtom atom,
             IAtom clonedAtom,
             IAtomContainer mol,
@@ -85,82 +54,61 @@ namespace NCDK.QSAR.Descriptors.Atomic
             List<int> atoms,
             List<int> bondsInCycloex)
         {
-            // ////////////////////////LAST DESCRIPTOR IS g3(r), FOR PROTONS BONDED TO LIKE-CYCLOEXANE RINGS:
-            if (bondsInCycloex.Count > 0)
+            if (bondsInCycloex.Any())
             {
-                // Variables
-                double sum;
-                double smooth = -20;
-                double partial;
-                int position;
-                double limitInf;
-                double limitSup;
-                double step;
-
-                Vector3 aA;
-                Vector3 aB;
-                Vector3 bA;
-                Vector3 bB;
-                double angle;
-
-                IAtom cycloexBondAtom0;
-                IAtom cycloexBondAtom1;
-                IBond theInCycloexBond;
-                limitInf = 0;
-                limitSup = Math.PI;
-                step = (limitSup - limitInf) / 13;
-                position = 0;
-                smooth = -2.86;
-                angle = 0;
-                int yaCounter = 0;
-                for (double g3r = 0; g3r < limitSup; g3r = g3r + step)
+                const double limitSup = Math.PI;
+                const double smooth = -2.86;
+                for (int c = 0; c < desc_length; c++)
                 {
-                    sum = 0;
+                    var g3r = limitSup * ((double)c / desc_length);
+                    double sum = 0;
                     foreach (var aBondsInCycloex in bondsInCycloex)
                     {
-                        yaCounter = 0;
-                        angle = 0;
-                        partial = 0;
-                        position = aBondsInCycloex;
-                        theInCycloexBond = mol.Bonds[position];
-                        cycloexBondAtom0 = theInCycloexBond.Atoms[0];
-                        cycloexBondAtom1 = theInCycloexBond.Atoms[1];
+                        int yaCounter = 0;
+                        int position = aBondsInCycloex;
+                        var theInCycloexBond = mol.Bonds[position];
+                        var cycloexBondAtom0 = theInCycloexBond.Atoms[0];
+                        var cycloexBondAtom1 = theInCycloexBond.Atoms[1];
 
                         var connAtoms = mol.GetConnectedAtoms(cycloexBondAtom0);
                         foreach (var connAtom in connAtoms)
                         {
-                            if (connAtom.Equals(neighbour0)) yaCounter += 1;
+                            if (connAtom.Equals(neighbour0))
+                                yaCounter += 1;
                         }
 
+                        Vector3 aA;
+                        Vector3 aB;
                         if (yaCounter > 0)
                         {
-                            aA = new Vector3(cycloexBondAtom1.Point3D.Value.X, cycloexBondAtom1.Point3D.Value.Y,
-                                    cycloexBondAtom1.Point3D.Value.Z);
-                            aB = new Vector3(cycloexBondAtom0.Point3D.Value.X, cycloexBondAtom0.Point3D.Value.Y,
-                                    cycloexBondAtom0.Point3D.Value.Z);
+                            aA = new Vector3(cycloexBondAtom1.Point3D.Value.X, 
+                                             cycloexBondAtom1.Point3D.Value.Y,
+                                             cycloexBondAtom1.Point3D.Value.Z);
+                            aB = new Vector3(cycloexBondAtom0.Point3D.Value.X, 
+                                             cycloexBondAtom0.Point3D.Value.Y,
+                                             cycloexBondAtom0.Point3D.Value.Z);
                         }
                         else
                         {
-                            aA = new Vector3(cycloexBondAtom0.Point3D.Value.X, cycloexBondAtom0.Point3D.Value.Y,
-                                    cycloexBondAtom0.Point3D.Value.Z);
-                            aB = new Vector3(cycloexBondAtom1.Point3D.Value.X, cycloexBondAtom1.Point3D.Value.Y,
-                                    cycloexBondAtom1.Point3D.Value.Z);
+                            aA = new Vector3(cycloexBondAtom0.Point3D.Value.X, 
+                                             cycloexBondAtom0.Point3D.Value.Y,
+                                             cycloexBondAtom0.Point3D.Value.Z);
+                            aB = new Vector3(cycloexBondAtom1.Point3D.Value.X, 
+                                             cycloexBondAtom1.Point3D.Value.Y,
+                                             cycloexBondAtom1.Point3D.Value.Z);
                         }
-                        bA = new Vector3(neighbour0.Point3D.Value.X, neighbour0.Point3D.Value.Y, neighbour0.Point3D.Value.Z);
-                        bB = new Vector3(atom.Point3D.Value.X, atom.Point3D.Value.Y, atom.Point3D.Value.Z);
-
-                        angle = CalculateAngleBetweenTwoLines(aA, aB, bA, bB);
-
-                        // Debug.WriteLine("gcycr ANGLE: " + angle + " "
-                        // +mol.Atoms.IndexOf(cycloexBondAtom0) + "
-                        // "+mol.Atoms.IndexOf(cycloexBondAtom1));
-
-                        partial = Math.Exp(smooth * (Math.Pow((g3r - angle), 2)));
+                        var bA = new Vector3(neighbour0.Point3D.Value.X,
+                                         neighbour0.Point3D.Value.Y, 
+                                         neighbour0.Point3D.Value.Z);
+                        var bB = new Vector3(atom.Point3D.Value.X, 
+                                         atom.Point3D.Value.Y,
+                                         atom.Point3D.Value.Z);
+                        var angle = CalculateAngleBetweenTwoLines(aA, aB, bA, bB);
+                        var partial = Math.Exp(smooth * Math.Pow(g3r - angle, 2));
                         sum += partial;
                     }
-                    // g3r_function.Add(new Double(sum));
                     rdfProtonCalculatedValues.Add(sum);
-                    Debug.WriteLine("RDF g3r prob.: " + sum + " at distance " + g3r);
+                    Debug.WriteLine($"RDF g3r prob.: {sum} at distance {g3r}");
                 }
                 return true;
             }

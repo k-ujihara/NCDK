@@ -84,7 +84,7 @@ namespace NCDK.Fingerprints
                                  + "  3  4  1  0  0  0  0\n"
                                  + "  3  5  1  1  0  0  0\n"
                                  + "M  END\n";
-            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            IChemObjectBuilder bldr = CDK.Builder;
             MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(molfile));
             SmilesParser smipar = new SmilesParser(bldr);
 

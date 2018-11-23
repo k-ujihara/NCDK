@@ -36,7 +36,7 @@ namespace NCDK.Tools
     [TestClass()]
     public class StructureResonanceGeneratorTest : CDKTestCase
     {
-        private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private readonly static IChemObjectBuilder builder = CDK.Builder;
 
         /// <summary>
         /// Constructor of the StructureResonanceGeneratorTest.

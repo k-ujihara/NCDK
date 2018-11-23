@@ -60,12 +60,18 @@ namespace NCDK.Tools.Manipulator
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestConfigure_IAtom_Null()
         {
-            IAtom atom = new Atom(NaturalElements.Carbon.Element);
+            var atom = new Atom(NaturalElements.Carbon.Element);
             IAtomType atomType = null;
-            AtomTypeManipulator.Configure(atom, atomType);
+            try
+            {
+                AtomTypeManipulator.Configure(atom, atomType);
+                Assert.Fail();
+            }
+            catch (ArgumentNullException)
+            {
+            }
         }
 
         [TestMethod()]

@@ -31,7 +31,7 @@ namespace NCDK.Signatures
     [TestClass()]
     public class AbstractSignatureTest
     {
-        public static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        public static IChemObjectBuilder builder = CDK.Builder;
 
         public static void Print(IAtomContainer mol)
         {

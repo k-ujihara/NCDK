@@ -45,7 +45,7 @@ namespace NCDK.Signatures
         public IAtomContainer Reconstruct(string signature)
         {
             ColoredTree tree = AbstractVertexSignature.Parse(signature);
-            MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(Silent.ChemObjectBuilder.Instance);
+            MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(CDK.Builder);
             builder.MakeFromColoredTree(tree);
             return builder.GetAtomContainer();
         }
@@ -131,7 +131,7 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void MakeGraphTest()
         {
-            MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(Silent.ChemObjectBuilder.Instance);
+            MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(CDK.Builder);
             builder.MakeGraph();
             Assert.IsNotNull(builder.GetAtomContainer());
         }
@@ -139,7 +139,7 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void MakeVertexTest()
         {
-            MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(Silent.ChemObjectBuilder.Instance);
+            MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(CDK.Builder);
             builder.MakeGraph();
             builder.MakeVertex("C");
             IAtomContainer product = builder.GetAtomContainer();
@@ -149,7 +149,7 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void MakeEdgeTest_singleBond()
         {
-            MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(Silent.ChemObjectBuilder.Instance);
+            MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(CDK.Builder);
             builder.MakeGraph();
             builder.MakeVertex("C");
             builder.MakeVertex("C");
@@ -164,7 +164,7 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void MakeEdgeTest_DoubleBond()
         {
-            MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(Silent.ChemObjectBuilder.Instance);
+            MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(CDK.Builder);
             builder.MakeGraph();
             builder.MakeVertex("C");
             builder.MakeVertex("C");
@@ -179,7 +179,7 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void MakeEdgeTest_tripleBond()
         {
-            MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(Silent.ChemObjectBuilder.Instance);
+            MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(CDK.Builder);
             builder.MakeGraph();
             builder.MakeVertex("C");
             builder.MakeVertex("C");
@@ -194,7 +194,7 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void MakeEdgeTest_aromaticBond()
         {
-            MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(Silent.ChemObjectBuilder.Instance);
+            MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(CDK.Builder);
             builder.MakeGraph();
             builder.MakeVertex("C");
             builder.MakeVertex("C");
@@ -211,7 +211,7 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void GetAtomContainerTest()
         {
-            MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(Silent.ChemObjectBuilder.Instance);
+            MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(CDK.Builder);
             builder.MakeGraph();
             Assert.IsNotNull(builder.GetAtomContainer());
         }

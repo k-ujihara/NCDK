@@ -9,7 +9,7 @@ namespace NCDK.Formula
     [TestClass()]
     public class IsotopeContainerTest : CDKTestCase
     {
-        private static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private static IChemObjectBuilder builder = CDK.Builder;
 
         /// <summary>
         ///  Constructor for the IsotopeContainerTest object.

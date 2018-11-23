@@ -16,52 +16,39 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs a test for the WeightDescriptor.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class WeightDescriptorTest : MolecularDescriptorTest
+    public class WeightDescriptorTest : MolecularDescriptorTest<WeightDescriptor>
     {
-        public WeightDescriptorTest()
-        {
-            SetDescriptor(typeof(WeightDescriptor));
-        }
-
         [TestMethod()]
         public void TestWeightDescriptor()
         {
-            Descriptor.Parameters = new object[] { "*" };
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCC");
-            Assert.AreEqual(44.06, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
+            Assert.AreEqual(44.06, CreateDescriptor(mol).Calculate("*").Value, 0.1);
         }
 
         // @cdk.bug 2185475
         [TestMethod()]
         public void TestNoHydrogens()
         {
-            Descriptor.Parameters = new object[] { "*" };
-            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.NewAtomContainer();
+            var builder = CDK.Builder;
+            var mol = builder.NewAtomContainer();
             mol.Atoms.Add(builder.NewAtom("C"));
-            Assert.AreEqual(12.00, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
+            Assert.AreEqual(12.00, CreateDescriptor(mol).Calculate("*").Value, 0.1);
         }
 
         // @cdk.bug 2185475
         [TestMethod()]
         public void TestExplicitHydrogens()
         {
-            Descriptor.Parameters = new object[] { "*" };
-            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.NewAtomContainer();
+            var builder = CDK.Builder;
+            var mol = builder.NewAtomContainer();
             mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms.Add(builder.NewAtom("H"));
             mol.Atoms.Add(builder.NewAtom("H"));
@@ -71,19 +58,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[4], BondOrder.Single);
-            Assert.AreEqual(16.01, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
+            Assert.AreEqual(16.01, CreateDescriptor(mol).Calculate("*").Value, 0.1);
         }
 
         // @cdk.bug 2185475
         [TestMethod()]
         public void TestImplicitHydrogens()
         {
-            Descriptor.Parameters = new object[] { "*" };
-            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.NewAtomContainer();
+            var builder = CDK.Builder;
+            var mol = builder.NewAtomContainer();
             mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[0].ImplicitHydrogenCount = 4;
-            Assert.AreEqual(16.01, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
+            Assert.AreEqual(16.01, CreateDescriptor(mol).Calculate("*").Value, 0.1);
         }
     }
 }

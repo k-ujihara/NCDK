@@ -184,11 +184,11 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void R_penta_2_3_diene()
         {
-            var parser = new InChIToStructure("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m0/s1", Silent.ChemObjectBuilder.Instance);
+            var parser = new InChIToStructure("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m0/s1", CDK.Builder);
             var container = parser.AtomContainer;
 
             var ses = container.StereoElements.GetEnumerator();
-            Assert.IsInstanceOfType(container, Silent.ChemObjectBuilder.Instance.NewAtomContainer().GetType());
+            Assert.IsInstanceOfType(container, CDK.Builder.NewAtomContainer().GetType());
             var f = ses.MoveNext();
             Assert.IsTrue(f);
             var se = ses.Current;
@@ -209,11 +209,11 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void S_penta_2_3_diene()
         {
-            var parser = new InChIToStructure("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m1/s1", Silent.ChemObjectBuilder.Instance);
+            var parser = new InChIToStructure("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m1/s1", CDK.Builder);
             var container = parser.AtomContainer;
 
             var ses = container.StereoElements.GetEnumerator();
-            Assert.IsInstanceOfType(container, Silent.ChemObjectBuilder.Instance.NewAtomContainer().GetType());
+            Assert.IsInstanceOfType(container, CDK.Builder.NewAtomContainer().GetType());
             Assert.IsTrue(ses.MoveNext());
             var se = ses.Current;
             Assert.IsInstanceOfType(se, typeof(ExtendedTetrahedral));
@@ -231,7 +231,7 @@ namespace NCDK.Graphs.InChI
         public void Diazene()
         {
             InChIToStructure parse = new InChIToStructure("InChI=1S/H2N2/c1-2/h1-2H/b2-1+",
-                                                          Silent.ChemObjectBuilder.Instance);
+                                                          CDK.Builder);
             IAtomContainer mol = parse.AtomContainer;
             Assert.AreEqual(4, mol.Atoms.Count);
             Assert.AreEqual(true, mol.StereoElements.Any());
@@ -241,7 +241,7 @@ namespace NCDK.Graphs.InChI
         public void ReadImplicitDeuteriums()
         {
             var inchi = "InChI=1S/C22H32O2/c1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22(23)24/h3-4,6-7,9-10,12-13,15-16,18-19H,2,5,8,11,14,17,20-21H2,1H3,(H,23,24)/b4-3-,7-6-,10-9-,13-12-,16-15-,19-18-/i1D3,2D2";
-            var intostruct = InChIGeneratorFactory.Instance.GetInChIToStructure(inchi, Silent.ChemObjectBuilder.Instance);
+            var intostruct = InChIGeneratorFactory.Instance.GetInChIToStructure(inchi, CDK.Builder);
             var mol = intostruct.AtomContainer;
             int dCount = 0;
             foreach (var atom in mol.Atoms)

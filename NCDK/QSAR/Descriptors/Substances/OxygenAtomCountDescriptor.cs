@@ -14,10 +14,8 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Config;
-using NCDK.QSAR.Results;
-using System;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Substances
 {
@@ -26,59 +24,37 @@ namespace NCDK.QSAR.Descriptors.Substances
     /// formula. Originally aimed at metal oxide nanoparticles <token>cdk-cite-Liu2011</token>.
     /// </summary>
     // @author      egonw
-    // @cdk.githash
-    public class OxygenAtomCountDescriptor : ISubstanceDescriptor
+    [DescriptorSpecification("http://egonw.github.com/resource/NM_001002")]
+    public class OxygenAtomCountDescriptor : AbstractDescriptor, ISubstanceDescriptor
     {
-        /// <inheritdoc/>
-        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "NoMe" };
-
-        /// <inheritdoc/>
-        public IReadOnlyList<string> ParameterNames => Array.Empty<string>();
-
-        /// <inheritdoc/>
-        public object GetParameterType(string substance) => null;
-
-        /// <inheritdoc/>
-        public IReadOnlyList<object> Parameters
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            get { return Array.Empty<object>(); }
-            set { }
+            public Result(int value)
+            {
+                this.NumberOfOxygenAtom = value;
+            }
+
+            [DescriptorResultProperty("NoMe")]
+            public int NumberOfOxygenAtom { get; private set; }
+
+            public int Value => NumberOfOxygenAtom;
         }
 
         /// <inheritdoc/>
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://egonw.github.com/resource/NM_001002",
-                typeof(OxygenAtomCountDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        /// <inheritdoc/>
-        public DescriptorValue<Result<int>> Calculate(ISubstance substance)
+        public Result Calculate(ISubstance substance)
         {
             int count = 0;
             if (substance != null)
-            {
                 foreach (var container in substance)
-                {
                     foreach (var atom in container.Atoms)
-                    {
-                        if (NaturalElements.O.AtomicNumber.Equals(atom.AtomicNumber) || 8 == atom.AtomicNumber)
+                        if (atom.AtomicNumber == NaturalElements.Oxygen.AtomicNumber)
                             count++;
-                    }
-                }
-            }
 
-            return new DescriptorValue<Result<int>>(
-                specification, ParameterNames, Parameters,
-                new Result<int>(count), DescriptorNames
-            );
+            return new Result(count);
         }
 
-        IDescriptorValue ISubstanceDescriptor.Calculate(ISubstance substance)
-            => Calculate(substance);
-
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = Result.Instance<int>();
+        IDescriptorResult ISubstanceDescriptor.Calculate(ISubstance substance) => Calculate(substance);
     }
 }

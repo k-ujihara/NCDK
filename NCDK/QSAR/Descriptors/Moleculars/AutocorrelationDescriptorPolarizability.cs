@@ -18,13 +18,10 @@
  */
 
 using NCDK.Aromaticities;
-using NCDK.AtomTypes;
 using NCDK.Charges;
 using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Graphs.Matrix;
-using NCDK.QSAR.Results;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -37,10 +34,34 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @author Federico
     // @cdk.created 2007-03-01
     // @cdk.module qsarmolecular
-    // @cdk.githash
-    public class AutocorrelationDescriptorPolarizability : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationPolarizability")]
+    public class AutocorrelationDescriptorPolarizability : AbstractDescriptor, IMolecularDescriptor
     {
-        private static readonly string[] NAMES = { "ATSp1", "ATSp2", "ATSp3", "ATSp4", "ATSp5" };
+        private const int DefaultSize = 5;
+
+        private readonly IAtomContainer container;
+
+        public AutocorrelationDescriptorPolarizability(IAtomContainer container)
+        {
+            container = (IAtomContainer)container.Clone();
+
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+            var hAdder = CDK.HydrogenAdder;
+            hAdder.AddImplicitHydrogens(container);
+            AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
+            Aromaticity.CDKLegacy.Apply(container);
+
+            this.container = container;
+        }
+
+        [DescriptorResult(prefix: "ATSp", baseIndex: 1)]
+        public class Result : AbstractDescriptorArrayResult<double>
+        {
+            public Result(IReadOnlyList<double> values)
+                : base(values)
+            {
+            }
+        }
 
         private static double[] Listpolarizability(IAtomContainer container, int[][] dmat)
         {
@@ -66,122 +87,37 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// This method calculate the ATS Autocorrelation descriptor.
         /// </summary>
-        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
+        public Result Calculate()
         {
-            IAtomContainer molecule;
-            molecule = (IAtomContainer)container.Clone();
-
-            // add H's in case they're not present
-            try
-            {
-                var matcher = CDK.AtomTypeMatcher;
-                foreach (var atom in molecule.Atoms)
-                {
-                    IAtomType type = matcher.FindMatchingAtomType(molecule, atom);
-                    AtomTypeManipulator.Configure(atom, type);
-                }
-                var hAdder = CDK.HydrogenAdder;
-                hAdder.AddImplicitHydrogens(molecule);
-                AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(molecule);
-            }
-            catch (Exception e)
-            {
-                return GetDummyDescriptorValue(new CDKException("Could not add hydrogens: " + e.Message, e));
-            }
-
-            // do aromaticity detecttion for calculating polarizability later on
-            try
-            {
-                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-            }
-            catch (CDKException e)
-            {
-                return GetDummyDescriptorValue(new CDKException("Could not percieve atom types: " + e.Message, e));
-            }
-            try
-            {
-                Aromaticity.CDKLegacy.Apply(molecule);
-            }
-            catch (CDKException e)
-            {
-                return GetDummyDescriptorValue(new CDKException("Could not percieve aromaticity: " + e.Message, e));
-            }
-
             // get the distance matrix for pol calcs as well as for later on
-            int[][] distancematrix = PathTools.ComputeFloydAPSP(AdjacencyMatrix.GetMatrix(molecule));
+            var distancematrix = PathTools.ComputeFloydAPSP(AdjacencyMatrix.GetMatrix(container));
 
-            try
+            var w = Listpolarizability(container, distancematrix);
+            var natom = container.Atoms.Count;
+            var polarizabilitySum = new double[5];
+
+            for (int k = 0; k < 5; k++)
             {
-                double[] w = Listpolarizability(molecule, distancematrix);
-                int natom = molecule.Atoms.Count;
-                double[] polarizabilitySum = new double[5];
-
-                for (int k = 0; k < 5; k++)
+                for (int i = 0; i < natom; i++)
                 {
-                    for (int i = 0; i < natom; i++)
+                    if (container.Atoms[i].AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                        continue;
+                    for (int j = 0; j < natom; j++)
                     {
-                        if (molecule.Atoms[i].AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                        if (container.Atoms[j].AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                             continue;
-                        for (int j = 0; j < natom; j++)
-                        {
-                            if (molecule.Atoms[j].AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
-                                continue;
-                            if (distancematrix[i][j] == k)
-                                polarizabilitySum[k] += w[i] * w[j];
-                            else
-                                polarizabilitySum[k] += 0.0;
-                        }
+                        if (distancematrix[i][j] == k)
+                            polarizabilitySum[k] += w[i] * w[j];
+                        else
+                            polarizabilitySum[k] += 0.0;
                     }
-                    if (k > 0) polarizabilitySum[k] = polarizabilitySum[k] / 2;
-
                 }
-                ArrayResult<double> result = new ArrayResult<double>(5);
-                foreach (var aPolarizabilitySum in polarizabilitySum)
-                {
-                    result.Add(aPolarizabilitySum);
-
-                }
-
-                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result,
-                        DescriptorNames);
-
+                if (k > 0)
+                    polarizabilitySum[k] = polarizabilitySum[k] / 2;
             }
-            catch (Exception ex)
-            {
-                return GetDummyDescriptorValue(new CDKException("Error while calculating the ATSpolarizabilty descriptor: "
-                        + ex.Message, ex));
-            }
+            return new Result(polarizabilitySum);
         }
 
-        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
-        {
-            ArrayResult<double> results = new ArrayResult<double>(5);
-            for (int i = 0; i < 5; i++)
-                results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results,
-                    DescriptorNames, e);
-        }
-
-        public override IReadOnlyList<string> ParameterNames => null;
-        public override object GetParameterType(string name) => null;
-
-        public override IReadOnlyList<object> Parameters
-        {
-            get { return null; }
-            set { }
-        }
-
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
-
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationPolarizability",
-               typeof(AutocorrelationDescriptorPolarizability).FullName, 
-               "The Chemistry Development Kit");
-
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

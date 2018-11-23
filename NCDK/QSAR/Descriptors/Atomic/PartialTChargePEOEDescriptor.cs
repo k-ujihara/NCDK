@@ -16,12 +16,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Charges;
-using NCDK.QSAR.Results;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
-using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
@@ -31,186 +29,80 @@ namespace NCDK.QSAR.Descriptors.Atomic
     /// <para>They are obtained by summation of the results of the calculations on
     /// sigma- and pi-charges. </para>
     /// </summary>
-    /// <remarks>
-    /// <para>
-    /// This descriptor uses these parameters:
-    /// <list type="table">
-    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
-    /// <item><term></term><term></term><term>no parameters</term></item>
-    /// </list>
-    /// </para> 
-    /// </remarks> 
     /// <seealso cref="GasteigerMarsiliPartialCharges"/>
     /// <seealso cref="GasteigerPEPEPartialCharges"/>
     // @author      Miguel Rojas
     // @cdk.created 2006-04-11
     // @cdk.module  qsaratomic
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:PartialTChargePEOE
-    public partial class PartialTChargePEOEDescriptor : IAtomicDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#PartialTChargePEOE")]
+    public partial class PartialTChargePEOEDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
-        private static readonly string[] NAMES = { "pepeT" };
+        IAtomContainer container;
+        IAtomContainer clonedContainer;
 
-        private GasteigerMarsiliPartialCharges peoe = null;
-        private GasteigerPEPEPartialCharges pepe = null;
-
-       /// <summary>Number of maximum iterations</summary>
-        private int maxIterations = -1;
-       /// <summary>Number of maximum resonance structures</summary>
-        private int maxResonStruc = -1;
-       /// <summary> make a lone pair electron checker. Default true</summary>
-        private bool lpeChecker = true;
-
-        /// <summary>
-        ///  Constructor for the PartialTChargePEOEDescriptor object
-        /// </summary>
-        public PartialTChargePEOEDescriptor()
+        /// <param name="maxIterations">Number of maximum iterations</param>
+        /// <param name="checkLonePairElectron">Checking lone pair electrons. Default <see langword="true"/></param>
+        /// <param name="maxResonanceStructures">Number of maximum resonance structures to be searched</param>
+        public PartialTChargePEOEDescriptor(IAtomContainer container,
+            int maxIterations = int.MaxValue,
+            bool checkLonePairElectron = true,
+            int maxResonanceStructures = int.MaxValue)
         {
-            peoe = new GasteigerMarsiliPartialCharges();
-            pepe = new GasteigerPEPEPartialCharges();
+            clonedContainer = (IAtomContainer)container.Clone();
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(clonedContainer);
+
+            var pepe = new GasteigerPEPEPartialCharges();
+            if (checkLonePairElectron)
+                CDK.LonePairElectronChecker.Saturate(clonedContainer);
+            if (maxIterations != int.MaxValue)
+                pepe.MaxGasteigerIterations = maxIterations;
+            if (maxResonanceStructures != int.MaxValue)
+                pepe.MaxResonanceStructures = maxResonanceStructures;
+
+            var peoe = new GasteigerMarsiliPartialCharges();
+            peoe.AssignGasteigerMarsiliSigmaPartialCharges(clonedContainer, true);
+            var peoeAtom = clonedContainer.Atoms.Select(n => n.Charge.Value).ToList();
+
+            foreach (var aatom in clonedContainer.Atoms)
+                aatom.Charge = 0;
+            pepe.AssignGasteigerPiPartialCharges(clonedContainer, true);
+
+            for (int i = 0; i < clonedContainer.Atoms.Count; i++)
+            {
+                var aatom = clonedContainer.Atoms[i];
+                aatom.Charge = aatom.Charge.Value + peoeAtom[i];
+            }
+
+            this.container = container;
+        }
+
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(double value)
+            {
+                this.TotalPartialCharge = value;
+            }
+
+            [DescriptorResultProperty("pepeT")]
+            public double TotalPartialCharge { get; private set; }
+
+            public double Value => TotalPartialCharge;
         }
 
         /// <summary>
-        /// The specification attribute of the PartialTChargePEOEDescriptor object
+        /// The method returns partial total charges assigned to an heavy atom through PEOE method.
+        /// It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
         /// </summary>
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#PartialTChargePEOE",
-                typeof(PartialTChargePEOEDescriptor).FullName, "The Chemistry Development Kit");
-
-        /// <summary>
-        /// The parameters attribute of the PartialTChargePEOEDescriptor object
-        /// </summary>
-        public IReadOnlyList<object> Parameters
-        {
-            set
-            {
-                if (value.Count > 3)
-                    throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
-
-                if (!(value[0] is int))
-                    throw new CDKException("The parameter must be of type int");
-
-                maxIterations = (int)value[0];
-
-                if (value.Count > 1 && value[1] != null)
-                {
-                    if (!(value[1] is bool)) throw new CDKException("The parameter must be of type bool");
-                    lpeChecker = (bool)value[1];
-                }
-
-                if (value.Count > 2 && value[2] != null)
-                {
-                    if (!(value[2] is int)) throw new CDKException("The parameter must be of type int");
-                    maxResonStruc = (int)value[2];
-                }
-            }
-            get
-            {
-                // return the parameters as used for the descriptor calculation
-                return new object[] { maxIterations, lpeChecker, maxResonStruc };
-            }
-        }
-
-        public IReadOnlyList<string> DescriptorNames => NAMES;
-
-        /// <summary>
-        ///  The method returns partial total charges assigned to an heavy atom through PEOE method.
-        ///  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
-        /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
-        /// <param name="ac">AtomContainer</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="Result"/> is requested</param>
         /// <returns>an array of doubles with partial charges of [heavy, proton_1 ... proton_n]</returns>
-        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer ac)
+        public Result Calculate(IAtom atom)
         {
-            // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
-            var originalCharge = atom.Charge;
-            var originalAtomtypeName = atom.AtomTypeName;
-            var originalNeighborCount = atom.FormalNeighbourCount;
-            var originalValency = atom.Valency;
-            var originalHybridization = atom.Hybridization;
-            var originalBondOrderSum = atom.BondOrderSum;
-            var originalMaxBondOrder = atom.MaxBondOrder;
-            if (!IsCachedAtomContainer(ac))
-            {
-                try
-                {
-                    AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
-                }
-                catch (CDKException e)
-                {
-#pragma warning disable CA1806 // Do not ignore method results
-                    new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
-#pragma warning restore CA1806 // Do not ignore method results
-                }
-
-                if (lpeChecker)
-                {
-                    try
-                    {
-                        CDK.LonePairElectronChecker.Saturate(ac);
-                    }
-                    catch (CDKException e)
-                    {
-#pragma warning disable CA1806 // Do not ignore method results
-                        new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
-#pragma warning restore CA1806 // Do not ignore method results
-                    }
-                }
-
-                if (maxIterations != -1) pepe.MaxGasteigerIterations = maxIterations;
-                if (maxResonStruc != -1) pepe.MaxResonanceStructures = maxResonStruc;
-
-                try
-                {
-                    peoe.AssignGasteigerMarsiliSigmaPartialCharges(ac, true);
-                    var peoeAtom = new List<double>();
-                    foreach (var aatom in ac.Atoms)
-                        peoeAtom.Add(aatom.Charge.Value);
-                    foreach (var aatom in ac.Atoms)
-                        aatom.Charge = 0;
-
-                    pepe.AssignGasteigerPiPartialCharges(ac, true);
-                    for (int i = 0; i < ac.Atoms.Count; i++)
-                        CacheDescriptorValue(ac.Atoms[i], ac, new Result<double>(peoeAtom[i] + ac.Atoms[i].Charge.Value));
-                }
-                catch (Exception e)
-                {
-#pragma warning disable CA1806 // Do not ignore method results
-                    new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
-#pragma warning restore CA1806 // Do not ignore method results
-                }
-            }
-            // restore original props
-            atom.Charge = originalCharge;
-            atom.AtomTypeName = originalAtomtypeName;
-            atom.FormalNeighbourCount = originalNeighborCount;
-            atom.Valency = originalValency;
-            atom.Hybridization = originalHybridization;
-            atom.MaxBondOrder = originalMaxBondOrder;
-            atom.BondOrderSum = originalBondOrderSum;
-
-            return GetCachedDescriptorValue(atom) != null ? new DescriptorValue<Result<double>>(specification, ParameterNames,
-                    Parameters, (Result<double>)GetCachedDescriptorValue(atom), NAMES) : null;
+            var index = container.Atoms.IndexOf(atom);
+            return new Result(clonedContainer.Atoms[index].Charge.Value);
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the PartialTChargePEOEDescriptor object
-        /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations", "lpeChecker", "maxResonStruc" };
-
-        /// <summary>
-        ///  Gets the parameterType attribute of the PartialTChargePEOEDescriptor object
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public object GetParameterType(string name)
-        {
-            if (string.Equals("maxIterations", name, StringComparison.Ordinal)) return int.MaxValue;
-            if (string.Equals("lpeChecker", name, StringComparison.Ordinal)) return true;
-            if (string.Equals("maxResonStruc", name, StringComparison.Ordinal)) return int.MaxValue;
-            return null;
-        }
+        IDescriptorResult IAtomicDescriptor.Calculate(IAtom atom) => Calculate(atom);
     }
 }

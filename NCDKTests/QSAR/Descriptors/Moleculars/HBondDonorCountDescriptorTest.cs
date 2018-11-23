@@ -16,30 +16,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Numerics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Smiles;
-using NCDK.Silent;
+using NCDK.Numerics;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class HBondDonorCountDescriptorTest : MolecularDescriptorTest
+    public class HBondDonorCountDescriptorTest : MolecularDescriptorTest<HBondDonorCountDescriptor>
     {
-        public HBondDonorCountDescriptorTest()
-        {
-            SetDescriptor(typeof(HBondDonorCountDescriptor));
-        }
-
         [TestMethod()]
         public void TestHBondDonorCountDescriptor()
         {
-            Descriptor.Parameters = new object[] { true };
             var sp = CDK.SmilesParser;
-            var mol = sp.ParseSmiles("Oc1ccccc1"); //
-            Assert.AreEqual(1, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
+            var mol = sp.ParseSmiles("Oc1ccccc1");
+            Assert.AreEqual(1, CreateDescriptor(mol).Calculate().Value);
         }
 
         // @cdk.bug   3133610
@@ -47,8 +39,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestCID9257()
         {
-            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.NewAtomContainer();
+            var builder = CDK.Builder;
+            var mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("N");
             a1.FormalCharge = 0;
             a1.Point3D = new Vector3(0.5509, 0.9639, 0.0);
@@ -98,7 +90,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b8 = builder.NewBond(a5, a8, BondOrder.Single);
             mol.Bonds.Add(b8);
 
-            Assert.AreEqual(1, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(1, CreateDescriptor(mol).Calculate().Value);
         }
     }
 }

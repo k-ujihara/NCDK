@@ -45,7 +45,6 @@ namespace NCDK.Charges
     /// <seealso cref="GasteigerMarsiliPartialCharges"/>
     // @author      Miguel Rojas
     // @cdk.module  charges
-    // @cdk.githash
     // @cdk.created 2006-05-14
     // @cdk.keyword partial atomic charges
     // @cdk.keyword charge distribution
@@ -70,9 +69,6 @@ namespace NCDK.Charges
         /// <summary>Scale factor which makes same heavy for all structures</summary>
         private const double fS = 0.37;
 
-        /// <summary>
-        ///  Constructor for the GasteigerPEPEPartialCharges object.
-        /// </summary>
         public GasteigerPEPEPartialCharges() { }
         
         /// <summary>
@@ -85,8 +81,8 @@ namespace NCDK.Charges
         {
             // we save the aromaticity flags for the input molecule so that
             // we can add them back before we return
-            bool[] oldBondAromaticity = new bool[ac.Bonds.Count];
-            bool[] oldAtomAromaticity = new bool[ac.Atoms.Count];
+            var oldBondAromaticity = new bool[ac.Bonds.Count];
+            var oldAtomAromaticity = new bool[ac.Atoms.Count];
             for (int i = 0; i < ac.Atoms.Count; i++)
                 oldAtomAromaticity[i] = ac.Atoms[i].IsAromatic;
             for (int i = 0; i < ac.Bonds.Count; i++)
@@ -134,7 +130,6 @@ namespace NCDK.Charges
             /* find resonance containers, which eliminates the repetitions */
             StructureResonanceGenerator gRN = new StructureResonanceGenerator(); // according G. should be integrated the breaking bonding
             var acSet = gRN.GetContainers(RemovingFlagsAromaticity(ac));
-            //        IAtomContainerSet acSet = ConjugatedPiSystemsDetector.Detect(RemovingFlagsAromaticity(ac));
 
             var iSet = ac.Builder.NewAtomContainerSet();
             iSet.Add(ac);
@@ -167,7 +162,8 @@ namespace NCDK.Charges
                         if (aa != null)
                         {
                             var ab = gR2.GetStructures(aa);
-                            if (ab.Count > 1) for (int j = 1; j < ab.Count; j++)
+                            if (ab.Count > 1)
+                                for (int j = 1; j < ab.Count; j++)
                                 { // the first is already added
                                     iSet.Add(ab[j]);
                                 }
@@ -194,21 +190,21 @@ namespace NCDK.Charges
             }
 
             /* 2: search whose atoms which don't keep their formal charge and set flags */
-            double[][] sumCharges = Arrays.CreateJagged<double>(iSet.Count, ac.Atoms.Count);
+            var sumCharges = Arrays.CreateJagged<double>(iSet.Count, ac.Atoms.Count);
             for (int i = 1; i < iSet.Count; i++)
             {
-                IAtomContainer iac = iSet[i];
+                var iac = iSet[i];
                 for (int j = 0; j < iac.Atoms.Count; j++)
                     sumCharges[i][j] = iac.Atoms[j].FormalCharge.Value;
-
             }
 
             for (int i = 1; i < iSet.Count; i++)
             {
-                IAtomContainer iac = iSet[i];
+                var iac = iSet[i];
                 int count = 0;
                 for (int j = 0; j < ac.Atoms.Count; j++)
-                    if (count < 2) if (sumCharges[i][j] != ac.Atoms[j].FormalCharge)
+                    if (count < 2)
+                        if (sumCharges[i][j] != ac.Atoms[j].FormalCharge)
                         {
                             ac.Atoms[j].IsPlaced = true;
                             iac.Atoms[j].IsPlaced = true;
@@ -217,14 +213,14 @@ namespace NCDK.Charges
             }
 
             /* 3: set sigma charge (PEOE). Initial start point */
-            GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges(); ;
+            var peoe = new GasteigerMarsiliPartialCharges(); ;
             peoe.MaxGasteigerIterations = 6;
             IAtomContainer acCloned;
 
-            double[][] gasteigerFactors = AssignPiFactors(iSet);//a,b,c,deoc,chi,q
+            var gasteigerFactors = AssignPiFactors(iSet);//a,b,c,deoc,chi,q
 
             /* 4: calculate topological weight factors Wt=fQ*fB*fA */
-            double[] Wt = new double[iSet.Count - 1];
+            var Wt = new double[iSet.Count - 1];
             for (int i = 1; i < iSet.Count; i++)
             {
                 Wt[i - 1] = GetTopologicalFactors(iSet[i], ac);
@@ -243,7 +239,6 @@ namespace NCDK.Charges
             // between whose atoms which change their formal charge
             for (int iter = 0; iter < MaxGasteigerIterations; iter++)
             {
-                //        for (int iter = 0; iter < 1; iter++) {
                 for (int k = 1; k < iSet.Count; k++)
                 {
                     IAtomContainer iac = iSet[k];
@@ -265,7 +260,8 @@ namespace NCDK.Charges
                                 atom2 = j;
 
                             double q1 = gasteigerFactors[k][StepSize * j + j + 5];
-                            electronegativity[count] = gasteigerFactors[k][StepSize * j + j + 2] * q1 * q1
+                            electronegativity[count] = 
+                                      gasteigerFactors[k][StepSize * j + j + 2] * q1 * q1
                                     + gasteigerFactors[k][StepSize * j + j + 1] * q1
                                     + gasteigerFactors[k][StepSize * j + j];
                             Debug.WriteLine("e:" + electronegativity[count] + ",q1: " + q1 + ", c:"
@@ -277,28 +273,28 @@ namespace NCDK.Charges
                     }
                     Debug.WriteLine("Atom1:" + atom1 + ",Atom2:" + atom2);
                     /* difference of electronegativity 1 lower */
-                    double max1 = Math.Max(electronegativity[0], electronegativity[1]);
-                    double min1 = Math.Min(electronegativity[0], electronegativity[1]);
+                    var max1 = Math.Max(electronegativity[0], electronegativity[1]);
+                    var min1 = Math.Min(electronegativity[0], electronegativity[1]);
                     double DX = 1.0;
                     if (electronegativity[0] < electronegativity[1])
                         DX = gasteigerFactors[k][StepSize * atom1 + atom1 + 3];
                     else
                         DX = gasteigerFactors[k][StepSize * atom2 + atom2 + 3];
 
-                    double Dq = (max1 - min1) / DX;
+                    var Dq = (max1 - min1) / DX;
                     Debug.WriteLine("Dq : " + Dq + " = (" + max1 + "-" + min1 + ")/" + DX);
-                    double epN1 = GetElectrostaticPotentialN(iac, atom1, gasteigerFactors[k]);
-                    double epN2 = GetElectrostaticPotentialN(iac, atom2, gasteigerFactors[k]);
-                    double SumQN = Math.Abs(epN1 - epN2);
+                    var epN1 = GetElectrostaticPotentialN(iac, atom1, gasteigerFactors[k]);
+                    var epN2 = GetElectrostaticPotentialN(iac, atom2, gasteigerFactors[k]);
+                    var SumQN = Math.Abs(epN1 - epN2);
                     Debug.WriteLine("sum(" + SumQN + ") = (" + epN1 + ") - (" + epN2 + ")");
 
                     /* electronic weight */
-                    double WE = Dq + fE * SumQN;
+                    var WE = Dq + fE * SumQN;
                     Debug.WriteLine("WE : " + WE + " = Dq(" + Dq + ")+FE(" + fE + ")*SumQN(" + SumQN);
-                    int iTE = iter + 1;
+                    var iTE = iter + 1;
 
                     /* total topological */
-                    double W = WE * Wt[k - 1] * fS / (iTE);
+                    var W = WE * Wt[k - 1] * fS / (iTE);
                     Debug.WriteLine("W : " + W + " = WE(" + WE + ")*Wt(" + Wt[k - 1] + ")*FS(" + fS + ")/iter(" + iTE
                             + "), atoms: " + atom1 + ", " + atom2);
 
@@ -351,7 +347,7 @@ namespace NCDK.Charges
                     for (int i = 0; i < ac.Atoms.Count; i++)
                         if (iSet[k].Atoms[i].IsPlaced)
                         {
-                            double charge = ac.Atoms[i].Charge.Value;
+                            var charge = ac.Atoms[i].Charge.Value;
                             double chargeT = 0.0;
                             chargeT = charge + gasteigerFactors[k][StepSize * i + i + 5];
                             Debug.WriteLine("i<|" + ac.Atoms[i].Symbol + ", " + chargeT + "=c:" + charge + "+g: "
@@ -370,7 +366,6 @@ namespace NCDK.Charges
                 ac.Bonds[i].IsAromatic = oldBondAromaticity[i];
 
             return ac;
-
         }
 
         public void CalculateCharges(IAtomContainer container)
@@ -381,8 +376,7 @@ namespace NCDK.Charges
             }
             catch (Exception exception)
             {
-                throw new CDKException("Could not calculate Gasteiger-Marsili PEPE charges: " + exception.Message,
-                        exception);
+                throw new CDKException($"Could not calculate Gasteiger-Marsili PEPE charges: {exception.Message}", exception);
             }
         }
 
@@ -432,7 +426,7 @@ namespace NCDK.Charges
         /// <returns></returns>
         private static IAtomContainer SetAntiFlags(IAtomContainer container, IAtomContainer ac, int number, bool b)
         {
-            IBond bond = ac.Bonds[number];
+            var bond = ac.Bonds[number];
             if (!container.Contains(bond))
             {
                 bond.IsReactiveCenter = b;
@@ -650,12 +644,9 @@ namespace NCDK.Charges
                             factors[2] = 0.0;
                             break;
                         case NaturalElements.C.AtomicNumber:
-                            // if(ac.Atoms[i].GetFlag(ISCHANGEDFC))
-                            {
-                                factors[0] = 5.60;
-                                factors[1] = 8.93;
-                                factors[2] = 2.94;
-                            }
+                            factors[0] = 5.60;
+                            factors[1] = 8.93;
+                            factors[2] = 2.94;
                             break;
                         case NaturalElements.O.AtomicNumber:
                             if (ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Single)

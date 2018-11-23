@@ -16,10 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
@@ -28,22 +26,18 @@ namespace NCDK.QSAR.Descriptors.Atomic
     /// </summary>
     // @cdk.module test-qsaratomic
     [TestClass()]
-    public class IsProtonInConjugatedPiSystemDescriptorTest : AtomicDescriptorTest
+    public class IsProtonInConjugatedPiSystemDescriptorTest : AtomicDescriptorTest<IsProtonInConjugatedPiSystemDescriptor>
     {
-        public IsProtonInConjugatedPiSystemDescriptorTest()
-        {
-            SetDescriptor(typeof(IsProtonInConjugatedPiSystemDescriptor));
-        }
+        public IsProtonInConjugatedPiSystemDescriptor CreateDescriptor(IAtomContainer mol, bool checkAromaticity) => new IsProtonInConjugatedPiSystemDescriptor(mol, checkAromaticity);
 
         [TestMethod()]
         public void TestIsProtonInConjugatedPiSystemDescriptor()
         {
-            IAtomicDescriptor descriptor = new IsProtonInConjugatedPiSystemDescriptor();
-            descriptor.Parameters = new object[] { true };
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CNC=CC=C");
             AddExplicitHydrogens(mol);
-            Assert.IsTrue(((Result<bool>)descriptor.Calculate(mol.Atoms[13], mol).Value).Value);
+            var descriptor = CreateDescriptor(mol, true);
+            Assert.IsTrue(descriptor.Calculate(mol.Atoms[13]).Value);
         }
     }
 }

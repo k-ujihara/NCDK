@@ -44,9 +44,7 @@ namespace NCDK.Config
     /// </remarks>
     // @author      egonw
     // @cdk.module  core
-    // @cdk.githash
-    public class BODRIsotopeFactory
-        : IsotopeFactory
+    public class BODRIsotopeFactory : IsotopeFactory
     {
         /// <summary>
         /// A singleton instance of this class.
@@ -66,10 +64,10 @@ namespace NCDK.Config
 
             for (int i = 0; i < isotopeCount; i++)
             {
-                int atomicNum = ins.ReadByte();
+                var atomicNum = ins.ReadByte();
                 ins.Read(buffer, 0, 2);
                 Array.Reverse(buffer, 0, 2);
-                int massNum = BitConverter.ToInt16(buffer, 0);
+                var massNum = BitConverter.ToInt16(buffer, 0);
                 ins.Read(buffer, 0, 8);
                 Array.Reverse(buffer, 0, 8);
                 var exactMass = BitConverter.ToDouble(buffer, 0);

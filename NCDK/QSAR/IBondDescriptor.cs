@@ -23,15 +23,13 @@ namespace NCDK.QSAR
     /// Classes that implement this interface are QSAR descriptor calculators.
     /// </summary>
     // @cdk.module qsar
-    // @cdk.githash
     public interface IBondDescriptor : IDescriptor
     {
         /// <summary>
         /// Calculates the descriptor value for the given IBond.
         /// </summary>
         /// <param name="bond">A <see cref="IBond"/> for which this descriptor should be calculated</param>
-        /// <param name="atomContainer">The molecule containing the bond</param>
-        /// <returns>An object of <see cref="IDescriptorValue"/> that contain the calculated value as well as specification details</returns>
-        IDescriptorValue Calculate(IBond bond, IAtomContainer atomContainer);
+        /// <returns>An object contains the calculated value as well as specification details</returns>
+        IDescriptorResult Calculate(IBond bond);
     }
 }

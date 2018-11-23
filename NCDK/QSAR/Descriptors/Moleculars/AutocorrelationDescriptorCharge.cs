@@ -19,7 +19,6 @@
 
 using NCDK.Charges;
 using NCDK.Graphs.Matrix;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -33,10 +32,26 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @author      Federico
     // @cdk.created 2007-02-27
     // @cdk.module  qsarmolecular
-    // @cdk.githash
-    public class AutocorrelationDescriptorCharge : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationCharge")]
+    public class AutocorrelationDescriptorCharge : AbstractDescriptor, IMolecularDescriptor
     {
-        private static readonly string[] NAMES = { "ATSc1", "ATSc2", "ATSc3", "ATSc4", "ATSc5" };
+        private const int DefaultSize = 5;
+
+        private readonly IAtomContainer container;
+
+        public AutocorrelationDescriptorCharge(IAtomContainer container)
+        {
+            container = (IAtomContainer)container.Clone();
+            container = AtomContainerManipulator.RemoveHydrogens(container);
+            this.container = container;
+        }
+
+        [DescriptorResult(prefix: "ATSc", baseIndex: 1)]
+        public class Result : AbstractDescriptorArrayResult<double>
+        {
+            public Result(IReadOnlyList<double> values) : base(values) { }
+            public Result(Exception e) : base(e) { }
+        }
 
         private static double[] Listcharges(IAtomContainer container)
         {
@@ -55,73 +70,42 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             catch (Exception ex1)
             {
-                throw new CDKException($"Problems with assignGasteigerMarsiliPartialCharges due to {ex1.ToString()}", ex1);
+                throw new CDKException($"Problems with assigning Gasteiger-Marsili partial charges due to {ex1.Message}", ex1);
             }
 
             return charges;
         }
 
-        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer atomContainer)
+        public Result Calculate(int count = DefaultSize)
         {
-            var container = (IAtomContainer)atomContainer.Clone();
-            container = AtomContainerManipulator.RemoveHydrogens(container);
-
             try
             {
                 var w = Listcharges(container);
                 var natom = container.Atoms.Count;
                 var distancematrix = TopologicalMatrix.GetMatrix(container);
 
-                var chargeSum = new double[5];
+                var chargeSum = new double[count];
 
-                for (int k = 0; k < 5; k++)
+                for (int k = 0; k < count; k++)
                 {
                     for (int i = 0; i < natom; i++)
                         for (int j = 0; j < natom; j++)
                             if (distancematrix[i][j] == k)
                                 chargeSum[k] += w[i] * w[j];
                             else
-                                chargeSum[k] += 0.0;
+                                chargeSum[k] += 0;
                     if (k > 0)
                         chargeSum[k] = chargeSum[k] / 2;
                 }
-                var result = new ArrayResult<double>(5);
-                foreach (var aChargeSum in chargeSum)
-                {
-                    result.Add(aChargeSum);
-                }
-                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, NAMES);
+
+                return new Result(chargeSum);
             }
-            catch (Exception ex)
+            catch (CDKException e)
             {
-                var result = new ArrayResult<double>(5);
-                for (int i = 0; i < 5; i++)
-                    result.Add(double.NaN);
-                return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, NAMES,
-                    new CDKException($"Error while calculating the ATS_charge descriptor: {ex.Message}", ex));
+                return new Result(e);
             }
         }
 
-        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
-        public override object GetParameterType(string name) => null;
-
-        public override IReadOnlyList<object> Parameters
-        {
-            get { return null; }
-            set { }
-        }
-
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
-
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-             new DescriptorSpecification(
-                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationCharge",
-                 typeof(AutocorrelationDescriptorCharge).FullName,
-                 "The Chemistry Development Kit");
-
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

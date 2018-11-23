@@ -35,7 +35,7 @@ namespace NCDK.IO
     public class MDLV2000BondBlockTest
     {
         private readonly MDLV2000Reader reader = new MDLV2000Reader(new StringReader(""));
-        private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
         private readonly IAtom[] atoms = new IAtom[]
             {
                 new Mock<IAtom>().Object, new Mock<IAtom>().Object,

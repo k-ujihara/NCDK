@@ -17,10 +17,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.QSAR.Results;
+using NCDK.Aromaticities;
 using NCDK.Smiles.SMARTS;
-using System;
-using System.Collections.Generic;
+using NCDK.Tools.Manipulator;
 using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -38,78 +37,57 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </summary>
     // @author      egonw
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:acidicGroupCount
-    public class BasicGroupCountDescriptor 
-        : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#basicGroupCount")]
+    public class BasicGroupCountDescriptor  : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly static string[] SMARTS_STRINGS = 
-        {
-            "[$([NH2]-[CX4])]",
-            "[$([NH](-[CX4])-[CX4])]",
-            "[$(N(-[CX4])(-[CX4])-[CX4])]",
-            "[$([*;+;!$(*~[*;-])])]",
-            "[$(N=C-N)]", 
-            "[$(N-C=N)]" 
-        };
-        private readonly static string[] NAMES = { "nBase" };
-
-        private static readonly List<SmartsPattern> tools = new List<SmartsPattern>();
-
-        public BasicGroupCountDescriptor() 
-        { 
-        }
-
-        static BasicGroupCountDescriptor()
-        {
-            foreach (var smarts in SMARTS_STRINGS)
+        private static readonly SmartsPattern[] tools = new string[]
             {
-                tools.Add(SmartsPattern.Create(smarts));
-            }
-        }
+                "[$([NH2]-[CX4])]",
+                "[$([NH](-[CX4])-[CX4])]",
+                "[$(N(-[CX4])(-[CX4])-[CX4])]",
+                "[$([*;+;!$(*~[*;-])])]",
+                "[$(N=C-N)]",
+                "[$(N-C=N)]"
+            }.Select(n => SmartsPattern.Create(n)).ToArray();
 
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#basicGroupCount",
-                typeof(BasicGroupCountDescriptor).FullName, 
-                "The Chemistry Development Kit");
+        private readonly IAtomContainer container;
 
-        public override IReadOnlyList<object> Parameters
+        public BasicGroupCountDescriptor(IAtomContainer container, bool checkAromaticity = false)
         {
-            get { return null; }
-            set { }
-        }
+            container = (IAtomContainer)container.Clone(); // don't mod original
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
-
-        public DescriptorValue<Result<int>> Calculate(IAtomContainer atomContainer)
-        {
-            atomContainer = Clone(atomContainer);
-
-            int count = 0;
-            foreach (var ptrn in tools)
+            // do aromaticity detection
+            if (checkAromaticity)
             {
-                count += ptrn.MatchAll(atomContainer).Count();
+                container = (IAtomContainer)container.Clone(); // don't mod original
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+                Aromaticity.CDKLegacy.Apply(container);
             }
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters,  new Result<int>(count), DescriptorNames);
+
+            this.container = container;
         }
 
-        public override IDescriptorResult DescriptorResultType => Result.Instance<int>();
-        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
-
-        public override object GetParameterType(string name) 
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            object obj = null;
-            return obj;
+            public Result(int value)
+            {
+                this.NumberOfBase = value;
+            }
+
+            [DescriptorResultProperty("nBase")]
+            public int NumberOfBase { get; private set; }
+
+            public int Value => NumberOfBase;
         }
 
-        private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception exception)
+        public Result Calculate()
         {
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(-1),
-                    DescriptorNames, exception);
+            var count = tools.Select(n => n.MatchAll(container).Count()).Sum();
+            return new Result(count);
         }
 
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

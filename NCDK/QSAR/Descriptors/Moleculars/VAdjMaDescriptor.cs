@@ -17,9 +17,8 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.QSAR.Results;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -28,80 +27,45 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// 1 + log2 m where m is the number of heavy-heavy bonds. If m is zero, then zero is returned.
     /// (definition from MOE tutorial on line)
     /// </summary>
-    /// <remarks>
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    ///   <item>
-    ///     <term>Name</term>
-    ///     <term>Default</term>
-    ///     <term>Description</term>
-    ///   </item>
-    ///   <item>
-    ///     <term></term>
-    ///     <term></term>
-    ///     <term>no parameters</term>
-    ///   </item>
-    /// </list>
-    /// </para>
-    /// Returns a single value named <i>vAdjMat</i>.
-    /// </remarks>
     // @author      mfe4
     // @cdk.created 2004-11-03
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:vAdjMa
-    public class VAdjMaDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vAdjMa")]
+    public class VAdjMaDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private static readonly string[] NAMES = { "VAdjMat" };
+        private readonly IAtomContainer container;
 
-        /// <summary>
-        /// Constructor for the VAdjMaDescriptor object
-        /// </summary>
-        public VAdjMaDescriptor() { }
-
-        /// <summary>
-        /// The specification attribute of the VAdjMaDescriptor object
-        /// </summary>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vAdjMa",
-                typeof(VAdjMaDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
-
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
-
-        public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
+        public VAdjMaDescriptor(IAtomContainer container)
         {
-            int n = 0; // count all heavy atom - heavy atom bonds
-            foreach (var bond in atomContainer.Bonds)
-            {
-                if (bond.Atoms[0].AtomicNumber != 1 && bond.Atoms[1].AtomicNumber != 1)
-                {
-                    n++;
-                }
-            }
-
-            double vadjMa = 0;
-            if (n > 0)
-            {
-                vadjMa += (Math.Log(n) / Math.Log(2)) + 1;
-            }
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(vadjMa), DescriptorNames);
+            this.container = container;
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(double value)
+            {
+                this.VertexAdjacency = value;
+            }
 
-        /// <inheritdoc/>
-        public override IReadOnlyList<string> ParameterNames => null;
+            [DescriptorResultProperty("VAdjMat")]
+            public double VertexAdjacency { get; private set; }
 
-        /// <inheritdoc/>
-        public override object GetParameterType(string name) => null;
+            public double Value => VertexAdjacency;
+        }
 
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        public Result Calculate()
+        {
+            var n = container.Bonds
+                .Count(bond => bond.Atoms[0].AtomicNumber != 1 
+                            && bond.Atoms[1].AtomicNumber != 1);
+
+            var vadjMa = n > 0 ? (Math.Log(n) / Math.Log(2)) + 1 : 0;
+
+            return new Result(vadjMa);
+        }
+
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

@@ -24,7 +24,6 @@ namespace NCDK
     /// implementation of an algorithm.
     /// </summary>
     // @cdk.module standard
-    // @cdk.githash
     public interface IImplementationSpecification
     {
         /// <summary>

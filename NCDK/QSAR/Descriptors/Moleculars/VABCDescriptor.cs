@@ -18,9 +18,7 @@
  */
 
 using NCDK.Geometries.Volume;
-using NCDK.QSAR.Results;
 using System;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -28,74 +26,53 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// Volume descriptor using the method implemented in the <see cref="VABCVolume"/> class.
     /// </summary>
     // @cdk.module qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:vabc
     // @cdk.keyword volume
     // @cdk.keyword descriptor
-    public class VABCDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vabc")]
+    public class VABCDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        /// <inheritdoc/>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vabc",
-                typeof(VABCDescriptor).FullName,
-                "The Chemistry Development Kit");
+        private readonly IAtomContainer container;
 
-        /// <inheritdoc/>
-        public override IReadOnlyList<object> Parameters
+        public VABCDescriptor(IAtomContainer container)
         {
-            set
-            {
-                if (value.Count != 0)
-                {
-                    throw new CDKException("The VABCDescriptor expects zero parameters");
-                }
-            }
-            get
-            {
-                return Array.Empty<object>();
-            }
+            container = (IAtomContainer)container.Clone(); // don't mod original
+
+            this.container = container;
         }
 
-        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "VABC" };
-
-        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            public Result(double value)
+            {
+                this.VABC = value;
+            }
+
+            public Result(Exception e) : base(e) { }
+
+            [DescriptorResultProperty("VABC")]
+            public double VABC { get; private set; }
+
+            public double Value => VABC;
         }
 
         /// <summary>
         /// Calculates the descriptor value using the <see cref="VABCVolume"/> class.
         /// </summary>
-        /// <param name="atomContainer">The <see cref="IAtomContainer"/> whose volume is to be calculated</param>
         /// <returns>A double containing the volume</returns>
-        public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
+        public Result Calculate()
         {
-            double volume;
             try
             {
-                // clone: don't mod original
-                volume = VABCVolume.Calculate(Clone(atomContainer));
+                return new Result(VABCVolume.Calculate(container));
             }
-            catch (CDKException exception)
+            catch (CDKException e)
             {
-                return GetDummyDescriptorValue(exception);
+                return new Result(e);
             }
-
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(volume), DescriptorNames);
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>();
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
-
-        /// <inheritdoc/>
-        public override object GetParameterType(string name) => null;
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }
-

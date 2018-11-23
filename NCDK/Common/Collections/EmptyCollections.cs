@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace NCDK.Common.Collections
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    public sealed class EmptyEnumerator<T> : IEnumerator<T>
+    internal sealed class EmptyEnumerator<T> : IEnumerator<T>
     {
         public T Current { get { throw new System.InvalidOperationException(); } }
         object IEnumerator.Current { get { throw new System.InvalidOperationException(); } }
@@ -14,15 +14,15 @@ namespace NCDK.Common.Collections
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    public sealed class EmptyEnumerable<T> : IEnumerable<T>
+    internal sealed class EmptyEnumerable<T> : IEnumerable<T>
     {
         private static readonly EmptyEnumerator<T> enumerator = new EmptyEnumerator<T>();
         public IEnumerator<T> GetEnumerator() => enumerator;
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-public sealed class EmptyCollection<T> : ICollection<T>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
+    public sealed class EmptyCollection<T> : ICollection<T>
     {
         private static readonly EmptyEnumerator<T> enumerator = new EmptyEnumerator<T>();
         public IEnumerator<T> GetEnumerator() => enumerator;

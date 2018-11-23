@@ -23,16 +23,14 @@ namespace NCDK.QSAR
     /// Classes that implement this interface are QSAR descriptor calculators.
     /// </summary>
     // @cdk.module qsar
-    // @cdk.githash
     public interface IAtomPairDescriptor : IDescriptor
     {
         /// <summary>
-        /// Calculates the descriptor value for the given IAtom.
+        /// Calculates the descriptor value for the given <see cref="IAtom"/>.
         /// </summary>
         /// <param name="atom">The first <see cref="IAtom"/> of the pair for which this descriptor should be calculated</param>
         /// <param name="atom2">The second <see cref="IAtom"/> of the pair for which this descriptor should be calculated</param>
-        /// <param name="container">TODO</param>
-        /// <returns>An object of <see cref="IDescriptorValue"/> that contain the calculated value as well as specification details</returns>
-        IDescriptorValue Calculate(IAtom atom, IAtom atom2, IAtomContainer container);
+        /// <returns>An object contains the calculated value as well as specification details</returns>
+        IDescriptorResult Calculate(IAtom atom, IAtom atom2);
     }
 }

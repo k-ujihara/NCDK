@@ -19,10 +19,7 @@
 
 using NCDK.Config;
 using NCDK.Graphs;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -33,105 +30,68 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <remarks>
     /// The number of rotatable bonds is given by the SMARTS specified by Daylight on
     /// <see href="http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html#EXMPL">SMARTS tutorial</see>
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    ///   <item>
-    ///     <term>Name</term>
-    ///     <term>Default</term>
-    ///     <term>Description</term>
-    ///   </item>
-    ///   <item>
-    ///     <term>includeTerminals</term>
-    ///     <term>false</term>
-    ///     <term>True if terminal bonds are included</term>
-    ///   </item>
-    ///   <item>
-    ///     <term>excludeAmides</term>
-    ///     <term>false</term>
-    ///     <term>True if amide C-N bonds should be excluded</term>
-    ///   </item>
-    /// </list>
-    /// </para>
     /// Returns a single value named <i>nRotB</i>
     /// </remarks>
     // @author      mfe4
     // @cdk.created 2004-11-03
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:rotatableBondsCount
     // @cdk.keyword bond count, rotatable
     // @cdk.keyword descriptor
-    public class RotatableBondsCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rotatableBondsCount")]
+    public class RotatableBondsCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private bool includeTerminals = false;
-        private bool excludeAmides = false;
+        private readonly IAtomContainer container;
 
-        public RotatableBondsCountDescriptor() { }
-
-        /// <summary>
-        /// The specification attribute of the RotatableBondsCountDescriptor object
-        /// </summary>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rotatableBondsCount",
-                typeof(RotatableBondsCountDescriptor).FullName, "The Chemistry Development Kit");
-
-        public override IReadOnlyList<object> Parameters
+        public RotatableBondsCountDescriptor(IAtomContainer container)
         {
-            set
-            {
-                if (value.Count != 2)
-                {
-                    throw new CDKException("RotatableBondsCount expects two parameters");
-                }
-                if (!(value[0] is bool) || !(value[1] is bool))
-                {
-                    throw new CDKException("The parameters must be of type bool");
-                }
-                // ok, all should be fine
-                includeTerminals = (bool)value[0];
-                excludeAmides = (bool)value[1];
-            }
-            get
-            {
-                // return the parameters as used for the descriptor calculation
-                return new object[] { includeTerminals, excludeAmides };
-            }
+            container = (IAtomContainer)container.Clone();
+            
+            this.container = container;
         }
 
-        public override IReadOnlyList<string> DescriptorNames => new string[] { includeTerminals ? "nRotBt" : "nRotB" };
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(int value)
+            {
+                this.NumberOfRotatableBonds = value;
+            }
+
+            /// <summary>
+            /// number of rotatable bonds
+            /// </summary>
+            [DescriptorResultProperty("nRotB")]
+            public int NumberOfRotatableBonds { get; private set; }
+
+            public int Value => NumberOfRotatableBonds;
+        }
 
         /// <summary>
         /// The method calculates the number of rotatable bonds of an atom container.
         /// If the boolean parameter is set to <see langword="true"/>, terminal bonds are included.
         /// </summary>
-        /// <param name="ac">AtomContainer</param>
         /// <returns>number of rotatable bonds</returns>
-        public DescriptorValue<Result<int>> Calculate(IAtomContainer ac)
+        /// <param name="includeTerminals"><see langword="true"/> if terminal bonds are included</param>
+        /// <param name="excludeAmides"><see langword="true"/> if amide C-N bonds should be excluded</param>
+        public Result Calculate(bool includeTerminals = false, bool excludeAmides = false)
         {
-            ac = Clone(ac); // don't mod original
-
-            int rotatableBondsCount = 0;
-            int degree0;
-            int degree1;
             IRingSet ringSet;
             try
             {
-                ringSet = new SpanningTree(ac).GetBasicRings();
+                ringSet = new SpanningTree(container).GetBasicRings();
             }
-            catch (NoSuchAtomException e)
+            catch (NoSuchAtomException)
             {
-                return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+                return new Result(0);
             }
-            foreach (var bond in ac.Bonds)
-            {
+
+            foreach (var bond in container.Bonds)
                 if (ringSet.GetRings(bond).Count() > 0)
-                {
                     bond.IsInRing = true;
-                }
-            }
-            foreach (var bond in ac.Bonds)
+
+            int rotatableBondsCount = 0;
+            foreach (var bond in container.Bonds)
             {
                 var atom0 = bond.Atoms[0];
                 var atom1 = bond.Atoms[1];
@@ -139,26 +99,21 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     continue;
                 if (bond.Order == BondOrder.Single)
                 {
-                    if (BondManipulator.IsLowerOrder(ac.GetMaximumBondOrder(atom0), BondOrder.Triple)
-                     && BondManipulator.IsLowerOrder(ac.GetMaximumBondOrder(atom1), BondOrder.Triple))
+                    if (BondManipulator.IsLowerOrder(container.GetMaximumBondOrder(atom0), BondOrder.Triple)
+                     && BondManipulator.IsLowerOrder(container.GetMaximumBondOrder(atom1), BondOrder.Triple))
                     {
                         if (!bond.IsInRing)
                         {
-
-                            if (excludeAmides && (IsAmide(atom0, atom1, ac) || IsAmide(atom1, atom0, ac)))
-                            {
+                            if (excludeAmides && (IsAmide(atom0, atom1, container) || IsAmide(atom1, atom0, container)))
                                 continue;
-                            }
 
                             // if there are explicit H's we should ignore those bonds
-                            degree0 = ac.GetConnectedBonds(atom0).Count() - GetConnectedHCount(ac, atom0);
-                            degree1 = ac.GetConnectedBonds(atom1).Count() - GetConnectedHCount(ac, atom1);
+                            var degree0 = container.GetConnectedBonds(atom0).Count() - GetConnectedHCount(container, atom0);
+                            var degree1 = container.GetConnectedBonds(atom1).Count() - GetConnectedHCount(container, atom1);
                             if ((degree0 == 1) || (degree1 == 1))
                             {
                                 if (includeTerminals)
-                                {
                                     rotatableBondsCount += 1;
-                                }
                             }
                             else
                             {
@@ -168,51 +123,35 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     }
                 }
             }
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(rotatableBondsCount), DescriptorNames);
+
+            return new Result(rotatableBondsCount);
         }
 
         /// <summary>
         /// Checks whether both atoms are involved in an amide C-N bond: *N(*)C(*)=O.
-        ///
+        /// 
         /// Only the most common constitution is considered. Tautomeric, O\C(*)=N\*,
         /// and charged forms, [O-]\C(*)=N\*, are ignored.
         /// </summary>
         /// <param name="atom0">the first bonding partner</param>
         /// <param name="atom1">the second bonding partner</param>
-        /// <param name="ac">the parent container</param>
+        /// <param name="container">the parent container</param>
         /// <returns>if both partners are involved in an amide C-N bond</returns>
-        private static bool IsAmide(IAtom atom0, IAtom atom1, IAtomContainer ac)
+        private static bool IsAmide(IAtom atom0, IAtom atom1, IAtomContainer container)
         {
             if (atom0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && atom1.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
-            {
-                foreach (var neighbor in ac.GetConnectedAtoms(atom0))
-                {
+                foreach (var neighbor in container.GetConnectedAtoms(atom0))
                     if (neighbor.AtomicNumber.Equals(NaturalElements.O.AtomicNumber)
-                     && ac.GetBond(atom0, neighbor).Order == BondOrder.Double)
-                    {
+                     && container.GetBond(atom0, neighbor).Order == BondOrder.Double)
                         return true;
-                    }
-                }
-            }
             return false;
         }
 
-        private static int GetConnectedHCount(IAtomContainer atomContainer, IAtom atom)
+        private static int GetConnectedHCount(IAtomContainer container, IAtom atom)
         {
-            var connectedAtoms = atomContainer.GetConnectedAtoms(atom);
-            int n = 0;
-            foreach (var anAtom in connectedAtoms)
-                if (anAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
-                    n++;
-            return n;
+            return container.GetConnectedAtoms(atom).Count(n => n.AtomicNumber.Equals(NaturalElements.H.AtomicNumber));
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
-
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "includeTerminals", "excludeAmides" };
-        public override object GetParameterType(string name) => true;
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

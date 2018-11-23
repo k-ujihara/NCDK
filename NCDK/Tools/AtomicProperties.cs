@@ -41,7 +41,7 @@ namespace NCDK.Tools
 
         private AtomicProperties()
         {
-            string configFile = "NCDK.Config.Data.whim_weights.txt";
+            var configFile = "NCDK.Config.Data.whim_weights.txt";
 
             using (var bufferedReader = new StreamReader(ResourceLoader.GetAsStream(configFile)))
             {
@@ -55,9 +55,9 @@ namespace NCDK.Tools
                     {
                         break;
                     }
-                    string[] components = line.Split('\t');
+                    var components = line.Split('\t');
 
-                    string symbol = components[0];
+                    var symbol = components[0];
                     htMass[symbol] = double.Parse(components[1], NumberFormatInfo.InvariantInfo);
                     htVdWVolume[symbol] = double.Parse(components[2], NumberFormatInfo.InvariantInfo);
                     htElectronegativity[symbol] = double.Parse(components[3], NumberFormatInfo.InvariantInfo);

@@ -35,7 +35,7 @@ namespace NCDK.AtomTypes
         private const string ATOMTYPE_LIST = "structgen_atomtypes.owl";
 
         private readonly static AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data."
-                                                                   + ATOMTYPE_LIST, Silent.ChemObjectBuilder.Instance);
+                                                                   + ATOMTYPE_LIST, CDK.Builder);
 
         public override string AtomTypeListName => ATOMTYPE_LIST;
         public override AtomTypeFactory GetFactory() => factory;
@@ -791,7 +791,7 @@ namespace NCDK.AtomTypes
         //public static void UTestCountTestedAtomTypes()
         //{
         //    AtomTypeFactory factory = AtomTypeFactory.GetInstance(
-        //            "NCDK.Config.Data.structgen_atomtypes.xml", Silent.ChemObjectBuilder.Instance);
+        //            "NCDK.Config.Data.structgen_atomtypes.xml", CDK.Builder);
 
         //    var expectedTypes = factory.GetAllAtomTypes().ToReadOnlyList();
         //    if (expectedTypes.Count != testedAtomTypes.Count)

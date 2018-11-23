@@ -8,7 +8,7 @@ namespace NCDK.Groups
     [TestClass()]
     public class AtomPermutationTests : CDKTestCase
     {
-        public static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        public static IChemObjectBuilder builder = CDK.Builder;
 
         /// <summary>
         /// This test is checking all permutations of an atom container to see

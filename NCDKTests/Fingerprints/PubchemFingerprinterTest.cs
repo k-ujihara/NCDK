@@ -346,7 +346,7 @@ namespace NCDK.Fingerprints
             AddImplicitHydrogens(superStructure);
             AddImplicitHydrogens(subStructure);
 
-            IFingerprinter fpr = new PubchemFingerprinter(Silent.ChemObjectBuilder.Instance);
+            IFingerprinter fpr = new PubchemFingerprinter(CDK.Builder);
             IBitFingerprint superBits = fpr.GetBitFingerprint(superStructure);
             IBitFingerprint subBits = fpr.GetBitFingerprint(subStructure);
 

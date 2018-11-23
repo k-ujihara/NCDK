@@ -31,7 +31,7 @@ namespace NCDK.SMARTS
     [TestClass()]
     public class SmartsPatternTest
     {
-        readonly IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+        readonly IChemObjectBuilder bldr = CDK.Builder;
 
         [TestMethod()]
         public void Isotopes()

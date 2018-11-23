@@ -808,7 +808,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void UnknownAtomTypeLeavesHydrogenCountAlone()
         {
-            var bldr = Silent.ChemObjectBuilder.Instance;
+            var bldr = CDK.Builder;
             var hydrogenAdder = CDK.HydrogenAdder;
             var container = bldr.NewAtomContainer();
             var atom = bldr.NewAtom("C");
@@ -822,7 +822,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void UnknownAtomTypeLeavesHydrogenCountAloneUnlessNull()
         {
-            var bldr = Silent.ChemObjectBuilder.Instance;
+            var bldr = CDK.Builder;
             var hydrogenAdder = CDK.HydrogenAdder;
             var container = bldr.NewAtomContainer();
             var atom = bldr.NewAtom("C");

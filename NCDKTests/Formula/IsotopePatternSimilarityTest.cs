@@ -10,7 +10,7 @@ namespace NCDK.Formula
     [TestClass()]
     public class IsotopePatternSimilarityTest : CDKTestCase
     {
-        private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private readonly static IChemObjectBuilder builder = CDK.Builder;
 
         public IsotopePatternSimilarityTest()
             : base()
@@ -116,7 +116,7 @@ namespace NCDK.Formula
             spExp.MonoIsotope = spExp.Isotopes[0];
             spExp.Charge = 1.0;
 
-            var formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C42H85NO8P", Silent.ChemObjectBuilder.Instance);
+            var formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C42H85NO8P", CDK.Builder);
             var isotopeGe = new IsotopePatternGenerator(0.01);
             var patternIsoPredicted = isotopeGe.GetIsotopes(formula);
             var is_ = new IsotopePatternSimilarity();

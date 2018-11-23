@@ -36,7 +36,7 @@ namespace NCDK.Tools.Manipulator
     [TestClass()]
     public class MolecularFormulaManipulatorTest : CDKTestCase
     {
-        private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private readonly static IChemObjectBuilder builder = CDK.Builder;
         private IsotopeFactory ifac;
 
         /// <summary>
@@ -1240,7 +1240,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void AcceptMinusAsInput()
         {
-            var bldr = Silent.ChemObjectBuilder.Instance;
+            var bldr = CDK.Builder;
             var mf = MolecularFormulaManipulator.GetMolecularFormula("[PO4]3–", bldr);
             Assert.AreEqual(-3, mf.Charge);
         }
@@ -1248,7 +1248,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void DeprotonatePhenol()
         {
-            var bldr = Silent.ChemObjectBuilder.Instance;
+            var bldr = CDK.Builder;
             var mf = MolecularFormulaManipulator.GetMolecularFormula("C6H6O", bldr);
             Assert.IsTrue(MolecularFormulaManipulator.AdjustProtonation(mf, -1));
             Assert.AreEqual("[C6H5O]-", MolecularFormulaManipulator.GetString(mf));
@@ -1258,7 +1258,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void ProtonatePhenolate()
         {
-            var bldr = Silent.ChemObjectBuilder.Instance;
+            var bldr = CDK.Builder;
             var mf = MolecularFormulaManipulator.GetMolecularFormula("[C6H5O]-", bldr);
             Assert.IsTrue(MolecularFormulaManipulator.AdjustProtonation(mf, +1));
             Assert.AreEqual("C6H6O", MolecularFormulaManipulator.GetString(mf));
@@ -1269,7 +1269,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void ProtonatePhenolateMajorIsotopes()
         {
-            var bldr = Silent.ChemObjectBuilder.Instance;
+            var bldr = CDK.Builder;
             var mf = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("[C6H5O]-", bldr);
             Assert.IsTrue(MolecularFormulaManipulator.AdjustProtonation(mf, +1));
             Assert.AreEqual("C6H6O", MolecularFormulaManipulator.GetString(mf));
@@ -1280,7 +1280,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void DeprontateHCl()
         {
-            var bldr = Silent.ChemObjectBuilder.Instance;
+            var bldr = CDK.Builder;
             var mf = MolecularFormulaManipulator.GetMolecularFormula("HCl", bldr);
             Assert.IsTrue(MolecularFormulaManipulator.AdjustProtonation(mf, -1));
             Assert.AreEqual("[Cl]-", MolecularFormulaManipulator.GetString(mf));
@@ -1291,7 +1291,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void ProntateChloride()
         {
-            var bldr = Silent.ChemObjectBuilder.Instance;
+            var bldr = CDK.Builder;
             var mf = MolecularFormulaManipulator.GetMolecularFormula("[Cl]-", bldr);
             Assert.IsTrue(MolecularFormulaManipulator.AdjustProtonation(mf, +1));
             Assert.AreEqual("ClH", MolecularFormulaManipulator.GetString(mf));
@@ -1302,7 +1302,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void DeprontateChloride()
         {
-            var bldr = Silent.ChemObjectBuilder.Instance;
+            var bldr = CDK.Builder;
             var mf = MolecularFormulaManipulator.GetMolecularFormula("[Cl]-", bldr);
             Assert.IsFalse(MolecularFormulaManipulator.AdjustProtonation(mf, -1));
         }
@@ -1310,7 +1310,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void ProtonateDeuteratedPhenolate()
         {
-            var bldr = Silent.ChemObjectBuilder.Instance;
+            var bldr = CDK.Builder;
             var mf = bldr.NewMolecularFormula();
             // [C6DH4O]- (parser not good enough ATM so need to create like this)
             var deuterium = BODRIsotopeFactory.Instance.GetIsotope("H", 2);
@@ -1332,7 +1332,7 @@ namespace NCDK.Tools.Manipulator
         public void TestMassNumberDisplay()
         {
             var ifac = BODRIsotopeFactory.Instance;
-            var bldr = Silent.ChemObjectBuilder.Instance;
+            var bldr = CDK.Builder;
             var mf = bldr.NewMolecularFormula();
             mf.Add(new Atom("C"), 7);
             mf.Add(new Atom("O"), 3);
@@ -1347,7 +1347,7 @@ namespace NCDK.Tools.Manipulator
         public void TestMassNumberDisplayWithDefinedIsotopes()
         {
             var ifac = BODRIsotopeFactory.Instance;
-            var bldr = Silent.ChemObjectBuilder.Instance;
+            var bldr = CDK.Builder;
             var mf = bldr.NewMolecularFormula();
             mf.Add(ifac.GetMajorIsotope("C"), 7);
             mf.Add(ifac.GetMajorIsotope("O"), 3);
@@ -1363,7 +1363,7 @@ namespace NCDK.Tools.Manipulator
         public void ParseMFMass()
         {
             var str = "C7H3[81]BrBrO3";
-            var builder = Silent.ChemObjectBuilder.Instance;
+            var builder = CDK.Builder;
             var mf = MolecularFormulaManipulator.GetMolecularFormula(str, builder);
             Assert.AreEqual("C7H3Br[81]BrO3", MolecularFormulaManipulator.GetString(mf, false, true));
         }
@@ -1372,7 +1372,7 @@ namespace NCDK.Tools.Manipulator
         public void TestRoundTripCharge()
         {
             var f = "[C3H7]+";
-            var m = MolecularFormulaManipulator.GetMolecularFormula(f, Silent.ChemObjectBuilder.Instance);
+            var m = MolecularFormulaManipulator.GetMolecularFormula(f, CDK.Builder);
             Assert.AreEqual("[C3H7]+", MolecularFormulaManipulator.GetString(m));
         }
     }

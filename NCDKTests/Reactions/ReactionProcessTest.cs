@@ -38,7 +38,7 @@ namespace NCDK.Reactions
         private IReactionProcess reaction;
         private EntryDictionary dictionary;
         private string entryString = "";
-        private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private IChemObjectBuilder builder = CDK.Builder;
 
         /// <summary>
         /// Set the IReactionProcess to analyzed

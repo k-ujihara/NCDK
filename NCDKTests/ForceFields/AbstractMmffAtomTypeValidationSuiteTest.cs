@@ -18,7 +18,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestAGLYSL01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -50,7 +50,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestAMHTAR01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -93,7 +93,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestAMPTRB10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -158,7 +158,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestARGIND11()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -223,7 +223,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBAOXLM01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -247,7 +247,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBBSPRT10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -310,7 +310,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBEVJER10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -372,7 +372,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBEWCUB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -508,7 +508,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBEWKUJ04()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -579,7 +579,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBIHKEI01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -636,7 +636,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBIPDEJ02()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -697,7 +697,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBIPJUF10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -749,7 +749,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBIPYCL01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -808,7 +808,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBITNAT10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -878,7 +878,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBIYBIU10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -940,7 +940,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBODKOU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -1029,7 +1029,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBSALAP01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -1094,7 +1094,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBUPSLB10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -1184,7 +1184,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBUPSLD10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -1276,7 +1276,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBUYTIY10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -1355,7 +1355,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBUYTOE10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -1434,7 +1434,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBUYXEY10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -1524,7 +1524,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBYITOT02()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -1595,7 +1595,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCABWEH10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -1656,7 +1656,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCAFORM07()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
@@ -1676,7 +1676,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCAGREH10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -1733,7 +1733,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCALXES20()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -1800,7 +1800,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCAMALD03()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -1830,7 +1830,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCEFMEN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -1949,7 +1949,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCETROI01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -2028,7 +2028,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCEWCUC10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -2115,7 +2115,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCEWVIJ10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -2191,7 +2191,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCEWYIM30()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -2251,7 +2251,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCIHWUL10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -2301,7 +2301,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCIJXOI10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -2366,7 +2366,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCIKSEU10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -2422,7 +2422,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCILBII()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -2507,7 +2507,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCILDOQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -2566,7 +2566,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCILWUP11()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -2597,7 +2597,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCIMRUL10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -2670,7 +2670,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCINVIE()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
@@ -2750,7 +2750,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCIPVOM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -2817,7 +2817,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCIPYAB10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -2868,7 +2868,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCISMOG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -2912,7 +2912,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCISPOJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -2976,7 +2976,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCITDIS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -3026,7 +3026,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCITNOI10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -3096,7 +3096,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCITPEA10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -3172,7 +3172,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCITSED10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -3202,7 +3202,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCIVCEP02()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -3292,7 +3292,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCIVLAU02()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -3371,7 +3371,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCIXWAH()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -3428,7 +3428,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCIYNUT()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -3472,7 +3472,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCIZFIA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -3541,7 +3541,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCIZJAW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("Si", 0));
@@ -3652,7 +3652,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCIZWUD()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -3696,7 +3696,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCIZYEP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -3768,7 +3768,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCIZZUG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -3823,7 +3823,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOBKIN01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -3887,7 +3887,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOCXUN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -3946,7 +3946,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOGDEH()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -4009,7 +4009,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOGYAY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -4060,7 +4060,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOHKOZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -4104,7 +4104,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOJFIQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -4165,7 +4165,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOKDEL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -4228,7 +4228,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOKROJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -4297,7 +4297,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOLZUY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -4402,7 +4402,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOMDIR()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -4464,7 +4464,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOMKAQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -4513,7 +4513,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOMWOQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -4564,7 +4564,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOMWUW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -4633,7 +4633,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCONBAI()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -4722,7 +4722,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCONFAM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -4754,7 +4754,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCONLIA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -4822,7 +4822,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCORDOC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -4882,7 +4882,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCORWUB10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", -1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -4910,7 +4910,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOSFAR()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -4961,7 +4961,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOSSEI()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", -1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -5006,7 +5006,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOSWIQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -5068,7 +5068,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOTMON()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -5122,7 +5122,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOTPEG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -5165,7 +5165,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOTRIM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("N", 1));
@@ -5230,7 +5230,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOVHUQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -5277,7 +5277,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOVMAB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -5355,7 +5355,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOVXIU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -5437,7 +5437,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOWTIR()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 1));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
@@ -5516,7 +5516,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOXBAS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -5576,7 +5576,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOXZEU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -5619,7 +5619,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOYMOS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -5686,7 +5686,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOYNAF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -5737,7 +5737,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCOYVIV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -5806,7 +5806,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUBTUO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -5879,7 +5879,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUCDAF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -5949,7 +5949,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUCHOX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -6022,7 +6022,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUCHUD()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -6087,7 +6087,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUDJAM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -6147,7 +6147,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUDNEU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -6232,7 +6232,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUDPAS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -6280,7 +6280,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUDPOG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -6345,7 +6345,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUDREY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("N", 0));
@@ -6380,7 +6380,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUFFAK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -6473,7 +6473,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUGBEL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -6549,7 +6549,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUGGOA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -6608,7 +6608,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUGLOF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -6682,7 +6682,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUJYUB10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -6742,7 +6742,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCULGEV10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -6801,7 +6801,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCULHIA10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -6895,7 +6895,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCULVEK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -6967,7 +6967,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUNVAI()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -7039,7 +7039,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUNVEM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -7111,7 +7111,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCURZIY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -7175,7 +7175,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUVFOO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -7236,7 +7236,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUVGAB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -7298,7 +7298,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUVJOS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -7330,7 +7330,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCUYRAP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -7401,7 +7401,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCYANAM01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -7423,7 +7423,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCYGUAN01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -7503,7 +7503,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDABHAP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -7587,7 +7587,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDABLIB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -7643,7 +7643,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDACSAB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("F", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -7720,7 +7720,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDACYIP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -7805,7 +7805,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDADDAN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -7886,7 +7886,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDADLAV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -7938,7 +7938,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDADLEZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -7990,7 +7990,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDAFKIE()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -8048,7 +8048,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDAFPUV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -8083,7 +8083,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDAGTUA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -8148,7 +8148,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDAHBAP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -8208,7 +8208,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDAHNAB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -8273,7 +8273,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDAJXER()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -8353,7 +8353,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDAKBAS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", -1));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
@@ -8437,7 +8437,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDAKCEX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -8493,7 +8493,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDAKDOI()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -8583,7 +8583,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDANCUQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -8632,7 +8632,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDAPSUO03()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -8705,7 +8705,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDARDEF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -8781,7 +8781,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDARPOB10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -8873,7 +8873,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDARXID()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -8940,7 +8940,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDARZEB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -9003,7 +9003,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDAVWEC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -9077,7 +9077,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDAVXED()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -9162,7 +9162,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDAWXII()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -9218,7 +9218,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDAWYUV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -9267,7 +9267,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDAYWEF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -9336,7 +9336,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDAZVEF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -9407,7 +9407,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEBMOM01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
@@ -9441,7 +9441,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDECJAW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -9498,7 +9498,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDECKUR()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -9574,7 +9574,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDECRIM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("N", 0));
@@ -9641,7 +9641,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEDCIY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -9696,7 +9696,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEDSIO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("I", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -9771,7 +9771,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEFGIE()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -9833,7 +9833,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEFLEF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -9909,7 +9909,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEFPUZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -9959,7 +9959,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEFTUD()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -10028,7 +10028,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEFVAL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -10106,7 +10106,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEFYUI()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -10156,7 +10156,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEGLUW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -10197,7 +10197,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEGRIQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -10289,7 +10289,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEKRUG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -10340,7 +10340,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEMBIG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -10401,7 +10401,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEPKEO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -10455,7 +10455,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDERZUV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -10532,7 +10532,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDESWUT()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -10584,7 +10584,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDESYOP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -10614,7 +10614,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEWHOC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -10688,7 +10688,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEWJEU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -10775,7 +10775,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEXCIS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -10844,7 +10844,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEXGIW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -10907,7 +10907,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEZDUH()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("F", 0));
             container.Atoms.Add(NewAtm("F", 0));
             container.Atoms.Add(NewAtm("F", 0));
@@ -10963,7 +10963,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEZNIF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -11034,7 +11034,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDEZXEL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -11085,7 +11085,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDHOADS01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -11157,7 +11157,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDICKIJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -11239,7 +11239,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDICPUA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -11290,7 +11290,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDICRAI()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -11341,7 +11341,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDICYIX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -11398,7 +11398,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDICYOD()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -11463,7 +11463,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIDYOE()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -11525,7 +11525,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIFSIU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
@@ -11596,7 +11596,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIGCOL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", -1));
             container.Atoms.Add(NewAtm("N", 0));
@@ -11628,7 +11628,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIGCUR()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -11685,7 +11685,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIGLEK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -11782,7 +11782,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIHTET()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -11839,7 +11839,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIKGAF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -11903,7 +11903,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIKGEJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -11967,7 +11967,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIKWID()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -12061,7 +12061,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIKYUR()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -12112,7 +12112,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDILCOQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -12191,7 +12191,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIMYIH10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -12258,7 +12258,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIPDAH10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -12332,7 +12332,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIPDIP10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("N", 0));
@@ -12388,7 +12388,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIRMIA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -12422,7 +12422,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDISHES()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -12491,7 +12491,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDISJOE()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
@@ -12534,7 +12534,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDITRAZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -12575,7 +12575,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDITYAG10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -12644,7 +12644,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIVJUN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -12698,7 +12698,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIVTUX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -12764,7 +12764,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIVVEJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -12805,7 +12805,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIVWEK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -12890,7 +12890,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIWCOB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("N", 0));
@@ -12935,7 +12935,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIXJEZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -12994,7 +12994,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIYDIY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -13050,7 +13050,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIYPOQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -13134,7 +13134,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIYPUW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -13181,7 +13181,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDIZPUX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -13252,7 +13252,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDMEOXA01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -13293,7 +13293,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDOCCIH()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", -1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -13339,7 +13339,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDOCFIK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -13396,7 +13396,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDOCWUN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -13462,7 +13462,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDODNOZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -13538,7 +13538,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDODNUF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -13595,7 +13595,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDOJPAT()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -13653,7 +13653,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDONFOB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -13722,7 +13722,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDOSNOO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -13766,7 +13766,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDOTNIJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -13816,7 +13816,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDOTVEN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -13860,7 +13860,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDOTWOY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -13933,7 +13933,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDOWDEY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -13981,7 +13981,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDOXXAP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -14028,7 +14028,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDOXZOF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -14077,7 +14077,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDOZFON()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("F", 0));
             container.Atoms.Add(NewAtm("F", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -14130,7 +14130,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDOZNIP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
@@ -14174,7 +14174,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUBNET()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -14234,7 +14234,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUDMUK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -14288,7 +14288,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUGMUN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -14336,7 +14336,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUGWIL01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -14387,7 +14387,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUJHEV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -14437,7 +14437,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUJMEA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -14524,7 +14524,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUKVAG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("N", 0));
@@ -14562,7 +14562,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUKWUB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -14632,7 +14632,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDULTIN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -14696,7 +14696,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUMHIC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -14763,7 +14763,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUMPAC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -14837,7 +14837,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUPHEB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -14899,7 +14899,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUPTAJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -14960,7 +14960,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDURDID()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -15014,7 +15014,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUTHIJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -15095,7 +15095,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUVHUX10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -15156,7 +15156,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUVXIB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -15205,7 +15205,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUWGAD()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -15263,7 +15263,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUWKUB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -15319,7 +15319,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUWRIW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("O", -1));
@@ -15377,7 +15377,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUXTIZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -15413,7 +15413,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUXWUO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -15486,7 +15486,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUXXAV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -15562,7 +15562,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUYNOA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -15655,7 +15655,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUYPES()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -15766,7 +15766,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestDUYRAQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -15851,7 +15851,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFACMIF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -15921,7 +15921,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFACREG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("O", -1));
@@ -15977,7 +15977,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFACYAJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -16031,7 +16031,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFADMIG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -16078,7 +16078,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFADVEL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -16137,7 +16137,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFADVUB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -16196,7 +16196,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAGBUK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("N", 1));
@@ -16292,7 +16292,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAGCOF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -16359,7 +16359,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAGLII()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -16401,7 +16401,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAGVEO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -16430,7 +16430,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAGZOC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -16467,7 +16467,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAHPUZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -16542,7 +16542,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAHSUC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -16609,7 +16609,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAHYUI()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("N", 1));
@@ -16669,7 +16669,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAHZET()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -16734,7 +16734,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAJWIW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -16784,7 +16784,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAMHAC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -16855,7 +16855,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAMYUN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -16892,7 +16892,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAPLUD()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -16932,7 +16932,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFARMAM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -16997,7 +16997,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFARSOG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -17057,7 +17057,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFARWEA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", -1));
             container.Atoms.Add(NewAtm("N", 0));
@@ -17093,7 +17093,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFASGUB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -17136,7 +17136,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFASJIS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 1));
             container.Atoms.Add(NewAtm("P", 1));
             container.Atoms.Add(NewAtm("S", -1));
@@ -17230,7 +17230,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFATLIV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 1));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -17317,7 +17317,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAXFUF10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -17362,7 +17362,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAXVAB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -17421,7 +17421,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAXVEF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -17483,7 +17483,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAXVIJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -17551,7 +17551,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAZBAJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -17587,7 +17587,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFAZKUM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -17623,7 +17623,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFBATNB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -17702,7 +17702,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFECXEQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -17764,7 +17764,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFEGSEP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 1));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -17814,7 +17814,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFEHDAX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -17856,7 +17856,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFEJJEJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -17921,7 +17921,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFEJKIO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -18014,7 +18014,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFELYIE()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -18068,7 +18068,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFELYUQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -18132,7 +18132,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFEMGEJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -18197,7 +18197,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFENCOQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -18247,7 +18247,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFENHAH()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -18295,7 +18295,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFENJIR()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -18372,7 +18372,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFENJOX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -18455,7 +18455,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFENJUD()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -18526,7 +18526,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFENNUH()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -18581,7 +18581,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFENYIG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -18669,7 +18669,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFEPWAY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", -1));
             container.Atoms.Add(NewAtm("N", 0));
@@ -18708,7 +18708,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFEPWOM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("F", 0));
             container.Atoms.Add(NewAtm("F", 0));
@@ -18744,7 +18744,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFESCAH()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -18776,7 +18776,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFESMIZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -18840,7 +18840,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFETRUR()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -18902,7 +18902,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFETWOQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -18979,7 +18979,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFEVNUP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -19031,7 +19031,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFEYLUQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -19084,7 +19084,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFEZPOP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("N", 0));
@@ -19116,7 +19116,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFEZRUX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -19191,7 +19191,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFIBLIL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -19264,7 +19264,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFICDOK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -19314,7 +19314,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFIFGUW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -19398,7 +19398,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFIGYID()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -19433,7 +19433,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFIHXID()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -19513,7 +19513,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFIKJAK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -19573,7 +19573,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFIKZOO10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -19626,7 +19626,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFILGEM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -19691,7 +19691,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFILNOD()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -19754,7 +19754,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFINBIN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -19815,7 +19815,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFINPEX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -19873,7 +19873,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFITGIY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -19943,7 +19943,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFITSEG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -19980,7 +19980,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFITTIL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -20033,7 +20033,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFIVNUT()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -20112,7 +20112,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFIVRAD()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -20192,7 +20192,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFIXPIL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -20259,7 +20259,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFIYBIY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -20326,7 +20326,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFIZGEA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -20395,7 +20395,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFIZGOK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -20451,7 +20451,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFIZJED()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -20497,7 +20497,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOBJUB01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("N", 1));
@@ -20539,7 +20539,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFODTUN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -20608,7 +20608,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOGBIM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -20677,7 +20677,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOGVIG01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -20762,7 +20762,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOHXEF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -20829,7 +20829,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOHYAC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -20879,7 +20879,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOJBEL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -20947,7 +20947,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOJPAV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -21015,7 +21015,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFONCOA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -21091,7 +21091,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFORGOI()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("I", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -21141,7 +21141,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFORHEZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -21186,7 +21186,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFORJIF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -21248,7 +21248,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFORJUR()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -21323,7 +21323,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFORTAH()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", -1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -21382,7 +21382,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOSDIA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -21456,7 +21456,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOVHUT()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -21506,7 +21506,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOVJIJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -21571,7 +21571,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOVRAJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -21656,7 +21656,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOVRUD()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -21741,7 +21741,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOWBEY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -21803,7 +21803,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOWPOW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -21875,7 +21875,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOWVES()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -21923,7 +21923,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOWZAS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -21998,7 +21998,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOYMAH()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -22048,7 +22048,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFOYNUC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -22118,7 +22118,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUCMIZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Si", 0));
@@ -22156,7 +22156,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUCMUL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -22190,7 +22190,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUCTIG01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", -1));
@@ -22210,7 +22210,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUCWIJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -22297,7 +22297,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUCWOP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -22363,7 +22363,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUDPOJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -22392,7 +22392,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUDXUX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -22428,7 +22428,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUFDIT()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -22482,7 +22482,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUGWIN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -22563,7 +22563,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUHFAP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -22599,7 +22599,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUHSEG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -22651,7 +22651,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFULRAF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -22733,7 +22733,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUNSIQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -22784,7 +22784,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUNXOB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -22849,7 +22849,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUPJUV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("N", 0));
@@ -22925,7 +22925,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUPKIK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -22982,7 +22982,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUPKOQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -23063,7 +23063,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUPTOZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -23115,7 +23115,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUPZEV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -23197,7 +23197,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUSPEO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -23225,7 +23225,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUTCEC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -23290,7 +23290,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUTZEZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -23320,7 +23320,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUVDOP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -23410,7 +23410,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUVMUE()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -23490,7 +23490,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUVNEP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -23586,7 +23586,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUVXOJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -23642,7 +23642,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUWMOZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -23709,7 +23709,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUWTUM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", -1));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -23765,7 +23765,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUXXAX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -23832,7 +23832,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFUXZED()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -23891,7 +23891,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGADHEY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -23977,7 +23977,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGAFNUW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -24056,7 +24056,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGAHPIO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -24113,7 +24113,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGAJTEQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -24157,7 +24157,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGAKGOO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -24229,7 +24229,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGAKNEL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
@@ -24274,7 +24274,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGAKNIP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -24328,7 +24328,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGAKPEN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -24383,7 +24383,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGAKTAN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -24429,7 +24429,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGANHUY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -24460,7 +24460,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGAPMEP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -24509,7 +24509,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGAVKOD()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("N", 0));
@@ -24548,7 +24548,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGAVMEV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -24607,7 +24607,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGAWWOQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 1));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
@@ -24685,7 +24685,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGEHBOK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -24765,7 +24765,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGEHPUE()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -24820,7 +24820,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGEHXEW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -24913,7 +24913,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGEJYOJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("F", 0));
             container.Atoms.Add(NewAtm("F", 0));
@@ -24958,7 +24958,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGEKXEZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -25007,7 +25007,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGEMCEG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -25055,7 +25055,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGEMCOQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -25107,7 +25107,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGEMDAD()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -25175,7 +25175,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGERCUB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -25228,7 +25228,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGESCIQ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -25314,7 +25314,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGESNIB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -25354,7 +25354,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGESSUS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -25420,7 +25420,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGETFIU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -25468,7 +25468,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGETFOA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -25516,7 +25516,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGETJOE()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("P", 1));
             container.Atoms.Add(NewAtm("S", -1));
@@ -25592,7 +25592,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGEWTAD()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -25649,7 +25649,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGEXGIZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -25707,7 +25707,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGEYWOW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -25787,7 +25787,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGICTIV01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -25842,7 +25842,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGIDJUY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -25909,7 +25909,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGIDMEL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -25970,7 +25970,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGIDTIW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -26060,7 +26060,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGIFRAO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -26140,7 +26140,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGIGCEE()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -26209,7 +26209,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGIGMUE()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -26280,7 +26280,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGIHZEC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -26340,7 +26340,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGIJMOB01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", -1));
@@ -26389,7 +26389,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGIKJIT()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -26432,7 +26432,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGIKNOD()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -26500,7 +26500,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGIKTUP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -26553,7 +26553,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGIMJIV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -26624,7 +26624,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGINMUL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -26685,7 +26685,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGIPHES()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -26745,7 +26745,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGIRDOA01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -26830,7 +26830,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGOHVUU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -26873,7 +26873,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGOJCIR()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -26929,7 +26929,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGOJKIZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -26984,7 +26984,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestGUANCH01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -27033,7 +27033,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestHYTPRD01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -27108,7 +27108,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestISTZCN10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -27146,7 +27146,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJABGAU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -27217,7 +27217,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJADLIJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -27259,7 +27259,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJADXER()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -27354,7 +27354,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJAHKOS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -27421,7 +27421,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJAHTOB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -27490,7 +27490,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJAHYEW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -27553,7 +27553,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJAKGUX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -27617,7 +27617,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJAKJOU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -27673,7 +27673,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJALSOE()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -27745,7 +27745,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJAMREU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -27866,7 +27866,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJANDOR()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -27991,7 +27991,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJANMAM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -28051,7 +28051,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJAPFAH()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -28123,7 +28123,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJATBIP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -28184,7 +28184,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJATCOW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -28227,7 +28227,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJATLOF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -28314,7 +28314,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJATMEW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -28405,7 +28405,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJAVGAO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -28465,7 +28465,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJAWJIA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -28556,7 +28556,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJAWMAV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -28593,7 +28593,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJAWVEI()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -28664,7 +28664,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJAWZEM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -28717,7 +28717,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJAZGOG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -28794,7 +28794,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJAZVIP10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -28878,7 +28878,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJAZZOZ10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -28969,7 +28969,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJEBFEB01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -29039,7 +29039,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJECVES()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -29115,7 +29115,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJECVUI()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -29176,7 +29176,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJECYIZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -29272,7 +29272,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJEFRAN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -29359,7 +29359,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJEHCUU01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -29418,7 +29418,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJEHXOJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -29472,7 +29472,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJELKUG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("P", 1));
@@ -29530,7 +29530,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJELREX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -29594,7 +29594,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJELRIB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -29653,7 +29653,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJEMHIS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -29696,7 +29696,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJEMWUT()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -29758,7 +29758,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJESFES()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -29821,7 +29821,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJETJUN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -29870,7 +29870,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJEVXIR()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -29936,7 +29936,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJEWFAS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -30028,7 +30028,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJEWPIK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -30082,7 +30082,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJEXREJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -30165,7 +30165,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJEYBUK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -30226,7 +30226,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJIDHIN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -30306,7 +30306,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJIFYUS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -30369,7 +30369,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJIGCIL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -30414,7 +30414,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJIGRAS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -30472,7 +30472,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJIHVEB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -30506,7 +30506,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJIKHUG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -30577,7 +30577,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJILWUW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", -1));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -30628,7 +30628,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJINDAL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -30684,7 +30684,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJINDOZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
@@ -30767,7 +30767,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJIRJID()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -30805,7 +30805,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJISZAM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -30887,7 +30887,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJITMII()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -30967,7 +30967,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJIWKOP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -31034,7 +31034,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJIXBAT()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -31102,7 +31102,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJIYJAC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -31159,7 +31159,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJIYREO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -31209,7 +31209,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJIYTOA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", -1));
@@ -31244,7 +31244,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJIZWUK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -31332,7 +31332,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestJOFDUD()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -31377,7 +31377,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKAFXIY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -31443,7 +31443,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKAGBOJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -31530,7 +31530,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKAKGOS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -31602,7 +31602,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKAMCUW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -31689,7 +31689,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKAMJAJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -31760,7 +31760,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKANWEB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -31817,7 +31817,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKANZOO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -31915,7 +31915,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKAPCUZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", -1));
             container.Atoms.Add(NewAtm("N", 0));
@@ -31965,7 +31965,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKARYAD()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -32041,7 +32041,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKASBAH()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -32095,7 +32095,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKASBOV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -32159,7 +32159,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKATNAU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -32238,7 +32238,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKAVFUI()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("O", -1));
@@ -32277,7 +32277,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKAVTEG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -32348,7 +32348,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKECSIU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("F", 0));
@@ -32422,7 +32422,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKECSUG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -32470,7 +32470,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKEDYAT()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -32533,7 +32533,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKEFJEK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -32598,7 +32598,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKEJFOU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -32654,7 +32654,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKEMFAJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -32727,7 +32727,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKENHOA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -32787,7 +32787,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKEPKIZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -32833,7 +32833,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKESNEB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
@@ -32912,7 +32912,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKEWJIF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -32947,7 +32947,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKHDFRM11()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -32969,7 +32969,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKIBDII()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -33039,7 +33039,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKIBFAC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("N", 0));
@@ -33100,7 +33100,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKICCUU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("F", 0));
             container.Atoms.Add(NewAtm("F", 0));
@@ -33136,7 +33136,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKICGAE()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -33197,7 +33197,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKICLAJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -33260,7 +33260,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKIGKIU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -33304,7 +33304,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKIKVUV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -33367,7 +33367,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKIMLEX01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("F", 0));
@@ -33389,7 +33389,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKINKUN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -33465,7 +33465,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKINTUW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -33547,7 +33547,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKINWEJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -33644,7 +33644,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKINWIN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -33695,7 +33695,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKIRCAP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
@@ -33782,7 +33782,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKIRCOD()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -33838,7 +33838,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKITREK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -33914,7 +33914,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKIYGAA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("F", 0));
@@ -33967,7 +33967,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKOBXOO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -34009,7 +34009,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKOBYOP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -34052,7 +34052,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKOBZEG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -34148,7 +34148,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKOCWUU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -34203,7 +34203,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKODFUE()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -34279,7 +34279,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKOFKIZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -34339,7 +34339,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKOFMEX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -34412,7 +34412,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKOFNIC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -34493,7 +34493,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKOHVEI()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -34555,7 +34555,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKOHVIM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -34603,7 +34603,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKOJGOF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -34679,7 +34679,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKOJKID()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -34745,7 +34745,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKOJZOY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -34801,7 +34801,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKOKMIG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -34875,7 +34875,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKOLCUJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -34947,7 +34947,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestMAPMIP03()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -35016,7 +35016,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestMENBZS01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -35068,7 +35068,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestMETBZC10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -35128,7 +35128,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestNAESCB01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", -1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -35177,7 +35177,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestNHOXAL06()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -35203,7 +35203,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestPHOSLA10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -35260,7 +35260,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestPHOSLB10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -35343,7 +35343,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestPIMTAZ01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -35411,7 +35411,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestQUICNA01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -35457,7 +35457,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSABNOY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -35532,7 +35532,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSACXAV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -35618,7 +35618,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSADXAW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -35679,7 +35679,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSAFFOU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -35722,7 +35722,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSAFFUA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -35765,7 +35765,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSAFKAL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -35797,7 +35797,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSAHSOJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -35885,7 +35885,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSAHSUP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -35953,7 +35953,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSAKGUG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -36042,7 +36042,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSALVEG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -36115,7 +36115,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSAMFUH()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", -1));
             container.Atoms.Add(NewAtm("S", 0));
@@ -36165,7 +36165,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSAMXUZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -36246,7 +36246,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSANKEX10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -36325,7 +36325,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSAVDOI()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -36420,7 +36420,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSAWKEG10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -36477,7 +36477,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEBPEU01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -36542,7 +36542,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSECDAF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -36629,7 +36629,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEFRAW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -36693,7 +36693,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEFYIL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("P", 0));
@@ -36771,7 +36771,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEGFIT()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -36831,7 +36831,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEGJAP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -36907,7 +36907,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEGLAR()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -36959,7 +36959,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEGNEX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
@@ -37004,7 +37004,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEGWEG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("I", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -37051,7 +37051,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEHBEM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("N", 1));
@@ -37127,7 +37127,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEJDAM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -37198,7 +37198,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEKKIC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -37272,7 +37272,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEKPED()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -37319,7 +37319,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEKPIH()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -37368,7 +37368,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSELFIY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -37457,7 +37457,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEMDIX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("F", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -37526,7 +37526,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEMXOX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -37595,7 +37595,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSETHAA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -37662,7 +37662,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSETLIM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -37729,7 +37729,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEYVUN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -37774,7 +37774,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEYWUO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", -1));
             container.Atoms.Add(NewAtm("N", 1));
@@ -37853,7 +37853,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSEZMEP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -37906,7 +37906,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSICNUN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -37972,7 +37972,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSICPEZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -38039,7 +38039,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSICSEC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -38099,7 +38099,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSIDFIU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("I", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -38153,7 +38153,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSIDRUS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -38244,7 +38244,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSINMIL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("N", 1));
@@ -38339,7 +38339,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSIYLOB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -38430,7 +38430,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSIZJIU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -38523,7 +38523,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSIZWUT()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -38588,7 +38588,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSLFNMB04()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -38659,7 +38659,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSOGVOZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -38728,7 +38728,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSOHXOC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -38807,7 +38807,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSOJNEK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -38865,7 +38865,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSOMKIO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("Br", 0));
@@ -38926,7 +38926,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSONZIE()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -39015,7 +39015,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSOPZEC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -39063,7 +39063,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSORBIK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("O", -1));
@@ -39118,7 +39118,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSURDOX02()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -39150,7 +39150,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTACGIN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -39211,7 +39211,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTACLEO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -39280,7 +39280,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTAFKIU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -39329,7 +39329,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTAFXIH()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -39397,7 +39397,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTAFZIJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", -1));
@@ -39440,7 +39440,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTAGVIG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -39482,7 +39482,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTAHMOE()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -39531,7 +39531,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTAJPUP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -39598,7 +39598,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTAJSUS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -39673,7 +39673,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTAJVUV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", -1));
             container.Atoms.Add(NewAtm("N", 0));
@@ -39698,7 +39698,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTAJWAC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -39751,7 +39751,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTAKHES()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -39793,7 +39793,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTAMMAV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -39840,7 +39840,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTANHAR()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -39895,7 +39895,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTAPJUP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -39957,7 +39957,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTAPSAE()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -40009,7 +40009,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTCYMPH02()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -40054,7 +40054,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestTMTCHD01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -40118,7 +40118,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVABLIT()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -40177,7 +40177,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVABROF()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -40248,7 +40248,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVACRUM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -40317,7 +40317,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVAJFAN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -40384,7 +40384,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVALTEH()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", -1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -40412,7 +40412,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVALWOU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -40489,7 +40489,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVAPZOB10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -40570,7 +40570,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVASDOI()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -40625,7 +40625,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVATKAC()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -40700,7 +40700,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVAWDUS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -40760,7 +40760,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVAWMOV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -40836,7 +40836,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVAWWAR()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", 0));
@@ -40916,7 +40916,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVAYKUB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -40982,7 +40982,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVAZHUZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -41049,7 +41049,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVECSAX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -41115,7 +41115,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVEDTED()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -41176,7 +41176,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVEHCOA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -41236,7 +41236,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVEHZOX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -41305,7 +41305,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVEJWOW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -41367,7 +41367,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVEKMON()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -41431,7 +41431,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVENYUI()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -41496,7 +41496,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVETWAS()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -41559,7 +41559,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVEVDIJ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -41633,7 +41633,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVEWZOM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -41712,7 +41712,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVEXKOY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -41770,7 +41770,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVEXMOA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -41835,7 +41835,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVEYBIK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -41897,7 +41897,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVEYWAX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -41929,7 +41929,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVEZBUX()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -41984,7 +41984,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVICGAP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -42062,7 +42062,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVICGET()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -42149,7 +42149,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVICKIB()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -42218,7 +42218,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVICPOM()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -42286,7 +42286,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVIDKUO()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -42342,7 +42342,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVIFFEV()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -42409,7 +42409,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVIGPEG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -42491,7 +42491,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVIGTUA()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -42553,7 +42553,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVIHHID()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -42620,7 +42620,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVIKVIU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -42674,7 +42674,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVIKYAP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -42744,7 +42744,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVIMHII()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("O", -1));
@@ -42766,7 +42766,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVIPXAT()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -42829,7 +42829,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVIRBON()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -42902,7 +42902,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVIWCOT()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -42957,7 +42957,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVIXRID()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -43004,7 +43004,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVIXXOP()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("F", 0));
@@ -43042,7 +43042,7 @@ namespace NCDK.ForceFields
 
         public void TestVIYPAU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -43119,7 +43119,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVOBLAZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -43193,7 +43193,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVOBWOY()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -43250,7 +43250,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVOFBOH()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -43315,7 +43315,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVOFCAU()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Br", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -43374,7 +43374,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVOJGEG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -43404,7 +43404,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVOJJIN()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -43458,7 +43458,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVUWXUG()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -43490,7 +43490,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVUXGOK()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -43549,7 +43549,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVUXPUZ()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -43608,7 +43608,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestVUXREL()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -43667,7 +43667,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestZZZIZA01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -43708,7 +43708,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestZZZMVU10()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -43783,7 +43783,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestZZZVCQ01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("I", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -43820,7 +43820,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestAR14A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -43849,7 +43849,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCA04A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -43875,7 +43875,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCE05A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -43905,7 +43905,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCO01A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -43925,7 +43925,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCO08A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -43959,7 +43959,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestHL08A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -43996,7 +43996,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestIM02A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -44024,7 +44024,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestNC10A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -44054,7 +44054,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestNC13A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -44078,7 +44078,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestNH10A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -44098,7 +44098,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestNH20A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -44138,7 +44138,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestNH22A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("N", 1));
             container.Atoms.Add(NewAtm("C", 0));
@@ -44172,7 +44172,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestNH23A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -44206,7 +44206,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestOH10A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -44232,7 +44232,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSR01A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -44250,7 +44250,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSR05A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -44276,7 +44276,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSR07A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -44315,7 +44315,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestAN05A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", -1));
             container.Atoms.Add(NewAtm("H", 0));
@@ -44337,7 +44337,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestAN06A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("S", -1));
             container.Atoms.Add(NewAtm("H", 0));
@@ -44359,7 +44359,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestAN08A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", -1));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -44383,7 +44383,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestAN11A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", -1));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -44408,7 +44408,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestAN12A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", -1));
@@ -44434,7 +44434,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestHL11A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("F", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -44465,7 +44465,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestHL13A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("F", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -44489,7 +44489,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestNO03A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -44513,7 +44513,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestNX02A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 1));
@@ -44547,7 +44547,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestOC02A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 1));
@@ -44581,7 +44581,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestPO02A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -44603,7 +44603,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestPO05A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("P", 0));
@@ -44641,7 +44641,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestPR01A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -44661,7 +44661,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestPR02A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -44687,7 +44687,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestPR03A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("Cl", 0));
@@ -44713,7 +44713,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestPR04A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("P", 0));
@@ -44747,7 +44747,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSI02A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -44775,7 +44775,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSI03A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -44805,7 +44805,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSO07A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -44863,7 +44863,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSO12A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -44889,7 +44889,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSO15A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("O", 0));
@@ -44925,7 +44925,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSO16A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -44959,7 +44959,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestSO18A()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("S", 0));
@@ -44985,7 +44985,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestBRMW1()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -45004,7 +45004,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCA2PW3()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -45033,7 +45033,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCLMW1()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -45052,7 +45052,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCU1PW1()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -45071,7 +45071,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestCU2PW3()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -45100,7 +45100,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFE2PW3()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -45129,7 +45129,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFE3PW3()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -45158,7 +45158,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestFMW1()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -45177,7 +45177,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestH3OPW1()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -45202,7 +45202,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestKPW1()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -45221,7 +45221,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestLIPW1()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -45240,7 +45240,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestMG2PW3()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -45269,7 +45269,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestNAPW()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -45288,7 +45288,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestOHMW1()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -45309,7 +45309,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestZN2PW3()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("O", 0));
             container.Atoms.Add(NewAtm("H", 0));
             container.Atoms.Add(NewAtm("H", 0));
@@ -45338,7 +45338,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestERULE01()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("S", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -45379,7 +45379,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestERULE02()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -45414,7 +45414,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestERULE03()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("Si", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -45465,7 +45465,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestERULE04()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("Cl", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("N", 0));
@@ -45498,7 +45498,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestERULE05()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("P", 0));
             container.Atoms.Add(NewAtm("P", 0));
@@ -45523,7 +45523,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestERULE06()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("C", 0));
             container.Atoms.Add(NewAtm("F", 0));
@@ -45555,7 +45555,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestERULE07()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -45597,7 +45597,7 @@ namespace NCDK.ForceFields
         [TestMethod()]
         public void TestERULE08()
         {
-            var container = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            var container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("N", 0));
             container.Atoms.Add(NewAtm("C", 0));
@@ -45632,7 +45632,7 @@ namespace NCDK.ForceFields
         // helper method for creating atoms
         static IAtom NewAtm(string symbol, int charge)
         {
-            IAtom atom = Silent.ChemObjectBuilder.Instance.NewAtom(symbol);
+            IAtom atom = CDK.Builder.NewAtom(symbol);
             atom.ImplicitHydrogenCount = 0;
             atom.FormalCharge = charge;
             return atom;

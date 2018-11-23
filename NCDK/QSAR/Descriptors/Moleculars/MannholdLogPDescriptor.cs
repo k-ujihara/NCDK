@@ -18,9 +18,6 @@
  */
 
 using NCDK.Config;
-using NCDK.QSAR.Results;
-using System;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -29,100 +26,61 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// implemented equation was proposed in <token>cdk-cite-Mannhold2009</token>.
     /// </summary>
     // @cdk.module     qsarmolecular
-    // @cdk.githash
     // @cdk.dictref    qsar-descriptors:mannholdLogP
     // @cdk.keyword LogP
     // @cdk.keyword descriptor
-    public class MannholdLogPDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mannholdLogP")]
+    public class MannholdLogPDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private static readonly string[] NAMES = { "MLogP" };
+        private readonly IAtomContainer container;
 
-        /// <summary>
-        /// The specification attribute of the MannholdLogPDescriptor object.
-        /// </summary>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mannholdLogP",
-                typeof(MannholdLogPDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        /// <summary>
-        /// This <see cref="IDescriptor"/> does not have any parameters. If it had, this
-        /// would have been the method to set them.
-        /// </summary>
-        /// <exception cref="CDKException">Exception throw when invalid parameter values are passed</exception>
-        public override IReadOnlyList<object> Parameters
+        public MannholdLogPDescriptor(IAtomContainer container)
         {
-            set
-            {
-                if (value != null && value.Count > 0)
-                {
-                    throw new CDKException("MannholdLogPDescriptor has no parameters.");
-                }
-            }
-            get
-            {
-                return Array.Empty<object>();
-            }
+            container = (IAtomContainer)container.Clone();
+            this.container = container;
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
-
-        private IDescriptorValue GetDummyDescriptorValue(Exception e)
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            public Result(double value)
+            {
+                this.MLogP = value;
+            }
+
+            [DescriptorResultProperty("MLogP")]
+            public double MLogP { get; private set; }
+
+            public double Value => MLogP;
         }
 
         /// <summary>
         /// Calculates the Mannhold LogP for an atom container.
         /// </summary>
-        /// <param name="atomContainer"><see cref="IAtomContainer"/> to calculate the descriptor value for.</param>
-        /// <returns>A descriptor value wrapping a <see cref="Result{Double}"/>.</returns>
-        public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
+        /// <returns>A descriptor value wrapping a <see cref="System.Double"/>.</returns>
+        public Result Calculate()
         {
-            var ac = (IAtomContainer)atomContainer.Clone();
-
             int carbonCount = 0;
             int heteroCount = 0;
-            foreach (var atom in ac.Atoms)
+            foreach (var atom in container.Atoms)
             {
-                if (!NaturalElements.Hydrogen.Element.Symbol.Equals(atom.Symbol, StringComparison.Ordinal))
+                switch (atom.AtomicNumber)
                 {
-                    if (NaturalElements.Carbon.Element.Symbol.Equals(atom.Symbol, StringComparison.Ordinal))
-                    {
+                    case NaturalElements.H.AtomicNumber:
+                        break;
+                    case NaturalElements.C.AtomicNumber:
                         carbonCount++;
-                    }
-                    else
-                    {
+                        break;
+                    default:
                         heteroCount++;
-                    }
+                        break;
                 }
             }
             var mLogP = 1.46 + 0.11 * carbonCount - 0.11 * heteroCount;
 
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(mLogP), DescriptorNames);
+            return new Result(mLogP);
         }
 
-        /// <summary>
-        /// A type of return value calculated by this descriptor.
-        /// </summary>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>();
-
-        /// <summary>
-        /// The parameterNames attribute for this descriptor.
-        /// A zero-length string array.
-        /// </summary>
-        public override IReadOnlyList<string> ParameterNames => Array.Empty<string>();
-
-        /// <summary>
-        /// Gets the parameterType attribute for a given parameter name. It
-        /// always returns <see langword="null"/>, as this descriptor does not have any parameters.
-        /// </summary>
-        /// <param name="name">Name of the parameter for which the type is requested.</param>
-        /// <returns>The parameterType of the given parameter.</returns>
-        public override object GetParameterType(string name) => null;
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

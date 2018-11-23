@@ -16,10 +16,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Charges;
-using NCDK.QSAR.Results;
 using System;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Bonds
 {
@@ -41,114 +40,53 @@ namespace NCDK.QSAR.Descriptors.Bonds
     // @author      Miguel Rojas
     // @cdk.created 2006-05-08
     // @cdk.module  qsarbond
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:bondPartialSigmaCharge
-
-    public partial class BondPartialSigmaChargeDescriptor
-        : IBondDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondPartialSigmaCharge")]
+    public partial class BondPartialSigmaChargeDescriptor : AbstractDescriptor, IBondDescriptor
     {
-        private GasteigerMarsiliPartialCharges peoe = null;
-       /// <summary>Number of maximum iterations</summary>
-        private int maxIterations;
+        private readonly IAtomContainer container;
+        private readonly IAtomContainer clonedContainer;
 
-        private static readonly string[] NAMES = { "peoeB" };
-
-        /// <summary>
-        ///  Constructor for the BondPartialSigmaChargeDescriptor object.
-        /// </summary>
-        public BondPartialSigmaChargeDescriptor()
+        /// <param name="maxIterations">Number of maximum iterations</param>
+        public BondPartialSigmaChargeDescriptor(IAtomContainer container, int maxIterations = int.MaxValue)
         {
-            peoe = new GasteigerMarsiliPartialCharges();
+            clonedContainer = (IAtomContainer)container.Clone();
+
+            var peoe = new GasteigerMarsiliPartialCharges();
+            if (maxIterations != int.MaxValue)
+                peoe.MaxGasteigerIterations = maxIterations;
+            peoe.AssignGasteigerMarsiliSigmaPartialCharges(clonedContainer, true);
+
+            this.container = container;
         }
 
-        /// <summary>
-        /// The specification attribute of the BondPartialSigmaChargeDescriptor object.
-        /// </summary>
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondPartialSigmaCharge",
-                typeof(BondPartialSigmaChargeDescriptor).FullName, "The Chemistry Development Kit");
-
-        /// <summary>
-        /// The parameters attribute of the BondPartialSigmaChargeDescriptor object
-        /// </summary>
-        public IReadOnlyList<object> Parameters
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            set
+            public Result(double value)
             {
-                if (value.Count > 1)
-                {
-                    throw new CDKException("PartialSigmaChargeDescriptor only expects one parameter");
-                }
-                if (!(value[0] is int))
-                {
-                    throw new CDKException("The parameter 1 must be of type int");
-                }
-                maxIterations = (int)value[0];
+                this.Value = value;
             }
-            get
-            {
-                // return the parameters as used for the descriptor calculation
-                return new object[] { (int)maxIterations };
-            }
-        }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
-
-        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
-        {
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+            [DescriptorResultProperty("peoeB")]
+            public double Value { get; private set; }
         }
 
         /// <summary>
-        ///  The method calculates the bond-sigma Partial charge of a given bond
-        ///  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
+        /// The method calculates the bond-sigma Partial charge of a given bond
+        /// it is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
         /// </summary>
-        /// <param name="ac">AtomContainer</param>
         /// <returns>return the sigma electronegativity</returns>
-        public DescriptorValue<Result<double>> Calculate(IBond bond, IAtomContainer ac)
+        public Result Calculate(IBond bond)
         {
-            // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
-            var originalCharge1 = bond.Atoms[0].Charge;
-            var originalCharge2 = bond.Atoms[1].Charge;
-            if (!IsCachedAtomContainer(ac))
-            {
-                IAtomContainer mol = ac.Builder.NewAtomContainer(ac);
-                if (maxIterations != 0) peoe.MaxGasteigerIterations = maxIterations;
-                try
-                {
-                    peoe.AssignGasteigerMarsiliSigmaPartialCharges(mol, true);
-                    foreach (var bondi in ac.Bonds)
-                    {
-                        double result = Math.Abs(bondi.Atoms[0].Charge.Value - bondi.Atoms[1].Charge.Value);
-                        CacheDescriptorValue(bondi, ac, new Result<double>(result));
-                    }
-                }
-                catch (Exception ex1)
-                {
-                    return GetDummyDescriptorValue(ex1);
-                }
-            }
-            bond.Atoms[0].Charge = originalCharge1;
-            bond.Atoms[1].Charge = originalCharge2;
-            return GetCachedDescriptorValue(bond) != null ? new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, (Result<double>)GetCachedDescriptorValue(bond), NAMES) : null;
+            if (bond.Atoms.Count != 2)
+                throw new CDKException("Only 2-center bonds are considered");
+
+            bond = clonedContainer.Bonds[container.Bonds.IndexOf(bond)];
+
+            return new Result(Math.Abs(bond.Begin.Charge.Value - bond.End.Charge.Value));
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the BondPartialSigmaChargeDescriptor object.
-        /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations" };
-
-        /// <summary>
-        /// Gets the parameterType attribute of the BondPartialSigmaChargeDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public object GetParameterType(string name)
-        {
-            if (string.Equals("maxIterations", name, StringComparison.Ordinal)) return int.MaxValue;
-            return null;
-        }
+        IDescriptorResult IBondDescriptor.Calculate(IBond bond) => Calculate(bond);
     }
 }

@@ -21,10 +21,8 @@
 using NCDK.Common.Collections;
 using NCDK.Geometries;
 using NCDK.Graphs;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -35,81 +33,61 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// These original Petitjean number was described by Petitjean (<token>cdk-cite-PET92</token>)
     /// and considered the molecular graph. This class also implements the geometric analog
     /// of the topological shape index described by Bath et al (<token>cdk-cite-BAT95</token>).
-    /// <para>
-    /// The descriptor returns a <see cref="ArrayResult{Double}"/> which contains
-    /// <list type="bullet"> 
-    /// <item>topoShape - topological shape index</item>
-    /// <item>geomShape - geometric shape index</item>
-    /// </list>
-    /// </para>
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    ///   <item>
-    ///     <term>Name</term>
-    ///     <term>Default</term>
-    ///     <term>Description</term>
-    ///   </item>
-    ///   <item>
-    ///     <term></term>
-    ///     <term></term>
-    ///     <term>no parameters</term>
-    ///   </item>
-    /// </list>
-    /// </para>
     /// </remarks>
     // @author      Rajarshi Guha
     // @cdk.created 2006-01-14
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:petitjeanShapeIndex
     // @cdk.keyword Petit-Jean, shape index
-    public class PetitjeanShapeIndexDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanShapeIndex")]
+    public class PetitjeanShapeIndexDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "topoShape", "geomShape" };
 
-        public PetitjeanShapeIndexDescriptor() { }
+        private readonly IAtomContainer container;
 
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanShapeIndex",
-                typeof(PetitjeanShapeIndexDescriptor).FullName, "The Chemistry Development Kit");
+        public PetitjeanShapeIndexDescriptor(IAtomContainer container)
+        {
+            this.container = container;
+        }
 
-        /// <summary>
-        /// Sets the parameters attribute of the PetitjeanShapeIndexDescriptor object.
-        /// </summary>
-        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(double topoShape, double geomShape)
+            {
+                this.TopologicalShapeIndex = topoShape;
+                this.GeometricShapeIndex = geomShape;
+            }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+            /// <summary>
+            /// topological shape index
+            /// </summary>
+            [DescriptorResultProperty("topoShape")]
+            public double TopologicalShapeIndex { get; private set; }
 
-        /// <summary>
-        /// The parameterNames attribute of the PetitjeanShapeIndexDescriptor object.
-        /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null;
+            /// <summary>
+            /// geometric shape index
+            /// </summary>
+            [DescriptorResultProperty("geomShape")]
+            public double GeometricShapeIndex { get; private set; }
 
-        /// <summary>
-        /// Gets the parameterType attribute of the PetitjeanShapeIndexDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => null;
+            public double Value => TopologicalShapeIndex;
+        }
 
         /// <summary>
         /// Calculates the two Petitjean shape indices.
         /// </summary>
-        /// <param name="container">Parameter is the atom container.</param>
-        /// <returns>A ArrayResult&lt;double&gt; value representing the Petitjean shape indices</returns>
-        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
+        /// <returns>A <see cref="ResolveEventArgs"/> representing the Petitjean shape indices</returns>
+        public Result Calculate()
         {
             var local = AtomContainerManipulator.RemoveHydrogens(container);
 
             var tradius = PathTools.GetMolecularGraphRadius(local);
             var tdiameter = PathTools.GetMolecularGraphDiameter(local);
 
-            var retval = new ArrayResult<double>
-            {
-                (double)(tdiameter - tradius) / tradius
-            };
+            var topoShape = (double)(tdiameter - tradius) / tradius;
+            var geomShape = double.NaN;
 
             // get the 3D distance matrix
             if (GeometryUtil.Has3DCoordinates(container))
@@ -133,15 +111,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
                 double gradius = 999999;
                 double gdiameter = -999999;
-                double[] geta = new double[natom];
+                var geta = new double[natom];
                 for (int i = 0; i < natom; i++)
                 {
                     double max = -99999;
                     for (int j = 0; j < natom; j++)
-                    {
                         if (distanceMatrix[i][j] > max)
                             max = distanceMatrix[i][j];
-                    }
                     geta[i] = max;
                 }
                 for (int i = 0; i < natom; i++)
@@ -151,19 +127,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     if (geta[i] > gdiameter)
                         gdiameter = geta[i];
                 }
-                retval.Add((gdiameter - gradius) / gradius);
-            }
-            else
-            {
-                retval.Add(double.NaN);
+                geomShape = (gdiameter - gradius) / gradius;
             }
 
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval, DescriptorNames);
+            return new Result(topoShape, geomShape);
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(2);
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

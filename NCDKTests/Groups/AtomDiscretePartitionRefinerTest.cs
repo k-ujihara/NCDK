@@ -32,7 +32,7 @@ namespace NCDK.Groups
     [TestClass()]
     public class AtomDiscretePartitionRefinerTest : CDKTestCase
     {
-        public static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        public static IChemObjectBuilder builder = CDK.Builder;
 
         [TestMethod()]
         public void DefaultConstructorTest()

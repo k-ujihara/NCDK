@@ -34,7 +34,7 @@ namespace NCDK.Charges
     [TestClass()]
     public class GasteigerMarsiliPartialChargesTest : CDKTestCase
     {
-        private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private IChemObjectBuilder builder = CDK.Builder;
 
         /// <summary>
         /// A unit test with methylenfluoride

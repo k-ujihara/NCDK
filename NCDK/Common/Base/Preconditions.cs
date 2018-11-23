@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace NCDK.Common.Base
 {
-    public static class Preconditions
+    internal static class Preconditions
     {
         public static int CheckNotNull(int? arg, string message)
         {

@@ -37,7 +37,7 @@ namespace NCDK.Tools.Diff
         /// <returns>a <see cref="string"/> representation of the difference between the first and second <see cref="IChemObject"/>.</returns>
         public static string Diff(IChemObject first, IChemObject second)
         {
-            IDifference diff = Difference(first, second);
+            var diff = Difference(first, second);
             if (diff == null)
             {
                 return "";

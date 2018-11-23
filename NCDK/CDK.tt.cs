@@ -95,6 +95,21 @@ namespace NCDK
                 return localSaturationChecker;
             }
         }
+        private static IChemObjectBuilder localBuilder = null;
+        private static readonly object lockBuilder = new object();
+        public static IChemObjectBuilder Builder
+        {
+            get
+            {
+                if (localBuilder == null)
+                    lock (lockBuilder)
+                    {
+                        if (localBuilder == null)
+                            localBuilder = Silent.ChemObjectBuilder.Instance;
+                    }
+                return localBuilder;
+            }
+        }
         private static Smiles.SmilesParser localSmilesParser = null;
         private static readonly object lockSmilesParser = new object();
         public static Smiles.SmilesParser SmilesParser
@@ -183,6 +198,21 @@ namespace NCDK
                             localPartialFilledStructureMerger = new StructGen.Stochastic.PartialFilledStructureMerger();
                     }
                 return localPartialFilledStructureMerger;
+            }
+        }
+        private static Charges.GasteigerMarsiliPartialCharges localGasteigerMarsiliPartialCharges = null;
+        private static readonly object lockGasteigerMarsiliPartialCharges = new object();
+        internal static Charges.GasteigerMarsiliPartialCharges GasteigerMarsiliPartialCharges
+        {
+            get
+            {
+                if (localGasteigerMarsiliPartialCharges == null)
+                    lock (lockGasteigerMarsiliPartialCharges)
+                    {
+                        if (localGasteigerMarsiliPartialCharges == null)
+                            localGasteigerMarsiliPartialCharges = new Charges.GasteigerMarsiliPartialCharges();
+                    }
+                return localGasteigerMarsiliPartialCharges;
             }
         }
     }

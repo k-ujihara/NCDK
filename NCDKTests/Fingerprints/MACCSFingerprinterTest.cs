@@ -44,7 +44,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void Getsize()
         {
-            IFingerprinter printer = new MACCSFingerprinter(Silent.ChemObjectBuilder.Instance);
+            IFingerprinter printer = new MACCSFingerprinter(CDK.Builder);
             Assert.AreEqual(166, printer.Length);
         }
 

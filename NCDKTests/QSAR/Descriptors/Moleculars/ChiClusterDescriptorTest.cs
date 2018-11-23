@@ -1,9 +1,5 @@
-using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
-using NCDK.QSAR.Results;
-using NCDK.Smiles;
-using System;
+using NCDK.Numerics;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -12,17 +8,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class ChiClusterDescriptorTest : MolecularDescriptorTest
+    public partial class ChiClusterDescriptorTest : MolecularDescriptorTest<ChiClusterDescriptor>
     {
-        public ChiClusterDescriptorTest()
-        {
-            SetDescriptor(typeof(ChiClusterDescriptor));
-        }
-
         [TestMethod()]
         public void TestDan64()
         {
-            var mol = new AtomContainer();
+            var mol = CDK.Builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.7500000000000004, 2.799038105676658);
             mol.Atoms.Add(a1);
@@ -44,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b4 = mol.Builder.NewBond(a4, a2, BondOrder.Single);
             mol.Bonds.Add(b4);
 
-            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
+            var ret = CreateDescriptor(mol).Calculate().Values;
 
             Assert.AreEqual(0.2887, ret[0], 0.0001);
             Assert.AreEqual(0.0000, ret[1], 0.0001);
@@ -59,7 +50,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestDan154()
         {
-            var mol = new AtomContainer();
+            var mol = CDK.Builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.0, 1.5);
             mol.Atoms.Add(a1);
@@ -101,7 +92,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b8 = mol.Builder.NewBond(a8, a2, BondOrder.Single);
             mol.Bonds.Add(b8);
 
-            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
+            var ret = CreateDescriptor(mol).Calculate().Values;
 
             Assert.AreEqual(0.5774, ret[0], 0.0001);
             Assert.AreEqual(0.0000, ret[1], 0.0001);
@@ -116,7 +107,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestDan248()
         {
-            var mol = new AtomContainer();
+            var mol = CDK.Builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(0.0, 1.5);
             mol.Atoms.Add(a1);
@@ -168,7 +159,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b10 = mol.Builder.NewBond(a10, a1, BondOrder.Single);
             mol.Bonds.Add(b10);
 
-            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
+            var ret = CreateDescriptor(mol).Calculate().Values;
 
             Assert.AreEqual(1.7845, ret[0], 0.0001);
             Assert.AreEqual(0.2500, ret[1], 0.0001);
@@ -179,45 +170,5 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Assert.AreEqual(0.0000, ret[6], 0.0001);
             Assert.AreEqual(0.0000, ret[7], 0.0001);
         }
-
-        // @cdk.bug 3023326
-        [TestMethod()]
-        public void TestCovalentMetal()
-        {
-            var sp = CDK.SmilesParser;
-            var mol = sp.ParseSmiles("CCCC[Sn](CCCC)(CCCC)c1cc(Cl)c(Nc2nc(C)nc(N(CCC)CC3CC3)c2Cl)c(Cl)c1");
-            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
-            Assert.IsNotNull(ret);
-        }
-     
-        // @cdk.bug 3023326
-        [TestMethod()]
-        public void TestCovalentPlatinum()
-        {
-            var sp = CDK.SmilesParser;
-            var mol = sp.ParseSmiles("CC1CN[Pt]2(N1)OC(=O)C(C)P(=O)(O)O2");
-            var dummy = Descriptor.Calculate(mol).Value;
-            if (dummy is ArrayResult<double> result)
-                Assert.IsTrue(double.IsNaN(result[0]));
-            else
-                Assert.Fail();
-        }
-
-        //    [TestMethod()] public void TestDan277() {
-        //
-        //        IAtomContainer mol = null;
-        //
-        //        ChiClusterDescriptor desc = new ChiClusterDescriptor();
-        //        ArrayResult<double> ret = (ArrayResult<double>) desc.Calculate(mol).Value;
-        //
-        //        Assert.AreEqual(0.0000, ret[0], 0.0001);
-        //        Assert.AreEqual(0.0000, ret[1], 0.0001);
-        //        Assert.AreEqual(0.0000, ret[2], 0.0001);
-        //        Assert.AreEqual(0.08333, ret[3], 0.00001);
-        //        Assert.AreEqual(0.0000, ret[4], 0.0001);
-        //        Assert.AreEqual(0.0000, ret[5], 0.0001);
-        //        Assert.AreEqual(0.0000, ret[6], 0.0001);
-        //        Assert.AreEqual(0.02778, ret[7], 0.00001);
-        //    }
     }
 }

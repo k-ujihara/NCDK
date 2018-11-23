@@ -17,8 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.QSAR.Results;
-using System;
+using NCDK.Templates;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -77,219 +76,114 @@ namespace NCDK.QSAR.Descriptors.Proteins
     /// Lapl8 Lapl9 Lapl10
     /// </pre>
     /// </para>
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    /// <item>
-    /// <term>Name</term>
-    /// <term>Default</term>
-    /// <term>Description</term>
-    /// </item>
-    /// <item>
-    /// <term></term>
-    /// <term></term>
-    /// <term>no parameters</term>
-    /// </item>
-    /// </list>
-    /// </para>
     /// </remarks>
     /// <seealso cref="IBioPolymer"/>
     // @author      Rajarshi Guha
     // @cdk.created 2006-08-23
     // @cdk.module  qsarprotein
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:taeAminoAcid
-    public partial class TaeAminoAcidDescriptor : IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#taeAminoAcid")]
+    public partial class TaeAminoAcidDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private Dictionary<string, double[]> taeParams = new Dictionary<string, double[]>();
-        private int ndesc = 147;
-
-        private Dictionary<string, string> nametrans = new Dictionary<string, string>();
-
         private static List<IMonomer> GetMonomers(IBioPolymer iBioPolymer)
         {
-            List<IMonomer> monomList = new List<IMonomer>();
+            var monomList = new List<IMonomer>();
 
             var strands = iBioPolymer.GetStrandMap();
             var strandKeys = strands.Keys;
             foreach (var key in strandKeys)
             {
-                IStrand aStrand = strands[key];
+                var aStrand = strands[key];
                 var tmp = aStrand.GetMonomerMap();
                 var keys = tmp.Keys;
                 foreach (var o1 in keys)
-                {
                     monomList.Add(tmp[o1]);
-                }
             }
 
             return monomList;
         }
 
-        private void LoadTAEParams()
+        private static readonly IReadOnlyDictionary<string, double[]> taeParams = LoadTAEParams();
+        private const int ndesc = 147;
+
+        private static IReadOnlyDictionary<string, double[]> LoadTAEParams()
         {
-            string filename = "NCDK.QSAR.Descriptors.Data.taepeptides.txt";
-            var ins = ResourceLoader.GetAsStream(this.GetType(), filename);
-            if (ins == null)
+            var taeParams = new Dictionary<string, double[]>();
+
+            var filename = "NCDK.QSAR.Descriptors.Data.taepeptides.txt";
+            using (var breader = new StreamReader(ResourceLoader.GetAsStream(filename)))
             {
-                Debug.WriteLine("Could not load the TAE peptide parameter data file");
-                taeParams = null;
-                return;
-            }
-            try
-            {
-                var breader = new StreamReader(ins);
                 breader.ReadLine(); // throw away the header
                 for (int i = 0; i < 60; i++)
                 {
-                    string line = breader.ReadLine();
-                    string[] components = line.Split(',');
+                    var line = breader.ReadLine();
+                    var components = line.Split(',');
                     if (components.Length != (ndesc + 1))
                         throw new CDKException("TAE peptide data table seems to be corrupt");
-                    string key = components[0].ToLowerInvariant().Trim();
+                    var key = components[0].ToLowerInvariant().Trim();
 
-                    double[] data = new double[ndesc];
+                    var data = new double[ndesc];
                     for (int j = 1; j < components.Length; j++)
                         data[j - 1] = double.Parse(components[j], NumberFormatInfo.InvariantInfo);
 
                     taeParams[key] = data;
                 }
             }
-            catch (IOException ioe)
-            {
-                Console.Error.WriteLine(ioe.StackTrace);
-                taeParams = null;
-                return;
-            }
-            catch (CDKException e)
-            {
-                Console.Error.WriteLine(e.StackTrace);
-                taeParams = null;
-                return;
-            }
 
             Debug.WriteLine($"Loaded {taeParams.Count} TAE parameters for amino acids");
+            return taeParams;
         }
 
-        public TaeAminoAcidDescriptor()
-        {
-            nametrans["a"] = "ala";
-            nametrans["c"] = "cys";
-            nametrans["d"] = "asp";
-            nametrans["e"] = "glu";
-            nametrans["f"] = "phe";
-            nametrans["g"] = "gly";
-            nametrans["h"] = "his";
-            nametrans["i"] = "ile";
-            nametrans["k"] = "lys";
-            nametrans["l"] = "leu";
-            nametrans["m"] = "met";
-            nametrans["n"] = "asn";
-            nametrans["p"] = "pro";
-            nametrans["q"] = "gln";
-            nametrans["r"] = "arg";
-            nametrans["s"] = "ser";
-            nametrans["t"] = "thr";
-            nametrans["v"] = "val";
-            nametrans["w"] = "trp";
-            nametrans["y"] = "tyr";
+        private readonly IBioPolymer peptide;
 
-            LoadTAEParams();
+        public TaeAminoAcidDescriptor(IBioPolymer container)
+        {
+            container = (IBioPolymer)container.Clone(); // don't mod original
+
+            this.peptide = container;
         }
 
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#taeAminoAcid",
-                typeof(TaeAminoAcidDescriptor).FullName, "The Chemistry Development Kit");
-
-        /// <summary>
-        /// The parameters attribute of the TaeAminoAcidDescriptor object.
-        /// </summary>
-        public IReadOnlyList<object> Parameters { get { return null; } set { } }
-
-        public IReadOnlyList<string> DescriptorNames
+        [DescriptorResult(prefix: "TAE", baseIndex: 0)]
+        public class Result : AbstractDescriptorArrayResult<double>
         {
-            get
-            {
-                string[] names = new string[ndesc];
-                for (int i = 0; i < names.Length; i++)
-                    names[i] = "TAE" + i;
-                return names;
-            }
-        }
-
-        /// <summary>
-        /// Tthe parameterNames attribute of the TaeAminOAcidDescriptor object.
-        /// </summary>
-        public IReadOnlyList<string> ParameterNames => null;
-
-        /// <summary>
-        /// Gets the parameterType attribute of the TaeAminoAcidDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name) => null;
-
-        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
-        {
-            int ndesc = DescriptorNames.Count;
-            ArrayResult<double> results = new ArrayResult<double>(ndesc);
-            for (int i = 0; i < ndesc; i++)
-                results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results, DescriptorNames, e);
+            public Result(IReadOnlyList<double> values) : base(values) { }
         }
 
         /// <summary>
         /// Calculates the 147 TAE descriptors for amino acids.
         /// </summary>
-        /// <param name="container">Parameter is the atom container which should implement <see cref="IBioPolymer"/>.</param>
-        /// <returns>A <see cref="ArrayResult{Double}"/> value representing the 147 TAE descriptors</returns>
-        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
+        /// <returns>The 147 TAE descriptors</returns>
+        public Result Calculate()
         {
-            if (taeParams == null) return GetDummyDescriptorValue(new CDKException("TAE parameters were not initialized"));
-            if (!(container is IBioPolymer))
-                return GetDummyDescriptorValue(new CDKException("The molecule should be of type IBioPolymer"));
-
-            IBioPolymer peptide = (IBioPolymer)container;
-
             // I assume that we get single letter names
-            //Collection aas = peptide.GetMonomerNames();
-
-            double[] desc = new double[ndesc];
+            var desc = new double[ndesc];
             for (int i = 0; i < ndesc; i++)
                 desc[i] = 0.0;
 
-            List<IMonomer> monomers = GetMonomers(peptide);
+            var monomers = GetMonomers(peptide);
 
             foreach (var monomer in monomers)
             {
                 string o = monomer.MonomerName;
 
-                if (o.Length == 0) continue;
-
-                string olc = new string(new char[] { o.ToLowerInvariant()[0] });
-                string tlc = (string)nametrans[olc];
+                if (o.Length == 0)
+                    continue;
+                
+                var olc = o.Substring(0, 1).ToUpperInvariant();
+                var tlc = AminoAcids.ConvertOneLetterCodeToThreeLetterCode(olc).ToLowerInvariant();
 
                 Debug.WriteLine($"Converted {olc} to {tlc}");
 
                 // get the params for this AA
-                Double[] parameters = (Double[])taeParams[tlc];
+                var parameters = taeParams[tlc];
 
                 for (int i = 0; i < ndesc; i++)
                     desc[i] += parameters[i];
             }
 
-            ArrayResult<double> retval = new ArrayResult<double>(ndesc);
-            for (int i = 0; i < ndesc; i++)
-                retval.Add(desc[i]);
-
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval, DescriptorNames);
+            return new Result(desc);
         }
 
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container)
-            => Calculate(container);
-
-        /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(147);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

@@ -27,47 +27,36 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.IO;
-using NCDK.QSAR.Results;
-
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// Test for fractional PSA Descriptor.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class FractionalPSADescriptorTest : MolecularDescriptorTest
+    public class FractionalPSADescriptorTest : MolecularDescriptorTest<FractionalPSADescriptor>
     {
-        public FractionalPSADescriptorTest()
-        {
-            SetDescriptor(typeof(FractionalPSADescriptor));
-        }
-
         [TestMethod()]
         public void TestDescriptors()
         {
             string fnmol = "NCDK.Data.CDD.pyridineacid.mol";
-            MDLV2000Reader mdl = new MDLV2000Reader(ResourceLoader.GetAsStream(fnmol));
-            AtomContainer mol = new AtomContainer();
-            mdl.Read(mol);
-            mdl.Close();
+            IAtomContainer mol;
+            using (var mdl = new MDLV2000Reader(ResourceLoader.GetAsStream(fnmol)))
+            {
+                mol = mdl.Read(CDK.Builder.NewAtomContainer());
+            }
 
-            FractionalPSADescriptor fpsa = new FractionalPSADescriptor();
-            var results = fpsa.Calculate(mol);
+            var fpsa = CreateDescriptor(mol);
+            var results = fpsa.Calculate();
 
             // note: test currently assumes that just one Descriptor is calculated
-            var names = results.Names;
+            var names = results.Keys.ToReadOnlyList();
             if (names.Count != 1 || !names[0].Equals("tpsaEfficiency"))
                 throw new CDKException("Only expecting 'tpsaEfficiency'");
-            Result<double> value = (Result<double>)results.Value;
-            double tpsaEfficiency = value.Value;
+            var tpsaEfficiency = results.Value;
             double ANSWER = 0.4036, ANSWER_LO = ANSWER * 0.999, ANSWER_HI = ANSWER * 1.001; // (we can tolerate rounding errors)
             if (tpsaEfficiency < ANSWER_LO || tpsaEfficiency > ANSWER_HI)
             {
-                throw new CDKException("Got " + tpsaEfficiency + ", expected " + ANSWER);
+                throw new CDKException($"Got {tpsaEfficiency}, expected {ANSWER}");
             }
         }
 

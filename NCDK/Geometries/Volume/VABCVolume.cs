@@ -33,7 +33,6 @@ namespace NCDK.Geometries.Volume
     /// </summary>
     // @cdk.module   standard
     // @cdk.keyword  volume, molecular
-    // @cdk.githash
     public static class VABCVolume
     {
         /// <summary>
@@ -77,18 +76,19 @@ namespace NCDK.Geometries.Volume
                 sum += bondiiVolume;
 
                 // add volumes of implicit hydrogens?
-                IAtomType type = atomTypeList.GetAtomType(atom.AtomTypeName);
-                if (type == null) throw new CDKException($"Unknown atom type for atom: {atom.Symbol}");
+                var type = atomTypeList.GetAtomType(atom.AtomTypeName);
+                if (type == null)
+                    throw new CDKException($"Unknown atom type for atom: {atom.Symbol}");
                 if (type.FormalNeighbourCount == null)
                     throw new CDKException($"Formal neighbor count not given for : {type.AtomTypeName}");
                 int hCount = type.FormalNeighbourCount.Value - molecule.GetConnectedBonds(atom).Count();
-                sum += (hCount * bondiiVolumes["H"]);
+                sum += hCount * bondiiVolumes["H"];
                 totalHCount += hCount;
             }
             sum -= 5.92 * (molecule.Bonds.Count + totalHCount);
 
             Aromaticity.CDKLegacy.Apply(molecule);
-            IRingSet ringSet = Cycles.FindSSSR(molecule).ToRingSet();
+            var ringSet = Cycles.FindSSSR(molecule).ToRingSet();
             if (ringSet.Count() > 0)
             {
                 int aromRingCount = 0;
@@ -116,7 +116,8 @@ namespace NCDK.Geometries.Volume
         {
             foreach (var atom in ring.Atoms)
             {
-                if (!atom.IsAromatic) return false;
+                if (!atom.IsAromatic)
+                    return false;
             }
             return true;
         }

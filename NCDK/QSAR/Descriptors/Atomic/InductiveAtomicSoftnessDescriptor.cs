@@ -17,156 +17,91 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Numerics;
 using NCDK.Config;
-using NCDK.QSAR.Results;
-using System;
-using System.Diagnostics;
-using System.Collections.Generic;
+using NCDK.Numerics;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
-    ///  Inductive atomic softness of an atom in a polyatomic system can be defined
-    ///  as charge delocalizing ability. Only works with 3D coordinates, which must be calculated beforehand. 
+    /// Inductive atomic softness of an atom in a polyatomic system can be defined
+    /// as charge delocalizing ability. Only works with 3D coordinates, which must be calculated beforehand. 
     /// </summary>
-    /// <remarks>
-    ///  This descriptor uses these parameters:
-    /// <list type="table">
-    /// <listheader>
-    ///   <term>Name</term>
-    ///   <term>Default</term>
-    ///   <term>Description</term>
-    /// </listheader>
-    /// <item>
-    ///   <term></term>
-    ///   <term></term>
-    ///   <term>no parameters</term>
-    /// </item>
-    /// </list>
-    /// </remarks>
     // @author         mfe4
     // @cdk.created    2004-11-03
     // @cdk.module     qsaratomic
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:atomicSoftness
-    public partial class InductiveAtomicSoftnessDescriptor : IAtomicDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomicSoftness")]
+    public partial class InductiveAtomicSoftnessDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
-        private static readonly string[] NAMES = { "indAtomSoftness" };
-        private static readonly AtomTypeFactory factory = CDK.JmolAtomTypeFactory;
+        IAtomContainer container;
 
-        /// <summary>
-        ///  Constructor for the InductiveAtomicSoftnessDescriptor object
-        /// </summary>
-        public InductiveAtomicSoftnessDescriptor() { }
-
-        /// <summary>
-        /// The specification attribute of the InductiveAtomicSoftnessDescriptor object
-        /// </summary>
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomicSoftness",
-                typeof(InductiveAtomicSoftnessDescriptor).FullName, "The Chemistry Development Kit");
-
-        /// <summary>
-        /// The parameters attribute of the InductiveAtomicSoftnessDescriptor object
-        /// </summary>
-        public IReadOnlyList<object> Parameters { get { return null; } set { } }
-
-        public IReadOnlyList<string> DescriptorNames => NAMES;
-
-        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
+        public InductiveAtomicSoftnessDescriptor(IAtomContainer container)
         {
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+            this.container = container;
+        }
+
+        public AtomTypeFactory AtomTypeFactory { get; set; } = CDK.JmolAtomTypeFactory;
+
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(double value)
+            {
+                this.AtomicHardness = value;
+            }
+
+            [DescriptorResultProperty("indAtomSoftness")]
+            public double AtomicHardness { get; private set; }
+
+            public double Value => AtomicHardness;
         }
 
         /// <summary>
-        ///  It is needed to call the addExplicitHydrogensToSatisfyValency method from
-        ///  the class tools.HydrogenAdder, and 3D coordinates.
+        /// It is needed to call the addExplicitHydrogensToSatisfyValency method from
+        /// the class tools.HydrogenAdder, and 3D coordinates.
         /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
-        /// <param name="ac">AtomContainer</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="Result"/> is requested</param>
         /// <returns>a double with polarizability of the heavy atom</returns>
-        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer ac)
+        public Result Calculate(IAtom atom)
         {
-            var allAtoms = ac.Atoms;
-            double atomicSoftness;
-            double radiusTarget;
+            double atomicSoftness = 0;
+            var symbol = atom.Symbol;
+            var type = this.AtomTypeFactory.GetAtomType(symbol);
+            var radiusTarget = type.CovalentRadius.Value;
 
-            atomicSoftness = 0;
-            double partial;
-            double radius;
-            string symbol;
-            IAtomType type;
-            try
-            {
-                symbol = atom.Symbol;
-                type = factory.GetAtomType(symbol);
-                radiusTarget = type.CovalentRadius.Value;
-            }
-            catch (Exception execption)
-            {
-                Debug.WriteLine(execption);
-                return GetDummyDescriptorValue(execption);
-            }
-
-            foreach (var curAtom in allAtoms)
+            foreach (var curAtom in container.Atoms)
             {
                 if (atom.Point3D == null || curAtom.Point3D == null)
-                {
-                    return GetDummyDescriptorValue(new CDKException(
-                            "The target atom or current atom had no 3D coordinates. These are required"));
-                }
+                    throw new CDKException("The target atom or current atom had no 3D coordinates. These are required");
+
                 if (!atom.Equals(curAtom))
                 {
-                    partial = 0;
+                    double partial = 0;
                     symbol = curAtom.Symbol;
-                    try
-                    {
-                        type = factory.GetAtomType(symbol);
-                    }
-                    catch (Exception exception)
-                    {
-                        Debug.WriteLine(exception);
-                        return GetDummyDescriptorValue(exception);
-                    }
+                    type = this.AtomTypeFactory.GetAtomType(symbol);
 
-                    radius = type.CovalentRadius.Value;
+                    var radius = type.CovalentRadius.Value;
                     partial += radius * radius;
                     partial += (radiusTarget * radiusTarget);
                     partial = partial / (CalculateSquareDistanceBetweenTwoAtoms(curAtom, atom));
-                    //Debug.WriteLine("SOFT: atom "+symbol+", radius "+radius+", distance "+CalculateSquareDistanceBetweenTwoAtoms(allAtoms[i], target));
                     atomicSoftness += partial;
                 }
             }
 
             atomicSoftness = 2 * atomicSoftness;
             atomicSoftness = atomicSoftness * 0.172;
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(atomicSoftness), NAMES);
+            return new Result(atomicSoftness);
         }
 
         private static double CalculateSquareDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
         {
-            double distance;
-            double tmp;
-            Vector3 firstPoint = atom1.Point3D.Value;
-            Vector3 secondPoint = atom2.Point3D.Value;
-            tmp = Vector3.Distance(firstPoint, secondPoint);
-            distance = tmp * tmp;
+            var firstPoint = atom1.Point3D.Value;
+            var secondPoint = atom2.Point3D.Value;
+            var tmp = Vector3.Distance(firstPoint, secondPoint);
+            var distance = tmp * tmp;
             return distance;
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the InductiveAtomicSoftnessDescriptor object.
-        /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
-
-        /// <summary>
-        ///  Gets the parameterType attribute of the InductiveAtomicSoftnessDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public object GetParameterType(string name) => null;
+        IDescriptorResult IAtomicDescriptor.Calculate(IAtom atom) => Calculate(atom);
     }
 }

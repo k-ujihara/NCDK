@@ -18,8 +18,8 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using NCDK.Graphs;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -35,88 +35,88 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// branching. Five descriptors are calculated, based on the implementation in the ADAPT
     /// software package. Note that the descriptor is based on identifying <b>all</b> pahs between pairs of
     /// atoms and so is NP-hard. This means that it can take some time for large, complex molecules.
-    /// The class returns a <see cref="ArrayResult{Double}"/> containing the five
-    /// descriptors in the order described below.
-    /// <list type="bullet">
-    /// <listheader>
-    /// <term>DMWP</term>
-    /// </listheader>
-    /// <item><term>WTPT1</term><description>molecular ID</description></item>
-    /// <item><term>WTPT2</term><description>molecular ID / number of atoms</description></item>
-    /// <item><term>WTPT3</term><description>sum of path lengths starting from heteroatoms</description></item>
-    /// <item><term>WTPT4</term><description>sum of path lengths starting from oxygens</description></item>
-    /// <item><term>WTPT5</term><description>sum of path lengths starting from nitrogens</description></item>
-    /// </list> 
-    /// This descriptor uses these parameters:
-    /// <list type="table">
-    /// <listheader>
-    ///     <term>Name</term>
-    ///     <term>Default</term>
-    ///     <term>Description</term>
-    /// </listheader>
-    /// <item>
-    /// <term></term>
-    /// <term></term>
-    /// <term>no parameters</term>
-    /// </item>
-    /// </list>
     /// </remarks>
     // @author Rajarshi Guha
     // @cdk.created 2006-01-15
     // @cdk.module qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:weightedPath
-    public class WeightedPathDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weightedPath")]
+    public class WeightedPathDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private static readonly string[] NAMES = { "WTPT-1", "WTPT-2", "WTPT-3", "WTPT-4", "WTPT-5" };
+        private readonly IAtomContainer container;
 
-        public WeightedPathDescriptor() { }
+        public WeightedPathDescriptor(IAtomContainer container)
+        {
+            container = AtomContainerManipulator.RemoveHydrogens(container);
 
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weightedPath",
-                typeof(WeightedPathDescriptor).FullName,
-                "The Chemistry Development Kit");
+            this.container = container;
+        }
 
-        /// <inheritdoc/>
-        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(IReadOnlyList<double> values)
+            {
+                this.Values = values;
+            }
 
-        /// <inheritdoc/>
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+            /// <summary>
+            /// molecular ID
+            /// </summary>
+            [DescriptorResultProperty("WTPT-1")]
+            public double WTPT1 => Values[0];
 
-        /// <inheritdoc/>
-        public override IReadOnlyList<string> ParameterNames => null;
+            /// <summary>
+            /// molecular ID / number of atoms
+            /// </summary>
+            [DescriptorResultProperty("WTPT-2")]
+            public double WTPT2 => Values[1];
 
-        /// <inheritdoc/>
-        public override object GetParameterType(string name) => null;
+            /// <summary>
+            /// sum of path lengths starting from heteroatoms
+            /// </summary>
+            [DescriptorResultProperty("WTPT-3")]
+            public double WTPT3 => Values[2];
+
+            /// <summary>
+            /// sum of path lengths starting from oxygens
+            /// </summary>
+            [DescriptorResultProperty("WTPT-4")]
+            public double WTPT4 => Values[3];
+
+            /// <summary>
+            /// sum of path lengths starting from nitrogens
+            /// </summary>
+            [DescriptorResultProperty("WTPT-5")]
+            public double WTPT5 => Values[4];
+
+            public new IReadOnlyList<double> Values { get; private set; }
+        }
 
         /// <summary>
         /// Calculates the weighted path descriptors.
         /// </summary>
-        /// <param name="container">Parameter is the atom container.</param>
-        /// <returns>A <see cref="ArrayResult{Double}"/> value representing the weighted path values</returns>
-        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
+        /// <returns>A value representing the weighted path values</returns>
+        public Result Calculate()
         {
-            IAtomContainer local = AtomContainerManipulator.RemoveHydrogens(container);
-            int natom = local.Atoms.Count;
-            ArrayResult<double> retval = new ArrayResult<double>();
+            int natom = container.Atoms.Count;
+            var retval = new List<double>(5);
 
             var pathList = new List<IList<IAtom>>();
 
             // unique paths
             for (int i = 0; i < natom - 1; i++)
             {
-                IAtom a = local.Atoms[i];
+                var a = container.Atoms[i];
                 for (int j = i + 1; j < natom; j++)
                 {
-                    IAtom b = local.Atoms[j];
-                    pathList.AddRange(PathTools.GetAllPaths(local, a, b));
+                    var b = container.Atoms[j];
+                    pathList.AddRange(PathTools.GetAllPaths(container, a, b));
                 }
             }
 
             // heteroatoms
-            double[] pathWts = GetPathWeights(pathList, local);
+            var pathWts = GetPathWeights(pathList, container);
             double mid = 0.0;
             foreach (var pathWt3 in pathWts)
                 mid += pathWt3;
@@ -129,17 +129,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int count = 0;
             for (int i = 0; i < natom; i++)
             {
-                IAtom a = local.Atoms[i];
-                if (string.Equals(a.Symbol, "C", StringComparison.OrdinalIgnoreCase)) continue;
+                var a = container.Atoms[i];
+                if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                    continue;
                 count++;
                 for (int j = 0; j < natom; j++)
                 {
-                    IAtom b = local.Atoms[j];
-                    if (a.Equals(b)) continue;
-                    pathList.AddRange(PathTools.GetAllPaths(local, a, b));
+                    var b = container.Atoms[j];
+                    if (a.Equals(b))
+                        continue;
+                    pathList.AddRange(PathTools.GetAllPaths(container, a, b));
                 }
             }
-            pathWts = GetPathWeights(pathList, local);
+            pathWts = GetPathWeights(pathList, container);
             mid = 0.0;
             foreach (var pathWt2 in pathWts)
                 mid += pathWt2;
@@ -151,17 +153,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             count = 0;
             for (int i = 0; i < natom; i++)
             {
-                IAtom a = local.Atoms[i];
-                if (!string.Equals(a.Symbol, "O", StringComparison.OrdinalIgnoreCase)) continue;
+                var a = container.Atoms[i];
+                if (!a.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                    continue;
                 count++;
                 for (int j = 0; j < natom; j++)
                 {
-                    IAtom b = local.Atoms[j];
-                    if (a.Equals(b)) continue;
-                    pathList.AddRange(PathTools.GetAllPaths(local, a, b));
+                    var b = container.Atoms[j];
+                    if (a.Equals(b))
+                        continue;
+                    pathList.AddRange(PathTools.GetAllPaths(container, a, b));
                 }
             }
-            pathWts = GetPathWeights(pathList, local);
+            pathWts = GetPathWeights(pathList, container);
             mid = 0.0;
             foreach (var pathWt1 in pathWts)
                 mid += pathWt1;
@@ -173,48 +177,47 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             count = 0;
             for (int i = 0; i < natom; i++)
             {
-                IAtom a = local.Atoms[i];
-                if (!string.Equals(a.Symbol, "N", StringComparison.OrdinalIgnoreCase)) continue;
+                var a = container.Atoms[i];
+                if (!a.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
+                    continue;
                 count++;
                 for (int j = 0; j < natom; j++)
                 {
-                    IAtom b = local.Atoms[j];
-                    if (a.Equals(b)) continue;
-                    pathList.AddRange(PathTools.GetAllPaths(local, a, b));
+                    var b = container.Atoms[j];
+                    if (a.Equals(b))
+                        continue;
+                    pathList.AddRange(PathTools.GetAllPaths(container, a, b));
                 }
             }
-            pathWts = GetPathWeights(pathList, local);
+            pathWts = GetPathWeights(pathList, container);
             mid = 0.0;
             foreach (var pathWt in pathWts)
                 mid += pathWt;
             mid += count;
             retval.Add(mid);
 
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval, DescriptorNames);
+            return new Result(retval);
         }
-
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
 
         private static double[] GetPathWeights(List<IList<IAtom>> pathList, IAtomContainer atomContainer)
         {
-            double[] pathWts = new double[pathList.Count];
+            var pathWts = new double[pathList.Count];
             for (int i = 0; i < pathList.Count; i++)
             {
                 var p = pathList[i];
                 pathWts[i] = 1.0;
                 for (int j = 0; j < p.Count - 1; j++)
                 {
-                    IAtom a = (IAtom)p[j];
-                    IAtom b = (IAtom)p[j + 1];
-                    int n1 = atomContainer.GetConnectedAtoms(a).Count();
-                    int n2 = atomContainer.GetConnectedAtoms(b).Count();
+                    var a = p[j];
+                    var b = p[j + 1];
+                    var n1 = atomContainer.GetConnectedAtoms(a).Count();
+                    var n2 = atomContainer.GetConnectedAtoms(b).Count();
                     pathWts[i] /= Math.Sqrt(n1 * n2);
                 }
             }
             return pathWts;
         }
 
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

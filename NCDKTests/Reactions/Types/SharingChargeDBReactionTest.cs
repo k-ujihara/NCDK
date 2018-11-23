@@ -38,7 +38,7 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class SharingChargeDBReactionTest : ReactionProcessTest
     {
-        private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private IChemObjectBuilder builder = CDK.Builder;
 
         public SharingChargeDBReactionTest()
         {
@@ -67,8 +67,10 @@ namespace NCDK.Reactions.Types
             /* initiate */
 
             var paramList = new List<IParameterReaction>();
-            var param = new SetReactionCenter();
-            param.IsSetParameter = false;
+            var param = new SetReactionCenter
+            {
+                IsSetParameter = false
+            };
             paramList.Add(param);
             type.ParameterList = paramList;
             var setOfReactions = type.Initiate(setOfReactants, null);
@@ -105,8 +107,10 @@ namespace NCDK.Reactions.Types
             molecule.Bonds[1].IsReactiveCenter = true;
 
             var paramList = new List<IParameterReaction>();
-            var param = new SetReactionCenter();
-            param.IsSetParameter = true;
+            var param = new SetReactionCenter
+            {
+                IsSetParameter = true
+            };
             paramList.Add(param);
             type.ParameterList = paramList;
 
@@ -140,8 +144,10 @@ namespace NCDK.Reactions.Types
             molecule.Bonds[1].IsReactiveCenter = true;
 
             var paramList = new List<IParameterReaction>();
-            var param = new SetReactionCenter();
-            param.IsSetParameter = true;
+            var param = new SetReactionCenter
+            {
+                IsSetParameter = true
+            };
             paramList.Add(param);
             type.ParameterList = paramList;
 
@@ -166,8 +172,10 @@ namespace NCDK.Reactions.Types
 
             /* automatic search of the center active */
             var paramList = new List<IParameterReaction>();
-            var param = new SetReactionCenter();
-            param.IsSetParameter = false;
+            var param = new SetReactionCenter
+            {
+                IsSetParameter = false
+            };
             paramList.Add(param);
             type.ParameterList = paramList;
             /* initiate */

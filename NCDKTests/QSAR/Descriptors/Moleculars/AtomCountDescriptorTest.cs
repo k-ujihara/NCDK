@@ -16,53 +16,39 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs a test for the AtomCountDescriptor.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class AtomCountDescriptorTest : MolecularDescriptorTest
+    public class AtomCountDescriptorTest : MolecularDescriptorTest<AtomCountDescriptor>
     {
-        public AtomCountDescriptorTest()
-        {
-            SetDescriptor(typeof(AtomCountDescriptor));
-        }
-
         [TestMethod()]
         public void TestCarbonCount()
         {
-            object[] parameters = new object[] { "C" };
-            Descriptor.Parameters = parameters;
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCO"); // ethanol
-            var value = Descriptor.Calculate(mol);
-            Assert.AreEqual(2, ((Result<int>)value.Value).Value);
-            Assert.AreEqual(1, value.Names.Count);
-            Assert.AreEqual("nC", value.Names[0]);
-            Assert.AreEqual(Descriptor.DescriptorNames[0], value.Names[0]);
+            var descriptor = CreateDescriptor(mol);
+            var result = descriptor.Calculate("C");
+            Assert.AreEqual(2, result.Value);
+            Assert.AreEqual(1, result.Keys.Count());
+            Assert.AreEqual("nC", result.Keys.First());
         }
 
         [TestMethod()]
         public void TestImplicitExplicitH()
         {
-            object[] parameters = new object[] { "*" };
-            Descriptor.Parameters = parameters;
             var sp = CDK.SmilesParser;
-            var mol = sp.ParseSmiles("C"); // ethanol
-            var value = Descriptor.Calculate(mol);
-            Assert.AreEqual(5, ((Result<int>)value.Value).Value);
+            var mol = sp.ParseSmiles("C");
+            var result = CreateDescriptor(mol).Calculate("*");
+            Assert.AreEqual(5, result.Value);
 
-            mol = sp.ParseSmiles("[C]"); // ethanol
-            value = Descriptor.Calculate(mol);
-            Assert.AreEqual(1, ((Result<int>)value.Value).Value);
+            mol = sp.ParseSmiles("[C]");
+            result = CreateDescriptor(mol).Calculate();
+            Assert.AreEqual(1, result.Value);
         }
     }
 }
-

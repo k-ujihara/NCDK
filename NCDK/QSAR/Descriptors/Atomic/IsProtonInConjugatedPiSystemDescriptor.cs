@@ -18,117 +18,73 @@
  */
 
 using NCDK.Aromaticities;
+using NCDK.Config;
 using NCDK.Graphs.Invariant;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
     /// This class evaluates if a proton is joined to a conjugated system.
     /// </summary>
-    /// <remarks>
-    /// This descriptor uses these parameters:
-    /// <list type="table">
-    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
-    /// <item><term>checkAromaticity</term><term>false</term><term><see langword="true"/> is the aromaticity has to be checked</term></item>
-    /// </list>
-    /// </remarks>
     // @author      mfe4
     // @cdk.created 2004-11-03
     // @cdk.module  qsaratomic
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:isProtonInConjugatedPiSystem
-    public partial class IsProtonInConjugatedPiSystemDescriptor : IAtomicDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInConjugatedPiSystem")]
+    public partial class IsProtonInConjugatedPiSystemDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
-        private static readonly string[] NAMES = { "protonInConjSystem" };
-        private bool checkAromaticity = false;
-        private IAtomContainer acold = null;
-        private IChemObjectSet<IAtomContainer> acSet = null;
+        IAtomContainer container;
+        IAtomContainer clonedAtomContainer;
+        private IChemObjectSet<IAtomContainer> acSet;
 
-        /// <summary>
-        /// Constructor for the IsProtonInConjugatedPiSystemDescriptor object
-        /// </summary>
-        public IsProtonInConjugatedPiSystemDescriptor() { }
-
-        /// <summary>
-        /// The specification attribute of the IsProtonInConjugatedPiSystemDescriptor object
-        /// </summary>
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInConjugatedPiSystem",
-                typeof(IsProtonInConjugatedPiSystemDescriptor).FullName, "The Chemistry Development Kit");
-
-        /// <summary>
-        /// The parameters attribute of the IsProtonInConjugatedPiSystemDescriptor object
-        /// <exception cref="CDKException"></exception>
-        /// </summary>
-        public IReadOnlyList<object> Parameters
+        public IsProtonInConjugatedPiSystemDescriptor(IAtomContainer container, bool checkAromaticity = false)
         {
-            set
-            {
-                if (value.Count > 1)
-                {
-                    throw new CDKException($"{typeof(IsProtonInConjugatedPiSystemDescriptor)} only expects one parameters");
-                }
-                if (!(value[0] is bool))
-                {
-                    throw new CDKException("The parameter must be of type bool");
-                }
-                checkAromaticity = (bool)value[0];
-            }
-            get
-            {
-                // return the parameters as used for the descriptor calculation
-                return new object[] { checkAromaticity };
-            }
-        }
-
-        public IReadOnlyList<string> DescriptorNames => NAMES;
-
-        /// <summary>
-        ///  The method is a proton descriptor that evaluates if a proton is joined to a conjugated system.
-        /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
-        /// <param name="atomContainer">AtomContainer</param>
-        /// <returns>true if the proton is bonded to a conjugated system</returns>
-        public DescriptorValue<Result<bool>> Calculate(IAtom atom, IAtomContainer atomContainer)
-        {
-            IAtomContainer clonedAtomContainer;
-            clonedAtomContainer = (IAtomContainer)atomContainer.Clone();
-            IAtom clonedAtom = clonedAtomContainer.Atoms[atomContainer.Atoms.IndexOf(atom)];
-
-            bool isProtonInPiSystem = false;
-            IAtomContainer mol = clonedAtom.Builder.NewAtomContainer(clonedAtomContainer);
+            clonedAtomContainer = (IAtomContainer)container.Clone();
             if (checkAromaticity)
             {
-                try
-                {
-                    AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-                    Aromaticity.CDKLegacy.Apply(mol);
-                }
-                catch (CDKException e)
-                {
-                    return new DescriptorValue<Result<bool>>(specification, ParameterNames, Parameters, new Result<bool>(false), NAMES, e);
-                }
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(clonedAtomContainer);
+                Aromaticity.CDKLegacy.Apply(clonedAtomContainer);
             }
-            if (string.Equals(atom.Symbol, "H", System.StringComparison.Ordinal))
+            this.acSet = ConjugatedPiSystemsDetector.Detect(clonedAtomContainer);
+
+            this.container = container;
+        }
+
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(bool value)
             {
-                if (acold != clonedAtomContainer)
-                {
-                    acold = clonedAtomContainer;
-                    acSet = ConjugatedPiSystemsDetector.Detect(mol);
-                }
+                this.ProtonInConjugatedSystem = value;
+            }
+
+            [DescriptorResultProperty("protonInConjSystem")]
+            public bool ProtonInConjugatedSystem { get; private set; }
+
+            public bool Value => ProtonInConjugatedSystem;
+        }
+
+        /// <summary>
+        /// The method is a proton descriptor that evaluates if a proton is joined to a conjugated system.
+        /// </summary>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="Result"/> is requested</param>
+        /// <returns><see langword="true"/> if the proton is bonded to a conjugated system</returns>
+        public Result Calculate(IAtom atom)
+        {
+            var clonedAtom = clonedAtomContainer.Atoms[container.Atoms.IndexOf(atom)];
+
+            bool isProtonInPiSystem = false;
+            if (atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+            {
                 var detected = acSet.GetEnumerator();
-                var neighboors = mol.GetConnectedAtoms(clonedAtom);
+                var neighboors = clonedAtomContainer.GetConnectedAtoms(clonedAtom);
                 foreach (var neighboor in neighboors)
                 {
                     while (detected.MoveNext())
                     {
-                        IAtomContainer detectedAC = detected.Current;
-                        if ((detectedAC != null) && (detectedAC.Contains(neighboor)))
+                        var detectedAC = detected.Current;
+                        if (detectedAC != null && detectedAC.Contains(neighboor))
                         {
                             isProtonInPiSystem = true;
                             break;
@@ -136,21 +92,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     }
                 }
             }
-            return new DescriptorValue<Result<bool>>(specification, ParameterNames, Parameters, new Result<bool>(
-                    isProtonInPiSystem), NAMES);
+            return new Result(isProtonInPiSystem);
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the IsProtonInConjugatedPiSystemDescriptor object
-        /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
-
-        /// <summary>
-        ///  Gets the parameterType attribute of the
-        ///  IsProtonInConjugatedPiSystemDescriptor object
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name) => true;
+        IDescriptorResult IAtomicDescriptor.Calculate(IAtom atom) => Calculate(atom);
     }
 }

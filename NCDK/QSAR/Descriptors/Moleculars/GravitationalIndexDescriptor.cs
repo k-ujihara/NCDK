@@ -19,112 +19,127 @@
 
 using NCDK.Config;
 using NCDK.Geometries;
-using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    /// IDescriptor characterizing the mass distribution of the molecule.
+    /// Descriptor characterizing the mass distribution of the molecule.
     /// </summary>
     /// <remarks>
     /// Described by Katritzky et al. <token>cdk-cite-KAT96</token>.
     /// For modelling purposes the value of the descriptor is calculated
     /// both with and without H atoms. Furthermore the square and cube roots
     /// of the descriptor are also generated as described by Wessel et al. <token>cdk-cite-WES98</token>.
-    /// <para>
-    /// The descriptor routine generates 9 descriptors:
-    /// <list type="bullet"> 
-    /// <item>GRAV-1 -  gravitational index of heavy atoms</item>
-    /// <item>GRAV-2 -  square root of gravitational index of heavy atoms</item>
-    /// <item>GRAV-3 -  cube root of gravitational index of heavy atoms</item>
-    /// <item>GRAVH-1 -  gravitational index - hydrogens included</item>
-    /// <item>GRAVH-2 -  square root of hydrogen-included gravitational index</item>
-    /// <item>GRAVH-3 -  cube root of hydrogen-included gravitational index</item>
-    /// <item>GRAV-4 -  grav1 for all pairs of atoms (not just bonded pairs)</item>
-    /// <item>GRAV-5 -  grav2 for all pairs of atoms (not just bonded pairs)</item>
-    /// <item>GRAV-6 -  grav3 for all pairs of atoms (not just bonded pairs)</item>
-    /// </list>
-    /// </para>
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    /// <item>
-    /// <term>Name</term>
-    /// <term>Default</term>
-    /// <term>Description</term>
-    /// </item>
-    /// <item>
-    /// <term></term>
-    /// <term></term>
-    /// <term>no parameters</term>
-    /// </item>
-    /// </list>
-    /// </para>
     /// </remarks>
     // @author Rajarshi Guha
     // @cdk.created 2004-11-23
     // @cdk.module qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:gravitationalIndex
     // @cdk.keyword gravitational index
     // @cdk.keyword descriptor
-    public class GravitationalIndexDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#gravitationalIndex")]
+    public class GravitationalIndexDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
+        private readonly IAtomContainer container;
+
+        public GravitationalIndexDescriptor(IAtomContainer container)
+        {
+            container = (IAtomContainer)container.Clone();
+            this.container = container;
+        }
+
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(IReadOnlyList<double> values)
+            {
+                this.Values = values;
+            }
+
+            /// <summary>
+            /// gravitational index of heavy atoms
+            /// </summary>
+            [DescriptorResultProperty("GRAV-1")]
+            public double GRAV1 => Values[0];
+
+            /// <summary>
+            /// square root of gravitational index of heavy atoms
+            /// </summary>
+            [DescriptorResultProperty("GRAV-2")]
+            public double GRAV2 => Values[1];
+
+            /// <summary>
+            /// cube root of gravitational index of heavy atoms
+            /// </summary>
+            [DescriptorResultProperty("GRAV-3")]
+            public double GRAV3 => Values[2];
+
+            /// <summary>
+            /// gravitational index - hydrogens included
+            /// </summary>
+            [DescriptorResultProperty("GRAVH-1")]
+            public double GRAVH1 => Values[3];
+
+            /// <summary>
+            /// square root of hydrogen-included gravitational index
+            /// </summary>
+            [DescriptorResultProperty("GRAVH-2")]
+            public double GRAVH2 => Values[4];
+
+            /// <summary>
+            /// cube root of hydrogen-included gravitational index
+            /// </summary>
+            [DescriptorResultProperty("GRAVH-3")]
+            public double GRAVH3 => Values[5];
+
+            /// <summary>
+            /// grav1 for all pairs of atoms (not just bonded pairs)
+            /// </summary>
+            [DescriptorResultProperty("GRAV-4")]
+            public double GRAV4 => Values[6];
+
+            /// <summary>
+            /// grav2 for all pairs of atoms (not just bonded pairs)
+            /// </summary>
+            [DescriptorResultProperty("GRAV-5")]
+            public double GRAV5 => Values[7];
+
+            /// <summary>
+            /// grav3 for all pairs of atoms (not just bonded pairs)
+            /// </summary>
+            [DescriptorResultProperty("GRAV-6")]
+            public double GRAV6 => Values[8];
+
+
+            public new IReadOnlyList<double> Values { get; private set; }
+        }
+
         private struct Pair
         {
             public int X;
             public int Y;
         }
 
-        private static readonly string[] NAMES = { "GRAV-1", "GRAV-2", "GRAV-3", "GRAVH-1", "GRAVH-2", "GRAVH-3", "GRAV-4", "GRAV-5", "GRAV-6" };
-
-        public GravitationalIndexDescriptor() { }
-
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#gravitationalIndex",
-                typeof(GravitationalIndexDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
-        public override IReadOnlyList<string> ParameterNames => null;
-        public override object GetParameterType(string name) => null;
-
-        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
-        {
-            var ndesc = DescriptorNames.Count;
-            var results = new ArrayResult<double>(ndesc);
-            for (int i = 0; i < ndesc; i++)
-                results.Add(double.NaN);
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, results, DescriptorNames, e);
-        }
-
         /// <summary>
         /// Calculates the 9 gravitational indices.
         /// </summary>
-        /// <param name="container">Parameter is the atom container.</param>
         /// <returns>An ArrayList containing 9 elements in the order described above</returns>
-        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
+        public Result Calculate()
         {
             if (!GeometryUtil.Has3DCoordinates(container))
-                return GetDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
+                throw new ThreeDRequiredException("Molecule must have 3D coordinates");
 
             var factory = CDK.IsotopeFactory;
-            double mass1;
-            double mass2;
             double sum = 0;
             foreach (var bond in container.Bonds)
             {
                 if (bond.Atoms.Count != 2)
-                {
-                    return GetDummyDescriptorValue(new CDKException("GravitationalIndex: Only handles 2 center bonds"));
-                }
+                    throw new CDKException("GravitationalIndex: Only handles 2 center bonds");
 
-                mass1 = factory.GetMajorIsotope(bond.Atoms[0].Symbol).MassNumber.Value;
-                mass2 = factory.GetMajorIsotope(bond.Atoms[1].Symbol).MassNumber.Value;
+                var mass1 = factory.GetMajorIsotope(bond.Atoms[0].Symbol).MassNumber.Value;
+                var mass2 = factory.GetMajorIsotope(bond.Atoms[1].Symbol).MassNumber.Value;
 
                 var p1 = bond.Atoms[0].Point3D.Value;
                 var p2 = bond.Atoms[1].Point3D.Value;
@@ -145,15 +160,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             foreach (var b in container.Bonds)
             {
                 if (b.Atoms.Count != 2)
-                {
-                    return GetDummyDescriptorValue(new CDKException("GravitationalIndex: Only handles 2 center bonds"));
-                }
+                    throw new CDKException("GravitationalIndex: Only handles 2 center bonds");
 
                 if (b.Atoms[0].AtomicNumber.Equals(NaturalElements.H.AtomicNumber) || b.Atoms[1].AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
                     continue;
 
-                mass1 = factory.GetMajorIsotope(b.Atoms[0].Symbol).MassNumber.Value;
-                mass2 = factory.GetMajorIsotope(b.Atoms[1].Symbol).MassNumber.Value;
+                var mass1 = factory.GetMajorIsotope(b.Atoms[0].Symbol).MassNumber.Value;
+                var mass2 = factory.GetMajorIsotope(b.Atoms[1].Symbol).MassNumber.Value;
 
                 var point0 = b.Atoms[0].Point3D.Value;
                 var point1 = b.Atoms[1].Point3D.Value;
@@ -206,8 +219,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 var atomNumber1 = aP.X;
                 var atomNumber2 = aP.Y;
 
-                mass1 = factory.GetMajorIsotope(container.Atoms[atomNumber1].Symbol).MassNumber.Value;
-                mass2 = factory.GetMajorIsotope(container.Atoms[atomNumber2].Symbol).MassNumber.Value;
+                var mass1 = factory.GetMajorIsotope(container.Atoms[atomNumber1].Symbol).MassNumber.Value;
+                var mass2 = factory.GetMajorIsotope(container.Atoms[atomNumber2].Symbol).MassNumber.Value;
 
                 var x1 = container.Atoms[atomNumber1].Point3D.Value.X;
                 var y1 = container.Atoms[atomNumber1].Point3D.Value.Y;
@@ -220,27 +233,22 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 allheavysum += (mass1 * mass2) / dist;
             }
 
-            var retval = new ArrayResult<double>(9)
-            {
-                heavysum,
-                Math.Sqrt(heavysum),
-                Math.Pow(heavysum, 1.0 / 3.0),
+            return new Result(new double[] 
+                {
+                    heavysum,
+                    Math.Sqrt(heavysum),
+                    Math.Pow(heavysum, 1.0 / 3.0),
 
-                sum,
-                Math.Sqrt(sum),
-                Math.Pow(sum, 1.0 / 3.0),
+                    sum,
+                    Math.Sqrt(sum),
+                    Math.Pow(sum, 1.0 / 3.0),
 
-                allheavysum,
-                Math.Sqrt(allheavysum),
-                Math.Pow(allheavysum, 1.0 / 3.0)
-            };
-
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, retval, DescriptorNames);
+                    allheavysum,
+                    Math.Sqrt(allheavysum),
+                    Math.Pow(allheavysum, 1.0 / 3.0)
+                });
         }
-
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(9);
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+       
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

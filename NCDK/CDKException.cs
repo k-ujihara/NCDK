@@ -29,20 +29,15 @@ namespace NCDK
     /// Exception that is thrown by CDK classes when some problem has occurred.
     /// </summary>
     // @cdk.module core
-    // @cdk.githash
-    public class CDKException
-        : Exception
+    public class CDKException : Exception
     {
-        public CDKException()
-        {
-        }
+        public CDKException() { }
 
         /// <summary>
         /// Constructs a new CDKException with the given message.
         /// </summary>
         /// <param name="message">for the constructed exception</param>
-        public CDKException(string message)
-            : base(message)
+        public CDKException(string message) : base(message)
         {
         }
 

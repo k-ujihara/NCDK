@@ -18,9 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.AtomTypes;
 using NCDK.Numerics;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;

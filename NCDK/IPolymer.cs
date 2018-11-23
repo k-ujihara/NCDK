@@ -29,13 +29,11 @@ namespace NCDK
     /// Subclass of Molecule to store Polymer specific attributes that a Polymer has.
     /// </summary>
     // @cdk.module  interfaces
-    // @cdk.githash
     // @author      Edgar Luttmann <edgar@uni-paderborn.de>
     // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
     // @cdk.created 2001-08-06
     // @cdk.keyword polymer
-    public interface IPolymer
-        : IAtomContainer
+    public interface IPolymer : IAtomContainer
     {
         /// <summary>
         /// Adds the atom oAtom to a specified Monomer.
@@ -58,7 +56,7 @@ namespace NCDK
         IMonomer GetMonomer(string name);
 
         /// <summary>
-        /// Returns <see cref="IEnumerable{T}"/> of the names of all <see cref="IMonomer"/>s in this polymer.
+        /// Returns enumeration of the names of all <see cref="IMonomer"/>s in this polymer.
         /// </summary>
         /// <returns></returns>
         IEnumerable<string> GetMonomerNames();

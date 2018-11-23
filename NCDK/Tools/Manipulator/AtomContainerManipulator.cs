@@ -271,7 +271,7 @@ namespace NCDK.Tools.Manipulator
                     if (atom.ImplicitHydrogenCount == null)
                         throw new ArgumentException("an atom had with unknown (null) implicit hydrogens");
 
-                    mass += isotopes.GetNaturalMass(NaturalElement.Elements[atom.AtomicNumber.Value]);
+                    mass += isotopes.GetNaturalMass(NaturalElement.OfNumber(atom.AtomicNumber.Value));
                     mass += hydgrogenMass * atom.ImplicitHydrogenCount.Value;
                 }
                 return mass;

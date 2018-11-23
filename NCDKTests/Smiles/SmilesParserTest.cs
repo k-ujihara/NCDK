@@ -2733,7 +2733,7 @@ namespace NCDK.Smiles
 
         static IAtomContainer LoadExact(string smi)
         {
-            SmilesParser parser = new SmilesParser(Silent.ChemObjectBuilder.Instance, false);
+            SmilesParser parser = new SmilesParser(CDK.Builder, false);
             return parser.ParseSmiles(smi);
         }
 

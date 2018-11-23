@@ -16,68 +16,56 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsaratomic
     [TestClass()]
-    public class StabilizationPlusChargeDescriptorTest : AtomicDescriptorTest
+    public class StabilizationPlusChargeDescriptorTest : AtomicDescriptorTest<StabilizationPlusChargeDescriptor>
     {
-        private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-        
-        public StabilizationPlusChargeDescriptorTest()
-        {
-            descriptor = new StabilizationPlusChargeDescriptor();
-            SetDescriptor(typeof(StabilizationPlusChargeDescriptor));
-        }
-
         [TestMethod()]
         [TestCategory("SlowTest")]
         public void TestStabilizationPlusChargeDescriptor()
         {
-            IAtomContainer mol = builder.NewAtomContainer();
-            mol.Atoms.Add(builder.NewAtom("C"));
+            var mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.Atoms[0].FormalCharge = -1;
-            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.Atoms[1].FormalCharge = 1;
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
-            mol.Atoms.Add(builder.NewAtom("F"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("F"));
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
 
-            Result<double> result = ((Result<double>)descriptor.Calculate(mol.Atoms[1], mol).Value);
-
-            Assert.AreNotSame(0.0, result.Value);
+            var descriptor = CreateDescriptor(mol);
+            var result = descriptor.Calculate(mol.Atoms[1]);
+            Assert.AreNotEqual(0.0, result.Value);
         }
 
         [TestMethod()]
         [TestCategory("SlowTest")]
         public void TestNotCharged()
         {
-            IAtomContainer mol = builder.NewAtomContainer();
-            mol.Atoms.Add(builder.NewAtom("C"));
+            var mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.Atoms[0].FormalCharge = -1;
-            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
-            mol.Atoms.Add(builder.NewAtom("F"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("F"));
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
 
-            Result<double> result = ((Result<double>)descriptor.Calculate(mol.Atoms[0], mol).Value);
-
+            var descriptor = CreateDescriptor(mol);
+            var result = descriptor.Calculate(mol.Atoms[0]);
             Assert.AreEqual(0.0, result.Value, 0.00001);
         }
 
@@ -85,103 +73,103 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestCategory("SlowTest")]
         public void TestStabilizationPlusChargeDescriptor2()
         {
-            IAtomContainer mol = builder.NewAtomContainer();
-            mol.Atoms.Add(builder.NewAtom("C"));
+            var mol = CDK.Builder.NewAtomContainer();
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.Atoms[0].FormalCharge = -1;
-            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.Atoms[1].FormalCharge = 1;
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
-            mol.Atoms.Add(builder.NewAtom("F"));
+            mol.Atoms.Add(CDK.Builder.NewAtom("F"));
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
             CDK.LonePairElectronChecker.Saturate(mol);
 
-            Result<double> result = ((Result<double>)descriptor.Calculate(mol.Atoms[1], mol).Value);
-
-            Assert.AreNotSame(0.0, result.Value);
+            var descriptor = CreateDescriptor(mol);
+            var result = descriptor.Calculate(mol.Atoms[1]);
+            Assert.AreNotEqual(0.0, result.Value);
         }
 
         [TestMethod()]
         [TestCategory("SlowTest")]
         public void TestStabilizationComparative()
         {
-            IAtomContainer mol1 = builder.NewAtomContainer();
-            mol1.Atoms.Add(builder.NewAtom("C"));
-            mol1.Atoms.Add(builder.NewAtom("C"));
+            var mol1 = CDK.Builder.NewAtomContainer();
+            mol1.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol1.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol1.Atoms[1].FormalCharge = 1;
             mol1.AddBond(mol1.Atoms[0], mol1.Atoms[1], BondOrder.Single);
-            mol1.Atoms.Add(builder.NewAtom("C"));
+            mol1.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol1.AddBond(mol1.Atoms[1], mol1.Atoms[2], BondOrder.Single);
-            mol1.Atoms.Add(builder.NewAtom("O"));
+            mol1.Atoms.Add(CDK.Builder.NewAtom("O"));
             mol1.AddBond(mol1.Atoms[1], mol1.Atoms[3], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             AddExplicitHydrogens(mol1);
             CDK.LonePairElectronChecker.Saturate(mol1);
 
-            Result<double> result1 = ((Result<double>)descriptor.Calculate(mol1.Atoms[1], mol1).Value);
+            var result1 = CreateDescriptor(mol1).Calculate(mol1.Atoms[1]).Value;
 
-            IAtomContainer mol2 = builder.NewAtomContainer();
-            mol2.Atoms.Add(builder.NewAtom("C"));
-            mol2.Atoms.Add(builder.NewAtom("C"));
+            var mol2 = CDK.Builder.NewAtomContainer();
+            mol2.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol2.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol2.Atoms[1].FormalCharge = 1;
             mol2.AddBond(mol2.Atoms[0], mol2.Atoms[1], BondOrder.Single);
-            mol2.Atoms.Add(builder.NewAtom("O"));
+            mol2.Atoms.Add(CDK.Builder.NewAtom("O"));
             mol2.AddBond(mol2.Atoms[1], mol2.Atoms[2], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);
             AddExplicitHydrogens(mol2);
             CDK.LonePairElectronChecker.Saturate(mol2);
 
-            Result<double> result2 = ((Result<double>)descriptor.Calculate(mol2.Atoms[1], mol2).Value);
+            var result2 = CreateDescriptor(mol2).Calculate(mol2.Atoms[1]).Value;
 
-            IAtomContainer mol3 = builder.NewAtomContainer();
-            mol3.Atoms.Add(builder.NewAtom("C"));
-            mol3.Atoms.Add(builder.NewAtom("C"));
+            var mol3 = CDK.Builder.NewAtomContainer();
+            mol3.Atoms.Add(CDK.Builder.NewAtom("C"));
+            mol3.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol3.Atoms[1].FormalCharge = 1;
             mol3.AddBond(mol3.Atoms[0], mol3.Atoms[1], BondOrder.Single);
-            mol3.Atoms.Add(builder.NewAtom("C"));
+            mol3.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol3.AddBond(mol3.Atoms[1], mol3.Atoms[2], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol3);
             AddExplicitHydrogens(mol3);
             CDK.LonePairElectronChecker.Saturate(mol3);
 
-            Result<double> result3 = ((Result<double>)descriptor.Calculate(mol3.Atoms[1], mol3).Value);
+            var result3 = CreateDescriptor(mol3).Calculate(mol3.Atoms[1]).Value;
 
-            Assert.IsTrue(result3.Value < result2.Value);
-            Assert.IsTrue(result2.Value < result1.Value);
+            Assert.IsTrue(result3 < result2);
+            Assert.IsTrue(result2 < result1);
         }
 
         /// <summary>
-        /// A unit test for JUnit with C=CCCl # C=CC[Cl+*]
+        /// C=CCCl # C=CC[Cl+*]
         /// </summary>
         // @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
         [TestMethod()]
         [TestCategory("SlowTest")]
         public void TestCompareIonized()
         {
-            IAtomContainer molA = builder.NewAtomContainer();
-            molA.Atoms.Add(builder.NewAtom("C"));
-            molA.Atoms.Add(builder.NewAtom("C"));
+            var molA = CDK.Builder.NewAtomContainer();
+            molA.Atoms.Add(CDK.Builder.NewAtom("C"));
+            molA.Atoms.Add(CDK.Builder.NewAtom("C"));
             molA.AddBond(molA.Atoms[0], molA.Atoms[1], BondOrder.Single);
-            molA.Atoms.Add(builder.NewAtom("C"));
+            molA.Atoms.Add(CDK.Builder.NewAtom("C"));
             molA.AddBond(molA.Atoms[1], molA.Atoms[2], BondOrder.Single);
-            molA.Atoms.Add(builder.NewAtom("Cl"));
+            molA.Atoms.Add(CDK.Builder.NewAtom("Cl"));
             molA.AddBond(molA.Atoms[2], molA.Atoms[3], BondOrder.Single);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molA);
             AddExplicitHydrogens(molA);
             CDK.LonePairElectronChecker.Saturate(molA);
 
-            double resultA = ((Result<double>)descriptor.Calculate(molA.Atoms[3], molA).Value).Value;
+            var resultA = CreateDescriptor(molA).Calculate(molA.Atoms[3]).Value;
 
-            IAtomContainer molB = builder.NewAtomContainer();
-            molB.Atoms.Add(builder.NewAtom("C"));
-            molB.Atoms.Add(builder.NewAtom("C"));
+            var molB = CDK.Builder.NewAtomContainer();
+            molB.Atoms.Add(CDK.Builder.NewAtom("C"));
+            molB.Atoms.Add(CDK.Builder.NewAtom("C"));
             molB.AddBond(molB.Atoms[0], molB.Atoms[1], BondOrder.Single);
-            molB.Atoms.Add(builder.NewAtom("C"));
+            molB.Atoms.Add(CDK.Builder.NewAtom("C"));
             molB.AddBond(molB.Atoms[1], molB.Atoms[2], BondOrder.Single);
-            molB.Atoms.Add(builder.NewAtom("Cl"));
+            molB.Atoms.Add(CDK.Builder.NewAtom("Cl"));
             molB.Atoms[3].FormalCharge = 1;
             molB.AddSingleElectronTo(molB.Atoms[3]);
             molB.AddLonePairTo(molB.Atoms[3]);
@@ -196,9 +184,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             Assert.AreEqual(1, molB.SingleElectrons.Count, 0.00001);
             Assert.AreEqual(2, molB.LonePairs.Count, 0.00001);
 
-            double resultB = ((Result<double>)descriptor.Calculate(molB.Atoms[3], molB).Value).Value;
+            var resultB = CreateDescriptor(molB).Calculate(molB.Atoms[3]).Value;
 
-            Assert.AreNotSame(resultA, resultB);
+            Assert.AreNotEqual(resultA, resultB);
         }
     }
 }

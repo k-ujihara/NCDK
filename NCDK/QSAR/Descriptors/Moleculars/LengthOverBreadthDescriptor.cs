@@ -24,7 +24,6 @@
 using MathNet.Numerics.LinearAlgebra;
 using NCDK.Common.Collections;
 using NCDK.Geometries;
-using NCDK.QSAR.Results;
 using NCDK.Tools;
 using System;
 using System.Collections.Generic;
@@ -38,60 +37,54 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// The current implementation reproduces the results obtained from the LOVERB descriptor
     /// routine in ADAPT. As a result ti does not perform any orientation and only considers the
     /// X &amp; Y extents for a series of rotations about the Z axis (in 10 degree increments).
-    /// <para>
-    /// The class gives two descriptors
-    /// <list type="bullet"> 
-    /// <item>LOBMAX - The maximum L/B ratio</item>
-    /// <item>LOBMIN - The L/B ratio for the rotation that results in the minimum area
-    /// (defined by the product of the X &amp; Y extents for that orientation)</item>
-    /// </list>
-    /// </para>
-    /// <B>Note:</B> The descriptor assumes that the atoms have been configured.
+    /// <note type="note">The descriptor assumes that the atoms have been configured.</note>
     /// </remarks>
     // @author      Rajarshi Guha
     // @cdk.created 2006-09-26
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:lengthOverBreadth
-    public class LengthOverBreadthDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lengthOverBreadth")]
+    public class LengthOverBreadthDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private static readonly string[] NAMES = { "LOBMAX", "LOBMIN" };
+        private readonly IAtomContainer container;
 
-        public LengthOverBreadthDescriptor() { }
-
-        /// <summary>
-        /// The specification attribute of the PetitjeanNumberDescriptor object
-        /// </summary>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lengthOverBreadth",
-                typeof(LengthOverBreadthDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
-
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
-
-        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
+        public LengthOverBreadthDescriptor(IAtomContainer container)
         {
-            ArrayResult<double> result = new ArrayResult<double>(2)
+            this.container = container;
+        }
+
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(IReadOnlyList<double> values)
             {
-                double.NaN,
-                double.NaN,
-            };
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, DescriptorNames, e);
+                this.Values = values;
+            }
+
+            /// <summary>
+            /// The maximum L/B ratio
+            /// </summary>
+            [DescriptorResultProperty("LOBMAX")]
+            public double MaxLOB => Values[0];
+
+            /// <summary>
+            /// The L/B ratio for the rotation that results in the minimum area
+            /// (defined by the product of the X &amp; Y extents for that orientation)
+            /// </summary>
+            [DescriptorResultProperty("LOBMIN")]
+            public double MinLOB => Values[1];
+
+            public new IReadOnlyList<double> Values { get; private set; }
         }
 
         /// <summary>
         /// Evaluate the descriptor for the molecule.
         /// </summary>
-        /// <param name="atomContainer">AtomContainer</param>
-        /// <returns>A <see cref="ArrayResult{Double}"/> containing LOBMAX and LOBMIN in that order</returns>
-        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer atomContainer)
+        /// <returns>LOBMAX and LOBMIN in that order</returns>
+        public Result Calculate()
         {
-            if (!GeometryUtil.Has3DCoordinates(atomContainer))
-                return GetDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
+            if (!GeometryUtil.Has3DCoordinates(container))
+                throw new ThreeDRequiredException("Molecule must have 3D coordinates");
 
             double angle = 10.0;
             double maxLOB = 0;
@@ -101,19 +94,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double lob, bol, area;
             double[] xyzRanges;
 
-            var coords = Arrays.CreateJagged<double>(atomContainer.Atoms.Count, 3);
-            for (int i = 0; i < atomContainer.Atoms.Count; i++)
+            var coords = Arrays.CreateJagged<double>(container.Atoms.Count, 3);
+            for (int i = 0; i < container.Atoms.Count; i++)
             {
-                var p = atomContainer.Atoms[i].Point3D.Value;
+                var p = container.Atoms[i].Point3D.Value;
                 coords[i][0] = p.X;
                 coords[i][1] = p.Y;
                 coords[i][2] = p.Z;
             }
 
             // get the com
-            var acom = GeometryUtil.Get3DCentreOfMass(atomContainer);
+            var acom = GeometryUtil.Get3DCentreOfMass(container);
             if (acom == null)
-                return GetDummyDescriptorValue(new CDKException("Error in center of mass calculation, has exact mass been set on all atoms?"));
+                throw new CDKException("Error in center of mass calculation, has exact mass been set on all atoms?");
             var com = acom.Value;
 
             // translate everything to COM
@@ -128,14 +121,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             for (int i = 0; i < nangle; i++)
             {
                 RotateZ(coords, Math.PI / 180.0 * angle);
-                try
-                {
-                    xyzRanges = Extents(atomContainer, coords, true);
-                }
-                catch (CDKException e)
-                {
-                    return GetDummyDescriptorValue(e);
-                }
+                xyzRanges = Extents(container, coords, true);
                 lob = xyzRanges[0] / xyzRanges[1];
                 bol = 1.0 / lob;
                 if (lob < bol)
@@ -153,17 +139,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            ArrayResult<double> result = new ArrayResult<double>(2)
-            {
-                maxLOB,
-                mmLOB
-            };
-
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, result, DescriptorNames);
+            return new Result(new[] { maxLOB, mmLOB });
         }
-
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(2);
 
         private static void RotateZ(double[][] coords, double theta)
         {
@@ -195,7 +172,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        private static double[] Extents(IAtomContainer atomContainer, double[][] coords, bool withRadii)
+        private static double[] Extents(IAtomContainer container, double[][] coords, bool withRadii)
         {
             double xmax = -1e30;
             double ymax = -1e30;
@@ -205,14 +182,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double ymin = 1e30;
             double zmin = 1e30;
 
-            int natom = atomContainer.Atoms.Count;
+            int natom = container.Atoms.Count;
             for (int i = 0; i < natom; i++)
             {
                 var coord = new double[coords[0].Length];
                 Array.Copy(coords[i], 0, coord, 0, coords[0].Length);
                 if (withRadii)
                 {
-                    var atom = atomContainer.Atoms[i];
+                    var atom = container.Atoms[i];
                     var radius = PeriodicTable.GetCovalentRadius(atom.Symbol).Value;
                     xmax = Math.Max(xmax, coord[0] + radius);
                     ymax = Math.Max(ymax, coord[1] + radius);
@@ -240,9 +217,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ranges;
         }
 
-        public override IReadOnlyList<string> ParameterNames => null;
-        public override object GetParameterType(string name) => null;
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

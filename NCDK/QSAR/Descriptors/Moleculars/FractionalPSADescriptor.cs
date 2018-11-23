@@ -26,11 +26,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
-using System;
-using System.Collections.Generic;
-using System.IO;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -43,91 +39,69 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// Other related descriptors may also be useful to add, e.g. ratio of polar to hydrophobic surface area.
     /// </remarks>
     // @cdk.module qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:fractionalPSA
     // @cdk.keyword volume
     // @cdk.keyword descriptor
-    public class FractionalPSADescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fractionalPSA")]
+    public class FractionalPSADescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        public FractionalPSADescriptor() { }
+        private readonly IAtomContainer container;
 
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fractionalPSA", 
-                typeof(FractionalPSADescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        public override IReadOnlyList<object> Parameters
+        public FractionalPSADescriptor(IAtomContainer container)
         {
-            set
+            container = (IAtomContainer)container.Clone();
+
+            // type & assign implicit hydrogens
+            var matcher = CDK.AtomTypeMatcher;
+            foreach (var atom in container.Atoms)
             {
-                if (value.Count != 0)
-                {
-                    throw new CDKException("The FractionalPSADescriptor expects zero parameters");
-                }
+                var type = matcher.FindMatchingAtomType(container, atom);
+                AtomTypeManipulator.Configure(atom, type);
             }
-            get
-            {
-                return Array.Empty<object>();
-            }
+            var adder = CDK.HydrogenAdder;
+            adder.AddImplicitHydrogens(container);
+
+            this.container = container;
         }
 
-        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "tpsaEfficiency" };
-
-        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            public Result(double value)
+            {
+                this.TPSAEfficiency = value;
+            }
+
+            [DescriptorResultProperty("tpsaEfficiency")]
+            public double TPSAEfficiency { get; private set; }
+
+            public double Value => TPSAEfficiency;
         }
 
         /// <summary>
         /// Calculates the topological polar surface area and expresses it as a ratio to molecule size.
         /// </summary>
-        /// <param name="mol">The <see cref="IAtomContainer"/> whose volume is to be calculated</param>
         /// <returns>Descriptor(s) retaining to polar surface area</returns>
-        public DescriptorValue<Result<double>> Calculate(IAtomContainer mol)
+        public Result Calculate()
         {
-            mol = (IAtomContainer)mol.Clone();
-            double polar = 0, weight = 0;
-            try
-            {
-                // type & assign implicit hydrogens
-                var builder = mol.Builder;
-                var matcher = CDK.AtomTypeMatcher;
-                foreach (var atom in mol.Atoms)
-                {
-                    var type = matcher.FindMatchingAtomType(mol, atom);
-                    AtomTypeManipulator.Configure(atom, type);
-                }
-                var adder = CDK.HydrogenAdder;
-                adder.AddImplicitHydrogens(mol);
+            double polar = 0;
+            double weight = 0;
 
-                // polar surface area: chain it off the TPSADescriptor
-                var tpsa = new TPSADescriptor();
-                var value = tpsa.Calculate(mol);
-                polar = value.Value.Value;
+            // polar surface area: chain it off the TPSADescriptor
+            var tpsa = new TPSADescriptor(container);
+            var value = tpsa.Calculate();
+            polar = value.Value;
 
-                //  molecular weight
-                foreach (var atom in mol.Atoms)
-                {
-                    weight += CDK.IsotopeFactory.GetMajorIsotope(atom.Symbol).ExactMass.Value;
-                    weight += (atom.ImplicitHydrogenCount ?? 0) * 1.00782504;
-                }
-            }
-            catch (Exception exception)
+            //  molecular weight
+            foreach (var atom in container.Atoms)
             {
-                if (!(exception is CDKException || exception is IOException))
-                    throw;
-                return GetDummyDescriptorValue(exception);
+                weight += CDK.IsotopeFactory.GetMajorIsotope(atom.Symbol).ExactMass.Value;
+                weight += (atom.ImplicitHydrogenCount ?? 0) * 1.00782504;
             }
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(
-                    weight == 0 ? 0 : polar / weight), DescriptorNames);
+
+            return new Result(weight == 0 ? 0 : polar / weight);
         }
 
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>();
-        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
-        public override object GetParameterType(string name) => null;
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

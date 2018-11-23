@@ -17,40 +17,31 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
-using NCDK.IO;
-using NCDK.QSAR.Results;
-using NCDK.Tools.Manipulator;
 
-using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.IO;
+using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
-    public class CPSADescriptorTest : MolecularDescriptorTest
+    public class CPSADescriptorTest : MolecularDescriptorTest<CPSADescriptor>
     {
-        public CPSADescriptorTest()
-        {
-            SetDescriptor(typeof(CPSADescriptor));
-        }
+        IChemObjectBuilder builder = CDK.Builder;
 
         [TestMethod()]
         public void TestCPSA()
         {
             string filename = "NCDK.Data.HIN.benzene.hin";
-            var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new HINReader(ins);
-            ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            IChemFile content;
+            using (var reader = new HINReader(ResourceLoader.GetAsStream(filename)))
+            {
+                content = reader.Read(builder.NewChemFile());
+            }
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
-            IAtomContainer ac = (IAtomContainer)cList[0];
+            var ac = cList[0];
 
-            ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(ac).Value;
-            // Console.Out.WriteLine("Num ret = "+retval.Count); for (int i = 0; i <
-            // retval.Count; i++) { Console.Out.WriteLine( retval[i] ); }
+            var retval = CreateDescriptor(ac).Calculate().Values;
 
             Assert.AreEqual(0, retval[28], 0.0001);
             Assert.AreEqual(1, retval[27], 0.0001);
@@ -62,14 +53,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestChargedMolecule()
         {
             string filename = "NCDK.Data.MDL.cpsa-charged.sdf";
-            var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-            ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            IChemFile content;
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
+            {
+                content = reader.Read(builder.NewChemFile());
+            }
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
-            IAtomContainer ac = (IAtomContainer)cList[0];
+            var ac = cList[0];
 
-            ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(ac).Value;
-            int ndesc = retval.Length;
+            var retval = CreateDescriptor(ac).Calculate().Values;
+            int ndesc = retval.Count;
             for (int i = 0; i < ndesc; i++)
                 Assert.IsTrue(retval[i] != double.NaN);
         }
@@ -78,14 +71,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestUnChargedMolecule()
         {
             string filename = "NCDK.Data.MDL.cpsa-uncharged.sdf";
-            var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-            ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            IChemFile content;
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
+            {
+                content = reader.Read(builder.NewChemFile());
+            }
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
-            IAtomContainer ac = (IAtomContainer)cList[0];
+            var ac = cList[0];
 
-            ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(ac).Value;
-            int ndesc = retval.Length;
+            var retval = CreateDescriptor(ac).Calculate().Values;
+            int ndesc = retval.Count;
             for (int i = 0; i < ndesc; i++)
                 Assert.IsTrue(retval[i] != double.NaN);
         }

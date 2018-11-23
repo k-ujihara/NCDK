@@ -29,7 +29,6 @@ namespace NCDK.QSAR
     // @author      mfe4
     // @cdk.created 2004-11-13
     // @cdk.module  standard
-    // @cdk.githash
     // @cdk.dictref valence, atom
     public static class AtomValenceTool
     {

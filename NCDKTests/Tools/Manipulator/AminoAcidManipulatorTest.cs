@@ -26,7 +26,7 @@ namespace NCDK.Tools.Manipulator
     [TestClass()]
     public class AminoAcidManipulatorTest : CDKTestCase
     {
-        private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
 
         public AminoAcidManipulatorTest()
             : base()

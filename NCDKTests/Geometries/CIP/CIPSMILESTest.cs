@@ -34,7 +34,7 @@ namespace NCDK.Geometries.CIP
     public class CIPSMILESTest : CDKTestCase
     {
         static readonly SmilesParser smiles = CDK.SmilesParser;
-        static readonly IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+        static readonly IChemObjectBuilder bldr = CDK.Builder;
         static readonly SmilesParser smipar = new SmilesParser(bldr);
 
         [TestMethod()]

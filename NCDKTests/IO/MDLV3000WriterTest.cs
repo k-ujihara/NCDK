@@ -432,7 +432,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void WriteDimensionField()
         {
-            var builder = Silent.ChemObjectBuilder.Instance;
+            var builder = CDK.Builder;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom atom = builder.NewAtom();
             atom.Symbol = "C";
@@ -450,7 +450,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void WriteDimensionField3D()
         {
-            var builder = Silent.ChemObjectBuilder.Instance;
+            var builder = CDK.Builder;
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom atom = builder.NewAtom();
             atom.Symbol = "C";

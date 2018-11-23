@@ -16,32 +16,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
     // @cdk.module test-qsaratomic
     [TestClass()]
-    public class CovalentRadiusDescriptorTest : AtomicDescriptorTest
+    public class CovalentRadiusDescriptorTest : AtomicDescriptorTest<CovalentRadiusDescriptor>
     {
-        public CovalentRadiusDescriptorTest()
-        {
-            SetDescriptor(typeof(CovalentRadiusDescriptor));
-        }
-
         [TestMethod()]
         public void TestVdWRadiusDescriptor()
         {
-            double[] testResult = { 0.77 };
-            IAtomicDescriptor descriptor = new CovalentRadiusDescriptor();
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("NCCN(C)(C)");
-            double retval = ((Result<double>)descriptor.Calculate(mol.Atoms[1], mol).Value).Value;
-
-            Assert.AreEqual(testResult[0], retval, 0.01);
+            var descriptor = CreateDescriptor(mol);
+            Assert.AreEqual(0.77, descriptor.Calculate(mol.Atoms[1]).Value, 0.01);
         }
     }
 }

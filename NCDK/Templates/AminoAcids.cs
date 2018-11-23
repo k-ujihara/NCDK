@@ -17,7 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Common.Collections;
 using NCDK.Dict;
 using NCDK.IO;
 using NCDK.Silent;
@@ -62,87 +61,88 @@ namespace NCDK.Templates
             #region Create proteinogenics
             {
                 IChemFile list = new ChemFile();
-                CMLReader reader = new CMLReader(ResourceLoader.GetAsStream("NCDK.Templates.Data.list_aminoacids.cml"));
-                try
+                using (var reader = new CMLReader(ResourceLoader.GetAsStream("NCDK.Templates.Data.list_aminoacids.cml")))
                 {
-                    list = (IChemFile)reader.Read(list);
-                    var containersList = ChemFileManipulator.GetAllAtomContainers(list);
-                    int counter = 0;
-                    foreach (var ac in containersList)
+                    try
                     {
-                        Debug.WriteLine($"Adding AA: {ac}");
-                        // convert into an AminoAcid
-                        AminoAcid aminoAcid = new AminoAcid();
-                        foreach (var next in ac.GetProperties().Keys)
+                        list = (IChemFile)reader.Read(list);
+                        var containersList = ChemFileManipulator.GetAllAtomContainers(list);
+                        int counter = 0;
+                        foreach (var ac in containersList)
                         {
-                            Debug.WriteLine("Prop: " + next.ToString());
-                            if (next is DictRef dictRef)
+                            Debug.WriteLine($"Adding AA: {ac}");
+                            // convert into an AminoAcid
+                            var aminoAcid = new AminoAcid();
+                            foreach (var next in ac.GetProperties().Keys)
                             {
-                                // Debug.WriteLine("DictRef type: " + dictRef.Type}");
-                                if (string.Equals(dictRef.Type, "pdb:residueName", StringComparison.Ordinal))
+                                Debug.WriteLine("Prop: " + next.ToString());
+                                if (next is DictRef dictRef)
                                 {
-                                    aminoAcid.SetProperty(ResidueNameKey, ac.GetProperty<string>(next).ToUpperInvariant());
-                                    aminoAcid.MonomerName = ac.GetProperty<string>(next);
-                                }
-                                else if (string.Equals(dictRef.Type, "pdb:oneLetterCode", StringComparison.Ordinal))
-                                {
-                                    aminoAcid.SetProperty(ResidueNameShortKey, ac.GetProperty<string>(next));
-                                }
-                                else if (string.Equals(dictRef.Type, "pdb:id", StringComparison.Ordinal))
-                                {
-                                    aminoAcid.SetProperty(IdKey, ac.GetProperty<string>(next));
-                                    Debug.WriteLine($"Set AA ID to: {ac.GetProperty<string>(next)}");
-                                }
-                                else
-                                {
-                                    Trace.TraceError("Cannot deal with dictRef!");
+                                    // Debug.WriteLine("DictRef type: " + dictRef.Type}");
+                                    if (string.Equals(dictRef.Type, "pdb:residueName", StringComparison.Ordinal))
+                                    {
+                                        aminoAcid.SetProperty(ResidueNameKey, ac.GetProperty<string>(next).ToUpperInvariant());
+                                        aminoAcid.MonomerName = ac.GetProperty<string>(next);
+                                    }
+                                    else if (string.Equals(dictRef.Type, "pdb:oneLetterCode", StringComparison.Ordinal))
+                                    {
+                                        aminoAcid.SetProperty(ResidueNameShortKey, ac.GetProperty<string>(next));
+                                    }
+                                    else if (string.Equals(dictRef.Type, "pdb:id", StringComparison.Ordinal))
+                                    {
+                                        aminoAcid.SetProperty(IdKey, ac.GetProperty<string>(next));
+                                        Debug.WriteLine($"Set AA ID to: {ac.GetProperty<string>(next)}");
+                                    }
+                                    else
+                                    {
+                                        Trace.TraceError("Cannot deal with dictRef!");
+                                    }
                                 }
                             }
-                        }
-                        foreach (var atom in ac.Atoms)
-                        {
-                            string dictRef = atom.GetProperty<string>("org.openscience.cdk.dict");
-                            switch (dictRef)
+                            foreach (var atom in ac.Atoms)
                             {
-                                case "pdb:nTerminus":
-                                    aminoAcid.AddNTerminus(atom);
-                                    break;
-                                case "pdb:cTerminus":
-                                    aminoAcid.AddCTerminus(atom);
-                                    break;
-                                default:
-                                    aminoAcid.Atoms.Add(atom);
-                                    break;
+                                string dictRef = atom.GetProperty<string>("org.openscience.cdk.dict");
+                                switch (dictRef)
+                                {
+                                    case "pdb:nTerminus":
+                                        aminoAcid.AddNTerminus(atom);
+                                        break;
+                                    case "pdb:cTerminus":
+                                        aminoAcid.AddCTerminus(atom);
+                                        break;
+                                    default:
+                                        aminoAcid.Atoms.Add(atom);
+                                        break;
+                                }
                             }
+                            foreach (var bond in ac.Bonds)
+                            {
+                                aminoAcid.Bonds.Add(bond);
+                            }
+                            AminoAcidManipulator.RemoveAcidicOxygen(aminoAcid);
+                            aminoAcid.SetProperty(NoAtomsKey, "" + aminoAcid.Atoms.Count);
+                            aminoAcid.SetProperty(NoBoundsKey, "" + aminoAcid.Bonds.Count);
+                            if (counter < proteinogenics.Length)
+                            {
+                                proteinogenics[counter] = aminoAcid;
+                            }
+                            else
+                            {
+                                Trace.TraceError("Could not store AminoAcid! Array too short!");
+                            }
+                            counter++;
                         }
-                        foreach (var bond in ac.Bonds)
+                    }
+                    catch (Exception exception)
+                    {
+                        if (exception is CDKException | exception is IOException)
                         {
-                            aminoAcid.Bonds.Add(bond);
-                        }
-                        AminoAcidManipulator.RemoveAcidicOxygen(aminoAcid);
-                        aminoAcid.SetProperty(NoAtomsKey, "" + aminoAcid.Atoms.Count);
-                        aminoAcid.SetProperty(NoBoundsKey, "" + aminoAcid.Bonds.Count);
-                        if (counter < proteinogenics.Length)
-                        {
-                            proteinogenics[counter] = aminoAcid;
+                            Trace.TraceError($"Failed reading file: {exception.Message}");
+                            Debug.WriteLine(exception);
                         }
                         else
-                        {
-                            Trace.TraceError("Could not store AminoAcid! Array too short!");
-                        }
-                        counter++;
+                            throw;
                     }
-                    reader.Close();
-                }
-                catch (Exception exception)
-                {
-                    if (exception is CDKException | exception is IOException)
-                    {
-                        Trace.TraceError($"Failed reading file: {exception.Message}");
-                        Debug.WriteLine(exception);
-                    }
-                    else
-                        throw;
                 }
             }
             #endregion

@@ -18,14 +18,13 @@
  */
 
 using NCDK.Aromaticities;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    ///  Class that returns the number of aromatic atoms in an atom container.
+    /// Class that returns the number of aromatic atoms in an atom container.
     /// </summary>
     /// <remarks>
     /// <para>This descriptor uses these parameters:
@@ -47,118 +46,47 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @author      mfe4
     // @cdk.created 2004-11-03
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:aromaticAtomsCount
-    public class AromaticAtomsCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticAtomsCount")]
+    public class AromaticAtomsCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private bool checkAromaticity = false;
-        private static readonly string[] NAMES = { "naAromAtom" };
+        private readonly IAtomContainer container;
 
-        /// <summary>
-        ///  Constructor for the AromaticAtomsCountDescriptor object.
-        /// </summary>
-        public AromaticAtomsCountDescriptor() { }
-
-        /// <inheritdoc/>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticAtomsCount",
-                typeof(AromaticAtomsCountDescriptor).FullName, "The Chemistry Development Kit");
-
-        /// <summary>
-        /// The parameters attribute of the AromaticAtomsCountDescriptor object.
-        /// </summary>
-        /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public override IReadOnlyList<object> Parameters
+        public AromaticAtomsCountDescriptor(IAtomContainer container, bool checkAromaticity = false)
         {
-            set
+            if (checkAromaticity)
             {
-                if (value.Count != 1)
-                {
-                    throw new CDKException("AromaticAtomsCountDescriptor expects one parameter");
-                }
-                if (!(value[0] is bool))
-                {
-                    throw new CDKException("The first parameter must be of type bool");
-                }
-                // ok, all should be fine
-                checkAromaticity = (bool)value[0];
+                container = (IAtomContainer)container.Clone();
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+                Aromaticity.CDKLegacy.Apply(container);
             }
-            get
-            {
-                // return the parameters as used for the descriptor calculation
-                return new object[] { checkAromaticity };
-            }
+            this.container = container;
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(int value)
+            {
+                this.NumberOfAromaticAtoms = value;
+            }
+
+            [DescriptorResultProperty("naAromAtom")]
+            public int NumberOfAromaticAtoms { get; private set; }
+
+            public int Value => NumberOfAromaticAtoms;
+        }
 
         /// <summary>
         /// Calculate the count of aromatic atoms in the supplied <see cref="IAtomContainer"/>.
-        ///
-        ///  The method require one parameter:
-        ///  if checkAromaticity is true, the method check the aromaticity,
-        ///  if false, means that the aromaticity has already been checked
         /// </summary>
-        /// <param name="atomContainer">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated</param>
         /// <returns>the number of aromatic atoms of this AtomContainer</returns>
-        /// <seealso cref="Parameters"/>
-        public DescriptorValue<Result<int>> Calculate(IAtomContainer atomContainer)
+        public Result Calculate()
         {
-            var ac = (IAtomContainer)atomContainer.Clone();
-
-            int aromaticAtomsCount = 0;
-            if (checkAromaticity)
-            {
-                try
-                {
-                    AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
-                }
-                catch (CDKException)
-                {
-                    return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters,
-                        new Result<int>(0), DescriptorNames,
-                        new CDKException("Error during atom type perception"));
-                }
-                try
-                {
-                    Aromaticity.CDKLegacy.Apply(ac);
-                }
-                catch (CDKException e)
-                {
-                    return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters,
-                        new Result<int>(0), DescriptorNames,
-                        new CDKException($"Error during aromaticity detection: {e.Message}"));
-                }
-            }
-            for (int i = 0; i < ac.Atoms.Count; i++)
-            {
-                if (ac.Atoms[i].IsAromatic)
-                {
-                    aromaticAtomsCount += 1;
-                }
-            }
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(aromaticAtomsCount), DescriptorNames);
+            var count = container.Atoms.Count(n => n.IsAromatic);
+            return new Result(count);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// </summary>
-        /// <remarks>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="IDescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="IDescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </remarks>
-        /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating
-        ///         the actual type of values returned by the descriptor in the <see cref="IDescriptorValue"/> object</returns>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
-
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
-
-        public override object GetParameterType(string name) => true;
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

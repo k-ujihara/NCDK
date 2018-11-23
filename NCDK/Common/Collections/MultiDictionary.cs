@@ -5,8 +5,7 @@ using System.Linq;
 
 namespace NCDK.Common.Collections
 {
-    public interface IMultiDictionary<T, V>
-        : IEnumerable<KeyValuePair<T, ICollection<V>>>
+    internal interface IMultiDictionary<T, V> : IEnumerable<KeyValuePair<T, ICollection<V>>>
     {
         int Count { get; }
         void Add(T key, V value);

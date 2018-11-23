@@ -31,7 +31,7 @@ namespace NCDK.Formula
     [TestClass()]
     public class IsotopePatternGeneratorTest : CDKTestCase
     {
-        private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private readonly static IChemObjectBuilder builder = CDK.Builder;
 
         public IsotopePatternGeneratorTest()
             : base()

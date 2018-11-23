@@ -20,9 +20,7 @@
 
 using NCDK.Graphs;
 using NCDK.Graphs.Matrix;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -63,37 +61,40 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @author      Rajarshi Guha
     // @cdk.created     2005-03-19
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:eccentricConnectivityIndex
-    public class EccentricConnectivityIndexDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#eccentricConnectivityIndex")]
+    public class EccentricConnectivityIndexDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private static readonly string[] NAMES = { "ECCEN" };
+        private readonly IAtomContainer container;
 
-        public EccentricConnectivityIndexDescriptor() { }
+        public EccentricConnectivityIndexDescriptor(IAtomContainer container)
+        {
+            container = AtomContainerManipulator.RemoveHydrogens(container);
+            this.container = container;
+        }
 
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#eccentricConnectivityIndex",
-                typeof(EccentricConnectivityIndexDescriptor).FullName,
-                "The Chemistry Development Kit");
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(int value)
+            {
+                this.ECCEN = value;
+            }
 
-        public override IReadOnlyList<string> ParameterNames => null;
-        public override object GetParameterType(string name) => null;
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
-        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
+            [DescriptorResultProperty("ECCEN")]
+            public int ECCEN { get; private set; }
+
+            public int Value => ECCEN;
+        }
 
         /// <summary>
         /// Calculates the eccentric connectivity
         /// </summary>
-        /// <param name="container">Parameter is the atom container.</param>
-        /// <returns>A <see cref="Result{Int32}"/> value representing the eccentric connectivity index</returns>
-        public DescriptorValue<Result<int>> Calculate(IAtomContainer container)
+        /// <returns>A <see cref="Result"/> value representing the eccentric connectivity index</returns>
+        public Result Calculate()
         {
-            var local = AtomContainerManipulator.RemoveHydrogens(container);
-
-            int natom = local.Atoms.Count;
-            var admat = AdjacencyMatrix.GetMatrix(local);
+            var natom = container.Atoms.Count;
+            var admat = AdjacencyMatrix.GetMatrix(container);
             var distmat = PathTools.ComputeFloydAPSP(admat);
 
             int eccenindex = 0;
@@ -105,16 +106,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     if (distmat[i][j] > max)
                         max = distmat[i][j];
                 }
-                var degree = local.GetConnectedBonds(local.Atoms[i]).Count();
+                var degree = container.GetConnectedBonds(container.Atoms[i]).Count();
                 eccenindex += max * degree;
             }
-            var retval = new Result<int>(eccenindex);
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, retval, DescriptorNames, null);
+            return new Result(eccenindex);
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

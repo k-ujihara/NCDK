@@ -16,28 +16,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Bonds
 {
     // @cdk.module test-qsarbond
     [TestClass()]
-    public class AtomicNumberDifferenceDescriptorTest : BondDescriptorTest
+    public class AtomicNumberDifferenceDescriptorTest : BondDescriptorTest<AtomicNumberDifferenceDescriptor>
     {
-        public AtomicNumberDifferenceDescriptorTest()
-        {
-            SetDescriptor(typeof(AtomicNumberDifferenceDescriptor));
-        }
-
         [TestMethod()]
         public void TestDescriptor1()
         {
             var sp = CDK.SmilesParser;
             var mol1 = sp.ParseSmiles("CC");
-            double value = ((Result<double>)descriptor.Calculate(mol1.Bonds[0], mol1).Value).Value;
+            var value = CreateDescriptor(mol1).Calculate(mol1.Bonds[0]).Value;
             Assert.AreEqual(0, value, 0.0000);
         }
 
@@ -46,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         {
             var sp = CDK.SmilesParser;
             var mol1 = sp.ParseSmiles("CO");
-            double value = ((Result<double>)descriptor.Calculate(mol1.Bonds[0], mol1).Value).Value;
+            double value = CreateDescriptor(mol1).Calculate(mol1.Bonds[0]).Value;
             Assert.AreEqual(2, value, 0.0000);
         }
     }

@@ -59,14 +59,14 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestGetInstance_IChemObjectBuilder()
         {
-            var matcher = SybylAtomTypeMatcher.GetInstance(Silent.ChemObjectBuilder.Instance);
+            var matcher = SybylAtomTypeMatcher.GetInstance(CDK.Builder);
             Assert.IsNotNull(matcher);
         }
 
         [TestMethod()]
         public void TestFindMatchingAtomType_IAtomContainer_IAtom()
         {
-            var matcher = SybylAtomTypeMatcher.GetInstance(Silent.ChemObjectBuilder.Instance);
+            var matcher = SybylAtomTypeMatcher.GetInstance(CDK.Builder);
             Assert.IsNotNull(matcher);
             var ethane = TestMoleculeFactory.MakeAlkane(2);
             var expectedTypes = new[] { "C.3", "C.3" };

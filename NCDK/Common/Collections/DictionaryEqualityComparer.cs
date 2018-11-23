@@ -7,7 +7,7 @@ namespace NCDK.Common.Collections
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="V"></typeparam>
-    public class DictionaryEqualityComparer<T, V> : IEqualityComparer<IReadOnlyDictionary<T, V>>
+    internal class DictionaryEqualityComparer<T, V> : IEqualityComparer<IReadOnlyDictionary<T, V>>
     {
         public bool Equals(IReadOnlyDictionary<T, V> x, IReadOnlyDictionary<T, V> y)
         {

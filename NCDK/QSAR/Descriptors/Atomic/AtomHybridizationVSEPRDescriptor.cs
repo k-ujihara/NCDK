@@ -16,14 +16,11 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.AtomTypes;
-using NCDK.QSAR.Results;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
-    ///  This class returns the hybridization of an atom.
+    /// This class returns the hybridization of an atom.
     /// </summary>
     /// <remarks>
     ///  <para>This class try to find a SIMPLE WAY the molecular geometry for following from
@@ -56,87 +53,50 @@ namespace NCDK.QSAR.Descriptors.Atomic
     ///
     ///  <para>This table only works if the central atom is a p-block element
     ///   (groups IIA through VIIIA), not a transition metal.</para>
-    ///
-    /// <para>
-    /// This descriptor uses these parameters:
-    /// <list type="table">
-    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
-    /// <item><term></term><term></term><term>no parameters</term></item>
-    /// </list>
-    /// </para> 
     /// </remarks>
     // @author         Miguel Rojas
     // @cdk.created    2005-03-24
     // @cdk.module     qsaratomic
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:atomHybridizationVSEPR
-    public partial class AtomHybridizationVSEPRDescriptor : IAtomicDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomHybridizationVSEPR")]
+    public partial class AtomHybridizationVSEPRDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
-        /// <summary>
-        ///  Constructor for the AtomHybridizationVSEPRDescriptor object
-        /// </summary>
-        public AtomHybridizationVSEPRDescriptor() { }
+        private IAtomContainer container;
 
-        /// <summary>
-        /// The specification attribute of the AtomHybridizationVSEPRDescriptor object
-        /// </summary>
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomHybridizationVSEPR",
-                typeof(AtomHybridizationVSEPRDescriptor).FullName,
-                "The Chemistry Development Kit");
+        public AtomHybridizationVSEPRDescriptor(IAtomContainer container)
+        {
+            this.container = container;
+        }
 
-        /// <summary>
-        ///  The parameters attribute of the AtomHybridizationVSEPRDescriptor object
-        /// </summary>
-        public IReadOnlyList<object> Parameters { get { return null; } set { } }
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
+        {
+            public Result(Hybridization value)
+            {
+                this.AtomHybridization = value;
+            }
 
-        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "hybr" };
+            [DescriptorResultProperty("hybr")]
+            public Hybridization AtomHybridization { get; private set; }
+
+            public Hybridization Value => AtomHybridization;
+        }
 
         /// <summary>
         /// This method calculates the hybridization of an atom.
         /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
-        /// <param name="container">Parameter is the atom container.</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="Result"/> is requested</param>
         /// <returns>The hybridization</returns>
-        public DescriptorValue<Result<Hybridization>> Calculate(IAtom atom, IAtomContainer container)
+        public Result Calculate(IAtom atom)
         {
-            IAtomType atomType;
-            try
-            {
-                atomType =  CDK.AtomTypeMatcher.FindMatchingAtomType(container, atom);
-            }
-            catch (CDKException)
-            {
-                return new DescriptorValue<Result<Hybridization>>(specification, ParameterNames, Parameters, new Result<Hybridization>(Hybridization.Unset), // does that work??
-                        DescriptorNames, new CDKException("Atom type was null"));
-            }
+            var atomType = CDK.AtomTypeMatcher.FindMatchingAtomType(container, atom);
             if (atomType == null)
-            {
-                return new DescriptorValue<Result<Hybridization>>(specification, ParameterNames, Parameters, new Result<Hybridization>(Hybridization.Unset), // does that work??
-                        DescriptorNames, new CDKException("Atom type was null"));
-            }
+                throw new CDKException("Atom type was null");
             if (atomType.Hybridization.IsUnset())
-            {
-                return new DescriptorValue<Result<Hybridization>>(specification, ParameterNames, Parameters, new Result<Hybridization>(Hybridization.Unset), // does that work??
-                        DescriptorNames, new CDKException("Hybridization was null"));
-            }
-
-            return new DescriptorValue<Result<Hybridization>>(specification, ParameterNames, Parameters, new Result<Hybridization>(
-                    atomType.Hybridization), DescriptorNames);
+                throw new CDKException("Hybridization was null");
+            return new Result(atomType.Hybridization);
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the AtomHybridizationVSEPRDescriptor object
-        /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = System.Array.Empty<string>();
-
-        /// <summary>
-        ///  Gets the parameterType attribute of the AtomHybridizationVSEPRDescriptor object
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public object GetParameterType(string name) => null;
+        IDescriptorResult IAtomicDescriptor.Calculate(IAtom atom) => Calculate(atom);
     }
 }

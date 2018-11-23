@@ -20,6 +20,7 @@
  */
 
 using NCDK.Config;
+using System;
 using System.Collections.Generic;
 using static NCDK.Config.NaturalElement;
 using static NCDK.Config.NaturalElements;
@@ -41,9 +42,6 @@ namespace NCDK.Tools
     // @cdk.module core
     public sealed class PeriodicTable
     {
-        /// <summary>A lock used for locking CAD ID initialisation.</summary>
-        private readonly static object syncLock = new object();
-
         /// <summary>
         /// Get the Van der Waals radius for the element in question.
         /// </summary>
@@ -51,9 +49,14 @@ namespace NCDK.Tools
         /// <returns>the Van der waals radius</returns>
         public static double? GetVdwRadius(string symbol)
         {
-            return VdwRadiuses[ToAtomicNumber(symbol)];
+            return GetVdwRadius(ToAtomicNumber(symbol));
         }
-        
+
+        public static double? GetVdwRadius(int atomicNumber)
+        {
+            return VdwRadiuses[atomicNumber];
+        }
+
         /// <summary>
         /// Get the covalent radius for an element.
         /// </summary>
@@ -108,7 +111,19 @@ namespace NCDK.Tools
         /// <returns>the name of the element</returns>
         public static string GetName(string symbol)
         {
-            return NaturalElement.Names[NaturalElement.ToAtomicNumber(symbol)];
+            return GetName(NaturalElement.ToAtomicNumber(symbol));
+        }
+
+        /// <summary>
+        /// Get the name of the element.
+        /// </summary>
+        /// <param name="atomicNumber">Atomic number</param>
+        /// <returns>The name of the element</returns>
+        public static string GetName(int atomicNumber)
+        {
+            if (atomicNumber < 0 || NaturalElement.Names.Count <= atomicNumber)
+                throw new ArgumentOutOfRangeException(nameof(atomicNumber));
+            return NaturalElement.Names[atomicNumber];
         }
 
         /// <summary>
@@ -121,6 +136,11 @@ namespace NCDK.Tools
             return Periods[ToAtomicNumber(symbol)];
         }
 
+        /// <summary>
+        /// Get the period of the element.
+        /// </summary>
+        /// <param name="number">Atomic number</param>
+        /// <returns>The period</returns>
         public static int GetPeriod(int number)
         {
             return NaturalElement.Periods[number];
@@ -165,13 +185,10 @@ namespace NCDK.Tools
         /// <returns>the corresponding symbol</returns>
         public static string GetSymbol(int atomicNumber)
         {
-            return OfNumber(atomicNumber).Symbol;
+            if (atomicNumber < 0 || atomicNumber >= Symbols.Count)
+                throw new ArgumentOutOfRangeException(nameof(atomicNumber));
+            return Symbols[atomicNumber];
         }
-
-        /// <summary>
-        /// The number of elements in the periodic table
-        /// </summary>
-        public static int ElementCount => NaturalElement.Elements.Count;
 
         private static Dictionary<int, string> MapToCasId { get; } = new Dictionary<int, string>
             {

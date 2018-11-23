@@ -26,7 +26,6 @@ namespace NCDK.Config
     /// Interface that allows reading atom type configuration data from some source.
     /// </summary>
     // @cdk.module core
-    // @cdk.githash
     public interface IAtomTypeConfigurator
     {
         /// <summary>

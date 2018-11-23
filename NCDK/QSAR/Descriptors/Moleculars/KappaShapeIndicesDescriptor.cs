@@ -17,7 +17,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -35,114 +34,100 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <remarks>
     /// Returns three values in the order
     /// <list type="bullet"> 
-    /// <item>Kier1 -  First kappa shape index</item>
+    /// <item>Kier1 - First kappa shape index</item>
     /// <item>Kier2 - Second kappa shape index</item>
-    /// <item>Kier3 -  Third kappa (É») shape index</item>
+    /// <item>Kier3 - Third kappa (É») shape index</item>
     /// </list>
     /// <para>This descriptor does not have any parameters.</para>
     /// </remarks>
     // @author mfe4
     // @cdk.created 2004-11-03
     // @cdk.module qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:kierValues
     // @cdk.keyword Kappe shape index
     // @cdk.keyword descriptor
-    public class KappaShapeIndicesDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierValues")]
+    public class KappaShapeIndicesDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private static readonly string[] NAMES = { "Kier1", "Kier2", "Kier3" };
+        private readonly IAtomContainer container;
 
-        public KappaShapeIndicesDescriptor() { }
+        public KappaShapeIndicesDescriptor(IAtomContainer container)
+        {
+            container = (IAtomContainer)container.Clone();
+            container = AtomContainerManipulator.RemoveHydrogens(container);
+            this.container = container;
+        }
 
-        /// <summary>
-        /// The specification attribute of the KappaShapeIndicesDescriptor object
-        /// </summary>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierValues",
-                typeof(KappaShapeIndicesDescriptor).FullName, "The Chemistry Development Kit");
+        [DescriptorResult(prefix: "Kier", baseIndex: 1)]
+        public class Result : AbstractDescriptorArrayResult<double>
+        {
+            public Result(IReadOnlyList<double> values)
+                : base(values)
+            {
+            }
 
-        /// <summary>
-        /// The parameters attribute of the
-        /// KappaShapeIndicesDescriptor object
-        /// </summary>
-        public override IReadOnlyList<object> Parameters { get { return null; } set { } }
+            [DescriptorResultProperty]
+            public double Kier1 => Values[0];
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+            [DescriptorResultProperty]
+            public double Kier2 => Values[1];
+
+            [DescriptorResultProperty]
+            public double Kier3 => Values[2];
+        }
 
         /// <summary>
         /// Calculates the kier shape indices for an atom container
         /// </summary>
-        /// <param name="container">AtomContainer</param>
         /// <returns>kier1, kier2 and kier3 are returned as arrayList of doubles</returns>
-        /// <exception cref="CDKException">Possible Exceptions</exception>
-        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
+        public Result Calculate()
         {
-            var atomContainer = (IAtomContainer)container.Clone();
-            atomContainer = AtomContainerManipulator.RemoveHydrogens(atomContainer);
-
-            //IAtom[] atoms = atomContainer.GetAtoms();
-            ArrayResult<double> kierValues = new ArrayResult<double>(3);
-            double bond1;
-            double bond2;
-            double bond3;
-            double kier1;
-            double kier2;
-            double kier3;
-            var atomsCount = atomContainer.Atoms.Count;
             var singlePaths = new List<double>();
             var doublePaths = new List<string>();
             var triplePaths = new List<string>();
-            var sorterFirst = new double[2];
-            var sorterSecond = new double[3];
-            string tmpbond2;
-            string tmpbond3;
 
-            for (int a1 = 0; a1 < atomsCount; a1++)
+            foreach (var atom1 in container.Atoms)
             {
-                bond1 = 0;
-                var firstAtomNeighboors = atomContainer.GetConnectedAtoms(atomContainer.Atoms[a1]);
+                var firstAtomNeighboors = container.GetConnectedAtoms(atom1);
                 foreach (var firstAtomNeighboor in firstAtomNeighboors)
                 {
-                    bond1 = atomContainer.Bonds.IndexOf(atomContainer.GetBond(atomContainer.Atoms[a1], firstAtomNeighboor));
+                    var bond1 = container.Bonds.IndexOf(container.GetBond(atom1, firstAtomNeighboor));
                     if (!singlePaths.Contains(bond1))
                     {
                         singlePaths.Add(bond1);
                         singlePaths.Sort();
                     }
-                    var secondAtomNeighboors = atomContainer.GetConnectedAtoms(firstAtomNeighboor);
+
+                    var secondAtomNeighboors = container.GetConnectedAtoms(firstAtomNeighboor);
                     foreach (var secondAtomNeighboor in secondAtomNeighboors)
                     {
-                        bond2 = atomContainer.Bonds.IndexOf(atomContainer.GetBond(firstAtomNeighboor, secondAtomNeighboor));
+                        var bond2 = container.Bonds.IndexOf(container.GetBond(firstAtomNeighboor, secondAtomNeighboor));
                         if (!singlePaths.Contains(bond2))
                         {
                             singlePaths.Add(bond2);
                         }
-                        sorterFirst[0] = bond1;
-                        sorterFirst[1] = bond2;
+                        var sorterFirst = new double[] { bond1, bond2 };
                         Array.Sort(sorterFirst);
 
-                        tmpbond2 = sorterFirst[0] + "+" + sorterFirst[1];
+                        var tmpbond2 = sorterFirst[0] + "+" + sorterFirst[1];
 
                         if (!doublePaths.Contains(tmpbond2) && (bond1 != bond2))
                         {
                             doublePaths.Add(tmpbond2);
                         }
-                        var thirdAtomNeighboors = atomContainer.GetConnectedAtoms(secondAtomNeighboor);
+
+                        var thirdAtomNeighboors = container.GetConnectedAtoms(secondAtomNeighboor);
                         foreach (var thirdAtomNeighboor in thirdAtomNeighboors)
                         {
-                            bond3 = atomContainer.Bonds.IndexOf(atomContainer.GetBond(secondAtomNeighboor, thirdAtomNeighboor));
+                            var bond3 = container.Bonds.IndexOf(container.GetBond(secondAtomNeighboor, thirdAtomNeighboor));
                             if (!singlePaths.Contains(bond3))
                             {
                                 singlePaths.Add(bond3);
                             }
-                            sorterSecond[0] = bond1;
-                            sorterSecond[1] = bond2;
-                            sorterSecond[2] = bond3;
+                            var sorterSecond = new double[] { bond1, bond2, bond3 };
                             Array.Sort(sorterSecond);
 
-                            tmpbond3 = sorterSecond[0] + "+" + sorterSecond[1] + "+" + sorterSecond[2];
+                            var tmpbond3 = sorterSecond[0] + "+" + sorterSecond[1] + "+" + sorterSecond[2];
                             if (!triplePaths.Contains(tmpbond3))
                             {
                                 if ((bond1 != bond2) && (bond1 != bond3) && (bond2 != bond3))
@@ -155,62 +140,32 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            if (atomsCount == 1)
+            double[] kier = new double[] { 0, 0, 0, };
+            do
             {
-                kier1 = 0;
-                kier2 = 0;
-                kier3 = 0;
-            }
-            else
-            {
-                kier1 = (double)(atomsCount * (atomsCount - 1) * (atomsCount - 1)) / (singlePaths.Count * singlePaths.Count);
-                if (atomsCount == 2)
-                {
-                    kier2 = 0;
-                    kier3 = 0;
-                }
-                else
-                {
-                    if (doublePaths.Count == 0)
-                        kier2 = double.NaN;
-                    else
-                        kier2 = (double)((atomsCount - 1) * (atomsCount - 2) * (atomsCount - 2)) / (doublePaths.Count * doublePaths.Count);
-                    if (atomsCount == 3)
-                    {
-                        kier3 = 0;
-                    }
-                    else
-                    {
-                        if (atomsCount % 2 != 0)
-                        {
-                            if (triplePaths.Count == 0)
-                                kier3 = double.NaN;
-                            else
-                                kier3 = (double)((atomsCount - 1) * (atomsCount - 3) * (atomsCount - 3)) / (triplePaths.Count * triplePaths.Count);
-                        }
-                        else
-                        {
-                            if (triplePaths.Count == 0)
-                                kier3 = double.NaN;
-                            else
-                                kier3 = (double)((atomsCount - 3) * (atomsCount - 2) * (atomsCount - 2)) / (triplePaths.Count * triplePaths.Count);
-                        }
-                    }
-                }
-            }
+                if (container.Atoms.Count == 1)
+                    break;
+                kier[0] =
+                      (double)(container.Atoms.Count * (container.Atoms.Count - 1) * (container.Atoms.Count - 1)) / (singlePaths.Count * singlePaths.Count);
+                if (container.Atoms.Count == 2)
+                    break;
+                kier[1] = doublePaths.Count == 0
+                    ? double.NaN
+                    : (double)((container.Atoms.Count - 1) * (container.Atoms.Count - 2) * (container.Atoms.Count - 2)) / (doublePaths.Count * doublePaths.Count);
+                if (container.Atoms.Count == 3)
+                    break;
+                kier[2] = triplePaths.Count == 0
+                    ? double.NaN
+                    : (
+                        container.Atoms.Count % 2 != 0
+                        ? (double)((container.Atoms.Count - 1) * (container.Atoms.Count - 3) * (container.Atoms.Count - 3)) / (triplePaths.Count * triplePaths.Count)
+                        : (double)((container.Atoms.Count - 3) * (container.Atoms.Count - 2) * (container.Atoms.Count - 2)) / (triplePaths.Count * triplePaths.Count)
+                      );
+            } while (false);
 
-            kierValues.Add(kier1);
-            kierValues.Add(kier2);
-            kierValues.Add(kier3);
-            return new DescriptorValue<ArrayResult<double>>(specification, ParameterNames, Parameters, kierValues, DescriptorNames);
+            return new Result(kier);
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(3);
-
-        public override IReadOnlyList<string> ParameterNames => null; // no param names to return
-        public override object GetParameterType(string name) => null;
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

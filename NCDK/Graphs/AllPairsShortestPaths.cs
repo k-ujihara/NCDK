@@ -96,8 +96,7 @@ namespace NCDK.Graphs
         /// </summary>
         private static readonly IAtomContainer EMPTY_CONTAINER = new EmptyAtomContainer();
 
-        private class EmptyAtomContainer
-            : IAtomContainer
+        private class EmptyAtomContainer : IAtomContainer
         {
             public IList<IAtom> Atoms => Array.Empty<IAtom>();
             public IList<IBond> Bonds => Array.Empty<IBond>();

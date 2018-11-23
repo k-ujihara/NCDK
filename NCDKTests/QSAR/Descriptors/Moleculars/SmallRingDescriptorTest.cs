@@ -26,48 +26,31 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Common.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
+using NCDK.Common.Primitives;
 using NCDK.IO;
-using NCDK.QSAR.Results;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
-using System.Globalization;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// Test for small rings Descriptor.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class SmallRingDescriptorTest : MolecularDescriptorTest
+    public class SmallRingDescriptorTest : MolecularDescriptorTest<SmallRingDescriptor>
     {
-        public SmallRingDescriptorTest()
-        {
-            SetDescriptor(typeof(SmallRingDescriptor));
-        }
-
         [TestMethod()]
         public void TestDescriptors()
         {
-            Trace.TraceInformation("CircularFingerprinter test: loading source materials");
-
             string fnzip = "NCDK.Data.CDD.aromring_validation.zip";
-            Trace.TraceInformation("Loading source content: " + fnzip);
             using (var ins = ResourceLoader.GetAsStream(fnzip))
             {
                 Validate(ins);
             }
-            Trace.TraceInformation("CircularFingerprinter test: completed without any problems");
         }
-
-        // included to shutdown the warning messages for not having tests for trivial methods
-        [TestMethod()]
-        public void Nop() { }
 
         // run through the cases
         private static void Validate(Stream ins)
@@ -98,15 +81,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 if (!content.TryGetValue(basefn + ".mol", out byte[] molBytes))
                     break;
 
-                AtomContainer mol = new AtomContainer();
+                var mol = CDK.Builder.NewAtomContainer();
                 using (var mdl = new MDLV2000Reader(new MemoryStream(molBytes)))
                 {
                     mdl.Read(mol);
                 }
 
                 IList<string> bits;
-                using (var rin = new MemoryStream(content[basefn + ".rings"]))
-                using (var rdr = new StreamReader(rin))
+                using (var rdr = new StreamReader(new MemoryStream(content[basefn + ".rings"])))
                 {
                     bits = Strings.Tokenize(rdr.ReadLine(), ' ');
                 }
@@ -119,21 +101,24 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         + wantSmallRings + " nRingBlocks=" + wantRingBlocks + " nAromRings=" + wantAromRings
                         + " nAromBlocks=" + wantAromBlocks);
 
-                SmallRingDescriptor descr = new SmallRingDescriptor();
-                var results = descr.Calculate(mol);
-                var names = results.Names;
-                ArrayResult<int> values = (ArrayResult<int>)results.Value;
+                var descr = new SmallRingDescriptor(mol);
+                var results = descr.Calculate();
+                var names = results.Keys;
+                var values = results.Values.Cast<int>().ToReadOnlyList();
 
                 int gotSmallRings = 0, gotRingBlocks = 0, gotAromRings = 0, gotAromBlocks = 0;
-                for (int n = 0; n < names.Count; n++)
+                int n = 0;
+                foreach (var name in names)
                 {
-                    if (names[n].Equals("nSmallRings"))
+                    if (name.Equals("nSmallRings"))
                         gotSmallRings = values[n];
-                    else if (names[n].Equals("nRingBlocks"))
+                    else if (name.Equals("nRingBlocks"))
                         gotRingBlocks = values[n];
-                    else if (names[n].Equals("nAromRings"))
+                    else if (name.Equals("nAromRings"))
                         gotAromRings = values[n];
-                    else if (names[n].Equals("nAromBlocks")) gotAromBlocks = values[n];
+                    else if (name.Equals("nAromBlocks"))
+                        gotAromBlocks = values[n];
+                    n++;
                 }
 
                 string error = null;
@@ -154,7 +139,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         wtr.Write(mol);
                         error += "\nMolecule:\n" + str.ToString();
                     }
-                    throw new CDKException(error);
+                    Assert.Fail(error);
                 }
             }
         }

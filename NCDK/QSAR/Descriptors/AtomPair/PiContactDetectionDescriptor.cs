@@ -17,12 +17,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Aromaticities;
 using NCDK.Graphs.Invariant;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.AtomPair
 {
@@ -31,121 +31,59 @@ namespace NCDK.QSAR.Descriptors.AtomPair
     /// one and the same conjugated pi-system which contains both atoms, or directly
     /// linked neighbours of the atoms).
     /// </summary>
-    /// <remarks>
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    ///   <item>
-    ///     <term>Name</term>
-    ///     <term>Default</term>
-    ///     <term>Description</term>
-    ///   </item>
-    ///   <item>
-    ///     <term>firstAtom</term>
-    ///     <term>0</term>
-    ///     <term>The position of the first atom</term>
-    ///   </item>
-    ///   <item>
-    ///     <term>secondAtom</term>
-    ///     <term>0</term>
-    ///     <term>The position of the second atom</term>
-    ///   </item>
-    ///   <item>
-    ///     <term>checkAromaticity</term>
-    ///     <term>false</term>
-    ///     <term>True is the aromaticity has to be checked</term>
-    ///   </item>
-    /// </list>
-    /// </para>
-    /// </remarks>
     // @author         mfe4
     // @cdk.created    2004-11-03
     // @cdk.module     qsarmolecular
-    // @cdk.githash
     // @cdk.dictref    qsar-descriptors:piContact
-    public class PiContactDetectionDescriptor : IAtomPairDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#piContact")]
+    public class PiContactDetectionDescriptor : AbstractDescriptor, IAtomPairDescriptor
     {
-        private static readonly string[] NAMES = { "piContact" };
+        private IAtomContainer container;
+        private IAtomContainer clonedContainer;
+        private IAtomContainer mol;
+        readonly IChemObjectSet<IAtomContainer> acSet = null;
 
-        private bool checkAromaticity = false;
-        IChemObjectSet<IAtomContainer> acSet = null;
-        private IAtomContainer acold = null;
-
-        public PiContactDetectionDescriptor() { }
-
-        /// <summary>
-        /// The specification attribute of the PiContactDetectionDescriptor object.
-        /// </summary>
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#piContact",
-                typeof(PiContactDetectionDescriptor).FullName, "The Chemistry Development Kit");
-
-        /// <summary>
-        /// The parameters attribute of the PiContactDetectionDescriptor object.
-        /// <para>Parameters contains a bool (true if is needed a checkAromaticity)Parameters contains a bool (true if is needed a checkAromaticity)</para>
-        /// </summary>
-        /// <exception cref="CDKException">Description of the Exception</exception>
-        public IReadOnlyList<object> Parameters
+        public PiContactDetectionDescriptor(IAtomContainer container, bool checkAromaticity = false)
         {
-            set
+            clonedContainer = (IAtomContainer)container.Clone();
+            mol = clonedContainer.Builder.NewAtomContainer(clonedContainer);
+            if (checkAromaticity)
             {
-                if (value.Count != 1)
-                {
-                    throw new CDKException("PiContactDetectionDescriptor expects 1 parameters");
-                }
-                if (!(value[0] is bool))
-                {
-                    throw new CDKException("The first parameter must be of type bool");
-                }
-                checkAromaticity = (bool)value[0];
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
+                Aromaticity.CDKLegacy.Apply(mol);
             }
-            get
-            {
-                // return the parameters as used for the descriptor calculation
-                return new object[] { checkAromaticity };
-            }
+            acSet = ConjugatedPiSystemsDetector.Detect(mol);
+
+            this.container = container;
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
-
-        private DescriptorValue<Result<bool>> GetDummyDescriptorValue(Exception e)
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            return new DescriptorValue<Result<bool>>(specification, ParameterNames, Parameters, new Result<bool>(false), NAMES, e);
+            public Result(bool value)
+            {
+                this.PiContact = value;
+            }
+
+            [DescriptorResultProperty("piContact")]
+            public bool PiContact { get; private set; }
+
+            public bool Value => PiContact;
         }
 
         /// <summary>
         /// The method returns if two atoms have pi-contact.
         /// </summary>
-        /// <param name="atomContainer">AtomContainer</param>
-        /// <returns>true if the atoms have pi-contact</returns>
-        public DescriptorValue<Result<bool>> Calculate(IAtom first, IAtom second, IAtomContainer atomContainer)
+        /// <returns><see langword="true"/> if the atoms have pi-contact</returns>
+        /// <param name="first">The first atom</param>
+        /// <param name="second">The second atom</param>
+        public Result Calculate(IAtom first, IAtom second)
         {
-            IAtomContainer ac = (IAtomContainer)atomContainer.Clone();
-            IAtom clonedFirst = ac.Atoms[atomContainer.Atoms.IndexOf(first)];
-            IAtom clonedSecond = ac.Atoms[atomContainer.Atoms.IndexOf(first)];
+            var clonedFirst = clonedContainer.Atoms[container.Atoms.IndexOf(first)];
+            var clonedSecond = clonedContainer.Atoms[container.Atoms.IndexOf(second)];
 
-            IAtomContainer mol = ac.Builder.NewAtomContainer(ac);
-            if (checkAromaticity)
-            {
-                try
-                {
-                    AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-                    Aromaticity.CDKLegacy.Apply(mol);
-                }
-                catch (CDKException e)
-                {
-                    return GetDummyDescriptorValue(e);
-                }
-            }
             bool piContact = false;
             int counter = 0;
-
-            if (acold != ac)
-            {
-                acold = ac;
-                acSet = ConjugatedPiSystemsDetector.Detect(mol);
-            }
             var detected = acSet;
 
             var neighboorsFirst = mol.GetConnectedAtoms(clonedFirst);
@@ -159,7 +97,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
                     break;
                 }
                 if (IsANeighboorsInAnAtomContainer(neighboorsFirst, detectedAC)
-                        && IsANeighboorsInAnAtomContainer(neighboorsSecond, detectedAC))
+                 && IsANeighboorsInAnAtomContainer(neighboorsSecond, detectedAC))
                 {
                     counter += 1;
                     break;
@@ -170,52 +108,22 @@ namespace NCDK.QSAR.Descriptors.AtomPair
             {
                 piContact = true;
             }
-            return new DescriptorValue<Result<bool>>(specification, ParameterNames, Parameters, new Result<bool>(
-                    piContact), DescriptorNames);
+
+            return new Result(piContact);
         }
 
         /// <summary>
         /// Gets if neighbours of an atom are in an atom container.
-        ///
-        /// <param name="neighs">array of atoms</param>
-        /// <param name="ac">AtomContainer</param>
-        /// <returns>The bool result</returns>
         /// </summary>
+        /// <param name="neighs">atoms</param>
+        /// <param name="ac">container</param>
+        /// <returns>The boolean result</returns>
         private static bool IsANeighboorsInAnAtomContainer(IEnumerable<IAtom> neighs, IAtomContainer ac)
         {
-            bool isIn = false;
-            int count = 0;
-            foreach (var neigh in neighs)
-            {
-                if (ac.Contains(neigh))
-                {
-                    count += 1;
-                }
-            }
-            if (count > 0)
-            {
-                isIn = true;
-            }
-            return isIn;
+            int count = neighs.Where(neigh => ac.Contains(neigh)).Count();
+            return count > 0;
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the PiContactDetectionDescriptor object.
-        /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
-
-        /// <summary>
-        /// Gets the parameterType attribute of the PiContactDetectionDescriptor object.
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name)
-        {
-            if (string.Equals(name, "checkAromaticity", StringComparison.Ordinal)) return true;
-            return null;
-        }
-
-        IDescriptorValue IAtomPairDescriptor.Calculate(IAtom atom, IAtom atom2, IAtomContainer container)
-            => Calculate(atom, atom2, container);
+        IDescriptorResult IAtomPairDescriptor.Calculate(IAtom atom, IAtom atom2) => Calculate(atom, atom2);
     }
 }

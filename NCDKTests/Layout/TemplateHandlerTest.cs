@@ -169,7 +169,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void Convert()
         {
-            TemplateHandler templateHandler = new TemplateHandler(Silent.ChemObjectBuilder.Instance);
+            TemplateHandler templateHandler = new TemplateHandler(CDK.Builder);
             using (var bout = new MemoryStream())
             {
                 templateHandler.ToIdentityTemplateLibrary().Store(bout);

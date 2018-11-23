@@ -106,7 +106,7 @@ namespace <#= ns.NS #>
         }
 
         /// <summary>
-        ///  The label of this <see cref="PseudoAtom"/>.
+        /// The label of this <see cref="PseudoAtom"/>.
         /// </summary>
         public virtual string Label
         {

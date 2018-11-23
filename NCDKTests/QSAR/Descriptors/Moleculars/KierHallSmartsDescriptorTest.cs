@@ -19,38 +19,14 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all test for the KierHallSmartsDescriptor
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class KierHallSmartsDescriptorTest : MolecularDescriptorTest
+    public class KierHallSmartsDescriptorTest : MolecularDescriptorTest<KierHallSmartsDescriptor>
     {
-        private readonly IReadOnlyList<string> names;
-
-        public KierHallSmartsDescriptorTest()
-        {
-            SetDescriptor(typeof(KierHallSmartsDescriptor));
-            names = Descriptor.DescriptorNames;
-        }
-
-        private int GetIndex(string name)
-        {
-            for (int i = 0; i < names.Count; i++)
-            {
-                if (names[i].Equals(name)) return i;
-            }
-            return -1;
-        }
-
         [TestMethod()]
         public void Test1()
         {
@@ -60,11 +36,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
-            var value = Descriptor.Calculate(mol);
-            ArrayResult<int> result = (ArrayResult<int>)value.Value;
+            var result = CreateDescriptor(mol).Calculate();
+            var values = result.Values;
 
-            Assert.AreEqual(79, result.Length);
-            Assert.AreEqual(1, result[GetIndex("khs.sOH")]);
+            Assert.AreEqual(79, result.Count);
+            Assert.AreEqual(1, result["khs.sOH"]);
+            Assert.AreEqual(result["khs.sOH"], result.KHSsOH);
         }
 
         [TestMethod()]
@@ -76,15 +53,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
-            var value = Descriptor.Calculate(mol);
-            ArrayResult<int> result = (ArrayResult<int>)value.Value;
+            var result = CreateDescriptor(mol).Calculate();
+            var values = result.Values;
 
-            Assert.AreEqual(79, result.Length);
-            Assert.AreEqual(2, result[GetIndex("khs.sOH")]);
-            Assert.AreEqual(1, result[GetIndex("khs.dO")]);
-            Assert.AreEqual(1, result[GetIndex("khs.ssO")]);
-            Assert.AreEqual(1, result[GetIndex("khs.sNH2")]);
-            Assert.AreEqual(1, result[GetIndex("khs.ssNH")]);
+            Assert.AreEqual(79, result.Count);
+            Assert.AreEqual(2, result["khs.sOH"]);
+            Assert.AreEqual(1, result["khs.dO"]);
+            Assert.AreEqual(1, result["khs.ssO"]);
+            Assert.AreEqual(1, result["khs.sNH2"]);
+            Assert.AreEqual(1, result["khs.ssNH"]);
         }
 
         [TestMethod()]
@@ -96,12 +73,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
-            var value = Descriptor.Calculate(mol);
-            ArrayResult<int> result = (ArrayResult<int>)value.Value;
+            var result = CreateDescriptor(mol).Calculate();
+            var values = result.Values;
 
-            Assert.AreEqual(79, result.Length);
-            Assert.AreEqual(2, result[GetIndex("khs.tsC")]);
-            Assert.AreEqual(2, result[GetIndex("khs.ssssC")]);
+            Assert.AreEqual(79, result.Count);
+            Assert.AreEqual(2, result["khs.tsC"]);
+            Assert.AreEqual(2, result["khs.ssssC"]);
         }
     }
 }

@@ -16,163 +16,76 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Charges;
-using NCDK.QSAR.Results;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
-using System;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
-    ///  Pi electronegativity is given by X = a + bq + c(q*q)
+    /// Pi electronegativity is given by X = a + bq + c(q*q)
     /// </summary>
-    /// <remarks>
-    /// <para>
-    /// This descriptor uses these parameters:
-    /// <list type="table">
-    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
-    /// <item><term>maxIterations</term><term>0</term><term>Number of maximum iterations</term></item>
-    /// </list>
-    /// </para>
-    /// </remarks>
     /// <seealso cref="Electronegativity"/>
     // @author      Miguel Rojas
     // @cdk.created 2006-05-17
     // @cdk.module  qsaratomic
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:piElectronegativity
-    public partial class PiElectronegativityDescriptor : IAtomicDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#piElectronegativity")]
+    public partial class PiElectronegativityDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
-        /// <summary>Number of maximum iterations</summary>
-        private int maxIterations = -1;
-        /// <summary>Number of maximum resonance structures</summary>
-        private int maxResonStruc = -1;
-        /// <summary> make a lone pair electron checker. Default true</summary>
-        private bool lpeChecker = true;
+        IAtomContainer container;
+        IAtomContainer clonedContainer = null;
+        PiElectronegativity electronegativity;
 
-        private static readonly string[] NAMES = { "elecPiA" };
-        private PiElectronegativity electronegativity;
-
-        /// <summary>
-        ///  Constructor for the PiElectronegativityDescriptor object
-        /// </summary>
-        public PiElectronegativityDescriptor()
+        /// <param name="maxIterations">Number of maximum iterations</param>
+        /// <param name="checkLonePairElectron">Checking lone pair electrons. Default <see langword="true"/></param>
+        /// <param name="maxResonanceStructures">Number of maximum resonance structures to be searched</param>
+        public PiElectronegativityDescriptor(IAtomContainer container,
+            int maxIterations = int.MaxValue,
+            bool checkLonePairElectron = true,
+            int maxResonanceStructures = int.MaxValue
+            )
         {
+            clonedContainer = (IAtomContainer)container.Clone();
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(clonedContainer);
+            if (checkLonePairElectron)
+                CDK.LonePairElectronChecker.Saturate(clonedContainer);
             electronegativity = new PiElectronegativity();
+            if (maxIterations != int.MaxValue)
+                electronegativity.MaxIterations = maxIterations;
+            if (maxResonanceStructures != int.MaxValue)
+                electronegativity.MaxResonanceStructures = maxResonanceStructures;
+
+            this.container = container;
         }
 
-        /// <summary>
-        ///  Gets the specification attribute of the PiElectronegativityDescriptor object
-        /// </summary>
-        public IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#piElectronegativity",
-                typeof(PiElectronegativityDescriptor).FullName, "The Chemistry Development Kit");
-
-        /// <summary>
-        ///  Sets the parameters attribute of the PiElectronegativityDescriptor object
-        /// </summary>
-        /// <remarks>
-        /// The number of maximum iterations.
-        /// <list type="bullet">
-        /// <item>
-        /// <term><value>1</value></term>
-        /// <description>maxIterations</description>
-        /// </item>
-        /// <item>
-        /// <term><value>2</value></term>
-        /// <description>maxResonStruc</description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// <exception cref="CDKException"></exception>
-        public IReadOnlyList<object> Parameters
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            set
+            public Result(double value)
             {
-                if (value.Count > 3) throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
-                if (!(value[0] is int)) throw new CDKException("The parameter must be of type int");
-
-                maxIterations = (int)value[0];
-
-                if (value.Count > 1 && value[1] != null)
-                {
-                    if (!(value[1] is bool)) throw new CDKException("The parameter must be of type bool");
-                    lpeChecker = (bool)value[1];
-                }
-
-                if (value.Count > 2 && value[2] != null)
-                {
-                    if (!(value[2] is int)) throw new CDKException("The parameter must be of type int");
-                    maxResonStruc = (int)value[2];
-                }
+                this.PiElectronegativity = value;
             }
-            get
-            {
-                // return the parameters as used for the descriptor calculation
-                return new object[] { maxIterations, lpeChecker, maxResonStruc };
-            }
+
+            [DescriptorResultProperty("elecPiA")]
+            public double PiElectronegativity { get; private set; }
+
+            public double Value => PiElectronegativity;
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
-
         /// <summary>
-        ///  The method calculates the pi electronegativity of a given atom
-        ///  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
+        /// The method calculates the pi electronegativity of a given atom
+        /// It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
         /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
-        /// <param name="atomContainer">AtomContainer</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="Result"/> is requested</param>
         /// <returns>return the pi electronegativity</returns>
-        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer atomContainer)
+        public Result Calculate(IAtom atom)
         {
-            IAtomContainer clone;
-            IAtom localAtom;
-            try
-            {
-                clone = (IAtomContainer)atomContainer.Clone();
-                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(clone);
-                if (lpeChecker)
-                {
-                    CDK.LonePairElectronChecker.Saturate(atomContainer);
-                }
-                localAtom = clone.Atoms[atomContainer.Atoms.IndexOf(atom)];
-            }
-            catch (CDKException)
-            {
-                return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, null);
-            }
-
-            if (maxIterations != -1 && maxIterations != 0) electronegativity.MaxIterations = maxIterations;
-            if (maxResonStruc != -1 && maxResonStruc != 0) electronegativity.MaxResonanceStructures = maxResonStruc;
-
-            double result = electronegativity.CalculatePiElectronegativity(clone, localAtom);
-
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(result),
-                                       NAMES);
+            var index = container.Atoms.IndexOf(atom);
+            var pe = electronegativity.CalculatePiElectronegativity(clonedContainer, clonedContainer.Atoms[index]);
+            return new Result(pe);
         }
 
-        /// <summary>
-        /// The parameterNames attribute of the SigmaElectronegativityDescriptor object
-        /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations", "lpeChecker", "maxResonStruc" };
-
-        /// <summary>
-        ///  Gets the parameterType attribute of the SigmaElectronegativityDescriptor object
-        /// </summary>
-        /// <param name="name">Description of the Parameter</param>
-        /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name)
-        {
-            if (string.Equals("maxIterations", name, StringComparison.Ordinal))
-                return int.MaxValue;
-            if (string.Equals("lpeChecker", name, StringComparison.Ordinal))
-                return true;
-            if (string.Equals("maxResonStruc", name, StringComparison.Ordinal))
-                return int.MaxValue;
-            return null;
-        }
+        IDescriptorResult IAtomicDescriptor.Calculate(IAtom atom) => Calculate(atom);
     }
 }

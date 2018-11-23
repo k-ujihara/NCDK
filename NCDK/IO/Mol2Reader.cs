@@ -425,12 +425,7 @@ namespace NCDK.IO
 
         private static bool IsElementSymbol(string atomTypeStr)
         {
-            for (int i = 1; i < PeriodicTable.ElementCount; i++)
-            {
-                if (string.Equals(PeriodicTable.GetSymbol(i), atomTypeStr, StringComparison.Ordinal))
-                    return true;
-            }
-            return false;
+            return NaturalElement.SymbolToAtomicNumberMap.ContainsKey(atomTypeStr);
         }
 
         #region IDisposable Support

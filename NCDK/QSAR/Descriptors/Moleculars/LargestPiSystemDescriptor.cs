@@ -19,7 +19,6 @@
 
 using NCDK.Aromaticities;
 using NCDK.Config;
-using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -30,164 +29,78 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <summary>
     /// Class that returns the number of atoms in the largest pi system.
     /// </summary>
-    /// <remarks>
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    /// <item>
-    /// <term>Name</term>
-    /// <term>Default</term>
-    /// <term>Description</term>
-    /// </item>
-    /// <item>
-    /// <term>checkAromaticity</term>
-    /// <term>false</term>
-    /// <term>True is the aromaticity has to be checked</term>
-    /// </item>
-    /// </list>
-    /// </para>
-    /// Returns a single value named <i>nAtomPi</i>
-    /// </remarks>
     // @author chhoppe from EUROSCREEN
     // @cdk.created 2006-1-03
     // @cdk.module qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:largestPiSystem
-    public class LargestPiSystemDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestPiSystem")]
+    public class LargestPiSystemDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private bool checkAromaticity = false;
-        private static readonly string[] NAMES = { "nAtomP" };
+        private readonly IAtomContainer container;
 
-        /// <summary>
-        /// Constructor for the LargestPiSystemDescriptor object.
-        /// </summary>
-        public LargestPiSystemDescriptor() { }
-
-        /// <inheritdoc/> 
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-         new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestPiSystem",
-                typeof(LargestPiSystemDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        /// <summary>
-        /// The parameters attribute of the LargestPiSystemDescriptor object.
-        /// </summary>
-        /// <remarks>
-        /// This descriptor takes one parameter, which should be bool to indicate whether
-        /// aromaticity has been checked <see langword="true"/> or not <see langword="false"/>.
-        /// </remarks>
-        /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public override IReadOnlyList<object> Parameters
+        public LargestPiSystemDescriptor(IAtomContainer container, bool checkAromaticity = false)
         {
-            set
+            container = (IAtomContainer)container.Clone();
+
+            if (checkAromaticity)
             {
-                if (value.Count > 1)
-                {
-                    throw new CDKException("LargestPiSystemDescriptor only expects one parameter");
-                }
-                if (!(value[0] is bool))
-                {
-                    throw new CDKException("The first parameter must be of type bool");
-                }
-                // ok, all should be fine
-                checkAromaticity = (bool)value[0];
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+                Aromaticity.CDKLegacy.Apply(container);
             }
-            get
-            {
-                // return the parameters as used for the descriptor calculation
-                return new object[] { checkAromaticity };
-            }
+
+            this.container = container;
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
-
-        private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception e)
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+            public Result(int value)
+            {
+                this.LargestPiSystemAtomsCount = value;
+            }
+
+            /// <summary>
+            /// The number of atoms in the largest chain.
+            /// </summary>
+            [DescriptorResultProperty("nAtomP")]
+            public int LargestPiSystemAtomsCount { get; private set; }
+
+            public int Value => LargestPiSystemAtomsCount;
         }
 
         /// <summary>
         /// Calculate the count of atoms of the largest pi system in the supplied <see cref="IAtomContainer"/>.
         /// </summary>
-        /// <remarks>
-        /// <para>The method require one parameter:
-        /// <list type="bullet"> 
-        /// <item>if checkAromaticity is true, the method check the aromaticity,</item>
-        /// <item>if false, means that the aromaticity has already been checked</item>
-        /// </list>
-        /// </para>
-        /// </remarks>
-        /// <param name="container">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated</param>
         /// <returns>the number of atoms in the largest pi system of this AtomContainer</returns>
-        /// <seealso cref="Parameters"/>
-        public DescriptorValue<Result<int>> Calculate(IAtomContainer container)
+        public Result Calculate()
         {
-            var originalFlag4 = new bool[container.Atoms.Count];
-            for (int i = 0; i < originalFlag4.Length; i++)
-            {
-                originalFlag4[i] = container.Atoms[i].IsVisited;
-            }
-            if (checkAromaticity)
-            {
-                try
-                {
-                    AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-                    Aromaticity.CDKLegacy.Apply(container);
-                }
-                catch (CDKException e)
-                {
-                    return GetDummyDescriptorValue(e);
-                }
-            }
             int largestPiSystemAtomsCount = 0;
+
             //Set all VisitedFlags to False
             for (int i = 0; i < container.Atoms.Count; i++)
-            {
                 container.Atoms[i].IsVisited = false;
-            }
-            //Debug.WriteLine("Set all atoms to Visited False");
+
             for (int i = 0; i < container.Atoms.Count; i++)
             {
                 //Possible pi System double bond or triple bond, charge, N or O (free electron pair)
                 if ((container.GetMaximumBondOrder(container.Atoms[i]) != BondOrder.Single
                   || Math.Abs(container.Atoms[i].FormalCharge.Value) >= 1
                   || container.Atoms[i].IsAromatic
-                  || container.Atoms[i].AtomicNumber.Equals(NaturalElements.N.AtomicNumber) 
+                  || container.Atoms[i].AtomicNumber.Equals(NaturalElements.N.AtomicNumber)
                   || container.Atoms[i].AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
                  && !container.Atoms[i].IsVisited)
                 {
-                    //Debug.WriteLine("...... -> Accepted");
                     var startSphere = new List<IAtom>();
                     var path = new List<IAtom>();
                     startSphere.Add(container.Atoms[i]);
-                    try
-                    {
-                        BreadthFirstSearch(container, startSphere, path);
-                    }
-                    catch (CDKException e)
-                    {
-                        return GetDummyDescriptorValue(e);
-                    }
+                    BreadthFirstSearch(container, startSphere, path);
                     if (path.Count > largestPiSystemAtomsCount)
-                    {
                         largestPiSystemAtomsCount = path.Count;
-                    }
                 }
-
-            }
-            // restore original flag values
-            for (int i = 0; i < originalFlag4.Length; i++)
-            {
-                container.Atoms[i].IsVisited = originalFlag4[i];
             }
 
-            return new DescriptorValue<Result<int>>(specification, ParameterNames, Parameters, new Result<int>(
-                    largestPiSystemAtomsCount), DescriptorNames);
+            return new Result(largestPiSystemAtomsCount);
         }
-
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         /// Performs a breadthFirstSearch in an AtomContainer starting with a
@@ -235,14 +148,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
-        public override object GetParameterType(string name)
-        {
-            if (string.Equals("checkAromaticity", name, StringComparison.Ordinal))
-                return false;
-            return null;
-        }
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

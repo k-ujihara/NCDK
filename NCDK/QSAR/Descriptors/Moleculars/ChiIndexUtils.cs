@@ -145,7 +145,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             catch (IOException e)
             {
-                throw new CDKException("IO problem occurred when using the CDK atom config\n" + e.Message, e);
+                throw new CDKException($"IO problem occurred when using the CDK atom config\n{e.Message}", e);
             }
             double sum = 0;
             foreach (var aFragList in fragList)
@@ -200,7 +200,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private static int GetValenceElectronCount(IAtom atom)
         {
-            int valency = AtomValenceTool.GetValence(atom);
+            var valency = AtomValenceTool.GetValence(atom);
             return valency - atom.FormalCharge.Value;
         }
 
@@ -329,6 +329,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 paths.Add(tmp);
             }
             return paths;
+        }
+
+        internal static QueryAtomContainer[] MakeQueries(params string[] smiles)
+        {
+            return smiles.Select(n => QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(CDK.SmilesParser.ParseSmiles(n), false)).ToArray();
         }
     }
 }

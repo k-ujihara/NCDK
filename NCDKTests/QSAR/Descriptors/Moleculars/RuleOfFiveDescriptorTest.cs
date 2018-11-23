@@ -16,53 +16,42 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Results;
-using NCDK.Silent;
-using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /// <summary>
-    /// TestSuite that runs all QSAR tests.
-    /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class RuleOfFiveDescriptorTest : MolecularDescriptorTest
+    public class RuleOfFiveDescriptorTest : MolecularDescriptorTest<RuleOfFiveDescriptor>
     {
-        public RuleOfFiveDescriptorTest()
-        {
-            SetDescriptor(typeof(RuleOfFiveDescriptor));
-        }
+        protected override RuleOfFiveDescriptor CreateDescriptor(IAtomContainer mol) => new RuleOfFiveDescriptor(mol, checkAromaticity: true);
 
         [TestMethod()]
         public void TestRuleOfFiveDescriptor()
         {
-            Descriptor.Parameters = new object[] { true };
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCC(OCC)OCC(c1cccc2ccccc12)C4CCC(CCCO)C(CC3CNCNC3)C4"); //
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(2, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(3, CreateDescriptor(mol).Calculate().Value);
         }
 
         [TestMethod()]
         public void TestRuleOfFiveRotatableBonds()
         {
-            Descriptor.Parameters = new object[] { true };
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCC1=CC(NC(=O)CC)=CC(CCC)=C1"); // nRot = 10 (excl. amide C-N bond)
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(0, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(0, CreateDescriptor(mol).Calculate().Value);
         }
 
         [TestMethod()]
         public void TestRuleOfFiveRotatableBondsViolated()
         {
-            Descriptor.Parameters = new object[] { true };
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCCC1=CC(CCC)=CC(NC(=O)CC)=C1"); // nRot = 11 (excl. amide C-N bond)
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(1, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(1, CreateDescriptor(mol).Calculate().Value);
         }
     }
 }

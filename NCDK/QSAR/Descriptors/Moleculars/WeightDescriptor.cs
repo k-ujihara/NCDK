@@ -17,180 +17,83 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.QSAR.Results;
+using NCDK.Config;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Evaluates the weight of atoms of a certain element type.
     /// </summary>
-    /// <remarks>
-    /// <para>
-    /// If the wild-card symbol *
-    /// is specified, the returned value is the molecular weight.
-    /// If an invalid element symbol is specified, the return value is
-    /// 0 and no exception is thrown
-    /// </para>
-    /// <para>This descriptor uses these parameters:
-    /// <list type="table">
-    ///   <item>
-    ///     <term>Name</term>
-    ///     <term>Default</term>
-    ///     <term>Description</term>
-    ///   </item>
-    ///   <item>
-    ///     <term>elementSymbol</term>
-    ///     <term>*</term>
-    ///     <term>If *, returns the molecular weight, otherwise the weight for the given element</term>
-    ///   </item>
-    /// </list>
-    /// </para>
-    /// <para>
-    /// Returns a single value named <i>wX</i> where <i>X</i> is the chemical symbol
-    /// or <i>MW</i> if * is specified as a parameter.
-    /// </para>
-    /// </remarks>
     // @author      mfe4
     // @cdk.created 2004-11-13
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:weight
-    public class WeightDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weight")]
+    public class WeightDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private string elementName = "*";
+        private readonly IAtomContainer container;
 
-        /// <summary>
-        ///  Constructor for the WeightDescriptor object.
-        /// </summary>
-        public WeightDescriptor() { }
-
-        /// <inheritdoc/>
-        public override IImplementationSpecification Specification => specification;
-        private static readonly DescriptorSpecification specification =
-            new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weight",
-                typeof(WeightDescriptor).FullName,
-                "The Chemistry Development Kit");
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<object> Parameters
+        /// <param name="container">The AtomContainer for which this descriptor is to be calculated. If 'H'
+        /// is specified as the element symbol make sure that the AtomContainer has hydrogens.</param>
+        public WeightDescriptor(IAtomContainer container)
         {
-            set
-            {
-                if (value.Count > 1)
-                {
-                    throw new CDKException("weight only expects one parameter");
-                }
-                if (!(value[0] is string))
-                {
-                    throw new CDKException("The parameter must be of type string");
-                }
-                // ok, all should be fine
-                elementName = (string)value[0];
-            }
-            get
-            {
-                // return the parameters as used for the descriptor calculation
-                return new object[] { elementName };
-            }
+            this.container = container;
         }
 
-        public override IReadOnlyList<string> DescriptorNames
+        [DescriptorResult]
+        public class Result : AbstractDescriptorResult
         {
-            get
+            public Result(double value)
             {
-                string name = "w";
-                if (string.Equals(elementName, "*", StringComparison.Ordinal))
-                    name = "MW";
-                else
-                    name += elementName;
-                return new string[] { name };
+                this.Weight = value;
             }
-        }
 
-        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
-        {
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            public Result(Exception e) : base(e) { }
+
+            [DescriptorResultProperty]
+            public double Weight { get; private set; }
+
+            public double Value => Weight;
         }
 
         /// <summary>
         /// Calculate the weight of specified element type in the supplied <see cref="IAtomContainer"/>.
         /// </summary>
-        /// <param name="container">The AtomContainer for which this descriptor is to be calculated. If 'H'
-        /// is specified as the element symbol make sure that the AtomContainer has hydrogens.</param>
         /// <returns>The total weight of atoms of the specified element type</returns>
-        public DescriptorValue<Result<double>> Calculate(IAtomContainer container)
+        /// <param name="symbol">If *, returns the molecular weight, otherwise the weight for the given element</param>
+        public Result Calculate(string symbol = "*")
         {
-            double weight = 0;
-            switch (elementName)
+            var iso = CDK.IsotopeFactory;
+            var h = iso.GetMajorIsotope(NaturalElements.H.AtomicNumber);
+
+            double weight;
+            switch (symbol)
             {
                 case "*":
-                    try
-                    {
-                        for (int i = 0; i < container.Atoms.Count; i++)
-                        {
-                            weight += CDK.IsotopeFactory.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
-                            int hcount = container.Atoms[i].ImplicitHydrogenCount ?? 0;
-                            weight += (hcount * 1.00782504);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        return GetDummyDescriptorValue(e);
-                    }
+                    weight = container.Atoms
+                        .Select(atom => iso.GetMajorIsotope(atom.AtomicNumber.Value).ExactMass.Value
+                                      + (atom.ImplicitHydrogenCount ?? 0) * h.ExactMass.Value)
+                        .Sum();
                     break;
                 case "H":
-                    try
-                    {
-                        var h = CDK.IsotopeFactory.GetMajorIsotope("H");
-                        for (int i = 0; i < container.Atoms.Count; i++)
-                        {
-                            if (container.Atoms[i].Symbol.Equals(elementName, StringComparison.Ordinal))
-                            {
-                                weight += CDK.IsotopeFactory.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
-                            }
-                            else
-                            {
-                                weight += (container.Atoms[i].ImplicitHydrogenCount.Value * h.ExactMass.Value);
-                            }
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        return GetDummyDescriptorValue(e);
-                    }
+                    weight = container.Atoms
+                        .Select(atom =>
+                           (atom.AtomicNumber.Value == NaturalElements.H.AtomicNumber
+                            ? 1
+                            : (atom.ImplicitHydrogenCount ?? 0)) * h.ExactMass.Value)
+                        .Sum();
                     break;
                 default:
-                    try
-                    {
-                        for (int i = 0; i < container.Atoms.Count; i++)
-                        {
-                            if (container.Atoms[i].Symbol.Equals(elementName, StringComparison.Ordinal))
-                            {
-                                weight += CDK.IsotopeFactory.GetMajorIsotope(container.Atoms[i].Symbol).ExactMass.Value;
-                            }
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        return GetDummyDescriptorValue(e);
-                    }
+                    var number = NaturalElement.ToAtomicNumber(symbol);
+                    weight = container.Atoms.Count(atom => atom.AtomicNumber.Value == number) * iso.GetMajorIsotope(number).ExactMass.Value;
                     break;
             }
 
-            return new DescriptorValue<Result<double>>(specification, ParameterNames, Parameters, new Result<double>(weight), DescriptorNames);
+            return new Result(weight);
         }
 
-        /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "elementSymbol" };
-
-        /// <inheritdoc/>
-        public override object GetParameterType(string name) => "";
-
-        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
     }
 }

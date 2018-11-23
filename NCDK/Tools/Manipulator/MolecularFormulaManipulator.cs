@@ -208,9 +208,9 @@ namespace NCDK.Tools.Manipulator
                 sb.Append('[')
                   .Append(mass)
                   .Append(']')
-                  .Append(NaturalElement.OfNumber(elem).Symbol);
+                  .Append(PeriodicTable.GetSymbol(elem));
             else
-                sb.Append(NaturalElement.OfNumber(elem).Symbol);
+                sb.Append(PeriodicTable.GetSymbol(elem));
             if (count != 0)
                 sb.Append(count);
         }
@@ -308,7 +308,7 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="GetHTML(IMolecularFormula)"/>
         public static string GetString(IMolecularFormula formula, bool setOne)
         {
-            if (ContainsElement(formula, formula.Builder.NewElement("C")))
+            if (ContainsElement(formula, NaturalElements.C.Element))
                 return GetString(formula, OrderEleHillWithCarbons, setOne, false);
             else
                 return GetString(formula, OrderEleHillNoCarbons, setOne, false);
