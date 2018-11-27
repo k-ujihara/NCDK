@@ -336,7 +336,7 @@ namespace NCDK.Layout
                 if (prevBond != null && IsColinear(atom, Molecule.GetConnectedBonds(atom)))
                 {
 
-                    int atomicNumber = atom.AtomicNumber.Value;
+                    int atomicNumber = atom.AtomicNumber;
                     int charge = atom.FormalCharge.Value;
 
                     // double length of the last bond to determining next placement

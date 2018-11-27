@@ -63,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
             var factory = CDK.IsotopeFactory;
 
-            return new Result(Math.Abs(bond.Begin.AtomicNumber.Value - bond.End.AtomicNumber.Value));
+            return new Result(Math.Abs(bond.Begin.AtomicNumber - bond.End.AtomicNumber));
         }
 
         IDescriptorResult IBondDescriptor.Calculate(IBond bond) => Calculate(bond);

@@ -799,11 +799,7 @@ namespace NCDK.Stereo
         private static int GetAtomicNumber(IAtom a)
         {
             var elem = a.AtomicNumber;
-            if (elem != null)
-                return elem.Value;
-            if (a is IPseudoAtom)
-                return 0;
-            throw new ArgumentException("an atom had an undefieind atomic number");
+            return elem;
         }
 
         /// <summary>

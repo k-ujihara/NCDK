@@ -157,7 +157,7 @@ namespace NCDK.Graphs.InChI
                     {
                         try
                         {
-                            var massNumber = CDK.IsotopeFactory.GetMajorIsotope(cAt.AtomicNumber.Value).MassNumber.Value;
+                            var massNumber = CDK.IsotopeFactory.GetMajorIsotope(cAt.AtomicNumber).MassNumber.Value;
                             cAt.MassNumber = massNumber + (isotopicMass - ISOTOPIC_SHIFT_FLAG);
                         }
                         catch (IOException e)

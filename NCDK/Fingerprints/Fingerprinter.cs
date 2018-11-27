@@ -496,7 +496,7 @@ namespace NCDK.Fingerprints
 
         private static int GetElem(IAtom atom)
         {
-            return atom.AtomicNumber ?? 0;
+            return atom.AtomicNumber;
         }
 
         private static string GetAtomSymbol(IAtom atom)

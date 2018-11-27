@@ -97,7 +97,7 @@ namespace NCDK.Config
 {
     public static partial class NaturalElement
     {
-        internal static IReadOnlyDictionary<string, int> Symbol0Map { get; } = new Dictionary<string, int>()
+        internal static IReadOnlyDictionary<string, int> SymbolToAtomicNumberMap { get; } = new Dictionary<string, int>()
             {
 <#
         foreach (var nn in name_and_numbers)
@@ -115,7 +115,7 @@ namespace NCDK.Config
         /// <summary>
         /// Lookup elements by symbol / name.
         /// </summary>
-        internal static IReadOnlyDictionary<string, int> SymbolMap { get; } = new Dictionary<string, int>()
+        internal static IReadOnlyDictionary<string, int> StringToAtomicNumberMap { get; } = new Dictionary<string, int>()
             {
 <#
         foreach (var nn in name_and_numbers)
@@ -158,7 +158,7 @@ namespace NCDK.Config
         /// <summary>
         /// Lookup elements by atomic number.
         /// </summary>
-        internal static IReadOnlyList<IElement> Elements { get; } = new IElement[] 
+        public static IReadOnlyList<IElement> Elements { get; } = new IElement[] 
             { 
 <# foreach (var nn in name_and_numbers.Where(n => !n.IsObsolete)) { #>
                 NaturalElements.<#= nn.Name #>.Element, 

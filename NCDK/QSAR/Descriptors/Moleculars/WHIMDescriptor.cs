@@ -300,7 +300,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     break;
                 default:
                     for (int i = 0; i < ac.Atoms.Count; i++)
-                        wt[i] = hash[ac.Atoms[i].AtomicNumber.Value];
+                        wt[i] = hash[ac.Atoms[i].AtomicNumber];
                     break;
             }
 

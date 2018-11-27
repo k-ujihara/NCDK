@@ -197,11 +197,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\ChemObjectConfig.ttinclude" Link="ChemObjectConfig.ttinclude" />
-    <None Include="..\Config.ttinclude" Link="Config.ttinclude" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="dotNetRDF" Version="2.1.0" />
     <PackageReference Include="MathNet.Numerics.Signed" Version="4.6.0" />
   </ItemGroup>

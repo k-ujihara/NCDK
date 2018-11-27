@@ -58,7 +58,7 @@ namespace NCDK.Default
             IIsotope i = new Isotope(6, "C", 12, 12.001, 80.0);
             Assert.AreEqual(12, i.MassNumber);
             Assert.AreEqual("C", i.Symbol);
-            Assert.AreEqual(6, i.AtomicNumber.Value);
+            Assert.AreEqual(6, i.AtomicNumber);
             Assert.AreEqual(12.001, i.ExactMass.Value, 0.001);
             Assert.AreEqual(80.0, i.NaturalAbundance.Value, 0.001);
         }
@@ -76,7 +76,7 @@ namespace NCDK.Default
         {
             IIsotope i = new Isotope(6, "C", 12.001, 80.0);
             Assert.AreEqual("C", i.Symbol);
-            Assert.AreEqual(6, i.AtomicNumber.Value);
+            Assert.AreEqual(6, i.AtomicNumber);
             Assert.AreEqual(12.001, i.ExactMass.Value, 0.001);
             Assert.AreEqual(80.0, i.NaturalAbundance.Value, 0.001);
         }
@@ -141,7 +141,7 @@ namespace NCDK.Silent
             IIsotope i = new Isotope(6, "C", 12, 12.001, 80.0);
             Assert.AreEqual(12, i.MassNumber);
             Assert.AreEqual("C", i.Symbol);
-            Assert.AreEqual(6, i.AtomicNumber.Value);
+            Assert.AreEqual(6, i.AtomicNumber);
             Assert.AreEqual(12.001, i.ExactMass.Value, 0.001);
             Assert.AreEqual(80.0, i.NaturalAbundance.Value, 0.001);
         }
@@ -159,7 +159,7 @@ namespace NCDK.Silent
         {
             IIsotope i = new Isotope(6, "C", 12.001, 80.0);
             Assert.AreEqual("C", i.Symbol);
-            Assert.AreEqual(6, i.AtomicNumber.Value);
+            Assert.AreEqual(6, i.AtomicNumber);
             Assert.AreEqual(12.001, i.ExactMass.Value, 0.001);
             Assert.AreEqual(80.0, i.NaturalAbundance.Value, 0.001);
         }

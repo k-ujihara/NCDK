@@ -120,7 +120,7 @@ namespace NCDK.Depict
             {
                 var atom = mol.Atoms[i];
                 var deg = adjlist[i].Length;
-                var elem = atom.AtomicNumber.Value;
+                var elem = atom.AtomicNumber;
 
                 if (elem == 6 && deg <= 2 || deg < 2)
                     continue;
@@ -453,7 +453,7 @@ namespace NCDK.Depict
                             }
                             else if (nbr.AtomicNumber > 0)
                             {
-                                nbrSymbols.Add(NewSymbol(nbr.AtomicNumber.Value, nbr.ImplicitHydrogenCount.Value, false));
+                                nbrSymbols.Add(NewSymbol(nbr.AtomicNumber, nbr.ImplicitHydrogenCount.Value, false));
                                 xatoms.Add(nbr);
                             }
                         }
@@ -474,7 +474,7 @@ namespace NCDK.Depict
 
                 // create the symbol
                 var sb = new StringBuilder();
-                sb.Append(NewSymbol(attach.AtomicNumber.Value, hcount, newbonds.Count == 0));
+                sb.Append(NewSymbol(attach.AtomicNumber, hcount, newbonds.Count == 0));
                 string prev = null;
                 int count = 0;
                 nbrSymbols.Sort((o1, o2) =>
@@ -682,7 +682,7 @@ namespace NCDK.Depict
         {
             var bldr = atom.Builder;
 
-            var elem = atom.AtomicNumber.Value;
+            var elem = atom.AtomicNumber;
 
             // attach atom skipped
             if (elem == 0)
@@ -813,7 +813,7 @@ namespace NCDK.Depict
             int numAttach = 0;
             foreach (var atom in mol.Atoms)
             {
-                if (atom.ImplicitHydrogenCount == null || atom.AtomicNumber == null)
+                if (atom.ImplicitHydrogenCount == null)
                     throw new ArgumentException("Implicit hydrogen count or atomic number is null");
                 if (atom.AtomicNumber == 0)
                     numAttach++;
@@ -846,12 +846,12 @@ namespace NCDK.Depict
                 return null;
             if (atom.MassNumber != null && atom.MassNumber != 0)
                 return null;
-            if (atom.AtomicNumber == null || atom.AtomicNumber.Value < 1)
+            if (atom.AtomicNumber < 1)
                 return null;
             var hcnt = atom.ImplicitHydrogenCount;
             if (hcnt == null)
                 return null;
-            var elem = NaturalElement.OfNumber(atom.AtomicNumber.Value);
+            var elem = NaturalElement.OfNumber(atom.AtomicNumber);
             var hsym = (hcnt > 0) ? ((hcnt > 1) ? ("H" + hcnt) : "H") : "";
             // see HydrogenPosition for canonical list
             switch (elem.AtomicNumber)

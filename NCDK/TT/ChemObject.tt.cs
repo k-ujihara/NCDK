@@ -31,8 +31,6 @@
 
 using NCDK.Common.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Security.Permissions;
 
 namespace NCDK.Default
 {
@@ -44,29 +42,12 @@ namespace NCDK.Default
     // @author        steinbeck
     // @cdk.githash
     // @cdk.module data
-    public class ChemObject : IChemObject, ISerializable
+    public class ChemObject : IChemObject
     {
         private bool isPlaced;
         private bool isVisited;
 
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue(nameof(isPlaced), isPlaced);
-            info.AddValue(nameof(isVisited), isVisited);
-        }
-
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        protected ChemObject(SerializationInfo info, StreamingContext context)
-        {
-            isPlaced = info.GetBoolean(nameof(isPlaced));
-            isVisited = info.GetBoolean(nameof(isVisited));
-        }
-
-        [System.NonSerialized]
         private ICollection<IChemObjectListener> listeners;
-
-        [System.NonSerialized]
         private bool notification = true;
 
         public virtual IChemObjectBuilder Builder => ChemObjectBuilder.Instance;
@@ -319,29 +300,12 @@ namespace NCDK.Silent
     // @author        steinbeck
     // @cdk.githash
     // @cdk.module data
-    public class ChemObject : IChemObject, ISerializable
+    public class ChemObject : IChemObject
     {
         private bool isPlaced;
         private bool isVisited;
 
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue(nameof(isPlaced), isPlaced);
-            info.AddValue(nameof(isVisited), isVisited);
-        }
-
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        protected ChemObject(SerializationInfo info, StreamingContext context)
-        {
-            isPlaced = info.GetBoolean(nameof(isPlaced));
-            isVisited = info.GetBoolean(nameof(isVisited));
-        }
-
-        [System.NonSerialized]
         private ICollection<IChemObjectListener> listeners;
-
-        [System.NonSerialized]
         private bool notification = true;
 
         public virtual IChemObjectBuilder Builder => ChemObjectBuilder.Instance;

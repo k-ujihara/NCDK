@@ -27,7 +27,6 @@ namespace NCDK.Renderers.Colors
     /// Colors atoms using CPK color scheme <token>cdk-cite-BER2001</token>. 
     /// </summary>
     // @cdk.module  render
-    // @cdk.githash
     // @cdk.keyword atom coloring, CPK
     [Obsolete(nameof(JmolColors) + " provides more comprehensive CPK color pallet")]
     [Serializable]
@@ -144,11 +143,11 @@ namespace NCDK.Renderers.Colors
         /// <returns>A color for the atom.  The default colour is used if none is found for the atom.</returns>
         public Color GetAtomColor(IAtom atom, Color defaultColor)
         {
-            Color color = defaultColor;
-            string symbol = atom.Symbol.ToUpperInvariant();
-            if (atom.AtomicNumber != null && AtomColorsMassNum.ContainsKey(atom.AtomicNumber.Value))
+            var color = defaultColor;
+            var symbol = atom.Symbol.ToUpperInvariant();
+            if (AtomColorsMassNum.ContainsKey(atom.AtomicNumber))
             {
-                color = AtomColorsMassNum[atom.AtomicNumber.Value]; // lookup by atomic number.
+                color = AtomColorsMassNum[atom.AtomicNumber]; // lookup by atomic number.
             }
             else if (AtomColorsSymbol.ContainsKey(symbol))
             {

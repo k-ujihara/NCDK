@@ -81,7 +81,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var polarizabilitiesH = polarizabilities[NaturalElements.H.AtomicNumber];
             var apol = container.Atoms
                 .Select(
-                    atom => polarizabilities[atom.AtomicNumber.Value]
+                    atom => polarizabilities[atom.AtomicNumber]
                           + polarizabilitiesH * (atom.ImplicitHydrogenCount ?? 0))
                 .Sum();
             return new Result(apol);

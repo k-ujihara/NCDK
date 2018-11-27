@@ -573,16 +573,6 @@ namespace NCDK.Tools.Manipulator
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentException))]
-        public void GetNaturalExactMassNeedsAtomicNumber()
-        {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms[0].AtomicNumber = null;
-            AtomContainerManipulator.GetNaturalExactMass(mol);
-        }
-
-        [TestMethod()]
         public void TestGetNaturalExactMass_IAtomContainer()
         {
             IChemObjectBuilder builder = ChemObjectBuilder.Instance;
@@ -1329,7 +1319,7 @@ namespace NCDK.Tools.Manipulator
             foreach (IAtom atom in mol.Atoms)
             {
                 if (atom.MassNumber == null)
-                    atom.ExactMass = isotopes.GetMajorIsotope(atom.AtomicNumber.Value).ExactMass;
+                    atom.ExactMass = isotopes.GetMajorIsotope(atom.AtomicNumber).ExactMass;
                 else
                     isotopes.Configure(atom);
             }

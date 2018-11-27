@@ -27,7 +27,6 @@ namespace NCDK.Renderers.Colors
     /// Gives a short table of atom colors for 3D display.
     /// </summary>
     // @cdk.module render
-    // @cdk.githash
     [Obsolete(nameof(JmolColors) + " provides more comprehensive color pallet for 3D")]
     public class CDKAtomColors : IAtomColorer
     {
@@ -60,9 +59,8 @@ namespace NCDK.Renderers.Colors
         /// <returns>the atom's color according to this coloring scheme.</returns>
         public Color GetAtomColor(IAtom atom, Color defaultColor)
         {
-            Color color = defaultColor;
-            if (atom.AtomicNumber == null) return defaultColor;
-            int atomnumber = atom.AtomicNumber.Value;
+            var color = defaultColor;
+            int atomnumber = atom.AtomicNumber;
             switch (atomnumber)
             {
                 case 1:

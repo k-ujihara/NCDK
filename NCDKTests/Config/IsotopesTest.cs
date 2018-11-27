@@ -52,7 +52,7 @@ namespace NCDK.Config
             var isofac = BODRIsotopeFactory.Instance;
             Atom atom = new Atom("H");
             isofac.Configure(atom);
-            Assert.AreEqual(1, atom.AtomicNumber.Value);
+            Assert.AreEqual(1, atom.AtomicNumber);
         }
 
         [TestMethod()]
@@ -86,7 +86,7 @@ namespace NCDK.Config
         {
             IsotopeFactory elfac = BODRIsotopeFactory.Instance;
             IElement element = elfac.GetElement("Br");
-            Assert.AreEqual(35, element.AtomicNumber.Value);
+            Assert.AreEqual(35, element.AtomicNumber);
         }
 
         [TestMethod()]

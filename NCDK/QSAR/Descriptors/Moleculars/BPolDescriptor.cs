@@ -71,8 +71,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double bpol = 0;
 
             bpol += container.Bonds
-                .Select(bond => Math.Abs(polarizabilities[bond.Atoms[0].AtomicNumber.Value]
-                                       - polarizabilities[bond.Atoms[1].AtomicNumber.Value]))
+                .Select(bond => Math.Abs(polarizabilities[bond.Atoms[0].AtomicNumber]
+                                       - polarizabilities[bond.Atoms[1].AtomicNumber]))
                 .Sum();
 
             // after going through the bonds, we go through the atoms and see if they have
@@ -80,7 +80,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             // if the count is UNSET, we assume it is 0
             var polarizabilitiesH = polarizabilities[1];
             bpol += container.Atoms
-                .Select(atom => Math.Abs((polarizabilities[atom.AtomicNumber.Value] - polarizabilitiesH)
+                .Select(atom => Math.Abs((polarizabilities[atom.AtomicNumber] - polarizabilitiesH)
                                        * (atom.ImplicitHydrogenCount ?? 0)))
                 .Sum();
 

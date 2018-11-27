@@ -86,7 +86,7 @@ namespace NCDK.QSAR
 
         public static int GetValence(IAtom atom)
         {
-            if (!valencesTable.TryGetValue(atom.AtomicNumber.Value, out int ret))
+            if (!valencesTable.TryGetValue(atom.AtomicNumber, out int ret))
                 throw new NoSuchAtomException();
             return ret;
         }

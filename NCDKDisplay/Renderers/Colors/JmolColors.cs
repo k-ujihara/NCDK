@@ -153,7 +153,7 @@ namespace NCDK.Renderers.Colors
         {
             var elem = NaturalElement.ToAtomicNumber(atom.Symbol);
             if (elem == NaturalElements.Unknown.AtomicNumber)
-                elem = atom.AtomicNumber.Value;
+                elem = atom.AtomicNumber;
             switch (elem)
             {
                 case NaturalElements.Hydrogen.AtomicNumber:

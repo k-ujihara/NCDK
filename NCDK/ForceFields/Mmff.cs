@@ -258,7 +258,7 @@ namespace NCDK.ForceFields
                                 int focus = -1;
                                 foreach (var w in adjList[v])
                                 {
-                                    int elem = mol.Atoms[w].AtomicNumber.Value;
+                                    int elem = mol.Atoms[w].AtomicNumber;
                                     if (elem == NaturalElements.Sulfur.AtomicNumber || elem == NaturalElements.Phosphorus.AtomicNumber)
                                     {
                                         if (focus >= 0)

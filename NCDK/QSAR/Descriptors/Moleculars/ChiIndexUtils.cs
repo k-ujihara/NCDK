@@ -182,7 +182,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             break;
                     }
 
-                    var z = atom.AtomicNumber.Value;
+                    var z = atom.AtomicNumber;
 
                     // TODO there should be a neater way to get the valence electron count
                     var zv = GetValenceElectronCount(atom);

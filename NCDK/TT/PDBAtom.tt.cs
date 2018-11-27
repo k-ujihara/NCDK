@@ -39,7 +39,6 @@ namespace NCDK.Default
     /// normally associated with atoms in such files.
     /// </summary>
     // @cdk.module data
-    // @cdk.githash
     // @see  Atom
     public class PDBAtom : Atom, ICloneable, IPDBAtom
     {
@@ -193,7 +192,6 @@ namespace NCDK.Silent
     /// normally associated with atoms in such files.
     /// </summary>
     // @cdk.module data
-    // @cdk.githash
     // @see  Atom
     public class PDBAtom : Atom, ICloneable, IPDBAtom
     {

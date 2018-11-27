@@ -32,8 +32,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Common.Serialization;
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace NCDK.Default
@@ -46,10 +44,9 @@ namespace NCDK.Default
     /// </summary>
     // @author       steinbeck
     // @cdk.created  2001-08-08
-    // @cdk.githash
     // @cdk.keyword  atom, type 
     public class AtomType
-        : Isotope, IAtomType, ISerializable
+        : Isotope, IAtomType
     {
         /// <summary>
         /// The maximum bond order allowed for this atom type.
@@ -100,46 +97,6 @@ namespace NCDK.Default
         internal bool isAromatic;
         internal bool isInRing;
         internal bool isReactiveCenter;
-
-        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue(nameof(maxBondOrder), maxBondOrder);
-            info.AddNullableValue(nameof(bondOrderSum), bondOrderSum);
-            info.AddNullableValue(nameof(covalentRadius), covalentRadius);
-            info.AddNullableValue(nameof(formalCharge), formalCharge);
-            info.AddValue(nameof(hybridization), hybridization);
-            info.AddNullableValue(nameof(valency), valency);
-            info.AddNullableValue(nameof(formalNeighbourCount), formalNeighbourCount);
-            info.AddValue(nameof(atomTypeName), atomTypeName);
-            info.AddValue(nameof(isHydrogenBondAcceptor), isHydrogenBondAcceptor);
-            info.AddValue(nameof(isHydrogenBondDonor), isHydrogenBondDonor);
-            info.AddValue(nameof(isAliphatic), isAliphatic);
-            info.AddValue(nameof(isAromatic), isAromatic);
-            info.AddValue(nameof(isInRing), isInRing);
-            info.AddValue(nameof(isReactiveCenter), isReactiveCenter);
-        }
-
-        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
-        protected AtomType(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            maxBondOrder = (BondOrder)info.GetInt32(nameof(maxBondOrder));
-            bondOrderSum = info.GetNullable<double>(nameof(bondOrderSum));
-            covalentRadius = info.GetNullable<double>(nameof(covalentRadius));
-            formalCharge = info.GetNullable<int>(nameof(formalCharge));
-            hybridization = (Hybridization)info.GetInt32(nameof(hybridization));
-            valency = info.GetNullable<int>(nameof(valency));
-            formalNeighbourCount = info.GetNullable<int>(nameof(formalNeighbourCount));
-            atomTypeName = info.GetString(nameof(atomTypeName));
-            isHydrogenBondAcceptor = info.GetBoolean(nameof(isHydrogenBondAcceptor));
-            isHydrogenBondDonor = info.GetBoolean(nameof(isHydrogenBondDonor));
-            isAliphatic = info.GetBoolean(nameof(isAliphatic));
-            isAromatic = info.GetBoolean(nameof(isAromatic));
-            isInRing = info.GetBoolean(nameof(isInRing));
-            isReactiveCenter = info.GetBoolean(nameof(isReactiveCenter));
-        }
 
         /// <summary>
         /// Constructor for the AtomType object.
@@ -410,10 +367,9 @@ namespace NCDK.Silent
     /// </summary>
     // @author       steinbeck
     // @cdk.created  2001-08-08
-    // @cdk.githash
     // @cdk.keyword  atom, type 
     public class AtomType
-        : Isotope, IAtomType, ISerializable
+        : Isotope, IAtomType
     {
         /// <summary>
         /// The maximum bond order allowed for this atom type.
@@ -464,46 +420,6 @@ namespace NCDK.Silent
         internal bool isAromatic;
         internal bool isInRing;
         internal bool isReactiveCenter;
-
-        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue(nameof(maxBondOrder), maxBondOrder);
-            info.AddNullableValue(nameof(bondOrderSum), bondOrderSum);
-            info.AddNullableValue(nameof(covalentRadius), covalentRadius);
-            info.AddNullableValue(nameof(formalCharge), formalCharge);
-            info.AddValue(nameof(hybridization), hybridization);
-            info.AddNullableValue(nameof(valency), valency);
-            info.AddNullableValue(nameof(formalNeighbourCount), formalNeighbourCount);
-            info.AddValue(nameof(atomTypeName), atomTypeName);
-            info.AddValue(nameof(isHydrogenBondAcceptor), isHydrogenBondAcceptor);
-            info.AddValue(nameof(isHydrogenBondDonor), isHydrogenBondDonor);
-            info.AddValue(nameof(isAliphatic), isAliphatic);
-            info.AddValue(nameof(isAromatic), isAromatic);
-            info.AddValue(nameof(isInRing), isInRing);
-            info.AddValue(nameof(isReactiveCenter), isReactiveCenter);
-        }
-
-        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
-        protected AtomType(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            maxBondOrder = (BondOrder)info.GetInt32(nameof(maxBondOrder));
-            bondOrderSum = info.GetNullable<double>(nameof(bondOrderSum));
-            covalentRadius = info.GetNullable<double>(nameof(covalentRadius));
-            formalCharge = info.GetNullable<int>(nameof(formalCharge));
-            hybridization = (Hybridization)info.GetInt32(nameof(hybridization));
-            valency = info.GetNullable<int>(nameof(valency));
-            formalNeighbourCount = info.GetNullable<int>(nameof(formalNeighbourCount));
-            atomTypeName = info.GetString(nameof(atomTypeName));
-            isHydrogenBondAcceptor = info.GetBoolean(nameof(isHydrogenBondAcceptor));
-            isHydrogenBondDonor = info.GetBoolean(nameof(isHydrogenBondDonor));
-            isAliphatic = info.GetBoolean(nameof(isAliphatic));
-            isAromatic = info.GetBoolean(nameof(isAromatic));
-            isInRing = info.GetBoolean(nameof(isInRing));
-            isReactiveCenter = info.GetBoolean(nameof(isReactiveCenter));
-        }
 
         /// <summary>
         /// Constructor for the AtomType object.

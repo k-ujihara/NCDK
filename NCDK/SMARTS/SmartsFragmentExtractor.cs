@@ -400,7 +400,7 @@ namespace NCDK.SMARTS
                 {
                     IBond bond = mol.Bonds[bondAdj[atmIdx][i]];
                     IAtom nbr = bond.GetOther(atom);
-                    if (nbr.AtomicNumber != null && nbr.AtomicNumber == 1)
+                    if (nbr.AtomicNumber == 1)
                         hcount++;
                     int bord = bond.Order.IsUnset() ? 0 : bond.Order.Numeric();
                     if (bord == 0)

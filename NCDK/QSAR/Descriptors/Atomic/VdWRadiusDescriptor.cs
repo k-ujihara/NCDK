@@ -60,7 +60,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>The Van der Waals radius of the atom</returns>
         public Result Calculate(IAtom atom)
         {
-            var vdwradius = PeriodicTable.GetVdwRadius(atom.AtomicNumber.Value);
+            var vdwradius = PeriodicTable.GetVdwRadius(atom.AtomicNumber);
             return new Result(vdwradius.Value);
         }
 

@@ -68,7 +68,7 @@ namespace NCDK
         IElement NewElement();
         IElement NewElement(IElement element);
         IElement NewElement(string symbol);
-        IElement NewElement(string symbol, int? atomicNumber);
+        IElement NewElement(string symbol, int atomicNumber);
         IFragmentAtom NewFragmentAtom();
         ILonePair NewLonePair();
         ILonePair NewLonePair(IAtom atom);

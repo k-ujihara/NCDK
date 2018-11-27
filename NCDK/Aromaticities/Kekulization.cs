@@ -118,28 +118,27 @@ namespace NCDK.Aromaticities
         /// <returns>atoms that can require a double-bond</returns>
         private static BitArray IsAvailable(int[][] graph, IAtom[] atoms, EdgeToBondMap bonds)
         {
-            BitArray available = new BitArray(atoms.Length);
+            var available = new BitArray(atoms.Length);
 
             // for all atoms, select those that require a double-bond
             for (int i = 0; i < atoms.Length; i++)
             {
-                IAtom atom = atoms[i];
+                var atom = atoms[i];
 
                 // preconditions
-                if (atom.AtomicNumber == null)
-                    throw new ArgumentException("atom " + (i + 1) + " had unset atomic number");
                 if (atom.FormalCharge == null)
                     throw new ArgumentException("atom " + (i + 1) + " had unset formal charge");
                 if (atom.ImplicitHydrogenCount == null)
                     throw new ArgumentException("atom " + (i + 1) + " had unset implicit hydrogen count");
 
-                if (!atom.IsAromatic) continue;
+                if (!atom.IsAromatic)
+                    continue;
 
                 // count preexisting pi-bonds, a higher bond order causes a skip
                 int nPiBonds = 0;
                 foreach (var w in graph[i])
                 {
-                    BondOrder order = bonds[i, w].Order;
+                    var order = bonds[i, w].Order;
                     if (order == BondOrder.Double)
                     {
                         nPiBonds++;
@@ -151,7 +150,7 @@ namespace NCDK.Aromaticities
                 }
 
                 // check if a pi bond can be assigned
-                int element = atom.AtomicNumber.Value;
+                int element = atom.AtomicNumber;
                 int charge = atom.FormalCharge.Value;
                 int valence = graph[i].Length + atom.ImplicitHydrogenCount.Value + nPiBonds;
 
@@ -160,7 +159,7 @@ namespace NCDK.Aromaticities
                     available.Set(i, true);
                 }
 
-                continue_ATOMS:
+            continue_ATOMS:
                 ;
             }
 

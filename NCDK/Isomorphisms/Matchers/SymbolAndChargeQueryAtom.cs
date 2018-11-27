@@ -24,7 +24,8 @@ namespace NCDK.Isomorphisms.Matchers
 {
     // @cdk.module  isomorphism
     [Obsolete]
-    public class SymbolAndChargeQueryAtom : QueryAtom, IQueryAtom
+    public class SymbolAndChargeQueryAtom 
+        : QueryAtom, IQueryAtom
     {
         public SymbolAndChargeQueryAtom(IChemObjectBuilder builder)
            : base(builder)

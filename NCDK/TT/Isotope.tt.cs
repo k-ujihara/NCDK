@@ -28,9 +28,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Common.Serialization;
 using System;
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace NCDK.Default
@@ -52,29 +50,11 @@ namespace NCDK.Default
     // @cdk.created    2001-08-21 
     // @cdk.keyword     isotope 
     public class Isotope
-        : Element, IIsotope, ICloneable, ISerializable
+        : Element, IIsotope, ICloneable
     {
         private double? naturalAbundance;
         private double? exactMass;
         private int? massNumber;
-
-        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddNullableValue(nameof(naturalAbundance), naturalAbundance);
-            info.AddNullableValue(nameof(exactMass), exactMass);
-            info.AddNullableValue(nameof(massNumber), massNumber);
-        }
-
-        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
-        protected Isotope(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            naturalAbundance = info.GetNullable<double>(nameof(naturalAbundance));
-            exactMass = info.GetNullable<double>(nameof(exactMass));
-            massNumber = info.GetNullable<int>(nameof(massNumber));
-        }
 
         /// <summary>
         /// Constructor for the Isotope object.
@@ -260,29 +240,11 @@ namespace NCDK.Silent
     // @cdk.created    2001-08-21 
     // @cdk.keyword     isotope 
     public class Isotope
-        : Element, IIsotope, ICloneable, ISerializable
+        : Element, IIsotope, ICloneable
     {
         private double? naturalAbundance;
         private double? exactMass;
         private int? massNumber;
-
-        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddNullableValue(nameof(naturalAbundance), naturalAbundance);
-            info.AddNullableValue(nameof(exactMass), exactMass);
-            info.AddNullableValue(nameof(massNumber), massNumber);
-        }
-
-        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
-        protected Isotope(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            naturalAbundance = info.GetNullable<double>(nameof(naturalAbundance));
-            exactMass = info.GetNullable<double>(nameof(exactMass));
-            massNumber = info.GetNullable<int>(nameof(massNumber));
-        }
 
         /// <summary>
         /// Constructor for the Isotope object.

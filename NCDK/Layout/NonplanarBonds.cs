@@ -843,7 +843,7 @@ namespace NCDK.Layout
         {
             var elem = atom.AtomicNumber;
             var hcnt = atom.ImplicitHydrogenCount;
-            if (elem == null || hcnt == null)
+            if (hcnt == null)
                 return false;
             if (elem == 6 && hcnt <= 1 && deg + hcnt == 4)
             {
@@ -922,9 +922,9 @@ namespace NCDK.Layout
                 return false;
 
             var iDegree = graph[i].Length;
-            var iElem = iAtom.AtomicNumber.Value;
+            var iElem = iAtom.AtomicNumber;
             var jDegree = graph[j].Length;
-            var jElem = jAtom.AtomicNumber.Value;
+            var jElem = jAtom.AtomicNumber;
 
             // rank carbon's last
             if (iElem == 6)
@@ -1100,8 +1100,7 @@ namespace NCDK.Layout
         {
             var atom = container.Atoms[idx];
             // error: uninit atom
-            if (atom.AtomicNumber == null ||
-                atom.FormalCharge == null ||
+            if (atom.FormalCharge == null ||
                 atom.ImplicitHydrogenCount == null)
                 return false;
             int chg = atom.FormalCharge.Value;

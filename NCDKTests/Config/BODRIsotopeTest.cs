@@ -32,7 +32,7 @@ namespace NCDK.Config
         {
             IIsotope isotope = new BODRIsotope("C", 6, 12, 12.0, 99.0);
             Assert.AreEqual("C", isotope.Symbol);
-            Assert.AreEqual(6, isotope.AtomicNumber.Value);
+            Assert.AreEqual(6, isotope.AtomicNumber);
             Assert.AreEqual(12, isotope.MassNumber.Value);
             Assert.AreEqual(12.0, isotope.ExactMass.Value, 0.001);
             Assert.AreEqual(99.0, isotope.NaturalAbundance.Value, 0.001);
@@ -59,7 +59,7 @@ namespace NCDK.Config
                 NaturalAbundance = 0.364
             };
             // check if original
-            Assert.AreEqual(6, isotope.AtomicNumber.Value);
+            Assert.AreEqual(6, isotope.AtomicNumber);
             Assert.AreEqual(12, isotope.MassNumber.Value);
             Assert.AreEqual(12.0, isotope.ExactMass.Value, 0.001);
             Assert.AreEqual(99.0, isotope.NaturalAbundance.Value, 0.001);

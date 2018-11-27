@@ -907,8 +907,8 @@ namespace NCDK.SMARTS
                     var mol = new QueryAtomContainer(null);
                     Assert.IsTrue(Smarts.Parse(mol, smarts), smarts);
                     var expr = GetAtomExpr(mol.Atoms[0]);
-                    var ee = new Expr(ExprType.Element, e.AtomicNumber.Value);
-                    var ea = new Expr(AliphaticElement, e.AtomicNumber.Value);
+                    var ee = new Expr(ExprType.Element, e.AtomicNumber);
+                    var ea = new Expr(AliphaticElement, e.AtomicNumber);
                     Assert.IsTrue(expr.Equals(ee) || expr.Equals(ea));
                 }
             }

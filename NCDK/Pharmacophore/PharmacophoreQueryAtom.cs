@@ -39,7 +39,8 @@ namespace NCDK.Pharmacophore
     // @cdk.module pcore
     // @cdk.keyword pharmacophore
     // @cdk.keyword 3D isomorphism
-    public class PharmacophoreQueryAtom : Silent.Atom, IQueryAtom
+    public class PharmacophoreQueryAtom
+        : Silent.Atom, IQueryAtom
     {
         /// <summary>
         /// Creat a new query pharmacophore group

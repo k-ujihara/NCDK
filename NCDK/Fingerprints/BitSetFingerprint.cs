@@ -25,14 +25,12 @@ using NCDK.Common.Collections;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace NCDK.Fingerprints
 {
     // @author jonalv
     // @cdk.module     standard
-    // @cdk.githash
-    public class BitSetFingerprint : IBitFingerprint, ISerializable
+    public class BitSetFingerprint : IBitFingerprint
     {
         private BitArray bitset;
 
@@ -161,16 +159,6 @@ namespace NCDK.Fingerprints
                     yield return i;
             }
             yield break;
-        }
-
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue(nameof(bitset), BitArrays.AsBitString(bitset));
-        }
-
-        protected BitSetFingerprint(SerializationInfo info, StreamingContext context)
-        {
-            bitset = BitArrays.FromString((string)info.GetValue(nameof(bitset), typeof(string)));
         }
     }
 }

@@ -52,13 +52,6 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void NoSymbol()
-        {
-            new CDKToBeam().ToBeamAtom(new Atom());
-        }
-
-        [TestMethod()]
         public void UnknownSymbol()
         {
             var a = new PseudoAtom("ALA")

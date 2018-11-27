@@ -44,7 +44,6 @@ namespace NCDK.Hash
     /// <seealso cref="ConjugatedAtomEncoder"/>
     // @author John May
     // @cdk.module hash
-    // @cdk.githash
     public
     partial class BasicAtomEncoder : System.IComparable<BasicAtomEncoder>, System.IComparable
 			 , IAtomEncoder 
@@ -207,7 +206,7 @@ namespace NCDK.Hash
         private static EncodeDelegate[] MakeListOnEncode()
         {
             var listOnEncode = new EncodeDelegate[values.Length];
-            listOnEncode[O.AtomicNumber] = (atom, container) => atom.AtomicNumber ?? 32451169;
+            listOnEncode[O.AtomicNumber] = (atom, container) => atom.AtomicNumber;
             listOnEncode[O.MassNumber] = (atom, container) => atom.MassNumber ?? 32451179;
             listOnEncode[O.FormalCharge] = (atom, container) => atom.FormalCharge ?? 32451193;
             listOnEncode[O.NConnectedAtoms] = (atom, container) => container.GetConnectedBonds(atom).Count();

@@ -34,9 +34,9 @@ namespace NCDK.Config
     internal sealed class ImmutableElement : IElement
     {
         private readonly string  symbol;
-        private readonly int? atomicNumber;
+        private readonly int atomicNumber;
 
-        internal ImmutableElement(string element, int? atomicNumber)
+        internal ImmutableElement(string element, int atomicNumber)
         {
             this.symbol = element;
             this.atomicNumber = atomicNumber;
@@ -49,7 +49,7 @@ namespace NCDK.Config
         public bool IsPlaced { get { return false; } set { } }
         public bool IsVisited { get { return false; } set { } }
 
-        public int? AtomicNumber { get { return atomicNumber; } set { } }
+        public int AtomicNumber { get { return atomicNumber; } set { } }
         public string Symbol { get { return symbol; } set { } }
 
         public string Id { get { return null; } set { } }

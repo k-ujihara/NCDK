@@ -318,7 +318,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 var atom = container.Atoms[i];
                 var numConnectedBonds = container.GetConnectedBonds(atom).Count();
                 atypes[i][1] = i;
-                if (atomicNum == (atom.AtomicNumber == null ? 0 : atom.AtomicNumber))
+                if (atomicNum == atom.AtomicNumber)
                     atypes[i][0] = numConnectedBonds;
                 else
                     atypes[i][0] = -1;

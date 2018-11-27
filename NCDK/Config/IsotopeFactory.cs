@@ -60,12 +60,11 @@ namespace NCDK.Config
         protected void Add(IIsotope isotope)
         {
             var atomicNum = isotope.AtomicNumber;
-            Trace.Assert(atomicNum != null);
-            var isotopesForElement = isotopes[atomicNum.Value];
+            var isotopesForElement = isotopes[atomicNum];
             if (isotopesForElement == null)
             {
                 isotopesForElement = new List<IIsotope>();
-                isotopes[atomicNum.Value] = isotopesForElement;
+                isotopes[atomicNum] = isotopesForElement;
             }
             isotopesForElement.Add(isotope);
         }

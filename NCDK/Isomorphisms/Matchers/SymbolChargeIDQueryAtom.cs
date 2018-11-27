@@ -23,8 +23,8 @@ using System.Text;
 namespace NCDK.Isomorphisms.Matchers
 {
     // @cdk.module  isomorphism
-    // @cdk.githash
-    public class SymbolChargeIDQueryAtom : QueryAtom, IQueryAtom
+    public class SymbolChargeIDQueryAtom 
+        : QueryAtom, IQueryAtom
     {
         public SymbolChargeIDQueryAtom(IChemObjectBuilder builder)
             : base(builder)

@@ -29,7 +29,6 @@ namespace NCDK.Geometries.CIP.Rules
     /// Compares to <see cref="ILigand"/>s based on atomic numbers.
     /// </summary>
     // @cdk.module cip
-    // @cdk.githash
     internal class AtomicNumberRule : ISequenceSubRule<ILigand>
     {
         public int Compare(ILigand ligand1, ILigand ligand2)
@@ -40,8 +39,8 @@ namespace NCDK.Geometries.CIP.Rules
         private static int GetAtomicNumber(ILigand ligand)
         {
             var atomNumber = ligand.LigandAtom.AtomicNumber;
-            if (atomNumber != null)
-                return atomNumber.Value;
+            if (atomNumber != 0)
+                return atomNumber;
             return PeriodicTable.GetAtomicNumber(ligand.LigandAtom.Symbol);
         }
     }

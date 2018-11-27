@@ -48,8 +48,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// The descriptor returns an integer array result of 79 values with the
     /// names (see <see href="http://www.edusoft-lc.com/molconn/manuals/350/appV.html">here</see>
     /// for the corresponding chemical groups).
-    /// </para>
-    /// </remarks>
+    /// </para></remarks>
     // @author Rajarshi Guha
     // @cdk.module qsarmolecular
     // @cdk.dictref qsar-descriptors:kierHallSmarts

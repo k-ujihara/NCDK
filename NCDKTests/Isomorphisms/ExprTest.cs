@@ -796,15 +796,6 @@ namespace NCDK.Isomorphisms
         }
 
         [TestMethod()]
-        public void TestGroupNull()
-        {
-            var expr = new Expr(ExprType.PeriodicGroup, Tools.PeriodicTable.GetGroup(NaturalElements.Chlorine.AtomicNumber));
-            var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
-            m_atom.SetupGet(n => n.AtomicNumber).Returns((int?)null);
-            Assert.IsFalse(expr.Matches(atom));
-        }
-
-        [TestMethod()]
         public void TestHybridisation0F()
         {
             var expr = new Expr(ExprType.HybridisationNumber, 0);

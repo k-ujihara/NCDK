@@ -804,8 +804,7 @@ namespace NCDK.IO
             }
             else
             {
-                int element = atom.AtomicNumber ?? 0;
-
+                int element = atom.AtomicNumber;
                 int charge = atom.FormalCharge ?? 0;
 
                 int implicitValence = MDLValence.ImplicitValence(element, charge, explicitValence);

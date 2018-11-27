@@ -801,24 +801,23 @@ namespace NCDK.IO
             var charge = atom.FormalCharge ?? 0;
             var element = atom.AtomicNumber;
             int valence = 0;
-            if (element != null)
+
+            var implied = MDLValence.ImplicitValence(element, charge, explicitValence);
+            int actual;
+            if (atom.ImplicitHydrogenCount != null)
+                actual = explicitValence + atom.ImplicitHydrogenCount.Value;
+            else if (atom.Valency != null)
+                actual = atom.Valency.Value;
+            else
+                return 0;
+            if (implied != actual)
             {
-                var implied = MDLValence.ImplicitValence(element.Value, charge, explicitValence);
-                int actual;
-                if (atom.ImplicitHydrogenCount != null)
-                    actual = explicitValence + atom.ImplicitHydrogenCount.Value;
-                else if (atom.Valency != null)
-                    actual = atom.Valency.Value;
-                else
-                    return 0;
-                if (implied != actual)
-                {
-                    if (actual == 0)
-                        return 15;
-                    else if (actual > 0 && actual < 15)
-                        return actual;
-                }
+                if (actual == 0)
+                    return 15;
+                else if (actual > 0 && actual < 15)
+                    return actual;
             }
+
             return valence;
         }
 

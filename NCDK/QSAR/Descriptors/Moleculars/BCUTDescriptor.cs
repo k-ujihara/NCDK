@@ -313,7 +313,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 var counter = 0;
                 foreach (var atom in container.Atoms.Where(atom => !atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)))
                 {
-                    diagvalue[counter] = iso.GetMajorIsotope(atom.AtomicNumber.Value).ExactMass.Value;
+                    diagvalue[counter] = iso.GetMajorIsotope(atom.AtomicNumber).ExactMass.Value;
                     counter++;
                 }
             }

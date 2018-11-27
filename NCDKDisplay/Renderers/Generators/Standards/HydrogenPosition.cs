@@ -328,7 +328,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the position</returns>
         internal static HydrogenPosition UsingDefaultPlacement(IAtom atom)
         {
-            if (PrefixedH.Contains(atom.AtomicNumber.Value))
+            if (PrefixedH.Contains(atom.AtomicNumber))
                 return Left;
             return Right;
         }

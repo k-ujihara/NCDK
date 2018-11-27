@@ -42,7 +42,7 @@ namespace NCDK.Config
 
         internal readonly IReadOnlyDictionary<string, object> properties = NCDK.Common.Collections.Dictionaries.Empty<string, object>();
 
-        internal int? atomicNumber;
+        internal int atomicNumber;
         internal string symbol;
 
         internal double? naturalAbundance;
@@ -124,7 +124,7 @@ namespace NCDK.Config
             set { ThrowModifyException(); }
         }
 
-        public int? AtomicNumber
+        public int AtomicNumber
         {
             get { return atomicNumber; }
             set { ThrowModifyException(); }

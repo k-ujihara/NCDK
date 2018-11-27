@@ -99,7 +99,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Determine the number of amino acids groups the supplied <see cref="IAtomContainer"/>.
         /// </summary>
         /// <returns>the number of aromatic atoms of this AtomContainer</returns>
-        /// <seealso cref="Parameters"/>
         public Result Calculate()
         {            
             var results = new List<int>(substructureSet.Count);

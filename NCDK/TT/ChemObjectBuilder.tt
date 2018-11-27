@@ -41,22 +41,20 @@ namespace <#= ns.NS #>
     /// </summary>
     /// <example>
     /// <code>    
-    ///     IChemObjectBuilder builder = ChemObjectBuilder.Instance;
-    /// 
-    ///     IAtom a = builder.NewAtom();
-    ///     IAtom c12 = builder.NewAtom("C");
-    ///     IAtom c13 = builder.NewAtom(builder.NewIsotope("C", 13));
+    /// IChemObjectBuilder builder = ChemObjectBuilder.Instance;
+    /// IAtom a = builder.NewAtom();
+    /// IAtom c12 = builder.NewAtom("C");
+    /// IAtom c13 = builder.NewAtom(builder.NewIsotope("C", 13));
     /// </code>
     /// </example>
     // @author        egonw
     // @author        john may
     // @cdk.module    data
-    // @cdk.githash 
     public sealed class ChemObjectBuilder
         : IChemObjectBuilder
     {
         public static IChemObjectBuilder Instance { get; } = new ChemObjectBuilder();
-
+        
         private bool LegacyAtomContainer { get; set; }
 
         internal ChemObjectBuilder()
@@ -97,116 +95,131 @@ namespace <#= ns.NS #>
         public T New<T>() where T : IAtomContainer, new() => new T();
 #pragma warning restore
 
-        // elements
-        public IAtom NewAtom() => new Atom();
-        public IAtom NewAtom(IElement element) => new Atom(element);
-        public IAtom NewAtom(int elem) => new Atom(elem);
-        public IAtom NewAtom(int elem, int hcnt) => new Atom(elem, hcnt);
-        public IAtom NewAtom(int elem, int hcnt, int fchg) => new Atom(elem, hcnt, fchg);
-        public IAtom NewAtom(string elementSymbol) => new Atom(elementSymbol);
-        public IAtom NewAtom(string elementSymbol, Vector2 point2d) => new Atom(elementSymbol, point2d);
-        public IAtom NewAtom(string elementSymbol, Vector3 point3d) => new Atom(elementSymbol, point3d);
-        public IPseudoAtom NewPseudoAtom() => new PseudoAtom();
-        public IPseudoAtom NewPseudoAtom(string label) => new PseudoAtom(label);
-        public IPseudoAtom NewPseudoAtom(IElement element) => new PseudoAtom(element);
-        public IPseudoAtom NewPseudoAtom(string label, Vector2 point2d) => new PseudoAtom(label, point2d);
-        public IPseudoAtom NewPseudoAtom(string label, Vector3 point3d) => new PseudoAtom(label, point3d);
-        public IElement NewElement() => new Element();
-        public IElement NewElement(IElement element) => new Element(element);
-        public IElement NewElement(string symbol) => new Element(symbol);
-        public IElement NewElement(string symbol, int? atomicNumber) => new Element(symbol, atomicNumber);
-        public IAtomType NewAtomType(IElement element) => new AtomType(element);
-        public IAtomType NewAtomType(string elementSymbol) => new AtomType(elementSymbol);
-        public IAtomType NewAtomType(string identifier, string elementSymbol) => new AtomType(identifier, elementSymbol);
-        public IFragmentAtom NewFragmentAtom() => new FragmentAtom();
-        public IPDBAtom NewPDBAtom(IElement element) => new PDBAtom(element);
-        public IPDBAtom NewPDBAtom(string symbol) => new PDBAtom(symbol);
-        public IPDBAtom NewPDBAtom(string symbol, Vector3 coordinate) => new PDBAtom(symbol, coordinate);
-        public IIsotope NewIsotope(string elementSymbol) => new Isotope(elementSymbol);
-        public IIsotope NewIsotope(int atomicNumber, string elementSymbol, int massNumber, double exactMass, double abundance) => new Isotope(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
-        public IIsotope NewIsotope(int atomicNumber, string elementSymbol, double exactMass, double abundance) => new Isotope(atomicNumber, elementSymbol, exactMass, abundance);
-        public IIsotope NewIsotope(string elementSymbol, int massNumber) => new Isotope(elementSymbol, massNumber);
-        public IIsotope NewIsotope(IElement element) => new Isotope(element);
+<#
+{
+    const string ptn_type = @"\w+|\w+(((?'Open'<)[^<>]*)+((?'Close-Open'>))+)*(?(Open)(?!))";
+    const string ptn_id = "[A-Za-z_][A-Za-z_0-9]*";
+    Regex re = new Regex(
+          @"^(?<spaces>\s*)"
+        + @"(?<body>"
+            + @"(?<ret_type>" + ptn_type + ")" 
+            + @"\s+"
+            + @"(?<name>" + ptn_id + ")" + @"(?:\<\w+\>)?"
+            + @"\("
+            + @"("
+                + @"(?<param_type>" + ptn_type + ")"
+                + @"\s+"
+                + @"(?<param_name>" + ptn_id + ")" 
+                + @"("
+                    + @"\s*\,\s*"
+                    + @"(?<param_type>" + ptn_type + ")"
+                    + @"\s+"
+                    + @"(?<param_name>" + ptn_id + ")" 
+                + @")*"
+            + @")?"
+            + @"\)\s*"
+            + @"(?<where>where\s+(?<genericT>\w+)\s*\:\s*(?:" + ptn_type + "))?"
+        + @")"
+        + @"\s*\;"
+        ,
+        RegexOptions.Compiled);
 
-        // electron containers
-        public IBond NewBond() => new Bond();
-        public IBond NewBond(IAtom atom1, IAtom atom2) => new Bond(atom1, atom2);
-        public IBond NewBond(IAtom atom1, IAtom atom2, BondOrder order) => new Bond(atom1, atom2, order);
-        public IBond NewBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo) => new Bond(atom1, atom2, order, stereo);
-        public IBond NewBond(IEnumerable<IAtom> atoms) => new Bond(atoms);
-        public IBond NewBond(IEnumerable<IAtom> atoms, BondOrder order) => new Bond(atoms, order);
-        public IBond NewBond(IEnumerable<IAtom> atoms, BondOrder order, BondStereo stereo) => new Bond(atoms, order, stereo);
-        public IElectronContainer NewElectronContainer() => new ElectronContainer();
-        public ISingleElectron NewSingleElectron() => new SingleElectron();
-        public ISingleElectron NewSingleElectron(IAtom atom) => new SingleElectron(atom);
-        public ILonePair NewLonePair() => new LonePair();
-        public ILonePair NewLonePair(IAtom atom) => new LonePair(atom);
-        
-        // atom containers
-        public IAtomContainer NewAtomContainer() => LegacyAtomContainer ? (IAtomContainer)new AtomContainer() : (IAtomContainer)new AtomContainer2();
-        public IAtomContainer NewAtomContainer(IAtomContainer container) => LegacyAtomContainer ? (IAtomContainer) new AtomContainer(container) : (IAtomContainer)new AtomContainer2(container);
-        public IAtomContainer NewAtomContainer(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => LegacyAtomContainer ? (IAtomContainer) new AtomContainer(atoms, bonds) : (IAtomContainer)new AtomContainer2(atoms, bonds);
-        public IRing NewRing() => new Ring();
-        public IRing NewRing(int ringSize, string elementSymbol) => new Ring(ringSize, elementSymbol);
-        public IRing NewRing(IAtomContainer atomContainer) => new Ring(atomContainer);
-        public IRing NewRing(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new Ring(atoms, bonds); 
-        public ICrystal NewCrystal() => new Crystal();
-        public ICrystal NewCrystal(IAtomContainer container) => new Crystal(container);
-        public IPolymer NewPolymer() => new Polymer();
-        public IPDBPolymer NewPDBPolymer() => new PDBPolymer();
-        public IMonomer NewMonomer() => new Monomer();
-        public IPDBMonomer NewPDBMonomer() => new PDBMonomer();
-        public IBioPolymer NewBioPolymer() => new BioPolymer();
-        public IPDBStructure NewPDBStructure() => new PDBStructure();
-        public IAminoAcid NewAminoAcid() => new AminoAcid();
-        public IStrand NewStrand() => new Strand();
-
-        // reactions
-        public IReaction NewReaction() => new Reaction();
-        public IReactionScheme NewReactionScheme() => new ReactionScheme();
-
-        // formula
-        public IMolecularFormula NewMolecularFormula() => new MolecularFormula();
-        public IAdductFormula NewAdductFormula() => new AdductFormula();
-        public IAdductFormula NewAdductFormula(IMolecularFormula formula) => new AdductFormula(formula);
-
-        // chem object sets
-        public IChemObjectSet<T> NewChemObjectSet<T>() where T : IAtomContainer => new ChemObjectSet<T>();
-        public IAtomContainerSet NewAtomContainerSet() => new AtomContainerSet();
-        public IMolecularFormulaSet NewMolecularFormulaSet() => new MolecularFormulaSet();
-        public IMolecularFormulaSet NewMolecularFormulaSet(IMolecularFormula formula) => new MolecularFormulaSet(formula);
-        public IReactionSet NewReactionSet() => new ReactionSet();
-        public IRingSet NewRingSet() => new RingSet();
-        public IChemModel NewChemModel() => new ChemModel();
-        public IChemFile NewChemFile() => new ChemFile();
-        public IChemSequence NewChemSequence() => new ChemSequence();
-        public ISubstance NewSubstance() => new Substance();
-        
-        // stereo components (requires some modification after instantiation)
-        public ITetrahedralChirality NewTetrahedralChirality(IAtom chiralAtom, IReadOnlyList<IAtom> ligandAtoms, TetrahedralStereo chirality)
+    var filename = "../IChemObjectBuilder.cs";
+    var fn = Path.Combine(new FileInfo(this.Host.TemplateFile).Directory.FullName, filename);
+    using (var reader = new StreamReader(fn))
+    {
+        string line;
+        while ((line = reader.ReadLine()) != null)
         {
-            var o = new TetrahedralChirality(chiralAtom, ligandAtoms, chirality)
-            {
-                Builder = this,
-            };
-            return o;
+            line = line.Trim();
+            if (line == "public interface IChemObjectBuilder")
+                break;
         }
-
-        public IDoubleBondStereochemistry CreateDoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, DoubleBondConformation stereo)
+        while ((line = reader.ReadLine()) != null)
         {
-            var o = new DoubleBondStereochemistry(stereoBond, ligandBonds, stereo)
+            var tline = line.Trim();
+            switch (tline)
             {
-                Builder = this,
-            };
-            return o;
-        }
+                case "":
+                case "{":
+                    continue;
+                case "}":
+                    goto break_line_loop;
+            }
+            var match = re.Match(line);
+            
+            var ret_type = match.Groups["ret_type"].Value;
+            var func_name = match.Groups["name"].Value;
+            if (!func_name.StartsWith("New"))
+                continue;
+            func_name = func_name.Substring(3);
 
-        // miscellaneous
-        public IMapping NewMapping(IChemObject objectOne, IChemObject objectTwo) => new Mapping(objectOne, objectTwo);
-        public IChemObject NewChemObject() => new ChemObject();
-        public IChemObject NewChemObject(IChemObject chemObject) => new ChemObject(chemObject);
+            string new_func_name = null;
+            switch (func_name)
+            {
+                case "AtomContainer":
+                    new_func_name = "AtomContainer2";
+                    break;
+            }
+
+            Write(match.Groups["spaces"].Value);
+            Write("public ");
+            Write(match.Groups["body"].Value);
+            Write(" => ");
+
+            if (new_func_name != null)
+            {
+                Write("LegacyAtomContainer ? ");
+                WriteNew(ret_type, func_name, match);
+                Write(" : ");
+                WriteNew(ret_type, new_func_name, match);
+            }
+            else
+            {
+                WriteNew(ret_type, func_name, match);
+            }
+
+            WriteLine(";");
+        }
+    break_line_loop:
+        ;
+    }
+}
+#>        
     }
 }
 <#   
 }
+#>
+<#+
+    List<string> initbuilder = new List<string>() 
+    {
+        "TetrahedralChirality",
+        "DoubleBondStereochemistry",
+    };
+
+    void WriteNew(string ret_type, string func_name, Match match)
+    {
+        Write("(");
+        Write(ret_type);
+        Write(")");
+        Write("new ");
+        Write(func_name);
+
+        if (!string.IsNullOrEmpty(match.Groups["genericT"].Value))
+        {
+            Write("<");
+            Write(match.Groups["genericT"].Value);
+            Write(">");
+        }
+
+        Write("(");
+        Write(string.Join(", ", match.Groups["param_name"].Captures.Cast<Capture>().Select(n => n.Value)));
+        Write(")");
+
+        if (initbuilder.Contains(func_name))
+        {
+            Write(" { Builder = this }");
+        }
+    }
 #>

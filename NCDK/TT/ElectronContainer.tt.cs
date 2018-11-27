@@ -24,10 +24,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Common.Serialization;
 using System;
-using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.Text;
 
 namespace NCDK.Default
@@ -41,26 +38,12 @@ namespace NCDK.Default
     // @cdk.keyword bond 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class ElectronContainer 
-        : ChemObject, IElectronContainer, ICloneable, ISerializable
+        : ChemObject, IElectronContainer, ICloneable
     {
         /// <summary>
         /// Constructs an empty ElectronContainer.
         /// </summary>
         private int? electronCount = 0;
-
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddNullableValue(nameof(electronCount), electronCount);
-        }
-
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        protected ElectronContainer(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            electronCount = info.GetNullable<int>(nameof(electronCount));
-        }
 
         /// <summary>
         /// Returns the number of electrons in this electron container.
@@ -107,26 +90,12 @@ namespace NCDK.Silent
     // @cdk.keyword bond 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class ElectronContainer 
-        : ChemObject, IElectronContainer, ICloneable, ISerializable
+        : ChemObject, IElectronContainer, ICloneable
     {
         /// <summary>
         /// Constructs an empty ElectronContainer.
         /// </summary>
         private int? electronCount = 0;
-
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddNullableValue(nameof(electronCount), electronCount);
-        }
-
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        protected ElectronContainer(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            electronCount = info.GetNullable<int>(nameof(electronCount));
-        }
 
         /// <summary>
         /// Returns the number of electrons in this electron container.

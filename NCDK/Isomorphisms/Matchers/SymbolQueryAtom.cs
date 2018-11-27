@@ -24,7 +24,8 @@ namespace NCDK.Isomorphisms.Matchers
 {
     // @cdk.module  isomorphism
     [Obsolete]
-    public class SymbolQueryAtom : QueryAtom, IQueryAtom
+    public class SymbolQueryAtom 
+        : QueryAtom, IQueryAtom
     {
         private string ID;
         public int HCount { get; set; } = 0;

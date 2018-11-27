@@ -73,21 +73,21 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 case "*":
                     weight = container.Atoms
-                        .Select(atom => iso.GetMajorIsotope(atom.AtomicNumber.Value).ExactMass.Value
+                        .Select(atom => iso.GetMajorIsotope(atom.AtomicNumber).ExactMass.Value
                                       + (atom.ImplicitHydrogenCount ?? 0) * h.ExactMass.Value)
                         .Sum();
                     break;
                 case "H":
                     weight = container.Atoms
                         .Select(atom =>
-                           (atom.AtomicNumber.Value == NaturalElements.H.AtomicNumber
+                           (atom.AtomicNumber == NaturalElements.H.AtomicNumber
                             ? 1
                             : (atom.ImplicitHydrogenCount ?? 0)) * h.ExactMass.Value)
                         .Sum();
                     break;
                 default:
                     var number = NaturalElement.ToAtomicNumber(symbol);
-                    weight = container.Atoms.Count(atom => atom.AtomicNumber.Value == number) * iso.GetMajorIsotope(number).ExactMass.Value;
+                    weight = container.Atoms.Count(atom => atom.AtomicNumber == number) * iso.GetMajorIsotope(number).ExactMass.Value;
                     break;
             }
 

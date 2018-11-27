@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CC1CN[Pt]2(N1)OC(=O)C(C)P(=O)(O)O2");
             var result = CreateDescriptor(mol).Calculate();
-            Assert.IsNotNull(result.Error);
+            Assert.IsNotNull(result.Exception);
         }
     }
 <#

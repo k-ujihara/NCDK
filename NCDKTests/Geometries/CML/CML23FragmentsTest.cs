@@ -104,7 +104,7 @@ namespace NCDK.IO.CML
             Assert.AreEqual(1, mol.Atoms.Count);
             IAtom atom = mol.Atoms[0];
             Assert.AreEqual("C", atom.Symbol);
-            Assert.AreEqual(6, atom.AtomicNumber.Value);
+            Assert.AreEqual(6, atom.AtomicNumber);
         }
 
         [TestMethod()]

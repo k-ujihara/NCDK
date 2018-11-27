@@ -250,7 +250,7 @@ namespace NCDK.Tools.Manipulator
                             AppendElement(stringMF,
                                           null, prev,
                                           setOne || count != 1 ? count : 0);
-                        prev = isotope.AtomicNumber.Value;
+                        prev = isotope.AtomicNumber;
                         count = formula.GetCount(isotope);
                     }
                     else
@@ -268,7 +268,7 @@ namespace NCDK.Tools.Manipulator
                     int count = formula.GetCount(isotope);
                     AppendElement(stringMF,
                             isotope.MassNumber,
-                            isotope.AtomicNumber.Value,
+                            isotope.AtomicNumber,
                             setOne || count != 1 ? count : 0);
                 }
             }

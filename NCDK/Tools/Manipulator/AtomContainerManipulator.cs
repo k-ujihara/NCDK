@@ -222,7 +222,7 @@ namespace NCDK.Tools.Manipulator
                 double mw = 0.0;
                 foreach (var atom in mol.Atoms)
                 {
-                    if (atom.AtomicNumber == null || atom.AtomicNumber == 0)
+                    if (atom.AtomicNumber == 0)
                         throw new ArgumentException("An atom had with unknown (null) atomic number");
                     if (atom.ImplicitHydrogenCount == null)
                         throw new ArgumentException("An atom had with unknown (null) implicit hydrogens");
@@ -265,13 +265,10 @@ namespace NCDK.Tools.Manipulator
                 double mass = 0.0;
                 foreach (var atom in atomContainer.Atoms)
                 {
-
-                    if (atom.AtomicNumber == null)
-                        throw new ArgumentException("an atom had with unknown (null) atomic number");
                     if (atom.ImplicitHydrogenCount == null)
                         throw new ArgumentException("an atom had with unknown (null) implicit hydrogens");
 
-                    mass += isotopes.GetNaturalMass(NaturalElement.OfNumber(atom.AtomicNumber.Value));
+                    mass += isotopes.GetNaturalMass(NaturalElement.OfNumber(atom.AtomicNumber));
                     mass += hydgrogenMass * atom.ImplicitHydrogenCount.Value;
                 }
                 return mass;
@@ -1498,7 +1495,7 @@ namespace NCDK.Tools.Manipulator
 
             for (int i = 0; i < atoms.Length; i++)
             {
-                atoms[i] = builder.NewAtom(src.Atoms[i].AtomicNumber.Value);
+                atoms[i] = builder.NewAtom(src.Atoms[i].AtomicNumber);
             }
             for (int i = 0; i < bonds.Length; i++)
             {

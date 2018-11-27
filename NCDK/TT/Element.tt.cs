@@ -24,11 +24,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Common.Serialization;
 using NCDK.Config;
 using System;
-using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.Text;
 
 namespace NCDK.Default
@@ -43,30 +40,16 @@ namespace NCDK.Default
     /// </example>
     // @cdk.keyword element
     public class Element
-        : ChemObject, IElement, ICloneable, ISerializable
+        : ChemObject, IElement, ICloneable
     {
         /// <summary>The atomic number for this element giving their position in the periodic table.</summary>
-        internal int? atomicNumber;
-
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddNullableValue(nameof(atomicNumber), atomicNumber);
-        }
-
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        protected Element(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            atomicNumber = info.GetNullable<int>(nameof(atomicNumber));
-        }
+        internal int atomicNumber;
 
         /// <summary>
         /// Constructs an empty Element.
         /// </summary>
         public Element()
-            : this(null, null)
+            : this(null, 0)
         {
         }
 
@@ -97,7 +80,7 @@ namespace NCDK.Default
         /// </summary>
         /// <param name="symbol">The element symbol of this element.</param>
         /// <param name="atomicNumber">The atomicNumber of this element.</param>
-        public Element(string symbol, int? atomicNumber)
+        public Element(string symbol, int atomicNumber)
             : base()
         {
             this.atomicNumber = atomicNumber;
@@ -112,7 +95,7 @@ namespace NCDK.Default
         /// the <see cref="IsotopeFactory.Configure(IAtom)"/> method:
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Element_Example.cs+AtomicNumber"]/*' />
         /// </example>
-        public virtual int? AtomicNumber
+        public virtual int AtomicNumber
         {
             get => atomicNumber;
 
@@ -131,11 +114,9 @@ namespace NCDK.Default
         {
             get
             {
-                if (atomicNumber == null)
-                    return null;
-                if (atomicNumber.Value == 0)
+                if (atomicNumber == 0)
                     return "R";
-                return NaturalElement.OfNumber(atomicNumber.Value).Symbol;
+                return NaturalElement.OfNumber(atomicNumber).Symbol;
             }
 
             set
@@ -145,10 +126,10 @@ namespace NCDK.Default
             }
         }
 
-        private static int? SymbolToAtomicNumber(string symbol)
+        private static int SymbolToAtomicNumber(string symbol)
         {
             if (symbol == null)
-                return null;
+                return 0;
             else
                 return NaturalElement.ToAtomicNumber(symbol);
         }
@@ -161,8 +142,7 @@ namespace NCDK.Default
                 sb.Append(", S:").Append(Symbol);
             if (Id != null)
                 sb.Append(", ID:").Append(Id);
-            if (AtomicNumber != null)
-                sb.Append(", AN:").Append(AtomicNumber);
+            sb.Append(", AN:").Append(AtomicNumber);
             sb.Append(')');
             return sb.ToString();
         }
@@ -194,30 +174,16 @@ namespace NCDK.Silent
     /// </example>
     // @cdk.keyword element
     public class Element
-        : ChemObject, IElement, ICloneable, ISerializable
+        : ChemObject, IElement, ICloneable
     {
         /// <summary>The atomic number for this element giving their position in the periodic table.</summary>
-        internal int? atomicNumber;
-
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddNullableValue(nameof(atomicNumber), atomicNumber);
-        }
-
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        protected Element(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            atomicNumber = info.GetNullable<int>(nameof(atomicNumber));
-        }
+        internal int atomicNumber;
 
         /// <summary>
         /// Constructs an empty Element.
         /// </summary>
         public Element()
-            : this(null, null)
+            : this(null, 0)
         {
         }
 
@@ -248,7 +214,7 @@ namespace NCDK.Silent
         /// </summary>
         /// <param name="symbol">The element symbol of this element.</param>
         /// <param name="atomicNumber">The atomicNumber of this element.</param>
-        public Element(string symbol, int? atomicNumber)
+        public Element(string symbol, int atomicNumber)
             : base()
         {
             this.atomicNumber = atomicNumber;
@@ -263,7 +229,7 @@ namespace NCDK.Silent
         /// the <see cref="IsotopeFactory.Configure(IAtom)"/> method:
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Element_Example.cs+AtomicNumber"]/*' />
         /// </example>
-        public virtual int? AtomicNumber
+        public virtual int AtomicNumber
         {
             get => atomicNumber;
 
@@ -281,11 +247,9 @@ namespace NCDK.Silent
         {
             get
             {
-                if (atomicNumber == null)
-                    return null;
-                if (atomicNumber.Value == 0)
+                if (atomicNumber == 0)
                     return "R";
-                return NaturalElement.OfNumber(atomicNumber.Value).Symbol;
+                return NaturalElement.OfNumber(atomicNumber).Symbol;
             }
 
             set
@@ -294,10 +258,10 @@ namespace NCDK.Silent
             }
         }
 
-        private static int? SymbolToAtomicNumber(string symbol)
+        private static int SymbolToAtomicNumber(string symbol)
         {
             if (symbol == null)
-                return null;
+                return 0;
             else
                 return NaturalElement.ToAtomicNumber(symbol);
         }
@@ -310,8 +274,7 @@ namespace NCDK.Silent
                 sb.Append(", S:").Append(Symbol);
             if (Id != null)
                 sb.Append(", ID:").Append(Id);
-            if (AtomicNumber != null)
-                sb.Append(", AN:").Append(AtomicNumber);
+            sb.Append(", AN:").Append(AtomicNumber);
             sb.Append(')');
             return sb.ToString();
         }

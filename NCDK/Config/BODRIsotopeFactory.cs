@@ -94,7 +94,7 @@ namespace NCDK.Config
                 return false;
             try
             {
-                var major = Instance.GetMajorIsotope(atom.AtomicNumber.Value);
+                var major = Instance.GetMajorIsotope(atom.AtomicNumber);
                 if (major == null)
                     return false; // no major isotope
                 return major.MassNumber.Equals(mass);

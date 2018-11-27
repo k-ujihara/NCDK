@@ -89,7 +89,7 @@ namespace NCDK.Config
             XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             Atom atom = new Atom("H");
             isofac.Configure(atom);
-            Assert.AreEqual(1, atom.AtomicNumber.Value);
+            Assert.AreEqual(1, atom.AtomicNumber);
         }
 
         [TestMethod()]
@@ -132,7 +132,7 @@ namespace NCDK.Config
         {
             XMLIsotopeFactory elfac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
             IElement element = elfac.GetElement("Br");
-            Assert.AreEqual(35, element.AtomicNumber.Value);
+            Assert.AreEqual(35, element.AtomicNumber);
         }
 
         [TestMethod()]
@@ -218,7 +218,7 @@ namespace NCDK.Config
             isofac.ConfigureAtoms(container);
             foreach (var atom in container.Atoms)
             {
-                Assert.IsTrue(0 < atom.AtomicNumber.Value);
+                Assert.IsTrue(0 < atom.AtomicNumber);
             }
         }
 

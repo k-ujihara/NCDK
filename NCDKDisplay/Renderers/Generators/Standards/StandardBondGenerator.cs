@@ -1480,7 +1480,7 @@ namespace NCDK.Renderers.Generators.Standards
                 foreach (var atom in container.Atoms)
                 {
                     if (atom.AtomicNumber >= 0 && atom.AtomicNumber < 19)
-                        freq[atom.AtomicNumber.Value]++;
+                        freq[atom.AtomicNumber]++;
                 }
                 return freq;
             }

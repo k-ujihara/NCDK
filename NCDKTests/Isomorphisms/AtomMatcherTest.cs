@@ -88,18 +88,6 @@ namespace NCDK.Isomorphisms
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void ElementError()
-        {
-            AtomMatcher matcher = AtomMatcher.CreateElementMatcher();
-            var m_atom1 = new Mock<IAtom>();
-            var m_atom2 = new Mock<IAtom>();
-            m_atom1.SetupGet(n => n.AtomicNumber).Returns((int?)null);
-            m_atom2.SetupGet(n => n.AtomicNumber).Returns((int?)null);
-            matcher.Matches(m_atom1.Object, m_atom2.Object);
-        }
-
-        [TestMethod()]
         public void QueryMatch()
         {
             AtomMatcher matcher = AtomMatcher.CreateQueryMatcher();

@@ -35,7 +35,8 @@ namespace NCDK.Isomorphisms.Matchers
     // @cdk.created   2004-09-16
     // @cdk.module    isomorphism
     [Obsolete("Use new Expr(Element, 6).And(new Expr(Element, 8)) etc")]
-    public class SymbolSetQueryAtom : QueryAtom, IQueryAtom
+    public class SymbolSetQueryAtom 
+        : QueryAtom, IQueryAtom
     {
         /// <summary>
         /// The symbol Set

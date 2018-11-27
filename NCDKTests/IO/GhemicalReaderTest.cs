@@ -72,7 +72,7 @@ namespace NCDK.IO
             // test reading of formal charges
             IAtom a = m.Atoms[0];
             Assert.IsNotNull(a);
-            Assert.AreEqual(6, a.AtomicNumber.Value);
+            Assert.AreEqual(6, a.AtomicNumber);
             Assert.AreEqual(-0.2, a.Charge.Value, 0.01);
             Assert.AreEqual(0.06677, a.Point3D.Value.X, 0.01);
         }

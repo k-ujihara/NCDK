@@ -25,7 +25,6 @@ namespace NCDK
     /// table for administration of physical or chemical properties
     /// </summary>
     // @author        egonw
-    // @cdk.githash
     // @cdk.module    interfaces
     public partial interface IChemObject
         : ICDKObject, INotify

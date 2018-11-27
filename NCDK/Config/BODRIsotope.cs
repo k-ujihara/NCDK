@@ -34,12 +34,12 @@ namespace NCDK.Config
     internal sealed class BODRIsotope : IIsotope
     {
         private readonly string element;
-        private readonly int? atomicNumber;
+        private readonly int atomicNumber;
         private readonly double? naturalAbundance;
         private readonly double? exactMass;
         private readonly int? massNumber;
 
-        public BODRIsotope(string element, int? atomicNumber, int? massNumber, double? exactMass, double? naturalAbundance)
+        public BODRIsotope(string element, int atomicNumber, int? massNumber, double? exactMass, double? naturalAbundance)
         {
             this.element = element;
             this.atomicNumber = atomicNumber;
@@ -75,7 +75,7 @@ namespace NCDK.Config
 
         public IChemObjectBuilder Builder => null;
 
-        public int? AtomicNumber
+        public int AtomicNumber
         {
             get { return atomicNumber; }
             set { }

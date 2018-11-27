@@ -283,18 +283,19 @@ namespace NCDK.LibIO.DotNetRDF
         private void SerializeElementFields(INode rdfObject, IElement element)
         {
             SerializeChemObjectFields(rdfObject, element);
-            if (element.Symbol != null) g.Assert(new Triple(rdfObject, P_SYMBOL, g.CreateLiteralNode(element.Symbol)));
-            if (element.AtomicNumber != null)
-                g.Assert(new Triple(rdfObject, P_HASATOMICNUMBER, g.CreateLiteralNode(element.AtomicNumber.ToString())));
+            if (element.Symbol != null)
+                g.Assert(new Triple(rdfObject, P_SYMBOL, g.CreateLiteralNode(element.Symbol)));
+            g.Assert(new Triple(rdfObject, P_HASATOMICNUMBER, g.CreateLiteralNode(element.AtomicNumber.ToString())));
         }
 
         private void DeserializeElementFields(INode rdfObject, IAtomType element)
         {
             DeserializeChemObjectFields(rdfObject, element);
             var symbol = g.GetTriplesWithSubjectPredicate(rdfObject, P_SYMBOL).FirstOrDefault();
-            if (symbol != null) element.Symbol = symbol.Object.ToString();
+            if (symbol != null)
+                element.Symbol = symbol.Object.ToString();
             var atomicNumber = g.GetTriplesWithSubjectPredicate(rdfObject, P_HASATOMICNUMBER).FirstOrDefault();
-            if (atomicNumber != null) element.AtomicNumber = int.Parse(atomicNumber.Object.ToString(), NumberFormatInfo.InvariantInfo);
+            element.AtomicNumber = int.Parse(atomicNumber.Object.ToString(), NumberFormatInfo.InvariantInfo);
         }
 
         private void SerializeAtomTypeFields(INode rdfObject, IAtomType type)
@@ -302,7 +303,7 @@ namespace NCDK.LibIO.DotNetRDF
             SerializeIsotopeFields(rdfObject, type);
             if (type.Hybridization != Hybridization.Unset)
             {
-                Hybridization hybrid = type.Hybridization;
+                var hybrid = type.Hybridization;
                 if (HYBRID_TO_RESOURCE.ContainsKey(hybrid))
                     g.Assert(new Triple(rdfObject, P_HASHYBRIDIZATION, g.CreateLiteralNode(HYBRID_TO_RESOURCE[hybrid])));
             }

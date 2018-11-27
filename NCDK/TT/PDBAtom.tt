@@ -41,7 +41,6 @@ namespace <#= ns.NS #>
     /// normally associated with atoms in such files.
     /// </summary>
     // @cdk.module data
-    // @cdk.githash
     // @see  Atom
     public class PDBAtom : Atom, ICloneable, IPDBAtom
     {

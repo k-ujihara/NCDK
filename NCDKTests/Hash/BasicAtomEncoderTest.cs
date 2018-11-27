@@ -47,19 +47,6 @@ namespace NCDK.Hash
         }
 
         [TestMethod()]
-        public void TestAtomicNumber_Null()
-        {
-            var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
-            var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
-            IAtomEncoder encoder = BasicAtomEncoder.AtomicNumber;
-
-            m_atom.SetupGet(n => n.AtomicNumber).Returns((int?)null);
-            Assert.AreEqual(32451169, encoder.Encode(atom, container));
-            m_atom.Verify(n => n.AtomicNumber, Times.Exactly(1));
-            //VerifyNoMoreInteractions(atom, container);
-        }
-
-        [TestMethod()]
         public void TestMassNumber()
         {
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;

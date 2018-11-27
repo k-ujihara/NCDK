@@ -53,7 +53,7 @@ namespace NCDK
         {
             IElement e = (IElement)NewChemObject();
             e.AtomicNumber = 1;
-            Assert.AreEqual(1, e.AtomicNumber.Value);
+            Assert.AreEqual(1, e.AtomicNumber);
         }
 
         [TestMethod()]
@@ -61,7 +61,7 @@ namespace NCDK
         {
             IElement e = (IElement)NewChemObject();
             e.AtomicNumber = 1;
-            Assert.AreEqual(1, e.AtomicNumber.Value);
+            Assert.AreEqual(1, e.AtomicNumber);
         }
 
         [TestMethod()]
@@ -107,7 +107,7 @@ namespace NCDK
 
             // test cloning of atomic number
             elem.AtomicNumber = 5; // don't care about symbol
-            Assert.AreEqual(6, clone.AtomicNumber.Value);
+            Assert.AreEqual(6, clone.AtomicNumber);
         }
 
         /// <summary>Test for RFC #9</summary>

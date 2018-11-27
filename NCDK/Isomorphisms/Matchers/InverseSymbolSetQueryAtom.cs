@@ -31,12 +31,12 @@ namespace NCDK.Isomorphisms.Matchers
     /// match for all non-"C"-Atoms).
     /// </summary>
     // @author        kha
-    // @cdk.githash
     // @cdk.created   2004-09-16
     // @see           SymbolSetQueryAtom
     // @cdk.module    isomorphism
     [Obsolete("Use new Expr(Element, 6).And(new Expr(Element, 8)).Negate() etc")]
-    public class InverseSymbolSetQueryAtom : QueryAtom, IQueryAtom
+    public class InverseSymbolSetQueryAtom 
+        : QueryAtom, IQueryAtom
     {
         private ICollection<string> symbols = new HashSet<string>();
 

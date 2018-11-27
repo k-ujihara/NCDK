@@ -557,7 +557,7 @@ namespace NCDK.IO
             }
             else
             {
-                int element = atom.AtomicNumber ?? 0;
+                int element = atom.AtomicNumber;
                 int charge = atom.FormalCharge ?? 0;
                 int implicitValence = MDLValence.ImplicitValence(element, charge, explicitValence);
                 if (implicitValence < explicitValence)
@@ -749,7 +749,7 @@ namespace NCDK.IO
             // if there was a mass difference, set the mass number
             if (massDiff != 0 && atom.AtomicNumber > 0)
             {
-                var majorIsotope = CDK.IsotopeFactory.GetMajorIsotope(atom.AtomicNumber.Value);
+                var majorIsotope = CDK.IsotopeFactory.GetMajorIsotope(atom.AtomicNumber);
                 if (majorIsotope == null)
                     atom.MassNumber = -1; // checked after M ISO is processed
                 else

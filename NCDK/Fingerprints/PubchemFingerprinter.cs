@@ -136,7 +136,7 @@ namespace NCDK.Fingerprints
             public ElementsCounter(IAtomContainer m)
             {
                 for (int i = 0; i < m.Atoms.Count; i++)
-                    ++counts[m.Atoms[i].AtomicNumber.Value];
+                    ++counts[m.Atoms[i].AtomicNumber];
             }
 
             public int GetCount(int atno)

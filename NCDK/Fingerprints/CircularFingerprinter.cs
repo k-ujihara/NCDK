@@ -395,7 +395,7 @@ namespace NCDK.Fingerprints
 
             var nheavy = atomAdj[aidx].Length;
             var nhydr = hcount[aidx];
-            var atno = atom.AtomicNumber.Value;
+            var atno = atom.AtomicNumber;
 
             var degree = (atno > 0 && atno < ELEMENT_BONDING.Length ? ELEMENT_BONDING[atno] : 0) - nhydr;
             var chg = atom.FormalCharge.Value;
@@ -997,7 +997,7 @@ namespace NCDK.Fingerprints
 
             // make sure the atom has an acceptable environment
             var atom = mol.Atoms[aidx];
-            var atno = atom.AtomicNumber.Value;
+            var atno = atom.AtomicNumber;
             if (atno <= 1 || atno >= ELEMENT_BLOCKS.Length)
                 return null;
             if (ELEMENT_BLOCKS[atno] != 2 /* p-block */)

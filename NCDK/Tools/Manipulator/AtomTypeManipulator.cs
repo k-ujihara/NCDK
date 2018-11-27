@@ -89,8 +89,7 @@ namespace NCDK.Tools.Manipulator
                 {
                     atom.SetProperty(CDKPropertyName.Color, color);
                 }
-                if (atomType.AtomicNumber != null)
-                    atom.AtomicNumber = atomType.AtomicNumber;
+                atom.AtomicNumber = atomType.AtomicNumber;
                 if (atomType.ExactMass != null)
                     atom.ExactMass = atomType.ExactMass;
             }
@@ -111,7 +110,8 @@ namespace NCDK.Tools.Manipulator
             }
             if (string.Equals("X", atomType.AtomTypeName, StringComparison.Ordinal))
             {
-                if (atom.AtomTypeName == null) atom.AtomTypeName = "X";
+                if (atom.AtomTypeName == null)
+                    atom.AtomTypeName = "X";
                 return;
             }
 
@@ -134,7 +134,7 @@ namespace NCDK.Tools.Manipulator
             if (atom.FormalNeighbourCount == null
                     && atomType.FormalNeighbourCount != null)
                 atom.FormalNeighbourCount = atomType.FormalNeighbourCount;
-            if (atom.AtomicNumber == null && atomType.AtomicNumber != null)
+            if (atom.AtomicNumber == 0 && atomType.AtomicNumber != 0)
                 atom.AtomicNumber = atomType.AtomicNumber;
             if (atom.ExactMass == null && atomType.ExactMass != null)
                 atom.ExactMass = atomType.ExactMass;

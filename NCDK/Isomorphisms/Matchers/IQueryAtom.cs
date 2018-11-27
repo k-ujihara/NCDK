@@ -4,7 +4,8 @@ namespace NCDK.Isomorphisms.Matchers
     /// Defines the ability to be matched against <see cref="IAtom"/>'s. Most prominent application
     /// is in isomorphism and substructure matching in the <see cref="UniversalIsomorphismTester"/>.
     /// </summary>
-    public interface IQueryAtom : IAtom
+    public interface IQueryAtom 
+        : IAtom
     {
         /// <summary>
         /// Returns true of the given <paramref name="atom"/> matches this <see cref="IQueryAtom"/>.

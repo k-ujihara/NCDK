@@ -31,7 +31,7 @@ namespace NCDK.Config.AtomTypes
             foreach (var atomTypeElm in doc.Elements(XName_AtomType))
             {
                 var anAtomType = builder.NewAtomType("H");
-                anAtomType.AtomicNumber = null;
+                anAtomType.AtomicNumber = 0;
                 anAtomType.AtomTypeName = atomTypeElm.Attribute(XName_ID)?.Value;
 
                 int piBondCount = 0;

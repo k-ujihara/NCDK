@@ -1070,7 +1070,7 @@ namespace NCDK.Layout
             // isolated atoms, HCl vs NH4+ etc
             if (!bonds.Any())
             {
-                var elem = NaturalElement.OfNumber(atom.AtomicNumber.Value);
+                var elem = NaturalElement.OfNumber(atom.AtomicNumber);
                 // see HydrogenPosition for canonical list
                 switch (elem.AtomicNumber)
                 {
@@ -1359,7 +1359,7 @@ namespace NCDK.Layout
                         {
                             var jAtm = res[i].Atoms[0];
                             if ((iAtm.FormalCharge ?? 0) == (jAtm.FormalCharge ?? 0) &&
-                                (iAtm.AtomicNumber ?? 0) == (jAtm.AtomicNumber ?? 0) &&
+                                iAtm.AtomicNumber == jAtm.AtomicNumber &&
                                 (iAtm.ImplicitHydrogenCount ?? 0) == (jAtm.ImplicitHydrogenCount ?? 0))
                             {
                                 break;
@@ -1643,9 +1643,9 @@ namespace NCDK.Layout
         /// <returns>the atom is a hydrogen</returns>
         private static bool IsHydrogen(IAtom atom)
         {
-            if (atom.AtomicNumber != null)
+            if (atom.AtomicNumber != 0)
                 return atom.AtomicNumber == 1;
-            return NaturalElements.H.AtomicNumber.Equals(atom.AtomicNumber);
+            return NaturalElements.H.Symbol.Equals(atom.Symbol);
         }
 
         /// <summary>
@@ -2437,8 +2437,8 @@ namespace NCDK.Layout
             {
                 if (!visit.Contains(b))
                     return false;
-                var aElem = a.AtomicNumber ?? 0;
-                var bElem = b.AtomicNumber ?? 0;
+                var aElem = a.AtomicNumber;
+                var bElem = b.AtomicNumber;
                 if (aElem != bElem)
                     return false;
                 var aChg = a.FormalCharge ?? 0;

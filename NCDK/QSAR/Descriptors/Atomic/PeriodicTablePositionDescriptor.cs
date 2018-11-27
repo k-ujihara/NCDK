@@ -59,7 +59,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>The period</returns>
         public Result Calculate(IAtom atom)
         {
-            return new Result(Tools.PeriodicTable.GetPeriod(atom.AtomicNumber.Value));
+            return new Result(Tools.PeriodicTable.GetPeriod(atom.AtomicNumber));
         }
 
         IDescriptorResult IAtomicDescriptor.Calculate(IAtom atom) => Calculate(atom);

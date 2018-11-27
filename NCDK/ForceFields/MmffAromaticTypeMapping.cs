@@ -442,7 +442,7 @@ namespace NCDK.ForceFields
                     }
                 }
 
-                contribution[v] = Contribution(molecule.Atoms[v].AtomicNumber.Value, con, val);
+                contribution[v] = Contribution(molecule.Atoms[v].AtomicNumber, con, val);
             }
         }
 

@@ -632,7 +632,7 @@ namespace NCDK.Tools
             {
                 // don't figure it out... it simply does not lack H's
             }
-            else if (atom.AtomicNumber != null && atom.AtomicNumber == 1 || atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+            else if (atom.AtomicNumber == 1)
             {
                 missingHydrogen = (int)(1 - bondOrderSum - singleElectronSum - atom.FormalCharge);
             }

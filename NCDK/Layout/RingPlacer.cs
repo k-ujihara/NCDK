@@ -880,7 +880,7 @@ namespace NCDK.Layout
                     foreach (IAtom atom in ring.Atoms)
                     {
                         var elem = atom.AtomicNumber;
-                        if (elem != null && elem != 6 && elem != 1)
+                        if (elem != 6 && elem != 1)
                             numHeteroAtoms++;
                     }
                     if (numHeteroAtoms > prevNumHeteroAtoms)

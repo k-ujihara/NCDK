@@ -28,7 +28,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     // @cdk.githash
     // @cdk.keyword SMARTS
     [Obsolete]
-    public abstract class SMARTSAtom : QueryAtom, IQueryAtom
+    public abstract class SMARTSAtom 
+        : QueryAtom, IQueryAtom
     {
         protected SMARTSAtom(IChemObjectBuilder builder)
             : base(builder)

@@ -159,15 +159,14 @@ namespace NCDK.Isomorphisms.Matchers
                 // isotope first
                 if (optset.Contains(ExprType.Isotope) && atom.MassNumber != null)
                     expr.And(new Expr(ExprType.Isotope, atom.MassNumber.Value));
-                if (atom.AtomicNumber != null &&
-                   atom.AtomicNumber != 0)
+                if (atom.AtomicNumber != 0)
                 {
                     if (atom.IsAromatic)
                     {
                         if (optset.Contains(ExprType.AromaticElement))
                         {
                             expr.And(new Expr(ExprType.AromaticElement,
-                                              atom.AtomicNumber.Value));
+                                              atom.AtomicNumber));
                         }
                         else
                         {
@@ -175,14 +174,14 @@ namespace NCDK.Isomorphisms.Matchers
                             {
                                 if (optset.Contains(ExprType.Element))
                                     expr.And(new Expr(ExprType.AromaticElement,
-                                                      atom.AtomicNumber.Value));
+                                                      atom.AtomicNumber));
                                 else
                                     expr.And(new Expr(ExprType.IsAromatic));
                             }
                             else if (optset.Contains(ExprType.Element))
                             {
                                 expr.And(new Expr(ExprType.Element,
-                                                  atom.AtomicNumber.Value));
+                                                  atom.AtomicNumber));
                             }
                         }
                     }
@@ -191,7 +190,7 @@ namespace NCDK.Isomorphisms.Matchers
                         if (optset.Contains(ExprType.AliphaticElement))
                         {
                             expr.And(new Expr(ExprType.AliphaticElement,
-                                              atom.AtomicNumber.Value));
+                                              atom.AtomicNumber));
                         }
                         else
                         {
@@ -199,14 +198,14 @@ namespace NCDK.Isomorphisms.Matchers
                             {
                                 if (optset.Contains(ExprType.Element))
                                     expr.And(new Expr(ExprType.AliphaticElement,
-                                                      atom.AtomicNumber.Value));
+                                                      atom.AtomicNumber));
                                 else
                                     expr.And(new Expr(ExprType.IsAliphatic));
                             }
                             else if (optset.Contains(ExprType.Element))
                             {
                                 expr.And(new Expr(ExprType.Element,
-                                                  atom.AtomicNumber.Value));
+                                                  atom.AtomicNumber));
                             }
                         }
                     }

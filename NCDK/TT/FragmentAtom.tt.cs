@@ -38,7 +38,6 @@ namespace NCDK.Default
     /// Class to represent an IPseudoAtom which embeds an IAtomContainer. Very much
     /// like the MDL Molfile "Group" concept.
     /// </summary>
-    // @cdk.githash 
     // @author egonw 
     public class FragmentAtom 
         : PseudoAtom, IFragmentAtom
@@ -88,7 +87,6 @@ namespace NCDK.Silent
     /// Class to represent an IPseudoAtom which embeds an IAtomContainer. Very much
     /// like the MDL Molfile "Group" concept.
     /// </summary>
-    // @cdk.githash 
     // @author egonw 
     public class FragmentAtom 
         : PseudoAtom, IFragmentAtom

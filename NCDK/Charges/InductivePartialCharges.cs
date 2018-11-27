@@ -126,7 +126,7 @@ namespace NCDK.Charges
                     var atom = ac.Atoms[i];
                     symbol = ac.Atoms[i].Symbol;
                     element = ifac.GetElement(symbol);
-                    atomicNumber = element.AtomicNumber.Value;
+                    atomicNumber = element.AtomicNumber;
                     if (modified)
                     {
                         switch (atom.AtomicNumber)
@@ -349,7 +349,7 @@ namespace NCDK.Charges
         /// <param name="atomicNumber">atomic number of the atom</param>
         /// <param name="maxBondOrder">its max bond order</param>
         /// <returns>The covalentRadius value given by the reference</returns>
-        private static double GetCovalentRadius(int? atomicNumber, BondOrder maxBondOrder)
+        private static double GetCovalentRadius(int atomicNumber, BondOrder maxBondOrder)
         {
             double radiusTarget = 0;
             switch (atomicNumber)

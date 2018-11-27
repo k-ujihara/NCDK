@@ -55,7 +55,7 @@ namespace NCDK.Graphs.Invariant
         {
             public int Compare(IAtom o1, IAtom o2)
             {
-                return (o1.AtomicNumber ?? 0).CompareTo(o2.AtomicNumber ?? 0);
+                return (o1.AtomicNumber).CompareTo(o2.AtomicNumber);
             }
         }
 
@@ -63,7 +63,7 @@ namespace NCDK.Graphs.Invariant
         {
             public int Compare(IAtom o1, IAtom o2)
             {
-                return -(o1.AtomicNumber ?? 0).CompareTo(o2.AtomicNumber ?? 0);
+                return -(o1.AtomicNumber).CompareTo(o2.AtomicNumber);
             }
         }
 

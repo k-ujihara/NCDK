@@ -51,7 +51,7 @@ namespace NCDK.Config
         public void TestMassNumber()
         {
             IElement chemObject = new ImmutableElement("C", 12);
-            Assert.AreEqual(12, chemObject.AtomicNumber.Value);
+            Assert.AreEqual(12, chemObject.AtomicNumber);
         }
     }
 }

@@ -76,7 +76,7 @@ namespace NCDK
         }
 
         /// <inheritdoc/>
-        public int? AtomicNumber
+        public int AtomicNumber
         {
             get { return atom.AtomicNumber; }
             set { atom.AtomicNumber = value; }

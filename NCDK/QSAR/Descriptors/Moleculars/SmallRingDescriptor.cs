@@ -587,7 +587,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 for (int n = 0; n < na; n++)
                 {
                     var atom = container.Atoms[n];
-                    var atno = atom.AtomicNumber.Value;
+                    var atno = atom.AtomicNumber;
                     electrons[n] = (ELEMENT_BLOCKS[atno] == 2 ? ELEMENT_VALENCE[atno] : 0) - atom.FormalCharge.Value - implicitH[n];
                 }
                 for (int n = 0; n < nb; n++)

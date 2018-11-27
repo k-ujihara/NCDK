@@ -194,7 +194,7 @@ namespace NCDK.IO
                     {
                         try
                         {
-                            atomType[atomIndex] = CDK.IsotopeFactory.GetElement(anames[i]).AtomicNumber.Value;
+                            atomType[atomIndex] = CDK.IsotopeFactory.GetElement(anames[i]).AtomicNumber;
                         }
                         catch (Exception exception)
                         {

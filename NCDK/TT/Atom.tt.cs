@@ -28,13 +28,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Common.Serialization;
 using NCDK.Config;
 using NCDK.Numerics;
 using NCDK.Tools;
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace NCDK.Default
@@ -60,7 +58,8 @@ namespace NCDK.Default
     // @author     steinbeck
     // @cdk.created    2000-10-02
     // @cdk.keyword    atom
-    public class Atom : AtomType, IAtom, ISerializable
+    public class Atom
+        : AtomType, IAtom
     {
         internal double? charge;
         internal int? implicitHydrogenCount;
@@ -69,40 +68,6 @@ namespace NCDK.Default
         internal Vector3? fractionalPoint3D;
         internal int stereoParity;
         internal bool isSingleOrDouble;
-
-        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddNullableValue(nameof(charge), charge);
-            info.AddNullableValue(nameof(implicitHydrogenCount), implicitHydrogenCount);
-            info.AddNullableValue(nameof(point2D), point2D);
-            info.AddNullableValue(nameof(point3D), point3D);
-            info.AddNullableValue(nameof(fractionalPoint3D), fractionalPoint3D);
-            info.AddValue(nameof(stereoParity), stereoParity);
-            info.AddValue(nameof(isSingleOrDouble), isSingleOrDouble);
-        }
-
-        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
-        protected Atom(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            charge = info.GetNullable<double>(nameof(charge));
-            implicitHydrogenCount = info.GetNullable<int>(nameof(implicitHydrogenCount));
-
-            covalentRadius = info.GetNullable<double>(nameof(covalentRadius));
-            hybridization = (Hybridization)info.GetInt32(nameof(hybridization));
-            valency = info.GetNullable<int>(nameof(valency));
-            formalNeighbourCount = info.GetNullable<int>(nameof(formalNeighbourCount));
-            atomTypeName = info.GetString(nameof(atomTypeName));
-            isHydrogenBondAcceptor = info.GetBoolean(nameof(isHydrogenBondAcceptor));
-            isHydrogenBondDonor = info.GetBoolean(nameof(isHydrogenBondDonor));
-            isAliphatic = info.GetBoolean(nameof(isAliphatic));
-            isAromatic = info.GetBoolean(nameof(isAromatic));
-            isInRing = info.GetBoolean(nameof(isInRing));
-            isReactiveCenter = info.GetBoolean(nameof(isReactiveCenter));
-        }
-
 
         /// <summary>
         /// Constructs an completely unset Atom.
@@ -545,7 +510,8 @@ namespace NCDK.Silent
     // @author     steinbeck
     // @cdk.created    2000-10-02
     // @cdk.keyword    atom
-    public class Atom : AtomType, IAtom, ISerializable
+    public class Atom
+        : AtomType, IAtom
     {
         internal double? charge;
         internal int? implicitHydrogenCount;
@@ -554,40 +520,6 @@ namespace NCDK.Silent
         internal Vector3? fractionalPoint3D;
         internal int stereoParity;
         internal bool isSingleOrDouble;
-
-        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddNullableValue(nameof(charge), charge);
-            info.AddNullableValue(nameof(implicitHydrogenCount), implicitHydrogenCount);
-            info.AddNullableValue(nameof(point2D), point2D);
-            info.AddNullableValue(nameof(point3D), point3D);
-            info.AddNullableValue(nameof(fractionalPoint3D), fractionalPoint3D);
-            info.AddValue(nameof(stereoParity), stereoParity);
-            info.AddValue(nameof(isSingleOrDouble), isSingleOrDouble);
-        }
-
-        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
-        protected Atom(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            charge = info.GetNullable<double>(nameof(charge));
-            implicitHydrogenCount = info.GetNullable<int>(nameof(implicitHydrogenCount));
-
-            covalentRadius = info.GetNullable<double>(nameof(covalentRadius));
-            hybridization = (Hybridization)info.GetInt32(nameof(hybridization));
-            valency = info.GetNullable<int>(nameof(valency));
-            formalNeighbourCount = info.GetNullable<int>(nameof(formalNeighbourCount));
-            atomTypeName = info.GetString(nameof(atomTypeName));
-            isHydrogenBondAcceptor = info.GetBoolean(nameof(isHydrogenBondAcceptor));
-            isHydrogenBondDonor = info.GetBoolean(nameof(isHydrogenBondDonor));
-            isAliphatic = info.GetBoolean(nameof(isAliphatic));
-            isAromatic = info.GetBoolean(nameof(isAromatic));
-            isInRing = info.GetBoolean(nameof(isInRing));
-            isReactiveCenter = info.GetBoolean(nameof(isReactiveCenter));
-        }
-
 
         /// <summary>
         /// Constructs an completely unset Atom.
