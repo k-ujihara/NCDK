@@ -67,7 +67,7 @@ namespace NCDK.Layout
         private readonly IDoubleBondStereochemistry[] doubleBondElements;
 
         /// <summary>Lookup atom index (avoid IAtomContainer).</summary>
-        private readonly IDictionary<IAtom, int> atomToIndex;
+        private readonly Dictionary<IAtom, int> atomToIndex;
 
         /// <summary>Quick lookup of a bond give the atom index of it's atoms.</summary>
         private readonly EdgeToBondMap edgeToBond;

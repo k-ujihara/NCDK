@@ -1848,12 +1848,12 @@ namespace NCDK.SMARTS
                             {
                                 Next();
                                 Append(new Expr(ExprType.Element,
-                                                NaturalElements.Bromine.AtomicNumber));
+                                                AtomicNumbers.Bromine));
                             }
                             else
                             {
                                 Append(new Expr(ExprType.AliphaticElement,
-                                                NaturalElements.Boron.AtomicNumber));
+                                                AtomicNumbers.Boron));
                             }
                             break;
                         case 'C':
@@ -1861,37 +1861,37 @@ namespace NCDK.SMARTS
                             {
                                 Next();
                                 Append(new Expr(ExprType.Element,
-                                                NaturalElements.Chlorine.AtomicNumber));
+                                                AtomicNumbers.Chlorine));
                             }
                             else
                             {
                                 Append(new Expr(ExprType.AliphaticElement,
-                                                NaturalElements.Carbon.AtomicNumber));
+                                                AtomicNumbers.Carbon));
                             }
                             break;
                         case 'N':
                             Append(new Expr(ExprType.AliphaticElement,
-                                            NaturalElements.Nitrogen.AtomicNumber));
+                                            AtomicNumbers.Nitrogen));
                             break;
                         case 'O':
                             Append(new Expr(ExprType.AliphaticElement,
-                                            NaturalElements.Oxygen.AtomicNumber));
+                                            AtomicNumbers.Oxygen));
                             break;
                         case 'P':
                             Append(new Expr(ExprType.AliphaticElement,
-                                            NaturalElements.Phosphorus.AtomicNumber));
+                                            AtomicNumbers.Phosphorus));
                             break;
                         case 'S':
                             Append(new Expr(ExprType.AliphaticElement,
-                                            NaturalElements.Sulfur.AtomicNumber));
+                                            AtomicNumbers.Sulfur));
                             break;
                         case 'F':
                             Append(new Expr(ExprType.Element,
-                                            NaturalElements.Fluorine.AtomicNumber));
+                                            AtomicNumbers.Fluorine));
                             break;
                         case 'I':
                             Append(new Expr(ExprType.Element,
-                                            NaturalElements.Iodine.AtomicNumber));
+                                            AtomicNumbers.Iodine));
                             break;
 
                         case 'a':
@@ -1899,27 +1899,27 @@ namespace NCDK.SMARTS
                             break;
                         case 'b':
                             Append(new Expr(ExprType.AromaticElement,
-                                            NaturalElements.Boron.AtomicNumber));
+                                            AtomicNumbers.Boron));
                             break;
                         case 'c':
                             Append(new Expr(ExprType.AromaticElement,
-                                            NaturalElements.Carbon.AtomicNumber));
+                                            AtomicNumbers.Carbon));
                             break;
                         case 'n':
                             Append(new Expr(ExprType.AromaticElement,
-                                            NaturalElements.Nitrogen.AtomicNumber));
+                                            AtomicNumbers.Nitrogen));
                             break;
                         case 'o':
                             Append(new Expr(ExprType.AromaticElement,
-                                            NaturalElements.Oxygen.AtomicNumber));
+                                            AtomicNumbers.Oxygen));
                             break;
                         case 'p':
                             Append(new Expr(ExprType.AromaticElement,
-                                            NaturalElements.Phosphorus.AtomicNumber));
+                                            AtomicNumbers.Phosphorus));
                             break;
                         case 's':
                             Append(new Expr(ExprType.AromaticElement,
-                                            NaturalElements.Sulfur.AtomicNumber));
+                                            AtomicNumbers.Sulfur));
                             break;
                         case '[':
                             if (!ParseAtomExpr())
@@ -2315,17 +2315,17 @@ namespace NCDK.SMARTS
             // used ring numbers
             private readonly bool[] rvisit = new bool[100];
             // open ring bonds and their number
-            private readonly IDictionary<IBond, int> rnums = new Dictionary<IBond, int>();
+            private readonly Dictionary<IBond, int> rnums = new Dictionary<IBond, int>();
             // bond direction (up/down) for stereo
-            private readonly IDictionary<IBond, string> bdirs = new Dictionary<IBond, string>();
+            private readonly Dictionary<IBond, string> bdirs = new Dictionary<IBond, string>();
 
             /* fields only used for assign double bond stereo */
             // stereo element cache
-            private IDictionary<IChemObject, IStereoElement<IChemObject, IChemObject>> ses;
+            private Dictionary<IChemObject, IStereoElement<IChemObject, IChemObject>> ses;
             // marks atoms that are in double bonds with stereo
-            private ISet<IAtom> adjToDb;
+            private HashSet<IAtom> adjToDb;
             // marks stereo bonds we've visited
-            private ISet<IBond> bvisit;
+            private HashSet<IBond> bvisit;
 
             public Generator(IAtomContainer mol)
             {
@@ -2797,12 +2797,12 @@ namespace NCDK.SMARTS
                             default:
                                 {
                                     // can't be aromatic, just emit the upper case symbol
-                                    var elem = NaturalElement.OfNumber(expr.Value);
-                                    if (elem == NaturalElements.Unknown.Element)
+                                    var elem = ChemicalElement.Of(expr.Value);
+                                    if (elem.AtomicNumber == AtomicNumbers.Unknown)
                                         throw new ArgumentException($"No element with atomic number: {expr.Value}", nameof(expr));
                                     // portability for older matchers, write very high atomic
                                     // num elements as #<num>
-                                    if (expr.Value > NaturalElements.Radon.AtomicNumber)
+                                    if (expr.Value > AtomicNumbers.Radon)
                                         sb.Append('#').Append(expr.Value);
                                     else
                                         sb.Append(elem.Symbol);
@@ -2821,12 +2821,12 @@ namespace NCDK.SMARTS
                                 break;
                             default:
                                 // can't be aromatic, just emit the symbol
-                                var elem = NaturalElement.OfNumber(expr.Value);
-                                if (elem == NaturalElements.Unknown.Element)
+                                var elem = ChemicalElement.Of(expr.Value);
+                                if (elem.AtomicNumber == AtomicNumbers.Unknown)
                                     throw new ArgumentException($"No element with atomic number: {expr.Value}");
                                 // portability for older matchers, write very high atomic
                                 // num elements as #<num>
-                                if (expr.Value > NaturalElements.Radon.AtomicNumber)
+                                if (expr.Value > AtomicNumbers.Radon)
                                     sb.Append('#').Append(expr.Value);
                                 else
                                     sb.Append(elem.Symbol);
@@ -2855,18 +2855,18 @@ namespace NCDK.SMARTS
                             case 34: // Se
                             case 51: // Sb
                             case 52: // Te
-                                var elem = NaturalElement.OfNumber(expr.Value);
-                                if (elem == NaturalElements.Unknown.Element)
+                                var elem = ChemicalElement.Of(expr.Value);
+                                if (elem.AtomicNumber == AtomicNumbers.Unknown)
                                     throw new ArgumentException($"No element with atomic number: {expr.Value}");
                                 sb.Append(elem.Symbol.ToLowerInvariant());
                                 break;
                             default:
-                                elem = NaturalElement.OfNumber(expr.Value);
-                                if (elem == NaturalElements.Unknown.Element)
+                                elem = ChemicalElement.Of(expr.Value);
+                                if (elem.AtomicNumber == AtomicNumbers.Unknown)
                                     throw new ArgumentException($"No element with atomic number: {expr.Value}");
                                 // portability for older matchers, write very high atomic
                                 // num elements as #<num>
-                                if (expr.Value > NaturalElements.Radon.AtomicNumber)
+                                if (expr.Value > AtomicNumbers.Radon)
                                     sb.Append('#').Append(expr.Value);
                                 else
                                     sb.Append(elem.Symbol); // Must be aliphatic
@@ -2874,7 +2874,6 @@ namespace NCDK.SMARTS
                         }
                         break;
                     case ExprType.And:
-
                         if (expr.Left.GetExprType() == ExprType.ReactionRole)
                         {
                             GenerateAtom(sb, atom, expr.Right, withDisjunction);

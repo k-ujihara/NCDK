@@ -35,7 +35,6 @@ using System.Linq;
 
 namespace NCDK.Default
 {
-    [Serializable]
     public class BioPolymer
         : Polymer, IBioPolymer
     {
@@ -196,7 +195,6 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
-    [Serializable]
     public class BioPolymer
         : Polymer, IBioPolymer
     {

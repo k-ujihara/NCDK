@@ -1410,11 +1410,11 @@ namespace NCDK.Renderers.Generators.Standards
 
             private static readonly int[] preferedElements = new int[]
             {
-                NaturalElements.Carbon.AtomicNumber,
-                NaturalElements.Nitrogen.AtomicNumber,
-                NaturalElements.Oxygen.AtomicNumber,
-                NaturalElements.Sulfur.AtomicNumber,
-                NaturalElements.Phosphorus.AtomicNumber,
+                AtomicNumbers.Carbon,
+                AtomicNumbers.Nitrogen,
+                AtomicNumbers.Oxygen,
+                AtomicNumbers.Sulfur,
+                AtomicNumbers.Phosphorus,
             };
 
             /// <inheritdoc/>

@@ -32,8 +32,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAtomArray_IBond()
         {
-            IAtom atom1 = new Atom(NaturalElements.Carbon.Element);
-            IAtom atom2 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom1 = new Atom(ChemicalElement.C);
+            IAtom atom2 = new Atom(ChemicalElement.C);
             IBond bond = new Bond(atom1, atom2, BondOrder.Triple);
             IAtom[] atoms = BondManipulator.GetAtomArray(bond);
             Assert.AreEqual(2, atoms.Length);

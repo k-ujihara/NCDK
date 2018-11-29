@@ -41,7 +41,7 @@ namespace NCDK.IO
     {
         private const string IO_FORMATS_LIST = "NCDK.io-formats.set";
         private static List<IChemFormat> formats = null;
-        private static IDictionary<string, System.Type> registeredReaders; // Type is IChemObjectWriter
+        private static Dictionary<string, System.Type> registeredReaders; // Type is IChemObjectWriter
 
         /// <summary>
         /// Constructs a ChemObjectIOInstantionTests.

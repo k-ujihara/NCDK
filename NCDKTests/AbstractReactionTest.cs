@@ -30,7 +30,6 @@ namespace NCDK
     /// TestCase for <see cref="IReaction"/> implementations.
     /// </summary>
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractReactionTest
         : AbstractChemObjectTest
     {

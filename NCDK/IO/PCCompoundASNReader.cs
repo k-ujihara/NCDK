@@ -36,14 +36,13 @@ namespace NCDK.IO
     /// it extracts the InChI and canonical SMILES properties.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @cdk.keyword file format, PubChem Compound ASN
     public class PCCompoundASNReader : DefaultChemObjectReader
     {
         private TextReader input;
         IAtomContainer molecule = null;
-        IDictionary<string, IAtom> atomIDs = null;
+        Dictionary<string, IAtom> atomIDs = null;
 
         /// <summary>
         /// Construct a new reader from a Reader type object.
@@ -121,8 +120,8 @@ namespace NCDK.IO
 
         private IChemFile ReadChemFile(IChemFile file)
         {
-            IChemSequence chemSequence = file.Builder.NewChemSequence();
-            IChemModel chemModel = file.Builder.NewChemModel();
+            var chemSequence = file.Builder.NewChemSequence();
+            var chemModel = file.Builder.NewChemModel();
             var moleculeSet = file.Builder.NewAtomContainerSet();
             molecule = file.Builder.NewAtomContainer();
             atomIDs = new Dictionary<string, IAtom>();
@@ -203,8 +202,8 @@ namespace NCDK.IO
 
         private void ProcessPropsBlockBlock()
         {
-            string line = input.ReadLine();
-            URN urn = new URN();
+            var line = input.ReadLine();
+            var urn = new URN();
             while (line != null)
             {
                 if (line.Contains("urn"))
@@ -250,8 +249,8 @@ namespace NCDK.IO
 
         private URN ExtractURN()
         {
-            URN urn = new URN();
-            string line = input.ReadLine();
+            var urn = new URN();
+            var line = input.ReadLine();
             while (line != null)
             {
                 int n;
@@ -344,7 +343,7 @@ namespace NCDK.IO
 
         private void ProcessAtomBlockBlock(string line)
         {
-            string command = GetCommand(line);
+            var command = GetCommand(line);
             if (string.Equals(command, "aid", StringComparison.Ordinal))
             {
                 // assume this is the first block in the atom block
@@ -366,7 +365,7 @@ namespace NCDK.IO
 
         private void ProcessBondBlockBlock(string line, NewBondInfo newBondInfo)
         {
-            string command = GetCommand(line);
+            var command = GetCommand(line);
             if (string.Equals(command, "aid1", StringComparison.Ordinal))
             {
                 // assume this is the first block in the atom block
@@ -388,7 +387,7 @@ namespace NCDK.IO
 
         private void ProcessAtomAIDs()
         {
-            string line = input.ReadLine();
+            var line = input.ReadLine();
             int atomIndex = 0;
             while (line != null)
             {
@@ -411,7 +410,7 @@ namespace NCDK.IO
 
         private void ProcessBondAtomIDs(int pos, NewBondInfo newBondInfo)
         {
-            string line = input.ReadLine();
+            var line = input.ReadLine();
             int bondIndex = 0;
             while (line != null)
             {
@@ -422,14 +421,8 @@ namespace NCDK.IO
                 }
                 else
                 {
-                    //                Debug.WriteLine($"Found an atom ID: {line}");
-                    //                Debug.WriteLine($"  index: {atomIndex}");
-                    //                    IBond bond = GetBond(bondIndex);
-                    //string id = GetValue(line);
-                    //IAtom atom = (IAtom)atomIDs[id];
-                    //bond.Atoms[pos] = atom ??
-                    string id = GetValue(line);
-                    IAtom atom = (IAtom)atomIDs[id];
+                    var id = GetValue(line);
+                    var atom = (IAtom)atomIDs[id];
                     if (atom == null)
                         throw new CDKException($"File is corrupt: atom ID does not exist {id}");
                     newBondInfo.Set(bondIndex, pos, atom);
@@ -453,7 +446,7 @@ namespace NCDK.IO
 
         private void ProcessAtomElements()
         {
-            string line = input.ReadLine();
+            var line = input.ReadLine();
             int atomIndex = 0;
             while (line != null)
             {
@@ -464,9 +457,7 @@ namespace NCDK.IO
                 }
                 else
                 {
-                    //                Debug.WriteLine("Found symbol: " + ToSymbol(GetValue(line)));
-                    //                Debug.WriteLine($"  index: {atomIndex}");
-                    IAtom atom = GetAtom(atomIndex);
+                    var atom = GetAtom(atomIndex);
                     atom.Symbol = ToSymbol(GetValue(line));
                     atomIndex++;
                 }
@@ -483,7 +474,7 @@ namespace NCDK.IO
 
         private void SkipBlock()
         {
-            string line = input.ReadLine();
+            var line = input.ReadLine();
             int openBrackets = 0;
             while (line != null)
             {
@@ -495,7 +486,8 @@ namespace NCDK.IO
                 //            Debug.WriteLine($" #open brackets: {openBrackets}");
                 if (line.IndexOf('}') != -1)
                 {
-                    if (openBrackets == 0) return;
+                    if (openBrackets == 0)
+                        return;
                     openBrackets--;
                 }
                 line = input.ReadLine();
@@ -509,7 +501,7 @@ namespace NCDK.IO
             bool foundBracket = false;
             while (i < line.Length && !foundBracket)
             {
-                char currentChar = line[i];
+                var currentChar = line[i];
                 if (currentChar == '{')
                 {
                     foundBracket = true;
@@ -531,10 +523,11 @@ namespace NCDK.IO
             bool preWS = true;
             while (i < line.Length && !foundComma)
             {
-                char currentChar = line[i];
+                var currentChar = line[i];
                 if (char.IsWhiteSpace(currentChar))
                 {
-                    if (!preWS) buffer.Append(currentChar);
+                    if (!preWS)
+                        buffer.Append(currentChar);
                 }
                 else if (currentChar == ',')
                 {

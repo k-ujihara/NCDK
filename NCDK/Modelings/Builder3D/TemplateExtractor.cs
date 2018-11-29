@@ -321,7 +321,7 @@ namespace NCDK.Modelings.Builder3D
             Console.Out.WriteLine("...ready");
         }
 
-        public static IReadOnlyList<IBitFingerprint> MakeFingerprintsFromSdf(bool anyAtom, bool anyAtomAnyBond, IDictionary<string, int> timings, TextReader fin, int limit)
+        public static IReadOnlyList<IBitFingerprint> MakeFingerprintsFromSdf(bool anyAtom, bool anyAtomAnyBond, Dictionary<string, int> timings, TextReader fin, int limit)
         {
             var fingerPrinter = new HybridizationFingerprinter(HybridizationFingerprinter.DefaultSize, HybridizationFingerprinter.DefaultSearchDepth);
             fingerPrinter.SetHashPseudoAtoms(true);

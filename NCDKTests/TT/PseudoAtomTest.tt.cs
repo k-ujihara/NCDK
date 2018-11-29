@@ -30,7 +30,8 @@ namespace NCDK.Default
     /// Checks the functionality of the <see cref="PseudoAtom"/>.
     /// </summary>
     [TestClass()]
-    public class PseudoAtomTest : AbstractPseudoAtomTest
+    public class PseudoAtomTest 
+        : AbstractPseudoAtomTest
     {
         public override IChemObject NewChemObject()
         {
@@ -50,7 +51,7 @@ namespace NCDK.Default
         [TestMethod()]
         public void TestPseudoAtom_IElement()
         {
-            IElement element = NewChemObject().Builder.NewElement();
+            var element = ChemicalElement.R;
             IPseudoAtom a = new PseudoAtom(element);
             Assert.AreEqual("R", a.Symbol);
             Assert.IsNull(a.Point3D);
@@ -116,7 +117,8 @@ namespace NCDK.Silent
     /// Checks the functionality of the <see cref="PseudoAtom"/>.
     /// </summary>
     [TestClass()]
-    public class PseudoAtomTest : AbstractPseudoAtomTest
+    public class PseudoAtomTest 
+        : AbstractPseudoAtomTest
     {
         public override IChemObject NewChemObject()
         {
@@ -136,7 +138,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public void TestPseudoAtom_IElement()
         {
-            IElement element = NewChemObject().Builder.NewElement();
+            var element = ChemicalElement.R;
             IPseudoAtom a = new PseudoAtom(element);
             Assert.AreEqual("R", a.Symbol);
             Assert.IsNull(a.Point3D);

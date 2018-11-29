@@ -89,16 +89,16 @@
   </Codes>
   <Codes id="NCDK.Config.ChemicalElement_Example.cs+OfNumber">
     <code>                // carbon
-                var c = NaturalElement.OfNumber(6);
+                var c = ChemicalElement.Of(6);
                 // oxygen
-                var o = NaturalElement.OfNumber(8);
+                var o = ChemicalElement.Of(8);
 </code>
   </Codes>
   <Codes id="NCDK.Config.ChemicalElement_Example.cs+ToAtomicNumber">
-    <code>                var a = NaturalElement.ToAtomicNumber("c");
-                var b = NaturalElement.ToAtomicNumber("C");
-                var c = NaturalElement.ToAtomicNumber("Carbon");
-                var d = NaturalElement.ToAtomicNumber("carbon");
+    <code>                var a = ChemicalElement.OfSymbol("c").AtomicNumber;
+                var b = ChemicalElement.OfSymbol("C").AtomicNumber;
+                var c = ChemicalElement.OfSymbol("Carbon").AtomicNumber;
+                var d = ChemicalElement.OfSymbol("carbon").AtomicNumber;
 </code>
   </Codes>
   <Codes id="NCDK.Config.XMLIsotopeFactory_Example.cs+1">
@@ -2128,9 +2128,9 @@ namespace NCDK.Smiles
 </code>
   </Codes>
   <Codes id="NCDK.TT.Element_Example.cs">
-    <code>                IsotopeFactory f = XMLIsotopeFactory.GetInstance(new Element().Builder);
-                IElement e1 = f.GetElement("C");
-                IElement e2 = f.GetElement(12);
+    <code>                IsotopeFactory f = XMLIsotopeFactory.GetInstance(CDK.Builder);
+                ChemicalElement e1 = f.GetElement("C");
+                ChemicalElement e2 = f.GetElement(12);
 </code>
   </Codes>
   <Codes id="NCDK.TT.Element_Example.cs+AtomicNumber">

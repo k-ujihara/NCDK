@@ -77,7 +77,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             var atomPosition = container.Atoms.IndexOf(atom);
             var clonedAtom = clonedContainer.Atoms[atomPosition];
             var rdfProtonCalculatedValues = new List<double>(desc_length);
-            if (!atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+            if (!atom.AtomicNumber.Equals(AtomicNumbers.H))
             {
                 return new Result(new CDKException("Invalid atom specified"));
             }
@@ -286,16 +286,16 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 else
                 {
-                    if (atom1.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                    if (atom1.AtomicNumber.Equals(AtomicNumbers.H))
                         counter += 1;
                     else
                         counter += 0;
                 }
             }
-            if (atom0.AtomicNumber.Equals(NaturalElements.N.AtomicNumber) && atom1.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+            if (atom0.AtomicNumber.Equals(AtomicNumbers.N) && atom1.AtomicNumber.Equals(AtomicNumbers.C))
                 if (GetIfACarbonIsDoubleBondedToAnOxygen(mol, atom1)) 
                     counter += 1;
-            if (atom0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && atom1.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
+            if (atom0.AtomicNumber.Equals(AtomicNumbers.C) && atom1.AtomicNumber.Equals(AtomicNumbers.N))
                 if (GetIfACarbonIsDoubleBondedToAnOxygen(mol, atom0)) 
                     counter += 1;
             if (counter > 0) 
@@ -311,7 +311,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int counter = 0;
             foreach (var neighbour in neighToCarbon)
             {
-                if (neighbour.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                if (neighbour.AtomicNumber.Equals(AtomicNumbers.O))
                 {
                     tmpBond = mol.GetBond(neighbour, carbonAtom);
                     if (tmpBond.Order == BondOrder.Double) 
@@ -470,7 +470,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             var atomPosition = container.Atoms.IndexOf(atom);
             var clonedAtom = clonedContainer.Atoms[atomPosition];
             var rdfProtonCalculatedValues = new List<double>(desc_length);
-            if (!atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+            if (!atom.AtomicNumber.Equals(AtomicNumbers.H))
             {
                 return new Result(new CDKException("Invalid atom specified"));
             }
@@ -679,16 +679,16 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 else
                 {
-                    if (atom1.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                    if (atom1.AtomicNumber.Equals(AtomicNumbers.H))
                         counter += 1;
                     else
                         counter += 0;
                 }
             }
-            if (atom0.AtomicNumber.Equals(NaturalElements.N.AtomicNumber) && atom1.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+            if (atom0.AtomicNumber.Equals(AtomicNumbers.N) && atom1.AtomicNumber.Equals(AtomicNumbers.C))
                 if (GetIfACarbonIsDoubleBondedToAnOxygen(mol, atom1)) 
                     counter += 1;
-            if (atom0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && atom1.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
+            if (atom0.AtomicNumber.Equals(AtomicNumbers.C) && atom1.AtomicNumber.Equals(AtomicNumbers.N))
                 if (GetIfACarbonIsDoubleBondedToAnOxygen(mol, atom0)) 
                     counter += 1;
             if (counter > 0) 
@@ -704,7 +704,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int counter = 0;
             foreach (var neighbour in neighToCarbon)
             {
-                if (neighbour.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                if (neighbour.AtomicNumber.Equals(AtomicNumbers.O))
                 {
                     tmpBond = mol.GetBond(neighbour, carbonAtom);
                     if (tmpBond.Order == BondOrder.Double) 
@@ -863,7 +863,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             var atomPosition = container.Atoms.IndexOf(atom);
             var clonedAtom = clonedContainer.Atoms[atomPosition];
             var rdfProtonCalculatedValues = new List<double>(desc_length);
-            if (!atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+            if (!atom.AtomicNumber.Equals(AtomicNumbers.H))
             {
                 return new Result(new CDKException("Invalid atom specified"));
             }
@@ -1072,16 +1072,16 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 else
                 {
-                    if (atom1.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                    if (atom1.AtomicNumber.Equals(AtomicNumbers.H))
                         counter += 1;
                     else
                         counter += 0;
                 }
             }
-            if (atom0.AtomicNumber.Equals(NaturalElements.N.AtomicNumber) && atom1.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+            if (atom0.AtomicNumber.Equals(AtomicNumbers.N) && atom1.AtomicNumber.Equals(AtomicNumbers.C))
                 if (GetIfACarbonIsDoubleBondedToAnOxygen(mol, atom1)) 
                     counter += 1;
-            if (atom0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && atom1.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
+            if (atom0.AtomicNumber.Equals(AtomicNumbers.C) && atom1.AtomicNumber.Equals(AtomicNumbers.N))
                 if (GetIfACarbonIsDoubleBondedToAnOxygen(mol, atom0)) 
                     counter += 1;
             if (counter > 0) 
@@ -1097,7 +1097,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int counter = 0;
             foreach (var neighbour in neighToCarbon)
             {
-                if (neighbour.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                if (neighbour.AtomicNumber.Equals(AtomicNumbers.O))
                 {
                     tmpBond = mol.GetBond(neighbour, carbonAtom);
                     if (tmpBond.Order == BondOrder.Double) 
@@ -1256,7 +1256,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             var atomPosition = container.Atoms.IndexOf(atom);
             var clonedAtom = clonedContainer.Atoms[atomPosition];
             var rdfProtonCalculatedValues = new List<double>(desc_length);
-            if (!atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+            if (!atom.AtomicNumber.Equals(AtomicNumbers.H))
             {
                 return new Result(new CDKException("Invalid atom specified"));
             }
@@ -1465,16 +1465,16 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 else
                 {
-                    if (atom1.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                    if (atom1.AtomicNumber.Equals(AtomicNumbers.H))
                         counter += 1;
                     else
                         counter += 0;
                 }
             }
-            if (atom0.AtomicNumber.Equals(NaturalElements.N.AtomicNumber) && atom1.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+            if (atom0.AtomicNumber.Equals(AtomicNumbers.N) && atom1.AtomicNumber.Equals(AtomicNumbers.C))
                 if (GetIfACarbonIsDoubleBondedToAnOxygen(mol, atom1)) 
                     counter += 1;
-            if (atom0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && atom1.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
+            if (atom0.AtomicNumber.Equals(AtomicNumbers.C) && atom1.AtomicNumber.Equals(AtomicNumbers.N))
                 if (GetIfACarbonIsDoubleBondedToAnOxygen(mol, atom0)) 
                     counter += 1;
             if (counter > 0) 
@@ -1490,7 +1490,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int counter = 0;
             foreach (var neighbour in neighToCarbon)
             {
-                if (neighbour.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                if (neighbour.AtomicNumber.Equals(AtomicNumbers.O))
                 {
                     tmpBond = mol.GetBond(neighbour, carbonAtom);
                     if (tmpBond.Order == BondOrder.Double) 
@@ -1649,7 +1649,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             var atomPosition = container.Atoms.IndexOf(atom);
             var clonedAtom = clonedContainer.Atoms[atomPosition];
             var rdfProtonCalculatedValues = new List<double>(desc_length);
-            if (!atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+            if (!atom.AtomicNumber.Equals(AtomicNumbers.H))
             {
                 return new Result(new CDKException("Invalid atom specified"));
             }
@@ -1858,16 +1858,16 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 else
                 {
-                    if (atom1.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                    if (atom1.AtomicNumber.Equals(AtomicNumbers.H))
                         counter += 1;
                     else
                         counter += 0;
                 }
             }
-            if (atom0.AtomicNumber.Equals(NaturalElements.N.AtomicNumber) && atom1.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+            if (atom0.AtomicNumber.Equals(AtomicNumbers.N) && atom1.AtomicNumber.Equals(AtomicNumbers.C))
                 if (GetIfACarbonIsDoubleBondedToAnOxygen(mol, atom1)) 
                     counter += 1;
-            if (atom0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && atom1.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
+            if (atom0.AtomicNumber.Equals(AtomicNumbers.C) && atom1.AtomicNumber.Equals(AtomicNumbers.N))
                 if (GetIfACarbonIsDoubleBondedToAnOxygen(mol, atom0)) 
                     counter += 1;
             if (counter > 0) 
@@ -1883,7 +1883,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int counter = 0;
             foreach (var neighbour in neighToCarbon)
             {
-                if (neighbour.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                if (neighbour.AtomicNumber.Equals(AtomicNumbers.O))
                 {
                     tmpBond = mol.GetBond(neighbour, carbonAtom);
                     if (tmpBond.Order == BondOrder.Double) 

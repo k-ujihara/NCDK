@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 
@@ -29,8 +30,8 @@ namespace NCDK.IO
     /// TestCase for CDK IO classes.
     /// </summary>
     // @cdk.module test-io
-    [TestClass()]
-    public abstract class SimpleChemObjectReaderTest : ChemObjectReaderTest
+    public abstract class SimpleChemObjectReaderTest 
+        : ChemObjectReaderTest
     {
         protected ISimpleChemObjectReader CreateSimpleChemObjectReader(Stream stream) => (ISimpleChemObjectReader)CreateChemObjectIO(stream);
         protected ISimpleChemObjectReader CreateSimpleChemObjectReader(TextReader reader) => (ISimpleChemObjectReader)CreateChemObjectReader(reader);

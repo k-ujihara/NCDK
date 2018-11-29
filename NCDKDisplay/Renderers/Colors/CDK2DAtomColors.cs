@@ -155,228 +155,228 @@ namespace NCDK.Renderers.Colors
 
         public Color GetAtomColor(IAtom atom, Color defaultColor)
         {
-            var elem = NaturalElement.ToAtomicNumber(atom.Symbol);
-            if (elem == NaturalElements.Unknown.AtomicNumber)
+            var elem = ChemicalElement.OfSymbol(atom.Symbol).AtomicNumber;
+            if (elem == AtomicNumbers.Unknown)
                 elem = atom.AtomicNumber;
             switch (elem)
             {
-                case NaturalElements.Helium.AtomicNumber:
+                case AtomicNumbers.Helium:
                     return hexD9FFFF;
-                case NaturalElements.Lithium.AtomicNumber:
+                case AtomicNumbers.Lithium:
                     return hexCC80FF;
-                case NaturalElements.Beryllium.AtomicNumber:
+                case AtomicNumbers.Beryllium:
                     return hexC2FF00;
-                case NaturalElements.Boron.AtomicNumber:
+                case AtomicNumbers.Boron:
                     return hexFFB5B5;
-                case NaturalElements.Hydrogen.AtomicNumber:
-                case NaturalElements.Carbon.AtomicNumber:
-                case NaturalElements.Unknown.AtomicNumber:
+                case AtomicNumbers.Hydrogen:
+                case AtomicNumbers.Carbon:
+                case AtomicNumbers.Unknown:
                     return WPF.Media.Colors.Black;
-                case NaturalElements.Nitrogen.AtomicNumber:
+                case AtomicNumbers.Nitrogen:
                     return hex3050F8;
-                case NaturalElements.Oxygen.AtomicNumber:
+                case AtomicNumbers.Oxygen:
                     return hexFF0D0D;
-                case NaturalElements.Fluorine.AtomicNumber:
+                case AtomicNumbers.Fluorine:
                     return hex90E050;
-                case NaturalElements.Neon.AtomicNumber:
+                case AtomicNumbers.Neon:
                     return hexB3E3F5;
-                case NaturalElements.Sodium.AtomicNumber:
+                case AtomicNumbers.Sodium:
                     return hexAB5CF2;
-                case NaturalElements.Magnesium.AtomicNumber:
+                case AtomicNumbers.Magnesium:
                     return hex8AFF00;
-                case NaturalElements.Aluminium.AtomicNumber:
+                case AtomicNumbers.Aluminium:
                     return hexBFA6A6;
-                case NaturalElements.Silicon.AtomicNumber:
+                case AtomicNumbers.Silicon:
                     return hexF0C8A0;
-                case NaturalElements.Phosphorus.AtomicNumber:
+                case AtomicNumbers.Phosphorus:
                     return hexFF8000;
-                case NaturalElements.Sulfur.AtomicNumber:
+                case AtomicNumbers.Sulfur:
                     return hexFFFF30;
-                case NaturalElements.Chlorine.AtomicNumber:
+                case AtomicNumbers.Chlorine:
                     return hex1FF01F;
-                case NaturalElements.Argon.AtomicNumber:
+                case AtomicNumbers.Argon:
                     return hex80D1E3;
-                case NaturalElements.Potassium.AtomicNumber:
+                case AtomicNumbers.Potassium:
                     return hex8F40D4;
-                case NaturalElements.Calcium.AtomicNumber:
+                case AtomicNumbers.Calcium:
                     return hex3DFF00;
-                case NaturalElements.Scandium.AtomicNumber:
+                case AtomicNumbers.Scandium:
                     return hexE6E6E6;
-                case NaturalElements.Titanium.AtomicNumber:
+                case AtomicNumbers.Titanium:
                     return hexBFC2C7;
-                case NaturalElements.Vanadium.AtomicNumber:
+                case AtomicNumbers.Vanadium:
                     return hexA6A6AB;
-                case NaturalElements.Chromium.AtomicNumber:
+                case AtomicNumbers.Chromium:
                     return hex8A99C7;
-                case NaturalElements.Manganese.AtomicNumber:
+                case AtomicNumbers.Manganese:
                     return hex9C7AC7;
-                case NaturalElements.Iron.AtomicNumber:
+                case AtomicNumbers.Iron:
                     return hexE06633;
-                case NaturalElements.Cobalt.AtomicNumber:
+                case AtomicNumbers.Cobalt:
                     return hexF090A0;
-                case NaturalElements.Nickel.AtomicNumber:
+                case AtomicNumbers.Nickel:
                     return hex50D050;
-                case NaturalElements.Copper.AtomicNumber:
+                case AtomicNumbers.Copper:
                     return hexC88033;
-                case NaturalElements.Zinc.AtomicNumber:
+                case AtomicNumbers.Zinc:
                     return hex7D80B0;
-                case NaturalElements.Gallium.AtomicNumber:
+                case AtomicNumbers.Gallium:
                     return hexC28F8F;
-                case NaturalElements.Germanium.AtomicNumber:
+                case AtomicNumbers.Germanium:
                     return hex668F8F;
-                case NaturalElements.Arsenic.AtomicNumber:
+                case AtomicNumbers.Arsenic:
                     return hexBD80E3;
-                case NaturalElements.Selenium.AtomicNumber:
+                case AtomicNumbers.Selenium:
                     return hexFFA100;
-                case NaturalElements.Bromine.AtomicNumber:
+                case AtomicNumbers.Bromine:
                     return hexA62929;
-                case NaturalElements.Krypton.AtomicNumber:
+                case AtomicNumbers.Krypton:
                     return hex5CB8D1;
-                case NaturalElements.Rubidium.AtomicNumber:
+                case AtomicNumbers.Rubidium:
                     return hex702EB0;
-                case NaturalElements.Strontium.AtomicNumber:
+                case AtomicNumbers.Strontium:
                     return hex00FF00;
-                case NaturalElements.Yttrium.AtomicNumber:
+                case AtomicNumbers.Yttrium:
                     return hex94FFFF;
-                case NaturalElements.Zirconium.AtomicNumber:
+                case AtomicNumbers.Zirconium:
                     return hex94E0E0;
-                case NaturalElements.Niobium.AtomicNumber:
+                case AtomicNumbers.Niobium:
                     return hex73C2C9;
-                case NaturalElements.Molybdenum.AtomicNumber:
+                case AtomicNumbers.Molybdenum:
                     return hex54B5B5;
-                case NaturalElements.Technetium.AtomicNumber:
+                case AtomicNumbers.Technetium:
                     return hex3B9E9E;
-                case NaturalElements.Ruthenium.AtomicNumber:
+                case AtomicNumbers.Ruthenium:
                     return hex248F8F;
-                case NaturalElements.Rhodium.AtomicNumber:
+                case AtomicNumbers.Rhodium:
                     return hex0A7D8C;
-                case NaturalElements.Palladium.AtomicNumber:
+                case AtomicNumbers.Palladium:
                     return hex006985;
-                case NaturalElements.Silver.AtomicNumber:
+                case AtomicNumbers.Silver:
                     return hexC0C0C0;
-                case NaturalElements.Cadmium.AtomicNumber:
+                case AtomicNumbers.Cadmium:
                     return hexFFD98F;
-                case NaturalElements.Indium.AtomicNumber:
+                case AtomicNumbers.Indium:
                     return hexA67573;
-                case NaturalElements.Tin.AtomicNumber:
+                case AtomicNumbers.Tin:
                     return hex668080;
-                case NaturalElements.Antimony.AtomicNumber:
+                case AtomicNumbers.Antimony:
                     return hex9E63B5;
-                case NaturalElements.Tellurium.AtomicNumber:
+                case AtomicNumbers.Tellurium:
                     return hexD47A00;
-                case NaturalElements.Iodine.AtomicNumber:
+                case AtomicNumbers.Iodine:
                     return hex940094;
-                case NaturalElements.Xenon.AtomicNumber:
+                case AtomicNumbers.Xenon:
                     return hex429EB0;
-                case NaturalElements.Caesium.AtomicNumber:
+                case AtomicNumbers.Caesium:
                     return hex57178F;
-                case NaturalElements.Barium.AtomicNumber:
+                case AtomicNumbers.Barium:
                     return hex00C900;
-                case NaturalElements.Lanthanum.AtomicNumber:
+                case AtomicNumbers.Lanthanum:
                     return hex70D4FF;
-                case NaturalElements.Cerium.AtomicNumber:
+                case AtomicNumbers.Cerium:
                     return hexFFFFC7;
-                case NaturalElements.Praseodymium.AtomicNumber:
+                case AtomicNumbers.Praseodymium:
                     return hexD9FFC7;
-                case NaturalElements.Neodymium.AtomicNumber:
+                case AtomicNumbers.Neodymium:
                     return hexC7FFC7;
-                case NaturalElements.Promethium.AtomicNumber:
+                case AtomicNumbers.Promethium:
                     return hexA3FFC7;
-                case NaturalElements.Samarium.AtomicNumber:
+                case AtomicNumbers.Samarium:
                     return hex8FFFC7;
-                case NaturalElements.Europium.AtomicNumber:
+                case AtomicNumbers.Europium:
                     return hex61FFC7;
-                case NaturalElements.Gadolinium.AtomicNumber:
+                case AtomicNumbers.Gadolinium:
                     return hex45FFC7;
-                case NaturalElements.Terbium.AtomicNumber:
+                case AtomicNumbers.Terbium:
                     return hex30FFC7;
-                case NaturalElements.Dysprosium.AtomicNumber:
+                case AtomicNumbers.Dysprosium:
                     return hex1FFFC7;
-                case NaturalElements.Holmium.AtomicNumber:
+                case AtomicNumbers.Holmium:
                     return hex00FF9C;
-                case NaturalElements.Erbium.AtomicNumber:
+                case AtomicNumbers.Erbium:
                     return hex00E675;
-                case NaturalElements.Thulium.AtomicNumber:
+                case AtomicNumbers.Thulium:
                     return hex00D452;
-                case NaturalElements.Ytterbium.AtomicNumber:
+                case AtomicNumbers.Ytterbium:
                     return hex00BF38;
-                case NaturalElements.Lutetium.AtomicNumber:
+                case AtomicNumbers.Lutetium:
                     return hex00AB24;
-                case NaturalElements.Hafnium.AtomicNumber:
+                case AtomicNumbers.Hafnium:
                     return hex4DC2FF;
-                case NaturalElements.Tantalum.AtomicNumber:
+                case AtomicNumbers.Tantalum:
                     return hex4DA6FF;
-                case NaturalElements.Tungsten.AtomicNumber:
+                case AtomicNumbers.Tungsten:
                     return hex2194D6;
-                case NaturalElements.Rhenium.AtomicNumber:
+                case AtomicNumbers.Rhenium:
                     return hex267DAB;
-                case NaturalElements.Osmium.AtomicNumber:
+                case AtomicNumbers.Osmium:
                     return hex266696;
-                case NaturalElements.Iridium.AtomicNumber:
+                case AtomicNumbers.Iridium:
                     return hex175487;
-                case NaturalElements.Platinum.AtomicNumber:
+                case AtomicNumbers.Platinum:
                     return hexD0D0E0;
-                case NaturalElements.Gold.AtomicNumber:
+                case AtomicNumbers.Gold:
                     return hexFFD123;
-                case NaturalElements.Mercury.AtomicNumber:
+                case AtomicNumbers.Mercury:
                     return hexB8B8D0;
-                case NaturalElements.Thallium.AtomicNumber:
+                case AtomicNumbers.Thallium:
                     return hexA6544D;
-                case NaturalElements.Lead.AtomicNumber:
+                case AtomicNumbers.Lead:
                     return hex575961;
-                case NaturalElements.Bismuth.AtomicNumber:
+                case AtomicNumbers.Bismuth:
                     return hex9E4FB5;
-                case NaturalElements.Polonium.AtomicNumber:
+                case AtomicNumbers.Polonium:
                     return hexAB5C00;
-                case NaturalElements.Astatine.AtomicNumber:
+                case AtomicNumbers.Astatine:
                     return hex754F45;
-                case NaturalElements.Radon.AtomicNumber:
+                case AtomicNumbers.Radon:
                     return hex428296;
-                case NaturalElements.Francium.AtomicNumber:
+                case AtomicNumbers.Francium:
                     return hex420066;
-                case NaturalElements.Radium.AtomicNumber:
+                case AtomicNumbers.Radium:
                     return hex007D00;
-                case NaturalElements.Actinium.AtomicNumber:
+                case AtomicNumbers.Actinium:
                     return hex70ABFA;
-                case NaturalElements.Thorium.AtomicNumber:
+                case AtomicNumbers.Thorium:
                     return hex00BAFF;
-                case NaturalElements.Protactinium.AtomicNumber:
+                case AtomicNumbers.Protactinium:
                     return hex00A1FF;
-                case NaturalElements.Uranium.AtomicNumber:
+                case AtomicNumbers.Uranium:
                     return hex008FFF;
-                case NaturalElements.Neptunium.AtomicNumber:
+                case AtomicNumbers.Neptunium:
                     return hex0080FF;
-                case NaturalElements.Plutonium.AtomicNumber:
+                case AtomicNumbers.Plutonium:
                     return hex006BFF;
-                case NaturalElements.Americium.AtomicNumber:
+                case AtomicNumbers.Americium:
                     return hex545CF2;
-                case NaturalElements.Curium.AtomicNumber:
+                case AtomicNumbers.Curium:
                     return hex785CE3;
-                case NaturalElements.Berkelium.AtomicNumber:
+                case AtomicNumbers.Berkelium:
                     return hex8A4FE3;
-                case NaturalElements.Californium.AtomicNumber:
+                case AtomicNumbers.Californium:
                     return hexA136D4;
-                case NaturalElements.Einsteinium.AtomicNumber:
+                case AtomicNumbers.Einsteinium:
                     return hexB31FD4;
-                case NaturalElements.Fermium.AtomicNumber:
+                case AtomicNumbers.Fermium:
                     return hexB31FBA;
-                case NaturalElements.Mendelevium.AtomicNumber:
+                case AtomicNumbers.Mendelevium:
                     return hexB30DA6;
-                case NaturalElements.Nobelium.AtomicNumber:
+                case AtomicNumbers.Nobelium:
                     return hexBD0D87;
-                case NaturalElements.Lawrencium.AtomicNumber:
+                case AtomicNumbers.Lawrencium:
                     return hexC70066;
-                case NaturalElements.Rutherfordium.AtomicNumber:
+                case AtomicNumbers.Rutherfordium:
                     return hexCC0059;
-                case NaturalElements.Dubnium.AtomicNumber:
+                case AtomicNumbers.Dubnium:
                     return hexD1004F;
-                case NaturalElements.Seaborgium.AtomicNumber:
+                case AtomicNumbers.Seaborgium:
                     return hexD90045;
-                case NaturalElements.Bohrium.AtomicNumber:
+                case AtomicNumbers.Bohrium:
                     return hexE00038;
-                case NaturalElements.Hassium.AtomicNumber:
+                case AtomicNumbers.Hassium:
                     return hexE6002E;
-                case NaturalElements.Meitnerium.AtomicNumber:
+                case AtomicNumbers.Meitnerium:
                     return hexEB0026;
                 default:
                     return defaultColor;

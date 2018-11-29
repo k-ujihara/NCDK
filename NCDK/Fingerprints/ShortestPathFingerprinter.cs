@@ -57,8 +57,6 @@ namespace NCDK.Fingerprints
     // @cdk.keyword fingerprint
     // @cdk.keyword similarity
     // @cdk.module fingerprint
-    // @cdk.githash
-    [Serializable]
     public class ShortestPathFingerprinter : AbstractFingerprinter, IFingerprinter
     {
         /// <summary>
@@ -101,7 +99,7 @@ namespace NCDK.Fingerprints
             IAtomContainer atomContainer = null;
             atomContainer = (IAtomContainer)ac.Clone();
             Aromaticity.CDKLegacy.Apply(atomContainer);
-            BitArray bitSet = new BitArray(fingerprintLength);
+            var bitSet = new BitArray(fingerprintLength);
             if (!ConnectivityChecker.IsConnected(atomContainer))
             {
                 var partitionedMolecules = ConnectivityChecker.PartitionIntoMolecules(atomContainer);
@@ -121,7 +119,7 @@ namespace NCDK.Fingerprints
         /// <inheritdoc/>
         /// </summary>
         /// <param name="ac">The <see cref="IAtomContainer"/> for which a fingerprint is generated</param>
-        /// <returns><see cref="IDictionary{T, T}"/> of raw fingerprint paths/features</returns>
+        /// <returns><see cref="IReadOnlyDictionary{TKey, TValue}"/> of raw fingerprint paths/features</returns>
         /// <exception cref="NotSupportedException">method is not supported</exception>
         public override IReadOnlyDictionary<string, int> GetRawFingerprint(IAtomContainer ac)
         {
@@ -130,15 +128,15 @@ namespace NCDK.Fingerprints
 
         private void AddUniquePath(IAtomContainer container, BitArray bitSet)
         {
-            int[] hashes = FindPaths(container);
+            var hashes = FindPaths(container);
             foreach (var hash in hashes)
             {
-                int position = GetRandomNumber(hash);
+                var position = GetRandomNumber(hash);
                 bitSet.Set(position, true);
             }
         }
 
-        private void AddUniquePath(IAtomContainer atomContainer, IDictionary<string, int> uniquePaths)
+        private void AddUniquePath(IAtomContainer atomContainer, Dictionary<string, int> uniquePaths)
         {
             int[] hashes;
             hashes = FindPaths(atomContainer);
@@ -159,14 +157,14 @@ namespace NCDK.Fingerprints
         /// <returns>A map of path strings, keyed on themselves</returns>
         private static int[] FindPaths(IAtomContainer container)
         {
-            ShortestPathWalker walker = new ShortestPathWalker(container);
+            var walker = new ShortestPathWalker(container);
             // convert paths to hashes
-            List<int> paths = new List<int>();
+            var paths = new List<int>();
             int patternIndex = 0;
 
             foreach (var s in walker.GetPaths())
             {
-                int toHashCode = Strings.GetJavaHashCode(s);
+                var toHashCode = Strings.GetJavaHashCode(s);
                 paths.Insert(patternIndex, toHashCode);
                 patternIndex++;
             }
@@ -176,7 +174,7 @@ namespace NCDK.Fingerprints
             RingSetManipulator.Sort(sssr);
             foreach (var ring in sssr)
             {
-                int toHashCode = Strings.GetJavaHashCode(ring.Atoms.Count.ToString(NumberFormatInfo.InvariantInfo));
+                var toHashCode = Strings.GetJavaHashCode(ring.Atoms.Count.ToString(NumberFormatInfo.InvariantInfo));
                 paths.Insert(patternIndex, toHashCode);
                 patternIndex++;
             }
@@ -184,7 +182,7 @@ namespace NCDK.Fingerprints
             var l = new List<string>();
             foreach (var atom in container.Atoms)
             {
-                int charge = atom.FormalCharge ?? 0;
+                var charge = atom.FormalCharge ?? 0;
                 if (charge != 0)
                 {
                     l.Add(atom.Symbol + charge.ToString(NumberFormatInfo.InvariantInfo));
@@ -192,7 +190,7 @@ namespace NCDK.Fingerprints
             }
             {
                 l.Sort();
-                int toHashCode = Lists.GetHashCode(l);
+                var toHashCode = Lists.GetHashCode(l);
                 paths.Insert(patternIndex, toHashCode);
                 patternIndex++;
             }
@@ -209,7 +207,7 @@ namespace NCDK.Fingerprints
             }
             {
                 l.Sort();
-                int toHashCode = Lists.GetHashCode(l);
+                var toHashCode = Lists.GetHashCode(l);
                 paths.Insert(patternIndex, toHashCode);
                 patternIndex++;
             }

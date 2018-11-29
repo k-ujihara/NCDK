@@ -66,9 +66,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 switch (atom.AtomicNumber)
                 {
-                    case NaturalElements.H.AtomicNumber:
+                    case AtomicNumbers.H:
                         break;
-                    case NaturalElements.C.AtomicNumber:
+                    case AtomicNumbers.C:
                         carbonCount++;
                         break;
                     default:

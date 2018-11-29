@@ -32,7 +32,8 @@ namespace NCDK
     /// be used to override the behaviour of the base atom.
     /// </summary>
     // @author John Mayfield 
-    public class AtomRef : ChemObjectRef, IAtom
+    public class AtomRef 
+        : ChemObjectRef, IAtom
     {
         private readonly IAtom atom;
 
@@ -67,6 +68,8 @@ namespace NCDK
         {
             return atom;
         }
+
+        public ChemicalElement Element => atom.Element;
 
         /// <inheritdoc/>
         public double? Charge

@@ -36,10 +36,9 @@ namespace NCDK.AtomTypes
     // @author         egonw
     // @cdk.created    2006-09-22
     // @cdk.module     structgen
-    // @cdk.githash
     public class StructGenMatcher : IAtomTypeMatcher
     {
-        private static readonly AtomTypeFactory factory = CDK.StructgenAtomTypeFactory;
+        private readonly AtomTypeFactory factory = CDK.StructgenAtomTypeFactory;
         
         /// <summary>
         /// Constructor for the StructGenMatcher object.
@@ -67,10 +66,10 @@ namespace NCDK.AtomTypes
         /// <returns>the matching AtomType</returns>
         public IAtomType FindMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
         {
-            double bondOrderSum = atomContainer.GetBondOrderSum(atom);
-            BondOrder maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
-            int charge = atom.FormalCharge.Value;
-            int hcount = atom.ImplicitHydrogenCount == null ? 0 : atom.ImplicitHydrogenCount.Value;
+            var bondOrderSum = atomContainer.GetBondOrderSum(atom);
+            var maxBondOrder = atomContainer.GetMaximumBondOrder(atom);
+            var charge = atom.FormalCharge.Value;
+            var hcount = atom.ImplicitHydrogenCount == null ? 0 : atom.ImplicitHydrogenCount.Value;
 
             var types = factory.GetAtomTypes(atom.Symbol);
             foreach (var type in types)

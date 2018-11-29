@@ -30,7 +30,6 @@ namespace NCDK.Geometries
     /// Tool to make projections from 3D to 2D.
     /// </summary>
     // @cdk.keyword projection in 2D
-    // @cdk.githash
     public static class Projector
     {
         public static void Project2D(IAtomContainer container)

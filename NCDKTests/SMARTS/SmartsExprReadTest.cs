@@ -448,7 +448,7 @@ namespace NCDK.SMARTS
         public void Chromium()
         {
             Expr actual = GetAtomExpr("[Cr]");
-            Expr expected = GetExpr(ExprType.Element, NaturalElements.Chromium.AtomicNumber);
+            Expr expected = GetExpr(ExprType.Element, AtomicNumbers.Chromium);
             Assert.AreEqual(expected, actual);
         }
 
@@ -898,18 +898,25 @@ namespace NCDK.SMARTS
         [TestMethod()]
         public void TestAliphaticSymbols()
         {
-            foreach (var e in NaturalElement.Elements)
+            foreach (var e in ChemicalElement.Values)
             {
-                int len = e.Symbol.Length;
-                if (len == 1 || len == 2)
+                switch (e.Symbol)
                 {
-                    string smarts = $"[{e.Symbol}]";
-                    var mol = new QueryAtomContainer(null);
-                    Assert.IsTrue(Smarts.Parse(mol, smarts), smarts);
-                    var expr = GetAtomExpr(mol.Atoms[0]);
-                    var ee = new Expr(ExprType.Element, e.AtomicNumber);
-                    var ea = new Expr(AliphaticElement, e.AtomicNumber);
-                    Assert.IsTrue(expr.Equals(ee) || expr.Equals(ea));
+                    case "R":
+                        continue;
+                    default:
+                        int len = e.Symbol.Length;
+                        if (len == 1 || len == 2)
+                        {
+                            string smarts = $"[{e.Symbol}]";
+                            var mol = new QueryAtomContainer(null);
+                            Assert.IsTrue(Smarts.Parse(mol, smarts), smarts);
+                            var expr = GetAtomExpr(mol.Atoms[0]);
+                            var ee = new Expr(ExprType.Element, e.AtomicNumber);
+                            var ea = new Expr(AliphaticElement, e.AtomicNumber);
+                            Assert.IsTrue(expr.Equals(ee) || expr.Equals(ea));
+                        }
+                        break;
                 }
             }
         }

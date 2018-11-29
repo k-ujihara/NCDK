@@ -44,7 +44,7 @@ namespace NCDK.Groups
         /// <summary>
         /// Specialised option to allow generating automorphisms that ignore the bond order.
         /// </summary>
-        private bool ignoreBondOrders;
+        private readonly bool ignoreBondOrders;
 
         public BondRefinable(IAtomContainer atomContainer) : this(atomContainer, false)
         {
@@ -64,9 +64,8 @@ namespace NCDK.Groups
 
         public virtual int GetConnectivity(int vertexI, int vertexJ)
         {
-            int indexInRow;
-            int maxRowIndex = connectionTable[vertexI].Length;
-            for (indexInRow = 0; indexInRow < maxRowIndex; indexInRow++)
+            var maxRowIndex = connectionTable[vertexI].Length;
+            for (int indexInRow = 0; indexInRow < maxRowIndex; indexInRow++)
             {
                 if (connectionTable[vertexI][indexInRow] == vertexJ)
                 {
@@ -101,15 +100,15 @@ namespace NCDK.Groups
         /// <returns>a partition of the bonds based on the element types and bond order</returns>
         public Partition GetInitialPartition()
         {
-            int bondCount = atomContainer.Bonds.Count;
-            IDictionary<string, SortedSet<int>> cellMap = new Dictionary<string, SortedSet<int>>();
+            var bondCount = atomContainer.Bonds.Count;
+            var cellMap = new Dictionary<string, SortedSet<int>>();
 
             // make mini-'descriptors' for bonds like "C=O" or "C#N" etc
             for (int bondIndex = 0; bondIndex < bondCount; bondIndex++)
             {
-                IBond bond = atomContainer.Bonds[bondIndex];
-                string el0 = bond.Atoms[0].Symbol;
-                string el1 = bond.Atoms[1].Symbol;
+                var bond = atomContainer.Bonds[bondIndex];
+                var el0 = bond.Atoms[0].Symbol;
+                var el1 = bond.Atoms[1].Symbol;
                 string boS;
                 if (ignoreBondOrders)
                 {
@@ -118,8 +117,8 @@ namespace NCDK.Groups
                 }
                 else
                 {
-                    bool isArom = bond.IsAromatic;
-                    int orderNumber = isArom ? 5 : bond.Order.Numeric();
+                    var isArom = bond.IsAromatic;
+                    var orderNumber = isArom ? 5 : bond.Order.Numeric();
                     boS = orderNumber.ToString(NumberFormatInfo.InvariantInfo);
                 }
                 string bondString;
@@ -145,14 +144,14 @@ namespace NCDK.Groups
             }
 
             // sorting is necessary to get cells in order
-            List<string> bondStrings = new List<string>(cellMap.Keys);
+            var bondStrings = new List<string>(cellMap.Keys);
             bondStrings.Sort();
 
             // the partition of the bonds by these 'descriptors'
-            Partition bondPartition = new Partition();
+            var bondPartition = new Partition();
             foreach (string key in bondStrings)
             {
-                SortedSet<int> cell = cellMap[key];
+                var cell = cellMap[key];
                 bondPartition.AddCell(cell);
             }
             bondPartition.Order();
@@ -161,16 +160,16 @@ namespace NCDK.Groups
 
         private void SetupConnectionTable(IAtomContainer atomContainer)
         {
-            int bondCount = atomContainer.Bonds.Count;
+            var bondCount = atomContainer.Bonds.Count;
             // unfortunately, we have to sort the bonds
-            List<IBond> bonds = new List<IBond>();
-            IDictionary<string, IBond> bondMap = new Dictionary<string, IBond>();
+            var bonds = new List<IBond>();
+            var bondMap = new Dictionary<string, IBond>();
             for (int bondIndexI = 0; bondIndexI < bondCount; bondIndexI++)
             {
-                IBond bond = atomContainer.Bonds[bondIndexI];
+                var bond = atomContainer.Bonds[bondIndexI];
                 bonds.Add(bond);
-                int a0 = atomContainer.Atoms.IndexOf(bond.Atoms[0]);
-                int a1 = atomContainer.Atoms.IndexOf(bond.Atoms[1]);
+                var a0 = atomContainer.Atoms.IndexOf(bond.Atoms[0]);
+                var a1 = atomContainer.Atoms.IndexOf(bond.Atoms[1]);
                 string boS;
                 if (ignoreBondOrders)
                 {
@@ -179,8 +178,8 @@ namespace NCDK.Groups
                 }
                 else
                 {
-                    bool isArom = bond.IsAromatic;
-                    int orderNumber = isArom ? 5 : bond.Order.Numeric();
+                    var isArom = bond.IsAromatic;
+                    var orderNumber = isArom ? 5 : bond.Order.Numeric();
                     boS = orderNumber.ToString(NumberFormatInfo.InvariantInfo);
                 }
                 string bondString;
@@ -195,7 +194,7 @@ namespace NCDK.Groups
                 bondMap[bondString] = bond;
             }
 
-            List<string> keys = new List<string>(bondMap.Keys);
+            var keys = new List<string>(bondMap.Keys);
             keys.Sort();
             foreach (string key in keys)
             {
@@ -205,18 +204,19 @@ namespace NCDK.Groups
             connectionTable = new int[bondCount][];
             for (int bondIndexI = 0; bondIndexI < bondCount; bondIndexI++)
             {
-                IBond bondI = bonds[bondIndexI];
-                List<int> connectedBondIndices = new List<int>();
+                var bondI = bonds[bondIndexI];
+                var connectedBondIndices = new List<int>();
                 for (int bondIndexJ = 0; bondIndexJ < bondCount; bondIndexJ++)
                 {
-                    if (bondIndexI == bondIndexJ) continue;
-                    IBond bondJ = bonds[bondIndexJ];
+                    if (bondIndexI == bondIndexJ)
+                        continue;
+                    var bondJ = bonds[bondIndexJ];
                     if (bondI.IsConnectedTo(bondJ))
                     {
                         connectedBondIndices.Add(bondIndexJ);
                     }
                 }
-                int connBondCount = connectedBondIndices.Count;
+                var connBondCount = connectedBondIndices.Count;
                 connectionTable[bondIndexI] = new int[connBondCount];
                 for (int index = 0; index < connBondCount; index++)
                 {

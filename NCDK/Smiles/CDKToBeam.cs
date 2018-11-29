@@ -81,7 +81,7 @@ namespace NCDK.Smiles
             return ToBeamAtom(atom, flavour);
         }
 
-        internal Edge ToBeamEdge(IBond b, IDictionary<IAtom, int> indices)
+        internal Edge ToBeamEdge(IBond b, Dictionary<IAtom, int> indices)
         {
             CheckArgument(b.Atoms.Count == 2, "Invalid number of atoms on bond");
 
@@ -147,7 +147,7 @@ namespace NCDK.Smiles
             return gb.Build();
         }
 
-        private static int? GetMajorMassNumber(Element e)
+        private static int? GetMajorMassNumber(ChemicalElement e)
         {
             try
             {
@@ -193,15 +193,15 @@ namespace NCDK.Smiles
             var charge = a.FormalCharge;
             string symbol = CheckNotNull(a.Symbol, "An atom had an undefined symbol");
 
-            var element = Element.OfSymbol(symbol);
+            var element = Beam.Element.OfSymbol(symbol);
             if (element == null)
-                element = Element.Unknown;
+                element = Beam.Element.Unknown;
 
             var ab = aromatic ? AtomBuilder.Aromatic(element) : AtomBuilder.Aliphatic(element);
 
             // CDK leaves nulls on pseudo atoms - we need to check this special case
             var hCount = a.ImplicitHydrogenCount;
-            if (element == Element.Unknown)
+            if (element == Beam.Element.Unknown)
             {
                 ab.NumOfHydrogens(hCount ?? 0);
             }
@@ -240,7 +240,7 @@ namespace NCDK.Smiles
         /// <returns>a Beam edge</returns>
         /// <exception cref="ArgumentException">the bond did not have 2 atoms or an unsupported order</exception>
         /// <exception cref="NullReferenceException">the bond order was undefined</exception>
-        internal static Edge ToBeamEdge(IBond b, SmiFlavors flavour, IDictionary<IAtom, int> indices)
+        internal static Edge ToBeamEdge(IBond b, SmiFlavors flavour, Dictionary<IAtom, int> indices)
         {
             CheckArgument(b.Atoms.Count == 2, "Invalid number of atoms on bond");
 
@@ -291,7 +291,7 @@ namespace NCDK.Smiles
         /// <param name="dbs">stereo element specifying double-bond configuration</param>
         /// <param name="gb">the current graph builder</param>
         /// <param name="indices">atom indices</param>
-        private static void AddGeometricConfiguration(IDoubleBondStereochemistry dbs, SmiFlavors flavour, GraphBuilder gb, IDictionary<IAtom, int> indices)
+        private static void AddGeometricConfiguration(IDoubleBondStereochemistry dbs, SmiFlavors flavour, GraphBuilder gb, Dictionary<IAtom, int> indices)
         {
             var db = dbs.StereoBond;
             var bs = dbs.Bonds;
@@ -323,7 +323,7 @@ namespace NCDK.Smiles
         /// <param name="tc">stereo element specifying tetrahedral configuration</param>
         /// <param name="gb">the current graph builder</param>
         /// <param name="indices">atom indices</param>
-        private static void AddTetrahedralConfiguration(ITetrahedralChirality tc, GraphBuilder gb, IDictionary<IAtom, int> indices)
+        private static void AddTetrahedralConfiguration(ITetrahedralChirality tc, GraphBuilder gb, Dictionary<IAtom, int> indices)
         {
             var ligands = tc.Ligands;
 
@@ -344,7 +344,7 @@ namespace NCDK.Smiles
         /// <param name="et">stereo element specifying tetrahedral configuration</param>
         /// <param name="gb">the current graph builder</param>
         /// <param name="indices">atom indices</param>
-        private static void AddExtendedTetrahedralConfiguration(ExtendedTetrahedral et, GraphBuilder gb, IDictionary<IAtom, int> indices)
+        private static void AddExtendedTetrahedralConfiguration(ExtendedTetrahedral et, GraphBuilder gb, Dictionary<IAtom, int> indices)
         {
             var ligands = et.Peripherals;
 

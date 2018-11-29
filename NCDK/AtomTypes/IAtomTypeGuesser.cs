@@ -29,7 +29,6 @@ namespace NCDK.AtomTypes
     // @author      egonw
     // @cdk.created 2006-09-22
     // @cdk.module  core
-    // @cdk.githash
     public interface IAtomTypeGuesser
     {
         /// <summary>

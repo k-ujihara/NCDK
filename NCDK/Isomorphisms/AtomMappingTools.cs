@@ -30,38 +30,32 @@ using System.Linq;
 namespace NCDK.Isomorphisms
 {
     // @cdk.module    standard
-    // @cdk.githash
     public static class AtomMappingTools
     {
         /// <summary>
-        /// Returns a IDictionary with the AtomNumbers, the first number corresponds to the first (or the largest
+        /// Returns a Dictionary with the AtomNumbers, the first number corresponds to the first (or the largest
         /// AtomContainer) atomContainer.
         /// </summary>
         /// <remarks>Only for similar and aligned molecules with coordinates!</remarks>
         /// <param name="firstAtomContainer">the (largest) first aligned AtomContainer which is the reference</param>
         /// <param name="secondAtomContainer">the second aligned AtomContainer</param>
         /// <param name="mappedAtoms"></param>
-        /// <returns>a IDictionary of the mapped atoms</returns>
         /// <exception cref="CDKException">if there is an error in the UniversalIsomorphismTester</exception>
-        public static void MapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer,
-                IAtomContainer secondAtomContainer, IDictionary<int, int> mappedAtoms)
+        public static void MapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, IDictionary<int, int> mappedAtoms)
         {
-            //IDictionary atoms onto each other
+            // Dictionary atoms onto each other
             if (firstAtomContainer.Atoms.Count < 1 & secondAtomContainer.Atoms.Count < 1)
             {
                 return;
             }
-            RMap map;
-            IAtom atom1;
-            IAtom atom2;
             try
             {
                 var list = new UniversalIsomorphismTester().GetSubgraphAtomsMap(firstAtomContainer, secondAtomContainer);
                 for (int i = 0; i < list.Count; i++)
                 {
-                    map = list[i];
-                    atom1 = firstAtomContainer.Atoms[map.Id1];
-                    atom2 = secondAtomContainer.Atoms[map.Id2];
+                    var map = list[i];
+                    var atom1 = firstAtomContainer.Atoms[map.Id1];
+                    var atom2 = secondAtomContainer.Atoms[map.Id2];
                     if (CheckAtomMapping(firstAtomContainer, secondAtomContainer, firstAtomContainer.Atoms.IndexOf(atom1),
                             secondAtomContainer.Atoms.IndexOf(atom2)))
                     {

@@ -40,10 +40,10 @@ namespace NCDK.Default
     /// Represents the idea of an monomer as used in PDB files. It contains extra fields
     /// normally associated with atoms in such files.
     /// </summary>
+    /// <seealso cref="PDBAtom" />
     // @cdk.module data
-    // @cdk.githash
-    // @see  PDBAtom
-    public class PDBMonomer : Monomer, ICloneable, IPDBMonomer
+    public class PDBMonomer 
+        : Monomer, ICloneable, IPDBMonomer
     {
         public string ICode { get; set; }
 
@@ -99,10 +99,10 @@ namespace NCDK.Silent
     /// Represents the idea of an monomer as used in PDB files. It contains extra fields
     /// normally associated with atoms in such files.
     /// </summary>
+    /// <seealso cref="PDBAtom" />
     // @cdk.module data
-    // @cdk.githash
-    // @see  PDBAtom
-    public class PDBMonomer : Monomer, ICloneable, IPDBMonomer
+    public class PDBMonomer 
+        : Monomer, ICloneable, IPDBMonomer
     {
         public string ICode { get; set; }
 

@@ -54,10 +54,10 @@ namespace NCDK.Beam
         private readonly UnionFind uf;
 
         /// <summary>
-        /// IDictionary stores the bridges of the blossom - indexed by with support
+        /// Dictionary stores the bridges of the blossom - indexed by with support
         /// vertices.
         /// </summary>
-        private readonly IDictionary<int, Tuple> bridges = new Dictionary<int, Tuple>();
+        private readonly Dictionary<int, Tuple> bridges = new Dictionary<int, Tuple>();
 
         /// <summary>Temporary array to fill with path information.</summary>
         private readonly int[] path;
@@ -410,7 +410,7 @@ namespace NCDK.Beam
         /// </summary>
         private sealed class FixedSizeQueue
         {
-            private int[] vs;
+            private readonly int[] vs;
             private int i = 0;
             private int n = 0;
 

@@ -254,7 +254,7 @@ namespace NCDK.Isomorphisms
         /// <param name="element">tetrahedral element</param>
         /// <param name="map">atom index lookup</param>
         /// <returns>the neighbors</returns>
-        private static int[] Neighbors(ITetrahedralChirality element, IDictionary<IAtom, int> map)
+        private static int[] Neighbors(ITetrahedralChirality element, Dictionary<IAtom, int> map)
         {
             var atoms = element.Ligands;
             int[] vs = new int[atoms.Count];

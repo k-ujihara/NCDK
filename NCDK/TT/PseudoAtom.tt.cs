@@ -36,12 +36,16 @@ namespace NCDK.Default
 {
     /// <inheritdoc cref="IPseudoAtom"/>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class PseudoAtom
         : Atom, ICloneable, IPseudoAtom
     {
         private string label;
         private int attachPointNum;
+
+        public PseudoAtom(ChemicalElement element)
+            : base(element)
+        {
+        }
 
         /// <summary>
         /// Constructs an empty PseudoAtom.
@@ -148,12 +152,16 @@ namespace NCDK.Silent
 {
     /// <inheritdoc cref="IPseudoAtom"/>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class PseudoAtom
         : Atom, ICloneable, IPseudoAtom
     {
         private string label;
         private int attachPointNum;
+
+        public PseudoAtom(ChemicalElement element)
+            : base(element)
+        {
+        }
 
         /// <summary>
         /// Constructs an empty PseudoAtom.

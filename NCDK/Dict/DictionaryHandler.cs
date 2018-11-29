@@ -27,7 +27,6 @@ namespace NCDK.Dict
     /// Class for unmarshalling a dictionary schema file.
     /// </summary>
     // @cdk.module     dict
-    // @cdk.githash
     public class DictionaryHandler : XContentHandler
     {
         private bool inEntry = false;

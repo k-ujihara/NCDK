@@ -147,7 +147,7 @@ namespace NCDK.Tautomers
             // shallow copy since we will suppress hydrogens
             mol = mol.Builder.NewAtomContainer(mol);
 
-            List<IAtomContainer> tautomers = new List<IAtomContainer>();
+            var tautomers = new List<IAtomContainer>();
             if (!inchi.Contains("(H"))
             { //No mobile H atoms according to InChI, so bail out.
                 tautomers.Add(mol);
@@ -155,8 +155,8 @@ namespace NCDK.Tautomers
             }
 
             //Preparation: translate the InChi
-            IDictionary<int, IAtom> inchiAtomsByPosition = GetElementsByPosition(inchi, mol);
-            IAtomContainer inchiMolGraph = ConnectAtoms(inchi, mol, inchiAtomsByPosition);
+            var inchiAtomsByPosition = GetElementsByPosition(inchi, mol);
+            var inchiMolGraph = ConnectAtoms(inchi, mol, inchiAtomsByPosition);
 
             if (amap != null && amap.Length == mol.Atoms.Count)
             {
@@ -172,8 +172,8 @@ namespace NCDK.Tautomers
                 MapInputMoleculeToInChIMolgraph(inchiMolGraph, mol);
             }
 
-            List<int> mobHydrAttachPositions = new List<int>();
-            int totalMobHydrCount = ParseMobileHydrogens(mobHydrAttachPositions, inchi);
+            var mobHydrAttachPositions = new List<int>();
+            var totalMobHydrCount = ParseMobileHydrogens(mobHydrAttachPositions, inchi);
 
             tautomers = ConstructTautomers(mol, mobHydrAttachPositions, totalMobHydrCount);
             //Remove duplicates
@@ -187,15 +187,15 @@ namespace NCDK.Tautomers
         /// </summary>
         /// <param name="inputInchi">user input InChI</param>
         /// <param name="inputMolecule">user input molecule</param>
-        /// <returns><see cref="IDictionary{TKey, TValue}"/> indicating position and atom</returns>
+        /// <returns><see cref="Dictionary{TKey, TValue}"/> indicating position and atom</returns>
         private static Dictionary<int, IAtom> GetElementsByPosition(string inputInchi, IAtomContainer inputMolecule)
         {
             var inchiAtomsByPosition = new Dictionary<int, IAtom>();
             int position = 0;
-            string inchi = inputInchi;
+            var inchi = inputInchi;
 
             inchi = inchi.Substring(inchi.IndexOf('/') + 1);
-            string formula = inchi.Substring(0, inchi.IndexOf('/'));
+            var formula = inchi.Substring(0, inchi.IndexOf('/'));
 
             // Test for dots in the formula. For now, bail out when encountered; it
             // would require more sophisticated InChI connection table parsing.
@@ -206,10 +206,10 @@ namespace NCDK.Tautomers
             if (formula.Contains("."))
                 throw new CDKException($"Cannot parse InChI, formula contains dot (unsupported feature). Input formula={formula}");
 
-            Regex formulaPattern = new Regex("\\.?[0-9]*(?<symbol>[A-Z]{1}[a-z]?)(?<cnt>[0-9]*)", RegexOptions.Compiled);
+            var formulaPattern = new Regex("\\.?[0-9]*(?<symbol>[A-Z]{1}[a-z]?)(?<cnt>[0-9]*)", RegexOptions.Compiled);
             foreach (Match match in formulaPattern.Matches(formula))
             {
-                string elementSymbol = match.Groups["symbol"].Value;
+                var elementSymbol = match.Groups["symbol"].Value;
                 switch (elementSymbol)
                 {
                     case "H":
@@ -217,7 +217,7 @@ namespace NCDK.Tautomers
                     default:
                         int elementCnt = 1;
                         {
-                            string cnt = match.Groups["cnt"].Value;
+                            var cnt = match.Groups["cnt"].Value;
                             if (cnt.Length != 0)
                                 elementCnt = int.Parse(cnt, NumberFormatInfo.InvariantInfo);
                         }
@@ -225,7 +225,7 @@ namespace NCDK.Tautomers
                         for (int i = 0; i < elementCnt; i++)
                         {
                             position++;
-                            IAtom atom = inputMolecule.Builder.NewAtom(elementSymbol);
+                            var atom = inputMolecule.Builder.NewAtom(elementSymbol);
 
                             // This class uses the atom's ID attribute to keep track of
                             // atom positions defined in the InChi. So if for example
@@ -247,21 +247,21 @@ namespace NCDK.Tautomers
         /// <param name="inputMolecule">user input molecule</param>
         /// <param name="inchiAtomsByPosition"></param>
         /// <returns>molecule with single bonds and no hydrogens.</returns>
-        private static IAtomContainer ConnectAtoms(string inputInchi, IAtomContainer inputMolecule, IDictionary<int, IAtom> inchiAtomsByPosition)
+        private static IAtomContainer ConnectAtoms(string inputInchi, IAtomContainer inputMolecule, Dictionary<int, IAtom> inchiAtomsByPosition)
         {
-            string inchi = inputInchi;
+            var inchi = inputInchi;
             inchi = inchi.Substring(inchi.IndexOf('/') + 1);
             inchi = inchi.Substring(inchi.IndexOf('/') + 1);
-            string connections = inchi.Substring(1, inchi.IndexOf('/') - 1);
-            Regex connectionPattern = new Regex("(-|\\(|\\)|,|([0-9])*)", RegexOptions.Compiled);
+            var connections = inchi.Substring(1, inchi.IndexOf('/') - 1);
+            var connectionPattern = new Regex("(-|\\(|\\)|,|([0-9])*)", RegexOptions.Compiled);
             var matches = connectionPattern.Matches(connections);
             var atomStack = new Stack<IAtom>();
-            IAtomContainer inchiMolGraph = inputMolecule.Builder.NewAtomContainer();
+            var inchiMolGraph = inputMolecule.Builder.NewAtomContainer();
             bool pop = false;
             bool push = true;
             foreach (Match match in matches)
             {
-                string group = match.Value;
+                var group = match.Value;
                 push = true;
                 switch (group)
                 {
@@ -289,8 +289,9 @@ namespace NCDK.Tautomers
                         int position;
                         if (int.TryParse(group, out position))
                         {
-                            IAtom atom = inchiAtomsByPosition[position];
-                            if (!inchiMolGraph.Contains(atom)) inchiMolGraph.Atoms.Add(atom);
+                            var atom = inchiAtomsByPosition[position];
+                            if (!inchiMolGraph.Contains(atom))
+                                inchiMolGraph.Atoms.Add(atom);
                             IAtom prevAtom = null;
                             if (atomStack.Count != 0)
                             {
@@ -302,8 +303,7 @@ namespace NCDK.Tautomers
                                 {
                                     prevAtom = atomStack.Peek();
                                 }
-                                IBond bond = inputMolecule.Builder.NewBond(prevAtom, atom,
-                                        BondOrder.Single);
+                                var bond = inputMolecule.Builder.NewBond(prevAtom, atom, BondOrder.Single);
                                 inchiMolGraph.Bonds.Add(bond);
                             }
                             if (push)
@@ -321,7 +321,8 @@ namespace NCDK.Tautomers
             //put any unconnected atoms in the output as well
             foreach (var at in inchiAtomsByPosition.Values)
             {
-                if (!inchiMolGraph.Contains(at)) inchiMolGraph.Atoms.Add(at);
+                if (!inchiMolGraph.Contains(at))
+                    inchiMolGraph.Atoms.Add(at);
             }
             return inchiMolGraph;
         }
@@ -335,18 +336,19 @@ namespace NCDK.Tautomers
         /// <exception cref="CDKException"></exception>
         private static void MapInputMoleculeToInChIMolgraph(IAtomContainer inchiMolGraph, IAtomContainer mol)
         {
-            var iter = VentoFoggia.FindIdentical(inchiMolGraph, AtomMatcher.CreateElementMatcher(), BondMatcher.CreateAnyMatcher())
-                                                                                      .MatchAll(mol)
-                                                                                      .Limit(1)
-                                                                                      .ToAtomMap();
+            var iter = VentoFoggia.FindIdentical(inchiMolGraph,
+                AtomMatcher.CreateElementMatcher(), BondMatcher.CreateAnyMatcher())
+                    .MatchAll(mol)
+                    .Limit(1)
+                    .ToAtomMap();
             var i = iter.FirstOrDefault();
             if (i != null)
             {
                 foreach (var e in i)
                 {
-                    IAtom src = e.Key;
-                    IAtom dst = e.Value;
-                    string position = src.Id;
+                    var src = e.Key;
+                    var dst = e.Value;
+                    var position = src.Id;
                     dst.Id = position;
                     Debug.WriteLine("Mapped InChI " + src.Symbol + " " + src.Id + " to " + dst.Symbol + " " + dst.Id);
                 }
@@ -380,8 +382,8 @@ namespace NCDK.Tautomers
         private static int ParseMobileHydrogens(List<int> mobHydrAttachPositions, string inputInchi)
         {
             int totalMobHydrCount = 0;
-            string hydrogens = "";
-            string inchi = inputInchi;
+            var hydrogens = "";
+            var inchi = inputInchi;
             if (inchi.IndexOf("/h", StringComparison.Ordinal) != -1)
             {
                 hydrogens = inchi.Substring(inchi.IndexOf("/h", StringComparison.Ordinal) + 2);
@@ -389,14 +391,16 @@ namespace NCDK.Tautomers
                 {
                     hydrogens = hydrogens.Substring(0, hydrogens.IndexOf('/'));
                 }
-                string mobileHydrogens = hydrogens.Substring(hydrogens.IndexOf('('));
+                var mobileHydrogens = hydrogens.Substring(hydrogens.IndexOf('('));
                 foreach (Match match in mobileHydrPattern.Matches(mobileHydrogens))
                 {
-                    string mobileHGroup = match.Value;
+                    var mobileHGroup = match.Value;
                     int mobHCount = 0;
-                    string head = mobileHGroup.Substring(0, mobileHGroup.IndexOf(',') + 1);
-                    if (head.Contains("H,")) head = head.Replace("H,", "H1,");
-                    if (head.Contains("-,")) head = head.Replace("-,", "-1,");
+                    var head = mobileHGroup.Substring(0, mobileHGroup.IndexOf(',') + 1);
+                    if (head.Contains("H,"))
+                        head = head.Replace("H,", "H1,");
+                    if (head.Contains("-,"))
+                        head = head.Replace("-,", "-1,");
                     head = head.Substring(2);
                     
                     // Pragmatically, also add any delocalised neg charge to the
@@ -438,22 +442,22 @@ namespace NCDK.Tautomers
         /// <returns>tautomers</returns>
         private List<IAtomContainer> ConstructTautomers(IAtomContainer inputMolecule, List<int> mobHydrAttachPositions, int totalMobHydrCount)
         {
-            List<IAtomContainer> tautomers = new List<IAtomContainer>();
+            var tautomers = new List<IAtomContainer>();
 
             //Tautomeric skeleton generation
-            IAtomContainer skeleton = (IAtomContainer)inputMolecule.Clone();
+            var skeleton = (IAtomContainer)inputMolecule.Clone();
 
             bool atomsToRemove = true;
-            List<IAtom> removedAtoms = new List<IAtom>();
+            var removedAtoms = new List<IAtom>();
             bool atomRemoved = false;
             while (atomsToRemove)
             {
                 foreach (var atom in skeleton.Atoms)
                 {
                     atomRemoved = false;
-                    int position = int.Parse(atom.Id, NumberFormatInfo.InvariantInfo);
+                    var position = int.Parse(atom.Id, NumberFormatInfo.InvariantInfo);
                     if (!mobHydrAttachPositions.Contains(position)
-                            && atom.Hybridization.Equals(Hybridization.SP3))
+                     && atom.Hybridization.Equals(Hybridization.SP3))
                     {
                         skeleton.Atoms.Remove(atom);
                         removedAtoms.Add(atom);
@@ -475,7 +479,8 @@ namespace NCDK.Tautomers
                     }
                 }
             break_ATOMS:
-                if (!atomRemoved) atomsToRemove = false;
+                if (!atomRemoved)
+                    atomsToRemove = false;
             }
 
             bool bondsToRemove = true;
@@ -489,7 +494,7 @@ namespace NCDK.Tautomers
                     {
                         if (bond.Contains(removedAtom))
                         {
-                            IAtom other = bond.GetOther(removedAtom);
+                            var other = bond.GetOther(removedAtom);
                             int decValence = 0;
                             switch (bond.Order.Numeric())
                             {
@@ -525,26 +530,25 @@ namespace NCDK.Tautomers
 
             foreach (var hPosition in mobHydrAttachPositions)
             {
-                IAtom atom = FindAtomByPosition(skeleton, hPosition);
+                var atom = FindAtomByPosition(skeleton, hPosition);
                 atom.ImplicitHydrogenCount = 0;
             }
 
             // Make combinations for mobile Hydrogen attachments
             var combinations = new List<IList<int>>();
-            CombineHydrogenPositions(new List<int>(), combinations, skeleton, totalMobHydrCount,
-                    mobHydrAttachPositions);
+            CombineHydrogenPositions(new List<int>(), combinations, skeleton, totalMobHydrCount, mobHydrAttachPositions);
 
-            Stack<object> solutions = new Stack<object>();
+            var solutions = new Stack<object>();
             foreach (var hPositions in combinations)
             {
-                IAtomContainer tautomerSkeleton = (IAtomContainer)skeleton.Clone();
+                var tautomerSkeleton = (IAtomContainer)skeleton.Clone();
 
                 foreach (var hPos in hPositions)
                 {
-                    IAtom atom = FindAtomByPosition(tautomerSkeleton, hPos);
+                    var atom = FindAtomByPosition(tautomerSkeleton, hPos);
                     atom.ImplicitHydrogenCount = atom.ImplicitHydrogenCount + 1;
                 }
-                List<IAtom> atomsInNeedOfFix = new List<IAtom>();
+                var atomsInNeedOfFix = new List<IAtom>();
                 foreach (var atom in tautomerSkeleton.Atoms)
                 {
                     if (atom.Valency - atom.FormalCharge != atom.ImplicitHydrogenCount
@@ -571,9 +575,9 @@ namespace NCDK.Tautomers
 
                 while (solutions.Count != 0)
                 {
-                    IAtomContainer tautomerSkeleton = (IAtomContainer)solutions.Pop();
+                    var tautomerSkeleton = (IAtomContainer)solutions.Pop();
                     var dblBondPositions = (List<int>)solutions.Pop();
-                    IAtomContainer tautomer = (IAtomContainer)inputMolecule.Clone();
+                    var tautomer = (IAtomContainer)inputMolecule.Clone();
                     foreach (var skAtom1 in tautomerSkeleton.Atoms)
                     {
                         foreach (var atom1 in tautomer.Atoms)
@@ -583,15 +587,15 @@ namespace NCDK.Tautomers
                                 atom1.ImplicitHydrogenCount = skAtom1.ImplicitHydrogenCount;
                                 for (int bondIdx = 0; bondIdx < tautomerSkeleton.Bonds.Count; bondIdx++)
                                 {
-                                    IBond skBond = tautomerSkeleton.Bonds[bondIdx];
+                                    var skBond = tautomerSkeleton.Bonds[bondIdx];
                                     if (skBond.Contains(skAtom1))
                                     {
-                                        IAtom skAtom2 = skBond.GetOther(skAtom1);
+                                        var skAtom2 = skBond.GetOther(skAtom1);
                                         foreach (var atom2 in tautomer.Atoms)
                                         {
                                             if (string.Equals(atom2.Id, skAtom2.Id, StringComparison.Ordinal))
                                             {
-                                                IBond tautBond = tautomer.GetBond(atom1, atom2);
+                                                var tautBond = tautomer.GetBond(atom1, atom2);
                                                 if (dblBondPositions.Contains(bondIdx))
                                                     tautBond.Order = BondOrder.Double;
                                                 else
@@ -627,8 +631,8 @@ namespace NCDK.Tautomers
         /// <exception cref="CDKException">unable to calculate canonical SMILES</exception>
         private static List<IAtomContainer> RemoveDuplicates(List<IAtomContainer> tautomers)
         {
-            ISet<string> cansmis = new HashSet<string>();
-            List<IAtomContainer> result = new List<IAtomContainer>();
+            var cansmis = new HashSet<string>();
+            var result = new List<IAtomContainer>();
             foreach (IAtomContainer tautomer in tautomers)
             {
                 if (cansmis.Add(CANSMI.Create(tautomer)))
@@ -652,12 +656,13 @@ namespace NCDK.Tautomers
             {
                 for (int i = 0; i < mobHydrAttachPositions.Count; i++)
                 {
-                    int pos = mobHydrAttachPositions[i];
-                    IAtom atom = FindAtomByPosition(skeleton, pos);
-                    int conn = GetConnectivity(atom, skeleton);
+                    var pos = mobHydrAttachPositions[i];
+                    var atom = FindAtomByPosition(skeleton, pos);
+                    var conn = GetConnectivity(atom, skeleton);
                     int hCnt = 0;
                     foreach (var t in taken)
-                        if (t == pos) hCnt++;
+                        if (t == pos)
+                            hCnt++;
                     if (atom.Valency - atom.FormalCharge > (hCnt + conn))
                     {
                         taken.Add(pos);
@@ -687,7 +692,7 @@ namespace NCDK.Tautomers
         /// <returns>atom on the position</returns>
         private static IAtom FindAtomByPosition(IAtomContainer container, int position)
         {
-            string pos = position.ToString(NumberFormatInfo.InvariantInfo);
+            var pos = position.ToString(NumberFormatInfo.InvariantInfo);
             foreach (var atom in container.Atoms)
             {
                 if (string.Equals(atom.Id, pos, StringComparison.Ordinal))
@@ -706,15 +711,14 @@ namespace NCDK.Tautomers
         /// <param name="doubleBondMax">maximum number of double bonds to add</param>
         /// <param name="atomsInNeedOfFix">atoms that require more bonds</param>
         /// <returns>a list of double bond positions (index) that make a valid combination, null if none found</returns>
-        private List<int> TryDoubleBondCombinations(IAtomContainer container, int dblBondsAdded, int bondOffSet,
-                int doubleBondMax, List<IAtom> atomsInNeedOfFix)
+        private List<int> TryDoubleBondCombinations(IAtomContainer container, int dblBondsAdded, int bondOffSet, int doubleBondMax, List<IAtom> atomsInNeedOfFix)
         {
-            int offSet = bondOffSet;
+            var offSet = bondOffSet;
             List<int> dblBondPositions = null;
 
             while (offSet < container.Bonds.Count && dblBondPositions == null)
             {
-                IBond bond = container.Bonds[offSet];
+                var bond = container.Bonds[offSet];
                 if (atomsInNeedOfFix.Contains(bond.Begin) && atomsInNeedOfFix.Contains(bond.End))
                 {
                     bond.Order = BondOrder.Double;
@@ -730,7 +734,7 @@ namespace NCDK.Tautomers
                                 goto break_CHECK;
                             }
                         }
-                        break_CHECK:
+                    break_CHECK:
                         if (validDoubleBondConfig)
                         {
                             dblBondPositions = new List<int>();
@@ -744,8 +748,7 @@ namespace NCDK.Tautomers
                     }
                     else
                     {
-                        dblBondPositions = TryDoubleBondCombinations(container, dblBondsAdded, offSet + 1, doubleBondMax,
-                                atomsInNeedOfFix);
+                        dblBondPositions = TryDoubleBondCombinations(container, dblBondsAdded, offSet + 1, doubleBondMax, atomsInNeedOfFix);
                     }
 
                     bond.Order = BondOrder.Single;

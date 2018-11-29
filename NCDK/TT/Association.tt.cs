@@ -35,12 +35,11 @@ namespace NCDK.Default
     /// The ElectronContainer contains zero electrons by default.
     /// </summary>
     // @cdk.module extra
-    // @cdk.githash
     // @cdk.keyword orbital
     // @cdk.keyword association
     // @cdk.keyword bond
-    [Serializable]
-    public class Association : ElectronContainer, IChemObjectListener
+    public class Association 
+        : ElectronContainer, IChemObjectListener
     {
         private readonly ObservableChemObjectCollection<IAtom> associatedAtoms;
 
@@ -111,12 +110,11 @@ namespace NCDK.Silent
     /// The ElectronContainer contains zero electrons by default.
     /// </summary>
     // @cdk.module extra
-    // @cdk.githash
     // @cdk.keyword orbital
     // @cdk.keyword association
     // @cdk.keyword bond
-    [Serializable]
-    public class Association : ElectronContainer, IChemObjectListener
+    public class Association 
+        : ElectronContainer, IChemObjectListener
     {
         private readonly ObservableChemObjectCollection<IAtom> associatedAtoms;
 

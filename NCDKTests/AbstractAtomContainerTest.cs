@@ -32,7 +32,6 @@ namespace NCDK
     /// Checks the functionality of the AtomContainer.
     /// </summary>
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractAtomContainerTest
         : AbstractChemObjectTest
     {

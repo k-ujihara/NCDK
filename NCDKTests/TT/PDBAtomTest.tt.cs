@@ -30,17 +30,18 @@ namespace NCDK.Default
     /// Checks the functionality of the <see cref="PDBAtom"/>.
     /// </summary>
     [TestClass()]
-    public class PDBAtomTest : AbstractPDBAtomTest
+    public class PDBAtomTest 
+        : AbstractPDBAtomTest
     {
         public override IChemObject NewChemObject()
         {
-            return new PDBAtom(new Element());
+            return new PDBAtom(ChemicalElement.R);
         }
 
         [TestMethod()]
         public void TestPDBAtom_IElement()
         {
-            IElement element = new Element();
+            var element = ChemicalElement.R;
             IAtom a = new PDBAtom(element);
             Assert.IsNotNull(a);
         }
@@ -75,17 +76,18 @@ namespace NCDK.Silent
     /// Checks the functionality of the <see cref="PDBAtom"/>.
     /// </summary>
     [TestClass()]
-    public class PDBAtomTest : AbstractPDBAtomTest
+    public class PDBAtomTest 
+        : AbstractPDBAtomTest
     {
         public override IChemObject NewChemObject()
         {
-            return new PDBAtom(new Element());
+            return new PDBAtom(ChemicalElement.R);
         }
 
         [TestMethod()]
         public void TestPDBAtom_IElement()
         {
-            IElement element = new Element();
+            var element = ChemicalElement.R;
             IAtom a = new PDBAtom(element);
             Assert.IsNotNull(a);
         }

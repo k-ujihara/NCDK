@@ -26,7 +26,6 @@ namespace NCDK
     /// Checks the functionality of <see cref="ICrystal"/> implementations.
     /// </summary>
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractCrystalTest
         : AbstractAtomContainerTest
     {

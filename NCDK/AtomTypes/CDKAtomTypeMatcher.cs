@@ -45,10 +45,11 @@ namespace NCDK.AtomTypes
             RequireExplicitHydrogens = 2,
         }
 
-        private static readonly AtomTypeFactory factory = CDK.CdkAtomTypeFactory;
+        private readonly AtomTypeFactory factory = CDK.CdkAtomTypeFactory;
         private readonly Mode mode;
-        private static readonly object syncLock = new object();
+
         private static Dictionary<Mode, CDKAtomTypeMatcher> factories = new Dictionary<Mode, CDKAtomTypeMatcher>(2);
+        private static readonly object syncFactorie = new object();
 
         private CDKAtomTypeMatcher(Mode mode)
         {
@@ -63,7 +64,7 @@ namespace NCDK.AtomTypes
         public static CDKAtomTypeMatcher GetInstance(Mode mode)
         {
             if (!factories.ContainsKey(mode))
-                lock (syncLock)
+                lock (syncFactorie)
                 {
                     if (!factories.ContainsKey(mode))
                         factories.Add(mode, new CDKAtomTypeMatcher(mode));
@@ -117,151 +118,151 @@ namespace NCDK.AtomTypes
             }
             switch (atom.AtomicNumber)
             {
-                case NaturalElements.C.AtomicNumber:
+                case AtomicNumbers.C:
                     type = PerceiveCarbons(atomContainer, atom, searcher, connectedBonds);
                     break;
-                case NaturalElements.H.AtomicNumber:
+                case AtomicNumbers.H:
                     type = PerceiveHydrogens(atomContainer, atom, connectedBonds);
                     break;
-                case NaturalElements.O.AtomicNumber:
+                case AtomicNumbers.O:
                     type = PerceiveOxygens(atomContainer, atom, searcher, connectedBonds);
                     break;
-                case NaturalElements.N.AtomicNumber:
+                case AtomicNumbers.N:
                     type = PerceiveNitrogens(atomContainer, atom, searcher, connectedBonds);
                     break;
-                case NaturalElements.S.AtomicNumber:
+                case AtomicNumbers.S:
                     type = PerceiveSulphurs(atomContainer, atom, searcher, connectedBonds);
                     break;
-                case NaturalElements.P.AtomicNumber:
+                case AtomicNumbers.P:
                     type = PerceivePhosphors(atomContainer, atom, connectedBonds);
                     break;
-                case NaturalElements.Si.AtomicNumber:
+                case AtomicNumbers.Si:
                     type = PerceiveSilicon(atomContainer, atom);
                     break;
-                case NaturalElements.Li.AtomicNumber:
+                case AtomicNumbers.Li:
                     type = PerceiveLithium(atomContainer, atom);
                     break;
-                case NaturalElements.B.AtomicNumber:
+                case AtomicNumbers.B:
                     type = PerceiveBorons(atomContainer, atom);
                     break;
-                case NaturalElements.Be.AtomicNumber:
+                case AtomicNumbers.Be:
                     type = PerceiveBeryllium(atomContainer, atom);
                     break;
-                case NaturalElements.Cr.AtomicNumber:
+                case AtomicNumbers.Cr:
                     type = PerceiveChromium(atomContainer, atom);
                     break;
-                case NaturalElements.Se.AtomicNumber:
+                case AtomicNumbers.Se:
                     type = PerceiveSelenium(atomContainer, atom, connectedBonds);
                     break;
-                case NaturalElements.Mo.AtomicNumber:
+                case AtomicNumbers.Mo:
                     type = PerceiveMolybdenum(atomContainer, atom);
                     break;
-                case NaturalElements.Rb.AtomicNumber:
+                case AtomicNumbers.Rb:
                     type = PerceiveRubidium(atomContainer, atom);
                     break;
-                case NaturalElements.Te.AtomicNumber:
+                case AtomicNumbers.Te:
                     type = PerceiveTellurium(atomContainer, atom);
                     break;
-                case NaturalElements.Cu.AtomicNumber:
+                case AtomicNumbers.Cu:
                     type = PerceiveCopper(atomContainer, atom);
                     break;
-                case NaturalElements.Ba.AtomicNumber:
+                case AtomicNumbers.Ba:
                     type = PerceiveBarium(atomContainer, atom);
                     break;
-                case NaturalElements.Ga.AtomicNumber:
+                case AtomicNumbers.Ga:
                     type = PerceiveGallium(atomContainer, atom);
                     break;
-                case NaturalElements.Ru.AtomicNumber:
+                case AtomicNumbers.Ru:
                     type = PerceiveRuthenium(atomContainer, atom);
                     break;
-                case NaturalElements.Zn.AtomicNumber:
+                case AtomicNumbers.Zn:
                     type = PerceiveZinc(atomContainer, atom);
                     break;
-                case NaturalElements.Al.AtomicNumber:
+                case AtomicNumbers.Al:
                     type = PerceiveAluminium(atomContainer, atom);
                     break;
-                case NaturalElements.Ni.AtomicNumber:
+                case AtomicNumbers.Ni:
                     type = PerceiveNickel(atomContainer, atom);
                     break;
-                case NaturalElements.Gd.AtomicNumber:
+                case AtomicNumbers.Gd:
                     type = PerceiveGadolinum(atomContainer, atom);
                     break;
-                case NaturalElements.Ge.AtomicNumber:
+                case AtomicNumbers.Ge:
                     type = PerceiveGermanium(atomContainer, atom);
                     break;
-                case NaturalElements.Co.AtomicNumber:
+                case AtomicNumbers.Co:
                     type = PerceiveCobalt(atomContainer, atom);
                     break;
-                case NaturalElements.Br.AtomicNumber:
+                case AtomicNumbers.Br:
                     type = PerceiveBromine(atomContainer, atom);
                     break;
-                case NaturalElements.V.AtomicNumber:
+                case AtomicNumbers.V:
                     type = PerceiveVanadium(atomContainer, atom);
                     break;
-                case NaturalElements.Ti.AtomicNumber:
+                case AtomicNumbers.Ti:
                     type = PerceiveTitanium(atomContainer, atom);
                     break;
-                case NaturalElements.Sr.AtomicNumber:
+                case AtomicNumbers.Sr:
                     type = PerceiveStrontium(atomContainer, atom);
                     break;
-                case NaturalElements.Pb.AtomicNumber:
+                case AtomicNumbers.Pb:
                     type = PerceiveLead(atomContainer, atom);
                     break;
-                case NaturalElements.Tl.AtomicNumber:
+                case AtomicNumbers.Tl:
                     type = PerceiveThallium(atomContainer, atom);
                     break;
-                case NaturalElements.Sb.AtomicNumber:
+                case AtomicNumbers.Sb:
                     type = PerceiveAntimony(atomContainer, atom);
                     break;
-                case NaturalElements.Pt.AtomicNumber:
+                case AtomicNumbers.Pt:
                     type = PerceivePlatinum(atomContainer, atom);
                     break;
-                case NaturalElements.Hg.AtomicNumber:
+                case AtomicNumbers.Hg:
                     type = PerceiveMercury(atomContainer, atom);
                     break;
-                case NaturalElements.Fe.AtomicNumber:
+                case AtomicNumbers.Fe:
                     type = PerceiveIron(atomContainer, atom);
                     break;
-                case NaturalElements.Ra.AtomicNumber:
+                case AtomicNumbers.Ra:
                     type = PerceiveRadium(atomContainer, atom);
                     break;
-                case NaturalElements.Au.AtomicNumber:
+                case AtomicNumbers.Au:
                     type = PerceiveGold(atomContainer, atom);
                     break;
-                case NaturalElements.Ag.AtomicNumber:
+                case AtomicNumbers.Ag:
                     type = PerceiveSilver(atomContainer, atom);
                     break;
-                case NaturalElements.Cl.AtomicNumber:
+                case AtomicNumbers.Cl:
                     type = PerceiveChlorine(atomContainer, atom, connectedBonds);
                     break;
-                case NaturalElements.In.AtomicNumber:
+                case AtomicNumbers.In:
                     type = PerceiveIndium(atomContainer, atom);
                     break;
-                case NaturalElements.Pu.AtomicNumber:
+                case AtomicNumbers.Pu:
                     type = PerceivePlutonium(atomContainer, atom);
                     break;
-                case NaturalElements.Th.AtomicNumber:
+                case AtomicNumbers.Th:
                     type = PerceiveThorium(atomContainer, atom);
                     break;
-                case NaturalElements.K.AtomicNumber:
+                case AtomicNumbers.K:
                     type = PerceivePotassium(atomContainer, atom);
                     break;
-                case NaturalElements.Mn.AtomicNumber:
+                case AtomicNumbers.Mn:
                     type = PerceiveManganese(atomContainer, atom);
                     break;
-                case NaturalElements.Mg.AtomicNumber:
+                case AtomicNumbers.Mg:
                     type = PerceiveMagnesium(atomContainer, atom);
                     break;
-                case NaturalElements.Na.AtomicNumber:
+                case AtomicNumbers.Na:
                     type = PerceiveSodium(atomContainer, atom);
                     break;
-                case NaturalElements.As.AtomicNumber:
+                case AtomicNumbers.As:
                     type = PerceiveArsenic(atomContainer, atom);
                     break;
-                case NaturalElements.Cd.AtomicNumber:
+                case AtomicNumbers.Cd:
                     type = PerceiveCadmium(atomContainer, atom);
                     break;
-                case NaturalElements.Ca.AtomicNumber:
+                case AtomicNumbers.Ca:
                     type = PerceiveCalcium(atomContainer, atom);
                     break;
                 default:
@@ -320,7 +321,7 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveSelenium(IAtomContainer atomContainer, IAtom atom, IReadOnlyList<IBond> connectedBonds)
         {
-            if (NaturalElements.Se.AtomicNumber.Equals(atom.AtomicNumber))
+            if (AtomicNumbers.Se.Equals(atom.AtomicNumber))
             {
                 if (connectedBonds == null)
                     connectedBonds = atomContainer.GetConnectedBonds(atom).ToReadOnlyList();
@@ -943,7 +944,7 @@ namespace NCDK.AtomTypes
             if (connectedBonds.Count != 1)
                 return false;
             var carbon = connectedBonds.First().GetOther(atom);
-            if (!NaturalElements.C.AtomicNumber.Equals(carbon.AtomicNumber))
+            if (!AtomicNumbers.C.Equals(carbon.AtomicNumber))
                 return false;
 
             var carbonBonds = container.GetConnectedBonds(carbon).ToReadOnlyList();
@@ -955,7 +956,7 @@ namespace NCDK.AtomTypes
             foreach (var cBond in carbonBonds)
             {
                 var neighbor = cBond.GetOther(carbon);
-                if (NaturalElements.O.AtomicNumber.Equals(neighbor.AtomicNumber))
+                if (AtomicNumbers.O.Equals(neighbor.AtomicNumber))
                 {
                     oxygenCount++;
                     var order = cBond.Order;
@@ -1471,7 +1472,7 @@ namespace NCDK.AtomTypes
                 if (!aromatic) continue;
 
                 // found a hetroatom - we're not a single hetroatom
-                if (!NaturalElements.C.AtomicNumber.Equals(atom1.AtomicNumber))
+                if (!AtomicNumbers.C.Equals(atom1.AtomicNumber))
                     return false;
 
                 // check the second sphere
@@ -1479,7 +1480,7 @@ namespace NCDK.AtomTypes
                 {
                     if (!atom2.Equals(atom) 
                      && container.GetBond(atom1, atom2).IsAromatic
-                     && !NaturalElements.C.AtomicNumber.Equals(atom2.AtomicNumber))
+                     && !AtomicNumbers.C.Equals(atom2.AtomicNumber))
                     {
                         return false;
                     }
@@ -1502,7 +1503,7 @@ namespace NCDK.AtomTypes
             foreach (var bond in connectedBonds)
             {
                 var neighbor = bond.GetOther(atom);
-                if (NaturalElements.C.AtomicNumber.Equals(neighbor.AtomicNumber))
+                if (AtomicNumbers.C.Equals(neighbor.AtomicNumber))
                 {
                     if (CountAttachedDoubleBonds(atomContainer.GetConnectedBonds(neighbor).ToReadOnlyList(), neighbor, "O") == 1)
                         return true;
@@ -1517,7 +1518,7 @@ namespace NCDK.AtomTypes
             foreach (var bond in connectedBonds)
             {
                 var neighbor = bond.GetOther(atom);
-                if (NaturalElements.C.AtomicNumber.Equals(neighbor.AtomicNumber))
+                if (AtomicNumbers.C.Equals(neighbor.AtomicNumber))
                 {
                     if (CountAttachedDoubleBonds(atomContainer.GetConnectedBonds(neighbor).ToReadOnlyList(), neighbor, "S") == 1)
                         return true;
@@ -1532,7 +1533,7 @@ namespace NCDK.AtomTypes
             foreach (var bond in connectedBonds)
             {
                 var aAtom = bond.GetOther(atom);
-                if (aAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                if (aAtom.AtomicNumber.Equals(AtomicNumbers.H))
                 {
                     count++;
                 }
@@ -1549,14 +1550,14 @@ namespace NCDK.AtomTypes
         {
             var heavy = new List<IBond>();
             foreach (var bond in bonds)
-                if (!(bond.Begin.AtomicNumber.Equals(NaturalElements.H.AtomicNumber) && bond.End.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)))
+                if (!(bond.Begin.AtomicNumber.Equals(AtomicNumbers.H) && bond.End.AtomicNumber.Equals(AtomicNumbers.H)))
                     heavy.Add(bond);
             return heavy;
         }
 
         private IAtomType PerceiveIron(IAtomContainer atomContainer, IAtom atom)
         {
-            if (NaturalElements.Fe.AtomicNumber.Equals(atom.AtomicNumber))
+            if (AtomicNumbers.Fe.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -1678,7 +1679,7 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveMercury(IAtomContainer atomContainer, IAtom atom)
         {
-            if (NaturalElements.Hg.AtomicNumber.Equals(atom.AtomicNumber))
+            if (AtomicNumbers.Hg.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2157,7 +2158,7 @@ namespace NCDK.AtomTypes
         private IAtomType PerceiveHalogens(IAtomContainer atomContainer, IAtom atom, IReadOnlyList<IBond> connectedBonds)
         {
             connectedBonds = (connectedBonds ?? atomContainer.GetConnectedBonds(atom)).ToReadOnlyList();
-            if (NaturalElements.F.AtomicNumber.Equals(atom.AtomicNumber))
+            if (AtomicNumbers.F.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2220,7 +2221,7 @@ namespace NCDK.AtomTypes
                         return type;
                 }
             }
-            else if (NaturalElements.I.AtomicNumber.Equals(atom.AtomicNumber))
+            else if (AtomicNumbers.I.Equals(atom.AtomicNumber))
             {
                 return PerceiveIodine(atomContainer, atom, connectedBonds);
             }
@@ -2292,7 +2293,7 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveThorium(IAtomContainer atomContainer, IAtom atom)
         {
-            if (NaturalElements.Th.AtomicNumber.Equals(atom.AtomicNumber))
+            if (AtomicNumbers.Th.Equals(atom.AtomicNumber))
             {
                 if (atom.FormalCharge == 0 && atomContainer.GetConnectedBonds(atom).Count() == 0)
                 {
@@ -2333,7 +2334,7 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveCommonSalts(IAtomContainer atomContainer, IAtom atom)
         {
-            if (NaturalElements.Mg.AtomicNumber.Equals(atom.AtomicNumber))
+            if (AtomicNumbers.Mg.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2346,7 +2347,7 @@ namespace NCDK.AtomTypes
                     if (IsAcceptable(atom, atomContainer, type)) return type;
                 }
             }
-            else if (NaturalElements.Co.AtomicNumber.Equals(atom.AtomicNumber))
+            else if (AtomicNumbers.Co.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2369,7 +2370,7 @@ namespace NCDK.AtomTypes
                     if (IsAcceptable(atom, atomContainer, type)) return type;
                 }
             }
-            else if (NaturalElements.W.AtomicNumber.Equals(atom.AtomicNumber))
+            else if (AtomicNumbers.W.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2555,7 +2556,7 @@ namespace NCDK.AtomTypes
                     return type;
                 }
             }
-            else if (NaturalElements.Cr.AtomicNumber.Equals(atom.AtomicNumber))
+            else if (AtomicNumbers.Cr.Equals(atom.AtomicNumber))
             {
                 if (atom.FormalCharge != null && atom.FormalCharge == 3
                         && atomContainer.GetConnectedBonds(atom).Count() == 0)
@@ -2572,7 +2573,7 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveOrganometallicCenters(IAtomContainer atomContainer, IAtom atom)
         {
-            if (NaturalElements.Po.AtomicNumber.Equals(atom.AtomicNumber))
+            if (AtomicNumbers.Po.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2586,7 +2587,7 @@ namespace NCDK.AtomTypes
                         return type;
                 }
             }
-            else if (NaturalElements.Sn.AtomicNumber.Equals(atom.AtomicNumber))
+            else if (AtomicNumbers.Sn.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2601,7 +2602,7 @@ namespace NCDK.AtomTypes
                         return type;
                 }
             }
-            else if (NaturalElements.Sc.AtomicNumber.Equals(atom.AtomicNumber))
+            else if (AtomicNumbers.Sc.Equals(atom.AtomicNumber))
             {
                 if (atom.FormalCharge != null && atom.FormalCharge == -3
                         && atomContainer.GetConnectedBonds(atom).Count() == 6)
@@ -2661,7 +2662,7 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveNobelGases(IAtomContainer atomContainer, IAtom atom)
         {
-            if (NaturalElements.He.AtomicNumber.Equals(atom.AtomicNumber))
+            if (AtomicNumbers.He.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2675,7 +2676,7 @@ namespace NCDK.AtomTypes
                         return type;
                 }
             }
-            else if (NaturalElements.Ne.AtomicNumber.Equals(atom.AtomicNumber))
+            else if (AtomicNumbers.Ne.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2689,7 +2690,7 @@ namespace NCDK.AtomTypes
                         return type;
                 }
             }
-            else if (NaturalElements.Ar.AtomicNumber.Equals(atom.AtomicNumber))
+            else if (AtomicNumbers.Ar.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2703,7 +2704,7 @@ namespace NCDK.AtomTypes
                         return type;
                 }
             }
-            else if (NaturalElements.Kr.AtomicNumber.Equals(atom.AtomicNumber))
+            else if (AtomicNumbers.Kr.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2717,7 +2718,7 @@ namespace NCDK.AtomTypes
                         return type;
                 }
             }
-            else if (NaturalElements.Xe.AtomicNumber.Equals(atom.AtomicNumber))
+            else if (AtomicNumbers.Xe.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -2740,7 +2741,7 @@ namespace NCDK.AtomTypes
                     }
                 }
             }
-            else if (NaturalElements.Rn.AtomicNumber.Equals(atom.AtomicNumber))
+            else if (AtomicNumbers.Rn.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {
@@ -3266,7 +3267,7 @@ namespace NCDK.AtomTypes
 
         private IAtomType PerceiveCalcium(IAtomContainer atomContainer, IAtom atom)
         {
-            if (NaturalElements.Ca.AtomicNumber.Equals(atom.AtomicNumber))
+            if (AtomicNumbers.Ca.Equals(atom.AtomicNumber))
             {
                 if (HasOneSingleElectron(atomContainer, atom))
                 {

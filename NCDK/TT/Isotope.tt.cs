@@ -50,19 +50,31 @@ namespace NCDK.Default
     // @cdk.created    2001-08-21 
     // @cdk.keyword     isotope 
     public class Isotope
-        : Element, IIsotope, ICloneable
+        : ChemObject, IIsotope, ICloneable
     {
+        private int atomicNumber;
         private double? naturalAbundance;
         private double? exactMass;
         private int? massNumber;
+
+        public Isotope(ChemicalElement element)
+            : this(element.AtomicNumber)
+        {
+        }
 
         /// <summary>
         /// Constructor for the Isotope object.
         /// </summary>
         /// <param name="elementSymbol">The element symbol, "O" for Oxygen, etc.</param>
         public Isotope(string elementSymbol)
-            : base(elementSymbol)
+            : this(ChemicalElement.OfSymbol(elementSymbol).AtomicNumber)
         {
+        }
+
+        public Isotope(int atomicNumber)
+            : base()
+        {
+            this.atomicNumber = atomicNumber;
         }
 
         /// <summary>
@@ -74,8 +86,10 @@ namespace NCDK.Default
         /// <param name="exactMass">The exact mass of the isotope, be a little more explicit here :-)</param>
         /// <param name="abundance">The natural abundance of the isotope</param>
         public Isotope(int atomicNumber, string elementSymbol, int massNumber, double exactMass, double abundance)
-            : base(elementSymbol, atomicNumber)
+            : this(elementSymbol)
         {
+            if (this.atomicNumber != atomicNumber)
+                throw new ArgumentException(nameof(atomicNumber));
             this.massNumber = massNumber;
             this.exactMass = exactMass;
             this.naturalAbundance = abundance;
@@ -89,8 +103,10 @@ namespace NCDK.Default
         /// <param name="exactMass">The exact mass of the isotope, be a little more explicit here :-)</param>
         /// <param name="abundance">The natural abundance of the isotope</param>
         public Isotope(int atomicNumber, string elementSymbol, double exactMass, double abundance)
-            : this(elementSymbol, atomicNumber)
+            : this(elementSymbol)
         {
+            if (this.atomicNumber != atomicNumber)
+                throw new ArgumentException(nameof(atomicNumber));
             this.exactMass = exactMass;
             this.naturalAbundance = abundance;
         }
@@ -101,7 +117,7 @@ namespace NCDK.Default
         /// <param name="elementSymbol">The element symbol, "O" for Oxygen, etc.</param>
         /// <param name="massNumber">The atomic mass of the isotope, 16 for Oxygen, e.g.</param>
         public Isotope(string elementSymbol, int massNumber)
-            : base(elementSymbol)
+            : this(elementSymbol)
         {
             this.massNumber = massNumber;
         }
@@ -115,13 +131,55 @@ namespace NCDK.Default
         /// </summary>
         /// <param name="element"><see cref="IElement"/> to copy information from</param>
         public Isotope(IElement element)
-            : base(element)
+            : this(element.AtomicNumber)
         {
             if (element is IIsotope isotope)           
             {
                 this.exactMass = isotope.ExactMass;
                 this.naturalAbundance = isotope.NaturalAbundance;
                 this.massNumber = isotope.MassNumber;
+            }
+        }
+
+        public virtual ChemicalElement Element => ChemicalElement.Of(AtomicNumber);
+
+        /// <summary>
+        /// The atomic number of this element.
+        /// </summary>
+        /// <example>
+        /// Once instantiated all field not filled by passing parameters
+        /// to the constructor are null. Elements can be configured by using
+        /// the <see cref="Config.IsotopeFactory.Configure(IAtom)"/> method:
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Element_Example.cs+AtomicNumber"]/*' />
+        /// </example>
+        public virtual int AtomicNumber
+        {
+            get => this.atomicNumber;
+
+            set
+            {
+                this.atomicNumber = value;
+                NotifyChanged();
+            }
+        }
+
+        /// <summary>
+        /// The element symbol of this element.
+        /// </summary>
+        /// <returns>The element symbol of this element. <see langword="null"/> if unset.</returns>
+        public virtual string Symbol
+        {
+            get
+            {
+                if (this.atomicNumber == 0)
+                    return "R";
+                return ChemicalElement.Of(this.atomicNumber).Symbol;
+            }
+
+            set
+            {
+                this.atomicNumber = ChemicalElement.OfSymbol(value).AtomicNumber;
+                NotifyChanged();
             }
         }
 
@@ -205,6 +263,7 @@ namespace NCDK.Default
         public override bool Compare(object obj)
         {
             return obj is Isotope isotope && base.Compare(obj)
+                && isotope.AtomicNumber == AtomicNumber
                 && isotope.MassNumber == MassNumber
                 && NearlyEquals(isotope.ExactMass, ExactMass)
                 && NearlyEquals(isotope.NaturalAbundance, NaturalAbundance);
@@ -240,19 +299,31 @@ namespace NCDK.Silent
     // @cdk.created    2001-08-21 
     // @cdk.keyword     isotope 
     public class Isotope
-        : Element, IIsotope, ICloneable
+        : ChemObject, IIsotope, ICloneable
     {
+        private int atomicNumber;
         private double? naturalAbundance;
         private double? exactMass;
         private int? massNumber;
+
+        public Isotope(ChemicalElement element)
+            : this(element.AtomicNumber)
+        {
+        }
 
         /// <summary>
         /// Constructor for the Isotope object.
         /// </summary>
         /// <param name="elementSymbol">The element symbol, "O" for Oxygen, etc.</param>
         public Isotope(string elementSymbol)
-            : base(elementSymbol)
+            : this(ChemicalElement.OfSymbol(elementSymbol).AtomicNumber)
         {
+        }
+
+        public Isotope(int atomicNumber)
+            : base()
+        {
+            this.atomicNumber = atomicNumber;
         }
 
         /// <summary>
@@ -264,8 +335,10 @@ namespace NCDK.Silent
         /// <param name="exactMass">The exact mass of the isotope, be a little more explicit here :-)</param>
         /// <param name="abundance">The natural abundance of the isotope</param>
         public Isotope(int atomicNumber, string elementSymbol, int massNumber, double exactMass, double abundance)
-            : base(elementSymbol, atomicNumber)
+            : this(elementSymbol)
         {
+            if (this.atomicNumber != atomicNumber)
+                throw new ArgumentException(nameof(atomicNumber));
             this.massNumber = massNumber;
             this.exactMass = exactMass;
             this.naturalAbundance = abundance;
@@ -279,8 +352,10 @@ namespace NCDK.Silent
         /// <param name="exactMass">The exact mass of the isotope, be a little more explicit here :-)</param>
         /// <param name="abundance">The natural abundance of the isotope</param>
         public Isotope(int atomicNumber, string elementSymbol, double exactMass, double abundance)
-            : this(elementSymbol, atomicNumber)
+            : this(elementSymbol)
         {
+            if (this.atomicNumber != atomicNumber)
+                throw new ArgumentException(nameof(atomicNumber));
             this.exactMass = exactMass;
             this.naturalAbundance = abundance;
         }
@@ -291,7 +366,7 @@ namespace NCDK.Silent
         /// <param name="elementSymbol">The element symbol, "O" for Oxygen, etc.</param>
         /// <param name="massNumber">The atomic mass of the isotope, 16 for Oxygen, e.g.</param>
         public Isotope(string elementSymbol, int massNumber)
-            : base(elementSymbol)
+            : this(elementSymbol)
         {
             this.massNumber = massNumber;
         }
@@ -305,13 +380,53 @@ namespace NCDK.Silent
         /// </summary>
         /// <param name="element"><see cref="IElement"/> to copy information from</param>
         public Isotope(IElement element)
-            : base(element)
+            : this(element.AtomicNumber)
         {
             if (element is IIsotope isotope)           
             {
                 this.exactMass = isotope.ExactMass;
                 this.naturalAbundance = isotope.NaturalAbundance;
                 this.massNumber = isotope.MassNumber;
+            }
+        }
+
+        public virtual ChemicalElement Element => ChemicalElement.Of(AtomicNumber);
+
+        /// <summary>
+        /// The atomic number of this element.
+        /// </summary>
+        /// <example>
+        /// Once instantiated all field not filled by passing parameters
+        /// to the constructor are null. Elements can be configured by using
+        /// the <see cref="Config.IsotopeFactory.Configure(IAtom)"/> method:
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Element_Example.cs+AtomicNumber"]/*' />
+        /// </example>
+        public virtual int AtomicNumber
+        {
+            get => this.atomicNumber;
+
+            set
+            {
+                this.atomicNumber = value;
+            }
+        }
+
+        /// <summary>
+        /// The element symbol of this element.
+        /// </summary>
+        /// <returns>The element symbol of this element. <see langword="null"/> if unset.</returns>
+        public virtual string Symbol
+        {
+            get
+            {
+                if (this.atomicNumber == 0)
+                    return "R";
+                return ChemicalElement.Of(this.atomicNumber).Symbol;
+            }
+
+            set
+            {
+                this.atomicNumber = ChemicalElement.OfSymbol(value).AtomicNumber;
             }
         }
 
@@ -392,6 +507,7 @@ namespace NCDK.Silent
         public override bool Compare(object obj)
         {
             return obj is Isotope isotope && base.Compare(obj)
+                && isotope.AtomicNumber == AtomicNumber
                 && isotope.MassNumber == MassNumber
                 && NearlyEquals(isotope.ExactMass, ExactMass)
                 && NearlyEquals(isotope.NaturalAbundance, NaturalAbundance);

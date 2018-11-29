@@ -181,12 +181,11 @@ namespace NCDK.SMSD.Tools
     /// Xe-O    84    175
     /// Xe-F    130    195
     /// </remarks>
-    // @cdk.githash
     // @cdk.module smsd
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     public class BondEnergies
     {
-        private static IDictionary<int, BondEnergy> bondEngergies = null;
+        private static ConcurrentDictionary<int, BondEnergy> bondEngergies = null;
         /// <summary>
         /// Singleton pattern instance for the Bond Energy class
         /// </summary>
@@ -228,15 +227,15 @@ namespace NCDK.SMSD.Tools
 
             foreach (var entry in bondEngergies)
             {
-                BondEnergy bondEnergy = entry.Value;
-                string atom1 = bondEnergy.SymbolFirstAtom;
-                string atom2 = bondEnergy.SymbolSecondAtom;
-                if ((string.Equals(atom1, sourceAtom.Symbol, StringComparison.OrdinalIgnoreCase) &&
-                     string.Equals(atom2, targetAtom.Symbol, StringComparison.OrdinalIgnoreCase))
-                 || (string.Equals(atom2, sourceAtom.Symbol, StringComparison.OrdinalIgnoreCase) &&
-                     string.Equals(atom1, targetAtom.Symbol, StringComparison.OrdinalIgnoreCase)))
+                var bondEnergy = entry.Value;
+                var atom1 = bondEnergy.SymbolFirstAtom;
+                var atom2 = bondEnergy.SymbolSecondAtom;
+                if ((string.Equals(atom1, sourceAtom.Symbol, StringComparison.OrdinalIgnoreCase) 
+                  && string.Equals(atom2, targetAtom.Symbol, StringComparison.OrdinalIgnoreCase))
+                 || (string.Equals(atom2, sourceAtom.Symbol, StringComparison.OrdinalIgnoreCase) 
+                  && string.Equals(atom1, targetAtom.Symbol, StringComparison.OrdinalIgnoreCase)))
                 {
-                    BondOrder order = bondEnergy.BondOrder;
+                    var order = bondEnergy.BondOrder;
                     if (order.CompareTo(bondOrder) == 0)
                     {
                         dKJPerMol = bondEnergy.Energy;
@@ -259,16 +258,15 @@ namespace NCDK.SMSD.Tools
 
             foreach (var entry in bondEngergies)
             {
-                BondEnergy bondEnergy = entry.Value;
-                string atom1 = bondEnergy.SymbolFirstAtom;
-                string atom2 = bondEnergy.SymbolSecondAtom;
-                if ((string.Equals(atom1, sourceAtom, StringComparison.OrdinalIgnoreCase) &&
-                     string.Equals(atom2, targetAtom, StringComparison.OrdinalIgnoreCase))
-                 || (string.Equals(atom2, sourceAtom, StringComparison.OrdinalIgnoreCase) &&
-                     string.Equals(atom1, targetAtom, StringComparison.OrdinalIgnoreCase)))
+                var bondEnergy = entry.Value;
+                var atom1 = bondEnergy.SymbolFirstAtom;
+                var atom2 = bondEnergy.SymbolSecondAtom;
+                if ((string.Equals(atom1, sourceAtom, StringComparison.OrdinalIgnoreCase) 
+                  && string.Equals(atom2, targetAtom, StringComparison.OrdinalIgnoreCase))
+                 || (string.Equals(atom2, sourceAtom, StringComparison.OrdinalIgnoreCase) 
+                  && string.Equals(atom1, targetAtom, StringComparison.OrdinalIgnoreCase)))
                 {
-
-                    BondOrder order = bondEnergy.BondOrder;
+                    var order = bondEnergy.BondOrder;
                     if (order.CompareTo(bondOrder) == 0)
                     {
                         dKJPerMol = bondEnergy.Energy;
@@ -288,7 +286,7 @@ namespace NCDK.SMSD.Tools
             int dKJPerMol = -1;
             foreach (var entry in bondEngergies)
             {
-                BondEnergy bondEnergy = entry.Value;
+                var bondEnergy = entry.Value;
                 if (bondEnergy.Matches(bond))
                 {
                     dKJPerMol = bondEnergy.Energy;

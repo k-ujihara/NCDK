@@ -33,7 +33,7 @@ namespace <#= ns.NS #>
     {
         public override IChemObject NewChemObject()
         {
-            return new Isotope(new Element());
+            return new Isotope(ChemicalElement.R);
         }
 
         [TestMethod()]
@@ -46,7 +46,7 @@ namespace <#= ns.NS #>
         [TestMethod()]
         public void TestIsotope_IElement()
         {
-            IElement element = NewChemObject().Builder.NewElement("C");
+            var element = ChemicalElement.C;
             IIsotope i = new Isotope(element);
             Assert.AreEqual("C", i.Symbol);
         }

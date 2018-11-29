@@ -62,15 +62,15 @@ namespace NCDK.Graphs
         private const int NIL = -1;
 
         /// <summary>Queue of 'even' (free) vertices to start paths from.</summary>
-        private readonly IList<int> queue;
+        private readonly List<int> queue;
 
         /// <summary>Union-Find to store blossoms.</summary>
         private DisjointSetForest dsf;
 
         /// <summary>
-        /// IDictionary stores the bridges of the blossom - indexed by with support vertices.
+        /// Dictionary stores the bridges of the blossom - indexed by with support vertices.
         /// </summary>
-        private readonly IDictionary<int, Tuple> bridges = new Dictionary<int, Tuple>();
+        private readonly Dictionary<int, Tuple> bridges = new Dictionary<int, Tuple>();
 
         /// <summary>Temporary array to fill with path information.</summary>
         private readonly int[] path;
@@ -137,7 +137,7 @@ namespace NCDK.Graphs
             // for each 'free' vertex, start a bfs search
             while (queue.Count != 0)
             {
-                int v = queue[0];
+                var v = queue[0];
                 queue.RemoveAt(0);
 
                 foreach (var w in graph[v])
@@ -157,7 +157,7 @@ namespace NCDK.Graphs
                     else if (odd[w] == NIL)
                     {
                         odd[w] = v;
-                        int u = matching.Other(w);
+                        var u = matching.Other(w);
                         // add the matched edge (potential though a blossom) if it
                         // isn't in the forest already
                         if (even[dsf.GetRoot(u)] == NIL)
@@ -194,15 +194,14 @@ namespace NCDK.Graphs
 
             vAncestors.SetAll(false);
             wAncestors.SetAll(false);
-            int vCurr = v;
-            int wCurr = w;
+            var vCurr = v;
+            var wCurr = w;
 
             // walk back along the trees filling up 'vAncestors' and 'wAncestors'
             // with the vertices in the tree -  vCurr and wCurr are the 'even' parents
             // from v/w along the tree
             while (true)
             {
-
                 vCurr = GetNExtEvenVertex(vAncestors, vCurr);
                 wCurr = GetNExtEvenVertex(wAncestors, wCurr);
 
@@ -255,7 +254,8 @@ namespace NCDK.Graphs
             curr = dsf.GetRoot(curr);
             ancestors.Set(curr, true);
             int parent = dsf.GetRoot(even[curr]);
-            if (parent == curr) return curr; // root of tree
+            if (parent == curr)
+                return curr; // root of tree
             ancestors.Set(parent, true);
             return dsf.GetRoot(odd[parent]);
         }
@@ -269,8 +269,8 @@ namespace NCDK.Graphs
         private void CreatebBlossom(int v, int w, int base_)
         {
             base_ = dsf.GetRoot(base_);
-            int[] supports1 = BlossomSupports(v, w, base_);
-            int[] supports2 = BlossomSupports(w, v, base_);
+            var supports1 = BlossomSupports(v, w, base_);
+            var supports2 = BlossomSupports(w, v, base_);
 
             for (int i = 0; i < supports1.Length; i++)
                 dsf.MakeUnion(supports1[i], supports1[0]);
@@ -294,10 +294,10 @@ namespace NCDK.Graphs
         {
             int n = 0;
             path[n++] = dsf.GetRoot(v);
-            Tuple b = new Tuple(v, w);
+            var b = new Tuple(v, w);
             while (path[n - 1] != base_)
             {
-                int u = even[path[n - 1]];
+                var u = even[path[n - 1]];
                 path[n++] = u;
                 this.bridges.Add(u, b);
                 // contracting the blossom allows us to continue searching from odd
@@ -315,7 +315,7 @@ namespace NCDK.Graphs
         /// <param name="v">the leaf to augment from</param>
         private void Augment(int v)
         {
-            int n = BuildPath(path, 0, v, NIL);
+            var n = BuildPath(path, 0, v, NIL);
             for (int i = 2; i < n; i += 2)
             {
                 matching.Match(path[i], path[i - 1]);
@@ -339,12 +339,12 @@ namespace NCDK.Graphs
                 // lift the path through the contracted blossom
                 while (odd[start] != NIL)
                 {
-                    Tuple bridge = bridges[start];
+                    var bridge = bridges[start];
 
                     // add to the path from the bridge down to where 'start'
                     // is - we need to reverse it as we travel 'up' the blossom
                     // and then...
-                    int j = BuildPath(path, i, bridge.First, start);
+                    var j = BuildPath(path, i, bridge.First, start);
                     Reverse(path, i, j - 1);
                     i = j;
 
@@ -354,12 +354,14 @@ namespace NCDK.Graphs
                 path[i++] = start;
 
                 // root of the tree
-                if (matching.Unmatched(start)) return i;
+                if (matching.Unmatched(start))
+                    return i;
 
                 path[i++] = matching.Other(start);
 
                 // end of recursive
-                if (path[i - 1] == goal) return i;
+                if (path[i - 1] == goal)
+                    return i;
 
                 start = odd[path[i - 1]];
             }
@@ -426,9 +428,11 @@ namespace NCDK.Graphs
             /// <inheritdoc/>
             public override bool Equals(object o)
             {
-                if (this == o) return true;
-                if (o == null || GetType() != o.GetType()) return false;
-                Tuple that = (Tuple)o;
+                if (this == o)
+                    return true;
+                if (o == null || GetType() != o.GetType())
+                    return false;
+                var that = (Tuple)o;
                 return this.First == that.First && this.Second == that.Second;
             }
         }

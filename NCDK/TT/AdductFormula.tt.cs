@@ -47,8 +47,8 @@ namespace NCDK.Default
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.keyword molecular formula
-    // @cdk.githash
-    public class AdductFormula : IEnumerable<IMolecularFormula>, IAdductFormula
+    public class AdductFormula 
+        : IEnumerable<IMolecularFormula>, IAdductFormula
     {
         /// <summary> Internal List of IMolecularFormula.</summary>
         private List<IMolecularFormula> components;
@@ -300,8 +300,8 @@ namespace NCDK.Silent
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.keyword molecular formula
-    // @cdk.githash
-    public class AdductFormula : IEnumerable<IMolecularFormula>, IAdductFormula
+    public class AdductFormula 
+        : IEnumerable<IMolecularFormula>, IAdductFormula
     {
         /// <summary> Internal List of IMolecularFormula.</summary>
         private List<IMolecularFormula> components;

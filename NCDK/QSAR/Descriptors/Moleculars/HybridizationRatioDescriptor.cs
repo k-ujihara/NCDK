@@ -72,7 +72,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int nsp3 = 0;
             foreach (var atom in container.Atoms)
             {
-                if (!atom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                if (!atom.AtomicNumber.Equals(AtomicNumbers.C))
                     continue;
                 switch (atom.Hybridization)
                 {

@@ -33,7 +33,6 @@ namespace NCDK
     /// </summary>
     // @author     Martin Eklund <martin.eklund@farmbio.uu.se>
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractStrandTest
         : AbstractAtomContainerTest
     {

@@ -102,7 +102,7 @@ namespace NCDK.Charges
 
                     if (gasteigerFactors[StepSize * atom1 + atom1 + 4] >= gasteigerFactors[StepSize * atom2 + atom2 + 4])
                     {
-                        if (ac.Atoms[atom2].AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                        if (ac.Atoms[atom2].AtomicNumber.Equals(AtomicNumbers.H))
                         {
                             deoc = ChiCatHydrogen;
                         }
@@ -113,7 +113,7 @@ namespace NCDK.Charges
                     }
                     else
                     {
-                        if (ac.Atoms[atom1].AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                        if (ac.Atoms[atom1].AtomicNumber.Equals(AtomicNumbers.H))
                         {
                             deoc = ChiCatHydrogen;
                         }
@@ -172,12 +172,12 @@ namespace NCDK.Charges
                 var charge = atom.FormalCharge;
                 switch (atom.AtomicNumber)
                 {
-                    case NaturalElements.H.AtomicNumber:
+                    case AtomicNumbers.H:
                         factors[0] = 7.17;
                         factors[1] = 6.24;
                         factors[2] = -0.56;
                         break;
-                    case NaturalElements.C.AtomicNumber:
+                    case AtomicNumbers.C:
                         if (maxBondOrder == BondOrder.Double 
                          || (maxBondOrder == BondOrder.Single && (charge == -1 || charge == +1)))
                         {
@@ -199,7 +199,7 @@ namespace NCDK.Charges
                             factors[2] = 0.73;
                         }
                         break;
-                    case NaturalElements.N.AtomicNumber:
+                    case AtomicNumbers.N:
                         if ((maxBondOrder == BondOrder.Single)
                          && (charge != -1))
                         {
@@ -222,7 +222,7 @@ namespace NCDK.Charges
                             factors[2] = -0.27;/*-0.27*/
                         }
                         break;
-                    case NaturalElements.O.AtomicNumber:
+                    case AtomicNumbers.O:
                         if ((maxBondOrder == BondOrder.Single)
                          && (charge != -1))
                         {
@@ -238,37 +238,37 @@ namespace NCDK.Charges
                             factors[2] = 0.47;/* 0.47 */
                         }
                         break;
-                    case NaturalElements.Si.AtomicNumber: // <--not correct
+                    case AtomicNumbers.Si: // <--not correct
                         factors[0] = 8.10;// <--not correct
                         factors[1] = 7.92;// <--not correct
                         factors[2] = 1.78;// <--not correct
                         break;
-                    case NaturalElements.P.AtomicNumber:
+                    case AtomicNumbers.P:
                         factors[0] = 8.90;
                         factors[1] = 8.32;
                         factors[2] = 1.58;
                         break;
-                    case NaturalElements.S.AtomicNumber:
+                    case AtomicNumbers.S:
                         factors[0] = 10.14;/* 10.14 */
                         factors[1] = 9.13;/* 9.13 */
                         factors[2] = 1.38;/* 1.38 */
                         break;
-                    case NaturalElements.F.AtomicNumber:
+                    case AtomicNumbers.F:
                         factors[0] = 14.66;
                         factors[1] = 13.85;
                         factors[2] = 2.31;
                         break;
-                    case NaturalElements.Cl.AtomicNumber:
+                    case AtomicNumbers.Cl:
                         factors[0] = 12.31;/* 11.0 *//* 12.31 */
                         factors[1] = 10.84;/* 9.69 *//* 10.84 */
                         factors[2] = 1.512;/* 1.35 *//* 1.512 */
                         break;
-                    case NaturalElements.Br.AtomicNumber:
+                    case AtomicNumbers.Br:
                         factors[0] = 11.44;/* 10.08 *//* 11.2 */
                         factors[1] = 9.63;/* 8.47 *//* 9.4 */
                         factors[2] = 1.31;/* 1.16 *//* 1.29 */
                         break;
-                    case NaturalElements.I.AtomicNumber:
+                    case AtomicNumbers.I:
                         factors[0] = 9.88;/* 9.90 */
                         factors[1] = 7.95;/* 7.96 */
                         factors[2] = 0.945;/* 0.96 */

@@ -22,7 +22,6 @@
  */
 
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Groups
 {
@@ -62,7 +61,8 @@ namespace NCDK.Groups
         /// Create a refinable from an atom container with flags set to false.
         /// </summary>
         /// <param name="atomContainer">the atom and bond data</param>
-        public AtomRefinable(IAtomContainer atomContainer) : this(atomContainer, false, false)
+        public AtomRefinable(IAtomContainer atomContainer) 
+            : this(atomContainer, false, false)
         {
         }
 
@@ -184,7 +184,7 @@ namespace NCDK.Groups
                 return Partition.Unit(n);
             }
 
-            IDictionary<string, SortedSet<int>> cellMap = new Dictionary<string, SortedSet<int>>();
+            var cellMap = new Dictionary<string, SortedSet<int>>();
             int numberOfAtoms = atomContainer.Atoms.Count;
             for (int atomIndex = 0; atomIndex < numberOfAtoms; atomIndex++)
             {
@@ -202,13 +202,13 @@ namespace NCDK.Groups
                 cell.Add(atomIndex);
             }
 
-            List<string> atomSymbols = new List<string>(cellMap.Keys);
+            var atomSymbols = new List<string>(cellMap.Keys);
             atomSymbols.Sort();
 
-            Partition elementPartition = new Partition();
+            var elementPartition = new Partition();
             foreach (string key in atomSymbols)
             {
-                SortedSet<int> cell = cellMap[key];
+                var cell = cellMap[key];
                 elementPartition.AddCell(cell);
             }
 
@@ -222,7 +222,7 @@ namespace NCDK.Groups
         /// <param name="atomContainer">the atom</param>
         private void SetupConnectionTable(IAtomContainer atomContainer)
         {
-            int atomCount = atomContainer.Atoms.Count;
+            var atomCount = atomContainer.Atoms.Count;
             connectionTable = new int[atomCount][];
             if (!ignoreBondOrders)
             {
@@ -232,7 +232,7 @@ namespace NCDK.Groups
             {
                 var atom = atomContainer.Atoms[atomIndex];
                 var connectedAtoms = atomContainer.GetConnectedAtoms(atom).ToReadOnlyList();
-                int numConnAtoms = connectedAtoms.Count;
+                var numConnAtoms = connectedAtoms.Count;
                 connectionTable[atomIndex] = new int[numConnAtoms];
                 if (!ignoreBondOrders)
                 {
@@ -241,13 +241,13 @@ namespace NCDK.Groups
                 int i = 0;
                 foreach (IAtom connected in connectedAtoms)
                 {
-                    int index = atomContainer.Atoms.IndexOf(connected);
+                    var index = atomContainer.Atoms.IndexOf(connected);
                     connectionTable[atomIndex][i] = index;
                     if (!ignoreBondOrders)
                     {
-                        IBond bond = atomContainer.GetBond(atom, connected);
-                        bool isArom = bond.IsAromatic;
-                        int orderNumber = isArom ? 5 : bond.Order.Numeric();
+                        var bond = atomContainer.GetBond(atom, connected);
+                        var isArom = bond.IsAromatic;
+                        var orderNumber = isArom ? 5 : bond.Order.Numeric();
                         bondOrders[atomIndex][i] = orderNumber;
 
                         // TODO

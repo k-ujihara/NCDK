@@ -30,7 +30,6 @@ namespace NCDK.Charges
     // @author      chhoppe
     // @cdk.created 2004-11-03
     // @cdk.module  charges
-    // @cdk.githash
     public class AtomTypeCharges : IChargeCalculator
     {
         HOSECodeGenerator hcg = new HOSECodeGenerator();

@@ -70,20 +70,20 @@ namespace NCDK.Beam
     /// 
     /// <code>
     /// Element e = Element.Carbon;
-    /// Element e = Element.OfSymbol("C");
-    /// Element e = Element.OfSymbol("c");
+    /// Element e = ChemicalElement.OfSymbol("C");
+    /// Element e = ChemicalElement.OfSymbol("c");
     /// </code>
     /// 
     /// When the symbol is invalid the result wil be null.
     /// <code>
-    /// Element e = Element.OfSymbol("R1"); // e = null
+    /// Element e = ChemicalElement.OfSymbol("R1"); // e = null
     /// </code>
     /// 
     /// The <see cref="Element.Unknown"/> element can be used to represent generic/alias
     /// atoms.
     /// <code>
     /// Element e = Element.Unknown;
-    /// Element e = Element.OfSymbol("*");
+    /// Element e = ChemicalElement.OfSymbol("*");
     /// </code>
     /// 
     /// To access the symbol of an already created element. Use <see cref="Element.Symbol"/>.
@@ -251,7 +251,7 @@ namespace NCDK.Beam
         private readonly int[] electrons;
 
         /// <summary>Look up of elements by symbol</summary>
-        private static readonly IDictionary<string, Element> elementMap = new Dictionary<string, Element>();
+        private static readonly Dictionary<string, Element> elementMap = new Dictionary<string, Element>();
 
         private static readonly Element[] elements = new Element[119];
 
@@ -640,9 +640,9 @@ namespace NCDK.Beam
             return ret;
         }
 
-        static IDictionary<string, ElementCheck> LoadDefaults()
+        static Dictionary<string, ElementCheck> LoadDefaults()
         {
-            IDictionary<string, ElementCheck> checks = new Dictionary<string, ElementCheck>();
+            var checks = new Dictionary<string, ElementCheck>();
             try
             {
                 using (var br = new StreamReader(ResourceLoader.GetAsStream(typeof(Element), "element-defaults.txt")))
@@ -653,7 +653,7 @@ namespace NCDK.Beam
                         if (line.Length == 0 || line[0] == '-') // empty line or comment
                             continue;
                         KeyValuePair<string, ElementCheck> entry = Load(line);
-                        checks.Add(entry);
+                        checks.Add(entry.Key, entry.Value);
                     }
                 }
             }
@@ -667,10 +667,10 @@ namespace NCDK.Beam
         static KeyValuePair<string, ElementCheck> Load(string line)
         {
             var data = Strings.Tokenize(line);
-            string symbol = data[0];
-            int electrons = int.Parse(data[3], NumberFormatInfo.InvariantInfo);
-            ValenceCheck valenceCheck = ValenceCheck.Parse(data[1], electrons);
-            ChargeCheck chargeCheck = ChargeCheck.Parse(data[2]);
+            var symbol = data[0];
+            var electrons = int.Parse(data[3], NumberFormatInfo.InvariantInfo);
+            var valenceCheck = ValenceCheck.Parse(data[1], electrons);
+            var chargeCheck = ChargeCheck.Parse(data[2]);
             return new KeyValuePair<string, ElementCheck>(symbol, new ElementCheck(valenceCheck, chargeCheck));
         }
 

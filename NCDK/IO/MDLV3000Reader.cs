@@ -140,11 +140,11 @@ namespace NCDK.IO
                 lastLine = ReadLine();
             }
 
-            foreach (IAtom atom in readData.Atoms)
+            foreach (var atom in readData.Atoms)
             {
                 // XXX: slow method is slow
                 int valence = 0;
-                foreach (IBond bond in readData.GetConnectedBonds(atom))
+                foreach (var bond in readData.GetConnectedBonds(atom))
                 {
                     if (bond is IQueryBond || bond.Order == BondOrder.Unset)
                     {
@@ -177,7 +177,7 @@ namespace NCDK.IO
         public string ReadHeader(IAtomContainer readData)
         {
             // read four lines
-            string line1 = ReadLine();
+            var line1 = ReadLine();
             if (line1 == null)
             {
                 throw new CDKException("Expected a header line, but found nothing.");
@@ -192,9 +192,10 @@ namespace NCDK.IO
                 readData.Title = line1;
             }
             ReadLine();
-            string line3 = ReadLine();
-            if (line3.Length > 0) readData.SetProperty(CDKPropertyName.Comment, line3);
-            string line4 = ReadLine();
+            var line3 = ReadLine();
+            if (line3.Length > 0)
+                readData.SetProperty(CDKPropertyName.Comment, line3);
+            var line4 = ReadLine();
             if (!line4.Contains("3000"))
             {
                 throw new CDKException("This file is not a MDL V3000 molfile.");
@@ -227,7 +228,7 @@ namespace NCDK.IO
                 else
                 {
                     Debug.WriteLine($"Parsing atom from: {command}");
-                    IAtom atom = readData.Builder.NewAtom();
+                    var atom = readData.Builder.NewAtom();
                     var tokenizer = Strings.Tokenize(command).GetEnumerator();
                     // parse the index
                     try
@@ -237,7 +238,7 @@ namespace NCDK.IO
                     }
                     catch (Exception exception)
                     {
-                        string error = "Error while parsing atom index";
+                        var error = "Error while parsing atom index";
                         Trace.TraceError(error);
                         Debug.WriteLine(exception);
                         throw new CDKException(error, exception);
@@ -272,7 +273,7 @@ namespace NCDK.IO
                     }
                     else if (element.Length > 0 && element[0] == 'R')
                     {
-                        Debug.WriteLine("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
+                        Debug.WriteLine($"Atom {element} is not an regular element. Creating a PseudoAtom.");
                         //check if the element is R
                         var rGroupNumStr = element.Substring(1);
                         {
@@ -294,8 +295,7 @@ namespace NCDK.IO
                     {
                         if (ReaderMode == ChemObjectReaderMode.Strict)
                         {
-                            throw new CDKException(
-                                    "Invalid element type. Must be an existing element, or one in: A, Q, L, LP, *.");
+                            throw new CDKException("Invalid element type. Must be an existing element, or one in: A, Q, L, LP, *.");
                         }
                         atom = readData.Builder.NewPseudoAtom(element);
                         atom.Symbol = element;
@@ -305,14 +305,14 @@ namespace NCDK.IO
                     try
                     {
                         tokenizer.MoveNext();
-                        string xString = tokenizer.Current;
+                        var xString = tokenizer.Current;
                         tokenizer.MoveNext();
-                        string yString = tokenizer.Current;
+                        var yString = tokenizer.Current;
                         tokenizer.MoveNext();
-                        string zString = tokenizer.Current;
-                        double x = double.Parse(xString, NumberFormatInfo.InvariantInfo);
-                        double y = double.Parse(yString, NumberFormatInfo.InvariantInfo);
-                        double z = double.Parse(zString, NumberFormatInfo.InvariantInfo);
+                        var zString = tokenizer.Current;
+                        var x = double.Parse(xString, NumberFormatInfo.InvariantInfo);
+                        var y = double.Parse(yString, NumberFormatInfo.InvariantInfo);
+                        var z = double.Parse(zString, NumberFormatInfo.InvariantInfo);
                         atom.Point3D = new Vector3(x, y, z);
                         atom.Point2D = new Vector2(x, y); // FIXME: dirty!
                     }
@@ -325,7 +325,7 @@ namespace NCDK.IO
                     }
                     // atom-atom mapping
                     tokenizer.MoveNext();
-                    string mapping = tokenizer.Current;
+                    var mapping = tokenizer.Current;
                     if (!string.Equals(mapping, "0", StringComparison.Ordinal))
                     {
                         Trace.TraceWarning("Skipping atom-atom mapping: " + mapping);
@@ -334,7 +334,7 @@ namespace NCDK.IO
                     // the rest are key value things
                     if (command.IndexOf('=') != -1)
                     {
-                        IDictionary<string, string> options = ParseOptions(ExhaustStringTokenizer(tokenizer));
+                        var options = ParseOptions(ExhaustStringTokenizer(tokenizer));
                         var keys = options.Keys;
                         foreach (var key in keys)
                         {
@@ -493,13 +493,13 @@ namespace NCDK.IO
                         throw new CDKException(error, exception);
                     }
 
-                    List<IAtom> endpts = new List<IAtom>();
+                    var endpts = new List<IAtom>();
                     string attach = null;
 
                     // the rest are key=value fields
                     if (command.IndexOf('=') != -1)
                     {
-                        IDictionary<string, string> options = ParseOptions(ExhaustStringTokenizer(tokenizer));
+                        var options = ParseOptions(ExhaustStringTokenizer(tokenizer));
                         foreach (var key in options.Keys)
                         {
                             string value = options[key];
@@ -606,7 +606,7 @@ namespace NCDK.IO
                     Trace.TraceWarning("Skipping external index: " + externalIndexString);
 
                     // the rest are key=value fields
-                    IDictionary<string, string> options = new Dictionary<string, string>();
+                    var options = new Dictionary<string, string>();
                     if (command.IndexOf('=') != -1)
                     {
                         options = ParseOptions(ExhaustStringTokenizer(tokenizer));
@@ -693,9 +693,9 @@ namespace NCDK.IO
             }
         }
 
-        private IDictionary<string, string> ParseOptions(string str)
+        private Dictionary<string, string> ParseOptions(string str)
         {
-            IDictionary<string, string> keyValueTuples = new Dictionary<string, string>();
+            var keyValueTuples = new Dictionary<string, string>();
             while (str.Length >= 3)
             {
                 Debug.WriteLine($"Matching remaining option string: {str}");

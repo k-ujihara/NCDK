@@ -18,10 +18,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Tools.Manipulator;
-using NCDK.Silent;
-using NCDK.Config;
+
 
 namespace NCDK.Smiles
 {
@@ -31,12 +31,14 @@ namespace NCDK.Smiles
     [TestClass()]
     public class FixBondOrdersToolTest : CDKTestCase
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+
         [TestMethod()]
         [Timeout(1000)]
         public void TestPyrrole()
         {
             string smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
-            var sp = new SmilesParser(ChemObjectBuilder.Instance, false);
+            var sp = new SmilesParser(builder, false);
             var molecule = sp.ParseSmiles(smiles);
             AtomContainerManipulator.SetSingleOrDoubleFlags(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
@@ -60,7 +62,7 @@ namespace NCDK.Smiles
         public void TestPyrrole_Silent()
         {
             string smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
-            var sp = new SmilesParser(ChemObjectBuilder.Instance, false);
+            var sp = new SmilesParser(builder, false);
             var molecule = sp.ParseSmiles(smiles);
             AtomContainerManipulator.SetSingleOrDoubleFlags(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
@@ -130,27 +132,27 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void XtestPyrrole()
         {
-            IAtomContainer enol = new AtomContainer();
+            var enol = builder.NewAtomContainer();
 
             // atom block
-            IAtom atom1 = new Atom(NaturalElements.Carbon.Element);
+            var atom1 = builder.NewAtom(ChemicalElement.C);
             atom1.Hybridization = Hybridization.SP2;
-            IAtom atom2 = new Atom(NaturalElements.Carbon.Element);
+            var atom2 = builder.NewAtom(ChemicalElement.C);
             atom2.Hybridization = Hybridization.SP2;
-            IAtom atom3 = new Atom(NaturalElements.Carbon.Element);
+            var atom3 = builder.NewAtom(ChemicalElement.C);
             atom3.Hybridization = Hybridization.SP2;
-            IAtom atom4 = new Atom(NaturalElements.Carbon.Element);
+            var atom4 = builder.NewAtom(ChemicalElement.C);
             atom4.Hybridization = Hybridization.SP2;
-            IAtom atom5 = new Atom(NaturalElements.Nitrogen.Element);
+            var atom5 = builder.NewAtom(ChemicalElement.N);
             atom5.Hybridization = Hybridization.SP2;
             atom5.ImplicitHydrogenCount = 1;
 
             // bond block
-            IBond bond1 = new Bond(atom1, atom2);
-            IBond bond2 = new Bond(atom2, atom3);
-            IBond bond3 = new Bond(atom3, atom4);
-            IBond bond4 = new Bond(atom4, atom5);
-            IBond bond5 = new Bond(atom5, atom1);
+            var bond1 = builder.NewBond(atom1, atom2);
+            var bond2 = builder.NewBond(atom2, atom3);
+            var bond3 = builder.NewBond(atom3, atom4);
+            var bond4 = builder.NewBond(atom4, atom5);
+            var bond5 = builder.NewBond(atom5, atom1);
 
             enol.Atoms.Add(atom1);
             enol.Atoms.Add(atom2);
@@ -182,29 +184,29 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void XtestPyridine()
         {
-            IAtomContainer enol = new AtomContainer();
+            var enol = builder.NewAtomContainer();
 
             // atom block
-            IAtom atom1 = new Atom(NaturalElements.Carbon.Element);
+            var atom1 = builder.NewAtom(ChemicalElement.C);
             atom1.Hybridization = Hybridization.SP2;
-            IAtom atom2 = new Atom(NaturalElements.Carbon.Element);
+            var atom2 = builder.NewAtom(ChemicalElement.C);
             atom2.Hybridization = Hybridization.SP2;
-            IAtom atom3 = new Atom(NaturalElements.Carbon.Element);
+            var atom3 = builder.NewAtom(ChemicalElement.C);
             atom3.Hybridization = Hybridization.SP2;
-            IAtom atom4 = new Atom(NaturalElements.Carbon.Element);
+            var atom4 = builder.NewAtom(ChemicalElement.C);
             atom4.Hybridization = Hybridization.SP2;
-            IAtom atom5 = new Atom(NaturalElements.Carbon.Element);
+            var atom5 = builder.NewAtom(ChemicalElement.C);
             atom5.Hybridization = Hybridization.SP2;
-            IAtom atom6 = new Atom(NaturalElements.Nitrogen.Element);
+            var atom6 = builder.NewAtom(ChemicalElement.N);
             atom6.Hybridization = Hybridization.SP2;
 
             // bond block
-            IBond bond1 = new Bond(atom1, atom2);
-            IBond bond2 = new Bond(atom2, atom3);
-            IBond bond3 = new Bond(atom3, atom4);
-            IBond bond4 = new Bond(atom4, atom5);
-            IBond bond5 = new Bond(atom5, atom6);
-            IBond bond6 = new Bond(atom6, atom1);
+            var bond1 = builder.NewBond(atom1, atom2);
+            var bond2 = builder.NewBond(atom2, atom3);
+            var bond3 = builder.NewBond(atom3, atom4);
+            var bond4 = builder.NewBond(atom4, atom5);
+            var bond5 = builder.NewBond(atom5, atom6);
+            var bond6 = builder.NewBond(atom6, atom1);
 
             enol.Atoms.Add(atom1);
             enol.Atoms.Add(atom2);
@@ -253,29 +255,29 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void XtestBenzene()
         {
-            IAtomContainer enol = new AtomContainer();
+            var enol = builder.NewAtomContainer();
 
             // atom block
-            IAtom atom1 = new Atom(NaturalElements.Carbon.Element);
+            var atom1 = builder.NewAtom(ChemicalElement.C);
             atom1.Hybridization = Hybridization.SP2;
-            IAtom atom2 = new Atom(NaturalElements.Carbon.Element);
+            var atom2 = builder.NewAtom(ChemicalElement.C);
             atom2.Hybridization = Hybridization.SP2;
-            IAtom atom3 = new Atom(NaturalElements.Carbon.Element);
+            var atom3 = builder.NewAtom(ChemicalElement.C);
             atom3.Hybridization = Hybridization.SP2;
-            IAtom atom4 = new Atom(NaturalElements.Carbon.Element);
+            var atom4 = builder.NewAtom(ChemicalElement.C);
             atom4.Hybridization = Hybridization.SP2;
-            IAtom atom5 = new Atom(NaturalElements.Carbon.Element);
+            var atom5 = builder.NewAtom(ChemicalElement.C);
             atom5.Hybridization = Hybridization.SP2;
-            IAtom atom6 = new Atom(NaturalElements.Carbon.Element);
+            var atom6 = builder.NewAtom(ChemicalElement.C);
             atom6.Hybridization = Hybridization.SP2;
 
             // bond block
-            IBond bond1 = new Bond(atom1, atom2);
-            IBond bond2 = new Bond(atom2, atom3);
-            IBond bond3 = new Bond(atom3, atom4);
-            IBond bond4 = new Bond(atom4, atom5);
-            IBond bond5 = new Bond(atom5, atom6);
-            IBond bond6 = new Bond(atom6, atom1);
+            var bond1 = builder.NewBond(atom1, atom2);
+            var bond2 = builder.NewBond(atom2, atom3);
+            var bond3 = builder.NewBond(atom3, atom4);
+            var bond4 = builder.NewBond(atom4, atom5);
+            var bond5 = builder.NewBond(atom5, atom6);
+            var bond6 = builder.NewBond(atom6, atom1);
 
             enol.Atoms.Add(atom1);
             enol.Atoms.Add(atom2);

@@ -101,7 +101,7 @@ namespace NCDK.Layout
             ac.Atoms.Add(new Atom("H"));
             ac.Atoms[0].Point2D = Vector2.Zero;
             AddExplicitHydrogens(ac);
-            HydrogenPlacer hPlacer = new HydrogenPlacer();
+            var hPlacer = new HydrogenPlacer();
             hPlacer.PlaceHydrogens2D(ac, 36);
             for (int i = 0; i < ac.Atoms.Count; i++)
             {

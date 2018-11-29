@@ -26,7 +26,8 @@ using System.Linq;
 namespace NCDK.QSAR.Descriptors.Atomic
 {
     // @cdk.module test-qsaratomic
-    public abstract class AtomicDescriptorTest<T> : DescriptorTest<T> where T: IAtomicDescriptor
+    public abstract class AtomicDescriptorTest<T> 
+        : DescriptorTest<T> where T: IAtomicDescriptor
     {
         public AtomicDescriptorTest() { }
 

@@ -31,12 +31,12 @@ using System.Windows.Media;
 namespace NCDK.Renderers.Generators
 {
     /// <summary>
-    /// Base class for test classes that test <see cref="IAtomContainerGenerator"/>s.
+    /// Base class for test classes that test <see cref="IGenerator{T}"/>s.
     /// </summary>
     // @author     maclean
     // @cdk.module test-renderbasic
-    [TestClass()]
-    public abstract class AbstractGeneratorTest<T> where T : IChemObject
+    public abstract class AbstractGeneratorTest<T> 
+        where T : IChemObject
     {
         protected IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         protected RendererModel model;

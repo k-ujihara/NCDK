@@ -27,8 +27,8 @@ namespace NCDK
     /// Checks the functionality of <see cref="IRingSet"/> implementations.
     /// </summary>
     // @cdk.module test-interfaces
-    [TestClass()]
-    public abstract class AbstractRingSetTest : AbstractAtomContainerSetTest<IRing>
+    public abstract class AbstractRingSetTest 
+        : AbstractAtomContainerSetTest<IRing>
     {
         [TestMethod()]
         public virtual void TestAdd_IRingSet()

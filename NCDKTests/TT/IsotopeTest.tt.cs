@@ -34,7 +34,7 @@ namespace NCDK.Default
     {
         public override IChemObject NewChemObject()
         {
-            return new Isotope(new Element());
+            return new Isotope(ChemicalElement.R);
         }
 
         [TestMethod()]
@@ -47,7 +47,7 @@ namespace NCDK.Default
         [TestMethod()]
         public void TestIsotope_IElement()
         {
-            IElement element = NewChemObject().Builder.NewElement("C");
+            var element = ChemicalElement.C;
             IIsotope i = new Isotope(element);
             Assert.AreEqual("C", i.Symbol);
         }
@@ -117,7 +117,7 @@ namespace NCDK.Silent
     {
         public override IChemObject NewChemObject()
         {
-            return new Isotope(new Element());
+            return new Isotope(ChemicalElement.R);
         }
 
         [TestMethod()]
@@ -130,7 +130,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public void TestIsotope_IElement()
         {
-            IElement element = NewChemObject().Builder.NewElement("C");
+            var element = ChemicalElement.C;
             IIsotope i = new Isotope(element);
             Assert.AreEqual("C", i.Symbol);
         }

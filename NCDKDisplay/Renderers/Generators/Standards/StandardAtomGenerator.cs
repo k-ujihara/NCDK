@@ -113,7 +113,7 @@ namespace NCDK.Renderers.Generators.Standards
             }
             else
             {
-                int number = UnboxSafely(atom.AtomicNumber, Config.NaturalElement.ToAtomicNumber(atom.Symbol));
+                var number = atom.AtomicNumber;
 
                 if (number == 0)
                     return GeneratePseudoSymbol("?", position);
@@ -128,9 +128,12 @@ namespace NCDK.Renderers.Generators.Standards
                     mass = null;
                 }
 
-                return GeneratePeriodicSymbol(number, UnboxSafely(atom.ImplicitHydrogenCount, 0),
-                                              UnboxSafely(mass, -1), UnboxSafely(atom.FormalCharge, 0),
-                                              container.GetConnectedSingleElectrons(atom).Count(), position);
+                return GeneratePeriodicSymbol(
+                    number, 
+                    atom.ImplicitHydrogenCount ?? 0,
+                    mass ?? -1, 
+                    atom.FormalCharge ?? 0,
+                    container.GetConnectedSingleElectrons(atom).Count(), position);
             }
         }
 
@@ -166,7 +169,7 @@ namespace NCDK.Renderers.Generators.Standards
 
                 if (pos > beg)
                 {
-                    TextOutline outline = new TextOutline(label.Substring(beg, pos - beg), italicFont, emSize);
+                    var outline = new TextOutline(label.Substring(beg, pos - beg), italicFont, emSize);
                     outline = outline.Resize(scriptSize, scriptSize);
                     outline = PositionSuperscript(outlines[0], outline);
                     outlines.Add(outline);
@@ -212,7 +215,7 @@ namespace NCDK.Renderers.Generators.Standards
                 else
                 {
                     TextOutline outline = null;
-                    TextOutline ref_ = outlines[outlines.Count - 1];
+                    var ref_ = outlines[outlines.Count - 1];
                     switch (numPrimes)
                     {
                         case 0: break;
@@ -238,8 +241,8 @@ namespace NCDK.Renderers.Generators.Standards
                 // line up text
                 for (int i = 1; i < outlines.Count; i++)
                 {
-                    TextOutline ref_ = outlines[i - 1];
-                    TextOutline curr = outlines[i];
+                    var ref_ = outlines[i - 1];
+                    var curr = outlines[i];
                     outlines[i] = PositionAfter(ref_, curr);
                 }
 
@@ -290,7 +293,7 @@ namespace NCDK.Renderers.Generators.Standards
             if (position == HydrogenPosition.Left)
                 AbbreviationLabel.Reverse(tokens);
 
-            TextOutline tmpRefPoint = new TextOutline("H", font, emSize);
+            var tmpRefPoint = new TextOutline("H", font, emSize);
             var fTexts = AbbreviationLabel.Format(tokens);
 
             var italicFont = new Typeface(font.FontFamily, FontStyles.Italic, font.Weight, font.Stretch);
@@ -298,9 +301,9 @@ namespace NCDK.Renderers.Generators.Standards
             var outlines = new List<TextOutline>(fTexts.Count);
             foreach (var fText in fTexts)
             {
-                TextOutline outline = fText.Style == AbbreviationLabel.STYLE_ITALIC
-                                      ? new TextOutline(fText.Text, italicFont, emSize)
-                                      : new TextOutline(fText.Text, font, emSize);
+                var outline = fText.Style == AbbreviationLabel.STYLE_ITALIC
+                            ? new TextOutline(fText.Text, italicFont, emSize)
+                            : new TextOutline(fText.Text, font, emSize);
 
                 // resize and position scripts
                 if (fText.Style == AbbreviationLabel.STYLE_SUBSCRIPT)
@@ -320,8 +323,8 @@ namespace NCDK.Renderers.Generators.Standards
             // position the outlines relative to each other
             for (int i = 1; i < outlines.Count; i++)
             {
-                TextOutline ref_ = outlines[i - 1];
-                TextOutline curr = outlines[i];
+                var ref_ = outlines[i - 1];
+                var curr = outlines[i];
                 // charge aligns to symbol not a subscript part
                 if (fTexts[i].Style == AbbreviationLabel.STYLE_SUPSCRIPT &&
                     fTexts[i - 1].Style == AbbreviationLabel.STYLE_SUBSCRIPT && i > 1)
@@ -337,14 +340,16 @@ namespace NCDK.Renderers.Generators.Standards
             if (position == HydrogenPosition.Left)
             {
                 for (index = outlines.Count - 1; index >= 0; index--)
-                    if ((fTexts[index].Style & 0x1) == 0) break;
+                    if ((fTexts[index].Style & 0x1) == 0)
+                        break;
             }
             else
             {
                 for (index = 0; index < outlines.Count; index++)
-                    if ((fTexts[index].Style & 0x1) == 0) break;
+                    if ((fTexts[index].Style & 0x1) == 0)
+                        break;
             }
-            TextOutline primary = outlines[index];
+            var primary = outlines[index];
             outlines.RemoveAt(index);
 
             return new AtomSymbol(primary, outlines);
@@ -363,13 +368,13 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>laid out atom symbol</returns>
         public AtomSymbol GeneratePeriodicSymbol(int number, int hydrogens, int mass, int charge, int unpaired, HydrogenPosition position)
         {
-            TextOutline element = new TextOutline(Config.NaturalElement.OfNumber(number).Symbol, font, emSize);
-            TextOutline hydrogenAdjunct = defaultHydrogenLabel;
+            var element = new TextOutline(ChemicalElement.Of(number).Symbol, font, emSize);
+            var hydrogenAdjunct = defaultHydrogenLabel;
 
             // the hydrogen count, charge, and mass adjuncts are script size
-            TextOutline hydrogenCount = new TextOutline(hydrogens.ToString(), font, emSize).Resize(scriptSize, scriptSize);
-            TextOutline chargeAdjunct = new TextOutline(ChargeAdjunctText(charge, unpaired), font, emSize).Resize(scriptSize, scriptSize);
-            TextOutline massAdjunct = new TextOutline(mass.ToString(), font, emSize).Resize(scriptSize, scriptSize);
+            var hydrogenCount = new TextOutline(hydrogens.ToString(), font, emSize).Resize(scriptSize, scriptSize);
+            var chargeAdjunct = new TextOutline(ChargeAdjunctText(charge, unpaired), font, emSize).Resize(scriptSize, scriptSize);
+            var massAdjunct = new TextOutline(mass.ToString(), font, emSize).Resize(scriptSize, scriptSize);
 
             // position each adjunct relative to the element label and each other
             hydrogenAdjunct = PositionHydrogenLabel(position, element, hydrogenAdjunct);
@@ -551,18 +556,6 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         /// <summary>
-        /// Utility to safely unbox an object instance number. If the value is null, the default value is
-        /// returned.
-        /// </summary>
-        /// <param name="value">a value</param>
-        /// <param name="defaultValue">value to return if null</param>
-        /// <returns>unbox number or the default value</returns>
-        private static int UnboxSafely(int? value, int defaultValue)
-        {
-            return value ?? defaultValue;
-        }
-
-        /// <summary>
         /// Characters used in the charge label.
         /// </summary>
         private const char BULLET = '•', // '\u2022'
@@ -576,7 +569,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>adjunct text</returns>
         public static string ChargeAdjunctText(int charge, int unpaired)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             if (unpaired == 1)
             {
@@ -601,8 +594,8 @@ namespace NCDK.Renderers.Generators.Standards
                 }
             }
 
-            char sign = charge < 0 ? MINUS : PLUS;
-            int coefficient = Math.Abs(charge);
+            var sign = charge < 0 ? MINUS : PLUS;
+            var coefficient = Math.Abs(charge);
 
             if (coefficient > 1) sb.Append(coefficient);
             if (coefficient > 0) sb.Append(sign);
@@ -618,8 +611,9 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>pseudo label</returns>
         public static string AccessPseudoLabel(IPseudoAtom atom, string defaultLabel)
         {
-            string label = atom.Label;
-            if (!string.IsNullOrEmpty(label)) return label;
+            var label = atom.Label;
+            if (!string.IsNullOrEmpty(label))
+                return label;
             return defaultLabel;
         }
     }

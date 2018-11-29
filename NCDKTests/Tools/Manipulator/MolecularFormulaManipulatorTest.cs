@@ -88,9 +88,9 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(3, formula.GetCount(h1));
             Assert.AreEqual(4, formula.GetCount(h2));
 
-            Assert.AreEqual(2, MolecularFormulaManipulator.GetElementCount(formula, builder.NewElement(carb)));
-            Assert.AreEqual(1, MolecularFormulaManipulator.GetElementCount(formula, builder.NewElement(flu)));
-            Assert.AreEqual(7, MolecularFormulaManipulator.GetElementCount(formula, builder.NewElement(h1)));
+            Assert.AreEqual(2, MolecularFormulaManipulator.GetElementCount(formula, carb.Element));
+            Assert.AreEqual(1, MolecularFormulaManipulator.GetElementCount(formula, flu.Element));
+            Assert.AreEqual(7, MolecularFormulaManipulator.GetElementCount(formula, h1.Element));
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace NCDK.Tools.Manipulator
             formula.Add(h1, 1);
             formula.Add(h2, 2);
 
-            var isotopes = MolecularFormulaManipulator.GetIsotopes(formula, builder.NewElement("H"));
+            var isotopes = MolecularFormulaManipulator.GetIsotopes(formula, ChemicalElement.H);
             Assert.AreEqual(2, isotopes.Count());
         }
 
@@ -128,9 +128,9 @@ namespace NCDK.Tools.Manipulator
             formula.Add(h1, 1);
             formula.Add(h2, 2);
 
-            Assert.IsTrue(MolecularFormulaManipulator.ContainsElement(formula, builder.NewElement("C")));
-            Assert.IsTrue(MolecularFormulaManipulator.ContainsElement(formula, builder.NewElement("H")));
-            Assert.IsTrue(MolecularFormulaManipulator.ContainsElement(formula, builder.NewElement("F")));
+            Assert.IsTrue(MolecularFormulaManipulator.ContainsElement(formula, ChemicalElement.C));
+            Assert.IsTrue(MolecularFormulaManipulator.ContainsElement(formula, ChemicalElement.H));
+            Assert.IsTrue(MolecularFormulaManipulator.ContainsElement(formula, ChemicalElement.F));
         }
 
         [TestMethod()]
@@ -305,12 +305,12 @@ namespace NCDK.Tools.Manipulator
 
             Assert.AreEqual(4, formula.Isotopes.Count());
 
-            formula = MolecularFormulaManipulator.RemoveElement(formula, builder.NewElement("F"));
+            formula = MolecularFormulaManipulator.RemoveElement(formula, ChemicalElement.F);
 
             Assert.AreEqual(3, formula.Isotopes.Count());
             Assert.AreEqual(4, MolecularFormulaManipulator.GetAtomCount(formula));
 
-            formula = MolecularFormulaManipulator.RemoveElement(formula, builder.NewElement("H"));
+            formula = MolecularFormulaManipulator.RemoveElement(formula, ChemicalElement.H);
 
             Assert.AreEqual(1, MolecularFormulaManipulator.GetAtomCount(formula));
             Assert.AreEqual(1, formula.Isotopes.Count());
@@ -372,8 +372,8 @@ namespace NCDK.Tools.Manipulator
             formula.Add(builder.NewIsotope("Cl"));
 
             double expectedMass = 0.0;
-            expectedMass += BODRIsotopeFactory.Instance.GetNaturalMass(builder.NewElement("C"));
-            expectedMass += BODRIsotopeFactory.Instance.GetNaturalMass(builder.NewElement("Cl"));
+            expectedMass += BODRIsotopeFactory.Instance.GetNaturalMass(ChemicalElement.C);
+            expectedMass += BODRIsotopeFactory.Instance.GetNaturalMass(ChemicalElement.Cl);
 
             double totalExactMass = MolecularFormulaManipulator.GetNaturalExactMass(formula);
             Assert.AreEqual(expectedMass, totalExactMass, 0.000001);
@@ -630,8 +630,8 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(MolecularFormulaManipulator.GetAtomCount(mf2),
                     MolecularFormulaManipulator.GetAtomCount(mf1));
             Assert.AreEqual(mf2.Isotopes.Count(), mf1.Isotopes.Count());
-            IElement elemC = builder.NewElement("C");
-            IElement elemH = builder.NewElement("H");
+            var elemC = ChemicalElement.C;
+            var elemH = ChemicalElement.H;
             Assert.AreEqual(mf2.GetCount(builder.NewIsotope(elemC)),
                     mf1.GetCount(builder.NewIsotope(elemC)));
             Assert.AreEqual(mf2.GetCount(builder.NewIsotope(elemH)),
@@ -694,8 +694,8 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(MolecularFormulaManipulator.GetAtomCount(mf2),
                     MolecularFormulaManipulator.GetAtomCount(mf1));
             Assert.AreEqual(mf2.Isotopes.Count(), mf1.Isotopes.Count());
-            var elemC = builder.NewElement("C");
-            var elemH = builder.NewElement("H");
+            var elemC = ChemicalElement.C;
+            var elemH = ChemicalElement.H;
             Assert.AreEqual(mf2.GetCount(builder.NewIsotope(elemC)),
                     mf1.GetCount(builder.NewIsotope(elemC)));
             Assert.AreEqual(mf2.GetCount(builder.NewIsotope(elemH)),
@@ -730,8 +730,8 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(MolecularFormulaManipulator.GetAtomCount(mf2),
                     MolecularFormulaManipulator.GetAtomCount(mf1));
             Assert.AreEqual(mf2.Isotopes.Count(), mf1.Isotopes.Count());
-            var elemC = builder.NewElement("C");
-            var elemH = builder.NewElement("H");
+            var elemC = ChemicalElement.C;
+            var elemH = ChemicalElement.H;
             Assert.AreEqual(mf2.GetCount(builder.NewIsotope(elemC)),
                     mf1.GetCount(builder.NewIsotope(elemC)));
             Assert.AreEqual(mf2.GetCount(builder.NewIsotope(elemH)),
@@ -786,12 +786,18 @@ namespace NCDK.Tools.Manipulator
             Assert.IsNotNull(ac.Atoms[0].AtomicNumber);
             foreach (var atom in ac.Atoms)
             {
-                if (NaturalElements.C.AtomicNumber.Equals(atom.AtomicNumber))
-                    Assert.AreEqual(6, atom.AtomicNumber);
-                else if (NaturalElements.H.AtomicNumber.Equals(atom.AtomicNumber))
-                    Assert.AreEqual(1, atom.AtomicNumber);
-                else
-                    Assert.Fail("Unexpected element: " + atom.Symbol);
+                switch (atom.AtomicNumber)
+                {
+                    case AtomicNumbers.C:
+                        Assert.AreEqual(6, atom.AtomicNumber);
+                        break;
+                    case AtomicNumbers.H:
+                        Assert.AreEqual(1, atom.AtomicNumber);
+                        break;
+                    default:
+                        Assert.Fail("Unexpected element: " + atom.Symbol);
+                        break;
+                }
             }
         }
 
@@ -1001,7 +1007,7 @@ namespace NCDK.Tools.Manipulator
         {
             var formula = "CH4";
             var mf = MolecularFormulaManipulator.GetMolecularFormula(formula, builder);
-            Assert.AreEqual(1, MolecularFormulaManipulator.GetIsotopes(mf, mf.Builder.NewElement("C")).Count());
+            Assert.AreEqual(1, MolecularFormulaManipulator.GetIsotopes(mf, ChemicalElement.C).Count());
         }
 
         [TestMethod()]

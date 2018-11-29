@@ -17,7 +17,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -50,7 +49,6 @@ namespace NCDK.Formula.Rules
     // @cdk.module  formula
     // @author      miguelrojasch
     // @cdk.created 2008-06-11
-    // @cdk.githash
     public class NitrogenRule : IRule
     {
         /// <summary>
@@ -79,8 +77,7 @@ namespace NCDK.Formula.Rules
             double mass = MolecularFormulaManipulator.GetTotalMassNumber(formula);
             if (mass == 0) return 0.0;
 
-            int numberN = MolecularFormulaManipulator.GetElementCount(formula,
-                    formula.Builder.NewElement("N"));
+            int numberN = MolecularFormulaManipulator.GetElementCount(formula, ChemicalElement.N);
             numberN += GetOthers(formula);
 
             if (formula.Charge == null || formula.Charge == 0 || !IsOdd(Math.Abs(formula.Charge.Value)))
@@ -111,8 +108,6 @@ namespace NCDK.Formula.Rules
             }
         }
 
-
-
         /// <summary>
         /// Get the number of other elements which affect to the calculation of the nominal mass.
         /// For example Fe, Co, Hg, Pt, As.
@@ -124,12 +119,12 @@ namespace NCDK.Formula.Rules
             return NominalMassAffectables.Sum(n => MolecularFormulaManipulator.GetElementCount(formula, n));
         }
 
-        private static readonly IElement[] NominalMassAffectables = new IElement[]
+        private static readonly ChemicalElement[] NominalMassAffectables = new ChemicalElement[]
         {
-            NaturalElements.Cobalt.Element,
-            NaturalElements.Mercury.Element,
-            NaturalElements.Platinum.Element,
-            NaturalElements.Arsenic.Element,
+            ChemicalElement.Co, 
+            ChemicalElement.Hg,
+            ChemicalElement.Pt,
+            ChemicalElement.As,
         };
 
         /// <summary>

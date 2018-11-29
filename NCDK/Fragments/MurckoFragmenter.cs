@@ -67,8 +67,8 @@ namespace NCDK.Fragments
         IMoleculeHashGenerator generator;
         SmilesGenerator smigen;
 
-        IDictionary<long, IAtomContainer> frameMap = new Dictionary<long, IAtomContainer>();
-        IDictionary<long, IAtomContainer> ringMap = new Dictionary<long, IAtomContainer>();
+        Dictionary<long, IAtomContainer> frameMap = new Dictionary<long, IAtomContainer>();
+        Dictionary<long, IAtomContainer> ringMap = new Dictionary<long, IAtomContainer>();
         readonly bool singleFrameworkOnly = false;
         bool ringFragments = true;
         readonly int minimumFragmentSize = 5;

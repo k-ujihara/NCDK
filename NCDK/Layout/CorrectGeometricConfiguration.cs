@@ -57,7 +57,7 @@ namespace NCDK.Layout
         private readonly int[][] graph;
 
         /// <summary>Lookup atom index (avoid IAtomContainer).</summary>
-        private readonly IDictionary<IAtom, int> atomToIndex;
+        private readonly Dictionary<IAtom, int> atomToIndex;
 
         /// <summary>Test if a bond is cyclic.</summary>
         private readonly RingSearch ringSearch;

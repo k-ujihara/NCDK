@@ -25,7 +25,6 @@ using NCDK.Common.Collections;
 using NCDK.Common.Mathematics;
 using NCDK.Graphs;
 using NCDK.Numerics;
-using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -51,8 +50,8 @@ namespace NCDK.Layout
     /// <list type="bullet">
     ///     <item>Rotation (or reflection), <see cref="Rotate(ICollection{AtomPair})"/></item>
     ///     <item>Inversion (not described in lit), <see cref="Invert(IEnumerable{AtomPair})"/></item>
-    ///     <item>Stretch, <see cref="Stretch(AtomPair, IntStack, Vector2[], IDictionary{IBond, AtomPair})"/></item>
-    ///     <item>Bend, <see cref="Bend(AtomPair, IntStack, Vector2[], IDictionary{IBond, AtomPair})"/></item>
+    ///     <item>Stretch, <see cref="Stretch(AtomPair, IntStack, Vector2[], Dictionary{IBond, AtomPair})"/></item>
+    ///     <item>Bend, <see cref="Bend(AtomPair, IntStack, Vector2[], Dictionary{IBond, AtomPair})"/></item>
     /// </list>
     /// </para>
     /// </remarks>
@@ -97,7 +96,7 @@ namespace NCDK.Layout
 
         // fast lookup structures
         private readonly IAtomContainer mol;
-        private readonly IDictionary<IAtom, int> idxs;
+        private readonly Dictionary<IAtom, int> idxs;
         private readonly int[][] adjList;
         private readonly EdgeToBondMap bondMap;
         private readonly IAtom[] atoms;
@@ -185,7 +184,7 @@ namespace NCDK.Layout
         /// <returns>pairs of congested atoms</returns>
         List<AtomPair> FindCongestedPairs()
         {
-            List<AtomPair> pairs = new List<AtomPair>();
+            var pairs = new List<AtomPair>();
 
             // only add a single pair between each ring system, otherwise we
             // may have many pairs that are actually all part of the same
@@ -195,12 +194,12 @@ namespace NCDK.Layout
             // score at which to check for crossing bonds
             double maybeCrossed = 1 / (2 * 2);
 
-            int numAtoms = mol.Atoms.Count;
+            var numAtoms = mol.Atoms.Count;
             for (int u = 0; u < numAtoms; u++)
             {
                 for (int v = u + 1; v < numAtoms; v++)
                 {
-                    double contribution = congestion.Contribution(u, v);
+                    var contribution = congestion.Contribution(u, v);
                     // <0 = bonded
                     if (contribution <= 0)
                         continue;
@@ -565,7 +564,7 @@ namespace NCDK.Layout
         /// <param name="coords">best result coords</param>
         /// <param name="firstVisit">visit map to avoid repeating work</param>
         /// <returns>congestion score of best result</returns>
-        private double Bend(AtomPair pair, IntStack stack, Vector2[] coords, IDictionary<IBond, AtomPair> firstVisit)
+        private double Bend(AtomPair pair, IntStack stack, Vector2[] coords, Dictionary<IBond, AtomPair> firstVisit)
         {
             stackBackup.Clear();
 
@@ -578,14 +577,14 @@ namespace NCDK.Layout
             // from each other
             if (pair.bndAt.Count > 4 && (pair.bndAtCode & 0x1F) == 0x6)
             {
-                IBond bndA = pair.bndAt[2];
-                IBond bndB = pair.bndAt[3];
+                var bndA = pair.bndAt[2];
+                var bndB = pair.bndAt[3];
 
                 if (bfix.Contains(bndA) || bfix.Contains(bndB))
                     return int.MaxValue;
 
-                IAtom pivotA = GetCommon(bndA, pair.bndAt[1]);
-                IAtom pivotB = GetCommon(bndB, pair.bndAt[0]);
+                var pivotA = GetCommon(bndA, pair.bndAt[1]);
+                var pivotB = GetCommon(bndB, pair.bndAt[0]);
 
                 if (pivotA == null || pivotB == null)
                     return int.MaxValue;
@@ -632,8 +631,10 @@ namespace NCDK.Layout
                 // try bending all bonds and accept the best one
                 foreach (var bond in pair.bndAt)
                 {
-                    if (bond.IsInRing) continue;
-                    if (bfix.Contains(bond)) continue;
+                    if (bond.IsInRing)
+                        continue;
+                    if (bfix.Contains(bond))
+                        continue;
 
                     // has this bond already been tested as part of another pair
                     if (!firstVisit.TryGetValue(bond, out AtomPair first))
@@ -641,10 +642,10 @@ namespace NCDK.Layout
                     if (first != pair)
                         continue;
 
-                    IAtom beg = bond.Begin;
-                    IAtom end = bond.End;
-                    int begPriority = beg.GetProperty<int>(AtomPlacer.Priority);
-                    int endPriority = end.GetProperty<int>(AtomPlacer.Priority);
+                    var beg = bond.Begin;
+                    var end = bond.End;
+                    var begPriority = beg.GetProperty<int>(AtomPlacer.Priority);
+                    var endPriority = end.GetProperty<int>(AtomPlacer.Priority);
 
                     Arrays.Fill(visited, false);
                     if (begPriority < endPriority)
@@ -705,19 +706,20 @@ namespace NCDK.Layout
         /// <param name="coords">best result coordinates</param>
         /// <param name="firstVisit">visit map to avoid repeating work</param>
         /// <returns>congestion score of best result</returns>
-        private double Stretch(AtomPair pair, IntStack stack, Vector2[] coords, IDictionary<IBond, AtomPair> firstVisit)
+        private double Stretch(AtomPair pair, IntStack stack, Vector2[] coords, Dictionary<IBond, AtomPair> firstVisit)
         {
             stackBackup.Clear();
 
-            double score = congestion.Score();
-            double min = score;
+            var score = congestion.Score();
+            var min = score;
 
             foreach (var bond in pair.bndAt)
             {
                 // don't stretch ring bonds
                 if (bond.IsInRing)
                     continue;
-                if (bfix.Contains(bond)) continue;
+                if (bfix.Contains(bond))
+                    continue;
 
                 // has this bond already been tested as part of another pair
                 if (!firstVisit.TryGetValue(bond, out AtomPair first))
@@ -725,12 +727,12 @@ namespace NCDK.Layout
                 if (first != pair)
                     continue;
 
-                IAtom beg = bond.Begin;
-                IAtom end = bond.End;
-                int begIdx = idxs[beg];
-                int endIdx = idxs[end];
-                int begPriority = beg.GetProperty<int>(AtomPlacer.Priority);
-                int endPriority = end.GetProperty<int>(AtomPlacer.Priority);
+                var beg = bond.Begin;
+                var end = bond.End;
+                var begIdx = idxs[beg];
+                var endIdx = idxs[end];
+                var begPriority = beg.GetProperty<int>(AtomPlacer.Priority);
+                var endPriority = end.GetProperty<int>(AtomPlacer.Priority);
 
                 Arrays.Fill(visited, false);
                 if (begPriority < endPriority)
@@ -773,11 +775,11 @@ namespace NCDK.Layout
         {
             // without checking which bonds have been bent/stretch already we
             // could end up repeating a lot of repeated work to no avail
-            IDictionary<IBond, AtomPair> bendVisit = new Dictionary<IBond, AtomPair>();
-            IDictionary<IBond, AtomPair> stretchVisit = new Dictionary<IBond, AtomPair>();
+            var bendVisit = new Dictionary<IBond, AtomPair>();
+            var stretchVisit = new Dictionary<IBond, AtomPair>();
 
-            IntStack bendStack = new IntStack(atoms.Length);
-            IntStack stretchStack = new IntStack(atoms.Length);
+            var bendStack = new IntStack(atoms.Length);
+            var stretchStack = new IntStack(atoms.Length);
 
             foreach (var pair in pairs)
             {
@@ -791,8 +793,8 @@ namespace NCDK.Layout
 
                     // attempt both bending and stretching storing the
                     // best result in the provided buffer
-                    double bendScore = Bend(pair, bendStack, buffer1, bendVisit);
-                    double stretchScore = Stretch(pair, stretchStack, buffer2, stretchVisit);
+                    var bendScore = Bend(pair, bendStack, buffer1, bendVisit);
+                    var stretchScore = Stretch(pair, stretchStack, buffer2, stretchVisit);
 
                     // bending is better than stretching
                     if (bendScore < stretchScore && bendScore < score)
@@ -862,7 +864,7 @@ namespace NCDK.Layout
         {
             for (int i = 0; i < stack.len; i++)
             {
-                int v = stack.xs[i];
+                var v = stack.xs[i];
                 dest[v] = new Vector2(atoms[v].Point2D.Value.X, atoms[v].Point2D.Value.Y);
             }
         }
@@ -877,7 +879,7 @@ namespace NCDK.Layout
         {
             for (int i = 0; i < stack.len; i++)
             {
-                int v = stack.xs[i];
+                var v = stack.xs[i];
                 atoms[v].Point2D = new Vector2(src[v].X, src[v].Y);
             }
         }
@@ -891,8 +893,8 @@ namespace NCDK.Layout
         /// <param name="end">end atom of a bond</param>
         private void Reflect(IntStack stack, IAtom beg, IAtom end)
         {
-            Vector2 begP = beg.Point2D.Value;
-            Vector2 endP = end.Point2D.Value;
+            var begP = beg.Point2D.Value;
+            var endP = end.Point2D.Value;
             Reflect(stack, begP, endP);
         }
 
@@ -919,8 +921,8 @@ namespace NCDK.Layout
         /// <param name="b">b reflection coefficient</param>
         private static void Reflect(IAtom ap, Vector2 baseOfSource, double a, double b)
         {
-            double x = a * (ap.Point2D.Value.X - baseOfSource.X) + b * (ap.Point2D.Value.Y - baseOfSource.Y) + baseOfSource.X;
-            double y = b * (ap.Point2D.Value.X - baseOfSource.X) - a * (ap.Point2D.Value.Y - baseOfSource.Y) + baseOfSource.Y;
+            var x = a * (ap.Point2D.Value.X - baseOfSource.X) + b * (ap.Point2D.Value.Y - baseOfSource.Y) + baseOfSource.X;
+            var y = b * (ap.Point2D.Value.X - baseOfSource.X) - a * (ap.Point2D.Value.Y - baseOfSource.Y) + baseOfSource.Y;
             ap.Point2D = new Vector2(x, y);
         }
 
@@ -934,17 +936,17 @@ namespace NCDK.Layout
         /// <param name="r">radians to bend by</param>
         private void Bend(int[] indexes, int from, int to, IAtom pivotAtm, double r)
         {
-            double s = Math.Sin(r);
-            double c = Math.Cos(r);
-            Vector2 pivot = pivotAtm.Point2D.Value;
+            var s = Math.Sin(r);
+            var c = Math.Cos(r);
+            var pivot = pivotAtm.Point2D.Value;
             for (int i = from; i < to; i++)
             {
                 var atom = mol.Atoms[indexes[i]];
-                Vector2 p = atom.Point2D.Value;
-                double x = p.X - pivot.X;
-                double y = p.Y - pivot.Y;
-                double nx = x * c + y * s;
-                double ny = -x * s + y * c;
+                var p = atom.Point2D.Value;
+                var x = p.X - pivot.X;
+                var y = p.Y - pivot.Y;
+                var nx = x * c + y * s;
+                var ny = -x * s + y * c;
                 atom.Point2D = new Vector2(nx + pivot.X, ny + pivot.Y);
             }
         }
@@ -959,13 +961,13 @@ namespace NCDK.Layout
         /// <param name="amount">amount to try stretching by (absolute)</param>
         private void Stretch(IntStack stack, IAtom beg, IAtom end, double amount)
         {
-            Vector2 begPoint = beg.Point2D.Value;
-            Vector2 endPoint = end.Point2D.Value;
+            var begPoint = beg.Point2D.Value;
+            var endPoint = end.Point2D.Value;
 
             if (Vector2.Distance(begPoint, endPoint) + amount > MaxBondLength)
                 return;
 
-            Vector2 vector = new Vector2(endPoint.X - begPoint.X, endPoint.Y - begPoint.Y);
+            var vector = new Vector2(endPoint.X - begPoint.X, endPoint.Y - begPoint.Y);
             vector = Vector2.Normalize(vector);
             vector *= amount;
 
@@ -987,9 +989,9 @@ namespace NCDK.Layout
         /// <param name="bndAt">prioritised bonds, first bond is the middle of the path</param>
         private void MakeAtmBndQueues(int[] path, int[] seqAt, IBond[] bndAt)
         {
-            int len = path.Length;
-            int i = (len - 1) / 2;
-            int j = i + 1;
+            var len = path.Length;
+            var i = (len - 1) / 2;
+            var j = i + 1;
             int nSeqAt = 0;
             int nBndAt = 0;
             if (IsOdd((path.Length)))
@@ -1076,8 +1078,8 @@ namespace NCDK.Layout
         /// <returns>common atom or null if non exists</returns>
         private static IAtom GetCommon(IBond bndA, IBond bndB)
         {
-            IAtom beg = bndA.Begin;
-            IAtom end = bndA.End;
+            var beg = bndA.Begin;
+            var end = bndA.End;
             if (bndB.Contains(beg))
                 return beg;
             else if (bndB.Contains(end))
@@ -1115,10 +1117,12 @@ namespace NCDK.Layout
 
             public override bool Equals(object o)
             {
-                if (this == o) return true;
-                if (o == null || GetType() != o.GetType()) return false;
+                if (this == o)
+                    return true;
+                if (o == null || GetType() != o.GetType())
+                    return false;
 
-                AtomPair pair = (AtomPair)o;
+                var pair = (AtomPair)o;
 
                 return (fst == pair.fst && snd == pair.snd) || (fst == pair.snd && snd == pair.fst);
             }
@@ -1138,7 +1142,7 @@ namespace NCDK.Layout
             static int BondCode(IEnumerable<IBond> enumBonds)
             {
                 var bonds = enumBonds.ToReadOnlyList();
-                int code = bonds.Count & 0x1;
+                var code = bonds.Count & 0x1;
                 for (int i = 0; i < bonds.Count; i++)
                 {
                     if (bonds[i].IsInRing)
@@ -1201,13 +1205,15 @@ namespace NCDK.Layout
 
             public override bool Equals(Object o)
             {
-                if (this == o) return true;
-                if (o == null || GetType() != o.GetType()) return false;
+                if (this == o)
+                    return true;
+                if (o == null || GetType() != o.GetType())
+                    return false;
 
-                IntTuple that = (IntTuple)o;
+                var that = (IntTuple)o;
 
-                return (this.fst == that.fst && this.snd == that.snd) ||
-                        (this.fst == that.snd && this.snd == that.fst);
+                return (this.fst == that.fst && this.snd == that.snd)
+                    || (this.fst == that.snd && this.snd == that.fst);
             }
 
             public override int GetHashCode()

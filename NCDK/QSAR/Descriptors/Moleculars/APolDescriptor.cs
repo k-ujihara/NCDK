@@ -78,7 +78,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>The sum of atomic polarizabilities <see cref="IsotopeFactory"/></returns>
         public Result Calculate()
         {
-            var polarizabilitiesH = polarizabilities[NaturalElements.H.AtomicNumber];
+            var polarizabilitiesH = polarizabilities[AtomicNumbers.H];
             var apol = container.Atoms
                 .Select(
                     atom => polarizabilities[atom.AtomicNumber]

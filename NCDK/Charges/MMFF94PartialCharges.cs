@@ -42,7 +42,6 @@ namespace NCDK.Charges
     // @author chhoppe
     // @cdk.created 2004-11-03
     // @cdk.module forcefield
-    // @cdk.githash
     public class MMFF94PartialCharges : IChargeCalculator
     {
         public const string Key = "MMFF94charge";

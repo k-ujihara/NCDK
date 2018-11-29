@@ -28,7 +28,6 @@ namespace NCDK.Config
     /// <see cref="IAtomType"/> resource that reads the atom type configuration from an OWL file.
     /// </summary>
     // @cdk.module  core
-    // @cdk.githash
     public class OWLBasedAtomTypeConfigurator
         : IAtomTypeConfigurator
     {

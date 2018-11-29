@@ -29,7 +29,6 @@ namespace NCDK.Config
     /// can be found in the NCDK.Config.Data directory.
     /// </summary>
     // @cdk.module core
-    // @cdk.githash
     public class CDKBasedAtomTypeConfigurator
         : IAtomTypeConfigurator
     {

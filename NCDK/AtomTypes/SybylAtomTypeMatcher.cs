@@ -33,7 +33,6 @@ namespace NCDK.AtomTypes
     // @author         egonw
     // @cdk.created    2008-07-13
     // @cdk.module     atomtype
-    // @cdk.githash
     // @cdk.keyword    atom type, Sybyl
     public class SybylAtomTypeMatcher : IAtomTypeMatcher
     {
@@ -44,7 +43,7 @@ namespace NCDK.AtomTypes
         private IAtomTypeMatcher cdkMatcher;
         private AtomTypeMapper mapper;
 
-        private static IDictionary<IChemObjectBuilder, SybylAtomTypeMatcher> factories = new Dictionary<IChemObjectBuilder, SybylAtomTypeMatcher>(1);
+        private static Dictionary<IChemObjectBuilder, SybylAtomTypeMatcher> factories = new Dictionary<IChemObjectBuilder, SybylAtomTypeMatcher>(1);
 
         private SybylAtomTypeMatcher(IChemObjectBuilder builder)
         {
@@ -108,7 +107,7 @@ namespace NCDK.AtomTypes
 
             switch (atom.AtomicNumber)
             {
-                case NaturalElements.Cr.AtomicNumber:
+                case AtomicNumbers.Cr:
                     {
                         // if only I had good descriptions of the Sybyl atom types
                         int neighbors = atomContainer.GetConnectedBonds(atom).Count();
@@ -118,7 +117,7 @@ namespace NCDK.AtomTypes
                             return factory.GetAtomType("Cr.th");
                     }
                     break;
-                case NaturalElements.Co.AtomicNumber:
+                case AtomicNumbers.Co:
                     {
                         // if only I had good descriptions of the Sybyl atom types
                         int neibors = atomContainer.GetConnectedBonds(atom).Count();
@@ -160,7 +159,7 @@ namespace NCDK.AtomTypes
                 return false;
             var neighbor = neighbors[0];
             var neighborAtom = neighbor.GetOther(atom);
-            if (neighborAtom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+            if (neighborAtom.AtomicNumber.Equals(AtomicNumbers.C))
             {
                 if (neighbor.Order == BondOrder.Single)
                 {
@@ -183,7 +182,7 @@ namespace NCDK.AtomTypes
                 return false;
             int oxygenCount = 0;
             foreach (var neighbor in neighbors)
-                if (NaturalElements.O.AtomicNumber.Equals(neighbor.AtomicNumber))
+                if (AtomicNumbers.O.Equals(neighbor.AtomicNumber))
                     oxygenCount++;
             return (oxygenCount == 2);
         }

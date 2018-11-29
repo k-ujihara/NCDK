@@ -57,8 +57,8 @@ namespace NCDK.IO
         /// Dictionary of known atom type aliases. If the key is seen on input, it
         /// is repleaced with the specified value. Bugs /openbabel/bug/214 and /cdk/bug/1346
         /// </summary>
-        private static readonly IDictionary<string, string> ATOM_TYPE_ALIASES =
-            new ReadOnlyDictionary<string, string>(new Dictionary<string, string>() {
+        private static readonly Dictionary<string, string> ATOM_TYPE_ALIASES =
+            new Dictionary<string, string>() {
                 // previously produced by Open Babel
                 { "S.o2", "S.O2" },
                 { "S.o", "S.O" },
@@ -68,7 +68,7 @@ namespace NCDK.IO
                 { "NA", "Na" }, { "SI", "Si" },
                 { "CA", "Ca" }, { "ZN", "Zn" },
                 { "LI", "Li" }, { "MG", "Mg" },
-            });
+            };
 
         /// <summary>
         /// Constructs a new MDLReader that can read Molecule from a given Reader.
@@ -120,7 +120,7 @@ namespace NCDK.IO
             {
                 setOfMolecules = chemModel.Builder.NewAtomContainerSet();
             }
-            IAtomContainer m = ReadMolecule(chemModel.Builder.NewAtomContainer());
+            var m = ReadMolecule(chemModel.Builder.NewAtomContainer());
             if (m != null)
             {
                 setOfMolecules.Add(m);
@@ -131,12 +131,13 @@ namespace NCDK.IO
 
         private IChemFile ReadChemFile(IChemFile chemFile)
         {
-            IChemSequence chemSequence = chemFile.Builder.NewChemSequence();
+            var chemSequence = chemFile.Builder.NewChemSequence();
 
-            IChemModel chemModel = chemFile.Builder.NewChemModel();
+            var chemModel = chemFile.Builder.NewChemModel();
             var setOfMolecules = chemFile.Builder.NewAtomContainerSet();
-            IAtomContainer m = ReadMolecule(chemFile.Builder.NewAtomContainer());
-            if (m != null) setOfMolecules.Add(m);
+            var m = ReadMolecule(chemFile.Builder.NewAtomContainer());
+            if (m != null)
+                setOfMolecules.Add(m);
             chemModel.MoleculeSet = setOfMolecules;
             chemSequence.Add(chemModel);
             setOfMolecules = chemFile.Builder.NewAtomContainerSet();
@@ -163,7 +164,7 @@ namespace NCDK.IO
             }
             catch (ArgumentException exception)
             {
-                string error = "Error while parsing MOL2";
+                var error = "Error while parsing MOL2";
                 Trace.TraceError(error);
                 Debug.WriteLine(exception);
                 throw new CDKException(error, exception);
@@ -174,7 +175,7 @@ namespace NCDK.IO
             }
             catch (Exception exc)
             {
-                string error = "Error while closing file: " + exc.Message;
+                var error = "Error while closing file: " + exc.Message;
                 Trace.TraceError(error);
                 throw new CDKException(error, exc);
             }
@@ -228,7 +229,7 @@ namespace NCDK.IO
                 }
 
                 // get atom and bond counts
-                string counts = input.ReadLine();
+                var counts = input.ReadLine();
                 var tokenizer = Strings.Tokenize(counts);
                 try
                 {
@@ -287,17 +288,17 @@ namespace NCDK.IO
                             }
                             tokenizer = Strings.Tokenize(line);
                             // disregard the id token
-                            string nameStr = tokenizer[1];
-                            string xStr = tokenizer[2];
-                            string yStr = tokenizer[3];
-                            string zStr = tokenizer[4];
-                            string atomTypeStr = tokenizer[5];
+                            var nameStr = tokenizer[1];
+                            var xStr = tokenizer[2];
+                            var yStr = tokenizer[3];
+                            var zStr = tokenizer[4];
+                            var atomTypeStr = tokenizer[5];
 
                             // replace unrecognised atom type
                             if (ATOM_TYPE_ALIASES.ContainsKey(atomTypeStr))
                                 atomTypeStr = ATOM_TYPE_ALIASES[atomTypeStr];
 
-                            IAtom atom = molecule.Builder.NewAtom();
+                            var atom = molecule.Builder.NewAtom();
                             IAtomType atomType;
                             try
                             {
@@ -323,14 +324,14 @@ namespace NCDK.IO
                                 AtomTypeManipulator.Configure(atom, atomType);
                             }
 
-                            atom.AtomicNumber = NaturalElement.ToAtomicNumber(atom.Symbol);
+                            atom.AtomicNumber = ChemicalElement.OfSymbol(atom.Symbol).AtomicNumber;
                             atom.Id = nameStr;
                             atom.AtomTypeName = atomTypeStr;
                             try
                             {
-                                double x = double.Parse(xStr, NumberFormatInfo.InvariantInfo);
-                                double y = double.Parse(yStr, NumberFormatInfo.InvariantInfo);
-                                double z = double.Parse(zStr, NumberFormatInfo.InvariantInfo);
+                                var x = double.Parse(xStr, NumberFormatInfo.InvariantInfo);
+                                var y = double.Parse(yStr, NumberFormatInfo.InvariantInfo);
+                                var z = double.Parse(zStr, NumberFormatInfo.InvariantInfo);
                                 atom.Point3D = new Vector3(x, y, z);
                             }
                             catch (FormatException nfExc)
@@ -356,20 +357,20 @@ namespace NCDK.IO
                             }
                             tokenizer = Strings.Tokenize(line);
                             // disregard the id token
-                            string atom1Str = tokenizer[1];
-                            string atom2Str = tokenizer[2];
-                            string orderStr = tokenizer[3];
+                            var atom1Str = tokenizer[1];
+                            var atom2Str = tokenizer[2];
+                            var orderStr = tokenizer[3];
                             try
                             {
-                                int atom1 = int.Parse(atom1Str, NumberFormatInfo.InvariantInfo);
-                                int atom2 = int.Parse(atom2Str, NumberFormatInfo.InvariantInfo);
+                                var atom1 = int.Parse(atom1Str, NumberFormatInfo.InvariantInfo);
+                                var atom2 = int.Parse(atom2Str, NumberFormatInfo.InvariantInfo);
                                 if (string.Equals("nc", orderStr, StringComparison.Ordinal))
                                 {
                                     // do not connect the atoms
                                 }
                                 else
                                 {
-                                    IBond bond = molecule.Builder.NewBond(molecule.Atoms[atom1 - 1], molecule.Atoms[atom2 - 1]);
+                                    var bond = molecule.Builder.NewBond(molecule.Atoms[atom1 - 1], molecule.Atoms[atom2 - 1]);
                                     switch (orderStr)
                                     {
                                         case "1":
@@ -402,20 +403,21 @@ namespace NCDK.IO
                             }
                             catch (FormatException nfExc)
                             {
-                                string error = "Error while reading bond information";
+                                var error = "Error while reading bond information";
                                 Trace.TraceError(error);
                                 Debug.WriteLine(nfExc);
                                 throw new CDKException(error, nfExc);
                             }
                         }
                     }
-                    if (molend) return molecule;
+                    if (molend)
+                        return molecule;
                     line = input.ReadLine();
                 }
             }
             catch (IOException exception)
             {
-                string error = "Error while reading general structure";
+                var error = "Error while reading general structure";
                 Trace.TraceError(error);
                 Debug.WriteLine(exception);
                 throw new CDKException(error, exception);
@@ -425,7 +427,7 @@ namespace NCDK.IO
 
         private static bool IsElementSymbol(string atomTypeStr)
         {
-            return NaturalElement.SymbolToAtomicNumberMap.ContainsKey(atomTypeStr);
+            return ChemicalElement.symbolToElementMap.ContainsKey(atomTypeStr);
         }
 
         #region IDisposable Support

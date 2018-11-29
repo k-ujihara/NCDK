@@ -36,13 +36,12 @@ namespace NCDK.Dict
     /// FIXME: this should be replaced by an uptodate Dictionary Schema DOM type thing.
     /// </para>
     // @author     Egon Willighagen
-    // @cdk.githash
     // @cdk.created    2003-08-23
     // @cdk.keyword dictionary
     // @cdk.module dict
     public class EntryDictionary : IReadOnlyDictionary<string, Entry>
     {
-        private IDictionary<string, Entry> entries;
+        private Dictionary<string, Entry> entries;
 
         public EntryDictionary()
         {
@@ -51,7 +50,7 @@ namespace NCDK.Dict
 
         public static EntryDictionary Unmarshal(TextReader reader)
         {
-            DictionaryHandler handler = new DictionaryHandler();
+            var handler = new DictionaryHandler();
             var r = new XReader
             {
                 Handler = handler

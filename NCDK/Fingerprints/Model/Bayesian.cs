@@ -74,7 +74,6 @@ namespace NCDK.Fingerprints.Model
     // @cdk.keyword    bayesian
     // @cdk.keyword    model
     // @cdk.module     standard
-    // @cdk.githash
     public class Bayesian
     {
         /// <summary>
@@ -161,7 +160,8 @@ namespace NCDK.Fingerprints.Model
         public int TrainingActives { get; private set; } = 0;                     // this is serialised, while the actual training set is not
 
         // optional text attributes (serialisable)
-        private string noteTitle = null, noteOrigin = null;
+        private string noteTitle = null;
+        private string noteOrigin = null;
         private string[] noteComments = null;
 
         private static readonly Regex PTN_HASHLINE = new Regex("^(-?\\d+)=([\\d\\.Ee-]+)", RegexOptions.Compiled);

@@ -301,7 +301,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int nheavy = 0;
 
             // find number of heavy atoms
-            nheavy += container.Atoms.Count(atom => !atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber));
+            nheavy += container.Atoms.Count(atom => !atom.AtomicNumber.Equals(AtomicNumbers.H));
             if (nheavy == 0)
                 throw new CDKException("No heavy atoms in the container");
 
@@ -311,7 +311,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             try
             {
                 var counter = 0;
-                foreach (var atom in container.Atoms.Where(atom => !atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)))
+                foreach (var atom in container.Atoms.Where(atom => !atom.AtomicNumber.Equals(AtomicNumbers.H)))
                 {
                     diagvalue[counter] = iso.GetMajorIsotope(atom.AtomicNumber).ExactMass.Value;
                     counter++;
@@ -349,7 +349,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             {
                 var counter = 0;
-                foreach (var atom in container.Atoms.Where(atom => !atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)))
+                foreach (var atom in container.Atoms.Where(atom => !atom.AtomicNumber.Equals(AtomicNumbers.H)))
                     diagvalue[counter++] = atom.Charge.Value;
             }
             {
@@ -366,7 +366,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             // get polarizability weighted BCUT
             {
                 var counter = 0;
-                foreach (var atom in container.Atoms.Where(atom => !atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)))
+                foreach (var atom in container.Atoms.Where(atom => !atom.AtomicNumber.Equals(AtomicNumbers.H)))
                     diagvalue[counter++] = Polarizability.CalculateGHEffectiveAtomPolarizability(container, atom, false, topoDistance);
             }
             {

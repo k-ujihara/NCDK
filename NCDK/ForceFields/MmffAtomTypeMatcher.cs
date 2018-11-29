@@ -52,7 +52,7 @@ namespace NCDK.ForceFields
         private readonly AtomTypePattern[] patterns;
 
         /// <summary>Mapping of parent to hydrogen symbols.</summary>
-        private readonly IDictionary<string, string> hydrogenMap;
+        private readonly Dictionary<string, string> hydrogenMap;
 
         /// <summary>
         /// Create a new MMFF atom type matcher, definitions are loaded at instantiation.
@@ -178,7 +178,7 @@ namespace NCDK.ForceFields
         {
             for (int v = 0; v < graph.Length; v++)
             {
-                if (container.Atoms[v].AtomicNumber.Equals(NaturalElements.H.AtomicNumber) && graph[v].Length == 1)
+                if (container.Atoms[v].AtomicNumber.Equals(AtomicNumbers.H) && graph[v].Length == 1)
                 {
                     int w = graph[v][0];
                     var symb = symbs[w];

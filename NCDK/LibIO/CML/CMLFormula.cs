@@ -221,18 +221,18 @@ namespace NCDK.LibIO.CML
 
         CMLAtomArray CreateAndAddAtomArrayAndFormalChargeFromConcise(string concise)
         {
-            CMLAtomArray atomArray = new CMLAtomArray();
+            var atomArray = new CMLAtomArray();
             if (concise != null)
             {
                 var elements = new List<string>();
                 var counts = new List<double>();
                 var tokens = Regex.Split(concise, @"\s");
-                int nelement = tokens.Length / 2;
+                var nelement = tokens.Length / 2;
                 for (int i = 0; i < nelement; i++)
                 {
-                    string elem = tokens[2 * i];
-                    var ce = Config.NaturalElement.ToAtomicNumber(elem);
-                    if (ce == NaturalElements.Unknown.AtomicNumber)
+                    var elem = tokens[2 * i];
+                    var ce = NCDK.ChemicalElement.OfSymbol(elem).AtomicNumber;
+                    if (ce == AtomicNumbers.Unknown)
                     {
                         throw new ApplicationException($"Unknown chemical element: {elem}");
                     }
@@ -241,7 +241,7 @@ namespace NCDK.LibIO.CML
                         throw new ApplicationException($"Duplicate element in concise: {elem}");
                     }
                     elements.Add(elem);
-                    string countS = tokens[2 * i + 1];
+                    var countS = tokens[2 * i + 1];
                     try
                     {
                         counts.Add(double.Parse(countS, NumberFormatInfo.InvariantInfo));
@@ -253,10 +253,10 @@ namespace NCDK.LibIO.CML
                 }
                 if (tokens.Length > nelement * 2)
                 {
-                    string chargeS = tokens[nelement * 2];
+                    var chargeS = tokens[nelement * 2];
                     try
                     {
-                        int formalCharge = int.Parse(chargeS, NumberFormatInfo.InvariantInfo);
+                        var formalCharge = int.Parse(chargeS, NumberFormatInfo.InvariantInfo);
                         FormalCharge = formalCharge;
                     }
                     catch (FormatException)
@@ -264,7 +264,7 @@ namespace NCDK.LibIO.CML
                         throw new ApplicationException($"Bad formal charge in concise: {chargeS}");
                     }
                 }
-                double[] countD = new double[nelement];
+                var countD = new double[nelement];
                 for (int i = 0; i < nelement; i++)
                 {
                     countD[i] = counts[i];

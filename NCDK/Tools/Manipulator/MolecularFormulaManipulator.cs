@@ -60,13 +60,13 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Checks a set of Nodes for the occurrence of the isotopes in the
-        /// molecular formula from a particular IElement. It returns 0 if the
-        /// element does not exist. The search is based only on the IElement.
+        /// molecular formula from a particular <paramref name="element"/>. It returns 0 if the
+        /// element does not exist. The search is based only on the <see cref="ChemicalElement"/>.
         /// </summary>
         /// <param name="formula">The MolecularFormula to check</param>
-        /// <param name="element">The IElement object</param>
+        /// <param name="element">The element object</param>
         /// <returns>The occurrence of this element in this molecular formula</returns>
-        public static int GetElementCount(IMolecularFormula formula, IElement element)
+        public static int GetElementCount(IMolecularFormula formula, ChemicalElement element)
         {
             int count = 0;
             foreach (var isotope in formula.Isotopes)
@@ -83,10 +83,10 @@ namespace NCDK.Tools.Manipulator
         /// <param name="formula">the formula</param>
         /// <param name="isotope">isotope of an element</param>
         /// <returns>number of the times the element occurs</returns>
-        /// <seealso cref="GetElementCount(IMolecularFormula, IElement)"/>
+        /// <seealso cref="GetElementCount(IMolecularFormula, ChemicalElement)"/>
         public static int GetElementCount(IMolecularFormula formula, IIsotope isotope)
         {
-            return GetElementCount(formula, formula.Builder.NewElement(isotope));
+            return GetElementCount(formula, isotope.Element);
         }
 
         /// <summary>
@@ -95,20 +95,20 @@ namespace NCDK.Tools.Manipulator
         /// <param name="formula">the formula</param>
         /// <param name="symbol">element symbol (e.g. C for carbon)</param>
         /// <returns>number of the times the element occurs</returns>
-        /// <seealso cref="GetElementCount(IMolecularFormula, IElement)"/>
+        /// <seealso cref="GetElementCount(IMolecularFormula, ChemicalElement)"/>
         public static int GetElementCount(IMolecularFormula formula, string symbol)
         {
-            return GetElementCount(formula, formula.Builder.NewElement(symbol));
+            return GetElementCount(formula, ChemicalElement.OfSymbol(symbol));
         }
 
         /// <summary>
         /// Get a list of <see cref="IIsotope"/> from a given <paramref name="element"/> which is contained
-        /// molecular. The search is based only on the <see cref="IElement"/>.
+        /// molecular. The search is based only on the <see cref="ChemicalElement"/>.
         /// </summary>
         /// <param name="formula">The <see cref="IMolecularFormula"/> to check</param>
-        /// <param name="element">The <see cref="IElement"/> object</param>
+        /// <param name="element">The <see cref="ChemicalElement"/> object</param>
         /// <returns>The list with the IIsotopes in this molecular formula</returns>
-        public static IEnumerable<IIsotope> GetIsotopes(IMolecularFormula formula, IElement element)
+        public static IEnumerable<IIsotope> GetIsotopes(IMolecularFormula formula, ChemicalElement element)
         {
             foreach (var isotope in formula.Isotopes)
             {
@@ -119,18 +119,18 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        ///  Get a list of all <see cref="IElement"/>s which are contained molecular.
+        /// Get a list of all <see cref="ChemicalElement"/>s which are contained molecular.
         /// </summary>
         /// <param name="formula">The molecular formula to check</param>
         /// <returns>The list with the elements in this molecular formula</returns>
-        public static IEnumerable<IElement> Elements(IMolecularFormula formula)
+        public static IEnumerable<ChemicalElement> Elements(IMolecularFormula formula)
         {
             var stringList = new List<string>();
             foreach (var isotope in formula.Isotopes)
             {
                 if (!stringList.Contains(isotope.Symbol))
                 {
-                    yield return isotope;
+                    yield return isotope.Element;
                     stringList.Add(isotope.Symbol);
                 }
             }
@@ -143,7 +143,7 @@ namespace NCDK.Tools.Manipulator
         /// <param name="formula">molecular formula</param>
         /// <param name="element">The element this <see cref="IMolecularFormula"/> is searched for</param>
         /// <returns>True, if the MolecularFormula contains the given element object</returns>
-        public static bool ContainsElement(IMolecularFormula formula, IElement element)
+        public static bool ContainsElement(IMolecularFormula formula, ChemicalElement element)
         {
             foreach (var isotope in formula.Isotopes)
             {
@@ -158,11 +158,12 @@ namespace NCDK.Tools.Manipulator
         /// Removes all isotopes from a given element in the molecular formula.
         /// </summary>
         /// <param name="formula">molecular formula</param>
-        /// <param name="element">The <see cref="IElement"/> of the IIsotopes to be removed</param>
+        /// <param name="element">The <see cref="ChemicalElement"/> of the IIsotopes to be removed</param>
         /// <returns>The molecularFormula with the isotopes removed</returns>
-        public static IMolecularFormula RemoveElement(IMolecularFormula formula, IElement element)
+        public static IMolecularFormula RemoveElement(IMolecularFormula formula, ChemicalElement element)
         {
-            foreach (var isotope in GetIsotopes(formula, element).ToReadOnlyList())
+            var isotopes = GetIsotopes(formula, element).ToReadOnlyList();
+            foreach (var isotope in isotopes)
             {
                 formula.Remove(isotope);
             }
@@ -308,7 +309,7 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="GetHTML(IMolecularFormula)"/>
         public static string GetString(IMolecularFormula formula, bool setOne)
         {
-            if (ContainsElement(formula, NaturalElements.C.Element))
+            if (ContainsElement(formula, ChemicalElement.C))
                 return GetString(formula, OrderEleHillWithCarbons, setOne, false);
             else
                 return GetString(formula, OrderEleHillNoCarbons, setOne, false);
@@ -332,7 +333,7 @@ namespace NCDK.Tools.Manipulator
         /// <see cref="GetHTML(IMolecularFormula)"/>
         public static string GetString(IMolecularFormula formula, bool setOne, bool setMassNumber)
         {
-            if (ContainsElement(formula, formula.Builder.NewElement("C")))
+            if (ContainsElement(formula, ChemicalElement.C))
                 return GetString(formula, OrderEleHillWithCarbons, setOne, setMassNumber);
             else
                 return GetString(formula, OrderEleHillNoCarbons, setOne, setMassNumber);
@@ -343,7 +344,7 @@ namespace NCDK.Tools.Manipulator
             var isotopesList = new List<IIsotope>();
             foreach (var orderElement in orderElements)
             {
-                var element = formula.Builder.NewElement(orderElement);
+                var element = ChemicalElement.OfSymbol(orderElement);
                 if (ContainsElement(formula, element))
                 {
                     var isotopes = GetIsotopes(formula, element).ToList();
@@ -437,7 +438,7 @@ namespace NCDK.Tools.Manipulator
         public static string GetHTML(IMolecularFormula formula, bool chargeB, bool isotopeB)
         {
             var orderElements =
-                ContainsElement(formula, formula.Builder.NewElement("C"))
+                ContainsElement(formula, ChemicalElement.C)
               ? OrderEleHillWithCarbons
               : OrderEleHillNoCarbons;
             return GetHTML(formula, orderElements, chargeB, isotopeB);
@@ -461,7 +462,7 @@ namespace NCDK.Tools.Manipulator
             var sb = new StringBuilder();
             foreach (var orderElement in orderElements)
             {
-                var element = formula.Builder.NewElement(orderElement);
+                var element = ChemicalElement.OfSymbol(orderElement);
                 if (ContainsElement(formula, element))
                 {
                     if (!showIsotopes)
@@ -545,8 +546,7 @@ namespace NCDK.Tools.Manipulator
 
         private static IMolecularFormula GetMolecularFormula(string stringMF, bool assumeMajorIsotope, IChemObjectBuilder builder)
         {
-            IMolecularFormula formula = builder.NewMolecularFormula();
-
+            var formula = builder.NewMolecularFormula();
             return GetMolecularFormula(stringMF, formula, assumeMajorIsotope);
         }
 
@@ -786,7 +786,7 @@ namespace NCDK.Tools.Manipulator
             var factory = CDK.IsotopeFactory;
             foreach (var isotope in formula.Isotopes)
             {
-                var isotopesElement = formula.Builder.NewElement(isotope);
+                var isotopesElement = isotope.Element;
                 mass += factory.GetNaturalMass(isotopesElement) * formula.GetCount(isotope);
             }
             return mass;
@@ -851,7 +851,7 @@ namespace NCDK.Tools.Manipulator
                     throw new CDKException($"Calculation of double bond equivalents not possible due to problems with element {ac.Atoms[f].Symbol}");
                 valencies[(int)types.First().BondOrderSum.Value]++;
             }
-            return 1 + (valencies[4]) + (valencies[3] / 2) - (valencies[1] / 2);
+            return 1 + valencies[4] + (valencies[3] / 2) - (valencies[1] / 2);
         }
 
         /// <summary>
@@ -975,18 +975,18 @@ namespace NCDK.Tools.Manipulator
             if (!IsLower(c2))
             {
                 // could use a switch, see SMARTS parser
-                elemNumber = NaturalElement.ToAtomicNumber("" + c1);
+                elemNumber = ChemicalElement.OfSymbol("" + c1).AtomicNumber;
                 if (c2 != '\0')
                     iter.pos--;
             }
             else
             {
-                elemNumber = NaturalElement.ToAtomicNumber("" + c1 + c2);
+                elemNumber = ChemicalElement.OfSymbol("" + c1 + c2).AtomicNumber;
             }
             count = iter.NextUInt();
             if (count < 0)
                 count = 1;
-            var isotope = mf.Builder.NewIsotope(NaturalElement.Elements[elemNumber]);
+            var isotope = mf.Builder.NewIsotope(ChemicalElement.Of(elemNumber));
             if (mass != 0)
                 isotope.MassNumber = mass;
             else if (setMajor)
@@ -1034,7 +1034,7 @@ namespace NCDK.Tools.Manipulator
                 var occur = formula.GetCount(isotope);
                 for (int i = 0; i < occur; i++)
                 {
-                    var atom = formula.Builder.NewAtom(isotope);
+                    var atom = formula.Builder.NewAtom(isotope.Element);
                     atomContainer.Atoms.Add(atom);
                 }
             }
@@ -1160,11 +1160,11 @@ namespace NCDK.Tools.Manipulator
         /// <param name="formula">The IMolecularFormula</param>
         /// <returns>The heavyElements value into a List</returns>
         // @cdk.keyword    hydrogen, removal
-        public static IEnumerable<IElement> GetHeavyElements(IMolecularFormula formula)
+        public static IEnumerable<ChemicalElement> GetHeavyElements(IMolecularFormula formula)
         {
             foreach (var element in Elements(formula))
             {
-                if (!element.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                if (!element.AtomicNumber.Equals(AtomicNumbers.H))
                 {
                     yield return element;
                 }
@@ -1435,7 +1435,7 @@ namespace NCDK.Tools.Manipulator
 
             foreach (IIsotope iso in mf.Isotopes)
             {
-                if (NaturalElements.H.AtomicNumber.Equals(iso.AtomicNumber))
+                if (AtomicNumbers.H.Equals(iso.AtomicNumber))
                 {
                     var count = mf.GetCount(iso);
                     if (count < hcnt)

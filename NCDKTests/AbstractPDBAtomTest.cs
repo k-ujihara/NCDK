@@ -26,7 +26,6 @@ namespace NCDK
     /// Checks the functionality of <see cref="IPDBAtom"/> implementations.
     /// </summary>
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractPDBAtomTest : AbstractAtomTest
     {
         /// <summary>

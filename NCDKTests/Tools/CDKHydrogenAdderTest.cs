@@ -19,10 +19,9 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.AtomTypes;
-using NCDK.Config;
-using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Numerics;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,7 +51,7 @@ namespace NCDK.Tools
         public void TestMethane()
         {
             IAtomContainer molecule = new AtomContainer();
-            IAtom newAtom = new Atom(NaturalElements.Carbon.Element);
+            IAtom newAtom = new Atom(ChemicalElement.C);
             molecule.Atoms.Add(newAtom);
             IAtomType type = matcher.FindMatchingAtomType(molecule, newAtom);
             Assert.IsNotNull(type);
@@ -68,8 +67,8 @@ namespace NCDK.Tools
         public void TestFormaldehyde()
         {
             IAtomContainer molecule = new AtomContainer();
-            IAtom newAtom = new Atom(NaturalElements.Carbon.Element);
-            IAtom newAtom2 = new Atom(NaturalElements.Oxygen.Element);
+            IAtom newAtom = new Atom(ChemicalElement.C);
+            IAtom newAtom2 = new Atom(ChemicalElement.O);
             molecule.Atoms.Add(newAtom);
             molecule.Atoms.Add(newAtom2);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
@@ -92,8 +91,8 @@ namespace NCDK.Tools
         public void TestMethanol()
         {
             IAtomContainer molecule = new AtomContainer();
-            IAtom newAtom = new Atom(NaturalElements.Carbon.Element);
-            IAtom newAtom2 = new Atom(NaturalElements.Oxygen.Element);
+            IAtom newAtom = new Atom(ChemicalElement.C);
+            IAtom newAtom2 = new Atom(ChemicalElement.O);
             molecule.Atoms.Add(newAtom);
             molecule.Atoms.Add(newAtom2);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
@@ -116,8 +115,8 @@ namespace NCDK.Tools
         public void TestHCN()
         {
             IAtomContainer molecule = new AtomContainer();
-            IAtom newAtom = new Atom(NaturalElements.Carbon.Element);
-            IAtom newAtom2 = new Atom(NaturalElements.Nitrogen.Element);
+            IAtom newAtom = new Atom(ChemicalElement.C);
+            IAtom newAtom2 = new Atom(ChemicalElement.N);
             molecule.Atoms.Add(newAtom);
             molecule.Atoms.Add(newAtom2);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Triple);
@@ -139,13 +138,13 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestMethylAmine()
         {
-            IAtomContainer molecule = new AtomContainer();
-            IAtom newAtom = new Atom(NaturalElements.Carbon.Element);
-            IAtom newAtom2 = new Atom(NaturalElements.Nitrogen.Element);
+            var molecule = new AtomContainer();
+            var newAtom = new Atom(ChemicalElement.C);
+            var newAtom2 = new Atom(ChemicalElement.N);
             molecule.Atoms.Add(newAtom);
             molecule.Atoms.Add(newAtom2);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            IAtomType type = matcher.FindMatchingAtomType(molecule, newAtom);
+            var type = matcher.FindMatchingAtomType(molecule, newAtom);
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(newAtom, type);
             type = matcher.FindMatchingAtomType(molecule, newAtom2);
@@ -164,8 +163,8 @@ namespace NCDK.Tools
         public void TestMethyleneImine()
         {
             IAtomContainer molecule = new AtomContainer();
-            IAtom newAtom = new Atom(NaturalElements.Carbon.Element);
-            IAtom newAtom2 = new Atom(NaturalElements.Nitrogen.Element);
+            IAtom newAtom = new Atom(ChemicalElement.C);
+            IAtom newAtom2 = new Atom(ChemicalElement.N);
             molecule.Atoms.Add(newAtom);
             molecule.Atoms.Add(newAtom2);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
@@ -216,7 +215,7 @@ namespace NCDK.Tools
             Assert.AreEqual(1, mol.Atoms.Count);
             IMolecularFormula formula = MolecularFormulaManipulator.GetMolecularFormula(mol);
             Assert.AreEqual(1,
-                    MolecularFormulaManipulator.GetElementCount(formula, mol.Builder.NewElement("H")));
+                    MolecularFormulaManipulator.GetElementCount(formula, ChemicalElement.H));
             Assert.AreEqual(0, mol.GetConnectedBonds(proton).Count());
             Assert.IsNotNull(proton.ImplicitHydrogenCount);
             Assert.AreEqual(0, proton.ImplicitHydrogenCount.Value);
@@ -236,7 +235,7 @@ namespace NCDK.Tools
 
             Assert.AreEqual(1, mol.Atoms.Count);
             IMolecularFormula formula = MolecularFormulaManipulator.GetMolecularFormula(mol);
-            Assert.AreEqual(2, MolecularFormulaManipulator.GetElementCount(formula, mol.Builder.NewElement("H")));
+            Assert.AreEqual(2, MolecularFormulaManipulator.GetElementCount(formula, ChemicalElement.H));
             Assert.AreEqual(0, mol.GetConnectedBonds(proton).Count());
             Assert.IsNotNull(proton.ImplicitHydrogenCount);
             Assert.AreEqual(1, proton.ImplicitHydrogenCount.Value);

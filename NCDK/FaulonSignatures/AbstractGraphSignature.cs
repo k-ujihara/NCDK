@@ -28,7 +28,7 @@ namespace NCDK.FaulonSignatures
         /// </summary>
         /// <param name="separator">the separator to use</param>
         protected AbstractGraphSignature(string separator)
-                : this(separator, -1)
+            : this(separator, -1)
         { }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace NCDK.FaulonSignatures
         /// </summary>
         /// <param name="height">the height of the vertex signatures made from this graph.</param>
         protected AbstractGraphSignature(int height)
-                : this(" + ", height)
+            : this(" + ", height)
         { }
 
         /// <summary>
@@ -97,8 +97,8 @@ namespace NCDK.FaulonSignatures
             for (int i = 0; i < this.GetVertexCount(); i++)
             {
                 string signatureString = this.SignatureStringForVertex(i);
-                if (canonicalString == null ||
-                        string.Compare(canonicalString, signatureString, StringComparison.Ordinal) > 0)
+                if (canonicalString == null 
+                 || string.Compare(canonicalString, signatureString, StringComparison.Ordinal) > 0)
                 {
                     canonicalString = signatureString;
                 }
@@ -127,10 +127,10 @@ namespace NCDK.FaulonSignatures
 
         public List<SymmetryClass> GetSymmetryClasses(int height)
         {
-            List<SymmetryClass> symmetryClasses = new List<SymmetryClass>();
+            var symmetryClasses = new List<SymmetryClass>();
             for (int i = 0; i < this.GetVertexCount(); i++)
             {
-                string signatureString = this.SignatureStringForVertex(i, height);
+                var signatureString = this.SignatureStringForVertex(i, height);
                 SymmetryClass foundClass = null;
                 foreach (var symmetryClass in symmetryClasses)
                 {
@@ -158,7 +158,7 @@ namespace NCDK.FaulonSignatures
         /// <returns>a full signature string for this graph</returns>
         public string ToFullString()
         {
-            IDictionary<string, int> sigmap = new Dictionary<string, int>();
+            var sigmap = new Dictionary<string, int>();
             for (int i = 0; i < this.GetVertexCount(); i++)
             {
                 string signatureString = this.SignatureStringForVertex(i);
@@ -178,13 +178,13 @@ namespace NCDK.FaulonSignatures
             var buffer = new StringBuilder();
             for (int i = 0; i < keyList.Count - 1; i++)
             {
-                string signature = keyList[i];
-                int count = sigmap[signature];
+                var signature = keyList[i];
+                var count = sigmap[signature];
                 buffer.Append(count).Append(signature).Append(this.separator);
             }
             {
-                string finalSignature = keyList[keyList.Count - 1];
-                int count = sigmap[finalSignature];
+                var finalSignature = keyList[keyList.Count - 1];
+                var count = sigmap[finalSignature];
                 buffer.Append(count).Append(finalSignature);
             }
             return buffer.ToString();
@@ -209,13 +209,13 @@ namespace NCDK.FaulonSignatures
 
         public string GetMinimalSignature()
         {
-            List<string> sortedSignatures = GetSortedSignatures();
+            var sortedSignatures = GetSortedSignatures();
             return sortedSignatures[sortedSignatures.Count - 1];
         }
 
         public string GetMaximalSignature()
         {
-            List<string> sortedSignatures = GetSortedSignatures();
+            var sortedSignatures = GetSortedSignatures();
             return sortedSignatures[0];
         }
 
@@ -241,8 +241,7 @@ namespace NCDK.FaulonSignatures
         /// <returns>a list of vertex signatures</returns>
         public List<AbstractVertexSignature> GetVertexSignatures()
         {
-            List<AbstractVertexSignature> signatures =
-                new List<AbstractVertexSignature>();
+            var signatures = new List<AbstractVertexSignature>();
             for (int i = 0; i < this.GetVertexCount(); i++)
             {
                 signatures.Add(this.SignatureForVertex(i));
@@ -259,7 +258,7 @@ namespace NCDK.FaulonSignatures
         /// <returns>true if the vertices are in a canonical order</returns>
         public bool IsCanonicallyLabelled()
         {
-            int[] labels = GetCanonicalLabels();
+            var labels = GetCanonicalLabels();
             int previousLabel = -1;
             for (int i = 0; i < labels.Length; i++)
             {
@@ -275,11 +274,10 @@ namespace NCDK.FaulonSignatures
             return true;
         }
 
-        public void ReconstructCanonicalGraph(
-                AbstractVertexSignature signature, AbstractGraphBuilder builder)
+        public void ReconstructCanonicalGraph(AbstractVertexSignature signature, AbstractGraphBuilder builder)
         {
-            string canonicalString = this.ToCanonicalString();
-            ColoredTree tree = AbstractVertexSignature.Parse(canonicalString);
+            var canonicalString = this.ToCanonicalString();
+            var tree = AbstractVertexSignature.Parse(canonicalString);
             builder.MakeFromColoredTree(tree);
         }
 
@@ -290,8 +288,8 @@ namespace NCDK.FaulonSignatures
             string canonicalSignatureString = null;
             for (int i = 0; i < n; i++)
             {
-                AbstractVertexSignature signatureForVertexI = SignatureForVertex(i);
-                string signatureString = signatureForVertexI.ToCanonicalString();
+                var signatureForVertexI = SignatureForVertex(i);
+                var signatureString = signatureForVertexI.ToCanonicalString();
                 if (canonicalSignature == null ||
                         string.Compare(signatureString, canonicalSignatureString, StringComparison.Ordinal) < 0)
                 {
@@ -304,11 +302,10 @@ namespace NCDK.FaulonSignatures
 
         public string ReconstructCanonicalEdgeString()
         {
-            string canonicalString = this.ToCanonicalString();
-            VirtualGraphBuilder builder = new VirtualGraphBuilder();
+            var canonicalString = this.ToCanonicalString();
+            var builder = new VirtualGraphBuilder();
 
-            builder.MakeFromColoredTree(
-                    AbstractVertexSignature.Parse(canonicalString));
+            builder.MakeFromColoredTree(AbstractVertexSignature.Parse(canonicalString));
             return builder.ToEdgeString();
         }
     }

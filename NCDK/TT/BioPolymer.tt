@@ -37,7 +37,6 @@ foreach (var ns in namespaces)
 #>
 namespace <#= ns.NS #>
 {
-    [Serializable]
     public class BioPolymer
         : Polymer, IBioPolymer
     {

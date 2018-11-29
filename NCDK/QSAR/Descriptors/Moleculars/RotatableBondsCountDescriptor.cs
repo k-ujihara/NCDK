@@ -95,7 +95,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 var atom0 = bond.Atoms[0];
                 var atom1 = bond.Atoms[1];
-                if (atom0.AtomicNumber.Equals(NaturalElements.H.AtomicNumber) || atom1.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                if (atom0.AtomicNumber.Equals(AtomicNumbers.H) || atom1.AtomicNumber.Equals(AtomicNumbers.H))
                     continue;
                 if (bond.Order == BondOrder.Single)
                 {
@@ -139,9 +139,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>if both partners are involved in an amide C-N bond</returns>
         private static bool IsAmide(IAtom atom0, IAtom atom1, IAtomContainer container)
         {
-            if (atom0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && atom1.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
+            if (atom0.AtomicNumber.Equals(AtomicNumbers.C) && atom1.AtomicNumber.Equals(AtomicNumbers.N))
                 foreach (var neighbor in container.GetConnectedAtoms(atom0))
-                    if (neighbor.AtomicNumber.Equals(NaturalElements.O.AtomicNumber)
+                    if (neighbor.AtomicNumber.Equals(AtomicNumbers.O)
                      && container.GetBond(atom0, neighbor).Order == BondOrder.Double)
                         return true;
             return false;
@@ -149,7 +149,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private static int GetConnectedHCount(IAtomContainer container, IAtom atom)
         {
-            return container.GetConnectedAtoms(atom).Count(n => n.AtomicNumber.Equals(NaturalElements.H.AtomicNumber));
+            return container.GetConnectedAtoms(atom).Count(n => n.AtomicNumber.Equals(AtomicNumbers.H));
         }
 
         IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();

@@ -24,7 +24,8 @@ namespace NCDK.Fingerprints
     // @cdk.keyword fingerprint
     // @cdk.keyword similarity
     // @cdk.module fingerprint
-    public class AtomPairs2DFingerprinter : AbstractFingerprinter, IFingerprinter
+    public class AtomPairs2DFingerprinter
+        : AbstractFingerprinter, IFingerprinter
     {
         private const int MAX_DISTANCE = 10;
         private static readonly string[] atypes = { "C", "N", "O", "S", "P", "F", "Cl", "Br", "I", "B", "Si", "X" };

@@ -37,12 +37,10 @@ namespace NCDK.Default
     /// A Monomer is an AtomContainer which stores additional monomer specific
     /// informations for a group of Atoms.
     /// </summary>
-    // @cdk.githash 
     // @author     Edgar Luttmann <edgar@uni-paderborn.de>
     // @cdk.created    2001-08-06 
     // @cdk.keyword    monomer  
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class Monomer 
         : AtomContainer, IMonomer, ICloneable
     {
@@ -100,12 +98,10 @@ namespace NCDK.Silent
     /// A Monomer is an AtomContainer which stores additional monomer specific
     /// informations for a group of Atoms.
     /// </summary>
-    // @cdk.githash 
     // @author     Edgar Luttmann <edgar@uni-paderborn.de>
     // @cdk.created    2001-08-06 
     // @cdk.keyword    monomer  
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class Monomer 
         : AtomContainer, IMonomer, ICloneable
     {

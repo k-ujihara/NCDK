@@ -30,7 +30,6 @@ namespace NCDK.AtomTypes
     // @author      mfe4
     // @cdk.created 2004-12-02
     // @cdk.module  core
-    // @cdk.githash
     public interface IAtomTypeMatcher
     {
         /// <summary>

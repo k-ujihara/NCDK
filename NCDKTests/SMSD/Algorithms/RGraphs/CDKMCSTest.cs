@@ -21,21 +21,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Silent;
 using NCDK.Graphs;
 using NCDK.IO;
 using NCDK.Isomorphisms.Matchers;
-using NCDK.Smiles;
 using NCDK.SMSD.Tools;
 using NCDK.Templates;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
-using System.IO;
 
 namespace NCDK.SMSD.Algorithms.RGraphs
 {
@@ -45,6 +41,7 @@ namespace NCDK.SMSD.Algorithms.RGraphs
     public class CDKMCSTest : CDKTestCase
     {
         readonly bool standAlone = false;
+        readonly IChemObjectBuilder builder = CDK.Builder;
 
         [TestMethod()]
         public void TestIsSubgraph_IAtomContainer_IAtomContainer()
@@ -74,25 +71,24 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestSFBug1708336()
         {
-            var builder = ChemObjectBuilder.Instance;
             var atomContainer = builder.NewAtomContainer();
             atomContainer.Atoms.Add(builder.NewAtom("C"));
             atomContainer.Atoms.Add(builder.NewAtom("C"));
             atomContainer.Atoms.Add(builder.NewAtom("N"));
             atomContainer.AddBond(atomContainer.Atoms[0], atomContainer.Atoms[1], BondOrder.Single);
             atomContainer.AddBond(atomContainer.Atoms[1], atomContainer.Atoms[2], BondOrder.Single);
-            var query = new QueryAtomContainer(ChemObjectBuilder.Instance);
-            var a1 = new SymbolQueryAtom(ChemObjectBuilder.Instance)
+            var query = new QueryAtomContainer(builder);
+            var a1 = new SymbolQueryAtom(builder)
             {
                 Symbol = "C"
             };
 
-            var a2 = new Isomorphisms.Matchers.SMARTS.AnyAtom(ChemObjectBuilder.Instance);
-            var b1 = new OrderQueryBond(a1, a2, BondOrder.Single, ChemObjectBuilder.Instance);
+            var a2 = new Isomorphisms.Matchers.SMARTS.AnyAtom(builder);
+            var b1 = new OrderQueryBond(a1, a2, BondOrder.Single, builder);
 
-            var a3 = new SymbolQueryAtom(ChemObjectBuilder.Instance) { Symbol = "C" };
+            var a3 = new SymbolQueryAtom(builder) { Symbol = "C" };
 
-            var b2 = new OrderQueryBond(a2, a3, BondOrder.Single, ChemObjectBuilder.Instance);
+            var b2 = new OrderQueryBond(a2, a3, BondOrder.Single, builder);
             query.Atoms.Add(a1);
             query.Atoms.Add(a2);
             query.Atoms.Add(a3);
@@ -192,13 +188,13 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         {
             string molfile = "NCDK.Data.MDL.decalin.mol";
             string queryfile = "NCDK.Data.MDL.decalin.mol";
-            var mol = new AtomContainer();
-            IAtomContainer temp = new AtomContainer();
+            var mol = builder.NewAtomContainer();
+            var temp = builder.NewAtomContainer();
             QueryAtomContainer query1 = null;
             QueryAtomContainer query2 = null;
 
             var ins = ResourceLoader.GetAsStream(molfile);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
+            var reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             reader.Read(mol);
             ins = ResourceLoader.GetAsStream(queryfile);
             reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
@@ -214,7 +210,6 @@ namespace NCDK.SMSD.Algorithms.RGraphs
 
             list = CDKMCS.GetSubgraphMap(mol, query2, true);
             Assert.AreEqual(6, list.Count);
-
         }
 
         /// <summary>
@@ -224,10 +219,10 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestGetOverlaps_IAtomContainer_IAtomContainer()
         {
-            string file1 = "NCDK.Data.MDL.5SD.mol";
-            string file2 = "NCDK.Data.MDL.ADN.mol";
-            IAtomContainer mol1 = new AtomContainer();
-            IAtomContainer mol2 = new AtomContainer();
+            var file1 = "NCDK.Data.MDL.5SD.mol";
+            var file2 = "NCDK.Data.MDL.ADN.mol";
+            var mol1 = builder.NewAtomContainer();
+            var mol2 = builder.NewAtomContainer();
 
             var ins1 = ResourceLoader.GetAsStream(file1);
             new MDLV2000Reader(ins1, ChemObjectReaderMode.Strict).Read(mol1);
@@ -257,18 +252,18 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestSFBug999330()
         {
-            string file1 = "NCDK.Data.MDL.5SD.mol";
-            string file2 = "NCDK.Data.MDL.ADN.mol";
-            IAtomContainer mol1 = new AtomContainer();
-            IAtomContainer mol2 = new AtomContainer();
+            var file1 = "NCDK.Data.MDL.5SD.mol";
+            var file2 = "NCDK.Data.MDL.ADN.mol";
+            var mol1 = builder.NewAtomContainer();
+            var mol2 = builder.NewAtomContainer();
 
             var ins1 = ResourceLoader.GetAsStream(file1);
             new MDLV2000Reader(ins1, ChemObjectReaderMode.Strict).Read(mol1);
             var ins2 = ResourceLoader.GetAsStream(file2);
             new MDLV2000Reader(ins2, ChemObjectReaderMode.Strict).Read(mol2);
-            AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
+            var permutor = new AtomContainerAtomPermutor(mol2);
             permutor.MoveNext();
-            mol2 = new AtomContainer(permutor.Current);
+            mol2 = builder.NewAtomContainer(permutor.Current);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             var adder = CDK.HydrogenAdder;
@@ -290,9 +285,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestItself()
         {
-            string smiles = "C1CCCCCCC1CC";
+            var smiles = "C1CCCCCCC1CC";
             var query = QueryAtomContainerCreator.CreateAnyAtomContainer(CDK.SmilesParser.ParseSmiles(smiles), true);
-            IAtomContainer ac = CDK.SmilesParser.ParseSmiles(smiles);
+            var ac = CDK.SmilesParser.ParseSmiles(smiles);
             if (standAlone)
             {
                 Console.Out.WriteLine("AtomCount of query: " + query.Atoms.Count);
@@ -313,10 +308,10 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestIsIsomorph_IAtomContainer_IAtomContainer()
         {
-            AtomContainer ac1 = new AtomContainer();
-            ac1.Atoms.Add(new Atom("C"));
-            AtomContainer ac2 = new AtomContainer();
-            ac2.Atoms.Add(new Atom("C"));
+            var ac1 = builder.NewAtomContainer();
+            ac1.Atoms.Add(builder.NewAtom("C"));
+            var ac2 = builder.NewAtomContainer();
+            ac2.Atoms.Add(builder.NewAtom("C"));
             Assert.IsTrue(CDKMCS.IsIsomorph(ac1, ac2, true));
             Assert.IsTrue(CDKMCS.IsSubgraph(ac1, ac2, true));
         }
@@ -365,7 +360,7 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             var matches = CDKMCS.GetIsomorphMaps(target, query, true);
             Assert.AreEqual(1, matches.Count);
             Assert.AreEqual(1, matches[0].Count);
-            CDKRMap mapping = matches[0][0];
+            var mapping = matches[0][0];
             Assert.AreEqual(0, mapping.Id1);
             Assert.AreEqual(0, mapping.Id2);
             var atomMappings = CDKMCS.MakeAtomsMapsOfBondsMaps(matches, target, query);
@@ -385,8 +380,8 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             Assert.AreEqual(2, matches.Count);
             Assert.AreEqual(1, matches[0].Count);
             Assert.AreEqual(1, matches[1].Count);
-            CDKRMap map1 = matches[0][0];
-            CDKRMap map2 = matches[1][0];
+            var map1 = matches[0][0];
+            var map2 = matches[1][0];
 
             Assert.AreEqual(0, map1.Id1);
             Assert.AreEqual(0, map1.Id2);
@@ -404,7 +399,7 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestGetTimeManager()
         {
-            TimeManager expResult = new TimeManager();
+            var expResult = new TimeManager();
             Assert.IsNotNull(expResult);
         }
 
@@ -414,7 +409,7 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         [TestMethod()]
         public void TestSetTimeManager()
         {
-            TimeManager aTimeManager = new TimeManager();
+            var aTimeManager = new TimeManager();
             CDKMCS.SetTimeManager(aTimeManager);
             Assert.IsNotNull(CDKMCS.GetTimeManager().GetElapsedTimeInSeconds());
         }

@@ -29,7 +29,6 @@ namespace NCDK
     // @author      egonw
     // @cdk.created 2005-08-24
     // @cdk.keyword atom
-    // @cdk.githash
     public interface IAtom
         : IAtomType
     {

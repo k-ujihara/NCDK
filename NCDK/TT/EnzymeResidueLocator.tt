@@ -37,8 +37,8 @@ namespace <#= ns.NS #>
     /// </summary>
     // @see  PseudoAtom
     // @cdk.module pdb
-    // @cdk.githash
-    public class EnzymeResidueLocator : PseudoAtom
+    public class EnzymeResidueLocator 
+        : PseudoAtom
     {
         /// <summary>
         /// Constructs an EnzymeResidueLocator from a string containing the locator.

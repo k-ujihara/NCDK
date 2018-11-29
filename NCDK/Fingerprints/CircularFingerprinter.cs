@@ -108,7 +108,6 @@ namespace NCDK.Fingerprints
     // @cdk.keyword    fingerprint
     // @cdk.keyword    similarity
     // @cdk.module     standard
-    // @cdk.githash
     public class CircularFingerprinter : AbstractFingerprinter, IFingerprinter
     {
         // ------------ private members ------------
@@ -375,10 +374,13 @@ namespace NCDK.Fingerprints
 
         // ------------ private methods ------------
 
-        private static readonly int[] ELEMENT_BONDING = new int[] {0, 1, 0, 1, 2, 3, 4, 3, 2, 1, 0, 1, 2, 3, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8,
-                    9, 10, 11, 12, 3, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 3, 4, 3, 2, 1, 0, 1, 2, 4, 4,
-                    4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 3, 4, 5, 6, 7, 8, 1, 1, 4, 4, 4,
-                    4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+        private static readonly int[] ELEMENT_BONDING = new int[] 
+            {
+                0, 1, 0, 1, 2, 3, 4, 3, 2, 1, 0, 1, 2, 3, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8,
+                9, 10, 11, 12, 3, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 3, 4, 3, 2, 1, 0, 1, 2, 4, 4,
+                4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 3, 4, 5, 6, 7, 8, 1, 1, 4, 4, 4,
+                4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+            };
 
         /// <summary>
         /// calculates an integer number that stores the bit-packed identity of the given atom
@@ -569,11 +571,11 @@ namespace NCDK.Fingerprints
 
         internal static readonly IReadOnlyDictionary<int?, int> HYVALENCES = new Dictionary<int?, int>()
             {
-                [NaturalElements.C.AtomicNumber] = 4,
-                [NaturalElements.N.AtomicNumber] = 3,
-                [NaturalElements.O.AtomicNumber] = 2,
-                [NaturalElements.S.AtomicNumber] = 2,
-                [NaturalElements.P.AtomicNumber] = 3,
+                [AtomicNumbers.C] = 4,
+                [AtomicNumbers.N] = 3,
+                [AtomicNumbers.O] = 2,
+                [AtomicNumbers.S] = 2,
+                [AtomicNumbers.P] = 3,
             };
 
         /// <summary>
@@ -605,14 +607,24 @@ namespace NCDK.Fingerprints
                     bondAdj[a1] = AppendInteger(bondAdj[a1], n);
                     atomAdj[a2] = AppendInteger(atomAdj[a2], a1);
                     bondAdj[a2] = AppendInteger(bondAdj[a2], n);
-                    if (bond.Order == BondOrder.Single)
-                        bondOrder[n] = 1;
-                    else if (bond.Order == BondOrder.Double)
-                        bondOrder[n] = 2;
-                    else if (bond.Order == BondOrder.Triple)
-                        bondOrder[n] = 3;
-                    else if (bond.Order == BondOrder.Quadruple) bondOrder[n] = 4;
-                    // (look for zero-order bonds later on)
+                    switch (bond.Order)
+                    {
+                        case BondOrder.Single:
+                            bondOrder[n] = 1;
+                            break;
+                        case BondOrder.Double:
+                            bondOrder[n] = 2;
+                            break;
+                        case BondOrder.Triple:
+                            bondOrder[n] = 3;
+                            break;
+                        case BondOrder.Quadruple:
+                            bondOrder[n] = 4;
+                            break;
+                        default:
+                            // (look for zero-order bonds later on)
+                            break;
+                    }
                 }
                 else
                 {
@@ -637,21 +649,31 @@ namespace NCDK.Fingerprints
                 if (!HYVALENCES.TryGetValue(an, out int hy))
                     continue;
                 int ch = atom.FormalCharge.Value;
-                if (an.Equals(NaturalElements.C.AtomicNumber))
+                if (an.Equals(AtomicNumbers.C))
                     ch = -Math.Abs(ch);
                 int unpaired = 0; // (not current available, maybe introduce later)
                 hy += ch - unpaired;
                 // (needs to include actual H's) for (int i=0;i<bondAdj[n].Length;i++) hy-=bondOrder[bondAdj[n][i]];
                 foreach (var bond in mol.GetConnectedBonds(atom))
                 {
-                    if (bond.Order == BondOrder.Single)
-                        hy -= 1;
-                    else if (bond.Order == BondOrder.Double)
-                        hy -= 2;
-                    else if (bond.Order == BondOrder.Triple)
-                        hy -= 3;
-                    else if (bond.Order == BondOrder.Quadruple) hy -= 4;
-                    // (look for zero-bonds later on)
+                    switch (bond.Order)
+                    {
+                        case BondOrder.Single:
+                            hy -= 1;
+                            break;
+                        case BondOrder.Double:
+                            hy -= 2;
+                            break;
+                        case BondOrder.Triple:
+                            hy -= 3;
+                            break;
+                        case BondOrder.Quadruple:
+                            hy -= 4;
+                            break;
+                        default:
+                            // (look for zero-bonds later on)
+                            break;
+                    }
                 }
                 hcount[n] += Math.Max(0, hy);
             }
@@ -1164,7 +1186,7 @@ namespace NCDK.Fingerprints
             for (int n = 0; n < na; n++)
                 if (amask[n])
                 {
-                    aliphatic[n] = mol.Atoms[n].AtomicNumber.Equals(NaturalElements.C.AtomicNumber);
+                    aliphatic[n] = mol.Atoms[n].AtomicNumber.Equals(AtomicNumbers.C);
                     bondSum[n] = hcount[n];
                 }
 
@@ -1186,9 +1208,9 @@ namespace NCDK.Fingerprints
                 {
                     hasDouble[a1] = true;
                     hasDouble[a2] = true;
-                    if (mol.Atoms[a1].AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                    if (mol.Atoms[a1].AtomicNumber.Equals(AtomicNumbers.O))
                         isOxide[a2] = true;
-                    if (mol.Atoms[a2].AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                    if (mol.Atoms[a2].AtomicNumber.Equals(AtomicNumbers.O))
                         isOxide[a1] = true;
                 }
                 if (o != 1)
@@ -1206,11 +1228,11 @@ namespace NCDK.Fingerprints
                 int valence;
                 switch (atom.AtomicNumber)
                 {
-                    case NaturalElements.N.AtomicNumber:
+                    case AtomicNumbers.N:
                         valence = 3;
                         break;
-                    case NaturalElements.O.AtomicNumber: 
-                    case NaturalElements.S.AtomicNumber:
+                    case AtomicNumbers.O: 
+                    case AtomicNumbers.S:
                         valence = 2;
                         break;
                     default:
@@ -1281,10 +1303,10 @@ namespace NCDK.Fingerprints
                 string el = atom.Symbol;
                 switch (atom.AtomicNumber)
                 {
-                    case NaturalElements.C.AtomicNumber:
+                    case AtomicNumbers.C:
                         countC++;
                         break;
-                    case NaturalElements.N.AtomicNumber:
+                    case AtomicNumbers.N:
                         countN++;
                         break;
                 }
@@ -1309,8 +1331,8 @@ namespace NCDK.Fingerprints
             var el = atom.Symbol;
             switch (atom.AtomicNumber)
             {
-                case NaturalElements.N.AtomicNumber:
-                case NaturalElements.O.AtomicNumber:
+                case AtomicNumbers.N:
+                case AtomicNumbers.O:
                     // tetrazoles do not donate
                     if (tetrazole[aidx])
                         return false;
@@ -1320,17 +1342,17 @@ namespace NCDK.Fingerprints
                     for (int n = 0; n < atomAdj[aidx].Length; n++)
                         if (isOxide[atomAdj[aidx][n]])
                         {
-                            if (!mol.Atoms[atomAdj[aidx][n]].AtomicNumber.Equals(NaturalElements.C.AtomicNumber) || !el.Equals("N", StringComparison.Ordinal))
+                            if (!mol.Atoms[atomAdj[aidx][n]].AtomicNumber.Equals(AtomicNumbers.C) || !el.Equals("N", StringComparison.Ordinal))
                                 return false;
                         }
                     return true;
-                case NaturalElements.S.AtomicNumber:
+                case AtomicNumbers.S:
                     // any kind of adjacent double bond disqualifies -SH
                     for (int n = 0; n < atomAdj[aidx].Length; n++)
                         if (hasDouble[atomAdj[aidx][n]])
                             return false;
                     return true;
-                case NaturalElements.C.AtomicNumber:
+                case AtomicNumbers.C:
                     // terminal alkynes qualify
                     for (int n = 0; n < bondAdj[aidx].Length; n++)
                         if (BondOrderBioType(bondAdj[aidx][n]) == 3)
@@ -1353,7 +1375,7 @@ namespace NCDK.Fingerprints
             // basic nitrogens do not qualify
             switch (atom.AtomicNumber)
             {
-                case NaturalElements.N.AtomicNumber:
+                case AtomicNumbers.N:
                     bool basic = true;
                     for (int n = 0; n < atomAdj[aidx].Length; n++)
                         if (!aliphatic[atomAdj[aidx][n]])
@@ -1389,7 +1411,7 @@ namespace NCDK.Fingerprints
 
             switch (atom.AtomicNumber)
             {
-                case NaturalElements.N.AtomicNumber:
+                case AtomicNumbers.N:
                     {
                         // basic amines, i.e. aliphatic neighbours
                         bool basic = true;
@@ -1429,7 +1451,7 @@ namespace NCDK.Fingerprints
                                     var aan = mol.Atoms[a].AtomicNumber;
                                     switch (aan)
                                     {
-                                        case NaturalElements.N.AtomicNumber:
+                                        case AtomicNumbers.N:
                                             if (hcount[a] > 0)
                                             {
                                                 amines = 0;
@@ -1437,7 +1459,7 @@ namespace NCDK.Fingerprints
                                             }
                                             amines++;
                                             break;
-                                        case NaturalElements.C.AtomicNumber:
+                                        case AtomicNumbers.C:
                                             break;
                                         default:
                                             amines = 0;
@@ -1451,7 +1473,7 @@ namespace NCDK.Fingerprints
                         }
                     }
                     break;
-                case NaturalElements.C.AtomicNumber:
+                case AtomicNumbers.C:
                     {
                         // carbon-centred charge if imine & H-containing amine present, i.e. =NR and -N[H]R both
                         bool imine = false, amine = false;
@@ -1464,7 +1486,7 @@ namespace NCDK.Fingerprints
                                 amine = false;
                                 break;
                             }
-                            if (!mol.Atoms[a].AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
+                            if (!mol.Atoms[a].AtomicNumber.Equals(AtomicNumbers.N))
                                 continue;
                             if (BondOrderBioType(bondAdj[aidx][n]) == 2)
                                 imine = true;
@@ -1500,7 +1522,7 @@ namespace NCDK.Fingerprints
             string el = atom.Symbol;
 
             // tetrazole nitrogens get negative charges
-            if (tetrazole[aidx] && atom.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
+            if (tetrazole[aidx] && atom.AtomicNumber.Equals(AtomicNumbers.N))
                 return true;
 
             // centres with an oxide and an -OH group qualify as negative
@@ -1508,14 +1530,14 @@ namespace NCDK.Fingerprints
             {
                 switch (atom.AtomicNumber)
                 {
-                    case NaturalElements.C.AtomicNumber:
-                    case NaturalElements.S.AtomicNumber:
-                    case NaturalElements.P.AtomicNumber:
+                    case AtomicNumbers.C:
+                    case AtomicNumbers.S:
+                    case AtomicNumbers.P:
                         for (int n = 0; n < atomAdj[aidx].Length; n++)
                             if (BondOrderBioType(bondAdj[aidx][n]) == 1)
                             {
                                 int a = atomAdj[aidx][n];
-                                if (mol.Atoms[a].AtomicNumber.Equals(NaturalElements.O.AtomicNumber) && hcount[a] > 0)
+                                if (mol.Atoms[a].AtomicNumber.Equals(AtomicNumbers.O) && hcount[a] > 0)
                                     return true;
                             }
                         break;
@@ -1530,10 +1552,10 @@ namespace NCDK.Fingerprints
         {
             switch (mol.Atoms[aidx].AtomicNumber)
             {
-                case NaturalElements.F.AtomicNumber:
-                case NaturalElements.Cl.AtomicNumber:
-                case NaturalElements.Br.AtomicNumber:
-                case NaturalElements.I.AtomicNumber:
+                case AtomicNumbers.F:
+                case AtomicNumbers.Cl:
+                case AtomicNumbers.Br:
+                case AtomicNumbers.I:
                     return true;
             }
             return false;

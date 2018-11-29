@@ -36,8 +36,8 @@ namespace NCDK.IO
     /// TestCase for CDK IO classes.
     /// </summary>
     // @cdk.module test-io
-    [TestClass()]
-    public abstract class ChemObjectIOTest : CDKTestCase
+    public abstract class ChemObjectIOTest 
+        : CDKTestCase
     {
         protected abstract Type ChemObjectIOToTestType { get; }
 

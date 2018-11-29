@@ -23,12 +23,11 @@ namespace NCDK
     /// Represents the idea of an protein monomer as found in PDB files.
     /// </summary>
     // @cdk.module  interfaces
-    // @cdk.githash
     // @author      Miguel Rojas <miguel.rojas @uni-koeln.de>
     // @cdk.created 2006-11-20
     // @cdk.keyword pdbpolymer
     public interface IPDBMonomer
-   : IMonomer
+        : IMonomer
     {
         /// <summary>
         /// the I code of this monomer

@@ -179,7 +179,7 @@ namespace NCDK.Aromaticities
             // higher atomic number elements aren't likely to be found but
             // we have them for rare corner cases (tellurium).
             // Germanium, Silicon, Tin and Antimony are a bit bonkers...
-            switch (NaturalElement.OfNumber(element).AtomicNumber)
+            switch (ChemicalElement.Of(element).AtomicNumber)
             {
                 case 5: // Boron
                     if (charge == 0 && valence <= 2) return true;

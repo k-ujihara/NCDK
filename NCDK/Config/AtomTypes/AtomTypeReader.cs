@@ -36,7 +36,6 @@ namespace NCDK.Config.AtomTypes
     /// </summary>
     /// <seealso cref="CDKBasedAtomTypeConfigurator"/>
     // @cdk.module core
-    // @cdk.githash
     public class AtomTypeReader : IDisposable
     {
         private TextReader input;

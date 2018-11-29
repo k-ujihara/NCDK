@@ -295,8 +295,8 @@ namespace NCDK.Tools
                 {
                     if (bonds[i].Order == BondOrder.Double 
                      && bonds[i].IsAromatic
-                     && bonds[i].Begin.AtomicNumber.Equals(NaturalElements.N.AtomicNumber) 
-                     && bonds[i].End.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
+                     && bonds[i].Begin.AtomicNumber.Equals(AtomicNumbers.N) 
+                     && bonds[i].End.AtomicNumber.Equals(AtomicNumbers.N))
                     {
                         int atomtohandle = 0;
                         if (string.Equals(bonds[i].Begin.Symbol, "N", StringComparison.Ordinal))

@@ -629,8 +629,8 @@ namespace NCDK.Smiles
         /// <returns>the CDK atom to have it's properties set</returns>
         public IAtom NewCDKAtom(Beam.IAtom atom)
         {
-            Element element = atom.Element;
-            bool unknown = element == Element.Unknown;
+            var element = atom.Element;
+            bool unknown = element == Beam.Element.Unknown;
             if (unknown)
             {
                 IPseudoAtom pseudoAtom = builder.NewPseudoAtom(element.Symbol);
@@ -657,7 +657,7 @@ namespace NCDK.Smiles
         /// </summary>
         /// <param name="element">Beam element</param>
         /// <returns>new atom with configured symbol and atomic number</returns>
-        private IAtom CreateAtom(Element element)
+        private IAtom CreateAtom(Beam.Element element)
         {
             IAtom atom = builder.NewAtom();
             atom.Symbol = element.Symbol;

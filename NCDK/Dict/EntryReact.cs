@@ -34,7 +34,6 @@ namespace NCDK.Dict
     // @cdk.created  2008-01-01
     // @cdk.keyword  dictionary
     // @cdk.module   dict
-    // @cdk.githash
     public class EntryReact : Entry
     {
         private readonly List<string> reactionInfo;

@@ -28,7 +28,6 @@ namespace NCDK
     /// Checks the functionality of <see cref="IPDBPolymer"/> implementations.
     /// </summary>
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractPDBPolymerTest : AbstractBioPolymerTest
     {
         [TestMethod()]

@@ -24,7 +24,6 @@ namespace NCDK.Charges
     /// </summary>
     // @author      egonw
     // @cdk.module  charges
-    // @cdk.githash
     public interface IElectronicPropertyCalculator
     {
         void CalculateCharges(IAtomContainer container);

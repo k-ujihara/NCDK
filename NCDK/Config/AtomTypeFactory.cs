@@ -54,7 +54,6 @@ namespace NCDK.Config
     /// </example>
     /// <seealso cref="IAtomTypeConfigurator"/>
     // @cdk.module core
-    // @cdk.githash
     // @author     steinbeck
     // @cdk.created    2001-08-29
     // @cdk.keyword    atom, type

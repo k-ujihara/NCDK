@@ -28,7 +28,6 @@ namespace NCDK
     /// Checks the functionality of <see cref="IBond"/> implementations.
     /// </summary>
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractBondTest
         : AbstractElectronContainerTest
     {

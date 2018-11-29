@@ -66,13 +66,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double zagreb = 0;
             foreach (var atom in container.Atoms)
             {
-                if (atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                if (atom.AtomicNumber.Equals(AtomicNumbers.H))
                     continue;
                 int atomDegree = 0;
                 var neighbours = container.GetConnectedAtoms(atom);
                 foreach (var neighbour in neighbours)
                 {
-                    if (!neighbour.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                    if (!neighbour.AtomicNumber.Equals(AtomicNumbers.H))
                     {
                         atomDegree += 1;
                     }

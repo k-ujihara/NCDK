@@ -57,14 +57,13 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
     /// Class for parsing and generating query graph.
     /// </summary>
     // @cdk.module smsd
-    // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public class VFQueryBuilder : IQuery
     {
-        private IList<INode> nodesList;
-        private IList<IEdge> edgesList;
-        private IDictionary<INode, IAtom> nodeBondMap;
+        private List<INode> nodesList;
+        private List<IEdge> edgesList;
+        private Dictionary<INode, IAtom> nodeBondMap;
 
         /// <summary>
         /// Constructor for VF Query Builder

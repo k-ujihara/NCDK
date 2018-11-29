@@ -78,7 +78,6 @@ namespace NCDK.Fingerprints
     // @cdk.keyword    fingerprint
     // @cdk.keyword    similarity
     // @cdk.module     standard
-    // @cdk.githash
     public class Fingerprinter : AbstractFingerprinter, IFingerprinter
     {
         /// <summary>Throw an exception if too many paths (per atom) are generated.</summary>
@@ -138,13 +137,13 @@ namespace NCDK.Fingerprints
         {
             Debug.WriteLine("Entering Fingerprinter");
             Debug.WriteLine("Starting Aromaticity Detection");
-            long before = DateTime.Now.Ticks;
+            var before = DateTime.Now.Ticks;
             if (!HasPseudoAtom(container.Atoms))
             {
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
                 Aromaticity.CDKLegacy.Apply(container);
             }
-            long after = DateTime.Now.Ticks;
+            var after = DateTime.Now.Ticks;
             Debug.WriteLine($"time for aromaticity calculation: {after - before} ticks");
             Debug.WriteLine("Finished Aromaticity Detection");
             BitArray bitSet = new BitArray(size);
@@ -176,14 +175,14 @@ namespace NCDK.Fingerprints
             return null;
         }
 
-        private string EncodePath(IAtomContainer mol, IDictionary<IAtom, List<IBond>> cache, List<IAtom> path, StringBuilder buffer)
+        private string EncodePath(IAtomContainer mol, Dictionary<IAtom, List<IBond>> cache, List<IAtom> path, StringBuilder buffer)
         {
             buffer.Clear();
             var prev = path[0];
             buffer.Append(GetAtomSymbol(prev));
             for (int i = 1; i < path.Count; i++)
             {
-                IAtom next = path[i];
+                var next = path[i];
                 var bonds = cache[prev];
 
                 if (bonds == null)
@@ -205,12 +204,12 @@ namespace NCDK.Fingerprints
         private string EncodePath(List<IAtom> apath, List<IBond> bpath, StringBuilder buffer)
         {
             buffer.Clear();
-            IAtom prev = apath[0];
+            var prev = apath[0];
             buffer.Append(GetAtomSymbol(prev));
             for (int i = 1; i < apath.Count; i++)
             {
-                IAtom next = apath[i];
-                IBond bond = bpath[i - 1];
+                var next = apath[i];
+                var bond = bpath[i - 1];
                 buffer.Append(GetBondSymbol(bond));
                 buffer.Append(GetAtomSymbol(next));
             }
@@ -219,7 +218,7 @@ namespace NCDK.Fingerprints
 
         private static int AppendHash(int hash, string str)
         {
-            int len = str.Length;
+            var len = str.Length;
             for (int i = 0; i < len; i++)
                 hash = 31 * hash + str[0];
             return hash;
@@ -231,8 +230,8 @@ namespace NCDK.Fingerprints
             hash = AppendHash(hash, GetAtomSymbol(apath[0]));
             for (int i = 1; i < apath.Count; i++)
             {
-                IAtom next = apath[i];
-                IBond bond = bpath[i - 1];
+                var next = apath[i];
+                var bond = bpath[i - 1];
                 hash = AppendHash(hash, GetBondSymbol(bond));
                 hash = AppendHash(hash, GetAtomSymbol(next));
             }
@@ -246,8 +245,8 @@ namespace NCDK.Fingerprints
             hash = AppendHash(hash, GetAtomSymbol(apath[last]));
             for (int i = last - 1; i >= 0; i--)
             {
-                IAtom next = apath[i];
-                IBond bond = bpath[i];
+                var next = apath[i];
+                var bond = bpath[i];
                 hash = AppendHash(hash, GetBondSymbol(bond));
                 hash = AppendHash(hash, GetAtomSymbol(next));
             }
@@ -265,7 +264,7 @@ namespace NCDK.Fingerprints
             internal List<IBond> bpath = new List<IBond>();
             internal readonly int maxDepth;
             private readonly int fpsize;
-            private IDictionary<IAtom, List<IBond>> cache = new Dictionary<IAtom, List<IBond>>();
+            private Dictionary<IAtom, List<IBond>> cache = new Dictionary<IAtom, List<IBond>>();
             public StringBuilder buffer = new StringBuilder();
 
             public State(IAtomContainer mol, BitArray fp, int fpsize, int maxDepth)
@@ -355,13 +354,13 @@ namespace NCDK.Fingerprints
         /// </remarks>
         /// <param name="container">The molecule to search</param>
         /// <param name="searchDepth">The maximum path length desired</param>
-        /// <returns>A IDictionary of path strings, keyed on themselves</returns>
+        /// <returns>A array of path strings, keyed on themselves</returns>
         [Obsolete("Use " + nameof(EncodePath) + "(IAtomContainer, int, " + nameof(BitArray) + ", int)")]
         protected int[] FindPathes(IAtomContainer container, int searchDepth)
         {
             var hashes = new HashSet<int>();
 
-            IDictionary<IAtom, List<IBond>> cache = new Dictionary<IAtom, List<IBond>>();
+            var cache = new Dictionary<IAtom, List<IBond>>();
             var buffer = new StringBuilder();
             foreach (IAtom startAtom in container.Atoms)
             {
@@ -383,7 +382,7 @@ namespace NCDK.Fingerprints
 
         protected void EncodePaths(IAtomContainer mol, int depth, BitArray fp, int size)
         {
-            State state = new State(mol, fp, size, depth + 1);
+            var state = new State(mol, fp, size, depth + 1);
             foreach (IAtom atom in mol.Atoms)
             {
                 state.numPaths = 0;
@@ -400,19 +399,19 @@ namespace NCDK.Fingerprints
 
         private static bool HasPseudoAtom(IEnumerable<IAtom> path)
         {
-            foreach (IAtom atom in path)
+            foreach (var atom in path)
                 if (IsPseudo(atom))
                     return true;
             return false;
         }
 
-        private int EncodeUniquePath(IAtomContainer container, IDictionary<IAtom, List<IBond>> cache, List<IAtom> path, StringBuilder buffer)
+        private int EncodeUniquePath(IAtomContainer container, Dictionary<IAtom, List<IBond>> cache, List<IAtom> path, StringBuilder buffer)
         {
             if (path.Count == 1)
                 return GetAtomSymbol(path[0]).GetHashCode();
-            string forward = EncodePath(container, cache, path, buffer);
+            var forward = EncodePath(container, cache, path, buffer);
             path.Reverse();
-            string reverse = EncodePath(container, cache, path, buffer);
+            var reverse = EncodePath(container, cache, path, buffer);
             path.Reverse();
 
             int x;
@@ -431,8 +430,8 @@ namespace NCDK.Fingerprints
         /// <returns>comparison &lt;0 a is less than b, &gt;0 a is more than b</returns>
         private static int Compare(IAtom a, IAtom b)
         {
-            int elemA = GetElem(a);
-            int elemB = GetElem(b);
+            var elemA = GetElem(a);
+            var elemB = GetElem(b);
             if (elemA == elemB)
                 return 0;
             return string.CompareOrdinal(GetAtomSymbol(a), GetAtomSymbol(b));
@@ -459,9 +458,9 @@ namespace NCDK.Fingerprints
         private int Compare(List<IAtom> apath, List<IBond> bpath)
         {
             int i = 0;
-            int len = apath.Count;
-            int j = len - 1;
-            int cmp = Compare(apath[i], apath[j]);
+            var len = apath.Count;
+            var j = len - 1;
+            var cmp = Compare(apath[i], apath[j]);
             if (cmp != 0)
                 return cmp;
             i++;
@@ -469,9 +468,11 @@ namespace NCDK.Fingerprints
             while (j != 0)
             {
                 cmp = Compare(bpath[i - 1], bpath[j]);
-                if (cmp != 0) return cmp;
+                if (cmp != 0)
+                    return cmp;
                 cmp = Compare(apath[i], apath[j]);
-                if (cmp != 0) return cmp;
+                if (cmp != 0)
+                    return cmp;
                 i++;
                 j--;
             }

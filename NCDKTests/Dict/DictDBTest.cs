@@ -94,7 +94,7 @@ namespace NCDK.Dict
             DictionaryDatabase db = new DictionaryDatabase();
             var dbs = db.GetDictionaryNames();
             Assert.IsNotNull(dbs);
-            Assert.AreNotSame(0, dbs.Length);
+            Assert.AreNotSame(0, dbs.Count);
             foreach (var dbName in dbs)
             {
                 Assert.IsNotNull(dbName);

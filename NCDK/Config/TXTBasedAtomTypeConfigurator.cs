@@ -32,7 +32,6 @@ namespace NCDK.Config
     /// background, but this is not clear.
     /// </summary>
     // @cdk.module core
-    // @cdk.githash
     // @author Bradley A. Smith &lt;bradley@baysmith.com&gt;
     // @cdk.keyword    atom, type
     public class TXTBasedAtomTypeConfigurator

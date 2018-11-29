@@ -17,10 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace NCDK.Tools.Diff.Tree
 {
     /// <summary>
@@ -28,19 +24,17 @@ namespace NCDK.Tools.Diff.Tree
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public static class ElementDiff
     {
         /// <summary>
         /// Compare two <see cref="IChemObject"/> classes and return the difference as a <see cref="string"/>.
-        ///
+        /// </summary>
         /// <param name="first">the first of the two classes to compare</param>
         /// <param name="second">the second of the two classes to compare</param>
         /// <returns>a <see cref="string"/> representation of the difference between the first and second <see cref="IChemObject"/>.</returns>
-        /// </summary>
         public static string Diff(IChemObject first, IChemObject second)
         {
-            IDifference difference = Difference(first, second);
+            var difference = Difference(first, second);
             if (difference == null)
             {
                 return "";
@@ -64,9 +58,9 @@ namespace NCDK.Tools.Diff.Tree
             {
                 return null;
             }
-            IElement firstElem = (IElement)first;
-            IElement secondElem = (IElement)second;
-            ChemObjectDifference coDiff = new ChemObjectDifference("ElementDiff");
+            var firstElem = (IElement)first;
+            var secondElem = (IElement)second;
+            var coDiff = new ChemObjectDifference("ElementDiff");
             coDiff.AddChild(StringDifference.Construct("S", firstElem.Symbol, secondElem.Symbol));
             coDiff.AddChild(StringDifference.Construct("ID", firstElem.Id, secondElem.Id));
             coDiff.AddChild(IntegerDifference.Construct("AN", firstElem.AtomicNumber, secondElem.AtomicNumber));
@@ -80,6 +74,5 @@ namespace NCDK.Tools.Diff.Tree
                 return null;
             }
         }
-
     }
 }

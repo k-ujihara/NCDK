@@ -23,7 +23,6 @@ namespace NCDK.Validate
     /// Abstract validator that does nothing but provide all the methods that the ValidatorInterface requires.
     /// </summary>
     // @cdk.module extra
-    // @cdk.githash
     // @author   Egon Willighagen
     // @cdk.created  2004-03-27
     // @cdk.require java1.4+
@@ -31,97 +30,97 @@ namespace NCDK.Validate
     {
         public virtual ValidationReport ValidateChemObject(IChemObject subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             return report;
         }
 
         public virtual ValidationReport ValidateAtom(IAtom subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             return report;
         }
 
         public virtual ValidationReport ValidateAtomContainer(IAtomContainer subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             return report;
         }
 
         public virtual ValidationReport ValidateAtomType(IAtomType subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             return report;
         }
 
         public virtual ValidationReport ValidateBond(IBond subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             return report;
         }
 
         public virtual ValidationReport ValidateChemFile(IChemFile subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             return report;
         }
 
         public virtual ValidationReport ValidateChemModel(IChemModel subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             return report;
         }
 
         public virtual ValidationReport ValidateChemSequence(IChemSequence subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             return report;
         }
 
         public virtual ValidationReport ValidateCrystal(ICrystal subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             return report;
         }
 
         public virtual ValidationReport ValidateElectronContainer(IElectronContainer subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             return report;
         }
 
         public virtual ValidationReport ValidateElement(IElement subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             return report;
         }
 
         public virtual ValidationReport ValidateIsotope(IIsotope subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             return report;
         }
 
         public virtual ValidationReport ValidateMolecule(IAtomContainer subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             return report;
         }
 
         public virtual ValidationReport ValidateReaction(IReaction subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             return report;
         }
 
         public virtual ValidationReport ValidateMoleculeSet(IChemObjectSet<IAtomContainer> subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             return report;
         }
 
         public virtual ValidationReport ValidateReactionSet(IReactionSet subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             return report;
         }
     }

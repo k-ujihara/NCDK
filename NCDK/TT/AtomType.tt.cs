@@ -97,6 +97,11 @@ namespace NCDK.Default
         internal bool isAromatic;
         internal bool isInRing;
         internal bool isReactiveCenter;
+        
+        public AtomType(ChemicalElement element)
+            : base(element)
+        {
+        }
 
         /// <summary>
         /// Constructor for the AtomType object.
@@ -107,7 +112,7 @@ namespace NCDK.Default
         /// </remarks>
         /// <param name="elementSymbol">Symbol of the atom</param>
         public AtomType(string elementSymbol)
-            : base(elementSymbol)
+            : this(ChemicalElement.OfSymbol(elementSymbol))
         {
             this.formalCharge = 0;
         }
@@ -118,7 +123,7 @@ namespace NCDK.Default
         /// <param name="identifier">An id for this atom type, like C3 for sp3 carbon</param>
         /// <param name="elementSymbol">The element symbol identifying the element to which this atom type applies</param>
         public AtomType(string identifier, string elementSymbol)
-            : base(elementSymbol)
+            : this(ChemicalElement.OfSymbol(elementSymbol))
         {
             this.atomTypeName = identifier;
         }
@@ -420,6 +425,11 @@ namespace NCDK.Silent
         internal bool isAromatic;
         internal bool isInRing;
         internal bool isReactiveCenter;
+        
+        public AtomType(ChemicalElement element)
+            : base(element)
+        {
+        }
 
         /// <summary>
         /// Constructor for the AtomType object.
@@ -430,7 +440,7 @@ namespace NCDK.Silent
         /// </remarks>
         /// <param name="elementSymbol">Symbol of the atom</param>
         public AtomType(string elementSymbol)
-            : base(elementSymbol)
+            : this(ChemicalElement.OfSymbol(elementSymbol))
         {
             this.formalCharge = 0;
         }
@@ -441,7 +451,7 @@ namespace NCDK.Silent
         /// <param name="identifier">An id for this atom type, like C3 for sp3 carbon</param>
         /// <param name="elementSymbol">The element symbol identifying the element to which this atom type applies</param>
         public AtomType(string identifier, string elementSymbol)
-            : base(elementSymbol)
+            : this(ChemicalElement.OfSymbol(elementSymbol))
         {
             this.atomTypeName = identifier;
         }

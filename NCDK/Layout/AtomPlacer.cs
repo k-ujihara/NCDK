@@ -26,7 +26,6 @@ using NCDK.Geometries;
 using NCDK.Graphs;
 using NCDK.Graphs.Matrix;
 using NCDK.Numerics;
-using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

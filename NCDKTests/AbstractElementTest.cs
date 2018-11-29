@@ -27,7 +27,6 @@ namespace NCDK
     /// </summary>
     /// <seealso cref="IElement"/>
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractElementTest : AbstractChemObjectTest
     {
         // test methods

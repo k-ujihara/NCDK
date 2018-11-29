@@ -26,7 +26,6 @@ using WPF = System.Windows;
 namespace NCDK.Renderers.Visitors
 {
     // @cdk.module  test-renderawt
-    // @cdk.githash
     [TestClass()]
     public class WPFDrawVisitorTest
     {

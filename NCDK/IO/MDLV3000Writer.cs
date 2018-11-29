@@ -112,7 +112,7 @@ namespace NCDK.IO
         /// <exception cref="IOException">low-level IO error</exception>
         private void WriteHeader(IAtomContainer mol)
         {
-            string title = mol.Title;
+            var title = mol.Title;
             if (title != null)
                 writer.WriteDirect(title.Substring(0, Math.Min(80, title.Length)));
             writer.WriteDirect('\n');
@@ -126,7 +126,7 @@ namespace NCDK.IO
             //  form. A blank line can be substituted for line 2.
             writer.WriteDirect("  CDK     ");
             writer.WriteDirect(DateTime.UtcNow.ToString("MMddyyHHmm", DateTimeFormatInfo.InvariantInfo));
-            int dim = GetNumberOfDimensions(mol);
+            var dim = GetNumberOfDimensions(mol);
             if (dim != 0)
             {
                 writer.WriteDirect(dim.ToString(NumberFormatInfo.InvariantInfo));
@@ -134,7 +134,7 @@ namespace NCDK.IO
             }
             writer.WriteDirect('\n');
 
-            string comment = mol.GetProperty<string>(CDKPropertyName.Remark);
+            var comment = mol.GetProperty<string>(CDKPropertyName.Remark);
             if (comment != null)
                 writer.WriteDirect(comment.Substring(0, Math.Min(80, comment.Length - 80)));
             writer.WriteDirect('\n');
@@ -149,10 +149,10 @@ namespace NCDK.IO
         /// <param name="idxs">atom/bond index lookup</param>
         /// <param name="stereo">the tetrahedral configuration</param>
         /// <returns>winding to write to molfile</returns>
-        private static TetrahedralStereo GetLocalParity(IDictionary<IChemObject, int> idxs, ITetrahedralChirality stereo)
+        private static TetrahedralStereo GetLocalParity(Dictionary<IChemObject, int> idxs, ITetrahedralChirality stereo)
         {
             var neighbours = stereo.Ligands;
-            int[] neighbourIdx = new int[neighbours.Count];
+            var neighbourIdx = new int[neighbours.Count];
             Trace.Assert(neighbours.Count == 4);
             for (int i = 0; i < 4; i++)
             {
@@ -195,20 +195,20 @@ namespace NCDK.IO
         /// <param name="atomToStereo">tetrahedral stereo lookup</param>
         /// <exception cref="IOException">low-level IO error</exception>
         /// <exception cref="CDKException">inconsistent state etc</exception>
-        private void WriteAtomBlock(IAtomContainer mol, IAtom[] atoms, IDictionary<IChemObject, int> idxs, IDictionary<IAtom, ITetrahedralChirality> atomToStereo)
+        private void WriteAtomBlock(IAtomContainer mol, IAtom[] atoms, Dictionary<IChemObject, int> idxs, Dictionary<IAtom, ITetrahedralChirality> atomToStereo)
         {
             if (mol.Atoms.Count == 0)
                 return;
-            int dim = GetNumberOfDimensions(mol);
+            var dim = GetNumberOfDimensions(mol);
             writer.Write("BEGIN ATOM\n");
             int atomIdx = 0;
             foreach (var atom in atoms)
             {
-                int elem = NullAsZero(atom.AtomicNumber);
-                int chg = NullAsZero(atom.FormalCharge);
-                int mass = NullAsZero(atom.MassNumber);
-                int hcnt = NullAsZero(atom.ImplicitHydrogenCount);
-                int elec = mol.GetConnectedSingleElectrons(atom).Count();
+                var elem = NullAsZero(atom.AtomicNumber);
+                var chg = NullAsZero(atom.FormalCharge);
+                var mass = NullAsZero(atom.MassNumber);
+                var hcnt = NullAsZero(atom.ImplicitHydrogenCount);
+                var elec = mol.GetConnectedSingleElectrons(atom).Count();
                 int rad = 0;
                 switch (elec)
                 {
@@ -327,7 +327,7 @@ namespace NCDK.IO
         {
             if (atom is IPseudoAtom)
                 return ((IPseudoAtom)atom).Label;
-            string symbol = NaturalElement.OfNumber(elem).Symbol;
+            string symbol = ChemicalElement.Of(elem).Symbol;
             if (symbol.Length == 0)
                 symbol = atom.Symbol;
             if (symbol == null)
@@ -376,19 +376,19 @@ namespace NCDK.IO
                 if (begIdx < 0 || endIdx < 0)
                     throw new InvalidOperationException($"Bond {bondIdx} had atoms not present in the molecule.");
 
-                BondStereo stereo = bond.Stereo;
+                var stereo = bond.Stereo;
 
                 // swap beg/end if needed
-                if (stereo == BondStereo.UpInverted ||
-                    stereo == BondStereo.DownInverted ||
-                    stereo == BondStereo.UpOrDownInverted)
+                if (stereo == BondStereo.UpInverted
+                 || stereo == BondStereo.DownInverted
+                 || stereo == BondStereo.UpOrDownInverted)
                 {
                     int tmp = begIdx;
                     begIdx = endIdx;
                     endIdx = tmp;
                 }
 
-                int order = bond.Order.Numeric();
+                var order = bond.Order.Numeric();
 
                 if (order < 1 || order > 3)
                     throw new CDKException("Bond order " + bond.Order + " cannot be written to V3000");
@@ -449,10 +449,10 @@ namespace NCDK.IO
         /// <param name="mol">molecule</param>
         /// <param name="atomToIdx">mapping that will be filled with the output index</param>
         /// <returns>the output order of atoms</returns>
-        private static IAtom[] PushHydrogensToBack(IAtomContainer mol, IDictionary<IChemObject, int> atomToIdx)
+        private static IAtom[] PushHydrogensToBack(IAtomContainer mol, Dictionary<IChemObject, int> atomToIdx)
         {
             Trace.Assert(atomToIdx.Count == 0);
-            IAtom[] atoms = new IAtom[mol.Atoms.Count];
+            var atoms = new IAtom[mol.Atoms.Count];
             foreach (var atom in mol.Atoms)
             {
                 if (atom.AtomicNumber == 1)
@@ -490,7 +490,7 @@ namespace NCDK.IO
             public int Compare(Sgroup o1, Sgroup o2)
             {
                 // empty parents come first
-                int cmp = -(o1.Parents.Count == 0).CompareTo(o2.Parents.Count == 0);
+                var cmp = -(o1.Parents.Count == 0).CompareTo(o2.Parents.Count == 0);
                 if (cmp != 0 || o1.Parents.Count == 0)
                     return cmp;
                 // non-empty parents, if one contains the other we have an ordering
@@ -505,7 +505,7 @@ namespace NCDK.IO
 
         private static int GetNumberOfDimensions(IAtomContainer mol)
         {
-            foreach (IAtom atom in mol.Atoms)
+            foreach (var atom in mol.Atoms)
             {
                 if (atom.Point3D != null)
                     return 3;
@@ -568,7 +568,7 @@ namespace NCDK.IO
 
                 if (sgroup.Parents.Any())
                 {
-                    ICollection<Sgroup> parents = sgroup.Parents;
+                    var parents = sgroup.Parents;
                     if (parents.Count > 1)
                         throw new CDKException("Cannot write Sgroup with multiple parents");
                     writer.Write(" PARENT=").Write(1 + a_sgroups.IndexOf(parents.First()));

@@ -34,7 +34,6 @@ namespace NCDK.Fingerprints
     // @author         egonw
     // @cdk.keyword    fingerprint
     // @cdk.module     core
-    // @cdk.githash
     public interface IFingerprinter
     {
         /// <summary>

@@ -30,13 +30,13 @@ namespace NCDK.Validate
     /// <code>
     /// ValidatorEngine engine = new ValidatorEngine();
     /// engine.Add(new BasicValidator());
-    /// ValidationReport report = engine.ValidateMolecule(molecule);
+    /// var report = engine.ValidateMolecule(molecule);
     /// </code>
     /// </example>
     // @author   Egon Willighagen <egonw@sci.kun.nl>
-    // @cdk.githash
     // @cdk.created  2003-08-22
-    public class ValidatorEngine : IValidator
+    public class ValidatorEngine 
+        : IValidator
     {
         private Dictionary<string, IValidator> validators;
 
@@ -76,7 +76,7 @@ namespace NCDK.Validate
         public ValidationReport ValidateAtom(IAtom subject)
         {
             Trace.TraceInformation($"Validating {nameof(IAtom)}");
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             // apply validators
             foreach (var test in validators.Values)
             {
@@ -91,7 +91,7 @@ namespace NCDK.Validate
         public ValidationReport ValidateAtomContainer(IAtomContainer subject)
         {
             Trace.TraceInformation($"Validating {nameof(IAtomContainer)}");
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             // apply validators
             foreach (var test in validators.Values)
             {
@@ -115,7 +115,7 @@ namespace NCDK.Validate
         public ValidationReport ValidateAtomType(IAtomType subject)
         {
             Trace.TraceInformation($"Validating {nameof(IAtomType)}");
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             // apply validators
             foreach (var test in validators.Values)
             {
@@ -130,7 +130,7 @@ namespace NCDK.Validate
         public ValidationReport ValidateBond(IBond subject)
         {
             Trace.TraceInformation($"Validating {nameof(IBond)}");
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             // apply validators
             foreach (var test in validators.Values)
             {
@@ -149,7 +149,7 @@ namespace NCDK.Validate
         public ValidationReport ValidateChemFile(IChemFile subject)
         {
             Trace.TraceInformation($"Validating {nameof(IChemFile)}");
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             // apply validators
             foreach (var test in validators.Values)
             {
@@ -168,7 +168,7 @@ namespace NCDK.Validate
         public ValidationReport ValidateChemModel(IChemModel subject)
         {
             Trace.TraceInformation($"Validating {nameof(IChemModel)}");
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             // apply validators
             foreach (var test in validators.Values)
             {
@@ -198,7 +198,7 @@ namespace NCDK.Validate
         public ValidationReport ValidateChemObject(IChemObject subject)
         {
             Trace.TraceInformation($"Validating {nameof(IChemObject)}");
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             // apply validators
             foreach (var test in validators.Values)
             {
@@ -212,7 +212,7 @@ namespace NCDK.Validate
         public ValidationReport ValidateChemSequence(IChemSequence subject)
         {
             Trace.TraceInformation($"Validating {nameof(IChemSequence)}");
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             // apply validators
             foreach (var test in validators.Values)
             {
@@ -231,7 +231,7 @@ namespace NCDK.Validate
         public ValidationReport ValidateCrystal(ICrystal subject)
         {
             Trace.TraceInformation($"Validating {nameof(ICrystal)}");
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             // apply validators
             foreach (var test in validators.Values)
             {
@@ -246,7 +246,7 @@ namespace NCDK.Validate
         public ValidationReport ValidateElectronContainer(IElectronContainer subject)
         {
             Trace.TraceInformation($"Validating {nameof(IElectronContainer)}");
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             // apply validators
             foreach (var test in validators.Values)
             {
@@ -261,7 +261,7 @@ namespace NCDK.Validate
         public ValidationReport ValidateElement(IElement subject)
         {
             Trace.TraceInformation($"Validating {nameof(IElement)}");
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             // apply validators
             foreach (var test in validators.Values)
             {
@@ -276,7 +276,7 @@ namespace NCDK.Validate
         public ValidationReport ValidateIsotope(IIsotope subject)
         {
             Trace.TraceInformation($"Validating {nameof(IIsotope)}");
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             // apply validators
             foreach (var test in validators.Values)
             {
@@ -291,7 +291,7 @@ namespace NCDK.Validate
         public ValidationReport ValidateMolecule(IAtomContainer subject)
         {
             Trace.TraceInformation($"Validating {nameof(IAtomContainer)}");
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             // apply validators
             foreach (var test in validators.Values)
             {
@@ -306,7 +306,7 @@ namespace NCDK.Validate
         public ValidationReport ValidateReaction(IReaction subject)
         {
             Trace.TraceInformation($"Validating {nameof(IReaction)}");
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             // apply validators
             foreach (var test in validators.Values)
             {
@@ -331,7 +331,7 @@ namespace NCDK.Validate
         public ValidationReport ValidateMoleculeSet(IChemObjectSet<IAtomContainer> subject)
         {
             Trace.TraceInformation($"Validating {nameof(IChemObjectSet<IAtomContainer>)}");
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             // apply validators
             foreach (var test in validators.Values)
             {
@@ -350,7 +350,7 @@ namespace NCDK.Validate
         public ValidationReport ValidateReactionSet(IReactionSet subject)
         {
             Trace.TraceInformation("Validating org.openscience.cdk.ReactionSet");
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             // apply validators
             foreach (var test in validators.Values)
             {

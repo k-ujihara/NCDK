@@ -27,7 +27,6 @@ namespace NCDK
     /// A <see cref="IMonomer"/> is an <see cref="IAtomContainer"/> which stores additional monomer specific informations for a group of atoms.
     /// </summary>
     // @cdk.module  interfaces
-    // @cdk.githash
     // @author      Edgar Luttmann <edgar@uni-paderborn.de>
     // @cdk.created 2001-08-06
     // @cdk.keyword monomer

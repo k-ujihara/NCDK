@@ -34,10 +34,12 @@ namespace NCDK.Renderers
         [TestMethod()]
         public void TestConstructor()
         {
-            var generators = new List<IGenerator<IAtomContainer>>();
-            generators.Add(new BasicSceneGenerator());
-            generators.Add(new BasicAtomGenerator());
-            generators.Add(new BasicBondGenerator());
+            var generators = new List<IGenerator<IAtomContainer>>
+            {
+                new BasicSceneGenerator(),
+                new BasicAtomGenerator(),
+                new BasicBondGenerator()
+            };
 
             MoleculeSetRenderer renderer = new MoleculeSetRenderer(generators, new WPFFontManager());
             Assert.IsNotNull(renderer);

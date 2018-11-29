@@ -23,7 +23,6 @@
 
 using NCDK.Common.Collections;
 using NCDK.Common.Mathematics;
-using NCDK.Config;
 using NCDK.Numerics;
 using NCDK.Sgroups;
 using NCDK.Tools.Manipulator;
@@ -47,7 +46,6 @@ namespace NCDK.Geometries
     // @author Christian Hoppe
     // @author Niels Out
     // @author John May
-    // @cdk.githash
     public static class GeometryUtil
     {
         /// <summary>
@@ -381,6 +379,8 @@ namespace NCDK.Geometries
                     length++;
                 }
             }
+            if (length == 0)
+                return new Vector2(double.NaN, double.NaN);
             return new Vector2(xsum / length, ysum / length);
         }
 
@@ -397,10 +397,15 @@ namespace NCDK.Geometries
             foreach (var ring in ringSet)
             {
                 var centerPoint = Get2DCenter(ring);
-                centerX += centerPoint.X;
-                centerY += centerPoint.Y;
-                count++;
+                if (centerPoint != null)
+                {
+                    centerX += centerPoint.X;
+                    centerY += centerPoint.Y;
+                    count++;
+                }
             }
+            if (count == 0)
+                return new Vector2(double.NaN, double.NaN);
             return new Vector2(centerX / count, centerY / count);
         }
 
@@ -411,7 +416,7 @@ namespace NCDK.Geometries
         /// <param name="ac">AtomContainer for which the center of mass is calculated</param>
         /// <returns>Null, if any of the atomcontainer <see cref="IAtom"/>'s</returns>
         /// masses are null
-       // @cdk.keyword center of mass
+        // @cdk.keyword center of mass
         public static Vector2? Get2DCentreOfMass(IAtomContainer ac)
         {
             double xsum = 0.0;
@@ -451,6 +456,8 @@ namespace NCDK.Geometries
                     counter++;
                 }
             }
+            if (counter == 0)
+                return new Vector2(double.NaN, double.NaN);
             return new Vector2((centerX / counter), (centerY / counter));
         }
 
@@ -465,6 +472,8 @@ namespace NCDK.Geometries
         public static void Translate2DCenterTo(IAtomContainer container, Vector2 p)
         {
             var com = Get2DCenter(container);
+            if (com == null)
+                return;
             var translation = new Vector2(p.X - com.X, p.Y - com.Y);
             foreach (var atom in container.Atoms)
             {
@@ -499,7 +508,7 @@ namespace NCDK.Geometries
                 if (a.Point3D == null)
                     return null;
                 if (mass == null)
-                   mass = isotopes.GetNaturalMass(a);
+                   mass = isotopes.GetNaturalMass(a.Element);
 
                 totalmass += mass.Value;
                 xsum += mass.Value * a.Point3D.Value.X;
@@ -531,6 +540,8 @@ namespace NCDK.Geometries
                     counter++;
                 }
             }
+            if (counter == 0)
+                return new Vector3(double.NaN, double.NaN, double.NaN);
             return new Vector3((centerX / counter), (centerY / counter), (centerZ / counter));
         }
 
@@ -627,10 +638,10 @@ namespace NCDK.Geometries
                 Trace.TraceError("GetBondCoordinates() called on Bond without 2D coordinates!");
                 return Array.Empty<int>();
             }
-            int beginX = (int)bond.Begin.Point2D.Value.X;
-            int endX = (int)bond.End.Point2D.Value.X;
-            int beginY = (int)bond.Begin.Point2D.Value.Y;
-            int endY = (int)bond.End.Point2D.Value.Y;
+            var beginX = (int)bond.Begin.Point2D.Value.X;
+            var endX = (int)bond.End.Point2D.Value.X;
+            var beginY = (int)bond.Begin.Point2D.Value.Y;
+            var endY = (int)bond.End.Point2D.Value.Y;
             return new int[] { beginX, beginY, endX, endY };
         }
 
@@ -644,17 +655,13 @@ namespace NCDK.Geometries
         public static IAtom GetClosestAtom(int xPosition, int yPosition, IAtomContainer atomCon)
         {
             IAtom closestAtom = null;
-            IAtom currentAtom;
             double smallestMouseDistance = -1;
-            double mouseDistance;
-            double atomX;
-            double atomY;
             for (int i = 0; i < atomCon.Atoms.Count; i++)
             {
-                currentAtom = atomCon.Atoms[i];
-                atomX = currentAtom.Point2D.Value.X;
-                atomY = currentAtom.Point2D.Value.Y;
-                mouseDistance = Math.Sqrt(Math.Pow(atomX - xPosition, 2) + Math.Pow(atomY - yPosition, 2));
+                var currentAtom = atomCon.Atoms[i];
+                var atomX = currentAtom.Point2D.Value.X;
+                var atomY = currentAtom.Point2D.Value.Y;
+                var mouseDistance = Math.Sqrt(Math.Pow(atomX - xPosition, 2) + Math.Pow(atomY - yPosition, 2));
                 if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
                 {
                     smallestMouseDistance = mouseDistance;
@@ -678,7 +685,7 @@ namespace NCDK.Geometries
             for (int i = 0; i < atomCon.Atoms.Count; i++)
             {
                 var currentAtom = atomCon.Atoms[i];
-                if (currentAtom != atom)
+                if (!currentAtom.Equals(atom))
                 {
                     var d = Vector2.Distance(atomPosition, currentAtom.Point2D.Value);
                     if (d < min)
@@ -707,17 +714,14 @@ namespace NCDK.Geometries
             // we compare squared distances, allowing us to do one Sqrt()
             // calculation less
             double smallestSquaredMouseDistance = -1;
-            double mouseSquaredDistance;
-            double atomX;
-            double atomY;
             for (int i = 0; i < atomCon.Atoms.Count; i++)
             {
                 currentAtom = atomCon.Atoms[i];
-                if (currentAtom != toignore)
+                if (!currentAtom.Equals(toignore))
                 {
-                    atomX = currentAtom.Point2D.Value.X;
-                    atomY = currentAtom.Point2D.Value.Y;
-                    mouseSquaredDistance = Math.Pow(atomX - xPosition, 2) + Math.Pow(atomY - yPosition, 2);
+                    var atomX = currentAtom.Point2D.Value.X;
+                    var atomY = currentAtom.Point2D.Value.Y;
+                    var mouseSquaredDistance = Math.Pow(atomX - xPosition, 2) + Math.Pow(atomY - yPosition, 2);
                     if (mouseSquaredDistance < smallestSquaredMouseDistance || smallestSquaredMouseDistance == -1)
                     {
                         smallestSquaredMouseDistance = mouseSquaredDistance;
@@ -738,17 +742,13 @@ namespace NCDK.Geometries
         public static IAtom GetClosestAtom(double xPosition, double yPosition, IAtomContainer atomCon)
         {
             IAtom closestAtom = null;
-            IAtom currentAtom;
             double smallestMouseDistance = -1;
-            double mouseDistance;
-            double atomX;
-            double atomY;
             for (int i = 0; i < atomCon.Atoms.Count; i++)
             {
-                currentAtom = atomCon.Atoms[i];
-                atomX = currentAtom.Point2D.Value.X;
-                atomY = currentAtom.Point2D.Value.Y;
-                mouseDistance = Math.Sqrt(Math.Pow(atomX - xPosition, 2) + Math.Pow(atomY - yPosition, 2));
+                var currentAtom = atomCon.Atoms[i];
+                var atomX = currentAtom.Point2D.Value.X;
+                var atomY = currentAtom.Point2D.Value.Y;
+                var mouseDistance = Math.Sqrt(Math.Pow(atomX - xPosition, 2) + Math.Pow(atomY - yPosition, 2));
                 if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
                 {
                     smallestMouseDistance = mouseDistance;
@@ -767,15 +767,14 @@ namespace NCDK.Geometries
         /// <returns>The bond that is closest to the given coordinates</returns>
         public static IBond GetClosestBond(int xPosition, int yPosition, IAtomContainer atomCon)
         {
-            Vector2 bondCenter;
             IBond closestBond = null;
-
             double smallestMouseDistance = -1;
-            double mouseDistance;
             foreach (var currentBond in atomCon.Bonds)
             {
-                bondCenter = Get2DCenter(currentBond.Atoms);
-                mouseDistance = Math.Sqrt(Math.Pow(bondCenter.X - xPosition, 2) + Math.Pow(bondCenter.Y - yPosition, 2));
+                var bondCenter = Get2DCenter(currentBond.Atoms);
+                if (bondCenter == null)
+                    continue;
+                var mouseDistance = Math.Sqrt(Math.Pow(bondCenter.X - xPosition, 2) + Math.Pow(bondCenter.Y - yPosition, 2));
                 if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
                 {
                     smallestMouseDistance = mouseDistance;
@@ -794,15 +793,14 @@ namespace NCDK.Geometries
         /// <returns>The bond that is closest to the given coordinates</returns>
         public static IBond GetClosestBond(double xPosition, double yPosition, IAtomContainer atomCon)
         {
-            Vector2 bondCenter;
             IBond closestBond = null;
-
             double smallestMouseDistance = -1;
-            double mouseDistance;
             foreach (var currentBond in atomCon.Bonds)
             {
-                bondCenter = Get2DCenter(currentBond.Atoms);
-                mouseDistance = Math.Sqrt(Math.Pow(bondCenter.X - xPosition, 2) + Math.Pow(bondCenter.Y - yPosition, 2));
+                var bondCenter = Get2DCenter(currentBond.Atoms);
+                if (bondCenter == null)
+                    continue;
+                var mouseDistance = Math.Sqrt(Math.Pow(bondCenter.X - xPosition, 2) + Math.Pow(bondCenter.Y - yPosition, 2));
                 if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
                 {
                     smallestMouseDistance = mouseDistance;
@@ -820,20 +818,16 @@ namespace NCDK.Geometries
         /// <param name="atoms">The atoms for which the distances to point are measured</param>
         public static void SortBy2DDistance(IAtom[] atoms, Vector2 point)
         {
-            double distance1;
-            double distance2;
-            IAtom atom1;
-            IAtom atom2;
             bool doneSomething;
             do
             {
                 doneSomething = false;
                 for (int f = 0; f < atoms.Length - 1; f++)
                 {
-                    atom1 = atoms[f];
-                    atom2 = atoms[f + 1];
-                    distance1 = Vector2.Distance(point, atom1.Point2D.Value);
-                    distance2 = Vector2.Distance(point, atom2.Point2D.Value);
+                    var atom1 = atoms[f];
+                    var atom2 = atoms[f + 1];
+                    var distance1 = Vector2.Distance(point, atom1.Point2D.Value);
+                    var distance2 = Vector2.Distance(point, atom2.Point2D.Value);
                     if (distance2 < distance1)
                     {
                         atoms[f] = atom2;
@@ -854,8 +848,9 @@ namespace NCDK.Geometries
         /// <returns>The ScaleFactor with which the AtomContainer must be scaled to have the target bond length</returns>
         public static double GetScaleFactor(IAtomContainer container, double bondLength)
         {
-            double currentAverageBondLength = GetBondLengthMedian(container);
-            if (currentAverageBondLength == 0 || double.IsNaN(currentAverageBondLength)) return 1;
+            var currentAverageBondLength = GetBondLengthMedian(container);
+            if (currentAverageBondLength == 0 || double.IsNaN(currentAverageBondLength))
+                return 1;
             return bondLength / currentAverageBondLength;
         }
 
@@ -872,8 +867,8 @@ namespace NCDK.Geometries
             int bondCounter = 0;
             foreach (var bond in container.Bonds)
             {
-                IAtom atom1 = bond.Begin;
-                IAtom atom2 = bond.End;
+                var atom1 = bond.Begin;
+                var atom2 = bond.End;
                 if (atom1.Point2D != null && atom2.Point2D != null)
                 {
                     bondCounter++;
@@ -895,8 +890,8 @@ namespace NCDK.Geometries
             {
                 return 0.0;
             }
-            Vector2 point1 = bond.Begin.Point2D.Value;
-            Vector2 point2 = bond.End.Point2D.Value;
+            var point1 = bond.Begin.Point2D.Value;
+            var point2 = bond.End.Point2D.Value;
             if (point1 == null || point2 == null)
             {
                 return 0.0;
@@ -914,11 +909,13 @@ namespace NCDK.Geometries
         /// <seealso cref="IAtom.Point2D"/>
         public static bool Has2DCoordinates(IAtomContainer container)
         {
-            if (container == null || container.Atoms.Count == 0) return false;
+            if (container == null || container.Atoms.Count == 0)
+                return false;
 
             foreach (var atom in container.Atoms)
             {
-                if (atom == null || atom.Point2D == null) return false;
+                if (atom == null || atom.Point2D == null)
+                    return false;
             }
             return true;
         }
@@ -959,7 +956,8 @@ namespace NCDK.Geometries
         /// <seealso cref="IAtom.Point2D"/>
         public static CoordinateCoverage Get2DCoordinateCoverage(IAtomContainer container)
         {
-            if (container == null || container.Atoms.Count == 0) return CoordinateCoverage.None;
+            if (container == null || container.Atoms.Count == 0)
+                return CoordinateCoverage.None;
 
             int count = 0;
 
@@ -968,8 +966,11 @@ namespace NCDK.Geometries
                 count += atom != null && atom.Point2D != null ? 1 : 0;
             }
 
-            return count == 0 ? CoordinateCoverage.None : count == container.Atoms.Count ? CoordinateCoverage.Full
-                    : CoordinateCoverage.Partial;
+            return count == 0 
+                ? CoordinateCoverage.None 
+                : count == container.Atoms.Count 
+                ? CoordinateCoverage.Full
+                : CoordinateCoverage.Partial;
         }
 
         /// <summary>
@@ -981,7 +982,8 @@ namespace NCDK.Geometries
         [Obsolete("Use " + nameof(Get2DCoordinateCoverage) + "(" + nameof(IAtomContainer) + ") for determining partial coordinates")] 
         public static int Has2DCoordinatesNew(IAtomContainer container)
         {
-            if (container == null) return 0;
+            if (container == null)
+                return 0;
 
             bool no2d = false;
             bool with2d = false;
@@ -1017,7 +1019,7 @@ namespace NCDK.Geometries
         /// <returns>bool indication that 2D coordinates are available</returns>
         public static bool Has2DCoordinates(IAtom atom)
         {
-            return (atom.Point2D != null);
+            return atom.Point2D != null;
         }
 
         /// <summary>
@@ -1185,7 +1187,7 @@ namespace NCDK.Geometries
             var atomsByDistance = new SortedDictionary<double, IAtom>();
             foreach (var atom in container.Atoms)
             {
-                if (atom != startAtom)
+                if (!atom.Equals(startAtom))
                 {
                     if (atom.Point3D == null)
                         throw new CDKException("No point3d, but FindClosestInSpace is working on point3ds");
@@ -1209,7 +1211,7 @@ namespace NCDK.Geometries
 
         /// <summary>
         /// Returns a IDictionary with the AtomNumbers, the first number corresponds to the first (or the largest
-        /// AtomContainer) atomcontainer. It is recommend to sort the atomContainer due to their number
+        /// AtomContainer) atom container. It is recommend to sort the atomContainer due to their number
         /// of atoms before calling this function.
         /// </summary>
         /// <remarks>
@@ -1219,14 +1221,12 @@ namespace NCDK.Geometries
         /// <param name="secondAtomContainer">the second aligned AtomContainer</param>
         /// <param name="searchRadius">the radius of space search from each atom</param>
         /// <param name="mappedAtoms"></param>
-        /// <exception cref="CDKException"></exception>
         public static void MapAtomsOfAlignedStructures(
             IAtomContainer firstAtomContainer,
             IAtomContainer secondAtomContainer,
             double searchRadius, 
             IDictionary<int, int> mappedAtoms)
         {
-            GetLargestAtomContainer(firstAtomContainer, secondAtomContainer);
             var distanceMatrix = Arrays.CreateJagged<double>(firstAtomContainer.Atoms.Count, secondAtomContainer.Atoms.Count);
             for (int i = 0; i < firstAtomContainer.Atoms.Count; i++)
             {
@@ -1237,10 +1237,9 @@ namespace NCDK.Geometries
                 }
             }
 
-            double minimumDistance;
             for (int i = 0; i < firstAtomContainer.Atoms.Count; i++)
             {
-                minimumDistance = searchRadius;
+                var minimumDistance = searchRadius;
                 for (int j = 0; j < secondAtomContainer.Atoms.Count; j++)
                 {
                     if (distanceMatrix[i][j] < searchRadius && distanceMatrix[i][j] < minimumDistance)
@@ -1254,26 +1253,6 @@ namespace NCDK.Geometries
                                 secondAtomContainer.Atoms.IndexOf(secondAtomContainer.Atoms[j]));
                         }
                     }
-                }
-            }
-        }
-
-        /// FIXME: huh!?!?!
-        private static void GetLargestAtomContainer(IAtomContainer firstAC, IAtomContainer secondAC)
-        {
-            if (firstAC.Atoms.Count < secondAC.Atoms.Count)
-            {
-                IAtomContainer tmp;
-                try
-                {
-                    tmp = (IAtomContainer)firstAC.Clone();
-                    firstAC = (IAtomContainer)secondAC.Clone();
-                    secondAC = (IAtomContainer)tmp.Clone();
-                }
-                catch (Exception e)
-                {
-                    // TODO Auto-generated catch block
-                    Console.Error.WriteLine(e.StackTrace);
                 }
             }
         }
@@ -1305,25 +1284,19 @@ namespace NCDK.Geometries
         /// <param name="mappedAtoms">IDictionary: a IDictionary of the mapped atoms</param>
         /// <param name="Coords3d">bool: true if moecules has 3D coords, false if molecules has 2D coords</param>
         /// <returns>double: all the RMSD of bonds length</returns>
-        public static double GetBondLengthRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, IDictionary<int, int> mappedAtoms, bool Coords3d)
+        public static double GetBondLengthRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, IReadOnlyDictionary<int, int> mappedAtoms, bool Coords3d)
         {
-            //Debug.WriteLine("**** GT getBondLengthRMSD ****");
             var firstAtoms = mappedAtoms.Keys;
-            IAtom centerAtomFirstMolecule;
-            IAtom centerAtomSecondMolecule;
-            IEnumerable<IAtom> connectedAtoms;
             double sum = 0;
             double n = 0;
-            double distance1 = 0;
-            double distance2 = 0;
             SetVisitedFlagsToFalse(firstAtomContainer);
             SetVisitedFlagsToFalse(secondAtomContainer);
             foreach (var firstAtom in firstAtoms)
             {
-                centerAtomFirstMolecule = firstAtomContainer.Atoms[firstAtom];
+                var centerAtomFirstMolecule = firstAtomContainer.Atoms[firstAtom];
                 centerAtomFirstMolecule.IsVisited = true;
-                centerAtomSecondMolecule = secondAtomContainer.Atoms[mappedAtoms[firstAtomContainer.Atoms.IndexOf(centerAtomFirstMolecule)]];
-                connectedAtoms = firstAtomContainer.GetConnectedAtoms(centerAtomFirstMolecule);
+                var centerAtomSecondMolecule = secondAtomContainer.Atoms[mappedAtoms[firstAtomContainer.Atoms.IndexOf(centerAtomFirstMolecule)]];
+                var connectedAtoms = firstAtomContainer.GetConnectedAtoms(centerAtomFirstMolecule);
                 foreach (var conAtom in connectedAtoms)
                 {
                     //this step is built to know if the program has already calculate a bond length (so as not to have duplicate values)
@@ -1331,15 +1304,15 @@ namespace NCDK.Geometries
                     {
                         if (Coords3d)
                         {
-                            distance1 = Vector3.Distance(centerAtomFirstMolecule.Point3D.Value, conAtom.Point3D.Value);
-                            distance2 = Vector3.Distance(centerAtomSecondMolecule.Point3D.Value, secondAtomContainer.Atoms[mappedAtoms[firstAtomContainer.Atoms.IndexOf(conAtom)]].Point3D.Value);
+                            var distance1 = Vector3.Distance(centerAtomFirstMolecule.Point3D.Value, conAtom.Point3D.Value);
+                            var distance2 = Vector3.Distance(centerAtomSecondMolecule.Point3D.Value, secondAtomContainer.Atoms[mappedAtoms[firstAtomContainer.Atoms.IndexOf(conAtom)]].Point3D.Value);
                             sum = sum + Math.Pow((distance1 - distance2), 2);
                             n++;
                         }
                         else
                         {
-                            distance1 = Vector2.Distance(centerAtomFirstMolecule.Point2D.Value, conAtom.Point2D.Value);
-                            distance2 = Vector2.Distance(centerAtomSecondMolecule.Point2D.Value, secondAtomContainer.Atoms[mappedAtoms[firstAtomContainer.Atoms.IndexOf(conAtom)]].Point2D.Value);
+                            var distance1 = Vector2.Distance(centerAtomFirstMolecule.Point2D.Value, conAtom.Point2D.Value);
+                            var distance2 = Vector2.Distance(centerAtomSecondMolecule.Point2D.Value, secondAtomContainer.Atoms[mappedAtoms[firstAtomContainer.Atoms.IndexOf(conAtom)]].Point2D.Value);
                             sum = sum + Math.Pow(distance1 - distance2, 2);
                             n++;
                         }
@@ -1492,8 +1465,8 @@ namespace NCDK.Geometries
                 {
                     switch (firstAtom.AtomicNumber)
                     {
-                        case NaturalElements.H.AtomicNumber:
-                        case NaturalElements.C.AtomicNumber:
+                        case AtomicNumbers.H:
+                        case AtomicNumbers.C:
                             break;
                         default:
                             if (Coords3d)
@@ -1513,7 +1486,7 @@ namespace NCDK.Geometries
                 {
                     switch (firstAtom.AtomicNumber)
                     {
-                        case NaturalElements.H.AtomicNumber:
+                        case AtomicNumbers.H:
                             break;
                         default:
                             if (Coords3d)

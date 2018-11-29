@@ -47,8 +47,8 @@ namespace NCDK.Default
         [TestMethod()]
         public void TestAtomType_IElement()
         {
-            IElement element = new Element("C");
-            IAtomType at = element.Builder.NewAtomType(element);
+            var element = ChemicalElement.C;
+            IAtomType at = new AtomType(element);
             Assert.AreEqual("C", at.Symbol);
         }
 
@@ -127,8 +127,8 @@ namespace NCDK.Silent
         [TestMethod()]
         public void TestAtomType_IElement()
         {
-            IElement element = new Element("C");
-            IAtomType at = element.Builder.NewAtomType(element);
+            var element = ChemicalElement.C;
+            IAtomType at = new AtomType(element);
             Assert.AreEqual("C", at.Symbol);
         }
 

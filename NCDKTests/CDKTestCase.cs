@@ -32,7 +32,6 @@ namespace NCDK
     /// </summary>
     /// <seealso cref="CDKTestCase"/>
     // @cdk.module test
-    [TestClass()]
     public class CDKTestCase
     {
         public virtual void AssertAreEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual)

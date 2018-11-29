@@ -99,7 +99,7 @@ namespace NCDK.Reactions.Types
                                         if (atomk.IsReactiveCenter
                                                 && (atomk.FormalCharge ?? 0) == 0
                                                 && !reactant.GetConnectedSingleElectrons(atomk).Any()
-                                                && atomk.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)
+                                                && atomk.AtomicNumber.Equals(AtomicNumbers.H)
                                         )
                                         {
                                             var atomList = new List<IAtom>
@@ -165,7 +165,7 @@ namespace NCDK.Reactions.Types
                                         IAtom atomk = bondj.GetOther(atomj);
                                         if ((atomk.FormalCharge ?? 0) == 0
                                                 && !reactant.GetConnectedSingleElectrons(atomk).Any()
-                                                && atomk.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)
+                                                && atomk.AtomicNumber.Equals(AtomicNumbers.H)
                                         )
                                         {
                                             atomi.IsReactiveCenter = true;

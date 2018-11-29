@@ -27,7 +27,6 @@ namespace NCDK.Events
     /// A change listener.
     /// </summary>
     // @cdk.module  interfaces
-    // @cdk.githash
     public interface ICDKChangeListener
     {
         /// <summary>

@@ -21,8 +21,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
-
 namespace NCDK.Dict
 {
     /// <summary>
@@ -37,7 +35,6 @@ namespace NCDK.Dict
     /// by :'number' to allow for more than one reference.
     ///</remarks>
     // @author     Egon Willighagen <egonw@sci.kun.nl>
-    // @cdk.githash
     // @cdk.created    2003-08-06
     // @cdk.keyword    dictionary, implicit CDK references
     // @cdk.module     dict
@@ -110,22 +107,22 @@ namespace NCDK.Dict
 
             switch (element.AtomicNumber)
             {
-                case NaturalElements.C.AtomicNumber:
+                case AtomicNumbers.C:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:carbon");
                     break;
-                case NaturalElements.N.AtomicNumber:
+                case AtomicNumbers.N:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:nitrogen");
                     break;
-                case NaturalElements.O.AtomicNumber:
+                case AtomicNumbers.O:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:oxygen");
                     break;
-                case NaturalElements.H.AtomicNumber:
+                case AtomicNumbers.H:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:hydrogen");
                     break;
-                case NaturalElements.S.AtomicNumber:
+                case AtomicNumbers.S:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:sulphur");
                     break;
-                case NaturalElements.P.AtomicNumber:
+                case AtomicNumbers.P:
                     element.SetProperty(prefix + ":self:" + selfCounter++, "element:phosphorus");
                     break;
                 default:

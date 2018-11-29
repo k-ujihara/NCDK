@@ -25,7 +25,6 @@ namespace NCDK.Validate
     /// Validates the 3D geometry of the model.
     /// </summary>
     // @cdk.module  extra
-    // @cdk.githash
     // @cdk.created 2006-05-11
     public class Geometry3DValidator : AbstractValidator
     {
@@ -34,14 +33,14 @@ namespace NCDK.Validate
         // assumes 1 unit in the coordinate system is one angstrom
         public override ValidationReport ValidateBond(IBond subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             // only consider two atom bonds
             if (subject.Atoms.Count == 2)
             {
-                double distance = Vector3.Distance(subject.Begin.Point3D.Value, subject.End.Point3D.Value);
+                var distance = Vector3.Distance(subject.Begin.Point3D.Value, subject.End.Point3D.Value);
                 if (distance > 3.0)
                 { // should really depend on the elements
-                    ValidationTest badBondLengthError = new ValidationTest(subject,
+                    var badBondLengthError = new ValidationTest(subject,
                             "Bond length cannot exceed 3 Angstroms.",
                             "A bond length typically is between 0.5 and 3.0 Angstroms.");
                     report.Errors.Add(badBondLengthError);

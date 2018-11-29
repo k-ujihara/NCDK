@@ -27,7 +27,6 @@ namespace NCDK
     /// </summary>
     // @author        egonw
     // @cdk.module    interfaces
-    // @cdk.githash
     public interface IChemObjectBuilder
     {
         IAdductFormula NewAdductFormula();
@@ -35,6 +34,7 @@ namespace NCDK
         IAminoAcid NewAminoAcid();
         IAtom NewAtom();
         IAtom NewAtom(IElement element);
+        IAtom NewAtom(ChemicalElement element);
         IAtom NewAtom(int elem);
         IAtom NewAtom(int elem, int hcnt);
         IAtom NewAtom(int elem, int hcnt, int fchg);
@@ -47,6 +47,7 @@ namespace NCDK
         IAtomContainer NewAtomContainer(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds);
         IAtomContainerSet NewAtomContainerSet();
         IAtomType NewAtomType(IElement element);
+        IAtomType NewAtomType(ChemicalElement element);
         IAtomType NewAtomType(string elementSymbol);
         IAtomType NewAtomType(string identifier, string elementSymbol);
         IBioPolymer NewBioPolymer();
@@ -65,13 +66,10 @@ namespace NCDK
         ICrystal NewCrystal();
         ICrystal NewCrystal(IAtomContainer container);
         IElectronContainer NewElectronContainer();
-        IElement NewElement();
-        IElement NewElement(IElement element);
-        IElement NewElement(string symbol);
-        IElement NewElement(string symbol, int atomicNumber);
         IFragmentAtom NewFragmentAtom();
         ILonePair NewLonePair();
         ILonePair NewLonePair(IAtom atom);
+        IIsotope NewIsotope(ChemicalElement element);
         IIsotope NewIsotope(string elementSymbol);
         IIsotope NewIsotope(int atomicNumber, string elementSymbol, int massNumber, double exactMass, double abundance);
         IIsotope NewIsotope(int atomicNumber, string elementSymbol, double exactMass, double abundance);
@@ -83,6 +81,7 @@ namespace NCDK
         IMolecularFormulaSet NewMolecularFormulaSet(IMolecularFormula formula);
         IMonomer NewMonomer();
         IPseudoAtom NewPseudoAtom();
+        IPseudoAtom NewPseudoAtom(ChemicalElement element);
         IPseudoAtom NewPseudoAtom(string label);
         IPseudoAtom NewPseudoAtom(IElement element);
         IPseudoAtom NewPseudoAtom(string label, Vector2 point2d);
@@ -90,6 +89,7 @@ namespace NCDK
         IReaction NewReaction();
         IReactionSet NewReactionSet();
         IReactionScheme NewReactionScheme();
+        IPDBAtom NewPDBAtom(ChemicalElement element);
         IPDBAtom NewPDBAtom(IElement element);
         IPDBAtom NewPDBAtom(string symbol);
         IPDBAtom NewPDBAtom(string symbol, Vector3 coordinate);

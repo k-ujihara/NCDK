@@ -49,6 +49,7 @@ namespace NCDK.Geometries.CIP
         /// This field is not used by this immutable hydrogen.
         /// Any setting will have no effect what so ever.
         /// </summary>
+        public ChemicalElement Element => ChemicalElement.H;
         public double? Charge { get { return null; } set { } }
         public Vector3? FractionalPoint3D { get { return null; } set { } }
         public int? ImplicitHydrogenCount { get { return null; } set { } }

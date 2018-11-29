@@ -1161,10 +1161,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ElectronContainerTest.tt.cs</LastGenOutput>
     </None>
-    <None Update="TT\ElementTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ElementTest.tt.cs</LastGenOutput>
-    </None>
     <None Update="TT\FragmentAtomTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FragmentAtomTest.tt.cs</LastGenOutput>
@@ -1347,11 +1343,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ElectronContainerTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\ElementTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ElementTest.tt</DependentUpon>
     </Compile>
     <Compile Update="TT\FragmentAtomTest.tt.cs">
       <DesignTime>True</DesignTime>

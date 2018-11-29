@@ -65,12 +65,11 @@ namespace NCDK.Smiles
         /// <param name="iter">char iteration</param>
         /// <param name="dest">destination of labels (atomidx->label)</param>
         /// <returns>parse success/failure</returns>
-        private static bool ProcessAtomLabels(CharIter iter, IDictionary<int, string> dest)
+        private static bool ProcessAtomLabels(CharIter iter, SortedDictionary<int, string> dest)
         {
             int atomIdx = 0;
             while (iter.HasNext())
             {
-
                 // fast forward through empty labels
                 while (iter.NextIf(';'))
                     atomIdx++;
@@ -85,8 +84,8 @@ namespace NCDK.Smiles
                 else
                 {
                     iter.pos--; // push back
-                    int beg = iter.pos;
-                    int rollback = beg;
+                    var beg = iter.pos;
+                    var rollback = beg;
                     while (iter.HasNext())
                     {
                         // correct step over of escaped label
@@ -444,7 +443,7 @@ namespace NCDK.Smiles
                 {
                     case '$': // atom labels and values
                               // dest is atom labels by default
-                        IDictionary<int, string> dest;
+                        SortedDictionary<int, string> dest;
                         // check for atom values
                         if (iter.NextIf("_AV:"))
                             dest = state.atomValues = new SortedDictionary<int, string>();

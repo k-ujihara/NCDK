@@ -23,6 +23,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Collections;
 using NCDK.Common.Primitives;
 using NCDK.Config;
 using NCDK.IO.Formats;
@@ -655,11 +656,9 @@ namespace NCDK.IO
             return sb.ToString();
         }
 
-        private static readonly IDictionary<IAtom, int> EmptyMap = new ReadOnlyDictionary<IAtom, int>(new Dictionary<IAtom, int>());
-
         internal IAtom ReadAtomFast(string line, IChemObjectBuilder builder, int lineNum)
         {
-            return ReadAtomFast(line, builder, EmptyMap, lineNum);
+            return ReadAtomFast(line, builder, new Dictionary<IAtom, int>(), lineNum);
         }
 
         /// <summary>
@@ -681,7 +680,7 @@ namespace NCDK.IO
         /// <param name="parities">map of atom parities for creation 0D stereochemistry</param>
         /// <param name="lineNum">the line number - for printing error messages</param>
         /// <returns>a new atom instance</returns>
-        internal IAtom ReadAtomFast(string line, IChemObjectBuilder builder, IDictionary<IAtom, int> parities, int lineNum)
+        internal IAtom ReadAtomFast(string line, IChemObjectBuilder builder, Dictionary<IAtom, int> parities, int lineNum)
         {
             // The line may be truncated and it's checked in reverse at the specified
             // lengths:
@@ -1085,8 +1084,7 @@ namespace NCDK.IO
                     count = ReadMolfileInt(line, 6);
                     for (int i = 0, st = 10; i < count && st + 7 <= length; i++, st += 8)
                     {
-                        sgroup = EnsureSgroup(sgroups,
-                                              ReadMolfileInt(line, st));
+                        sgroup = EnsureSgroup(sgroups, ReadMolfileInt(line, st));
                         if (ReaderMode == ChemObjectReaderMode.Strict && sgroup.Type != SgroupType.CtabCopolymer)
                             HandleError("SST (Sgroup Subtype) specified for a non co-polymer group");
 
@@ -1324,7 +1322,7 @@ namespace NCDK.IO
             }
         }
 
-        private Sgroup EnsureSgroup(IDictionary<int, Sgroup> map, int idx)
+        private Sgroup EnsureSgroup(SortedDictionary<int, Sgroup> map, int idx)
         {
             if (!map.TryGetValue(idx, out Sgroup sgroup))
             {
@@ -1400,7 +1398,7 @@ namespace NCDK.IO
         /// <exception cref="CDKException">the symbol is not allowed</exception>
         private IAtom CreateAtom(string symbol, IChemObjectBuilder builder, int lineNum)
         {
-            var elem = NaturalElement.ToAtomicNumber(symbol);
+            var elem = ChemicalElement.OfSymbol(symbol).AtomicNumber;
             if (elem != 0)
             {
                 var atom = builder.NewAtom(elem);

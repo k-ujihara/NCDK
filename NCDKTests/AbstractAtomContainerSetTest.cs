@@ -31,7 +31,6 @@ namespace NCDK
     /// Checks the functionality of <see cref="IChemObjectSet{T}"/> implementations.
     /// </summary>
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractAtomContainerSetTest<T>
         : AbstractChemObjectTest
         where T : IAtomContainer

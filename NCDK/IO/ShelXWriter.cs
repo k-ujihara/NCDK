@@ -174,7 +174,7 @@ namespace NCDK.IO
                 string elemID = null;
                 for (int elemidx = 0; elemidx < asortedElements.Count; elemidx++)
                 {
-                    IElement elem = asortedElements[elemidx];
+                    var elem = asortedElements[elemidx];
                     if (elem.Symbol.Equals(symbol, StringComparison.Ordinal))
                     {
                         elemID = (elemidx + 1).ToString(NumberFormatInfo.InvariantInfo);

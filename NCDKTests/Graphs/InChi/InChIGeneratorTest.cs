@@ -21,7 +21,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO;
 using NCDK.Numerics;
-using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Stereo;
 using System;
@@ -37,16 +36,8 @@ namespace NCDK.Graphs.InChI
     [TestClass()]
     public class InChIGeneratorTest : CDKTestCase
     {
-        protected static InChIGeneratorFactory Factory { get; set; } = null;
-
-        protected InChIGeneratorFactory GetFactory()
-        {
-            if (Factory == null)
-            {
-                Factory = InChIGeneratorFactory.Instance;
-            }
-            return Factory;
-        }
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+        private readonly InChIGeneratorFactory factory = InChIGeneratorFactory.Instance;
 
         /// <summary>
         /// Tests element name is correctly passed to InChI.
@@ -54,9 +45,9 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIFromChlorineAtom()
         {
-            var ac = new AtomContainer();
-            ac.Atoms.Add(new Atom("ClH"));
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
+            var ac = builder.NewAtomContainer();
+            ac.Atoms.Add(builder.NewAtom("ClH"));
+            var gen = factory.GetInChIGenerator(ac, "FixedH");
             Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/ClH/h1H", gen.InChI);
         }
@@ -64,24 +55,24 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetLog()
         {
-            var ac = new AtomContainer();
-            ac.Atoms.Add(new Atom("Cl"));
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
+            var ac = builder.NewAtomContainer();
+            ac.Atoms.Add(builder.NewAtom("Cl"));
+            var gen = factory.GetInChIGenerator(ac, "FixedH");
             Assert.IsNotNull(gen.Log);
         }
 
         [TestMethod()]
         public void TestGetAuxInfo()
         {
-            var ac = new AtomContainer();
-            IAtom a1 = new Atom("C");
-            IAtom a2 = new Atom("C");
+            var ac = builder.NewAtomContainer();
+            var a1 = builder.NewAtom("C");
+            var a2 = builder.NewAtom("C");
             a1.ImplicitHydrogenCount = 3;
             a2.ImplicitHydrogenCount = 3;
             ac.Atoms.Add(a1);
             ac.Atoms.Add(a2);
-            ac.Bonds.Add(new Bond(a1, a2, BondOrder.Single));
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "");
+            ac.Bonds.Add(builder.NewBond(a1, a2, BondOrder.Single));
+            var gen = factory.GetInChIGenerator(ac, "");
             Assert.IsNotNull(gen.AuxInfo);
             Assert.IsTrue(gen.AuxInfo.StartsWith("AuxInfo="));
         }
@@ -89,22 +80,22 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetMessage()
         {
-            var ac = new AtomContainer();
-            ac.Atoms.Add(new Atom("Cl"));
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
+            var ac = builder.NewAtomContainer();
+            ac.Atoms.Add(builder.NewAtom("Cl"));
+            var gen = factory.GetInChIGenerator(ac, "FixedH");
             Assert.IsNull(gen.Message, "Because this generation should work, I expected a null message string.");
         }
 
         [TestMethod()]
         public void TestGetWarningMessage()
         {
-            var ac = new AtomContainer();
-            var cl = new Atom("Cl");
-            var h = new Atom("H");
+            var ac = builder.NewAtomContainer();
+            var cl = builder.NewAtom("Cl");
+            var h = builder.NewAtom("H");
             ac.Atoms.Add(cl);
             ac.Atoms.Add(h);
             ac.AddBond(cl, h, BondOrder.Triple);
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
+            var gen = factory.GetInChIGenerator(ac);
             Assert.IsNotNull(gen.Message);
             Assert.IsTrue(gen.Message.Contains("Accepted unusual valence"));
         }
@@ -115,26 +106,26 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIFromLithiumIon()
         {
-            var ac = new AtomContainer();
-            IAtom a = new Atom("Li");
+            var ac = builder.NewAtomContainer();
+            var a = builder.NewAtom("Li");
             a.FormalCharge = +1;
             ac.Atoms.Add(a);
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
+            var gen = factory.GetInChIGenerator(ac, "FixedH");
             Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/Li/q+1", gen.InChI);
         }
 
         /// <summary>
-       /// Tests isotopic mass is correctly passed to InChI.
-       /// </summary>
+        /// Tests isotopic mass is correctly passed to InChI.
+        /// </summary>
         [TestMethod()]
         public void TestGetInChIFromChlorine37Atom()
         {
-            var ac = new AtomContainer();
-            IAtom a = new Atom("ClH");
+            var ac = builder.NewAtomContainer();
+            var a = builder.NewAtom("ClH");
             a.MassNumber = 37;
             ac.Atoms.Add(a);
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
+            var gen = factory.GetInChIGenerator(ac, "FixedH");
             Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/ClH/h1H/i1+2", gen.InChI);
         }
@@ -145,11 +136,11 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIFromHydrogenChlorideImplicitH()
         {
-            var ac = new AtomContainer();
-            IAtom a = new Atom("Cl");
+            var ac = builder.NewAtomContainer();
+            var a = builder.NewAtom("Cl");
             a.ImplicitHydrogenCount = 1;
             ac.Atoms.Add(a);
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
+            var gen = factory.GetInChIGenerator(ac, "FixedH");
             Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/ClH/h1H", gen.InChI);
         }
@@ -160,12 +151,12 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIFromMethylRadical()
         {
-            var ac = new AtomContainer();
-            IAtom a = new Atom("C");
+            var ac = builder.NewAtomContainer();
+            var a = builder.NewAtom("C");
             a.ImplicitHydrogenCount = 3;
             ac.Atoms.Add(a);
-            ac.SingleElectrons.Add(new SingleElectron(a));
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
+            ac.SingleElectrons.Add(builder.NewSingleElectron(a));
+            var gen = factory.GetInChIGenerator(ac, "FixedH");
             Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/CH3/h1H3", gen.InChI);
         }
@@ -176,15 +167,15 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIFromEthane()
         {
-            var ac = new AtomContainer();
-            IAtom a1 = new Atom("C");
-            IAtom a2 = new Atom("C");
+            var ac = builder.NewAtomContainer();
+            var a1 = builder.NewAtom("C");
+            var a2 = builder.NewAtom("C");
             a1.ImplicitHydrogenCount = 3;
             a2.ImplicitHydrogenCount = 3;
             ac.Atoms.Add(a1);
             ac.Atoms.Add(a2);
-            ac.Bonds.Add(new Bond(a1, a2, BondOrder.Single));
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
+            ac.Bonds.Add(builder.NewBond(a1, a2, BondOrder.Single));
+            var gen = factory.GetInChIGenerator(ac, "FixedH");
             Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/C2H6/c1-2/h1-2H3", gen.InChI);
             Assert.AreEqual("OTMSDBZUPAUEDD-UHFFFAOYNA-N", gen.GetInChIKey());
@@ -193,28 +184,28 @@ namespace NCDK.Graphs.InChI
         /// <summary>
         /// Test generation of non-standard InChIs.
         /// </summary>
-        /// <exception cref="Exception"></exception>
-        /// <seealso cref=""/>
         // @cdk.bug 1384
         [TestMethod()]
         public void NonStandardInChIWithEnumOptions()
         {
-            var ac = new AtomContainer();
-            IAtom a1 = new Atom("C");
-            IAtom a2 = new Atom("C");
+            var ac = builder.NewAtomContainer();
+            var a1 = builder.NewAtom("C");
+            var a2 = builder.NewAtom("C");
             a1.ImplicitHydrogenCount = 3;
             a2.ImplicitHydrogenCount = 3;
             ac.Atoms.Add(a1);
             ac.Atoms.Add(a2);
-            ac.Bonds.Add(new Bond(a1, a2, BondOrder.Single));
-            List<InChIOption> options = new List<InChIOption>();
-            options.Add(InChIOption.FixedH);
-            options.Add(InChIOption.SAbs);
-            options.Add(InChIOption.SAsXYZ);
-            options.Add(InChIOption.SPXYZ);
-            options.Add(InChIOption.FixSp3Bug);
-            options.Add(InChIOption.AuxNone);
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac, options);
+            ac.Bonds.Add(builder.NewBond(a1, a2, BondOrder.Single));
+            var options = new List<InChIOption>
+                {
+                    InChIOption.FixedH,
+                    InChIOption.SAbs,
+                    InChIOption.SAsXYZ,
+                    InChIOption.SPXYZ,
+                    InChIOption.FixSp3Bug,
+                    InChIOption.AuxNone
+                };
+            var gen = factory.GetInChIGenerator(ac, options);
             Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/C2H6/c1-2/h1-2H3", gen.InChI);
             Assert.AreEqual("OTMSDBZUPAUEDD-UHFFFAOYNA-N", gen.GetInChIKey());
@@ -226,15 +217,15 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIFromEthene()
         {
-            var ac = new AtomContainer();
-            IAtom a1 = new Atom("C");
-            IAtom a2 = new Atom("C");
+            var ac = builder.NewAtomContainer();
+            var a1 = builder.NewAtom("C");
+            var a2 = builder.NewAtom("C");
             a1.ImplicitHydrogenCount = 2;
             a2.ImplicitHydrogenCount = 2;
             ac.Atoms.Add(a1);
             ac.Atoms.Add(a2);
-            ac.Bonds.Add(new Bond(a1, a2, BondOrder.Double));
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
+            ac.Bonds.Add(builder.NewBond(a1, a2, BondOrder.Double));
+            var gen = factory.GetInChIGenerator(ac, "FixedH");
             Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/C2H4/c1-2/h1-2H2", gen.InChI);
         }
@@ -245,15 +236,15 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetInChIFromEthyne()
         {
-            var ac = new AtomContainer();
-            IAtom a1 = new Atom("C");
-            IAtom a2 = new Atom("C");
+            var ac = builder.NewAtomContainer();
+            var a1 = builder.NewAtom("C");
+            var a2 = builder.NewAtom("C");
             a1.ImplicitHydrogenCount = 1;
             a2.ImplicitHydrogenCount = 1;
             ac.Atoms.Add(a1);
             ac.Atoms.Add(a2);
-            ac.Bonds.Add(new Bond(a1, a2, BondOrder.Triple));
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
+            ac.Bonds.Add(builder.NewBond(a1, a2, BondOrder.Triple));
+            var gen = factory.GetInChIGenerator(ac, "FixedH");
             Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/C2H2/c1-2/h1-2H", gen.InChI);
         }
@@ -265,11 +256,11 @@ namespace NCDK.Graphs.InChI
         public void TestGetInChIEandZ12Dichloroethene2D()
         {
             // (E)-1,2-dichloroethene
-            IAtomContainer acE = new AtomContainer();
-            IAtom a1E = new Atom("C", new Vector2(2.866, -0.250));
-            IAtom a2E = new Atom("C", new Vector2(3.732, 0.250));
-            IAtom a3E = new Atom("Cl", new Vector2(2.000, 2.500));
-            IAtom a4E = new Atom("Cl", new Vector2(4.598, -0.250));
+            var acE = builder.NewAtomContainer();
+            var a1E = builder.NewAtom("C", new Vector2(2.866, -0.250));
+            var a2E = builder.NewAtom("C", new Vector2(3.732, 0.250));
+            var a3E = builder.NewAtom("Cl", new Vector2(2.000, 2.500));
+            var a4E = builder.NewAtom("Cl", new Vector2(4.598, -0.250));
             a1E.ImplicitHydrogenCount = 1;
             a2E.ImplicitHydrogenCount = 1;
             acE.Atoms.Add(a1E);
@@ -277,21 +268,21 @@ namespace NCDK.Graphs.InChI
             acE.Atoms.Add(a3E);
             acE.Atoms.Add(a4E);
 
-            acE.Bonds.Add(new Bond(a1E, a2E, BondOrder.Double));
-            acE.Bonds.Add(new Bond(a1E, a2E, BondOrder.Double));
-            acE.Bonds.Add(new Bond(a1E, a3E, BondOrder.Single));
-            acE.Bonds.Add(new Bond(a2E, a4E, BondOrder.Single));
+            acE.Bonds.Add(builder.NewBond(a1E, a2E, BondOrder.Double));
+            acE.Bonds.Add(builder.NewBond(a1E, a2E, BondOrder.Double));
+            acE.Bonds.Add(builder.NewBond(a1E, a3E, BondOrder.Single));
+            acE.Bonds.Add(builder.NewBond(a2E, a4E, BondOrder.Single));
 
-            InChIGenerator genE = GetFactory().GetInChIGenerator(acE, "FixedH");
+            var genE = factory.GetInChIGenerator(acE, "FixedH");
             Assert.AreEqual(genE.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", genE.InChI);
 
             // (Z)-1,2-dichloroethene
-            IAtomContainer acZ = new AtomContainer();
-            IAtom a1Z = new Atom("C", new Vector2(2.866, -0.440));
-            IAtom a2Z = new Atom("C", new Vector2(3.732, 0.060));
-            IAtom a3Z = new Atom("Cl", new Vector2(2.000, 0.060));
-            IAtom a4Z = new Atom("Cl", new Vector2(3.732, 1.060));
+            var acZ = builder.NewAtomContainer();
+            var a1Z = builder.NewAtom("C", new Vector2(2.866, -0.440));
+            var a2Z = builder.NewAtom("C", new Vector2(3.732, 0.060));
+            var a3Z = builder.NewAtom("Cl", new Vector2(2.000, 0.060));
+            var a4Z = builder.NewAtom("Cl", new Vector2(3.732, 1.060));
             a1Z.ImplicitHydrogenCount = 1;
             a2Z.ImplicitHydrogenCount = 1;
             acZ.Atoms.Add(a1Z);
@@ -299,12 +290,12 @@ namespace NCDK.Graphs.InChI
             acZ.Atoms.Add(a3Z);
             acZ.Atoms.Add(a4Z);
 
-            acZ.Bonds.Add(new Bond(a1Z, a2Z, BondOrder.Double));
-            acZ.Bonds.Add(new Bond(a1Z, a2Z, BondOrder.Double));
-            acZ.Bonds.Add(new Bond(a1Z, a3Z, BondOrder.Single));
-            acZ.Bonds.Add(new Bond(a2Z, a4Z, BondOrder.Single));
+            acZ.Bonds.Add(builder.NewBond(a1Z, a2Z, BondOrder.Double));
+            acZ.Bonds.Add(builder.NewBond(a1Z, a2Z, BondOrder.Double));
+            acZ.Bonds.Add(builder.NewBond(a1Z, a3Z, BondOrder.Single));
+            acZ.Bonds.Add(builder.NewBond(a2Z, a4Z, BondOrder.Single));
 
-            InChIGenerator genZ = GetFactory().GetInChIGenerator(acZ, "FixedH");
+            var genZ = factory.GetInChIGenerator(acZ, "FixedH");
             Assert.AreEqual(genZ.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-", genZ.InChI);
         }
@@ -316,13 +307,13 @@ namespace NCDK.Graphs.InChI
         public void TestGetInChIFromLandDAlanine3D()
         {
             // L-Alanine
-            IAtomContainer acL = new AtomContainer();
-            IAtom a1L = new Atom("C", new Vector3(-0.358, 0.819, 20.655));
-            IAtom a2L = new Atom("C", new Vector3(-1.598, -0.032, 20.905));
-            IAtom a3L = new Atom("N", new Vector3(-0.275, 2.014, 21.574));
-            IAtom a4L = new Atom("C", new Vector3(0.952, 0.043, 20.838));
-            IAtom a5L = new Atom("O", new Vector3(-2.678, 0.479, 21.093));
-            IAtom a6L = new Atom("O", new Vector3(-1.596, -1.239, 20.958));
+            var acL = builder.NewAtomContainer();
+            var a1L = builder.NewAtom("C", new Vector3(-0.358, 0.819, 20.655));
+            var a2L = builder.NewAtom("C", new Vector3(-1.598, -0.032, 20.905));
+            var a3L = builder.NewAtom("N", new Vector3(-0.275, 2.014, 21.574));
+            var a4L = builder.NewAtom("C", new Vector3(0.952, 0.043, 20.838));
+            var a5L = builder.NewAtom("O", new Vector3(-2.678, 0.479, 21.093));
+            var a6L = builder.NewAtom("O", new Vector3(-1.596, -1.239, 20.958));
             a1L.ImplicitHydrogenCount = 1;
             a3L.ImplicitHydrogenCount = 2;
             a4L.ImplicitHydrogenCount = 3;
@@ -334,24 +325,24 @@ namespace NCDK.Graphs.InChI
             acL.Atoms.Add(a5L);
             acL.Atoms.Add(a6L);
 
-            acL.Bonds.Add(new Bond(a1L, a2L, BondOrder.Single));
-            acL.Bonds.Add(new Bond(a1L, a3L, BondOrder.Single));
-            acL.Bonds.Add(new Bond(a1L, a4L, BondOrder.Single));
-            acL.Bonds.Add(new Bond(a2L, a5L, BondOrder.Single));
-            acL.Bonds.Add(new Bond(a2L, a6L, BondOrder.Double));
+            acL.Bonds.Add(builder.NewBond(a1L, a2L, BondOrder.Single));
+            acL.Bonds.Add(builder.NewBond(a1L, a3L, BondOrder.Single));
+            acL.Bonds.Add(builder.NewBond(a1L, a4L, BondOrder.Single));
+            acL.Bonds.Add(builder.NewBond(a2L, a5L, BondOrder.Single));
+            acL.Bonds.Add(builder.NewBond(a2L, a6L, BondOrder.Double));
 
-            InChIGenerator genL = GetFactory().GetInChIGenerator(acL, "FixedH");
+            var genL = factory.GetInChIGenerator(acL, "FixedH");
             Assert.AreEqual(genL.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1/f/h5H", genL.InChI);
 
             // D-Alanine
-            IAtomContainer acD = new AtomContainer();
-            IAtom a1D = new Atom("C", new Vector3(0.358, 0.819, 20.655));
-            IAtom a2D = new Atom("C", new Vector3(1.598, -0.032, 20.905));
-            IAtom a3D = new Atom("N", new Vector3(0.275, 2.014, 21.574));
-            IAtom a4D = new Atom("C", new Vector3(-0.952, 0.043, 20.838));
-            IAtom a5D = new Atom("O", new Vector3(2.678, 0.479, 21.093));
-            IAtom a6D = new Atom("O", new Vector3(1.596, -1.239, 20.958));
+            var acD = builder.NewAtomContainer();
+            var a1D = builder.NewAtom("C", new Vector3(0.358, 0.819, 20.655));
+            var a2D = builder.NewAtom("C", new Vector3(1.598, -0.032, 20.905));
+            var a3D = builder.NewAtom("N", new Vector3(0.275, 2.014, 21.574));
+            var a4D = builder.NewAtom("C", new Vector3(-0.952, 0.043, 20.838));
+            var a5D = builder.NewAtom("O", new Vector3(2.678, 0.479, 21.093));
+            var a6D = builder.NewAtom("O", new Vector3(1.596, -1.239, 20.958));
             a1D.ImplicitHydrogenCount = 1;
             a3D.ImplicitHydrogenCount = 2;
             a4D.ImplicitHydrogenCount = 3;
@@ -363,13 +354,13 @@ namespace NCDK.Graphs.InChI
             acD.Atoms.Add(a5D);
             acD.Atoms.Add(a6D);
 
-            acD.Bonds.Add(new Bond(a1D, a2D, BondOrder.Single));
-            acD.Bonds.Add(new Bond(a1D, a3D, BondOrder.Single));
-            acD.Bonds.Add(new Bond(a1D, a4D, BondOrder.Single));
-            acD.Bonds.Add(new Bond(a2D, a5D, BondOrder.Single));
-            acD.Bonds.Add(new Bond(a2D, a6D, BondOrder.Double));
+            acD.Bonds.Add(builder.NewBond(a1D, a2D, BondOrder.Single));
+            acD.Bonds.Add(builder.NewBond(a1D, a3D, BondOrder.Single));
+            acD.Bonds.Add(builder.NewBond(a1D, a4D, BondOrder.Single));
+            acD.Bonds.Add(builder.NewBond(a2D, a5D, BondOrder.Single));
+            acD.Bonds.Add(builder.NewBond(a2D, a6D, BondOrder.Double));
 
-            InChIGenerator genD = GetFactory().GetInChIGenerator(acD, "FixedH");
+            var genD = factory.GetInChIGenerator(acD, "FixedH");
             Assert.AreEqual(genD.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1/f/h5H", genD.InChI);
         }
@@ -378,10 +369,10 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void ZeroHydrogenCount()
         {
-            var ac = new AtomContainer();
-            ac.Atoms.Add(new Atom("O"));
+            var ac = builder.NewAtomContainer();
+            ac.Atoms.Add(builder.NewAtom("O"));
             ac.Atoms[0].ImplicitHydrogenCount = 0;
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
+            var gen = factory.GetInChIGenerator(ac);
             Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
             Assert.AreEqual("InChI=1S/O", gen.InChI);
         }
@@ -392,9 +383,9 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetStandardInChIFromChlorineAtom()
         {
-            var ac = new AtomContainer();
-            ac.Atoms.Add(new Atom("ClH"));
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
+            var ac = builder.NewAtomContainer();
+            ac.Atoms.Add(builder.NewAtom("ClH"));
+            var gen = factory.GetInChIGenerator(ac);
             Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
             Assert.AreEqual("InChI=1S/ClH/h1H", gen.InChI);
         }
@@ -405,26 +396,26 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetStandardInChIFromLithiumIon()
         {
-            var ac = new AtomContainer();
-            IAtom a = new Atom("Li");
+            var ac = builder.NewAtomContainer();
+            var a = builder.NewAtom("Li");
             a.FormalCharge = +1;
             ac.Atoms.Add(a);
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
+            var gen = factory.GetInChIGenerator(ac);
             Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
             Assert.AreEqual("InChI=1S/Li/q+1", gen.InChI);
         }
 
         /// <summary>
-       /// Tests isotopic mass is correctly passed to InChI.
-       /// </summary>
+        /// Tests isotopic mass is correctly passed to InChI.
+        /// </summary>
         [TestMethod()]
         public void TestGetStandardInChIFromChlorine37Atom()
         {
-            var ac = new AtomContainer();
-            IAtom a = new Atom("ClH");
+            var ac = builder.NewAtomContainer();
+            var a = builder.NewAtom("ClH");
             a.MassNumber = 37;
             ac.Atoms.Add(a);
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
+            var gen = factory.GetInChIGenerator(ac);
             Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
             Assert.AreEqual("InChI=1S/ClH/h1H/i1+2", gen.InChI);
         }
@@ -435,11 +426,11 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetStandardInChIFromHydrogenChlorideImplicitH()
         {
-            var ac = new AtomContainer();
-            IAtom a = new Atom("Cl");
+            var ac = builder.NewAtomContainer();
+            var a = builder.NewAtom("Cl");
             a.ImplicitHydrogenCount = 1;
             ac.Atoms.Add(a);
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
+            var gen = factory.GetInChIGenerator(ac);
             Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1S/ClH/h1H", gen.InChI);
         }
@@ -450,12 +441,12 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetStandardInChIFromMethylRadical()
         {
-            var ac = new AtomContainer();
-            IAtom a = new Atom("C");
+            var ac = builder.NewAtomContainer();
+            var a = builder.NewAtom("C");
             a.ImplicitHydrogenCount = 3;
             ac.Atoms.Add(a);
-            ac.SingleElectrons.Add(new SingleElectron(a));
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
+            ac.SingleElectrons.Add(builder.NewSingleElectron(a));
+            var gen = factory.GetInChIGenerator(ac);
             Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
             Assert.AreEqual("InChI=1S/CH3/h1H3", gen.InChI);
         }
@@ -466,15 +457,15 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetStandardInChIFromEthane()
         {
-            var ac = new AtomContainer();
-            IAtom a1 = new Atom("C");
-            IAtom a2 = new Atom("C");
+            var ac = builder.NewAtomContainer();
+            var a1 = builder.NewAtom("C");
+            var a2 = builder.NewAtom("C");
             a1.ImplicitHydrogenCount = 3;
             a2.ImplicitHydrogenCount = 3;
             ac.Atoms.Add(a1);
             ac.Atoms.Add(a2);
-            ac.Bonds.Add(new Bond(a1, a2, BondOrder.Single));
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
+            ac.Bonds.Add(builder.NewBond(a1, a2, BondOrder.Single));
+            var gen = factory.GetInChIGenerator(ac);
             Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H6/c1-2/h1-2H3", gen.InChI);
             Assert.AreEqual("OTMSDBZUPAUEDD-UHFFFAOYSA-N", gen.GetInChIKey());
@@ -486,15 +477,15 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetStandardInChIFromEthene()
         {
-            var ac = new AtomContainer();
-            IAtom a1 = new Atom("C");
-            IAtom a2 = new Atom("C");
+            var ac = builder.NewAtomContainer();
+            var a1 = builder.NewAtom("C");
+            var a2 = builder.NewAtom("C");
             a1.ImplicitHydrogenCount = 2;
             a2.ImplicitHydrogenCount = 2;
             ac.Atoms.Add(a1);
             ac.Atoms.Add(a2);
-            ac.Bonds.Add(new Bond(a1, a2, BondOrder.Double));
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
+            ac.Bonds.Add(builder.NewBond(a1, a2, BondOrder.Double));
+            var gen = factory.GetInChIGenerator(ac);
             Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H4/c1-2/h1-2H2", gen.InChI);
         }
@@ -505,15 +496,15 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetStandardInChIFromEthyne()
         {
-            var ac = new AtomContainer();
-            IAtom a1 = new Atom("C");
-            IAtom a2 = new Atom("C");
+            var ac = builder.NewAtomContainer();
+            var a1 = builder.NewAtom("C");
+            var a2 = builder.NewAtom("C");
             a1.ImplicitHydrogenCount = 1;
             a2.ImplicitHydrogenCount = 1;
             ac.Atoms.Add(a1);
             ac.Atoms.Add(a2);
-            ac.Bonds.Add(new Bond(a1, a2, BondOrder.Triple));
-            InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
+            ac.Bonds.Add(builder.NewBond(a1, a2, BondOrder.Triple));
+            var gen = factory.GetInChIGenerator(ac);
             Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2/c1-2/h1-2H", gen.InChI);
         }
@@ -524,13 +515,12 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetStandardInChIEandZ12Dichloroethene2D()
         {
-
             // (E)-1,2-dichloroethene
-            IAtomContainer acE = new AtomContainer();
-            IAtom a1E = new Atom("C", new Vector2(2.866, -0.250));
-            IAtom a2E = new Atom("C", new Vector2(3.732, 0.250));
-            IAtom a3E = new Atom("Cl", new Vector2(2.000, 2.500));
-            IAtom a4E = new Atom("Cl", new Vector2(4.598, -0.250));
+            var acE = builder.NewAtomContainer();
+            var a1E = builder.NewAtom("C", new Vector2(2.866, -0.250));
+            var a2E = builder.NewAtom("C", new Vector2(3.732, 0.250));
+            var a3E = builder.NewAtom("Cl", new Vector2(2.000, 2.500));
+            var a4E = builder.NewAtom("Cl", new Vector2(4.598, -0.250));
             a1E.ImplicitHydrogenCount = 1;
             a2E.ImplicitHydrogenCount = 1;
             acE.Atoms.Add(a1E);
@@ -538,21 +528,21 @@ namespace NCDK.Graphs.InChI
             acE.Atoms.Add(a3E);
             acE.Atoms.Add(a4E);
 
-            acE.Bonds.Add(new Bond(a1E, a2E, BondOrder.Double));
-            acE.Bonds.Add(new Bond(a1E, a2E, BondOrder.Double));
-            acE.Bonds.Add(new Bond(a1E, a3E, BondOrder.Single));
-            acE.Bonds.Add(new Bond(a2E, a4E, BondOrder.Single));
+            acE.Bonds.Add(builder.NewBond(a1E, a2E, BondOrder.Double));
+            acE.Bonds.Add(builder.NewBond(a1E, a2E, BondOrder.Double));
+            acE.Bonds.Add(builder.NewBond(a1E, a3E, BondOrder.Single));
+            acE.Bonds.Add(builder.NewBond(a2E, a4E, BondOrder.Single));
 
-            InChIGenerator genE = GetFactory().GetInChIGenerator(acE);
+            var genE = factory.GetInChIGenerator(acE);
             Assert.AreEqual(InChIReturnCode.Ok, genE.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", genE.InChI);
 
             // (Z)-1,2-dichloroethene
-            IAtomContainer acZ = new AtomContainer();
-            IAtom a1Z = new Atom("C", new Vector2(2.866, -0.440));
-            IAtom a2Z = new Atom("C", new Vector2(3.732, 0.060));
-            IAtom a3Z = new Atom("Cl", new Vector2(2.000, 0.060));
-            IAtom a4Z = new Atom("Cl", new Vector2(3.732, 1.060));
+            var acZ = builder.NewAtomContainer();
+            var a1Z = builder.NewAtom("C", new Vector2(2.866, -0.440));
+            var a2Z = builder.NewAtom("C", new Vector2(3.732, 0.060));
+            var a3Z = builder.NewAtom("Cl", new Vector2(2.000, 0.060));
+            var a4Z = builder.NewAtom("Cl", new Vector2(3.732, 1.060));
             a1Z.ImplicitHydrogenCount = 1;
             a2Z.ImplicitHydrogenCount = 1;
             acZ.Atoms.Add(a1Z);
@@ -560,33 +550,30 @@ namespace NCDK.Graphs.InChI
             acZ.Atoms.Add(a3Z);
             acZ.Atoms.Add(a4Z);
 
-            acZ.Bonds.Add(new Bond(a1Z, a2Z, BondOrder.Double));
-            acZ.Bonds.Add(new Bond(a1Z, a2Z, BondOrder.Double));
-            acZ.Bonds.Add(new Bond(a1Z, a3Z, BondOrder.Single));
-            acZ.Bonds.Add(new Bond(a2Z, a4Z, BondOrder.Single));
+            acZ.Bonds.Add(builder.NewBond(a1Z, a2Z, BondOrder.Double));
+            acZ.Bonds.Add(builder.NewBond(a1Z, a2Z, BondOrder.Double));
+            acZ.Bonds.Add(builder.NewBond(a1Z, a3Z, BondOrder.Single));
+            acZ.Bonds.Add(builder.NewBond(a2Z, a4Z, BondOrder.Single));
 
-            InChIGenerator genZ = GetFactory().GetInChIGenerator(acZ);
+            InChIGenerator genZ = factory.GetInChIGenerator(acZ);
             Assert.AreEqual(InChIReturnCode.Ok, genZ.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-", genZ.InChI);
         }
 
         /// <summary>
         /// Tests 3D coordinates are correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetStandardInChIFromLandDAlanine3D()
         {
-
             // L-Alanine
-            IAtomContainer acL = new AtomContainer();
-            IAtom a1L = new Atom("C", new Vector3(-0.358, 0.819, 20.655));
-            IAtom a2L = new Atom("C", new Vector3(-1.598, -0.032, 20.905));
-            IAtom a3L = new Atom("N", new Vector3(-0.275, 2.014, 21.574));
-            IAtom a4L = new Atom("C", new Vector3(0.952, 0.043, 20.838));
-            IAtom a5L = new Atom("O", new Vector3(-2.678, 0.479, 21.093));
-            IAtom a6L = new Atom("O", new Vector3(-1.596, -1.239, 20.958));
+            var acL = builder.NewAtomContainer();
+            var a1L = builder.NewAtom("C", new Vector3(-0.358, 0.819, 20.655));
+            var a2L = builder.NewAtom("C", new Vector3(-1.598, -0.032, 20.905));
+            var a3L = builder.NewAtom("N", new Vector3(-0.275, 2.014, 21.574));
+            var a4L = builder.NewAtom("C", new Vector3(0.952, 0.043, 20.838));
+            var a5L = builder.NewAtom("O", new Vector3(-2.678, 0.479, 21.093));
+            var a6L = builder.NewAtom("O", new Vector3(-1.596, -1.239, 20.958));
             a1L.ImplicitHydrogenCount = 1;
             a3L.ImplicitHydrogenCount = 2;
             a4L.ImplicitHydrogenCount = 3;
@@ -598,24 +585,24 @@ namespace NCDK.Graphs.InChI
             acL.Atoms.Add(a5L);
             acL.Atoms.Add(a6L);
 
-            acL.Bonds.Add(new Bond(a1L, a2L, BondOrder.Single));
-            acL.Bonds.Add(new Bond(a1L, a3L, BondOrder.Single));
-            acL.Bonds.Add(new Bond(a1L, a4L, BondOrder.Single));
-            acL.Bonds.Add(new Bond(a2L, a5L, BondOrder.Single));
-            acL.Bonds.Add(new Bond(a2L, a6L, BondOrder.Double));
+            acL.Bonds.Add(builder.NewBond(a1L, a2L, BondOrder.Single));
+            acL.Bonds.Add(builder.NewBond(a1L, a3L, BondOrder.Single));
+            acL.Bonds.Add(builder.NewBond(a1L, a4L, BondOrder.Single));
+            acL.Bonds.Add(builder.NewBond(a2L, a5L, BondOrder.Single));
+            acL.Bonds.Add(builder.NewBond(a2L, a6L, BondOrder.Double));
 
-            InChIGenerator genL = GetFactory().GetInChIGenerator(acL);
+            var genL = factory.GetInChIGenerator(acL);
             Assert.AreEqual(InChIReturnCode.Ok, genL.ReturnStatus);
             Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1", genL.InChI);
 
             // D-Alanine
-            IAtomContainer acD = new AtomContainer();
-            IAtom a1D = new Atom("C", new Vector3(0.358, 0.819, 20.655));
-            IAtom a2D = new Atom("C", new Vector3(1.598, -0.032, 20.905));
-            IAtom a3D = new Atom("N", new Vector3(0.275, 2.014, 21.574));
-            IAtom a4D = new Atom("C", new Vector3(-0.952, 0.043, 20.838));
-            IAtom a5D = new Atom("O", new Vector3(2.678, 0.479, 21.093));
-            IAtom a6D = new Atom("O", new Vector3(1.596, -1.239, 20.958));
+            var acD = builder.NewAtomContainer();
+            var a1D = builder.NewAtom("C", new Vector3(0.358, 0.819, 20.655));
+            var a2D = builder.NewAtom("C", new Vector3(1.598, -0.032, 20.905));
+            var a3D = builder.NewAtom("N", new Vector3(0.275, 2.014, 21.574));
+            var a4D = builder.NewAtom("C", new Vector3(-0.952, 0.043, 20.838));
+            var a5D = builder.NewAtom("O", new Vector3(2.678, 0.479, 21.093));
+            var a6D = builder.NewAtom("O", new Vector3(1.596, -1.239, 20.958));
             a1D.ImplicitHydrogenCount = 1;
             a3D.ImplicitHydrogenCount = 2;
             a4D.ImplicitHydrogenCount = 3;
@@ -627,13 +614,13 @@ namespace NCDK.Graphs.InChI
             acD.Atoms.Add(a5D);
             acD.Atoms.Add(a6D);
 
-            acD.Bonds.Add(new Bond(a1D, a2D, BondOrder.Single));
-            acD.Bonds.Add(new Bond(a1D, a3D, BondOrder.Single));
-            acD.Bonds.Add(new Bond(a1D, a4D, BondOrder.Single));
-            acD.Bonds.Add(new Bond(a2D, a5D, BondOrder.Single));
-            acD.Bonds.Add(new Bond(a2D, a6D, BondOrder.Double));
+            acD.Bonds.Add(builder.NewBond(a1D, a2D, BondOrder.Single));
+            acD.Bonds.Add(builder.NewBond(a1D, a3D, BondOrder.Single));
+            acD.Bonds.Add(builder.NewBond(a1D, a4D, BondOrder.Single));
+            acD.Bonds.Add(builder.NewBond(a2D, a5D, BondOrder.Single));
+            acD.Bonds.Add(builder.NewBond(a2D, a6D, BondOrder.Double));
 
-            InChIGenerator genD = GetFactory().GetInChIGenerator(acD);
+            var genD = factory.GetInChIGenerator(acD);
             Assert.AreEqual(InChIReturnCode.Ok, genD.ReturnStatus);
             Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1", genD.InChI);
         }
@@ -642,19 +629,19 @@ namespace NCDK.Graphs.InChI
         public void TestTetrahedralStereo()
         {
             // L-Alanine
-            IAtomContainer acL = new AtomContainer();
-            IAtom[] ligandAtoms = new IAtom[4];
-            IAtom a1 = new Atom("C");
-            IAtom a1H = new Atom("H");
+            var acL = builder.NewAtomContainer();
+            var ligandAtoms = new IAtom[4];
+            var a1 = builder.NewAtom("C");
+            var a1H = builder.NewAtom("H");
             ligandAtoms[0] = a1H;
-            IAtom a2 = new Atom("C");
+            var a2 = builder.NewAtom("C");
             ligandAtoms[1] = a2;
-            IAtom a3 = new Atom("N");
+            var a3 = builder.NewAtom("N");
             ligandAtoms[2] = a3;
-            IAtom a4 = new Atom("C");
+            var a4 = builder.NewAtom("C");
             ligandAtoms[3] = a4;
-            IAtom a5 = new Atom("O");
-            IAtom a6 = new Atom("O");
+            var a5 = builder.NewAtom("O");
+            var a6 = builder.NewAtom("O");
             a1.ImplicitHydrogenCount = 0;
             a3.ImplicitHydrogenCount = 2;
             a4.ImplicitHydrogenCount = 3;
@@ -667,17 +654,17 @@ namespace NCDK.Graphs.InChI
             acL.Atoms.Add(a5);
             acL.Atoms.Add(a6);
 
-            acL.Bonds.Add(new Bond(a1, a1H, BondOrder.Single));
-            acL.Bonds.Add(new Bond(a1, a2, BondOrder.Single));
-            acL.Bonds.Add(new Bond(a1, a3, BondOrder.Single));
-            acL.Bonds.Add(new Bond(a1, a4, BondOrder.Single));
-            acL.Bonds.Add(new Bond(a2, a5, BondOrder.Single));
-            acL.Bonds.Add(new Bond(a2, a6, BondOrder.Double));
+            acL.Bonds.Add(builder.NewBond(a1, a1H, BondOrder.Single));
+            acL.Bonds.Add(builder.NewBond(a1, a2, BondOrder.Single));
+            acL.Bonds.Add(builder.NewBond(a1, a3, BondOrder.Single));
+            acL.Bonds.Add(builder.NewBond(a1, a4, BondOrder.Single));
+            acL.Bonds.Add(builder.NewBond(a2, a5, BondOrder.Single));
+            acL.Bonds.Add(builder.NewBond(a2, a6, BondOrder.Double));
 
-            ITetrahedralChirality chirality = new TetrahedralChirality(a1, ligandAtoms, TetrahedralStereo.AntiClockwise);
+            var chirality = new TetrahedralChirality(a1, ligandAtoms, TetrahedralStereo.AntiClockwise);
             acL.StereoElements.Add(chirality);
 
-            InChIGenerator genL = GetFactory().GetInChIGenerator(acL);
+            var genL = factory.GetInChIGenerator(acL);
             Assert.AreEqual(InChIReturnCode.Ok, genL.ReturnStatus);
             Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1", genL.InChI);
         }
@@ -686,11 +673,11 @@ namespace NCDK.Graphs.InChI
         public void TestDoubleBondStereochemistry()
         {
             // (E)-1,2-dichloroethene
-            IAtomContainer acE = new AtomContainer();
-            IAtom a1E = new Atom("C");
-            IAtom a2E = new Atom("C");
-            IAtom a3E = new Atom("Cl");
-            IAtom a4E = new Atom("Cl");
+            var acE = builder.NewAtomContainer();
+            var a1E = builder.NewAtom("C");
+            var a2E = builder.NewAtom("C");
+            var a3E = builder.NewAtom("Cl");
+            var a4E = builder.NewAtom("Cl");
             a1E.ImplicitHydrogenCount = 1;
             a2E.ImplicitHydrogenCount = 1;
             acE.Atoms.Add(a1E);
@@ -698,62 +685,59 @@ namespace NCDK.Graphs.InChI
             acE.Atoms.Add(a3E);
             acE.Atoms.Add(a4E);
 
-            acE.Bonds.Add(new Bond(a1E, a2E, BondOrder.Double));
-            acE.Bonds.Add(new Bond(a1E, a3E, BondOrder.Single));
-            acE.Bonds.Add(new Bond(a2E, a4E, BondOrder.Single));
+            acE.Bonds.Add(builder.NewBond(a1E, a2E, BondOrder.Double));
+            acE.Bonds.Add(builder.NewBond(a1E, a3E, BondOrder.Single));
+            acE.Bonds.Add(builder.NewBond(a2E, a4E, BondOrder.Single));
 
-            IBond[] ligands = new IBond[2];
+            var ligands = new IBond[2];
             ligands[0] = acE.Bonds[1];
             ligands[1] = acE.Bonds[2];
-            IDoubleBondStereochemistry stereo = new DoubleBondStereochemistry(acE.Bonds[0], ligands,
-                    DoubleBondConformation.Opposite);
+            var stereo = new DoubleBondStereochemistry(acE.Bonds[0], ligands, DoubleBondConformation.Opposite);
             acE.StereoElements.Add(stereo);
 
-            InChIGenerator genE = GetFactory().GetInChIGenerator(acE);
+            var genE = factory.GetInChIGenerator(acE);
             Assert.AreEqual(InChIReturnCode.Ok, genE.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", genE.InChI);
         }
 
-        /// <summary>
         // @cdk.bug 1295
-        /// </summary>
         [TestMethod()]
         public void Bug1295()
         {
-            MDLV2000Reader reader = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.bug1295.mol"));
-            try
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.bug1295.mol")))
             {
-                IAtomContainer container = reader.Read(new AtomContainer());
-                InChIGenerator generator = GetFactory().GetInChIGenerator(container);
+                var container = reader.Read(builder.NewAtomContainer());
+                var generator = factory.GetInChIGenerator(container);
                 Assert.AreEqual("InChI=1S/C7H15NO/c1-4-7(3)6-8-9-5-2/h6-7H,4-5H2,1-3H3", generator.InChI);
-            }
-            finally
-            {
-                reader.Close();
             }
         }
 
         [TestMethod()]
         public void R_penta_2_3_diene_impl_h()
         {
-            var m = new AtomContainer();
-            m.Atoms.Add(new Atom("CH3"));
-            m.Atoms.Add(new Atom("CH"));
-            m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("CH"));
-            m.Atoms.Add(new Atom("CH3"));
+            var m = builder.NewAtomContainer();
+            m.Atoms.Add(builder.NewAtom("CH3"));
+            m.Atoms.Add(builder.NewAtom("CH"));
+            m.Atoms.Add(builder.NewAtom("C"));
+            m.Atoms.Add(builder.NewAtom("CH"));
+            m.Atoms.Add(builder.NewAtom("CH3"));
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Double);
             m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Single);
 
-            int[][] atoms = new int[][]{
-                new[] {0, 1, 3, 4}, new[] {1, 0, 3, 4},
-                new[] {1, 0, 4, 3}, new[] {0, 1, 4, 3},
-                new[] {4, 3, 1, 0}, new[] {4, 3, 0, 1},
-                new[] {3, 4, 0, 1}, new[] {3, 4, 1, 0},};
-            TetrahedralStereo[] stereos = new TetrahedralStereo[]{TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise,
-                TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise};
+            var atoms = new int[][]
+                {
+                    new[] {0, 1, 3, 4}, new[] {1, 0, 3, 4},
+                    new[] {1, 0, 4, 3}, new[] {0, 1, 4, 3},
+                    new[] {4, 3, 1, 0}, new[] {4, 3, 0, 1},
+                    new[] {3, 4, 0, 1}, new[] {3, 4, 1, 0},
+                };
+            var stereos = new TetrahedralStereo[]
+                {
+                    TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise,
+                    TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise,
+                };
 
             for (int i = 0; i < atoms.Length; i++)
             {
@@ -767,7 +751,7 @@ namespace NCDK.Graphs.InChI
                     stereos[i]);
                 m.SetStereoElements(new[] { element });
 
-                InChIGenerator generator = GetFactory().GetInChIGenerator(m);
+                var generator = factory.GetInChIGenerator(m);
                 Assert.AreEqual("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m0/s1", generator.InChI);
             }
         }
@@ -775,24 +759,27 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void S_penta_2_3_diene_impl_h()
         {
-            var m = new AtomContainer();
-            m.Atoms.Add(new Atom("CH3"));
-            m.Atoms.Add(new Atom("CH"));
-            m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("CH"));
-            m.Atoms.Add(new Atom("CH3"));
+            var m = builder.NewAtomContainer();
+            m.Atoms.Add(builder.NewAtom("CH3"));
+            m.Atoms.Add(builder.NewAtom("CH"));
+            m.Atoms.Add(builder.NewAtom("C"));
+            m.Atoms.Add(builder.NewAtom("CH"));
+            m.Atoms.Add(builder.NewAtom("CH3"));
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Double);
             m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Single);
 
-            int[][] atoms = new int[][] {
+            var atoms = new int[][] {
                 new[] {0, 1, 3, 4}, new[] {1, 0, 3, 4},
                 new[] {1, 0, 4, 3}, new[] {0, 1, 4, 3},
                 new[] {4, 3, 1, 0}, new[] {4, 3, 0, 1},
                 new[] {3, 4, 0, 1}, new[] {3, 4, 1, 0}, };
-            TetrahedralStereo[] stereos = new TetrahedralStereo[]{TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise,
-                TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise};
+            var stereos = new TetrahedralStereo[]
+                {
+                    TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise,
+                    TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise,
+                };
 
             for (int i = 0; i < atoms.Length; i++)
             {
@@ -806,7 +793,7 @@ namespace NCDK.Graphs.InChI
                     stereos[i]);
 
                 m.SetStereoElements(new[] { element });
-                InChIGenerator generator = GetFactory().GetInChIGenerator(m);
+                var generator = factory.GetInChIGenerator(m);
                 Assert.AreEqual("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m1/s1", generator.InChI);
             }
         }
@@ -814,14 +801,14 @@ namespace NCDK.Graphs.InChI
         // why it does not work? [TestMethod()]
         public void R_penta_2_3_diene_expl_h()
         {
-            var m = new AtomContainer();
-            m.Atoms.Add(new Atom("CH3"));
-            m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("CH3"));
-            m.Atoms.Add(new Atom("H"));
-            m.Atoms.Add(new Atom("H"));
+            var m = builder.NewAtomContainer();
+            m.Atoms.Add(builder.NewAtom("CH3"));
+            m.Atoms.Add(builder.NewAtom("C"));
+            m.Atoms.Add(builder.NewAtom("C"));
+            m.Atoms.Add(builder.NewAtom("C"));
+            m.Atoms.Add(builder.NewAtom("CH3"));
+            m.Atoms.Add(builder.NewAtom("H"));
+            m.Atoms.Add(builder.NewAtom("H"));
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Double);
@@ -834,8 +821,11 @@ namespace NCDK.Graphs.InChI
                 new[] {5, 0, 4, 6}, new[] {0, 5, 4, 6},
                 new[] {4, 6, 5, 0}, new[] {4, 6, 0, 5},
                 new[] {6, 4, 0, 5} ,new[] {6, 4, 5, 0}, };
-            TetrahedralStereo[] stereos = new TetrahedralStereo[]{TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.Clockwise,
-                TetrahedralStereo.Clockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise};
+            var stereos = new TetrahedralStereo[]
+                {
+                    TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.Clockwise,
+                    TetrahedralStereo.Clockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise
+                };
 
             for (int i = 0; i < atoms.Length; i++)
             {
@@ -849,7 +839,7 @@ namespace NCDK.Graphs.InChI
                    stereos[i]);
                 m.SetStereoElements(new[] { element });
 
-                InChIGenerator generator = GetFactory().GetInChIGenerator(m);
+                var generator = factory.GetInChIGenerator(m);
                 Assert.AreEqual("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m0/s1", generator.InChI);
             }
         }
@@ -857,14 +847,14 @@ namespace NCDK.Graphs.InChI
         // why it does not work? [TestMethod()]
         public void S_penta_2_3_diene_expl_h()
         {
-            var m = new AtomContainer();
-            m.Atoms.Add(new Atom("CH3"));
-            m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("CH3"));
-            m.Atoms.Add(new Atom("H"));
-            m.Atoms.Add(new Atom("H"));
+            var m = builder.NewAtomContainer();
+            m.Atoms.Add(builder.NewAtom("CH3"));
+            m.Atoms.Add(builder.NewAtom("C"));
+            m.Atoms.Add(builder.NewAtom("C"));
+            m.Atoms.Add(builder.NewAtom("C"));
+            m.Atoms.Add(builder.NewAtom("CH3"));
+            m.Atoms.Add(builder.NewAtom("H"));
+            m.Atoms.Add(builder.NewAtom("H"));
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Double);
@@ -872,13 +862,18 @@ namespace NCDK.Graphs.InChI
             m.AddBond(m.Atoms[1], m.Atoms[5], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[6], BondOrder.Single);
 
-            int[][] atoms = new int[][]{
-                new[] {0, 5, 6, 4}, new[] {5, 0, 6, 4},
-                new[] {5, 0, 4, 6}, new[] {0, 5, 4, 6},
-                new[] {4, 6, 5, 0}, new[] {4, 6, 0, 5},
-                new[] {6, 4, 0, 5}, new[] {6, 4, 5, 0}, };
-            TetrahedralStereo[] stereos = new TetrahedralStereo[]{TetrahedralStereo.Clockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.Clockwise,
-                TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.Clockwise};
+            int[][] atoms = new int[][]
+                {
+                    new[] {0, 5, 6, 4}, new[] {5, 0, 6, 4},
+                    new[] {5, 0, 4, 6}, new[] {0, 5, 4, 6},
+                    new[] {4, 6, 5, 0}, new[] {4, 6, 0, 5},
+                    new[] {6, 4, 0, 5}, new[] {6, 4, 5, 0},
+                };
+            var stereos = new TetrahedralStereo[]
+                {
+                    TetrahedralStereo.Clockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise,
+                    TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.Clockwise,
+                };
 
             for (int i = 0; i < atoms.Length; i++)
             {
@@ -892,7 +887,7 @@ namespace NCDK.Graphs.InChI
                    stereos[i]);
                 m.SetStereoElements(new[] { element });
 
-                InChIGenerator generator = GetFactory().GetInChIGenerator(m);
+                var generator = factory.GetInChIGenerator(m);
                 Assert.AreEqual("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m1/s1", generator.InChI);
             }
         }
@@ -900,16 +895,15 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void Timeout()
         {
-            IChemObjectBuilder bldr = CDK.Builder;
-            SmilesParser smipar = new SmilesParser(bldr);
-            string smiles = "C(CCCNC(=N)N)(COCC(COP([O])(=O)OCCCCCCNC(NC1=CC(=C(C=C1)C2(C3=CC=C(C=C3OC=4C2=CC=C(C4)O)O)C)C(=O)[O])=S)OP(=O)([O])OCC(COCC(CCC/[NH]=C(\\[NH])/N)(CCCNC(=N)N)CCCNC(=N)N)OP(=O)([O])OCC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)OP(OCC(COCC(CCCNC(=N)N)(CCCNC(=N)N)CCC/[NH]=C(\\[NH])/N)OP(=O)([O])OCC(COCC(CCCNC(=N)N)(CCCNC(N)=N)CCC/[NH]=C(/N)\\[NH])OP([O])(=O)CCC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)OP([O])(=O)OCC(COCC(CCCNC(N)=N)(CCCNC(N)=N)CCC/[NH]=C(\\[NH])/N)OP(OCC(COCC(CCCNC(N)=N)(CCC/[NH]=C(/N)\\[NH])CCCNC(N)=N)O=P([O])(OCC(COP(=OC(COCC(CCC/[NH]=C(\\[NH])/N)(CCCNC(N)=N)CCCNC(N)=N)COP([O])(=O)OC(COP(OC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)COP(OC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)COP([O])(=O)OC(COP(OC(COP(OC(COP(=O)([O])OC(COCC(CCC/[NH]=C(/N)\\[NH])(CCCNC(N)=N)CCCNC(=N)N)COP([O])(=O)OCCCCCCNC(NC=5C=CC(=C(C5)C(=O)[O])C6(C7=CC=C(C=C7OC=8C6=CC=C(C8)O)O)C)=S)COCC(CCCNC(N)=N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)([O])=O)COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)([O])=O)COCC(CCCNC(=N)N)(CCCNC(=N)N)CCC/[NH]=C(\\[NH])/N)([O])=O)([O])=O)COCC(CCC/[NH]=C(/N)\\[NH])(CCCNC(=N)N)CCCNC(=N)N)([O])[O])(C)COP(OCCCCCCO)(=O)[O])[O])(=O)[O])([O])=O)(CCC/[NH]=C(\\[NH])/[NH])CCCNC(=N)N";
+            var smipar = new SmilesParser(builder);
+            var smiles = "C(CCCNC(=N)N)(COCC(COP([O])(=O)OCCCCCCNC(NC1=CC(=C(C=C1)C2(C3=CC=C(C=C3OC=4C2=CC=C(C4)O)O)C)C(=O)[O])=S)OP(=O)([O])OCC(COCC(CCC/[NH]=C(\\[NH])/N)(CCCNC(=N)N)CCCNC(=N)N)OP(=O)([O])OCC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)OP(OCC(COCC(CCCNC(=N)N)(CCCNC(=N)N)CCC/[NH]=C(\\[NH])/N)OP(=O)([O])OCC(COCC(CCCNC(=N)N)(CCCNC(N)=N)CCC/[NH]=C(/N)\\[NH])OP([O])(=O)CCC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)OP([O])(=O)OCC(COCC(CCCNC(N)=N)(CCCNC(N)=N)CCC/[NH]=C(\\[NH])/N)OP(OCC(COCC(CCCNC(N)=N)(CCC/[NH]=C(/N)\\[NH])CCCNC(N)=N)O=P([O])(OCC(COP(=OC(COCC(CCC/[NH]=C(\\[NH])/N)(CCCNC(N)=N)CCCNC(N)=N)COP([O])(=O)OC(COP(OC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)COP(OC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)COP([O])(=O)OC(COP(OC(COP(OC(COP(=O)([O])OC(COCC(CCC/[NH]=C(/N)\\[NH])(CCCNC(N)=N)CCCNC(=N)N)COP([O])(=O)OCCCCCCNC(NC=5C=CC(=C(C5)C(=O)[O])C6(C7=CC=C(C=C7OC=8C6=CC=C(C8)O)O)C)=S)COCC(CCCNC(N)=N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)([O])=O)COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)([O])=O)COCC(CCCNC(=N)N)(CCCNC(=N)N)CCC/[NH]=C(\\[NH])/N)([O])=O)([O])=O)COCC(CCC/[NH]=C(/N)\\[NH])(CCCNC(=N)N)CCCNC(=N)N)([O])[O])(C)COP(OCCCCCCO)(=O)[O])[O])(=O)[O])([O])=O)(CCC/[NH]=C(\\[NH])/[NH])CCCNC(=N)N";
             var mol = smipar.ParseSmiles(smiles);
-            InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
-            InChIGenerator generator = inchiFact.GetInChIGenerator(mol, "W0.01");
+            var inchiFact = InChIGeneratorFactory.Instance;
+            var generator = inchiFact.GetInChIGenerator(mol, "W0.01");
             Assert.AreEqual(InChIReturnCode.Error, generator.ReturnStatus);
             Assert.IsTrue(
-                generator.Log.Contains("Time limit exceeded") ||
-                generator.Log.Contains("Structure normalization timeout"));
+                generator.Log.Contains("Time limit exceeded")
+             || generator.Log.Contains("Structure normalization timeout"));
         }
 
         /// <summary>
@@ -919,11 +913,10 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void Guanine_std()
         {
-            IChemObjectBuilder bldr = CDK.Builder;
-            SmilesParser smipar = new SmilesParser(bldr);
-            string smiles = "NC1=NC2=C(N=CN2)C(=O)N1";
+            var smipar = new SmilesParser(builder);
+            var smiles = "NC1=NC2=C(N=CN2)C(=O)N1";
             var mol = smipar.ParseSmiles(smiles);
-            InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
+            var inchiFact = InChIGeneratorFactory.Instance;
             InChIGenerator inchigen = inchiFact.GetInChIGenerator(mol);
             Assert.AreEqual(InChIReturnCode.Ok, inchigen.ReturnStatus);
             Assert.AreEqual("InChI=1S/C5H5N5O/c6-5-9-3-2(4(11)10-5)7-1-8-3/h1H,(H4,6,7,8,9,10,11)", inchigen.InChI);
@@ -936,12 +929,11 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void Guanine_ket()
         {
-            IChemObjectBuilder bldr = CDK.Builder;
-            SmilesParser smipar = new SmilesParser(bldr);
-            string smiles = "NC1=NC2=C(N=CN2)C(=O)N1";
+            var smipar = new SmilesParser(builder);
+            var smiles = "NC1=NC2=C(N=CN2)C(=O)N1";
             var mol = smipar.ParseSmiles(smiles);
-            InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
-            InChIGenerator inchigen = inchiFact.GetInChIGenerator(mol, "KET");
+            var inchiFact = InChIGeneratorFactory.Instance;
+            var inchigen = inchiFact.GetInChIGenerator(mol, "KET");
             Assert.AreEqual(InChIReturnCode.Ok, inchigen.ReturnStatus);
             Assert.AreEqual("InChI=1/C5H5N5O/c6-5-9-3-2(4(11)10-5)7-1-8-3/h1H,(H4,2,6,7,8,9,10,11)", inchigen.InChI);
         }
@@ -953,15 +945,14 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void Aminopropenol_std()
         {
-            IChemObjectBuilder bldr = CDK.Builder;
-            SmilesParser smipar = new SmilesParser(bldr);
-            string smiles = "N\\C=C/C=O";
+            var smipar = new SmilesParser(builder);
+            var smiles = "N\\C=C/C=O";
             var mol = smipar.ParseSmiles(smiles);
-            InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
-            InChIGenerator stdinchi = inchiFact.GetInChIGenerator(mol);
+            var inchiFact = InChIGeneratorFactory.Instance;
+            var stdinchi = inchiFact.GetInChIGenerator(mol);
             Assert.AreEqual(InChIReturnCode.Ok, stdinchi.ReturnStatus);
             Assert.AreEqual("InChI=1S/C3H5NO/c4-2-1-3-5/h1-3H,4H2/b2-1-", stdinchi.InChI);
-            InChIGenerator inchigen = inchiFact.GetInChIGenerator(mol, "15T");
+            var inchigen = inchiFact.GetInChIGenerator(mol, "15T");
             Assert.AreEqual(InChIReturnCode.Ok, inchigen.ReturnStatus);
             Assert.AreEqual("InChI=1/C3H5NO/c4-2-1-3-5/h1-3H,(H2,4,5)", inchigen.InChI);
         }
@@ -973,12 +964,12 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void Aminopropenol_15T()
         {
-            IChemObjectBuilder bldr = CDK.Builder;
-            SmilesParser smipar = new SmilesParser(bldr);
-            string smiles = "N\\C=C/C=O";
+            var builder = CDK.Builder;
+            var smipar = new SmilesParser(builder);
+            var smiles = "N\\C=C/C=O";
             var mol = smipar.ParseSmiles(smiles);
-            InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
-            InChIGenerator inchigen = inchiFact.GetInChIGenerator(mol, "15T");
+            var inchiFact = InChIGeneratorFactory.Instance;
+            var inchigen = inchiFact.GetInChIGenerator(mol, "15T");
             Assert.AreEqual(InChIReturnCode.Ok, inchigen.ReturnStatus);
             Assert.AreEqual("InChI=1/C3H5NO/c4-2-1-3-5/h1-3H,(H2,4,5)", inchigen.InChI);
         }
@@ -989,12 +980,12 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestFiveSecondTimeoutFlag()
         {
-            var ac = new AtomContainer();
-            ac.Atoms.Add(new Atom("C"));
-            InChIGeneratorFactory factory = InChIGeneratorFactory.Instance;
-            InChIGenerator generator = factory.GetInChIGenerator(ac);
+            var ac = builder.NewAtomContainer();
+            ac.Atoms.Add(builder.NewAtom("C"));
+            var factory = InChIGeneratorFactory.Instance;
+            var generator = factory.GetInChIGenerator(ac);
 
-            string flagChar = Environment.OSVersion.Platform < PlatformID.Unix ? "/" : "-";
+            var flagChar = Environment.OSVersion.Platform < PlatformID.Unix ? "/" : "-";
             Assert.IsTrue(generator.Input.Options.Contains(flagChar + "W5"));
         }
     }

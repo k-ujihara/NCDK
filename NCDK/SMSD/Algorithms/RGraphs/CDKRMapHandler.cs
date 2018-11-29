@@ -391,22 +391,22 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             {
                 return null;
             }
-            IDictionary<IBond, IBond> bondMap = new Dictionary<IBond, IBond>(list.Count);
+            var bondMap = new Dictionary<IBond, IBond>(list.Count);
             foreach (var solBondMap in list)
             {
-                int id1 = solBondMap.Id1;
-                int id2 = solBondMap.Id2;
-                IBond qBond = sourceGraph.Bonds[id1];
-                IBond tBond = targetGraph.Bonds[id2];
+                var id1 = solBondMap.Id1;
+                var id2 = solBondMap.Id2;
+                var qBond = sourceGraph.Bonds[id1];
+                var tBond = targetGraph.Bonds[id2];
                 bondMap[qBond] = tBond;
             }
-            List<CDKRMap> result1 = new List<CDKRMap>();
-            List<CDKRMap> result2 = new List<CDKRMap>();
+            var result1 = new List<CDKRMap>();
+            var result2 = new List<CDKRMap>();
             foreach (var qbond in sourceGraph.Bonds)
             {
                 if (bondMap.ContainsKey(qbond))
                 {
-                    IBond tbond = bondMap[qbond];
+                    var tbond = bondMap[qbond];
                     CDKRMap map00 = null;
                     CDKRMap map01 = null;
                     CDKRMap map10 = null;

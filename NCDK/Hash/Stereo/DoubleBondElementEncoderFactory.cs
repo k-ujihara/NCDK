@@ -40,7 +40,7 @@ namespace NCDK.Hash.Stereo
             // index atoms for quick lookup - wish we didn't have to do this
             // but the it's better than calling getAtomNumber every time - we use
             // a lazy creation so it's only created if there was a need for it
-            IDictionary<IAtom, int> atomToIndex = null;
+            Dictionary<IAtom, int> atomToIndex = null;
 
             var encoders = new List<IStereoEncoder>();
 
@@ -49,8 +49,7 @@ namespace NCDK.Hash.Stereo
             {
                 if (se is IDoubleBondStereochemistry)
                 {
-                    encoders.Add(GetEncoder((IDoubleBondStereochemistry)se, atomToIndex = IndexMap(atomToIndex, container),
-                            graph));
+                    encoders.Add(GetEncoder((IDoubleBondStereochemistry)se, atomToIndex = IndexMap(atomToIndex, container), graph));
                 }
             }
 
@@ -66,9 +65,9 @@ namespace NCDK.Hash.Stereo
         /// <returns>a new geometry encoder</returns>
         private static GeometryEncoder GetEncoder(IDoubleBondStereochemistry dbs, IDictionary<IAtom, int> atomToIndex, int[][] graph)
         {
-            IBond db = dbs.StereoBond;
-            int u = atomToIndex[db.Begin];
-            int v = atomToIndex[db.End];
+            var db = dbs.StereoBond;
+            var u = atomToIndex[db.Begin];
+            var v = atomToIndex[db.End];
 
             // we now need to expand our view of the environment - the vertex arrays
             // 'us' and <paramref name="vs"/> hold the neighbors of each end point of the double bond
@@ -78,8 +77,8 @@ namespace NCDK.Hash.Stereo
             // no additional atom attached (or perhaps it is an implicit Hydrogen)
             // we use either double bond end point.
             var bs = dbs.Bonds;
-            int[] us = new int[2];
-            int[] vs = new int[2];
+            var us = new int[2];
+            var vs = new int[2];
 
             us[0] = atomToIndex[bs[0].GetOther(db.Begin)];
             us[1] = graph[u].Length == 2 ? u : FindOther(graph[u], v, us[0]);
@@ -87,16 +86,18 @@ namespace NCDK.Hash.Stereo
             vs[0] = atomToIndex[bs[1].GetOther(db.End)];
             vs[1] = graph[v].Length == 2 ? v : FindOther(graph[v], u, vs[0]);
 
-            int parity = dbs.Stereo == DoubleBondConformation.Opposite ? +1 : -1;
+            var parity = dbs.Stereo == DoubleBondConformation.Opposite ? +1 : -1;
 
-            GeometricParity geomParity = GeometricParity.ValueOf(parity);
+            var geomParity = GeometricParity.ValueOf(parity);
 
             // the permutation parity is combined - but note we only use this if we
             // haven't used <paramref name="u"/> or 'v' as place holders (i.e. implicit hydrogens)
             // otherwise there is only '1' and the parity is just '1' (identity)
-            PermutationParity permParity = new CombinedPermutationParity(us[1] == u ? BasicPermutationParity.Identity
-                    : new BasicPermutationParity(us), vs[1] == v ? BasicPermutationParity.Identity
-                    : new BasicPermutationParity(vs));
+            PermutationParity permParity = new CombinedPermutationParity(us[1] == 
+                u ? BasicPermutationParity.Identity
+                  : new BasicPermutationParity(us), vs[1] == v 
+                  ? BasicPermutationParity.Identity
+                  : new BasicPermutationParity(vs));
             return new GeometryEncoder(new int[] { u, v }, permParity, geomParity);
         }
 
@@ -111,7 +112,8 @@ namespace NCDK.Hash.Stereo
         {
             foreach (var v in vs)
             {
-                if (v != u && v != x) return v;
+                if (v != u && v != x)
+                    return v;
             }
             throw new ArgumentException("vs[] did not contain another vertex");
         }
@@ -122,9 +124,10 @@ namespace NCDK.Hash.Stereo
         /// <param name="map">existing map (possibly null)</param>
         /// <param name="container">the container we want the map for</param>
         /// <returns>a usable atom to index map for the given container</returns>
-        private static IDictionary<IAtom, int> IndexMap(IDictionary<IAtom, int> map, IAtomContainer container)
+        private static Dictionary<IAtom, int> IndexMap(Dictionary<IAtom, int> map, IAtomContainer container)
         {
-            if (map != null) return map;
+            if (map != null)
+                return map;
             map = new Dictionary<IAtom, int>();
             foreach (var a in container.Atoms)
             {

@@ -34,7 +34,8 @@ namespace NCDK
     // @cdk.created 2001-08-06
     // @cdk.keyword polymer
     // @cdk.keyword biopolymer
-    public interface IBioPolymer : IPolymer
+    public interface IBioPolymer
+        : IPolymer
     {
         /// <summary>
         /// Adds the atom oAtom to a specified Strand, whereas the Monomer is unspecified. Hence
@@ -66,7 +67,7 @@ namespace NCDK
         /// <summary>
         /// Map containing the strands in the Polymer.
         /// </summary>
-        /// <returns><see cref="IDictionary{TKey, TValue}"/> containing the strands in the Polymer</returns>
+        /// <returns><see cref="Dictionary{TKey, TValue}"/> containing the strands in the Polymer</returns>
         IReadOnlyDictionary<string, IStrand> GetStrandMap();
 
         /// <summary>

@@ -18,7 +18,6 @@
  */
 
 using NCDK.Aromaticities;
-using NCDK.Config;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
 using System;
@@ -34,7 +33,6 @@ namespace NCDK.Tools
     /// <seealso cref="Normalizers.Normalizer"/>
     // @author     Todd Martin
     // @cdk.module extra
-    // @cdk.githash
     public static class CDKUtilities
     {
         public static string FixSmiles(string Smiles)
@@ -55,7 +53,7 @@ namespace NCDK.Tools
                 for (int i = 0; i <= m.Atoms.Count - 1; i++)
                 {
                     IAtom a = m.Atoms[i];
-                    if (a.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
+                    if (a.AtomicNumber.Equals(AtomicNumbers.N))
                     {
                         var ca = m.GetConnectedAtoms(a).ToReadOnlyList();
 
@@ -67,7 +65,7 @@ namespace NCDK.Tools
 
                             for (int j = 0; j <= 2; j++)
                             {
-                                if ((ca[j]).AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                                if (ca[j].AtomicNumber.Equals(AtomicNumbers.O))
                                 {
                                     count++;
                                 }
@@ -75,12 +73,11 @@ namespace NCDK.Tools
 
                             if (count > 1)
                             {
-
                                 count = 0;
                                 for (int j = 0; j <= 2; j++)
                                 {
-                                    IAtom caj = (IAtom)ca[j];
-                                    if (caj.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                                    var caj = ca[j];
+                                    if (caj.AtomicNumber.Equals(AtomicNumbers.O))
                                     {
                                         if (m.GetConnectedBonds(caj).Count() == 1)
                                         {// account for possibility of ONO2
@@ -90,8 +87,8 @@ namespace NCDK.Tools
                                     }
                                 }
 
-                                BondOrder order1 = m.GetBond(a, cao[0]).Order;
-                                BondOrder order2 = m.GetBond(a, cao[1]).Order;
+                                var order1 = m.GetBond(a, cao[0]).Order;
+                                var order2 = m.GetBond(a, cao[1]).Order;
 
                                 //if (totalobonds==4) { // need to fix (FIXME)
                                 if (order1 == BondOrder.Single && order2 == BondOrder.Double)
@@ -125,21 +122,21 @@ namespace NCDK.Tools
             {
                 for (int i = 0; i <= m.Atoms.Count - 1; i++)
                 {
-                    IAtom a = m.Atoms[i];
-                    if (a.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
+                    var a = m.Atoms[i];
+                    if (a.AtomicNumber.Equals(AtomicNumbers.N))
                     {
                         var ca = m.GetConnectedAtoms(a).ToReadOnlyList();
 
                         if (ca.Count == 3)
                         {
-                            IAtom[] cao = new IAtom[2];
+                            var cao = new IAtom[2];
 
                             int count = 0;
 
                             for (int j = 0; j <= 2; j++)
                             {
-                                IAtom caj = ca[j];
-                                if (caj.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                                var caj = ca[j];
+                                if (caj.AtomicNumber.Equals(AtomicNumbers.O))
                                 {
                                     count++;
                                 }
@@ -150,8 +147,8 @@ namespace NCDK.Tools
                                 count = 0;
                                 for (int j = 0; j <= 2; j++)
                                 {
-                                    IAtom caj = (IAtom)ca[j];
-                                    if (caj.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                                    var caj = (IAtom)ca[j];
+                                    if (caj.AtomicNumber.Equals(AtomicNumbers.O))
                                     {
                                         if (m.GetConnectedBonds(caj).Count() == 1)
                                         {// account for possibility of ONO2
@@ -161,8 +158,8 @@ namespace NCDK.Tools
                                     }
                                 }
 
-                                BondOrder order1 = m.GetBond(a, cao[0]).Order;
-                                BondOrder order2 = m.GetBond(a, cao[1]).Order;
+                                var order1 = m.GetBond(a, cao[0]).Order;
+                                var order2 = m.GetBond(a, cao[1]).Order;
 
                                 if ((order1 == BondOrder.Single && order2 == BondOrder.Double)
                                  || (order1 == BondOrder.Double && order2 == BondOrder.Single))
@@ -253,13 +250,11 @@ namespace NCDK.Tools
         public static void FixSulphurH(IAtomContainer m)
         {
             // removes extra H's attached to sulphurs
-            //Debug.WriteLine("EnterFixSulphur");
-
             for (int i = 0; i <= m.Atoms.Count - 1; i++)
             {
-                IAtom a = m.Atoms[i];
+                var a = m.Atoms[i];
 
-                if (a.AtomicNumber.Equals(NaturalElements.S.AtomicNumber))
+                if (a.AtomicNumber.Equals(AtomicNumbers.S))
                 {
                     var connectedAtoms = m.GetConnectedAtoms(a);
 
@@ -267,7 +262,7 @@ namespace NCDK.Tools
 
                     foreach (var conAtom in connectedAtoms)
                     {
-                        if (!conAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                        if (!conAtom.AtomicNumber.Equals(AtomicNumbers.H))
                         {
                             IBond bond = m.GetBond(a, conAtom);
                             if (bond.Order == BondOrder.Single)
@@ -293,7 +288,7 @@ namespace NCDK.Tools
                     {
                         foreach (var conAtom in connectedAtoms)
                         {
-                            if (conAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                            if (conAtom.AtomicNumber.Equals(AtomicNumbers.H))
                             {
                                 m.RemoveAtom(conAtom);
                             }

@@ -23,16 +23,12 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.AtomTypes;
 using NCDK.Common.Base;
 using NCDK.Graphs;
 using NCDK.IO;
 using NCDK.Isomorphisms.Matchers;
-using NCDK.Silent;
 using NCDK.SMARTS;
-using NCDK.Smiles;
 using NCDK.Templates;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections;
@@ -45,7 +41,8 @@ namespace NCDK.Isomorphisms
     public class UniversalIsomorphismTesterTest : CDKTestCase
     {
         readonly bool standAlone = false;
-        private UniversalIsomorphismTester uiTester = new UniversalIsomorphismTester();
+        private readonly UniversalIsomorphismTester uiTester = new UniversalIsomorphismTester();
+        private readonly IChemObjectBuilder builder = CDK.Builder;
 
         [TestMethod()]
         public void TestIsSubgraphIAtomContainerIAtomContainer()
@@ -72,14 +69,13 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSFBug1708336()
         {
-            var builder = ChemObjectBuilder.Instance;
             var atomContainer = builder.NewAtomContainer();
             atomContainer.Atoms.Add(builder.NewAtom("C"));
             atomContainer.Atoms.Add(builder.NewAtom("C"));
             atomContainer.Atoms.Add(builder.NewAtom("N"));
             atomContainer.AddBond(atomContainer.Atoms[0], atomContainer.Atoms[1], BondOrder.Single);
             atomContainer.AddBond(atomContainer.Atoms[1], atomContainer.Atoms[2], BondOrder.Single);
-            var query = new QueryAtomContainer(ChemObjectBuilder.Instance);
+            var query = new QueryAtomContainer(builder);
             if (!Smarts.Parse(query, "C*C"))
                 Assert.Fail(Smarts.GetLastErrorMessage());
 
@@ -167,8 +163,8 @@ namespace NCDK.Isomorphisms
         {
             var molfile = "NCDK.Data.MDL.decalin.mol";
             var queryfile = "NCDK.Data.MDL.decalin.mol";
-            var mol = new AtomContainer();
-            var temp = new AtomContainer();
+            var mol = builder.NewAtomContainer();
+            var temp = builder.NewAtomContainer();
             QueryAtomContainer query1 = null;
             QueryAtomContainer query2 = null;
 
@@ -197,8 +193,8 @@ namespace NCDK.Isomorphisms
         {
             var file1 = "NCDK.Data.MDL.5SD.mol";
             var file2 = "NCDK.Data.MDL.ADN.mol";
-            var mol1 = new AtomContainer();
-            var mol2 = new AtomContainer();
+            var mol1 = builder.NewAtomContainer();
+            var mol2 = builder.NewAtomContainer();
 
             var ins1 = ResourceLoader.GetAsStream(file1);
             new MDLV2000Reader(ins1, ChemObjectReaderMode.Strict).Read(mol1);
@@ -357,16 +353,22 @@ namespace NCDK.Isomorphisms
         {
             var file1 = "NCDK.Data.MDL.5SD.mol";
             var file2 = "NCDK.Data.MDL.ADN.mol";
-            var mol1 = new AtomContainer();
-            var mol2 = new AtomContainer();
 
-            var ins1 = ResourceLoader.GetAsStream(file1);
-            new MDLV2000Reader(ins1, ChemObjectReaderMode.Strict).Read(mol1);
-            var ins2 = ResourceLoader.GetAsStream(file2);
-            new MDLV2000Reader(ins2, ChemObjectReaderMode.Strict).Read(mol2);
+            var mol1 = builder.NewAtomContainer();
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(file1), ChemObjectReaderMode.Strict))
+            {
+                reader.Read(mol1);
+            }
+
+            var mol2 = builder.NewAtomContainer();
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(file2), ChemObjectReaderMode.Strict))
+            {
+                reader.Read(mol2);
+            }
+
             var permutor = new AtomContainerAtomPermutor(mol2);
             permutor.MoveNext();
-            mol2 = new AtomContainer((AtomContainer)permutor.Current);
+            mol2 = builder.NewAtomContainer(permutor.Current);
 
             var list1 = uiTester.GetOverlaps(mol1, mol2);
             var list2 = uiTester.GetOverlaps(mol2, mol1);
@@ -397,10 +399,10 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestIsIsomorphIAtomContainerIAtomContainer()
         {
-            var ac1 = new AtomContainer();
-            ac1.Atoms.Add(new Atom("C"));
-            var ac2 = new AtomContainer();
-            ac2.Atoms.Add(new Atom("C"));
+            var ac1 = builder.NewAtomContainer();
+            ac1.Atoms.Add(builder.NewAtom("C"));
+            var ac2 = builder.NewAtomContainer();
+            ac2.Atoms.Add(builder.NewAtom("C"));
             Assert.IsTrue(uiTester.IsIsomorph(ac1, ac2));
             Assert.IsTrue(uiTester.IsSubgraph(ac1, ac2));
         }
@@ -538,12 +540,12 @@ namespace NCDK.Isomorphisms
             var filename = "NCDK.Data.MDL.UITTimeout.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new MDLV2000Reader(ins);
-            var content = (ChemFile)reader.Read(new ChemFile());
+            var content = reader.Read(builder.NewChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             var molecules = new IAtomContainer[2];
             for (int j = 0; j < 2; j++)
             {
-                var aAtomContainer = (IAtomContainer)cList[j];
+                var aAtomContainer = cList[j];
                 var tmpMatcher = CDK.AtomTypeMatcher;
                 var tmpAdder = CDK.HydrogenAdder;
                 for (int i = 0; i < aAtomContainer.Atoms.Count; i++)
@@ -570,33 +572,33 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestUITSymmetricMatch()
         {
-            var q = new QueryAtomContainer(ChemObjectBuilder.Instance);
+            var q = new QueryAtomContainer(builder);
             if (!Smarts.Parse(q, "C**C"))
                 Assert.Fail(Smarts.GetLastErrorMessage());
 
             //Creating 'SCCS' target molecule
-            var target = new AtomContainer();
+            var target = builder.NewAtomContainer();
             //atoms
-            var ta0 = new Atom("S");
+            var ta0 = builder.NewAtom("S");
             target.Atoms.Add(ta0);
-            var ta1 = new Atom("C");
+            var ta1 = builder.NewAtom("C");
             target.Atoms.Add(ta1);
-            var ta2 = new Atom("C");
+            var ta2 = builder.NewAtom("C");
             target.Atoms.Add(ta2);
-            var ta3 = new Atom("S");
+            var ta3 = builder.NewAtom("S");
             target.Atoms.Add(ta3);
             //bonds
-            var tb0 = new Bond();
+            var tb0 = builder.NewBond();
             tb0.SetAtoms(new IAtom[] { ta0, ta1 });
             tb0.Order = BondOrder.Single;
             target.Bonds.Add(tb0);
 
-            var tb1 = new Bond();
+            var tb1 = builder.NewBond();
             tb1.SetAtoms(new IAtom[] { ta1, ta2 });
             tb1.Order = BondOrder.Single;
             target.Bonds.Add(tb1);
 
-            var tb2 = new Bond();
+            var tb2 = builder.NewBond();
             tb2.SetAtoms(new IAtom[] { ta2, ta3 });
             tb2.Order = BondOrder.Single;
             target.Bonds.Add(tb2);

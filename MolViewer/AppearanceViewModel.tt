@@ -24,8 +24,6 @@
 <#@ output extension=".tt.cs" #>
 
 <#
-    string className = "ChemObjectBox";
-
     void P(string name, string type, string defaultValue)
     {
 #>

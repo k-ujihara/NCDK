@@ -32,8 +32,6 @@ namespace NCDK.Dict
     // @author      Egon Willighagen
     // @cdk.created 2003-08-24
     // @cdk.module  standard
-    // @cdk.githash
-    [Serializable]
     public class DictRef
     {
         readonly string type;

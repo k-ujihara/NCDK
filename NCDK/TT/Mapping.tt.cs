@@ -35,7 +35,6 @@ namespace NCDK.Default
     /// An example of such a mapping, is the mapping between corresponding atoms
     /// in a Reaction.
     /// </summary>
-    // @cdk.githash 
     // @cdk.keyword reaction, atom mapping 
     // @author  Egon Willighagen
     // @cdk.created 2003-08-16 
@@ -90,7 +89,6 @@ namespace NCDK.Silent
     /// An example of such a mapping, is the mapping between corresponding atoms
     /// in a Reaction.
     /// </summary>
-    // @cdk.githash 
     // @cdk.keyword reaction, atom mapping 
     // @author  Egon Willighagen
     // @cdk.created 2003-08-16 

@@ -54,11 +54,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        private static double ScaledAtomicMasses(IElement element)
+        private static double ScaledAtomicMasses(ChemicalElement element)
         {
             var isofac = CDK.IsotopeFactory;
-            double realmasses = isofac.GetNaturalMass(element);
-            return realmasses / CarbonMass;
+            var realmasses = isofac.GetNaturalMass(element);
+            return (double)realmasses / (double)CarbonMass;
         }
 
         private static double[] ListConvertion(IAtomContainer container)
@@ -67,7 +67,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var scalated = new double[natom];
 
             for (int i = 0; i < natom; i++)
-                scalated[i] = ScaledAtomicMasses(container.Atoms[i]);
+                scalated[i] = ScaledAtomicMasses(container.Atoms[i].Element);
             return scalated;
         }
 

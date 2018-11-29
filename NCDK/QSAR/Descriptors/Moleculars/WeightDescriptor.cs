@@ -66,7 +66,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public Result Calculate(string symbol = "*")
         {
             var iso = CDK.IsotopeFactory;
-            var h = iso.GetMajorIsotope(NaturalElements.H.AtomicNumber);
+            var h = iso.GetMajorIsotope(AtomicNumbers.H);
 
             double weight;
             switch (symbol)
@@ -80,13 +80,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 case "H":
                     weight = container.Atoms
                         .Select(atom =>
-                           (atom.AtomicNumber == NaturalElements.H.AtomicNumber
+                           (atom.AtomicNumber == AtomicNumbers.H
                             ? 1
                             : (atom.ImplicitHydrogenCount ?? 0)) * h.ExactMass.Value)
                         .Sum();
                     break;
                 default:
-                    var number = NaturalElement.ToAtomicNumber(symbol);
+                    var number = ChemicalElement.OfSymbol(symbol).AtomicNumber;
                     weight = container.Atoms.Count(atom => atom.AtomicNumber == number) * iso.GetMajorIsotope(number).ExactMass.Value;
                     break;
             }

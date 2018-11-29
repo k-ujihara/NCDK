@@ -10,7 +10,7 @@ namespace NCDK.Common.Collections
 {
     public class LinkedHashSet<T> : ISet<T>
     {
-        private readonly IDictionary<T, LinkedListNode<T>> dict;
+        private readonly Dictionary<T, LinkedListNode<T>> dict;
         private readonly LinkedList<T> list;
 
         public LinkedHashSet(int initialCapacity)
@@ -53,7 +53,7 @@ namespace NCDK.Common.Collections
             {
                 return false;
             }
-            LinkedListNode<T> node = this.list.AddLast(item);
+            var node = this.list.AddLast(item);
             this.dict[item] = node;
             return true;
         }
@@ -76,7 +76,7 @@ namespace NCDK.Common.Collections
             {
                 throw new ArgumentNullException(nameof(other));
             }
-            T[] ts = new T[Count];
+            var ts = new T[Count];
             CopyTo(ts, 0);
             foreach (T t in ts)
             {
@@ -115,7 +115,7 @@ namespace NCDK.Common.Collections
             {
                 throw new ArgumentNullException(nameof(other));
             }
-            int otherCount = System.Linq.Enumerable.Count(other);
+            var otherCount = System.Linq.Enumerable.Count(other);
             if (Count <= otherCount)
             {
                 return false;
@@ -237,26 +237,11 @@ namespace NCDK.Common.Collections
         // ICollection<T> implementation
         //
 
-        public int Count
-        {
-            get
-            {
-                return this.dict.Count;
-            }
-        }
+        public int Count => this.dict.Count;
 
-        public bool IsReadOnly
-        {
-            get
-            {
-                return this.dict.IsReadOnly;
-            }
-        }
+        public bool IsReadOnly => false;
 
-        void ICollection<T>.Add(T item)
-        {
-            Add(item);
-        }
+        void ICollection<T>.Add(T item) => Add(item);
 
         public void Clear()
         {
@@ -264,10 +249,7 @@ namespace NCDK.Common.Collections
             this.list.Clear();
         }
 
-        public bool Contains(T item)
-        {
-            return this.dict.ContainsKey(item);
-        }
+        public bool Contains(T item) => this.dict.ContainsKey(item);
 
         public void CopyTo(T[] array, int arrayIndex)
         {
@@ -289,18 +271,12 @@ namespace NCDK.Common.Collections
         // IEnumerable<T> implementation
         //
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            return this.list.GetEnumerator();
-        }
+        public IEnumerator<T> GetEnumerator() => this.list.GetEnumerator();
 
         //
         // IEnumerable implementation
         //
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.list.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

@@ -36,7 +36,6 @@ namespace NCDK
     // @author      Edgar Luttmann <edgar@uni-paderborn.de>
     // @cdk.module  test-interfaces
     // @cdk.created 2001-08-09
-    [TestClass()]
     public abstract class AbstractChemObjectTest 
         : AbstractCDKObjectTest
     {
@@ -383,7 +382,7 @@ namespace NCDK
         [TestClass()]
         public class DummyChemObjectListener : IChemObjectListener
         {
-            AbstractChemObjectTest parent;
+            readonly AbstractChemObjectTest parent;
 
             public DummyChemObjectListener(AbstractChemObjectTest parent)
             {

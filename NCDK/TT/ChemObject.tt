@@ -43,7 +43,6 @@ namespace <#= ns.NS #>
     /// table for administration of physical or chemical properties
     /// </summary>
     // @author        steinbeck
-    // @cdk.githash
     // @cdk.module data
     public class ChemObject : IChemObject
     {
@@ -208,6 +207,8 @@ namespace <#= ns.NS #>
 <# } #>
             }
         }
+
+        public override string ToString() => CDKStuff.ToString(this);
     }
 }
 <#   

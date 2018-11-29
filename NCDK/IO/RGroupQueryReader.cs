@@ -36,6 +36,8 @@ namespace NCDK.IO
 {
     /// <summary>
     /// A reader for Symyx' Rgroup files (RGFiles).
+    /// </summary>
+    /// <remarks>
     /// An RGfile describes a single molecular query with Rgroups.
     /// Each RGfile is a combination of Ctabs defining the root molecule and each
     /// member of each Rgroup in the query.
@@ -43,9 +45,8 @@ namespace NCDK.IO
     /// <para>The RGFile format is described in the manual
     /// <see href="http://www.symyx.com/downloads/public/ctfile/ctfile.pdf">"CTFile Formats"</see> , Chapter 5.
     /// </para>
-    /// </summary>
+    /// </remarks>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @cdk.keyword Rgroup
     // @cdk.keyword R group
@@ -143,11 +144,11 @@ namespace NCDK.IO
         /// <returns>populated query</returns>
         private RGroupQuery ParseRGFile(RGroupQuery rGroupQuery)
         {
-            IChemObjectBuilder defaultChemObjectBuilder = rGroupQuery.Builder;
+            var defaultChemObjectBuilder = rGroupQuery.Builder;
             int lineCount = 0;
             string line = "";
             /* Variable to capture the LOG Line(s) */
-            IDictionary<int, RGroupLogic> logicDefinitions = new Dictionary<int, RGroupLogic>();
+            var logicDefinitions = new Dictionary<int, RGroupLogic>();
 
             // Variable to captures attachment order for Rgroups. Contains: - pseudo
             // atom (Rgroup) - map with (integer,bond) meaning "bond" has attachment
@@ -182,7 +183,7 @@ namespace NCDK.IO
                     Trace.TraceInformation("Process the root structure (scaffold)");
                     CheckLineBeginsWith(input.ReadLine(), "$CTAB", ++lineCount);
                     //Force header
-                    StringBuilder sb = new StringBuilder(RGroup.RootLabelKey + "\n\n\n");
+                    var sb = new StringBuilder(RGroup.RootLabelKey + "\n\n\n");
                     line = input.ReadLine();
                     ++lineCount;
                     while (line != null && !string.Equals(line, "$END CTAB", StringComparison.Ordinal))
@@ -196,8 +197,8 @@ namespace NCDK.IO
                             RGroupLogic log = null;
 
                             log = new RGroupLogic();
-                            int rgroupNumber = int.Parse(tokens[3], NumberFormatInfo.InvariantInfo);
-                            string tok = tokens[4];
+                            var rgroupNumber = int.Parse(tokens[3], NumberFormatInfo.InvariantInfo);
+                            var tok = tokens[4];
                             log.rgoupNumberRequired = string.Equals(tok, "0", StringComparison.Ordinal) ? 0 : int.Parse(tok, NumberFormatInfo.InvariantInfo);
                             log.restH = string.Equals(tokens[5], "1", StringComparison.Ordinal) ? true : false;
                             tok = "";
@@ -216,8 +217,8 @@ namespace NCDK.IO
                 }
 
                 //Let MDL reader process $CTAB block of the root structure.
-                MDLV2000Reader reader = new MDLV2000Reader(new StringReader(rootStr), ChemObjectReaderMode.Strict);
-                IAtomContainer root = reader.Read(defaultChemObjectBuilder.NewAtomContainer());
+                var reader = new MDLV2000Reader(new StringReader(rootStr), ChemObjectReaderMode.Strict);
+                var root = reader.Read(defaultChemObjectBuilder.NewAtomContainer());
                 rGroupQuery.RootStructure = root;
 
                 //Atom attachment order: parse AAL lines first
@@ -228,15 +229,15 @@ namespace NCDK.IO
                         if (line.StartsWith("M  AAL", StringComparison.Ordinal))
                         {
                             var stAAL = Strings.Tokenize(line);
-                            int pos = int.Parse(stAAL[2], NumberFormatInfo.InvariantInfo);
-                            IAtom rGroup = root.Atoms[pos - 1];
+                            var pos = int.Parse(stAAL[2], NumberFormatInfo.InvariantInfo);
+                            var rGroup = root.Atoms[pos - 1];
                             var bondMap = new Dictionary<int, IBond>();
                             for (int i = 4; i < stAAL.Count; i += 2)
                             {
                                 pos = int.Parse(stAAL[i], NumberFormatInfo.InvariantInfo);
-                                IAtom partner = root.Atoms[pos - 1];
-                                IBond bond = root.GetBond(rGroup, partner);
-                                int order = int.Parse(stAAL[i + 1], NumberFormatInfo.InvariantInfo);
+                                var partner = root.Atoms[pos - 1];
+                                var bond = root.GetBond(rGroup, partner);
+                                var order = int.Parse(stAAL[i + 1], NumberFormatInfo.InvariantInfo);
                                 bondMap[order] = bond;
                                 Trace.TraceInformation($"AAL {order} {((IPseudoAtom)rGroup).Label}-{partner.Symbol}");
                             }
@@ -297,7 +298,7 @@ namespace NCDK.IO
                     {
                         if (RGroupQuery.IsValidRgroupQueryLabel(rGroup.Label))
                         {
-                            int rgroupNum = int.Parse(rGroup.Label.Substring(1), NumberFormatInfo.InvariantInfo);
+                            var rgroupNum = int.Parse(rGroup.Label.Substring(1), NumberFormatInfo.InvariantInfo);
                             var rgroupList = new RGroupList(rgroupNum);
                             if (!rGroupDefinitions.ContainsKey(rgroupNum))
                             {
@@ -328,7 +329,6 @@ namespace NCDK.IO
                 bool hasMoreRGP = true;
                 while (hasMoreRGP)
                 {
-
                     CheckLineBeginsWith(line, "$RGP", lineCount);
                     line = input.ReadLine();
                     ++lineCount;
@@ -340,7 +340,6 @@ namespace NCDK.IO
                     bool hasMoreCTAB = true;
                     while (hasMoreCTAB)
                     {
-
                         CheckLineBeginsWith(line, "$CTAB", lineCount);
                         var sb = new StringBuilder(RGroup.MakeLabel(rgroupNum) + "\n\n\n");
                         line = input.ReadLine();
@@ -350,10 +349,10 @@ namespace NCDK.IO
                             line = input.ReadLine();
                             ++lineCount;
                         }
-                        string groupStr = sb.ToString();
+                        var groupStr = sb.ToString();
                         reader = new MDLV2000Reader(new StringReader(groupStr), ChemObjectReaderMode.Strict);
-                        IAtomContainer group = reader.Read(defaultChemObjectBuilder.NewAtomContainer());
-                        RGroup rGroup = new RGroup
+                        var group = reader.Read(defaultChemObjectBuilder.NewAtomContainer());
+                        var rGroup = new RGroup
                         {
                             Group = group
                         };
@@ -370,7 +369,7 @@ namespace NCDK.IO
                                     {
                                         var pos = int.Parse(stAPO[i], NumberFormatInfo.InvariantInfo);
                                         var apo = int.Parse(stAPO[i + 1], NumberFormatInfo.InvariantInfo);
-                                        IAtom at = group.Atoms[pos - 1];
+                                        var at = group.Atoms[pos - 1];
                                         switch (apo)
                                         {
                                             case 1:
@@ -432,8 +431,7 @@ namespace NCDK.IO
                 if (!(exception is IOException || exception is ArgumentException))
                     throw;
                 Console.Error.WriteLine(exception.StackTrace);
-                string error = exception.GetType() + "Error while parsing line " + lineCount + ": " + line + " -> "
-                        + exception.Message;
+                var error = exception.GetType() + "Error while parsing line " + lineCount + ": " + line + " -> " + exception.Message;
                 Trace.TraceError(error);
                 Debug.WriteLine(exception);
                 throw new CDKException(error, exception);

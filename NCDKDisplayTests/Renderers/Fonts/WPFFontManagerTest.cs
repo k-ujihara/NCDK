@@ -26,7 +26,8 @@ namespace NCDK.Renderers.Fonts
 {
     // @cdk.module test-renderbasic
     [TestClass()]
-    public class WPFFontManagerTest : AbstractFontManagerTest
+    public class WPFFontManagerTest 
+        : AbstractFontManagerTest
     {
         static WPFFontManagerTest()
         {

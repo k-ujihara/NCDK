@@ -26,8 +26,8 @@ namespace NCDK
     /// Checks the functionality of <see cref="IMolecularFormulaSet"/> implementations.
     /// </summary>
     // @cdk.module test-interfaces
-    [TestClass()]
-    public abstract class AbstractMolecularFormulaSetTest : CDKTestCase
+    public abstract class AbstractMolecularFormulaSetTest 
+        : CDKTestCase
     {
         protected abstract IChemObjectBuilder Builder { get; }
 

@@ -42,7 +42,7 @@ namespace NCDK.SMSD.Algorithms.Singles
         private IAtomContainer source = null;
         private IAtomContainer target = null;
         private List<IReadOnlyDictionary<IAtom, IAtom>> mappings = null;
-        private IDictionary<int, double> connectedBondOrder = null;
+        private SortedDictionary<int, double> connectedBondOrder = null;
 
         /// <summary>
         /// Default
@@ -105,7 +105,7 @@ namespace NCDK.SMSD.Algorithms.Singles
             foreach (var sourceAtom in source.Atoms)
             {
                 var smartAtom = (IQueryAtom)sourceAtom;
-                if ((removeHydrogen && !smartAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)) || (!removeHydrogen))
+                if ((removeHydrogen && !smartAtom.AtomicNumber.Equals(AtomicNumbers.H)) || (!removeHydrogen))
                 {
                     foreach (var targetAtom in target.Atoms)
                     {
@@ -143,7 +143,7 @@ namespace NCDK.SMSD.Algorithms.Singles
             BondEnergies be = BondEnergies.Instance;
             foreach (var sourceAtom in source.Atoms)
             {
-                if ((removeHydrogen && !sourceAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)) || (!removeHydrogen))
+                if ((removeHydrogen && !sourceAtom.AtomicNumber.Equals(AtomicNumbers.H)) || (!removeHydrogen))
                 {
                     foreach (var targetAtom in target.Atoms)
                     {
@@ -181,7 +181,7 @@ namespace NCDK.SMSD.Algorithms.Singles
             BondEnergies be = BondEnergies.Instance;
             foreach (var targetAtom in target.Atoms)
             {
-                if ((removeHydrogen && !targetAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)) || (!removeHydrogen))
+                if ((removeHydrogen && !targetAtom.AtomicNumber.Equals(AtomicNumbers.H)) || (!removeHydrogen))
                 {
                     foreach (var sourceAtoms in source.Atoms)
                     {
@@ -225,7 +225,7 @@ namespace NCDK.SMSD.Algorithms.Singles
             mappings = sortedMap;
         }
 
-        private static List<KeyValuePair<int, double>> SortByValue(IDictionary<int, double> map) 
+        private static List<KeyValuePair<int, double>> SortByValue(SortedDictionary<int, double> map) 
         {
             var list = new List<KeyValuePair<int, double>>();
             foreach (var entry in map)

@@ -46,9 +46,9 @@ namespace NCDK.Tools
             IAtomContainer keto = new AtomContainer();
 
             // atom block
-            IAtom atom1 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom1 = new Atom(ChemicalElement.C);
             AddHydrogens(keto, atom1, 1);
-            IAtom atom2 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom2 = new Atom(ChemicalElement.C);
             AddHydrogens(keto, atom2, 1);
 
             // bond block
@@ -74,11 +74,11 @@ namespace NCDK.Tools
             IAtomContainer keto = new AtomContainer();
 
             // atom block
-            IAtom atom1 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom1 = new Atom(ChemicalElement.C);
             AddHydrogens(keto, atom1, 3);
-            IAtom atom2 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom2 = new Atom(ChemicalElement.C);
             AddHydrogens(keto, atom2, 1);
-            IAtom atom3 = new Atom(NaturalElements.Oxygen.Element);
+            IAtom atom3 = new Atom(ChemicalElement.O);
 
             // bond block
             IBond bond1 = new Bond(atom1, atom2);
@@ -107,11 +107,11 @@ namespace NCDK.Tools
             IAtomContainer enol = new AtomContainer();
 
             // atom block
-            IAtom atom1 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom1 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom1, 2);
-            IAtom atom2 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom2 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom2, 1);
-            IAtom atom3 = new Atom(NaturalElements.Oxygen.Element);
+            IAtom atom3 = new Atom(ChemicalElement.O);
             AddHydrogens(enol, atom3, 1);
 
             // bond block
@@ -141,13 +141,13 @@ namespace NCDK.Tools
             IAtomContainer enol = new AtomContainer();
 
             // atom block
-            IAtom atom1 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom1 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom1, 2);
-            IAtom atom2 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom2 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom2, 1);
-            IAtom atom3 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom3 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom3, 1);
-            IAtom atom4 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom4 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom4, 2);
 
             // bond block
@@ -181,18 +181,18 @@ namespace NCDK.Tools
             IAtomContainer enol = new AtomContainer();
 
             // atom block
-            IAtom atom1 = new Atom(NaturalElements.Carbon.Element);
-            IAtom atom2 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom1 = new Atom(ChemicalElement.C);
+            IAtom atom2 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom2, 1);
-            IAtom atom3 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom3 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom3, 1);
-            IAtom atom4 = new Atom(NaturalElements.Carbon.Element);
-            IAtom atom5 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom4 = new Atom(ChemicalElement.C);
+            IAtom atom5 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom5, 1);
-            IAtom atom6 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom6 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom6, 1);
-            IAtom atom7 = new Atom(NaturalElements.Oxygen.Element);
-            IAtom atom8 = new Atom(NaturalElements.Oxygen.Element);
+            IAtom atom7 = new Atom(ChemicalElement.O);
+            IAtom atom8 = new Atom(ChemicalElement.O);
 
             // bond block
             IBond bond1 = new Bond(atom1, atom2);
@@ -244,17 +244,17 @@ namespace NCDK.Tools
             IAtomContainer enol = new AtomContainer();
 
             // atom block
-            IAtom atom1 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom1 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom1, 1);
-            IAtom atom2 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom2 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom2, 1);
-            IAtom atom3 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom3 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom3, 1);
-            IAtom atom4 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom4 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom4, 1);
-            IAtom atom5 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom5 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom5, 1);
-            IAtom atom6 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom6 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom6, 1);
 
             // bond block
@@ -305,15 +305,15 @@ namespace NCDK.Tools
             IAtomContainer enol = new AtomContainer();
 
             // atom block
-            IAtom atom1 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom1 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom1, 1);
-            IAtom atom2 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom2 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom2, 1);
-            IAtom atom3 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom3 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom3, 1);
-            IAtom atom4 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom4 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom4, 1);
-            IAtom atom5 = new Atom(NaturalElements.Nitrogen.Element);
+            IAtom atom5 = new Atom(ChemicalElement.N);
             AddHydrogens(enol, atom5, 1);
 
             // bond block
@@ -354,16 +354,16 @@ namespace NCDK.Tools
             IAtomContainer enol = new AtomContainer();
 
             // atom block
-            IAtom atom1 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom1 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom1, 1);
-            IAtom atom2 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom2 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom2, 1);
-            IAtom atom3 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom3 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom3, 1);
-            IAtom atom4 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom4 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom4, 1);
-            IAtom atom5 = new Atom(NaturalElements.Nitrogen.Element);
-            IAtom atom6 = new Atom(NaturalElements.Carbon.Element);
+            IAtom atom5 = new Atom(ChemicalElement.N);
+            IAtom atom6 = new Atom(ChemicalElement.C);
             AddHydrogens(enol, atom6, 1);
 
             // bond block

@@ -1094,43 +1094,34 @@ namespace NCDK.Isomorphisms
             for (int i = 0; i < ac1.Atoms.Count; i++)
             {
                 atom = ac1.Atoms[i];
-                if (atom.AtomicNumber.Equals(NaturalElements.S.AtomicNumber))
-                    ac1SCount++;
-                else if (atom.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
-                    ac1NCount++;
-                else if (atom.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
-                    ac1OCount++;
-                else if (atom.AtomicNumber.Equals(NaturalElements.F.AtomicNumber))
-                    ac1FCount++;
-                else if (atom.AtomicNumber.Equals(NaturalElements.Cl.AtomicNumber))
-                    ac1ClCount++;
-                else if (atom.AtomicNumber.Equals(NaturalElements.Br.AtomicNumber))
-                    ac1BrCount++;
-                else if (atom.AtomicNumber.Equals(NaturalElements.I.AtomicNumber))
-                    ac1ICount++;
-                else if (atom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                    ac1CCount++;
+                switch (atom.AtomicNumber)
+                {
+                    case AtomicNumbers.S:  ac1SCount++;  break;
+                    case AtomicNumbers.N:  ac1NCount++;  break;
+                    case AtomicNumbers.O:  ac1OCount++;  break;
+                    case AtomicNumbers.F:  ac1FCount++;  break;
+                    case AtomicNumbers.Cl: ac1ClCount++; break;
+                    case AtomicNumbers.Br: ac1BrCount++; break;
+                    case AtomicNumbers.I:  ac1ICount++;  break;
+                    case AtomicNumbers.C:  ac1CCount++;  break;
+                }
             }
             for (int i = 0; i < ac2.Atoms.Count; i++)
             {
                 atom = ac2.Atoms[i];
-                if (atom is IQueryAtom) continue;
-                if (atom.AtomicNumber.Equals(NaturalElements.S.AtomicNumber))
-                    ac2SCount++;
-                else if (atom.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
-                    ac2NCount++;
-                else if (atom.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
-                    ac2OCount++;
-                else if (atom.AtomicNumber.Equals(NaturalElements.F.AtomicNumber))
-                    ac2FCount++;
-                else if (atom.AtomicNumber.Equals(NaturalElements.Cl.AtomicNumber))
-                    ac2ClCount++;
-                else if (atom.AtomicNumber.Equals(NaturalElements.Br.AtomicNumber))
-                    ac2BrCount++;
-                else if (atom.AtomicNumber.Equals(NaturalElements.I.AtomicNumber))
-                    ac2ICount++;
-                else if (atom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
-                    ac2CCount++;
+                if (atom is IQueryAtom)
+                    continue;
+                switch (atom.AtomicNumber)
+                {
+                    case AtomicNumbers.S:  ac2SCount++;  break;
+                    case AtomicNumbers.N:  ac2NCount++;  break;
+                    case AtomicNumbers.O:  ac2OCount++;  break;
+                    case AtomicNumbers.F:  ac2FCount++;  break;
+                    case AtomicNumbers.Cl: ac2ClCount++; break;
+                    case AtomicNumbers.Br: ac2BrCount++; break;
+                    case AtomicNumbers.I:  ac2ICount++;  break;
+                    case AtomicNumbers.C:  ac2CCount++;  break;
+                }
             }
 
             if (ac1SCount < ac2SCount) return false;

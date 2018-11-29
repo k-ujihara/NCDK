@@ -147,7 +147,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 var currentAtom = container.Atoms[i];
 
                 var _mass = factory.GetMajorIsotope(currentAtom.Symbol).ExactMass;
-                double mass = _mass == null ? factory.GetNaturalMass(currentAtom) : _mass.Value;
+                double mass = _mass == null ? factory.GetNaturalMass(currentAtom.Element) : _mass.Value;
 
                 var p = currentAtom.Point3D.Value;
                 xdif = p.X - centerOfMass.X;

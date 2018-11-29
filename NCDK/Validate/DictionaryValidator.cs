@@ -27,9 +27,9 @@ namespace NCDK.Validate
     /// Validates the existence of references to dictionaries.
     /// </summary>
     // @author   Egon Willighagen
-    // @cdk.githash
     // @cdk.created  2003-03-28
-    public class DictionaryValidator : AbstractValidator
+    public class DictionaryValidator 
+        : AbstractValidator
     {
         private DictionaryDatabase db;
 
@@ -40,13 +40,12 @@ namespace NCDK.Validate
 
         public override ValidationReport ValidateChemObject(IChemObject subject)
         {
-            ValidationReport report = new ValidationReport();
+            var report = new ValidationReport();
             var properties = subject.GetProperties();
             var iter = properties.Keys;
-            ValidationTest noNamespace = new ValidationTest(subject,
-                    "Dictionary Reference lacks a namespace indicating the dictionary.");
-            ValidationTest noDict = new ValidationTest(subject, "The referenced dictionary does not exist.");
-            ValidationTest noEntry = new ValidationTest(subject, "The referenced entry does not exist in the dictionary.");
+            var noNamespace = new ValidationTest(subject,"Dictionary Reference lacks a namespace indicating the dictionary.");
+            var noDict = new ValidationTest(subject, "The referenced dictionary does not exist.");
+            var noEntry = new ValidationTest(subject, "The referenced entry does not exist in the dictionary.");
             foreach (var key in iter)
             {
                 if (key is string keyName)

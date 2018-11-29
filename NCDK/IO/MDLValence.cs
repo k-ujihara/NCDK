@@ -49,11 +49,11 @@ namespace NCDK.IO
         /// <returns>the container (for convenience)</returns>
         public static IAtomContainer Apply(IAtomContainer container)
         {
-            int n = container.Atoms.Count;
+            var n = container.Atoms.Count;
 
-            int[] valences = new int[n];
+            var valences = new int[n];
 
-            IDictionary<IAtom, int> atomToIndex = new Dictionary<IAtom, int>(n);
+            var atomToIndex = new Dictionary<IAtom, int>(n);
             foreach (var atom in container.Atoms)
                 atomToIndex[atom] = atomToIndex.Count;
 
@@ -71,14 +71,11 @@ namespace NCDK.IO
 
             for (int i = 0; i < n; i++)
             {
+                var atom = container.Atoms[i];
+                var charge = atom.FormalCharge;
+                var element = atom.AtomicNumber;
 
-                IAtom atom = container.Atoms[i];
-                int? charge = atom.FormalCharge;
-                int? element = atom.AtomicNumber;
-
-                if (element == null) continue;
-
-                int explicit_ = valences[i];
+                var explicit_ = valences[i];
 
                 // if there was a valence read from the mol file use that otherwise
                 // use the default value from the valence model to set the correct
@@ -89,7 +86,7 @@ namespace NCDK.IO
                 }
                 else
                 {
-                    int implicit_ = ImplicitValence(element.Value, charge ?? 0, valences[i]);
+                    var implicit_ = ImplicitValence(element, charge ?? 0, valences[i]);
                     atom.ImplicitHydrogenCount = implicit_ - explicit_;
                     atom.Valency = implicit_;
                 }

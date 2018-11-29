@@ -41,7 +41,7 @@ namespace NCDK.Hash.Stereo
             // index atoms for quick lookup - wish we didn't have to do this
             // but the it's better than calling getAtomNumber every time - we use
             // a lazy creation so it's only created if there was a need for it
-            IDictionary<IAtom, int> atomToIndex = null;
+            Dictionary<IAtom, int> atomToIndex = null;
 
             var encoders = new List<IStereoEncoder>();
 
@@ -67,23 +67,23 @@ namespace NCDK.Hash.Stereo
         {
             var ligands = tc.Ligands;
 
-            int centre = atomToIndex[tc.ChiralAtom];
-            int[] indices = new int[4];
+            var centre = atomToIndex[tc.ChiralAtom];
+            var indices = new int[4];
 
             int offset = -1;
-
             {
                 int i = 0;
                 foreach (var ligand in ligands)
                 {
                     indices[i] = atomToIndex[ligands[i]];
-                    if (indices[i] == centre) offset = i;
+                    if (indices[i] == centre)
+                        offset = i;
                     i++;
                 }
             }
 
             // convert clockwise/anticlockwise to -1/+1
-            int parity = tc.Stereo == TetrahedralStereo.Clockwise ? -1 : 1;
+            var parity = tc.Stereo == TetrahedralStereo.Clockwise ? -1 : 1;
 
             // now if any atom is the centre (indicating an implicit
             // hydrogen) we need to adjust the indicies and the parity
@@ -99,7 +99,8 @@ namespace NCDK.Hash.Stereo
                 // 3 (last index) minus the index where we started. if the
                 // value is odd we invert the parity (odd number of
                 // inversions)
-                if ((3 - offset) % 2 == 1) parity *= -1;
+                if ((3 - offset) % 2 == 1)
+                    parity *= -1;
 
                 // trim the array to size we don't include the last (implicit)
                 // vertex when checking the invariants
@@ -117,9 +118,10 @@ namespace NCDK.Hash.Stereo
         /// <param name="map">existing map (possibly null)</param>
         /// <param name="container">the container we want the map for</param>
         /// <returns>a usable atom to index map for the given container</returns>
-        private static IDictionary<IAtom, int> IndexMap(IDictionary<IAtom, int> map, IAtomContainer container)
+        private static Dictionary<IAtom, int> IndexMap(Dictionary<IAtom, int> map, IAtomContainer container)
         {
-            if (map != null) return map;
+            if (map != null)
+                return map;
             map = new Dictionary<IAtom, int>();
             foreach (var a in container.Atoms)
             {

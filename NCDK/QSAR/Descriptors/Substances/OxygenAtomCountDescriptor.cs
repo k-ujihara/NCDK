@@ -48,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Substances
             if (substance != null)
                 foreach (var container in substance)
                     foreach (var atom in container.Atoms)
-                        if (atom.AtomicNumber == NaturalElements.Oxygen.AtomicNumber)
+                        if (atom.AtomicNumber == AtomicNumbers.Oxygen)
                             count++;
 
             return new Result(count);

@@ -108,7 +108,7 @@ namespace NCDK.Layout
             {
                 if (conAtom.Point2D == null)
                 {
-                    if (conAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                    if (conAtom.AtomicNumber.Equals(AtomicNumbers.H))
                     {
                         unplaced.Atoms.Add(conAtom);
                     }

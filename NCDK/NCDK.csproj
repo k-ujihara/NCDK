@@ -219,6 +219,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EStateFragments.tt.cs</LastGenOutput>
     </None>
+    <None Update="ChemicalElement.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ChemicalElement.tt.cs</LastGenOutput>
+    </None>
     <None Update="IncludeExamples.xml">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -232,9 +236,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Configuration.tt.cs</LastGenOutput>
     </None>
-    <None Update="Config\NaturalElements.tt">
+    <None Update="Config\NaturalElement.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>NaturalElements.tt.cs</LastGenOutput>
+      <LastGenOutput>NaturalElement.tt.cs</LastGenOutput>
     </None>
     <None Update="Formula\MolecularFormula.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -356,10 +360,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ElectronContainer.tt.cs</LastGenOutput>
     </None>
-    <None Update="TT\Element.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Element.tt.cs</LastGenOutput>
-    </None>
     <None Update="TT\EnzymeResidueLocator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EnzymeResidueLocator.tt.cs</LastGenOutput>
@@ -471,15 +471,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CDK.tt</DependentUpon>
     </Compile>
+    <Compile Update="ChemicalElement.tt.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ChemicalElement.tt</DependentUpon>
+    </Compile>
     <Compile Update="Config\Fragments\EStateFragments.tt.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>EStateFragments.tt</DependentUpon>
     </Compile>
-    <Compile Update="Config\NaturalElements.tt.cs">
+    <Compile Update="Config\NaturalElement.tt.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>NaturalElements.tt</DependentUpon>
+      <DependentUpon>NaturalElement.tt</DependentUpon>
     </Compile>
     <Compile Update="Formula\MolecularFormula.tt.cs">
       <DesignTime>True</DesignTime>
@@ -630,11 +635,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ElectronContainer.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\Element.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Element.tt</DependentUpon>
     </Compile>
     <Compile Update="TT\EnzymeResidueLocator.tt.cs">
       <DesignTime>True</DesignTime>

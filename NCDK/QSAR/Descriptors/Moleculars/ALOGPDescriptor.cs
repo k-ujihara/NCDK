@@ -520,11 +520,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     {
                         switch (a.AtomicNumber)
                         {
-                            case NaturalElements.C.AtomicNumber:
+                            case AtomicNumbers.C:
                                 frags[1]++;
                                 alogpfrag[i] = 1;
                                 break;
-                            case NaturalElements.H.AtomicNumber:
+                            case AtomicNumbers.H:
                                 frags[htype]++;
                                 break;
                             default:
@@ -551,10 +551,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     {
                         switch (a.AtomicNumber)
                         {
-                            case NaturalElements.C.AtomicNumber:
+                            case AtomicNumbers.C:
                                 carbonCount++;
                                 break;
-                            case NaturalElements.H.AtomicNumber:
+                            case AtomicNumbers.H:
                                 frags[htype]++;
                                 break;
                             default:
@@ -594,10 +594,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     {
                         switch (a.AtomicNumber)
                         {
-                            case NaturalElements.C.AtomicNumber:
+                            case AtomicNumbers.C:
                                 carbonCount++;
                                 break;
-                            case NaturalElements.H.AtomicNumber:
+                            case AtomicNumbers.H:
                                 frags[htype]++;
                                 break;
                             default:
@@ -642,7 +642,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     {
                         switch (a.AtomicNumber)
                         {
-                            case NaturalElements.C.AtomicNumber:
+                            case AtomicNumbers.C:
                                 carbonCount++;
                                 break;
                             default:
@@ -707,13 +707,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
                 foreach (var a in ca)
                 {
-                    if (a.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                    if (a.AtomicNumber.Equals(AtomicNumbers.H))
                         continue;
 
                     switch (container.GetBond(ai, a).Order)
                     {
                         case BondOrder.Single:
-                            if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                            if (!a.AtomicNumber.Equals(AtomicNumbers.C))
                             {
                                 haveCsX = true;
                             }
@@ -724,7 +724,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             }
                             break;
                         case BondOrder.Double:
-                            if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                            if (!a.AtomicNumber.Equals(AtomicNumbers.C))
                             {
                                 haveCdX = true;
                             }
@@ -778,7 +778,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     if (container.GetBond(ai, a).Order == BondOrder.Single)
                     {
-                        if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        if (a.AtomicNumber.Equals(AtomicNumbers.C))
                         {
                             rCount++;
                         }
@@ -795,7 +795,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     }
                     else if (container.GetBond(ai, a).Order == BondOrder.Double)
                     {
-                        if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        if (!a.AtomicNumber.Equals(AtomicNumbers.C))
                         {
                             haveCdX = true;
                         }
@@ -891,14 +891,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     {
                         if (container.GetBond(ai, a).Order == BondOrder.Single)
                         {
-                            if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                            if (!a.AtomicNumber.Equals(AtomicNumbers.C))
                             {
                                 haveCsX = true;
                             }
                         }
                         else if (container.GetBond(ai, a).Order == BondOrder.Triple)
                         {
-                            if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                            if (!a.AtomicNumber.Equals(AtomicNumbers.C))
                             {
                                 haveCtX = true;
                             }
@@ -957,7 +957,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     }
                 }
 
-                if (ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && ca1.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                if (ca0.AtomicNumber.Equals(AtomicNumbers.C) && ca1.AtomicNumber.Equals(AtomicNumbers.C))
                 {
                     frags[24]++;
                     alogpfrag[i] = 24;
@@ -987,7 +987,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     }
                 }
 
-                if (!ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && !string.Equals(ca[1].Symbol, "C", StringComparison.Ordinal))
+                if (!ca0.AtomicNumber.Equals(AtomicNumbers.C) && !string.Equals(ca[1].Symbol, "C", StringComparison.Ordinal))
                 {
                     if (haveDouble1 && haveDouble2)
                     { // X--CH--X
@@ -1001,8 +1001,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     }
 
                 }
-                else if (ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && !ca1.AtomicNumber.Equals(NaturalElements.C.AtomicNumber)
-                      || (!ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && ca1.AtomicNumber.Equals(NaturalElements.C.AtomicNumber)))
+                else if (ca0.AtomicNumber.Equals(AtomicNumbers.C) && !ca1.AtomicNumber.Equals(AtomicNumbers.C)
+                      || (!ca0.AtomicNumber.Equals(AtomicNumbers.C) && ca1.AtomicNumber.Equals(AtomicNumbers.C)))
                 {
 
                     if (haveDouble1 && haveDouble2)
@@ -1109,7 +1109,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     if (haveDouble1 && haveDouble2)
                     { // X--CR--X
-                        if (nonringatom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        if (nonringatom.AtomicNumber.Equals(AtomicNumbers.C))
                         {
                             frags[31]++;
                             alogpfrag[i] = 31;
@@ -1124,7 +1124,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     else
                     {
 
-                        if (nonringatom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        if (nonringatom.AtomicNumber.Equals(AtomicNumbers.C))
                         { // X--CR..X
                             frags[43]++;
                             alogpfrag[i] = 43;
@@ -1141,7 +1141,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 else if (string.Equals(sameringatoms[0].Symbol, "C", StringComparison.Ordinal) && string.Equals(sameringatoms[1].Symbol, "C", StringComparison.Ordinal))
                 {
 
-                    if (nonringatom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                    if (nonringatom.AtomicNumber.Equals(AtomicNumbers.C))
                     {// R--CR--R
                         frags[25]++;
                         alogpfrag[i] = 25;
@@ -1159,7 +1159,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
                     if (haveDouble1 && haveDouble2)
                     { // R--CR--X
-                        if (nonringatom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        if (nonringatom.AtomicNumber.Equals(AtomicNumbers.C))
                         {
                             frags[28]++;
                             alogpfrag[i] = 28;
@@ -1174,7 +1174,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     else
                     {
 
-                        if (nonringatom.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        if (nonringatom.AtomicNumber.Equals(AtomicNumbers.C))
                         { // R--CR..X
                             frags[34]++;
                             alogpfrag[i] = 34;
@@ -1203,18 +1203,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     ca = connectedAtoms;
 
                 // first check for alpha carbon:
-                if (ai.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && !ai.IsAromatic)
+                if (ai.AtomicNumber.Equals(AtomicNumbers.C) && !ai.IsAromatic)
                 {
                     foreach (var a in ca)
                     {
-                        if (container.GetBond(ai, a).Order == BondOrder.Single && a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        if (container.GetBond(ai, a).Order == BondOrder.Single && a.AtomicNumber.Equals(AtomicNumbers.C))
                         { // single bonded
                             var ca2 = container.GetConnectedAtoms(a);
 
                             foreach (var a2 in ca2)
                             {
                                 IAtom ca2k = a2;
-                                if (!ca2k.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                                if (!ca2k.AtomicNumber.Equals(AtomicNumbers.C))
                                 {
                                     if (container.GetBond(a, ca2k).Order != BondOrder.Single)
                                         return 51;
@@ -1230,7 +1230,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             } // end k loop
                         } // end if (atomContainer.GetBond(ai, ((IAtom)ca[j])).Order == BondOrder.Single) {
                     }// end j loop
-                } // end if(ai.AtomicNumber.Equals(NaturalElements.C.AtomicNumber) && !ai.IsAromatic)
+                } // end if(ai.AtomicNumber.Equals(AtomicNumbers.C) && !ai.IsAromatic)
 
                 var bonds = container.GetConnectedBonds(ai);
                 int doublebondcount = 0;
@@ -1266,7 +1266,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                 break;
                             }
                         }
-                        if (haveDouble && a.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
+                        if (haveDouble && a.AtomicNumber.Equals(AtomicNumbers.N))
                             oxNum += 2; // C-N bond order for pyridine type N's is considered to be 2
                         else
                             oxNum += (int)BondManipulator.DestroyBondOrder(container.GetBond(ai, a).Order);
@@ -1275,7 +1275,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
                     foreach (var a2 in ca2)
                     {
-                        if (!a2.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        if (!a2.AtomicNumber.Equals(AtomicNumbers.C))
                             xCount++;
                     }
                 }// end j loop
@@ -1326,7 +1326,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 frags[50]++; //H atom attached to a hetero atom
 
                 var ca0 = (IAtom)ca[0];
-                if (ca0.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)) ca0 = ca[1];
+                if (ca0.AtomicNumber.Equals(AtomicNumbers.H)) ca0 = ca[1];
 
                 if (ca0.IsAromatic)
                 { // phenol
@@ -1360,7 +1360,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
                 if (string.Equals(fragment[i], "SsOm", StringComparison.Ordinal))
                 {
-                    if (ca0.AtomicNumber.Equals(NaturalElements.N.AtomicNumber) && ca0.FormalCharge == 1)
+                    if (ca0.AtomicNumber.Equals(AtomicNumbers.N) && ca0.FormalCharge == 1)
                     {
                         frags[61]++;
                         alogpfrag[i] = 61;
@@ -1373,7 +1373,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
                 else if (string.Equals(fragment[i], "SdO", StringComparison.Ordinal))
                 {
-                    if (ca0.AtomicNumber.Equals(NaturalElements.N.AtomicNumber) && ca0.FormalCharge == 1)
+                    if (ca0.AtomicNumber.Equals(AtomicNumbers.N) && ca0.FormalCharge == 1)
                     {
                         frags[61]++;
                         alogpfrag[i] = 61;
@@ -1417,7 +1417,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             {
                                 if (container.GetBond(a, a2).Order == BondOrder.Double)
                                 {
-                                    if (!a2.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                                    if (!a2.AtomicNumber.Equals(AtomicNumbers.C))
                                     {
                                         frags[60]++;
                                         alogpfrag[i] = 60;
@@ -1427,7 +1427,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             }
                         } // end j ca loop
 
-                        if (ca0.AtomicNumber.Equals(NaturalElements.O.AtomicNumber) || ca1.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                        if (ca0.AtomicNumber.Equals(AtomicNumbers.O) || ca1.AtomicNumber.Equals(AtomicNumbers.O))
                         {
                             frags[63]++;
                             alogpfrag[i] = 63;
@@ -1451,12 +1451,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 int nAr = 0;
                 int nAl = 0;
                 var ai = container.Atoms[i];
-                if (!ai.AtomicNumber.Equals(NaturalElements.N.AtomicNumber)) return;
+                if (!ai.AtomicNumber.Equals(AtomicNumbers.N))
+                    return;
                 var ca = container.GetConnectedAtoms(container.Atoms[i]);
 
                 foreach (var a in ca)
                 {
-                    if (a.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)) continue;
+                    if (a.AtomicNumber.Equals(AtomicNumbers.H))
+                        continue;
                     if (a.IsAromatic)
                         nAr++;
                     else
@@ -1466,7 +1468,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 // first check if have RC(=O)N or NX=X
                 foreach (var a in ca)
                 {
-                    if (a.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                    if (a.AtomicNumber.Equals(AtomicNumbers.H))
                         continue;
                     var ca2 = container.GetConnectedAtoms(a);
                     foreach (var a2 in ca2)
@@ -1474,7 +1476,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         var ca2k = a2;
                         if (container.Atoms.IndexOf(ca2k) != i)
                         {
-                            if (!ca2k.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                            if (!ca2k.AtomicNumber.Equals(AtomicNumbers.C))
                             {
                                 if (!ca2k.IsAromatic
                                  && !a.IsAromatic
@@ -1498,7 +1500,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     //Find which neigbpur is not the hydrogen atom
                     foreach (var a in ca)
                     {
-                        if (a.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                        if (a.AtomicNumber.Equals(AtomicNumbers.H))
                             continue;
                         else
                         {
@@ -1506,7 +1508,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             break;
                         }
                     }
-                    if (ca0.IsAromatic || !ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                    if (ca0.IsAromatic || !ca0.AtomicNumber.Equals(AtomicNumbers.C))
                     {
                         frags[69]++;
                         alogpfrag[i] = 69;
@@ -1613,7 +1615,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 else if (string.Equals(fragment[i], "StN", StringComparison.Ordinal))
                 {
                     var ca0 = (IAtom)ca.ElementAt(0);
-                    if (ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                    if (ca0.AtomicNumber.Equals(AtomicNumbers.C))
                     { // R#N
                         frags[74]++;
                         alogpfrag[i] = 74;
@@ -1627,7 +1629,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         var caa = ca.ToReadOnlyList();
                         var ca0 = caa[0];
                         var ca1 = caa[1];
-                        if (ca0.AtomicNumber.Equals(NaturalElements.O.AtomicNumber) && ca1.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                        if (ca0.AtomicNumber.Equals(AtomicNumbers.O) && ca1.AtomicNumber.Equals(AtomicNumbers.O))
                         {
                             frags[76]++;
                             alogpfrag[i] = 76;
@@ -1640,11 +1642,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
                     foreach (var a in ca)
                     {
-                        if (a.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                        if (a.AtomicNumber.Equals(AtomicNumbers.H))
                             continue;
                         if (container.GetBond(ai, a).Order == BondOrder.Double)
                         {
-                            if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                            if (a.AtomicNumber.Equals(AtomicNumbers.C))
                             {
                                 frags[74]++;
                                 alogpfrag[i] = 74;
@@ -1657,7 +1659,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         }
                         else
                         {
-                            if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber)
+                            if (!a.AtomicNumber.Equals(AtomicNumbers.C)
                                     || a.IsAromatic)
                             {
                                 flag2 = true;
@@ -1765,7 +1767,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     alogpfrag[i] = 84;
                 }
                 else if ((string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum > 1) || (string.Equals(hybrid, "sp", StringComparison.Ordinal) && oxNum >= 1)
-                      || (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 4) || !ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                      || (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 4) || !ca0.AtomicNumber.Equals(AtomicNumbers.C))
                 {
                     frags[85]++;
                     alogpfrag[i] = 85;
@@ -1850,7 +1852,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     alogpfrag[i] = 89;
                 }
                 else if ((string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum > 1) || (string.Equals(hybrid, "sp", StringComparison.Ordinal) && oxNum >= 1)
-                      || (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 4) || !ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                      || (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 4) || !ca0.AtomicNumber.Equals(AtomicNumbers.C))
                 {
                     frags[90]++;
                     alogpfrag[i] = 90;
@@ -1934,7 +1936,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     alogpfrag[i] = 94;
                 }
                 else if ((string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum > 1) || (string.Equals(hybrid, "sp", StringComparison.Ordinal) && oxNum >= 1)
-                      || (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 4) || !ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                      || (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 4) || !ca0.AtomicNumber.Equals(AtomicNumbers.C))
                 {
                     frags[95]++;
                     alogpfrag[i] = 95;
@@ -2019,7 +2021,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     alogpfrag[i] = 99;
                 }
                 else if ((string.Equals(hybrid, "sp2", StringComparison.Ordinal) && oxNum > 1) || (string.Equals(hybrid, "sp", StringComparison.Ordinal) && oxNum >= 1)
-                      || (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 4) || !ca0.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                      || (string.Equals(hybrid, "sp3", StringComparison.Ordinal) && oxNum == 4) || !ca0.AtomicNumber.Equals(AtomicNumbers.C))
                 {
                     frags[100]++;
                     alogpfrag[i] = 100;
@@ -2035,19 +2037,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     switch (ai.AtomicNumber)
                     {
-                        case NaturalElements.F.AtomicNumber:
+                        case AtomicNumbers.F:
                             frags[101]++;
                             alogpfrag[i] = 101;
                             break;
-                        case NaturalElements.Cl.AtomicNumber:
+                        case AtomicNumbers.Cl:
                             frags[102]++;
                             alogpfrag[i] = 102;
                             break;
-                        case NaturalElements.Br.AtomicNumber:
+                        case AtomicNumbers.Br:
                             frags[103]++;
                             alogpfrag[i] = 103;
                             break;
-                        case NaturalElements.I.AtomicNumber:
+                        case AtomicNumbers.I:
                             frags[104]++;
                             alogpfrag[i] = 104;
                             break;
@@ -2111,14 +2113,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     if (container.GetBond(ai, a).Order == BondOrder.Single)
                     {
-                        if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        if (a.AtomicNumber.Equals(AtomicNumbers.C))
                         {
                             ssCCount++;
                         }
                     }
                     else if (container.GetBond(ai, a).Order == BondOrder.Double)
                     {
-                        if (a.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                        if (a.AtomicNumber.Equals(AtomicNumbers.O))
                         {
                             sdOCount++;
                         }
@@ -2145,14 +2147,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     if (container.GetBond(ai, a).Order == BondOrder.Single)
                     {
-                        if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        if (a.AtomicNumber.Equals(AtomicNumbers.C))
                         {
                             ssCCount++;
                         }
                     }
                     else if (container.GetBond(ai, a).Order == BondOrder.Double)
                     {
-                        if (a.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                        if (a.AtomicNumber.Equals(AtomicNumbers.O))
                         {
                             sdOCount++;
                         }
@@ -2192,7 +2194,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     if (container.GetBond(ai, a).Order == BondOrder.Single)
                     {
-                        if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        if (a.AtomicNumber.Equals(AtomicNumbers.C))
                         {
                             rCount++;
                         }
@@ -2203,7 +2205,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     }
                     else if (container.GetBond(ai, a).Order == BondOrder.Double)
                     {
-                        if (!a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        if (!a.AtomicNumber.Equals(AtomicNumbers.C))
                         {
                             pdX = true;
                         }
@@ -2245,7 +2247,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     if (container.GetBond(ai, a).Order == BondOrder.Single)
                     {
-                        if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        if (a.AtomicNumber.Equals(AtomicNumbers.C))
                         {
                             rCount++;
                         }

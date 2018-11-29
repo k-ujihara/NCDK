@@ -72,8 +72,8 @@ namespace NCDK.Beam
                 h.AddTopology(g.TopologyOf(u));
             }
 
-            IDictionary<Edge, Edge> replacements = new Dictionary<Edge, Edge>();
-            ICollection<Edge> remaining = new HashSet<Edge>();
+            var replacements = new Dictionary<Edge, Edge>();
+            var remaining = new HashSet<Edge>();
 
             // change edges (only changed added to replacement)
             for (int u = 0; u < g.Order; u++)
@@ -127,8 +127,8 @@ namespace NCDK.Beam
         /// <param name="acc">accumulator for new edges</param>
         /// <exception cref="InvalidSmilesException">thrown if the edge could not be converted</exception>
         private bool ReplaceImplWithExpl(Graph g,
-                                            Edge e,
-                                            IDictionary<Edge, Edge> acc)
+                                         Edge e,
+                                         Dictionary<Edge, Edge> acc)
         {
             int u = e.Either(), v = e.Other(u);
 
@@ -151,7 +151,7 @@ namespace NCDK.Beam
         private bool ReplaceImplWithExpl(Graph g,
                                             Edge e,
                                             int u,
-                                            IDictionary<Edge, Edge> acc)
+                                            Dictionary<Edge, Edge> acc)
         {
             Edge implicit_ = null;
             Edge explicit_ = null;
@@ -223,7 +223,7 @@ namespace NCDK.Beam
 
         private void InvertExistingDirectionalLabels(Graph g,
                                                      BitArray visited,
-                                                     IDictionary<Edge, Edge> replacement,
+                                                     Dictionary<Edge, Edge> replacement,
                                                      int u)
         {
             visited.Set(u, true);

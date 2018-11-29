@@ -26,8 +26,8 @@ namespace NCDK
     /// Checks the functionality of <see cref="IReactionSet"/> implementations.
     /// </summary>
     // @cdk.module test-interfaces
-    [TestClass()]
-    public abstract class AbstractReactionSetTest : AbstractChemObjectTest
+    public abstract class AbstractReactionSetTest
+        : AbstractChemObjectTest
     {
         [TestMethod()]
 

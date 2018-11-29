@@ -20,14 +20,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Graphs;
 using NCDK.Silent;
-using NCDK.Smiles;
-using NCDK.Tools;
 
 namespace NCDK.StructGen.Stochastic
 {
     // @cdk.module test-structgen
     [TestClass()]
-    public class PartialFilledStructureMergerTest : CDKTestCase
+    public class PartialFilledStructureMergerTest 
+        : CDKTestCase
     {
         [TestMethod()]
         public void TestGenerate_IAtomContainerSet()
@@ -49,8 +48,8 @@ namespace NCDK.StructGen.Stochastic
             var acs = ChemObjectBuilder.Instance.NewAtomContainerSet();
             acs.Add(sp.ParseSmiles("[C]=[C]CC[CH2]"));
             acs.Add(sp.ParseSmiles("[C]([CH2])=C1CC1"));
-            PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
-            IAtomContainer result = pfsm.Generate(acs);
+            var pfsm = new PartialFilledStructureMerger();
+            var result = pfsm.Generate(acs);
             Assert.IsTrue(ConnectivityChecker.IsConnected(result));
             Assert.IsTrue(CDK.SaturationChecker.IsSaturated(result));
         }
@@ -63,8 +62,8 @@ namespace NCDK.StructGen.Stochastic
             acs.Add(sp.ParseSmiles("[CH2]CCC[CH2]"));
             acs.Add(sp.ParseSmiles("[CH2]C[CH2]"));
             acs.Add(sp.ParseSmiles("[CH2][CH2]"));
-            PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
-            IAtomContainer result = pfsm.Generate(acs);
+            var pfsm = new PartialFilledStructureMerger();
+            var result = pfsm.Generate(acs);
             Assert.IsTrue(ConnectivityChecker.IsConnected(result));
             Assert.IsTrue(CDK.SaturationChecker.IsSaturated(result));
         }
@@ -77,8 +76,8 @@ namespace NCDK.StructGen.Stochastic
             acs.Add(sp.ParseSmiles("[C]CCC[CH2]"));
             acs.Add(sp.ParseSmiles("[C]CC[CH2]"));
             acs.Add(sp.ParseSmiles("[CH2]"));
-            PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
-            IAtomContainer result = pfsm.Generate(acs);
+            var pfsm = new PartialFilledStructureMerger();
+            var result = pfsm.Generate(acs);
             Assert.IsTrue(ConnectivityChecker.IsConnected(result));
             Assert.IsTrue(CDK.SaturationChecker.IsSaturated(result));
         }
@@ -91,8 +90,8 @@ namespace NCDK.StructGen.Stochastic
             acs.Add(sp.ParseSmiles("[C]1CCC1"));
             acs.Add(sp.ParseSmiles("[C]([CH2])CC[CH2]"));
             acs.Add(sp.ParseSmiles("[CH2]"));
-            PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
-            IAtomContainer result = pfsm.Generate(acs);
+            var pfsm = new PartialFilledStructureMerger();
+            var result = pfsm.Generate(acs);
             Assert.IsTrue(ConnectivityChecker.IsConnected(result));
             Assert.IsTrue(CDK.SaturationChecker.IsSaturated(result));
         }

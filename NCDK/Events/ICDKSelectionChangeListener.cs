@@ -28,7 +28,6 @@ namespace NCDK.Events
     /// A ChangeListener for the CDK, to be independent from the Swing package.
     /// </summary>
     // @cdk.module standard
-    // @cdk.githash
     public interface ICDKSelectionChangeListener
     {
         /// <summary>

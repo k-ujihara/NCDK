@@ -34,8 +34,8 @@ namespace NCDK.Default
     /// some way but without hard coded semantics.
     /// </summary>
     // @author      miguelrojasch <miguelrojasch@yahoo.es>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    public class ReactionScheme : ReactionSet, IReactionScheme
+    public class ReactionScheme 
+        : ReactionSet, IReactionScheme
     {
         /// <summary>
         /// A List of reaction schemes
@@ -90,8 +90,8 @@ namespace NCDK.Silent
     /// some way but without hard coded semantics.
     /// </summary>
     // @author      miguelrojasch <miguelrojasch@yahoo.es>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    public class ReactionScheme : ReactionSet, IReactionScheme
+    public class ReactionScheme 
+        : ReactionSet, IReactionScheme
     {
         /// <summary>
         /// A List of reaction schemes

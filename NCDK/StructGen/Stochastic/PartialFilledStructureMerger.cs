@@ -41,7 +41,7 @@ namespace NCDK.StructGen.Stochastic
     // @cdk.module     structgen
     public class PartialFilledStructureMerger
     {
-        private static readonly ISaturationChecker satCheck = CDK.SaturationChecker;
+        private readonly ISaturationChecker satCheck = CDK.SaturationChecker;
 
         public PartialFilledStructureMerger()
         {
@@ -86,7 +86,8 @@ namespace NCDK.StructGen.Stochastic
                         if (ac == null)
                             continue;
 
-                        foreach (var atom in ac.Atoms.ToReadOnlyList()) // ToReadOnlyList is requied
+                        var atoms = ac.Atoms.ToList(); // ToList is required because some atoms are added to ac.Atoms in the loop.
+                        foreach (var atom in atoms)
                         {
                             if (!satCheck.IsSaturated(atom, ac))
                             {
@@ -97,7 +98,7 @@ namespace NCDK.StructGen.Stochastic
                                     var cmax1 = satCheck.GetCurrentMaxBondOrder(atom, ac);
                                     var cmax2 = satCheck.GetCurrentMaxBondOrder(partner, toadd);
                                     var max = Math.Min(cmax1, cmax2);
-                                    var order = Math.Min(Math.Max(1.0, max), 3.0);//(double)Math.Round(Math.Random() * max)
+                                    var order = Math.Min(Math.Max(1, max), 3); //(double)Math.Round(Math.Random() * max)
                                     Debug.WriteLine($"cmax1, cmax2, max, order: {cmax1}, {cmax2}, {max}, {order}");
                                     if (toadd != ac)
                                     {
@@ -107,8 +108,7 @@ namespace NCDK.StructGen.Stochastic
                                         atomContainers.Remove(toadd);
                                         ac.Add(toadd);
                                     }
-                                    ac.Bonds.Add(ac.Builder.NewBond(atom, partner,
-                                            BondManipulator.CreateBondOrder(order)));
+                                    ac.Bonds.Add(ac.Builder.NewBond(atom, partner, BondManipulator.CreateBondOrder(order)));
                                     bondFormed = true;
                                 }
                             }

@@ -40,10 +40,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             switch (atom.AtomicNumber)
             {
-                case NaturalElements.F.AtomicNumber:
-                case NaturalElements.Cl.AtomicNumber:
-                case NaturalElements.Br.AtomicNumber:
-                case NaturalElements.I.AtomicNumber:
+                case AtomicNumbers.F:
+                case AtomicNumbers.Cl:
+                case AtomicNumbers.Br:
+                case AtomicNumbers.I:
                     return true;
                 default:
                     return false;

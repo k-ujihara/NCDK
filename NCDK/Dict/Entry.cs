@@ -30,7 +30,6 @@ namespace NCDK.Dict
     /// </summary>
     /// <seealso cref="EntryDictionary"/>
     // @author       Egon Willighagen <egonw@users.sf.net>
-    // @cdk.githash
     // @cdk.created  2003-08-23
     // @cdk.keyword  dictionary
     // @cdk.module   dict

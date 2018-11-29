@@ -35,7 +35,6 @@ namespace NCDK
     // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
     // @cdk.created 2001-08-09
     // @cdk.module  test-interfaces
-    [TestClass()]
     public abstract class AbstractPolymerTest : AbstractMoleculeTest
     {
         [TestMethod()]

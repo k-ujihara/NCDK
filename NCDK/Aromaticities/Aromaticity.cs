@@ -79,7 +79,6 @@ namespace NCDK.Aromaticities
     /// <seealso href="http://blueobelisk.shapado.com/questions/aromaticity-perception-differences">Aromaticity Perception Differences, Blue Obelisk</seealso>
     // @author John May
     // @cdk.module standard
-    // @cdk.githash
     public sealed class Aromaticity
     {
         /// <summary>Find how many electrons each atom contributes.</summary>

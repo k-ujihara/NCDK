@@ -47,7 +47,6 @@ namespace NCDK.Config.Isotopes
     /// ]]>
     /// </remarks>
     // @cdk.module  extra
-    // @cdk.githash
     public class IsotopeHandler : XContentHandler
     {
         private List<IIsotope> isotopes;

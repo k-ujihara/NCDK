@@ -18,7 +18,6 @@
  */
 
 using NCDK.Stereo;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -42,7 +41,6 @@ namespace NCDK.Graphs.InChI
     /// TODO: problem recognising bond stereochemistry<br/>
     // @author Sam Adams
     // @cdk.module inchi
-    // @cdk.githash
     public class InChIGenerator
     {
         internal NInchiInput Input { get; set; }
@@ -137,7 +135,7 @@ namespace NCDK.Graphs.InChI
                 }
             }
 
-            IDictionary<IAtom, NInchiAtom> atomMap = new Dictionary<IAtom, NInchiAtom>();
+            var atomMap = new Dictionary<IAtom, NInchiAtom>();
             foreach (var atom in atomContainer.Atoms)
             {
                 // Get coordinates
@@ -165,21 +163,21 @@ namespace NCDK.Graphs.InChI
                 }
 
                 // Chemical element symbol
-                string el = atom.Symbol;
+                var el = atom.Symbol;
 
                 // Generate InChI atom
-                NInchiAtom iatom = Input.Add(new NInchiAtom(x, y, z, el));
+                var iatom = Input.Add(new NInchiAtom(x, y, z, el));
                 atomMap[atom] = iatom;
 
                 // Check if charged
-                int charge = atom.FormalCharge.Value;
+                var charge = atom.FormalCharge.Value;
                 if (charge != 0)
                 {
                     iatom.Charge = charge;
                 }
 
                 // Check whether isotopic
-                int? isotopeNumber = atom.MassNumber;
+                var isotopeNumber = atom.MassNumber;
                 if (isotopeNumber != null)
                 {
                     iatom.IsotopicMass = isotopeNumber.Value;
@@ -215,16 +213,16 @@ namespace NCDK.Graphs.InChI
             }
 
             // Process bonds
-            IDictionary<IBond, NInchiBond> bondMap = new Dictionary<IBond, NInchiBond>();
+            var bondMap = new Dictionary<IBond, NInchiBond>();
             foreach (var bond in atomContainer.Bonds)
             {
                 // Assumes 2 centre bond
-                NInchiAtom at0 = (NInchiAtom)atomMap[bond.Begin];
-                NInchiAtom at1 = (NInchiAtom)atomMap[bond.End];
+                var at0 = atomMap[bond.Begin];
+                var at1 = atomMap[bond.End];
 
                 // Get bond order
                 INCHI_BOND_TYPE order;
-                BondOrder bo = bond.Order;
+                var bo = bond.Order;
                 if (!ignore && bond.IsAromatic)
                 {
                     order = INCHI_BOND_TYPE.Altern;
@@ -247,12 +245,12 @@ namespace NCDK.Graphs.InChI
                 }
 
                 // Create InChI bond
-                NInchiBond ibond = new NInchiBond(at0, at1, order);
+                var ibond = new NInchiBond(at0, at1, order);
                 bondMap[bond] = ibond;
                 Input.Add(ibond);
 
                 // Check for bond stereo definitions
-                BondStereo stereo = bond.Stereo;
+                var stereo = bond.Stereo;
                 // No stereo definition
                 if (stereo == BondStereo.None)
                 {
@@ -309,14 +307,14 @@ namespace NCDK.Graphs.InChI
             {
                 if (stereoElem is ITetrahedralChirality chirality)
                 {
-                    TetrahedralStereo stereoType = chirality.Stereo;
+                    var stereoType = chirality.Stereo;
 
-                    NInchiAtom atC = (NInchiAtom)atomMap[chirality.ChiralAtom];
-                    NInchiAtom at0 = (NInchiAtom)atomMap[chirality.Ligands[0]];
-                    NInchiAtom at1 = (NInchiAtom)atomMap[chirality.Ligands[1]];
-                    NInchiAtom at2 = (NInchiAtom)atomMap[chirality.Ligands[2]];
-                    NInchiAtom at3 = (NInchiAtom)atomMap[chirality.Ligands[3]];
-                    INCHI_PARITY p = INCHI_PARITY.Unknown;
+                    var atC = atomMap[chirality.ChiralAtom];
+                    var at0 = atomMap[chirality.Ligands[0]];
+                    var at1 = atomMap[chirality.Ligands[1]];
+                    var at2 = atomMap[chirality.Ligands[2]];
+                    var at3 = atomMap[chirality.Ligands[3]];
+                    var p = INCHI_PARITY.Unknown;
                     if (stereoType == TetrahedralStereo.AntiClockwise)
                     {
                         p = INCHI_PARITY.Odd;
@@ -330,8 +328,7 @@ namespace NCDK.Graphs.InChI
                         throw new CDKException("Unknown tetrahedral chirality");
                     }
 
-                    NInchiStereo0D jniStereo = new NInchiStereo0D(atC, at0, at1, at2, at3,
-                            INCHI_STEREOTYPE.Tetrahedral, p);
+                    var jniStereo = new NInchiStereo0D(atC, at0, at1, at2, at3, INCHI_STEREOTYPE.Tetrahedral, p);
                     Input.Stereos.Add(jniStereo);
                 }
                 else if (stereoElem is IDoubleBondStereochemistry dbStereo)
@@ -339,7 +336,7 @@ namespace NCDK.Graphs.InChI
                     var surroundingBonds = dbStereo.Bonds;
                     if (surroundingBonds[0] == null || surroundingBonds[1] == null)
                         throw new CDKException("Cannot generate an InChI with incomplete double bond info");
-                    DoubleBondConformation stereoType = dbStereo.Stereo;
+                    var stereoType = dbStereo.Stereo;
 
                     IBond stereoBond = dbStereo.StereoBond;
                     NInchiAtom at0 = null;
@@ -351,28 +348,28 @@ namespace NCDK.Graphs.InChI
                     if (stereoBond.Contains(surroundingBonds[0].Begin))
                     {
                         // first atom is A
-                        at1 = (NInchiAtom)atomMap[surroundingBonds[0].Begin];
-                        at0 = (NInchiAtom)atomMap[surroundingBonds[0].End];
+                        at1 = atomMap[surroundingBonds[0].Begin];
+                        at0 = atomMap[surroundingBonds[0].End];
                     }
                     else
                     {
                         // first atom is X
-                        at0 = (NInchiAtom)atomMap[surroundingBonds[0].Begin];
-                        at1 = (NInchiAtom)atomMap[surroundingBonds[0].End];
+                        at0 = atomMap[surroundingBonds[0].Begin];
+                        at1 = atomMap[surroundingBonds[0].End];
                     }
                     if (stereoBond.Contains(surroundingBonds[1].Begin))
                     {
                         // first atom is B
-                        at2 = (NInchiAtom)atomMap[surroundingBonds[1].Begin];
-                        at3 = (NInchiAtom)atomMap[surroundingBonds[1].End];
+                        at2 = atomMap[surroundingBonds[1].Begin];
+                        at3 = atomMap[surroundingBonds[1].End];
                     }
                     else
                     {
                         // first atom is Y
-                        at2 = (NInchiAtom)atomMap[surroundingBonds[1].End];
-                        at3 = (NInchiAtom)atomMap[surroundingBonds[1].Begin];
+                        at2 = atomMap[surroundingBonds[1].End];
+                        at3 = atomMap[surroundingBonds[1].Begin];
                     }
-                    INCHI_PARITY p = INCHI_PARITY.Unknown;
+                    var p = INCHI_PARITY.Unknown;
                     if (stereoType == DoubleBondConformation.Together)
                     {
                         p = INCHI_PARITY.Odd;
@@ -386,8 +383,7 @@ namespace NCDK.Graphs.InChI
                         throw new CDKException("Unknown double bond stereochemistry");
                     }
 
-                    NInchiStereo0D jniStereo = new NInchiStereo0D(null, at0, at1, at2, at3,
-                            INCHI_STEREOTYPE.DoubleBond, p);
+                    var jniStereo = new NInchiStereo0D(null, at0, at1, at2, at3, INCHI_STEREOTYPE.DoubleBond, p);
                     Input.Stereos.Add(jniStereo);
                 }
                 else if (stereoElem is ExtendedTetrahedral extendedTetrahedral)
@@ -412,8 +408,8 @@ namespace NCDK.Graphs.InChI
                     // be in the peripherals already and so we correct the winding
                     // and reposition as needed.
 
-                    IList<IBond> t0Bonds = OnlySingleBonded(atomContainer.GetConnectedBonds(terminals[0]));
-                    IList<IBond> t1Bonds = OnlySingleBonded(atomContainer.GetConnectedBonds(terminals[1]));
+                    var t0Bonds = OnlySingleBonded(atomContainer.GetConnectedBonds(terminals[0]));
+                    var t1Bonds = OnlySingleBonded(atomContainer.GetConnectedBonds(terminals[1]));
 
                     // first if there are two explicit atoms we need to replace one
                     // with the terminal atom - the configuration does not change
@@ -421,7 +417,7 @@ namespace NCDK.Graphs.InChI
                     {
                         var orgBond = t0Bonds[0];
                         t0Bonds.RemoveAt(0);
-                        IAtom replace = orgBond.GetOther(terminals[0]);
+                        var replace = orgBond.GetOther(terminals[0]);
                         for (int i = 0; i < peripherals.Length; i++)
                             if (replace == peripherals[i])
                                 peripherals[i] = terminals[0];
@@ -431,7 +427,7 @@ namespace NCDK.Graphs.InChI
                     {
                         var orgBond = t0Bonds[0];
                         t1Bonds.RemoveAt(0);
-                        IAtom replace = orgBond.GetOther(terminals[1]);
+                        var replace = orgBond.GetOther(terminals[1]);
                         for (int i = 0; i < peripherals.Length; i++)
                             if (replace == peripherals[i])
                                 peripherals[i] = terminals[1];
@@ -439,8 +435,8 @@ namespace NCDK.Graphs.InChI
 
                     // the neighbor attached to each terminal atom that we will
                     // define the configuration of
-                    IAtom t0Neighbor = t0Bonds[0].GetOther(terminals[0]);
-                    IAtom t1Neighbor = t1Bonds[0].GetOther(terminals[1]);
+                    var t0Neighbor = t0Bonds[0].GetOther(terminals[0]);
+                    var t1Neighbor = t1Bonds[0].GetOther(terminals[1]);
 
                     // we now need to move all the atoms into the correct positions
                     // everytime we exchange atoms the configuration inverts
@@ -468,7 +464,7 @@ namespace NCDK.Graphs.InChI
                         }
                     }
 
-                    INCHI_PARITY parity = INCHI_PARITY.Unknown;
+                    var parity = INCHI_PARITY.Unknown;
                     if (winding == TetrahedralStereo.AntiClockwise)
                         parity = INCHI_PARITY.Odd;
                     else if (winding == TetrahedralStereo.Clockwise)
@@ -493,19 +489,20 @@ namespace NCDK.Graphs.InChI
             }
         }
 
-        private static IList<IBond> OnlySingleBonded(IEnumerable<IBond> bonds)
+        private static List<IBond> OnlySingleBonded(IEnumerable<IBond> bonds)
         {
-            IList<IBond> filtered = new List<IBond>();
+            var filtered = new List<IBond>();
             foreach (var bond in bonds)
             {
-                if (bond.Order == BondOrder.Single) filtered.Add(bond);
+                if (bond.Order == BondOrder.Single)
+                    filtered.Add(bond);
             }
             return filtered;
         }
 
-        private static void Swap(Object[] objs, int i, int j)
+        private static void Swap(object[] objs, int i, int j)
         {
-            object tmp = objs[i];
+            var tmp = objs[i];
             objs[i] = objs[j];
             objs[j] = tmp;
         }
@@ -527,10 +524,9 @@ namespace NCDK.Graphs.InChI
         /// </summary>
         public string GetInChIKey()
         {
-            NInchiOutputKey key;
             try
             {
-                key = NInchiWrapper.GetInchiKey(Output.InChI);
+                var key = NInchiWrapper.GetInchiKey(Output.InChI);
                 if (key.ReturnStatus == INCHI_KEY.OK)
                 {
                     return key.Key;

@@ -36,7 +36,6 @@ namespace NCDK.Fingerprints
     // @cdk.created    2002-02-24
     // @cdk.keyword    fingerprint
     // @cdk.module     standard
-    // @cdk.githash
     public static class FingerprinterTool
     {
         /// <summary>

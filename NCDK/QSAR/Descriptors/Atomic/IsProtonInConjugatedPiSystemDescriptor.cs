@@ -75,7 +75,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             var clonedAtom = clonedAtomContainer.Atoms[container.Atoms.IndexOf(atom)];
 
             bool isProtonInPiSystem = false;
-            if (atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+            if (atom.AtomicNumber.Equals(AtomicNumbers.H))
             {
                 var detected = acSet.GetEnumerator();
                 var neighboors = clonedAtomContainer.GetConnectedAtoms(clonedAtom);

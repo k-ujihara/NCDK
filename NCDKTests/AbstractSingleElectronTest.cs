@@ -26,7 +26,6 @@ namespace NCDK
     /// <seealso cref="ISingleElectron"/>
     /// </summary>
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractSingleElectronTest
         : AbstractElectronContainerTest
     {

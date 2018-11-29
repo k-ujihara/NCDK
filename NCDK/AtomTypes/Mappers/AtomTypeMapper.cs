@@ -29,7 +29,6 @@ namespace NCDK.AtomTypes.Mappers
     /// algorithm and write the resulting atom types using the Sybyl atom type scheme.
     /// </summary>
     // @cdk.module atomtype
-    // @cdk.githash
     public class AtomTypeMapper
     {
         private static Dictionary<string, AtomTypeMapper> mappers = new Dictionary<string, AtomTypeMapper>();

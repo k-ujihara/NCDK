@@ -152,7 +152,7 @@ namespace NCDK.Reactions
         }
 
         /// <summary>
-        /// The current parameter IDictionary for this reaction.
+        /// The current parameter Dictionary for this reaction.
         /// </summary>
         /// <remarks>Must be done before calling calculate as the parameters influence the calculation outcome.</remarks>
         public IList<IParameterReaction> ParameterList { get; set; }

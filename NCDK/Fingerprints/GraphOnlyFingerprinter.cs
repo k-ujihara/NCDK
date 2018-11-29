@@ -35,7 +35,6 @@ namespace NCDK.Fingerprints
     // @cdk.keyword    fingerprint
     // @cdk.keyword    similarity
     // @cdk.module     standard
-    // @cdk.githash
     public class GraphOnlyFingerprinter : Fingerprinter
     {
         /// <summary>

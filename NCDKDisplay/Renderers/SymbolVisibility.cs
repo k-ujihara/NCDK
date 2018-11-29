@@ -95,7 +95,7 @@ namespace NCDK.Renderers
                 var bonds = bonds_.ToList();
 
                 // all non-carbons are displayed
-                if (atom.AtomicNumber != NaturalElements.Carbon.AtomicNumber)
+                if (atom.AtomicNumber != AtomicNumbers.Carbon)
                     return true;
 
                 // methane

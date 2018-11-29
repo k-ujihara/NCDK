@@ -141,7 +141,7 @@ namespace NCDK.Beam
             private Element element;
             private readonly Generator.AtomToken token;
 
-            private static readonly IDictionary<Element, IAtom> atoms = new Dictionary<Element, IAtom>();
+            private static readonly Dictionary<Element, IAtom> atoms = new Dictionary<Element, IAtom>();
 
             static AromaticSubset()
             {

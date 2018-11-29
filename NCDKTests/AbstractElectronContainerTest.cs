@@ -26,7 +26,6 @@ namespace NCDK
     /// </summary>
     /// <seealso cref="IElectronContainer"/>
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractElectronContainerTest : AbstractChemObjectTest
     {
         [TestMethod()]

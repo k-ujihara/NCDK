@@ -98,6 +98,7 @@ namespace NCDK.Default
         public IAminoAcid NewAminoAcid() => (IAminoAcid)new AminoAcid();
         public IAtom NewAtom() => (IAtom)new Atom();
         public IAtom NewAtom(IElement element) => (IAtom)new Atom(element);
+        public IAtom NewAtom(ChemicalElement element) => (IAtom)new Atom(element);
         public IAtom NewAtom(int elem) => (IAtom)new Atom(elem);
         public IAtom NewAtom(int elem, int hcnt) => (IAtom)new Atom(elem, hcnt);
         public IAtom NewAtom(int elem, int hcnt, int fchg) => (IAtom)new Atom(elem, hcnt, fchg);
@@ -110,6 +111,7 @@ namespace NCDK.Default
         public IAtomContainer NewAtomContainer(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => LegacyAtomContainer ? (IAtomContainer)new AtomContainer(atoms, bonds) : (IAtomContainer)new AtomContainer2(atoms, bonds);
         public IAtomContainerSet NewAtomContainerSet() => (IAtomContainerSet)new AtomContainerSet();
         public IAtomType NewAtomType(IElement element) => (IAtomType)new AtomType(element);
+        public IAtomType NewAtomType(ChemicalElement element) => (IAtomType)new AtomType(element);
         public IAtomType NewAtomType(string elementSymbol) => (IAtomType)new AtomType(elementSymbol);
         public IAtomType NewAtomType(string identifier, string elementSymbol) => (IAtomType)new AtomType(identifier, elementSymbol);
         public IBioPolymer NewBioPolymer() => (IBioPolymer)new BioPolymer();
@@ -128,13 +130,10 @@ namespace NCDK.Default
         public ICrystal NewCrystal() => (ICrystal)new Crystal();
         public ICrystal NewCrystal(IAtomContainer container) => (ICrystal)new Crystal(container);
         public IElectronContainer NewElectronContainer() => (IElectronContainer)new ElectronContainer();
-        public IElement NewElement() => (IElement)new Element();
-        public IElement NewElement(IElement element) => (IElement)new Element(element);
-        public IElement NewElement(string symbol) => (IElement)new Element(symbol);
-        public IElement NewElement(string symbol, int atomicNumber) => (IElement)new Element(symbol, atomicNumber);
         public IFragmentAtom NewFragmentAtom() => (IFragmentAtom)new FragmentAtom();
         public ILonePair NewLonePair() => (ILonePair)new LonePair();
         public ILonePair NewLonePair(IAtom atom) => (ILonePair)new LonePair(atom);
+        public IIsotope NewIsotope(ChemicalElement element) => (IIsotope)new Isotope(element);
         public IIsotope NewIsotope(string elementSymbol) => (IIsotope)new Isotope(elementSymbol);
         public IIsotope NewIsotope(int atomicNumber, string elementSymbol, int massNumber, double exactMass, double abundance) => (IIsotope)new Isotope(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
         public IIsotope NewIsotope(int atomicNumber, string elementSymbol, double exactMass, double abundance) => (IIsotope)new Isotope(atomicNumber, elementSymbol, exactMass, abundance);
@@ -146,6 +145,7 @@ namespace NCDK.Default
         public IMolecularFormulaSet NewMolecularFormulaSet(IMolecularFormula formula) => (IMolecularFormulaSet)new MolecularFormulaSet(formula);
         public IMonomer NewMonomer() => (IMonomer)new Monomer();
         public IPseudoAtom NewPseudoAtom() => (IPseudoAtom)new PseudoAtom();
+        public IPseudoAtom NewPseudoAtom(ChemicalElement element) => (IPseudoAtom)new PseudoAtom(element);
         public IPseudoAtom NewPseudoAtom(string label) => (IPseudoAtom)new PseudoAtom(label);
         public IPseudoAtom NewPseudoAtom(IElement element) => (IPseudoAtom)new PseudoAtom(element);
         public IPseudoAtom NewPseudoAtom(string label, Vector2 point2d) => (IPseudoAtom)new PseudoAtom(label, point2d);
@@ -153,6 +153,7 @@ namespace NCDK.Default
         public IReaction NewReaction() => (IReaction)new Reaction();
         public IReactionSet NewReactionSet() => (IReactionSet)new ReactionSet();
         public IReactionScheme NewReactionScheme() => (IReactionScheme)new ReactionScheme();
+        public IPDBAtom NewPDBAtom(ChemicalElement element) => (IPDBAtom)new PDBAtom(element);
         public IPDBAtom NewPDBAtom(IElement element) => (IPDBAtom)new PDBAtom(element);
         public IPDBAtom NewPDBAtom(string symbol) => (IPDBAtom)new PDBAtom(symbol);
         public IPDBAtom NewPDBAtom(string symbol, Vector3 coordinate) => (IPDBAtom)new PDBAtom(symbol, coordinate);
@@ -239,6 +240,7 @@ namespace NCDK.Silent
         public IAminoAcid NewAminoAcid() => (IAminoAcid)new AminoAcid();
         public IAtom NewAtom() => (IAtom)new Atom();
         public IAtom NewAtom(IElement element) => (IAtom)new Atom(element);
+        public IAtom NewAtom(ChemicalElement element) => (IAtom)new Atom(element);
         public IAtom NewAtom(int elem) => (IAtom)new Atom(elem);
         public IAtom NewAtom(int elem, int hcnt) => (IAtom)new Atom(elem, hcnt);
         public IAtom NewAtom(int elem, int hcnt, int fchg) => (IAtom)new Atom(elem, hcnt, fchg);
@@ -251,6 +253,7 @@ namespace NCDK.Silent
         public IAtomContainer NewAtomContainer(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => LegacyAtomContainer ? (IAtomContainer)new AtomContainer(atoms, bonds) : (IAtomContainer)new AtomContainer2(atoms, bonds);
         public IAtomContainerSet NewAtomContainerSet() => (IAtomContainerSet)new AtomContainerSet();
         public IAtomType NewAtomType(IElement element) => (IAtomType)new AtomType(element);
+        public IAtomType NewAtomType(ChemicalElement element) => (IAtomType)new AtomType(element);
         public IAtomType NewAtomType(string elementSymbol) => (IAtomType)new AtomType(elementSymbol);
         public IAtomType NewAtomType(string identifier, string elementSymbol) => (IAtomType)new AtomType(identifier, elementSymbol);
         public IBioPolymer NewBioPolymer() => (IBioPolymer)new BioPolymer();
@@ -269,13 +272,10 @@ namespace NCDK.Silent
         public ICrystal NewCrystal() => (ICrystal)new Crystal();
         public ICrystal NewCrystal(IAtomContainer container) => (ICrystal)new Crystal(container);
         public IElectronContainer NewElectronContainer() => (IElectronContainer)new ElectronContainer();
-        public IElement NewElement() => (IElement)new Element();
-        public IElement NewElement(IElement element) => (IElement)new Element(element);
-        public IElement NewElement(string symbol) => (IElement)new Element(symbol);
-        public IElement NewElement(string symbol, int atomicNumber) => (IElement)new Element(symbol, atomicNumber);
         public IFragmentAtom NewFragmentAtom() => (IFragmentAtom)new FragmentAtom();
         public ILonePair NewLonePair() => (ILonePair)new LonePair();
         public ILonePair NewLonePair(IAtom atom) => (ILonePair)new LonePair(atom);
+        public IIsotope NewIsotope(ChemicalElement element) => (IIsotope)new Isotope(element);
         public IIsotope NewIsotope(string elementSymbol) => (IIsotope)new Isotope(elementSymbol);
         public IIsotope NewIsotope(int atomicNumber, string elementSymbol, int massNumber, double exactMass, double abundance) => (IIsotope)new Isotope(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
         public IIsotope NewIsotope(int atomicNumber, string elementSymbol, double exactMass, double abundance) => (IIsotope)new Isotope(atomicNumber, elementSymbol, exactMass, abundance);
@@ -287,6 +287,7 @@ namespace NCDK.Silent
         public IMolecularFormulaSet NewMolecularFormulaSet(IMolecularFormula formula) => (IMolecularFormulaSet)new MolecularFormulaSet(formula);
         public IMonomer NewMonomer() => (IMonomer)new Monomer();
         public IPseudoAtom NewPseudoAtom() => (IPseudoAtom)new PseudoAtom();
+        public IPseudoAtom NewPseudoAtom(ChemicalElement element) => (IPseudoAtom)new PseudoAtom(element);
         public IPseudoAtom NewPseudoAtom(string label) => (IPseudoAtom)new PseudoAtom(label);
         public IPseudoAtom NewPseudoAtom(IElement element) => (IPseudoAtom)new PseudoAtom(element);
         public IPseudoAtom NewPseudoAtom(string label, Vector2 point2d) => (IPseudoAtom)new PseudoAtom(label, point2d);
@@ -294,6 +295,7 @@ namespace NCDK.Silent
         public IReaction NewReaction() => (IReaction)new Reaction();
         public IReactionSet NewReactionSet() => (IReactionSet)new ReactionSet();
         public IReactionScheme NewReactionScheme() => (IReactionScheme)new ReactionScheme();
+        public IPDBAtom NewPDBAtom(ChemicalElement element) => (IPDBAtom)new PDBAtom(element);
         public IPDBAtom NewPDBAtom(IElement element) => (IPDBAtom)new PDBAtom(element);
         public IPDBAtom NewPDBAtom(string symbol) => (IPDBAtom)new PDBAtom(symbol);
         public IPDBAtom NewPDBAtom(string symbol, Vector3 coordinate) => (IPDBAtom)new PDBAtom(symbol, coordinate);

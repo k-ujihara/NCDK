@@ -25,7 +25,6 @@ namespace NCDK
     /// Checks the functionality of <see cref="IPDBStructure"/> implementations.
     /// </summary>
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractPDBStructureTest : CDKTestCase
     {
         public IChemObjectBuilder Builder => ChemObject.Builder;

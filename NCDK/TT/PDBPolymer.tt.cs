@@ -48,8 +48,8 @@ namespace NCDK.Default
     // @cdk.keyword polymer
     public class PDBPolymer : BioPolymer, ICloneable, IPDBPolymer
     {
-        IList<string> sequentialListOfMonomers;
-        IList<IPDBStructure> secondaryStructures;
+        List<string> sequentialListOfMonomers;
+        List<IPDBStructure> secondaryStructures;
 
         /// <summary>
         /// Constructs a new Polymer to store the <see cref="IMonomer"/>s.
@@ -151,8 +151,8 @@ namespace NCDK.Silent
     // @cdk.keyword polymer
     public class PDBPolymer : BioPolymer, ICloneable, IPDBPolymer
     {
-        IList<string> sequentialListOfMonomers;
-        IList<IPDBStructure> secondaryStructures;
+        List<string> sequentialListOfMonomers;
+        List<IPDBStructure> secondaryStructures;
 
         /// <summary>
         /// Constructs a new Polymer to store the <see cref="IMonomer"/>s.

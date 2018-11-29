@@ -19,7 +19,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,12 +37,18 @@ namespace NCDK.Config
         : CDKTestCase
     {
         readonly bool standAlone = false;
-        readonly static AtomTypeFactory atf = AtomTypeFactory.GetInstance(new ChemObject().Builder);
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+        private readonly AtomTypeFactory atf;
         private const string JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
         private const string W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
 
-        private static IList<FileInfo> tmpFiles = new List<FileInfo>();
+        private static List<FileInfo> tmpFiles = new List<FileInfo>();
         private static string tmpCMLSchema;
+
+        public XMLIsotopeFactoryTest()
+        {
+            atf = AtomTypeFactory.GetInstance(builder.NewChemObject().Builder);
+        }
 
         [ClassInitialize()]
         public static void Initialize(TestContext context)
@@ -72,22 +77,22 @@ namespace NCDK.Config
         [TestMethod()]
         public void TestGetInstanceIChemObjectBuilder()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
             Assert.IsNotNull(isofac);
         }
 
         [TestMethod()]
         public void TestGetSize()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
             Assert.IsTrue(isofac.Count > 0);
         }
 
         [TestMethod()]
         public void TestConfigureIAtom()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            Atom atom = new Atom("H");
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            var atom = builder.NewAtom("H");
             isofac.Configure(atom);
             Assert.AreEqual(1, atom.AtomicNumber);
         }
@@ -95,9 +100,9 @@ namespace NCDK.Config
         [TestMethod()]
         public void TestConfigureIAtomIIsotope()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            Atom atom = new Atom("H");
-            IIsotope isotope = new Default.Isotope("H", 2);
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            var atom = builder.NewAtom("H");
+            var isotope = new Default.Isotope("H", 2);
             isofac.Configure(atom, isotope);
             Assert.AreEqual(2, atom.MassNumber.Value);
         }
@@ -105,73 +110,74 @@ namespace NCDK.Config
         [TestMethod()]
         public void TestGetMajorIsotopeString()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            IIsotope isotope = isofac.GetMajorIsotope("Te");
-            if (standAlone) Console.Out.WriteLine($"Isotope: {isotope}");
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            var isotope = isofac.GetMajorIsotope("Te");
+            if (standAlone)
+                Console.Out.WriteLine($"Isotope: {isotope}");
             Assert.AreEqual(129.9062244, isotope.ExactMass.Value, 0.0001);
         }
 
         [TestMethod()]
         public void TestGetMajorIsotopeNonelement()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            IIsotope isotope = isofac.GetMajorIsotope("E");
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            var isotope = isofac.GetMajorIsotope("E");
             Assert.IsNull(isotope);
         }
 
         [TestMethod()]
         public void TestGetMajorIsotopeInt()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            IIsotope isotope = isofac.GetMajorIsotope(17);
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            var isotope = isofac.GetMajorIsotope(17);
             Assert.AreEqual("Cl", isotope.Symbol);
         }
 
         [TestMethod()]
         public void TestGetElementString()
         {
-            XMLIsotopeFactory elfac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            IElement element = elfac.GetElement("Br");
+            var elfac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            var element = elfac.GetElement("Br");
             Assert.AreEqual(35, element.AtomicNumber);
         }
 
         [TestMethod()]
         public void TestGetElementNonelement()
         {
-            XMLIsotopeFactory elfac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            IElement element = elfac.GetElement("E");
+            var elfac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            var element = elfac.GetElement("E");
             Assert.IsNull(element);
         }
 
         [TestMethod()]
         public void TestGetElemenInt()
         {
-            XMLIsotopeFactory elfac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            IElement element = elfac.GetElement(6);
+            var elfac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            var element = elfac.GetElement(6);
             Assert.AreEqual("C", element.Symbol);
         }
 
         [TestMethod()]
         public void TestGetElementSymbolInt()
         {
-            XMLIsotopeFactory elfac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            String symbol = elfac.GetElementSymbol(8);
+            var elfac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            var symbol = elfac.GetElementSymbol(8);
             Assert.AreEqual("O", symbol);
         }
 
         [TestMethod()]
         public void TestGetIsotopesString()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            IIsotope[] list = isofac.GetIsotopes("He").ToArray();
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            var list = isofac.GetIsotopes("He").ToArray();
             Assert.AreEqual(8, list.Length);
         }
 
         [TestMethod()]
         public void TestGetIsotopesNonelement()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            IIsotope[] list = isofac.GetIsotopes("E").ToArray();
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            var list = isofac.GetIsotopes("E").ToArray();
             Assert.IsNotNull(list);
             Assert.AreEqual(0, list.Length);
         }
@@ -179,16 +185,16 @@ namespace NCDK.Config
         [TestMethod()]
         public void TestGetIsotopes()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            IIsotope[] list = isofac.GetIsotopes().ToArray();
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            var list = isofac.GetIsotopes().ToArray();
             Assert.IsTrue(list.Length > 200);
         }
 
         [TestMethod()]
         public void TestGetIsotopesDoubleDouble()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            IIsotope[] list = isofac.GetIsotopes(87.90, 0.01).ToArray();
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            var list = isofac.GetIsotopes(87.90, 0.01).ToArray();
             //        should return:
             //        Isotope match: 88Sr has mass 87.9056121
             //        Isotope match: 88Y has mass 87.9095011
@@ -200,21 +206,21 @@ namespace NCDK.Config
         [TestMethod()]
         public void TestIsElementString()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
             Assert.IsTrue(isofac.IsElement("C"));
         }
 
         [TestMethod()]
         public void TestConfigureAtomsIAtomContainer()
         {
-            AtomContainer container = new AtomContainer();
-            container.Atoms.Add(new Atom("C"));
-            container.Atoms.Add(new Atom("H"));
-            container.Atoms.Add(new Atom("N"));
-            container.Atoms.Add(new Atom("O"));
-            container.Atoms.Add(new Atom("F"));
-            container.Atoms.Add(new Atom("Cl"));
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
+            var container = builder.NewAtomContainer();
+            container.Atoms.Add(builder.NewAtom("C"));
+            container.Atoms.Add(builder.NewAtom("H"));
+            container.Atoms.Add(builder.NewAtom("N"));
+            container.Atoms.Add(builder.NewAtom("O"));
+            container.Atoms.Add(builder.NewAtom("F"));
+            container.Atoms.Add(builder.NewAtom("Cl"));
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
             isofac.ConfigureAtoms(container);
             foreach (var atom in container.Atoms)
             {
@@ -259,23 +265,23 @@ namespace NCDK.Config
         [TestMethod()]
         public void TestGetNaturalMassIElement()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            Assert.AreEqual(1.0079760, isofac.GetNaturalMass(new Default.Element("H")), 0.1);
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            Assert.AreEqual(1.0079760, isofac.GetNaturalMass(ChemicalElement.H), 0.1);
         }
 
         [TestMethod()]
         public void TestGetIsotope()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
             Assert.AreEqual(13.00335484, isofac.GetIsotope("C", 13).ExactMass.Value, 0.0000001);
         }
 
         [TestMethod()]
         public void TestGetIsotopeFromExactMass()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            IIsotope carbon13 = isofac.GetIsotope("C", 13);
-            IIsotope match = isofac.GetIsotope(carbon13.Symbol, carbon13.ExactMass.Value, 0.0001);
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            var carbon13 = isofac.GetIsotope("C", 13);
+            var match = isofac.GetIsotope(carbon13.Symbol, carbon13.ExactMass.Value, 0.0001);
             Assert.IsNotNull(match);
             Assert.AreEqual(13, match.MassNumber.Value);
         }
@@ -283,17 +289,17 @@ namespace NCDK.Config
         [TestMethod()]
         public void TestYeahSure()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            IIsotope match = isofac.GetIsotope("H", (int)13.00001, 0.0001);
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            var match = isofac.GetIsotope("H", (int)13.00001, 0.0001);
             Assert.IsNull(match);
         }
 
         [TestMethod()]
         public void TestGetIsotopeFromExactMassLargeTolerance()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            IIsotope carbon13 = isofac.GetIsotope("C", 13);
-            IIsotope match = isofac.GetIsotope(carbon13.Symbol, carbon13.ExactMass.Value, 2.0);
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            var carbon13 = isofac.GetIsotope("C", 13);
+            var match = isofac.GetIsotope(carbon13.Symbol, carbon13.ExactMass.Value, 2.0);
             Assert.IsNotNull(match);
             Assert.AreEqual(13, match.MassNumber.Value);
         }
@@ -303,8 +309,8 @@ namespace NCDK.Config
         [ExpectedException(typeof(ArgumentException))]
         public void TestNonexistingElement()
         {
-            XMLIsotopeFactory isofac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
-            IAtom xxAtom = new Atom("Xx");
+            var isofac = XMLIsotopeFactory.GetInstance(builder.NewChemObject().Builder);
+            var xxAtom = builder.NewAtom("Xx");
             isofac.Configure(xxAtom);
         }
     }

@@ -26,7 +26,6 @@ using System.Windows.Media;
 namespace NCDK.Renderers.Elements
 {
     // @cdk.module test-renderbasic
-    [TestClass()]
     public abstract class AbstractElementTest
     {
         private static IRenderingElement element;

@@ -53,10 +53,10 @@ namespace NCDK.Beam
                 h.AddTopology(g.TopologyOf(u));
             }
 
-            int[] Ordering = new DepthFirstOrder(g).visited;
+            var Ordering = new DepthFirstOrder(g).visited;
 
-            IDictionary<Edge, Edge> replacements = new Dictionary<Edge, Edge>();
-            ICollection<int> dbCentres = new SortedSet<int>();
+            var replacements = new Dictionary<Edge, Edge>();
+            var dbCentres = new SortedSet<int>();
 
             // change edges (only changed added to replacement)
             for (int u = 0; u < g.Order; u++)
@@ -112,7 +112,7 @@ namespace NCDK.Beam
         private static void RemoveRedundant(Graph g,
                                      Edge e,
                                      int[] ordering,
-                                     IDictionary<Edge, Edge> acc)
+                                     Dictionary<Edge, Edge> acc)
         {
             int u = e.Either(), v = e.Other(u);
 
@@ -159,7 +159,7 @@ namespace NCDK.Beam
                                       Edge e,
                                       int u,
                                       int[] ordering,
-                                      IDictionary<Edge, Edge> acc)
+                                      Dictionary<Edge, Edge> acc)
         {
             ICollection<Edge> edges = new SortedSet<Edge>(new S(e, u, ordering));
 

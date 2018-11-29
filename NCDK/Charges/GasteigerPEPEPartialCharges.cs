@@ -61,7 +61,7 @@ namespace NCDK.Charges
         /// <summary>The StepSize attribute of the GasteigerMarsiliPartialCharges object.</summary>
         public int StepSize { get; set; } = 5;
 
-        private static readonly AtomTypeFactory factory = CDK.JmolAtomTypeFactory;
+        private readonly AtomTypeFactory factory = CDK.JmolAtomTypeFactory;
 
         /// <summary>Corresponds an empirical influence between the electrostatic potential and the neighbours.</summary>
         private const double fE = 1.1;
@@ -463,7 +463,7 @@ namespace NCDK.Charges
                             {
                                 var a0 = ati.Bonds[k].Atoms[0];
                                 var a1 = ati.Bonds[k].Atoms[1];
-                                if (!a0.AtomicNumber.Equals(NaturalElements.H.AtomicNumber) || !a1.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                                if (!a0.AtomicNumber.Equals(AtomicNumbers.H) || !a1.AtomicNumber.Equals(AtomicNumbers.H))
                                     if ((a0.Id.Equals(ac.Bonds[i].Atoms[0].Id, StringComparison.Ordinal) && a1.Id.Equals(ac.Bonds[i].Atoms[1].Id, StringComparison.Ordinal))
                                      || (a1.Id.Equals(ac.Bonds[i].Atoms[0].Id, StringComparison.Ordinal) && a0.Id.Equals(ac.Bonds[i].Atoms[1].Id, StringComparison.Ordinal)))
                                     {
@@ -638,17 +638,17 @@ namespace NCDK.Charges
                     factors[2] = 0.0;
                     switch (ac.Atoms[i].AtomicNumber)
                     {
-                        case NaturalElements.H.AtomicNumber:
+                        case AtomicNumbers.H:
                             factors[0] = 0.0;
                             factors[1] = 0.0;
                             factors[2] = 0.0;
                             break;
-                        case NaturalElements.C.AtomicNumber:
+                        case AtomicNumbers.C:
                             factors[0] = 5.60;
                             factors[1] = 8.93;
                             factors[2] = 2.94;
                             break;
-                        case NaturalElements.O.AtomicNumber:
+                        case AtomicNumbers.O:
                             if (ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Single)
                             {
                                 factors[0] = 10.0;
@@ -662,7 +662,7 @@ namespace NCDK.Charges
                                 factors[2] = 6.85;
                             }
                             break;
-                        case NaturalElements.N.AtomicNumber:
+                        case AtomicNumbers.N:
                             if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
                             {
                                 factors[0] = 7.95;/* 7.95 */
@@ -676,7 +676,7 @@ namespace NCDK.Charges
                                 factors[2] = 7.32;/* 7.32 *//* 7.99 */
                             }
                             break;
-                        case NaturalElements.S.AtomicNumber:
+                        case AtomicNumbers.S:
                             if (ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Single)
                             {
                                 factors[0] = 7.73;
@@ -690,22 +690,22 @@ namespace NCDK.Charges
                                 factors[2] = 3.72;
                             }
                             break;
-                        case NaturalElements.F.AtomicNumber:
+                        case AtomicNumbers.F:
                             factors[0] = 7.34;
                             factors[1] = 13.86;
                             factors[2] = 9.68;
                             break;
-                        case NaturalElements.Cl.AtomicNumber:
+                        case AtomicNumbers.Cl:
                             factors[0] = 6.50;
                             factors[1] = 11.02;
                             factors[2] = 4.52;
                             break;
-                        case NaturalElements.Br.AtomicNumber:
+                        case AtomicNumbers.Br:
                             factors[0] = 5.20;
                             factors[1] = 9.68;
                             factors[2] = 4.48;
                             break;
-                        case NaturalElements.I.AtomicNumber:
+                        case AtomicNumbers.I:
                             factors[0] = 4.95;
                             factors[1] = 8.81;
                             factors[2] = 3.86;
@@ -752,17 +752,17 @@ namespace NCDK.Charges
                     factors[2] = 0.0;
                     switch (ac.Atoms[i].AtomicNumber)
                     {
-                        case NaturalElements.H.AtomicNumber:
+                        case AtomicNumbers.H:
                             factors[0] = 0.0;
                             factors[1] = 0.0;
                             factors[2] = 0.0;
                             break;
-                        case NaturalElements.C.AtomicNumber:
+                        case AtomicNumbers.C:
                             factors[0] = 5.98;/* 5.98-5.60 */
                             factors[1] = 7.93;/* 7.93-8.93 */
                             factors[2] = 1.94;
                             break;
-                        case NaturalElements.O.AtomicNumber:
+                        case AtomicNumbers.O:
                             if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
                             {
                                 factors[0] = 11.2;/* 11.2-10.0 */
@@ -776,7 +776,7 @@ namespace NCDK.Charges
                                 factors[2] = 6.85;
                             }
                             break;
-                        case NaturalElements.N.AtomicNumber:
+                        case AtomicNumbers.N:
                             if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
                             {
 
@@ -791,7 +791,7 @@ namespace NCDK.Charges
                                 factors[2] = 7.32;
                             }
                             break;
-                        case NaturalElements.P.AtomicNumber:
+                        case AtomicNumbers.P:
                             {// <--No correct
                                 if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
                                 {
@@ -807,7 +807,7 @@ namespace NCDK.Charges
                                 }
                             }
                             break;
-                        case NaturalElements.S.AtomicNumber:
+                        case AtomicNumbers.S:
                             if (ac.GetMaximumBondOrder(ac.Atoms[i]) != BondOrder.Single)
                             {
 
@@ -822,22 +822,22 @@ namespace NCDK.Charges
                                 factors[2] = 3.72;
                             }
                             break;
-                        case NaturalElements.F.AtomicNumber:
+                        case AtomicNumbers.F:
                             factors[0] = 7.14/* 7.34 */;
                             factors[1] = 13.86;
                             factors[2] = 5.68;
                             break;
-                        case NaturalElements.Cl.AtomicNumber:
+                        case AtomicNumbers.Cl:
                             factors[0] = 6.51;/* 6.50 */
                             factors[1] = 11.02;
                             factors[2] = 4.52;
                             break;
-                        case NaturalElements.Br.AtomicNumber:
+                        case AtomicNumbers.Br:
                             factors[0] = 5.20;
                             factors[1] = 9.68;
                             factors[2] = 4.48;
                             break;
-                        case NaturalElements.I.AtomicNumber:
+                        case AtomicNumbers.I:
                             factors[0] = 4.95;
                             factors[1] = 8.81;
                             factors[2] = 3.86;

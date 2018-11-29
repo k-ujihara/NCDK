@@ -271,7 +271,8 @@ namespace NCDK.LibIO.DotNetRDF
 
         private void SerializeChemObjectFields(INode rdfObject, IChemObject obj)
         {
-            if (obj.Id != null) g.Assert(new Triple(rdfObject, P_IDENTIFIER, g.CreateLiteralNode(obj.Id)));
+            if (obj.Id != null)
+                g.Assert(new Triple(rdfObject, P_IDENTIFIER, g.CreateLiteralNode(obj.Id)));
         }
 
         private void DeserializeChemObjectFields(INode rdfObject, IChemObject obj)

@@ -28,7 +28,6 @@ using NCDK.Aromaticities;
 using NCDK.Silent;
 using NCDK.Stereo;
 using NCDK.Templates;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -176,11 +175,13 @@ namespace NCDK.Smiles
         {
             var mock_u = new Mock<IAtom>(); var u = mock_u.Object;
             var mock_v = new Mock<IAtom>(); var v = mock_v.Object;
-            IBond b = new Bond(u, v, BondOrder.Unset);
-            var mock = new Mock<IDictionary<IAtom, int>>();
-            mock.SetupGet(n => n[u]).Returns(0);
-            mock.SetupGet(n => n[v]).Returns(1);
-            new CDKToBeam().ToBeamEdge(b, mock.Object);
+            var b = new Bond(u, v, BondOrder.Unset);
+            var o = new Dictionary<IAtom, int>()
+                {
+                    [u] = 0,
+                    [v] = 1,
+                };
+            new CDKToBeam().ToBeamEdge(b, o);
         }
 
         [TestMethod()]
@@ -189,11 +190,13 @@ namespace NCDK.Smiles
         {
             var mock_u = new Mock<IAtom>(); var u = mock_u.Object;
             var mock_v = new Mock<IAtom>(); var v = mock_v.Object;
-            IBond b = new Bond(u, v, BondOrder.Unset);
-            var mock = new Mock<IDictionary<IAtom, int>>();
-            mock.SetupGet(n => n[u]).Returns(0);
-            mock.SetupGet(n => n[v]).Returns(1);
-            new CDKToBeam().ToBeamEdge(b, mock.Object);
+            var b = new Bond(u, v, BondOrder.Unset);
+            var o = new Dictionary<IAtom, int>()
+            {
+                [u] = 0,
+                [v] = 1,
+            };
+            new CDKToBeam().ToBeamEdge(b, o);
         }
 
         [TestMethod()]
@@ -201,15 +204,15 @@ namespace NCDK.Smiles
         public void TooFewAtoms()
         {
             IBond b = new Bond(new IAtom[] { new Mock<IAtom>().Object });
-            new CDKToBeam().ToBeamEdge(b, new Mock<IDictionary<IAtom, int>>().Object);
+            new CDKToBeam().ToBeamEdge(b, new Mock<Dictionary<IAtom, int>>().Object);
         }
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
         public void TooManyAtoms()
         {
-            IBond b = new Bond(new IAtom[] { new Mock<IAtom>().Object, new Mock<IAtom>().Object, new Mock<IAtom>().Object });
-            new CDKToBeam().ToBeamEdge(b, new Mock<IDictionary<IAtom, int>>().Object);
+            var b = new Bond(new IAtom[] { new Mock<IAtom>().Object, new Mock<IAtom>().Object, new Mock<IAtom>().Object });
+            new CDKToBeam().ToBeamEdge(b, new Mock<Dictionary<IAtom, int>>().Object);
         }
 
         [TestMethod()]
@@ -217,12 +220,14 @@ namespace NCDK.Smiles
         {
             var mock_u = new Mock<IAtom>(); var u = mock_u.Object;
             var mock_v = new Mock<IAtom>(); var v = mock_v.Object;
-            IBond b = new Bond(u, v);
-            var mock = new Mock<IDictionary<IAtom, int>>();
-            mock.SetupGet(n => n[u]).Returns(0);
-            mock.SetupGet(n => n[v]).Returns(1);
-            CDKToBeam c2g = new CDKToBeam();
-            Assert.AreEqual(Beam.Bond.Single.CreateEdge(0, 1), c2g.ToBeamEdge(b, mock.Object));
+            var b = new Bond(u, v);
+            var o = new Dictionary<IAtom, int>()
+                {
+                   [u] = 0,
+                   [v] = 1,
+                };
+            var c2g = new CDKToBeam();
+            Assert.AreEqual(Beam.Bond.Single.CreateEdge(0, 1), c2g.ToBeamEdge(b, o));
         }
 
         [TestMethod()]
@@ -234,13 +239,15 @@ namespace NCDK.Smiles
             {
                 IsAromatic = true
             };
-            var mock = new Mock<IDictionary<IAtom, int>>();
-            mock.SetupGet(n => n[u]).Returns(0);
-            mock.SetupGet(n => n[v]).Returns(1);
+            var o = new Dictionary<IAtom, int>()
+            {
+                [u] = 0,
+                [v] = 1,
+            };
             mock_u.SetupGet(n => n.IsAromatic).Returns(true);
             mock_v.SetupGet(n => n.IsAromatic).Returns(true);
-            CDKToBeam c2g = new CDKToBeam();
-            Assert.AreEqual(Beam.Bond.Aromatic.CreateEdge(0, 1), c2g.ToBeamEdge(b, mock.Object));
+            var c2g = new CDKToBeam();
+            Assert.AreEqual(Beam.Bond.Aromatic.CreateEdge(0, 1), c2g.ToBeamEdge(b, o));
         }
 
         [TestMethod()]
@@ -248,12 +255,14 @@ namespace NCDK.Smiles
         {
             var mock_u = new Mock<IAtom>(); var u = mock_u.Object;
             var mock_v = new Mock<IAtom>(); var v = mock_v.Object;
-            IBond b = new Bond(u, v, BondOrder.Double);
-            var mock = new Mock<IDictionary<IAtom, int>>();
-            mock.SetupGet(n => n[u]).Returns(0);
-            mock.SetupGet(n => n[v]).Returns(1);
+            var b = new Bond(u, v, BondOrder.Double);
+            var o = new Dictionary<IAtom, int>()
+                {
+                    [u] = 0,
+                    [v] = 1,
+                };
             CDKToBeam c2g = new CDKToBeam();
-            Assert.AreEqual(Beam.Bond.Double.CreateEdge(0, 1), c2g.ToBeamEdge(b, mock.Object));
+            Assert.AreEqual(Beam.Bond.Double.CreateEdge(0, 1), c2g.ToBeamEdge(b, o));
         }
 
         [TestMethod()]
@@ -261,12 +270,14 @@ namespace NCDK.Smiles
         {
             var mock_u = new Mock<IAtom>(); var u = mock_u.Object;
             var mock_v = new Mock<IAtom>(); var v = mock_v.Object;
-            IBond b = new Bond(u, v, BondOrder.Triple);
-            var mock = new Mock<IDictionary<IAtom, int>>();
-            mock.SetupGet(n => n[u]).Returns(0);
-            mock.SetupGet(n => n[v]).Returns(1);
-            CDKToBeam c2g = new CDKToBeam();
-            Assert.AreEqual(Beam.Bond.Triple.CreateEdge(0, 1), c2g.ToBeamEdge(b, mock.Object));
+            var b = new Bond(u, v, BondOrder.Triple);
+            var o = new Dictionary<IAtom, int>()
+            {
+                [u] = 0,
+                [v] = 1,
+            };
+            var c2g = new CDKToBeam();
+            Assert.AreEqual(Beam.Bond.Triple.CreateEdge(0, 1), c2g.ToBeamEdge(b,o));
         }
 
         [TestMethod()]
@@ -274,54 +285,56 @@ namespace NCDK.Smiles
         {
             var mock_u = new Mock<IAtom>(); var u = mock_u.Object;
             var mock_v = new Mock<IAtom>(); var v = mock_v.Object;
-            IBond b = new Bond(u, v, BondOrder.Quadruple);
-            var mock = new Mock<IDictionary<IAtom, int>>();
-            mock.SetupGet(n => n[u]).Returns(0);
-            mock.SetupGet(n => n[v]).Returns(1);
-            CDKToBeam c2g = new CDKToBeam();
-            Assert.AreEqual(Beam.Bond.Quadruple.CreateEdge(0, 1), c2g.ToBeamEdge(b, mock.Object));
+            var b = new Bond(u, v, BondOrder.Quadruple);
+            var o = new Dictionary<IAtom, int>()
+            {
+                [u] = 0,
+                [v] = 1,
+            };
+            var c2g = new CDKToBeam();
+            Assert.AreEqual(Beam.Bond.Quadruple.CreateEdge(0, 1), c2g.ToBeamEdge(b, o));
         }
 
         [TestMethod()]
         public void Adeneine()
         {
-            Beam.Graph g = Convert(TestMoleculeFactory.MakeAdenine(), 0);
+            var g = Convert(TestMoleculeFactory.MakeAdenine(), 0);
             Assert.AreEqual("C12=C(N=CN=C1N)NC=N2", g.ToSmiles());
         }
 
         [TestMethod()]
         public void Benzene_kekule()
         {
-            Beam.Graph g = Convert(TestMoleculeFactory.MakeBenzene(), 0);
+            var g = Convert(TestMoleculeFactory.MakeBenzene(), 0);
             Assert.AreEqual("C=1C=CC=CC1", g.ToSmiles());
         }
 
         [TestMethod()]
         public void Benzene()
         {
-            IAtomContainer ac = TestMoleculeFactory.MakeBenzene();
-            Beam.Graph g = Convert(ac, true, SmiFlavors.UseAromaticSymbols);
+            var ac = TestMoleculeFactory.MakeBenzene();
+            var g = Convert(ac, true, SmiFlavors.UseAromaticSymbols);
             Assert.AreEqual("c1ccccc1", g.ToSmiles());
         }
 
         [TestMethod()]
         public void Imidazole_kekule()
         {
-            Beam.Graph g = Convert(TestMoleculeFactory.MakeImidazole(), false, 0);
+            var g = Convert(TestMoleculeFactory.MakeImidazole(), false, 0);
             Assert.AreEqual("C=1NC=NC1", g.ToSmiles());
         }
 
         [TestMethod()]
         public void Imidazole()
         {
-            Beam.Graph g = Convert(TestMoleculeFactory.MakeImidazole(), true, SmiFlavors.UseAromaticSymbols);
+            var g = Convert(TestMoleculeFactory.MakeImidazole(), true, SmiFlavors.UseAromaticSymbols);
             Assert.AreEqual("c1[nH]cnc1", g.ToSmiles());
         }
 
         [TestMethod()]
         public void Imidazole_ignoreAromatic()
         {
-            Beam.Graph g = Convert(TestMoleculeFactory.MakeImidazole(), true, 0);
+            var g = Convert(TestMoleculeFactory.MakeImidazole(), true, 0);
             Assert.AreEqual("C=1NC=NC1", g.ToSmiles());
         }
 
@@ -334,7 +347,7 @@ namespace NCDK.Smiles
                 MassNumber = 13
             };
             ac.Atoms.Add(a);
-            Beam.Graph g = Convert(ac, SmiFlavors.AtomicMass);
+            var g = Convert(ac, SmiFlavors.AtomicMass);
             Assert.AreEqual(13, g.GetAtom(0).Isotope);
             Assert.AreEqual("[13CH4]", g.ToSmiles());
         }
@@ -348,7 +361,7 @@ namespace NCDK.Smiles
                 MassNumber = 13
             };
             ac.Atoms.Add(a);
-            Beam.Graph g = Convert(ac, false, 0); // non-isomeric
+            var g = Convert(ac, false, 0); // non-isomeric
             Assert.AreEqual(-1, g.GetAtom(0).Isotope);
             Assert.AreEqual("C", g.ToSmiles());
         }
@@ -362,7 +375,7 @@ namespace NCDK.Smiles
                 FormalCharge = +1
             };
             ac.Atoms.Add(a);
-            Beam.Graph g = Convert(ac, 0);
+            var g = Convert(ac, 0);
             Assert.AreEqual(+1, g.GetAtom(0).Charge);
             Assert.AreEqual("[NH4+]", g.ToSmiles());
         }
@@ -376,7 +389,7 @@ namespace NCDK.Smiles
                 FormalCharge = -1
             };
             ac.Atoms.Add(a);
-            Beam.Graph g = Convert(ac, 0);
+            var g = Convert(ac, 0);
             Assert.AreEqual(-1, g.GetAtom(0).Charge);
             Assert.AreEqual("[OH-]", g.ToSmiles());
         }
@@ -390,7 +403,7 @@ namespace NCDK.Smiles
                 FormalCharge = -2
             };
             ac.Atoms.Add(a);
-            Beam.Graph g = Convert(ac, 0);
+            var g = Convert(ac, 0);
             Assert.AreEqual(-2, g.GetAtom(0).Charge);
             Assert.AreEqual("[O-2]", g.ToSmiles());
         }
@@ -411,9 +424,8 @@ namespace NCDK.Smiles
             ac.AddBond(ac.Atoms[1], ac.Atoms[2], BondOrder.Double);
             ac.AddBond(ac.Atoms[2], ac.Atoms[3], BondOrder.Single);
 
-            ac.StereoElements.Add(new DoubleBondStereochemistry(ac.Bonds[1], new IBond[] { ac.Bonds[0], ac.Bonds[2] },
-                    DoubleBondConformation.Opposite));
-            Beam.Graph g = Convert(ac, SmiFlavors.StereoCisTrans);
+            ac.StereoElements.Add(new DoubleBondStereochemistry(ac.Bonds[1], new IBond[] { ac.Bonds[0], ac.Bonds[2] }, DoubleBondConformation.Opposite));
+            var g = Convert(ac, SmiFlavors.StereoCisTrans);
             Assert.AreEqual("F/C=C/F", g.ToSmiles());
         }
 
@@ -433,9 +445,8 @@ namespace NCDK.Smiles
             ac.AddBond(ac.Atoms[1], ac.Atoms[2], BondOrder.Double);
             ac.AddBond(ac.Atoms[2], ac.Atoms[3], BondOrder.Single);
 
-            ac.StereoElements.Add(new DoubleBondStereochemistry(ac.Bonds[1], new IBond[] { ac.Bonds[0], ac.Bonds[2] },
-                    DoubleBondConformation.Together));
-            Beam.Graph g = Convert(ac, SmiFlavors.StereoCisTrans);
+            ac.StereoElements.Add(new DoubleBondStereochemistry(ac.Bonds[1], new IBond[] { ac.Bonds[0], ac.Bonds[2] }, DoubleBondConformation.Together));
+            var g = Convert(ac, SmiFlavors.StereoCisTrans);
             Assert.AreEqual("F/C=C\\F", g.ToSmiles());
         }
 
@@ -459,13 +470,16 @@ namespace NCDK.Smiles
             ac.AddBond(ac.Atoms[2], ac.Atoms[4], BondOrder.Single);
             ac.AddBond(ac.Atoms[2], ac.Atoms[5], BondOrder.Single);
 
-            ac.StereoElements.Add(new TetrahedralChirality(ac.Atoms[2], new IAtom[]{ac.Atoms[1], // C-C
-                        ac.Atoms[3], // C
-                        ac.Atoms[4], // O
-                        ac.Atoms[5], // H
-                }, TetrahedralStereo.Clockwise));
+            ac.StereoElements.Add(new TetrahedralChirality(ac.Atoms[2], new IAtom[]
+                {
+                    ac.Atoms[1], // C-C
+                    ac.Atoms[3], // C
+                    ac.Atoms[4], // O
+                    ac.Atoms[5], // H
+                },
+                TetrahedralStereo.Clockwise));
 
-            Beam.Graph g = Convert(ac, SmiFlavors.StereoTetrahedral);
+            var g = Convert(ac, SmiFlavors.StereoTetrahedral);
             Assert.AreEqual("CC[C@@](C)(O)[H]", g.ToSmiles());
         }
 
@@ -489,13 +503,16 @@ namespace NCDK.Smiles
             ac.AddBond(ac.Atoms[2], ac.Atoms[4], BondOrder.Single);
             ac.AddBond(ac.Atoms[2], ac.Atoms[5], BondOrder.Single);
 
-            ac.StereoElements.Add(new TetrahedralChirality(ac.Atoms[2], new IAtom[]{ac.Atoms[1], // C-C
-                        ac.Atoms[3], // C
-                        ac.Atoms[4], // O
-                        ac.Atoms[5], // H
-                }, TetrahedralStereo.AntiClockwise));
+            ac.StereoElements.Add(new TetrahedralChirality(ac.Atoms[2], new IAtom[]
+                {
+                    ac.Atoms[1], // C-C
+                    ac.Atoms[3], // C
+                    ac.Atoms[4], // O
+                    ac.Atoms[5], // H
+                }, 
+                TetrahedralStereo.AntiClockwise));
 
-            Beam.Graph g = Convert(ac, SmiFlavors.StereoTetrahedral);
+            var g = Convert(ac, SmiFlavors.StereoTetrahedral);
             Assert.AreEqual("CC[C@](C)(O)[H]", g.ToSmiles());
         }
 
@@ -521,15 +538,9 @@ namespace NCDK.Smiles
 
             ac.Bonds[1].IsAromatic = true;
 
-            ac.StereoElements.Add(new DoubleBondStereochemistry(ac.Bonds[1], new IBond[] { ac.Bonds[0], ac.Bonds[2] },
-                   DoubleBondConformation.Together));
-            Beam.Graph g = Convert(ac, SmiFlavors.UseAromaticSymbols);
+            ac.StereoElements.Add(new DoubleBondStereochemistry(ac.Bonds[1], new IBond[] { ac.Bonds[0], ac.Bonds[2] }, DoubleBondConformation.Together));
+            var g = Convert(ac, SmiFlavors.UseAromaticSymbols);
             Assert.AreEqual("FccF", g.ToSmiles());
-        }
-
-        [TestMethod()]
-        public void Propadiene()
-        {
         }
 
         [TestMethod()]
@@ -561,8 +572,7 @@ namespace NCDK.Smiles
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Double);
             m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Single);
 
-            var element = new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[0], m.Atoms[1],
-                        m.Atoms[3], m.Atoms[4]}, TetrahedralStereo.AntiClockwise);
+            var element = new ExtendedTetrahedral ( m.Atoms[2], new IAtom[]{m.Atoms[0], m.Atoms[1], m.Atoms[3], m.Atoms[4] }, TetrahedralStereo.AntiClockwise);
             m.SetStereoElements(new[] { element });
 
             Assert.AreEqual("CC=[C@]=CC", Convert(m, SmiFlavors.Stereo).ToSmiles());
@@ -582,8 +592,7 @@ namespace NCDK.Smiles
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Double);
             m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Single);
 
-            var element = new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[0], m.Atoms[1],
-                        m.Atoms[3], m.Atoms[4]}, TetrahedralStereo.Clockwise);
+            var element = new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[0], m.Atoms[1], m.Atoms[3], m.Atoms[4]}, TetrahedralStereo.Clockwise);
             m.SetStereoElements(new[] { element });
 
             Assert.AreEqual("CC=[C@@]=CC", Convert(m, SmiFlavors.Stereo).ToSmiles());
@@ -607,14 +616,12 @@ namespace NCDK.Smiles
             m.AddBond(m.Atoms[1], m.Atoms[5], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[6], BondOrder.Single);
 
-            int[][] atoms = new int[][] { new[] { 0, 5, 6, 4 }, new[] { 5, 0, 6, 4 }, new[] { 5, 0, 4, 6 }, new[] { 0, 5, 4, 6 }, new[] { 4, 6, 5, 0 }, new[] { 4, 6, 0, 5 }, new[] { 6, 4, 0, 5 }, new[] { 6, 4, 5, 0 }, };
-            TetrahedralStereo[] stereos = new TetrahedralStereo[]{TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise,
-                        TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise};
+            var atoms = new int[][] { new[] { 0, 5, 6, 4 }, new[] { 5, 0, 6, 4 }, new[] { 5, 0, 4, 6 }, new[] { 0, 5, 4, 6 }, new[] { 4, 6, 5, 0 }, new[] { 4, 6, 0, 5 }, new[] { 6, 4, 0, 5 }, new[] { 6, 4, 5, 0 }, };
+            var stereos = new TetrahedralStereo[]{TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise};
 
             for (int i = 0; i < atoms.Length; i++)
             {
-                var element = new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[atoms[i][0]],
-                            m.Atoms[atoms[i][1]], m.Atoms[atoms[i][2]], m.Atoms[atoms[i][3]]}, stereos[i]);
+                var element = new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[atoms[i][0]], m.Atoms[atoms[i][1]], m.Atoms[atoms[i][2]], m.Atoms[atoms[i][3]]}, stereos[i]);
                 m.SetStereoElements(new[] { element });
 
                 Assert.AreEqual("CC(=[C@@]=C(C)[H])[H]", Convert(m, SmiFlavors.Stereo).ToSmiles());
@@ -639,14 +646,12 @@ namespace NCDK.Smiles
             m.AddBond(m.Atoms[1], m.Atoms[5], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[6], BondOrder.Single);
 
-            int[][] atoms = new int[][] { new[] { 0, 5, 6, 4 }, new[] { 5, 0, 6, 4 }, new[] { 5, 0, 4, 6 }, new[] { 0, 5, 4, 6 }, new[] { 4, 6, 5, 0 }, new[] { 4, 6, 0, 5 }, new[] { 6, 4, 0, 5 }, new[] { 6, 4, 5, 0 }, };
-            TetrahedralStereo[] stereos = new TetrahedralStereo[]{TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise,
-                        TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise};
+            var atoms = new int[][] { new[] { 0, 5, 6, 4 }, new[] { 5, 0, 6, 4 }, new[] { 5, 0, 4, 6 }, new[] { 0, 5, 4, 6 }, new[] { 4, 6, 5, 0 }, new[] { 4, 6, 0, 5 }, new[] { 6, 4, 0, 5 }, new[] { 6, 4, 5, 0 }, };
+            var stereos = new TetrahedralStereo[]{TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise};
 
             for (int i = 0; i < atoms.Length; i++)
             {
-                var element = new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[atoms[i][0]],
-                            m.Atoms[atoms[i][1]], m.Atoms[atoms[i][2]], m.Atoms[atoms[i][3]]}, stereos[i]);
+                var element = new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[atoms[i][0]], m.Atoms[atoms[i][1]], m.Atoms[atoms[i][2]], m.Atoms[atoms[i][3]]}, stereos[i]);
                 m.SetStereoElements(new[] { element });
 
                 Assert.AreEqual("CC(=[C@]=C(C)[H])[H]", Convert(m, SmiFlavors.Stereo).ToSmiles());

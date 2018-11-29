@@ -48,143 +48,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace NCDK.Config
 {
-    public static class NaturalElements
+    internal static class NaturalElement
     {
-<#
-        foreach (var nn in name_and_numbers)
-        {
-            if (nn.IsObsolete)
-            {
-#>
-        <#= nn.ObsoleteLine #>
-<#
-            }
-#>
-        public static class <#= nn.Name #>
-        {
-            public const string Name = "<#= nn.Name #>";
-            public const string Symbol = "<#= nn.Symbol #>";
-            public const int AtomicNumber = <#= nn.Number #>;
-            public static IElement Element { get; } = new ImmutableElement(Symbol, AtomicNumber);
-        }
-<#
-            if (string.IsNullOrEmpty(nn.Symbol))
-                continue;
-            if (nn.IsObsolete)
-            {
-#>
-        <#= nn.ObsoleteLine #>
-<#
-            }
-#>
-        public static class <#= nn.Symbol #>
-        {
-            public const string Name = <#= nn.Name #>.Name;
-            public const string Symbol = <#= nn.Name #>.Symbol;
-            public const int AtomicNumber = <#= nn.Name #>.AtomicNumber;
-            public static IElement Element { get; } = <#= nn.Name #>.Element;
-        }
-<#
-        }
-#>
-    }
-}
-
-namespace NCDK.Config
-{
-    public static partial class NaturalElement
-    {
-        internal static IReadOnlyDictionary<string, int> SymbolToAtomicNumberMap { get; } = new Dictionary<string, int>()
-            {
-<#
-        foreach (var nn in name_and_numbers)
-        {
-            if (nn.Symbol != "")
-            {
-#>
-                ["<#= nn.Symbol #>"] = NaturalElements.<#= nn.Name #>.AtomicNumber,
-<#
-            }
-        }
-#>
-            };
-
-        /// <summary>
-        /// Lookup elements by symbol / name.
-        /// </summary>
-        internal static IReadOnlyDictionary<string, int> StringToAtomicNumberMap { get; } = new Dictionary<string, int>()
-            {
-<#
-        foreach (var nn in name_and_numbers)
-        {
-#>
-                ["<#= nn.Name.ToLowerInvariant() #>"] = NaturalElements.<#= nn.Name #>.AtomicNumber,
-<#
-            if (nn.Symbol != "")
-            {
-#>
-                ["<#= nn.Symbol.ToLowerInvariant() #>"] = NaturalElements.<#= nn.Name #>.AtomicNumber,
-<#
-            }
-        }
-#>
-                // recently named elements
-                ["uub"] = NaturalElements.Copernicium.AtomicNumber, // 2009
-                ["ununbium"] = NaturalElements.Copernicium.AtomicNumber,
-                ["uuq"] = NaturalElements.Flerovium.AtomicNumber, // 2012
-                ["ununquadium"] = NaturalElements.Flerovium.AtomicNumber,
-                ["uuh"] = NaturalElements.Livermorium.AtomicNumber, // 2012
-                ["ununhexium"] = NaturalElements.Livermorium.AtomicNumber,
-                // alternative spellings
-                ["sulphur"] = NaturalElements.Sulfur.AtomicNumber,
-                ["cesium"] = NaturalElements.Caesium.AtomicNumber,
-                ["aluminum"] = NaturalElements.Aluminium.AtomicNumber,
-            };
-<#
-        int maxAtomicNumber = name_and_numbers.Select(n => n.Number).Max();
-        string[] uniq_atoms = new string[maxAtomicNumber + 1];
-        foreach (var nn in name_and_numbers)
-        {
-            if (uniq_atoms[nn.Number] == null && !nn.IsObsolete)
-            {
-                uniq_atoms[nn.Number] = nn.Name;
-            }
-        }
-#>
-
-        /// <summary>
-        /// Lookup elements by atomic number.
-        /// </summary>
-        public static IReadOnlyList<IElement> Elements { get; } = new IElement[] 
-            { 
-<# foreach (var nn in name_and_numbers.Where(n => !n.IsObsolete)) { #>
-                NaturalElements.<#= nn.Name #>.Element, 
-<# } #>
-<# foreach (var nn in name_and_numbers.Where(n => n.IsObsolete)) { #>
-                NaturalElements.<#= nn.Name #>.Element, 
-<# } #>
-            };
-
-        internal static IReadOnlyList<string> Names { get; } = new string[]
-            { 
-<# foreach (var nn in name_and_numbers.Where(n => !n.IsObsolete)) { #>
-                NaturalElements.<#= nn.Name #>.Name,
-<# } #> 
-            };
-
-        internal static IReadOnlyList<string> Symbols { get; } = new string[]
-            { 
-<# foreach (var nn in name_and_numbers.Where(n => !n.IsObsolete)) { #>
-                NaturalElements.<#= nn.Name #>.Symbol,
-<# } #> 
-            };
-
         /// <summary>
         /// Return the period in the periodic table this element belongs to. If
-        /// the element is <see cref="NaturalElements.Unknown"/> it's period is 0.
+        /// the element is <see cref="ChemicalElement.R"/> it's period is 0.
         /// </summary>
         internal static IReadOnlyList<int> Periods { get; } = new int[] 
             { <# foreach (var nn in name_and_numbers.Where(n => !n.IsObsolete)) { #><#= nn.Period #>, <# } #> };

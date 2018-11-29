@@ -26,7 +26,6 @@ namespace NCDK
     /// </summary>
     // @see org.openscience.cdk.LonePair
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractLonePairTest
         : AbstractElectronContainerTest
     {

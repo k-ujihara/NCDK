@@ -661,7 +661,7 @@ namespace NCDK.LibIO.CML
                     {
                         foreach (var atom in bond.Atoms)
                         {
-                            if (NaturalElements.H.AtomicNumber.Equals(atom.AtomicNumber) && atom != cdkAtom)
+                            if (AtomicNumbers.H.Equals(atom.AtomicNumber) && atom != cdkAtom)
                                 totalHydrogen++;
                         }
                     }

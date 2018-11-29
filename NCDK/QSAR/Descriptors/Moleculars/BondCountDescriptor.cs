@@ -82,7 +82,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 var count = container.Bonds
                     .Select(bond => bond.Atoms
-                        .Count(atom => atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)))
+                        .Count(atom => atom.AtomicNumber.Equals(AtomicNumbers.H)))
                     .Sum();
                 return new Result(count, order);
             }

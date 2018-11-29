@@ -36,7 +36,6 @@ namespace NCDK.Charges
     // @cdk.created  2008-104-31
     // @cdk.module   charges
     // @cdk.keyword  stabilization charge
-    // @cdk.githash
     public static class StabilizationCharges
     {
         /// <summary>

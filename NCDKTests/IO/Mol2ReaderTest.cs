@@ -22,9 +22,9 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -39,18 +39,23 @@ namespace NCDK.IO
     /// <seealso cref="Mol2Reader"/>
     // @cdk.module test-io
     [TestClass()]
-    public class Mol2ReaderTest : SimpleChemObjectReaderTest
+    public class Mol2ReaderTest 
+        : SimpleChemObjectReaderTest
     {
         protected override string TestFile => "NCDK.Data.Mol2.fromWebsite.mol2";
         protected override Type ChemObjectIOToTestType => typeof(Mol2Reader);
 
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+
         [TestMethod()]
         public void TestAccepts()
         {
-            Mol2Reader reader = new Mol2Reader(new StringReader(""));
-            Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
-            Assert.IsTrue(reader.Accepts(typeof(ChemModel)));
-            Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
+            using (var reader = new Mol2Reader(new StringReader("")))
+            {
+                Assert.IsTrue(reader.Accepts(typeof(IChemFile)));
+                Assert.IsTrue(reader.Accepts(typeof(IChemModel)));
+                Assert.IsTrue(reader.Accepts(typeof(IAtomContainer)));
+            }
         }
 
         /// <summary>
@@ -60,25 +65,26 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestExampleFromWebsite()
         {
-            string filename = "NCDK.Data.Mol2.fromWebsite.mol2";
+            var filename = "NCDK.Data.Mol2.fromWebsite.mol2";
             Trace.TraceInformation("Testing: ", filename);
-            var ins = ResourceLoader.GetAsStream(filename);
-            Mol2Reader reader = new Mol2Reader(ins);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
-            reader.Close();
+            IChemFile chemFile;
+            using (var reader = new Mol2Reader(ResourceLoader.GetAsStream(filename)))
+            {
+                chemFile = reader.Read(builder.NewChemFile());
+            }
 
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
 
             var som = model.MoleculeSet;
             Assert.IsNotNull(som);
             Assert.AreEqual(1, som.Count);
-            IAtomContainer m = som[0];
+            var m = som[0];
             Assert.IsNotNull(m);
             Assert.AreEqual(12, m.Atoms.Count);
             Assert.AreEqual(12, m.Bonds.Count);
@@ -92,42 +98,53 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestReadingIDs()
         {
-            string filename = "NCDK.Data.Mol2.fromWebsite.mol2";
-            var ins = ResourceLoader.GetAsStream(filename);
-            Mol2Reader reader = new Mol2Reader(ins);
-            IAtomContainer molecule = (IAtomContainer)reader.Read(new AtomContainer());
-            reader.Close();
+            var filename = "NCDK.Data.Mol2.fromWebsite.mol2";
+            IAtomContainer molecule;
+            using (var reader = new Mol2Reader(ResourceLoader.GetAsStream(filename)))
+            {
+                molecule = reader.Read(builder.NewAtomContainer());
+            }
             Assert.IsNotNull(molecule);
-            IAtomContainer reference = (IAtomContainer)molecule.Clone();
+            var reference = (IAtomContainer)molecule.Clone();
             Assert.AreEqual("C1", reference.Atoms[0].Id);
         }
 
         /// <summary>
         /// Tests the Mol2Reader with about 30% of the NCI molecules.
         /// </summary>
-        [TestCategory("SlowTest")]
+        [TestCategory("VerySlowTest")]
         [TestMethod()]
         public void TestNCIfeb03_2D()
         {
-            string filename = "NCDK.Data.Mol2.NCI_feb03_2D.mol2.gz";
-            Stream ins = new GZipStream(ResourceLoader.GetAsStream(filename), CompressionMode.Decompress);
-            var br = new StreamReader(ins);
-            var buf = new StringBuilder();
-            string line;
-            while ((line = br.ReadLine()) != null)
+            foreach (var s in GetNCIfeb032Ds())
             {
-                if (line.StartsWith("@<TRIPOS>MOLECULE") && (buf.Length > 0))
+                CheckMol(s);
+            }
+        }
+
+        private IEnumerable<string> GetNCIfeb032Ds()
+        {
+            var buf = new StringBuilder();
+            var filename = "NCDK.Data.Mol2.NCI_feb03_2D.mol2.gz";
+            using (var br = new StreamReader(new GZipStream(ResourceLoader.GetAsStream(filename), CompressionMode.Decompress)))
+            {
+                string line;
+                while ((line = br.ReadLine()) != null)
                 {
-                    CheckMol(buf);
-                    var last = buf[buf.Length - 1];
-                    buf.Clear();
-                    buf.Append(last);
+                    if (line.StartsWith("@<TRIPOS>MOLECULE", StringComparison.Ordinal)
+                     && buf.Length > 0)
+                    {
+                        yield return buf.ToString();
+                        var last = buf[buf.Length - 1];
+                        buf.Clear();
+                        buf.Append(last);
+                    }
+                    buf.Append(line).Append('\n');
                 }
-                buf.Append(line).Append('\n');
             }
             if (buf.Length > 0)
             {
-                CheckMol(buf);
+                yield return buf.ToString();
             }
         }
 
@@ -135,12 +152,13 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestMultiMol()
         {
-            string filename = "NCDK.Data.Mol2.actives.mol2";
+            var filename = "NCDK.Data.Mol2.actives.mol2";
             Trace.TraceInformation("Testing: ", filename);
-            var ins = ResourceLoader.GetAsStream(filename);
-            Mol2Reader reader = new Mol2Reader(ins);
-            IChemFile chemFile = reader.Read(new ChemFile());
-            reader.Close();
+            IChemFile chemFile;
+            using (var reader = new Mol2Reader(ResourceLoader.GetAsStream(filename)))
+            {
+                chemFile = reader.Read(builder.NewChemFile());
+            }
             var mols = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(30, mols.Count);
             Assert.AreEqual(25, mols[0].Atoms.Count);
@@ -151,12 +169,13 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestMultiMolButSingle()
         {
-            string filename = "NCDK.Data.Mol2.fromWebsite.mol2";
+            var filename = "NCDK.Data.Mol2.fromWebsite.mol2";
             Trace.TraceInformation("Testing: ", filename);
-            var ins = ResourceLoader.GetAsStream(filename);
-            Mol2Reader reader = new Mol2Reader(ins);
-            IChemFile chemFile = reader.Read(new ChemFile());
-            reader.Close();
+            IChemFile chemFile;
+            using (var reader = new Mol2Reader(ResourceLoader.GetAsStream(filename)))
+            {
+                chemFile = reader.Read(builder.NewChemFile());
+            }
             var mols = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(1, mols.Count);
             Assert.AreEqual(12, mols[0].Atoms.Count);
@@ -165,11 +184,12 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestIAtomContainer()
         {
-            string filename = "NCDK.Data.Mol2.fromWebsite.mol2";
-            var ins = ResourceLoader.GetAsStream(filename);
-            Mol2Reader reader = new Mol2Reader(ins);
-            IAtomContainer mol = (IAtomContainer)reader.Read(new AtomContainer());
-            reader.Close();
+            var filename = "NCDK.Data.Mol2.fromWebsite.mol2";
+            IAtomContainer mol;
+            using (var reader = new Mol2Reader(ResourceLoader.GetAsStream(filename)))
+            {
+                mol = (IAtomContainer)reader.Read(builder.NewAtomContainer());
+            }
             Assert.IsNotNull(mol);
             Assert.AreEqual(12, mol.Atoms.Count);
             Assert.AreEqual(12, mol.Bonds.Count);
@@ -178,7 +198,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestBug1714794()
         {
-            string problematicMol2 = "@<TRIPOS>MOLECULE\n" + "mol_197219.smi\n" + " 129 135 0 0 0\n" + "SMALL\n"
+            var problematicMol2 = "@<TRIPOS>MOLECULE\n" + "mol_197219.smi\n" + " 129 135 0 0 0\n" + "SMALL\n"
                     + "GASTEIGER\n" + "Energy = 0\n" + "\n" + "@<TRIPOS>ATOM\n"
                     + "      1 N1          0.0000    0.0000    0.0000 N.am    1  <1>        -0.2782\n"
                     + "      2 H1          0.0000    0.0000    0.0000 H       1  <1>         0.1552\n"
@@ -354,13 +374,15 @@ namespace NCDK.IO
                     + "   127   101   119    1\n" + "   128    96   122    1\n" + "   129   122   123    1\n"
                     + "   130   122   124    1\n" + "   131   122   125    1\n" + "   132    91   126    1\n"
                     + "   133   126   127    1\n" + "   134     4   128    1\n" + "   135   128   129    1\n";
-            Mol2Reader r = new Mol2Reader(new StringReader(problematicMol2));
-            IChemModel model = (IChemModel)r.Read(CDK.Builder.NewChemModel());
-            r.Close();
+            IChemModel model;
+            using (var r = new Mol2Reader(new StringReader(problematicMol2)))
+            {
+                model = (IChemModel)r.Read(CDK.Builder.NewChemModel());
+            }
             Assert.IsNotNull(model);
             var containers = ChemModelManipulator.GetAllAtomContainers(model);
             Assert.AreEqual(1, containers.Count());
-            IAtomContainer molecule = containers.FirstOrDefault();
+            var molecule = containers.FirstOrDefault();
             Assert.IsNotNull(molecule);
             Assert.AreEqual(129, molecule.Atoms.Count);
             Assert.AreEqual(135, molecule.Bonds.Count);
@@ -372,10 +394,16 @@ namespace NCDK.IO
 
         private static void CheckMol(StringBuilder buf)
         {
-            StringReader sr = new StringReader(buf.ToString());
-            Mol2Reader reader = new Mol2Reader(sr);
-            IChemFile mol = (IChemFile)reader.Read(CDK.Builder.NewChemFile());
-            reader.Close();
+            CheckMol(buf.ToString());
+        }
+
+        private static void CheckMol(string str)
+        {
+            IChemFile mol;
+            using (var reader = new Mol2Reader(new StringReader(str)))
+            {
+                mol = reader.Read(CDK.Builder.NewChemFile());
+            }
             Assert.IsTrue(mol.Count > 0);
             Assert.IsTrue(mol[0].Count > 0);
             Assert.IsTrue(mol[0][0].MoleculeSet.Count > 0);
@@ -386,18 +414,13 @@ namespace NCDK.IO
         [TestMethod()]
         public void UnrecognisedAtomTypes()
         {
-            Mol2Reader mol2Reader = null;
-            try
+            IAtomContainer container;
+            using (var mol2Reader = new Mol2Reader(ResourceLoader.GetAsStream(this.GetType(), "CLMW1.mol2")))
             {
-                mol2Reader = new Mol2Reader(ResourceLoader.GetAsStream(this.GetType(), "CLMW1.mol2"));
-                IAtomContainer container = mol2Reader.Read(new AtomContainer());
-                foreach (var atom in container.Atoms)
-                    Assert.IsNotNull(atom.AtomicNumber);
+                container = mol2Reader.Read(builder.NewAtomContainer());
             }
-            finally
-            {
-                if (mol2Reader != null) mol2Reader.Close();
-            }
+            foreach (var atom in container.Atoms)
+                Assert.IsNotNull(atom.AtomicNumber);
         }
     }
 }

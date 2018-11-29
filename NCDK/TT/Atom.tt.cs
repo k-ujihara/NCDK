@@ -74,13 +74,20 @@ namespace NCDK.Default
         /// </summary>
         public Atom()
             : base((string)null)
-        { }
+        { 
+        }
+
+        public Atom(ChemicalElement element)
+            : base(element)
+        {
+        }
 
         /// <summary>
         /// Create a new atom with of the specified element.
         /// </summary>
         /// <param name="elem">atomic number</param>
-        public Atom(int elem) : this(elem, 0, 0)
+        public Atom(int elem) 
+            : this(elem, 0, 0)
         {
         }
 
@@ -102,7 +109,7 @@ namespace NCDK.Default
         public Atom(int elem, int hcnt, int fchg) : base((string)null)
         {
             AtomicNumber = elem;
-            Symbol = NaturalElement.OfNumber(elem).Symbol;
+            Symbol = ChemicalElement.Of(elem).Symbol;
             ImplicitHydrogenCount = hcnt;
             FormalCharge = fchg;
         }
@@ -139,7 +146,7 @@ namespace NCDK.Default
         /// <summary>
         /// Constructs an <see cref="IAtom"/> from an element name and a <see cref="Vector2"/>.
         /// </summary>
-        /// <param name="elementSymbol">The Element</param>
+        /// <param name="elementSymbol">The element</param>
         /// <param name="point2d">The Point</param>
         public Atom(string elementSymbol, Vector2 point2d)
             : base(elementSymbol)
@@ -150,7 +157,7 @@ namespace NCDK.Default
         /// <summary>
         /// Constructs an <see cref="IAtom"/> from an element name and a <see cref="Vector3"/>.
         /// </summary>
-        /// <param name="elementSymbol">The Element</param>
+        /// <param name="elementSymbol">The element</param>
         /// <param name="point3d">The Point</param>
         public Atom(string elementSymbol, Vector3 point3d)
             : base(elementSymbol)
@@ -402,8 +409,8 @@ namespace NCDK.Default
                 pos++;
                 while (pos < len && IsLower(str[pos]))
                     pos++;
-                anum = NaturalElement.ToAtomicNumber(str.Substring(beg, pos - beg));
-                if (anum == NaturalElements.Unknown.AtomicNumber)
+                anum = ChemicalElement.OfSymbol(str.Substring(beg, pos - beg)).AtomicNumber;
+                if (anum == AtomicNumbers.Unknown)
                     return false;
 
                 // optional fields after atom symbol
@@ -526,13 +533,20 @@ namespace NCDK.Silent
         /// </summary>
         public Atom()
             : base((string)null)
-        { }
+        { 
+        }
+
+        public Atom(ChemicalElement element)
+            : base(element)
+        {
+        }
 
         /// <summary>
         /// Create a new atom with of the specified element.
         /// </summary>
         /// <param name="elem">atomic number</param>
-        public Atom(int elem) : this(elem, 0, 0)
+        public Atom(int elem) 
+            : this(elem, 0, 0)
         {
         }
 
@@ -554,7 +568,7 @@ namespace NCDK.Silent
         public Atom(int elem, int hcnt, int fchg) : base((string)null)
         {
             AtomicNumber = elem;
-            Symbol = NaturalElement.OfNumber(elem).Symbol;
+            Symbol = ChemicalElement.Of(elem).Symbol;
             ImplicitHydrogenCount = hcnt;
             FormalCharge = fchg;
         }
@@ -591,7 +605,7 @@ namespace NCDK.Silent
         /// <summary>
         /// Constructs an <see cref="IAtom"/> from an element name and a <see cref="Vector2"/>.
         /// </summary>
-        /// <param name="elementSymbol">The Element</param>
+        /// <param name="elementSymbol">The element</param>
         /// <param name="point2d">The Point</param>
         public Atom(string elementSymbol, Vector2 point2d)
             : base(elementSymbol)
@@ -602,7 +616,7 @@ namespace NCDK.Silent
         /// <summary>
         /// Constructs an <see cref="IAtom"/> from an element name and a <see cref="Vector3"/>.
         /// </summary>
-        /// <param name="elementSymbol">The Element</param>
+        /// <param name="elementSymbol">The element</param>
         /// <param name="point3d">The Point</param>
         public Atom(string elementSymbol, Vector3 point3d)
             : base(elementSymbol)
@@ -847,8 +861,8 @@ namespace NCDK.Silent
                 pos++;
                 while (pos < len && IsLower(str[pos]))
                     pos++;
-                anum = NaturalElement.ToAtomicNumber(str.Substring(beg, pos - beg));
-                if (anum == NaturalElements.Unknown.AtomicNumber)
+                anum = ChemicalElement.OfSymbol(str.Substring(beg, pos - beg)).AtomicNumber;
+                if (anum == AtomicNumbers.Unknown)
                     return false;
 
                 // optional fields after atom symbol

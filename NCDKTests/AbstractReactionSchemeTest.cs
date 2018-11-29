@@ -25,9 +25,8 @@ namespace NCDK
     /// Checks the functionality of <see cref="IReactionScheme"/> implementations.
     /// </summary>
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractReactionSchemeTest
-           : AbstractReactionSetTest
+        : AbstractReactionSetTest
     {
         [TestMethod()]
         public virtual void TestGetReactionSchemeCount()

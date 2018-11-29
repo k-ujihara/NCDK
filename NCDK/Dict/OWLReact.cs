@@ -38,7 +38,6 @@ namespace NCDK.Dict
     // @cdk.created  2008-01-01
     // @cdk.keyword  dictionary
     // @cdk.module   dict
-    // @cdk.githash
     public class OWLReact : EntryDictionary
     {
         private static readonly XNamespace rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";

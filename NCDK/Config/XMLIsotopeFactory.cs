@@ -39,8 +39,6 @@ namespace NCDK.Config
     /// about the major isotope of hydrogen, one can use this code:
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Config.XMLIsotopeFactory_Example.cs+example"]/*' />
     /// </example>
-    // @cdk.module     extra
-    // @cdk.githash
     // @author     steinbeck
     // @cdk.created    2001-08-29
     // @cdk.keyword    isotope

@@ -180,7 +180,7 @@ namespace NCDK.Smiles.SMARTS
         public void TestMethane()
         {
             IAtomContainer methane = CDK.Builder.NewAtomContainer();
-            IAtom carbon = methane.Builder.NewAtom(NaturalElements.Carbon.Element);
+            IAtom carbon = methane.Builder.NewAtom(ChemicalElement.C);
             carbon.ImplicitHydrogenCount = 4;
             methane.Atoms.Add(carbon);
 

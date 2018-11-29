@@ -180,7 +180,7 @@ namespace NCDK.ForceFields
             return atype;
         }
 
-        private static void ParseMMFFCHARGE(Stream ins, IDictionary<BondKey, decimal> map)
+        private static void ParseMMFFCHARGE(Stream ins, Dictionary<BondKey, decimal> map)
         {
             using (var br = new StreamReader(ins, System.Text.Encoding.UTF8))
             {
@@ -246,7 +246,7 @@ namespace NCDK.ForceFields
             }
         }
 
-        private static void ParseMMFFTypeMap(Stream ins, IDictionary<string, int> types)
+        private static void ParseMMFFTypeMap(Stream ins, Dictionary<string, int> types)
         {
             using (var br = new StreamReader(ins, Encoding.UTF8))
             {
@@ -263,7 +263,7 @@ namespace NCDK.ForceFields
             }
         }
 
-        private static void ParseMMFFFORMCHG(Stream ins, IDictionary<string, decimal> fcharges)
+        private static void ParseMMFFFORMCHG(Stream ins, Dictionary<string, decimal> fcharges)
         {
             using (var br = new StreamReader(ins, Encoding.UTF8))
             {

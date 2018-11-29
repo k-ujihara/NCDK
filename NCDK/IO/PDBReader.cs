@@ -69,7 +69,7 @@ namespace NCDK.IO
         private BooleanIOSetting readConnect;
         private BooleanIOSetting useHetDictionary;
 
-        private IDictionary<int, IAtom> atomNumberMap;
+        private Dictionary<int, IAtom> atomNumberMap;
 
         /// <summary>
         /// This is a temporary store for bonds from CONNECT records. As CONNECT is

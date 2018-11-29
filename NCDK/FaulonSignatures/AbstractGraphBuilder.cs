@@ -8,7 +8,7 @@ namespace NCDK.FaulonSignatures
     // @author maclean
     public abstract class AbstractGraphBuilder
     {
-        private IDictionary<int, int> colorToVertexIndexMap;
+        private Dictionary<int, int> colorToVertexIndexMap;
 
         private int vertexCount;
 
@@ -34,8 +34,7 @@ namespace NCDK.FaulonSignatures
             colorToVertexIndexMap.Clear();
         }
 
-        private void MakeFromColoredTreeNode(
-                ColoredTree.Node parent, ColoredTree.Node node, int parentIndex)
+        private void MakeFromColoredTreeNode(ColoredTree.Node parent, ColoredTree.Node node, int parentIndex)
         {
             int vertexIndex;
             if (node.IsColored())
@@ -87,7 +86,6 @@ namespace NCDK.FaulonSignatures
         /// <param name="vertexSymbol1"></param>
         /// <param name="vertexSymbol2"></param>
         /// <param name="edgeLabel"></param>
-        public abstract void MakeEdge(int vertexIndex1, int vertexIndex2,
-                string vertexSymbol1, string vertexSymbol2, string edgeLabel);
+        public abstract void MakeEdge(int vertexIndex1, int vertexIndex2, string vertexSymbol1, string vertexSymbol2, string edgeLabel);
     }
 }

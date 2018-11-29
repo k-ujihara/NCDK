@@ -57,7 +57,7 @@ namespace NCDK.Reactions.Types
         /// <param name="agents">agents of the reaction (Must be in this case null).</param>
         public override IReactionSet Initiate(IChemObjectSet<IAtomContainer> reactants, IChemObjectSet<IAtomContainer> agents)
         {
-            return base.Initiate(reactants, agents, 5, false, atom => atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber));
+            return base.Initiate(reactants, agents, 5, false, atom => atom.AtomicNumber.Equals(AtomicNumbers.H));
         }
     }
 }

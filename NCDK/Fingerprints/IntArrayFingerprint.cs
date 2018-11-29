@@ -31,8 +31,6 @@ namespace NCDK.Fingerprints
 {
     // @author jonalv
     // @cdk.module     standard
-    // @cdk.githash
-    [Serializable]
     public class IntArrayFingerprint : IBitFingerprint
     {
         private volatile int[] trueBits;

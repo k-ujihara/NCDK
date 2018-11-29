@@ -57,11 +57,9 @@ namespace NCDK.Beam
         private RingBond[] rings = new RingBond[10];
 
         /// <summary>Local arrangement for ring openings.</summary>
-        private IDictionary<int, LocalArrangement> arrangement
-                = new Dictionary<int, LocalArrangement>(5);
+        private Dictionary<int, LocalArrangement> arrangement = new Dictionary<int, LocalArrangement>(5);
 
-        private IDictionary<int, Configuration> configurations
-                = new Dictionary<int, Configuration>(5);
+        private Dictionary<int, Configuration> configurations = new Dictionary<int, Configuration>(5);
 
         /// <summary>Current bond.</summary>
         private Bond bond = Bond.Implicit;

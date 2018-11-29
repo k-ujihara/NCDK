@@ -23,14 +23,13 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Smiles;
-using System.Collections;
 
 namespace NCDK.Fingerprints
 {
     // @cdk.module test-fingerprint
     [TestClass()]
-    public class KlekotaRothFingerprinterTest : AbstractFingerprinterTest
+    public class KlekotaRothFingerprinterTest 
+        : AbstractFingerprinterTest
     {
         public override IFingerprinter GetBitFingerprinter()
         {
@@ -40,7 +39,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestGetSize()
         {
-            IFingerprinter printer = GetBitFingerprinter();
+            var printer = GetBitFingerprinter();
             Assert.AreEqual(4860, printer.Length);
         }
 
@@ -52,11 +51,11 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestFingerprint()
         {
-            SmilesParser parser = CDK.SmilesParser;
-            IFingerprinter printer = GetBitFingerprinter();
+            var parser = CDK.SmilesParser;
+            var printer = GetBitFingerprinter();
 
-            BitArray bs1 = printer.GetBitFingerprint(parser.ParseSmiles("C=C-C#N")).AsBitSet();
-            BitArray bs2 = printer.GetBitFingerprint(parser.ParseSmiles("C=CCC(O)CC#N")).AsBitSet();
+            var bs1 = printer.GetBitFingerprint(parser.ParseSmiles("C=C-C#N")).AsBitSet();
+            var bs2 = printer.GetBitFingerprint(parser.ParseSmiles("C=CCC(O)CC#N")).AsBitSet();
 
             Assert.AreEqual(4860, printer.Length);
 

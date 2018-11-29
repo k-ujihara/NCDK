@@ -52,7 +52,6 @@ namespace NCDK.Stereo
     /// </remarks>
     /// <seealso href="http://en.wikipedia.org/wiki/Fischer_projection">Fischer projection (Wikipedia)</seealso>
     // @author John May
-    // @cdk.githash
     internal sealed class FischerRecognition
     {
         /// <summary>
@@ -124,7 +123,7 @@ namespace NCDK.Stereo
             for (int v = 0; v < container.Atoms.Count; v++)
             {
                 var focus = container.Atoms[v];
-                if (!focus.AtomicNumber.Equals(NaturalElements.Carbon.AtomicNumber))
+                if (!focus.AtomicNumber.Equals(AtomicNumbers.Carbon))
                     continue;
                 if (ringSearch.Cyclic(v))
                     continue;
@@ -229,20 +228,19 @@ namespace NCDK.Stereo
 
             foreach (var bond in bonds)
             {
-
                 var other = bond.GetOther(focus);
                 var otherXy = other.Point2D.Value;
 
-                double deltaX = otherXy.X - centerXy.X;
-                double deltaY = otherXy.Y - centerXy.Y;
+                var deltaX = otherXy.X - centerXy.X;
+                var deltaY = otherXy.Y - centerXy.Y;
 
                 // normalise vector length so thresholds are independent 
-                double mag = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+                var mag = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
                 deltaX /= mag;
                 deltaY /= mag;
 
-                double absDeltaX = Math.Abs(deltaX);
-                double absDeltaY = Math.Abs(deltaY);
+                var absDeltaX = Math.Abs(deltaX);
+                var absDeltaY = Math.Abs(deltaY);
 
                 // assign the bond to the cardinal direction
                 if (absDeltaX < CARDINALITY_THRESHOLD
@@ -270,7 +268,7 @@ namespace NCDK.Stereo
         /// <param name="atom">an atom</param>
         /// <param name="atomToIndex">a map of atoms to index</param>
         /// <returns>the atom is terminal</returns>
-        private bool IsTerminal(IAtom atom, IDictionary<IAtom, int> atomToIndex)
+        private bool IsTerminal(IAtom atom, Dictionary<IAtom, int> atomToIndex)
         {
             return graph[atomToIndex[atom]].Length == 1;
         }
@@ -283,9 +281,9 @@ namespace NCDK.Stereo
         /// <returns>the bond is a planar sigma bond</returns>
         private static bool IsPlanarSigmaBond(IBond bond)
         {
-            return bond != null &&
-                    BondOrder.Single.Equals(bond.Order) &&
-                    BondStereo.None.Equals(bond.Stereo);
+            return bond != null 
+                && BondOrder.Single.Equals(bond.Order)
+                && BondStereo.None.Equals(bond.Stereo);
         }
 
         /// <summary>

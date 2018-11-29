@@ -37,7 +37,6 @@ namespace NCDK.Tools.Manipulator
     // @cdk.module  formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
-    // @cdk.githash
     public static class MolecularFormulaSetManipulator
     {
         /// <summary>
@@ -49,20 +48,20 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="GetMinOccurrenceElements(IMolecularFormulaSet)"/> 
         public static IMolecularFormula GetMaxOccurrenceElements(IMolecularFormulaSet mfSet)
         {
-            IMolecularFormula molecularFormula = mfSet.Builder.NewMolecularFormula();
+            var molecularFormula = mfSet.Builder.NewMolecularFormula();
             foreach (var mf in mfSet)
             {
                 foreach (var isotope in mf.Isotopes)
                 {
-                    IElement element = mfSet.Builder.NewElement(isotope);
-                    int occur_new = MolecularFormulaManipulator.GetElementCount(mf, element);
+                    var element = isotope.Element;
+                    int occur_new = MolecularFormulaManipulator.GetElementCount(mf, isotope.Element);
                     if (!MolecularFormulaManipulator.ContainsElement(molecularFormula, element))
                     {
                         molecularFormula.Add(mfSet.Builder.NewIsotope(element), occur_new);
                     }
                     else
                     {
-                        int occur_old = MolecularFormulaManipulator.GetElementCount(molecularFormula, element);
+                        var occur_old = MolecularFormulaManipulator.GetElementCount(molecularFormula, element);
                         if (occur_new > occur_old)
                         {
                             MolecularFormulaManipulator.RemoveElement(molecularFormula, element);
@@ -83,13 +82,12 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="GetMaxOccurrenceElements(IMolecularFormulaSet)"/>
         public static IMolecularFormula GetMinOccurrenceElements(IMolecularFormulaSet mfSet)
         {
-
-            IMolecularFormula molecularFormula = mfSet.Builder.NewMolecularFormula();
+            var molecularFormula = mfSet.Builder.NewMolecularFormula();
             foreach (var mf in mfSet)
             {
                 foreach (var isotope in mf.Isotopes)
                 {
-                    IElement element = mfSet.Builder.NewElement(isotope);
+                    var element = isotope.Element;
                     int occur_new = MolecularFormulaManipulator.GetElementCount(mf, element);
                     if (!MolecularFormulaManipulator.ContainsElement(molecularFormula, element))
                     {
@@ -120,21 +118,21 @@ namespace NCDK.Tools.Manipulator
         /// <param name="formulaMin">A IMolecularFormula which contains the minimal representation of the Elements</param>
         /// <returns>A IMolecularFormulaSet with only the IMolecularFormula which the IElements
         ///                         are into the correct occurrence</returns>
-        public static IMolecularFormulaSet Remove(IMolecularFormulaSet formulaSet, IMolecularFormula formulaMin,
-                IMolecularFormula formulaMax)
+        public static IMolecularFormulaSet Remove(IMolecularFormulaSet formulaSet, IMolecularFormula formulaMin, IMolecularFormula formulaMax)
         {
-
             // prove the correlation between maximum and minimum molecularFormula
-            if (!ValidCorrelation(formulaMin, formulaMax)) return null;
+            if (!ValidCorrelation(formulaMin, formulaMax))
+                return null;
 
-            IMolecularFormulaSet newFormulaSet = formulaSet.Builder.NewMolecularFormulaSet();
+            var newFormulaSet = formulaSet.Builder.NewMolecularFormulaSet();
 
             foreach (var formula in formulaSet)
             {
                 bool flagPass = true;
 
                 // the formula must contain all element found into the formulaMin
-                if (!ValidCorrelation(formula, formulaMin)) continue;
+                if (!ValidCorrelation(formula, formulaMin))
+                    continue;
 
                 foreach (var element in MolecularFormulaManipulator.Elements(formulaMin))
                 {
@@ -167,7 +165,8 @@ namespace NCDK.Tools.Manipulator
         {
             foreach (var element in MolecularFormulaManipulator.Elements(formulaMin))
             {
-                if (!MolecularFormulaManipulator.ContainsElement(formulaMax, element)) return false;
+                if (!MolecularFormulaManipulator.ContainsElement(formulaMax, element))
+                    return false;
 
             }
             return true;
@@ -204,18 +203,17 @@ namespace NCDK.Tools.Manipulator
         /// <param name="formulaRange">A IMolecularFormulaRange which contains the range representation of the IIsotope</param>
         public static IMolecularFormulaSet Remove(IMolecularFormulaSet formulaSet, MolecularFormulaRange formulaRange)
         {
-            IMolecularFormulaSet newFormulaSet = formulaSet.Builder.NewMolecularFormulaSet();
+            var newFormulaSet = formulaSet.Builder.NewMolecularFormulaSet();
 
             foreach (var formula in formulaSet)
             {
-
                 bool flagCorrect = true;
                 foreach (var isotope in formulaRange.GetIsotopes())
                 {
                     if (formula.GetCount(isotope) != 0)
                     {
                         if ((formula.GetCount(isotope) < formulaRange.GetIsotopeCountMin(isotope))
-                                || (formula.GetCount(isotope) > formulaRange.GetIsotopeCountMax(isotope)))
+                         || (formula.GetCount(isotope) > formulaRange.GetIsotopeCountMax(isotope)))
                         {
                             flagCorrect = false;
                             break;

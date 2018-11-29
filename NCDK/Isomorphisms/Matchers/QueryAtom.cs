@@ -23,7 +23,8 @@ using System.Text;
 namespace NCDK.Isomorphisms.Matchers
 {
     // @cdk.module  isomorphism
-    public class QueryAtom : Silent.Atom, IQueryAtom
+    public class QueryAtom 
+        : Silent.Atom, IQueryAtom
     {
         public QueryAtom(string symbol, IChemObjectBuilder builder)
             : base(symbol)

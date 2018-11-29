@@ -32,7 +32,6 @@ namespace NCDK.Fingerprints
     /// </summary>
     // @author jonalv
     // @cdk.module     core
-    // @cdk.githash
     public interface ICountFingerprint
     {
         /// <summary>

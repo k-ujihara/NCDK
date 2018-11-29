@@ -28,8 +28,6 @@ namespace NCDK.Fingerprints
 {
     // @author jonalv
     // @cdk.module     standard
-    // @cdk.githash
-    [Serializable]
     public class IntArrayCountFingerprint : ICountFingerprint
     {
         internal int[] hitHashes;
@@ -102,7 +100,7 @@ namespace NCDK.Fingerprints
 
         public void Merge(ICountFingerprint fp)
         {
-            IDictionary<int, int> newFp = new Dictionary<int, int>();
+            var newFp = new Dictionary<int, int>();
             {
                 for (int i = 0; i < hitHashes.Length; i++)
                 {
@@ -117,7 +115,7 @@ namespace NCDK.Fingerprints
                     newFp[fp.GetHash(i)] = count + fp.GetCount(i);
                 }
             }
-            List<int> keys = new List<int>(newFp.Keys);
+            var keys = new List<int>(newFp.Keys);
             keys.Sort();
             hitHashes = new int[keys.Count];
             numOfHits = new int[keys.Count];

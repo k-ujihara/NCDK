@@ -29,10 +29,12 @@ namespace NCDK
     public interface IElement
         : IChemObject
     {
+        ChemicalElement Element { get; }
+
         /// <summary>
         /// Returns the atomic number of this element.
         /// </summary>
-        int AtomicNumber { get; set; }
+        int AtomicNumber { get; set;  }
 
         /// <summary>
         /// Returns the element symbol of this element.

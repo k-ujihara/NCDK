@@ -38,7 +38,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         public override bool Matches(IAtom atom)
         {
-            if (!atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+            if (!atom.AtomicNumber.Equals(AtomicNumbers.H))
             {
                 return false;
             }
@@ -52,7 +52,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             var list = Invariants(atom).Target.GetConnectedAtoms(atom);
             foreach (var connAtom in list)
             {
-                if (connAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                if (connAtom.AtomicNumber.Equals(AtomicNumbers.H))
                 {
                     return true;
                 }

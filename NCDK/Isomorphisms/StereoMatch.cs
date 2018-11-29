@@ -308,7 +308,7 @@ namespace NCDK.Isomorphisms
         /// <param name="types">type of stereo element indexed</param>
         /// <param name="container">the container to index the elements of</param>
         /// <returns>indices of atoms involved in stereo configurations</returns>
-        private static int[] IndexElements(IDictionary<IAtom, int> map, IStereoElement<IChemObject, IChemObject>[] elements, Types[] types, IAtomContainer container)
+        private static int[] IndexElements(Dictionary<IAtom, int> map, IStereoElement<IChemObject, IChemObject>[] elements, Types[] types, IAtomContainer container)
         {
             int[] indices = new int[container.Atoms.Count];
             int nElements = 0;

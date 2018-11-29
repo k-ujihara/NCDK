@@ -28,7 +28,6 @@ namespace NCDK.Config
     /// Used to store and return data of a particular isotope.
     /// </summary>
     // @cdk.module core
-    // @cdk.githash
     // @author         steinbeck
     // @cdk.created    2001-08-29
     public abstract class IsotopeFactory
@@ -76,7 +75,7 @@ namespace NCDK.Config
         /// <returns><see cref="IIsotope"/>s that matches the given element symbol</returns>
         public virtual IEnumerable<IIsotope> GetIsotopes(string symbol)
         {
-            int elem = NaturalElement.ToAtomicNumber(symbol);
+            int elem = ChemicalElement.OfSymbol(symbol).AtomicNumber;
             if (isotopes[elem] == null)
                 yield break;
             foreach (IIsotope isotope in isotopes[elem])
@@ -92,10 +91,11 @@ namespace NCDK.Config
         /// <returns>All isotopes</returns>
         public virtual IEnumerable<IIsotope> GetIsotopes()
         {
-            foreach (List<IIsotope> isotopes in this.isotopes)
+            foreach (var isotopes in this.isotopes)
             {
-                if (isotopes == null) continue;
-                foreach (IIsotope isotope in isotopes)
+                if (isotopes == null)
+                    continue;
+                foreach (var isotope in isotopes)
                 {
                     yield return Clone(isotope);
                 }
@@ -114,7 +114,7 @@ namespace NCDK.Config
             foreach (var isotopes in this.isotopes)
             {
                 if (isotopes == null) continue;
-                foreach (IIsotope isotope in isotopes)
+                foreach (var isotope in isotopes)
                 {
                     if (Math.Abs(isotope.ExactMass.Value - exactMass) <= difference)
                     {
@@ -133,11 +133,11 @@ namespace NCDK.Config
         /// <returns>the corresponding isotope</returns>
         public virtual IIsotope GetIsotope(string symbol, int massNumber)
         {
-            int elem = NaturalElement.ToAtomicNumber(symbol);
+            int elem = ChemicalElement.OfSymbol(symbol).AtomicNumber;
             var isotopes = this.isotopes[elem];
             if (isotopes == null)
                 return null;
-            foreach (IIsotope isotope in isotopes)
+            foreach (var isotope in isotopes)
             {
                 if (isotope.Symbol.Equals(symbol, StringComparison.Ordinal) && isotope.MassNumber == massNumber)
                 {
@@ -158,13 +158,13 @@ namespace NCDK.Config
         {
             IIsotope ret = null;
             double minDiff = double.MaxValue;
-            int elem = NaturalElement.ToAtomicNumber(symbol);
+            int elem = ChemicalElement.OfSymbol(symbol).AtomicNumber;
             var isotopes = this.isotopes[elem];
             if (isotopes == null)
                 return null;
             foreach (var isotope in isotopes)
             {
-                double diff = Math.Abs(isotope.ExactMass.Value - exactMass);
+                var diff = Math.Abs(isotope.ExactMass.Value - exactMass);
                 if (isotope.Symbol.Equals(symbol, StringComparison.Ordinal) && diff <= tolerance && diff < minDiff)
                 {
                     ret = Clone(isotope);
@@ -193,10 +193,10 @@ namespace NCDK.Config
             {
                 return Clone(this.majorIsotope[elem]);
             }
-            List<IIsotope> isotopes = this.isotopes[elem];
+            var isotopes = this.isotopes[elem];
             if (isotopes != null)
             {
-                foreach (IIsotope isotope in isotopes)
+                foreach (var isotope in isotopes)
                 {
                     if (isotope.NaturalAbundance <= 0)
                         continue;
@@ -238,27 +238,27 @@ namespace NCDK.Config
         /// <returns>The Major Isotope value</returns>
         public virtual IIsotope GetMajorIsotope(string symbol)
         {
-            return GetMajorIsotope(NaturalElement.ToAtomicNumber(symbol));
+            return GetMajorIsotope(ChemicalElement.OfSymbol(symbol).AtomicNumber);
         }
 
         /// <summary>
-        /// Returns an <see cref="IElement"/> with a given element symbol.
+        /// Returns an <see cref="ChemicalElement"/> with a given element symbol.
         /// </summary>
         /// <param name="symbol">The element symbol for the requested element</param>
         /// <returns>The configured element</returns>
-        public virtual IElement GetElement(string symbol)
+        public virtual ChemicalElement GetElement(string symbol)
         {
-            return GetMajorIsotope(symbol);
+            return GetMajorIsotope(symbol)?.Element;
         }
 
         /// <summary>
         /// Returns an element according to a given atomic number.
         /// </summary>
         /// <param name="atomicNumber">The elements atomic number</param>
-        /// <returns>The <see cref="IElement"/> of the given atomic number</returns>
-        public virtual IElement GetElement(int atomicNumber)
+        /// <returns>The <see cref="ChemicalElement"/> of the given atomic number</returns>
+        public virtual ChemicalElement GetElement(int atomicNumber)
         {
-            return GetMajorIsotope(atomicNumber);
+            return GetMajorIsotope(atomicNumber)?.Element;
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace NCDK.Config
         /// </summary>
         /// <param name="element">the element in question</param>
         /// <returns>The natural mass value</returns>
-        public virtual double GetNaturalMass(IElement element)
+        public virtual double GetNaturalMass(ChemicalElement element)
         {
             var isotopes = GetIsotopes(element.Symbol);
             double summedAbundances = 0;

@@ -63,7 +63,7 @@ namespace NCDK.Modelings.Builder3D
     // @cdk.keyword coordinate generation, 3D
     public class ModelBuilder3D
     {
-        private static IDictionary<string, ModelBuilder3D> memyselfandi = new Dictionary<string, ModelBuilder3D>();
+        private static Dictionary<string, ModelBuilder3D> memyselfandi = new Dictionary<string, ModelBuilder3D>();
         private TemplateHandler3D templateHandler = null;
         private IReadOnlyDictionary<string, object> parameterSet = null;
         private readonly ForceFieldConfigurator ffc = new ForceFieldConfigurator();
@@ -472,7 +472,7 @@ namespace NCDK.Modelings.Builder3D
                 var atoms = molecule.GetConnectedAtoms(chain.Atoms[i]);
                 foreach (var atom in atoms)
                 {
-                    if (!atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber) & !atom.IsPlaced & !atom.IsInRing)
+                    if (!atom.AtomicNumber.Equals(AtomicNumbers.H) & !atom.IsPlaced & !atom.IsInRing)
                     {
                         connectedAtoms.Add(ap3d.GetPlacedHeavyAtoms(molecule, chain.Atoms[i]));
                         try

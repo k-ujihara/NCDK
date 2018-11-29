@@ -26,7 +26,6 @@ namespace NCDK
     /// Checks the functionality of <see cref="IChemObjectBuilder"/> implementations.
     /// </summary>
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractChemObjectBuilderTest : CDKTestCase
     {
         public virtual IChemObject RootObject { get; }
@@ -44,7 +43,7 @@ namespace NCDK
         public void TestNewAtom_IElement()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAtom atom = builder.NewAtom(builder.NewElement("N"));
+            IAtom atom = builder.NewAtom(ChemicalElement.N);
             Assert.IsNotNull(atom);
             Assert.AreEqual("N", atom.Symbol);
         }
@@ -118,7 +117,7 @@ namespace NCDK
         public void TestNewAtomType_IElement()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAtomType type = builder.NewAtomType(builder.NewElement("C"));
+            IAtomType type = builder.NewAtomType(ChemicalElement.C);
             Assert.IsNotNull(type);
         }
 
@@ -255,38 +254,6 @@ namespace NCDK
         }
 
         [TestMethod()]
-        public void TestNewElement()
-        {
-            IChemObjectBuilder builder = RootObject.Builder;
-            IElement element = builder.NewElement();
-            Assert.IsNotNull(element);
-        }
-
-        [TestMethod()]
-        public void TestNewElement_IElement()
-        {
-            IChemObjectBuilder builder = RootObject.Builder;
-            IElement element = builder.NewElement(builder.NewElement());
-            Assert.IsNotNull(element);
-        }
-
-        [TestMethod()]
-        public void TestNewElement_String()
-        {
-            IChemObjectBuilder builder = RootObject.Builder;
-            IElement element = builder.NewElement("C");
-            Assert.IsNotNull(element);
-        }
-
-        [TestMethod()]
-        public void TestNewElement_String_int()
-        {
-            IChemObjectBuilder builder = RootObject.Builder;
-            IElement element = builder.NewElement("C", 13);
-            Assert.IsNotNull(element);
-        }
-
-        [TestMethod()]
         public void TestNewIsotope_int_String_Double_double()
         {
             IChemObjectBuilder builder = RootObject.Builder;
@@ -306,7 +273,7 @@ namespace NCDK
         public void TestNewIsotope_IElement()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IIsotope isotope = builder.NewIsotope(builder.NewElement());
+            IIsotope isotope = builder.NewIsotope(ChemicalElement.R);
             Assert.IsNotNull(isotope);
         }
 
@@ -371,7 +338,7 @@ namespace NCDK
         public void TestNewPDBAtom_IElement()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPDBAtom atom = builder.NewPDBAtom(builder.NewElement());
+            IPDBAtom atom = builder.NewPDBAtom(ChemicalElement.R);
             Assert.IsNotNull(atom);
         }
 
@@ -427,7 +394,7 @@ namespace NCDK
         public void TestNewPseudoAtom_IElement()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPseudoAtom atom = builder.NewPseudoAtom(builder.NewElement());
+            IPseudoAtom atom = builder.NewPseudoAtom(ChemicalElement.R);
             Assert.IsNotNull(atom);
         }
 

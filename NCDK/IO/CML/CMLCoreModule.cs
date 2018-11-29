@@ -64,53 +64,53 @@ namespace NCDK.IO.CML
         protected IBond CurrentBond { get; set; }
         protected IStrand CurrentStrand { get; set; }
         protected IMonomer CurrentMonomer { get; set; }
-        protected IDictionary<string, IAtom> AtomEnumeration { get; set; }
+        protected Dictionary<string, IAtom> AtomEnumeration { get; set; }
         protected IList<string> MoleculeCustomProperty { get; set; }
 
         // helper fields
         protected int FormulaCounter { get; set; }
         protected int AtomCounter { get; set; }
-        protected IList<string> ElSym { get; set; }
-        protected IList<string> ElTitles { get; set; }
-        protected IList<string> ElId { get; set; }
-        protected IList<string> Formula { get; set; }
-        protected IList<string> FormalCharges { get; set; }
-        protected IList<string> PartialCharges { get; set; }
-        protected IList<string> Isotope { get; set; }
-        protected IList<string> AtomicNumbers { get; set; }
-        protected IList<string> ExactMasses { get; set; }
-        protected IList<string> X3 { get; set; }
-        protected IList<string> Y3 { get; set; }
-        protected IList<string> Z3 { get; set; }
-        protected IList<string> X2 { get; set; }
-        protected IList<string> Y2 { get; set; }
-        protected IList<string> XFract { get; set; }
-        protected IList<string> YFract { get; set; }
-        protected IList<string> ZFract { get; set; }
-        protected IList<string> HCounts { get; set; }
-        protected IList<string> AtomParities { get; set; }
-        protected IList<string> ParityARef1 { get; set; }
-        protected IList<string> ParityARef2 { get; set; }
-        protected IList<string> ParityARef3 { get; set; }
-        protected IList<string> ParityARef4 { get; set; }
-        protected IList<string> AtomDictRefs { get; set; }
-        protected IList<string> AtomAromaticities { get; set; }
-        protected IList<string> SpinMultiplicities { get; set; }
-        protected IList<string> Occupancies { get; set; }
-        protected IDictionary<int, IList<string>> AtomCustomProperty { get; set; }
+        protected List<string> ElSym { get; set; }
+        protected List<string> ElTitles { get; set; }
+        protected List<string> ElId { get; set; }
+        protected List<string> Formula { get; set; }
+        protected List<string> FormalCharges { get; set; }
+        protected List<string> PartialCharges { get; set; }
+        protected List<string> Isotope { get; set; }
+        protected List<string> AtomicNumbers { get; set; }
+        protected List<string> ExactMasses { get; set; }
+        protected List<string> X3 { get; set; }
+        protected List<string> Y3 { get; set; }
+        protected List<string> Z3 { get; set; }
+        protected List<string> X2 { get; set; }
+        protected List<string> Y2 { get; set; }
+        protected List<string> XFract { get; set; }
+        protected List<string> YFract { get; set; }
+        protected List<string> ZFract { get; set; }
+        protected List<string> HCounts { get; set; }
+        protected List<string> AtomParities { get; set; }
+        protected List<string> ParityARef1 { get; set; }
+        protected List<string> ParityARef2 { get; set; }
+        protected List<string> ParityARef3 { get; set; }
+        protected List<string> ParityARef4 { get; set; }
+        protected List<string> AtomDictRefs { get; set; }
+        protected List<string> AtomAromaticities { get; set; }
+        protected List<string> SpinMultiplicities { get; set; }
+        protected List<string> Occupancies { get; set; }
+        protected Dictionary<int, List<string>> AtomCustomProperty { get; set; }
         protected bool ParityAtomsGiven { get; set; }
         protected bool ParityGiven { get; set; }
 
         protected int BondCounter { get; set; }
-        protected IList<string> BondId { get; set; }
-        protected IList<string> BondARef1 { get; set; }
-        protected IList<string> BondARef2 { get; set; }
-        protected IList<string> Order { get; set; }
-        protected IList<string> BondStereo { get; set; }
-        protected IList<string> BondDictRefs { get; set; }
-        protected IList<string> BondElId { get; set; }
-        protected IList<bool?> BondAromaticity { get; set; }
-        protected IDictionary<string, IDictionary<string, string>> BondCustomProperty { get; set; }
+        protected List<string> BondId { get; set; }
+        protected List<string> BondARef1 { get; set; }
+        protected List<string> BondARef2 { get; set; }
+        protected List<string> Order { get; set; }
+        protected List<string> BondStereo { get; set; }
+        protected List<string> BondDictRefs { get; set; }
+        protected List<string> BondElId { get; set; }
+        protected List<bool?> BondAromaticity { get; set; }
+        protected Dictionary<string, Dictionary<string, string>> BondCustomProperty { get; set; }
         protected bool StereoGiven { get; set; }
         protected string InChIString { get; set; }
         protected int CurRef { get; set; }
@@ -119,7 +119,7 @@ namespace NCDK.IO.CML
         protected string DictRef { get; set; }
         protected string ElementTitle { get; set; }
 
-        protected IList<double> UnitCellParams { get; set; }
+        protected double[] UnitCellParams { get; set; }
         protected int CrystalScalar { get; set; }
 
         public CMLCoreModule(IChemFile chemFile)
@@ -266,7 +266,7 @@ namespace NCDK.IO.CML
             AtomDictRefs = new List<string>();
             SpinMultiplicities = new List<string>();
             Occupancies = new List<string>();
-            AtomCustomProperty = new Dictionary<int, IList<string>>();
+            AtomCustomProperty = new Dictionary<int, List<string>>();
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace NCDK.IO.CML
             BondARef2 = new List<string>();
             Order = new List<string>();
             BondStereo = new List<string>();
-            BondCustomProperty = new Dictionary<string, IDictionary<string, string>>();
+            BondCustomProperty = new Dictionary<string, Dictionary<string, string>>();
             BondDictRefs = new List<string>();
             BondElId = new List<string>();
             BondAromaticity = new List<bool?>();
@@ -344,13 +344,13 @@ namespace NCDK.IO.CML
 
         internal static string AttGetValue(IEnumerable<XAttribute> atts, string name)
         {
-            XAttribute attribute = atts.Where(n => n.Name.LocalName == name).FirstOrDefault();
+            var attribute = atts.Where(n => n.Name.LocalName == name).FirstOrDefault();
             return attribute?.Value;
         }
 
         public virtual void StartElement(CMLStack xpath, XElement element)
         {
-            string name = element.Name.LocalName;
+            var name = element.Name.LocalName;
             Debug.WriteLine("StartElement");
 
             Builtin = "";
@@ -385,8 +385,8 @@ namespace NCDK.IO.CML
                     AtomCounter++;
                     foreach (var atti in element.Attributes())
                     {
-                        string att = atti.Name.LocalName;
-                        string value = atti.Value;
+                        var att = atti.Name.LocalName;
+                        var value = atti.Value;
                         switch (att)
                         {
                             case "id":
@@ -546,7 +546,7 @@ namespace NCDK.IO.CML
                     foreach (var attribute in element.Attributes())
                     {
                         var xname = attribute.Name;
-                        string att = xname.LocalName;
+                        var att = xname.LocalName;
                         switch (att)
                         {
                             case "atomRefs4":
@@ -577,7 +577,7 @@ namespace NCDK.IO.CML
                     foreach (var attribute in element.Attributes())
                     {
                         var xname = attribute.Name;
-                        string att = xname.LocalName;
+                        var att = xname.LocalName;
                         Debug.WriteLine("B2 ", att, "=", attribute.Value);
 
                         switch (att)
@@ -622,7 +622,7 @@ namespace NCDK.IO.CML
                         {
                             var xname = attribute.Name;
                             int count = 0;
-                            string att = xname.LocalName;
+                            var att = xname.LocalName;
                             switch (att)
                             {
                                 case "bondID":
@@ -660,11 +660,11 @@ namespace NCDK.IO.CML
                     foreach (var attribute in element.Attributes())
                     {
                         var xname = attribute.Name;
-                        string att = xname.LocalName;
+                        var att = xname.LocalName;
                         switch (att)
                         {
                             case "dictRef":
-                                string value = attribute.Value;
+                                var value = attribute.Value;
                                 if (value.StartsWith("cml:", StringComparison.Ordinal) && value.Length > 4)
                                 {
                                     BondStereo.Add(value.Substring(4));
@@ -680,7 +680,7 @@ namespace NCDK.IO.CML
                     foreach (var attribute in element.Attributes())
                     {
                         var xname = attribute.Name;
-                        string att = xname.LocalName;
+                        var att = xname.LocalName;
                         switch (att)
                         {
                             case "dictRef":
@@ -740,7 +740,7 @@ namespace NCDK.IO.CML
                     foreach (var attribute in element.Attributes())
                     {
                         var xname = attribute.Name;
-                        string att = xname.LocalName;
+                        var att = xname.LocalName;
                         if (string.Equals(att, "spaceGroup", StringComparison.Ordinal))
                         {
                             ((ICrystal)CurrentMolecule).SpaceGroup = attribute.Value;
@@ -775,7 +775,7 @@ namespace NCDK.IO.CML
                            foreach (var attribute in element.Attributes())
                             {
                                 var xname = attribute.Name;
-                                string att = xname.LocalName;
+                                var att = xname.LocalName;
                                 if (string.Equals(att, "id", StringComparison.Ordinal))
                                 {
                                     CurrentChemModel.Id = attribute.Value;
@@ -789,7 +789,7 @@ namespace NCDK.IO.CML
                             foreach (var attribute in element.Attributes())
                             {
                                 var xname = attribute.Name;
-                                string att = xname.LocalName;
+                                var att = xname.LocalName;
                                 if (string.Equals(att, "id", StringComparison.Ordinal))
                                 {
                                     CurrentMoleculeSet.Id = attribute.Value;
@@ -805,7 +805,7 @@ namespace NCDK.IO.CML
                             foreach (var attribute in element.Attributes())
                             {
                                 var xname = attribute.Name;
-                                string att = xname.LocalName;
+                                var att = xname.LocalName;
                                 if (string.Equals(att, "id", StringComparison.Ordinal))
                                 {
                                     CurrentMoleculeSet.Id = attribute.Value;
@@ -820,8 +820,8 @@ namespace NCDK.IO.CML
                     foreach (var attribute in element.Attributes())
                     {
                         var xname = attribute.Name;
-                        string att = xname.LocalName;
-                        string value = attribute.Value;
+                        var att = xname.LocalName;
+                        var value = attribute.Value;
                         if (string.Equals(att, "concise", StringComparison.Ordinal))
                         {
                             Formula.Add(value);
@@ -1098,7 +1098,7 @@ namespace NCDK.IO.CML
                             // invalid according to CML1 DTD but found in OpenBabel 1.X output
                             try
                             {
-                                bool countAtoms = (AtomCounter == 0) ? true : false;
+                                var countAtoms = (AtomCounter == 0) ? true : false;
                                 var tokens = Strings.Tokenize(cData);
                                 foreach (var token in tokens)
                                 {
@@ -1118,7 +1118,7 @@ namespace NCDK.IO.CML
                         case "elementType":
                             try
                             {
-                                bool countAtoms = (AtomCounter == 0) ? true : false;
+                                var countAtoms = (AtomCounter == 0) ? true : false;
                                 var tokens = Strings.Tokenize(cData);
 
                                 foreach (var token in tokens)
@@ -1141,7 +1141,7 @@ namespace NCDK.IO.CML
 
                             try
                             {
-                                bool countBonds = (BondCounter == 0) ? true : false;
+                                var countBonds = (BondCounter == 0) ? true : false;
                                 var tokens = Strings.Tokenize(cData);
 
                                 foreach (var token in tokens)
@@ -1178,7 +1178,7 @@ namespace NCDK.IO.CML
                             // 1 1 1 2 2</stringArray> </bondArray>
                             try
                             {
-                                bool countBonds = (BondCounter == 0) ? true : false;
+                                var countBonds = (BondCounter == 0) ? true : false;
                                 var tokens = Strings.Tokenize(cData);
 
                                 foreach (var token in tokens)
@@ -1272,7 +1272,7 @@ namespace NCDK.IO.CML
                                 StereoGiven = true;
                                 break;
                             default:
-                                if (!BondCustomProperty.TryGetValue(BondId[BondId.Count - 1], out IDictionary<string, string> bp))
+                                if (!BondCustomProperty.TryGetValue(BondId[BondId.Count - 1], out Dictionary<string, string> bp))
                                 {
                                     bp = new Dictionary<string, string>();
                                     BondCustomProperty[BondId[BondId.Count - 1]] = bp;
@@ -1482,9 +1482,9 @@ namespace NCDK.IO.CML
 
             while (customs.MoveNext())
             {
-                string x = customs.Current;
+                var x = customs.Current;
                 customs.MoveNext();
-                string y = customs.Current;
+                var y = customs.Current;
                 CurrentMolecule.SetProperty(x, y);
             }
             StoreAtomData();
@@ -1500,7 +1500,7 @@ namespace NCDK.IO.CML
             {
                 if (atom.ImplicitHydrogenCount != null)
                 {
-                    int explicitHCount = AtomContainerManipulator.CountExplicitHydrogens(CurrentMolecule, atom);
+                    var explicitHCount = AtomContainerManipulator.CountExplicitHydrogens(CurrentMolecule, atom);
                     if (explicitHCount != 0)
                     {
                         atom.ImplicitHydrogenCount = atom.ImplicitHydrogenCount - explicitHCount;
@@ -1701,7 +1701,7 @@ namespace NCDK.IO.CML
                 {
                     if (hasSymbols)
                     {
-                        string symbol = ElSym[i];
+                        var symbol = ElSym[i];
                         switch (symbol)
                         {
                             case "Du":
@@ -1840,17 +1840,19 @@ namespace NCDK.IO.CML
 
                 if (hasAtomicNumbers)
                 {
-                    if (AtomicNumbers[i] != null) CurrentAtom.AtomicNumber = int.Parse(AtomicNumbers[i], NumberFormatInfo.InvariantInfo);
+                    if (AtomicNumbers[i] != null)
+                        CurrentAtom.AtomicNumber = int.Parse(AtomicNumbers[i], NumberFormatInfo.InvariantInfo);
                 }
 
                 if (hasExactMasses)
                 {
-                    if (ExactMasses[i] != null) CurrentAtom.ExactMass = double.Parse(ExactMasses[i], NumberFormatInfo.InvariantInfo);
+                    if (ExactMasses[i] != null)
+                        CurrentAtom.ExactMass = double.Parse(ExactMasses[i], NumberFormatInfo.InvariantInfo);
                 }
 
-                if (AtomCustomProperty.TryGetValue(i, out IList<string> property))
+                if (AtomCustomProperty.TryGetValue(i, out List<string> property))
                 {
-                    IEnumerator<string> it = property.GetEnumerator();
+                    var it = property.GetEnumerator();
                     while (it.MoveNext())
                     {
                         var p1 = it.Current;
@@ -1987,7 +1989,7 @@ namespace NCDK.IO.CML
 
                     if (CurrentBond.Id != null)
                     {
-                        if (BondCustomProperty.TryGetValue(CurrentBond.Id, out IDictionary<string, string> currentBondProperties))
+                        if (BondCustomProperty.TryGetValue(CurrentBond.Id, out Dictionary<string, string> currentBondProperties))
                         {
                             foreach (var key in currentBondProperties.Keys)
                             {

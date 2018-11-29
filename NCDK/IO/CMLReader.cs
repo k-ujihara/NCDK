@@ -41,7 +41,6 @@ namespace NCDK.IO
     // @author      Egon L. Willighagen
     // @cdk.created 2001-02-01
     // @cdk.module  io
-    // @cdk.githash
     // @cdk.keyword file format, CML
     // @cdk.bug     1544406
     // @cdk.iooptions
@@ -50,7 +49,7 @@ namespace NCDK.IO
         private Stream input;
         private readonly string url;
 
-        private IDictionary<string, ICMLModule> userConventions = new Dictionary<string, ICMLModule>();
+        private Dictionary<string, ICMLModule> userConventions = new Dictionary<string, ICMLModule>();
 
         /// <summary>
         ///  Reads CML from stream.
@@ -84,7 +83,8 @@ namespace NCDK.IO
 
         public override bool Accepts(Type type)
         {
-            if (typeof(IChemFile).IsAssignableFrom(type)) return true;
+            if (typeof(IChemFile).IsAssignableFrom(type))
+                return true;
             return false;
         }
 
@@ -112,7 +112,7 @@ namespace NCDK.IO
         {
             Debug.WriteLine("Started parsing from input...");
 
-            XmlReaderSettings setting = new XmlReaderSettings
+            var setting = new XmlReaderSettings
             {
                 DtdProcessing = DtdProcessing.Parse,
                 ValidationFlags = XmlSchemaValidationFlags.None,
@@ -141,12 +141,12 @@ namespace NCDK.IO
             var reader = new XReader { Handler = handler };
             try
             {
-                XDocument doc = XDocument.Load(parser);
+                var doc = XDocument.Load(parser);
                 reader.Read(doc);
             }
             catch (IOException e)
             {
-                string error = "Error while reading file: " + e.Message;
+                var error = "Error while reading file: " + e.Message;
                 Trace.TraceError(error);
                 Debug.WriteLine(e);
                 throw new CDKException(error, e);

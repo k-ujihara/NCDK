@@ -26,7 +26,6 @@ using NCDK.Config;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.SMARTS;
 using System.Linq;
-using static NCDK.Isomorphisms.Matchers.ExprType;
 
 namespace NCDK.Isomorphisms
 {
@@ -57,7 +56,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void UseExplAnd1()
         {
-            var expr = new Expr(AliphaticElement, 6).And(new Expr(ExprType.RingSmallest, 6));
+            var expr = new Expr(ExprType.AliphaticElement, 6).And(new Expr(ExprType.RingSmallest, 6));
             Assert.AreEqual("[C&r6]", Smarts.GenerateAtom(expr));
         }
 
@@ -65,7 +64,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void UseExplAnd2()
         {
-            var expr = new Expr(ExprType.Degree, 1).And(new Expr(Isotope, 2));
+            var expr = new Expr(ExprType.Degree, 1).And(new Expr(ExprType.Isotope, 2));
             Assert.AreEqual("[D&2]", Smarts.GenerateAtom(expr));
         }
 
@@ -73,7 +72,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Carbon()
         {
-            var expr = new Expr(Element, 6);
+            var expr = new Expr(ExprType.Element, 6);
             Assert.AreEqual("[#6]", Smarts.GenerateAtom(expr));
         }
 
@@ -81,7 +80,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Helium()
         {
-            var expr = new Expr(Element, 2);
+            var expr = new Expr(ExprType.Element, 2);
             Assert.AreEqual("[He]", Smarts.GenerateAtom(expr));
         }
 
@@ -103,15 +102,15 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Connectivity()
         {
-            Assert.AreEqual("[X]", Smarts.GenerateAtom(GetExpr(TotalDegree, 1)));
-            Assert.AreEqual("[X2]", Smarts.GenerateAtom(GetExpr(TotalDegree, 2)));
+            Assert.AreEqual("[X]", Smarts.GenerateAtom(GetExpr(ExprType.TotalDegree, 1)));
+            Assert.AreEqual("[X2]", Smarts.GenerateAtom(GetExpr(ExprType.TotalDegree, 2)));
         }
 
         [TestMethod()]
         public void RingMembership()
         {
-            Assert.AreEqual("[R]", Smarts.GenerateAtom(GetExpr(IsInRing)));
-            Assert.AreEqual("[!R]", Smarts.GenerateAtom(GetExpr(IsInChain)));
+            Assert.AreEqual("[R]", Smarts.GenerateAtom(GetExpr(ExprType.IsInRing)));
+            Assert.AreEqual("[!R]", Smarts.GenerateAtom(GetExpr(ExprType.IsInChain)));
         }
 
         [TestMethod()]
@@ -129,19 +128,19 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Isotopes()
         {
-            Assert.AreEqual("[13]", Smarts.GenerateAtom(GetExpr(Isotope, 13)));
-            Assert.AreEqual("[0]", Smarts.GenerateAtom(GetExpr(HasUnspecifiedIsotope)));
-            Assert.AreEqual("[!0]", Smarts.GenerateAtom(GetExpr(HasIsotope)));
+            Assert.AreEqual("[13]", Smarts.GenerateAtom(GetExpr(ExprType.Isotope, 13)));
+            Assert.AreEqual("[0]", Smarts.GenerateAtom(GetExpr(ExprType.HasUnspecifiedIsotope)));
+            Assert.AreEqual("[!0]", Smarts.GenerateAtom(GetExpr(ExprType.HasIsotope)));
         }
 
         [TestMethod()]
         public void FormalCharges()
         {
-            Assert.AreEqual("[-2]", Smarts.GenerateAtom(GetExpr(FormalCharge, -2)));
-            Assert.AreEqual("[-]", Smarts.GenerateAtom(GetExpr(FormalCharge, -1)));
-            Assert.AreEqual("[+0]", Smarts.GenerateAtom(GetExpr(FormalCharge, 0)));
-            Assert.AreEqual("[+]", Smarts.GenerateAtom(GetExpr(FormalCharge, 1)));
-            Assert.AreEqual("[+2]", Smarts.GenerateAtom(GetExpr(FormalCharge, 2)));
+            Assert.AreEqual("[-2]", Smarts.GenerateAtom(GetExpr(ExprType.FormalCharge, -2)));
+            Assert.AreEqual("[-]", Smarts.GenerateAtom(GetExpr(ExprType.FormalCharge, -1)));
+            Assert.AreEqual("[+0]", Smarts.GenerateAtom(GetExpr(ExprType.FormalCharge, 0)));
+            Assert.AreEqual("[+]", Smarts.GenerateAtom(GetExpr(ExprType.FormalCharge, 1)));
+            Assert.AreEqual("[+2]", Smarts.GenerateAtom(GetExpr(ExprType.FormalCharge, 2)));
         }
 
         [TestMethod()]
@@ -154,25 +153,25 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void AtomicNum()
         {
-            Assert.AreEqual("[#0]", Smarts.GenerateAtom(GetExpr(Element, 0)));
-            Assert.AreEqual("[#0]", Smarts.GenerateAtom(GetExpr(AliphaticElement, 0)));
+            Assert.AreEqual("[#0]", Smarts.GenerateAtom(GetExpr(ExprType.Element, 0)));
+            Assert.AreEqual("[#0]", Smarts.GenerateAtom(GetExpr(ExprType.AliphaticElement, 0)));
             Assert.AreEqual("[#0]", Smarts.GenerateAtom(GetExpr(ExprType.AromaticElement, 0)));
-            Assert.AreEqual("[#1]", Smarts.GenerateAtom(GetExpr(Element, 1)));
-            Assert.AreEqual("[#1]", Smarts.GenerateAtom(GetExpr(AliphaticElement, 1)));
+            Assert.AreEqual("[#1]", Smarts.GenerateAtom(GetExpr(ExprType.Element, 1)));
+            Assert.AreEqual("[#1]", Smarts.GenerateAtom(GetExpr(ExprType.AliphaticElement, 1)));
             Assert.AreEqual("[#1]", Smarts.GenerateAtom(GetExpr(ExprType.AromaticElement, 1)));
-            Assert.AreEqual("[He]", Smarts.GenerateAtom(GetExpr(Element, 2)));
-            Assert.AreEqual("[Li]", Smarts.GenerateAtom(GetExpr(Element, 3)));
-            Assert.AreEqual("[#6]", Smarts.GenerateAtom(GetExpr(Element, 6)));
-            Assert.AreEqual("[#7]", Smarts.GenerateAtom(GetExpr(Element, 7)));
-            Assert.AreEqual("[#8]", Smarts.GenerateAtom(GetExpr(Element, 8)));
-            Assert.AreEqual("F", Smarts.GenerateAtom(GetExpr(Element, 9)));
-            Assert.AreEqual("[Ne]", Smarts.GenerateAtom(GetExpr(Element, 10)));
-            Assert.AreEqual("[Na]", Smarts.GenerateAtom(GetExpr(Element, 11)));
-            Assert.AreEqual("[Mg]", Smarts.GenerateAtom(GetExpr(Element, 12)));
+            Assert.AreEqual("[He]", Smarts.GenerateAtom(GetExpr(ExprType.Element, 2)));
+            Assert.AreEqual("[Li]", Smarts.GenerateAtom(GetExpr(ExprType.Element, 3)));
+            Assert.AreEqual("[#6]", Smarts.GenerateAtom(GetExpr(ExprType.Element, 6)));
+            Assert.AreEqual("[#7]", Smarts.GenerateAtom(GetExpr(ExprType.Element, 7)));
+            Assert.AreEqual("[#8]", Smarts.GenerateAtom(GetExpr(ExprType.Element, 8)));
+            Assert.AreEqual("F", Smarts.GenerateAtom(GetExpr(ExprType.Element, 9)));
+            Assert.AreEqual("[Ne]", Smarts.GenerateAtom(GetExpr(ExprType.Element, 10)));
+            Assert.AreEqual("[Na]", Smarts.GenerateAtom(GetExpr(ExprType.Element, 11)));
+            Assert.AreEqual("[Mg]", Smarts.GenerateAtom(GetExpr(ExprType.Element, 12)));
             // Ds, Ts and Nh etc write as #<num>
-            Assert.AreEqual("[#110]", Smarts.GenerateAtom(GetExpr(Element, NaturalElements.Darmstadtium.AtomicNumber)));
-            Assert.AreEqual("[#117]", Smarts.GenerateAtom(GetExpr(Element, NaturalElements.Tennessine.AtomicNumber)));
-            Assert.AreEqual("[#113]", Smarts.GenerateAtom(GetExpr(Element, NaturalElements.Nihonium.AtomicNumber)));
+            Assert.AreEqual("[#110]", Smarts.GenerateAtom(GetExpr(ExprType.Element, AtomicNumbers.Darmstadtium)));
+            Assert.AreEqual("[#117]", Smarts.GenerateAtom(GetExpr(ExprType.Element, AtomicNumbers.Tennessine)));
+            Assert.AreEqual("[#113]", Smarts.GenerateAtom(GetExpr(ExprType.Element, AtomicNumbers.Nihonium)));
         }
 
         // Ds, Ts and Nh etc can be ambiguous - we write anything above radon as
@@ -180,12 +179,12 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void AtomicNumHighWeightElements()
         {
-            Assert.AreEqual("[#110]", Smarts.GenerateAtom(GetExpr(Element, NaturalElements.Darmstadtium.AtomicNumber)));
-            Assert.AreEqual("[#117]", Smarts.GenerateAtom(GetExpr(Element, NaturalElements.Tennessine.AtomicNumber)));
-            Assert.AreEqual("[#113]", Smarts.GenerateAtom(GetExpr(Element, NaturalElements.Nihonium.AtomicNumber)));
-            Assert.AreEqual("[#110]", Smarts.GenerateAtom(GetExpr(AliphaticElement, NaturalElements.Darmstadtium.AtomicNumber)));
-            Assert.AreEqual("[#117]", Smarts.GenerateAtom(GetExpr(AliphaticElement, NaturalElements.Tennessine.AtomicNumber)));
-            Assert.AreEqual("[#113]", Smarts.GenerateAtom(GetExpr(AliphaticElement, NaturalElements.Nihonium.AtomicNumber)));
+            Assert.AreEqual("[#110]", Smarts.GenerateAtom(GetExpr(ExprType.Element, AtomicNumbers.Darmstadtium)));
+            Assert.AreEqual("[#117]", Smarts.GenerateAtom(GetExpr(ExprType.Element, AtomicNumbers.Tennessine)));
+            Assert.AreEqual("[#113]", Smarts.GenerateAtom(GetExpr(ExprType.Element, AtomicNumbers.Nihonium)));
+            Assert.AreEqual("[#110]", Smarts.GenerateAtom(GetExpr(ExprType.AliphaticElement, AtomicNumbers.Darmstadtium)));
+            Assert.AreEqual("[#117]", Smarts.GenerateAtom(GetExpr(ExprType.AliphaticElement, AtomicNumbers.Tennessine)));
+            Assert.AreEqual("[#113]", Smarts.GenerateAtom(GetExpr(ExprType.AliphaticElement, AtomicNumbers.Nihonium)));
         }
 
         [TestMethod()]
@@ -198,14 +197,14 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void UseLowPrecedenceAnd()
         {
-            var expr = new Expr(Element, 8).And(new Expr(ExprType.Degree, 2).Or(new Expr(ExprType.Degree, 1)));
+            var expr = new Expr(ExprType.Element, 8).And(new Expr(ExprType.Degree, 2).Or(new Expr(ExprType.Degree, 1)));
             Assert.AreEqual("[#8;D2,D]", Smarts.GenerateAtom(expr));
         }
 
         [TestMethod()]
         public void UseImplAnd()
         {
-            var expr = new Expr(ExprType.AromaticElement, 7).And(new Expr(ExprType.Degree, 2).And(new Expr(HasImplicitHydrogen)));
+            var expr = new Expr(ExprType.AromaticElement, 7).And(new Expr(ExprType.Degree, 2).And(new Expr(ExprType.HasImplicitHydrogen)));
             Assert.AreEqual("[nD2h]", Smarts.GenerateAtom(expr));
         }
 
@@ -213,9 +212,9 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void UsrRecrNot()
         {
-            var expr = new Expr(Element, 9)
-                .Or(new Expr(Element, 17))
-                .Or(new Expr(Element, 35))
+            var expr = new Expr(ExprType.Element, 9)
+                .Or(new Expr(ExprType.Element, 17))
+                .Or(new Expr(ExprType.Element, 35))
                 .Negate();
             Assert.AreEqual("[!$([F,Cl,Br])]", Smarts.GenerateAtom(expr));
         }
@@ -227,34 +226,34 @@ namespace NCDK.Isomorphisms
             var expr = GetOr(
                 GetAnd(
                     GetOr(
-                        GetExpr(Element, 6),
-                        GetExpr(Element, 7)),
-                    GetExpr(IsInRing)),
-                GetExpr(IsAromatic));
+                        GetExpr(ExprType.Element, 6),
+                        GetExpr(ExprType.Element, 7)),
+                    GetExpr(ExprType.IsInRing)),
+                GetExpr(ExprType.IsAromatic));
             Assert.AreEqual("[$([#6,#7])R,a]", Smarts.GenerateAtom(expr));
         }
 
         [TestMethod()]
         public void SingleOrDouble()
         {
-            var expr = new Expr(AliphaticOrder, 1)
-                   .Or(new Expr(AliphaticOrder, 2));
+            var expr = new Expr(ExprType.AliphaticOrder, 1)
+                   .Or(new Expr(ExprType.AliphaticOrder, 2));
             Assert.AreEqual("-,=", Smarts.GenerateBond(expr));
         }
 
         [TestMethod()]
         public void SingleOrDoubleInRing()
         {
-            var expr = new Expr(IsInRing)
-                  .And(new Expr(AliphaticOrder, 1)
-                   .Or(new Expr(AliphaticOrder, 2)));
+            var expr = new Expr(ExprType.IsInRing)
+                  .And(new Expr(ExprType.AliphaticOrder, 1)
+                   .Or(new Expr(ExprType.AliphaticOrder, 2)));
             Assert.AreEqual("@;-,=", Smarts.GenerateBond(expr));
         }
 
         [TestMethod()]
         public void SingleOrDoubleInRing2()
         {
-            var expr = new Expr(IsInRing)
+            var expr = new Expr(ExprType.IsInRing)
                   .And(new Expr(ExprType.SingleOrDouble));
             Assert.AreEqual("@;-,=", Smarts.GenerateBond(expr));
         }

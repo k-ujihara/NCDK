@@ -94,19 +94,19 @@ namespace NCDK.Layout
         private string CreateCanonicalSmiles(IAtomContainer mol, int[] ordering)
         {
             // backup parts we will strip off
-            int?[] hcntBackup = new int?[mol.Atoms.Count];
+            var hcntBackup = new int?[mol.Atoms.Count];
 
-            IDictionary<IAtom, int> idxs = new Dictionary<IAtom, int>();
+            var idxs = new Dictionary<IAtom, int>();
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 hcntBackup[i] = mol.Atoms[i].ImplicitHydrogenCount;
                 idxs[mol.Atoms[i]] = i;
             }
 
-            int[] bondedValence = new int[mol.Atoms.Count];
+            var bondedValence = new int[mol.Atoms.Count];
             for (int i = 0; i < mol.Bonds.Count; i++)
             {
-                IBond bond = mol.Bonds[i];
+                var bond = mol.Bonds[i];
                 bondedValence[idxs[bond.Begin]] += bond.Order.Numeric();
                 bondedValence[idxs[bond.End]] += bond.Order.Numeric();
             }
@@ -114,7 +114,7 @@ namespace NCDK.Layout
             // http://www.opensmiles.org/opensmiles.html#orgsbst
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                IAtom atom = mol.Atoms[i];
+                var atom = mol.Atoms[i];
                 atom.ImplicitHydrogenCount = 0;
                 switch (atom.AtomicNumber)
                 {
@@ -183,15 +183,15 @@ namespace NCDK.Layout
         {
             try
             {
-                int n = container.Atoms.Count;
-                int[] ordering = new int[n];
-                string smiles = CreateCanonicalSmiles(container, ordering);
+                var n = container.Atoms.Count;
+                var ordering = new int[n];
+                var smiles = CreateCanonicalSmiles(container, ordering);
 
                 // build point array that is in the canonical output order
-                Vector2[] points = new Vector2[n];
+                var points = new Vector2[n];
                 for (int i = 0; i < n; i++)
                 {
-                    Vector2? point = container.Atoms[i].Point2D;
+                    var point = container.Atoms[i].Point2D;
 
                     if (point == null)
                     {
@@ -366,16 +366,16 @@ namespace NCDK.Layout
             {
                 // create the library key to lookup an entry, we also store
                 // the canonical out ordering
-                int n = mol.Atoms.Count;
-                int[] ordering = new int[n];
-                string smiles = CreateCanonicalSmiles(mol, ordering);
+                var n = mol.Atoms.Count;
+                var ordering = new int[n];
+                var smiles = CreateCanonicalSmiles(mol, ordering);
 
                 var coordSet = templateMap[smiles];
                 var orderedCoordSet = new List<Vector2[]>();
 
                 foreach (var coords in coordSet)
                 {
-                    Vector2[] orderedCoords = new Vector2[coords.Length];
+                    var orderedCoords = new Vector2[coords.Length];
                     for (int i = 0; i < n; i++)
                     {
                         orderedCoords[i] = coords[ordering[i]];
@@ -431,11 +431,12 @@ namespace NCDK.Layout
             using (var br = new StreamReader(ins))
             {
                 string line = null;
-                IdentityTemplateLibrary library = new IdentityTemplateLibrary();
+                var library = new IdentityTemplateLibrary();
                 while ((line = br.ReadLine()) != null)
                 {
                     // skip comments
-                    if (line[0] == '#') continue;
+                    if (line[0] == '#')
+                        continue;
                     library.Add(DecodeEntry(line));
                 }
                 return library;
@@ -450,7 +451,7 @@ namespace NCDK.Layout
         /// <returns>reordered coordinates</returns>
         public static Vector2[] ReorderCoords(Vector2[] coords, int[] order)
         {
-            Vector2[] neworder = new Vector2[coords.Length];
+            var neworder = new Vector2[coords.Length];
             for (int i = 0; i < order.Length; i++)
                 neworder[order[i]] = coords[i];
             return neworder;
@@ -463,15 +464,15 @@ namespace NCDK.Layout
         /// <param name="bldr">builder</param>
         public void Update(IChemObjectBuilder bldr)
         {
-            SmilesParser smipar = new SmilesParser(bldr);
+            var smipar = new SmilesParser(bldr);
             var updated = new MultiDictionary<string, Vector2[]>();
             foreach (var e in templateMap)
             {
                 try
                 {
                     var mol = smipar.ParseSmiles(e.Key);
-                    int[] order = new int[mol.Atoms.Count];
-                    string key = CreateCanonicalSmiles(mol, order);
+                    var order = new int[mol.Atoms.Count];
+                    var key = CreateCanonicalSmiles(mol, order);
                     foreach (var coords in e.Value)
                     {
                         updated.Add(key, ReorderCoords(coords, order));

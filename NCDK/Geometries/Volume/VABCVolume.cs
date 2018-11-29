@@ -39,7 +39,8 @@ namespace NCDK.Geometries.Volume
         /// Values are taken from the spreadsheet where possible. The values in the
         /// paper are imprecise.
         /// </summary>
-        private static IDictionary<string, double> bondiiVolumes = new Dictionary<string, double>() {
+        private static readonly Dictionary<string, double> bondiiVolumes = new Dictionary<string, double>()
+            {
                 { "H", 7.2382293504 },
                 { "C", 20.5795259250667 },
                 { "N", 15.5985308577667 },

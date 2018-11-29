@@ -31,7 +31,6 @@ namespace NCDK
     // @cdk.module test-interfaces
     // @author  Edgar Luttman <edgar@uni-paderborn.de>
     // @cdk.created 2001-08-09
-    [TestClass()]
     public abstract class AbstractMonomerTest
         : AbstractAtomContainerTest
     {

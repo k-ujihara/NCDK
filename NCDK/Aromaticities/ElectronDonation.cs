@@ -54,7 +54,6 @@ namespace NCDK.Aromaticities
     /// </example>
     // @author John May
     // @cdk.module standard
-    // @cdk.githash
     public abstract class ElectronDonation
     {
         /// <summary>

@@ -28,43 +28,40 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Config;
 using System;
-using static NCDK.Beam.Element;
 
 namespace NCDK.Beam
 {
-   /// <summary> <author>John May </author></summary>
+    /// <summary> <author>John May </author></summary>
     [TestClass()]
     public class ElementTest
     {
-
         [TestMethod()]
         public void OrganicSymbols()
         {
-            Assert.AreEqual(Element.OfSymbol("B"), Boron);
-            Assert.AreEqual(Element.OfSymbol("C"), Carbon);
-            Assert.AreEqual(Element.OfSymbol("N"), Nitrogen);
-            Assert.AreEqual(Element.OfSymbol("O"), Oxygen);
-            Assert.AreEqual(Element.OfSymbol("P"), Phosphorus);
-            Assert.AreEqual(Element.OfSymbol("S"), Sulfur);
-            Assert.AreEqual(Element.OfSymbol("F"), Fluorine);
-            Assert.AreEqual(Element.OfSymbol("Br"), Bromine);
-            Assert.AreEqual(Element.OfSymbol("Cl"), Chlorine);
-            Assert.AreEqual(Element.OfSymbol("I"), Iodine);
+            Assert.AreEqual(Beam.Element.OfSymbol("B"), Beam.Element.Boron);
+            Assert.AreEqual(Beam.Element.OfSymbol("C"), Beam.Element.Carbon);
+            Assert.AreEqual(Beam.Element.OfSymbol("N"), Beam.Element.Nitrogen);
+            Assert.AreEqual(Beam.Element.OfSymbol("O"), Beam.Element.Oxygen);
+            Assert.AreEqual(Beam.Element.OfSymbol("P"), Beam.Element.Phosphorus);
+            Assert.AreEqual(Beam.Element.OfSymbol("S"), Beam.Element.Sulfur);
+            Assert.AreEqual(Beam.Element.OfSymbol("F"), Beam.Element.Fluorine);
+            Assert.AreEqual(Beam.Element.OfSymbol("Br"), Beam.Element.Bromine);
+            Assert.AreEqual(Beam.Element.OfSymbol("Cl"), Beam.Element.Chlorine);
+            Assert.AreEqual(Beam.Element.OfSymbol("I"), Beam.Element.Iodine);
         }
 
         [TestMethod()]
         public void IsAromaticSymbols()
         {
-            Assert.AreEqual(Element.OfSymbol("b"), Boron);
-            Assert.AreEqual(Element.OfSymbol("c"), Carbon);
-            Assert.AreEqual(Element.OfSymbol("n"), Nitrogen);
-            Assert.AreEqual(Element.OfSymbol("o"), Oxygen);
-            Assert.AreEqual(Element.OfSymbol("p"), Phosphorus);
-            Assert.AreEqual(Element.OfSymbol("s"), Sulfur);
-            Assert.AreEqual(Element.OfSymbol("se"), Selenium);
-            Assert.AreEqual(Element.OfSymbol("as"), Arsenic);
+            Assert.AreEqual(Beam.Element.OfSymbol("b"), Beam.Element.Boron);
+            Assert.AreEqual(Beam.Element.OfSymbol("c"), Beam.Element.Carbon);
+            Assert.AreEqual(Beam.Element.OfSymbol("n"), Beam.Element.Nitrogen);
+            Assert.AreEqual(Beam.Element.OfSymbol("o"), Beam.Element.Oxygen);
+            Assert.AreEqual(Beam.Element.OfSymbol("p"), Beam.Element.Phosphorus);
+            Assert.AreEqual(Beam.Element.OfSymbol("s"), Beam.Element.Sulfur);
+            Assert.AreEqual(Beam.Element.OfSymbol("se"), Beam.Element.Selenium);
+            Assert.AreEqual(Beam.Element.OfSymbol("as"), Beam.Element.Arsenic);
         }
 
         [TestMethod()]
@@ -72,30 +69,30 @@ namespace NCDK.Beam
         {
             foreach (var e in Element.Values)
             {
-                Assert.AreEqual(Element.OfSymbol(e.Symbol), e);
+                Assert.AreEqual(Beam.Element.OfSymbol(e.Symbol), e);
             }
         }
 
         [TestMethod()]
         public void InvalidSymbol()
         {
-            Assert.IsNull(Element.OfSymbol("J"));
+            Assert.IsNull(Beam.Element.OfSymbol("J"));
         }
 
         [TestMethod()]
         public void IsOrganic()
         {
             foreach (var e in new[] {
-                Boron,
-                Carbon,
-                Nitrogen,
-                Oxygen,
-                Phosphorus,
-                Sulfur,
-                Fluorine,
-                Chlorine,
-                Bromine,
-                Iodine })
+                Beam.Element.Boron,
+                Beam.Element.Carbon,
+                Beam.Element.Nitrogen,
+                Beam.Element.Oxygen,
+                Beam.Element.Phosphorus,
+                Beam.Element.Sulfur,
+                Beam.Element.Fluorine,
+                Beam.Element.Chlorine,
+                Beam.Element.Bromine,
+                Beam.Element.Iodine })
             {
                 Assert.IsTrue(e.IsOrganic());
             }
@@ -104,14 +101,17 @@ namespace NCDK.Beam
         [TestMethod()]
         public void IsAromatic()
         {
-            foreach (var e in new[] { Boron,
-                                           Carbon,
-                                           Nitrogen,
-                                           Oxygen,
-                                           Phosphorus,
-                                           Sulfur,
-                                           Selenium,
-                                           Arsenic })
+            foreach (var e in new[] 
+                {
+                    Beam.Element.Boron,
+                    Beam.Element.Carbon,
+                    Beam.Element.Nitrogen,
+                    Beam.Element.Oxygen,
+                    Beam.Element.Phosphorus,
+                    Beam.Element.Sulfur,
+                    Beam.Element.Selenium,
+                    Beam.Element.Arsenic,
+                })
             {
                 Assert.IsTrue(e.IsAromatic());
             }
@@ -120,92 +120,98 @@ namespace NCDK.Beam
         [TestMethod()]
         public void UnknownHydrogens()
         {
-            Assert.AreEqual(Unknown.NumOfImplicitHydrogens(0), 0);
-            Assert.AreEqual(Unknown.NumOfImplicitHydrogens(1), 0);
-            Assert.AreEqual(Unknown.NumOfImplicitHydrogens(2), 0);
-            Assert.AreEqual(Unknown.NumOfImplicitHydrogens(3), 0);
-            Assert.AreEqual(Unknown.NumOfImplicitHydrogens(4), 0);
+            Assert.AreEqual(Beam.Element.Unknown.NumOfImplicitHydrogens(0), 0);
+            Assert.AreEqual(Beam.Element.Unknown.NumOfImplicitHydrogens(1), 0);
+            Assert.AreEqual(Beam.Element.Unknown.NumOfImplicitHydrogens(2), 0);
+            Assert.AreEqual(Beam.Element.Unknown.NumOfImplicitHydrogens(3), 0);
+            Assert.AreEqual(Beam.Element.Unknown.NumOfImplicitHydrogens(4), 0);
         }
 
         // now deprecated
         [ExpectedException(typeof(InvalidOperationException))]
         public void InorganicHydrogens()
         {
-            Calcium.NumOfImplicitHydrogens(0);
+            Beam.Element.Calcium.NumOfImplicitHydrogens(0);
         }
 
         [TestMethod()]
         public void BoronHydrogens()
         {
-            Assert.AreEqual(Boron.NumOfImplicitHydrogens(0), 3);
-            Assert.AreEqual(Boron.NumOfImplicitHydrogens(1), 2);
-            Assert.AreEqual(Boron.NumOfImplicitHydrogens(2), 1);
-            Assert.AreEqual(Boron.NumOfImplicitHydrogens(3), 0);
-            Assert.AreEqual(Boron.NumOfImplicitHydrogens(4), 0);
+            Assert.AreEqual(Beam.Element.Boron.NumOfImplicitHydrogens(0), 3);
+            Assert.AreEqual(Beam.Element.Boron.NumOfImplicitHydrogens(1), 2);
+            Assert.AreEqual(Beam.Element.Boron.NumOfImplicitHydrogens(2), 1);
+            Assert.AreEqual(Beam.Element.Boron.NumOfImplicitHydrogens(3), 0);
+            Assert.AreEqual(Beam.Element.Boron.NumOfImplicitHydrogens(4), 0);
         }
 
         [TestMethod()]
         public void CarbonHydrogens()
         {
-            Assert.AreEqual(Carbon.NumOfImplicitHydrogens(0), 4);
-            Assert.AreEqual(Carbon.NumOfImplicitHydrogens(1), 3);
-            Assert.AreEqual(Carbon.NumOfImplicitHydrogens(2), 2);
-            Assert.AreEqual(Carbon.NumOfImplicitHydrogens(3), 1);
-            Assert.AreEqual(Carbon.NumOfImplicitHydrogens(4), 0);
-            Assert.AreEqual(Carbon.NumOfImplicitHydrogens(5), 0);
-            Assert.AreEqual(Carbon.NumOfImplicitHydrogens(6), 0);
+            Assert.AreEqual(Beam.Element.Carbon.NumOfImplicitHydrogens(0), 4);
+            Assert.AreEqual(Beam.Element.Carbon.NumOfImplicitHydrogens(1), 3);
+            Assert.AreEqual(Beam.Element.Carbon.NumOfImplicitHydrogens(2), 2);
+            Assert.AreEqual(Beam.Element.Carbon.NumOfImplicitHydrogens(3), 1);
+            Assert.AreEqual(Beam.Element.Carbon.NumOfImplicitHydrogens(4), 0);
+            Assert.AreEqual(Beam.Element.Carbon.NumOfImplicitHydrogens(5), 0);
+            Assert.AreEqual(Beam.Element.Carbon.NumOfImplicitHydrogens(6), 0);
         }
 
         [TestMethod()]
         public void NitrogenHydrogens()
         {
-            Assert.AreEqual(Nitrogen.NumOfImplicitHydrogens(0), 3);
-            Assert.AreEqual(Nitrogen.NumOfImplicitHydrogens(1), 2);
-            Assert.AreEqual(Nitrogen.NumOfImplicitHydrogens(2), 1);
-            Assert.AreEqual(Nitrogen.NumOfImplicitHydrogens(3), 0);
-            Assert.AreEqual(Nitrogen.NumOfImplicitHydrogens(4), 1);
-            Assert.AreEqual(Nitrogen.NumOfImplicitHydrogens(5), 0);
-            Assert.AreEqual(Nitrogen.NumOfImplicitHydrogens(6), 0);
+            Assert.AreEqual(Beam.Element.Nitrogen.NumOfImplicitHydrogens(0), 3);
+            Assert.AreEqual(Beam.Element.Nitrogen.NumOfImplicitHydrogens(1), 2);
+            Assert.AreEqual(Beam.Element.Nitrogen.NumOfImplicitHydrogens(2), 1);
+            Assert.AreEqual(Beam.Element.Nitrogen.NumOfImplicitHydrogens(3), 0);
+            Assert.AreEqual(Beam.Element.Nitrogen.NumOfImplicitHydrogens(4), 1);
+            Assert.AreEqual(Beam.Element.Nitrogen.NumOfImplicitHydrogens(5), 0);
+            Assert.AreEqual(Beam.Element.Nitrogen.NumOfImplicitHydrogens(6), 0);
         }
 
         [TestMethod()]
         public void OxygenHydrogens()
         {
-            Assert.AreEqual(Oxygen.NumOfImplicitHydrogens(0), 2);
-            Assert.AreEqual(Oxygen.NumOfImplicitHydrogens(1), 1);
-            Assert.AreEqual(Oxygen.NumOfImplicitHydrogens(2), 0);
-            Assert.AreEqual(Oxygen.NumOfImplicitHydrogens(3), 0);
+            Assert.AreEqual(Beam.Element.Oxygen.NumOfImplicitHydrogens(0), 2);
+            Assert.AreEqual(Beam.Element.Oxygen.NumOfImplicitHydrogens(1), 1);
+            Assert.AreEqual(Beam.Element.Oxygen.NumOfImplicitHydrogens(2), 0);
+            Assert.AreEqual(Beam.Element.Oxygen.NumOfImplicitHydrogens(3), 0);
         }
 
         [TestMethod()]
         public void PhosphorusHydrogens()
         {
-            Assert.AreEqual(Phosphorus.NumOfImplicitHydrogens(0), 3);
-            Assert.AreEqual(Phosphorus.NumOfImplicitHydrogens(1), 2);
-            Assert.AreEqual(Phosphorus.NumOfImplicitHydrogens(2), 1);
-            Assert.AreEqual(Phosphorus.NumOfImplicitHydrogens(3), 0);
-            Assert.AreEqual(Phosphorus.NumOfImplicitHydrogens(4), 1);
-            Assert.AreEqual(Phosphorus.NumOfImplicitHydrogens(5), 0);
-            Assert.AreEqual(Phosphorus.NumOfImplicitHydrogens(6), 0);
+            Assert.AreEqual(Beam.Element.Phosphorus.NumOfImplicitHydrogens(0), 3);
+            Assert.AreEqual(Beam.Element.Phosphorus.NumOfImplicitHydrogens(1), 2);
+            Assert.AreEqual(Beam.Element.Phosphorus.NumOfImplicitHydrogens(2), 1);
+            Assert.AreEqual(Beam.Element.Phosphorus.NumOfImplicitHydrogens(3), 0);
+            Assert.AreEqual(Beam.Element.Phosphorus.NumOfImplicitHydrogens(4), 1);
+            Assert.AreEqual(Beam.Element.Phosphorus.NumOfImplicitHydrogens(5), 0);
+            Assert.AreEqual(Beam.Element.Phosphorus.NumOfImplicitHydrogens(6), 0);
         }
 
         [TestMethod()]
         public void SulfurHydrogens()
         {
-            Assert.AreEqual(Sulfur.NumOfImplicitHydrogens(0), 2);
-            Assert.AreEqual(Sulfur.NumOfImplicitHydrogens(1), 1);
-            Assert.AreEqual(Sulfur.NumOfImplicitHydrogens(2), 0);
-            Assert.AreEqual(Sulfur.NumOfImplicitHydrogens(3), 1);
-            Assert.AreEqual(Sulfur.NumOfImplicitHydrogens(4), 0);
-            Assert.AreEqual(Sulfur.NumOfImplicitHydrogens(5), 1);
-            Assert.AreEqual(Sulfur.NumOfImplicitHydrogens(6), 0);
-            Assert.AreEqual(Sulfur.NumOfImplicitHydrogens(7), 0);
+            Assert.AreEqual(Beam.Element.Sulfur.NumOfImplicitHydrogens(0), 2);
+            Assert.AreEqual(Beam.Element.Sulfur.NumOfImplicitHydrogens(1), 1);
+            Assert.AreEqual(Beam.Element.Sulfur.NumOfImplicitHydrogens(2), 0);
+            Assert.AreEqual(Beam.Element.Sulfur.NumOfImplicitHydrogens(3), 1);
+            Assert.AreEqual(Beam.Element.Sulfur.NumOfImplicitHydrogens(4), 0);
+            Assert.AreEqual(Beam.Element.Sulfur.NumOfImplicitHydrogens(5), 1);
+            Assert.AreEqual(Beam.Element.Sulfur.NumOfImplicitHydrogens(6), 0);
+            Assert.AreEqual(Beam.Element.Sulfur.NumOfImplicitHydrogens(7), 0);
         }
 
         [TestMethod()]
         public void HalogenHydrogens()
         {
-            foreach (var e in new[] { Fluorine, Chlorine, Bromine, Iodine })
+            foreach (var e in new[] 
+                {
+                    Beam.Element.Fluorine,
+                    Beam.Element.Chlorine,
+                    Beam.Element.Bromine,
+                    Beam.Element.Iodine,
+                })
             {
                 Assert.AreEqual(e.NumOfImplicitHydrogens(0), 1);
                 Assert.AreEqual(e.NumOfImplicitHydrogens(1), 0);
@@ -225,32 +231,8 @@ namespace NCDK.Beam
         [TestMethod()]
         public void OfNumber()
         {
-            Assert.AreEqual(NaturalElement.OfNumber(6), NaturalElements.Carbon.Element);
-            Assert.AreEqual(NaturalElement.OfNumber(8), NaturalElements.Oxygen.Element);
+            Assert.AreEqual(Beam.Element.OfNumber(6), Beam.Element.Carbon);
+            Assert.AreEqual(Beam.Element.OfNumber(8), Beam.Element.Oxygen);
         }
-
-        // Read() is no longer used.
-        //[TestMethod()]
-        //public void Read()
-        //{
-        //    foreach (var e in Element.Values)
-        //    {
-        //        if (e.IsAromatic())
-        //            Assert.AreEqual(Element.Read(CharBuffer.FromString(e.Symbol)), e);
-        //        Assert.AreEqual(Element.Read(CharBuffer.FromString(e.Symbol)), e);
-        //    }
-        //}
-
-        //[TestMethod()]
-        //public void ReadNone()
-        //{
-        //    Assert.IsNull(Element.Read(CharBuffer.FromString("")));
-        //}
-
-        //[TestMethod()]
-        //public void ReadInvalidElement()
-        //{
-        //    Assert.IsNull(Element.Read(CharBuffer.FromString("J")));
-        //}
     }
 }

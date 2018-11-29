@@ -275,8 +275,8 @@ namespace NCDK.IO
         {
             int dim = GetNumberOfDimensions(container);
             var line = new StringBuilder();
-            IDictionary<int, int> rgroups = null;
-            IDictionary<int, string> aliases = null;
+            SortedDictionary<int, int> rgroups = null;
+            SortedDictionary<int, string> aliases = null;
             // write header block
             // lines get shortened to 80 chars, that's in the spec
             string title = container.Title;
@@ -371,7 +371,7 @@ namespace NCDK.IO
                 //according to http://www.google.co.uk/url?sa=t&ct=res&cd=2&url=http%3A%2F%2Fwww.mdl.com%2Fdownloads%2Fpublic%2Fctfile%2Fctfile.pdf&ei=MsJjSMbjAoyq1gbmj7zCDQ&usg=AFQjCNGaJSvH4wYy4FTXIaQ5f7hjoTdBAw&sig2=eSfruNOSsdMFdlrn7nhdAw an R group is written as R#
                 if (container.Atoms[f] is IPseudoAtom pseudoAtom)
                 {
-                    string label = pseudoAtom.Label;
+                    var label = pseudoAtom.Label;
                     if (label == null) // set to empty string if null
                         label = "";
 
@@ -399,7 +399,8 @@ namespace NCDK.IO
                         if (label.Length > 3)
                         {
 
-                            if (aliases == null) aliases = new SortedDictionary<int, string>();
+                            if (aliases == null)
+                                aliases = new SortedDictionary<int, string>();
 
                             aliases[f + 1] = label; // atom index to alias
 
@@ -423,7 +424,7 @@ namespace NCDK.IO
                 }
 
                 // atom properties
-                int[] atomprops = new int[12];
+                var atomprops = new int[12];
                 atomprops[0] = DetermineIsotope(atom);
                 atomprops[1] = DetermineCharge(container, atom);
                 atomprops[2] = DetermineStereoParity(container, atomstereo, atomindex, atom);
@@ -477,7 +478,7 @@ namespace NCDK.IO
 
                     if (bond is QueryBond qbond)
                     {
-                        Expr e = qbond.Expression;
+                        var e = qbond.Expression;
                         switch (e.GetExprType())
                         {
                             case ExprType.AliphaticElement:
@@ -823,8 +824,8 @@ namespace NCDK.IO
 
         private int DetermineStereoParity(
             IAtomContainer container,
-            IDictionary<IAtom, ITetrahedralChirality> atomstereo,
-            IDictionary<IAtom, int> atomindex, 
+            Dictionary<IAtom, ITetrahedralChirality> atomstereo,
+            Dictionary<IAtom, int> atomindex, 
             IAtom atom)
         {
             if (!atomstereo.TryGetValue(atom, out ITetrahedralChirality tc))
@@ -872,7 +873,7 @@ namespace NCDK.IO
             return major != null && major.MassNumber.Equals(atom.MassNumber);
         }
 
-        private static void WriteSgroups(IAtomContainer container, TextWriter writer, IReadOnlyDictionary<IAtom, int> atomidxs)
+        private static void WriteSgroups(IAtomContainer container, TextWriter writer, Dictionary<IAtom, int> atomidxs)
         {
             var sgroups = container.GetCtabSgroups();
             if (sgroups == null)
@@ -1048,7 +1049,7 @@ namespace NCDK.IO
             }
         }
 
-        private static IList<List<T>> Wrap<T>(IEnumerable<T> set, int lim)
+        private static List<List<T>> Wrap<T>(IEnumerable<T> set, int lim)
         {
             var wrapped = new List<List<T>>();
             var list = new List<T>(set);

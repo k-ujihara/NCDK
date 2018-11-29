@@ -99,6 +99,11 @@ namespace <#= ns.NS #>
         internal bool isAromatic;
         internal bool isInRing;
         internal bool isReactiveCenter;
+        
+        public AtomType(ChemicalElement element)
+            : base(element)
+        {
+        }
 
         /// <summary>
         /// Constructor for the AtomType object.
@@ -109,7 +114,7 @@ namespace <#= ns.NS #>
         /// </remarks>
         /// <param name="elementSymbol">Symbol of the atom</param>
         public AtomType(string elementSymbol)
-            : base(elementSymbol)
+            : this(ChemicalElement.OfSymbol(elementSymbol))
         {
             this.formalCharge = 0;
         }
@@ -120,7 +125,7 @@ namespace <#= ns.NS #>
         /// <param name="identifier">An id for this atom type, like C3 for sp3 carbon</param>
         /// <param name="elementSymbol">The element symbol identifying the element to which this atom type applies</param>
         public AtomType(string identifier, string elementSymbol)
-            : base(elementSymbol)
+            : this(ChemicalElement.OfSymbol(elementSymbol))
         {
             this.atomTypeName = identifier;
         }

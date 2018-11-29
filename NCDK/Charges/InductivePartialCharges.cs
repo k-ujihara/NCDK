@@ -31,7 +31,6 @@ namespace NCDK.Charges
     /// </summary>
     // @author      mfe4
     // @cdk.module  charges
-    // @cdk.githash
     // @cdk.created 2004-11-03
     // @cdk.keyword partial atomic charges
     // @cdk.keyword charge distribution
@@ -40,7 +39,7 @@ namespace NCDK.Charges
     {
         private static double[] pauling;
         private IsotopeFactory ifac = null;
-        private static readonly AtomTypeFactory factory = CDK.JmolAtomTypeFactory;
+        private readonly AtomTypeFactory factory = CDK.JmolAtomTypeFactory;
 
         /// <summary>
         ///  Constructor for the InductivePartialCharges object.
@@ -115,7 +114,6 @@ namespace NCDK.Charges
         public double[] GetPaulingElectronegativities(IAtomContainer ac, bool modified)
         {
             var paulingElectronegativities = new double[ac.Atoms.Count];
-            IElement element = null;
             string symbol = null;
             int atomicNumber = 0;
             try
@@ -125,25 +123,25 @@ namespace NCDK.Charges
                 {
                     var atom = ac.Atoms[i];
                     symbol = ac.Atoms[i].Symbol;
-                    element = ifac.GetElement(symbol);
+                    var element = ifac.GetElement(symbol);
                     atomicNumber = element.AtomicNumber;
                     if (modified)
                     {
                         switch (atom.AtomicNumber)
                         {
-                            case NaturalElements.Cl.AtomicNumber:
+                            case AtomicNumbers.Cl:
                                 paulingElectronegativities[i] = 3.28;
                                 break;
-                            case NaturalElements.Br.AtomicNumber:
+                            case AtomicNumbers.Br:
                                 paulingElectronegativities[i] = 3.13;
                                 break;
-                            case NaturalElements.I.AtomicNumber:
+                            case AtomicNumbers.I:
                                 paulingElectronegativities[i] = 2.93;
                                 break;
-                            case NaturalElements.H.AtomicNumber:
+                            case AtomicNumbers.H:
                                 paulingElectronegativities[i] = 2.10;
                                 break;
-                            case NaturalElements.C.AtomicNumber:
+                            case AtomicNumbers.C:
                                 if (ac.GetMaximumBondOrder(atom) == BondOrder.Single)
                                 {
                                     // Csp3
@@ -158,7 +156,7 @@ namespace NCDK.Charges
                                     paulingElectronegativities[i] = 3.15;
                                 }
                                 break;
-                            case NaturalElements.O.AtomicNumber:
+                            case AtomicNumbers.O:
                                 if (ac.GetMaximumBondOrder(atom) == BondOrder.Single)
                                 {
                                     // Osp3
@@ -169,13 +167,13 @@ namespace NCDK.Charges
                                     paulingElectronegativities[i] = 4.34;
                                 }
                                 break;
-                            case NaturalElements.Si.AtomicNumber:
+                            case AtomicNumbers.Si:
                                 paulingElectronegativities[i] = 1.99;
                                 break;
-                            case NaturalElements.S.AtomicNumber:
+                            case AtomicNumbers.S:
                                 paulingElectronegativities[i] = 2.74;
                                 break;
-                            case NaturalElements.N.AtomicNumber:
+                            case AtomicNumbers.N:
                                 paulingElectronegativities[i] = 2.59;
                                 break;
                             default:
@@ -354,22 +352,22 @@ namespace NCDK.Charges
             double radiusTarget = 0;
             switch (atomicNumber)
             {
-                case NaturalElements.F.AtomicNumber:
+                case AtomicNumbers.F:
                     radiusTarget = 0.64;
                     break;
-                case NaturalElements.Cl.AtomicNumber:
+                case AtomicNumbers.Cl:
                     radiusTarget = 0.99;
                     break;
-                case NaturalElements.Br.AtomicNumber:
+                case AtomicNumbers.Br:
                     radiusTarget = 1.14;
                     break;
-                case NaturalElements.I.AtomicNumber:
+                case AtomicNumbers.I:
                     radiusTarget = 1.33;
                     break;
-                case NaturalElements.H.AtomicNumber:
+                case AtomicNumbers.H:
                     radiusTarget = 0.30;
                     break;
-                case NaturalElements.C.AtomicNumber:
+                case AtomicNumbers.C:
                     if (maxBondOrder == BondOrder.Single)
                     {
                         // Csp3
@@ -384,7 +382,7 @@ namespace NCDK.Charges
                         radiusTarget = 0.60;
                     }
                     break;
-                case NaturalElements.O.AtomicNumber:
+                case AtomicNumbers.O:
                     if (maxBondOrder == BondOrder.Single)
                     {
                         // Csp3
@@ -395,13 +393,13 @@ namespace NCDK.Charges
                         radiusTarget = 0.60;
                     }
                     break;
-                case NaturalElements.Si.AtomicNumber:
+                case AtomicNumbers.Si:
                     radiusTarget = 1.11;
                     break;
-                case NaturalElements.S.AtomicNumber:
+                case AtomicNumbers.S:
                     radiusTarget = 1.04;
                     break;
-                case NaturalElements.N.AtomicNumber:
+                case AtomicNumbers.N:
                     radiusTarget = 0.70;
                     break;
                 default:

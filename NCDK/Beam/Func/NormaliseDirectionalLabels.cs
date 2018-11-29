@@ -200,7 +200,7 @@ namespace NCDK.Beam
 
             private void InvertExistingDirectionalLabels(Graph g,
                                                          BitArray visited,
-                                                         IDictionary<Edge, Edge> replacement,
+                                                         Dictionary<Edge, Edge> replacement,
                                                          BitArray dbAtoms,
                                                          int u)
             {

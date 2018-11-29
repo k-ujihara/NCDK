@@ -35,7 +35,6 @@ namespace NCDK.Config.AtomTypes
     /// XML Reader for the <see cref="OWLBasedAtomTypeConfigurator"/>.
     /// </summary>
     // @cdk.module  atomtype
-    // @cdk.githash
     public class OWLAtomTypeMappingReader
     {
         private readonly TextReader input;

@@ -130,7 +130,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             for (int i = 0; i < natom; i++)
             {
                 var a = container.Atoms[i];
-                if (a.AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                if (a.AtomicNumber.Equals(AtomicNumbers.C))
                     continue;
                 count++;
                 for (int j = 0; j < natom; j++)
@@ -154,7 +154,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             for (int i = 0; i < natom; i++)
             {
                 var a = container.Atoms[i];
-                if (!a.AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                if (!a.AtomicNumber.Equals(AtomicNumbers.O))
                     continue;
                 count++;
                 for (int j = 0; j < natom; j++)
@@ -178,7 +178,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             for (int i = 0; i < natom; i++)
             {
                 var a = container.Atoms[i];
-                if (!a.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
+                if (!a.AtomicNumber.Equals(AtomicNumbers.N))
                     continue;
                 count++;
                 for (int j = 0; j < natom; j++)

@@ -29,7 +29,6 @@ namespace NCDK.AtomTypes
     // @author Todd Martin
     // @author nick
     // @cdk.module standard
-    // @cdk.githash
     // @cdk.keyword atom type, E-state
     public class EStateAtomTypeMatcher : IAtomTypeMatcher
     {
@@ -75,7 +74,7 @@ namespace NCDK.AtomTypes
                 foreach (var attached in attachedAtoms)
                 {
                     var b = atomContainer.GetBond(atom, attached);
-                    if (attached.AtomicNumber.Equals(NaturalElements.H.AtomicNumber)) NumHAtoms++;
+                    if (attached.AtomicNumber.Equals(AtomicNumbers.H)) NumHAtoms++;
 
                     if (atom.IsAromatic && attached.IsAromatic)
                     {
@@ -84,7 +83,7 @@ namespace NCDK.AtomTypes
                         if (SameRing)
                         {
                             NumAromaticBonds2++;
-                            if (n.Equals(NaturalElements.N.AtomicNumber))
+                            if (n.Equals(AtomicNumbers.N))
                             {
                                 if (b.Order == BondOrder.Single) NumAromaticBondsTotal2++;
                                 if (b.Order == BondOrder.Double)

@@ -26,13 +26,12 @@ namespace NCDK
     /// Checks the functionality of <see cref="IAtomType"/> implementations.
     /// </summary>
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractAtomTypeTest : AbstractIsotopeTest
     {
         [TestMethod()]
         public virtual void TestSetAtomTypeName_String()
         {
-            IAtomType at = (IAtomType)NewChemObject();
+            var at = (IAtomType)NewChemObject();
             at.AtomTypeName = "C4";
             Assert.AreEqual("C4", at.AtomTypeName);
         }
@@ -40,7 +39,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetAtomTypeName()
         {
-            IAtomType at = (IAtomType)NewChemObject();
+            var at = (IAtomType)NewChemObject();
             at.AtomTypeName = "C4";
             Assert.AreEqual("C4", at.AtomTypeName);
         }
@@ -48,7 +47,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetMaxBondOrder_BondOrder()
         {
-            IAtomType at = (IAtomType)NewChemObject();
+            var at = (IAtomType)NewChemObject();
             at.MaxBondOrder = BondOrder.Triple;
             Assert.AreEqual(BondOrder.Triple, at.MaxBondOrder);
         }
@@ -62,7 +61,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetBondOrderSum_Double()
         {
-            IAtomType at = (IAtomType)NewChemObject();
+            var at = (IAtomType)NewChemObject();
             at.BondOrderSum = 4.0;
             Assert.AreEqual(4.0, at.BondOrderSum.Value, 0.001);
         }
@@ -76,7 +75,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetCovalentRadius_Double()
         {
-            IAtomType at = (IAtomType)NewChemObject();
+            var at = (IAtomType)NewChemObject();
             at.CovalentRadius = 1.0;
             Assert.AreEqual(1.0, at.CovalentRadius.Value, 0.001);
         }
@@ -92,7 +91,7 @@ namespace NCDK
         {
             int charge = 1;
 
-            IAtomType a = (IAtomType)NewChemObject();
+            var a = (IAtomType)NewChemObject();
             a.FormalCharge = charge;
             Assert.AreEqual(charge, a.FormalCharge.Value);
         }
@@ -111,7 +110,7 @@ namespace NCDK
         {
             int valency = 4;
 
-            IAtomType a = (IAtomType)NewChemObject();
+            var a = (IAtomType)NewChemObject();
             a.Valency = valency;
             Assert.AreEqual(valency, (int)a.Valency);
         }
@@ -127,7 +126,7 @@ namespace NCDK
         {
             int count = 4;
 
-            IAtomType a = (IAtomType)NewChemObject();
+            var a = (IAtomType)NewChemObject();
             a.FormalNeighbourCount = count;
             Assert.AreEqual(count, (int)a.FormalNeighbourCount);
         }
@@ -143,7 +142,7 @@ namespace NCDK
         {
             Hybridization hybridization = Hybridization.SP1;
 
-            IAtomType atom = (IAtomType)NewChemObject();
+            var atom = (IAtomType)NewChemObject();
             atom.Hybridization = hybridization;
             Assert.AreEqual(hybridization, atom.Hybridization);
         }
@@ -157,9 +156,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetHybridization_Null()
         {
-            Hybridization hybridization = Hybridization.SP1;
+            var hybridization = Hybridization.SP1;
 
-            IAtomType atom = (IAtomType)NewChemObject();
+            var atom = (IAtomType)NewChemObject();
             atom.Hybridization = hybridization;
             Assert.AreEqual(hybridization, atom.Hybridization);
             atom.Hybridization = Hybridization.Unset;
@@ -170,7 +169,7 @@ namespace NCDK
         public virtual void TestSetAcceptor_bool()
         {
             bool acceptor = true;
-            IAtomType a = (IAtomType)NewChemObject();
+            var a = (IAtomType)NewChemObject();
             a.IsHydrogenBondAcceptor = acceptor;
             Assert.IsTrue(a.IsHydrogenBondAcceptor);
         }
@@ -185,7 +184,7 @@ namespace NCDK
         public virtual void TestSetDonor_bool()
         {
             bool donor = true;
-            IAtomType a = (IAtomType)NewChemObject();
+            var a = (IAtomType)NewChemObject();
             a.IsHydrogenBondDonor = donor;
 
             Assert.IsTrue(a.IsHydrogenBondDonor);
@@ -201,7 +200,7 @@ namespace NCDK
         public virtual void TestSetChemicalGroupConstant_int()
         {
             int benzol = 6;
-            IAtomType a = (IAtomType)NewChemObject();
+            var a = (IAtomType)NewChemObject();
             a.SetProperty(CDKPropertyName.ChemicalGroupConstant, benzol);
             Assert.AreEqual(benzol, a.GetProperty<int>(CDKPropertyName.ChemicalGroupConstant));
         }
@@ -216,7 +215,7 @@ namespace NCDK
         public virtual void TestSetRingSize_int()
         {
             int five = 5;
-            IAtomType a = (IAtomType)NewChemObject();
+            var a = (IAtomType)NewChemObject();
             a.SetProperty(CDKPropertyName.PartOfRingOfSize, five);
             Assert.AreEqual(five, a.GetProperty<int>(CDKPropertyName.PartOfRingOfSize));
         }
@@ -230,7 +229,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetIsAromatic_bool()
         {
-            IAtomType a = (IAtomType)NewChemObject();
+            var a = (IAtomType)NewChemObject();
             a.IsAromatic = true;
             Assert.IsTrue(a.IsAromatic);
         }
@@ -244,8 +243,8 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetSphericalMatcher_String()
         {
-            string hoseCode = "C-4;HHHC(;///***)";
-            IAtomType a = (IAtomType)NewChemObject();
+            var hoseCode = "C-4;HHHC(;///***)";
+            var a = (IAtomType)NewChemObject();
             a.SetProperty(CDKPropertyName.ChemicalGroupConstant, hoseCode);
             Assert.AreEqual(hoseCode, a.GetProperty<string>(CDKPropertyName.ChemicalGroupConstant));
         }
@@ -262,7 +261,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestAtomTypeNameAndIDBug()
         {
-            IAtomType a = (IAtomType)NewChemObject();
+            var a = (IAtomType)NewChemObject();
             a.Id = "carbon1";
             a.AtomTypeName = "C.sp3";
             Assert.AreEqual("carbon1", a.Id);
@@ -275,12 +274,12 @@ namespace NCDK
 
         public override void TestClone()
         {
-            IAtomType at = (IAtomType)NewChemObject();
+            var at = (IAtomType)NewChemObject();
             object clone = at.Clone();
             Assert.IsTrue(clone is IAtomType);
 
             // test that everything has been cloned properly
-            string diff = AtomTypeDiff.Diff(at, (IAtomType)clone);
+            var diff = AtomTypeDiff.Diff(at, (IAtomType)clone);
             Assert.IsNotNull(diff);
             Assert.AreEqual(0, diff.Length);
         }
@@ -291,9 +290,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestClone_MaxBondOrder()
         {
-            IAtomType at = (IAtomType)NewChemObject();
+            var at = (IAtomType)NewChemObject();
             at.MaxBondOrder = BondOrder.Single;
-            IAtomType clone = (IAtomType)at.Clone();
+            var clone = (IAtomType)at.Clone();
 
             at.MaxBondOrder = BondOrder.Double;
             Assert.AreEqual(BondOrder.Single, clone.MaxBondOrder);
@@ -305,9 +304,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestClone_IBondOrderSum()
         {
-            IAtomType at = (IAtomType)NewChemObject();
+            var at = (IAtomType)NewChemObject();
             at.BondOrderSum = 1.0;
-            IAtomType clone = (IAtomType)at.Clone();
+            var clone = (IAtomType)at.Clone();
 
             at.BondOrderSum = 2.0;
             Assert.AreEqual(1.0, clone.BondOrderSum.Value, 0.001);
@@ -319,9 +318,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestClone_CovalentRadius()
         {
-            IAtomType at = (IAtomType)NewChemObject();
+            var at = (IAtomType)NewChemObject();
             at.CovalentRadius = 1.0;
-            IAtomType clone = (IAtomType)at.Clone();
+            var clone = (IAtomType)at.Clone();
 
             at.CovalentRadius = 2.0;
             Assert.AreEqual(1.0, clone.CovalentRadius.Value, 0.001);
@@ -333,9 +332,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestClone_FormalCharge()
         {
-            IAtomType at = (IAtomType)NewChemObject();
+            var at = (IAtomType)NewChemObject();
             at.FormalCharge = 1;
-            IAtomType clone = (IAtomType)at.Clone();
+            var clone = (IAtomType)at.Clone();
 
             at.FormalCharge = 2;
             Assert.AreEqual(1, clone.FormalCharge.Value);
@@ -347,9 +346,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestClone_FormalNeighbourCount()
         {
-            IAtomType at = (IAtomType)NewChemObject();
+            var at = (IAtomType)NewChemObject();
             at.FormalNeighbourCount = 1;
-            IAtomType clone = (IAtomType)at.Clone();
+            var clone = (IAtomType)at.Clone();
 
             at.FormalNeighbourCount = 2;
             Assert.AreEqual(1, (int)clone.FormalNeighbourCount);
@@ -361,9 +360,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestClone_Hybridization()
         {
-            IAtomType at = (IAtomType)NewChemObject();
+            var at = (IAtomType)NewChemObject();
             at.Hybridization = Hybridization.Planar3;
-            IAtomType clone = (IAtomType)at.Clone();
+            var clone = (IAtomType)at.Clone();
 
             at.Hybridization = Hybridization.SP1;
             Assert.AreEqual(Hybridization.Planar3, clone.Hybridization);
@@ -375,8 +374,8 @@ namespace NCDK
         [TestMethod()]
         public override void TestToString()
         {
-            IAtomType at = (IAtomType)NewChemObject();
-            string description = at.ToString();
+            var at = (IAtomType)NewChemObject();
+            var description = at.ToString();
             for (int i = 0; i < description.Length; i++)
             {
                 Assert.IsTrue(description[i] != '\n');
@@ -387,16 +386,16 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestToString_AtomTypeName()
         {
-            IAtomType at = (IAtomType)NewChemObject();
+            var at = (IAtomType)NewChemObject();
             at.AtomTypeName = "N.sp2.3";
-            string description = at.ToString();
+            var description = at.ToString();
             Assert.IsTrue(description.Contains("N.sp2.3"));
         }
 
         [TestMethod()]
         public virtual void TestDefaultFormalCharge()
         {
-            IAtomType atomType = (IAtomType)NewChemObject();
+            var atomType = (IAtomType)NewChemObject();
             Assert.AreEqual(0, atomType.FormalCharge.Value);
         }
     }

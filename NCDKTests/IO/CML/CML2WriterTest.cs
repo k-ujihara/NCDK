@@ -20,13 +20,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
-using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NCDK.Aromaticities;
-using NCDK.Config;
-using NCDK.Silent;
 using NCDK.Formula;
+using NCDK.Numerics;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
 using System.Diagnostics;
@@ -41,14 +39,16 @@ namespace NCDK.IO.CML
     [TestClass()]
     public class CML2WriterTest : CDKTestCase
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+
         [TestMethod()]
         public void TestCMLWriterBenzene()
         {
-            StringWriter writer = new StringWriter();
+            var writer = new StringWriter();
             IAtomContainer molecule = TestMoleculeFactory.MakeBenzene();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             Aromaticity.CDKLegacy.Apply(molecule);
-            CMLWriter cmlWriter = new CMLWriter(writer);
+            var cmlWriter = new CMLWriter(writer);
 
             cmlWriter.Write(molecule);
             cmlWriter.Close();
@@ -66,11 +66,11 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestHydrogenCount()
         {
-            StringWriter writer = new StringWriter();
-            IAtomContainer molecule = new AtomContainer(); // methane
-            molecule.Atoms.Add(molecule.Builder.NewAtom(NaturalElements.Carbon.Element));
+            var writer = new StringWriter();
+            IAtomContainer molecule = builder.NewAtomContainer(); // methane
+            molecule.Atoms.Add(molecule.Builder.NewAtom(ChemicalElement.C));
             molecule.Atoms[0].ImplicitHydrogenCount = 4;
-            CMLWriter cmlWriter = new CMLWriter(writer);
+            var cmlWriter = new CMLWriter(writer);
 
             cmlWriter.Write(molecule);
             cmlWriter.Close();
@@ -83,11 +83,11 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestNullFormalCharge()
         {
-            StringWriter writer = new StringWriter();
-            IAtomContainer molecule = new AtomContainer(); // methane
-            molecule.Atoms.Add(molecule.Builder.NewAtom(NaturalElements.Carbon.Element));
+            var writer = new StringWriter();
+            IAtomContainer molecule = builder.NewAtomContainer(); // methane
+            molecule.Atoms.Add(molecule.Builder.NewAtom(ChemicalElement.C));
             molecule.Atoms[0].FormalCharge = null;
-            CMLWriter cmlWriter = new CMLWriter(writer);
+            var cmlWriter = new CMLWriter(writer);
 
             cmlWriter.Write(molecule);
             cmlWriter.Close();
@@ -104,12 +104,12 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestMassNumber()
         {
-            StringWriter writer = new StringWriter();
-            var mol = new AtomContainer();
-            Atom atom = new Atom("C");
+            var writer = new StringWriter();
+            var mol = builder.NewAtomContainer();
+            var atom = builder.NewAtom("C");
             atom.MassNumber = 12;
             mol.Atoms.Add(atom);
-            CMLWriter cmlWriter = new CMLWriter(writer);
+            var cmlWriter = new CMLWriter(writer);
 
             cmlWriter.Write(mol);
             cmlWriter.Close();
@@ -121,22 +121,21 @@ namespace NCDK.IO.CML
 
         /// <summary>
         /// Test example with one explicit carbon, and one implicit hydrogen, and three implicit hydrogens.
-        ///
-        // @cdk.bug 1655045
         /// </summary>
+        // @cdk.bug 1655045
         [TestMethod()]
         public void TestHydrogenCount_2()
         {
-            StringWriter writer = new StringWriter();
-            IAtomContainer molecule = new AtomContainer(); // methane
-            molecule.Atoms.Add(molecule.Builder.NewAtom(NaturalElements.Carbon.Element));
-            molecule.Atoms.Add(molecule.Builder.NewAtom(NaturalElements.Hydrogen.Element));
+            var writer = new StringWriter();
+            var molecule = builder.NewAtomContainer(); // methane
+            molecule.Atoms.Add(molecule.Builder.NewAtom(ChemicalElement.C));
+            molecule.Atoms.Add(molecule.Builder.NewAtom(ChemicalElement.H));
             molecule.Atoms[0].ImplicitHydrogenCount = 3;
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            CMLWriter cmlWriter = new CMLWriter(writer);
-
-            cmlWriter.Write(molecule);
-            cmlWriter.Close();
+            using (var cmlWriter = new CMLWriter(writer))
+            {
+                cmlWriter.Write(molecule);
+            }
             Debug.WriteLine("****************************** TestHydrogenCount_2()");
             Debug.WriteLine(writer.ToString());
             Debug.WriteLine("******************************");
@@ -146,19 +145,19 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestCMLCrystal()
         {
-            StringWriter writer = new StringWriter();
-            ICrystal crystal = new Crystal();
-            IAtom silicon = new Atom("Si");
+            var writer = new StringWriter();
+            var crystal = builder.NewCrystal();
+            var silicon = builder.NewAtom("Si");
             silicon.FractionalPoint3D = new Vector3(0, 0, 0);
             crystal.Atoms.Add(silicon);
             crystal.A = (new Vector3(1.5, 0.0, 0.0));
             crystal.B = (new Vector3(0.0, 2.0, 0.0));
             crystal.C = (new Vector3(0.0, 0.0, 1.5));
-            CMLWriter cmlWriter = new CMLWriter(writer);
-
-            cmlWriter.Write(crystal);
-            cmlWriter.Close();
-            string cmlContent = writer.ToString();
+            using (var cmlWriter = new CMLWriter(writer))
+            {
+                cmlWriter.Write(crystal);
+            }
+            var cmlContent = writer.ToString();
             Debug.WriteLine("****************************** TestCMLCrystal()");
             Debug.WriteLine(cmlContent);
             Debug.WriteLine("******************************");
@@ -169,8 +168,8 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestReactionCustomization()
         {
-            StringWriter writer = new StringWriter();
-            IReaction reaction = new Reaction();
+            var writer = new StringWriter();
+            var reaction = builder.NewReaction();
             reaction.Id = "reaction1";
             IAtomContainer reactant = reaction.Builder.NewAtomContainer();
             reactant.Id = "react";
@@ -183,7 +182,7 @@ namespace NCDK.IO.CML
             reaction.Products.Add(product);
             reaction.Agents.Add(agent);
 
-            CMLWriter cmlWriter = new CMLWriter(writer);
+            var cmlWriter = new CMLWriter(writer);
             cmlWriter.Write(reaction);
             cmlWriter.Close();
             string cmlContent = writer.ToString();
@@ -199,37 +198,38 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestReactionScheme1()
         {
-            StringWriter writer = new StringWriter();
-            IReactionScheme scheme1 = ChemObjectBuilder.Instance.NewReactionScheme();
+            var writer = new StringWriter();
+            var scheme1 = builder.NewReactionScheme();
             scheme1.Id = "rs0";
-            IReactionScheme scheme2 = scheme1.Builder.NewReactionScheme();
+            var scheme2 = scheme1.Builder.NewReactionScheme();
             scheme2.Id = "rs1";
             scheme1.Add(scheme2);
 
-            IReaction reaction = scheme1.Builder.NewReaction();
+            var reaction = scheme1.Builder.NewReaction();
             reaction.Id = "r1";
-            IAtomContainer moleculeA = reaction.Builder.NewAtomContainer();
+            var moleculeA = reaction.Builder.NewAtomContainer();
             moleculeA.Id = "A";
-            IAtomContainer moleculeB = reaction.Builder.NewAtomContainer();
+            var moleculeB = reaction.Builder.NewAtomContainer();
             moleculeB.Id = "B";
             reaction.Reactants.Add(moleculeA);
             reaction.Products.Add(moleculeB);
 
             scheme2.Add(reaction);
 
-            IReaction reaction2 = reaction.Builder.NewReaction();
+            var reaction2 = reaction.Builder.NewReaction();
             reaction2.Id = "r2";
-            IAtomContainer moleculeC = reaction.Builder.NewAtomContainer();
+            var moleculeC = reaction.Builder.NewAtomContainer();
             moleculeC.Id = "C";
             reaction2.Reactants.Add(moleculeB);
             reaction2.Products.Add(moleculeC);
 
             scheme1.Add(reaction2);
 
-            CMLWriter cmlWriter = new CMLWriter(writer);
-            cmlWriter.Write(scheme1);
-            cmlWriter.Close();
-            string cmlContent = writer.ToString();
+            using (var cmlWriter = new CMLWriter(writer))
+            {
+                cmlWriter.Write(scheme1);
+            }
+            var cmlContent = writer.ToString();
             Debug.WriteLine("****************************** TestReactionCustomization()");
             Debug.WriteLine(cmlContent);
             Debug.WriteLine("******************************");
@@ -245,34 +245,35 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestReactionScheme2()
         {
-            StringWriter writer = new StringWriter();
-            ReactionScheme scheme1 = new ReactionScheme();
+            var writer = new StringWriter();
+            var scheme1 = builder.NewReactionScheme();
             scheme1.Id = "rs0";
 
-            IReaction reaction = ChemObjectBuilder.Instance.NewReaction();
+            var reaction = builder.NewReaction();
             reaction.Id = "r1";
-            IAtomContainer moleculeA = reaction.Builder.NewAtomContainer();
+            var moleculeA = reaction.Builder.NewAtomContainer();
             moleculeA.Id = "A";
-            IAtomContainer moleculeB = reaction.Builder.NewAtomContainer();
+            var moleculeB = reaction.Builder.NewAtomContainer();
             moleculeB.Id = "B";
             reaction.Reactants.Add(moleculeA);
             reaction.Products.Add(moleculeB);
 
             scheme1.Add(reaction);
 
-            IReaction reaction2 = reaction.Builder.NewReaction();
+            var reaction2 = reaction.Builder.NewReaction();
             reaction2.Id = "r2";
-            IAtomContainer moleculeC = reaction.Builder.NewAtomContainer();
+            var moleculeC = reaction.Builder.NewAtomContainer();
             moleculeC.Id = "C";
             reaction2.Reactants.Add(moleculeB);
             reaction2.Products.Add(moleculeC);
 
             scheme1.Add(reaction2);
 
-            CMLWriter cmlWriter = new CMLWriter(writer);
-            cmlWriter.Write(scheme1);
-            cmlWriter.Close();
-            string cmlContent = writer.ToString();
+            using (var cmlWriter = new CMLWriter(writer))
+            {
+                cmlWriter.Write(scheme1);
+            }
+            var cmlContent = writer.ToString();
             Debug.WriteLine("****************************** TestReactionCustomization()");
             Debug.WriteLine(cmlContent);
             Debug.WriteLine("******************************");
@@ -287,13 +288,13 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestReactionSchemeWithFormula()
         {
-            StringWriter writer = new StringWriter();
-            ReactionScheme scheme1 = new ReactionScheme();
+            var writer = new StringWriter();
+            var scheme1 = builder.NewReactionScheme();
             scheme1.Id = "rs0";
 
-            IReaction reaction = ChemObjectBuilder.Instance.NewReaction();
+            var reaction = builder.NewReaction();
             reaction.Id = "r1";
-            IAtomContainer moleculeA = reaction.Builder.NewAtomContainer();
+            var moleculeA = reaction.Builder.NewAtomContainer();
             moleculeA.Id = "A";
             var formula = new MolecularFormula();
             formula.Add(reaction.Builder.NewIsotope("C"), 10);
@@ -301,27 +302,27 @@ namespace NCDK.IO.CML
             formula.Add(reaction.Builder.NewIsotope("N"), 2);
             formula.Add(reaction.Builder.NewIsotope("O"), 1);
             moleculeA.SetProperty(CDKPropertyName.Formula, formula);
-            IAtomContainer moleculeB = reaction.Builder.NewAtomContainer();
+            var moleculeB = reaction.Builder.NewAtomContainer();
             moleculeB.Id = "B";
             reaction.Reactants.Add(moleculeA);
             reaction.Products.Add(moleculeB);
 
             scheme1.Add(reaction);
 
-            IReaction reaction2 = reaction.Builder.NewReaction();
+            var reaction2 = reaction.Builder.NewReaction();
             reaction2.Id = "r2";
-            IAtomContainer moleculeC = reaction.Builder.NewAtomContainer();
+            var moleculeC = reaction.Builder.NewAtomContainer();
             moleculeC.Id = "C";
             reaction2.Reactants.Add(moleculeB);
             reaction2.Products.Add(moleculeC);
 
             scheme1.Add(reaction2);
 
-            CMLWriter cmlWriter = new CMLWriter(writer);
-            cmlWriter.Write(scheme1);
-            cmlWriter.Close();
-            string cmlContent = writer.ToString();
-
+            using (var cmlWriter = new CMLWriter(writer))
+            {
+                cmlWriter.Write(scheme1);
+            }
+            var cmlContent = writer.ToString();
             Debug.WriteLine("****************************** TestReactionCustomization()");
             Debug.WriteLine(cmlContent);
             Debug.WriteLine("******************************");
@@ -337,35 +338,36 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestReactionSchemeWithFormula2()
         {
-            StringWriter writer = new StringWriter();
-            ReactionScheme scheme1 = new ReactionScheme();
+            var writer = new StringWriter();
+            var scheme1 = builder.NewReactionScheme();
             scheme1.Id = "rs0";
 
-            IReaction reaction = ChemObjectBuilder.Instance.NewReaction();
+            var reaction = builder.NewReaction();
             reaction.Id = "r1";
-            IAtomContainer moleculeA = reaction.Builder.NewAtomContainer();
+            var moleculeA = reaction.Builder.NewAtomContainer();
             moleculeA.Id = "A";
             moleculeA.SetProperty(CDKPropertyName.Formula, "C 10 H 15 N 2 O 1");
-            IAtomContainer moleculeB = reaction.Builder.NewAtomContainer();
+            var moleculeB = reaction.Builder.NewAtomContainer();
             moleculeB.Id = "B";
             reaction.Reactants.Add(moleculeA);
             reaction.Products.Add(moleculeB);
 
             scheme1.Add(reaction);
 
-            IReaction reaction2 = reaction.Builder.NewReaction();
+            var reaction2 = reaction.Builder.NewReaction();
             reaction2.Id = "r2";
-            IAtomContainer moleculeC = reaction.Builder.NewAtomContainer();
+            var moleculeC = reaction.Builder.NewAtomContainer();
             moleculeC.Id = "C";
             reaction2.Reactants.Add(moleculeB);
             reaction2.Products.Add(moleculeC);
 
             scheme1.Add(reaction2);
 
-            CMLWriter cmlWriter = new CMLWriter(writer);
-            cmlWriter.Write(scheme1);
-            cmlWriter.Close();
-            string cmlContent = writer.ToString();
+            using (var cmlWriter = new CMLWriter(writer))
+            {
+                cmlWriter.Write(scheme1);
+            }
+            var cmlContent = writer.ToString();
             Debug.WriteLine("****************************** TestReactionCustomization()");
             Debug.WriteLine(cmlContent);
             Debug.WriteLine("******************************");
@@ -381,11 +383,11 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestChemModeID()
         {
-            StringWriter writer = new StringWriter();
-            IChemModel chemModel = new ChemModel();
+            var writer = new StringWriter();
+            var chemModel = builder.NewChemModel();
             chemModel.Id = "cm0";
 
-            CMLWriter cmlWriter = new CMLWriter(writer);
+            var cmlWriter = new CMLWriter(writer);
             cmlWriter.Write(chemModel);
             cmlWriter.Close();
             string cmlContent = writer.ToString();
@@ -398,11 +400,11 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestMoleculeSetID()
         {
-            StringWriter writer = new StringWriter();
-            var moleculeSet = new ChemObjectSet<IAtomContainer>();
+            var writer = new StringWriter();
+            var moleculeSet = builder.NewChemObjectSet<IAtomContainer>();
             moleculeSet.Id = "ms0";
 
-            CMLWriter cmlWriter = new CMLWriter(writer);
+            var cmlWriter = new CMLWriter(writer);
             cmlWriter.Write(moleculeSet);
             cmlWriter.Close();
             string cmlContent = writer.ToString();
@@ -415,11 +417,11 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestReactionProperty()
         {
-            StringWriter writer = new StringWriter();
-            IReaction reaction = ChemObjectBuilder.Instance.NewReaction();
+            var writer = new StringWriter();
+            var reaction = builder.NewReaction();
             reaction.Id = "r1";
             reaction.SetProperty("blabla", "blabla2");
-            CMLWriter cmlWriter = new CMLWriter(writer);
+            var cmlWriter = new CMLWriter(writer);
             cmlWriter.Write(reaction);
             cmlWriter.Close();
             string cmlContent = writer.ToString();
@@ -428,119 +430,6 @@ namespace NCDK.IO.CML
             Debug.WriteLine("******************************");
             Assert.IsTrue(cmlContent.IndexOf("<scalar dictRef=\"cdk:reactionProperty") != -1);
         }
-
-        /// <summary>
-        /// TODO: introduce concept for ReactionStepList and ReactionStep.
-        /// </summary>
-        //    [TestMethod()] public void TestReactionStepList()  {
-        //        StringWriter writer = new StringWriter();
-        //        ReactionChain chain = new ReactionChain();
-        //        chain.Id = "rsl1";
-        //
-        //
-        //        IReaction reaction = ChemObjectBuilder.Instance.NewReaction();
-        //        reaction.Id = "r1";
-        //        IAtomContainer moleculeA = reaction.GetNewBuilder().NewAtomContainer();
-        //        moleculeA.Id = "A";
-        //        IAtomContainer moleculeB = reaction.GetNewBuilder().NewAtomContainer();
-        //        moleculeB.Id = "B";
-        //        reaction.Reactants.Add(moleculeA);
-        //        reaction.Products.Add(moleculeB);
-        //
-        //        chain.AddReaction(reaction);
-        //
-        //        IReaction reaction2 = reaction.GetNewBuilder().NewReaction();
-        //        reaction2.Id = "r2";
-        //        IAtomContainer moleculeC = reaction.GetNewBuilder().NewAtomContainer();
-        //        moleculeC.Id = "C";
-        //        reaction2.Reactants.Add(moleculeB);
-        //        reaction2.Products.Add(moleculeC);
-        //
-        //        chain.AddReaction(reaction2);
-        //
-        //        CMLWriter cmlWriter = new CMLWriter(writer);
-        //        cmlWriter.Write(chain);
-        //        string cmlContent = writer.ToString();
-        //        Debug.WriteLine("****************************** TestReactionCustomization()");
-        //        Debug.WriteLine(cmlContent);
-        //        Debug.WriteLine("******************************");
-        //        Assert.IsTrue(cmlContent.IndexOf("<reactionStepList id=\"rsl1") != -1);
-        //        Assert.IsTrue(cmlContent.IndexOf("<reaction id=\"r1") != -1);
-        //        Assert.IsTrue(cmlContent.IndexOf("<reaction id=\"r2") != -1);
-        //        Assert.IsTrue(cmlContent.IndexOf("<molecule id=\"A") != -1);
-        //        Assert.IsTrue(cmlContent.IndexOf("<molecule id=\"B") != -1);
-        //        Assert.IsTrue(cmlContent.IndexOf("<molecule id=\"C") != -1);
-        //    }
-        //
-        //    [TestMethod()] public void TestReactionSchemeStepList1()  {
-        //        StringWriter writer = new StringWriter();
-        //        ReactionScheme scheme1 = new ReactionScheme();
-        //        scheme1.Id = "rs0";
-        //        ReactionScheme scheme2 = new ReactionScheme();
-        //        scheme2.Id = "rs1";
-        //        scheme1.Add(scheme2);
-        //
-        //
-        //        IReaction reaction1 = ChemObjectBuilder.Instance.NewReaction();
-        //        reaction1.Id = "r1.1";
-        //        IAtomContainer moleculeA = reaction1.GetNewBuilder().NewAtomContainer();
-        //        moleculeA.Id = "A";
-        //        IAtomContainer moleculeB = reaction1.GetNewBuilder().NewAtomContainer();
-        //        moleculeB.Id = "B";
-        //        reaction1.Reactants.Add(moleculeA);
-        //        reaction1.Products.Add(moleculeB);
-        //
-        //        scheme2.AddReaction(reaction1);
-        //
-        //        IReaction reaction2 = reaction1.GetNewBuilder().NewReaction();
-        //        reaction2.Id = "r1.2";
-        //        IAtomContainer moleculeC = reaction1.GetNewBuilder().NewAtomContainer();
-        //        moleculeC.Id = "C";
-        //        reaction2.Reactants.Add(moleculeB);
-        //        reaction2.Products.Add(moleculeC);
-        //
-        //        scheme2.AddReaction(reaction2);
-        //
-        //        ReactionChain chain = new ReactionChain();
-        //        chain.Id = "rsl1";
-        //
-        //        IReaction reaction3 = reaction1.GetNewBuilder().NewReaction();
-        //        reaction3.Id = "r2.1";
-        //        IAtomContainer moleculeD = reaction1.GetNewBuilder().NewAtomContainer();
-        //        moleculeD.Id = "D";
-        //        reaction3.Reactants.Add(moleculeA);
-        //        reaction3.Products.Add(moleculeD);
-        //
-        //        chain.AddReaction(reaction3,0);
-        //
-        //        IReaction reaction4 = reaction1.GetNewBuilder().NewReaction();
-        //        reaction4.Id = "r2.2";
-        //        IAtomContainer moleculeE = reaction1.GetNewBuilder().NewAtomContainer();
-        //        moleculeE.Id = "E";
-        //        reaction4.Reactants.Add(moleculeD);
-        //        reaction4.Products.Add(moleculeE);
-        //
-        //        chain.AddReaction(reaction4,1);
-        //
-        ////        scheme1.Add((IReactionSet)chain);
-        //
-        //        CMLWriter cmlWriter = new CMLWriter(writer);
-        //        cmlWriter.Write(scheme1);
-        //        string cmlContent = writer.ToString();
-        //        Debug.WriteLine("****************************** TestReactionCustomization()");
-        //        Debug.WriteLine(cmlContent);
-        //        Debug.WriteLine("******************************");
-        //        Assert.IsTrue(cmlContent.IndexOf("<reactionScheme id=\"rs0") != -1);
-        //        Assert.IsTrue(cmlContent.IndexOf("<reactionScheme id=\"rs1") != -1);
-        //        Assert.IsTrue(cmlContent.IndexOf("<reaction id=\"r1") != -1);
-        //        Assert.IsTrue(cmlContent.IndexOf("<reaction id=\"r2") != -1);
-        //        Assert.IsTrue(cmlContent.IndexOf("<molecule id=\"A") != -1);
-        //        Assert.IsTrue(cmlContent.IndexOf("<molecule id=\"B") != -1);
-        //        Assert.IsTrue(cmlContent.IndexOf("<molecule id=\"C") != -1);
-        //        Assert.IsTrue(cmlContent.IndexOf("<reactionStepList id=\"rsl1") != -1);
-        //        Assert.IsTrue(cmlContent.IndexOf("<molecule id=\"D") != -1);
-        //        Assert.IsTrue(cmlContent.IndexOf("<molecule id=\"E") != -1);
-        //    }
 
         [TestMethod()]
         public void WriteIsClosed()

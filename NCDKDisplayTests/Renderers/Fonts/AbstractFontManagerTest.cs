@@ -25,7 +25,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Renderers.Fonts
 {
     // @cdk.module test-renderbasic
-    [TestClass()]
     public abstract class AbstractFontManagerTest
     {
         public static AbstractFontManager manager;

@@ -35,8 +35,8 @@ namespace NCDK.Default
     /// </summary>
     // @see  PseudoAtom
     // @cdk.module pdb
-    // @cdk.githash
-    public class EnzymeResidueLocator : PseudoAtom
+    public class EnzymeResidueLocator 
+        : PseudoAtom
     {
         /// <summary>
         /// Constructs an EnzymeResidueLocator from a string containing the locator.
@@ -68,8 +68,8 @@ namespace NCDK.Silent
     /// </summary>
     // @see  PseudoAtom
     // @cdk.module pdb
-    // @cdk.githash
-    public class EnzymeResidueLocator : PseudoAtom
+    public class EnzymeResidueLocator 
+        : PseudoAtom
     {
         /// <summary>
         /// Constructs an EnzymeResidueLocator from a string containing the locator.

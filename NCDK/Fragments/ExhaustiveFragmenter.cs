@@ -48,7 +48,7 @@ namespace NCDK.Fragments
     {
         private const int DEFAULT_MIN_FRAG_SIZE = 6;
 
-        IDictionary<string, IAtomContainer> fragMap;
+        Dictionary<string, IAtomContainer> fragMap;
         SmilesGenerator smilesGenerator;
 
         /// <summary>

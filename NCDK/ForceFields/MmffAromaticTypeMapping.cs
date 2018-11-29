@@ -27,8 +27,6 @@ using NCDK.Common.Primitives;
 using NCDK.Graphs;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.ForceFields
 {
@@ -121,15 +119,15 @@ namespace NCDK.ForceFields
             // loop control variables, the while loop continual checks all cycles
             // until no changes are found
             bool found;
-            bool[] checked_ = new bool[cycles.Length];
+            var checked_ = new bool[cycles.Length];
 
             // stores the aromatic atoms as a bit set and the aromatic bonds as
             // a hash set. the aromatic bonds are the result of this method but the
             // aromatic atoms are needed for checking each ring
-            bool[] aromaticAtoms = new bool[contribution.Length];
+            var aromaticAtoms = new bool[contribution.Length];
 
-            List<int[]> ringsOfSize6 = new List<int[]>();
-            List<int[]> ringsOfSize5 = new List<int[]>();
+            var ringsOfSize6 = new List<int[]>();
+            var ringsOfSize5 = new List<int[]>();
 
             do
             {
@@ -138,10 +136,11 @@ namespace NCDK.ForceFields
                 {
                     // note paths are closed walks and repeat first/last vertex so
                     // the true length is one less
-                    int[] cycle = cycles[i];
-                    int len = cycle.Length - 1;
+                    var cycle = cycles[i];
+                    var len = cycle.Length - 1;
 
-                    if (checked_[i]) continue;
+                    if (checked_[i])
+                        continue;
 
                     if (IsAromaticRing(cycle, contribution, dbs, aromaticAtoms))
                     {
@@ -153,13 +152,14 @@ namespace NCDK.ForceFields
                         }
                         if (len == 6)
                             ringsOfSize6.Add(cycle);
-                        else if (len == 5) ringsOfSize5.Add(cycle);
+                        else if (len == 5)
+                            ringsOfSize5.Add(cycle);
 
                     }
                 }
             } while (found);
 
-            List<int[]> rings = new List<int[]>();
+            var rings = new List<int[]>();
             rings.AddRange(ringsOfSize6);
             rings.AddRange(ringsOfSize5);
 
@@ -187,22 +187,25 @@ namespace NCDK.ForceFields
 
             while (i < len)
             {
-                int prev = cycle[iPrev];
-                int curr = cycle[i];
-                int next = cycle[iNext];
+                var prev = cycle[iPrev];
+                var curr = cycle[i];
+                var next = cycle[iNext];
 
-                int pElectrons = contribution[curr];
+                var pElectrons = contribution[curr];
 
-                if (pElectrons < 0) return false;
+                if (pElectrons < 0)
+                    return false;
 
                 // single p electrons are only donated from double bonds, these are
                 // only counted if the bonds are either in this ring or the bond
                 // is aromatic
                 if (pElectrons == 1)
                 {
-                    int other = dbs[curr];
-                    if (other < 0) return false;
-                    if (other != prev && other != next && !aromatic[other]) return false;
+                    var other = dbs[curr];
+                    if (other < 0)
+                        return false;
+                    if (other != prev && other != next && !aromatic[other])
+                        return false;
                 }
 
                 iPrev = i;
@@ -256,11 +259,11 @@ namespace NCDK.ForceFields
         /// <param name="symbs">vector of symbolic types for the whole structure</param>
         private void UpdateAromaticTypesInFiveMemberRing(int[] cycle, string[] symbs)
         {
-            string hetro = symbs[cycle[0]];
+            var hetro = symbs[cycle[0]];
 
             // simple conditions tell is the 'IM' and 'AN' flags
-            bool imidazolium = NCN_PLUS.Equals(hetro, StringComparison.Ordinal) || NGD_PLUS.Equals(hetro, StringComparison.Ordinal);
-            bool anion = "NM".Equals(hetro, StringComparison.Ordinal);
+            var imidazolium = NCN_PLUS.Equals(hetro, StringComparison.Ordinal) || NGD_PLUS.Equals(hetro, StringComparison.Ordinal);
+            var anion = "NM".Equals(hetro, StringComparison.Ordinal);
 
             symbs[cycle[0]] = hetroTypes[hetro];
 
@@ -337,7 +340,8 @@ namespace NCDK.ForceFields
             int index = -1;
             for (int i = 0; i < cycle.Length - 1; i++)
             {
-                if (contribution[cycle[i]] == 2) index = index == -1 ? i : -2;
+                if (contribution[cycle[i]] == 2)
+                    index = index == -1 ? i : -2;
             }
             return index;
         }
@@ -353,11 +357,13 @@ namespace NCDK.ForceFields
         /// <returns>whether the cycle was normalised</returns>
         public static bool NormaliseCycle(int[] cycle, int[] contribution)
         {
-            int offset = IndexOfHetro(cycle, contribution);
-            if (offset < 0) return false;
-            if (offset == 0) return true;
-            int[] cpy = Arrays.CopyOf(cycle, cycle.Length);
-            int len = cycle.Length - 1;
+            var offset = IndexOfHetro(cycle, contribution);
+            if (offset < 0)
+                return false;
+            if (offset == 0)
+                return true;
+            var cpy = Arrays.CopyOf(cycle, cycle.Length);
+            var len = cycle.Length - 1;
             for (int j = 0; j < len; j++)
             {
                 cycle[j] = cpy[(offset + j) % len];
@@ -428,13 +434,13 @@ namespace NCDK.ForceFields
             for (int v = 0; v < graph.Length; v++)
             {
                 // hydrogens, valence, and connectivity
-                int hyd = molecule.Atoms[v].ImplicitHydrogenCount.Value;
-                int val = hyd;
-                int con = hyd + graph[v].Length;
+                var hyd = molecule.Atoms[v].ImplicitHydrogenCount.Value;
+                var val = hyd;
+                var con = hyd + graph[v].Length;
 
                 foreach (var w in graph[v])
                 {
-                    IBond bond = bonds[v, w];
+                    var bond = bonds[v, w];
                     val += bond.Order.Numeric();
                     if (bond.Order == BondOrder.Double)
                     {
@@ -450,16 +456,15 @@ namespace NCDK.ForceFields
         /// Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute a
         /// lone pair.
         /// </summary>
-        private readonly IDictionary<string, string> hetroTypes =
-                new ReadOnlyDictionary<string, string>(new Dictionary<string, string>()
-                {
-                    { "S", STHI },
-                    { "-O-", OFUR }, { "OC=C", OFUR }, { "OC=N", OFUR },
-                    { NCN_PLUS, NIM_PLUS }, { NGD_PLUS, NIM_PLUS },
-                    { "NM", N5M }, { "NC=C", NPYL }, { "NC=N", NPYL }, { "NN=N", NPYL },
-                    { "NC=O", NPYL }, { "NC=S", NPYL }, { "NSO2", NPYL },
-                    { "NR", NPYL },
-                });
+        private readonly Dictionary<string, string> hetroTypes = new Dictionary<string, string>()
+            {
+                { "S", STHI },
+                { "-O-", OFUR }, { "OC=C", OFUR }, { "OC=N", OFUR },
+                { NCN_PLUS, NIM_PLUS }, { NGD_PLUS, NIM_PLUS },
+                { "NM", N5M }, { "NC=C", NPYL }, { "NC=N", NPYL }, { "NN=N", NPYL },
+                { "NC=O", NPYL }, { "NC=S", NPYL }, { "NSO2", NPYL },
+                { "NR", NPYL },
+            };
 
         /// <summary>
         /// Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute

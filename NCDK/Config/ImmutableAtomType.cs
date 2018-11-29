@@ -42,6 +42,7 @@ namespace NCDK.Config
 
         internal readonly IReadOnlyDictionary<string, object> properties = NCDK.Common.Collections.Dictionaries.Empty<string, object>();
 
+        internal ChemicalElement element;
         internal int atomicNumber;
         internal string symbol;
 
@@ -202,8 +203,11 @@ namespace NCDK.Config
             set { ThrowModifyException(); }
         }
 
+        public ChemicalElement Element => element;
+
         internal ImmutableAtomType(IAtomType type)
         {
+            this.element = type.Element;
             this.symbol = type.Symbol;
             this.atomicNumber = type.AtomicNumber;
             this.naturalAbundance = type.NaturalAbundance;

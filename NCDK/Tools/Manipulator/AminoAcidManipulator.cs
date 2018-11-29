@@ -54,7 +54,7 @@ namespace NCDK.Tools.Manipulator
                 {
                     for (int j = 0; j < bond.Atoms.Count; j++)
                     {
-                        if (bond.Atoms[j].AtomicNumber.Equals(NaturalElements.O.AtomicNumber))
+                        if (bond.Atoms[j].AtomicNumber.Equals(AtomicNumbers.O))
                         {
                             // yes, we found a singly bonded oxygen!
                             atomsToRemove.Add(bond.Atoms[j]);

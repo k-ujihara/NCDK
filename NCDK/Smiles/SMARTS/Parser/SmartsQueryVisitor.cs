@@ -61,7 +61,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         /// Maintain order of neighboring atoms - required for atom-based
         /// stereochemistry.
         /// </summary>
-        private IDictionary<IAtom, IList<IAtom>> neighbors = new Dictionary<IAtom, IList<IAtom>>();
+        private Dictionary<IAtom, IList<IAtom>> neighbors = new Dictionary<IAtom, IList<IAtom>>();
 
         /// <summary>
         /// Lookup of atom indices.

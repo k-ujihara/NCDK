@@ -40,7 +40,6 @@ namespace NCDK.Fingerprints
     // @cdk.keyword    fingerprint
     // @cdk.keyword    similarity
     // @cdk.module     fingerprint
-    // @cdk.githash
     public class ExtendedFingerprinter : Fingerprinter, IFingerprinter
     {
         private const int ReservedBits = 25;

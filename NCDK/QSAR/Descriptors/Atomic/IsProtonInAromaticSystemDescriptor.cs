@@ -77,7 +77,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             var neighboor = clonedAtomContainer.GetConnectedAtoms(clonedAtom);
             var neighbour0 = neighboor.First();
             int isProtonInAromaticSystem = 0;
-            if (atom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+            if (atom.AtomicNumber.Equals(AtomicNumbers.H))
             {
                 if (neighbour0.IsAromatic)
                     isProtonInAromaticSystem = 1;

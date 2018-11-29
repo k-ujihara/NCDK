@@ -37,7 +37,6 @@ namespace NCDK.Config.Isotopes
     /// the isotope information in the CML2 isotope data file.
     /// </summary>
     // @cdk.module  extra
-    // @cdk.githash
     // @author     Egon Willighagen
     public class IsotopeReader
     {

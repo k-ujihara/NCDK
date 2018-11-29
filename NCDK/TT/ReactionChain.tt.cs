@@ -34,9 +34,8 @@ namespace NCDK.Default
     /// </summary>
     // @author      miguelrojasch <miguelrojasch@yahoo.es>
     // @cdk.module  extra
-    // @cdk.githash
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    public class ReactionChain : ReactionSet
+    public class ReactionChain 
+        : ReactionSet
     {
         Dictionary<IReaction, int> hashMapChain = new Dictionary<IReaction, int>();
 
@@ -99,9 +98,8 @@ namespace NCDK.Silent
     /// </summary>
     // @author      miguelrojasch <miguelrojasch@yahoo.es>
     // @cdk.module  extra
-    // @cdk.githash
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    public class ReactionChain : ReactionSet
+    public class ReactionChain 
+        : ReactionSet
     {
         Dictionary<IReaction, int> hashMapChain = new Dictionary<IReaction, int>();
 

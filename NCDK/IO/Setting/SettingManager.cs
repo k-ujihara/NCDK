@@ -44,7 +44,6 @@ namespace NCDK.IO.Setting
     /// <seealso cref="IOSetting"/>
     // @author       John May
     // @cdk.module   io
-    // @cdk.githash
     // @cdk.created  20.03.2012
     public class SettingManager<T> where T : ISetting
     {
@@ -132,7 +131,7 @@ namespace NCDK.IO.Setting
         {
             get
             {
-                string key = MakeKey(name);
+                var key = MakeKey(name);
                 if (settings.ContainsKey(key))
                     return settings[key];
                 throw new ArgumentException($"No setting found for name {name}(key={key}) available settings are: {settings.Keys}");

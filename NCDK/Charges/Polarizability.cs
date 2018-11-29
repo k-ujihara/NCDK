@@ -37,7 +37,6 @@ namespace NCDK.Charges
     /// P, Osp3 and Osp2. Aromaticity must be calculated beforehand.
     /// </summary>
     // @author         chhoppe
-    // @cdk.githash
     // @cdk.created    2004-11-03
     // @cdk.keyword polarizability
     // @cdk.module     charges
@@ -220,10 +219,10 @@ namespace NCDK.Charges
             double polarizabilitiyFactor = 0;
             switch (atom.AtomicNumber)
             {
-                case NaturalElements.H.AtomicNumber:
+                case AtomicNumbers.H:
                     polarizabilitiyFactor = 0.387;
                     break;
-                case NaturalElements.C.AtomicNumber:
+                case AtomicNumbers.C:
                     if (atom.IsAromatic)
                     {
                         polarizabilitiyFactor = 1.230;
@@ -249,7 +248,7 @@ namespace NCDK.Charges
                         polarizabilitiyFactor = 1.279;
                     }
                     break;
-                case NaturalElements.N.AtomicNumber:
+                case AtomicNumbers.N:
                     if (atom.Charge != null && atom.Charge < 0)
                     {
                         polarizabilitiyFactor = 1.090;
@@ -267,7 +266,7 @@ namespace NCDK.Charges
                         polarizabilitiyFactor = 0.852;
                     }
                     break;
-                case NaturalElements.O.AtomicNumber:
+                case AtomicNumbers.O:
                     if (atom.Charge != null && atom.Charge == -1)
                     {
                         polarizabilitiyFactor = 1.791;
@@ -285,14 +284,14 @@ namespace NCDK.Charges
                         polarizabilitiyFactor = 0.460;
                     }
                     break;
-                case NaturalElements.P.AtomicNumber:
+                case AtomicNumbers.P:
                     if (atomContainer.GetConnectedBonds(atom).Count() == 4
                             && atomContainer.GetMaximumBondOrder(atom) == BondOrder.Double)
                     {
                         polarizabilitiyFactor = 0;
                     }
                     break;
-                case NaturalElements.S.AtomicNumber:
+                case AtomicNumbers.S:
                     if (atom.IsAromatic)
                     {
                         polarizabilitiyFactor = 3.38;
@@ -317,16 +316,16 @@ namespace NCDK.Charges
                         polarizabilitiyFactor = 3.42;
                     }
                     break;
-                case NaturalElements.F.AtomicNumber:
+                case AtomicNumbers.F:
                     polarizabilitiyFactor = 0.296;
                     break;
-                case NaturalElements.Cl.AtomicNumber:
+                case AtomicNumbers.Cl:
                     polarizabilitiyFactor = 2.343;
                     break;
-                case NaturalElements.Br.AtomicNumber:
+                case AtomicNumbers.Br:
                     polarizabilitiyFactor = 3.5;
                     break;
-                case NaturalElements.I.AtomicNumber:
+                case AtomicNumbers.I:
                     polarizabilitiyFactor = 5.79;
                     break;
             }
@@ -347,7 +346,7 @@ namespace NCDK.Charges
             foreach (var bond in bonds)
             {
                 connectedAtom = bond.GetOther(atom);
-                if (connectedAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                if (connectedAtom.AtomicNumber.Equals(AtomicNumbers.H))
                 {
                     hCounter += 1;
                 }

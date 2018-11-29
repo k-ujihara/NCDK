@@ -768,7 +768,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestGroupT()
         {
-            var expr = new Expr(ExprType.PeriodicGroup, Tools.PeriodicTable.GetGroup(NaturalElements.Chlorine.AtomicNumber));
+            var expr = new Expr(ExprType.PeriodicGroup, Tools.PeriodicTable.GetGroup(AtomicNumbers.Chlorine));
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             m_atom.SetupGet(n => n.AtomicNumber).Returns(9);
             Assert.IsTrue(expr.Matches(atom));
@@ -783,7 +783,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestGroupF()
         {
-            var expr = new Expr(ExprType.PeriodicGroup, Tools.PeriodicTable.GetGroup(NaturalElements.Chlorine.AtomicNumber));
+            var expr = new Expr(ExprType.PeriodicGroup, Tools.PeriodicTable.GetGroup(AtomicNumbers.Chlorine));
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             m_atom.SetupGet(n => n.AtomicNumber).Returns(8);
             Assert.IsFalse(expr.Matches(atom));

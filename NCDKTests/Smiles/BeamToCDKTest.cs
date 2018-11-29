@@ -42,7 +42,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void NewUnknownAtom()
         {
-            IAtom a = g2c.NewCDKAtom(AtomBuilder.Aliphatic(Element.Unknown).Build());
+            IAtom a = g2c.NewCDKAtom(AtomBuilder.Aliphatic(Beam.Element.Unknown).Build());
             Assert.IsInstanceOfType(a, typeof(IPseudoAtom));
             Assert.AreEqual("*", ((IPseudoAtom)a).Label);
         }
@@ -50,7 +50,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void NewCarbonAtom()
         {
-            IAtom a = g2c.NewCDKAtom(AtomBuilder.Aliphatic(Element.Carbon).Build());
+            IAtom a = g2c.NewCDKAtom(AtomBuilder.Aliphatic(Beam.Element.Carbon).Build());
             Assert.IsInstanceOfType(a, typeof(IAtom));
             Assert.IsNotInstanceOfType(a, typeof(IPseudoAtom));
             Assert.AreEqual("C", a.Symbol);
@@ -59,7 +59,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void NewNitrogenAtom()
         {
-            IAtom a = g2c.NewCDKAtom(AtomBuilder.Aliphatic(Element.Nitrogen).Build());
+            IAtom a = g2c.NewCDKAtom(AtomBuilder.Aliphatic(Beam.Element.Nitrogen).Build());
             Assert.IsInstanceOfType(a, typeof(IAtom));
             Assert.IsNotInstanceOfType(a, typeof(IPseudoAtom));
             Assert.AreEqual("N", a.Symbol);
@@ -68,7 +68,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void MethaneAtom()
         {
-            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Element.Carbon).NumOfHydrogens(4).Build(), 4);
+            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Beam.Element.Carbon).NumOfHydrogens(4).Build(), 4);
             Assert.AreEqual("C", a.Symbol);
             Assert.AreEqual(4, a.ImplicitHydrogenCount);
         }
@@ -76,7 +76,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void WaterAtom()
         {
-            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Element.Oxygen).NumOfHydrogens(2).Build(), 2);
+            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Beam.Element.Oxygen).NumOfHydrogens(2).Build(), 2);
             Assert.AreEqual("O", a.Symbol);
             Assert.AreEqual(2, a.ImplicitHydrogenCount);
         }
@@ -84,7 +84,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Oxidanide()
         {
-            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Element.Oxygen).NumOfHydrogens(1).Anion.Build(), 1);
+            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Beam.Element.Oxygen).NumOfHydrogens(1).Anion.Build(), 1);
             Assert.AreEqual("O", a.Symbol);
             Assert.AreEqual(1, a.ImplicitHydrogenCount);
             Assert.AreEqual(-1, a.FormalCharge);
@@ -93,7 +93,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void AzaniumAtom()
         {
-            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Element.Nitrogen).NumOfHydrogens(4).Cation.Build(), 4);
+            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Beam.Element.Nitrogen).NumOfHydrogens(4).Cation.Build(), 4);
             Assert.AreEqual("N", a.Symbol);
             Assert.AreEqual(4, a.ImplicitHydrogenCount);
             Assert.AreEqual(+1, a.FormalCharge);
@@ -102,35 +102,35 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void UnspecifiedMass()
         {
-            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Element.Carbon).NumOfHydrogens(4).Build(), 4);
+            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Beam.Element.Carbon).NumOfHydrogens(4).Build(), 4);
             Assert.IsNull(a.MassNumber);
         }
 
         [TestMethod()]
         public void Carbon_12()
         {
-            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Element.Carbon).NumOfHydrogens(4).Isotope(12).Build(), 4);
+            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Beam.Element.Carbon).NumOfHydrogens(4).Isotope(12).Build(), 4);
             Assert.AreEqual(12, a.MassNumber);
         }
 
         [TestMethod()]
         public void Carbon_13()
         {
-            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Element.Carbon).NumOfHydrogens(4).Isotope(13).Build(), 4);
+            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Beam.Element.Carbon).NumOfHydrogens(4).Isotope(13).Build(), 4);
             Assert.AreEqual(13, a.MassNumber);
         }
 
         [TestMethod()]
         public void Carbon_14()
         {
-            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Element.Carbon).NumOfHydrogens(4).Isotope(14).Build(), 4);
+            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Beam.Element.Carbon).NumOfHydrogens(4).Isotope(14).Build(), 4);
             Assert.AreEqual(14, a.MassNumber);
         }
 
         [TestMethod()]
         public void Aromatic()
         {
-            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aromatic(Element.Carbon).Build(), 0);
+            IAtom a = g2c.ToCDKAtom(AtomBuilder.Aromatic(Beam.Element.Carbon).Build(), 0);
             Assert.IsTrue(a.IsAromatic);
         }
 

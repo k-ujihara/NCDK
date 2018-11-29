@@ -61,7 +61,7 @@ namespace NCDK.Groups
         /// <summary>
         /// The blocks to be refined, or at least considered for refinement
         /// </summary>
-        private Queue<ISet<int>> blocksToRefine;
+        private Queue<SortedSet<int>> blocksToRefine;
 
         /// <summary>
         /// Gets from the graph the number of vertices. Abstract to allow different
@@ -94,16 +94,16 @@ namespace NCDK.Groups
         /// <returns>a finer partition</returns>
         public Partition Refine(Partition coarser)
         {
-            Partition finer = new Partition(coarser);
+            var finer = new Partition(coarser);
 
             // start the queue with the blocks of a in reverse order
-            blocksToRefine = new Queue<ISet<int>>();
+            blocksToRefine = new Queue<SortedSet<int>>();
             for (int i = 0; i < finer.Count; i++)
             {
                 blocksToRefine.Enqueue(finer.CopyBlock(i));
             }
 
-            int numberOfVertices = GetVertexCount();
+            var numberOfVertices = GetVertexCount();
             while (blocksToRefine.Count != 0)
             {
                 var t = blocksToRefine.Dequeue();
@@ -114,7 +114,7 @@ namespace NCDK.Groups
                     {
 
                         // get the neighbor invariants for this block
-                        IDictionary<int, SortedSet<int>> invariants = GetInvariants(finer, t);
+                        var invariants = GetInvariants(finer, t);
 
                         // split the block on the basis of these invariants
                         Split(invariants, finer);
@@ -140,19 +140,19 @@ namespace NCDK.Groups
         /// <param name="partition">the current partition</param>
         /// <param name="targetBlock">the current target block of the partition</param>
         /// <returns>a map of set intersection sizes to elements</returns>
-        private IDictionary<int, SortedSet<int>> GetInvariants(Partition partition, ISet<int> targetBlock)
+        private Dictionary<int, SortedSet<int>> GetInvariants(Partition partition, SortedSet<int> targetBlock)
         {
-            IDictionary<int, SortedSet<int>> setList = new Dictionary<int, SortedSet<int>>();
+            var setList = new Dictionary<int, SortedSet<int>>();
             foreach (var u in partition.GetCell(currentBlockIndex))
             {
-                int h = NeighboursInBlock(targetBlock, u);
+                var h = NeighboursInBlock(targetBlock, u);
                 if (setList.ContainsKey(h))
                 {
                     setList[h].Add(u);
                 }
                 else
                 {
-                    SortedSet<int> set = new SortedSet<int>
+                    var set = new SortedSet<int>
                     {
                         u
                     };
@@ -167,12 +167,12 @@ namespace NCDK.Groups
         /// </summary>
         /// <param name="invariants">a map of neighbor counts to elements</param>
         /// <param name="partition">the partition that is being refined</param>
-        private void Split(IDictionary<int, SortedSet<int>> invariants, Partition partition)
+        private void Split(Dictionary<int, SortedSet<int>> invariants, Partition partition)
         {
-            int nonEmptyInvariants = invariants.Keys.Count;
+            var nonEmptyInvariants = invariants.Keys.Count;
             if (nonEmptyInvariants > 1)
             {
-                List<int> invariantKeys = new List<int>();
+                var invariantKeys = new List<int>();
                 invariantKeys.AddRange(invariants.Keys);
                 partition.RemoveCell(currentBlockIndex);
                 int k = currentBlockIndex;
@@ -187,7 +187,7 @@ namespace NCDK.Groups
                 }
                 foreach (var h in invariantKeys)
                 {
-                    SortedSet<int> setH = invariants[h];
+                    var setH = invariants[h];
                     partition.InsertCell(k, setH);
                     blocksToRefine.Enqueue(setH);
                     k++;

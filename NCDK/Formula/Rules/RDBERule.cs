@@ -56,7 +56,24 @@ namespace NCDK.Formula.Rules
     // @cdk.githash
     public class RDBERule : IRule
     {
-        private static IDictionary<string, int[]> oxidationStateTable = null;
+        private static readonly Dictionary<string, int[]> oxidationStateTable = new Dictionary<string, int[]>()
+            {
+                ["H"] = new int[] { 1 },
+                ["B"] = new int[] { 3 },
+                ["C"] = new int[] { 4 },
+                ["N"] = new int[] { 3 },
+                ["O"] = new int[] { 2 },
+                ["F"] = new int[] { 1 },
+                ["Na"] = new int[] { 1 },
+                ["Mg"] = new int[] { 2 },
+                ["Al"] = new int[] { 3 },
+                ["Si"] = new int[] { 4 },
+                ["P"] = new int[] { 3, 5 },
+                ["S"] = new int[] { 2, 4, 6 },
+                ["Cl"] = new int[] { 1 },
+                ["I"] = new int[] { 1 }
+            };
+
         private double min = -0.5;
         private double max = 30;
 
@@ -65,7 +82,6 @@ namespace NCDK.Formula.Rules
         /// </summary>
         public RDBERule()
         {
-            CreateTable();
         }
         
         /// <summary>
@@ -83,9 +99,12 @@ namespace NCDK.Formula.Rules
             }
             set
             {
-                if (value.Count != 2) throw new CDKException("RDBERule expects two parameters");
-                if (!(value[0] is double)) throw new CDKException("The 1 parameter must be of type Double");
-                if (!(value[1] is double)) throw new CDKException("The 2 parameter must be of type Double");
+                if (value.Count != 2)
+                    throw new CDKException("RDBERule expects two parameters");
+                if (!(value[0] is double))
+                    throw new CDKException("The 1 parameter must be of type Double");
+                if (!(value[1] is double))
+                    throw new CDKException("The 2 parameter must be of type Double");
 
                 min = (double)value[0];
                 max = (double)value[1];
@@ -99,12 +118,14 @@ namespace NCDK.Formula.Rules
         /// <returns>A double value meaning 1.0 True, 0.0 False</returns>
         public virtual double Validate(IMolecularFormula formula)
         {
-            Trace.TraceInformation("Start validation of ", formula);
+            Trace.TraceInformation($"Start validation of {formula}");
 
             var RDBEList = GetRDBEValue(formula);
             foreach (var RDBE in RDBEList)
             {
-                if (min <= RDBE && RDBE <= 30) if (Validate(formula, RDBE)) return 1.0;
+                if (min <= RDBE && RDBE <= 30)
+                    if (Validate(formula, RDBE))
+                        return 1.0;
             }
 
             return 0.0;
@@ -141,7 +162,6 @@ namespace NCDK.Formula.Rules
         /// </summary>
         /// <param name="formula">The IMolecularFormula object</param>
         /// <returns>The RDBE value</returns>
-        /// <seealso cref="CreateTable"/>
         public virtual IReadOnlyList<double> GetRDBEValue(IMolecularFormula formula)
         {
             var RDBEList = new List<double>();
@@ -158,8 +178,7 @@ namespace NCDK.Formula.Rules
                     {
                         nV.Add(valence[i]);
                     }
-                    nE += MolecularFormulaManipulator.GetElementCount(formula,
-                            formula.Builder.NewElement(isotope.Symbol));
+                    nE += MolecularFormulaManipulator.GetElementCount(formula, ChemicalElement.OfSymbol(isotope.Symbol));
                 }
             }
 
@@ -168,8 +187,8 @@ namespace NCDK.Formula.Rules
             {
                 foreach (var isotope in formula.Isotopes)
                 {
-                    int[] valence = GetOxidationState(formula.Builder.NewAtom(isotope.Symbol));
-                    double value = (valence[0] - 2) * formula.GetCount(isotope) / 2.0;
+                    var valence = GetOxidationState(formula.Builder.NewAtom(isotope.Symbol));
+                    var value = (valence[0] - 2) * formula.GetCount(isotope) / 2.0;
                     RDBE += value;
                 }
                 RDBE += 1;
@@ -180,22 +199,22 @@ namespace NCDK.Formula.Rules
                 double RDBE_1 = 0;
                 foreach (var isotope in formula.Isotopes)
                 {
-                    int[] valence = GetOxidationState(formula.Builder.NewAtom(isotope.Symbol));
-                    double value = (valence[0] - 2) * formula.GetCount(isotope) * 0.5;
+                    var valence = GetOxidationState(formula.Builder.NewAtom(isotope.Symbol));
+                    var value = (valence[0] - 2) * formula.GetCount(isotope) * 0.5;
                     RDBE_1 += value;
                 }
-                string[] valences = new string[nV.Count];
+                var valences = new string[nV.Count];
                 for (int i = 0; i < valences.Length; i++)
                     valences[i] = nV[i].ToString(NumberFormatInfo.InvariantInfo);
 
-                Combinations c = new Combinations(valences, nE);
+                var c = new Combinations(valences, nE);
                 while (c.HasMoreElements())
                 {
                     double RDBE_int = 0.0;
-                    object[] combo = (object[])c.NextElement();
+                    var combo = (object[])c.NextElement();
                     for (int i = 0; i < combo.Length; i++)
                     {
-                        int value = (int.Parse((string)combo[i], NumberFormatInfo.InvariantInfo) - 2) / 2;
+                        var value = (int.Parse((string)combo[i], NumberFormatInfo.InvariantInfo) - 2) / 2;
                         RDBE_int += value;
                     }
                     RDBE = 1 + RDBE_1 + RDBE_int;
@@ -213,61 +232,7 @@ namespace NCDK.Formula.Rules
         private static int[] GetOxidationState(IAtom newAtom)
         {
             return oxidationStateTable[newAtom.Symbol];
-        }
-
-        /// <summary>
-        /// Create the table with the common oxidation states
-        /// </summary>
-        private void CreateTable()
-        {
-            if (oxidationStateTable == null)
-            {
-                oxidationStateTable = new Dictionary<string, int[]>
-                {
-                    ["H"] = new int[] { 1 },
-                    //            oxidationStateTable["Li"] = 1;
-                    //            oxidationStateTable["Be"] = 2;
-                    ["B"] = new int[] { 3 },
-                    ["C"] = new int[] { 4 },
-                    ["N"] = new int[] { 3 },
-                    ["O"] = new int[] { 2 },
-                    ["F"] = new int[] { 1 },
-                    ["Na"] = new int[] { 1 },
-                    ["Mg"] = new int[] { 2 },
-                    ["Al"] = new int[] { 3 },
-                    ["Si"] = new int[] { 4 },
-                    ["P"] = new int[] { 3, 5 },
-                    ["S"] = new int[] { 2, 4, 6 },
-                    ["Cl"] = new int[] { 1 },
-                    //            oxidationStateTable["K"] = 1;
-                    //            oxidationStateTable["Ca"] = 2;
-                    //            oxidationStateTable["Ga"] = 3;
-                    //            oxidationStateTable["Ge"] = 4;
-                    //            oxidationStateTable["As"] = 5;
-                    //            oxidationStateTable["Se"] = 6;
-                    //            oxidationStateTable["Br"] = 7;
-                    //            oxidationStateTable["Rb"] = 1;
-                    //            oxidationStateTable["Sr"] = 2;
-                    //            oxidationStateTable["In"] = 3;
-                    //            oxidationStateTable["Sn"] = 4;
-                    //            oxidationStateTable["Sb"] = 5;
-                    //            oxidationStateTable["Te"] = 6;
-                    ["I"] = new int[] { 1 }
-                };
-                //            oxidationStateTable["Cs"] = 1;
-                //            oxidationStateTable["Ba"] = 2;
-                //            oxidationStateTable["Tl"] = 3;
-                //            oxidationStateTable["Pb"] = 4;
-                //            oxidationStateTable["Bi"] = 5;
-                //            oxidationStateTable["Po"] = 6;
-                //            oxidationStateTable["At"] = 7;
-                //            oxidationStateTable["Fr"] = 1;
-                //            oxidationStateTable["Ra"] = 2;
-                //            oxidationStateTable["Cu"] = 2;
-                //            oxidationStateTable["Mn"] = 2;
-                //            oxidationStateTable["Co"] = 2;
-            }
-        }
+        }        
 
         private sealed class Combinations
         {
@@ -320,7 +285,7 @@ namespace NCDK.Formula.Rules
             /// </summary>
             private void MoveIndex()
             {
-                int i = RightmostIndexBelowMax();
+                var i = RightmostIndexBelowMax();
                 if (i >= 0)
                 {
                     index[i] = index[i] + 1;
@@ -339,9 +304,10 @@ namespace NCDK.Formula.Rules
             /// <returns><see cref="Object"/>, the next combination from the supplied Object array.</returns>
             public object NextElement()
             {
-                if (!hasMore) return null;
+                if (!hasMore)
+                    return null;
 
-                object[] output = new object[m];
+                var output = new object[m];
                 for (int i = 0; i < m; i++)
                 {
                     output[i] = inArray[index[i]];
@@ -350,15 +316,14 @@ namespace NCDK.Formula.Rules
                 return output;
             }
 
-            /// <summary>
-            /// </summary>
             /// <returns>int, the index which can be bumped up.</returns>
             private int RightmostIndexBelowMax()
             {
                 for (int i = m - 1; i >= 0; i--)
                 {
                     int s = n - 1;
-                    if (index[i] != s) return i;
+                    if (index[i] != s)
+                        return i;
                 }
                 return -1;
             }

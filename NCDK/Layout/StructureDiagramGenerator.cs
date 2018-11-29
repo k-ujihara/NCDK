@@ -546,7 +546,7 @@ namespace NCDK.Layout
             // delete single-bonded H's from
             foreach (var curAtom in shallowCopy.Atoms)
             {
-                if (curAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+                if (curAtom.AtomicNumber.Equals(AtomicNumbers.H))
                 {
                     if (shallowCopy.GetConnectedBonds(curAtom).Count() < 2)
                     {
@@ -1070,18 +1070,18 @@ namespace NCDK.Layout
             // isolated atoms, HCl vs NH4+ etc
             if (!bonds.Any())
             {
-                var elem = NaturalElement.OfNumber(atom.AtomicNumber);
+                var elem = ChemicalElement.Of(atom.AtomicNumber);
                 // see HydrogenPosition for canonical list
                 switch (elem.AtomicNumber)
                 {
-                    case NaturalElements.Oxygen.AtomicNumber:
-                    case NaturalElements.Sulfur.AtomicNumber:
-                    case NaturalElements.Selenium.AtomicNumber:
-                    case NaturalElements.Tellurium.AtomicNumber:
-                    case NaturalElements.Fluorine.AtomicNumber:
-                    case NaturalElements.Chlorine.AtomicNumber:
-                    case NaturalElements.Bromine.AtomicNumber:
-                    case NaturalElements.Iodine.AtomicNumber:
+                    case AtomicNumbers.Oxygen:
+                    case AtomicNumbers.Sulfur:
+                    case AtomicNumbers.Selenium:
+                    case AtomicNumbers.Tellurium:
+                    case AtomicNumbers.Fluorine:
+                    case AtomicNumbers.Chlorine:
+                    case AtomicNumbers.Bromine:
+                    case AtomicNumbers.Iodine:
                         pos = -1; // left
                         break;
                     default:
@@ -1643,9 +1643,7 @@ namespace NCDK.Layout
         /// <returns>the atom is a hydrogen</returns>
         private static bool IsHydrogen(IAtom atom)
         {
-            if (atom.AtomicNumber != 0)
-                return atom.AtomicNumber == 1;
-            return NaturalElements.H.Symbol.Equals(atom.Symbol);
+            return atom.AtomicNumber == AtomicNumbers.H;
         }
 
         /// <summary>
@@ -2801,7 +2799,7 @@ namespace NCDK.Layout
         /// <param name="counter">count how many brackets this group has already</param>
         /// <param name="vert">vertical align bonds</param>
         /// <returns>the new bracket</returns>
-        private SgroupBracket NewCrossingBracket(IBond bond, IMultiDictionary<IBond, Sgroup> bonds, IDictionary<IBond, int> counter, bool vert)
+        private SgroupBracket NewCrossingBracket(IBond bond, IMultiDictionary<IBond, Sgroup> bonds, Dictionary<IBond, int> counter, bool vert)
         {
             var beg = bond.Begin;
             var end = bond.End;

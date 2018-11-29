@@ -62,7 +62,6 @@ namespace NCDK.Aromaticities
     /// </remarks>
     // @author John May
     // @cdk.module standard
-    // @cdk.githash
     sealed class DaylightModel : ElectronDonation
     {
         private const int Carbon = 6;
@@ -81,19 +80,19 @@ namespace NCDK.Aromaticities
             // we compute values we need for all atoms and then make the decisions
             // - this avoids costly operations such as looking up connected
             // bonds on each atom at the cost of memory
-            int[] degree = new int[n];
-            int[] bondOrderSum = new int[n];
-            int[] nCyclicPiBonds = new int[n];
-            int[] exocyclicPiBond = new int[n];
-            int[] electrons = new int[n];
+            var degree = new int[n];
+            var bondOrderSum = new int[n];
+            var nCyclicPiBonds = new int[n];
+            var exocyclicPiBond = new int[n];
+            var electrons = new int[n];
 
             Arrays.Fill(exocyclicPiBond, -1);
 
             // index atoms and set the degree to the number of implicit hydrogens
-            IDictionary<IAtom, int> atomIndex = new Dictionary<IAtom, int>(n);
+            var atomIndex = new Dictionary<IAtom, int>(n);
             for (int i = 0; i < n; i++)
             {
-                IAtom a = container.Atoms[i];
+                var a = container.Atoms[i];
                 atomIndex.Add(a, i);
                 degree[i] = CheckNotNull(a.ImplicitHydrogenCount,
                         "Aromaticity model requires implicit hydrogen count is set.");
@@ -105,12 +104,12 @@ namespace NCDK.Aromaticities
             // lookup later.
             foreach (var bond in container.Bonds)
             {
-                int u = atomIndex[bond.Begin];
-                int v = atomIndex[bond.End];
+                var u = atomIndex[bond.Begin];
+                var v = atomIndex[bond.End];
                 degree[u]++;
                 degree[v]++;
 
-                BondOrder order = CheckNotNull(bond.Order, "Aromaticity model requires that bond orders must be set");
+                var order = CheckNotNull(bond.Order, "Aromaticity model requires that bond orders must be set");
 
                 if (order == BondOrder.Unset)
                 {
@@ -144,13 +143,12 @@ namespace NCDK.Aromaticities
             // now make a decision on how many electrons each atom contributes
             for (int i = 0; i < n; i++)
             {
-
-                int element = Element(container.Atoms[i]);
-                int charge = Charge(container.Atoms[i]);
+                var element = Element(container.Atoms[i]);
+                var charge = Charge(container.Atoms[i]);
 
                 // abnormal valence, usually indicated a radical. these cause problems
                 // with kekulisations
-                int bondedValence = bondOrderSum[i] + container.Atoms[i].ImplicitHydrogenCount.Value;
+                var bondedValence = bondOrderSum[i] + container.Atoms[i].ImplicitHydrogenCount.Value;
                 if (!Normal(element, charge, bondedValence))
                 {
                     electrons[i] = -1;

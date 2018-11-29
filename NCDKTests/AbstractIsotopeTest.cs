@@ -27,7 +27,6 @@ namespace NCDK
     /// </summary>
     /// <see cref="IIsotope"/> 
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractIsotopeTest : AbstractElementTest
     {
         [TestMethod()]

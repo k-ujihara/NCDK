@@ -30,15 +30,15 @@ namespace NCDK
     /// </summary>
     // @cdk.module  test-interfaces
     // @cdk.created 2010-10-22
-    [TestClass()]
-    public abstract class AbstractCDKObjectTest : CDKTestCase
+    public abstract class AbstractCDKObjectTest 
+        : CDKTestCase
     {
         public abstract IChemObject NewChemObject();
 
         [TestMethod()]
         public virtual void TestGetBuilder()
         {
-            IChemObject chemObject = NewChemObject();
+            var chemObject = NewChemObject();
             object obj = chemObject.Builder;
             Assert.IsNotNull(obj);
             Assert.IsTrue(obj is IChemObjectBuilder);

@@ -56,7 +56,7 @@ namespace NCDK.Beam
                 h.AddTopology(g.TopologyOf(u));
             }
 
-            IDictionary<Edge, Edge> replacements = new Dictionary<Edge, Edge>();
+            var replacements = new Dictionary<Edge, Edge>();
 
             // change edges (only changed added to replacement)
             for (int u = 0; u < g.Order; u++)

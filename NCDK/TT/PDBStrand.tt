@@ -46,9 +46,10 @@ namespace <#= ns.NS #>
     // @cdk.created 2006-04-19
     // @cdk.keyword polymer
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    public class PDBStrand : Strand
+    public class PDBStrand 
+        : Strand, IPDBStrand
     {
-        List<string> sequentialListOfMonomers;
+        private readonly List<string> sequentialListOfMonomers;
 
         /// <summary>
         /// Constructs a new Polymer to store the Monomers.
@@ -77,7 +78,7 @@ namespace <#= ns.NS #>
         /// Returns the monomer names in the order in which they were added.
         /// </summary>
         /// <seealso cref="IPolymer.GetMonomerNames()"/>
-        public ICollection<string> GetMonomerNamesInSequentialOrder()
+        public IReadOnlyCollection<string> GetMonomerNamesInSequentialOrder()
         {
             // don't return the original
             return new List<string>(sequentialListOfMonomers);

@@ -24,7 +24,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
 {
     // @cdk.module test-qsaratomic
     [TestClass()]
-    public class PartialPiChargeDescriptorTest : AtomicDescriptorTest<PartialPiChargeDescriptor>
+    public class PartialPiChargeDescriptorTest
+        : AtomicDescriptorTest<PartialPiChargeDescriptor>
     {
         public PartialPiChargeDescriptor CreateDescriptor(IAtomContainer mol, int maxIterations) => new PartialPiChargeDescriptor(mol, maxIterations);
         public PartialPiChargeDescriptor CreateDescriptor(IAtomContainer mol, int maxIterations, bool checkLonePairElectron) => new PartialPiChargeDescriptor(mol, maxIterations, checkLonePairElectron);

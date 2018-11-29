@@ -75,6 +75,8 @@ namespace NCDK.Config
 
         public IChemObjectBuilder Builder => null;
 
+        public ChemicalElement Element => ChemicalElement.Of(atomicNumber);
+
         public int AtomicNumber
         {
             get { return atomicNumber; }

@@ -584,9 +584,9 @@ namespace NCDK.Tools.Manipulator
             mol.Atoms[1].ImplicitHydrogenCount = 1;
 
             double expectedMass = 0.0;
-            expectedMass += BODRIsotopeFactory.Instance.GetNaturalMass(builder.NewElement("C"));
-            expectedMass += BODRIsotopeFactory.Instance.GetNaturalMass(builder.NewElement("Cl"));
-            expectedMass += 5 * BODRIsotopeFactory.Instance.GetNaturalMass(builder.NewElement("H"));
+            expectedMass += BODRIsotopeFactory.Instance.GetNaturalMass(ChemicalElement.C);
+            expectedMass += BODRIsotopeFactory.Instance.GetNaturalMass(ChemicalElement.Cl);
+            expectedMass += 5 * BODRIsotopeFactory.Instance.GetNaturalMass(ChemicalElement.H);
 
             double totalExactMass = AtomContainerManipulator.GetNaturalExactMass(mol);
 

@@ -40,7 +40,6 @@ namespace NCDK.Default
     /// table for administration of physical or chemical properties
     /// </summary>
     // @author        steinbeck
-    // @cdk.githash
     // @cdk.module data
     public class ChemObject : IChemObject
     {
@@ -288,6 +287,8 @@ namespace NCDK.Default
                 NotifyChanged();
             }
         }
+
+        public override string ToString() => CDKStuff.ToString(this);
     }
 }
 namespace NCDK.Silent
@@ -298,7 +299,6 @@ namespace NCDK.Silent
     /// table for administration of physical or chemical properties
     /// </summary>
     // @author        steinbeck
-    // @cdk.githash
     // @cdk.module data
     public class ChemObject : IChemObject
     {
@@ -530,5 +530,7 @@ namespace NCDK.Silent
                 id = value;
             }
         }
+
+        public override string ToString() => CDKStuff.ToString(this);
     }
 }

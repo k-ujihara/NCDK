@@ -55,7 +55,7 @@ namespace NCDK.Beam
         private readonly int[] tmp;
         private int nVisit;
         private readonly AtomToken[] tokens;
-        private readonly IDictionary<int, IList<RingClosure>> rings;
+        private readonly Dictionary<int, IList<RingClosure>> rings;
         private readonly IRingNumbering rnums;
 
         /// <summary>

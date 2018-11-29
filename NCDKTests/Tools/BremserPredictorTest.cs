@@ -22,10 +22,9 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.IO;
+using NCDK.Silent;
 using System;
-using NCDK.Config;
 
 namespace NCDK.Tools
 {
@@ -41,22 +40,28 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestConstructor()
         {
-            BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
+            var bp = new BremserOneSphereHOSECodePredictor();
             Assert.IsNotNull(bp);
         }
 
         [TestMethod()]
         public void TestPrediction()
         {
-            var data = new[] {"=C(//)", "=OCC(//)", "CC(//)", "CC(//)", "CCC(//)", "CC(//)", "CC(//)", "CCC(//)", "CCC(//)",
-                "CC(//)", "CC(//)", "CC(//)", "CC(//)", "CCO(//)", "CC(//)", "CCO(//)", "CCO(//)", "CC(//)", "O(//)",
-                "CC(//)", "CCC(//)", "CCC(//)", "CCC(//)"};
+            var data = new[] 
+                {
+                    "=C(//)", "=OCC(//)", "CC(//)", "CC(//)", "CCC(//)", "CC(//)", "CC(//)", "CCC(//)", "CCC(//)",
+                    "CC(//)", "CC(//)", "CC(//)", "CC(//)", "CCO(//)", "CC(//)", "CCO(//)", "CCO(//)", "CC(//)", "O(//)",
+                    "CC(//)", "CCC(//)", "CCC(//)", "CCC(//)",
+                };
 
-            double[] result = {112.6, 198.6, 29.6, 29.6, 40.1, 29.6, 29.6, 40.1, 40.1, 29.6, 29.6, 29.6, 29.6, 73.1, 29.6,
-                73.1, 73.1, 29.6, 54.7, 29.6, 40.1, 40.1, 40.1};
+            var result = new double[]
+                {
+                    112.6, 198.6, 29.6, 29.6, 40.1, 29.6, 29.6, 40.1, 40.1, 29.6, 29.6, 29.6, 29.6, 73.1, 29.6,
+                    73.1, 73.1, 29.6, 54.7, 29.6, 40.1, 40.1, 40.1,
+                };
 
             double prediction;
-            BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
+            var bp = new BremserOneSphereHOSECodePredictor();
             for (int f = 0; f < data.Length; f++)
             {
                 prediction = bp.Predict(data[f]);
@@ -68,25 +73,26 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestGetConfidenceLimit()
         {
-            double[] result = {28.5, 25.7, 28.5, 34.9, 28.5, 25.7, 25.4, 28.5, 28.5, 14.8, 13.3, 23.0, 34.9, 25.7, 25.7,
-                28.5, 25.7, 25.7, 13.3, 14.4, 14.4, 8.9, 14.8, 14.8, 13.3, 13.3, 13.3, 14.4, 14.4, 13.3, 14.4, 14.4,
-                8.9, 14.8, 14.8, 13.3, 13.3, 13.3, 14.4, 14.4, 13.3};
+            var result = new double[] 
+                {
+                    28.5, 25.7, 28.5, 34.9, 28.5, 25.7, 25.4, 28.5, 28.5, 14.8, 13.3, 23.0, 34.9, 25.7, 25.7,
+                    28.5, 25.7, 25.7, 13.3, 14.4, 14.4, 8.9, 14.8, 14.8, 13.3, 13.3, 13.3, 14.4, 14.4, 13.3, 14.4, 14.4,
+                    8.9, 14.8, 14.8, 13.3, 13.3, 13.3, 14.4, 14.4, 13.3,
+                };
             IAtomContainer molecule = null;
             string filename = "NCDK.Data.MDL.BremserPredictionTest.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
+            var reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             molecule = reader.Read(new AtomContainer());
             double prediction;
-            BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
-            HOSECodeGenerator hcg = new HOSECodeGenerator();
+            var bp = new BremserOneSphereHOSECodePredictor();
+            var hcg = new HOSECodeGenerator();
             string s = null;
             RemoveHydrogens(molecule);
-            //logger.debug("Molecule has " + molecule.Atoms.Count + " atoms.");
             for (int f = 0; f < molecule.Atoms.Count; f++)
             {
                 s = hcg.GetHOSECode(molecule, molecule.Atoms[f], 1);
                 prediction = bp.GetConfidenceLimit(HOSECodeGenerator.MakeBremserCompliant(s));
-                //logger.debug("\"" + prediction + "\",");
                 Assert.AreEqual(result[f], prediction, 0.001);
             }
         }
@@ -95,7 +101,7 @@ namespace NCDK.Tools
         public void TestFailure1()
         {
             bool correct = false;
-            BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
+            var bp = new BremserOneSphereHOSECodePredictor();
             try
             {
                 bp.Predict("dumb code");
@@ -114,7 +120,7 @@ namespace NCDK.Tools
         public void TestFailure2()
         {
             bool correct = false;
-            BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
+            var bp = new BremserOneSphereHOSECodePredictor();
             try
             {
                 bp.GetConfidenceLimit("dumb code");
@@ -134,7 +140,7 @@ namespace NCDK.Tools
         {
             bool correct = false;
             string test = null;
-            BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
+            var bp = new BremserOneSphereHOSECodePredictor();
             try
             {
                 bp.Predict(test);
@@ -159,7 +165,7 @@ namespace NCDK.Tools
                 atom = ac.Atoms[f];
                 switch (atom.AtomicNumber)
                 {
-                    case NaturalElements.H.AtomicNumber:
+                    case AtomicNumbers.H:
                         ac.RemoveAtom(atom);
                         break;
                 }

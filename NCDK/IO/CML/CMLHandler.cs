@@ -34,14 +34,12 @@ namespace NCDK.IO.CML
     /// </para>
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
-    // 
     // @author Egon Willighagen <egonw@sci.kun.nl>
     public class CMLHandler : XContentHandler
     {
         private ICMLModule conv;
 
-        private IDictionary<string, ICMLModule> userConventions;
+        private Dictionary<string, ICMLModule> userConventions;
 
         private CMLStack xpath;
         private CMLStack conventionStack;

@@ -53,7 +53,7 @@ namespace NCDK.Geometries.CIP.Rules
             if (massNumberComp != 0)
                 return massNumberComp;
 
-            if (ligand1.LigandAtom.AtomicNumber.Equals(NaturalElements.H.AtomicNumber))
+            if (ligand1.LigandAtom.AtomicNumber.Equals(AtomicNumbers.H))
             {
                 // both atoms are hydrogens
                 return 0;

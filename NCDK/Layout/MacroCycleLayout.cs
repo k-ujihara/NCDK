@@ -49,7 +49,7 @@ namespace NCDK.Layout
         // molecule representations
         private readonly IAtomContainer mol;
         private readonly int[][] adjList;
-        private readonly IDictionary<IAtom, int> idxs = new Dictionary<IAtom, int>();
+        private readonly Dictionary<IAtom, int> idxs = new Dictionary<IAtom, int>();
 
         /// <summary>
         /// Create a new helper for the provided molecule.
@@ -71,14 +71,14 @@ namespace NCDK.Layout
         /// <returns>layout was successfully, if false caller fall-back to regular polygons</returns>
         public static bool Layout(IRing macrocycle, IRingSet ringset)
         {
-            IAtomContainer anon = RoundUpIfNeeded(AtomContainerManipulator.Anonymise(macrocycle));
+            var anon = RoundUpIfNeeded(AtomContainerManipulator.Anonymise(macrocycle));
             var coords = TEMPLATES.GetCoordinates(anon);
 
             if (coords.Count == 0)
                 return false;
 
-            Vector2[] best = new Vector2[anon.Atoms.Count];
-            int bestOffset = SelectCoords(coords, best, macrocycle, ringset);
+            var best = new Vector2[anon.Atoms.Count];
+            var bestOffset = SelectCoords(coords, best, macrocycle, ringset);
 
             for (int i = 0; i < macrocycle.Atoms.Count; i++)
             {
@@ -101,8 +101,7 @@ namespace NCDK.Layout
         /// <returns>the best scoring configuration</returns>
         private static MacroScore BestScore(IRing macrocycle, IRingSet ringset, int wind, int[] winding)
         {
-
-            int numAtoms = macrocycle.Atoms.Count;
+            var numAtoms = macrocycle.Atoms.Count;
 
             var heteroIdxs = new List<int>();
             var ringAttachs = new List<IList<int>>();
@@ -117,15 +116,15 @@ namespace NCDK.Layout
             {
                 if (other == macrocycle)
                     continue;
-                IAtomContainer shared = AtomContainerManipulator.GetIntersection(macrocycle, other);
+                var shared = AtomContainerManipulator.GetIntersection(macrocycle, other);
 
                 if (shared.Atoms.Count >= 2 && shared.Atoms.Count <= 4)
                     ringAttachs.Add(GetAttachedInOrder(macrocycle, shared));
             }
 
             // convex and concave are relative
-            int convex = wind;
-            int concave = -wind;
+            var convex = wind;
+            var concave = -wind;
 
             MacroScore best = null;
 
@@ -185,7 +184,7 @@ namespace NCDK.Layout
                 int nConcaveHetero = 0;
                 foreach (var heteroIdx in heteroIdxs)
                 {
-                    int k = (heteroIdx + i) % numAtoms;
+                    var k = (heteroIdx + i) % numAtoms;
                     if (winding[k] == concave)
                         nConcaveHetero++;
                 }
@@ -196,9 +195,9 @@ namespace NCDK.Layout
                 {
                     if (se.Class == StereoClass.CisTrans)
                     {
-                        IBond bond = (IBond)se.Focus;
-                        IAtom beg = bond.Begin;
-                        IAtom end = bond.End;
+                        var bond = (IBond)se.Focus;
+                        var beg = bond.Begin;
+                        var end = bond.End;
                         StereoConfigurations cfg;
                         if (winding[(macrocycle.Atoms.IndexOf(beg) + i) % numAtoms] ==
                             winding[(macrocycle.Atoms.IndexOf(end) + i) % numAtoms])
@@ -220,10 +219,7 @@ namespace NCDK.Layout
                     }
                 }
 
-                MacroScore score = new MacroScore(i,
-                                                  nConcaveHetero,
-                                                  nCorrectStereo,
-                                                  nRingClick);
+                var score = new MacroScore(i, nConcaveHetero, nCorrectStereo, nRingClick);
                 if (score.CompareTo(best) < 0)
                 {
                     best = score;
@@ -243,7 +239,7 @@ namespace NCDK.Layout
         {
             var ringAttach = new List<int>();
             var visit = new HashSet<IAtom>();
-            IAtom atom = shared.Atoms[0];
+            var atom = shared.Atoms[0];
             while (atom != null)
             {
                 visit.Add(atom);
@@ -273,13 +269,13 @@ namespace NCDK.Layout
         private static int SelectCoords(IEnumerable<Vector2[]> ps, Vector2[] coords, IRing macrocycle, IRingSet ringset)
         {
             Debug.Assert(ps.Any());
-            int[] winding = new int[coords.Length];
+            var winding = new int[coords.Length];
 
             MacroScore best = null;
             foreach (var p in ps)
             {
-                int wind = Winding(p, winding);
-                MacroScore score = BestScore(macrocycle, ringset, wind, winding);
+                var wind = Winding(p, winding);
+                var score = BestScore(macrocycle, ringset, wind, winding);
                 if (score.CompareTo(best) < 0)
                 {
                     best = score;
@@ -301,11 +297,11 @@ namespace NCDK.Layout
         {
             int cw = 0, ccw = 0;
 
-            Vector2 prev = coords[coords.Length - 1];
+            var prev = coords[coords.Length - 1];
             for (int i = 0; i < coords.Length; i++)
             {
-                Vector2 curr = coords[i];
-                Vector2 next = coords[(i + 1) % coords.Length];
+                var curr = coords[i];
+                var next = coords[(i + 1) % coords.Length];
                 winding[i] = Winding(prev, curr, next);
 
                 if (winding[i] < 0)
@@ -377,12 +373,12 @@ namespace NCDK.Layout
         /// <returns>'anon' returned of chaining convenience</returns>
         private static IAtomContainer RoundUpIfNeeded(IAtomContainer anon)
         {
-            IChemObjectBuilder bldr = anon.Builder;
+            var bldr = anon.Builder;
             if ((anon.Atoms.Count & 0x1) != 0)
             {
                 var bond = anon.Bonds[anon.Bonds.Count - 1];
                 anon.Bonds.RemoveAt(anon.Bonds.Count - 1);
-                IAtom dummy = bldr.NewAtom("C");
+                var dummy = bldr.NewAtom("C");
                 anon.Atoms.Add(dummy);
                 anon.Bonds.Add(bldr.NewBond(bond.Begin, dummy, BondOrder.Single));
                 anon.Bonds.Add(bldr.NewBond(dummy, bond.End, BondOrder.Single));

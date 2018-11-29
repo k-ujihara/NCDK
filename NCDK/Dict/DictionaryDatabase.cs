@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 
 using System;
@@ -34,39 +33,38 @@ namespace NCDK.Dict
     /// and entities.
     /// </summary>
     // @author     Egon Willighagen
-    // @cdk.githash
     // @cdk.created    2003-04-06
     // @cdk.keyword    dictionary
     // @cdk.module     dict
     public class DictionaryDatabase
     {
-        private static readonly IDictionary<string, EntryDictionary> cache = new Dictionary<string, EntryDictionary>();
+        internal const string DictRefPropertyName = "NCDK.Dict";
+        private static readonly string[] dictionaryNames = {"chemical", "elements", "descriptor-algorithms", "reaction-processes" };
+        private static readonly string[] dictionaryTypes = { "xml", "owl", "owl", "owl_React" };
 
-        public const string DictRefPropertyName = "NCDK.Dict";
+        private static readonly Dictionary<string, EntryDictionary> dictionaries = MakeDictionaries();
 
-        private readonly string[] dictionaryNames = {"chemical", "elements", "descriptor-algorithms", "reaction-processes" };
-        private readonly string[] dictionaryTypes = { "xml", "owl", "owl", "owl_React" };
-
-        private IDictionary<string, EntryDictionary> dictionaries;
-
-        public DictionaryDatabase()
+        private static Dictionary<string, EntryDictionary> MakeDictionaries()
         {
             // read dictionaries distributed with CDK
-            dictionaries = new Dictionary<string, EntryDictionary>();
+            var dictionaries = new Dictionary<string, EntryDictionary>();
+            var cache = new Dictionary<string, EntryDictionary>();
             for (int i = 0; i < dictionaryNames.Length; i++)
             {
-                string name = dictionaryNames[i];
-                string type = dictionaryTypes[i];
-                EntryDictionary dictionary = ReadDictionary("NCDK.Dict.Data." + name, type);
+                var name = dictionaryNames[i];
+                var type = dictionaryTypes[i];
+                var dictionary = ReadDictionary(DictRefPropertyName + ".Data." + name, type, cache);
                 if (dictionary != null)
                 {
                     dictionaries.Add(name.ToLowerInvariant(), dictionary);
                     Debug.WriteLine($"Read dictionary: {name}");
                 }
             }
+
+            return dictionaries;
         }
 
-        private static EntryDictionary ReadDictionary(string databaseLocator, string type)
+        private static EntryDictionary ReadDictionary(string databaseLocator, string type, Dictionary<string, EntryDictionary> cache)
         {
             EntryDictionary dictionary;
             // to distinguish between OWL: QSAR & REACT
@@ -80,7 +78,7 @@ namespace NCDK.Dict
             }
             else
             {
-                Trace.TraceInformation("Reading dictionary from ", databaseLocator);
+                Trace.TraceInformation($"Reading dictionary from {databaseLocator}");
                 try
                 {
                     var reader = new StreamReader(ResourceLoader.GetAsStream(databaseLocator));
@@ -109,6 +107,10 @@ namespace NCDK.Dict
             }
         }
 
+        public DictionaryDatabase()
+        {
+        }
+
         /// <summary>
         /// Reads a custom dictionary into the database.
         /// </summary>
@@ -122,7 +124,7 @@ namespace NCDK.Dict
             {
                 try
                 {
-                    EntryDictionary dictionary = EntryDictionary.Unmarshal(reader);
+                    var dictionary = EntryDictionary.Unmarshal(reader);
                     dictionaries.Add(name, dictionary);
                     Debug.WriteLine("  ... loaded and stored");
                 }
@@ -142,7 +144,7 @@ namespace NCDK.Dict
         /// Returns a string[] with the names of the known dictionaries.
         /// </summary>
         /// <returns>The names of the dictionaries</returns>
-        public string[] GetDictionaryNames()
+        public ICollection<string> GetDictionaryNames()
         {
             return dictionaryNames;
         }
@@ -159,7 +161,7 @@ namespace NCDK.Dict
         /// <param name="dictionaryName">The name of the dictionary</param>
         public IEnumerable<string> GetDictionaryEntries(string dictionaryName)
         {
-            EntryDictionary dictionary = GetDictionary(dictionaryName);
+            var dictionary = GetDictionary(dictionaryName);
             if (dictionary == null)
             {
                 Trace.TraceError("Cannot find requested dictionary");
@@ -175,7 +177,7 @@ namespace NCDK.Dict
 
         public IEnumerable<Entry> GetDictionaryEntry(string dictionaryName)
         {
-            EntryDictionary dictionary = dictionaries[dictionaryName];
+            var dictionary = dictionaries[dictionaryName];
             return dictionary.Entries;
         }
 
@@ -199,7 +201,7 @@ namespace NCDK.Dict
         {
             if (HasDictionary(dictName))
             {
-                EntryDictionary dictionary = dictionaries[dictName];
+                var dictionary = dictionaries[dictName];
                 return dictionary.ContainsKey(entryID.ToLowerInvariant());
             }
             else

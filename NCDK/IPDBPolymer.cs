@@ -30,7 +30,6 @@ namespace NCDK
     /// additional informations about the BioPolymer which are connected to BioPolymers.
     /// </summary>
     // @cdk.module  interfaces
-    // @cdk.githash
     // @author      Miguel Rojas <miguel.rojas @uni-koeln.de>
     // @cdk.created 2006-11-20
     // @cdk.keyword polymer

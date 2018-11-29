@@ -51,7 +51,7 @@ namespace NCDK.Default
     public class Polymer
         : AtomContainer, IPolymer
     {
-        private IDictionary<string, IMonomer> monomers;
+        private Dictionary<string, IMonomer> monomers;
 
         /// <summary>
         /// Constructs a new Polymer to store the Monomers.
@@ -162,7 +162,7 @@ namespace NCDK.Silent
     public class Polymer
         : AtomContainer, IPolymer
     {
-        private IDictionary<string, IMonomer> monomers;
+        private Dictionary<string, IMonomer> monomers;
 
         /// <summary>
         /// Constructs a new Polymer to store the Monomers.

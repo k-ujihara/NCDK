@@ -75,14 +75,14 @@ namespace NCDK.Renderers.Generators.Standards
         private static readonly ISet<int> PrefixedH
             = new HashSet<int>()
                 {
-                    NaturalElements.Oxygen.AtomicNumber,
-                    NaturalElements.Sulfur.AtomicNumber,
-                    NaturalElements.Selenium.AtomicNumber,
-                    NaturalElements.Tellurium.AtomicNumber,
-                    NaturalElements.Fluorine.AtomicNumber,
-                    NaturalElements.Chlorine.AtomicNumber,
-                    NaturalElements.Bromine.AtomicNumber,
-                    NaturalElements.Iodine.AtomicNumber,
+                    AtomicNumbers.Oxygen,
+                    AtomicNumbers.Sulfur,
+                    AtomicNumbers.Selenium,
+                    AtomicNumbers.Tellurium,
+                    AtomicNumbers.Fluorine,
+                    AtomicNumbers.Chlorine,
+                    AtomicNumbers.Bromine,
+                    AtomicNumbers.Iodine,
                 };
 
         /// <summary>

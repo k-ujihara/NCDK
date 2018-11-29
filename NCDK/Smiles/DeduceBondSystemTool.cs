@@ -208,7 +208,7 @@ namespace NCDK.Smiles
             {
                 var ai = atomContainer.Atoms[i];
 
-                if (ai.AtomicNumber.Equals(NaturalElements.N.AtomicNumber)
+                if (ai.AtomicNumber.Equals(AtomicNumbers.N)
                  && (ai.FormalCharge == null || ai.FormalCharge == 0))
                 {
                     if (InRingSet(ai, ringSet))
@@ -216,7 +216,7 @@ namespace NCDK.Smiles
                         var ca = atomContainer.GetConnectedAtoms(ai);
                         foreach (var caj in ca)
                         {
-                            if (caj.AtomicNumber.Equals(NaturalElements.O.AtomicNumber) 
+                            if (caj.AtomicNumber.Equals(AtomicNumbers.O) 
                              && atomContainer.GetBond(ai, caj).Order == BondOrder.Double)
                             {
                                 ai.FormalCharge = 1;
@@ -482,7 +482,7 @@ namespace NCDK.Smiles
 
                 if (InRingSet(atom, ringSet))
                 {
-                    if (atom.AtomicNumber.Equals(NaturalElements.N.AtomicNumber))
+                    if (atom.AtomicNumber.Equals(AtomicNumbers.N))
                     {
                         if (atom.FormalCharge == 0)
                         {
@@ -520,7 +520,7 @@ namespace NCDK.Smiles
                             }
                         }
                     }
-                    else if (atom.AtomicNumber.Equals(NaturalElements.S.AtomicNumber))
+                    else if (atom.AtomicNumber.Equals(AtomicNumbers.S))
                     {
                         if (atomContainer.GetBondOrderSum(atom) > 2)
                         {
@@ -765,7 +765,7 @@ namespace NCDK.Smiles
                      || r.Atoms[j].Hybridization != Hybridization.SP2)
                     {
                         NonSP2Count++;
-                        if (r.Atoms[j].AtomicNumber.Equals(NaturalElements.C.AtomicNumber))
+                        if (r.Atoms[j].AtomicNumber.Equals(AtomicNumbers.C))
                         {
                             Check[i] = false;
                             goto iloop;

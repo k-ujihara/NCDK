@@ -581,17 +581,17 @@ namespace NCDK.Smiles
         /// <exception cref="CDKException">the inchi numbers could not be obtained</exception>
         private static long[] InChINumbers(IAtomContainer container)
         {
-            var rgrps = GetRgrps(container, NaturalElements.Rutherfordium.AtomicNumber);
+            var rgrps = GetRgrps(container, AtomicNumbers.Rutherfordium);
             foreach (var rgrp in rgrps)
             {
-                rgrp.AtomicNumber = NaturalElements.Rutherfordium.AtomicNumber;
-                rgrp.Symbol = NaturalElements.Rutherfordium.Symbol;
+                rgrp.AtomicNumber = AtomicNumbers.Rutherfordium;
+                rgrp.Symbol = ChemicalElement.Rf.Symbol;
             }
 
             var numbers = InChINumbersTools.GetUSmilesNumbers(container);
             foreach (var rgrp in rgrps)
             {
-                rgrp.AtomicNumber = NaturalElements.Unknown.AtomicNumber;
+                rgrp.AtomicNumber = AtomicNumbers.Unknown;
                 rgrp.Symbol = "*";
             }
             return numbers;
@@ -623,7 +623,7 @@ namespace NCDK.Smiles
         }
 
         // utility method maps the atoms to their indices using the provided map.
-        private static List<int> ToAtomIdxs(ICollection<IAtom> atoms, IDictionary<IAtom, int> atomidx)
+        private static List<int> ToAtomIdxs(ICollection<IAtom> atoms, Dictionary<IAtom, int> atomidx)
         {
             List<int> idxs = new List<int>(atoms.Count);
             foreach (IAtom atom in atoms)
@@ -642,7 +642,7 @@ namespace NCDK.Smiles
 
             // set the atom labels, values, and coordinates,
             // and build the atom->idx map required by other parts
-            IDictionary<IAtom, int> atomidx = new Dictionary<IAtom, int>();
+            var atomidx = new Dictionary<IAtom, int>();
             for (int idx = 0; idx < mol.Atoms.Count; idx++)
             {
                 IAtom atom = mol.Atoms[idx];

@@ -358,8 +358,8 @@ namespace NCDK.Fingerprints
     // @cdk.keyword  fingerprint
     // @cdk.keyword  similarity
     // @cdk.module   fingerprint
-    // @cdk.githash
-    public class SubstructureFingerprinter : AbstractFingerprinter, IFingerprinter
+    public class SubstructureFingerprinter 
+        : AbstractFingerprinter, IFingerprinter
     {
         private sealed class Key
         {
@@ -409,8 +409,7 @@ namespace NCDK.Fingerprints
             foreach (var key in smarts)
             {
                 var qmol = new QueryAtomContainer(null);
-                SmartsPattern ptrn = null;
-                ptrn = SmartsPattern.Create(key);
+                var ptrn = SmartsPattern.Create(key);
                 ptrn.SetPrepare(false); // prepare is done once
                 keys.Add(new Key(key, ptrn));
             }

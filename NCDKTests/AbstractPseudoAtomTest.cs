@@ -26,14 +26,13 @@ namespace NCDK
     /// Checks the functionality of <see cref="IPseudoAtom"/> implementations.
     /// </summary>
     // @cdk.module test-interfaces
-    [TestClass()]
     public abstract class AbstractPseudoAtomTest : AbstractAtomTest
     {
         [TestMethod()]
         public virtual void TestGetLabel()
         {
-            string label = "Arg255";
-            IPseudoAtom a = (IPseudoAtom)NewChemObject();
+            var label = "Arg255";
+            var a = (IPseudoAtom)NewChemObject();
             a.Label = label;
             Assert.AreEqual(label, a.Label);
         }
@@ -41,10 +40,10 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetLabel_String()
         {
-            string label = "Arg255";
-            IPseudoAtom atom = (IPseudoAtom)NewChemObject();
+            var label = "Arg255";
+            var atom = (IPseudoAtom)NewChemObject();
             atom.Label = label;
-            string label2 = "His66";
+            var label2 = "His66";
             atom.Label = label2;
             Assert.AreEqual(label2, atom.Label);
         }
@@ -52,14 +51,14 @@ namespace NCDK
         [TestMethod()]
         public override void TestGetFormalCharge()
         {
-            IPseudoAtom atom = (IPseudoAtom)NewChemObject();
+            var atom = (IPseudoAtom)NewChemObject();
             Assert.AreEqual(0, atom.FormalCharge.Value);
         }
 
         [TestMethod()]
         public override void TestSetFormalCharge_Integer()
         {
-            IPseudoAtom atom = (IPseudoAtom)NewChemObject();
+            var atom = (IPseudoAtom)NewChemObject();
             atom.FormalCharge = +5;
             Assert.AreEqual(+5, atom.FormalCharge.Value);
         }
@@ -67,7 +66,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetHydrogenCount_Integer()
         {
-            IPseudoAtom atom = (IPseudoAtom)NewChemObject();
+            var atom = (IPseudoAtom)NewChemObject();
             atom.ImplicitHydrogenCount = +5;
             Assert.AreEqual(5, atom.ImplicitHydrogenCount.Value);
         }
@@ -75,7 +74,7 @@ namespace NCDK
         [TestMethod()]
         public override void TestSetChargeDouble()
         {
-            IPseudoAtom atom = (IPseudoAtom)NewChemObject();
+            var atom = (IPseudoAtom)NewChemObject();
             atom.Charge = 0.78;
             Assert.AreEqual(0.78, atom.Charge.Value, 0.001);
         }
@@ -83,7 +82,7 @@ namespace NCDK
         [TestMethod()]
         public override void TestSetExactMass_Double()
         {
-            IPseudoAtom atom = (IPseudoAtom)NewChemObject();
+            var atom = (IPseudoAtom)NewChemObject();
             atom.ExactMass = 12.001;
             Assert.AreEqual(12.001, atom.ExactMass.Value, 0.001);
         }
@@ -91,7 +90,7 @@ namespace NCDK
         [TestMethod()]
         public override void TestSetStereoParityInteger()
         {
-            IPseudoAtom atom = (IPseudoAtom)NewChemObject();
+            var atom = (IPseudoAtom)NewChemObject();
             atom.StereoParity = -1;
             Assert.AreEqual(0, atom.StereoParity);
         }
@@ -99,16 +98,16 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestPseudoAtom_IAtom()
         {
-            IChemObject obj = NewChemObject();
-            IAtom atom = obj.Builder.NewAtom("C");
-            Vector3 fract = new Vector3(0.5, 0.5, 0.5);
-            Vector3 threeD = new Vector3(0.5, 0.5, 0.5);
-            Vector2 twoD = new Vector2(0.5, 0.5);
+            var obj = NewChemObject();
+            var atom = obj.Builder.NewAtom("C");
+            var fract = new Vector3(0.5, 0.5, 0.5);
+            var threeD = new Vector3(0.5, 0.5, 0.5);
+            var twoD = new Vector2(0.5, 0.5);
             atom.FractionalPoint3D = fract;
             atom.Point3D = threeD;
             atom.Point2D = twoD;
 
-            IPseudoAtom a = obj.Builder.NewPseudoAtom(atom);
+            var a = obj.Builder.NewPseudoAtom(atom);
             AssertAreEqual(fract, a.FractionalPoint3D.Value, 0.0001);
             AssertAreEqual(threeD, a.Point3D.Value, 0.0001);
             AssertAreEqual(twoD, a.Point2D.Value, 0.0001);
@@ -120,7 +119,7 @@ namespace NCDK
         [TestMethod()]
         public override void TestClone()
         {
-            IPseudoAtom atom = (IPseudoAtom)NewChemObject();
+            var atom = (IPseudoAtom)NewChemObject();
             object clone = atom.Clone();
             Assert.IsTrue(clone is IPseudoAtom);
         }
@@ -131,8 +130,8 @@ namespace NCDK
         [TestMethod()]
         public override void TestToString()
         {
-            IAtom atom = (IPseudoAtom)NewChemObject();
-            string description = atom.ToString();
+            var atom = (IPseudoAtom)NewChemObject();
+            var description = atom.ToString();
             for (int i = 0; i < description.Length; i++)
             {
                 Assert.IsTrue(description[i] != '\n');
@@ -149,7 +148,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestBug1778479DefaultLabel()
         {
-            IPseudoAtom atom = (IPseudoAtom)NewChemObject();
+            var atom = (IPseudoAtom)NewChemObject();
             Assert.IsNotNull(atom.Label, "Test for PseudoAtom's default label");
             Assert.AreEqual("*", atom.Label, "Test for PseudoAtom's default label");
         }
@@ -161,9 +160,9 @@ namespace NCDK
         [TestMethod()]
         public override void TestCloneHydrogenCount()
         {
-            IAtom atom = (IAtom)NewChemObject();
+            var atom = (IAtom)NewChemObject();
             atom.ImplicitHydrogenCount = 3;
-            IAtom clone = (IAtom)atom.Clone();
+            var clone = (IAtom)atom.Clone();
 
             // test cloning
             atom.ImplicitHydrogenCount = 4;
@@ -178,7 +177,7 @@ namespace NCDK
         public virtual void TestGetHydrogenCount()
         {
             // expect zero by definition
-            IAtom a = (IAtom)NewChemObject();
+            var a = (IAtom)NewChemObject();
             Assert.IsNull(a.ImplicitHydrogenCount);
             a.ImplicitHydrogenCount = 5;
             Assert.AreEqual(5, a.ImplicitHydrogenCount.Value);
@@ -192,10 +191,10 @@ namespace NCDK
         /// </summary>
         [TestMethod()]
         public override void TestCloneStereoParity()
-        {            
-            IAtom atom = (IAtom)NewChemObject();
+        {
+            var atom = (IAtom)NewChemObject();
             atom.StereoParity = 3;
-            IAtom clone = (IAtom)atom.Clone();
+            var clone = (IAtom)atom.Clone();
 
             // test cloning
             atom.StereoParity = 4;
@@ -205,8 +204,8 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestPseudoAtomCharges()
         {
-            string label = "charged patom";
-            IPseudoAtom a = (IPseudoAtom)NewChemObject();
+            var label = "charged patom";
+            var a = (IPseudoAtom)NewChemObject();
             a.Label = label;
             a.FormalCharge = -1;
             Assert.IsNotNull(a);

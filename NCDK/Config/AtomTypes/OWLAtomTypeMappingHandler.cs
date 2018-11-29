@@ -28,7 +28,6 @@ namespace NCDK.Config.AtomTypes
     /// Handler for the <see cref="OWLAtomTypeMappingReader"/>.
     /// </summary>
     // @cdk.module  atomtype
-    // @cdk.githash
     public class OWLAtomTypeMappingHandler : XContentHandler
     {
         private Dictionary<string, string> atomTypeMappings;

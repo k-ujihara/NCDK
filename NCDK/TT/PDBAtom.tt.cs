@@ -40,8 +40,14 @@ namespace NCDK.Default
     /// </summary>
     // @cdk.module data
     // @see  Atom
-    public class PDBAtom : Atom, ICloneable, IPDBAtom
+    public class PDBAtom 
+        : Atom, ICloneable, IPDBAtom
     {
+        public PDBAtom(ChemicalElement element)
+            : this(element.Symbol)
+        {
+        }
+
         /// <summary>
         /// Constructs an IPDBAtom from a Element.
         /// </summary>
@@ -193,8 +199,14 @@ namespace NCDK.Silent
     /// </summary>
     // @cdk.module data
     // @see  Atom
-    public class PDBAtom : Atom, ICloneable, IPDBAtom
+    public class PDBAtom 
+        : Atom, ICloneable, IPDBAtom
     {
+        public PDBAtom(ChemicalElement element)
+            : this(element.Symbol)
+        {
+        }
+
         /// <summary>
         /// Constructs an IPDBAtom from a Element.
         /// </summary>

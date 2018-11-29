@@ -28,7 +28,6 @@ using System;
 namespace NCDK.Fingerprints
 {
     // @cdk.module test
-    [TestClass()]
     public abstract class AbstractFingerprinterTest : CDKTestCase
     {
         public virtual IFingerprinter GetBitFingerprinter()
