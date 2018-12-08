@@ -50,11 +50,11 @@ namespace NCDK.Default
     /// to the constructor are <see langword="null"/>. Atoms can be configured by using
     /// the <see cref="IsotopeFactory.Configure(IAtom)"/> method:
     /// <code>
-    /// IsotopeFactory factory = SomeIsotopeFactory.GetInstance(a.Builder);
+    /// IsotopeFactory factory = SomeIsotopeFactory.GetInstance();
     /// factory.Configure(a);
     /// </code>
     /// </example>
-    /// <seealso cref="NCDK.Config.XMLIsotopeFactory.GetInstance(IChemObjectBuilder)"/>
+    /// <seealso cref="NCDK.Config.XMLIsotopeFactory.Instance"/>
     // @author     steinbeck
     // @cdk.created    2000-10-02
     // @cdk.keyword    atom
@@ -509,11 +509,11 @@ namespace NCDK.Silent
     /// to the constructor are <see langword="null"/>. Atoms can be configured by using
     /// the <see cref="IsotopeFactory.Configure(IAtom)"/> method:
     /// <code>
-    /// IsotopeFactory factory = SomeIsotopeFactory.GetInstance(a.Builder);
+    /// IsotopeFactory factory = SomeIsotopeFactory.GetInstance();
     /// factory.Configure(a);
     /// </code>
     /// </example>
-    /// <seealso cref="NCDK.Config.XMLIsotopeFactory.GetInstance(IChemObjectBuilder)"/>
+    /// <seealso cref="NCDK.Config.XMLIsotopeFactory.Instance"/>
     // @author     steinbeck
     // @cdk.created    2000-10-02
     // @cdk.keyword    atom

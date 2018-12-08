@@ -21,7 +21,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Collections;
 using NCDK.Utils.Xml;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -36,6 +38,7 @@ namespace NCDK.Config.AtomTypes
     /// </summary>
     // @cdk.module  atomtype
     public class OWLAtomTypeMappingReader
+        : IDisposable
     {
         private readonly TextReader input;
 
@@ -56,20 +59,20 @@ namespace NCDK.Config.AtomTypes
         {
             IReadOnlyDictionary<string, string> mappings = null;
 
-            XmlReaderSettings setting = new XmlReaderSettings
+            var setting = new XmlReaderSettings
             {
                 DtdProcessing = DtdProcessing.Parse,
                 ValidationFlags = XmlSchemaValidationFlags.None
             };
-            OWLAtomTypeMappingHandler handler = new OWLAtomTypeMappingHandler();
-            XmlReader parser = XmlReader.Create(input, setting);
+            var handler = new OWLAtomTypeMappingHandler();
+            var parser = XmlReader.Create(input, setting);
             var reader = new XReader
             {
                 Handler = handler
             };
             try
             {
-                XDocument doc = XDocument.Load(parser);
+                var doc = XDocument.Load(parser);
                 reader.Read(doc);
                 mappings = handler.GetAtomTypeMappings();
             }
@@ -83,7 +86,30 @@ namespace NCDK.Config.AtomTypes
                 Trace.TraceError(nameof(XmlException) + ": " + saxe.Message);
                 Debug.WriteLine(saxe);
             }
-            return mappings ?? new Dictionary<string, string>(0);
+            return mappings ?? Dictionaries.Empty<string, string>();
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (input != null)
+                        input.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        #endregion
     }
 }

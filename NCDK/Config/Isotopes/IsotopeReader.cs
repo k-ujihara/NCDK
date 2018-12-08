@@ -21,7 +21,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Common.Collections;
 using NCDK.Utils.Xml;
 using System;
 using System.Collections.Generic;
@@ -39,19 +38,17 @@ namespace NCDK.Config.Isotopes
     // @cdk.module  extra
     // @author     Egon Willighagen
     public class IsotopeReader
+        : IDisposable
     {
         private readonly Stream input;
-        private readonly IChemObjectBuilder builder;
 
         /// <summary>
         /// Instantiates a new reader that parses the XML from the given <paramref name="input"/>.
         /// </summary>
         /// <param name="input"><see cref="Stream"/> with the XML source</param>
-        /// <param name="builder">The <see cref="IChemObjectBuilder"/> used to create new <see cref="IIsotope"/>'s.</param>
-        public IsotopeReader(Stream input, IChemObjectBuilder builder)
+        public IsotopeReader(Stream input)
         {
             this.input = input;
-            this.builder = builder;
         }
 
         /// <summary>
@@ -62,7 +59,7 @@ namespace NCDK.Config.Isotopes
         public IReadOnlyList<IIsotope> ReadIsotopes()
         {
             var reader = new XReader();
-            var handler = new IsotopeHandler(builder);
+            var handler = new IsotopeHandler();
             reader.Handler = handler;
             try
             {
@@ -83,5 +80,29 @@ namespace NCDK.Config.Isotopes
             }
             return Array.Empty<IIsotope>();
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (input != null)
+                        input.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        #endregion
     }
 }

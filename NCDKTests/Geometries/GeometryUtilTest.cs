@@ -201,7 +201,7 @@ namespace NCDK.Geometries
             IAtomContainer molOne;
             IAtomContainer molTwo;
             var mappedAtoms = new Dictionary<int, int>();
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
+            var reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             molOne = reader.Read(builder.NewAtomContainer());
 
             ins = ResourceLoader.GetAsStream(filenameMolTwo);

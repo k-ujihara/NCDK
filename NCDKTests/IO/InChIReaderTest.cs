@@ -22,7 +22,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -35,15 +34,17 @@ namespace NCDK.IO
     /// <seealso cref="InChIReader"/>
     // @cdk.module test-extra
     [TestClass()]
-    public class InChIReaderTest : SimpleChemObjectReaderTest
+    public class InChIReaderTest 
+        : SimpleChemObjectReaderTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         protected override string TestFile => "NCDK.Data.InChI.guanine.inchi.xml";
         protected override Type ChemObjectIOToTestType => typeof(InChIReader);
         
         [TestMethod()]
         public void TestAccepts()
         {
-            Assert.IsTrue(ChemObjectIOToTest.Accepts(typeof(ChemFile)));
+            Assert.IsTrue(ChemObjectIOToTest.Accepts(typeof(IChemFile)));
         }
 
         /// <summary>
@@ -53,22 +54,22 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestGuanine()
         {
-            string filename = "NCDK.Data.InChI.guanine.inchi.xml";
+            var filename = "NCDK.Data.InChI.guanine.inchi.xml";
             Trace.TraceInformation("Testing: ", filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            InChIReader reader = new InChIReader(ins);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new InChIReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
 
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
             var moleculeSet = model.MoleculeSet;
             Assert.IsNotNull(moleculeSet);
-            IAtomContainer molecule = moleculeSet[0];
+            var molecule = moleculeSet[0];
             Assert.IsNotNull(molecule);
 
             Assert.AreEqual(11, molecule.Atoms.Count);

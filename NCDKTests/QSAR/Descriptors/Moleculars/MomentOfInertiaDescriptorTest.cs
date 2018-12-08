@@ -47,7 +47,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestMomentOfInertia1()
         {
-            string filename = "NCDK.Data.HIN.gravindex.hin";
+            var filename = "NCDK.Data.HIN.gravindex.hin";
             IChemFile content;
             using (var reader = new HINReader(ResourceLoader.GetAsStream(filename)))
             {
@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestMomentOfInertia2()
         {
-            string filename = "NCDK.Data.HIN.momi2.hin";
+            var filename = "NCDK.Data.HIN.momi2.hin";
             IChemFile content;
             using (var reader = new HINReader(ResourceLoader.GetAsStream(filename)))
             {

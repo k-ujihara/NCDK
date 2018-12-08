@@ -34,52 +34,46 @@ namespace NCDK.IO
     public class MDLV2000AtomBlockTest
     {
         private readonly MDLV2000Reader reader = new MDLV2000Reader(new StringReader(""));
+
         private static readonly IChemObjectBuilder builder = CDK.Builder;
 
         [TestMethod()]
         public void LineLength_excessSpace()
         {
-            IAtom a1 = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0 ",
-                    builder, 1);
-            IAtom a2 = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    ",
-                    builder, 1);
+            var a1 = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0 ", builder, 1);
+            var a2 = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    ", builder, 1);
         }
 
         [TestMethod()]
         public void LineLength_exact()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0", builder, 1);
         }
 
         [TestMethod()]
         public void LineLength_truncated()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  ",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  ", builder, 1);
         }
 
         [TestMethod()]
         public void Symbol_C()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual("C", atom.Symbol);
         }
 
         [TestMethod()]
         public void Symbol_N()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual("N", atom.Symbol);
         }
 
         [TestMethod()]
         public void ReadCoordinates()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual(7.8089, atom.Point3D.Value.X, 0.5);
             Assert.AreEqual(-1.3194, atom.Point3D.Value.Y, 0.5);
             Assert.AreEqual(0, atom.Point3D.Value.Z, 0.5);
@@ -88,48 +82,42 @@ namespace NCDK.IO
         [TestMethod()]
         public void MassDiff_c13()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   1  0  0  0  0  0  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   1  0  0  0  0  0  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual(13, atom.MassNumber);
         }
 
         [TestMethod()]
         public void MassDiff_c14()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   2  0  0  0  0  0  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   2  0  0  0  0  0  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual(14, atom.MassNumber);
         }
 
         [TestMethod()]
         public void MassDiff_c11()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C  -1  0  0  0  0  0  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C  -1  0  0  0  0  0  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual(11, atom.MassNumber);
         }
 
         [TestMethod()]
         public void Charge_cation()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  1  0  0  0  0  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  1  0  0  0  0  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual(3, atom.FormalCharge);
         }
 
         [TestMethod()]
         public void Charge_dication()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  2  0  0  0  0  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  2  0  0  0  0  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual(2, atom.FormalCharge);
         }
 
         [TestMethod()]
         public void Charge_trication()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  3  0  0  0  0  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  3  0  0  0  0  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual(1, atom.FormalCharge);
         }
 
@@ -137,104 +125,91 @@ namespace NCDK.IO
         [TestMethod()]
         public void Charge_Doubletradical()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  4  0  0  0  0  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  4  0  0  0  0  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual(0, atom.FormalCharge);
         }
 
         [TestMethod()]
         public void Charge_anion()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  5  0  0  0  0  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  5  0  0  0  0  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual(-1, atom.FormalCharge);
         }
 
         [TestMethod()]
         public void Charge_dianion()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  6  0  0  0  0  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  6  0  0  0  0  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual(-2, atom.FormalCharge);
         }
 
         [TestMethod()]
         public void Charge_trianion()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  7  0  0  0  0  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  7  0  0  0  0  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual(-3, atom.FormalCharge);
         }
 
         [TestMethod()]
         public void Charge_invalid()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  8  0  0  0  0  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  8  0  0  0  0  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual(0, atom.FormalCharge);
         }
 
         [TestMethod()]
         public void Valence_0()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0 15  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0 15  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual(0, atom.Valency);
         }
 
         [TestMethod()]
         public void Valence_unset()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual(null, atom.Valency);
         }
 
         [TestMethod()]
         public void Valence_1()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  1  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  1  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual(1, atom.Valency);
         }
 
         [TestMethod()]
         public void Valence_14()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0 14  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0 14  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual(14, atom.Valency);
         }
 
         [TestMethod()]
         public void Valence_invalid()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0 16  0  0  0  0  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0 16  0  0  0  0  0  0", builder, 1);
             Assert.AreEqual(null, atom.Valency);
         }
 
         [TestMethod()]
         public void Mapping()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0  1  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0  1  0  0", builder, 1);
             Assert.AreEqual(1, atom.GetProperty<int>(CDKPropertyName.AtomAtomMapping));
         }
 
         [TestMethod()]
         public void Mapping_42()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0 42  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0 42  0  0", builder, 1);
             Assert.AreEqual(42, atom.GetProperty<int>(CDKPropertyName.AtomAtomMapping));
         }
 
         [TestMethod()]
         public void Mapping_999()
         {
-            IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0999  0  0",
-                    builder, 1);
+            var atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0999  0  0", builder, 1);
             Assert.AreEqual(999, atom.GetProperty<int>(CDKPropertyName.AtomAtomMapping));
         }
 
@@ -309,7 +284,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void ReadOldJmolCoords()
         {
-            MDLV2000Reader reader = new MDLV2000Reader(new StringReader("")) { ReaderMode = ChemObjectReaderMode.Relaxed };
+            var reader = new MDLV2000Reader(new StringReader("")) { ReaderMode = ChemObjectReaderMode.Relaxed };
             Assert.IsTrue(Math.Abs(reader.ReadMDLCoordinate("  -2.00120    7.8089", 0) - (-2.00120)) < 0.1);
         }
 
@@ -317,7 +292,7 @@ namespace NCDK.IO
         [ExpectedException(typeof(CDKException), AllowDerivedTypes = true)]
         public void ReadOldJmolCoordsFailOnStrictRead()
         {
-            MDLV2000Reader reader = new MDLV2000Reader(new StringReader("")) { ReaderMode = ChemObjectReaderMode.Strict };
+            var reader = new MDLV2000Reader(new StringReader("")) { ReaderMode = ChemObjectReaderMode.Strict };
             reader.ReadMDLCoordinate("  -2.00120    7.8089", 0);
         }
 
@@ -325,28 +300,28 @@ namespace NCDK.IO
         [ExpectedException(typeof(CDKException), AllowDerivedTypes = true)]
         public void ReadMDLCoordinates_wrong_decimal_position_strict()
         {
-            MDLV2000Reader reader = new MDLV2000Reader(new StringReader("")) { ReaderMode = ChemObjectReaderMode.Strict };
+            var reader = new MDLV2000Reader(new StringReader("")) { ReaderMode = ChemObjectReaderMode.Strict };
             Assert.IsTrue(Math.Abs(reader.ReadMDLCoordinate("   -2.0012   7.8089 ", 10) - 7.8089) < 0.1);
         }
 
         [TestMethod()]
         public void ReadMDLCoordinates_wrong_decimal_position_relaxed()
         {
-            MDLV2000Reader reader = new MDLV2000Reader(new StringReader("")) { ReaderMode = ChemObjectReaderMode.Relaxed };
+            var reader = new MDLV2000Reader(new StringReader("")) { ReaderMode = ChemObjectReaderMode.Relaxed };
             Assert.IsTrue(Math.Abs(reader.ReadMDLCoordinate("   -2.0012   7.8089 ", 10) - 7.8089) < 0.1);
         }
 
         [TestMethod()]
         public void ReadMDLCoordinates_no_value_relaxed()
         {
-            MDLV2000Reader reader = new MDLV2000Reader(new StringReader("")) { ReaderMode = ChemObjectReaderMode.Relaxed };
+            var reader = new MDLV2000Reader(new StringReader("")) { ReaderMode = ChemObjectReaderMode.Relaxed };
             Assert.IsTrue(Math.Abs(reader.ReadMDLCoordinate("   -2.0012          ", 10) - 0) < 0.1);
         }
 
         [TestMethod()]
         public void ReadMDLCoordinates_no_decimal_relaxed()
         {
-            MDLV2000Reader reader = new MDLV2000Reader(new StringReader("")) { ReaderMode = ChemObjectReaderMode.Relaxed };
+            var reader = new MDLV2000Reader(new StringReader("")) { ReaderMode = ChemObjectReaderMode.Relaxed };
             Assert.IsTrue(Math.Abs(reader.ReadMDLCoordinate("   -2.0012   708089 ", 10) - 708089) < 0.1);
         }
     }

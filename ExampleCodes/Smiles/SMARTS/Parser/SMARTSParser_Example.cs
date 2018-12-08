@@ -10,7 +10,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             UniversalIsomorphismTester universalIsomorphismTester = null;
             #region 1
-            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser();
              IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C");
              QueryAtomContainer query = SMARTSParser.Parse("C*C", Silent.ChemObjectBuilder.Instance);
              bool queryMatch = universalIsomorphismTester.IsSubgraph(atomContainer, query);

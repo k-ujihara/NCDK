@@ -19,7 +19,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config.Isotopes;
-using NCDK.Silent;
 using System.IO;
 using System.Text;
 
@@ -32,14 +31,14 @@ namespace NCDK.Config.Isotope
         [TestMethod()]
         public void TestIsotopeReader_InputStream_IChemObjectBuilder()
         {
-            IsotopeReader reader = new IsotopeReader(new MemoryStream(System.Array.Empty<byte>()), new ChemObject().Builder);
+            IsotopeReader reader = new IsotopeReader(new MemoryStream(System.Array.Empty<byte>()));
             Assert.IsNotNull(reader);
         }
 
         [TestMethod()]
         public void TestReadIsotopes()
         {
-            IsotopeReader reader = new IsotopeReader(new MemoryStream(Encoding.UTF8.GetBytes("<?xml version=\"1.0\"?><list></list>")), new ChemObject().Builder);
+            IsotopeReader reader = new IsotopeReader(new MemoryStream(Encoding.UTF8.GetBytes("<?xml version=\"1.0\"?><list></list>")));
             Assert.IsNotNull(reader);
             var isotopes = reader.ReadIsotopes();
             Assert.IsNotNull(isotopes);
@@ -67,7 +66,7 @@ namespace NCDK.Config.Isotope
                 + "            <scalar dictRef=\"cdk:atomicNumber\">1</scalar>" + "        </isotope>"
                 + "    </isotopeList>" + "</list>";
 
-            IsotopeReader reader = new IsotopeReader(new MemoryStream(Encoding.UTF8.GetBytes(isotopeData)), new ChemObject().Builder);
+            IsotopeReader reader = new IsotopeReader(new MemoryStream(Encoding.UTF8.GetBytes(isotopeData)));
             Assert.IsNotNull(reader);
             var isotopes = reader.ReadIsotopes();
             Assert.IsNotNull(isotopes);

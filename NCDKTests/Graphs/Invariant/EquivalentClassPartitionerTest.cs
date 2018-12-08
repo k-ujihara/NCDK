@@ -20,7 +20,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
@@ -35,52 +34,55 @@ namespace NCDK.Graphs.Invariant
     // @cdk.created 2003-09-26
     // @cdk.module test-extra
     [TestClass()]
-    public class EquivalentClassPartitionerTest : CDKTestCase
+    public class EquivalentClassPartitionerTest
+        : CDKTestCase
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
+
         [TestMethod()]
         public void TestEquivalent()
         {
-            AtomContainer C40C3V = new AtomContainer();
-            C40C3V.Atoms.Add(new Atom("C")); // 1
-            C40C3V.Atoms.Add(new Atom("C")); // 2
-            C40C3V.Atoms.Add(new Atom("C")); // 3
-            C40C3V.Atoms.Add(new Atom("C")); // 4
-            C40C3V.Atoms.Add(new Atom("C")); // 5
-            C40C3V.Atoms.Add(new Atom("C")); // 6
-            C40C3V.Atoms.Add(new Atom("C")); // 7
-            C40C3V.Atoms.Add(new Atom("C")); // 8
-            C40C3V.Atoms.Add(new Atom("C")); // 9
-            C40C3V.Atoms.Add(new Atom("C")); // 10
-            C40C3V.Atoms.Add(new Atom("C")); // 11
-            C40C3V.Atoms.Add(new Atom("C")); // 12
-            C40C3V.Atoms.Add(new Atom("C")); // 13
-            C40C3V.Atoms.Add(new Atom("C")); // 14
-            C40C3V.Atoms.Add(new Atom("C")); // 15
-            C40C3V.Atoms.Add(new Atom("C")); // 16
-            C40C3V.Atoms.Add(new Atom("C")); // 17
-            C40C3V.Atoms.Add(new Atom("C")); // 18
-            C40C3V.Atoms.Add(new Atom("C")); // 19
-            C40C3V.Atoms.Add(new Atom("C")); // 20
-            C40C3V.Atoms.Add(new Atom("C")); // 21
-            C40C3V.Atoms.Add(new Atom("C")); // 22
-            C40C3V.Atoms.Add(new Atom("C")); // 23
-            C40C3V.Atoms.Add(new Atom("C")); // 24
-            C40C3V.Atoms.Add(new Atom("C")); // 25
-            C40C3V.Atoms.Add(new Atom("C")); // 26
-            C40C3V.Atoms.Add(new Atom("C")); // 27
-            C40C3V.Atoms.Add(new Atom("C")); // 28
-            C40C3V.Atoms.Add(new Atom("C")); // 29
-            C40C3V.Atoms.Add(new Atom("C")); // 30
-            C40C3V.Atoms.Add(new Atom("C")); // 31
-            C40C3V.Atoms.Add(new Atom("C")); // 32
-            C40C3V.Atoms.Add(new Atom("C")); // 33
-            C40C3V.Atoms.Add(new Atom("C")); // 34
-            C40C3V.Atoms.Add(new Atom("C")); // 35
-            C40C3V.Atoms.Add(new Atom("C")); // 36
-            C40C3V.Atoms.Add(new Atom("C")); // 37
-            C40C3V.Atoms.Add(new Atom("C")); // 38
-            C40C3V.Atoms.Add(new Atom("C")); // 39
-            C40C3V.Atoms.Add(new Atom("C")); // 40
+            var C40C3V = builder.NewAtomContainer();
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 1
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 2
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 3
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 4
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 5
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 6
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 7
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 8
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 9
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 10
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 11
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 12
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 13
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 14
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 15
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 16
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 17
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 18
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 19
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 20
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 21
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 22
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 23
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 24
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 25
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 26
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 27
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 28
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 29
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 30
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 31
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 32
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 33
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 34
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 35
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 36
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 37
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 38
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 39
+            C40C3V.Atoms.Add(builder.NewAtom("C")); // 40
 
             C40C3V.AddBond(C40C3V.Atoms[0], C40C3V.Atoms[1], BondOrder.Single); // 1
             C40C3V.AddBond(C40C3V.Atoms[0], C40C3V.Atoms[5], BondOrder.Single); // 2
@@ -142,9 +144,9 @@ namespace NCDK.Graphs.Invariant
             C40C3V.AddBond(C40C3V.Atoms[31], C40C3V.Atoms[32], BondOrder.Single); // 58
             C40C3V.AddBond(C40C3V.Atoms[31], C40C3V.Atoms[35], BondOrder.Single); // 59
             C40C3V.AddBond(C40C3V.Atoms[32], C40C3V.Atoms[38], BondOrder.Single); // 60
-            EquivalentClassPartitioner it = new EquivalentClassPartitioner(C40C3V);
+            var it = new EquivalentClassPartitioner(C40C3V);
             var equivalentClass = it.GetTopoEquivClassbyHuXu(C40C3V);
-            char[] arrEquivalent = new char[39];
+            var arrEquivalent = new char[39];
             for (int i = 1; i < equivalentClass.Length - 1; i++)
                 arrEquivalent[i - 1] = equivalentClass[i].ToString()[0];
             string strEquivalent = new string(arrEquivalent);
@@ -157,31 +159,31 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void TestFullereneC24D6D()
         {
-            AtomContainer C24D6D = new AtomContainer();
-            C24D6D.Atoms.Add(new Atom("C")); // 1
-            C24D6D.Atoms.Add(new Atom("C")); // 2
-            C24D6D.Atoms.Add(new Atom("C")); // 3
-            C24D6D.Atoms.Add(new Atom("C")); // 4
-            C24D6D.Atoms.Add(new Atom("C")); // 5
-            C24D6D.Atoms.Add(new Atom("C")); // 6
-            C24D6D.Atoms.Add(new Atom("C")); // 7
-            C24D6D.Atoms.Add(new Atom("C")); // 8
-            C24D6D.Atoms.Add(new Atom("C")); // 9
-            C24D6D.Atoms.Add(new Atom("C")); // 10
-            C24D6D.Atoms.Add(new Atom("C")); // 11
-            C24D6D.Atoms.Add(new Atom("C")); // 12
-            C24D6D.Atoms.Add(new Atom("C")); // 13
-            C24D6D.Atoms.Add(new Atom("C")); // 14
-            C24D6D.Atoms.Add(new Atom("C")); // 15
-            C24D6D.Atoms.Add(new Atom("C")); // 16
-            C24D6D.Atoms.Add(new Atom("C")); // 17
-            C24D6D.Atoms.Add(new Atom("C")); // 18
-            C24D6D.Atoms.Add(new Atom("C")); // 19
-            C24D6D.Atoms.Add(new Atom("C")); // 20
-            C24D6D.Atoms.Add(new Atom("C")); // 21
-            C24D6D.Atoms.Add(new Atom("C")); // 22
-            C24D6D.Atoms.Add(new Atom("C")); // 23
-            C24D6D.Atoms.Add(new Atom("C")); // 24
+            var C24D6D = builder.NewAtomContainer();
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 1
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 2
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 3
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 4
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 5
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 6
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 7
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 8
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 9
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 10
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 11
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 12
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 13
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 14
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 15
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 16
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 17
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 18
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 19
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 20
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 21
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 22
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 23
+            C24D6D.Atoms.Add(builder.NewAtom("C")); // 24
 
             C24D6D.AddBond(C24D6D.Atoms[0], C24D6D.Atoms[1], BondOrder.Single); // 1
             C24D6D.AddBond(C24D6D.Atoms[0], C24D6D.Atoms[5], BondOrder.Single); // 2
@@ -220,9 +222,9 @@ namespace NCDK.Graphs.Invariant
             C24D6D.AddBond(C24D6D.Atoms[21], C24D6D.Atoms[22], BondOrder.Single); // 35
             C24D6D.AddBond(C24D6D.Atoms[22], C24D6D.Atoms[23], BondOrder.Single); // 36
 
-            EquivalentClassPartitioner it = new EquivalentClassPartitioner(C24D6D);
+            var it = new EquivalentClassPartitioner(C24D6D);
             var equivalentClass = it.GetTopoEquivClassbyHuXu(C24D6D);
-            char[] arrEquivalent = new char[24];
+            var arrEquivalent = new char[24];
             for (int i = 1; i < equivalentClass.Length; i++)
                 arrEquivalent[i - 1] = equivalentClass[i].ToString()[0];
             string strEquivalent = new string(arrEquivalent);
@@ -231,18 +233,15 @@ namespace NCDK.Graphs.Invariant
             Assert.AreEqual("111111222222222222111111", strEquivalent);
         }
 
-        /// <summary>
         // @cdk.bug 3513954
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestPseudoAtoms()
         {
-            string filename = "NCDK.Data.MDL.pseudoatoms.sdf";
+            var filename = "NCDK.Data.MDL.pseudoatoms.sdf";
 
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            var reader = new MDLV2000Reader(ins);
+            var mol = builder.NewAtomContainer();
             mol = reader.Read(mol);
             Assert.IsNotNull(mol);
 
@@ -265,21 +264,19 @@ namespace NCDK.Graphs.Invariant
         /// Azulene has an aromatic outer ring and if bonds are considered only as a sequence of single and double bonds
         /// then the atoms closing the rings will be assigned to different classes (and all other atoms as well) because
         /// there will be a different number of single and double bonds on opposite sides of the symmetry axis.
-        ///
-        // @throws Exception
-        // @cdk.bug 3562476
         /// </summary>
+        // @cdk.bug 3562476
         [TestMethod()]
         public void TestAromaticSystem()
         {
-            IAtomContainer mol = TestMoleculeFactory.MakeAzulene();
+            var mol = TestMoleculeFactory.MakeAzulene();
             Assert.IsNotNull(mol, "Created molecule was null");
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
-            EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
-            int[] equivalentClass = it.GetTopoEquivClassbyHuXu(mol);
-            char[] arrEquivalent = new char[mol.Atoms.Count];
+            var it = new EquivalentClassPartitioner(mol);
+            var equivalentClass = it.GetTopoEquivClassbyHuXu(mol);
+            var arrEquivalent = new char[mol.Atoms.Count];
             for (int i = 1; i < equivalentClass.Length; i++)
                 arrEquivalent[i - 1] = equivalentClass[i].ToString()[0];
             string strEquivalent = new string(arrEquivalent);
@@ -292,19 +289,17 @@ namespace NCDK.Graphs.Invariant
 
         /// <summary>
         /// Test the equivalent classes method in alpha-pinene
-        ///
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestAlphaPinene()
         {
-            IAtomContainer mol = TestMoleculeFactory.MakeAlphaPinene();
+            var mol = TestMoleculeFactory.MakeAlphaPinene();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
             Assert.IsNotNull(mol, "Created molecule was null");
-            EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
-            int[] equivalentClass = it.GetTopoEquivClassbyHuXu(mol);
-            char[] arrEquivalent = new char[mol.Atoms.Count];
+            var it = new EquivalentClassPartitioner(mol);
+            var equivalentClass = it.GetTopoEquivClassbyHuXu(mol);
+            var arrEquivalent = new char[mol.Atoms.Count];
             for (int i = 1; i < equivalentClass.Length; i++)
                 arrEquivalent[i - 1] = equivalentClass[i].ToString()[0];
             string strEquivalent = new string(arrEquivalent);
@@ -317,19 +312,17 @@ namespace NCDK.Graphs.Invariant
         /// Test the equivalent classes method in pyrimidine
         /// Tests if the position of the single and double bonds in an aromatic ring matter
         /// to assign a class.
-        ///
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestPyrimidine()
         {
-            IAtomContainer mol = TestMoleculeFactory.MakePyrimidine();
+            var mol = TestMoleculeFactory.MakePyrimidine();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
             Assert.IsNotNull(mol, "Created molecule was null");
-            EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
-            int[] equivalentClass = it.GetTopoEquivClassbyHuXu(mol);
-            char[] arrEquivalent = new char[mol.Atoms.Count];
+            var it = new EquivalentClassPartitioner(mol);
+            var equivalentClass = it.GetTopoEquivClassbyHuXu(mol);
+            var arrEquivalent = new char[mol.Atoms.Count];
             for (int i = 1; i < equivalentClass.Length; i++)
                 arrEquivalent[i - 1] = equivalentClass[i].ToString()[0];
             string strEquivalent = new string(arrEquivalent);
@@ -341,19 +334,17 @@ namespace NCDK.Graphs.Invariant
         /// <summary>
         /// Test the equivalent classes method in biphenyl,
         /// a molecule with two aromatic systems. It has 2 symmetry axis.
-        ///
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestBiphenyl()
         {
-            IAtomContainer mol = TestMoleculeFactory.MakeBiphenyl();
+            var mol = TestMoleculeFactory.MakeBiphenyl();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
             Assert.IsNotNull(mol, "Created molecule was null");
-            EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
-            int[] equivalentClass = it.GetTopoEquivClassbyHuXu(mol);
-            char[] arrEquivalent = new char[mol.Atoms.Count];
+            var it = new EquivalentClassPartitioner(mol);
+            var equivalentClass = it.GetTopoEquivClassbyHuXu(mol);
+            var arrEquivalent = new char[mol.Atoms.Count];
             for (int i = 1; i < equivalentClass.Length; i++)
                 arrEquivalent[i - 1] = equivalentClass[i].ToString()[0];
             string strEquivalent = new string(arrEquivalent);
@@ -367,19 +358,17 @@ namespace NCDK.Graphs.Invariant
         /// an aromatic molecule with a proton that can be exchanged between two aromatic nitrogens.
         /// The method should have failed because only one tautomer is considered,
         /// but there is no priority class for nodes of type ArNH to distinguish the nitrogens.
-        ///
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestImidazole()
         {
-            IAtomContainer mol = TestMoleculeFactory.MakeImidazole();
+            var mol = TestMoleculeFactory.MakeImidazole();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
             Assert.IsNotNull(mol, "Created molecule was null");
-            EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
-            int[] equivalentClass = it.GetTopoEquivClassbyHuXu(mol);
-            char[] arrEquivalent = new char[mol.Atoms.Count];
+            var it = new EquivalentClassPartitioner(mol);
+            var equivalentClass = it.GetTopoEquivClassbyHuXu(mol);
+            var arrEquivalent = new char[mol.Atoms.Count];
             for (int i = 1; i < equivalentClass.Length; i++)
                 arrEquivalent[i - 1] = equivalentClass[i].ToString()[0];
             string strEquivalent = new string(arrEquivalent);

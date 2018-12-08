@@ -40,7 +40,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestSMILESFileWithNames()
         {
-            string filename = "NCDK.Data.Smiles.test.smi";
+            var filename = "NCDK.Data.Smiles.test.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, ChemObjectBuilder.Instance);
@@ -61,7 +61,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestSMILESFileWithSpacesAndTabs()
         {
-            string filename = "NCDK.Data.Smiles.tabs.smi";
+            var filename = "NCDK.Data.Smiles.tabs.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, ChemObjectBuilder.Instance);
@@ -82,7 +82,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestSMILESTitles()
         {
-            string filename = "NCDK.Data.Smiles.tabs.smi";
+            var filename = "NCDK.Data.Smiles.tabs.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, ChemObjectBuilder.Instance);
@@ -97,7 +97,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestSMILESFile()
         {
-            string filename = "NCDK.Data.Smiles.test2.smi";
+            var filename = "NCDK.Data.Smiles.test2.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, ChemObjectBuilder.Instance);
@@ -116,7 +116,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestGetFormat()
         {
-            string filename = "NCDK.Data.Smiles.test2.smi";
+            var filename = "NCDK.Data.Smiles.test2.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, ChemObjectBuilder.Instance);
@@ -127,7 +127,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestSetReader1()
         {
-            string filename = "NCDK.Data.Smiles.test2.smi";
+            var filename = "NCDK.Data.Smiles.test2.smi";
             var ins1 = ResourceLoader.GetAsStream(filename);
             EnumerableSMILESReader reader1 = new EnumerableSMILESReader(ins1, ChemObjectBuilder.Instance);
             int molCount = 0;
@@ -150,7 +150,7 @@ namespace NCDK.IO.Iterator
         [ExpectedException(typeof(NotSupportedException))]
         public void TestRemove()
         {
-            string filename = "NCDK.Data.Smiles.test2.smi";
+            var filename = "NCDK.Data.Smiles.test2.smi";
             var ins1 = ResourceLoader.GetAsStream(filename);
             EnumerableSMILESReader reader = new EnumerableSMILESReader(ins1, ChemObjectBuilder.Instance);
             int molCount = 0;

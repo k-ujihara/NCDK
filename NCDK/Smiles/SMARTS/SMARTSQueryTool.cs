@@ -137,7 +137,8 @@ namespace NCDK.Smiles.SMARTS
             /// however the non-uniqueness leads to ambiguous matching.
             /// </summary>
             public static readonly RingSet SmallestSetOfSmallestRings = new SmallestSetOfSmallestRings_Impl();
-            private class SmallestSetOfSmallestRings_Impl : RingSet
+            private class SmallestSetOfSmallestRings_Impl
+                : RingSet
             {
                 public override IRingSet ComputeRingSet(IAtomContainer m)
                 {

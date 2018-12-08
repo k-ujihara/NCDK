@@ -43,7 +43,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestExampleFile_MolReading()
         {
-            string filename = "NCDK.Data.MoSS.TKO.mossoutput";
+            var filename = "NCDK.Data.MoSS.TKO.mossoutput";
             var ins = ResourceLoader.GetAsStream(filename);
             MoSSOutputReader reader = new MoSSOutputReader(ins);
             var moleculeSet = new ChemObjectSet<IAtomContainer>();
@@ -59,7 +59,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestExampleFile_SupportColumns()
         {
-            string filename = "NCDK.Data.MoSS.TKO.mossoutput";
+            var filename = "NCDK.Data.MoSS.TKO.mossoutput";
             var ins = ResourceLoader.GetAsStream(filename);
             MoSSOutputReader reader = new MoSSOutputReader(ins);
             var moleculeSet = new ChemObjectSet<IAtomContainer>();

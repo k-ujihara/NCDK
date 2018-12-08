@@ -33,7 +33,7 @@ namespace NCDK.Groups
     {
         public IAtomContainer GetMol(string smiles)
         {
-            SmilesParser parser = CDK.SmilesParser;
+            var parser = CDK.SmilesParser;
             return parser.ParseSmiles(smiles);
         }
 

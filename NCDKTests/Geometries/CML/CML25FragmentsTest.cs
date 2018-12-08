@@ -22,7 +22,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System.IO;
 using System.Text;
 
@@ -37,6 +36,8 @@ namespace NCDK.IO.CML
     [TestClass()]
     public class CML25FragmentsTest : CDKTestCase
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+
         [TestMethod(), Ignore()] // Functionality not yet implemented
         public void TestIsotopeRef()
         {
@@ -47,11 +48,11 @@ namespace NCDK.IO.CML
                     + "      <atom id='a1' elementType='H' isotopeRef='H1'/>" + "    </atomArray>" + "  </molecule>"
                     + "</cml>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
-            IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
+            var chemFile = ParseCMLString(cmlString);
+            var mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(1, mol.Atoms.Count);
-            IAtom atom = mol.Atoms[0];
+            var atom = mol.Atoms[0];
             Assert.AreEqual("a1", atom.Id);
             Assert.IsNotNull(atom.NaturalAbundance);
             Assert.AreEqual(99.9885, atom.NaturalAbundance.Value, 0.0001);
@@ -62,9 +63,10 @@ namespace NCDK.IO.CML
         private IChemFile ParseCMLString(string cmlString)
         {
             IChemFile chemFile = null;
-            CMLReader reader = new CMLReader(new MemoryStream(Encoding.UTF8.GetBytes(cmlString)));
-            chemFile = (IChemFile)reader.Read(new ChemFile());
-            reader.Close();
+            using (var reader = new CMLReader(new MemoryStream(Encoding.UTF8.GetBytes(cmlString))))
+            {
+                chemFile = reader.Read(builder.NewChemFile());
+            }
             return chemFile;
         }
 
@@ -81,11 +83,11 @@ namespace NCDK.IO.CML
             Assert.IsNotNull(chemFile);
 
             Assert.AreEqual(chemFile.Count, 1);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
 
             Assert.AreEqual(seq.Count, 1);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
 
             var moleculeSet = model.MoleculeSet;

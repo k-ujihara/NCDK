@@ -31,7 +31,6 @@ namespace NCDK.SMSD.Globals
     /// Class that manages MCS timeout.
     /// </summary>
     // @cdk.module smsd
-    // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd .")]
     public class TimeOut

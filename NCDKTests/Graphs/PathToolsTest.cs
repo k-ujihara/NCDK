@@ -20,7 +20,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Collections;
 using NCDK.IO;
-using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Templates;
 using System.Collections.Generic;
@@ -31,6 +30,7 @@ namespace NCDK.Graphs
     [TestClass()]
     public class PathToolsTest : CDKTestCase
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         private static IAtomContainer molecule = TestMoleculeFactory.MakeAlphaPinene();
         private static SmilesParser sp = CDK.SmilesParser;
 
@@ -50,16 +50,12 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void TestReSetFlags_IAtomContainer()
         {
-            IAtomContainer atomContainer = new AtomContainer();
-            IAtom atom1 = new Atom("C")
-            {
-                IsVisited = true
-            };
-            IAtom atom2 = new Atom("C")
-            {
-                IsVisited = true
-            };
-            IBond bond1 = new Bond(atom1, atom2, BondOrder.Single);
+            IAtomContainer atomContainer = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
+            atom1.IsVisited = true;
+            IAtom atom2 = builder.NewAtom("C");
+            atom2.IsVisited = true;
+            IBond bond1 = builder.NewBond(atom1, atom2, BondOrder.Single);
             atomContainer.Atoms.Add(atom1);
             atomContainer.Atoms.Add(atom2);
             atomContainer.Bonds.Add(bond1);
@@ -108,10 +104,10 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void TestGetShortestPath_Middle()
         {
-            string filename = "NCDK.Data.MDL.shortest_path_test.mol";
+            var filename = "NCDK.Data.MDL.shortest_path_test.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            IAtomContainer testMolecule = new AtomContainer();
+            var reader = new MDLV2000Reader(ins);
+            IAtomContainer testMolecule = builder.NewAtomContainer();
             reader.Read(testMolecule);
 
             var path = PathTools.GetShortestPath(testMolecule, testMolecule.Atoms[0], testMolecule.Atoms[9]);
@@ -276,7 +272,7 @@ namespace NCDK.Graphs
             foreach (var atom in molecule.Atoms)
                 atom.IsVisited = false;
 
-            IAtomContainer paths = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer paths = builder.NewAtomContainer();
             IAtom root = molecule.Atoms[0];
             IAtom target = null;
 

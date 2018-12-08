@@ -20,11 +20,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Numerics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
-using System.IO;
+using NCDK.Numerics;
 using System;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -34,25 +34,27 @@ namespace NCDK.IO
     /// <seealso cref="XYZWriter"/>
     // @cdk.module test-io
     [TestClass()]
-    public class XYZWriterTest : ChemObjectIOTest
+    public class XYZWriterTest 
+        : ChemObjectIOTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         protected override Type ChemObjectIOToTestType => typeof(XYZWriter);
 
         [TestMethod()]
         public void TestAccepts()
         {
             XYZWriter reader = new XYZWriter(new StringWriter());
-            Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
+            Assert.IsTrue(reader.Accepts(typeof(IAtomContainer)));
         }
 
         [TestMethod()]
         public void TestWriting()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainer molecule = new AtomContainer();
-            IAtom atom1 = new Atom("C");
+            var molecule = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
             atom1.Point3D = new Vector3(1.0, 2.0, 3.0);
-            IAtom atom2 = new Atom("C");
+            IAtom atom2 = builder.NewAtom("C");
             atom2.Point3D = new Vector3(1.0, 2.0, 3.0);
             molecule.Atoms.Add(atom1);
             molecule.Atoms.Add(atom2);
@@ -77,8 +79,8 @@ namespace NCDK.IO
         public void TestWriting_Point2d()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainer molecule = new AtomContainer();
-            IAtom atom1 = new Atom("C");
+            var molecule = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
             atom1.Point2D = new Vector2(1.0, 2.0);
             molecule.Atoms.Add(atom1);
 
@@ -96,11 +98,11 @@ namespace NCDK.IO
         public void TestSixDecimalOuput()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainer molecule = new AtomContainer();
-            IAtom atom1 = new Atom("C");
+            var molecule = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
             atom1.Point3D = new Vector3(1.0, 2.0, 3.0);
             molecule.Atoms.Add(atom1);
-            IAtom atom2 = new Atom("C");
+            IAtom atom2 = builder.NewAtom("C");
             atom2.Point3D = new Vector3(-1.5, -2.0, 0.0);
             molecule.Atoms.Add(atom2);
 

@@ -86,7 +86,7 @@ namespace NCDK.RingSearches
             if (true)
             {
                 #region Fused
-                IAtomContainer mol = new Smiles.SmilesParser(ChemObjectBuilder.Instance).ParseSmiles("c1cc(cc2cc(ccc12)C3C4CC34)C6CC5CCC6(C5)");
+                IAtomContainer mol = new Smiles.SmilesParser().ParseSmiles("c1cc(cc2cc(ccc12)C3C4CC34)C6CC5CCC6(C5)");
                 RingSearch ringSearch = new RingSearch(mol);
                 
                 int[][] fused = ringSearch.Fused();

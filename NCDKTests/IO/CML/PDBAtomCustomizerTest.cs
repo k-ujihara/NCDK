@@ -21,10 +21,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.LibIO.CML;
-using System;
 using System.IO;
 using System.Text;
 
@@ -34,8 +33,11 @@ namespace NCDK.IO.CML
     /// TestCase for the <see cref="PDBAtomCustomizer"/> class.
     /// </summary>
     // @cdk.module test-pdbcml
-    public class PDBAtomCustomizerTest : CDKTestCase
+    public class PDBAtomCustomizerTest 
+        : CDKTestCase
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
+
         /// <summary>
         /// A roundtripping test to see of PDB atom customization works.
         /// </summary>
@@ -47,7 +49,7 @@ namespace NCDK.IO.CML
             var ins1 = ResourceLoader.GetAsStream(this.GetType(), filename_pdb);
 
             ISimpleChemObjectReader reader = new PDBReader(ins1);
-            IChemFile chemFile1 = (IChemFile)reader.Read(new ChemFile());
+            IChemFile chemFile1 = (IChemFile)reader.Read(builder.NewChemFile());
             reader.Close();
             IChemSequence seq1 = chemFile1[0];
             IChemModel model1 = seq1[0];
@@ -65,11 +67,11 @@ namespace NCDK.IO.CML
             string cmlContent1 = writer.ToString();
 
             CMLReader reader2 = new CMLReader(new MemoryStream(Encoding.UTF8.GetBytes(cmlContent1)));
-            IChemFile chemFil2 = (IChemFile)reader2.Read(new ChemFile());
+            var chemFil2 = reader2.Read(builder.NewChemFile());
             reader2.Close();
             IChemSequence seq2 = chemFil2[0];
             IChemModel model2 = seq2[0];
-            PDBPolymer polymer2 = (PDBPolymer)model2.MoleculeSet[0];
+            var polymer2 = (IPDBPolymer)model2.MoleculeSet[0];
 
             int countchemFile2 = chemFil2.Count;
             int countmodel2 = model2.MoleculeSet.Count;

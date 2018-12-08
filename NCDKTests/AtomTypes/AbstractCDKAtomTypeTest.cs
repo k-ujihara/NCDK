@@ -34,7 +34,7 @@ namespace NCDK.AtomTypes
     {
         private const string ATOMTYPE_LIST = "cdk-atom-types.owl";
 
-        protected readonly static AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data." + ATOMTYPE_LIST, CDK.Builder);
+        protected readonly static AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data." + ATOMTYPE_LIST);
 
         public override string AtomTypeListName => ATOMTYPE_LIST;
 

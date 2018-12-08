@@ -25,7 +25,6 @@
 
 using NCDK.Common.Collections;
 using NCDK.Isomorphisms.Matchers;
-using NCDK.Isomorphisms.Matchers.SMARTS;
 using System;
 using System.Collections.Generic;
 using System.Linq;

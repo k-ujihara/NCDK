@@ -29,7 +29,6 @@ namespace NCDK.Tools
     /// </summary>
     // @author     Todd Martin
     // @cdk.module qsar
-    // @cdk.githash
     public class AtomicProperties
     {
         public static AtomicProperties Instance { get; } = new AtomicProperties();

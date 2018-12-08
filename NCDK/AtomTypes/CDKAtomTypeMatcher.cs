@@ -23,6 +23,7 @@ using NCDK.Config;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -48,7 +49,7 @@ namespace NCDK.AtomTypes
         private readonly AtomTypeFactory factory = CDK.CdkAtomTypeFactory;
         private readonly Mode mode;
 
-        private static Dictionary<Mode, CDKAtomTypeMatcher> factories = new Dictionary<Mode, CDKAtomTypeMatcher>(2);
+        private static ConcurrentDictionary<Mode, CDKAtomTypeMatcher> factories = new ConcurrentDictionary<Mode, CDKAtomTypeMatcher>();
         private static readonly object syncFactorie = new object();
 
         private CDKAtomTypeMatcher(Mode mode)
@@ -63,13 +64,7 @@ namespace NCDK.AtomTypes
 
         public static CDKAtomTypeMatcher GetInstance(Mode mode)
         {
-            if (!factories.ContainsKey(mode))
-                lock (syncFactorie)
-                {
-                    if (!factories.ContainsKey(mode))
-                        factories.Add(mode, new CDKAtomTypeMatcher(mode));
-                }
-            return factories[mode];
+            return factories.GetOrAdd(mode, n => new CDKAtomTypeMatcher(n));
         }
 
         public IEnumerable<IAtomType> FindMatchingAtomTypes(IAtomContainer atomContainer)

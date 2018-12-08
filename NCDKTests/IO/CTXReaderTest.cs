@@ -19,9 +19,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -36,39 +36,40 @@ namespace NCDK.IO
     [TestClass()]
     public class CTXReaderTest : SimpleChemObjectReaderTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         protected override string TestFile => "NCDK.Data.CTX.methanol_with_descriptors.ctx";
         protected override Type ChemObjectIOToTestType => typeof(CTXReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            CTXReader reader = new CTXReader(new StringReader(""));
-            Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
+            var reader = new CTXReader(new StringReader(""));
+            Assert.IsTrue(reader.Accepts(typeof(IChemFile)));
         }
 
         [TestMethod()]
         public void TestMethanol()
         {
-            string filename = "NCDK.Data.CTX.methanol_with_descriptors.ctx";
+            var filename = "NCDK.Data.CTX.methanol_with_descriptors.ctx";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            CTXReader reader = new CTXReader(ins);
-            IChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new CTXReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
 
             var moleculeSet = model.MoleculeSet;
             Assert.IsNotNull(moleculeSet);
             Assert.AreEqual(1, moleculeSet.Count);
 
-            IAtomContainer container = moleculeSet[0];
+            var container = moleculeSet[0];
             Assert.IsNotNull(container);
             Assert.AreEqual(6, container.Atoms.Count, "Incorrect atom count.");
             Assert.AreEqual(5, container.Bonds.Count);

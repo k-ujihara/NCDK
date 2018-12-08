@@ -22,7 +22,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.Numerics;
 using NCDK.Sgroups;
 using NCDK.Stereo;
@@ -34,12 +33,14 @@ namespace NCDK.IO
     [TestClass()]
     public class MDLV3000WriterTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+
         [TestMethod()]
         public void OutputValencyWhenNeeded()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("Na"));
-            mol.Atoms.Add(new Atom("Na"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("Na"));
+            mol.Atoms.Add(builder.NewAtom("Na"));
             mol.Atoms[0].ImplicitHydrogenCount = 0; // Na metal
             mol.Atoms[1].ImplicitHydrogenCount = 1; // Na hydride
             string res = WriteToStr(mol);
@@ -50,9 +51,9 @@ namespace NCDK.IO
         [TestMethod()]
         public void OutputFormalCharge()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("O"));
-            mol.Atoms.Add(new Atom("C"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("O"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.Atoms[0].ImplicitHydrogenCount = 0;
             mol.Atoms[0].FormalCharge = -1;
@@ -65,9 +66,9 @@ namespace NCDK.IO
         [TestMethod()]
         public void OutputMassNumber()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("C"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.Atoms[0].ImplicitHydrogenCount = 0;
             mol.Atoms[0].MassNumber = 2;
@@ -81,8 +82,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void OutputRadical()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("C"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[0].ImplicitHydrogenCount = 3;
             mol.AddSingleElectronTo(mol.Atoms[0]);
             string res = WriteToStr(mol);
@@ -93,10 +94,10 @@ namespace NCDK.IO
         [ExpectedException(typeof(CDKException))]
         public void NullBondOrder()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Bonds.Add(new Bond(mol.Atoms[0], mol.Atoms[1], BondOrder.Unset));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Bonds.Add(builder.NewBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Unset));
             mol.Atoms[0].ImplicitHydrogenCount = 0;
             mol.Atoms[0].MassNumber = 2;
             mol.Atoms[1].ImplicitHydrogenCount = 3;
@@ -107,9 +108,9 @@ namespace NCDK.IO
         [ExpectedException(typeof(CDKException))]
         public void UnSetBondOrder()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("C"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Unset);
             mol.Atoms[0].ImplicitHydrogenCount = 0;
             mol.Atoms[0].MassNumber = 2;
@@ -120,9 +121,9 @@ namespace NCDK.IO
         [TestMethod()]
         public void SolidWedgeBonds()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("O"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("O"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single, BondStereo.Up);
             mol.Atoms[0].ImplicitHydrogenCount = 3;
             mol.Atoms[1].ImplicitHydrogenCount = 1;
@@ -133,9 +134,9 @@ namespace NCDK.IO
         [TestMethod()]
         public void HashedWedgeBonds()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("O"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("O"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single, BondStereo.Down);
             mol.Atoms[0].ImplicitHydrogenCount = 3;
             mol.Atoms[1].ImplicitHydrogenCount = 1;
@@ -146,9 +147,9 @@ namespace NCDK.IO
         [TestMethod()]
         public void SolidWedgeInvBonds()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("O"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("O"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single, BondStereo.UpInverted);
             mol.Atoms[0].ImplicitHydrogenCount = 3;
             mol.Atoms[1].ImplicitHydrogenCount = 1;
@@ -159,9 +160,9 @@ namespace NCDK.IO
         [TestMethod()]
         public void HashedWedgeInvBonds()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("O"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("O"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single, BondStereo.DownInverted);
             mol.Atoms[0].ImplicitHydrogenCount = 3;
             mol.Atoms[1].ImplicitHydrogenCount = 1;
@@ -172,11 +173,9 @@ namespace NCDK.IO
         [TestMethod()]
         public void WriteLeadingZero()
         {
-            var mol = new AtomContainer();
-            Atom atom = new Atom("C")
-            {
-                Point2D = new Vector2(0.5, 1.2)
-            };
+            var mol = builder.NewAtomContainer();
+            var atom = builder.NewAtom("C"); ;
+            atom.Point2D = new Vector2(0.5, 1.2);
             mol.Atoms.Add(atom);
             Assert.IsTrue(WriteToStr(mol).Contains("0.5 1.2"));
         }
@@ -184,13 +183,13 @@ namespace NCDK.IO
         [TestMethod()]
         public void WriteParity()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("O"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("H"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("O"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single);
@@ -202,12 +201,16 @@ namespace NCDK.IO
             mol.Atoms[3].ImplicitHydrogenCount = 3;
             mol.Atoms[4].ImplicitHydrogenCount = 3;
             mol.Atoms[5].ImplicitHydrogenCount = 0;
-            mol.StereoElements.Add(new TetrahedralChirality(mol.Atoms[1],
-                                                          new IAtom[]{mol.Atoms[0],  // oxygen (look from)
-                                                                  mol.Atoms[2],  // Et
-                                                                  mol.Atoms[4],  // Me
-                                                                  mol.Atoms[5]}, // H
-                                                          TetrahedralStereo.Clockwise));
+            mol.StereoElements.Add(
+                new TetrahedralChirality(mol.Atoms[1],
+                    new IAtom[]
+                        {
+                            mol.Atoms[0],  // oxygen (look from)
+                            mol.Atoms[2],  // Et
+                            mol.Atoms[4],  // Me
+                            mol.Atoms[5],  // H
+                        },
+                    TetrahedralStereo.Clockwise));
             string res = WriteToStr(mol);
             Assert.IsTrue(res.Contains("M  V30 2 C 0 0 0 0 CFG=2\n"));
         }
@@ -215,13 +218,13 @@ namespace NCDK.IO
         [TestMethod()]
         public void WriteParityHNotLast()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("O"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("C"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("O"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single);
@@ -233,12 +236,16 @@ namespace NCDK.IO
             mol.Atoms[3].ImplicitHydrogenCount = 3;
             mol.Atoms[4].ImplicitHydrogenCount = 0;
             mol.Atoms[5].ImplicitHydrogenCount = 3;
-            mol.StereoElements.Add(new TetrahedralChirality(mol.Atoms[1],
-                                                          new IAtom[]{mol.Atoms[0],  // oxygen (look from)
-                                                                  mol.Atoms[2],  // Et
-                                                                  mol.Atoms[4],  // H
-                                                                  mol.Atoms[5]}, // Me
-                                                          TetrahedralStereo.Clockwise));
+            mol.StereoElements.Add(
+                new TetrahedralChirality(
+                    mol.Atoms[1],
+                    new IAtom[]
+                        {
+                            mol.Atoms[0],  // oxygen (look from)
+                            mol.Atoms[2],  // Et
+                            mol.Atoms[4],  // H
+                            mol.Atoms[5]}, // Me
+                    TetrahedralStereo.Clockwise));
             string res = WriteToStr(mol);
             Assert.IsTrue(res.Contains("M  V30 2 C 0 0 0 0 CFG=1\n"));
             // H was moved to position 6 from 5
@@ -248,12 +255,12 @@ namespace NCDK.IO
         [TestMethod()]
         public void WriteParityImplH()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("O"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("O"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single);
@@ -276,12 +283,12 @@ namespace NCDK.IO
         [TestMethod()]
         public void WriteParityImplHInverted()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("O"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("O"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single);
@@ -291,12 +298,15 @@ namespace NCDK.IO
             mol.Atoms[2].ImplicitHydrogenCount = 2;
             mol.Atoms[3].ImplicitHydrogenCount = 3;
             mol.Atoms[4].ImplicitHydrogenCount = 3;
-            mol.StereoElements.Add(new TetrahedralChirality(mol.Atoms[1],
-                                                          new IAtom[]{mol.Atoms[0],  // oxygen (look from)
-                                                                  mol.Atoms[1],  // H (implicit)
-                                                                  mol.Atoms[2],  // Et
-                                                                  mol.Atoms[4]}, // Me
-                                                          TetrahedralStereo.Clockwise));
+            mol.StereoElements.Add(
+                new TetrahedralChirality(
+                    mol.Atoms[1],
+                    new IAtom[]{
+                        mol.Atoms[0],  // oxygen (look from)
+                        mol.Atoms[1],  // H (implicit)
+                        mol.Atoms[2],  // Et
+                        mol.Atoms[4]}, // Me
+                    TetrahedralStereo.Clockwise));
             string res = WriteToStr(mol);
             Assert.IsTrue(res.Contains("M  V30 2 C 0 0 0 0 CFG=2\n"));
         }
@@ -304,11 +314,11 @@ namespace NCDK.IO
         [TestMethod()]
         public void WriteSRUs()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("O"));
-            mol.Atoms.Add(new Atom("O"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("O"));
+            mol.Atoms.Add(builder.NewAtom("O"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single);
@@ -335,11 +345,11 @@ namespace NCDK.IO
         public void WriteMultipleGroup()
         {
             int repeatAtoms = 50;
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("C"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
             for (int i = 0; i < repeatAtoms; i++)
-                mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("O"));
+                mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("O"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             for (int i = 0; i < repeatAtoms; i++)
                 mol.AddBond(mol.Atoms[i + 1], mol.Atoms[i + 2], BondOrder.Single);
@@ -370,7 +380,7 @@ namespace NCDK.IO
         {
             using (MDLV2000Reader mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.sgroup-sru-bracketstyles.mol")))
             {
-                IAtomContainer mol = mdlr.Read(new AtomContainer());
+                IAtomContainer mol = mdlr.Read(builder.NewAtomContainer());
                 string res = WriteToStr(mol);
                 Assert.IsTrue(
                     res.Contains("M  V30 1 SRU 0 ATOMS=(1 2) XBONDS=(2 1 2) LABEL=n CONNECT=HT BRKXYZ=(9 -2.5742-\n"
@@ -387,7 +397,7 @@ namespace NCDK.IO
         {
             using (MDLV2000Reader mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.triphenyl-phosphate-expanded.mol")))
             {
-                IAtomContainer mol = mdlr.Read(new AtomContainer());
+                IAtomContainer mol = mdlr.Read(builder.NewAtomContainer());
                 string res = WriteToStr(mol);
                 Assert.IsTrue(res.Contains(
                     "M  V30 1 SUP 0 ATOMS=(6 6 19 20 21 22 23) XBONDS=(1 5) ESTATE=E LABEL=Ph\n" +
@@ -401,7 +411,7 @@ namespace NCDK.IO
         {
             using (MDLV2000Reader mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.sgroup-ord-mixture.mol")))
             {
-                IAtomContainer mol = mdlr.Read(new AtomContainer());
+                IAtomContainer mol = mdlr.Read(builder.NewAtomContainer());
                 string res = WriteToStr(mol);
                 Assert.IsTrue(res.Contains(
                     "M  V30 1 FOR 0 ATOMS=(24 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21-\n" +
@@ -423,7 +433,7 @@ namespace NCDK.IO
         {
             using (MDLV3000Reader mdlr = new MDLV3000Reader(GetType().Assembly.GetManifestResourceStream(GetType(), "multicenterBond.mol")))
             {
-                IAtomContainer mol = mdlr.Read(new AtomContainer());
+                IAtomContainer mol = mdlr.Read(builder.NewAtomContainer());
                 string res = WriteToStr(mol);
                 Assert.IsTrue(res.Contains("M  V30 8 1 8 9 ATTACH=Any ENDPTS=(5 2 3 4 5 6)\n"));
             }

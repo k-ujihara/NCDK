@@ -20,7 +20,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.IO;
-using NCDK.Silent;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System.IO;
@@ -48,8 +47,8 @@ namespace NCDK.Charges
             GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
 
             IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(new Atom("C"));
-            molecule.Atoms.Add(new Atom("F"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("F"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
 
             AddExplicitHydrogens(molecule);
@@ -72,8 +71,8 @@ namespace NCDK.Charges
             GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
 
             IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(new Atom("C"));
-            molecule.Atoms.Add(new Atom("F"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("F"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
 
             AddExplicitHydrogens(molecule);
@@ -94,9 +93,9 @@ namespace NCDK.Charges
             GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
 
             IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(new Atom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms[0].Charge = 0.0;
-            molecule.Atoms.Add(new Atom("F"));
+            molecule.Atoms.Add(builder.NewAtom("F"));
             molecule.Atoms[1].Charge = 0.0;
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
 
@@ -177,13 +176,13 @@ namespace NCDK.Charges
         [ExpectedException(typeof(CDKException))]
         public void TestUndefinedPartialCharge()
         {
-            string filename = "NCDK.Data.MDL.burden_undefined.sdf";
+            var filename = "NCDK.Data.MDL.burden_undefined.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-            ChemFile content = reader.Read(new ChemFile());
+            var reader = new MDLV2000Reader(ins);
+            var content = reader.Read(builder.NewChemFile());
             reader.Close();
             var cList = ChemFileManipulator.GetAllAtomContainers(content);
-            IAtomContainer ac = cList.First();
+            var ac = cList.First();
 
             Assert.IsNotNull(ac);
             AddExplicitHydrogens(ac);
@@ -194,7 +193,7 @@ namespace NCDK.Charges
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
             CDK.LonePairElectronChecker.Saturate(ac);
 
-            GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+            var peoe = new GasteigerMarsiliPartialCharges();
             peoe.CalculateCharges(ac);
         }
     }

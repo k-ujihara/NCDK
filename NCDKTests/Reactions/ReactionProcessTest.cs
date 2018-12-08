@@ -254,7 +254,7 @@ namespace NCDK.Reactions
             //        For(Iterator<string> it = xmlList.Iterator(); it.HasNext();){
             //            string xml = it.Next();
             //            CMLReader reader = new CMLReader(new MemoryStream(xml.GetBytes()));
-            //            IChemFile chemFile = (IChemFile)reader.Read(builder.NewChemFile());
+            //            var chemFile = (IChemFile)reader.Read(builder.NewChemFile());
             //            IReaction reactionDict = chemFile[0][0].ReactionSet[0];
             //            For(Iterator<IAtomContainer> itM = reactionDict.Reactants.Molecules().Iterator(); itM.HasNext();){
             //                IAtomContainer molecule = (IAtomContainer) itM.Next();
@@ -286,7 +286,7 @@ namespace NCDK.Reactions
             foreach (var xml in xmlList)
             {
                 CMLReader reader = new CMLReader(new MemoryStream(Encoding.UTF8.GetBytes(xml)));
-                IChemFile chemFile = (IChemFile)reader.Read(builder.NewChemFile());
+                var chemFile = (IChemFile)reader.Read(builder.NewChemFile());
                 IReaction reactionDict = chemFile[0][0].ReactionSet[0];
 
                 var reactants = reactionDict.Reactants;
@@ -352,7 +352,7 @@ namespace NCDK.Reactions
         //            string xml = it.Next();
         //            Console.Out.WriteLine(xml);
         //            CMLReader reader = new CMLReader(new MemoryStream(xml.GetBytes()));
-        //            IChemFile chemFile = (IChemFile)reader.Read(builder.NewChemFile());
+        //            var chemFile = (IChemFile)reader.Read(builder.NewChemFile());
         //            IReaction reactionDict = chemFile[0][0].ReactionSet[0];
         //
         //            IReaction reactionTest = builder.NewReaction();

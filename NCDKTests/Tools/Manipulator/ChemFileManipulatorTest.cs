@@ -18,7 +18,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,6 +29,8 @@ namespace NCDK.Tools.Manipulator
     [TestClass()]
     public class ChemFileManipulatorTest : CDKTestCase
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+
         IAtomContainer molecule1 = null;
         IAtomContainer molecule2 = null;
         IAtom atomInMol1 = null;
@@ -50,56 +51,44 @@ namespace NCDK.Tools.Manipulator
         [TestInitialize()]
         public void SetUp()
         {
-            molecule1 = new AtomContainer();
-            atomInMol1 = new Atom("Cl");
+            molecule1 = builder.NewAtomContainer();
+            atomInMol1 = builder.NewAtom("Cl");
             molecule1.Atoms.Add(atomInMol1);
-            molecule1.Atoms.Add(new Atom("Cl"));
-            bondInMol1 = new Bond(atomInMol1, molecule1.Atoms[1]);
+            molecule1.Atoms.Add(builder.NewAtom("Cl"));
+            bondInMol1 = builder.NewBond(atomInMol1, molecule1.Atoms[1]);
             molecule1.Bonds.Add(bondInMol1);
-            molecule2 = new AtomContainer();
-            atomInMol2 = new Atom("O")
-            {
-                ImplicitHydrogenCount = 2
-            };
+            molecule2 = builder.NewAtomContainer();
+            atomInMol2 = builder.NewAtom("O");
+            atomInMol2.ImplicitHydrogenCount = 2;
             molecule2.Atoms.Add(atomInMol2);
-            moleculeSet = new ChemObjectSet<IAtomContainer>
-            {
-                molecule1,
-                molecule2
-            };
-            reaction = new Reaction();
+            moleculeSet = builder.NewChemObjectSet<IAtomContainer>();
+            moleculeSet.Add(molecule1);
+            moleculeSet.Add(molecule2);
+            reaction = builder.NewReaction();
             reaction.Reactants.Add(molecule1);
             reaction.Products.Add(molecule2);
-            reactionSet = new ReactionSet
-            {
-                reaction
-            };
-            chemModel = new ChemModel
-            {
-                MoleculeSet = moleculeSet,
-                ReactionSet = reactionSet
-            };
-            chemSequence1 = new ChemSequence
-            {
-                chemModel
-            };
-            chemSequence2 = new ChemSequence();
-            chemFile = new ChemFile
-            {
-                chemSequence1,
-                chemSequence2
-            };
+            reactionSet = builder.NewReactionSet();
+            reactionSet.Add(reaction);
+            chemModel = builder.NewChemModel();
+            chemModel.MoleculeSet = moleculeSet;
+            chemModel.ReactionSet = reactionSet;
+            chemSequence1 = builder.NewChemSequence();
+            chemSequence1.Add(chemModel);
+            chemSequence2 = builder.NewChemSequence();
+            chemFile = builder.NewChemFile();
+            chemFile.Add(chemSequence1);
+            chemFile.Add(chemSequence2);
         }
 
         [TestMethod()]
         public void TestGetAllAtomContainers_IChemFile()
         {
-            string filename = "NCDK.Data.MDL.prev2000.sd";
+            var filename = "NCDK.Data.MDL.prev2000.sd";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
 
             var reader = new MDLReader(ins, ChemObjectReaderMode.Strict);
-            var chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var chemFile = reader.Read(builder.NewChemFile());
             Assert.IsNotNull(chemFile);
             var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             Assert.AreEqual(2, containersList.Count);

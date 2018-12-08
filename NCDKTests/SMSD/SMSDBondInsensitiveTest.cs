@@ -23,7 +23,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.SMSD.Tools;
 using NCDK.Tools.Manipulator;
@@ -35,6 +34,7 @@ namespace NCDK.SMSD
     [TestClass()]
     public class SMSDBondInsensitiveTest
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
         private static IAtomContainer Napthalene;
         private static IAtomContainer Cyclohexane;
         private static IAtomContainer Benzene;
@@ -230,20 +230,20 @@ namespace NCDK.SMSD
 
         private IAtomContainer Create4Toluene()
         {
-            IAtomContainer result = ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom c1 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtomContainer result = builder.NewAtomContainer();
+            IAtom c1 = builder.NewAtom("C");
             c1.Id = "1";
-            IAtom c2 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c2 = builder.NewAtom("C");
             c2.Id = "2";
-            IAtom c3 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c3 = builder.NewAtom("C");
             c3.Id = "3";
-            IAtom c4 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c4 = builder.NewAtom("C");
             c4.Id = "4";
-            IAtom c5 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c5 = builder.NewAtom("C");
             c5.Id = "5";
-            IAtom c6 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c6 = builder.NewAtom("C");
             c6.Id = "6";
-            IAtom c7 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c7 = builder.NewAtom("C");
             c7.Id = "7";
 
             result.Atoms.Add(c1);
@@ -254,13 +254,13 @@ namespace NCDK.SMSD
             result.Atoms.Add(c6);
             result.Atoms.Add(c7);
 
-            IBond bond1 = new Bond(c1, c2, BondOrder.Single);
-            IBond bond2 = new Bond(c2, c3, BondOrder.Double);
-            IBond bond3 = new Bond(c3, c4, BondOrder.Single);
-            IBond bond4 = new Bond(c4, c5, BondOrder.Double);
-            IBond bond5 = new Bond(c5, c6, BondOrder.Single);
-            IBond bond6 = new Bond(c6, c1, BondOrder.Double);
-            IBond bond7 = new Bond(c7, c4, BondOrder.Single);
+            IBond bond1 = builder.NewBond(c1, c2, BondOrder.Single);
+            IBond bond2 = builder.NewBond(c2, c3, BondOrder.Double);
+            IBond bond3 = builder.NewBond(c3, c4, BondOrder.Single);
+            IBond bond4 = builder.NewBond(c4, c5, BondOrder.Double);
+            IBond bond5 = builder.NewBond(c5, c6, BondOrder.Single);
+            IBond bond6 = builder.NewBond(c6, c1, BondOrder.Double);
+            IBond bond7 = builder.NewBond(c7, c4, BondOrder.Single);
 
             result.Bonds.Add(bond1);
             result.Bonds.Add(bond2);
@@ -277,8 +277,8 @@ namespace NCDK.SMSD
 
         public IAtomContainer CreateMethane()
         {
-            IAtomContainer result = ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom c1 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtomContainer result = builder.NewAtomContainer();
+            IAtom c1 = builder.NewAtom("C");
             result.Atoms.Add(c1);
 
             return result;
@@ -286,17 +286,17 @@ namespace NCDK.SMSD
 
         public IAtomContainer CreatePropane()
         {
-            IAtomContainer result = ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom c1 = ChemObjectBuilder.Instance.NewAtom("C");
-            IAtom c2 = ChemObjectBuilder.Instance.NewAtom("C");
-            IAtom c3 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtomContainer result = builder.NewAtomContainer();
+            IAtom c1 = builder.NewAtom("C");
+            IAtom c2 = builder.NewAtom("C");
+            IAtom c3 = builder.NewAtom("C");
 
             result.Atoms.Add(c1);
             result.Atoms.Add(c2);
             result.Atoms.Add(c3);
 
-            IBond bond1 = new Bond(c1, c2, BondOrder.Single);
-            IBond bond2 = new Bond(c2, c3, BondOrder.Single);
+            IBond bond1 = builder.NewBond(c1, c2, BondOrder.Single);
+            IBond bond2 = builder.NewBond(c2, c3, BondOrder.Single);
 
             result.Bonds.Add(bond1);
             result.Bonds.Add(bond2);
@@ -306,19 +306,19 @@ namespace NCDK.SMSD
 
         public IAtomContainer CreateHexane()
         {
-            IAtomContainer result = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer result = builder.NewAtomContainer();
 
-            IAtom c1 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c1 = builder.NewAtom("C");
             c1.Id = "1";
-            IAtom c2 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c2 = builder.NewAtom("C");
             c2.Id = "2";
-            IAtom c3 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c3 = builder.NewAtom("C");
             c3.Id = "3";
-            IAtom c4 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c4 = builder.NewAtom("C");
             c4.Id = "4";
-            IAtom c5 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c5 = builder.NewAtom("C");
             c5.Id = "5";
-            IAtom c6 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c6 = builder.NewAtom("C");
             c6.Id = "6";
 
             result.Atoms.Add(c1);
@@ -328,11 +328,11 @@ namespace NCDK.SMSD
             result.Atoms.Add(c5);
             result.Atoms.Add(c6);
 
-            IBond bond1 = new Bond(c1, c2, BondOrder.Single);
-            IBond bond2 = new Bond(c2, c3, BondOrder.Single);
-            IBond bond3 = new Bond(c3, c4, BondOrder.Single);
-            IBond bond4 = new Bond(c4, c5, BondOrder.Single);
-            IBond bond5 = new Bond(c5, c6, BondOrder.Single);
+            IBond bond1 = builder.NewBond(c1, c2, BondOrder.Single);
+            IBond bond2 = builder.NewBond(c2, c3, BondOrder.Single);
+            IBond bond3 = builder.NewBond(c3, c4, BondOrder.Single);
+            IBond bond4 = builder.NewBond(c4, c5, BondOrder.Single);
+            IBond bond5 = builder.NewBond(c5, c6, BondOrder.Single);
 
             result.Bonds.Add(bond1);
             result.Bonds.Add(bond2);
@@ -347,19 +347,19 @@ namespace NCDK.SMSD
 
         public static IAtomContainer CreateBenzene()
         {
-            IAtomContainer result = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer result = builder.NewAtomContainer();
 
-            IAtom c1 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c1 = builder.NewAtom("C");
             c1.Id = "1";
-            IAtom c2 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c2 = builder.NewAtom("C");
             c2.Id = "2";
-            IAtom c3 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c3 = builder.NewAtom("C");
             c3.Id = "3";
-            IAtom c4 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c4 = builder.NewAtom("C");
             c4.Id = "4";
-            IAtom c5 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c5 = builder.NewAtom("C");
             c5.Id = "5";
-            IAtom c6 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c6 = builder.NewAtom("C");
             c6.Id = "6";
 
             result.Atoms.Add(c1);
@@ -369,12 +369,12 @@ namespace NCDK.SMSD
             result.Atoms.Add(c5);
             result.Atoms.Add(c6);
 
-            IBond bond1 = new Bond(c1, c2, BondOrder.Single);
-            IBond bond2 = new Bond(c2, c3, BondOrder.Double);
-            IBond bond3 = new Bond(c3, c4, BondOrder.Single);
-            IBond bond4 = new Bond(c4, c5, BondOrder.Double);
-            IBond bond5 = new Bond(c5, c6, BondOrder.Single);
-            IBond bond6 = new Bond(c6, c1, BondOrder.Double);
+            IBond bond1 = builder.NewBond(c1, c2, BondOrder.Single);
+            IBond bond2 = builder.NewBond(c2, c3, BondOrder.Double);
+            IBond bond3 = builder.NewBond(c3, c4, BondOrder.Single);
+            IBond bond4 = builder.NewBond(c4, c5, BondOrder.Double);
+            IBond bond5 = builder.NewBond(c5, c6, BondOrder.Single);
+            IBond bond6 = builder.NewBond(c6, c1, BondOrder.Double);
 
             result.Bonds.Add(bond1);
             result.Bonds.Add(bond2);
@@ -451,27 +451,27 @@ namespace NCDK.SMSD
 
         public static IAtomContainer CreateNaphthalene()
         {
-            IAtomContainer result = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer result = builder.NewAtomContainer();
 
-            IAtom c1 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c1 = builder.NewAtom("C");
             c1.Id = "1";
-            IAtom c2 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c2 = builder.NewAtom("C");
             c2.Id = "2";
-            IAtom c3 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c3 = builder.NewAtom("C");
             c3.Id = "3";
-            IAtom c4 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c4 = builder.NewAtom("C");
             c4.Id = "4";
-            IAtom c5 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c5 = builder.NewAtom("C");
             c5.Id = "5";
-            IAtom c6 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c6 = builder.NewAtom("C");
             c6.Id = "6";
-            IAtom c7 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c7 = builder.NewAtom("C");
             c4.Id = "7";
-            IAtom c8 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c8 = builder.NewAtom("C");
             c5.Id = "8";
-            IAtom c9 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c9 = builder.NewAtom("C");
             c6.Id = "9";
-            IAtom c10 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c10 = builder.NewAtom("C");
             c6.Id = "10";
 
             result.Atoms.Add(c1);
@@ -485,17 +485,17 @@ namespace NCDK.SMSD
             result.Atoms.Add(c9);
             result.Atoms.Add(c10);
 
-            IBond bond1 = new Bond(c1, c2, BondOrder.Single);
-            IBond bond2 = new Bond(c2, c3, BondOrder.Double);
-            IBond bond3 = new Bond(c3, c4, BondOrder.Single);
-            IBond bond4 = new Bond(c4, c5, BondOrder.Double);
-            IBond bond5 = new Bond(c5, c6, BondOrder.Single);
-            IBond bond6 = new Bond(c6, c1, BondOrder.Double);
-            IBond bond7 = new Bond(c5, c7, BondOrder.Single);
-            IBond bond8 = new Bond(c7, c8, BondOrder.Double);
-            IBond bond9 = new Bond(c8, c9, BondOrder.Single);
-            IBond bond10 = new Bond(c9, c10, BondOrder.Double);
-            IBond bond11 = new Bond(c10, c6, BondOrder.Single);
+            IBond bond1 = builder.NewBond(c1, c2, BondOrder.Single);
+            IBond bond2 = builder.NewBond(c2, c3, BondOrder.Double);
+            IBond bond3 = builder.NewBond(c3, c4, BondOrder.Single);
+            IBond bond4 = builder.NewBond(c4, c5, BondOrder.Double);
+            IBond bond5 = builder.NewBond(c5, c6, BondOrder.Single);
+            IBond bond6 = builder.NewBond(c6, c1, BondOrder.Double);
+            IBond bond7 = builder.NewBond(c5, c7, BondOrder.Single);
+            IBond bond8 = builder.NewBond(c7, c8, BondOrder.Double);
+            IBond bond9 = builder.NewBond(c8, c9, BondOrder.Single);
+            IBond bond10 = builder.NewBond(c9, c10, BondOrder.Double);
+            IBond bond11 = builder.NewBond(c10, c6, BondOrder.Single);
 
             result.Bonds.Add(bond1);
             result.Bonds.Add(bond2);
@@ -614,19 +614,19 @@ namespace NCDK.SMSD
         public static IAtomContainer CreateCyclohexane()
         {
 
-            IAtomContainer result = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer result = builder.NewAtomContainer();
 
-            IAtom c1 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c1 = builder.NewAtom("C");
             c1.Id = "1";
-            IAtom c2 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c2 = builder.NewAtom("C");
             c2.Id = "2";
-            IAtom c3 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c3 = builder.NewAtom("C");
             c3.Id = "3";
-            IAtom c4 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c4 = builder.NewAtom("C");
             c4.Id = "4";
-            IAtom c5 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c5 = builder.NewAtom("C");
             c5.Id = "5";
-            IAtom c6 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c6 = builder.NewAtom("C");
             c6.Id = "6";
 
             result.Atoms.Add(c1);
@@ -636,12 +636,12 @@ namespace NCDK.SMSD
             result.Atoms.Add(c5);
             result.Atoms.Add(c6);
 
-            IBond bond1 = new Bond(c1, c2, BondOrder.Single);
-            IBond bond2 = new Bond(c2, c3, BondOrder.Single);
-            IBond bond3 = new Bond(c3, c4, BondOrder.Single);
-            IBond bond4 = new Bond(c4, c5, BondOrder.Single);
-            IBond bond5 = new Bond(c5, c6, BondOrder.Single);
-            IBond bond6 = new Bond(c6, c1, BondOrder.Single);
+            IBond bond1 = builder.NewBond(c1, c2, BondOrder.Single);
+            IBond bond2 = builder.NewBond(c2, c3, BondOrder.Single);
+            IBond bond3 = builder.NewBond(c3, c4, BondOrder.Single);
+            IBond bond4 = builder.NewBond(c4, c5, BondOrder.Single);
+            IBond bond5 = builder.NewBond(c5, c6, BondOrder.Single);
+            IBond bond6 = builder.NewBond(c6, c1, BondOrder.Single);
 
             result.Bonds.Add(bond1);
             result.Bonds.Add(bond2);
@@ -658,19 +658,19 @@ namespace NCDK.SMSD
 
         public static IAtomContainer CreateCyclopropane()
         {
-            IAtomContainer result = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer result = builder.NewAtomContainer();
 
-            IAtom c1 = ChemObjectBuilder.Instance.NewAtom("C");
-            IAtom c2 = ChemObjectBuilder.Instance.NewAtom("C");
-            IAtom c3 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c1 = builder.NewAtom("C");
+            IAtom c2 = builder.NewAtom("C");
+            IAtom c3 = builder.NewAtom("C");
 
             result.Atoms.Add(c1);
             result.Atoms.Add(c2);
             result.Atoms.Add(c3);
 
-            IBond bond1 = new Bond(c1, c2, BondOrder.Single);
-            IBond bond2 = new Bond(c2, c3, BondOrder.Single);
-            IBond bond3 = new Bond(c3, c1, BondOrder.Single);
+            IBond bond1 = builder.NewBond(c1, c2, BondOrder.Single);
+            IBond bond2 = builder.NewBond(c2, c3, BondOrder.Single);
+            IBond bond3 = builder.NewBond(c3, c1, BondOrder.Single);
 
             result.Bonds.Add(bond1);
             result.Bonds.Add(bond2);
@@ -681,21 +681,21 @@ namespace NCDK.SMSD
 
         public static IAtomContainer CreateIsobutane()
         {
-            IAtomContainer result = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer result = builder.NewAtomContainer();
 
-            IAtom c1 = ChemObjectBuilder.Instance.NewAtom("C");
-            IAtom c2 = ChemObjectBuilder.Instance.NewAtom("C");
-            IAtom c3 = ChemObjectBuilder.Instance.NewAtom("C");
-            IAtom c4 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c1 = builder.NewAtom("C");
+            IAtom c2 = builder.NewAtom("C");
+            IAtom c3 = builder.NewAtom("C");
+            IAtom c4 = builder.NewAtom("C");
 
             result.Atoms.Add(c1);
             result.Atoms.Add(c2);
             result.Atoms.Add(c3);
             result.Atoms.Add(c4);
 
-            IBond bond1 = new Bond(c1, c2, BondOrder.Single);
-            IBond bond2 = new Bond(c2, c3, BondOrder.Single);
-            IBond bond3 = new Bond(c2, c4, BondOrder.Single);
+            IBond bond1 = builder.NewBond(c1, c2, BondOrder.Single);
+            IBond bond2 = builder.NewBond(c2, c3, BondOrder.Single);
+            IBond bond3 = builder.NewBond(c2, c4, BondOrder.Single);
 
             result.Bonds.Add(bond1);
             result.Bonds.Add(bond2);

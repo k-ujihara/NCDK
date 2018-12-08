@@ -24,7 +24,6 @@
 using NCDK.SMSD.Helper;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 
 namespace NCDK.SMSD.Tools
 {
@@ -186,6 +185,7 @@ namespace NCDK.SMSD.Tools
     public class BondEnergies
     {
         private static ConcurrentDictionary<int, BondEnergy> bondEngergies = null;
+
         /// <summary>
         /// Singleton pattern instance for the Bond Energy class
         /// </summary>

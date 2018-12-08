@@ -43,7 +43,7 @@ namespace NCDK.IO.RDF
             StringWriter output = new StringWriter();
             CDKOWLWriter writer = new CDKOWLWriter(output);
 
-            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer mol = builder.NewAtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);

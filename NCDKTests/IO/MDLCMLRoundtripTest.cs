@@ -19,9 +19,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System.IO;
 using System.Text;
 
@@ -34,6 +34,8 @@ namespace NCDK.IO
     [TestClass()]
     public class MDLCMLRoundtripTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+
         public MDLCMLRoundtripTest()
             : base()
         { }
@@ -43,26 +45,26 @@ namespace NCDK.IO
         public void TestBug1649526()
         {
             //Read the original
-            string filename = "NCDK.Data.MDL.bug-1649526.mol";
+            var filename = "NCDK.Data.MDL.bug-1649526.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLReader reader = new MDLReader(ins);
-            IAtomContainer mol = reader.Read(new AtomContainer());
+            var reader = new MDLReader(ins);
+            var mol = reader.Read(builder.NewAtomContainer());
             reader.Close();
             //Write it as cml
-            StringWriter writer = new StringWriter();
-            CMLWriter cmlWriter = new CMLWriter(writer);
+            var writer = new StringWriter();
+            var cmlWriter = new CMLWriter(writer);
             cmlWriter.Write(mol);
             cmlWriter.Close();
             //Read this again
-            CMLReader cmlreader = new CMLReader(new MemoryStream(Encoding.UTF8.GetBytes(writer.ToString())));
-            IChemFile file = (IChemFile)cmlreader.Read(new ChemFile());
+            var cmlreader = new CMLReader(new MemoryStream(Encoding.UTF8.GetBytes(writer.ToString())));
+            var file = (IChemFile)cmlreader.Read(builder.NewChemFile());
             cmlreader.Close();
             //And finally write as mol
-            StringWriter writermdl = new StringWriter();
-            MDLV2000Writer mdlWriter = new MDLV2000Writer(writermdl);
+            var writermdl = new StringWriter();
+            var mdlWriter = new MDLV2000Writer(writermdl);
             mdlWriter.Write(file);
             mdlWriter.Close();
-            string output = writermdl.ToString().Replace("\r\n", "\n");
+            var output = writermdl.ToString().Replace("\r\n", "\n");
             //if there would be 3 instances (as in the bug), the only instance wouldnt't be right at the end
             Assert.AreEqual(2994, output.IndexOf("M  END"));
             //there would need some $$$$ to be in

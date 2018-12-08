@@ -59,7 +59,7 @@ namespace NCDK.Config.AtomTypes
         {
             OWLAtomTypeReader reader = new OWLAtomTypeReader(new StringReader(OWL_CONTENT));
             Assert.IsNotNull(reader);
-            var types = reader.ReadAtomTypes(new ChemObject().Builder);
+            var types = reader.ReadAtomTypes();
             Assert.IsNotNull(types);
             Assert.AreEqual(1, types.Count);
         }
@@ -69,7 +69,7 @@ namespace NCDK.Config.AtomTypes
         {
             OWLAtomTypeReader reader = new OWLAtomTypeReader(new StringReader(OWL_CONTENT));
             Assert.IsNotNull(reader);
-            var types = reader.ReadAtomTypes(new ChemObject().Builder);
+            var types = reader.ReadAtomTypes();
             Assert.IsNotNull(types);
             Assert.AreEqual(1, types.Count);
 

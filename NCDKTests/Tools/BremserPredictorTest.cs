@@ -23,7 +23,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO;
-using NCDK.Silent;
 using System;
 
 namespace NCDK.Tools
@@ -35,8 +34,11 @@ namespace NCDK.Tools
     // @author     steinbeck
     // @cdk.created    2002-11-16
     [TestClass()]
-    public class BremserPredictorTest : CDKTestCase
+    public class BremserPredictorTest
+        : CDKTestCase
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+
         [TestMethod()]
         public void TestConstructor()
         {
@@ -80,10 +82,10 @@ namespace NCDK.Tools
                     8.9, 14.8, 14.8, 13.3, 13.3, 13.3, 14.4, 14.4, 13.3,
                 };
             IAtomContainer molecule = null;
-            string filename = "NCDK.Data.MDL.BremserPredictionTest.mol";
+            var filename = "NCDK.Data.MDL.BremserPredictionTest.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-            molecule = reader.Read(new AtomContainer());
+            molecule = reader.Read(builder.NewAtomContainer());
             double prediction;
             var bp = new BremserOneSphereHOSECodePredictor();
             var hcg = new HOSECodeGenerator();

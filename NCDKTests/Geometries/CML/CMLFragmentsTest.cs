@@ -23,7 +23,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Numerics;
-using NCDK.Silent;
 using System.IO;
 using System.Text;
 
@@ -38,12 +37,14 @@ namespace NCDK.IO.CML
     [TestClass()]
     public class CMLFragmentsTest : CDKTestCase
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+
         [TestMethod()]
         public void TestAtomId()
         {
             string cmlString = "<molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(1, mol.Atoms.Count);
@@ -56,7 +57,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray><stringArray builtin='id'>a1</stringArray></atomArray></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(1, mol.Atoms.Count);
@@ -69,7 +70,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray atomID='a1 a2 a3'/></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(3, mol.Atoms.Count);
@@ -82,7 +83,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray><stringArray builtin='elementType'>C</stringArray></atomArray></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(1, mol.Atoms.Count);
@@ -95,7 +96,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray><atom id='a1'><string builtin='elementType'>C</string></atom></atomArray></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(1, mol.Atoms.Count);
@@ -108,7 +109,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray atomID='a1' elementType='C'/></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(1, mol.Atoms.Count);
@@ -121,7 +122,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray><atom id='a1'><coordinate2 builtin='xy2'>84 138</coordinate2></atom></atomArray></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(1, mol.Atoms.Count);
@@ -137,7 +138,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray><stringArray builtin='id'>a1</stringArray><floatArray builtin='x2'>2.0833</floatArray><floatArray builtin='y2'>4.9704</floatArray></atomArray></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(1, mol.Atoms.Count);
@@ -153,7 +154,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(2, mol.Atoms.Count);
@@ -171,7 +172,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray><stringArray builtin='id'>a1 a2</stringArray></atomArray><bondArray><stringArray builtin='atomRefs'>a1</stringArray><stringArray builtin='atomRefs'>a2</stringArray></bondArray></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(2, mol.Atoms.Count);
@@ -189,7 +190,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray><stringArray builtin='id'>a1 a2</stringArray></atomArray><bondArray><bond id='b1'><string builtin='atomRef'>a1</string><string builtin='atomRef'>a2</string></bond></bondArray></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(2, mol.Atoms.Count);
@@ -207,7 +208,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray atomID='a1 a2 a3'/><bondArray atomRef1='a1 a1' atomRef2='a2 a3' bondID='b1 b2'/></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(3, mol.Atoms.Count);
@@ -226,7 +227,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray atomID='a1 a2 a3'/><bondArray atomRef1='a1 a1' atomRef2='a2 a3' order='1 1'/></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(3, mol.Atoms.Count);
@@ -243,7 +244,7 @@ namespace NCDK.IO.CML
         public void TestBondAromatic()
         {
             string cmlString = "<molecule id='m1'><atomArray atomID='a1 a2'/><bondArray atomRef1='a1' atomRef2='a2' order='A'/></molecule>";
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(2, mol.Atoms.Count);
@@ -258,7 +259,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(2, mol.Atoms.Count);
@@ -275,7 +276,7 @@ namespace NCDK.IO.CML
                     + "<molecule id='m2'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>"
                     + "</list>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             CheckForXMoleculeFile(chemFile, 2);
         }
 
@@ -284,7 +285,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray atomID='a1 a2' x2='0.0 0.1' y2='1.2 1.3'/></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(2, mol.Atoms.Count);
@@ -299,7 +300,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray atomID='a1 a2' x3='0.0 0.1' y3='1.2 1.3' z3='2.1 2.5'/></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(2, mol.Atoms.Count);
@@ -314,7 +315,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray atomID='a1 a2' xFract='0.0 0.1' yFract='1.2 1.3' zFract='2.1 2.5'/></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(2, mol.Atoms.Count);
@@ -329,7 +330,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray><atom id='a1' xy2='0.0 0.1'/><atom id='a2'/><atom id='a3' xy2='0.1 0.0'/></atomArray></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(3, mol.Atoms.Count);
@@ -347,7 +348,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray><atom id='a1' xyz3='0.0 0.1 0.2'/><atom id='a2'/><atom id='a3' xyz3='0.1 0.0 0.2'/></atomArray></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(3, mol.Atoms.Count);
@@ -384,7 +385,7 @@ namespace NCDK.IO.CML
             cmlStringB.Append("    </atomArray>\n");
             cmlStringB.Append("  </molecule>\n");
 
-            IChemFile chemFile = ParseCMLString(cmlStringB.ToString());
+            var chemFile = ParseCMLString(cmlStringB.ToString());
             ICrystal crystal = CheckForCrystalFile(chemFile);
             Assert.AreEqual(4, crystal.Z.Value);
             Assert.AreEqual("Fm3m", crystal.SpaceGroup);
@@ -408,7 +409,7 @@ namespace NCDK.IO.CML
         {
             string cmlString = "<molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>";
 
-            IChemFile chemFile = ParseCMLString(cmlString);
+            var chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual("m1", mol.Id);
@@ -430,7 +431,7 @@ namespace NCDK.IO.CML
                     + "    <stringArray builtin=\"order\">1 1 1 1 2 1 2 1 1 1 2 2</stringArray>\n" + "   </bondArray>\n"
                     + "  </molecule>\n";
 
-            IChemFile chemFile = ParseCMLString(cml1String);
+            var chemFile = ParseCMLString(cml1String);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
             Assert.AreEqual(13, mol.Atoms.Count);
@@ -440,9 +441,10 @@ namespace NCDK.IO.CML
         private IChemFile ParseCMLString(string cmlString)
         {
             IChemFile chemFile = null;
-            CMLReader reader = new CMLReader(new MemoryStream(Encoding.UTF8.GetBytes(cmlString)));
-            chemFile = (IChemFile)reader.Read(new ChemFile());
-            reader.Close();
+            using (var reader = new CMLReader(new MemoryStream(Encoding.UTF8.GetBytes(cmlString))))
+            {
+                chemFile = reader.Read(builder.NewChemFile());
+            }
             return chemFile;
         }
 
@@ -459,11 +461,11 @@ namespace NCDK.IO.CML
             Assert.IsNotNull(chemFile);
 
             Assert.AreEqual(chemFile.Count, 1);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
 
             Assert.AreEqual(seq.Count, 1);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
 
             var moleculeSet = model.MoleculeSet;
@@ -484,11 +486,11 @@ namespace NCDK.IO.CML
             Assert.IsNotNull(chemFile);
 
             Assert.AreEqual(chemFile.Count, 1);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
 
             Assert.AreEqual(seq.Count, 1);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
 
             ICrystal crystal = model.Crystal;

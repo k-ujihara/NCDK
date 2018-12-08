@@ -85,11 +85,11 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllAtomContainers_IChemModel()
         {
-            string filename = "NCDK.Data.MDL.a-pinene.mol";
+            var filename = "NCDK.Data.MDL.a-pinene.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
 
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
+            var reader = new MDLV2000Reader(ins);
             ChemModel chemFile = (ChemModel)reader.Read((ChemObject)new ChemModel());
             Assert.IsNotNull(chemFile);
             var containersList = ChemModelManipulator.GetAllAtomContainers(chemFile);
@@ -99,7 +99,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllAtomContainers_IChemModel_WithReactions()
         {
-            string filename = "NCDK.Data.MDL.0024.stg02.rxn";
+            var filename = "NCDK.Data.MDL.0024.stg02.rxn";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
 
@@ -116,7 +116,7 @@ namespace NCDK.Tools.Manipulator
         {
             var ac = new AtomContainer();
             ac.Atoms.Add(new Atom("C"));
-            IChemModel model = ChemModelManipulator.NewChemModel(ac);
+            var model = ChemModelManipulator.NewChemModel(ac);
             IAtomContainer mol = model.MoleculeSet[0];
             Assert.IsNotNull(mol);
             Assert.AreEqual(ac.Atoms.Count, mol.Atoms.Count);
@@ -157,7 +157,7 @@ namespace NCDK.Tools.Manipulator
             {
                 r
             };
-            IChemModel model = new ChemModel
+            var model = new ChemModel
             {
                 MoleculeSet = molSet,
                 ReactionSet = rSet
@@ -195,7 +195,7 @@ namespace NCDK.Tools.Manipulator
             {
                 r
             };
-            IChemModel model = new ChemModel
+            var model = new ChemModel
             {
                 MoleculeSet = molSet,
                 ReactionSet = rSet
@@ -277,7 +277,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestCreateNewMolecule_IChemModel()
         {
-            IChemModel model = new ChemModel();
+            var model = new ChemModel();
             IAtomContainer ac = ChemModelManipulator.CreateNewMolecule(model);
             Assert.AreEqual(1, model.MoleculeSet.Count);
             Assert.AreEqual(ac, model.MoleculeSet[0]);
@@ -307,7 +307,7 @@ namespace NCDK.Tools.Manipulator
         [ExpectedException(typeof(ArgumentException))]
         public void TestGetRelevantAtomContainer_NonExistentAtom()
         {
-            IChemModel model = CDK.Builder.NewChemModel();
+            var model = CDK.Builder.NewChemModel();
             ChemModelManipulator.GetRelevantAtomContainer(model, CDK.Builder.NewAtom());
         }
     }

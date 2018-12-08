@@ -35,8 +35,7 @@ namespace NCDK.Graphs
     [TestClass()]
     public class MatchingTest
     {
-        private static IChemObjectBuilder Builder { get; } = CDK.Builder;
-        private SmilesParser smipar = new SmilesParser(Builder);
+        private SmilesParser smipar = new SmilesParser();
 
         [TestMethod(), Ignore()] // no operation performed
         public void Nop() { }

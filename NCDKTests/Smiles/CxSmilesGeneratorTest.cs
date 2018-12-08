@@ -22,7 +22,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.IO;
 using System;
 using System.Collections.Generic;
@@ -31,6 +30,8 @@ namespace NCDK.Smiles
 {
     public class CxSmilesGeneratorTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+
         [TestMethod()]
         public void EmptyCXSMILES()
         {
@@ -112,7 +113,7 @@ namespace NCDK.Smiles
         {
             using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream(GetType(), "CHEMBL367774.mol")))
             {
-                IAtomContainer container = mdlr.Read(new AtomContainer());
+                IAtomContainer container = mdlr.Read(builder.NewAtomContainer());
                 SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.CxSmiles);
                 Assert.AreEqual("OC(=O)C1=CC(F)=CC=2NC(=NC12)C3=CC=C(C=C3F)C4=CC=CC=C4", smigen.Create(container));
             }

@@ -54,8 +54,8 @@ namespace NCDK.Charges
             Electronegativity pe = new Electronegativity();
 
             IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(new Atom("F"));
-            molecule.Atoms.Add(new Atom("C"));
+            molecule.Atoms.Add(builder.NewAtom("F"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
 
             AddExplicitHydrogens(molecule);
@@ -74,8 +74,8 @@ namespace NCDK.Charges
             Electronegativity pe = new Electronegativity();
 
             IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(new Atom("F"));
-            molecule.Atoms.Add(new Atom("C"));
+            molecule.Atoms.Add(builder.NewAtom("F"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
 
             AddExplicitHydrogens(molecule);

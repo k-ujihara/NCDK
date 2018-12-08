@@ -15,12 +15,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
-using NCDK.Numerics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
-using NCDK.Silent;
+using NCDK.Numerics;
 
 namespace NCDK.Graphs.Rebond
 {
@@ -29,33 +28,35 @@ namespace NCDK.Graphs.Rebond
     /// </summary>
     // @cdk.module test-standard
     [TestClass()]
-    public class RebondToolTest : CDKTestCase
+    public class RebondToolTest 
+        : CDKTestCase
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+
         public RebondToolTest()
-                : base()
+            : base()
         { }
 
         [TestMethod()]
         public void TestRebondTool_Double_double_double()
         {
-            RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
+            var rebonder = new RebondTool(2.0, 0.5, 0.5);
             Assert.IsNotNull(rebonder);
         }
 
         [TestMethod()]
         public void TestRebond_IAtomContainer()
         {
-            RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
-            IAtomContainer methane = new AtomContainer();
-            methane.Atoms.Add(new Atom("C", new Vector3(0.0, 0.0, 0.0)));
-            methane.Atoms.Add(new Atom("H", new Vector3(0.6, 0.6, 0.6)));
-            methane.Atoms.Add(new Atom("H", new Vector3(-0.6, -0.6, 0.6)));
-            methane.Atoms.Add(new Atom("H", new Vector3(0.6, -0.6, -0.6)));
-            methane.Atoms.Add(new Atom("H", new Vector3(-0.6, 0.6, -0.6)));
+            var rebonder = new RebondTool(2.0, 0.5, 0.5);
+            var methane = builder.NewAtomContainer();
+            methane.Atoms.Add(builder.NewAtom("C", new Vector3(0.0, 0.0, 0.0)));
+            methane.Atoms.Add(builder.NewAtom("H", new Vector3(0.6, 0.6, 0.6)));
+            methane.Atoms.Add(builder.NewAtom("H", new Vector3(-0.6, -0.6, 0.6)));
+            methane.Atoms.Add(builder.NewAtom("H", new Vector3(0.6, -0.6, -0.6)));
+            methane.Atoms.Add(builder.NewAtom("H", new Vector3(-0.6, 0.6, -0.6)));
 
             // configure atoms
-            AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt",
-                    methane.Builder);
+            var factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt");
             //IAtom[] atoms = methane.GetAtoms();
             for (int i = 0; i < methane.Atoms.Count; i++)
             {

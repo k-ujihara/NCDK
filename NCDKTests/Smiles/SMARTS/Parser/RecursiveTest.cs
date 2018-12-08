@@ -443,7 +443,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         [TestMethod()]
         public void TestBasicAmineOnDrugs_cdkAromaticModel()
         {
-            string filename = "drugs.smi";
+            var filename = "drugs.smi";
             var ins = ResourceLoader.GetAsStream(GetType(), filename);
             using (EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, ChemObjectBuilder.Instance))
             {
@@ -482,7 +482,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         [TestMethod()]
         public void TestBasicAmineOnDrugs()
         {
-            string filename = "drugs.smi";
+            var filename = "drugs.smi";
             var ins = ResourceLoader.GetAsStream(GetType(), filename);
 
             SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", ChemObjectBuilder.Instance);

@@ -3103,15 +3103,14 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAllElementsRepresented()
         {
-            AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl",
-                    CDK.Builder);
+            var factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl");
             Assert.IsTrue(factory.Count != 0, "Could not read the atom types");
-            string errorMessage = "Elements without atom type(s) defined in the XML:";
+            var errorMessage = "Elements without atom type(s) defined in the XML:";
             int testUptoAtomicNumber = 36; // TODO: 92 ?
             int elementsMissingTypes = 0;
             for (int i = 1; i < testUptoAtomicNumber; i++)
             {
-                string symbol = PeriodicTable.GetSymbol(i);
+                var symbol = PeriodicTable.GetSymbol(i);
                 var expectedTypes = factory.GetAtomTypes(symbol);
                 if (expectedTypes.Count() == 0)
                 {
@@ -3126,11 +3125,11 @@ namespace NCDK.AtomTypes
         public void TestAssumeExplicitHydrogens()
         {
             var mol = builder.NewAtomContainer();
-            CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.GetInstance(CDKAtomTypeMatcher.Mode.RequireExplicitHydrogens);
+            var atm = CDKAtomTypeMatcher.GetInstance(CDKAtomTypeMatcher.Mode.RequireExplicitHydrogens);
 
             mol.Atoms.Add(builder.NewAtom("O"));
             mol.Atoms[0].FormalCharge = +1;
-            IAtomType type = atm.FindMatchingAtomType(mol, mol.Atoms[0]);
+            var type = atm.FindMatchingAtomType(mol, mol.Atoms[0]);
             Assert.IsNotNull(type);
             Assert.AreEqual("X", type.AtomTypeName);
 

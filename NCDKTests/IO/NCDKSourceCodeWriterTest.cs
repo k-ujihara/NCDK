@@ -21,8 +21,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System;
 using System.IO;
 
@@ -34,22 +34,26 @@ namespace NCDK.IO
     /// <seealso cref="NCDKSourceCodeWriter"/>
     // @cdk.module test-io
     [TestClass()]
-    public class NCDKSourceCodeWriterTest : ChemObjectIOTest
+    public class NCDKSourceCodeWriterTest
+        : ChemObjectIOTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+
         protected override Type ChemObjectIOToTestType => typeof(NCDKSourceCodeWriter);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            Assert.IsTrue(ChemObjectIOToTest.Accepts(typeof(AtomContainer)));
+            Assert.IsTrue(ChemObjectIOToTest.Accepts(typeof(IAtomContainer)));
         }
 
         [TestMethod()]
         public void TestOutput()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainer molecule = new AtomContainer();
-            Atom atom = new Atom("C") { MassNumber = 14 };
+            var molecule = builder.NewAtomContainer();
+            var atom = builder.NewAtom("C");
+            atom.MassNumber = 14;
             molecule.Atoms.Add(atom);
 
             var sourceWriter = new NCDKSourceCodeWriter(writer);

@@ -132,7 +132,7 @@ namespace NCDK.SMSD
             IAtomContainer target = new AtomContainer();
 
             var ins = ResourceLoader.GetAsStream(molfile);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
+            var reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             reader.Read(query);
             ins = ResourceLoader.GetAsStream(queryfile);
             reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);

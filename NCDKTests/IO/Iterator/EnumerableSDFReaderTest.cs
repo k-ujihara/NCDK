@@ -44,7 +44,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestSDF()
         {
-            string filename = "NCDK.Data.MDL.test2.sdf";
+            var filename = "NCDK.Data.MDL.test2.sdf";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             EnumerableSDFReader reader = new EnumerableSDFReader(ins, CDK.Builder);
@@ -65,7 +65,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestSDF_broken_stream()
         {
-            string filename = "NCDK.Data.MDL.test2.sdf";
+            var filename = "NCDK.Data.MDL.test2.sdf";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             var streamReader = new StreamReader(ins); // { public bool Ready()  {    return false;     }   };
@@ -88,7 +88,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestReadTitle()
         {
-            string filename = "NCDK.Data.MDL.test.sdf";
+            var filename = "NCDK.Data.MDL.test.sdf";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             EnumerableSDFReader reader = new EnumerableSDFReader(ins, CDK.Builder);
@@ -105,7 +105,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestReadDataItems()
         {
-            string filename = "NCDK.Data.MDL.test.sdf";
+            var filename = "NCDK.Data.MDL.test.sdf";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             EnumerableSDFReader reader = new EnumerableSDFReader(ins, CDK.Builder);
@@ -124,7 +124,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestMultipleEntryFields()
         {
-            string filename = "NCDK.Data.MDL.test.sdf";
+            var filename = "NCDK.Data.MDL.test.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
             using (var reader = new EnumerableSDFReader(ins, CDK.Builder))
             {
@@ -141,7 +141,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestOnMDLMolfile()
         {
-            string filename = "NCDK.Data.MDL.bug682233.mol";
+            var filename = "NCDK.Data.MDL.bug682233.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             EnumerableSDFReader reader = new EnumerableSDFReader(ins, CDK.Builder);
@@ -161,7 +161,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestOnSingleEntrySDFile()
         {
-            string filename = "NCDK.Data.MDL.singleMol.sdf";
+            var filename = "NCDK.Data.MDL.singleMol.sdf";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             EnumerableSDFReader reader = new EnumerableSDFReader(ins, CDK.Builder);
@@ -181,7 +181,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestEmptyEntryIteratingReader()
         {
-            string filename = "NCDK.Data.MDL.emptyStructures.sdf";
+            var filename = "NCDK.Data.MDL.emptyStructures.sdf";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             EnumerableSDFReader reader = new EnumerableSDFReader(ins, CDK.Builder);
@@ -208,7 +208,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestZeroZCoordinates()
         {
-            string filename = "NCDK.Data.MDL.nozcoord.sdf";
+            var filename = "NCDK.Data.MDL.nozcoord.sdf";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             var prop = new NameValueCollection
@@ -236,7 +236,7 @@ namespace NCDK.IO.Iterator
         public void TestNo3DCoordsButForcedAs()
         {
             // First test unforced 3D coordinates
-            string filename = "NCDK.Data.MDL.no3dStructures.sdf";
+            var filename = "NCDK.Data.MDL.no3dStructures.sdf";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             EnumerableSDFReader reader = new EnumerableSDFReader(ins, CDK.Builder);

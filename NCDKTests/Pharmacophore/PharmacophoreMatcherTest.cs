@@ -32,7 +32,7 @@ namespace NCDK.Pharmacophore
 
         static PharmacophoreMatcherTest()
         {
-            string filename = "NCDK.Data.MDL.pcoretest1.sdf";
+            var filename = "NCDK.Data.MDL.pcoretest1.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new IEnumerableMDLConformerReader(ins, CDK.Builder).GetEnumerator();
             if (reader.MoveNext())
@@ -206,7 +206,7 @@ namespace NCDK.Pharmacophore
         [TestMethod()]
         public void TestCNSPcore()
         {
-            string filename = "NCDK.Data.MDL.cnssmarts.sdf";
+            var filename = "NCDK.Data.MDL.cnssmarts.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new EnumerableSDFReader(ins, CDK.Builder);
 
@@ -235,7 +235,7 @@ namespace NCDK.Pharmacophore
         [TestMethod()]
         public void TestMatchingBonds()
         {
-            string filename = "NCDK.Data.MDL.cnssmarts.sdf";
+            var filename = "NCDK.Data.MDL.cnssmarts.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
             EnumerableSDFReader reader = new EnumerableSDFReader(ins, CDK.Builder);
 
@@ -271,7 +271,7 @@ namespace NCDK.Pharmacophore
         [TestMethod()]
         public void TestAngleMatch1()
         {
-            string filename = "NCDK.Data.MDL.cnssmarts.sdf";
+            var filename = "NCDK.Data.MDL.cnssmarts.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
             EnumerableSDFReader reader = new EnumerableSDFReader(ins, CDK.Builder);
 
@@ -296,7 +296,7 @@ namespace NCDK.Pharmacophore
         [TestMethod()]
         public void TestAngleMatch2()
         {
-            string filename = "NCDK.Data.MDL.cnssmarts.sdf";
+            var filename = "NCDK.Data.MDL.cnssmarts.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
             EnumerableSDFReader reader = new EnumerableSDFReader(ins, CDK.Builder);
 
@@ -400,7 +400,7 @@ namespace NCDK.Pharmacophore
             PharmacophoreMatcher matcher = new PharmacophoreMatcher();
             matcher.SetPharmacophoreQuery(query);
 
-            string filename = "NCDK.Data.PCore.multismartpcore.sdf";
+            var filename = "NCDK.Data.PCore.multismartpcore.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new EnumerableSDFReader(ins, CDK.Builder);
             var enumerator = reader.GetEnumerator();

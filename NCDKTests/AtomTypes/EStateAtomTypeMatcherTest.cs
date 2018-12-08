@@ -20,11 +20,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.RingSearches;
-using NCDK.Silent;
-using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 using System;
-using System.Linq;
 
 namespace NCDK.AtomTypes
 {
@@ -32,6 +29,7 @@ namespace NCDK.AtomTypes
     [TestClass()]
     public class EStateAtomTypeMatcherTest : CDKTestCase
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
         static EStateAtomTypeMatcher matcher = new EStateAtomTypeMatcher();
         IAtomContainer mol = null;
 
@@ -68,9 +66,9 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestFindMatchingAtomType_IAtomContainer()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("C");
-            Hybridization thisHybridization = Hybridization.SP3;
+            var mol = builder.NewAtomContainer();
+            var atom = builder.NewAtom("C");
+            var thisHybridization = Hybridization.SP3;
             atom.Hybridization = thisHybridization;
             mol.Atoms.Add(atom);
 
@@ -78,7 +76,7 @@ namespace NCDK.AtomTypes
             var types = matcher.FindMatchingAtomTypes(mol).ToReadOnlyList();
             for (int i = 0; i < types.Count; i++)
             {
-                IAtomType type = matcher.FindMatchingAtomType(mol, mol.Atoms[i]);
+                var type = matcher.FindMatchingAtomType(mol, mol.Atoms[i]);
                 Assert.AreEqual(type.AtomTypeName, types[i].AtomTypeName);
             }
         }
@@ -87,7 +85,7 @@ namespace NCDK.AtomTypes
         public void TestSP3Atoms()
         {
             //Testing with CC(C)(C)CC
-            mol = new AtomContainer();
+            mol = builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a1);
             IAtom a2 = mol.Builder.NewAtom("C");
@@ -182,7 +180,7 @@ namespace NCDK.AtomTypes
         public void TestSP2Atoms()
         {
             //Test with C=CC=N
-            mol = new AtomContainer();
+            mol = builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a1);
             IAtom a2 = mol.Builder.NewAtom("C");
@@ -230,7 +228,7 @@ namespace NCDK.AtomTypes
         public void TestSPAtoms()
         {
             //Testing with  C#CCC#N
-            mol = new AtomContainer();
+            mol = builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a1);
             IAtom a2 = mol.Builder.NewAtom("C");
@@ -274,7 +272,7 @@ namespace NCDK.AtomTypes
         public void TestAromaticAtoms()
         {
             //Testing with C1=CN=CC=C1C
-            mol = new AtomContainer();
+            mol = builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.IsAromatic = true;
             mol.Atoms.Add(a1);
@@ -371,7 +369,7 @@ namespace NCDK.AtomTypes
         public void TestNaphthalene()
         {
             //Testing with C1=CC2C=CC=CC=2C=C1
-            mol = new AtomContainer();
+            mol = builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.IsAromatic = true;
             mol.Atoms.Add(a1);
@@ -474,7 +472,7 @@ namespace NCDK.AtomTypes
         public void TestChargedAtoms()
         {
             //Testing with C[N+]
-            mol = new AtomContainer();
+            mol = builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a1);
             IAtom a2 = mol.Builder.NewAtom("N");
@@ -516,7 +514,7 @@ namespace NCDK.AtomTypes
         public void TestNaCl()
         {
             //Testing with [Na+].[Cl-]
-            mol = new AtomContainer();
+            mol = builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("Na");
             a1.FormalCharge = +1;
             mol.Atoms.Add(a1);
@@ -529,7 +527,7 @@ namespace NCDK.AtomTypes
             Assert.IsTrue(TestAtom("SClm", a2));
 
             //Testing with different presentation - [Na]Cl
-            mol = new AtomContainer();
+            mol = builder.NewAtomContainer();
             a1 = mol.Builder.NewAtom("Na");
             mol.Atoms.Add(a1);
             a2 = mol.Builder.NewAtom("Cl");

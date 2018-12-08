@@ -98,7 +98,7 @@ namespace NCDK.FaulonSignatures.Chemistry
         [TestMethod()]
         public void TestLargeExample()
         {
-            string filename = "NCDK.FaulonSignatures.Data.large_example.sdf";
+            var filename = "NCDK.FaulonSignatures.Data.large_example.sdf";
             foreach (var molecule in MoleculeReader.ReadSDFFile(filename))
             {
                 MoleculeSignature signature = new MoleculeSignature(molecule);
@@ -109,7 +109,7 @@ namespace NCDK.FaulonSignatures.Chemistry
         [TestMethod()]
         public void TestSDF()
         {
-            string filename = "NCDK.FaulonSignatures.Data.test.sdf";
+            var filename = "NCDK.FaulonSignatures.Data.test.sdf";
             int molNr = 0;
             foreach (var molecule in MoleculeReader.ReadSDFFile(filename))
             {
@@ -124,7 +124,7 @@ namespace NCDK.FaulonSignatures.Chemistry
         [TestMethod()]
         public void TestCanonicalLabelling()
         {
-            string filename = "NCDK.FaulonSignatures.Data.multCycle.sdf";
+            var filename = "NCDK.FaulonSignatures.Data.multCycle.sdf";
             foreach (var molecule in MoleculeReader.ReadSDFFile(filename))
             {
                 MoleculeSignature signature = new MoleculeSignature(molecule);

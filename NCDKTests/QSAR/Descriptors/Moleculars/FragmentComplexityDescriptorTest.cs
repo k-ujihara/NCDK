@@ -14,7 +14,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void Test1FragmentComplexityDescriptor()
         {
-            string filename = "NCDK.Data.MDL.murckoTest1.mol";
+            var filename = "NCDK.Data.MDL.murckoTest1.mol";
             IAtomContainer mol;
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename), ChemObjectReaderMode.Strict))
             {
@@ -35,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void Test2FragmentComplexityDescriptor()
         {
-            string filename = "NCDK.Data.MDL.murckoTest10.mol";
+            var filename = "NCDK.Data.MDL.murckoTest10.mol";
             IAtomContainer mol;
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename), ChemObjectReaderMode.Strict))
             {

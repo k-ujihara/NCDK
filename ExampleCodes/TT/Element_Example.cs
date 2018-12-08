@@ -9,7 +9,7 @@ namespace NCDK.TT
         {
             {
                 #region
-                IsotopeFactory f = XMLIsotopeFactory.GetInstance(CDK.Builder);
+                IsotopeFactory f = XMLIsotopeFactory.Instance;
                 ChemicalElement e1 = f.GetElement("C");
                 ChemicalElement e2 = f.GetElement(12);
                 #endregion
@@ -17,7 +17,7 @@ namespace NCDK.TT
             {
                 #region AtomicNumber
                 IAtom element = new Atom("C");
-                IsotopeFactory f = XMLIsotopeFactory.GetInstance(element.Builder);
+                IsotopeFactory f = XMLIsotopeFactory.Instance;
                 f.Configure(element);
                 #endregion
             }

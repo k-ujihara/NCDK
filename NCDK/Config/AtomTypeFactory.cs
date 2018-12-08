@@ -19,6 +19,7 @@
 
 using NCDK.Common.Primitives;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -63,17 +64,17 @@ namespace NCDK.Config
         private const string XML_EXTENSION = ".xml";
         private const string OWL_EXTENSION = ".owl";
 
-        private static Dictionary<string, AtomTypeFactory> tables = new Dictionary<string, AtomTypeFactory>();
+        private static ConcurrentDictionary<string, AtomTypeFactory> tables = new ConcurrentDictionary<string, AtomTypeFactory>();
         private Dictionary<string, IAtomType> atomTypes = new Dictionary<string, IAtomType>();
 
-        private AtomTypeFactory(string configFile, IChemObjectBuilder builder)
+        private AtomTypeFactory(string configFile)
         {
-            ReadConfiguration(configFile, builder);
+            ReadConfiguration(configFile);
         }
 
-        private AtomTypeFactory(Stream ins, string format, IChemObjectBuilder builder)
+        private AtomTypeFactory(Stream ins, string format)
         {
-            ReadConfiguration(ins, format, builder);
+            ReadConfiguration(ins, format);
         }
 
         /// <summary>
@@ -82,22 +83,19 @@ namespace NCDK.Config
         /// </summary>
         /// <param name="ins">InputStream containing the data</param>
         /// <param name="format">String representing the possible formats ('xml' and 'txt')</param>
-        /// <param name="builder">IChemObjectBuilder used to make IChemObject instances</param>
         /// <returns>The AtomTypeFactory for the given data file</returns>
-        /// <seealso cref="GetInstance(string, IChemObjectBuilder)"/>
-        public static AtomTypeFactory GetInstance(Stream ins, string format, IChemObjectBuilder builder)
+        public static AtomTypeFactory GetInstance(Stream ins, string format)
         {
-            return new AtomTypeFactory(ins, format, builder);
+            return new AtomTypeFactory(ins, format);
         }
 
         /// <summary>
         /// Method to create a default AtomTypeFactory, using the structgen atom type list.
         /// </summary>
-        /// <param name="builder">used to make IChemObject instances</param>
         /// <returns>the <see cref="AtomTypeFactory"/> for the given data file</returns>
-        public static AtomTypeFactory GetInstance(IChemObjectBuilder builder)
+        public static AtomTypeFactory GetInstance()
         {
-            return GetInstance("NCDK.Config.Data.structgen_atomtypes.xml", builder);
+            return GetInstance("NCDK.Config.Data.structgen_atomtypes.xml");
         }
 
         /// <summary>
@@ -117,26 +115,19 @@ namespace NCDK.Config
         /// </list>
         /// </remarks>
         /// <param name="configFile">the name of the data file</param>
-        /// <param name="builder">used to make IChemObject instances</param>
         /// <returns>the <see cref="AtomTypeFactory"/> for the given data file</returns>
-        public static AtomTypeFactory GetInstance(string configFile, IChemObjectBuilder builder)
+        public static AtomTypeFactory GetInstance(string configFile)
         {
-            if (!tables.TryGetValue(configFile, out AtomTypeFactory factory))
-            {
-                factory = new AtomTypeFactory(configFile, builder);
-                tables.Add(configFile, factory);
-            }
-            return factory;
+            return tables.GetOrAdd(configFile, n => new AtomTypeFactory(n));
         }
 
         /// <summary>
         /// Read the configuration from a text file.
         /// </summary>
         /// <param name="fileName">name of the configuration file</param>
-        /// <param name="builder">used to make IChemObject instances</param>
-        private void ReadConfiguration(string fileName, IChemObjectBuilder builder)
+        private void ReadConfiguration(string fileName)
         {
-            Trace.TraceInformation("Reading config file from " + fileName);
+            Trace.TraceInformation($"Reading config file from {fileName}");
             var ins = ResourceLoader.GetAsStream(fileName);
 
             string format = Path.GetExtension(fileName);
@@ -151,7 +142,7 @@ namespace NCDK.Config
                     break;
             }
 
-            ReadConfiguration(ins, format, builder);
+            ReadConfiguration(ins, format);
         }
 
         private static IAtomTypeConfigurator ConstructConfigurator(string format)
@@ -171,15 +162,15 @@ namespace NCDK.Config
             }
         }
 
-        private void ReadConfiguration(Stream ins, string format, IChemObjectBuilder builder)
+        private void ReadConfiguration(Stream ins, string format)
         {
-            IAtomTypeConfigurator atc = ConstructConfigurator(format);
+            var atc = ConstructConfigurator(format);
             if (atc != null)
             {
                 atc.SetStream(ins);
                 try
                 {
-                    foreach (var type in atc.ReadAtomTypes(builder))
+                    foreach (var type in atc.ReadAtomTypes())
                         atomTypes[type.AtomTypeName] = new ImmutableAtomType(type);
                 }
                 catch (Exception exc)

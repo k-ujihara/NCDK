@@ -18,7 +18,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System.Linq;
 
 namespace NCDK.Config
@@ -33,7 +32,7 @@ namespace NCDK.Config
         [TestMethod()]
         public virtual void TestTXTBasedAtomTypeConfigurator()
         {
-            TXTBasedAtomTypeConfigurator configurator = new TXTBasedAtomTypeConfigurator();
+            var configurator = new TXTBasedAtomTypeConfigurator();
             Assert.IsNotNull(configurator);
         }
 
@@ -44,7 +43,7 @@ namespace NCDK.Config
             var ins = ResourceLoader.GetAsStream(typeof(TXTBasedAtomTypeConfigurator), configFile);
             var configurator = new TXTBasedAtomTypeConfigurator();
             configurator.SetStream(ins);
-            var atomTypes = configurator.ReadAtomTypes(new ChemObject().Builder);
+            var atomTypes = configurator.ReadAtomTypes();
             Assert.AreNotSame(0, atomTypes.Count());
         }
 

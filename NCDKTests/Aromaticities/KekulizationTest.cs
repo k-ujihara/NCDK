@@ -24,8 +24,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Base;
-using NCDK.Silent;
-using NCDK.Tools.Manipulator;
 using System.Linq;
 
 namespace NCDK.Aromaticities
@@ -34,10 +32,12 @@ namespace NCDK.Aromaticities
     [TestClass()]
     public class KekulizationTest
     {
+        private readonly static IChemObjectBuilder builder = CDK.Builder;
+
         [TestMethod()]
         public void Benzene()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
@@ -57,7 +57,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void BenzeneWithExistingDoubleBond()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
@@ -76,7 +76,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void Pyrrole()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("N", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
@@ -93,7 +93,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void PyrroleWithExplicitHydrogen()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("N", 0, true));
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
@@ -115,7 +115,7 @@ namespace NCDK.Aromaticities
         {
             try
             {
-                var m = new AtomContainer();
+                var m = builder.NewAtomContainer();
                 m.Atoms.Add(Atom("N", 0, true));
                 m.Atoms.Add(Atom("C", 1, true));
                 m.Atoms.Add(Atom("C", 1, true));
@@ -138,7 +138,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void Azulene()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 0, true));
@@ -167,7 +167,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void PyridineOxide()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("O", 0, false));
             m.Atoms.Add(Atom("N", 0, true));
             m.Atoms.Add(Atom("C", 1, true));
@@ -191,7 +191,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void PyridineOxideNonChargeSeparated()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("O", 0, false));
             m.Atoms.Add(Atom("N", 0, true));
             m.Atoms.Add(Atom("C", 1, true));
@@ -212,7 +212,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void Furane()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("O", 0, true));
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
@@ -233,7 +233,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void Tellurophene()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("Te", 0, true));
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
@@ -251,7 +251,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void CarbonAnion()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
@@ -270,7 +270,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void Tropylium()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
@@ -296,7 +296,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void SeleniumCation()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
@@ -320,7 +320,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void SixValentSulphur()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("C", 3, false));
             m.Atoms.Add(Atom("S", 0, true));
             m.Atoms.Add(Atom("O", 0, false));
@@ -367,7 +367,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void Biphenyl()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
@@ -401,7 +401,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void Quinone()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("O", 0, true));
             m.Atoms.Add(Atom("C", 0, true));
             m.Atoms.Add(Atom("C", 1, true));
@@ -427,7 +427,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void Fluorene()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("C", 2, false));
             m.Atoms.Add(Atom("C", 0, true));
             m.Atoms.Add(Atom("C", 1, true));
@@ -464,7 +464,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void Borinine()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("B", 0, true));
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
@@ -484,7 +484,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void SulfurCation()
         {
-            var m = new AtomContainer();
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(Atom("S", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
             m.Atoms.Add(Atom("C", 1, true));
@@ -511,21 +511,17 @@ namespace NCDK.Aromaticities
 
         static IAtom Atom(string symbol, int h, bool arom)
         {
-            IAtom a = new Atom(symbol)
-            {
-                ImplicitHydrogenCount = h,
-                IsAromatic = arom
-            };
+            IAtom a = builder.NewAtom(symbol);
+            a.ImplicitHydrogenCount = h;
+            a.IsAromatic = arom;
             return a;
         }
 
         static IBond Bond(IAtomContainer m, int v, int w, BondOrder ord, bool arom)
         {
-            IBond b = new Bond(m.Atoms[v], m.Atoms[w])
-            {
-                Order = ord,
-                IsAromatic = arom
-            };
+            IBond b = builder.NewBond(m.Atoms[v], m.Atoms[w]);
+            b.Order = ord;
+            b.IsAromatic = arom;
             return b;
         }
     }

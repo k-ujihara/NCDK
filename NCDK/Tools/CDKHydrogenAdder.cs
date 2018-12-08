@@ -61,8 +61,8 @@ namespace NCDK.Tools
     /// </example>
     // @author     egonw
     // @cdk.module valencycheck
-    // @cdk.githash
-    public class CDKHydrogenAdder : IHydrogenAdder
+    public class CDKHydrogenAdder
+        : IHydrogenAdder
     {
         private static readonly AtomTypeFactory atomTypeList = CDK.CdkAtomTypeFactory;
 
@@ -70,8 +70,10 @@ namespace NCDK.Tools
         {
         }
 
-        public static CDKHydrogenAdder Instance { get; } = new CDKHydrogenAdder();
+        private static readonly CDKHydrogenAdder instance = new CDKHydrogenAdder();
 
+        public static CDKHydrogenAdder GetInstance() => instance;
+        
         /// <inheritdoc/>
         public void AddImplicitHydrogens(IAtomContainer container)
         {

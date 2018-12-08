@@ -38,6 +38,7 @@ namespace NCDK.Config.AtomTypes
     // @cdk.module core
     public class AtomTypeReader : IDisposable
     {
+        private readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private TextReader input;
 
         /// <summary>
@@ -61,9 +62,8 @@ namespace NCDK.Config.AtomTypes
         /// <summary>
         /// Reads the atom types from the data file.
         /// </summary>
-        /// <param name="builder">The <see cref="IChemObjectBuilder"/> used to create new <see cref="IAtomType"/>'s.</param>
         /// <returns><see cref="IEnumerable{T}"/> with atom types. Is empty if some reading error occurred.</returns>
-        public IEnumerable<IAtomType> ReadAtomTypes(IChemObjectBuilder builder)
+        public IEnumerable<IAtomType> ReadAtomTypes()
         {
             var settings = new XmlReaderSettings
             {

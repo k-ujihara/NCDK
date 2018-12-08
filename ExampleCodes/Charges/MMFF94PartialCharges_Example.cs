@@ -9,7 +9,7 @@ namespace NCDK.Charges
         public void Ctor()
         {
             #region 
-            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser();
             IAtomContainer ac = sp.ParseSmiles("CC");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(ac);

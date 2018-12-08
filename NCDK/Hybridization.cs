@@ -74,7 +74,7 @@ namespace NCDK
         SP3D5,
     }
 
-    public static class HybridizationTools
+    internal static class HybridizationTools
     {
         public static bool IsUnset(this Hybridization value)
         {

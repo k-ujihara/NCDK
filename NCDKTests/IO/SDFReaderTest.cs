@@ -22,7 +22,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System;
 using System.IO;
 
@@ -34,27 +33,29 @@ namespace NCDK.IO
     /// <seealso cref="MDLReader"/>
     // @cdk.module test-io
     [TestClass()]
-    public class SDFReaderTest : SimpleChemObjectReaderTest
+    public class SDFReaderTest
+        : SimpleChemObjectReaderTest
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
         protected override string TestFile => "NCDK.Data.MDL.test.sdf";
         protected override Type ChemObjectIOToTestType => typeof(MDLV2000Reader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            MDLV2000Reader reader = new MDLV2000Reader(new StringReader(""));
-            Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
-            Assert.IsTrue(reader.Accepts(typeof(ChemModel)));
+            var reader = new MDLV2000Reader(new StringReader(""));
+            Assert.IsTrue(reader.Accepts(typeof(IChemFile)));
+            Assert.IsTrue(reader.Accepts(typeof(IChemModel)));
             Assert.IsTrue(reader.Accepts(typeof(Silent.AtomContainer)));
         }
 
         [TestMethod()]
         public void TestSDFFile()
         {
-            string filename = "NCDK.Data.MDL.test.sdf"; // a multi molecule SDF file
+            var filename = "NCDK.Data.MDL.test.sdf"; // a multi molecule SDF file
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            ChemFile fileContents = (ChemFile)reader.Read(new ChemFile());
+            var reader = new MDLV2000Reader(ins);
+            var fileContents = reader.Read(builder.NewChemFile());
             reader.Close();
             Assert.AreEqual(1, fileContents.Count);
             var sequence = fileContents[0];
@@ -69,10 +70,10 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestDataFromSDFReading()
         {
-            string filename = "NCDK.Data.MDL.test.sdf"; // a multi molecule SDF file
+            var filename = "NCDK.Data.MDL.test.sdf"; // a multi molecule SDF file
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            ChemFile fileContents = (ChemFile)reader.Read(new ChemFile());
+            var reader = new MDLV2000Reader(ins);
+            var fileContents = reader.Read(builder.NewChemFile());
             reader.Close();
             Assert.AreEqual(1, fileContents.Count);
             var sequence = fileContents[0];
@@ -93,16 +94,16 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestMultipleDataFields()
         {
-            string filename = "NCDK.Data.MDL.bug1587283.mol";
+            var filename = "NCDK.Data.MDL.bug1587283.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            IChemFile fileContents = (IChemFile)reader.Read(new ChemFile());
+            var reader = new MDLV2000Reader(ins);
+            IChemFile fileContents = (IChemFile)reader.Read(builder.NewChemFile());
             reader.Close();
             Assert.AreEqual(1, fileContents.Count);
             IChemSequence sequence = fileContents[0];
             Assert.IsNotNull(sequence);
             Assert.AreEqual(1, sequence.Count);
-            IChemModel model = sequence[0];
+            var model = sequence[0];
             Assert.IsNotNull(model);
             var som = model.MoleculeSet;
             Assert.IsNotNull(som);
@@ -119,10 +120,10 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestSDFFile4()
         {
-            string filename = "NCDK.Data.MDL.test4.sdf"; // a multi molecule SDF file
+            var filename = "NCDK.Data.MDL.test4.sdf"; // a multi molecule SDF file
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            ChemFile fileContents = (ChemFile)reader.Read(new ChemFile());
+            var reader = new MDLV2000Reader(ins);
+            var fileContents = reader.Read(builder.NewChemFile());
             reader.Close();
             Assert.AreEqual(1, fileContents.Count);
             var sequence = fileContents[0];
@@ -137,10 +138,10 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestSDFFile3()
         {
-            string filename = "NCDK.Data.MDL.test3.sdf"; // a multi molecule SDF file
+            var filename = "NCDK.Data.MDL.test3.sdf"; // a multi molecule SDF file
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            ChemFile fileContents = (ChemFile)reader.Read(new ChemFile());
+            var reader = new MDLV2000Reader(ins);
+            var fileContents = reader.Read(builder.NewChemFile());
             reader.Close();
             Assert.AreEqual(1, fileContents.Count);
             var sequence = fileContents[0];
@@ -155,10 +156,10 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestSDFFile5()
         {
-            string filename = "NCDK.Data.MDL.test5.sdf"; // a multi molecule SDF file
+            var filename = "NCDK.Data.MDL.test5.sdf"; // a multi molecule SDF file
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            ChemFile fileContents = (ChemFile)reader.Read(new ChemFile());
+            var reader = new MDLV2000Reader(ins);
+            var fileContents = reader.Read(builder.NewChemFile());
             reader.Close();
             Assert.AreEqual(1, fileContents.Count);
             var sequence = fileContents[0];
@@ -177,10 +178,10 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestSDFFile6()
         {
-            string filename = "NCDK.Data.MDL.test6.sdf"; // a multi molecule SDF file
+            var filename = "NCDK.Data.MDL.test6.sdf"; // a multi molecule SDF file
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            ChemFile fileContents = (ChemFile)reader.Read(new ChemFile());
+            var reader = new MDLV2000Reader(ins);
+            var fileContents = reader.Read(builder.NewChemFile());
             reader.Close();
             Assert.AreEqual(1, fileContents.Count);
             var sequence = fileContents[0];
@@ -191,7 +192,7 @@ namespace NCDK.IO
                 Assert.IsNotNull(sequence[i]);
             }
 
-            IChemModel model = sequence[0];
+            var model = sequence[0];
             Assert.IsNotNull(model);
             var som = model.MoleculeSet;
             Assert.IsNotNull(som);
@@ -208,14 +209,14 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestBug2911300()
         {
-            string filename = "NCDK.Data.MDL.bug2911300.sdf";
+            var filename = "NCDK.Data.MDL.bug2911300.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            IChemFile fileContents = (IChemFile)reader.Read(new ChemFile());
+            var reader = new MDLV2000Reader(ins);
+            IChemFile fileContents = (IChemFile)reader.Read(builder.NewChemFile());
             reader.Close();
             Assert.AreEqual(1, fileContents.Count);
             IChemSequence sequence = fileContents[0];
-            IChemModel model = sequence[0];
+            var model = sequence[0];
             Assert.IsNotNull(model);
             var som = model.MoleculeSet;
             Assert.IsNotNull(som);

@@ -20,8 +20,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -30,8 +30,10 @@ namespace NCDK.IO
 {
     // @cdk.module test-io
     [TestClass()]
-    public class PCSubstanceXMLReaderTest : SimpleChemObjectReaderTest
+    public class PCSubstanceXMLReaderTest
+        : SimpleChemObjectReaderTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         protected override string TestFile => "NCDK.Data.ASN.PubChem.sid577309.xml";
         protected override Type ChemObjectIOToTestType => typeof(PCSubstanceXMLReader);
 
@@ -39,17 +41,17 @@ namespace NCDK.IO
         public void TestAccepts()
         {
             PCSubstanceXMLReader reader = new PCSubstanceXMLReader(new StringReader(""));
-            Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
+            Assert.IsTrue(reader.Accepts(typeof(IAtomContainer)));
         }
 
         [TestMethod()]
         public void TestReading()
         {
-            string filename = "NCDK.Data.ASN.PubChem.sid577309.xml";
+            var filename = "NCDK.Data.ASN.PubChem.sid577309.xml";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             PCSubstanceXMLReader reader = new PCSubstanceXMLReader(ins);
-            IAtomContainer molecule = reader.Read(new AtomContainer());
+            var molecule = reader.Read(builder.NewAtomContainer());
             Assert.IsNotNull(molecule);
 
             // check atom stuff

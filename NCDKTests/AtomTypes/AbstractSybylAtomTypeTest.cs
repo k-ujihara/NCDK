@@ -35,7 +35,7 @@ namespace NCDK.AtomTypes
     {
         private const string ATOMTYPE_LIST = "sybyl-atom-types.owl";
 
-        protected static readonly AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data." + ATOMTYPE_LIST, CDK.Builder);
+        protected static readonly AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data." + ATOMTYPE_LIST);
 
         public override string AtomTypeListName => ATOMTYPE_LIST;
 
@@ -46,7 +46,7 @@ namespace NCDK.AtomTypes
 
         public override IAtomTypeMatcher GetAtomTypeMatcher(IChemObjectBuilder builder)
         {
-            return SybylAtomTypeMatcher.GetInstance(builder);
+            return SybylAtomTypeMatcher.GetInstance();
         }
 
         public override void AssertAtomTypes(IDictionary<string, int> testedAtomTypes, string[] expectedTypes, IAtomContainer mol)

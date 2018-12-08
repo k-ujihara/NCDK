@@ -32,7 +32,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestCPSA()
         {
-            string filename = "NCDK.Data.HIN.benzene.hin";
+            var filename = "NCDK.Data.HIN.benzene.hin";
             IChemFile content;
             using (var reader = new HINReader(ResourceLoader.GetAsStream(filename)))
             {
@@ -52,7 +52,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestChargedMolecule()
         {
-            string filename = "NCDK.Data.MDL.cpsa-charged.sdf";
+            var filename = "NCDK.Data.MDL.cpsa-charged.sdf";
             IChemFile content;
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
             {
@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestUnChargedMolecule()
         {
-            string filename = "NCDK.Data.MDL.cpsa-uncharged.sdf";
+            var filename = "NCDK.Data.MDL.cpsa-uncharged.sdf";
             IChemFile content;
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
             {

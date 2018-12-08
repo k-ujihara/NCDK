@@ -27,18 +27,16 @@ namespace NCDK
     /// </summary>
     // @cdk.module test-core 
     [TestClass()]
-    public class ImmutableAtomTypeTest : CDKTestCase
+    public class ImmutableAtomTypeTest 
+        : CDKTestCase
     {
         [TestMethod()]
         public void TestToString()
         {
-            AtomTypeFactory factory = AtomTypeFactory.GetInstance(
-                "NCDK.Dict.Data.cdk-atom-types.owl",
-                CDK.Builder
-            );
-            IAtomType type = factory.GetAtomType("C.sp3");
+            var factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl");
+            var type = factory.GetAtomType("C.sp3");
             Assert.IsTrue(type is ImmutableAtomType);
-            string output = type.ToString();
+            var output = type.ToString();
             Assert.IsTrue(output.Contains("ImmutableAtomType("));
             Assert.IsTrue(output.Contains("MBO:"));
         }

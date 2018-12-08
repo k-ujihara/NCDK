@@ -27,7 +27,6 @@ using NCDK.Common.Collections;
 using NCDK.Stereo;
 using System;
 using System.Collections.Generic;
-using static NCDK.Beam.Configuration.ConfigurationType;
 
 namespace NCDK.Smiles
 {
@@ -55,22 +54,6 @@ namespace NCDK.Smiles
         /// <summary>The builder used to create the CDK objects.</summary>
         private readonly IChemObjectBuilder builder;
 
-        /// <summary> Base atom objects for cloning - SMILES is very efficient and noticeable
-        ///  lag is seen using the IChemObjectBuilders.
-        ///  </summary>
-        private readonly IAtom templateAtom;
-
-        /// <summary> Base atom objects for cloning - SMILES is very efficient and noticeable
-        ///  lag is seen using the IChemObjectBuilders.
-        ///  </summary>
-        private readonly IBond templateBond;
-
-        /// <summary>
-        /// Base atom container for cloning - SMILES is very efficient and noticeable
-        /// lag is seen using the IChemObjectBuilders.
-        /// </summary>
-        private readonly IAtomContainer emptyContainer;
-
         /// <summary>
         /// Create a new converter for the Beam SMILES toolkit. The converter needs
         /// an <see cref="IChemObjectBuilder"/>. Currently the 'cdk-silent' builder will
@@ -80,9 +63,6 @@ namespace NCDK.Smiles
         public BeamToCDK(IChemObjectBuilder builder)
         {
             this.builder = builder;
-            this.templateAtom = builder.NewAtom();
-            this.templateBond = builder.NewBond();
-            this.emptyContainer = builder.NewAtomContainer();
         }
 
         /// <summary>
@@ -96,10 +76,10 @@ namespace NCDK.Smiles
         /// </exception>
         public IAtomContainer ToAtomContainer(Graph g, bool kekule)
         {
-            IAtomContainer ac = CreateEmptyContainer();
-            int numAtoms = g.Order;
-            IAtom[] atoms = new IAtom[numAtoms];
-            IBond[] bonds = new IBond[g.Size];
+            var ac = CreateEmptyContainer();
+            var numAtoms = g.Order;
+            var atoms = new IAtom[numAtoms];
+            var bonds = new IBond[g.Size];
 
             int j = 0; // bond index
 
@@ -117,9 +97,9 @@ namespace NCDK.Smiles
                 atoms[i] = ac.Atoms[i];
             foreach (Edge edge in g.Edges)
             {
-                int u = edge.Either();
-                int v = edge.Other(u);
-                IBond bond = builder.NewBond();
+                var u = edge.Either();
+                var v = edge.Other(u);
+                var bond = builder.NewBond();
                 bond.SetAtoms(new IAtom[] { atoms[u], atoms[v] });
                 bonds[j++] = bond;
 
@@ -175,21 +155,23 @@ namespace NCDK.Smiles
             {
                 for (int u = 0; u < g.Order; u++)
                 {
-                    Beam.Configuration c = g.ConfigurationOf(u);
+                    var c = g.ConfigurationOf(u);
                     switch (c.Type)
                     {
                         case Beam.Configuration.ConfigurationType.Tetrahedral:
                             {
                                 var se = NewTetrahedral(u, g.Neighbors(u), atoms, c);
 
-                                if (se != null) ac.StereoElements.Add(se);
+                                if (se != null)
+                                    ac.StereoElements.Add(se);
                                 break;
                             }
                         case Beam.Configuration.ConfigurationType.ExtendedTetrahedral:
                             {
                                 var se = NewExtendedTetrahedral(u, g, atoms);
 
-                                if (se != null) ac.StereoElements.Add(se);
+                                if (se != null)
+                                    ac.StereoElements.Add(se);
                                 break;
                             }
                         case Beam.Configuration.ConfigurationType.DoubleBond:
@@ -200,19 +182,22 @@ namespace NCDK.Smiles
                         case Beam.Configuration.ConfigurationType.SquarePlanar:
                             {
                                 var se = NewSquarePlanar(u, g.Neighbors(u), atoms, c);
-                                if (se != null) ac.StereoElements.Add(se);
+                                if (se != null)
+                                    ac.StereoElements.Add(se);
                                 break;
                             }
                         case Beam.Configuration.ConfigurationType.TrigonalBipyramidal:
                             {
                                 var se = NewTrigonalBipyramidal(u, g.Neighbors(u), atoms, c);
-                                if (se != null) ac.StereoElements.Add(se);
+                                if (se != null)
+                                    ac.StereoElements.Add(se);
                                 break;
                             }
                         case Beam.Configuration.ConfigurationType.Octahedral:
                             {
                                 var se = NewOctahedral(u, g.Neighbors(u), atoms, c);
-                                if (se != null) ac.StereoElements.Add(se);
+                                if (se != null)
+                                    ac.StereoElements.Add(se);
                                 break;
                             }
                     }
@@ -261,8 +246,8 @@ namespace NCDK.Smiles
                 if (e.Bond != Bond.Double)
                     continue;
 
-                int u = e.Either();
-                int v = e.Other(u);
+                var u = e.Either();
+                var v = e.Other(u);
 
                 // find a directional bond for either end
                 Edge first = null;
@@ -277,13 +262,15 @@ namespace NCDK.Smiles
                         // if the directions (relative to the double bond) are the
                         // same then they are on the same side - otherwise they
                         // are opposite
-                        DoubleBondConformation conformation = first.GetBond(u) == second.GetBond(v) ?
-                            DoubleBondConformation.Together : DoubleBondConformation.Opposite;
+                        var conformation = first.GetBond(u) == 
+                            second.GetBond(v) 
+                          ? DoubleBondConformation.Together 
+                          : DoubleBondConformation.Opposite;
                         // get the stereo bond and build up the ligands for the
                         // stereo-element - linear search could be improved with
                         // map or API change to double bond element
-                        IBond db = ac.GetBond(ac.Atoms[u], ac.Atoms[v]);
-                        IBond[] ligands = new IBond[]
+                        var db = ac.GetBond(ac.Atoms[u], ac.Atoms[v]);
+                        var ligands = new IBond[]
                         {
                             ac.GetBond(ac.Atoms[u], ac.Atoms[first.Other(u)]),
                             ac.GetBond(ac.Atoms[v], ac.Atoms[second.Other(v)])
@@ -293,7 +280,7 @@ namespace NCDK.Smiles
                     else if (g.Degree(v) == 2)
                     {
                         var edges = new List<Edge> { e };
-                        Edge f = FindCumulatedEdge(g, v, e);
+                        var f = FindCumulatedEdge(g, v, e);
                         while (f != null)
                         {
                             edges.Add(f);
@@ -325,14 +312,14 @@ namespace NCDK.Smiles
                 // extension F[C@]=[C@@]F
                 else
                 {
-                    Beam.Configuration uConf = g.ConfigurationOf(u);
-                    Beam.Configuration vConf = g.ConfigurationOf(v);
+                    var uConf = g.ConfigurationOf(u);
+                    var vConf = g.ConfigurationOf(v);
                     if (uConf.Type == Beam.Configuration.ConfigurationType.DoubleBond 
                      && vConf.Type == Beam.Configuration.ConfigurationType.DoubleBond)
                     {
-                        int[] nbrs = new int[6];
-                        int[] uNbrs = g.Neighbors(u);
-                        int[] vNbrs = g.Neighbors(v);
+                        var nbrs = new int[6];
+                        var uNbrs = g.Neighbors(u);
+                        var vNbrs = g.Neighbors(v);
 
                         if (uNbrs.Length < 2 || uNbrs.Length > 3)
                             continue;
@@ -349,8 +336,8 @@ namespace NCDK.Smiles
                         Array.Sort(nbrs, 0, 3);
                         Array.Sort(nbrs, 3, 3);
 
-                        int vPos = Array.BinarySearch(nbrs, 0, 3, v);
-                        int uPos = Array.BinarySearch(nbrs, 3, 3, u);
+                        var vPos = Array.BinarySearch(nbrs, 0, 3, v);
+                        var uPos = Array.BinarySearch(nbrs, 3, 3, u);
 
                         int uhi = 0, ulo = 0;
                         int vhi = 0, vlo = 0;
@@ -373,8 +360,8 @@ namespace NCDK.Smiles
                             vlo = tmp;
                         }
 
-                        DoubleBondConformation conf = DoubleBondConformation.Unset;
-                        IBond[] bonds = new IBond[2];
+                        var conf = DoubleBondConformation.Unset;
+                        var bonds = new IBond[2];
 
                         if (uhi != u)
                         {
@@ -429,7 +416,7 @@ namespace NCDK.Smiles
                 return null;
             foreach (var e in g.GetEdges(u))
             {
-                Bond b = e.Bond;
+                var b = e.Bond;
                 if (b == Bond.Up || b == Bond.Down) return e;
             }
             return null;
@@ -493,7 +480,7 @@ namespace NCDK.Smiles
         {
             if (vs.Length != 5)
                 return null;
-            int order = 1 + c.Ordinal - Configuration.TB1.Ordinal;
+            var order = 1 + c.Ordinal - Configuration.TB1.Ordinal;
             if (order < 1 || order > 20)
                 return null;
             return new TrigonalBipyramidal(atoms[u], new IAtom[] { atoms[vs[0]], atoms[vs[1]], atoms[vs[2]], atoms[vs[3]], atoms[vs[4]] }, order);
@@ -503,7 +490,7 @@ namespace NCDK.Smiles
         {
             if (vs.Length != 6)
                 return null;
-            int order = 1 + c.Ordinal - Configuration.OH1.Ordinal;
+            var order = 1 + c.Ordinal - Configuration.OH1.Ordinal;
             if (order < 1 || order > 30)
                 return null;
             return new Octahedral(atoms[u],
@@ -522,7 +509,7 @@ namespace NCDK.Smiles
             {
                 if (e.Bond != Bond.Double)
                     continue;
-                int nbr = e.Other(u);
+                var nbr = e.Other(u);
                 if (nbr == v)
                     continue;
                 return nbr;
@@ -533,10 +520,10 @@ namespace NCDK.Smiles
         private static int[] FindExtendedTetrahedralEnds(Graph g, int focus)
         {
             var es = g.GetEdges(focus);
-            int prevEnd1 = focus;
-            int prevEnd2 = focus;
-            int end1 = es[0].Other(prevEnd2);
-            int end2 = es[1].Other(prevEnd2);
+            var prevEnd1 = focus;
+            var prevEnd2 = focus;
+            var end1 = es[0].Other(prevEnd2);
+            var end2 = es[1].Other(prevEnd2);
             int tmp;
             while (end1 >= 0 && end2 >= 0)
             {
@@ -552,8 +539,8 @@ namespace NCDK.Smiles
 
         private static IStereoElement<IChemObject, IChemObject> NewExtendedTetrahedral(int u, Graph g, IAtom[] atoms)
         {
-            int[] terminals = FindExtendedTetrahedralEnds(g, u);
-            int[] xs = new int[] { -1, terminals[0], -1, terminals[1] };
+            var terminals = FindExtendedTetrahedralEnds(g, u);
+            var xs = new int[] { -1, terminals[0], -1, terminals[1] };
 
             int n = 0;
             foreach (var e in g.GetEdges(terminals[0]))
@@ -581,8 +568,8 @@ namespace NCDK.Smiles
         /// <returns>array with 'u' inserted in sorted order</returns>
         private static int[] Insert(int v, int[] vs)
         {
-            int n = vs.Length;
-            int[] ws = Arrays.CopyOf(vs, n + 1);
+            var n = vs.Length;
+            var ws = Arrays.CopyOf(vs, n + 1);
             ws[n] = v;
 
             // insert 'u' in to sorted position
@@ -604,7 +591,7 @@ namespace NCDK.Smiles
         /// <returns>the CDK atom to have it's properties set</returns>
         public IAtom ToCDKAtom(Beam.IAtom beamAtom, int hCount)
         {
-            IAtom cdkAtom = NewCDKAtom(beamAtom);
+            var cdkAtom = NewCDKAtom(beamAtom);
 
             cdkAtom.ImplicitHydrogenCount = hCount;
             cdkAtom.FormalCharge = beamAtom.Charge;
@@ -630,10 +617,10 @@ namespace NCDK.Smiles
         public IAtom NewCDKAtom(Beam.IAtom atom)
         {
             var element = atom.Element;
-            bool unknown = element == Beam.Element.Unknown;
+            var unknown = element == Beam.Element.Unknown;
             if (unknown)
             {
-                IPseudoAtom pseudoAtom = builder.NewPseudoAtom(element.Symbol);
+                var pseudoAtom = builder.NewPseudoAtom(element.Symbol);
                 pseudoAtom.Symbol = element.Symbol;
                 pseudoAtom.Label = atom.Label;
                 return pseudoAtom;
@@ -659,7 +646,7 @@ namespace NCDK.Smiles
         /// <returns>new atom with configured symbol and atomic number</returns>
         private IAtom CreateAtom(Beam.Element element)
         {
-            IAtom atom = builder.NewAtom();
+            var atom = builder.NewAtom();
             atom.Symbol = element.Symbol;
             atom.AtomicNumber = element.AtomicNumber;
             return atom;

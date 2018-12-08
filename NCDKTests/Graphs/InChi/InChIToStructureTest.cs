@@ -19,7 +19,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Base;
-using NCDK.Silent;
 using NCDK.Stereo;
 using System.Linq;
 
@@ -30,19 +29,22 @@ namespace NCDK.Graphs.InChI
     /// </summary>
     // @cdk.module test-inchi
     [TestClass()]
-    public class InChIToStructureTest : CDKTestCase
+    public class InChIToStructureTest
+        : CDKTestCase
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
+
         [TestMethod()]
         public void TestConstructor_String_IChemObjectBuilder()
         {
-            var parser = new InChIToStructure("InChI=1S/CH4/h1H4", ChemObjectBuilder.Instance);
+            var parser = new InChIToStructure("InChI=1S/CH4/h1H4", builder);
             Assert.IsNotNull(parser);
         }
 
         [TestMethod()]
         public void TestGetAtomContainer()
         {
-            var parser = new InChIToStructure("InChI=1S/CH4/h1H4", ChemObjectBuilder.Instance);
+            var parser = new InChIToStructure("InChI=1S/CH4/h1H4", builder);
             var container = parser.AtomContainer;
             Assert.IsNotNull(container);
             Assert.AreEqual(1, container.Atoms.Count);
@@ -52,7 +54,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void NonNullAtomicNumbers()
         {
-            var parser = new InChIToStructure("InChI=1S/CH4/h1H4", ChemObjectBuilder.Instance);
+            var parser = new InChIToStructure("InChI=1S/CH4/h1H4", builder);
             var container = parser.AtomContainer;
             foreach (var atom in container.Atoms)
             {
@@ -65,7 +67,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestFixedHydrogens()
         {
-            var parser = new InChIToStructure("InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)/f/h2H", ChemObjectBuilder.Instance);
+            var parser = new InChIToStructure("InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)/f/h2H", builder);
             var container = parser.AtomContainer;
             Assert.IsNotNull(container);
             Assert.AreEqual(3, container.Atoms.Count);
@@ -76,7 +78,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetReturnStatus_EOF()
         {
-            var parser = new InChIToStructure("InChI=1S", ChemObjectBuilder.Instance);
+            var parser = new InChIToStructure("InChI=1S", builder);
             var container = parser.AtomContainer;
             var returnStatus = parser.ReturnStatus;
             Assert.IsNotNull(returnStatus);
@@ -86,7 +88,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetMessage()
         {
-            var parser = new InChIToStructure("InChI=1S/CH5/h1H4", ChemObjectBuilder.Instance);
+            var parser = new InChIToStructure("InChI=1S/CH5/h1H4", builder);
             var container = parser.AtomContainer;
             string message = parser.Message;
             Assert.IsNotNull(message);
@@ -95,7 +97,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetMessageNull()
         {
-            var parser = new InChIToStructure("InChI=1S", ChemObjectBuilder.Instance);
+            var parser = new InChIToStructure("InChI=1S", builder);
             var container = parser.AtomContainer;
             string message = parser.Message;
             Assert.IsNull(message);
@@ -104,7 +106,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetLog()
         {
-            var parser = new InChIToStructure("InChI=1S/CH5/h1H4", ChemObjectBuilder.Instance);
+            var parser = new InChIToStructure("InChI=1S/CH5/h1H4", builder);
             var container = parser.AtomContainer;
             string message = parser.Message;
             Assert.IsNotNull(message);
@@ -113,7 +115,7 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetWarningFlags()
         {
-            var parser = new InChIToStructure("InChI=1S/CH5/h1H4", ChemObjectBuilder.Instance);
+            var parser = new InChIToStructure("InChI=1S/CH5/h1H4", builder);
             var container = parser.AtomContainer;
             var flags = parser.WarningFlags;
             Assert.IsNotNull(flags);
@@ -123,19 +125,19 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetAtomContainer_IChemObjectBuilder()
         {
-            var parser = new InChIToStructure("InChI=1S/CH5/h1H4", ChemObjectBuilder.Instance);
+            var parser = new InChIToStructure("InChI=1S/CH5/h1H4", builder);
             var container = parser.AtomContainer;
             // test if the created IAtomContainer is done with the Silent module...
             // OK, this is not typical use, but maybe the above generate method should be private
-            Assert.IsInstanceOfType(container, ChemObjectBuilder.Instance.NewAtomContainer().GetType());
+            Assert.IsInstanceOfType(container, builder.NewAtomContainer().GetType());
         }
 
         [TestMethod()]
         public void AtomicOxygen()
         {
-            var parser = new InChIToStructure("InChI=1S/O", ChemObjectBuilder.Instance);
+            var parser = new InChIToStructure("InChI=1S/O", builder);
             var container = parser.AtomContainer;
-            Assert.IsInstanceOfType(container, ChemObjectBuilder.Instance.NewAtomContainer().GetType());
+            Assert.IsInstanceOfType(container, builder.NewAtomContainer().GetType());
             Assert.IsNotNull(container.Atoms[0].ImplicitHydrogenCount);
             Assert.AreEqual(0, container.Atoms[0].ImplicitHydrogenCount);
         }
@@ -143,10 +145,10 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void HeavyOxygenWater()
         {
-            var parser = new InChIToStructure("InChI=1S/H2O/h1H2/i1+2", ChemObjectBuilder.Instance);
+            var parser = new InChIToStructure("InChI=1S/H2O/h1H2/i1+2", builder);
             var container = parser.AtomContainer;
             Assert.IsNotNull(container.Atoms[0].ImplicitHydrogenCount);
-            Assert.IsInstanceOfType(container, ChemObjectBuilder.Instance.NewAtomContainer().GetType());
+            Assert.IsInstanceOfType(container, builder.NewAtomContainer().GetType());
             Assert.IsNotNull(container.Atoms[0].ImplicitHydrogenCount);
             Assert.AreEqual(2, container.Atoms[0].ImplicitHydrogenCount);
             Assert.AreEqual(18, container.Atoms[0].MassNumber);
@@ -155,10 +157,10 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void E_bute_2_ene()
         {
-            var parser = new InChIToStructure("InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3+", ChemObjectBuilder.Instance);
+            var parser = new InChIToStructure("InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3+", builder);
             var container = parser.AtomContainer;
             var ses = container.StereoElements.GetEnumerator();
-            Assert.IsInstanceOfType(container, ChemObjectBuilder.Instance.NewAtomContainer().GetType());
+            Assert.IsInstanceOfType(container, builder.NewAtomContainer().GetType());
             Assert.IsTrue(ses.MoveNext());
             var se = ses.Current;
             Assert.IsInstanceOfType(se, typeof(IDoubleBondStereochemistry));
@@ -168,10 +170,10 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void Z_bute_2_ene()
         {
-            var parser = new InChIToStructure("InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3-", ChemObjectBuilder.Instance);
+            var parser = new InChIToStructure("InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3-", builder);
             var container = parser.AtomContainer;
             var ses = container.StereoElements.GetEnumerator();
-            Assert.IsInstanceOfType(container, ChemObjectBuilder.Instance.NewAtomContainer().GetType());
+            Assert.IsInstanceOfType(container, builder.NewAtomContainer().GetType());
             Assert.IsTrue(ses.MoveNext());
             var se = ses.Current;
             Assert.IsInstanceOfType(se, typeof(IDoubleBondStereochemistry));

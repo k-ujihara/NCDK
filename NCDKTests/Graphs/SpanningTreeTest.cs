@@ -18,7 +18,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Templates;
 
@@ -28,6 +27,7 @@ namespace NCDK.Graphs
     [TestClass()]
     public class SpanningTreeTest : CDKTestCase
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         private static SpanningTree azulene = null;
         private static SpanningTree ethane = null;
 
@@ -36,12 +36,12 @@ namespace NCDK.Graphs
             if (azulene == null)
             {
                 // load azulene
-                string filename = "NCDK.Data.MDL.azulene.mol";
+                var filename = "NCDK.Data.MDL.azulene.mol";
                 var ins = ResourceLoader.GetAsStream(filename);
-                MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-                IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
-                IChemSequence seq = chemFile[0];
-                IChemModel model = seq[0];
+                var reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
+                var chemFile = reader.Read(builder.NewChemFile());
+                var seq = chemFile[0];
+                var model = seq[0];
                 IAtomContainer azuleneMolecule = model.MoleculeSet[0];
                 Assert.AreEqual(10, azuleneMolecule.Atoms.Count);
                 Assert.AreEqual(11, azuleneMolecule.Bonds.Count);
@@ -50,7 +50,6 @@ namespace NCDK.Graphs
             if (ethane == null)
             {
                 // create ethane
-                IChemObjectBuilder builder = ChemObjectBuilder.Instance;
                 IAtomContainer ethaneMolecule = builder.NewAtomContainer();
                 ethaneMolecule.Atoms.Add(builder.NewAtom("C"));
                 ethaneMolecule.Atoms.Add(builder.NewAtom("C"));
@@ -62,7 +61,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void TestSpanningTree_IAtomContainer()
         {
-            SpanningTree sTree = new SpanningTree(new AtomContainer());
+            SpanningTree sTree = new SpanningTree(builder.NewAtomContainer());
             Assert.IsNotNull(sTree);
         }
 
@@ -96,7 +95,6 @@ namespace NCDK.Graphs
             Assert.AreEqual(2, path.Atoms.Count);
             Assert.AreEqual(1, path.Bonds.Count);
 
-            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer disconnectedStructure = builder.NewAtomContainer();
             disconnectedStructure.Atoms.Add(builder.NewAtom("Na"));
             disconnectedStructure.Atoms[0].FormalCharge = +1;

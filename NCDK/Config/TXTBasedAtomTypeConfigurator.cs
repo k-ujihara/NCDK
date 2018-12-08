@@ -37,6 +37,7 @@ namespace NCDK.Config
     public class TXTBasedAtomTypeConfigurator
         : IAtomTypeConfigurator
     {
+        private readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private const string configFile = "NCDK.Config.Data.jmol_atomtypes.txt";
         private Stream stream;
 
@@ -57,10 +58,9 @@ namespace NCDK.Config
         /// <summary>
         /// Reads a text based configuration file.
         /// </summary>
-        /// <param name="builder">used to construct the <see cref="IAtomType"/>'s.</param>
         /// <returns>A <see cref="IEnumerable{IAtomType}"/> with read <see cref="IAtomType"/>'s.</returns>
         /// <exception cref="IOException">when a problem occurred with reading from the <see cref="GetStream()"/></exception>
-        public IEnumerable<IAtomType> ReadAtomTypes(IChemObjectBuilder builder)
+        public IEnumerable<IAtomType> ReadAtomTypes()
         {
             if (GetStream() == null)
             {

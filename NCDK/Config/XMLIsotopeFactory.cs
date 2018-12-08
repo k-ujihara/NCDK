@@ -17,10 +17,10 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config.Isotopes;
 using System;
 using System.Diagnostics;
 using System.IO;
-using NCDK.Config.Isotopes;
 
 namespace NCDK.Config
 {
@@ -43,60 +43,30 @@ namespace NCDK.Config
     // @cdk.created    2001-08-29
     // @cdk.keyword    isotope
     // @cdk.keyword    element
-    public class XMLIsotopeFactory : IsotopeFactory
+    public class XMLIsotopeFactory 
+        : IsotopeFactory
     {
-        private static XMLIsotopeFactory ifac = null;
+        public static XMLIsotopeFactory Instance { get; } = new XMLIsotopeFactory();
 
         /// <summary>
         /// Private constructor for the IsotopeFactory object.
         /// </summary>
-        /// <param name="builder">The builder from which we the factory will be generated</param>
         /// <exception cref="IOException">A problem with reading the isotopes.xml file</exception>
-        private XMLIsotopeFactory(IChemObjectBuilder builder)
+        private XMLIsotopeFactory()
         {
             Trace.TraceInformation("Creating new IsotopeFactory");
 
-            Stream ins;
             // ObjIn in = null;
-            string errorMessage = $"There was a problem getting NCDK.Config.Data.isotopes.xml as a stream";
-            try
+            var errorMessage = $"There was a problem getting NCDK.Config.Data.isotopes.xml as a stream";
+            var configFile = "NCDK.Config.Data.isotopes.xml";
+            Debug.WriteLine($"Getting stream for {configFile}");
+            using (var reader = new IsotopeReader(ResourceLoader.GetAsStream(configFile)))
             {
-                string configFile = "NCDK.Config.Data.isotopes.xml";
-                Debug.WriteLine($"Getting stream for {configFile}");
-                ins = ResourceLoader.GetAsStream(configFile);
+                var isotopes = reader.ReadIsotopes();
+                foreach (var isotope in isotopes)
+                    Add(isotope);
+                Debug.WriteLine($"Found #isotopes in file: {isotopes.Count}");
             }
-            catch (Exception exception)
-            {
-                Trace.TraceError(errorMessage);
-                Debug.WriteLine(exception);
-                throw new IOException(errorMessage);
-            }
-            if (ins == null)
-            {
-                Trace.TraceError(errorMessage);
-                throw new IOException(errorMessage);
-            }
-            var reader = new IsotopeReader(ins, builder);
-            //in = new ObjIn(ins, new Config().aliasID(false));
-            var isotopes = reader.ReadIsotopes();
-            foreach (var isotope in isotopes)
-                Add(isotope);
-            Debug.WriteLine($"Found #isotopes in file: {isotopes.Count}");
-        }
-
-        /// <summary>
-        /// Returns an IsotopeFactory instance.
-        /// </summary>
-        /// <param name="builder">ChemObjectBuilder used to construct the Isotope's</param>
-        /// <returns>The instance value</returns>
-        /// <exception cref="IOException">if isotopic data files could not be read.</exception>"
-        public static XMLIsotopeFactory GetInstance(IChemObjectBuilder builder)
-        {
-            if (ifac == null)
-            {
-                ifac = new XMLIsotopeFactory(builder);
-            }
-            return ifac;
         }
     }
 }

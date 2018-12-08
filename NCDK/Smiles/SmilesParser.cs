@@ -84,7 +84,6 @@ namespace NCDK.Smiles
     // @author Egon Willighagen
     // @author John May
     // @cdk.module smiles
-    // @cdk.githash
     // @cdk.created 2002-04-29
     // @cdk.keyword SMILES, parser
     public sealed class SmilesParser
@@ -98,6 +97,11 @@ namespace NCDK.Smiles
         /// Direct converter from Beam to CDK.
         /// </summary>
         private readonly BeamToCDK beamToCDK;
+
+        public SmilesParser()
+            : this(Silent.ChemObjectBuilder.Instance)
+        {
+        }
 
         /// <summary>
         /// Create a new SMILES parser which will create <see cref="IAtomContainer"/>s with

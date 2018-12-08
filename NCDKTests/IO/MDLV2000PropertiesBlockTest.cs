@@ -24,7 +24,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System.IO;
 
 namespace NCDK.IO
@@ -95,7 +94,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void Anion()
         {
-            IAtomContainer mock = Mock(3);
+            var mock = Mock(3);
             Read("M  CHG  1   1  -1", mock);
             Moq.Mock.Get(mock.Atoms[0]).VerifySet(n => n.FormalCharge = -1);
         }
@@ -103,7 +102,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void Cation()
         {
-            IAtomContainer mock = Mock(3);
+            var mock = Mock(3);
             Read("M  CHG  1   1   1", mock);
             Moq.Mock.Get(mock.Atoms[0]).VerifySet(n => n.FormalCharge = +1);
         }
@@ -111,7 +110,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void MultipleCharges()
         {
-            IAtomContainer mock = Mock(6);
+            var mock = Mock(6);
             Read("M  CHG  2   2   1   5  -2", mock);
             Moq.Mock.Get(mock.Atoms[1]).VerifySet(n => n.FormalCharge = +1);
             Moq.Mock.Get(mock.Atoms[4]).VerifySet(n => n.FormalCharge = -2);
@@ -120,7 +119,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void MultipleChargesTruncated()
         {
-            IAtomContainer mock = Mock(6);
+            var mock = Mock(6);
             Read("M  CHG  2   2  -3", mock);
             Moq.Mock.Get(mock.Atoms[1]).VerifySet(n => n.FormalCharge = -3);
         }
@@ -128,7 +127,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void C13()
         {
-            IAtomContainer mock = Mock(3);
+            var mock = Mock(3);
             Read("M  ISO  1   1  13", mock);
             Moq.Mock.Get(mock.Atoms[0]).VerifySet(n => n.MassNumber = 13);
         }
@@ -136,7 +135,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void C13N14()
         {
-            IAtomContainer mock = Mock(4);
+            var mock = Mock(4);
             Read("M  ISO  2   1  13   3  14", mock);
             Moq.Mock.Get(mock.Atoms[0]).VerifySet(n => n.MassNumber = 13);
             Moq.Mock.Get(mock.Atoms[2]).VerifySet(n => n.MassNumber = 14);
@@ -145,7 +144,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void AtomValue()
         {
-            IAtomContainer mock = Mock(3);
+            var mock = Mock(3);
             Read("V    1 A Comment", mock);
             Moq.Mock.Get(mock.Atoms[0]).Verify(n => n.SetProperty(CDKPropertyName.Comment, "A Comment"));
         }
@@ -153,7 +152,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void AtomAlias()
         {
-            IAtomContainer mock = Mock(4);
+            var mock = Mock(4);
             Read("A    4\n" + "Gly", mock);
             Assert.IsInstanceOfType(mock.Atoms[3], typeof(IPseudoAtom));
             Assert.AreEqual("Gly", ((IPseudoAtom)mock.Atoms[3]).Label);
@@ -162,14 +161,15 @@ namespace NCDK.IO
         [TestMethod()]
         public void AcdAtomLabel()
         {
-            IAtomContainer mock = Mock(3);
+            var mock = Mock(3);
             Read("M  ZZC   1 6", mock);
             Moq.Mock.Get(mock.Atoms[0]).Verify(n => n.SetProperty(CDKPropertyName.ACDLabsAtomLabel, "6"));
         }
 
         static IAtomContainer Mock(int n)
         {
-            IAtomContainer mock = new AtomContainer();
+            // builder.NewAtomContainer, ie, new AtomContainer2 does not work here with Moq.
+            var mock = new Silent.AtomContainer();  
             for (int i = 0; i < n; i++)
                 mock.Atoms.Add(new Moq.Mock<IAtom>().Object);
             return mock;

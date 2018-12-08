@@ -671,7 +671,7 @@ namespace NCDK.IO.CML
                 new AtomContainer(),
                 new AtomContainer()
             };
-            IChemModel model = new ChemModel { MoleculeSet = list };
+            var model = new ChemModel { MoleculeSet = list };
 
             IChemModel roundTripped = CMLRoundTripTool.RoundTripChemModel(convertor, model);
             var newList = roundTripped.MoleculeSet;
@@ -685,9 +685,9 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestAtomProperties()
         {
-            string filename = "NCDK.Data.CML.custompropertiestest.cml";
+            var filename = "NCDK.Data.CML.custompropertiestest.cml";
             var ins = ResourceLoader.GetAsStream(filename);
-            CMLReader reader = new CMLReader(ins);
+            var reader = new CMLReader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemFile)new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);

@@ -19,7 +19,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.Geometries;
 using NCDK.IO;
 using NCDK.Layout;
@@ -40,8 +39,10 @@ namespace NCDK.Modelings.Builder3D
     // @author chhoppe
     // @cdk.created    2004-11-04
     [TestClass()]
-    public class ModelBuilder3DTest : CDKTestCase
+    public class ModelBuilder3DTest
+        : CDKTestCase
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         bool standAlone = false;
 
         /// <summary>
@@ -59,7 +60,7 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestModelBuilder3D_CF()
         {
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(CDK.Builder);
+            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance();
             Vector3 c_coord = new Vector3(1.392, 0.0, 0.0);
             Vector3 f_coord = new Vector3(0.0, 0.0, 0.0);
             Vector3 h1_coord = new Vector3(1.7439615035767404, 1.0558845107302222, 0.0);
@@ -82,7 +83,7 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestModelBuilder3D_CccccC()
         {
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(CDK.Builder);
+            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance();
             string smile = "CccccC";
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles(smile);
@@ -100,7 +101,7 @@ namespace NCDK.Modelings.Builder3D
         [TestCategory("SlowTest")]
         public void TestModelBuilder3D_c1ccccc1C0()
         {
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(CDK.Builder);
+            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance();
             string smile = "c1ccccc1C=O";
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles(smile);
@@ -117,7 +118,7 @@ namespace NCDK.Modelings.Builder3D
         [TestCategory("SlowTest")]
         public void TestModelBuilder3D_Konstanz()
         {
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(ChemObjectBuilder.Instance);
+            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance();
             string smile = "C12(-[H])-C3(-C(-[H])(-[H])-C(-C4(-C5(-C(-Cl)(-Cl)-C(-C-3-4-[H])(-Cl)-C(-Cl)(-[H])-C-5(-Cl)-[H])-Cl)-[H])(-[H])-C-2(-O-1)-[H])-[H]";
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles(smile);
@@ -134,7 +135,7 @@ namespace NCDK.Modelings.Builder3D
         [TestCategory("SlowTest")]
         public void XTestModelBuilder3D_Konstanz2()
         {
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(CDK.Builder);
+            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance();
             string smile = "c1(:c(:c(:c(-[H]):c(-Cl):c:1-[H])-[H])-[H])-[H]";
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles(smile);
@@ -151,7 +152,7 @@ namespace NCDK.Modelings.Builder3D
         [TestCategory("SlowTest")]
         public void TestModelBuilder3D_C1CCCCCCC1CC()
         {
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(CDK.Builder);
+            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance();
             string smile = "C1CCCCCCC1CC";
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles(smile);
@@ -172,7 +173,7 @@ namespace NCDK.Modelings.Builder3D
         [TestCategory("SlowTest")]
         public void TestModelBuilder3D_CCCCCCCCCC_with2d()
         {
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(CDK.Builder);
+            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance();
             string smile = "CCCCCCCCCC";
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles(smile);
@@ -194,11 +195,11 @@ namespace NCDK.Modelings.Builder3D
         [TestCategory("SlowTest")]
         public void TestModelBuilder3D_232()
         {
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(CDK.Builder);
-            string filename = "NCDK.Data.MDL.allmol232.mol";
+            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance();
+            var filename = "NCDK.Data.MDL.allmol232.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            var chemFile = reader.Read(new ChemFile());
+            var reader = new MDLV2000Reader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
             var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             IAtomContainer ac = new Silent.AtomContainer(containersList[0]);
@@ -222,11 +223,11 @@ namespace NCDK.Modelings.Builder3D
         [TestCategory("SlowTest")]
         public void TestModelBuilder3D_231()
         {
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(CDK.Builder);
-            string filename = "NCDK.Data.MDL.allmol231.mol";
+            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance();
+            var filename = "NCDK.Data.MDL.allmol231.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            var chemFile = reader.Read(new ChemFile());
+            var reader = new MDLV2000Reader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
             var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToArray();
             IAtomContainer ac = new Silent.AtomContainer(containersList[0]);
@@ -246,7 +247,7 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestModelBuilder3D_keepChemObjectIDs()
         {
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(CDK.Builder);
+            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance();
 
             IAtomContainer methanol = new Silent.AtomContainer();
             IChemObjectBuilder builder = methanol.Builder;
@@ -328,7 +329,7 @@ namespace NCDK.Modelings.Builder3D
             // Test for the method Model3DBuildersWithMM2ForceField
             var builder = CDK.Builder;
 
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(CDK.Builder);
+            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance();
             for (var i = 0; i < inputList.Count; i++)
             {
                 var input = inputList[i];
@@ -360,11 +361,11 @@ namespace NCDK.Modelings.Builder3D
         [TestCategory("SlowTest")]
         public void TestModelBuilder3D_bug_1241421()
         {
-            var mb3d = ModelBuilder3D.GetInstance(ChemObjectBuilder.Instance);
-            string filename = "NCDK.Data.MDL.bug1241421.mol";
+            var mb3d = ModelBuilder3D.GetInstance();
+            var filename = "NCDK.Data.MDL.bug1241421.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new MDLV2000Reader(ins);
-            var chemFile = reader.Read(new ChemFile());
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
             var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             IAtomContainer ac = new Silent.AtomContainer(containersList[0]);
@@ -376,11 +377,11 @@ namespace NCDK.Modelings.Builder3D
         [TestCategory("SlowTest")]
         public void TestModelBuilder3D_reserpine()
         {
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(ChemObjectBuilder.Instance);
-            string filename = "NCDK.Data.MDL.reserpine.mol";
+            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance();
+            var filename = "NCDK.Data.MDL.reserpine.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            var chemFile = reader.Read(new ChemFile());
+            var reader = new MDLV2000Reader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
             var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
             IAtomContainer ac = new Silent.AtomContainer(containersList[0]);
@@ -397,12 +398,12 @@ namespace NCDK.Modelings.Builder3D
         {
             string smiles1 = "CCCCCCCCCCCCCCCCCC";
             string smiles2 = "CCCCCC(CCCC)CCCC";
-            SmilesParser parser = CDK.SmilesParser;
+            var parser = CDK.SmilesParser;
             var nonBranchedAlkane = parser.ParseSmiles(smiles1);
             var branchedAlkane = parser.ParseSmiles(smiles2);
-            ModelBuilder3D.GetInstance(CDK.Builder).Generate3DCoordinates(nonBranchedAlkane,
+            ModelBuilder3D.GetInstance().Generate3DCoordinates(nonBranchedAlkane,
                     false);
-            ModelBuilder3D.GetInstance(CDK.Builder).Generate3DCoordinates(branchedAlkane, false);
+            ModelBuilder3D.GetInstance().Generate3DCoordinates(branchedAlkane, false);
         }
 
         [TestMethod()]
@@ -411,7 +412,7 @@ namespace NCDK.Modelings.Builder3D
             SmilesParser smipar = CDK.SmilesParser;
             var methane = smipar.ParseSmiles("[H]C([H])([H])[H]");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(methane);
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(CDK.Builder);
+            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance();
             mb3d.Generate3DCoordinates(methane, false);
             foreach (var atom in methane.Atoms)
                 Assert.IsNotNull(atom.Point3D);
@@ -423,7 +424,7 @@ namespace NCDK.Modelings.Builder3D
             SmilesParser smipar = CDK.SmilesParser;
             var ethane = smipar.ParseSmiles("[H]C([H])([H])C([H])([H])[H]");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ethane);
-            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(CDK.Builder);
+            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance();
             mb3d.Generate3DCoordinates(ethane, false);
             foreach (var atom in ethane.Atoms)
                 Assert.IsNotNull(atom.Point3D);

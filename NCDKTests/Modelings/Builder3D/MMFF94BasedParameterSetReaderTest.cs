@@ -20,11 +20,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Base;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
 using System.Collections.Generic;
 using System.Globalization;
-using NCDK.Silent;
+
 
 namespace NCDK.Modelings.Builder3D
 {
@@ -41,7 +42,7 @@ namespace NCDK.Modelings.Builder3D
         public void TestReadParameterSets()
         {
             MMFF94BasedParameterSetReader mmff94bpsr = new MMFF94BasedParameterSetReader();
-            mmff94bpsr.ReadParameterSets(ChemObjectBuilder.Instance);
+            mmff94bpsr.ReadParameterSets();
             var parameterSet = mmff94bpsr.GetParamterSet();
 
             //test atom type

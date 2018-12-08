@@ -172,7 +172,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public void TestIsConnectedFromHINFile()
         {
-            string filename = "NCDK.Data.HIN.connectivity1.hin";
+            var filename = "NCDK.Data.HIN.connectivity1.hin";
             var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new HINReader(ins);
             ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
@@ -188,7 +188,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public void TestIsConnectedFromSDFile()
         {
-            string filename = "NCDK.Data.MDL.mdeotest.sdf";
+            var filename = "NCDK.Data.MDL.mdeotest.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());

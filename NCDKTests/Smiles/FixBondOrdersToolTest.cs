@@ -37,7 +37,7 @@ namespace NCDK.Smiles
         [Timeout(1000)]
         public void TestPyrrole()
         {
-            string smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
+            var smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
             var sp = new SmilesParser(builder, false);
             var molecule = sp.ParseSmiles(smiles);
             AtomContainerManipulator.SetSingleOrDoubleFlags(molecule);
@@ -61,7 +61,7 @@ namespace NCDK.Smiles
         [Timeout(1000)]
         public void TestPyrrole_Silent()
         {
-            string smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
+            var smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
             var sp = new SmilesParser(builder, false);
             var molecule = sp.ParseSmiles(smiles);
             AtomContainerManipulator.SetSingleOrDoubleFlags(molecule);
@@ -84,8 +84,8 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestLargeRingSystem()
         {
-            string smiles = "O=C1Oc6ccccc6(C(O)C1C5c2ccccc2CC(c3ccc(cc3)c4ccccc4)C5)";
-            SmilesParser smilesParser = CDK.SmilesParser;
+            var smiles = "O=C1Oc6ccccc6(C(O)C1C5c2ccccc2CC(c3ccc(cc3)c4ccccc4)C5)";
+            var smilesParser = CDK.SmilesParser;
             var molecule = smilesParser.ParseSmiles(smiles);
 
             molecule = FixBondOrdersTool.KekuliseAromaticRings(molecule);
@@ -108,8 +108,8 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestLargeBioclipseUseCase()
         {
-            string smiles = "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@@H]6COc7cc(OC)ccc7[C@H]56";
-            SmilesParser smilesParser = CDK.SmilesParser;
+            var smiles = "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@@H]6COc7cc(OC)ccc7[C@H]56";
+            var smilesParser = CDK.SmilesParser;
             var molecule = smilesParser.ParseSmiles(smiles);
 
             molecule = FixBondOrdersTool.KekuliseAromaticRings(molecule);
@@ -328,8 +328,8 @@ namespace NCDK.Smiles
         [Timeout(1000)]
         public void TestAcyclic()
         {
-            string smiles = "CCCCCCC";
-            SmilesParser smilesParser = CDK.SmilesParser;
+            var smiles = "CCCCCCC";
+            var smilesParser = CDK.SmilesParser;
             var molecule = smilesParser.ParseSmiles(smiles);
 
             molecule = FixBondOrdersTool.KekuliseAromaticRings(molecule);

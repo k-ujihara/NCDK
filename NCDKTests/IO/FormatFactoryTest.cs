@@ -227,7 +227,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestGuessFormat()
         {
-            string filename = "NCDK.Data.XYZ.bf3.xyz";
+            var filename = "NCDK.Data.XYZ.bf3.xyz";
             var input = ResourceLoader.GetAsStream(filename);
             input = new BufferedStream(input);
             IChemFormat format = factory.GuessFormat(input);
@@ -245,7 +245,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestGuessFormat_Gz()
         {
-            string filename = "NCDK.Data.XYZ.bf3.xyz.gz";
+            var filename = "NCDK.Data.XYZ.bf3.xyz.gz";
             Stream input = new ReadSeekableStream(new GZipStream(ResourceLoader.GetAsStream(filename), CompressionMode.Decompress), 60000);
             IChemFormat format = factory.GuessFormat(input);
             Assert.IsNotNull(format);
@@ -262,7 +262,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestGuessFormat_Reader()
         {
-            string filename = "NCDK.Data.XYZ.bf3.xyz";
+            var filename = "NCDK.Data.XYZ.bf3.xyz";
             var input = ResourceLoader.GetAsStream(filename);
             var reader = new StreamReader(input);
             IChemFormat format = factory.GuessFormat(reader);

@@ -64,7 +64,7 @@ namespace NCDK.IO
         public void TestBug1248()
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.CML.(1R)-1-aminoethan-1-ol.cml");
-            CMLReader reader = new CMLReader(ins);
+            var reader = new CMLReader(ins);
             try
             {
                 IChemFile cfile = reader.Read(ChemObjectBuilder.Instance.NewChemFile());
@@ -99,7 +99,7 @@ namespace NCDK.IO
         public void TestBug1245()
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.CML.(1R)-1-aminoethan-1-ol.cml");
-            CMLReader reader = new CMLReader(ins);
+            var reader = new CMLReader(ins);
             try
             {
                 IChemFile cfile = reader.Read(ChemObjectBuilder.Instance.NewChemFile());
@@ -156,7 +156,7 @@ namespace NCDK.IO
         public void TestBug1274()
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.CML.(1R)-1-aminoethan-1-ol-multipleBondStereo.cml");
-            CMLReader reader = new CMLReader(ins);
+            var reader = new CMLReader(ins);
             try
             {
                 IChemFile cfile = reader.Read(ChemObjectBuilder.Instance.NewChemFile());
@@ -191,7 +191,7 @@ namespace NCDK.IO
         public void TestBug1275()
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.CML.(1R)-1-aminoethan-1-ol-malformedDictRef.cml");
-            CMLReader reader = new CMLReader(ins);
+            var reader = new CMLReader(ins);
             try
             {
                 IChemFile cfile = reader.Read(ChemObjectBuilder.Instance.NewChemFile());
@@ -221,7 +221,7 @@ namespace NCDK.IO
         public void TestWedgeBondParsing()
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.CML.AZD5423.xml");
-            CMLReader reader = new CMLReader(ins);
+            var reader = new CMLReader(ins);
             try
             {
                 IChemFile cfile = reader.Read(ChemObjectBuilder.Instance.NewChemFile());
@@ -319,7 +319,7 @@ namespace NCDK.IO
         public void TestMixedNamespaces()
         {
             var ins = ResourceLoader.GetAsStream(this.GetType(), "US06358966-20020319-C00001-enr.cml");
-            CMLReader reader = new CMLReader(ins);
+            var reader = new CMLReader(ins);
             try
             {
                 IChemFile cfile = reader.Read(ChemObjectBuilder.Instance.NewChemFile());

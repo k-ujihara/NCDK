@@ -38,10 +38,11 @@ namespace NCDK.Modelings.Builder3D
     // @author chhoppe
     // @cdk.created 2004-09-07
     // @cdk.module forcefield
-    // @cdk.githash
     // @cdk.keyword atom type, mmff94
     public class MMFF94BasedParameterSetReader
     {
+        private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+
         private const string configFile = "NCDK.Modelings.ForceField.Data.mmff94.prm";
         private Stream ins = null;
         private Dictionary<string, object> parameterSet;
@@ -170,7 +171,7 @@ namespace NCDK.Modelings.Builder3D
         /// Read and stores the atom types in a vector
         /// </summary>
         /// <exception cref="Exception">Description of the Exception</exception>
-        private void SetAtomTypes(IChemObjectBuilder builder)
+        private void SetAtomTypes()
         {
             string name = "";
             string rootType = "";
@@ -459,7 +460,7 @@ namespace NCDK.Modelings.Builder3D
         /// The main method which parses through the force field configuration file
         /// </summary>
         /// <exception cref="Exception">Description of the Exception</exception>
-        public void ReadParameterSets(IChemObjectBuilder builder)
+        public void ReadParameterSets()
         {
             //vdW,bond,angle,strbond,opbend,torsion,data
             Debug.WriteLine("------ Read MMFF94 ParameterSets ------");
@@ -516,7 +517,7 @@ namespace NCDK.Modelings.Builder3D
                     int nt = e_st.Count;
                     if (s.StartsWith("atom", StringComparison.Ordinal) && nt <= 8)
                     {
-                        SetAtomTypes(builder);
+                        SetAtomTypes();
                         a[0]++;
                     }
                     else if (s.StartsWith("bond", StringComparison.Ordinal) && nt == 9)

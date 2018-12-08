@@ -19,7 +19,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO;
-using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Diagnostics;
@@ -37,6 +36,8 @@ namespace NCDK.AtomTypes
     [TestClass()]
     public class CDKAtomTypeMatcherTestFileReposTest : CDKTestCase
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
+
         public void TestPDBfiles()
         {
             string DIRNAME = "NCDK.Data.PDB.";
@@ -149,9 +150,9 @@ namespace NCDK.AtomTypes
             }
             else if (reader.Accepts(typeof(IChemFile)))
             {
-                IChemFile cf = reader.Read(new ChemFile());
-                mol = ChemObjectBuilder.Instance.NewAtomContainer();
-                var containers = ChemFileManipulator.GetAllAtomContainers(cf);
+                var chemFile = reader.Read(builder.NewChemFile());
+                mol = builder.NewAtomContainer();
+                var containers = ChemFileManipulator.GetAllAtomContainers(chemFile);
                 foreach (var container in containers)
                     mol.Add(container);
             }

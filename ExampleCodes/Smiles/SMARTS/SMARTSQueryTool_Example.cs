@@ -12,7 +12,7 @@ namespace NCDK.Smiles.SMARTS
         {
             {
                 #region
-                SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+                SmilesParser sp = new SmilesParser();
                 IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C");
                 SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO", ChemObjectBuilder.Instance);
                 bool status = querytool.Matches(atomContainer);

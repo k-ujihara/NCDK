@@ -56,7 +56,7 @@ namespace NCDK.IO
         {
             StringWriter writer = new StringWriter();
             IChemObjectSet<IAtomContainer> molSet = new ChemObjectSet<IAtomContainer>();
-            IAtomContainer molecule = new AtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molecule.SetProperty("foo", "bar");
             molSet.Add(molecule);
@@ -93,7 +93,7 @@ namespace NCDK.IO
         {
             StringWriter writer = new StringWriter();
             IChemObjectSet<IAtomContainer> molSet = new ChemObjectSet<IAtomContainer>();
-            IAtomContainer molecule = new AtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molecule.SetProperty("foo", "bar");
             molSet.Add(molecule);
@@ -110,7 +110,7 @@ namespace NCDK.IO
         {
             StringWriter writer = new StringWriter();
             IChemObjectSet<IAtomContainer> molSet = new ChemObjectSet<IAtomContainer>();
-            IAtomContainer molecule = new AtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molecule.SetProperty(InvPair.CanonicalLabelPropertyKey, "bar");
             molSet.Add(molecule);
@@ -126,7 +126,7 @@ namespace NCDK.IO
         {
             StringWriter writer = new StringWriter();
             IChemObjectSet<IAtomContainer> molSet = new ChemObjectSet<IAtomContainer>();
-            IAtomContainer molecule = new AtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molSet.Add(molecule);
 
@@ -141,7 +141,7 @@ namespace NCDK.IO
         {
             StringWriter writer = new StringWriter();
             IChemObjectSet<IAtomContainer> molSet = new ChemObjectSet<IAtomContainer>();
-            IAtomContainer molecule = new AtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molSet.Add(molecule);
             molecule = new AtomContainer();
@@ -160,7 +160,7 @@ namespace NCDK.IO
             StringWriter writer = new StringWriter();
             SDFWriter sdfWriter = new SDFWriter(writer);
 
-            IAtomContainer molecule = new AtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molecule.SetProperty("foo", "bar");
             sdfWriter.Write(molecule);
@@ -184,7 +184,7 @@ namespace NCDK.IO
             StringWriter writer = new StringWriter();
             SDFWriter sdfWriter = new SDFWriter(writer);
 
-            IAtomContainer molecule = new AtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molecule.SetProperty("http://not-valid.com", "URL");
             sdfWriter.Write(molecule);
@@ -199,7 +199,7 @@ namespace NCDK.IO
             StringWriter writer = new StringWriter();
             SDFWriter sdfWriter = new SDFWriter(writer);
 
-            IAtomContainer molecule = new AtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("CH4"));
             sdfWriter.Write(molecule);
 
@@ -225,7 +225,7 @@ namespace NCDK.IO
             SDFWriter sdfWriter = new SDFWriter(writer);
             sdfWriter.SetAlwaysV3000(true);
 
-            IAtomContainer molecule = new AtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("CH4"));
             sdfWriter.Write(molecule);
 

@@ -25,8 +25,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class ALogPDescriptorTest : MolecularDescriptorTest<ALogPDescriptor>
+    public class ALogPDescriptorTest
+        : MolecularDescriptorTest<ALogPDescriptor>
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+
         /// <summary>
         /// This test is actually testing 1-cholorpropane.
         /// </summary>
@@ -34,7 +37,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestChloroButane()
         {
-            var mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            var mol = builder.NewAtomContainer();
             var c1 = ChemObjectBuilder.Instance.NewAtom("C");
             var c2 = ChemObjectBuilder.Instance.NewAtom("C");
             var c3 = ChemObjectBuilder.Instance.NewAtom("C");

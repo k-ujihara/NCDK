@@ -25,7 +25,6 @@ using NCDK.Graphs.InChI;
 using NCDK.Layout;
 using NCDK.Renderers;
 using NCDK.Renderers.Colors;
-using NCDK.Silent;
 using NCDK.Smiles;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -38,10 +37,11 @@ using WPF = System.Windows;
 
 namespace NCDK.MolViewer
 {
-    partial class AppearanceViewModel : BindableBase
+    partial class AppearanceViewModel 
+        : BindableBase
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
         private static StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-        private static IChemObjectBuilder builder = ChemObjectBuilder.Instance;
         private static SmilesParser parser = new SmilesParser(builder);
         private static SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavors.Default);
 

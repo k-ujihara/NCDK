@@ -22,7 +22,7 @@ namespace NCDK.TT
                 #region NaturalAbundance
                 IAtom atom = new Atom();
                 Isotope isotope = new Isotope("C", 13);
-                XMLIsotopeFactory f = XMLIsotopeFactory.GetInstance(isotope.Builder);
+                XMLIsotopeFactory f = XMLIsotopeFactory.Instance;
                 f.Configure(atom, isotope);
                 #endregion
             }

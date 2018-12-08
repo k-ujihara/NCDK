@@ -17,6 +17,7 @@
  */
 
 using NCDK.Config.AtomTypes;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 
@@ -31,22 +32,26 @@ namespace NCDK.AtomTypes.Mappers
     // @cdk.module atomtype
     public class AtomTypeMapper
     {
-        private static Dictionary<string, AtomTypeMapper> mappers = new Dictionary<string, AtomTypeMapper>();
+        private static ConcurrentDictionary<string, AtomTypeMapper> mappers = new ConcurrentDictionary<string, AtomTypeMapper>();
+
         private readonly IReadOnlyDictionary<string, string> mappings;
 
         private AtomTypeMapper(string mappingFile)
         {
-            this.Mapping = mappingFile;
-            var stream = ResourceLoader.GetAsStream(mappingFile);
-            OWLAtomTypeMappingReader reader = new OWLAtomTypeMappingReader(new StreamReader(stream));
-            mappings = reader.ReadAtomTypeMappings();
+            this.Name = mappingFile;
+            using (var reader = new OWLAtomTypeMappingReader(new StreamReader(ResourceLoader.GetAsStream(mappingFile))))
+            {
+                mappings = reader.ReadAtomTypeMappings();
+            }
         }
 
         private AtomTypeMapper(string mappingFile, Stream stream)
         {
-            this.Mapping = mappingFile;
-            var reader = new OWLAtomTypeMappingReader(new StreamReader(stream));
-            mappings = reader.ReadAtomTypeMappings();
+            this.Name = mappingFile;
+            using (var reader = new OWLAtomTypeMappingReader(new StreamReader(stream)))
+            {
+                mappings = reader.ReadAtomTypeMappings();
+            }
         }
 
         /// <summary>
@@ -58,11 +63,7 @@ namespace NCDK.AtomTypes.Mappers
         /// <returns>An instance of AtomTypeMapper for the given mapping file.</returns>
         public static AtomTypeMapper GetInstance(string mappingFile)
         {
-            if (!mappers.ContainsKey(mappingFile))
-            {
-                mappers.Add(mappingFile, new AtomTypeMapper(mappingFile));
-            }
-            return mappers[mappingFile];
+            return mappers.GetOrAdd(mappingFile, n => new AtomTypeMapper(n));
         }
 
         /// <summary>
@@ -73,18 +74,13 @@ namespace NCDK.AtomTypes.Mappers
         /// <returns>An instance of AtomTypeMapper for the given mapping file.</returns>
         public static AtomTypeMapper GetInstance(string mappingFile, Stream stream)
         {
-            if (!mappers.ContainsKey(mappingFile))
-            {
-                mappers.Add(mappingFile, new AtomTypeMapper(mappingFile, stream));
-            }
-            return mappers[mappingFile];
+            return mappers.GetOrAdd(mappingFile, n => new AtomTypeMapper(n, stream));
         }
 
         /// <summary>
         /// Maps an atom type from one scheme to another, as specified in the input used when creating
         /// this <see cref="AtomTypeMapper"/> instance.
         /// </summary>
-        ///
         /// <param name="type">atom type to map to the target schema</param>
         /// <returns>atom type name in the target schema</returns>
         public string MapAtomType(string type)
@@ -97,6 +93,6 @@ namespace NCDK.AtomTypes.Mappers
         /// but when the input was an <see cref="Stream"/> then the name is less well defined.
         /// </summary>
         /// <returns>the name of the mapping represented by this <see cref="AtomTypeMapper"/>.</returns>
-        public string Mapping { get; }
+        public string Name { get; }
     }
 }

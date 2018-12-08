@@ -38,7 +38,6 @@ namespace NCDK.Normalizers
     // @author        shk3
     // @cdk.created   2004-03-04
     // @cdk.module    smiles
-    // @cdk.githash
     [Obsolete("The functionality provided by with class is better suited to SMIRKS")]
     public static class Normalizer
     {
@@ -64,7 +63,7 @@ namespace NCDK.Normalizers
         public static bool Normalize(IAtomContainer ac, XDocument doc)
         {
             var nl = doc.Elements("replace-set");
-            var sp = new SmilesParser(ac.Builder);
+            var sp = new SmilesParser();
 
             bool change = false;
             foreach (var child in nl)
@@ -98,28 +97,28 @@ namespace NCDK.Normalizers
                     }
                     var replaceStructure = sp.ParseSmiles(replacestring);
                     IReadOnlyList<RMap> l = null;
-                    UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
+                    var universalIsomorphismTester = new UniversalIsomorphismTester();
                     while ((l = universalIsomorphismTester.GetSubgraphMap(ac, replaceStructure)) != null)
                     {
                         var l2 = UniversalIsomorphismTester.MakeAtomsMapOfBondsMap(l, ac, replaceStructure);
                         foreach (var rmap in l)
                         {
-                            IBond acbond = ac.Bonds[rmap.Id1];
-                            IBond replacebond = replacementStructure.Bonds[rmap.Id2];
+                            var acbond = ac.Bonds[rmap.Id1];
+                            var replacebond = replacementStructure.Bonds[rmap.Id2];
                             acbond.Order = replacebond.Order;
                             change = true;
                         }
                         foreach (var rmap in l2)
                         {
-                            IAtom acatom = ac.Atoms[rmap.Id1];
-                            IAtom replaceatom = replacementStructure.Atoms[rmap.Id2];
+                            var acatom = ac.Atoms[rmap.Id1];
+                            var replaceatom = replacementStructure.Atoms[rmap.Id2];
                             acatom.FormalCharge = replaceatom.FormalCharge;
                             change = true;
                         }
                     }
                 }
             }
-            return (change);
+            return change;
         }
     }
 }

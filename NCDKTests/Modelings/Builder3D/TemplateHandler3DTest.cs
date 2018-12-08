@@ -119,7 +119,7 @@ namespace NCDK.Modelings.Builder3D
             var ac = TestMoleculeFactory.MakeBicycloRings();
             var th3d = TemplateHandler3D.Instance;
             var ffc = new ForceFieldConfigurator();
-            ffc.SetForceFieldConfigurator("mm2", ac.Builder);
+            ffc.SetForceFieldConfigurator("mm2");
             var ringSetMolecule = ffc.AssignAtomTyps(ac);
             var ringSystems = RingPartitioner.PartitionRings(ringSetMolecule);
             var largestRingSet = RingSetManipulator.GetLargestRingSet(ringSystems);

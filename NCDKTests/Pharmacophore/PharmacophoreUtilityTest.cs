@@ -33,7 +33,7 @@ namespace NCDK.Pharmacophore
 
         static PharmacophoreUtilityTest()
         {
-            string filename = "NCDK.Data.MDL.pcoretest1.sdf";
+            var filename = "NCDK.Data.MDL.pcoretest1.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
             IEnumerableMDLConformerReader reader = new IEnumerableMDLConformerReader(ins, ChemObjectBuilder.Instance);
             conformers = reader.FirstOrDefault();
@@ -42,7 +42,7 @@ namespace NCDK.Pharmacophore
         [TestMethod()]
         public void TestReadPcoreDef()
         {
-            string filename = "NCDK.Data.PCore.pcore.xml";
+            var filename = "NCDK.Data.PCore.pcore.xml";
             var ins = ResourceLoader.GetAsStream(filename);
             var defs = PharmacophoreUtils.ReadPharmacophoreDefinitions(ins);
 
@@ -79,7 +79,7 @@ namespace NCDK.Pharmacophore
         [TestMethod()]
         public void TestReadPcoreAngleDef()
         {
-            string filename = "NCDK.Data.PCore.pcoreangle.xml";
+            var filename = "NCDK.Data.PCore.pcoreangle.xml";
             var ins = ResourceLoader.GetAsStream(filename);
             var defs = PharmacophoreUtils.ReadPharmacophoreDefinitions(ins);
 
@@ -127,7 +127,7 @@ namespace NCDK.Pharmacophore
         [ExpectedException(typeof(CDKException))]
         public void TestInvalidPcoreXML()
         {
-            string filename = "NCDK.Data.PCore.invalid1.xml";
+            var filename = "NCDK.Data.PCore.invalid1.xml";
             var ins = ResourceLoader.GetAsStream(filename);
             PharmacophoreUtils.ReadPharmacophoreDefinitions(ins);
         }
@@ -135,7 +135,7 @@ namespace NCDK.Pharmacophore
         [TestMethod()]
         public void TestPCoreWrite()
         {
-            string filename = "NCDK.Data.PCore.pcore.xml";
+            var filename = "NCDK.Data.PCore.pcore.xml";
             var ins = ResourceLoader.GetAsStream(filename);
             var defs = PharmacophoreUtils.ReadPharmacophoreDefinitions(ins);
 

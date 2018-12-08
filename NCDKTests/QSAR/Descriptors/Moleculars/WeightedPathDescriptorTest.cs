@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
 
             {
-                string filename = "NCDK.Data.MDL.wpo.sdf";
+                var filename = "NCDK.Data.MDL.wpo.sdf";
                 IChemFile content;
                 using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
                 {

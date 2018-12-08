@@ -22,7 +22,6 @@
  */
 
 using NCDK.Common.Collections;
-using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Sgroups;
@@ -54,7 +53,8 @@ namespace NCDK.Depict
     // @cdk.keyword abbreviate
     // @cdk.keyword depict
     // @cdk.keyword superatom
-    public class Abbreviations : IEnumerable<string>
+    public class Abbreviations
+        : IEnumerable<string>
     {
         private const int MaxFragment = 50;
 
@@ -69,7 +69,7 @@ namespace NCDK.Depict
         private readonly HashSet<string> disabled = new HashSet<string>();
         private readonly SmilesGenerator usmigen = SmilesGenerator.Unique();
 
-        private readonly SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+        private readonly SmilesParser smipar = new SmilesParser();
 
         public Abbreviations()
         {

@@ -19,9 +19,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.LibIO.CML;
 using System.Diagnostics;
 using System.IO;
@@ -33,8 +33,10 @@ namespace NCDK.IO.CML
     /// Helper tool for round tripping CDK classes via CML.
     /// </summary>
     // @cdk.module  test-libiocml
-    public class CMLRoundTripTool : CDKTestCase
+    public class CMLRoundTripTool 
+        : CDKTestCase
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
         /// <summary>
         /// Convert a Molecule to CML and back to a Molecule again.
         /// Given that CML reading is working, the problem is with the CMLWriter.
@@ -53,7 +55,7 @@ namespace NCDK.IO.CML
             IChemFile file;
             using (var reader = new CMLReader(new MemoryStream(Encoding.UTF8.GetBytes(cmlString))))
             {
-                file = (IChemFile)reader.Read(new ChemFile());
+                file = (IChemFile)reader.Read(builder.NewChemFile());
             }
             Assert.IsNotNull(file);
             Assert.AreEqual(1, file.Count);
@@ -104,7 +106,7 @@ namespace NCDK.IO.CML
             Debug.WriteLine("CML string: ", cmlString);
             CMLReader reader = new CMLReader(new MemoryStream(Encoding.UTF8.GetBytes(cmlString)));
 
-            IChemFile file = (IChemFile)reader.Read(new ChemFile());
+            IChemFile file = (IChemFile)reader.Read(builder.NewChemFile());
             reader.Close();
             Assert.IsNotNull(file);
             Assert.AreEqual(1, file.Count);

@@ -9,7 +9,7 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         static void Main()
         {
             #region
-            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser();
             IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
             IAtomContainer SMILESquery = sp.ParseSmiles("CC"); // acetic acid anhydride
             IQueryAtomContainer query = QueryAtomContainerCreator.CreateBasicQueryContainer(SMILESquery);

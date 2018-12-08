@@ -20,8 +20,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -30,8 +30,10 @@ namespace NCDK.IO
 {
     // @cdk.module test-io
     [TestClass()]
-    public class PCCompoundXMLReaderTest : SimpleChemObjectReaderTest
+    public class PCCompoundXMLReaderTest
+        : SimpleChemObjectReaderTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         protected override string TestFile => "NCDK.Data.ASN.PubChem.cid1145.xml";
         protected override Type ChemObjectIOToTestType => typeof(PCCompoundXMLReader);
 
@@ -39,17 +41,17 @@ namespace NCDK.IO
         public void TestAccepts()
         {
             PCCompoundXMLReader reader = new PCCompoundXMLReader(new StringReader(""));
-            Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
+            Assert.IsTrue(reader.Accepts(typeof(IAtomContainer)));
         }
 
         [TestMethod()]
         public void TestReading()
         {
-            string filename = "NCDK.Data.ASN.PubChem.cid1145.xml";
+            var filename = "NCDK.Data.ASN.PubChem.cid1145.xml";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             PCCompoundXMLReader reader = new PCCompoundXMLReader(ins);
-            IAtomContainer molecule = (IAtomContainer)reader.Read(new AtomContainer());
+            IAtomContainer molecule = (IAtomContainer)reader.Read(builder.NewAtomContainer());
             reader.Close();
             Assert.IsNotNull(molecule);
 
@@ -76,11 +78,11 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestReading3DCoords()
         {
-            string filename = "NCDK.Data.ASN.PubChem.cid176.xml";
+            var filename = "NCDK.Data.ASN.PubChem.cid176.xml";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             PCCompoundXMLReader reader = new PCCompoundXMLReader(ins);
-            IAtomContainer molecule = (IAtomContainer)reader.Read(new AtomContainer());
+            IAtomContainer molecule = (IAtomContainer)reader.Read(builder.NewAtomContainer());
             reader.Close();
             Assert.IsNotNull(molecule);
 

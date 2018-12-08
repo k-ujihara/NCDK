@@ -32,7 +32,10 @@ namespace NCDK.IO
 {
     /// <summary>
     /// This Reader reads files which has one SMILES string on each
-    /// line, where the format is given as below:
+    /// line.
+    /// </summary>
+    /// <remarks>
+    /// The format is given as below:
     /// <para>
     /// COC ethoxy ethane
     /// </para>
@@ -45,16 +48,16 @@ namespace NCDK.IO
     ///
     /// <para>For each line a molecule is generated, and multiple Molecules are
     /// read as MoleculeSet.</para>
-    /// </summary>
+    /// </remarks>
     /// <seealso cref="EnumerableSMILESReader"/>
     // @cdk.module  smiles
-    // @cdk.githash
     // @cdk.iooptions
     // @cdk.keyword file format, SMILES
-    public class SMILESReader : DefaultChemObjectReader
+    public class SMILESReader
+        : DefaultChemObjectReader
     {
-        private TextReader input = null;
-        private SmilesParser sp = null;
+        private readonly TextReader input;
+        private SmilesParser sp;
 
         /// <summary>
         /// Construct a new reader from a Reader and a specified builder object.
@@ -67,15 +70,18 @@ namespace NCDK.IO
         }
 
         public SMILESReader(Stream input)
-                : this(new StreamReader(input))
-        { }
+            : this(new StreamReader(input))
+        {
+        }
 
         public override IResourceFormat Format => SMILESFormat.Instance;
 
         public override bool Accepts(Type type)
         {
-            if (typeof(IChemObjectSet<IAtomContainer>).IsAssignableFrom(type)) return true;
-            if (typeof(IChemFile).IsAssignableFrom(type)) return true;
+            if (typeof(IChemObjectSet<IAtomContainer>).IsAssignableFrom(type))
+                return true;
+            if (typeof(IChemFile).IsAssignableFrom(type))
+                return true;
             return false;
         }
 
@@ -89,30 +95,27 @@ namespace NCDK.IO
         {
             sp = new SmilesParser(obj.Builder);
 
-            if (obj is IChemObjectSet<IAtomContainer>)
+            switch (obj)
             {
-                return (T)ReadAtomContainerSet((IChemObjectSet<IAtomContainer>)obj);
-            }
-            else if (obj is IChemFile file)
-            {
-                IChemSequence sequence = file.Builder.NewChemSequence();
-                IChemModel chemModel = file.Builder.NewChemModel();
-                chemModel.MoleculeSet = ReadAtomContainerSet(file.Builder.NewAtomContainerSet());
-                sequence.Add(chemModel);
-                file.Add(sequence);
-                return (T)file;
-            }
-            else
-            {
-                throw new CDKException("Only supported is reading of MoleculeSet objects.");
+                case IChemObjectSet<IAtomContainer> set:
+                    return (T)ReadAtomContainerSet(set);
+                case IChemFile file:
+                    var sequence = file.Builder.NewChemSequence();
+                    var chemModel = file.Builder.NewChemModel();
+                    chemModel.MoleculeSet = ReadAtomContainerSet(file.Builder.NewAtomContainerSet());
+                    sequence.Add(chemModel);
+                    file.Add(sequence);
+                    return (T)file;
+                default:
+                    throw new CDKException("Only supported is reading of MoleculeSet objects.");
             }
         }
 
         // private procedures
 
         /// <summary>
-        ///  Private method that actually parses the input to read a ChemFile
-        ///  object.
+        /// Private method that actually parses the input to read a ChemFile
+        /// object.
         /// </summary>
         /// <param name="som">The set of molecules that came from the file</param>
         /// <returns>A ChemFile containing the data parsed from input.</returns>
@@ -139,7 +142,7 @@ namespace NCDK.IO
                         Trace.TraceWarning("This SMILES could not be parsed: ", line);
                         Trace.TraceWarning("Because of: ", exception.Message);
                         Debug.WriteLine(exception);
-                        IAtomContainer empty = som.Builder.NewAtomContainer();
+                        var empty = som.Builder.NewAtomContainer();
                         empty.SetProperty(EnumerableSMILESReader.BadSmilesInput, line);
                         som.Add(empty);
                     }
@@ -162,11 +165,10 @@ namespace NCDK.IO
             {
                 if (disposing)
                 {
-                    input.Dispose();
+                    if (input != null)
+                        input.Dispose();
                 }
-
-                input = null;
-
+                
                 disposedValue = true;
                 base.Dispose(disposing);
             }
@@ -183,8 +185,9 @@ namespace NCDK.IO
         {
             for (int i = 0; i < line.Length; i++)
             {
-                char c = line[i];
-                if (c == ' ' || c == '\t') return line.Substring(i + 1);
+                var c = line[i];
+                if (c == ' ' || c == '\t')
+                    return line.Substring(i + 1);
             }
             return null;
         }

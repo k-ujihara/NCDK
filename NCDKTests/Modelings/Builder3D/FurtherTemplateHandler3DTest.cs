@@ -68,7 +68,7 @@ namespace NCDK.Modelings.Builder3D
             SmilesParser smiparser = new SmilesParser(builder);
             var molecule = smiparser.ParseSmiles(cyclicMolSmi);
             ForceFieldConfigurator forcefconf = new ForceFieldConfigurator();
-            forcefconf.SetForceFieldConfigurator("mmff94", builder);
+            forcefconf.SetForceFieldConfigurator("mmff94");
             IRingSet rings = forcefconf.AssignAtomTyps(molecule);
             var ringSystems = RingPartitioner.PartitionRings(rings);
             IRingSet largestRingSet = RingSetManipulator.GetLargestRingSet(ringSystems);
@@ -90,7 +90,7 @@ namespace NCDK.Modelings.Builder3D
             SmilesParser smiparser = new SmilesParser(builder);
             var molecule = smiparser.ParseSmiles(cyclicMolSmi);
             ForceFieldConfigurator forcefconf = new ForceFieldConfigurator();
-            forcefconf.SetForceFieldConfigurator("mmff94", builder);
+            forcefconf.SetForceFieldConfigurator("mmff94");
             IRingSet rings = forcefconf.AssignAtomTyps(molecule);
             var ringSystems = RingPartitioner.PartitionRings(rings);
             IRingSet largestRingSet = RingSetManipulator.GetLargestRingSet(ringSystems);

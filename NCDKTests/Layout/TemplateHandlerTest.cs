@@ -16,9 +16,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO;
-using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Templates;
 using System.Diagnostics;
@@ -30,8 +30,10 @@ namespace NCDK.Layout
     // @author      steinbeck
     // @cdk.created September 4, 2003
     [TestClass()]
-    public class TemplateHandlerTest : CDKTestCase
+    public class TemplateHandlerTest 
+        : CDKTestCase
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         public bool standAlone = false;
 
         private static SmilesParser sp = null;
@@ -46,7 +48,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void TestInit()
         {
-            TemplateHandler th = new TemplateHandler(ChemObjectBuilder.Instance);
+            TemplateHandler th = new TemplateHandler();
 
             Assert.AreEqual(5, th.TemplateCount);
         }
@@ -54,8 +56,8 @@ namespace NCDK.Layout
         [TestMethod()]
         public void TestDetection()
         {
-            TemplateHandler th = new TemplateHandler(ChemObjectBuilder.Instance);
-            string smiles = "CC12C3(C6CC6)C4(C)C1C5(C(CC)C)C(C(CC)C)2C(C)3C45CC(C)C";
+            TemplateHandler th = new TemplateHandler();
+            var smiles = "CC12C3(C6CC6)C4(C)C1C5(C(CC)C)C(C(CC)C)2C(C)3C45CC(C)C";
             var mol = sp.ParseSmiles(smiles);
             Assert.IsTrue(th.MapTemplates(mol));
         }
@@ -67,7 +69,7 @@ namespace NCDK.Layout
         public void TestOtherElements()
         {
             bool itIsInThere = false;
-            TemplateHandler th = new TemplateHandler(ChemObjectBuilder.Instance);
+            TemplateHandler th = new TemplateHandler();
             IAtomContainer mol = TestMoleculeFactory.MakeSteran();
             itIsInThere = th.MapTemplates(mol);
             Assert.IsTrue(itIsInThere);
@@ -83,7 +85,7 @@ namespace NCDK.Layout
         public void TestOtherBondOrder()
         {
             bool itIsInThere = false;
-            TemplateHandler th = new TemplateHandler(ChemObjectBuilder.Instance);
+            TemplateHandler th = new TemplateHandler();
             IAtomContainer mol = TestMoleculeFactory.MakeSteran();
             itIsInThere = th.MapTemplates(mol);
             Assert.IsTrue(itIsInThere);
@@ -97,13 +99,13 @@ namespace NCDK.Layout
         {
             Debug.WriteLine("***TestAddMolecule***");
             bool itIsInThere = false;
-            TemplateHandler th = new TemplateHandler(ChemObjectBuilder.Instance);
+            TemplateHandler th = new TemplateHandler();
             IAtomContainer mol = TestMoleculeFactory.MakeAlphaPinene();
             sdg.Molecule = mol;
             sdg.GenerateCoordinates();
             mol = sdg.Molecule;
 
-            string smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
+            var smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
             var smilesMol = sp.ParseSmiles(smiles);
             itIsInThere = th.MapTemplates(smilesMol);
             Debug.WriteLine($"Alpha-Pinene found by templateMapper: {itIsInThere}");
@@ -120,13 +122,13 @@ namespace NCDK.Layout
         {
             Debug.WriteLine("***TestRemoveMolecule***");
             bool itIsInThere = false;
-            TemplateHandler th = new TemplateHandler(ChemObjectBuilder.Instance);
+            TemplateHandler th = new TemplateHandler();
             IAtomContainer mol = TestMoleculeFactory.MakeAlphaPinene();
             sdg.Molecule = mol;
             sdg.GenerateCoordinates();
             mol = sdg.Molecule;
 
-            string smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
+            var smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
             var smilesMol = sp.ParseSmiles(smiles);
             itIsInThere = th.MapTemplates(smilesMol);
             Debug.WriteLine($"Alpha-Pinene found by templateMapper: {itIsInThere}");
@@ -151,15 +153,15 @@ namespace NCDK.Layout
         public void GetMappedSubstructures_IAtomContainer()
         {
             // Set up molecule reader
-            string filename = "NCDK.Data.MDL.diadamantane-cubane.mol";
+            var filename = "NCDK.Data.MDL.diadamantane-cubane.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader molReader = new MDLReader(ins, ChemObjectReaderMode.Strict);
+            var molReader = new MDLReader(ins, ChemObjectReaderMode.Strict);
 
             // Read molecule
-            IAtomContainer molecule = (IAtomContainer)molReader.Read(ChemObjectBuilder.Instance.NewAtomContainer());
+            var molecule = molReader.Read(builder.NewAtomContainer());
 
             // Map templates
-            TemplateHandler th = new TemplateHandler(ChemObjectBuilder.Instance);
+            var th = new TemplateHandler();
             var mappedStructures = th.GetMappedSubstructures(molecule);
 
             // Do the Assert.assertion
@@ -169,7 +171,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void Convert()
         {
-            TemplateHandler templateHandler = new TemplateHandler(CDK.Builder);
+            var templateHandler = new TemplateHandler();
             using (var bout = new MemoryStream())
             {
                 templateHandler.ToIdentityTemplateLibrary().Store(bout);

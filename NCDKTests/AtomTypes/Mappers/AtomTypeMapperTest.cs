@@ -51,7 +51,7 @@ namespace NCDK.AtomTypes.Mappers
             string mapping = "NCDK.Dict.Data.cdk-sybyl-mappings.owl";
             AtomTypeMapper mapper = AtomTypeMapper.GetInstance(mapping);
             Assert.IsNotNull(mapper);
-            Assert.AreEqual(mapping, mapper.Mapping);
+            Assert.AreEqual(mapping, mapper.Name);
         }
 
         [TestMethod()]

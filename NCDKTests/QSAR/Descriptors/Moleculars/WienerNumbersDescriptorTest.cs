@@ -60,7 +60,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             double[] testResult = { 10, 20, 35, 56, 84, 120, 165, 220, 286 };
-            string smiles = "CCC";
+            var smiles = "CCC";
             for (int i = 0; i < testResult.Length; i++)
             {
                 smiles += "C"; // create the matching paraffin

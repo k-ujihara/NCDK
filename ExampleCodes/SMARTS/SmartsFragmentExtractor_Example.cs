@@ -12,8 +12,7 @@ namespace NCDK.SMARTS
         static void Main()
         {
             #region
-            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
-            var smipar = new SmilesParser(bldr);
+            var smipar = new SmilesParser();
 
             IAtomContainer mol = smipar.ParseSmiles("[nH]1ccc2c1cccc2");
             var subsmarts = new SmartsFragmentExtractor(mol);

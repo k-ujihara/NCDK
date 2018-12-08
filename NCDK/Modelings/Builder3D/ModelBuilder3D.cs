@@ -23,7 +23,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.Geometries;
 using NCDK.Graphs;
 using NCDK.Layout;
@@ -31,6 +30,7 @@ using NCDK.Numerics;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -58,12 +58,11 @@ namespace NCDK.Modelings.Builder3D
     // @author      steinbeck
     // @cdk.created 2004-09-07
     // @cdk.module  builder3d
-    // @cdk.githash
     // @cdk.keyword 3D coordinates
     // @cdk.keyword coordinate generation, 3D
     public class ModelBuilder3D
     {
-        private static Dictionary<string, ModelBuilder3D> memyselfandi = new Dictionary<string, ModelBuilder3D>();
+        private static ConcurrentDictionary<string, ModelBuilder3D> memyselfandi = new ConcurrentDictionary<string, ModelBuilder3D>();
         private TemplateHandler3D templateHandler = null;
         private IReadOnlyDictionary<string, object> parameterSet = null;
         private readonly ForceFieldConfigurator ffc = new ForceFieldConfigurator();
@@ -74,31 +73,26 @@ namespace NCDK.Modelings.Builder3D
         /// </summary>
         /// <param name="templateHandler">templateHandler Object</param>
         /// <param name="ffname">name of force field</param>
-        private ModelBuilder3D(TemplateHandler3D templateHandler, string ffname, IChemObjectBuilder builder)
+        private ModelBuilder3D(TemplateHandler3D templateHandler, string ffname)
         {
             SetTemplateHandler(templateHandler);
-            SetForceField(ffname, builder);
+            SetForceField(ffname);
         }
 
-        public static ModelBuilder3D GetInstance(TemplateHandler3D templateHandler, string ffname,
-                IChemObjectBuilder chemObjectBuilder)
+        public static ModelBuilder3D GetInstance(TemplateHandler3D templateHandler, string ffname)
         {
-            if (ffname == null || ffname.Length == 0) throw new CDKException("The given ffname is null or empty!");
-            if (templateHandler == null) throw new CDKException("The given template handler is null!");
+            if (ffname == null || ffname.Length == 0)
+                throw new CDKException("The given ffname is null or empty!");
+            if (templateHandler == null)
+                throw new CDKException("The given template handler is null!");
 
-            string builderCode = templateHandler.GetType().FullName + "#" + ffname;
-            if (!memyselfandi.ContainsKey(builderCode))
-            {
-                ModelBuilder3D builder = new ModelBuilder3D(templateHandler, ffname, chemObjectBuilder);
-                memyselfandi[builderCode] = builder;
-                return builder;
-            }
-            return memyselfandi[builderCode];
+            var builderCode = $"{templateHandler.GetType().FullName}#{ffname}";
+            return memyselfandi.GetOrAdd(builderCode, n => new ModelBuilder3D(templateHandler, ffname));
         }
 
-        public static ModelBuilder3D GetInstance(IChemObjectBuilder builder)
+        public static ModelBuilder3D GetInstance()
         {
-            return GetInstance(TemplateHandler3D.Instance, "mm2", builder);
+            return GetInstance(TemplateHandler3D.Instance, "mm2");
         }
 
         /// <summary>
@@ -114,7 +108,7 @@ namespace NCDK.Modelings.Builder3D
         /// Sets the forceField attribute of the ModeSetForceFieldConfigurator(lBuilder3D object.
         /// </summary>
         /// <param name="ffname">forceField name</param>
-        private void SetForceField(string ffname, IChemObjectBuilder builder)
+        private void SetForceField(string ffname)
         {
             if (ffname == null)
             {
@@ -123,7 +117,7 @@ namespace NCDK.Modelings.Builder3D
             try
             {
                 forceFieldName = ffname;
-                ffc.SetForceFieldConfigurator(ffname, builder);
+                ffc.SetForceFieldConfigurator(ffname);
                 parameterSet = ffc.GetParameterSet();
             }
             catch (CDKException ex1)

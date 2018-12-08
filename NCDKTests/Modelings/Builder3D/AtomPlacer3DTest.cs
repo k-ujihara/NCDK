@@ -20,7 +20,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
-using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Tools.Manipulator;
 using System.Diagnostics;
@@ -34,10 +33,11 @@ namespace NCDK.Modelings.Builder3D
     /// Tests for AtomPlacer3D
     /// </summary>
     // @cdk.module test-builder3d
-    // @cdk.githash
     [TestClass()]
-    public class AtomPlacer3DTest : CDKTestCase
+    public class AtomPlacer3DTest 
+        : CDKTestCase
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         bool standAlone = false;
 
         /// <summary>
@@ -56,17 +56,17 @@ namespace NCDK.Modelings.Builder3D
         /// <returns>the created test molecule</returns>
         private IAtomContainer MakeAlphaPinene()
         {
-            IAtomContainer mol = new Silent.AtomContainer();
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
 
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
@@ -92,12 +92,12 @@ namespace NCDK.Modelings.Builder3D
 
         private IAtomContainer MakeMethaneWithExplicitHydrogens()
         {
-            IAtomContainer mol = new Silent.AtomContainer();
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
 
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
@@ -110,7 +110,7 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestAllHeavyAtomsPlaced_IAtomContainer()
         {
-            IAtomContainer ac = MakeAlphaPinene();
+            var ac = MakeAlphaPinene();
             Assert.IsFalse(new AtomPlacer3D().AllHeavyAtomsPlaced(ac));
             foreach (var atom in ac.Atoms)
             {
@@ -122,16 +122,16 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestFindHeavyAtomsInChain_IAtomContainer_IAtomContainer()
         {
-            string filename = "NCDK.Data.MDL.allmol232.mol";
+            var filename = "NCDK.Data.MDL.allmol232.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             // TODO: shk3-cleanuptests: best to use the STRICT IO mode here
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new MDLV2000Reader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
             var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile);
-            IAtomContainer ac = new Silent.AtomContainer(containersList.First());
+            var ac = new Silent.AtomContainer(containersList.First());
             AddExplicitHydrogens(ac);
-            IAtomContainer chain = ac.Builder.NewAtomContainer();
+            var chain = ac.Builder.NewAtomContainer();
             for (int i = 16; i < 25; i++)
             {
                 chain.Atoms.Add(ac.Atoms[i]);
@@ -146,8 +146,8 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public virtual void TestNumberOfUnplacedHeavyAtoms_IAtomContainer()
         {
-            IAtomContainer ac = MakeAlphaPinene();
-            int count = new AtomPlacer3D().NumberOfUnplacedHeavyAtoms(ac);
+            var ac = MakeAlphaPinene();
+            var count = new AtomPlacer3D().NumberOfUnplacedHeavyAtoms(ac);
             Assert.AreEqual(10, count);
         }
 
@@ -158,16 +158,16 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public virtual void TestNumberOfUnplacedHeavyAtoms_IAtomContainerWithExplicitHydrogens()
         {
-            IAtomContainer ac = MakeMethaneWithExplicitHydrogens();
-            int count = new AtomPlacer3D().NumberOfUnplacedHeavyAtoms(ac);
+            var ac = MakeMethaneWithExplicitHydrogens();
+            var count = new AtomPlacer3D().NumberOfUnplacedHeavyAtoms(ac);
             Assert.AreEqual(1, count);
         }
 
         [TestMethod()]
         public virtual void TestGetPlacedHeavyAtoms_IAtomContainer_IAtom()
         {
-            IAtomContainer ac = MakeAlphaPinene();
-            IAtomContainer acplaced = new AtomPlacer3D().GetPlacedHeavyAtoms(ac, ac.Atoms[0]);
+            var ac = MakeAlphaPinene();
+            var acplaced = new AtomPlacer3D().GetPlacedHeavyAtoms(ac, ac.Atoms[0]);
             Assert.AreEqual(0, acplaced.Atoms.Count);
             ac.Atoms[1].IsPlaced = true;
             acplaced = new AtomPlacer3D().GetPlacedHeavyAtoms(ac, ac.Atoms[0]);
@@ -177,8 +177,8 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public virtual void TestGetPlacedHeavyAtom_IAtomContainer_IAtom_IAtom()
         {
-            IAtomContainer ac = MakeAlphaPinene();
-            IAtom acplaced = new AtomPlacer3D().GetPlacedHeavyAtom(ac, ac.Atoms[0], ac.Atoms[1]);
+            var ac = MakeAlphaPinene();
+            var acplaced = new AtomPlacer3D().GetPlacedHeavyAtom(ac, ac.Atoms[0], ac.Atoms[1]);
             Assert.IsNull(acplaced);
             ac.Atoms[1].IsPlaced = true;
             acplaced = new AtomPlacer3D().GetPlacedHeavyAtom(ac, ac.Atoms[0], ac.Atoms[2]);
@@ -190,8 +190,8 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public virtual void TestGetPlacedHeavyAtom_IAtomContainer_IAtom()
         {
-            IAtomContainer ac = MakeAlphaPinene();
-            IAtom acplaced = new AtomPlacer3D().GetPlacedHeavyAtom(ac, ac.Atoms[0]);
+            var ac = MakeAlphaPinene();
+            var acplaced = new AtomPlacer3D().GetPlacedHeavyAtom(ac, ac.Atoms[0]);
             Assert.IsNull(acplaced);
             ac.Atoms[1].IsPlaced = true;
             acplaced = new AtomPlacer3D().GetPlacedHeavyAtom(ac, ac.Atoms[0]);
@@ -201,7 +201,7 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public virtual void TestGeometricCenterAllPlacedAtoms_IAtomContainer()
         {
-            IAtomContainer ac = MakeAlphaPinene();
+            var ac = MakeAlphaPinene();
             for (int i = 0; i < ac.Atoms.Count; i++)
             {
                 ac.Atoms[i].IsPlaced = true;
@@ -216,7 +216,7 @@ namespace NCDK.Modelings.Builder3D
             ac.Atoms[0].Point3D = new Vector3(2.83, 3.69, 1.17);
             ac.Atoms[0].Point3D = new Vector3(3.32, 4.27, 2.49);
             ac.Atoms[0].Point3D = new Vector3(2.02, 4.68, 0.35);
-            Vector3 center = new AtomPlacer3D().GeometricCenterAllPlacedAtoms(ac);
+            var center = new AtomPlacer3D().GeometricCenterAllPlacedAtoms(ac);
             Assert.AreEqual(2.02, center.X, 0.01);
             Assert.AreEqual(4.68, center.Y, 0.01);
             Assert.AreEqual(0.35, center.Z, 0.01);
@@ -225,9 +225,9 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestIsUnplacedHeavyAtom()
         {
-            IAtomContainer ac = MakeMethaneWithExplicitHydrogens();
-            IAtom carbon = ac.Atoms[0];
-            IAtom hydrogen = ac.Atoms[1];
+            var ac = MakeMethaneWithExplicitHydrogens();
+            var carbon = ac.Atoms[0];
+            var hydrogen = ac.Atoms[1];
             AtomPlacer3D placer = new AtomPlacer3D();
 
             bool result = false;
@@ -247,10 +247,10 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestIsPlacedHeavyAtom()
         {
-            IAtomContainer ac = MakeMethaneWithExplicitHydrogens();
-            IAtom carbon = ac.Atoms[0];
-            IAtom hydrogen = ac.Atoms[1];
-            AtomPlacer3D placer = new AtomPlacer3D();
+            var ac = MakeMethaneWithExplicitHydrogens();
+            var carbon = ac.Atoms[0];
+            var hydrogen = ac.Atoms[1];
+            var placer = new AtomPlacer3D();
 
             bool result = false;
             result = placer.IsPlacedHeavyAtom(carbon);
@@ -269,10 +269,10 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestIsAliphaticHeavyAtom()
         {
-            IAtomContainer ac = MakeMethaneWithExplicitHydrogens();
-            IAtom carbon = ac.Atoms[0];
-            IAtom hydrogen = ac.Atoms[1];
-            AtomPlacer3D placer = new AtomPlacer3D();
+            var ac = MakeMethaneWithExplicitHydrogens();
+            var carbon = ac.Atoms[0];
+            var hydrogen = ac.Atoms[1];
+            var placer = new AtomPlacer3D();
 
             bool result = false;
             result = placer.IsAliphaticHeavyAtom(carbon);
@@ -292,10 +292,10 @@ namespace NCDK.Modelings.Builder3D
         public void TestIsRingHeavyAtom()
         {
 
-            IAtomContainer ac = MakeMethaneWithExplicitHydrogens();
-            IAtom carbon = ac.Atoms[0];
-            IAtom hydrogen = ac.Atoms[1];
-            AtomPlacer3D placer = new AtomPlacer3D();
+            var ac = MakeMethaneWithExplicitHydrogens();
+            var carbon = ac.Atoms[0];
+            var hydrogen = ac.Atoms[1];
+            var placer = new AtomPlacer3D();
 
             bool result = false;
             result = placer.IsRingHeavyAtom(carbon);
@@ -315,10 +315,10 @@ namespace NCDK.Modelings.Builder3D
         public void TestIsHeavyAtom()
         {
 
-            IAtomContainer ac = MakeMethaneWithExplicitHydrogens();
-            IAtom carbon = ac.Atoms[0];
-            IAtom hydrogen = ac.Atoms[1];
-            AtomPlacer3D placer = new AtomPlacer3D();
+            var ac = MakeMethaneWithExplicitHydrogens();
+            var carbon = ac.Atoms[0];
+            var hydrogen = ac.Atoms[1];
+            var placer = new AtomPlacer3D();
 
             bool result = false;
             result = placer.IsHeavyAtom(carbon);

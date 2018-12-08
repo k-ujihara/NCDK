@@ -47,22 +47,21 @@ namespace NCDK.Config.Isotopes
     /// ]]>
     /// </remarks>
     // @cdk.module  extra
-    public class IsotopeHandler : XContentHandler
+    public class IsotopeHandler
+        : XContentHandler
     {
+        private readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+
         private List<IIsotope> isotopes;
         private IIsotope workingIsotope;
         private string currentElement;
         private string dictRef;
 
-        private IChemObjectBuilder builder;
-
         /// <summary>
         /// Constructs an IsotopeHandler used by the IsotopeReader.
         /// </summary>
-        /// <param name="builder">The <see cref="IChemObjectBuilder"/> used to create new <see cref="IIsotope"/>'s.</param>
-        public IsotopeHandler(IChemObjectBuilder builder)
+        public IsotopeHandler()
         {
-            this.builder = builder;
         }
 
         /// <summary>
@@ -143,7 +142,7 @@ namespace NCDK.Config.Isotopes
 
         private IIsotope CreateIsotopeOfElement(string currentElement, XElement element)
         {
-            IIsotope isotope = builder.NewIsotope(currentElement);
+            var isotope = builder.NewIsotope(currentElement);
 
             XAttribute att = null;
             try

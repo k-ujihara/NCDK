@@ -42,7 +42,6 @@ namespace NCDK.IO.Iterator
     /// </summary>
     /// <seealso cref="SMILESReader"/>
     // @cdk.module smiles
-    // @cdk.githash
     // @cdk.iooptions
     // @author     Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.created    2004-12-16
@@ -55,6 +54,16 @@ namespace NCDK.IO.Iterator
 
         /// <summary>Store the problem input as a property.</summary>
         public const string BadSmilesInput = "bad.smiles.input";
+
+        public EnumerableSMILESReader(TextReader input)
+            : this(input, CDK.Builder)
+        {
+        }
+
+        public EnumerableSMILESReader(Stream input)
+            : this(input, CDK.Builder)
+        {
+        }
 
         /// <summary>
         /// Constructs a new <see cref="EnumerableSMILESReader"/> that can read molecule from a given reader.
@@ -75,7 +84,8 @@ namespace NCDK.IO.Iterator
         /// <param name="builder">The builder</param>
         public EnumerableSMILESReader(Stream input, IChemObjectBuilder builder)
            : this(new StreamReader(input), builder)
-        { }
+        {
+        }
 
         /// <summary>
         /// Get the format for this reader.

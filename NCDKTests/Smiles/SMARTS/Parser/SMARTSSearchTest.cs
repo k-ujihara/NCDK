@@ -87,7 +87,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         [TestMethod()]
         public void TestMoleculeFromSDF()
         {
-            string filename = "cnssmarts.sdf";
+            var filename = "cnssmarts.sdf";
             var ins = ResourceLoader.GetAsStream(GetType(), filename);
             DefaultChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content;

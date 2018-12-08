@@ -19,11 +19,9 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO;
-using NCDK.Silent;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.AtomTypes
 {
@@ -31,12 +29,13 @@ namespace NCDK.AtomTypes
     /// This class tests the perception of Sybyl atom types, which uses
     /// CDK atom type perception and mapping of CDK atom types to Sybyl
     /// atom types.
-    ///
-    // @cdk.module test-atomtype
     /// </summary>
+    // @cdk.module test-atomtype
     [TestClass()]
     public class SybylAtomTypeMatcherTest : AbstractSybylAtomTypeTest
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
+
         private static readonly IDictionary<string, int> testedAtomTypes = new Dictionary<string, int>
         {
             // do not complain about a few non-tested atom types
@@ -59,14 +58,14 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestGetInstance_IChemObjectBuilder()
         {
-            var matcher = SybylAtomTypeMatcher.GetInstance(CDK.Builder);
+            var matcher = SybylAtomTypeMatcher.GetInstance();
             Assert.IsNotNull(matcher);
         }
 
         [TestMethod()]
         public void TestFindMatchingAtomType_IAtomContainer_IAtom()
         {
-            var matcher = SybylAtomTypeMatcher.GetInstance(CDK.Builder);
+            var matcher = SybylAtomTypeMatcher.GetInstance();
             Assert.IsNotNull(matcher);
             var ethane = TestMoleculeFactory.MakeAlkane(2);
             var expectedTypes = new[] { "C.3", "C.3" };
@@ -79,10 +78,10 @@ namespace NCDK.AtomTypes
             var filename = "NCDK.Data.Mol2.atomtyping.mol2";
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new Mol2Reader(ins);
-            var mol = reader.Read(new AtomContainer());
+            var mol = reader.Read(builder.NewAtomContainer());
 
             // just check consistency; other methods do perception testing
-            var matcher = SybylAtomTypeMatcher.GetInstance(ChemObjectBuilder.Instance);
+            var matcher = SybylAtomTypeMatcher.GetInstance();
             var types = matcher.FindMatchingAtomTypes(mol).ToReadOnlyList();
             for (int i = 0; i < types.Count; i++)
             {
@@ -94,10 +93,10 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAtomTyping()
         {
-            string filename = "NCDK.Data.Mol2.atomtyping.mol2";
+            var filename = "NCDK.Data.Mol2.atomtyping.mol2";
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new Mol2Reader(ins);
-            var molecule = (IAtomContainer)reader.Read(new AtomContainer());
+            var molecule = (IAtomContainer)reader.Read(builder.NewAtomContainer());
             Assert.IsNotNull(molecule);
             var reference = (IAtomContainer)molecule.Clone();
 
@@ -122,7 +121,7 @@ namespace NCDK.AtomTypes
             var benzene = TestMoleculeFactory.MakeBenzene();
 
             // test if the perceived atom types match that
-            var matcher = SybylAtomTypeMatcher.GetInstance(benzene.Builder);
+            var matcher = SybylAtomTypeMatcher.GetInstance();
             var types = matcher.FindMatchingAtomTypes(benzene);
             foreach (var type in types)
             {
@@ -135,7 +134,7 @@ namespace NCDK.AtomTypes
         {
             var mol = TestMoleculeFactory.MakeAdenine();
             var expectedTypes = new[] { "C.ar", "C.ar", "C.ar", "N.ar", "N.ar", "N.ar", "N.ar", "N.3", "C.ar", "C.ar" };
-            var matcher = SybylAtomTypeMatcher.GetInstance(mol.Builder);
+            var matcher = SybylAtomTypeMatcher.GetInstance();
             var types = matcher.FindMatchingAtomTypes(mol).ToReadOnlyList();
             for (int i = 0; i < expectedTypes.Length; i++)
             {
@@ -152,7 +151,7 @@ namespace NCDK.AtomTypes
             var benzene = TestMoleculeFactory.MakeBenzene();
 
             // test if the perceived atom types match that
-            var matcher = SybylAtomTypeMatcher.GetInstance(benzene.Builder);
+            var matcher = SybylAtomTypeMatcher.GetInstance();
             var types = matcher.FindMatchingAtomTypes(benzene);
             foreach (var type in types)
             {
@@ -166,7 +165,7 @@ namespace NCDK.AtomTypes
             var filename = "NCDK.Data.Mol2.atomtyping4.mol2";
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new Mol2Reader(ins);
-            var molecule = (IAtomContainer)reader.Read(new AtomContainer());
+            var molecule = (IAtomContainer)reader.Read(builder.NewAtomContainer());
             Assert.IsNotNull(molecule);
             var reference = (IAtomContainer)molecule.Clone();
 
@@ -190,10 +189,10 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestNonExistingType()
         {
-            var mol = new AtomContainer();
-            var atom = new Atom();
+            var mol = builder.NewAtomContainer();
+            var atom = builder.NewAtom();
             mol.Atoms.Add(atom);
-            var matcher = SybylAtomTypeMatcher.GetInstance(mol.Builder);
+            var matcher = SybylAtomTypeMatcher.GetInstance();
             var type = matcher.FindMatchingAtomType(mol, atom);
             Assert.IsNotNull(type);
             Assert.AreEqual("X", type.AtomTypeName);
@@ -205,7 +204,7 @@ namespace NCDK.AtomTypes
             var filename = "NCDK.Data.Mol2.atomtyping2.mol2";
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new Mol2Reader(ins);
-            var molecule = reader.Read(new AtomContainer());
+            var molecule = reader.Read(builder.NewAtomContainer());
             Assert.IsNotNull(molecule);
             var reference = (IAtomContainer)molecule.Clone();
 
@@ -229,7 +228,7 @@ namespace NCDK.AtomTypes
             var filename = "NCDK.Data.Mol2.atomtyping3.mol2";
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new Mol2Reader(ins);
-            var molecule = (IAtomContainer)reader.Read(new AtomContainer());
+            var molecule = (IAtomContainer)reader.Read(builder.NewAtomContainer());
             Assert.IsNotNull(molecule);
             var reference = (IAtomContainer)molecule.Clone();
 
@@ -249,7 +248,7 @@ namespace NCDK.AtomTypes
 
         private static void PercieveAtomTypesAndConfigureAtoms(IAtomContainer container)
         {
-            var matcher = SybylAtomTypeMatcher.GetInstance(container.Builder);
+            var matcher = SybylAtomTypeMatcher.GetInstance();
             var atoms = container.Atoms.GetEnumerator();
             while (atoms.MoveNext())
             {
@@ -270,8 +269,8 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestDummy()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new PseudoAtom("R");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewPseudoAtom("R");
             mol.Atoms.Add(atom);
 
             string[] expectedTypes = { "X" };
@@ -281,9 +280,9 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestEthene()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("C");
-            IAtom atom2 = new Atom("C");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
+            IAtom atom2 = builder.NewAtom("C");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
@@ -295,9 +294,9 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestImine()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("C");
-            IAtom atom2 = new Atom("N");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
+            IAtom atom2 = builder.NewAtom("N");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
@@ -309,10 +308,10 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPropyne()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("C");
-            IAtom atom2 = new Atom("C");
-            IAtom atom3 = new Atom("C");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
+            IAtom atom2 = builder.NewAtom("C");
+            IAtom atom3 = builder.NewAtom("C");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom3);
@@ -326,10 +325,10 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAllene()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("C");
-            IAtom atom2 = new Atom("C");
-            IAtom atom3 = new Atom("C");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
+            IAtom atom2 = builder.NewAtom("C");
+            IAtom atom3 = builder.NewAtom("C");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom3);
@@ -343,12 +342,12 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHalogenatedMethane()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("F"));
-            mol.Atoms.Add(new Atom("Cl"));
-            mol.Atoms.Add(new Atom("I"));
-            mol.Atoms.Add(new Atom("Br"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("F"));
+            mol.Atoms.Add(builder.NewAtom("Cl"));
+            mol.Atoms.Add(builder.NewAtom("I"));
+            mol.Atoms.Add(builder.NewAtom("Br"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
@@ -361,12 +360,12 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMnF4()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("F");
-            IAtom atom2 = new Atom("Mn");
-            IAtom atom3 = new Atom("F");
-            IAtom atom4 = new Atom("F");
-            IAtom atom5 = new Atom("F");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("F");
+            IAtom atom2 = builder.NewAtom("Mn");
+            IAtom atom3 = builder.NewAtom("F");
+            IAtom atom4 = builder.NewAtom("F");
+            IAtom atom5 = builder.NewAtom("F");
             mol.Atoms.Add(atom);
             atom.FormalCharge = -1;
             mol.Atoms.Add(atom2);
@@ -385,10 +384,10 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAmide()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("O");
-            IAtom atom2 = new Atom("C");
-            IAtom atom3 = new Atom("N");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("O");
+            IAtom atom2 = builder.NewAtom("C");
+            IAtom atom3 = builder.NewAtom("N");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom3);
@@ -402,10 +401,10 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestCarboxylicAcid()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("O");
-            IAtom atom2 = new Atom("C");
-            IAtom atom3 = new Atom("O");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("O");
+            IAtom atom2 = builder.NewAtom("C");
+            IAtom atom3 = builder.NewAtom("O");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom3);
@@ -419,10 +418,11 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestCarboxylate()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("O");
-            IAtom atom2 = new Atom("C");
-            IAtom atom3 = new Atom("O") { FormalCharge = -1 };
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("O");
+            IAtom atom2 = builder.NewAtom("C");
+            IAtom atom3 = builder.NewAtom("O");
+            atom3.FormalCharge = -1;
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom3);
@@ -436,9 +436,9 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethylAmine()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("N");
-            IAtom atom2 = new Atom("C");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("N");
+            IAtom atom2 = builder.NewAtom("C");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
@@ -450,16 +450,16 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethylNitro_Charged()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("C");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             mol.Atoms.Add(atom);
-            IAtom atom2 = new Atom("N");
+            IAtom atom2 = builder.NewAtom("N");
             mol.Atoms.Add(atom2);
             atom2.FormalCharge = +1;
-            IAtom atom3 = new Atom("O");
+            IAtom atom3 = builder.NewAtom("O");
             mol.Atoms.Add(atom3);
             atom3.FormalCharge = -1;
-            IAtom atom4 = new Atom("O");
+            IAtom atom4 = builder.NewAtom("O");
             mol.Atoms.Add(atom4);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
@@ -472,12 +472,12 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestAmmonia()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("H");
-            IAtom atom2 = new Atom("N");
-            IAtom atom3 = new Atom("H");
-            IAtom atom4 = new Atom("H");
-            IAtom atom5 = new Atom("H");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("H");
+            IAtom atom2 = builder.NewAtom("N");
+            IAtom atom3 = builder.NewAtom("H");
+            IAtom atom4 = builder.NewAtom("H");
+            IAtom atom5 = builder.NewAtom("H");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             atom2.FormalCharge = +1;
@@ -496,9 +496,9 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMethanol()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("O");
-            IAtom atom2 = new Atom("C");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("O");
+            IAtom atom2 = builder.NewAtom("C");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
@@ -510,11 +510,11 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestDMSO()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("O");
-            IAtom atom2 = new Atom("S");
-            IAtom atom3 = new Atom("C");
-            IAtom atom4 = new Atom("C");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("O");
+            IAtom atom2 = builder.NewAtom("S");
+            IAtom atom3 = builder.NewAtom("C");
+            IAtom atom4 = builder.NewAtom("C");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom3);
@@ -530,12 +530,12 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestDMSOO()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("O");
-            IAtom atom1 = new Atom("O");
-            IAtom atom2 = new Atom("S");
-            IAtom atom3 = new Atom("C");
-            IAtom atom4 = new Atom("C");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("O");
+            IAtom atom1 = builder.NewAtom("O");
+            IAtom atom2 = builder.NewAtom("S");
+            IAtom atom3 = builder.NewAtom("C");
+            IAtom atom4 = builder.NewAtom("C");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom1);
             mol.Atoms.Add(atom2);
@@ -553,11 +553,12 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestCarbokation()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("H");
-            IAtom atom2 = new Atom("C") { FormalCharge = +1 };
-            IAtom atom3 = new Atom("H");
-            IAtom atom4 = new Atom("H");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("H");
+            IAtom atom2 = builder.NewAtom("C");
+            atom2.FormalCharge = +1;
+            IAtom atom3 = builder.NewAtom("H");
+            IAtom atom4 = builder.NewAtom("H");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom3);
@@ -573,7 +574,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSilicon()
         {
-            var mol = new AtomContainer();
+            var mol = builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("Si");
             mol.Atoms.Add(a1);
             IAtom a2 = mol.Builder.NewAtom("O");
@@ -649,10 +650,10 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestThioAmide()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("S");
-            IAtom atom2 = new Atom("C");
-            IAtom atom3 = new Atom("N");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("S");
+            IAtom atom2 = builder.NewAtom("C");
+            IAtom atom3 = builder.NewAtom("N");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom3);
@@ -666,39 +667,45 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSalts()
         {
-            var mol = new AtomContainer();
+            var mol = builder.NewAtomContainer();
 
-            IAtom atom = new Atom("Na") { FormalCharge = +1 };
+            IAtom atom = builder.NewAtom("Na");
+            atom.FormalCharge = +1;
             mol.Atoms.Add(atom);
             string[] expectedTypes = new string[] { "Na" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
-            mol = new AtomContainer();
-            atom = new Atom("K") { FormalCharge = +1 };
+            mol = builder.NewAtomContainer();
+            atom = builder.NewAtom("K");
+            atom.FormalCharge = +1;
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "K" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
-            mol = new AtomContainer();
-            atom = new Atom("Ca") { FormalCharge = +2 };
+            mol = builder.NewAtomContainer();
+            atom = builder.NewAtom("Ca");
+            atom.FormalCharge = +2;
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "Ca" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
-            mol = new AtomContainer();
-            atom = new Atom("Mg") { FormalCharge = +2 };
+            mol = builder.NewAtomContainer();
+            atom = builder.NewAtom("Mg");
+            atom.FormalCharge = +2;
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "Mg" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
-            mol = new AtomContainer();
-            atom = new Atom("Cu") { FormalCharge = +2 };
+            mol = builder.NewAtomContainer();
+            atom = builder.NewAtom("Cu");
+            atom.FormalCharge = +2;
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "Cu" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
-            mol = new AtomContainer();
-            atom = new Atom("Al") { FormalCharge = +3 };
+            mol = builder.NewAtomContainer();
+            atom = builder.NewAtom("Al");
+            atom.FormalCharge = +3;
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "Al" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -707,13 +714,13 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestH2S()
         {
-            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom s = ChemObjectBuilder.Instance.NewAtom("S");
-            IAtom h1 = ChemObjectBuilder.Instance.NewAtom("H");
-            IAtom h2 = ChemObjectBuilder.Instance.NewAtom("H");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom s = builder.NewAtom("S");
+            IAtom h1 = builder.NewAtom("H");
+            IAtom h2 = builder.NewAtom("H");
 
-            IBond b1 = ChemObjectBuilder.Instance.NewBond(s, h1, BondOrder.Single);
-            IBond b2 = ChemObjectBuilder.Instance.NewBond(s, h2, BondOrder.Single);
+            IBond b1 = builder.NewBond(s, h1, BondOrder.Single);
+            IBond b2 = builder.NewBond(s, h2, BondOrder.Single);
 
             mol.Atoms.Add(s);
             mol.Atoms.Add(h1);
@@ -729,20 +736,20 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestFerrocene()
         {
-            IAtomContainer ferrocene = new AtomContainer();
-            ferrocene.Atoms.Add(new Atom("C"));
-            ferrocene.Atoms.Add(new Atom("C"));
-            ferrocene.Atoms.Add(new Atom("C"));
-            ferrocene.Atoms.Add(new Atom("C"));
-            ferrocene.Atoms.Add(new Atom("C"));
+            IAtomContainer ferrocene = builder.NewAtomContainer();
+            ferrocene.Atoms.Add(builder.NewAtom("C"));
+            ferrocene.Atoms.Add(builder.NewAtom("C"));
+            ferrocene.Atoms.Add(builder.NewAtom("C"));
+            ferrocene.Atoms.Add(builder.NewAtom("C"));
+            ferrocene.Atoms.Add(builder.NewAtom("C"));
             ferrocene.Atoms[4].FormalCharge = -1;
-            ferrocene.Atoms.Add(new Atom("C"));
-            ferrocene.Atoms.Add(new Atom("C"));
-            ferrocene.Atoms.Add(new Atom("C"));
-            ferrocene.Atoms.Add(new Atom("C"));
-            ferrocene.Atoms.Add(new Atom("C"));
+            ferrocene.Atoms.Add(builder.NewAtom("C"));
+            ferrocene.Atoms.Add(builder.NewAtom("C"));
+            ferrocene.Atoms.Add(builder.NewAtom("C"));
+            ferrocene.Atoms.Add(builder.NewAtom("C"));
+            ferrocene.Atoms.Add(builder.NewAtom("C"));
             ferrocene.Atoms[9].FormalCharge = -1;
-            ferrocene.Atoms.Add(new Atom("Fe"));
+            ferrocene.Atoms.Add(builder.NewAtom("Fe"));
             ferrocene.Atoms[10].FormalCharge = +2;
             ferrocene.AddBond(ferrocene.Atoms[0], ferrocene.Atoms[1], BondOrder.Double);
             ferrocene.AddBond(ferrocene.Atoms[1], ferrocene.Atoms[2], BondOrder.Single);
@@ -762,9 +769,9 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHCN()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("N");
-            IAtom atom2 = new Atom("C");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("N");
+            IAtom atom2 = builder.NewAtom("C");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Triple);
@@ -782,7 +789,7 @@ namespace NCDK.AtomTypes
             benzene.Bonds.Add(benzene.Builder.NewBond(benzene.Atoms[0], nitrogen, BondOrder.Single));
 
             // test if the perceived atom types match that
-            var matcher = SybylAtomTypeMatcher.GetInstance(benzene.Builder);
+            var matcher = SybylAtomTypeMatcher.GetInstance();
             var types = matcher.FindMatchingAtomTypes(benzene).ToReadOnlyList();
             for (int i = 0; i < 6; i++)
             {
@@ -794,10 +801,10 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestLithiumMethanoxide()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("O");
-            IAtom atom2 = new Atom("C");
-            IAtom atom3 = new Atom("Li");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("O");
+            IAtom atom2 = builder.NewAtom("C");
+            IAtom atom3 = builder.NewAtom("Li");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom3);
@@ -811,12 +818,12 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestTinCompound()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("C");
-            IAtom atom2 = new Atom("Sn");
-            IAtom atom3 = new Atom("C");
-            IAtom atom4 = new Atom("C");
-            IAtom atom5 = new Atom("C");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
+            IAtom atom2 = builder.NewAtom("Sn");
+            IAtom atom3 = builder.NewAtom("C");
+            IAtom atom4 = builder.NewAtom("C");
+            IAtom atom5 = builder.NewAtom("C");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom3);
@@ -834,10 +841,10 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestZincChloride()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("Zn"));
-            mol.Atoms.Add(new Atom("Cl"));
-            mol.Atoms.Add(new Atom("Cl"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("Zn"));
+            mol.Atoms.Add(builder.NewAtom("Cl"));
+            mol.Atoms.Add(builder.NewAtom("Cl"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
 
@@ -851,13 +858,13 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestH2Se()
         {
-            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom se = ChemObjectBuilder.Instance.NewAtom("Se");
-            IAtom h1 = ChemObjectBuilder.Instance.NewAtom("H");
-            IAtom h2 = ChemObjectBuilder.Instance.NewAtom("H");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom se = builder.NewAtom("Se");
+            IAtom h1 = builder.NewAtom("H");
+            IAtom h2 = builder.NewAtom("H");
 
-            IBond b1 = ChemObjectBuilder.Instance.NewBond(se, h1, BondOrder.Single);
-            IBond b2 = ChemObjectBuilder.Instance.NewBond(se, h2, BondOrder.Single);
+            IBond b1 = builder.NewBond(se, h1, BondOrder.Single);
+            IBond b2 = builder.NewBond(se, h2, BondOrder.Single);
 
             mol.Atoms.Add(se);
             mol.Atoms.Add(h1);
@@ -873,12 +880,12 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPhosphate()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("O");
-            IAtom atom2 = new Atom("P");
-            IAtom atom3 = new Atom("O");
-            IAtom atom4 = new Atom("O");
-            IAtom atom5 = new Atom("O");
+            var mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("O");
+            IAtom atom2 = builder.NewAtom("P");
+            IAtom atom3 = builder.NewAtom("O");
+            IAtom atom4 = builder.NewAtom("O");
+            IAtom atom5 = builder.NewAtom("O");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom3);
@@ -896,21 +903,21 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test_Mo_4()
         {
-            var mol = new AtomContainer();
-            IAtom a1 = new Atom("Mo");
+            var mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Mo");
             mol.Atoms.Add(a1);
-            IAtom a2 = new Atom("C");
+            IAtom a2 = builder.NewAtom("C");
             mol.Atoms.Add(a2);
-            IAtom a3 = new Atom("C");
+            IAtom a3 = builder.NewAtom("C");
             mol.Atoms.Add(a3);
-            IAtom a4 = new Atom("C");
+            IAtom a4 = builder.NewAtom("C");
             mol.Atoms.Add(a4);
-            IAtom a5 = new Atom("C");
+            IAtom a5 = builder.NewAtom("C");
             mol.Atoms.Add(a5);
-            mol.Bonds.Add(new Bond(a1, a2, BondOrder.Double));
-            mol.Bonds.Add(new Bond(a1, a3, BondOrder.Double));
-            mol.Bonds.Add(new Bond(a1, a4, BondOrder.Single));
-            mol.Bonds.Add(new Bond(a1, a5, BondOrder.Single));
+            mol.Bonds.Add(builder.NewBond(a1, a2, BondOrder.Double));
+            mol.Bonds.Add(builder.NewBond(a1, a3, BondOrder.Double));
+            mol.Bonds.Add(builder.NewBond(a1, a4, BondOrder.Single));
+            mol.Bonds.Add(builder.NewBond(a1, a5, BondOrder.Single));
 
             string[] expectedTypes = { "Mo", "C.2", "C.2", "C.3", "C.3" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -919,15 +926,15 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestCrth()
         {
-            var mol = new AtomContainer();
+            var mol = builder.NewAtomContainer();
             // this is made up
-            IAtom a1 = new Atom("Cr");
+            IAtom a1 = builder.NewAtom("Cr");
             mol.Atoms.Add(a1);
             for (int i = 0; i < 4; i++)
             {
-                IAtom atom = new Atom("O");
+                IAtom atom = builder.NewAtom("O");
                 mol.Atoms.Add(atom);
-                mol.Bonds.Add(new Bond(a1, atom, BondOrder.Single));
+                mol.Bonds.Add(builder.NewBond(a1, atom, BondOrder.Single));
             }
 
             string[] expectedTypes = { "Cr.th", "O.3", "O.3", "O.3", "O.3" };
@@ -937,16 +944,16 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestCroh()
         {
-            var mol = new AtomContainer();
+            var mol = builder.NewAtomContainer();
             // this is made up, and may be wrong; info on the web is sparse, and PubChem has no
             // octa-coordinate structure; lone pairs involved?
-            IAtom a1 = new Atom("Cr");
+            IAtom a1 = builder.NewAtom("Cr");
             mol.Atoms.Add(a1);
             for (int i = 0; i < 6; i++)
             {
-                IAtom atom = new Atom("O");
+                IAtom atom = builder.NewAtom("O");
                 mol.Atoms.Add(atom);
-                mol.Bonds.Add(new Bond(a1, atom, BondOrder.Single));
+                mol.Bonds.Add(builder.NewBond(a1, atom, BondOrder.Single));
             }
 
             string[] expectedTypes = { "Cr.oh", "O.3", "O.3", "O.3", "O.3", "O.3", "O.3" };
@@ -956,26 +963,20 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestCooh()
         {
-            var mol = new AtomContainer();
+            var mol = builder.NewAtomContainer();
             // this is made up, and may be wrong; info on the web is sparse, and PubChem has no
             // octa-coordinate structure; lone pairs involved?
-            IAtom a1 = new Atom("Co");
+            IAtom a1 = builder.NewAtom("Co");
             mol.Atoms.Add(a1);
             for (int i = 0; i < 6; i++)
             {
-                IAtom atom = new Atom("O");
+                IAtom atom = builder.NewAtom("O");
                 mol.Atoms.Add(atom);
-                mol.Bonds.Add(new Bond(a1, atom, BondOrder.Single));
+                mol.Bonds.Add(builder.NewBond(a1, atom, BondOrder.Single));
             }
 
             string[] expectedTypes = { "Co.oh", "O.3", "O.3", "O.3", "O.3", "O.3", "O.3" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
         }
-
-        //[ClassCleanup()]
-        //public static void TestTestedAtomTypes()
-        //{
-        //    CountTestedAtomTypes(testedAtomTypes, factory);
-        //}
     }
 }

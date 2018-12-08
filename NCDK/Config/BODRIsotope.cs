@@ -31,7 +31,8 @@ namespace NCDK.Config
     /// </summary>
     // @author      egonw
     // @cdk.module  core
-    internal sealed class BODRIsotope : IIsotope
+    internal sealed class BODRIsotope 
+        : IIsotope
     {
         private readonly string element;
         private readonly int atomicNumber;

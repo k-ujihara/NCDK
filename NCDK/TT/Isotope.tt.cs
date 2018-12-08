@@ -262,7 +262,7 @@ namespace NCDK.Default
         /// <returns>true if the isotopes are equal</returns>
         public override bool Compare(object obj)
         {
-            return obj is Isotope isotope && base.Compare(obj)
+            return obj is IIsotope isotope && base.Compare(obj)
                 && isotope.AtomicNumber == AtomicNumber
                 && isotope.MassNumber == MassNumber
                 && NearlyEquals(isotope.ExactMass, ExactMass)
@@ -506,7 +506,7 @@ namespace NCDK.Silent
         /// <returns>true if the isotopes are equal</returns>
         public override bool Compare(object obj)
         {
-            return obj is Isotope isotope && base.Compare(obj)
+            return obj is IIsotope isotope && base.Compare(obj)
                 && isotope.AtomicNumber == AtomicNumber
                 && isotope.MassNumber == MassNumber
                 && NearlyEquals(isotope.ExactMass, ExactMass)

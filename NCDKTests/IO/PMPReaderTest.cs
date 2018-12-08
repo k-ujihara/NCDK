@@ -19,9 +19,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System;
 using System.IO;
 
@@ -35,34 +35,35 @@ namespace NCDK.IO
     [TestClass()]
     public class PMPReaderTest : SimpleChemObjectReaderTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         protected override string TestFile => "NCDK.Data.PMP.aceticacid.pmp";
         protected override Type ChemObjectIOToTestType => typeof(PMPReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            PMPReader reader = new PMPReader(new StringReader(""));
-            Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
+            var reader = new PMPReader(new StringReader(""));
+            Assert.IsTrue(reader.Accepts(typeof(IChemFile)));
         }
 
         [TestMethod()]
         public void TestAceticAcid()
         {
-            string filename = "NCDK.Data.PMP.aceticacid.pmp";
+            var filename = "NCDK.Data.PMP.aceticacid.pmp";
             var ins = ResourceLoader.GetAsStream(filename);
-            PMPReader reader = new PMPReader(ins);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new PMPReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
 
-            ICrystal crystal = model.Crystal;
+            var crystal = model.Crystal;
             Assert.IsNotNull(crystal);
             Assert.AreEqual(32, crystal.Atoms.Count);
             Assert.AreEqual(28, crystal.Bonds.Count);
@@ -76,21 +77,21 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestTwoAceticAcid()
         {
-            string filename = "NCDK.Data.PMP.two_aceticacid.pmp";
+            var filename = "NCDK.Data.PMP.two_aceticacid.pmp";
             var ins = ResourceLoader.GetAsStream(filename);
-            PMPReader reader = new PMPReader(ins);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new PMPReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(2, seq.Count);
 
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
-            ICrystal crystal = model.Crystal;
+            var crystal = model.Crystal;
             Assert.IsNotNull(crystal);
             Assert.AreEqual(32, crystal.Atoms.Count);
             Assert.AreEqual(28, crystal.Bonds.Count);

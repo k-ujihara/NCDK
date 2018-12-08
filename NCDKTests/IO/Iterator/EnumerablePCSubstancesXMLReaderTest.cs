@@ -35,7 +35,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestTaxols()
         {
-            string filename = "NCDK.Data.ASN.PubChem.taxols.xml";
+            var filename = "NCDK.Data.ASN.PubChem.taxols.xml";
             Trace.TraceInformation("Testing: " + filename);
 
             int modelCount = 0;

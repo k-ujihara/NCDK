@@ -1,6 +1,5 @@
-using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
+using NCDK.Common.Base;
 using NCDK.IO;
 using NCDK.Templates;
 using System.Collections.Generic;
@@ -17,6 +16,8 @@ namespace NCDK.Graphs
     [TestClass()]
     public class CyclesTest
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
+
         [TestMethod()]
         public virtual void All()
         {
@@ -252,7 +253,7 @@ namespace NCDK.Graphs
             MDLV2000Reader mdl = new MDLV2000Reader(ResourceLoader.GetAsStream(path));
             try
             {
-                return mdl.Read(new AtomContainer());
+                return mdl.Read(builder.NewAtomContainer());
             }
             finally
             {

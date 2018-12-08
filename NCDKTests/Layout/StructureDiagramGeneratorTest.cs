@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Mathematics;
-using NCDK.Silent;
 using NCDK.Geometries;
 using NCDK.IO;
 using NCDK.Numerics;
@@ -29,11 +28,11 @@ using NCDK.Sgroups;
 using NCDK.Smiles;
 using NCDK.Stereo;
 using NCDK.Templates;
+using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using NCDK.Tools.Manipulator;
 
 namespace NCDK.Layout
 {
@@ -44,8 +43,10 @@ namespace NCDK.Layout
     // @author     steinbeck
     // @cdk.created    August 29, 2003
     [TestClass()]
-    public class StructureDiagramGeneratorTest : CDKTestCase
+    public class StructureDiagramGeneratorTest
+        : CDKTestCase
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         private static readonly StructureDiagramGenerator SDG = new StructureDiagramGenerator();
 
         static StructureDiagramGeneratorTest()
@@ -62,14 +63,13 @@ namespace NCDK.Layout
 
         public void VisualBugPMR()
         {
-            string filename = "NCDK.Data.CML.SL0016a.cml";
+            var filename = "NCDK.Data.CML.SL0016a.cml";
             var ins = ResourceLoader.GetAsStream(filename);
-            CMLReader reader = new CMLReader(ins);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
-            IChemSequence seq = chemFile[0];
-            IChemModel model = seq[0];
-            IAtomContainer mol = model.MoleculeSet[0];
-            //MoleculeViewer2D.Display(mol, true, false, JFrame.DO_NOTHING_ON_CLOSE,"");
+            var reader = new CMLReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
+            var seq = chemFile[0];
+            var model = seq[0];
+            var mol = model.MoleculeSet[0];
         }
 
         // @cdk.bug 1670871
@@ -78,13 +78,8 @@ namespace NCDK.Layout
         public void TestBugLecture2007()
         {
             var sp = CDK.SmilesParser;
-            //var mol = sp.ParseSmiles("Oc1nc(Nc2c(nn(c12)C)CCC)c3cc(ccc3(OCC))S(=O)(=O)N4CCN(C)CC4");
             var mol = sp.ParseSmiles("O=C(N1CCN(CC1)CCCN(C)C)C3(C=2C=CC(=CC=2)C)(CCCCC3)");
-
-            //var mol = sp.ParseSmiles("C1CCC1CCCCCCCC1CC1");
-
-            IAtomContainer ac = Layout(mol);
-            //        MoleculeViewer2D.Display(new AtomContainer(ac), false);
+            var ac = Layout(mol);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
@@ -92,8 +87,8 @@ namespace NCDK.Layout
         [Timeout(5000)]
         public void TestAlphaPinene()
         {
-            IAtomContainer m = TestMoleculeFactory.MakeAlphaPinene();
-            IAtomContainer ac = Layout(m);
+            var m = TestMoleculeFactory.MakeAlphaPinene();
+            var ac = Layout(m);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
@@ -101,10 +96,10 @@ namespace NCDK.Layout
         [Timeout(5000)]
         public void TestBridgedHydrogen()
         {
-            var mol = new AtomContainer();
-            IAtom carbon1 = new Atom("C");
-            IAtom carbon2 = new Atom("C");
-            IAtom bridgingHydrogen = new Atom("H");
+            var mol = builder.NewAtomContainer();
+            var carbon1 = builder.NewAtom("C");
+            var carbon2 = builder.NewAtom("C");
+            var bridgingHydrogen = builder.NewAtom("H");
             mol.Atoms.Add(carbon1);
             mol.Atoms.Add(bridgingHydrogen);
             mol.Atoms.Add(carbon2);
@@ -118,8 +113,8 @@ namespace NCDK.Layout
         [Timeout(5000)]
         public void TestBiphenyl()
         {
-            IAtomContainer m = TestMoleculeFactory.MakeBiphenyl();
-            IAtomContainer ac = Layout(m);
+            var m = TestMoleculeFactory.MakeBiphenyl();
+            var ac = Layout(m);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
@@ -127,8 +122,8 @@ namespace NCDK.Layout
         [Timeout(5000)]
         public void Test4x3CondensedRings()
         {
-            IAtomContainer m = TestMoleculeFactory.Make4x3CondensedRings();
-            IAtomContainer ac = Layout(m);
+            var m = TestMoleculeFactory.Make4x3CondensedRings();
+            var ac = Layout(m);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
@@ -136,8 +131,8 @@ namespace NCDK.Layout
         [Timeout(5000)]
         public void TestPhenylEthylBenzene()
         {
-            IAtomContainer m = TestMoleculeFactory.MakePhenylEthylBenzene();
-            IAtomContainer ac = Layout(m);
+            var m = TestMoleculeFactory.MakePhenylEthylBenzene();
+            var ac = Layout(m);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
@@ -145,8 +140,8 @@ namespace NCDK.Layout
         [Timeout(5000)]
         public void TestSpiroRings()
         {
-            IAtomContainer m = TestMoleculeFactory.MakeSpiroRings();
-            IAtomContainer ac = Layout(m);
+            var m = TestMoleculeFactory.MakeSpiroRings();
+            var ac = Layout(m);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
@@ -154,8 +149,8 @@ namespace NCDK.Layout
         [Timeout(5000)]
         public void TestMethylDecaline()
         {
-            IAtomContainer m = TestMoleculeFactory.MakeMethylDecaline();
-            IAtomContainer ac = Layout(m);
+            var m = TestMoleculeFactory.MakeMethylDecaline();
+            var ac = Layout(m);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
@@ -163,8 +158,8 @@ namespace NCDK.Layout
         [Timeout(5000)]
         public void TestBranchedAliphatic()
         {
-            IAtomContainer m = TestMoleculeFactory.MakeBranchedAliphatic();
-            IAtomContainer ac = Layout(m);
+            var m = TestMoleculeFactory.MakeBranchedAliphatic();
+            var ac = Layout(m);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
@@ -172,8 +167,8 @@ namespace NCDK.Layout
         [Timeout(5000)]
         public void TestDiamantane()
         {
-            IAtomContainer m = TestMoleculeFactory.MakeDiamantane();
-            IAtomContainer ac = Layout(m);
+            var m = TestMoleculeFactory.MakeDiamantane();
+            var ac = Layout(m);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
@@ -184,8 +179,7 @@ namespace NCDK.Layout
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CC(=O)OC1C=CC(SC23CC4CC(CC(C4)C2)C3)N(C1SC56CC7CC(CC(C7)C5)C6)C(C)=O");
-            IAtomContainer ac = Layout(mol);
-            //MoleculeViewer2D.Display(new AtomContainer(ac), false);
+            var ac = Layout(mol);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
@@ -193,8 +187,8 @@ namespace NCDK.Layout
         [Timeout(5000)]
         public void TestEthylCyclohexane()
         {
-            IAtomContainer m = TestMoleculeFactory.MakeEthylCyclohexane();
-            IAtomContainer ac = Layout(m);
+            var m = TestMoleculeFactory.MakeEthylCyclohexane();
+            var ac = Layout(m);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
@@ -202,8 +196,8 @@ namespace NCDK.Layout
         [Timeout(5000)]
         public void TestBicycloRings()
         {
-            IAtomContainer m = TestMoleculeFactory.MakeBicycloRings();
-            IAtomContainer ac = Layout(m);
+            var m = TestMoleculeFactory.MakeBicycloRings();
+            var ac = Layout(m);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
@@ -227,7 +221,7 @@ namespace NCDK.Layout
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("c1ccccc1");
-            IAtomContainer ac = Layout(mol);
+            var ac = Layout(mol);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
@@ -236,9 +230,9 @@ namespace NCDK.Layout
         [Timeout(5000)]
         public void TestBug780545()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("C"));
-            IAtomContainer ac = Layout(mol);
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            var ac = Layout(mol);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
@@ -247,8 +241,8 @@ namespace NCDK.Layout
         [Timeout(5000)]
         public void TestBug1598409()
         {
-            string smiles = "c1(:c(:c2-C(-c3:c(-C(=O)-c:2:c(:c:1-[H])-[H]):c(:c(:c(:c:3-[H])-[H])-N(-[H])-[H])-[H])=O)-[H])-[H]";
-            SmilesParser parser = CDK.SmilesParser;
+            var smiles = "c1(:c(:c2-C(-c3:c(-C(=O)-c:2:c(:c:1-[H])-[H]):c(:c(:c(:c:3-[H])-[H])-N(-[H])-[H])-[H])=O)-[H])-[H]";
+            var parser = CDK.SmilesParser;
             var cdkMol = parser.ParseSmiles(smiles);
             Layout(cdkMol);
         }
@@ -258,14 +252,14 @@ namespace NCDK.Layout
         [Timeout(5000)]
         public void TestBug1572062()
         {
-            string filename = "NCDK.Data.MDL.sdg_test.mol";
+            var filename = "NCDK.Data.MDL.sdg_test.mol";
 
             //        set up molecule reader
             var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
 
             //        read molecule
-            IAtomContainer molecule = molReader.Read(ChemObjectBuilder.Instance.NewAtomContainer());
+            IAtomContainer molecule = molReader.Read(builder.NewAtomContainer());
 
             //        rebuild 2D coordinates
             for (int i = 0; i < 10; i++)
@@ -279,7 +273,7 @@ namespace NCDK.Layout
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[N+](=O)([O-])C1=C(O)C(=CC(=C1)[N+](=O)[O-])[N+](=O)[O-].C23N(CCCC2)CCCC3");
-            IAtomContainer ac = Layout(mol);
+            var ac = Layout(mol);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
@@ -293,8 +287,8 @@ namespace NCDK.Layout
         public void TestBug1677912SDGHangs()
         {
             // Parse the SMILES
-            string smiles = "[NH](-[CH]1-[CH]2-[CH2]-[CH]3-[CH2]-[CH]-1-[CH2]-[CH](-[CH2]-2)-[CH2]-3)-C(=O)-C(=O)-[CH2]-c1:n:c(:c(:[cH]:c:1-C(=O)-O-[CH3])-C(=O)-O-[CH3])-[CH2]-C(=O)-C(=O)-[NH]-[CH]1-[CH]2-[CH2]-[CH]3-[CH2]-[CH]-1-[CH2]-[CH](-[CH2]-2)-[CH2]-3";
-            SmilesParser smilesParser = CDK.SmilesParser;
+            var smiles = "[NH](-[CH]1-[CH]2-[CH2]-[CH]3-[CH2]-[CH]-1-[CH2]-[CH](-[CH2]-2)-[CH2]-3)-C(=O)-C(=O)-[CH2]-c1:n:c(:c(:[cH]:c:1-C(=O)-O-[CH3])-C(=O)-O-[CH3])-[CH2]-C(=O)-C(=O)-[NH]-[CH]1-[CH]2-[CH2]-[CH]3-[CH2]-[CH]-1-[CH2]-[CH](-[CH2]-2)-[CH2]-3";
+            var smilesParser = CDK.SmilesParser;
             var molecule = smilesParser.ParseSmiles(smiles);
 
             // Generate 2D coordinates
@@ -308,12 +302,12 @@ namespace NCDK.Layout
         [Timeout(5000)]
         public void TestBug1714794()
         {
-            string problematicMol2AsSmiles = "N1c2c(c3c(c4c(c(c3O)C)OC(OC=CC(C(C(C(C(C(C(C(C=CC=C(C1=O)C)C)O)C)O)C)OC(=O)C)C)OC)(C4=O)C)c(c2C=NN(C12CC3CC(C1)CC(C2)C3)C)O)O";
-            SmilesParser parser = CDK.SmilesParser;
+            var problematicMol2AsSmiles = "N1c2c(c3c(c4c(c(c3O)C)OC(OC=CC(C(C(C(C(C(C(C(C=CC=C(C1=O)C)C)O)C)O)C)OC(=O)C)C)OC)(C4=O)C)c(c2C=NN(C12CC3CC(C1)CC(C2)C3)C)O)O";
+            var parser = CDK.SmilesParser;
             var cdkMol = parser.ParseSmiles(problematicMol2AsSmiles);
-            long t0 = DateTime.Now.Ticks;
+            var t0 = DateTime.Now.Ticks;
             Layout(cdkMol);
-            long t1 = DateTime.Now.Ticks;
+            var t1 = DateTime.Now.Ticks;
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(cdkMol));
 
             string problematicMol2 = "@<TRIPOS>MOLECULE\n" + "mol_197219.smi\n" + " 129 135 0 0 0\n" + "SMALL\n"
@@ -492,24 +486,24 @@ namespace NCDK.Layout
                     + "   127   101   119    1\n" + "   128    96   122    1\n" + "   129   122   123    1\n"
                     + "   130   122   124    1\n" + "   131   122   125    1\n" + "   132    91   126    1\n"
                     + "   133   126   127    1\n" + "   134     4   128    1\n" + "   135   128   129    1\n";
-            Mol2Reader r = new Mol2Reader(new StringReader(problematicMol2));
-            IChemModel model = (IChemModel)r.Read(CDK.Builder.NewChemModel());
-            IAtomContainer mol = model.MoleculeSet[0];
+            var r = new Mol2Reader(new StringReader(problematicMol2));
+            var model = (IChemModel)r.Read(CDK.Builder.NewChemModel());
+            var mol = model.MoleculeSet[0];
             Layout(mol);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(mol));
         }
 
         IAtomContainer MakeTetraMethylCycloButane()
         {
-            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
-            mol.Atoms.Add(new Atom("C")); // 1
-            mol.Atoms.Add(new Atom("C")); // 2
-            mol.Atoms.Add(new Atom("C")); // 3
-            mol.Atoms.Add(new Atom("C")); // 4
-            mol.Atoms.Add(new Atom("C")); // 5
-            mol.Atoms.Add(new Atom("C")); // 6
-            mol.Atoms.Add(new Atom("C")); // 7
-            mol.Atoms.Add(new Atom("C")); // 8
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C")); // 1
+            mol.Atoms.Add(builder.NewAtom("C")); // 2
+            mol.Atoms.Add(builder.NewAtom("C")); // 3
+            mol.Atoms.Add(builder.NewAtom("C")); // 4
+            mol.Atoms.Add(builder.NewAtom("C")); // 5
+            mol.Atoms.Add(builder.NewAtom("C")); // 6
+            mol.Atoms.Add(builder.NewAtom("C")); // 7
+            mol.Atoms.Add(builder.NewAtom("C")); // 8
 
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single); // 1
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single); // 2
@@ -524,16 +518,16 @@ namespace NCDK.Layout
 
         IAtomContainer MakeJhao1()
         {
-            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
-            mol.Atoms.Add(new Atom("C")); // 1
-            mol.Atoms.Add(new Atom("C")); // 2
-            mol.Atoms.Add(new Atom("C")); // 3
-            mol.Atoms.Add(new Atom("C")); // 4
-            mol.Atoms.Add(new Atom("C")); // 5
-            mol.Atoms.Add(new Atom("C")); // 6
-            mol.Atoms.Add(new Atom("C")); // 7
-            mol.Atoms.Add(new Atom("O")); // 8
-            mol.Atoms.Add(new Atom("C")); // 9
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C")); // 1
+            mol.Atoms.Add(builder.NewAtom("C")); // 2
+            mol.Atoms.Add(builder.NewAtom("C")); // 3
+            mol.Atoms.Add(builder.NewAtom("C")); // 4
+            mol.Atoms.Add(builder.NewAtom("C")); // 5
+            mol.Atoms.Add(builder.NewAtom("C")); // 6
+            mol.Atoms.Add(builder.NewAtom("C")); // 7
+            mol.Atoms.Add(builder.NewAtom("O")); // 8
+            mol.Atoms.Add(builder.NewAtom("C")); // 9
 
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single); // 1
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single); // 2
@@ -552,16 +546,16 @@ namespace NCDK.Layout
 
         IAtomContainer MakeJhao2()
         {
-            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
-            mol.Atoms.Add(new Atom("C")); // 1
-            mol.Atoms.Add(new Atom("C")); // 2
-            mol.Atoms.Add(new Atom("C")); // 3
-            mol.Atoms.Add(new Atom("C")); // 4
-            mol.Atoms.Add(new Atom("C")); // 5
-            mol.Atoms.Add(new Atom("C")); // 6
-            mol.Atoms.Add(new Atom("C")); // 7
-            mol.Atoms.Add(new Atom("O")); // 8
-            mol.Atoms.Add(new Atom("C")); // 9
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C")); // 1
+            mol.Atoms.Add(builder.NewAtom("C")); // 2
+            mol.Atoms.Add(builder.NewAtom("C")); // 3
+            mol.Atoms.Add(builder.NewAtom("C")); // 4
+            mol.Atoms.Add(builder.NewAtom("C")); // 5
+            mol.Atoms.Add(builder.NewAtom("C")); // 6
+            mol.Atoms.Add(builder.NewAtom("C")); // 7
+            mol.Atoms.Add(builder.NewAtom("O")); // 8
+            mol.Atoms.Add(builder.NewAtom("C")); // 9
 
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single); // 1
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single); // 2
@@ -581,14 +575,14 @@ namespace NCDK.Layout
         // @cdk.bug 1750968
         public IAtomContainer MakeBug1750968()
         {
-            string filename = "NCDK.Data.MDL.bug_1750968.mol";
+            var filename = "NCDK.Data.MDL.bug_1750968.mol";
 
             //        set up molecule reader
             var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader molReader = new MDLReader(ins, ChemObjectReaderMode.Strict);
+            var molReader = new MDLReader(ins, ChemObjectReaderMode.Strict);
 
             //        read molecule
-            return molReader.Read(ChemObjectBuilder.Instance.NewAtomContainer());
+            return molReader.Read(builder.NewAtomContainer());
         }
 
         /// <summary>
@@ -615,12 +609,12 @@ namespace NCDK.Layout
         public void TestNPEWithBridgedRingsBug1772609()
         {
             // set up molecule reader
-            string filename = "NCDK.Data.MDL.bug1772609.mol";
+            var filename = "NCDK.Data.MDL.bug1772609.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
+            var molReader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
 
             // read molecule
-            IAtomContainer molecule = (IAtomContainer)molReader.Read(CDK.Builder.NewAtomContainer());
+            var molecule = molReader.Read(builder.NewAtomContainer());
 
             // rebuild 2D coordinates
             // repeat this 10 times since the bug does only occur by chance
@@ -650,12 +644,12 @@ namespace NCDK.Layout
         public void TestBug1784850InfiniteLoop()
         {
             // set up molecule reader
-            string filename = "NCDK.Data.MDL.bug1784850.mol";
+            var filename = "NCDK.Data.MDL.bug1784850.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
+            var molReader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
 
             // read molecule
-            IAtomContainer molecule = molReader.Read(ChemObjectBuilder.Instance.NewAtomContainer());
+            var molecule = molReader.Read(builder.NewAtomContainer());
 
             // rebuild 2D coordinates
             Layout(molecule);
@@ -673,7 +667,7 @@ namespace NCDK.Layout
         public void TestBug2843445NaNCoords()
         {
             var sp = CDK.SmilesParser;
-            string smiles = "CCCC[C@H](NC(=O)[C@H](CCC(O)=O)NC(=O)[C@@H](NC(=O)[C@@H](CCCC)NC"
+            var smiles = "CCCC[C@H](NC(=O)[C@H](CCC(O)=O)NC(=O)[C@@H](NC(=O)[C@@H](CCCC)NC"
                     + "(=O)[C@H](CC(N)=O)NC(=O)[C@H](CCC\\N=C(\\N)N)NC(=O)[C@H](CC(C)C)NC"
                     + "(=O)[C@H](CC(C)C)NC(=O)[C@H](CC1=CNC=N1)NC(=O)[C@H](CC1=CC=CC=C1"
                     + ")NC(=O)[C@@H](NC(=O)[C@H](CC(C)C)NC(=O)[C@H](CC(O)=O)NC(=O)[C@@H"
@@ -712,7 +706,7 @@ namespace NCDK.Layout
         public void TestBug1234()
         {
             var sp = CDK.SmilesParser;
-            string smiles = "C1C1";
+            var smiles = "C1C1";
 
             var mol = sp.ParseSmiles(smiles);
             Layout(mol);
@@ -737,7 +731,7 @@ namespace NCDK.Layout
         public void TestBug1269()
         {
             var sp = CDK.SmilesParser;
-            string smiles = "O=C(O)[C@H](N)C"; // L-alanine, but any [C@H] will do
+            var smiles = "O=C(O)[C@H](N)C"; // L-alanine, but any [C@H] will do
             var mol = sp.ParseSmiles(smiles);
 
             SDG.Molecule = mol;
@@ -753,7 +747,7 @@ namespace NCDK.Layout
         public void TestBug1279()
         {
             var sp = CDK.SmilesParser;
-            string smiles = "[NH4+].CP(=O)(O)CCC(N)C(=O)[O-]";
+            var smiles = "[NH4+].CP(=O)(O)CCC(N)C(=O)[O-]";
 
             var mol = sp.ParseSmiles(smiles);
 
@@ -766,7 +760,7 @@ namespace NCDK.Layout
         public void AlleneWithImplHDoesNotCauseNPE()
         {
             var sp = CDK.SmilesParser;
-            string smiles = "CC=[C@]=CC";
+            var smiles = "CC=[C@]=CC";
 
             var mol = sp.ParseSmiles(smiles);
 
@@ -777,16 +771,16 @@ namespace NCDK.Layout
         public void PyrroleWithIdentityTemplate()
         {
             var sp = CDK.SmilesParser;
-            string smiles = "C1=CNC=C1";
+            var smiles = "C1=CNC=C1";
 
-            StructureDiagramGenerator generator = new StructureDiagramGenerator { UseIdentityTemplates = true };
+            var generator = new StructureDiagramGenerator { UseIdentityTemplates = true };
 
             var mol = sp.ParseSmiles(smiles);
 
             generator.SetMolecule(mol, false);
             generator.GenerateCoordinates();
 
-            IAtom nitrogen = mol.Atoms[2];
+            var nitrogen = mol.Atoms[2];
 
             // nitrogen is lowest point
             Assert.IsTrue(nitrogen.Point2D.Value.Y < mol.Atoms[0].Point2D.Value.Y);
@@ -799,17 +793,16 @@ namespace NCDK.Layout
         public void PyrroleWithIdentityTemplate40()
         {
             var sp = CDK.SmilesParser;
-            string smiles = "C1=CNC=C1";
+            var smiles = "C1=CNC=C1";
 
-            StructureDiagramGenerator generator = new StructureDiagramGenerator { UseIdentityTemplates = true };
-
+            var generator = new StructureDiagramGenerator { UseIdentityTemplates = true };
 
             var mol = sp.ParseSmiles(smiles);
 
             generator.SetMolecule(mol, false);
             generator.GenerateCoordinates();
 
-            IAtom nitrogen = mol.Atoms[2];
+            var nitrogen = mol.Atoms[2];
 
             // nitrogen is lowest point
             Assert.IsTrue(nitrogen.Point2D.Value.Y < mol.Atoms[0].Point2D.Value.Y);
@@ -822,9 +815,9 @@ namespace NCDK.Layout
         public void PyrroleWithoutIdentityTemplate()
         {
             var sp = CDK.SmilesParser;
-            string smiles = "C1=CNC=C1";
+            var smiles = "C1=CNC=C1";
 
-            StructureDiagramGenerator generator = new StructureDiagramGenerator { UseIdentityTemplates = false };
+            var generator = new StructureDiagramGenerator { UseIdentityTemplates = false };
 
             var mol = sp.ParseSmiles(smiles);
 
@@ -838,7 +831,7 @@ namespace NCDK.Layout
             // the bottom by chance when generated ab initio
             for (int j = 0; j < mol.Atoms.Count; j++)
             {
-                IAtom atom = mol.Atoms[j];
+                var atom = mol.Atoms[j];
                 if (atom.Point2D.Value.Y < minY)
                 {
                     minY = atom.Point2D.Value.Y;
@@ -1050,7 +1043,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void PlaceCrossingSgroupBrackets()
         {
-            IAtomContainer mol = CDK.Builder.NewAtomContainer();
+            var mol = CDK.Builder.NewAtomContainer();
             mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.Atoms.Add(CDK.Builder.NewAtom("C"));
@@ -1084,7 +1077,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void PlaceNonCrossingSgroupBrackets()
         {
-            IAtomContainer mol = CDK.Builder.NewAtomContainer();
+            var mol = CDK.Builder.NewAtomContainer();
             mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.Atoms.Add(CDK.Builder.NewAtom("C"));
@@ -1097,7 +1090,7 @@ namespace NCDK.Layout
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single);
 
-            Sgroup sgroup = new Sgroup
+            var sgroup = new Sgroup
             {
                 Type = SgroupType.CtabStructureRepeatUnit,
                 Subscript = "n"
@@ -1116,7 +1109,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void PlaceOverlappingCrossingSgroupBrackets()
         {
-            IAtomContainer mol = CDK.Builder.NewAtomContainer();
+            var mol = CDK.Builder.NewAtomContainer();
             mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.Atoms.Add(CDK.Builder.NewAtom("C"));
             mol.Atoms.Add(CDK.Builder.NewAtom("C"));
@@ -1177,10 +1170,10 @@ namespace NCDK.Layout
         [TestMethod()]
         public void PositionalVariation()
         {
-            SmilesParser smipar = CDK.SmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles("c1ccccc1CCCC.*[R1].*C(=O)O");
 
-            Sgroup sgroup1 = new Sgroup
+            var sgroup1 = new Sgroup
             {
                 Type = SgroupType.ExtMulticenter
             };
@@ -1194,7 +1187,7 @@ namespace NCDK.Layout
             sgroup1.Atoms.Add(mol.Atoms[4]);
             sgroup1.Atoms.Add(mol.Atoms[5]);
 
-            Sgroup sgroup2 = new Sgroup
+            var sgroup2 = new Sgroup
             {
                 Type = SgroupType.ExtMulticenter
             };
@@ -1224,11 +1217,11 @@ namespace NCDK.Layout
         [TestMethod()]
         public void DisconnectedMultigroupPlacement()
         {
-            SmilesParser smipar = CDK.SmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles("c1ccccc1.c1ccccc1.c1ccccc1");
 
             // build multiple group Sgroup
-            Sgroup sgroup = new Sgroup
+            var sgroup = new Sgroup
             {
                 Type = SgroupType.CtabMultipleGroup
             };
@@ -1264,7 +1257,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void Dihydroazine()
         {
-            SmilesParser smipar = CDK.SmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles("N=N.N=N");
             Layout(mol);
             Assert.IsTrue(mol.Atoms[2].Point2D.Value.X - mol.Atoms[1].Point2D.Value.X > SDG.BondLength);
@@ -1273,7 +1266,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void NH4OH()
         {
-            SmilesParser smipar = CDK.SmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles("[NH4+].[OH-]");
             Layout(mol);
             Assert.IsTrue(SDG.BondLength < mol.Atoms[1].Point2D.Value.X - mol.Atoms[0].Point2D.Value.X);
@@ -1282,7 +1275,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void FragmentDoubleBondConfiguration()
         {
-            SmilesParser smipar = CDK.SmilesParser;
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles("C(\\C)=C/C.C(\\C)=C\\C.C(\\C)=C/C.C(\\C)=C\\C");
             Layout(mol);
             var elements = StereoElementFactory.Using2DCoordinates(mol).CreateAll();

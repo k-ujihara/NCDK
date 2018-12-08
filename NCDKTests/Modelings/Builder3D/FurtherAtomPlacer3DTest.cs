@@ -20,11 +20,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Numerics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Smiles;
+using NCDK.Numerics;
 using NCDK.Templates;
-using NCDK.Silent;
 
 namespace NCDK.Modelings.Builder3D
 {
@@ -308,12 +307,12 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestGetAngleValue_String_String_String()
         {
-            SmilesParser parser = CDK.SmilesParser;
-            string smiles = "CCCCCC";
+            var parser = CDK.SmilesParser;
+            var smiles = "CCCCCC";
             var molecule = parser.ParseSmiles(smiles);
             Assert.IsNotNull(molecule);
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
-            ffc.SetForceFieldConfigurator("mmff94", ChemObjectBuilder.Instance);
+            ffc.SetForceFieldConfigurator("mmff94");
             AtomPlacer3D atomPlacer3d = new AtomPlacer3D(ffc.GetParameterSet());
             ffc.AssignAtomTyps(molecule);
 
@@ -330,12 +329,12 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestGetBondLengthValue_String_String()
         {
-            SmilesParser parser = CDK.SmilesParser;
-            string smiles = "CCCCCC";
+            var parser = CDK.SmilesParser;
+            var smiles = "CCCCCC";
             var molecule = parser.ParseSmiles(smiles);
             Assert.IsNotNull(molecule);
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
-            ffc.SetForceFieldConfigurator("mmff94", ChemObjectBuilder.Instance);
+            ffc.SetForceFieldConfigurator("mmff94");
             AtomPlacer3D atomPlacer3d = new AtomPlacer3D(ffc.GetParameterSet());
             ffc.AssignAtomTyps(molecule);
 
@@ -354,12 +353,12 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestGetBondLengthValue_bug_CNBond()
         {
-            SmilesParser parser = CDK.SmilesParser;
-            string smiles = "CCCN";
+            var parser = CDK.SmilesParser;
+            var smiles = "CCCN";
             var molecule = parser.ParseSmiles(smiles);
             Assert.IsNotNull(molecule);
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
-            ffc.SetForceFieldConfigurator("mmff94", ChemObjectBuilder.Instance);
+            ffc.SetForceFieldConfigurator("mmff94");
             AtomPlacer3D atomPlacer3d = new AtomPlacer3D(ffc.GetParameterSet());
             ffc.AssignAtomTyps(molecule);
 
@@ -383,7 +382,7 @@ namespace NCDK.Modelings.Builder3D
             var m = sp.ParseSmiles(input);
 
             ForceFieldConfigurator ffc = new ForceFieldConfigurator();
-            ffc.SetForceFieldConfigurator("mmff92", ChemObjectBuilder.Instance);
+            ffc.SetForceFieldConfigurator("mmff92");
             ffc.AssignAtomTyps(m);
 
             AtomPlacer3D ap3d = new AtomPlacer3D(ffc.GetParameterSet());

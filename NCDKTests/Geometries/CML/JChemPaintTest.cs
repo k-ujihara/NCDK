@@ -23,7 +23,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Geometries;
-using NCDK.Silent;
 using System.Diagnostics;
 
 namespace NCDK.IO.CML
@@ -35,30 +34,33 @@ namespace NCDK.IO.CML
     /// </summary>
     // @cdk.module test-io
     [TestClass()]
-    public class JChemPaintTest : CDKTestCase
+    public class JChemPaintTest 
+        : CDKTestCase
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
+
         /// <summary>
         /// This one tests a CML2 file.
         /// </summary>
         [TestMethod()]
         public void TestSalt()
         {
-            string filename = "NCDK.Data.CML.COONa.cml";
+            var filename = "NCDK.Data.CML.COONa.cml";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
+            var reader = new CMLReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             // test the resulting ChemFile content
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
             //Debug.WriteLine($"NO sequences: {chemFile.Count}");
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
             //Debug.WriteLine($"NO models: {seq.Count}");
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
             Assert.AreEqual(1, model.MoleculeSet.Count);
 
@@ -75,20 +77,20 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestWWMMOutput()
         {
-            string filename = "NCDK.Data.CML.keggtest.cml";
+            var filename = "NCDK.Data.CML.keggtest.cml";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
+            var reader = new CMLReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             // test the resulting ChemFile content
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
             var moleculeSet = model.MoleculeSet;
             Assert.IsNotNull(moleculeSet);

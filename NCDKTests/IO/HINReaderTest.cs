@@ -19,13 +19,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Diagnostics;
-using System.Linq;
 
 namespace NCDK.IO
 {
@@ -37,37 +36,38 @@ namespace NCDK.IO
     [TestClass()]
     public class HINReaderTest : SimpleChemObjectReaderTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         protected override string TestFile => "NCDK.Data.HIN.benzene.hin";
         protected override Type ChemObjectIOToTestType => typeof(HINReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            Assert.IsTrue(ChemObjectIOToTest.Accepts(typeof(ChemFile)));
+            Assert.IsTrue(ChemObjectIOToTest.Accepts(typeof(IChemFile)));
         }
 
         [TestMethod()]
         public void TestBenzene()
         {
-            string filename = "NCDK.Data.HIN.benzene.hin";
+            var filename = "NCDK.Data.HIN.benzene.hin";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            HINReader reader = new HINReader(ins);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new HINReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
 
             var som = model.MoleculeSet;
             Assert.IsNotNull(som);
             Assert.AreEqual(1, som.Count);
-            IAtomContainer m = som[0];
+            var m = som[0];
             Assert.IsNotNull(m);
             Assert.AreEqual(12, m.Atoms.Count);
             // AreEqual(?, m.Bonds.Count);
@@ -76,25 +76,25 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestMoleculeTwo()
         {
-            string filename = "NCDK.Data.HIN.molecule2.hin";
+            var filename = "NCDK.Data.HIN.molecule2.hin";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            HINReader reader = new HINReader(ins);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new HINReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
 
             var som = model.MoleculeSet;
             Assert.IsNotNull(som);
             Assert.AreEqual(1, som.Count);
-            IAtomContainer m = som[0];
+            var m = som[0];
             Assert.IsNotNull(m);
             Assert.AreEqual(37, m.Atoms.Count);
             // AreEqual(?, m.Bonds.Count);
@@ -103,19 +103,19 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestMultiple()
         {
-            string filename = "NCDK.Data.HIN.multiple.hin";
+            var filename = "NCDK.Data.HIN.multiple.hin";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            HINReader reader = new HINReader(ins);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new HINReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
 
             var som = model.MoleculeSet;
@@ -126,13 +126,13 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestIsConnectedFromHINFile()
         {
-            string filename = "NCDK.Data.HIN.connectivity1.hin";
+            var filename = "NCDK.Data.HIN.connectivity1.hin";
             var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new HINReader(ins);
-            IChemFile content = reader.Read(new ChemFile());
+            var reader = new HINReader(ins);
+            var content = reader.Read(builder.NewChemFile());
             reader.Close();
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
-            IAtomContainer ac = cList[0];
+            var ac = cList[0];
             Assert.AreEqual(57, ac.Atoms.Count);
             Assert.AreEqual(59, ac.Bonds.Count);
         }
@@ -141,10 +141,10 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestAromaticRingsLine()
         {
-            string filename = "NCDK.Data.HIN.bug2984581.hin";
+            var filename = "NCDK.Data.HIN.bug2984581.hin";
             var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new HINReader(ins);
-            IChemFile content = reader.Read(new ChemFile());
+            var reader = new HINReader(ins);
+            var content = reader.Read(builder.NewChemFile());
             reader.Close();
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             Assert.AreEqual(1, cList.Count);
@@ -154,15 +154,15 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestReadAromaticRingsKeyword()
         {
-            string filename = "NCDK.Data.HIN.arorings.hin";
+            var filename = "NCDK.Data.HIN.arorings.hin";
             var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new HINReader(ins);
-            IChemFile content = reader.Read(new ChemFile());
+            var reader = new HINReader(ins);
+            var content = reader.Read(builder.NewChemFile());
             reader.Close();
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             Assert.AreEqual(1, cList.Count);
 
-            IAtomContainer mol = cList[0];
+            var mol = cList[0];
             Assert.IsTrue(mol.Atoms[0].IsAromatic);
             Assert.IsTrue(mol.Atoms[2].IsAromatic);
             Assert.IsTrue(mol.Atoms[3].IsAromatic);
@@ -181,8 +181,7 @@ namespace NCDK.IO
             foreach (var atom in mol.Atoms)
             {
                 if (atom.Symbol.Equals("C"))
-                    Assert.IsTrue(atom.IsAromatic,
-                        $"{atom.Symbol} (index {mol.Atoms.IndexOf(atom)}) was wrongly marked as aromatic");
+                    Assert.IsTrue(atom.IsAromatic, $"{atom.Symbol} (index {mol.Atoms.IndexOf(atom)}) was wrongly marked as aromatic");
             }
         }
     }

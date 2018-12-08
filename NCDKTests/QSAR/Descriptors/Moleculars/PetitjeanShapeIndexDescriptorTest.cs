@@ -31,7 +31,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestPetitjeanShapeIndexDescriptor()
         {
             // first molecule is nbutane, second is naphthalene
-            string filename = "NCDK.Data.MDL.petitejean.sdf";
+            var filename = "NCDK.Data.MDL.petitejean.sdf";
             IChemFile content;
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
             {

@@ -47,7 +47,7 @@ namespace NCDK.IO
             var ins = ResourceLoader.GetAsStream(GetType(), "1100784.cif");
             CIFReader cifReader = new CIFReader(ins);
             //        try {
-            IChemFile chemFile = cifReader.Read(new ChemFile());
+            var chemFile = cifReader.Read(new ChemFile());
             Assert.AreEqual(1, chemFile.Count);
             Assert.AreEqual(1, chemFile[0].Count);
             Assert.IsNotNull(chemFile[0][0].Crystal);
@@ -61,7 +61,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream(GetType(), "1100784.cif");
             CIFReader cifReader = new CIFReader(ins);
-            IChemFile chemFile = cifReader.Read(new ChemFile());
+            var chemFile = cifReader.Read(new ChemFile());
             ICrystal crystal = chemFile[0][0].Crystal;
             Assert.AreEqual(72, crystal.Atoms.Count);
             cifReader.Close();
@@ -72,7 +72,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream(GetType(), "1100784.cif");
             CIFReader cifReader = new CIFReader(ins);
-            IChemFile chemFile = cifReader.Read(new ChemFile());
+            var chemFile = cifReader.Read(new ChemFile());
             ICrystal crystal = chemFile[0][0].Crystal;
             Assert.IsTrue(Math.Abs(crystal.A.Length() - 10.9754) < 1E-5);
             Assert.IsTrue(Math.Abs(crystal.B.Length() - 11.4045) < 1E-5);
@@ -85,7 +85,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream(GetType(), "1100784.cif");
             CIFReader cifReader = new CIFReader(ins);
-            IChemFile chemFile = cifReader.Read(new ChemFile());
+            var chemFile = cifReader.Read(new ChemFile());
             ICrystal crystal = chemFile[0][0].Crystal;
             Vector3 a = crystal.A;
             Vector3 b = crystal.B;

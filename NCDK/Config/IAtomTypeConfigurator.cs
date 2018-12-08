@@ -37,9 +37,8 @@ namespace NCDK.Config
         /// <summary>
         /// Reads a set of configured <see cref="IAtomType"/>'s into a <see cref="IEnumerable{IAtomType}"/>.
         /// </summary>
-        /// <param name="builder">used to instantiate the AtomType's.</param>
         /// <returns>A List containing the AtomTypes extracted from the InputStream</returns>
         /// <exception cref="IOException">when something went wrong with reading the data</exception>
-        IEnumerable<IAtomType> ReadAtomTypes(IChemObjectBuilder builder);
+        IEnumerable<IAtomType> ReadAtomTypes();
     }
 }

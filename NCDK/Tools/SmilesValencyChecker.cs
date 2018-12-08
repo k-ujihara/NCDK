@@ -39,7 +39,8 @@ namespace NCDK.Tools
     // @cdk.keyword  atom, valency
     // @cdk.module   valencycheck
     // @cdk.githash
-    public class SmilesValencyChecker : IValencyChecker, IDeduceBondOrderTool
+    public class SmilesValencyChecker
+        : IValencyChecker, IDeduceBondOrderTool
     {
         private readonly AtomTypeFactory structgenATF;
 
@@ -50,7 +51,7 @@ namespace NCDK.Tools
 
         public SmilesValencyChecker(string atomTypeList)
         {
-            structgenATF = AtomTypeFactory.GetInstance(atomTypeList, Silent.ChemObjectBuilder.Instance);
+            structgenATF = AtomTypeFactory.GetInstance(atomTypeList);
             Trace.TraceInformation($"Using configuration file: {atomTypeList}");
         }
 

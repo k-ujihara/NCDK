@@ -19,12 +19,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
-using NCDK.Numerics;
+ */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
-using System.Diagnostics;
 using System;
+using System.Diagnostics;
 
 namespace NCDK.IO
 {
@@ -34,56 +33,59 @@ namespace NCDK.IO
     /// <seealso cref="CrystClustReader"/>
     // @cdk.module test-extra
     [TestClass()]
-    public class CrystClustReaderTest : SimpleChemObjectReaderTest
+    public class CrystClustReaderTest
+        : SimpleChemObjectReaderTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+
         protected override string TestFile => "NCDK.Data.CrystClust.estron.crystclust";
         protected override Type ChemObjectIOToTestType => typeof(CrystClustReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            Assert.IsTrue(ChemObjectIOToTest.Accepts(typeof(ChemFile)));
-            Assert.IsFalse(ChemObjectIOToTest.Accepts(typeof(AtomContainer)));
+            Assert.IsTrue(ChemObjectIOToTest.Accepts(typeof(IChemFile)));
+            Assert.IsFalse(ChemObjectIOToTest.Accepts(typeof(IAtomContainer)));
         }
 
         [TestMethod()]
         public void TestEstrone()
         {
-            string filename = "NCDK.Data.CrystClust.estron.crystclust";
+            var filename = "NCDK.Data.CrystClust.estron.crystclust";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            CrystClustReader reader = new CrystClustReader(ins);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new CrystClustReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
 
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(2, seq.Count);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
 
-            ICrystal crystal = model.Crystal;
+            var crystal = model.Crystal;
             Assert.IsNotNull(crystal);
             Assert.AreEqual(42, crystal.Atoms.Count);
             Assert.AreEqual(1, crystal.Z.Value);
 
             // test reading of partial charges
-            IAtom atom = crystal.Atoms[0];
+            var atom = crystal.Atoms[0];
             Assert.IsNotNull(atom);
             Assert.AreEqual("O", atom.Symbol);
             Assert.AreEqual(-0.68264902, atom.Charge.Value, 0.00000001);
 
             // test unit cell axes
-            Vector3 a = crystal.A;
+            var a = crystal.A;
             Assert.AreEqual(7.971030, a.X, 0.000001);
             Assert.AreEqual(0.0, a.Y, 0.000001);
             Assert.AreEqual(0.0, a.Z, 0.000001);
-            Vector3 b = crystal.B;
+            var b = crystal.B;
             Assert.AreEqual(0.0, b.X, 0.000001);
             Assert.AreEqual(18.772200, b.Y, 0.000001);
             Assert.AreEqual(0.0, b.Z, 0.000001);
-            Vector3 c = crystal.C;
+            var c = crystal.C;
             Assert.AreEqual(0.0, c.X, 0.000001);
             Assert.AreEqual(0.0, c.Y, 0.000001);
             Assert.AreEqual(10.262220, c.Z, 0.000001);

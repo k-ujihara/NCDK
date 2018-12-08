@@ -22,7 +22,6 @@
  */
 
 using NCDK.Config;
-using System.Collections.Generic;
 
 namespace NCDK.Tools
 {
@@ -32,23 +31,11 @@ namespace NCDK.Tools
     /// </summary>
     // @author     egonw
     // @cdk.module valencycheck
-    // @cdk.githash
-    public class CDKValencyChecker : IValencyChecker
+    public class CDKValencyChecker
+        : IValencyChecker
     {
         private static readonly AtomTypeFactory atomTypeList = CDK.CdkAtomTypeFactory;
-        
-        private static Dictionary<string, CDKValencyChecker> tables = new Dictionary<string, CDKValencyChecker>(3);
-
-        private CDKValencyChecker(IChemObjectBuilder builder)
-        {
-        }
-
-        public static CDKValencyChecker GetInstance(IChemObjectBuilder builder)
-        {
-            if (!tables.ContainsKey(builder.GetType().Name))
-                tables.Add(builder.GetType().Name, new CDKValencyChecker(builder));
-            return tables[builder.GetType().Name];
-        }
+        public static CDKValencyChecker Instance { get; } = new CDKValencyChecker();
 
         public bool IsSaturated(IAtomContainer atomContainer)
         {

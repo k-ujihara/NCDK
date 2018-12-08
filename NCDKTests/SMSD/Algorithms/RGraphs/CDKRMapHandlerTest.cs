@@ -20,8 +20,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.SMSD.Helper;
 using System.Collections.Generic;
@@ -33,65 +33,50 @@ namespace NCDK.SMSD.Algorithms.RGraphs
     [TestClass()]
     public class CDKRMapHandlerTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         private readonly CDKRMapHandler handler = new CDKRMapHandler();
 
         public CDKRMapHandlerTest() { }
 
-        /// <summary>
-        /// Test of getSource method, of class CDKRMapHandler.
-        /// </summary>
         [TestMethod()]
         public void TestGetSource()
         {
-            IAtomContainer expResult = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer expResult = builder.NewAtomContainer();
             handler.Source = expResult;
             IAtomContainer result = handler.Source;
             Assert.AreEqual(expResult, result);
         }
 
-        /// <summary>
-        /// Test of setSource method, of class CDKRMapHandler.
-        /// </summary>
         [TestMethod()]
         public void TestSetSource()
         {
-            IAtomContainer expResult = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer expResult = builder.NewAtomContainer();
             handler.Source = expResult;
             IAtomContainer result = handler.Source;
             Assert.AreEqual(expResult, result);
         }
 
-        /// <summary>
-        /// Test of getTarget method, of class CDKRMapHandler.
-        /// </summary>
         [TestMethod()]
         public void TestGetTarget()
         {
-            IAtomContainer expResult = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer expResult = builder.NewAtomContainer();
             handler.Target = expResult;
             IAtomContainer result = handler.Target;
             Assert.AreEqual(expResult, result);
         }
 
-        /// <summary>
-        /// Test of setTarget method, of class CDKRMapHandler.
-        /// </summary>
         [TestMethod()]
         public void TestSetTarget()
         {
-            IAtomContainer expResult = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer expResult = builder.NewAtomContainer();
             handler.Target = expResult;
             IAtomContainer result = handler.Target;
             Assert.AreEqual(expResult, result);
         }
 
-        /// <summary>
-        /// Test of calculateOverlapsAndReduce method, of class CDKRMapHandler.
-        /// </summary>
         [TestMethod()]
         public void TestCalculateOverlapsAndReduce()
         {
-            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             var sp = new SmilesParser(builder);
             var Molecule1 = sp.ParseSmiles("O1C=CC=C1");
             var Molecule2 = sp.ParseSmiles("C1CCCC1");
@@ -100,13 +85,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             Assert.IsNotNull(FinalMappings.Instance.Count);
         }
 
-        /// <summary>
-        /// Test of calculateOverlapsAndReduceExactMatch method, of class CDKRMapHandler.
-        /// </summary>
         [TestMethod()]
         public void TestCalculateOverlapsAndReduceExactMatch()
         {
-            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             var sp = new SmilesParser(builder);
             var Molecule1 = sp.ParseSmiles("O1C=CC=C1");
             var Molecule2 = sp.ParseSmiles("O1C=CC=C1");
@@ -116,13 +97,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             Assert.IsNotNull(FinalMappings.Instance.Count);
         }
 
-        /// <summary>
-        /// Test of getMappings method, of class CDKRMapHandler.
-        /// </summary>
         [TestMethod()]
         public void TestGetMappings()
         {
-            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             var sp = new SmilesParser(builder);
             var Molecule1 = sp.ParseSmiles("O1C=CC=C1");
             var Molecule2 = sp.ParseSmiles("O1C=CC=C1");
@@ -132,9 +109,6 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             Assert.AreEqual(2, result.Count);
         }
 
-        /// <summary>
-        /// Test of setMappings method, of class CDKRMapHandler.
-        /// </summary>
         [TestMethod()]
         public void TestSetMappings()
         {
@@ -152,9 +126,6 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             Assert.IsNotNull(instance.Mappings);
         }
 
-        /// <summary>
-        /// Test of isTimeoutFlag method, of class CDKRMapHandler.
-        /// </summary>
         [TestMethod()]
         public void TestIsTimeoutFlag()
         {
@@ -165,14 +136,11 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             Assert.AreEqual(expResult, result);
         }
 
-        /// <summary>
-        /// Test of setTimeoutFlag method, of class CDKRMapHandler.
-        /// </summary>
         [TestMethod()]
         public void TestSetTimeoutFlag()
         {
             bool timeoutFlag = false;
-            CDKRMapHandler instance = new CDKRMapHandler();
+            var instance = new CDKRMapHandler();
             instance.IsTimedOut = timeoutFlag;
             Assert.AreNotEqual(true, instance.IsTimedOut);
         }

@@ -22,7 +22,6 @@ using NCDK.Config;
 using NCDK.IO;
 using NCDK.Isomorphisms;
 using NCDK.Sgroups;
-using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Stereo;
 using NCDK.Templates;
@@ -34,8 +33,10 @@ namespace NCDK.Tools.Manipulator
 {
     // @cdk.module test-standard
     [TestClass()]
-    public class AtomContainerManipulatorTest : CDKTestCase
+    public class AtomContainerManipulatorTest 
+        : CDKTestCase
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
         readonly IAtomContainer ac = TestMoleculeFactory.MakeAlphaPinene();
 
         [TestMethod()]
@@ -51,13 +52,13 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalHydrogenCount_IAtomContainer()
         {
-            var mol = new AtomContainer(); // ethene
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
+            var mol = builder.NewAtomContainer(); // ethene
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
@@ -72,10 +73,10 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestConvertImplicitToExplicitHydrogens_IAtomContainer()
         {
-            var mol = new AtomContainer(); // ethene
-            mol.Atoms.Add(new Atom("C"));
+            var mol = builder.NewAtomContainer(); // ethene
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[0].ImplicitHydrogenCount = 2;
-            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[1].ImplicitHydrogenCount = 2;
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
             Assert.AreEqual(2, mol.Atoms.Count);
@@ -89,9 +90,9 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestConvertImplicitToExplicitHydrogens_IAtomContainer2()
         {
-            var mol = new AtomContainer(); // ethane
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
+            var mol = builder.NewAtomContainer(); // ethane
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[0].ImplicitHydrogenCount = 3;
             mol.Atoms[1].ImplicitHydrogenCount = 3;
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
@@ -106,15 +107,15 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalHydrogenCount_IAtomContainer_zeroImplicit()
         {
-            var mol = new AtomContainer(); // ethene
-            mol.Atoms.Add(new Atom("C"));
+            var mol = builder.NewAtomContainer(); // ethene
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[0].ImplicitHydrogenCount = 0;
-            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[1].ImplicitHydrogenCount = 0;
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
@@ -131,15 +132,15 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalHydrogenCount_IAtomContainer_nullImplicit()
         {
-            var mol = new AtomContainer(); // ethene
-            mol.Atoms.Add(new Atom("C"));
+            var mol = builder.NewAtomContainer(); // ethene
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[0].ImplicitHydrogenCount = null;
-            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[1].ImplicitHydrogenCount = null;
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
@@ -156,8 +157,9 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalHydrogenCount_ImplicitHydrogens()
         {
-            var mol = new AtomContainer();
-            Atom carbon = new Atom("C") { ImplicitHydrogenCount = 4 };
+            var mol = builder.NewAtomContainer();
+            var carbon = builder.NewAtom("C");
+            carbon.ImplicitHydrogenCount = 4;
             mol.Atoms.Add(carbon);
             Assert.AreEqual(4, AtomContainerManipulator.GetTotalHydrogenCount(mol));
         }
@@ -165,13 +167,13 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveHydrogens_IAtomContainer()
         {
-            var mol = new AtomContainer(); // ethene
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
+            var mol = builder.NewAtomContainer(); // ethene
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
@@ -190,9 +192,9 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void DontSuppressHydrogensOnPseudoAtoms()
         {
-            var mol = new AtomContainer(); // *[H]
-            mol.Atoms.Add(new PseudoAtom("*"));
-            mol.Atoms.Add(new Atom("H"));
+            var mol = builder.NewAtomContainer(); // *[H]
+            mol.Atoms.Add(builder.NewPseudoAtom("*"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.Atoms[0].ImplicitHydrogenCount = 0;
             mol.Atoms[1].ImplicitHydrogenCount = 1;
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
@@ -204,11 +206,11 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void SuppressHydrogensKeepsRadicals()
         {
-            var mol = new AtomContainer(); // *[H]
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
+            var mol = builder.NewAtomContainer(); // *[H]
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.Atoms[0].ImplicitHydrogenCount = 0;
             mol.Atoms[1].ImplicitHydrogenCount = 1;
             mol.Atoms[2].ImplicitHydrogenCount = 1;
@@ -226,15 +228,15 @@ namespace NCDK.Tools.Manipulator
 
         private static IAtomContainer GetChiralMolTemplate()
         {
-            IAtomContainer molecule = new AtomContainer();
-            molecule.Atoms.Add(new Atom("Cl"));
-            molecule.Atoms.Add(new Atom("C"));
-            molecule.Atoms.Add(new Atom("Br"));
-            molecule.Atoms.Add(new Atom("H"));
-            molecule.Atoms.Add(new Atom("C"));
-            molecule.Atoms.Add(new Atom("H"));
-            molecule.Atoms.Add(new Atom("H"));
-            molecule.Atoms.Add(new Atom("Cl"));
+            var molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("Cl"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("Br"));
+            molecule.Atoms.Add(builder.NewAtom("H"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("H"));
+            molecule.Atoms.Add(builder.NewAtom("H"));
+            molecule.Atoms.Add(builder.NewAtom("Cl"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[3], BondOrder.Single);
@@ -309,13 +311,13 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveHydrogensZeroHydrogenCounts()
         {
-            var mol = new AtomContainer(); // ethene
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("Br"));
-            mol.Atoms.Add(new Atom("Br"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
+            var mol = builder.NewAtomContainer(); // ethene
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("Br"));
+            mol.Atoms.Add(builder.NewAtom("Br"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
@@ -345,18 +347,18 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllIDs_IAtomContainer()
         {
-            var mol = new AtomContainer(); // ethene
-            mol.Atoms.Add(new Atom("C"));
+            var mol = builder.NewAtomContainer(); // ethene
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[0].Id = "a1";
-            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[1].Id = "a2";
-            mol.Atoms.Add(new Atom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.Atoms[2].Id = "a3";
-            mol.Atoms.Add(new Atom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.Atoms[3].Id = "a4";
-            mol.Atoms.Add(new Atom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.Atoms[4].Id = "a5";
-            mol.Atoms.Add(new Atom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.Atoms[5].Id = "a6";
 
             var ids = AtomContainerManipulator.GetAllIDs(mol).ToReadOnlyList();
@@ -372,13 +374,13 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAtomArray_IAtomContainer()
         {
-            var mol = new AtomContainer(); // ethene
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
+            var mol = builder.NewAtomContainer(); // ethene
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
 
             IAtom[] atoms = mol.Atoms.ToArray();
             Assert.AreEqual(6, atoms.Length);
@@ -393,13 +395,13 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAtomArray_List()
         {
-            var mol = new AtomContainer(); // ethene
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
+            var mol = builder.NewAtomContainer(); // ethene
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
@@ -417,13 +419,13 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetBondArray_List()
         {
-            var mol = new AtomContainer(); // ethene
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
+            var mol = builder.NewAtomContainer(); // ethene
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
@@ -441,13 +443,13 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetBondArray_IAtomContainer()
         {
-            var mol = new AtomContainer(); // ethene
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
+            var mol = builder.NewAtomContainer(); // ethene
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
@@ -467,18 +469,18 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAtomById_IAtomContainer_String()
         {
-            var mol = new AtomContainer(); // ethene
-            mol.Atoms.Add(new Atom("C"));
+            var mol = builder.NewAtomContainer(); // ethene
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[0].Id = "a1";
-            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[1].Id = "a2";
-            mol.Atoms.Add(new Atom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.Atoms[2].Id = "a3";
-            mol.Atoms.Add(new Atom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.Atoms[3].Id = "a4";
-            mol.Atoms.Add(new Atom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.Atoms[4].Id = "a5";
-            mol.Atoms.Add(new Atom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.Atoms[5].Id = "a6";
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
@@ -503,7 +505,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveHydrogensBorane()
         {
-            IAtomContainer borane = new AtomContainer();
+            IAtomContainer borane = builder.NewAtomContainer();
             borane.Atoms.Add(borane.Builder.NewAtom("H"));
             borane.Atoms.Add(borane.Builder.NewAtom("H"));
             borane.Atoms.Add(borane.Builder.NewAtom("B"));
@@ -540,7 +542,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalFormalCharge_IAtomContainer()
         {
-            SmilesParser parser = CDK.SmilesParser;
+            var parser = CDK.SmilesParser;
             var mol = parser.ParseSmiles("[O-]C([N+])C([N+])C");
             int totalCharge = AtomContainerManipulator.GetTotalFormalCharge(mol);
 
@@ -553,7 +555,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalExactMass_IAtomContainer()
         {
-            SmilesParser parser = CDK.SmilesParser;
+            var parser = CDK.SmilesParser;
             var mol = parser.ParseSmiles("CCl");
             mol.Atoms[0].ExactMass = 12.00;
             mol.Atoms[1].ExactMass = 34.96885268;
@@ -566,8 +568,9 @@ namespace NCDK.Tools.Manipulator
         [ExpectedException(typeof(ArgumentException))]
         public void GetNaturalExactMassNeedsHydrogens()
         {
-            var mol = new AtomContainer();
-            IAtom atom = new Atom("C") { ImplicitHydrogenCount = null };
+            var mol = builder.NewAtomContainer();
+            var atom = builder.NewAtom("C");
+            atom.ImplicitHydrogenCount = null;
             mol.Atoms.Add(atom);
             AtomContainerManipulator.GetNaturalExactMass(mol);
         }
@@ -575,10 +578,9 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetNaturalExactMass_IAtomContainer()
         {
-            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
-            mol.Atoms.Add(new Atom("C"));
-            mol.Atoms.Add(new Atom("Cl"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("Cl"));
 
             mol.Atoms[0].ImplicitHydrogenCount = 4;
             mol.Atoms[1].ImplicitHydrogenCount = 1;
@@ -599,7 +601,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalNaturalAbundance_IAtomContainer()
         {
-            SmilesParser parser = CDK.SmilesParser;
+            var parser = CDK.SmilesParser;
             var mol = parser.ParseSmiles("CCl");
             mol.Atoms[0].NaturalAbundance = 98.93;
             mol.Atoms[1].NaturalAbundance = 75.78;
@@ -614,7 +616,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalPositiveFormalCharge_IAtomContainer()
         {
-            SmilesParser parser = CDK.SmilesParser;
+            var parser = CDK.SmilesParser;
             var mol = parser.ParseSmiles("[O-]C([N+])C([N+])C");
             int totalCharge = AtomContainerManipulator.GetTotalPositiveFormalCharge(mol);
 
@@ -627,7 +629,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalNegativeFormalCharge_IAtomContainer()
         {
-            SmilesParser parser = CDK.SmilesParser;
+            var parser = CDK.SmilesParser;
             var mol = parser.ParseSmiles("[O-]C([N+])C([N+])C");
             int totalCharge = AtomContainerManipulator.GetTotalNegativeFormalCharge(mol);
 
@@ -637,7 +639,6 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetIntersection_IAtomContainer_IAtomContainer()
         {
-            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtom c1 = builder.NewAtom("C");
             IAtom o = builder.NewAtom("O");
             IAtom c2 = builder.NewAtom("C");
@@ -647,13 +648,13 @@ namespace NCDK.Tools.Manipulator
             IBond b2 = builder.NewBond(o, c2);
             IBond b3 = builder.NewBond(c2, c3);
 
-            IAtomContainer container1 = new AtomContainer();
+            IAtomContainer container1 = builder.NewAtomContainer();
             container1.Atoms.Add(c1);
             container1.Atoms.Add(o);
             container1.Atoms.Add(c2);
             container1.Bonds.Add(b1);
             container1.Bonds.Add(b2);
-            IAtomContainer container2 = new AtomContainer();
+            IAtomContainer container2 = builder.NewAtomContainer();
             container2.Atoms.Add(o);
             container2.Atoms.Add(c3);
             container2.Atoms.Add(c2);
@@ -671,8 +672,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestPerceiveAtomTypesAndConfigureAtoms()
         {
-            IAtomContainer container = new AtomContainer();
-            container.Atoms.Add(new Atom("R"));
+            IAtomContainer container = builder.NewAtomContainer();
+            container.Atoms.Add(builder.NewAtom("R"));
 
             // the next should not throw an exception
             try
@@ -688,14 +689,13 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestPerceiveAtomTypesAndConfigureUnsetProperties()
         {
-            IAtomContainer container = new AtomContainer();
-            IAtom atom = new Atom("C") { ExactMass = 13.0 };
+            IAtomContainer container = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
+            atom.ExactMass = 13.0;
             container.Atoms.Add(atom);
-            IAtomType type = new AtomType("C")
-            {
-                AtomTypeName = "C.sp3",
-                ExactMass = 12.0
-            };
+            IAtomType type = builder.NewAtomType("C");
+            type.AtomTypeName = "C.sp3";
+            type.ExactMass = 12.0;
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureUnsetProperties(container);
             Assert.IsNotNull(atom.ExactMass);
@@ -707,15 +707,15 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestClearConfig()
         {
-            IAtomContainer container = ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom atom1 = ChemObjectBuilder.Instance.NewAtom("C");
-            IAtom atom2 = ChemObjectBuilder.Instance.NewAtom("O");
-            IAtom atom3 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtomContainer container = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
+            IAtom atom2 = builder.NewAtom("O");
+            IAtom atom3 = builder.NewAtom("C");
             container.Atoms.Add(atom1);
             container.Atoms.Add(atom2);
             container.Atoms.Add(atom3);
-            container.Bonds.Add(new Bond(atom1, atom2, BondOrder.Single));
-            container.Bonds.Add(new Bond(atom2, atom3, BondOrder.Single));
+            container.Bonds.Add(builder.NewBond(atom1, atom2, BondOrder.Single));
+            container.Bonds.Add(builder.NewBond(atom2, atom3, BondOrder.Single));
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
             foreach (var atom in container.Atoms)
@@ -735,15 +735,15 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void AtomicNumberIsNotCleared()
         {
-            IAtomContainer container = ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom atom1 = ChemObjectBuilder.Instance.NewAtom("C");
-            IAtom atom2 = ChemObjectBuilder.Instance.NewAtom("O");
-            IAtom atom3 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtomContainer container = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
+            IAtom atom2 = builder.NewAtom("O");
+            IAtom atom3 = builder.NewAtom("C");
             container.Atoms.Add(atom1);
             container.Atoms.Add(atom2);
             container.Atoms.Add(atom3);
-            container.Bonds.Add(new Bond(atom1, atom2, BondOrder.Single));
-            container.Bonds.Add(new Bond(atom2, atom3, BondOrder.Single));
+            container.Bonds.Add(builder.NewBond(atom1, atom2, BondOrder.Single));
+            container.Bonds.Add(builder.NewBond(atom2, atom3, BondOrder.Single));
 
             AtomContainerManipulator.ClearAtomConfigurations(container);
             foreach (var atom in container.Atoms)
@@ -767,14 +767,14 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalCharge()
         {
-            IAtomContainer container = ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom atom1 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtomContainer container = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
             atom1.Charge = 1.0;
-            IAtom atom2 = ChemObjectBuilder.Instance.NewAtom("N");
+            IAtom atom2 = builder.NewAtom("N");
 
             container.Atoms.Add(atom1);
             container.Atoms.Add(atom2);
-            container.Bonds.Add(new Bond(atom1, atom2, BondOrder.Single));
+            container.Bonds.Add(builder.NewBond(atom1, atom2, BondOrder.Single));
 
             double totalCharge = AtomContainerManipulator.GetTotalCharge(container);
 
@@ -787,7 +787,7 @@ namespace NCDK.Tools.Manipulator
         public void TestCountExplicitH_Null_IAtom()
         {
             AtomContainerManipulator.CountExplicitHydrogens(null,
-                    ChemObjectBuilder.Instance.NewAtom());
+                    builder.NewAtom());
         }
 
         // @cdk.bug 1254
@@ -796,29 +796,29 @@ namespace NCDK.Tools.Manipulator
         public void TestCountExplicitH_IAtomContainer_Null()
         {
             AtomContainerManipulator.CountExplicitHydrogens(
-                    ChemObjectBuilder.Instance.NewAtomContainer(), null);
+                    builder.NewAtomContainer(), null);
         }
 
         [TestMethod()]
         public void TestCountExplicitH()
         {
-            IAtomContainer container = ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom atom1 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtomContainer container = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
             atom1.Charge = 1.0;
-            IAtom atom2 = ChemObjectBuilder.Instance.NewAtom("N");
+            IAtom atom2 = builder.NewAtom("N");
 
             container.Atoms.Add(atom1);
             container.Atoms.Add(atom2);
-            container.Bonds.Add(new Bond(atom1, atom2, BondOrder.Single));
+            container.Bonds.Add(builder.NewBond(atom1, atom2, BondOrder.Single));
 
             Assert.AreEqual(0, AtomContainerManipulator.CountExplicitHydrogens(container, atom1));
             Assert.AreEqual(0, AtomContainerManipulator.CountExplicitHydrogens(container, atom2));
 
             for (int i = 0; i < 3; i++)
             {
-                IAtom h = ChemObjectBuilder.Instance.NewAtom("H");
+                IAtom h = builder.NewAtom("H");
                 container.Atoms.Add(h);
-                container.Bonds.Add(new Bond(atom1, h, BondOrder.Single));
+                container.Bonds.Add(builder.NewBond(atom1, h, BondOrder.Single));
             }
             Assert.AreEqual(3, AtomContainerManipulator.CountExplicitHydrogens(container, atom1));
         }
@@ -826,14 +826,14 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestCountH()
         {
-            IAtomContainer container = ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom atom1 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtomContainer container = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
             atom1.Charge = 1.0;
-            IAtom atom2 = ChemObjectBuilder.Instance.NewAtom("N");
+            IAtom atom2 = builder.NewAtom("N");
 
             container.Atoms.Add(atom1);
             container.Atoms.Add(atom2);
-            container.Bonds.Add(new Bond(atom1, atom2, BondOrder.Single));
+            container.Bonds.Add(builder.NewBond(atom1, atom2, BondOrder.Single));
 
             // no atom type perception, so implicit count is 0
             Assert.AreEqual(0, AtomContainerManipulator.CountHydrogens(container, atom1));
@@ -848,9 +848,9 @@ namespace NCDK.Tools.Manipulator
 
             for (int i = 0; i < 3; i++)
             {
-                IAtom h = ChemObjectBuilder.Instance.NewAtom("H");
+                IAtom h = builder.NewAtom("H");
                 container.Atoms.Add(h);
-                container.Bonds.Add(new Bond(atom1, h, BondOrder.Single));
+                container.Bonds.Add(builder.NewBond(atom1, h, BondOrder.Single));
             }
             Assert.AreEqual(6, AtomContainerManipulator.CountHydrogens(container, atom1));
 
@@ -889,16 +889,16 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestReplaceAtom()
         {
-            IAtomContainer container = ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom atom1 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtomContainer container = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
             atom1.Charge = 1.0;
-            IAtom atom2 = ChemObjectBuilder.Instance.NewAtom("N");
+            IAtom atom2 = builder.NewAtom("N");
 
             container.Atoms.Add(atom1);
             container.Atoms.Add(atom2);
-            container.Bonds.Add(new Bond(atom1, atom2, BondOrder.Single));
+            container.Bonds.Add(builder.NewBond(atom1, atom2, BondOrder.Single));
 
-            IAtom atom3 = ChemObjectBuilder.Instance.NewAtom("Br");
+            IAtom atom3 = builder.NewAtom("Br");
 
             AtomContainerManipulator.ReplaceAtomByAtom(container, atom2, atom3);
             Assert.AreEqual(atom3, container.Atoms[1]);
@@ -907,17 +907,17 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestReplaceAtom_lonePair()
         {
-            IAtomContainer container = ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom atom1 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtomContainer container = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
             atom1.Charge = 1.0;
-            IAtom atom2 = ChemObjectBuilder.Instance.NewAtom("N");
+            IAtom atom2 = builder.NewAtom("N");
 
             container.Atoms.Add(atom1);
             container.Atoms.Add(atom2);
-            container.Bonds.Add(new Bond(atom1, atom2, BondOrder.Single));
+            container.Bonds.Add(builder.NewBond(atom1, atom2, BondOrder.Single));
             container.AddLonePairTo(container.Atoms[1]);
 
-            IAtom atom3 = ChemObjectBuilder.Instance.NewAtom("Br");
+            IAtom atom3 = builder.NewAtom("Br");
 
             AtomContainerManipulator.ReplaceAtomByAtom(container, atom2, atom3);
             Assert.AreEqual(atom3, container.LonePairs[0].Atom);
@@ -926,17 +926,17 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestReplaceAtom_singleElectron()
         {
-            IAtomContainer container = ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom atom1 = ChemObjectBuilder.Instance.NewAtom("C");
+            IAtomContainer container = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
             atom1.Charge = 1.0;
-            IAtom atom2 = ChemObjectBuilder.Instance.NewAtom("N");
+            IAtom atom2 = builder.NewAtom("N");
 
             container.Atoms.Add(atom1);
             container.Atoms.Add(atom2);
-            container.Bonds.Add(new Bond(atom1, atom2, BondOrder.Single));
+            container.Bonds.Add(builder.NewBond(atom1, atom2, BondOrder.Single));
             container.AddSingleElectronTo(container.Atoms[1]);
 
-            IAtom atom3 = ChemObjectBuilder.Instance.NewAtom("Br");
+            IAtom atom3 = builder.NewAtom("Br");
 
             AtomContainerManipulator.ReplaceAtomByAtom(container, atom2, atom3);
             Assert.AreEqual(atom3, container.SingleElectrons[0].Atom);
@@ -945,10 +945,9 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestReplaceAtom_stereochemistry()
         {
-            IChemObjectBuilder bldr = CDK.Builder;
-            SmilesParser smipar = new SmilesParser(bldr);
+            var smipar = new SmilesParser(builder);
             var mol = smipar.ParseSmiles("N[C@H](CC)O");
-            IAtom newAtom = bldr.NewAtom("Cl");
+            var newAtom = builder.NewAtom("Cl");
             newAtom.ImplicitHydrogenCount = 0;
             AtomContainerManipulator.ReplaceAtomByAtom(mol, mol.Atoms[0], newAtom);
             Assert.AreEqual("Cl[C@H](CC)O", SmilesGenerator.Isomeric().Create(mol));
@@ -957,8 +956,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetHeavyAtoms_IAtomContainer()
         {
-            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
-            IAtomContainer container = builder.NewAtomContainer();
+            var container = builder.NewAtomContainer();
             container.Atoms.Add(builder.NewAtom("C"));
             for (int i = 0; i < 4; i++)
                 container.Atoms.Add(builder.NewAtom("H"));
@@ -972,7 +970,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveHydrogensPreserveMultiplyBonded()
         {
-            var borane = new AtomContainer();
+            var borane = builder.NewAtomContainer();
             borane.Atoms.Add(borane.Builder.NewAtom("H"));
             borane.Atoms.Add(borane.Builder.NewAtom("H"));
             borane.Atoms.Add(borane.Builder.NewAtom("B"));
@@ -1026,7 +1024,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestCreateAnyAtomAnyBondAtomContainerIAtomContainer()
         {
-            string smiles = "c1ccccc1";
+            var smiles = "c1ccccc1";
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles(smiles);
             mol = AtomContainerManipulator.CreateAllCarbonAllSingleNonAromaticBondAtomContainer(mol);
@@ -1086,10 +1084,10 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestOverWriteConfig()
         {
-            string filename = "NCDK.Data.MDL.lobtest2.sdf";
+            var filename = "NCDK.Data.MDL.lobtest2.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new MDLV2000Reader(ins);
-            var content = reader.Read(new ChemFile());
+            var content = reader.Read(builder.NewChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             var ac = cList[0];
 
@@ -1153,9 +1151,9 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveHydrogensFromMolecularHydrogen()
         {
-            var mol = new AtomContainer(); // molecular hydrogen
-            mol.Atoms.Add(new Atom("H"));
-            mol.Atoms.Add(new Atom("H"));
+            var mol = builder.NewAtomContainer(); // molecular hydrogen
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
 
             Assert.AreEqual(2, mol.Atoms.Count);
@@ -1166,7 +1164,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestBondOrderSum()
         {
-            SmilesParser parser = CDK.SmilesParser;
+            var parser = CDK.SmilesParser;
             var mol = parser.ParseSmiles("C=CC");
             double bosum = AtomContainerManipulator.GetBondOrderSum(mol, mol.Atoms[0]);
             Assert.AreEqual(2.0, bosum, 0.001);

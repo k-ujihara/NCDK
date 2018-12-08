@@ -30,7 +30,7 @@ namespace NCDK.Depict
     [TestClass()]
     public class AbbreviationsTest
     {
-        private static SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+        private static SmilesParser smipar = CDK.SmilesParser;
 
         static IAtomContainer Smi(string smi)
         {

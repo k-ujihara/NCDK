@@ -52,15 +52,14 @@ namespace NCDK.Config
         /// <summary>
         /// Reads the atom types from the CDK based atom type list.
         /// </summary>
-        /// <param name="builder">used to construct the <see cref="IAtomType"/>'s</param>
         /// <returns><see cref="IEnumerable{IAtomType}"/> with read IAtomType's.</returns>
         /// <exception cref="IOException">when a problem occurred with reading from the <see cref="GetStream()"/></exception>
-        public IEnumerable<IAtomType> ReadAtomTypes(IChemObjectBuilder builder)
+        public IEnumerable<IAtomType> ReadAtomTypes()
         {
             if (GetStream() == null)
                 SetStream(ResourceLoader.GetAsStream(configFile));
 
-            return new AtomTypeReader(GetStream()).ReadAtomTypes(builder);
+            return new AtomTypeReader(GetStream()).ReadAtomTypes();
         }
     }
 }

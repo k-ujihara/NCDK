@@ -56,7 +56,7 @@ namespace NCDK.Layout
         [TestMethod()]
         public void EncodeEntry()
         {
-            string smiles = "CO";
+            var smiles = "CO";
             Vector2[] points = new Vector2[] { new Vector2(12.5f, 5.5f), new Vector2(4f, 2f) };
             string encoded = IdentityTemplateLibrary.EncodeEntry(new KeyValuePair<string, Vector2[]>(smiles, points));
             var entry = IdentityTemplateLibrary.DecodeEntry(encoded);

@@ -35,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestBCUT()
         {
-            string filename = "NCDK.Data.HIN.gravindex.hin";
+            var filename = "NCDK.Data.HIN.gravindex.hin";
             IChemFile content;
             using (var reader = new HINReader(ResourceLoader.GetAsStream(filename)))
             {
@@ -79,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestExtraEigenvalues()
         {
-            string filename = "NCDK.Data.HIN.gravindex.hin";
+            var filename = "NCDK.Data.HIN.gravindex.hin";
             IChemFile content;
             using (var reader = new HINReader(ResourceLoader.GetAsStream(filename)))
             {
@@ -145,7 +145,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestUndefinedValues()
         {
-            string filename = "NCDK.Data.MDL.burden_undefined.sdf";
+            var filename = "NCDK.Data.MDL.burden_undefined.sdf";
             IChemFile content;
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
             {

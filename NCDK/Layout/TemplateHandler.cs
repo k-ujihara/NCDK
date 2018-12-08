@@ -48,9 +48,10 @@ namespace NCDK.Layout
     // @cdk.keyword structure diagram generation
     // @cdk.require java1.4+
     // @cdk.module sdg
-    // @cdk.githash
     public sealed class TemplateHandler
     {
+        private readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+
         private readonly List<IAtomContainer> templates = new List<IAtomContainer>();
         private readonly List<Pattern> anonPatterns = new List<Pattern>();
         private readonly List<Pattern> elemPatterns = new List<Pattern>();
@@ -88,16 +89,9 @@ namespace NCDK.Layout
         /// <summary>
         /// Creates a new TemplateHandler with default templates loaded.
         /// </summary>
-        public TemplateHandler(IChemObjectBuilder builder)
-        {
-            LoadTemplates(builder);
-        }
-
-        /// <summary>
-        /// Creates a new TemplateHandler without any default templates.
-        /// </summary>
         public TemplateHandler()
         {
+            LoadTemplates();
         }
 
         /// <summary>
@@ -105,12 +99,11 @@ namespace NCDK.Layout
         /// SDG, place a drawing with the new template in org/openscience/cdk/layout/templates and add the
         /// template filename to org/openscience/cdk/layout/templates/template.list
         /// </summary>
-        public void LoadTemplates(IChemObjectBuilder builder)
+        public void LoadTemplates()
         {
             try
             {
-                using (var ins = ResourceLoader.GetAsStream("NCDK.Layout.Templates.templates.list"))
-                using (var reader = new StreamReader(ins))
+                using (var reader = new StreamReader(ResourceLoader.GetAsStream("NCDK.Layout.Templates.templates.list")))
                 {
                     string line;
                     while ((line = reader.ReadLine()) != null)

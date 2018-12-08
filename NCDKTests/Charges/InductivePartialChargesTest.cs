@@ -19,7 +19,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Numerics;
-using NCDK.Silent;
 
 namespace NCDK.Charges
 {
@@ -30,13 +29,14 @@ namespace NCDK.Charges
     // @author        mfe4
     // @cdk.created       2004-11-04
     [TestClass()]
-    public class InductivePartialChargesTest : CDKTestCase
+    public class InductivePartialChargesTest 
+        : CDKTestCase
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
         private static IAtomContainer mol;
 
         static InductivePartialChargesTest()
         {
-            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             mol = builder.NewAtomContainer();
             IAtom atom1 = builder.NewAtom("C");
             IAtom atom2 = builder.NewAtom("Cl");
@@ -80,25 +80,25 @@ namespace NCDK.Charges
             Vector3 h2_coord = new Vector3(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
             Vector3 h3_coord = new Vector3(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 
-            var mol = new AtomContainer(); // molecule is CF
+            var mol = builder.NewAtomContainer(); // molecule is CF
 
-            Atom c = new Atom("C");
+            var c = builder.NewAtom("C");
             mol.Atoms.Add(c);
             c.Point3D = c_coord;
 
-            Atom f = new Atom("F");
+            var f = builder.NewAtom("F");
             mol.Atoms.Add(f);
             f.Point3D = f_coord;
 
-            Atom h1 = new Atom("H");
+            var h1 = builder.NewAtom("H");
             mol.Atoms.Add(h1);
             h1.Point3D = h1_coord;
 
-            Atom h2 = new Atom("H");
+            var h2 = builder.NewAtom("H");
             mol.Atoms.Add(h2);
             h2.Point3D = h2_coord;
 
-            Atom h3 = new Atom("H");
+            var h3 = builder.NewAtom("H");
             mol.Atoms.Add(h3);
             h3.Point3D = h3_coord;
 
@@ -129,25 +129,25 @@ namespace NCDK.Charges
             Vector3 h2_coord = new Vector3(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
             Vector3 h3_coord = new Vector3(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 
-            var mol = new AtomContainer(); // molecule is CF
+            var mol = builder.NewAtomContainer(); // molecule is CF
 
-            Atom c = new Atom("C");
+            var c = builder.NewAtom("C");
             mol.Atoms.Add(c);
             c.Point3D = c_coord;
 
-            Atom f = new Atom("F");
+            var f = builder.NewAtom("F");
             mol.Atoms.Add(f);
             f.Point3D = f_coord;
 
-            Atom h1 = new Atom("H");
+            var h1 = builder.NewAtom("H");
             mol.Atoms.Add(h1);
             h1.Point3D = h1_coord;
 
-            Atom h2 = new Atom("H");
+            var h2 = builder.NewAtom("H");
             mol.Atoms.Add(h2);
             h2.Point3D = h2_coord;
 
-            Atom h3 = new Atom("H");
+            var h3 = builder.NewAtom("H");
             mol.Atoms.Add(h3);
             h3.Point3D = h3_coord;
 

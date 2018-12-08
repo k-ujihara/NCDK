@@ -12,7 +12,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestLOBDescriptorCholesterol()
         {
-            string filename = "NCDK.Data.MDL.lobtest.sdf";
+            var filename = "NCDK.Data.MDL.lobtest.sdf";
             IChemFile content;
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
             {
@@ -31,7 +31,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestLOBDescriptorCyclohexane()
         {
-            string filename = "NCDK.Data.MDL.lobtest.sdf";
+            var filename = "NCDK.Data.MDL.lobtest.sdf";
             IChemFile content;
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
             {
@@ -50,7 +50,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestLOBDescriptorNaphthalene()
         {
-            string filename = "NCDK.Data.MDL.lobtest.sdf";
+            var filename = "NCDK.Data.MDL.lobtest.sdf";
             IChemFile content;
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
             {
@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestLOBDescriptorNButane()
         {
-            string filename = "NCDK.Data.MDL.lobtest.sdf";
+            var filename = "NCDK.Data.MDL.lobtest.sdf";
             IChemFile content;
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
             {
@@ -90,7 +90,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestLOBDescriptor2()
         {
-            string filename = "NCDK.Data.MDL.lobtest2.sdf";
+            var filename = "NCDK.Data.MDL.lobtest2.sdf";
             IChemFile content;
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
             {

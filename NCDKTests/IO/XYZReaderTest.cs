@@ -20,8 +20,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -34,40 +34,42 @@ namespace NCDK.IO
     /// <seealso cref="XYZReader"/>
     // @cdk.module test-io
     [TestClass()]
-    public class XYZReaderTest : SimpleChemObjectReaderTest
+    public class XYZReaderTest
+        : SimpleChemObjectReaderTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         protected override string TestFile => "NCDK.Data.XYZ.viagra.xyz";
         protected override Type ChemObjectIOToTestType => typeof(XYZReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            XYZReader reader = new XYZReader(new StringReader(""));
-            Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
+            var reader = new XYZReader(new StringReader(""));
+            Assert.IsTrue(reader.Accepts(typeof(IChemFile)));
         }
 
         [TestMethod()]
         public void TestViagra()
         {
-            string filename = "NCDK.Data.XYZ.viagra.xyz";
+            var filename = "NCDK.Data.XYZ.viagra.xyz";
             Trace.TraceInformation("Testing: ", filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            XYZReader reader = new XYZReader(ins);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new XYZReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
 
             var som = model.MoleculeSet;
             Assert.IsNotNull(som);
             Assert.AreEqual(1, som.Count);
-            IAtomContainer m = som[0];
+            var m = som[0];
             Assert.IsNotNull(m);
             Assert.AreEqual(63, m.Atoms.Count);
             Assert.AreEqual(0, m.Bonds.Count);
@@ -82,25 +84,25 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestComment()
         {
-            string filename = "NCDK.Data.XYZ.viagra_withComment.xyz";
+            var filename = "NCDK.Data.XYZ.viagra_withComment.xyz";
             Trace.TraceInformation("Testing: ", filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            XYZReader reader = new XYZReader(ins);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new XYZReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
 
             var som = model.MoleculeSet;
             Assert.IsNotNull(som);
             Assert.AreEqual(1, som.Count);
-            IAtomContainer m = som[0];
+            var m = som[0];
             Assert.IsNotNull(m);
             Assert.AreEqual(63, m.Atoms.Count);
             Assert.AreEqual(0, m.Bonds.Count);

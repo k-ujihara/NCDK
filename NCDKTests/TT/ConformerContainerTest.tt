@@ -9,7 +9,8 @@ using System.Linq;
 namespace <#= ns.NS #>
 {
     [TestClass()]
-    public class ConformerContainerTest : CDKTestCase
+    public class ConformerContainerTest 
+        : CDKTestCase
     {
         private IAtomContainer base_;
         private IAtomContainer[] confs;
@@ -21,7 +22,7 @@ namespace <#= ns.NS #>
 
         private static IAtomContainer GetBaseAtomContainer(int natom, string title)
         {
-            IAtomContainer container = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer container = new AtomContainer();
             container.Title = title;
             for (int i = 0; i < natom; i++)
             {

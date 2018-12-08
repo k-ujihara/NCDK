@@ -201,7 +201,7 @@ namespace NCDK
         public void TestNewChemModel()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IChemModel model = builder.NewChemModel();
+            var model = builder.NewChemModel();
             Assert.IsNotNull(model);
         }
 

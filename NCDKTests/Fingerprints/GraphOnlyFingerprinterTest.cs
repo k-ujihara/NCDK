@@ -24,7 +24,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO;
 using NCDK.Isomorphisms;
-using NCDK.Silent;
 using NCDK.Smiles;
 using System.Collections;
 using System.Diagnostics;
@@ -36,6 +35,8 @@ namespace NCDK.Fingerprints
     [TestClass()]
     public class GraphOnlyFingerprinterTest : AbstractFixedLengthFingerprinterTest
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
+
         public override IFingerprinter GetBitFingerprinter()
         {
             return new GraphOnlyFingerprinter();
@@ -44,7 +45,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestFingerprint()
         {
-            SmilesParser parser = CDK.SmilesParser;
+            var parser = CDK.SmilesParser;
             IFingerprinter printer = new GraphOnlyFingerprinter();
 
             IBitFingerprint bs1 = printer.GetBitFingerprint(parser.ParseSmiles("C=C-C#N"));
@@ -92,9 +93,9 @@ namespace NCDK.Fingerprints
             {
                 ISimpleChemObjectReader reader = new MDLV2000Reader(new StringReader(molecule));
                 Assert.IsNotNull(reader, "Could not create reader");
-                if (reader.Accepts(typeof(AtomContainer)))
+                if (reader.Accepts(typeof(IAtomContainer)))
                 {
-                    structure = reader.Read(ChemObjectBuilder.Instance.NewAtomContainer());
+                    structure = reader.Read(builder.NewAtomContainer());
                 }
             }
             return structure;

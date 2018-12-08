@@ -22,7 +22,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -37,14 +36,15 @@ namespace NCDK.IO
     [TestClass()]
     public class InChIPlainTextReaderTest : SimpleChemObjectReaderTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         protected override string TestFile => "NCDK.Data.InChI.guanine.inchi";
         protected override Type ChemObjectIOToTestType => typeof(InChIPlainTextReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            InChIPlainTextReader reader = new InChIPlainTextReader(new StringReader(""));
-            Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
+            var reader = new InChIPlainTextReader(new StringReader(""));
+            Assert.IsTrue(reader.Accepts(typeof(IChemFile)));
             reader.Close();
         }
 
@@ -54,23 +54,23 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestGuanine()
         {
-            string filename = "NCDK.Data.InChI.guanine.inchi";
+            var filename = "NCDK.Data.InChI.guanine.inchi";
             Trace.TraceInformation("Testing: ", filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            InChIPlainTextReader reader = new InChIPlainTextReader(ins);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new InChIPlainTextReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
             var moleculeSet = model.MoleculeSet;
             Assert.IsNotNull(moleculeSet);
-            IAtomContainer molecule = moleculeSet[0];
+            var molecule = moleculeSet[0];
             Assert.IsNotNull(molecule);
 
             Assert.AreEqual(11, molecule.Atoms.Count);
@@ -81,20 +81,20 @@ namespace NCDK.IO
         public void TestChebi26120()
         {
             var ins = new StringReader("InChI=1/C40H62/c1-33(2)19-13-23-37(7)27-17-31-39(9)29-15-25-35(5)21-11-12-22-36(6)26-16-30-40(10)32-18-28-38(8)24-14-20-34(3)4/h11-12,15,19-22,25,27-30H,13-14,16-18,23-24,26,31-32H2,1-10H3");
-            InChIPlainTextReader reader = new InChIPlainTextReader(ins);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new InChIPlainTextReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
             var moleculeSet = model.MoleculeSet;
             Assert.IsNotNull(moleculeSet);
-            IAtomContainer molecule = moleculeSet[0];
+            var molecule = moleculeSet[0];
             Assert.IsNotNull(molecule);
 
             Assert.AreEqual(40, molecule.Atoms.Count);
@@ -104,21 +104,21 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestPlatinum()
         {
-            StringReader ins = new StringReader("InChI=1S/Pt");
-            InChIPlainTextReader reader = new InChIPlainTextReader(ins);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var ins = new StringReader("InChI=1S/Pt");
+            var reader = new InChIPlainTextReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
             var moleculeSet = model.MoleculeSet;
             Assert.IsNotNull(moleculeSet);
-            IAtomContainer molecule = moleculeSet[0];
+            var molecule = moleculeSet[0];
             Assert.IsNotNull(molecule);
 
             Assert.AreEqual(1, molecule.Atoms.Count);

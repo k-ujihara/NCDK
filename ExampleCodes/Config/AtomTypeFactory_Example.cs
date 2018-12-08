@@ -6,15 +6,14 @@ namespace NCDK.Config
     {
         public void Main()
         {
-            IChemObjectBuilder someChemObjectBuilder = null;
             {
                 #region 1
-                AtomTypeFactory factory = AtomTypeFactory.GetInstance(someChemObjectBuilder);
+                AtomTypeFactory factory = AtomTypeFactory.GetInstance();
                 #endregion
             }
             {
                 #region 2
-                AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt", someChemObjectBuilder);
+                AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt");
                 #endregion
             }
         }

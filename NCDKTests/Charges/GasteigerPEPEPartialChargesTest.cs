@@ -47,8 +47,8 @@ namespace NCDK.Charges
             GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
             IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(new Atom("C"));
-            molecule.Atoms.Add(new Atom("F"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("F"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
 
             AddExplicitHydrogens(molecule);
@@ -134,8 +134,8 @@ namespace NCDK.Charges
             GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
             IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(new Atom("C"));
-            molecule.Atoms.Add(new Atom("F"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("F"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
 
             AddExplicitHydrogens(molecule);
@@ -206,8 +206,8 @@ namespace NCDK.Charges
             GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
             IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(new Atom("C"));
-            molecule.Atoms.Add(new Atom("F"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("F"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
 
             AddExplicitHydrogens(molecule);

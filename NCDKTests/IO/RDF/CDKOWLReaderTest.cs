@@ -20,9 +20,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using System.IO;
 using System;
@@ -31,27 +30,29 @@ namespace NCDK.IO.RDF
 {
     // @cdk.module test-iordf
     [TestClass()]
-    public class CDKOWLReaderTest : SimpleChemObjectReaderTest
+    public class CDKOWLReaderTest 
+        : SimpleChemObjectReaderTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         protected override string TestFile => "NCDK.Data.OWL.molecule.n3";
         protected override Type ChemObjectIOToTestType => typeof(CDKOWLReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            Assert.IsTrue(ChemObjectIOToTest.Accepts(typeof(AtomContainer)));
+            Assert.IsTrue(ChemObjectIOToTest.Accepts(typeof(IAtomContainer)));
         }
 
         [TestMethod()]
         public void TestMolecule()
         {
-            string filename = "NCDK.Data.OWL.molecule.n3";
+            var filename = "NCDK.Data.OWL.molecule.n3";
             Trace.TraceInformation($"Testing: {filename}");
             var ins = ResourceLoader.GetAsStream(filename);
             IAtomContainer mol;
             using (var reader = new CDKOWLReader(new StreamReader(ins)))
             {
-                mol = reader.Read(new AtomContainer());
+                mol = reader.Read(builder.NewAtomContainer());
             }
             Assert.IsNotNull(mol);
             Assert.AreEqual(2, mol.Atoms.Count);

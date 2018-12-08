@@ -19,7 +19,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System;
 using System.Linq;
 
@@ -30,8 +29,11 @@ namespace NCDK.Config
     /// </summary>
     // @cdk.module test-core
     [TestClass()]
-    public class IsotopesTest : CDKTestCase
+    public class IsotopesTest
+        : CDKTestCase
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
+
         [TestMethod()]
         public void TestGetInstanceIChemObjectBuilder()
         {
@@ -50,7 +52,7 @@ namespace NCDK.Config
         public void TestConfigureIAtom()
         {
             var isofac = BODRIsotopeFactory.Instance;
-            Atom atom = new Atom("H");
+            var atom = builder.NewAtom("H");
             isofac.Configure(atom);
             Assert.AreEqual(1, atom.AtomicNumber);
         }
@@ -59,7 +61,7 @@ namespace NCDK.Config
         public void TestConfigureIAtomIIsotope()
         {
             var isofac = BODRIsotopeFactory.Instance;
-            Atom atom = new Atom("H");
+            var atom = builder.NewAtom("H");
             IIsotope isotope = new Default.Isotope("H", 2);
             isofac.Configure(atom, isotope);
             Assert.AreEqual(2, atom.MassNumber.Value);
@@ -144,13 +146,13 @@ namespace NCDK.Config
         [TestMethod()]
         public void TestConfigureAtomsIAtomContainer()
         {
-            AtomContainer container = new AtomContainer();
-            container.Atoms.Add(new Atom("C"));
-            container.Atoms.Add(new Atom("H"));
-            container.Atoms.Add(new Atom("N"));
-            container.Atoms.Add(new Atom("O"));
-            container.Atoms.Add(new Atom("F"));
-            container.Atoms.Add(new Atom("Cl"));
+            var container = builder.NewAtomContainer();
+            container.Atoms.Add(builder.NewAtom("C"));
+            container.Atoms.Add(builder.NewAtom("H"));
+            container.Atoms.Add(builder.NewAtom("N"));
+            container.Atoms.Add(builder.NewAtom("O"));
+            container.Atoms.Add(builder.NewAtom("F"));
+            container.Atoms.Add(builder.NewAtom("Cl"));
             var isofac = BODRIsotopeFactory.Instance;
             isofac.ConfigureAtoms(container);
             for (int i = 0; i < container.Atoms.Count; i++)
@@ -229,7 +231,7 @@ namespace NCDK.Config
         [TestMethod()]
         public void ConfigureDoesNotSetMajorIsotope()
         {
-            IAtom atom = new Atom("CH4");
+            IAtom atom = builder.NewAtom("CH4");
             var isotopes = BODRIsotopeFactory.Instance;
             var major = isotopes.GetMajorIsotope(atom.Symbol);
             Assert.IsNotNull(major);
@@ -244,7 +246,7 @@ namespace NCDK.Config
         public void TestNonexistingElement()
         {
             var isofac = BODRIsotopeFactory.Instance;
-            IAtom xxAtom = new Atom("Xx");
+            IAtom xxAtom = builder.NewAtom("Xx");
             isofac.Configure(xxAtom);
         }
 

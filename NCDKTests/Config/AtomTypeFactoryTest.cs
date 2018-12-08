@@ -18,7 +18,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,7 +35,8 @@ namespace NCDK.Config
     public class AtomTypeFactoryTest 
         : CDKTestCase
     {
-        static AtomTypeFactory atf = AtomTypeFactory.GetInstance(new ChemObject().Builder);
+        private readonly static IChemObjectBuilder builder = CDK.Builder;
+        static AtomTypeFactory atf = CDK.AtomTypeFactory;
         private const string JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
         private const string W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
 
@@ -79,7 +79,7 @@ namespace NCDK.Config
         {
             var configFile = "NCDK.Config.Data.structgen_atomtypes.xml";
             var ins = ResourceLoader.GetAsStream(typeof(AtomTypeFactory), configFile);
-            AtomTypeFactory atf = AtomTypeFactory.GetInstance(ins, "xml", new ChemObject().Builder);
+            AtomTypeFactory atf = AtomTypeFactory.GetInstance(ins, "xml");
             Assert.IsNotNull(atf);
             Assert.AreNotSame(0, atf.Count);
         }
@@ -88,7 +88,7 @@ namespace NCDK.Config
         public void TestGetInstance_String_IChemObjectBuilder()
         {
             string configFile = "NCDK.Config.Data.structgen_atomtypes.xml";
-            AtomTypeFactory atf = AtomTypeFactory.GetInstance(configFile, new ChemObject().Builder);
+            AtomTypeFactory atf = AtomTypeFactory.GetInstance(configFile);
             Assert.IsNotNull(atf);
             Assert.AreNotSame(0, atf.Count);
         }
@@ -96,21 +96,21 @@ namespace NCDK.Config
         [TestMethod()]
         public void TestGetInstance_IChemObjectBuilder()
         {
-            AtomTypeFactory atf = AtomTypeFactory.GetInstance(new ChemObject().Builder);
+            AtomTypeFactory atf = AtomTypeFactory.GetInstance();
             Assert.IsNotNull(atf);
         }
 
         [TestMethod()]
         public virtual void TestGetSize()
         {
-            AtomTypeFactory atf = AtomTypeFactory.GetInstance(new ChemObject().Builder);
+            AtomTypeFactory atf = AtomTypeFactory.GetInstance();
             Assert.AreNotSame(0, atf.Count);
         }
 
         [TestMethod()]
         public virtual void TestGetAllAtomTypes()
         {
-            AtomTypeFactory atf = AtomTypeFactory.GetInstance(new ChemObject().Builder);
+            AtomTypeFactory atf = AtomTypeFactory.GetInstance();
             IAtomType[] types = atf.GetAllAtomTypes()?.ToArray();
             Assert.IsNotNull(types);
             Assert.AreNotSame(0, types.Length);
@@ -140,7 +140,7 @@ namespace NCDK.Config
         [TestMethod()]
         public virtual void TestGetAtomTypeFromPDB()
         {
-            AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.pdb_atomtypes.xml", new ChemObject().Builder);
+            AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.pdb_atomtypes.xml");
             IAtomType atomType = factory.GetAtomType("ALA.CA");
             Assert.IsNotNull(atomType);
             Assert.AreEqual("C", atomType.Symbol);
@@ -150,7 +150,7 @@ namespace NCDK.Config
         [TestMethod()]
         public virtual void TestGetAtomTypeFromOWL()
         {
-            AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", new ChemObject().Builder);
+            AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl");
             IAtomType atomType;
 
             atomType = factory.GetAtomType("C.sp3");
@@ -196,7 +196,7 @@ namespace NCDK.Config
         [TestMethod()]
         public virtual void TestGetAtomTypeFromOWL_Sybyl()
         {
-            AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data.sybyl-atom-types.owl", new ChemObject().Builder);
+            AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data.sybyl-atom-types.owl");
 
             IAtomType atomType;
             atomType = factory.GetAtomType("C.3");
@@ -213,7 +213,7 @@ namespace NCDK.Config
         [TestMethod()]
         public virtual void TestGetAtomTypeFromJmol()
         {
-            AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt", new ChemObject().Builder);
+            AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt");
             IAtomType atomType = factory.GetAtomType("H");
             Assert.IsNotNull(atomType);
             Assert.AreEqual("H", atomType.Symbol);
@@ -223,11 +223,9 @@ namespace NCDK.Config
         [TestMethod()]
         public virtual void TestConfigure_IAtom()
         {
-            IAtom atom = new Atom
-            {
-                AtomTypeName = "C.ar"
-            };
-            AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.mol2_atomtypes.xml", new ChemObject().Builder);
+            IAtom atom = builder.NewAtom();
+            atom.AtomTypeName = "C.ar";
+            AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.mol2_atomtypes.xml");
             IAtomType atomType = factory.Configure(atom);
             Assert.IsNotNull(atomType);
             Assert.AreEqual("C", atom.Symbol);
@@ -255,7 +253,7 @@ namespace NCDK.Config
         public virtual void TestGetAtomTypeFromMM2()
         {
             AtomTypeFactory factory;
-            factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.mm2_atomtypes.xml", new ChemObject().Builder);
+            factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.mm2_atomtypes.xml");
 
             IAtomType atomType = factory.GetAtomType("C");
             Assert.IsNotNull(atomType);

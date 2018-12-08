@@ -22,12 +22,10 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 
 namespace NCDK.IO
 {
@@ -35,6 +33,7 @@ namespace NCDK.IO
     [TestClass()]
     public class PCCompoundASNReaderTest : SimpleChemObjectReaderTest
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
         protected override string TestFile => "NCDK.Data.ASN.PubChem.cid1.asn";
         protected override Type ChemObjectIOToTestType => typeof(PCCompoundASNReader);
 
@@ -42,17 +41,17 @@ namespace NCDK.IO
         public void TestAccepts()
         {
             PCCompoundASNReader reader = new PCCompoundASNReader(new StringReader(""));
-            Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
+            Assert.IsTrue(reader.Accepts(typeof(IChemFile)));
         }
 
         [TestMethod()]
         public void TestReading()
         {
-            string filename = "NCDK.Data.ASN.PubChem.cid1.asn";
+            var filename = "NCDK.Data.ASN.PubChem.cid1.asn";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             PCCompoundASNReader reader = new PCCompoundASNReader(ins);
-            IChemFile cFile = (IChemFile)reader.Read(new ChemFile());
+            IChemFile cFile = (IChemFile)reader.Read(builder.NewChemFile());
             reader.Close();
             var containers = ChemFileManipulator.GetAllAtomContainers(cFile).ToReadOnlyList();
             Assert.AreEqual(1, containers.Count);

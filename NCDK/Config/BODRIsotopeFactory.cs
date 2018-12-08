@@ -44,12 +44,9 @@ namespace NCDK.Config
     /// </remarks>
     // @author      egonw
     // @cdk.module  core
-    public class BODRIsotopeFactory : IsotopeFactory
+    public class BODRIsotopeFactory 
+        : IsotopeFactory
     {
-        /// <summary>
-        /// A singleton instance of this class.
-        /// </summary>
-        /// <exception cref="System.IO.IOException">when reading of the data file did not work</exception>
         public static BODRIsotopeFactory Instance { get; } = new BODRIsotopeFactory();
 
         private BODRIsotopeFactory()

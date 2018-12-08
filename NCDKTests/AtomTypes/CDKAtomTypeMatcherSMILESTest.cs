@@ -30,10 +30,11 @@ namespace NCDK.AtomTypes
     /// </summary>
     // @cdk.module test-core
     [TestClass()]
-    public class CDKAtomTypeMatcherSMILESTest : AbstractCDKAtomTypeTest
+    public class CDKAtomTypeMatcherSMILESTest 
+        : AbstractCDKAtomTypeTest
     {
-        private static SmilesParser smilesParser = CDK.SmilesParser;
-        private static IAtomTypeMatcher atomTypeMatcher = CDK.AtomTypeMatcher;
+        private readonly SmilesParser smilesParser = CDK.SmilesParser;
+        private readonly IAtomTypeMatcher atomTypeMatcher = CDK.AtomTypeMatcher;
 
         /// <summary>
         // @cdk.bug 2826961

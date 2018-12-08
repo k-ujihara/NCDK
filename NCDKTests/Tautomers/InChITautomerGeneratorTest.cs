@@ -22,10 +22,8 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Smiles;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
 using System.IO;
@@ -40,6 +38,7 @@ namespace NCDK.Tautomers
     [TestClass()]
     public class InChITautomerGeneratorTest : CDKTestCase
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         private SmilesParser smilesParser = CDK.SmilesParser;
         private InChITautomerGenerator tautomerGenerator = new InChITautomerGenerator();
 
@@ -175,8 +174,8 @@ namespace NCDK.Tautomers
                     + "  4  6  2  0  0  0  0\n" + "  6  7  1  0  0  0  0\n" + "  7  8  1  0  0  0  0\n"
                     + "  7  9  2  0  0  0  0\n" + "  2  9  1  0  0  0  0\n" + "M  END\n";
 
-            MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdlInput));
-            IAtomContainer molecule = reader.Read(new AtomContainer());
+            var reader = new MDLV2000Reader(new StringReader(mdlInput));
+            var molecule = reader.Read(builder.NewAtomContainer());
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             var hAdder = CDK.HydrogenAdder;
             hAdder.AddImplicitHydrogens(molecule);
@@ -188,8 +187,7 @@ namespace NCDK.Tautomers
         [TestMethod()]
         public void TestAdenine()
         {
-            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.NewAtomContainer();
+            var mol = builder.NewAtomContainer();
             IAtom a1 = builder.NewAtom("N");
             mol.Atoms.Add(a1);
             IAtom a2 = builder.NewAtom("N");

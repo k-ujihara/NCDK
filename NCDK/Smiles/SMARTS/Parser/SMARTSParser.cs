@@ -48,12 +48,11 @@ namespace NCDK.Smiles.SMARTS.Parser
     /// <seealso cref="SMARTSAtom"/>
     // @author      Dazhi Jiao
     // @cdk.created 2007-04-23
-    // @cdk.githash
     // @cdk.require ant1.6
     // @cdk.module  smarts
     // @cdk.keyword SMARTS
     // @cdk.keyword substructure search
-    [System.Obsolete]
+    [Obsolete]
     internal class SMARTSParser/*@bgen(jjtree)*/
     {/*@bgen(jjtree)*/
         protected JJTSMARTSParserState jjtree = new JJTSMARTSParserState();

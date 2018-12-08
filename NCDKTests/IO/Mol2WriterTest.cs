@@ -110,10 +110,10 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestMissingAtomType()
         {
-            string filename = "NCDK.Data.MDL.ligand-1a0i.sdf";
+            var filename = "NCDK.Data.MDL.ligand-1a0i.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            IChemFile fileContents = (IChemFile)reader.Read(new ChemFile());
+            var reader = new MDLV2000Reader(ins);
+            IChemFile fileContents = (IChemFile)reader.Read(builder.NewChemFile());
             reader.Close();
             var molecules = ChemFileManipulator.GetAllAtomContainers(fileContents).ToReadOnlyList();
             IAtomContainer mol = molecules[0];

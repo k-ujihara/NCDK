@@ -19,9 +19,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -30,36 +30,38 @@ namespace NCDK.IO
 {
     // @cdk.module test-extra
     [TestClass()]
-    public class VASPReaderTest : SimpleChemObjectReaderTest
+    public class VASPReaderTest 
+        : SimpleChemObjectReaderTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         protected override string TestFile => "NCDK.Data.VASP.LiMoS2_optimisation_ISIF3.vasp";
         protected override Type ChemObjectIOToTestType => typeof(VASPReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            VASPReader reader = new VASPReader(new StringReader(""));
-            Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
+            var reader = new VASPReader(new StringReader(""));
+            Assert.IsTrue(reader.Accepts(typeof(IChemFile)));
         }
 
         [TestMethod()]
         public void TestReading()
         {
-            string filename = "NCDK.Data.VASP.LiMoS2_optimisation_ISIF3.vasp";
+            var filename = "NCDK.Data.VASP.LiMoS2_optimisation_ISIF3.vasp";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            VASPReader reader = new VASPReader(ins);
-            ChemFile chemFile = (ChemFile)reader.Read(new ChemFile());
+            var reader = new VASPReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             Assert.IsNotNull(chemFile);
             var sequence = chemFile[0];
             Assert.IsNotNull(sequence);
             Assert.AreEqual(6, sequence.Count);
-            IChemModel model = sequence[0];
+            var model = sequence[0];
             Assert.IsNotNull(model);
-            ICrystal crystal = model.Crystal;
+            var crystal = model.Crystal;
             Assert.IsNotNull(crystal);
             Assert.AreEqual(16, crystal.Atoms.Count);
-            IAtom atom = crystal.Atoms[0];
+            var atom = crystal.Atoms[0];
             Assert.IsNotNull(atom);
             Assert.IsNotNull(atom.FractionalPoint3D);
         }

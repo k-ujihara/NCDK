@@ -66,7 +66,7 @@ namespace NCDK.IO
             Assert.IsTrue(output.Length > 0);
 
             PDBReader reader = new PDBReader(new StringReader(""));
-            ChemFile chemFile = (ChemFile)reader.Read(new ChemFile());
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             Assert.IsNotNull(chemFile);
@@ -103,7 +103,7 @@ namespace NCDK.IO
             Assert.IsTrue(output.Length > 0);
 
             PDBReader reader = new PDBReader(new StringReader(""));
-            ChemFile chemFile = (ChemFile)reader.Read(new ChemFile());
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             Assert.IsNotNull(chemFile);
@@ -255,7 +255,7 @@ namespace NCDK.IO
             writer.Close();
             string output = stringWriter.ToString();
             PDBReader reader = new PDBReader(new StringReader(output));
-            IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
             IAtomContainer reconstructed = chemFile[0][0].MoleculeSet[0];
             Assert.AreEqual(original.Atoms.Count, reconstructed.Atoms.Count);

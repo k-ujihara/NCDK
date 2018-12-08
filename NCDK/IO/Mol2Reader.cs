@@ -46,9 +46,10 @@ namespace NCDK.IO
     // @cdk.iooptions
     // @cdk.created 2003-08-21
     // @cdk.keyword file format, Mol2
-    public class Mol2Reader : DefaultChemObjectReader
+    public class Mol2Reader
+        : DefaultChemObjectReader
     {
-        private static readonly AtomTypeFactory atFactory = AtomTypeFactory.GetInstance("NCDK.Config.Data.mol2_atomtypes.xml", Silent.ChemObjectBuilder.Instance);
+        private static readonly AtomTypeFactory atFactory = AtomTypeFactory.GetInstance("NCDK.Config.Data.mol2_atomtypes.xml");
 
         bool firstLineisMolecule = false;
         TextReader input = null;

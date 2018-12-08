@@ -50,15 +50,14 @@ namespace NCDK.Config
         /// <summary>
         /// Reads the atom types from the OWL based atom type list.
         /// </summary>
-        /// <param name="builder">used to construct the <see cref="IAtomType"/>'s.</param>
         /// <returns>A <see cref="IEnumerable{IAtomType}"/> with read <see cref="IAtomType"/>'s.</returns>
         /// <exception cref="IOException">when a problem occurred with reading from the <see cref="GetStream()"/></exception>
-        public IEnumerable<IAtomType> ReadAtomTypes(IChemObjectBuilder builder)
+        public IEnumerable<IAtomType> ReadAtomTypes()
         {
             if (GetStream() == null)
                 throw new Exception("There was a problem getting an input stream");
 
-            return new OWLAtomTypeReader(GetStream()).ReadAtomTypes(builder);
+            return new OWLAtomTypeReader(GetStream()).ReadAtomTypes();
         }
     }
 }

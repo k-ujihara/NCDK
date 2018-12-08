@@ -21,7 +21,6 @@ using NCDK.AtomTypes.Mappers;
 using NCDK.Config;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace NCDK.AtomTypes
@@ -34,7 +33,8 @@ namespace NCDK.AtomTypes
     // @cdk.created    2008-07-13
     // @cdk.module     atomtype
     // @cdk.keyword    atom type, Sybyl
-    public class SybylAtomTypeMatcher : IAtomTypeMatcher
+    public class SybylAtomTypeMatcher 
+        : IAtomTypeMatcher
     {
         private const string SYBYL_ATOM_TYPE_LIST = "NCDK.Dict.Data.sybyl-atom-types.owl";
         private const string CDK_TO_SYBYL_MAP = "NCDK.Dict.Data.cdk-sybyl-mappings.owl";
@@ -43,35 +43,27 @@ namespace NCDK.AtomTypes
         private IAtomTypeMatcher cdkMatcher;
         private AtomTypeMapper mapper;
 
-        private static Dictionary<IChemObjectBuilder, SybylAtomTypeMatcher> factories = new Dictionary<IChemObjectBuilder, SybylAtomTypeMatcher>(1);
-
-        private SybylAtomTypeMatcher(IChemObjectBuilder builder)
+        private SybylAtomTypeMatcher()
         {
             var stream = ResourceLoader.GetAsStream(SYBYL_ATOM_TYPE_LIST);
-            factory = AtomTypeFactory.GetInstance(stream, "owl", builder);
+            factory = AtomTypeFactory.GetInstance(stream, "owl");
             cdkMatcher = CDK.AtomTypeMatcher;
             var mapStream = ResourceLoader.GetAsStream(CDK_TO_SYBYL_MAP);
             mapper = AtomTypeMapper.GetInstance(CDK_TO_SYBYL_MAP, mapStream);
         }
 
+        private static readonly SybylAtomTypeMatcher instance = new SybylAtomTypeMatcher();
+
         /// <summary>
-        /// Returns an instance of this atom typer. It uses the given <paramref name="builder"/> to
-        /// create atom type objects.
+        /// Get an instance of this atom typer.
         /// </summary>
-        /// <param name="builder"><see cref="IChemObjectBuilder"/> to use to create <see cref="IAtomType"/> instances.</param>
-        /// <returns>an instance of this atom type matcher.</returns>
-        public static SybylAtomTypeMatcher GetInstance(IChemObjectBuilder builder)
-        {
-            if (!factories.ContainsKey(builder))
-                factories.Add(builder, new SybylAtomTypeMatcher(builder));
-            return factories[builder];
-        }
+        public static SybylAtomTypeMatcher GetInstance() => instance;
 
         public IEnumerable<IAtomType> FindMatchingAtomTypes(IAtomContainer atomContainer)
         {
             foreach (var atom in atomContainer.Atoms)
             {
-                IAtomType type = cdkMatcher.FindMatchingAtomType(atomContainer, atom);
+                var type = cdkMatcher.FindMatchingAtomType(atomContainer, atom);
                 atom.AtomTypeName = type?.AtomTypeName;
                 atom.Hybridization = type == null ? Hybridization.Unset : type.Hybridization;
             }

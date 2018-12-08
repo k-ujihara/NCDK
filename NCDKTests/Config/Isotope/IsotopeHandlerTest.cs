@@ -19,7 +19,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config.Isotopes;
-using NCDK.Silent;
 
 namespace NCDK.Config.Isotope
 {
@@ -33,14 +32,14 @@ namespace NCDK.Config.Isotope
         [TestMethod()]
         public void TestIsotopeHandler_IChemObjectBuilder()
         {
-            IsotopeHandler handler = new IsotopeHandler(new ChemObject().Builder);
+            IsotopeHandler handler = new IsotopeHandler();
             Assert.IsNotNull(handler);
         }
 
         [TestMethod()]
         public void TestGetIsotopes()
         {
-            IsotopeHandler handler = new IsotopeHandler(new ChemObject().Builder);
+            IsotopeHandler handler = new IsotopeHandler();
             // nothing is read
             Assert.IsNotNull(handler);
             Assert.IsNull(handler.Isotopes);
@@ -49,7 +48,7 @@ namespace NCDK.Config.Isotope
         [TestMethod()]
         public void TestStartDocument()
         {
-            IsotopeHandler handler = new IsotopeHandler(new ChemObject().Builder);
+            IsotopeHandler handler = new IsotopeHandler();
             // nothing is read, but Vector is initialized
             Assert.IsNotNull(handler);
             Assert.IsNull(handler.Isotopes);

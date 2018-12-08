@@ -32,7 +32,7 @@ namespace NCDK.IO
             //Double shielding = null;
             object obj = null;
             int shieldingCounter = 0;
-            string filename = "NCDK.Data.Gaussian.g98ReaderNMRTest.log";
+            var filename = "NCDK.Data.Gaussian.g98ReaderNMRTest.log";
             var ins = ResourceLoader.GetAsStream(filename);
             var inputReader = new StreamReader(ins);
             Gaussian98Reader g98Reader = new Gaussian98Reader(inputReader);

@@ -19,7 +19,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
-using NCDK.Silent;
 using NCDK.Formula;
 using NCDK.IO;
 using NCDK.Templates;
@@ -34,7 +33,8 @@ namespace NCDK.Tools.Manipulator
     /// </summary>
     // @cdk.module test-formula
     [TestClass()]
-    public class MolecularFormulaManipulatorTest : CDKTestCase
+    public class MolecularFormulaManipulatorTest 
+        : CDKTestCase
     {
         private readonly static IChemObjectBuilder builder = CDK.Builder;
         private IsotopeFactory ifac;
@@ -770,7 +770,7 @@ namespace NCDK.Tools.Manipulator
         public void TestGetAtomContainer_String_IChemObjectBuilder()
         {
             var mf = "C2H4";
-            var atomContainer = MolecularFormulaManipulator.GetAtomContainer(mf, ChemObjectBuilder.Instance);
+            var atomContainer = MolecularFormulaManipulator.GetAtomContainer(mf, builder);
             Assert.AreEqual(6, atomContainer.Atoms.Count);
         }
 
@@ -990,8 +990,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestSingleAtomFromSmiles()
         {
-            var mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("C"));
+            var mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
 
             // previously performed inside SmilesParser
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -1146,10 +1146,10 @@ namespace NCDK.Tools.Manipulator
         public void TestFromMol()
         {
             var filename = "NCDK.Data.MDL.formulatest.mol";
-            ChemFile chemFile;
+            IChemFile chemFile;
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
             {
-                chemFile = reader.Read(new ChemFile());
+                chemFile = reader.Read(builder.NewChemFile());
             }
             Assert.IsNotNull(chemFile);
             var mols = ChemFileManipulator.GetAllAtomContainers(chemFile).ToReadOnlyList();
@@ -1169,8 +1169,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestHelium()
         {
-            var helium = new AtomContainer();
-            helium.Atoms.Add(new Atom("He"));
+            var helium = builder.NewAtomContainer();
+            helium.Atoms.Add(builder.NewAtom("He"));
             var formula = MolecularFormulaManipulator.GetMolecularFormula(helium);
             Assert.IsNotNull(formula);
             Assert.AreEqual("He", MolecularFormulaManipulator.GetString(formula));
@@ -1180,8 +1180,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestAmericum()
         {
-            var helium = new AtomContainer();
-            helium.Atoms.Add(new Atom("Am"));
+            var helium = builder.NewAtomContainer();
+            helium.Atoms.Add(builder.NewAtom("Am"));
             var formula = MolecularFormulaManipulator.GetMolecularFormula(helium);
             Assert.IsNotNull(formula);
             Assert.AreEqual("Am", MolecularFormulaManipulator.GetString(formula));
@@ -1207,9 +1207,9 @@ namespace NCDK.Tools.Manipulator
         public void NoNullPointerExceptionForExactMassOfRGroups()
         {
             var formula = new MolecularFormula();
-            formula.Add(new Isotope("C"));
-            formula.Add(new Isotope("H"), 3);
-            formula.Add(new Isotope("R"));
+            formula.Add(builder.NewIsotope("C"));
+            formula.Add(builder.NewIsotope("H"), 3);
+            formula.Add(builder.NewIsotope("R"));
             Assert.AreEqual(15.0234, MolecularFormulaManipulator.GetTotalExactMass(formula), 0.01);
         }
 
@@ -1217,9 +1217,9 @@ namespace NCDK.Tools.Manipulator
         public void NoNullPointerExceptionForMassOfRGroups()
         {
             var formula = new MolecularFormula();
-            formula.Add(new Isotope("C"));
-            formula.Add(new Isotope("H"), 3);
-            formula.Add(new Isotope("R"));
+            formula.Add(builder.NewIsotope("C"));
+            formula.Add(builder.NewIsotope("H"), 3);
+            formula.Add(builder.NewIsotope("R"));
             Assert.AreEqual(15.0, MolecularFormulaManipulator.GetTotalMassNumber(formula), 0.01);
         }
 
@@ -1227,9 +1227,9 @@ namespace NCDK.Tools.Manipulator
         public void NoNullPointerExceptionForMajorMassOfRGroups()
         {
             var formula = new MolecularFormula();
-            formula.Add(new Isotope("C"));
-            formula.Add(new Isotope("H"), 3);
-            formula.Add(new Isotope("R"));
+            formula.Add(builder.NewIsotope("C"));
+            formula.Add(builder.NewIsotope("H"), 3);
+            formula.Add(builder.NewIsotope("R"));
             Assert.AreEqual(15.0234, MolecularFormulaManipulator.GetMajorIsotopeMass(formula), 0.01);
         }
 
@@ -1340,10 +1340,10 @@ namespace NCDK.Tools.Manipulator
             var ifac = BODRIsotopeFactory.Instance;
             var bldr = CDK.Builder;
             var mf = bldr.NewMolecularFormula();
-            mf.Add(new Atom("C"), 7);
-            mf.Add(new Atom("O"), 3);
-            mf.Add(new Atom("H"), 3);
-            mf.Add(new Atom("Br"), 1);
+            mf.Add(builder.NewAtom("C"), 7);
+            mf.Add(builder.NewAtom("O"), 3);
+            mf.Add(builder.NewAtom("H"), 3);
+            mf.Add(builder.NewAtom("Br"), 1);
             mf.Add(ifac.GetIsotope("Br", 81), 1);
             Assert.AreEqual("C7H3Br2O3", MolecularFormulaManipulator.GetString(mf, false, false));
             Assert.AreEqual("C7H3Br[81]BrO3", MolecularFormulaManipulator.GetString(mf, false, true));

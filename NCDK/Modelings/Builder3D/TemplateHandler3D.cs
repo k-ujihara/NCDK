@@ -45,7 +45,6 @@ namespace NCDK.Modelings.Builder3D
     // @author      steinbeck
     // @cdk.created 2004-09-21
     // @cdk.module  builder3d
-    // @cdk.githash
     public class TemplateHandler3D
     {
         private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;

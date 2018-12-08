@@ -24,7 +24,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Geometries;
 using NCDK.Numerics;
-using NCDK.Silent;
 using System.Diagnostics;
 
 namespace NCDK.IO.CML
@@ -38,6 +37,8 @@ namespace NCDK.IO.CML
     [TestClass()]
     public class JmolTest : CDKTestCase
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
+
         /// <summary>
         /// Now come the actual tests...
         /// </summary>
@@ -49,22 +50,22 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestEstron()
         {
-            string filename = "NCDK.Data.CML.estron.cml";
+            var filename = "NCDK.Data.CML.estron.cml";
             Trace.TraceInformation("Testing: " + filename);
             IChemFile chemFile;
             using (var ins = ResourceLoader.GetAsStream(filename))
             using (var reader = new CMLReader(ins))
             {
-                chemFile = reader.Read(new ChemFile());
+                chemFile = reader.Read(builder.NewChemFile());
             }
 
             // test the resulting ChemFile content
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
 
             // test the molecule
@@ -88,20 +89,20 @@ namespace NCDK.IO.CML
         [TestMethod(), Ignore()] // It is broken, but not used, AFAIK
         public void TestAnimation()
         {
-            string filename = "NCDK.Data.CML.SN1_reaction.cml";
+            var filename = "NCDK.Data.CML.SN1_reaction.cml";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
+            var reader = new CMLReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             // test the resulting ChemFile content
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(34, seq.Count);
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
             var som = model.MoleculeSet;
             Assert.IsNotNull(som);
@@ -120,22 +121,22 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestMethanolTwo()
         {
-            string filename = "NCDK.Data.CML.methanol2.cml";
+            var filename = "NCDK.Data.CML.methanol2.cml";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
+            var reader = new CMLReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             // test the resulting ChemFile content
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
             //Debug.WriteLine($"NO sequences: {chemFile.Count}");
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
             //Debug.WriteLine($"NO models: {seq.Count}");
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
             Assert.AreEqual(1, model.MoleculeSet.Count);
 
@@ -152,22 +153,22 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestMethanolOne()
         {
-            string filename = "NCDK.Data.CML.methanol1.cml";
+            var filename = "NCDK.Data.CML.methanol1.cml";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
+            var reader = new CMLReader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
 
             // test the resulting ChemFile content
             Assert.IsNotNull(chemFile);
             Assert.AreEqual(1, chemFile.Count);
             //Debug.WriteLine($"NO sequences: {chemFile.Count}");
-            IChemSequence seq = chemFile[0];
+            var seq = chemFile[0];
             Assert.IsNotNull(seq);
             Assert.AreEqual(1, seq.Count);
             //Debug.WriteLine($"NO models: {seq.Count}");
-            IChemModel model = seq[0];
+            var model = seq[0];
             Assert.IsNotNull(model);
             var som = model.MoleculeSet;
             Assert.AreEqual(1, som.Count);

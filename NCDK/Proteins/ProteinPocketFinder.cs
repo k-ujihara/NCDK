@@ -874,7 +874,7 @@ namespace NCDK.Proteins
             IAtom[] atoms = Protein.Atoms.ToArray();
             try
             {
-                atf = AtomTypeFactory.GetInstance(VanDerWaalsFile, atoms[0].Builder);
+                atf = AtomTypeFactory.GetInstance(VanDerWaalsFile);
             }
             catch (Exception ex1)
             {

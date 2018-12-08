@@ -23,13 +23,10 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Silent;
 using NCDK.IO;
 using NCDK.Numerics;
-using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 using System;
-using System.IO;
 using System.Linq;
 
 namespace NCDK.Tools
@@ -43,16 +40,17 @@ namespace NCDK.Tools
     [TestClass()]
     public class HOSECodeGeneratorTest : CDKTestCase
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
         static readonly bool standAlone = false;
 
         // @cdk.bug 968852
         [TestMethod()]
         public void Test968852()
         {
-            string filename = "NCDK.Data.MDL.2,5-dimethyl-furan.mol";
+            var filename = "NCDK.Data.MDL.2,5-dimethyl-furan.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-            IAtomContainer mol1 = reader.Read(ChemObjectBuilder.Instance.NewAtomContainer());
+            var reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
+            IAtomContainer mol1 = reader.Read(builder.NewAtomContainer());
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             Aromaticity.CDKLegacy.Apply(mol1);
             Assert.AreEqual(new HOSECodeGenerator().GetHOSECode(mol1, mol1.Atoms[2], 6),
@@ -62,15 +60,15 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestSecondSphere()
         {
-            string filename = "NCDK.Data.MDL.isopropylacetate.mol";
+            var filename = "NCDK.Data.MDL.isopropylacetate.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-            IAtomContainer mol1 = reader.Read(ChemObjectBuilder.Instance.NewAtomContainer());
+            var reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
+            IAtomContainer mol1 = reader.Read(builder.NewAtomContainer());
             string code1 = new HOSECodeGenerator().GetHOSECode(mol1, mol1.Atoms[0], 6);
             filename = "NCDK.Data.MDL.testisopropylacetate.mol";
             var ins2 = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader2 = new MDLV2000Reader(ins2, ChemObjectReaderMode.Strict);
-            IAtomContainer mol2 = reader2.Read(ChemObjectBuilder.Instance.NewAtomContainer());
+            IAtomContainer mol2 = reader2.Read(builder.NewAtomContainer());
             string code2 = new HOSECodeGenerator().GetHOSECode(mol2, mol2.Atoms[2], 6);
             Assert.AreNotSame(code2, code1);
         }
@@ -83,7 +81,7 @@ namespace NCDK.Tools
                 "C-3;*C*C(//)", "C-3;*C*CO(//)", "O-2;CC(//)", "C-3;*C*CO(//)", "C-3;*C*CO(//)", "O-2;CC(//)",
                 "C-4;O(//)", "C-3;*C*C(//)", "C-3;*C*CC(//)", "C-3;*C*C*C(//)", "C-3;*C*C*C(//)"};
 
-            var mol = new AtomContainer();
+            var mol = builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("O");
             a1.Point2D = new Vector2(502.88457268119913, 730.4999999999999);
             mol.Atoms.Add(a1);
@@ -271,7 +269,7 @@ namespace NCDK.Tools
                 "C-3;*C*C*C(*C*C,*CC,*CC/*C,*CC,O,*&,=OC,*&,=&/*&O,*&,*C*C,&,,=&)",
                 "C-3;*C*C*C(*C*C,*C,*CC,O/*CC,*CC,*&O,*&,*C*C,&/*&,=OC,*&,=&,C,*C&,*C)"};
 
-            var mol = new AtomContainer();
+            var mol = builder.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("O");
             a1.Point2D = new Vector2(502.88457268119913, 730.4999999999999);
             mol.Atoms.Add(a1);

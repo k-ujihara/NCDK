@@ -107,7 +107,7 @@ namespace NCDK.IO
         /// <exception cref="IOException">if there is an error during writing</exception>
         public void WriteMolecule(IAtomContainer mol)
         {
-            matcher = SybylAtomTypeMatcher.GetInstance(mol.Builder);
+            matcher = SybylAtomTypeMatcher.GetInstance();
             try
             {
                 Debug.WriteLine("Writing header...");

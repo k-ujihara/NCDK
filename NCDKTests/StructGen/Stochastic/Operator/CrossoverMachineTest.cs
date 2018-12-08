@@ -36,7 +36,7 @@ namespace NCDK.StructGen.Stochastic.Operators
         {
             IChemObjectSet<IAtomContainer> som;
 
-            string filename = "NCDK.Data.Smiles.c10h16isomers.smi";
+            var filename = "NCDK.Data.Smiles.c10h16isomers.smi";
             using (var ins = ResourceLoader.GetAsStream(filename))
             using (SMILESReader reader = new SMILESReader(ins))
             {

@@ -21,18 +21,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
-using System;
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+
 namespace NCDK.SMSD.Helper
 {
     /// <summary>
     /// Class that stores raw Mapping(s) after each algorithm is executed.
     /// </summary>
     // @cdk.module smsd
-    // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     public class FinalMappings : IFinalMapping
     {

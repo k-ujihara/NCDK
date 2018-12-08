@@ -8,8 +8,10 @@ using static NCDK.Config.AtomTypes.OWLConstants;
 
 namespace NCDK.Config.AtomTypes
 {
-    public class OWLAtomTypeReader : IDisposable
+    public class OWLAtomTypeReader 
+        : IDisposable
     {
+        private readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private TextReader input;
 
         public OWLAtomTypeReader(Stream input)
@@ -22,7 +24,7 @@ namespace NCDK.Config.AtomTypes
             this.input = input;
         }
 
-        public IReadOnlyList<IAtomType> ReadAtomTypes(IChemObjectBuilder builder)
+        public IReadOnlyList<IAtomType> ReadAtomTypes()
         {
             var ret = new List<IAtomType>();
 

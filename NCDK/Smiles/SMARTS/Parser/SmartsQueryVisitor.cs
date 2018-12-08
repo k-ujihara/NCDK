@@ -19,7 +19,6 @@
  */
 
 using NCDK.Common.Collections;
-using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Isomorphisms.Matchers.SMARTS;
 using NCDK.Stereo;
@@ -44,9 +43,8 @@ namespace NCDK.Smiles.SMARTS.Parser
     // @author Dazhi Jiao
     // @cdk.created 2007-04-24
     // @cdk.module smarts
-    // @cdk.githash
     // @cdk.keyword SMARTS AST
-    [System.Obsolete]
+    [Obsolete]
     internal class SmartsQueryVisitor : ISMARTSParserVisitor
     {
         // current atoms with a ring identifier

@@ -31,7 +31,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void Test1()
         {
-            string filename = "NCDK.Data.MDL.chlorobenzene.mol";
+            var filename = "NCDK.Data.MDL.chlorobenzene.mol";
             IAtomContainer container;
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
             {
@@ -54,7 +54,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void Test1()
         {
-            string filename = "NCDK.Data.MDL.chlorobenzene.mol";
+            var filename = "NCDK.Data.MDL.chlorobenzene.mol";
             IAtomContainer container;
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
             {
@@ -77,7 +77,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void Test1()
         {
-            string filename = "NCDK.Data.MDL.chlorobenzene.mol";
+            var filename = "NCDK.Data.MDL.chlorobenzene.mol";
             IAtomContainer container;
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
             {

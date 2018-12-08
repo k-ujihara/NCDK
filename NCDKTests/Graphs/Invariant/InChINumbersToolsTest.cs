@@ -68,7 +68,7 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void TestGlycine()
         {
-            SmilesParser parser = CDK.SmilesParser;
+            var parser = CDK.SmilesParser;
             var atomContainer = parser.ParseSmiles("C(C(=O)O)N");
             long[] numbers = InChINumbersTools.GetNumbers(atomContainer);
             Assert.AreEqual(5, numbers.Length);
@@ -82,7 +82,7 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void TestGlycine_uSmiles()
         {
-            SmilesParser parser = CDK.SmilesParser;
+            var parser = CDK.SmilesParser;
             var atomContainer = parser.ParseSmiles("C(C(=O)O)N");
             long[] numbers = InChINumbersTools.GetNumbers(atomContainer);
             Assert.AreEqual(5, numbers.Length);
@@ -96,7 +96,7 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void FixedH()
         {
-            SmilesParser parser = CDK.SmilesParser;
+            var parser = CDK.SmilesParser;
             var atomContainer = parser.ParseSmiles("N1C=NC2=CC=CC=C12");
             string auxInfo = InChINumbersTools.AuxInfo(atomContainer, InChIOption.FixedH);
             string expected = "AuxInfo=1/1/" + "N:6,7,5,8,2,4,9,3,1/" + "E:(1,2)(3,4)(6,7)(8,9)/" + "F:7,6,8,5,2,9,4,1,3/"

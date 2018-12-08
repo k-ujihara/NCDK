@@ -18,24 +18,28 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System.Linq;
 
 namespace NCDK.AtomTypes
 {
     // @cdk.module test-structgen
     [TestClass()]
-    public class StructGenAtomTypeGuesserTest : CDKTestCase
+    public class StructGenAtomTypeGuesserTest
+        : CDKTestCase
     {
+        private readonly static IChemObjectBuilder builder = CDK.Builder;
+
         [TestMethod()]
         public void TestPossibleAtomTypes_IAtomContainer_IAtom()
         {
-            var mol = new AtomContainer();
-            Atom atom = new Atom("C") { ImplicitHydrogenCount = 3 };
-            Atom atom2 = new Atom("N") { ImplicitHydrogenCount = 2 };
+            var mol = builder.NewAtomContainer();
+            var atom = builder.NewAtom("C");
+            atom.ImplicitHydrogenCount = 3;
+            var atom2 = builder.NewAtom("N");
+            atom.ImplicitHydrogenCount = 2;
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
-            mol.Bonds.Add(new Bond(atom, atom2, BondOrder.Single));
+            mol.Bonds.Add(builder.NewBond(atom, atom2, BondOrder.Single));
 
             StructGenAtomTypeGuesser atm = new StructGenAtomTypeGuesser();
             var matched = atm.PossibleAtomTypes(mol, atom);

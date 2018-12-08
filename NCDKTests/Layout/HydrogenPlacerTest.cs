@@ -16,15 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Mathematics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.Geometries;
 using NCDK.IO;
+using NCDK.Numerics;
 using System;
 using System.Diagnostics;
-using System.IO;
-using NCDK.Numerics;
 
 namespace NCDK.Layout
 {
@@ -32,30 +30,31 @@ namespace NCDK.Layout
     [TestClass()]
     public class HydrogenPlacerTest : CDKTestCase
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         public bool standAlone = false;
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
         public void TestAtomWithoutCoordinates()
         {
-            HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
-            hydrogenPlacer.PlaceHydrogens2D(new AtomContainer(), new Atom(), 1.5);
+            var hydrogenPlacer = new HydrogenPlacer();
+            hydrogenPlacer.PlaceHydrogens2D(builder.NewAtomContainer(), builder.NewAtom(), 1.5);
         }
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
         public void TestNullContainer()
         {
-            HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
-            hydrogenPlacer.PlaceHydrogens2D(null, new Atom(), 1.5);
+            var hydrogenPlacer = new HydrogenPlacer();
+            hydrogenPlacer.PlaceHydrogens2D(null, builder.NewAtom(), 1.5);
         }
 
         [TestMethod()]
         public void TestNoConnections()
         {
-            HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
-            AtomContainer container = new AtomContainer();
-            Atom atom = new Atom("C", new Vector2(0, 0));
+            var hydrogenPlacer = new HydrogenPlacer();
+            var container = builder.NewAtomContainer();
+            var atom = builder.NewAtom("C", new Vector2(0, 0));
             container.Atoms.Add(atom);
             hydrogenPlacer.PlaceHydrogens2D(container, atom, 1.5);
         }
@@ -64,15 +63,15 @@ namespace NCDK.Layout
         [TestMethod()]
         public void TestH2()
         {
-            HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
+            var hydrogenPlacer = new HydrogenPlacer();
 
             // h1 has no coordinates
-            IAtom h1 = new Atom("H");
-            IAtom h2 = new Atom("H", Vector2.Zero);
-            var m = new AtomContainer();
+            var h1 = builder.NewAtom("H");
+            var h2 = builder.NewAtom("H", Vector2.Zero);
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(h1);
             m.Atoms.Add(h2);
-            m.Bonds.Add(new Bond(h1, h2));
+            m.Bonds.Add(builder.NewBond(h1, h2));
             hydrogenPlacer.PlaceHydrogens2D(m, 1.5);
             Assert.IsNotNull(h1.Point2D);
         }
@@ -81,15 +80,15 @@ namespace NCDK.Layout
         [ExpectedException(typeof(ArgumentException))]
         public void UnPlacedNonHydrogen()
         {
-            HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
+            var hydrogenPlacer = new HydrogenPlacer();
 
             // c2 is unplaced
-            IAtom c1 = new Atom("C", Vector2.Zero);
-            IAtom c2 = new Atom("C");
-            var m = new AtomContainer();
+            var c1 = builder.NewAtom("C", Vector2.Zero);
+            var c2 = builder.NewAtom("C");
+            var m = builder.NewAtomContainer();
             m.Atoms.Add(c1);
             m.Atoms.Add(c2);
-            m.Bonds.Add(new Bond(c1, c2));
+            m.Bonds.Add(builder.NewBond(c1, c2));
             hydrogenPlacer.PlaceHydrogens2D(m, 1.5);
         }
 
@@ -97,8 +96,8 @@ namespace NCDK.Layout
         [TestMethod()]
         public void TestBug933572()
         {
-            var ac = new AtomContainer();
-            ac.Atoms.Add(new Atom("H"));
+            var ac = builder.NewAtomContainer();
+            ac.Atoms.Add(builder.NewAtom("H"));
             ac.Atoms[0].Point2D = Vector2.Zero;
             AddExplicitHydrogens(ac);
             var hPlacer = new HydrogenPlacer();
@@ -112,28 +111,28 @@ namespace NCDK.Layout
         [TestMethod()]
         public void TestPlaceHydrogens2D()
         {
-            HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
-            IAtomContainer dichloromethane = new AtomContainer();
-            Atom carbon = new Atom("C");
-            Vector2 carbonPos = new Vector2(0.0, 0.0);
+            var hydrogenPlacer = new HydrogenPlacer();
+            var dichloromethane = builder.NewAtomContainer();
+            var carbon = builder.NewAtom("C");
+            var carbonPos = new Vector2(0.0, 0.0);
             carbon.Point2D = carbonPos;
-            Atom h1 = new Atom("H");
-            Atom h2 = new Atom("H");
-            Atom cl1 = new Atom("Cl");
-            Vector2 cl1Pos = new Vector2(0.0, -1.0);
+            var h1 = builder.NewAtom("H");
+            var h2 = builder.NewAtom("H");
+            var cl1 = builder.NewAtom("Cl");
+            var cl1Pos = new Vector2(0.0, -1.0);
             cl1.Point2D = cl1Pos;
-            Atom cl2 = new Atom("Cl");
-            Vector2 cl2Pos = new Vector2(-1.0, 0.0);
+            var cl2 = builder.NewAtom("Cl");
+            var cl2Pos = new Vector2(-1.0, 0.0);
             cl2.Point2D = cl2Pos;
             dichloromethane.Atoms.Add(carbon);
             dichloromethane.Atoms.Add(h1);
             dichloromethane.Atoms.Add(h2);
             dichloromethane.Atoms.Add(cl1);
             dichloromethane.Atoms.Add(cl2);
-            dichloromethane.Bonds.Add(new Bond(carbon, h1));
-            dichloromethane.Bonds.Add(new Bond(carbon, h2));
-            dichloromethane.Bonds.Add(new Bond(carbon, cl1));
-            dichloromethane.Bonds.Add(new Bond(carbon, cl2));
+            dichloromethane.Bonds.Add(builder.NewBond(carbon, h1));
+            dichloromethane.Bonds.Add(builder.NewBond(carbon, h2));
+            dichloromethane.Bonds.Add(builder.NewBond(carbon, cl1));
+            dichloromethane.Bonds.Add(builder.NewBond(carbon, cl2));
 
             Assert.IsNull(h1.Point2D);
             Assert.IsNull(h2.Point2D);
@@ -156,15 +155,15 @@ namespace NCDK.Layout
         /// </summary>
         public void VisualFullMolecule2DEvaluation()
         {
-            HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
-            string filename = "NCDK.Data.MDL.reserpine.mol";
+            var hydrogenPlacer = new HydrogenPlacer();
+            var filename = "NCDK.Data.MDL.reserpine.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLReader reader = new MDLReader(ins, ChemObjectReaderMode.Strict);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
-            IChemSequence seq = chemFile[0];
-            IChemModel model = seq[0];
-            IAtomContainer mol = model.MoleculeSet[0];
-            double bondLength = GeometryUtil.GetBondLengthAverage(mol);
+            var reader = new MDLReader(ins, ChemObjectReaderMode.Strict);
+            var chemFile = reader.Read(builder.NewChemFile());
+            var seq = chemFile[0];
+            var model = seq[0];
+            var mol = model.MoleculeSet[0];
+            var bondLength = GeometryUtil.GetBondLengthAverage(mol);
             Debug.WriteLine("Read Reserpine");
             Debug.WriteLine("Starting addition of H's");
             AddExplicitHydrogens(mol);

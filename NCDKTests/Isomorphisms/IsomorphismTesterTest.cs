@@ -149,7 +149,7 @@ namespace NCDK.Isomorphisms
         public void TestBiphenyl()
         {
             //get the biphenyl as aromatic smiles
-            SmilesParser parser = CDK.SmilesParser;
+            var parser = CDK.SmilesParser;
             var biphenyl_aromaticsmiles = parser.ParseSmiles("c1ccccc1-c2ccccc2");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(biphenyl_aromaticsmiles);
             var hAdder = CDK.HydrogenAdder;

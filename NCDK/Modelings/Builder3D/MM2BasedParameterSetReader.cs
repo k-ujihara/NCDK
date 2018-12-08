@@ -43,6 +43,8 @@ namespace NCDK.Modelings.Builder3D
     // @cdk.keyword    atom type, MM2
     public class MM2BasedParameterSetReader
     {
+        private readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+
         private const string configFile = "NCDK.Modelings.ForceField.Data.mm2.prm";
         private Stream ins = null;
         private Dictionary<string, object> parameterSet;
@@ -335,7 +337,7 @@ namespace NCDK.Modelings.Builder3D
         /// <summary>
         /// Read and stores the atom types in a vector
         /// </summary>
-        private void SetAtomTypes(IChemObjectBuilder builder)
+        private void SetAtomTypes()
         {
             string name = "";
             string rootType = "";
@@ -900,7 +902,7 @@ namespace NCDK.Modelings.Builder3D
         /// <summary>
         /// The main method which parses through the force field configuration file
         /// </summary>
-        public void ReadParameterSets(IChemObjectBuilder builder)
+        public void ReadParameterSets()
         {
             //vdW,vdWp,bond,bond4,bond3,angle,angle4,angle3,
             //strbond,opbend,torsion,torsion4,charge,dipole,
@@ -939,7 +941,7 @@ namespace NCDK.Modelings.Builder3D
                     else if (s.StartsWith("atom", StringComparison.Ordinal) && nt <= 8)
                     {
                         a[0]++;
-                        SetAtomTypes(builder);
+                        SetAtomTypes();
                     }
                     else if (s.StartsWith("vdw ", StringComparison.Ordinal) && nt <= 5)
                     {

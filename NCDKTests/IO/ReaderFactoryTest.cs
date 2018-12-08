@@ -19,11 +19,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.IO.Formats;
 using NCDK.Tools.Manipulator;
 using System.IO;
@@ -38,6 +36,7 @@ namespace NCDK.IO
     [TestClass()]
     public class ReaderFactoryTest : AbstractReaderFactoryTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         private ReaderFactory factory = new ReaderFactory();
 
         [TestMethod()]
@@ -164,7 +163,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestBug2153298()
         {
-            string filename = "NCDK.Data.ASN.PubChem.cid1145.xml";
+            var filename = "NCDK.Data.ASN.PubChem.cid1145.xml";
             var ins = ResourceLoader.GetAsStream(filename);
             Assert.IsNotNull(ins, "Cannot find file: " + filename);
             IChemFormatMatcher realFormat = (IChemFormatMatcher)PubChemCompoundXMLFormat.Instance;
@@ -175,7 +174,7 @@ namespace NCDK.IO
             Assert.IsNotNull(reader);
             Assert.AreEqual(((IChemFormat)PubChemCompoundXMLFormat.Instance).ReaderClassName, reader.GetType().FullName);
             // now try reading something from it
-            IAtomContainer molecule = (IAtomContainer)reader.Read(new AtomContainer());
+            IAtomContainer molecule = (IAtomContainer)reader.Read(builder.NewAtomContainer());
             Assert.IsNotNull(molecule);
             Assert.AreNotSame(0, molecule.Atoms.Count);
             Assert.AreNotSame(0, molecule.Bonds.Count);
@@ -184,15 +183,15 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestReadGz()
         {
-            string filename = "NCDK.Data.XYZ.bf3.xyz.gz";
+            var filename = "NCDK.Data.XYZ.bf3.xyz.gz";
             var input =new GZipStream(ResourceLoader.GetAsStream(filename), CompressionMode.Decompress);
             // ok, if format ok, try instantiating a reader
             ISimpleChemObjectReader reader = factory.CreateReader(input);
             Assert.IsNotNull(reader);
             Assert.AreEqual(((IChemFormat)XYZFormat.Instance).ReaderClassName, reader.GetType().FullName);
             // now try reading something from it
-            IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
-            IAtomContainer molecule = new AtomContainer();
+            var chemFile = reader.Read(builder.NewChemFile());
+            var molecule = builder.NewAtomContainer();
             foreach (var container in ChemFileManipulator.GetAllAtomContainers(chemFile))
             {
                 molecule.Add(container);
@@ -204,15 +203,15 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestReadGzWithGzipDetection()
         {
-            string filename = "NCDK.Data.XYZ.bf3.xyz.gz";
+            var filename = "NCDK.Data.XYZ.bf3.xyz.gz";
             var input = ResourceLoader.GetAsStream(filename);
             // ok, if format ok, try instantiating a reader
             ISimpleChemObjectReader reader = factory.CreateReader(input);
             Assert.IsNotNull(reader);
             Assert.AreEqual(((IChemFormat)XYZFormat.Instance).ReaderClassName, reader.GetType().FullName);
             // now try reading something from it
-            IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
-            IAtomContainer molecule = new AtomContainer();
+            var chemFile = reader.Read(builder.NewChemFile());
+            var molecule = builder.NewAtomContainer();
             foreach (var container in ChemFileManipulator.GetAllAtomContainers(chemFile))
             {
                 molecule.Add(container);

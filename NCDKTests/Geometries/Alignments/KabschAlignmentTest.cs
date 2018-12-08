@@ -23,7 +23,7 @@ namespace NCDK.Geometries.Alignments
         {
             {
                 IAtomContainer ac;
-                string filename = "NCDK.Data.HIN.gravindex.hin";
+                var filename = "NCDK.Data.HIN.gravindex.hin";
                 var ins = ResourceLoader.GetAsStream(filename);
                 ISimpleChemObjectReader reader = new HINReader(ins);
                 ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());

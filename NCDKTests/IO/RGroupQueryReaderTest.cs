@@ -70,7 +70,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRGFileFormat()
         {
-            string filename = "NCDK.Data.MDL.rgfile.1.mol";
+            var filename = "NCDK.Data.MDL.rgfile.1.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             IChemFormat format = new FormatFactory().GuessFormat(ins);
             Assert.AreEqual(format.GetType(), typeof(RGroupQueryFormat));
@@ -83,7 +83,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRgroupQueryFile1()
         {
-            string filename = "NCDK.Data.MDL.rgfile.1.mol";
+            var filename = "NCDK.Data.MDL.rgfile.1.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             RGroupQueryReader reader = new RGroupQueryReader(ins);
@@ -260,7 +260,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRgroupQueryFile3()
         {
-            string filename = "NCDK.Data.MDL.rgfile.3.mol";
+            var filename = "NCDK.Data.MDL.rgfile.3.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             RGroupQueryReader reader = new RGroupQueryReader(ins);

@@ -229,7 +229,7 @@ namespace NCDK.Renderers.Generators.Standards
             KeyValuePair<HydrogenPosition, OffsetExtent>? best = null;
             foreach (var e in extentEntries)
             {
-                if (best == null || ExtentPriority.INSTANCE.Compare(e, best.Value) < 0) best = e;
+                if (best == null || ExtentPriority.Instance.Compare(e, best.Value) < 0) best = e;
             }
 
             Debug.Assert(best != null);
@@ -265,9 +265,10 @@ namespace NCDK.Renderers.Generators.Standards
         /// <summary>
         /// Comparator to prioritise <see cref="OffsetExtent"/>s.
         /// </summary>
-        private class ExtentPriority : IComparer<KeyValuePair<HydrogenPosition, OffsetExtent>>
+        private class ExtentPriority 
+            : IComparer<KeyValuePair<HydrogenPosition, OffsetExtent>>
         {
-            public static ExtentPriority INSTANCE = new ExtentPriority();
+            public static ExtentPriority Instance = new ExtentPriority();
 
             public int Compare(KeyValuePair<HydrogenPosition, OffsetExtent> a, KeyValuePair<HydrogenPosition, OffsetExtent> b)
             {

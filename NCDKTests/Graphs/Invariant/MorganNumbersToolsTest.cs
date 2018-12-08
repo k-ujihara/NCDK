@@ -74,9 +74,9 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void TestBug2846213()
         {
-            string filename = "NCDK.Data.MDL.bug2846213.mol";
+            var filename = "NCDK.Data.MDL.bug2846213.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
+            var reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             ChemFile chemFile = (ChemFile) reader.Read((ChemObject) new ChemFile());
             IAtomContainer ac = ChemFileManipulator.GetAllAtomContainers(chemFile).First();
             long[] morganNumbers = MorganNumbersTools.GetMorganNumbers(ac);

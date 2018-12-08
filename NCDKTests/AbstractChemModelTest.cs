@@ -91,7 +91,7 @@ namespace NCDK
         [TestMethod()]
         public void TestToString()
         {
-            IChemModel model = (IChemModel)NewChemObject();
+            var model = (IChemModel)NewChemObject();
             string description = model.ToString();
             for (int i = 0; i < description.Length; i++)
             {
@@ -104,7 +104,7 @@ namespace NCDK
 
         public override void TestClone()
         {
-            IChemModel model = (IChemModel)NewChemObject();
+            var model = (IChemModel)NewChemObject();
             object clone = model.Clone();
             Assert.IsNotNull(clone);
             Assert.IsTrue(clone is IChemModel);
@@ -113,7 +113,7 @@ namespace NCDK
         [TestMethod()]
         public void TestClone_IAtomContainerSet()
         {
-            IChemModel model = (IChemModel)NewChemObject();
+            var model = (IChemModel)NewChemObject();
             IChemModel clone = (IChemModel)model.Clone();
             Assert.IsNull(clone.MoleculeSet);
 
@@ -126,7 +126,7 @@ namespace NCDK
         [TestMethod()]
         public void TestClone_IReactionSet()
         {
-            IChemModel model = (IChemModel)NewChemObject();
+            var model = (IChemModel)NewChemObject();
             IChemModel clone = (IChemModel)model.Clone();
             Assert.IsNull(clone.ReactionSet);
 
@@ -139,7 +139,7 @@ namespace NCDK
         [TestMethod()]
         public void TestClone_Crystal()
         {
-            IChemModel model = (IChemModel)NewChemObject();
+            var model = (IChemModel)NewChemObject();
             IChemModel clone = (IChemModel)model.Clone();
             Assert.IsNull(clone.Crystal);
 
@@ -152,7 +152,7 @@ namespace NCDK
         [TestMethod()]
         public void TestClone_RingSet()
         {
-            IChemModel model = (IChemModel)NewChemObject();
+            var model = (IChemModel)NewChemObject();
             IChemModel clone = (IChemModel)model.Clone();
             Assert.IsNull(clone.RingSet);
 
@@ -395,7 +395,7 @@ namespace NCDK
         [TestMethod()]
         public void TestIsEmpty_ReactionSet()
         {
-            IChemModel model = (IChemModel)NewChemObject();
+            var model = (IChemModel)NewChemObject();
             IChemObjectBuilder builder = model.Builder;
 
             IAtomContainer molecule = builder.NewAtomContainer();
@@ -415,7 +415,7 @@ namespace NCDK
         [TestMethod()]
         public void TestIsEmpty_RingSet()
         {
-            IChemModel model = (IChemModel)NewChemObject();
+            var model = (IChemModel)NewChemObject();
             IChemObjectBuilder builder = model.Builder;
 
             IRing container = builder.NewRing();    // NCDK does not allow to add Ring to RingSet
@@ -433,7 +433,7 @@ namespace NCDK
         [TestMethod()]
         public void TestIsEmpty_Crystal()
         {
-            IChemModel model = (IChemModel)NewChemObject();
+            var model = (IChemModel)NewChemObject();
             IChemObjectBuilder builder = model.Builder;
 
             ICrystal crystal = builder.NewCrystal();

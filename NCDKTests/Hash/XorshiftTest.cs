@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Hash
@@ -45,9 +46,9 @@ namespace NCDK.Hash
         [TestMethod()]
         public void TestDistribution()
         {
-            int[] values = new int[10];
+            var values = new int[10];
 
-            long x = System.DateTime.Now.Ticks;
+            var x = System.DateTime.Now.Ticks;
 
             // fill the buckets (0..10)
             for (int i = 0; i < 1000000; i++)

@@ -1,5 +1,4 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.IO;
 using System.Diagnostics;
 using System.IO;
@@ -11,12 +10,14 @@ namespace NCDK.LibIO.CML
     [TestClass()]
     public class PDBAtomCustomizerTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+
         [TestMethod()]
         public void TestPDBAtomCustomization()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainer molecule = new AtomContainer();
-            IPDBAtom atom = new PDBAtom("C");
+            var molecule = builder.NewAtomContainer();
+            IPDBAtom atom = builder.NewPDBAtom("C");
             atom.Name = "CA";
             atom.ResName = "PHE";
             molecule.Atoms.Add(atom);

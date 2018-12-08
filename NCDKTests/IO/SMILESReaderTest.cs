@@ -51,7 +51,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestReading()
         {
-            string filename = "NCDK.Data.Smiles.smiles.smi";
+            var filename = "NCDK.Data.Smiles.smiles.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             SMILESReader reader = new SMILESReader(ins);
@@ -62,7 +62,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestReadingSmiFile_1()
         {
-            string filename = "NCDK.Data.Smiles.smiles.smi";
+            var filename = "NCDK.Data.Smiles.smiles.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             SMILESReader reader = new SMILESReader(ins);
@@ -76,7 +76,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestReadingSmiFile_2()
         {
-            string filename = "NCDK.Data.Smiles.smiles.smi";
+            var filename = "NCDK.Data.Smiles.smiles.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             SMILESReader reader = new SMILESReader(ins);
@@ -88,7 +88,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestReadingSmiFile_3()
         {
-            string filename = "NCDK.Data.Smiles.test3.smi";
+            var filename = "NCDK.Data.Smiles.test3.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             SMILESReader reader = new SMILESReader(ins);

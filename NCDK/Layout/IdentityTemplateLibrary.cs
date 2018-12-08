@@ -308,7 +308,8 @@ namespace NCDK.Layout
         /// </summary>
         public void Add(KeyValuePair<string, Vector2[]>? entry)
         {
-            if (entry != null) templateMap.Add(entry.Value.Key, entry.Value.Value);
+            if (entry != null)
+                templateMap.Add(entry.Value.Key, entry.Value.Value);
         }
 
         /// <summary>
@@ -461,10 +462,9 @@ namespace NCDK.Layout
         /// Update the template library - can be called for safety after
         /// each load.
         /// </summary>
-        /// <param name="bldr">builder</param>
-        public void Update(IChemObjectBuilder bldr)
+        public void Update()
         {
-            var smipar = new SmilesParser(bldr);
+            var smipar = new SmilesParser();
             var updated = new MultiDictionary<string, Vector2[]>();
             foreach (var e in templateMap)
             {

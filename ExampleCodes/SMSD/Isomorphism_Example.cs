@@ -10,7 +10,7 @@ namespace NCDK.SMSD
         {
             {
                 #region 1
-                SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+                SmilesParser sp = new SmilesParser();
                 // Benzene
                 IAtomContainer A1 = sp.ParseSmiles("C1=CC=CC=C1");
                 // Napthalene
@@ -46,7 +46,7 @@ namespace NCDK.SMSD
             }
             {
                 #region 2
-                SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+                SmilesParser sp = new SmilesParser();
                 // Benzene
                 IAtomContainer A1 = sp.ParseSmiles("C1=CC=CC=C1");
                 // Napthalene

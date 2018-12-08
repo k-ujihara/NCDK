@@ -24,7 +24,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO;
 using NCDK.Numerics;
-using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Stereo;
 using NCDK.Tools.Manipulator;
@@ -35,8 +34,10 @@ namespace NCDK.Geometries.CIP
 {
     // @cdk.module test-cip
     [TestClass()]
-    public class CIPToolTest : CDKTestCase
+    public class CIPToolTest 
+        : CDKTestCase
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
         static SmilesParser smiles = CDK.SmilesParser;
         static IAtomContainer molecule;
         static IReadOnlyList<ILigand> ligands = MakeLigands();
@@ -254,10 +255,10 @@ namespace NCDK.Geometries.CIP
         public void TestTermination()
         {
             int ringSize = 7;
-            var ring = new AtomContainer();
+            var ring = builder.NewAtomContainer();
             for (int i = 0; i < ringSize; i++)
             {
-                ring.Atoms.Add(new Atom("C"));
+                ring.Atoms.Add(builder.NewAtom("C"));
             }
             for (int j = 0; j < ringSize - 1; j++)
             {
@@ -265,11 +266,11 @@ namespace NCDK.Geometries.CIP
             }
             ring.AddBond(ring.Atoms[ringSize - 1], ring.Atoms[0], BondOrder.Single);
 
-            ring.Atoms.Add(new Atom("Cl"));
-            ring.Atoms.Add(new Atom("F"));
+            ring.Atoms.Add(builder.NewAtom("Cl"));
+            ring.Atoms.Add(builder.NewAtom("F"));
             ring.AddBond(ring.Atoms[0], ring.Atoms[ringSize], BondOrder.Single);
             ring.AddBond(ring.Atoms[0], ring.Atoms[ringSize + 1], BondOrder.Single);
-            ring.Atoms.Add(new Atom("O"));
+            ring.Atoms.Add(builder.NewAtom("O"));
             ring.AddBond(ring.Atoms[1], ring.Atoms[ringSize + 2], BondOrder.Single);
             var atoms = new IAtom[]{ring.Atoms[ringSize], ring.Atoms[ringSize + 1], ring.Atoms[ringSize - 1], ring.Atoms[1]};
             var stereoCenter = new TetrahedralChirality(ring.Atoms[0], atoms, TetrahedralStereo.AntiClockwise);
@@ -281,13 +282,13 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void TestOla28()
         {
-            string filename = "NCDK.Data.CML.mol28.cml";
+            var filename = "NCDK.Data.CML.mol28.cml";
 
             IChemFile file;
             IAtomContainer mol;
             using (var reader = new CMLReader(ResourceLoader.GetAsStream(filename)))
             {
-                file = reader.Read(new ChemFile());
+                file = reader.Read(builder.NewChemFile());
                 mol = ChemFileManipulator.GetAllAtomContainers(file).First();
             }
 
@@ -307,7 +308,6 @@ namespace NCDK.Geometries.CIP
         [TestMethod()]
         public void TestSteroid()
         {
-            var builder = ChemObjectBuilder.Instance;
             var mol = builder.NewAtomContainer();
             var a1 = builder.NewAtom("F");
             a1.FormalCharge = 0;

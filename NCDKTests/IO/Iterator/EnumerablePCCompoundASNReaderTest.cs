@@ -33,7 +33,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestList()
         {
-            string filename = "NCDK.Data.ASN.PubChem.list.asn";
+            var filename = "NCDK.Data.ASN.PubChem.list.asn";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             EnumerablePCCompoundASNReader reader = new EnumerablePCCompoundASNReader(ins, ChemObjectBuilder.Instance);

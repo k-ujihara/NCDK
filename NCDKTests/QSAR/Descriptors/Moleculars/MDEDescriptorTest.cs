@@ -11,7 +11,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestMDE1()
         {
-            string filename = "NCDK.Data.MDL.mdeotest.sdf";
+            var filename = "NCDK.Data.MDL.mdeotest.sdf";
             IChemFile content;
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
             {

@@ -22,7 +22,6 @@
  */
 
 using NCDK.Aromaticities;
-using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
@@ -47,7 +46,6 @@ namespace NCDK.Modelings.Builder3D
     // @author     chhoppe
     // @cdk.created    2004-09-07
     // @cdk.module     forcefield
-    // @cdk.githash
     public class ForceFieldConfigurator
     {
         private string ffName = "mmff94";
@@ -105,7 +103,7 @@ namespace NCDK.Modelings.Builder3D
         ///Constructor for the ForceFieldConfigurator object
         /// </summary>
         /// <param name="ffname">name of the force field data file</param>
-        public void SetForceFieldConfigurator(string ffname, IChemObjectBuilder builder)
+        public void SetForceFieldConfigurator(string ffname)
         {
             ffname = ffname.ToLowerInvariant();
             bool check = false;
@@ -124,7 +122,7 @@ namespace NCDK.Modelings.Builder3D
                     mm2.SetInputStream(ins);
                     try
                     {
-                        this.SetMM2Parameters(builder);
+                        this.SetMM2Parameters();
                     }
                     catch (Exception ex1)
                     {
@@ -139,7 +137,7 @@ namespace NCDK.Modelings.Builder3D
                     mmff94.SetInputStream(ins);
                     try
                     {
-                        this.SetMMFF94Parameters(builder);
+                        this.SetMMFF94Parameters();
                     }
                     catch (Exception ex2)
                     {
@@ -168,13 +166,13 @@ namespace NCDK.Modelings.Builder3D
         }
 
         /// <summary>Sets the parameters attribute of the ForceFieldConfigurator object, default is mm2 force field</summary>
-        public void SetMM2Parameters(IChemObjectBuilder builder)
+        public void SetMM2Parameters()
         {
             try
             {
                 if (mm2 == null)
                     mm2 = new MM2BasedParameterSetReader();
-                mm2.ReadParameterSets(builder);
+                mm2.ReadParameterSets();
             }
             catch (Exception ex1)
             {
@@ -184,11 +182,11 @@ namespace NCDK.Modelings.Builder3D
             atomTypes = mm2.AtomTypes;
         }
 
-        public void SetMMFF94Parameters(IChemObjectBuilder builder)
+        public void SetMMFF94Parameters()
         {
             if (mmff94 == null)
                 mmff94 = new MMFF94BasedParameterSetReader();
-            mmff94.ReadParameterSets(builder);
+            mmff94.ReadParameterSets();
             parameterSet = mmff94.GetParamterSet();
             atomTypes = mmff94.AtomTypes;
         }

@@ -149,7 +149,7 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void TestEmpty()
         {
-            IAtomContainer mol = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer mol = builder.NewAtomContainer();
             MoleculeSignature signature = new MoleculeSignature(mol);
             string signatureString = signature.ToCanonicalString();
             string expected = "";
@@ -420,7 +420,7 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void MethylFerroceneTest()
         {
-            string smiles = "CC12C3C4C5C1[Fe]23456789C%10C6C7C8C9%10";
+            var smiles = "CC12C3C4C5C1[Fe]23456789C%10C6C7C8C9%10";
             var mol = parser.ParseSmiles(smiles);
             MoleculeSignature molSig = new MoleculeSignature(mol);
             int feIndex = FindFirstAtomIndexForSymbol(mol, "Fe");
@@ -433,7 +433,7 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void ThreeMethylSulphanylPropanal()
         {
-            string smiles = "O=CCCSC";
+            var smiles = "O=CCCSC";
             FullPermutationTest(parser.ParseSmiles(smiles));
         }
 

@@ -255,7 +255,7 @@ namespace NCDK.Tools
         {
             // Should have 4 double bonds and all three bonds to/from the nitrogen
             // should be single
-            string smiles = "c1ccn2cccc2c1";
+            var smiles = "c1ccn2cccc2c1";
             var mol = sp.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureUnsetProperties(mol);
 
@@ -277,7 +277,7 @@ namespace NCDK.Tools
         public void TestLargeRingSystem3()
         {
             // Should have 17 double bonds
-            string smiles = "O=C5C=C(O)C(N=Nc1ccc(cc1)Nc2ccccc2)=CC5(=NNc3ccc(cc3)Nc4ccccc4)";
+            var smiles = "O=C5C=C(O)C(N=Nc1ccc(cc1)Nc2ccccc2)=CC5(=NNc3ccc(cc3)Nc4ccccc4)";
             var mol = sp.ParseSmiles(smiles);
             atasc.DecideBondOrder(mol, true);
 
@@ -293,7 +293,7 @@ namespace NCDK.Tools
         public void TestLargeRingSystem4()
         {
             // Should have 18 double bonds
-            string smiles = "c1ccc(cc1)[Sn](c2ccccc2)(c3ccccc3)S[Sn](c4ccccc4)(c5ccccc5)c6ccccc6";
+            var smiles = "c1ccc(cc1)[Sn](c2ccccc2)(c3ccccc3)S[Sn](c4ccccc4)(c5ccccc5)c6ccccc6";
             var mol = sp.ParseSmiles(smiles);
             atasc.DecideBondOrder(mol, true);
 
@@ -309,7 +309,7 @@ namespace NCDK.Tools
         public void TestLargeRingSystem5()
         {
             // Should have 24 double bonds
-            string smiles = "O=C1c2ccccc2C(=O)c3c1ccc4c3[nH]c5c6C(=O)c7ccccc7C(=O)c6c8[nH]c9c%10C(=O)c%11ccccc%11C(=O)c%10ccc9c8c45";
+            var smiles = "O=C1c2ccccc2C(=O)c3c1ccc4c3[nH]c5c6C(=O)c7ccccc7C(=O)c6c8[nH]c9c%10C(=O)c%11ccccc%11C(=O)c%10ccc9c8c45";
 
             var mol = sp.ParseSmiles(smiles);
             atasc.DecideBondOrder(mol, true);
@@ -329,7 +329,7 @@ namespace NCDK.Tools
         public void TestLargeBioclipseUseCase()
         {
             // Should have 14 double bonds
-            string smiles = "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@@H]6COc7cc(OC)ccc7[C@H]56";
+            var smiles = "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@@H]6COc7cc(OC)ccc7[C@H]56";
             var molecule = sp.ParseSmiles(smiles);
 
             atasc.DecideBondOrder(molecule, true);

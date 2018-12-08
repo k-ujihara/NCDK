@@ -48,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             double value2D = CreateDescriptor(mol).Calculate().Value;
 
-            string filename = "NCDK.Data.MDL.cpsa-uncharged.sdf";
+            var filename = "NCDK.Data.MDL.cpsa-uncharged.sdf";
             IChemFile content;
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
             {

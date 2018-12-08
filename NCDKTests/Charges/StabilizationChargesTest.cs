@@ -40,13 +40,13 @@ namespace NCDK.Charges
         public void TestCalculatePositive_IAtomContainer_IAtom()
         {
             IAtomContainer molecule = builder.NewAtomContainer();
-            molecule.Atoms.Add(new Atom("C"));
-            molecule.Atoms.Add(new Atom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
             molecule.Atoms[1].FormalCharge = +1;
-            molecule.Atoms.Add(new Atom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Atoms.Add(new Atom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Double);
 
             AddExplicitHydrogens(molecule);

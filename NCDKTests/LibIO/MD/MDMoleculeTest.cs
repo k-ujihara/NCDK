@@ -19,10 +19,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.IO;
 using NCDK.IO.CML;
 using NCDK.LibIO.CML;
@@ -30,26 +29,28 @@ using NCDK.Tools.Manipulator;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace NCDK.LibIO.MD
 {
     // @cdk.module test-libiomd
     [TestClass()]
-    public class MDMoleculeTest : CDKTestCase
+    public class MDMoleculeTest
+        : CDKTestCase
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
+
         // @cdk.bug 1748257
         [TestMethod()]
         public void TestBug1748257()
         {
             MDMolecule mol = new MDMolecule();
-            mol.Atoms.Add(new Atom("C")); // 0
-            mol.Atoms.Add(new Atom("C")); // 1
-            mol.Atoms.Add(new Atom("H")); // 2
-            mol.Atoms.Add(new Atom("H")); // 3
-            mol.Atoms.Add(new Atom("H")); // 4
-            mol.Atoms.Add(new Atom("H")); // 5
+            mol.Atoms.Add(builder.NewAtom("C")); // 0
+            mol.Atoms.Add(builder.NewAtom("C")); // 1
+            mol.Atoms.Add(builder.NewAtom("H")); // 2
+            mol.Atoms.Add(builder.NewAtom("H")); // 3
+            mol.Atoms.Add(builder.NewAtom("H")); // 4
+            mol.Atoms.Add(builder.NewAtom("H")); // 5
 
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double); // 1
             mol.AddBond(mol.Atoms[2], mol.Atoms[0], BondOrder.Single); // 3
@@ -69,12 +70,12 @@ namespace NCDK.LibIO.MD
         public void TestMDMolecule()
         {
             MDMolecule mol = new MDMolecule();
-            mol.Atoms.Add(new Atom("C")); // 0
-            mol.Atoms.Add(new Atom("C")); // 1
-            mol.Atoms.Add(new Atom("C")); // 2
-            mol.Atoms.Add(new Atom("C")); // 3
-            mol.Atoms.Add(new Atom("C")); // 4
-            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(builder.NewAtom("C")); // 0
+            mol.Atoms.Add(builder.NewAtom("C")); // 1
+            mol.Atoms.Add(builder.NewAtom("C")); // 2
+            mol.Atoms.Add(builder.NewAtom("C")); // 3
+            mol.Atoms.Add(builder.NewAtom("C")); // 4
+            mol.Atoms.Add(builder.NewAtom("C")); // 5
 
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single); // 1
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Double); // 2
@@ -84,7 +85,7 @@ namespace NCDK.LibIO.MD
             mol.AddBond(mol.Atoms[5], mol.Atoms[0], BondOrder.Double); // 6
 
             //Create 2 residues
-            AtomContainer ac = new AtomContainer();
+            var ac = builder.NewAtomContainer();
             ac.Atoms.Add(mol.Atoms[0]);
             ac.Atoms.Add(mol.Atoms[1]);
             ac.Atoms.Add(mol.Atoms[2]);
@@ -92,7 +93,7 @@ namespace NCDK.LibIO.MD
             res1.Name = "myResidue1";
             mol.AddResidue(res1);
 
-            AtomContainer ac2 = new AtomContainer();
+            var ac2 = builder.NewAtomContainer();
             ac2.Atoms.Add(mol.Atoms[3]);
             ac2.Atoms.Add(mol.Atoms[4]);
             ac2.Atoms.Add(mol.Atoms[5]);
@@ -113,13 +114,13 @@ namespace NCDK.LibIO.MD
             Assert.AreEqual(mol.GetResidues()[1], res2);
 
             //Create 2 chargegroups
-            AtomContainer ac3 = new AtomContainer();
+            var ac3 = builder.NewAtomContainer();
             ac3.Atoms.Add(mol.Atoms[0]);
             ac3.Atoms.Add(mol.Atoms[1]);
             ChargeGroup chg1 = new ChargeGroup(ac3, 0, mol);
             mol.AddChargeGroup(chg1);
 
-            AtomContainer ac4 = new AtomContainer();
+            var ac4 = builder.NewAtomContainer();
             ac4.Atoms.Add(mol.Atoms[2]);
             ac4.Atoms.Add(mol.Atoms[3]);
             ac4.Atoms.Add(mol.Atoms[4]);
@@ -159,8 +160,8 @@ namespace NCDK.LibIO.MD
             Debug.WriteLine("******************************");
 
             CMLReader reader = new CMLReader(new MemoryStream(Encoding.UTF8.GetBytes(serializedMol)));
-            reader.RegisterConvention("md:mdMolecule", new MDMoleculeConvention(new ChemFile()));
-            IChemFile file = (IChemFile)reader.Read(new ChemFile());
+            reader.RegisterConvention("md:mdMolecule", new MDMoleculeConvention(builder.NewChemFile()));
+            IChemFile file = (IChemFile)reader.Read(builder.NewChemFile());
             reader.Close();
             var containers = ChemFileManipulator.GetAllAtomContainers(file).ToReadOnlyList();
             Assert.AreEqual(1, containers.Count);
@@ -256,12 +257,12 @@ namespace NCDK.LibIO.MD
         public MDMolecule MakeMDBenzene()
         {
             MDMolecule mol = new MDMolecule();
-            mol.Atoms.Add(new Atom("C")); // 0
-            mol.Atoms.Add(new Atom("C")); // 1
-            mol.Atoms.Add(new Atom("C")); // 2
-            mol.Atoms.Add(new Atom("C")); // 3
-            mol.Atoms.Add(new Atom("C")); // 4
-            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(builder.NewAtom("C")); // 0
+            mol.Atoms.Add(builder.NewAtom("C")); // 1
+            mol.Atoms.Add(builder.NewAtom("C")); // 2
+            mol.Atoms.Add(builder.NewAtom("C")); // 3
+            mol.Atoms.Add(builder.NewAtom("C")); // 4
+            mol.Atoms.Add(builder.NewAtom("C")); // 5
 
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single); // 1
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Double); // 2
@@ -271,7 +272,7 @@ namespace NCDK.LibIO.MD
             mol.AddBond(mol.Atoms[5], mol.Atoms[0], BondOrder.Double); // 6
 
             //Create 2 residues
-            AtomContainer ac = new AtomContainer();
+            var ac = builder.NewAtomContainer();
             ac.Atoms.Add(mol.Atoms[0]);
             ac.Atoms.Add(mol.Atoms[1]);
             ac.Atoms.Add(mol.Atoms[2]);
@@ -279,7 +280,7 @@ namespace NCDK.LibIO.MD
             res1.Name = "myResidue1";
             mol.AddResidue(res1);
 
-            AtomContainer ac2 = new AtomContainer();
+            var ac2 = builder.NewAtomContainer();
             ac2.Atoms.Add(mol.Atoms[3]);
             ac2.Atoms.Add(mol.Atoms[4]);
             ac2.Atoms.Add(mol.Atoms[5]);
@@ -288,14 +289,14 @@ namespace NCDK.LibIO.MD
             mol.AddResidue(res2);
 
             //Create 2 chargegroups
-            AtomContainer ac3 = new AtomContainer();
+            var ac3 = builder.NewAtomContainer();
             ac3.Atoms.Add(mol.Atoms[0]);
             ac3.Atoms.Add(mol.Atoms[1]);
             ChargeGroup chg1 = new ChargeGroup(ac3, 2, mol);
             chg1.SetSwitchingAtom(mol.Atoms[1]);
             mol.AddChargeGroup(chg1);
 
-            AtomContainer ac4 = new AtomContainer();
+            var ac4 = builder.NewAtomContainer();
             ac4.Atoms.Add(mol.Atoms[2]);
             ac4.Atoms.Add(mol.Atoms[3]);
             ac4.Atoms.Add(mol.Atoms[4]);

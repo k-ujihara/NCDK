@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestEhccentricConnectivityIndex()
         {
-            string filename = "NCDK.Data.HIN.gravindex.hin";
+            var filename = "NCDK.Data.HIN.gravindex.hin";
             IChemFile content;
             using (var reader = new HINReader(ResourceLoader.GetAsStream(filename)))
             {

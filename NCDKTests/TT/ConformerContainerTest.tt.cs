@@ -10,7 +10,8 @@ using System.Linq;
 namespace NCDK.Default
 {
     [TestClass()]
-    public class ConformerContainerTest : CDKTestCase
+    public class ConformerContainerTest 
+        : CDKTestCase
     {
         private IAtomContainer base_;
         private IAtomContainer[] confs;
@@ -22,7 +23,7 @@ namespace NCDK.Default
 
         private static IAtomContainer GetBaseAtomContainer(int natom, string title)
         {
-            IAtomContainer container = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer container = new AtomContainer();
             container.Title = title;
             for (int i = 0; i < natom; i++)
             {
@@ -373,7 +374,8 @@ namespace NCDK.Default
 namespace NCDK.Silent
 {
     [TestClass()]
-    public class ConformerContainerTest : CDKTestCase
+    public class ConformerContainerTest 
+        : CDKTestCase
     {
         private IAtomContainer base_;
         private IAtomContainer[] confs;
@@ -385,7 +387,7 @@ namespace NCDK.Silent
 
         private static IAtomContainer GetBaseAtomContainer(int natom, string title)
         {
-            IAtomContainer container = ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtomContainer container = new AtomContainer();
             container.Title = title;
             for (int i = 0; i < natom; i++)
             {

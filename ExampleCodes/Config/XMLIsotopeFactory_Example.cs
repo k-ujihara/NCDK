@@ -8,12 +8,12 @@ namespace NCDK.Config
         {
             {
                 #region 1
-                IsotopeFactory ifac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
+                IsotopeFactory ifac = XMLIsotopeFactory.Instance;
                 #endregion
             }
             {
                 #region example
-                IsotopeFactory factory = XMLIsotopeFactory.GetInstance(ChemObjectBuilder.Instance);
+                IsotopeFactory factory = XMLIsotopeFactory.Instance;
                 IIsotope major = factory.GetMajorIsotope("H");
                 #endregion
             }

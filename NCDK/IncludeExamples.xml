@@ -67,7 +67,7 @@
 </code>
   </Codes>
   <Codes id="NCDK.Charges.MMFF94PartialCharges_Example.cs">
-    <code>            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+    <code>            SmilesParser sp = new SmilesParser();
             IAtomContainer ac = sp.ParseSmiles("CC");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(ac);
@@ -80,11 +80,11 @@
 </code>
   </Codes>
   <Codes id="NCDK.Config.AtomTypeFactory_Example.cs+1">
-    <code>                AtomTypeFactory factory = AtomTypeFactory.GetInstance(someChemObjectBuilder);
+    <code>                AtomTypeFactory factory = AtomTypeFactory.GetInstance();
 </code>
   </Codes>
   <Codes id="NCDK.Config.AtomTypeFactory_Example.cs+2">
-    <code>                AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt", someChemObjectBuilder);
+    <code>                AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt");
 </code>
   </Codes>
   <Codes id="NCDK.Config.ChemicalElement_Example.cs+OfNumber">
@@ -102,11 +102,11 @@
 </code>
   </Codes>
   <Codes id="NCDK.Config.XMLIsotopeFactory_Example.cs+1">
-    <code>                IsotopeFactory ifac = XMLIsotopeFactory.GetInstance(new ChemObject().Builder);
+    <code>                IsotopeFactory ifac = XMLIsotopeFactory.Instance;
 </code>
   </Codes>
   <Codes id="NCDK.Config.XMLIsotopeFactory_Example.cs+example">
-    <code>                IsotopeFactory factory = XMLIsotopeFactory.GetInstance(ChemObjectBuilder.Instance);
+    <code>                IsotopeFactory factory = XMLIsotopeFactory.Instance;
                 IIsotope major = factory.GetMajorIsotope("H");
 </code>
   </Codes>
@@ -1441,7 +1441,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Isomorphisms.UniversalIsomorphismTester_Example.cs">
-    <code>            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+    <code>            SmilesParser sp = new SmilesParser();
             IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
             IAtomContainer SMILESquery = sp.ParseSmiles("CC"); // ethylene
             IQueryAtomContainer query = QueryAtomContainerCreator.CreateBasicQueryContainer(SMILESquery);
@@ -1485,7 +1485,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Modelings.Builder3D.ModelBuilder3D_Example.cs">
-    <code>            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(ChemObjectBuilder.Instance);
+    <code>            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance();
             IAtomContainer molecule = mb3d.Generate3DCoordinates(mol, false);
 </code>
   </Codes>
@@ -1639,7 +1639,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.RingSearches.RingSearch_Example.cs+Fused">
-    <code>                IAtomContainer mol = new Smiles.SmilesParser(ChemObjectBuilder.Instance).ParseSmiles("c1cc(cc2cc(ccc12)C3C4CC34)C6CC5CCC6(C5)");
+    <code>                IAtomContainer mol = new Smiles.SmilesParser().ParseSmiles("c1cc(cc2cc(ccc12)C3C4CC34)C6CC5CCC6(C5)");
                 RingSearch ringSearch = new RingSearch(mol);
                 
                 int[][] fused = ringSearch.Fused();
@@ -1668,8 +1668,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.SMARTS.SmartsFragmentExtractor_Example.cs">
-    <code>            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
-            var smipar = new SmilesParser(bldr);
+    <code>            var smipar = new SmilesParser();
 
             IAtomContainer mol = smipar.ParseSmiles("[nH]1ccc2c1cccc2");
             var subsmarts = new SmartsFragmentExtractor(mol);
@@ -1686,7 +1685,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Smiles.SMARTS.Parser.SMARTSParser_Example.cs+1">
-    <code>            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+    <code>            SmilesParser sp = new SmilesParser();
              IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C");
              QueryAtomContainer query = SMARTSParser.Parse("C*C", Silent.ChemObjectBuilder.Instance);
              bool queryMatch = universalIsomorphismTester.IsSubgraph(atomContainer, query);
@@ -1735,7 +1734,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Smiles.SMARTS.SMARTSQueryTool_Example.cs">
-    <code>                SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+    <code>                SmilesParser sp = new SmilesParser();
                 IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C");
                 SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO", ChemObjectBuilder.Instance);
                 bool status = querytool.Matches(atomContainer);
@@ -1900,21 +1899,21 @@ namespace NCDK.Smiles
 </code>
   </Codes>
   <Codes id="NCDK.Smiles.SmilesParser_Example.cs+1">
-    <code>                SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+    <code>                SmilesParser sp = new SmilesParser();
                 IAtomContainer m = sp.ParseSmiles("c1[cH:5]cccc1");
                 var c1 = m.Atoms[1].GetProperty&lt;int&gt;(CDKPropertyName.AtomAtomMapping); // 5
                 var c2 = m.Atoms[2].GetProperty&lt;int&gt;(CDKPropertyName.AtomAtomMapping); // null
 </code>
   </Codes>
   <Codes id="NCDK.Smiles.SmilesParser_Example.cs+2">
-    <code>                SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+    <code>                SmilesParser sp = new SmilesParser();
                 IAtomContainer m = sp.ParseSmiles("c1[cH:5]cccc1");
                 var c1 = m.Atoms[1].GetProperty&lt;int&gt;(CDKPropertyName.AtomAtomMapping); // 5
                 var c2 = m.Atoms[2].GetProperty&lt;int&gt;(CDKPropertyName.AtomAtomMapping); // null
 </code>
   </Codes>
   <Codes id="NCDK.SMSD.Algorithms.RGraphs.CDKMCS_Example.cs">
-    <code>            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+    <code>            SmilesParser sp = new SmilesParser();
             IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
             IAtomContainer SMILESquery = sp.ParseSmiles("CC"); // acetic acid anhydride
             IQueryAtomContainer query = QueryAtomContainerCreator.CreateBasicQueryContainer(SMILESquery);
@@ -1922,7 +1921,7 @@ namespace NCDK.Smiles
 </code>
   </Codes>
   <Codes id="NCDK.SMSD.Isomorphism_Example.cs+1">
-    <code>                SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+    <code>                SmilesParser sp = new SmilesParser();
                 // Benzene
                 IAtomContainer A1 = sp.ParseSmiles("C1=CC=CC=C1");
                 // Napthalene
@@ -1957,7 +1956,7 @@ namespace NCDK.Smiles
 </code>
   </Codes>
   <Codes id="NCDK.SMSD.Isomorphism_Example.cs+2">
-    <code>                SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
+    <code>                SmilesParser sp = new SmilesParser();
                 // Benzene
                 IAtomContainer A1 = sp.ParseSmiles("C1=CC=CC=C1");
                 // Napthalene
@@ -2128,14 +2127,14 @@ namespace NCDK.Smiles
 </code>
   </Codes>
   <Codes id="NCDK.TT.Element_Example.cs">
-    <code>                IsotopeFactory f = XMLIsotopeFactory.GetInstance(CDK.Builder);
+    <code>                IsotopeFactory f = XMLIsotopeFactory.Instance;
                 ChemicalElement e1 = f.GetElement("C");
                 ChemicalElement e2 = f.GetElement(12);
 </code>
   </Codes>
   <Codes id="NCDK.TT.Element_Example.cs+AtomicNumber">
     <code>                IAtom element = new Atom("C");
-                IsotopeFactory f = XMLIsotopeFactory.GetInstance(element.Builder);
+                IsotopeFactory f = XMLIsotopeFactory.Instance;
                 f.Configure(element);
 </code>
   </Codes>
@@ -2151,7 +2150,7 @@ namespace NCDK.Smiles
   <Codes id="NCDK.TT.Isotope_Example.cs+NaturalAbundance">
     <code>                IAtom atom = new Atom();
                 Isotope isotope = new Isotope("C", 13);
-                XMLIsotopeFactory f = XMLIsotopeFactory.GetInstance(isotope.Builder);
+                XMLIsotopeFactory f = XMLIsotopeFactory.Instance;
                 f.Configure(atom, isotope);
 </code>
   </Codes>

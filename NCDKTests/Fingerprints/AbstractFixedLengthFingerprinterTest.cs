@@ -71,9 +71,9 @@ namespace NCDK.Fingerprints
         public void TestBug853254()
         {
             var builder = CDK.Builder;
-            string filename = "NCDK.Data.MDL.bug853254-2.mol";
+            var filename = "NCDK.Data.MDL.bug853254-2.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
+            var reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer superstructure = (IAtomContainer)reader.Read(builder.NewAtomContainer());
 
             filename = "NCDK.Data.MDL.bug853254-1.mol";
@@ -128,9 +128,9 @@ namespace NCDK.Fingerprints
         public void TestBug771485()
         {
             var builder = CDK.Builder;
-            string filename = "NCDK.Data.MDL.bug771485-1.mol";
+            var filename = "NCDK.Data.MDL.bug771485-1.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
+            var reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer structure1 = (IAtomContainer)reader.Read(builder.NewAtomContainer());
 
             filename = "NCDK.Data.MDL.bug771485-2.mol";
@@ -173,9 +173,9 @@ namespace NCDK.Fingerprints
         public void TestBug931608()
         {
             var builder = CDK.Builder;
-            string filename = "NCDK.Data.MDL.bug931608-1.mol";
+            var filename = "NCDK.Data.MDL.bug931608-1.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
+            var reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer structure1 = (IAtomContainer)reader.Read(builder.NewAtomContainer());
 
             filename = "NCDK.Data.MDL.bug931608-2.mol";

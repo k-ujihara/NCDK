@@ -56,7 +56,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestBug1571207()
         {
-            string filename = "NCDK.Data.MDL.molV3000.mol";
+            var filename = "NCDK.Data.MDL.molV3000.mol";
             Trace.TraceInformation("Testing: " + filename);
             using (var ins = ResourceLoader.GetAsStream(filename))
             {
@@ -100,7 +100,7 @@ namespace NCDK.IO
             using (var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.pseudoatomsv3000.mol"))
             using (MDLV3000Reader reader = new MDLV3000Reader(ins))
             {
-                IAtomContainer molecule = ChemObjectBuilder.Instance.NewAtomContainer();
+                IAtomContainer molecule = builder.NewAtomContainer();
                 molecule = reader.Read(molecule);
                 reader.Close();
                 Assert.IsTrue(molecule.Atoms[9] is IPseudoAtom);

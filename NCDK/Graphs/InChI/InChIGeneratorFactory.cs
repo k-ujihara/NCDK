@@ -57,7 +57,6 @@ namespace NCDK.Graphs.InChI
     /// </remarks>
     // @author Sam Adams
     // @cdk.module inchi
-    // @cdk.githash
     public class InChIGeneratorFactory
     {
         /// <summary>

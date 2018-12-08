@@ -19,21 +19,22 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO;
-using NCDK.Silent;
 
 namespace NCDK.Validate
 {
     // @cdk.module test-extra
     [TestClass()]
     public class Geometry3DValidatorTest : CDKTestCase
-    {
+    { 
+        private readonly IChemObjectBuilder builder = CDK.Builder;
+
         [TestMethod()]
         public void TestEthane()
         {
-            string filename = "NCDK.Data.MDL.Heptane-TestFF-output.mol";
+            var filename = "NCDK.Data.MDL.Heptane-TestFF-output.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-            ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
+            var chemFile = reader.Read(builder.NewChemFile());
             ValidatorEngine engine = new ValidatorEngine();
             engine.Add(new Geometry3DValidator());
             ValidationReport report = engine.ValidateChemFile(chemFile);

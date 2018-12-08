@@ -35,7 +35,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestList()
         {
-            string filename = "NCDK.Data.ASN.PubChem.aceticAcids38.xml";
+            var filename = "NCDK.Data.ASN.PubChem.aceticAcids38.xml";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new EnumerablePCCompoundXMLReader(new StreamReader(ins), ChemObjectBuilder.Instance);

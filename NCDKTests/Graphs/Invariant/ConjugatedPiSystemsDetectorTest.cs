@@ -20,7 +20,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.IO;
-using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System.Diagnostics;
 
@@ -31,14 +30,17 @@ namespace NCDK.Graphs.Invariant
     /// </summary>
     // @cdk.module test-reaction
     [TestClass()]
-    public class ConjugatedPiSystemsDetectorTest : CDKTestCase
+    public class ConjugatedPiSystemsDetectorTest 
+        : CDKTestCase
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
+
         [TestMethod()]
         public void TestDetectButadiene()
         {
             Trace.TraceInformation("Entering testDetectButadiene.");
             IAtomContainer mol = null;
-            string filename = "NCDK.Data.CML.butadiene.cml";
+            var filename = "NCDK.Data.CML.butadiene.cml";
             mol = ReadCMLMolecule(filename);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -67,7 +69,7 @@ namespace NCDK.Graphs.Invariant
         {
             Trace.TraceInformation("Entering testDetectNaphtalene.");
             IAtomContainer mol = null;
-            string filename = "NCDK.Data.CML.naphtalene.cml";
+            var filename = "NCDK.Data.CML.naphtalene.cml";
             mol = ReadCMLMolecule(filename);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -96,7 +98,7 @@ namespace NCDK.Graphs.Invariant
         {
             Trace.TraceInformation("Entering testDetectToluene.");
             IAtomContainer mol = null;
-            string filename = "NCDK.Data.CML.toluene.cml";
+            var filename = "NCDK.Data.CML.toluene.cml";
             mol = ReadCMLMolecule(filename);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -125,10 +127,10 @@ namespace NCDK.Graphs.Invariant
         {
             Trace.TraceInformation("Entering testNonConnectedPiSystems.");
             IAtomContainer mol = null;
-            string filename = "NCDK.Data.MDL.nonConnectedPiSystems.mol";
+            var filename = "NCDK.Data.MDL.nonConnectedPiSystems.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             MDLReader reader = new MDLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
+            var chemFile = reader.Read(builder.NewChemFile());
             mol = chemFile[0][0].MoleculeSet[0];
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
@@ -170,10 +172,10 @@ namespace NCDK.Graphs.Invariant
         {
             Trace.TraceInformation("Entering testPiSystemWithCarbokation.");
             IAtomContainer mol = null;
-            string filename = "NCDK.Data.MDL.piSystemWithCarbokation.mol";
+            var filename = "NCDK.Data.MDL.piSystemWithCarbokation.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             MDLReader reader = new MDLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.Read((ChemObject)new ChemFile());
+            var chemFile = reader.Read(builder.NewChemFile());
             mol = chemFile[0][0].MoleculeSet[0];
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -209,10 +211,10 @@ namespace NCDK.Graphs.Invariant
         {
             Trace.TraceInformation("Entering testPiSystemWithCumulativeDB.");
             IAtomContainer mol = null;
-            string filename = "NCDK.Data.MDL.piSystemCumulative.mol";
+            var filename = "NCDK.Data.MDL.piSystemCumulative.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             MDLReader reader = new MDLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.Read((ChemObject)new ChemFile());
+            var chemFile = reader.Read(builder.NewChemFile());
 
             mol = chemFile[0][0].MoleculeSet[0];
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -285,10 +287,10 @@ namespace NCDK.Graphs.Invariant
         public void TestNN_dimethylaniline_cation()
         {
             IAtomContainer mol = null;
-            string filename = "NCDK.Data.MDL.NN_dimethylaniline.mol";
+            var filename = "NCDK.Data.MDL.NN_dimethylaniline.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            IChemFile chemFile = (IChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new MDLV2000Reader(ins);
+            var chemFile = reader.Read(builder.NewChemFile());
             mol = chemFile[0][0].MoleculeSet[0];
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -389,9 +391,9 @@ namespace NCDK.Graphs.Invariant
             IAtomContainer mol = null;
             Debug.WriteLine($"Filename: {filename}");
             var ins = ResourceLoader.GetAsStream(filename);
-            CMLReader reader = new CMLReader(ins);
+            var reader = new CMLReader(ins);
 
-            IChemFile file = (IChemFile)reader.Read(new ChemFile());
+            IChemFile file = (IChemFile)reader.Read(builder.NewChemFile());
             Assert.IsNotNull(file);
             Assert.AreEqual(1, file.Count);
             IChemSequence sequence = file[0];

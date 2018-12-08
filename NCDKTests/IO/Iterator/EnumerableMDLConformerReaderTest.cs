@@ -17,7 +17,7 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestSDF()
         {
-            string filename = "NCDK.Data.MDL.iterconftest.sdf";
+            var filename = "NCDK.Data.MDL.iterconftest.sdf";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             IEnumerableMDLConformerReader reader = new IEnumerableMDLConformerReader(ins,
@@ -44,7 +44,7 @@ namespace NCDK.IO.Iterator
         [ExpectedException(typeof(NotSupportedException))]
         public void TestRemove()
         {
-            string filename = "NCDK.Data.MDL.iterconftest.sdf";
+            var filename = "NCDK.Data.MDL.iterconftest.sdf";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new IEnumerableMDLConformerReader(ins, ChemObjectBuilder.Instance).GetEnumerator();

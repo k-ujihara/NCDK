@@ -26,7 +26,6 @@ using NCDK.Graphs;
 using NCDK.IO;
 using NCDK.Numerics;
 using NCDK.RingSearches;
-using NCDK.Silent;
 using NCDK.Templates;
 using NCDK.Tools.Diff;
 using System.Collections;
@@ -35,8 +34,11 @@ namespace NCDK.Fingerprints
 {
     // @cdk.module test-fingerprint
     [TestClass()]
-    public class ExtendedFingerprinterTest : AbstractFixedLengthFingerprinterTest
+    public class ExtendedFingerprinterTest 
+        : AbstractFixedLengthFingerprinterTest
     {
+        private static readonly IChemObjectBuilder builder = CDK.Builder;
+
         public override IFingerprinter GetBitFingerprinter()
         {
             return new ExtendedFingerprinter();
@@ -123,40 +125,40 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestDifferentRingFinders()
         {
-            IFingerprinter fingerprinter = new ExtendedFingerprinter();
-            IAtomContainer ac1 = new AtomContainer();
-            Atom atom1 = new Atom("C");
-            Atom atom2 = new Atom("C");
-            Atom atom3 = new Atom("C");
-            Atom atom4 = new Atom("C");
-            Atom atom5 = new Atom("C");
-            Atom atom6 = new Atom("C");
+            var fingerprinter = new ExtendedFingerprinter();
+            var ac1 = builder.NewAtomContainer();
+            var atom1 = builder.NewAtom("C");
+            var atom2 = builder.NewAtom("C");
+            var atom3 = builder.NewAtom("C");
+            var atom4 = builder.NewAtom("C");
+            var atom5 = builder.NewAtom("C");
+            var atom6 = builder.NewAtom("C");
             ac1.Atoms.Add(atom1);
             ac1.Atoms.Add(atom2);
             ac1.Atoms.Add(atom3);
             ac1.Atoms.Add(atom4);
             ac1.Atoms.Add(atom5);
             ac1.Atoms.Add(atom6);
-            Bond bond1 = new Bond(atom1, atom2);
-            Bond bond2 = new Bond(atom2, atom3);
-            Bond bond3 = new Bond(atom3, atom4);
-            Bond bond4 = new Bond(atom4, atom5);
-            Bond bond5 = new Bond(atom5, atom6);
-            Bond bond6 = new Bond(atom6, atom1);
+            var bond1 = builder.NewBond(atom1, atom2);
+            var bond2 = builder.NewBond(atom2, atom3);
+            var bond3 = builder.NewBond(atom3, atom4);
+            var bond4 = builder.NewBond(atom4, atom5);
+            var bond5 = builder.NewBond(atom5, atom6);
+            var bond6 = builder.NewBond(atom6, atom1);
             ac1.Bonds.Add(bond1);
             ac1.Bonds.Add(bond2);
             ac1.Bonds.Add(bond3);
             ac1.Bonds.Add(bond4);
             ac1.Bonds.Add(bond5);
             ac1.Bonds.Add(bond6);
-            IAtomContainer ac2 = new AtomContainer();
+            var ac2 = builder.NewAtomContainer();
             ac2.Atoms.Add(atom1);
             ac2.Atoms.Add(atom2);
             ac2.Atoms.Add(atom3);
             ac2.Atoms.Add(atom4);
             ac2.Atoms.Add(atom5);
             ac2.Atoms.Add(atom6);
-            Bond bond7 = new Bond(atom3, atom1);
+            var bond7 = builder.NewBond(atom3, atom1);
             ac2.Bonds.Add(bond1);
             ac2.Bonds.Add(bond2);
             ac2.Bonds.Add(bond3);
@@ -164,8 +166,8 @@ namespace NCDK.Fingerprints
             ac2.Bonds.Add(bond5);
             ac2.Bonds.Add(bond6);
             ac2.Bonds.Add(bond7);
-            BitArray bs = fingerprinter.GetBitFingerprint(ac1).AsBitSet();
-            BitArray bs1 = fingerprinter.GetBitFingerprint(ac2).AsBitSet();
+            var bs = fingerprinter.GetBitFingerprint(ac1).AsBitSet();
+            var bs1 = fingerprinter.GetBitFingerprint(ac2).AsBitSet();
             Assert.IsTrue(FingerprinterTool.IsSubset(bs1, bs));
             Assert.IsFalse(FingerprinterTool.IsSubset(bs, bs1));
         }
@@ -178,205 +180,204 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestCondensedSingle()
         {
-            IAtomContainer molcondensed = new AtomContainer();
-            IAtom a1 = molcondensed.Builder.NewAtom("C");
+            var molcondensed = builder.NewAtomContainer();
+            var a1 = molcondensed.Builder.NewAtom("C");
             a1.Point2D = new Vector2(421.99999999999994, 860.0);
             molcondensed.Atoms.Add(a1);
-            IAtom a2 = molcondensed.Builder.NewAtom("C");
+            var a2 = molcondensed.Builder.NewAtom("C");
             a2.Point2D = new Vector2(390.8230854637602, 878.0);
             molcondensed.Atoms.Add(a2);
-            IAtom a3 = molcondensed.Builder.NewAtom("C");
+            var a3 = molcondensed.Builder.NewAtom("C");
             a3.Point2D = new Vector2(390.8230854637602, 914.0);
             molcondensed.Atoms.Add(a3);
-            IAtom a4 = molcondensed.Builder.NewAtom("C");
+            var a4 = molcondensed.Builder.NewAtom("C");
             a4.Point2D = new Vector2(422.0, 932.0);
             molcondensed.Atoms.Add(a4);
-            IAtom a5 = molcondensed.Builder.NewAtom("C");
+            var a5 = molcondensed.Builder.NewAtom("C");
             a5.Point2D = new Vector2(453.1769145362398, 914.0);
             molcondensed.Atoms.Add(a5);
-            IAtom a6 = molcondensed.Builder.NewAtom("C");
+            var a6 = molcondensed.Builder.NewAtom("C");
             a6.Point2D = new Vector2(453.1769145362398, 878.0);
             molcondensed.Atoms.Add(a6);
-            IAtom a7 = molcondensed.Builder.NewAtom("C");
+            var a7 = molcondensed.Builder.NewAtom("C");
             a7.Point2D = new Vector2(484.3538290724796, 860.0);
             molcondensed.Atoms.Add(a7);
-            IAtom a8 = molcondensed.Builder.NewAtom("C");
+            var a8 = molcondensed.Builder.NewAtom("C");
             a8.Point2D = new Vector2(515.5307436087194, 878.0);
             molcondensed.Atoms.Add(a8);
-            IAtom a9 = molcondensed.Builder.NewAtom("C");
+            var a9 = molcondensed.Builder.NewAtom("C");
             a9.Point2D = new Vector2(515.5307436087194, 914.0);
             molcondensed.Atoms.Add(a9);
-            IAtom a10 = molcondensed.Builder.NewAtom("C");
+            var a10 = molcondensed.Builder.NewAtom("C");
             a10.Point2D = new Vector2(484.3538290724796, 932.0);
             molcondensed.Atoms.Add(a10);
-            IAtom a11 = molcondensed.Builder.NewAtom("C");
+            var a11 = molcondensed.Builder.NewAtom("C");
             a11.Point2D = new Vector2(546.7076581449592, 932.0);
             molcondensed.Atoms.Add(a11);
-            IAtom a12 = molcondensed.Builder.NewAtom("C");
+            var a12 = molcondensed.Builder.NewAtom("C");
             a12.Point2D = new Vector2(577.884572681199, 914.0);
             molcondensed.Atoms.Add(a12);
-            IAtom a13 = molcondensed.Builder.NewAtom("C");
+            var a13 = molcondensed.Builder.NewAtom("C");
             a13.Point2D = new Vector2(577.884572681199, 878.0);
             molcondensed.Atoms.Add(a13);
-            IAtom a14 = molcondensed.Builder.NewAtom("C");
+            var a14 = molcondensed.Builder.NewAtom("C");
             a14.Point2D = new Vector2(546.7076581449592, 860.0);
             molcondensed.Atoms.Add(a14);
-            IAtom a15 = molcondensed.Builder.NewAtom("C");
+            var a15 = molcondensed.Builder.NewAtom("C");
             a15.Point2D = new Vector2(359.6461709275204, 860.0);
             molcondensed.Atoms.Add(a15);
-            IAtom a16 = molcondensed.Builder.NewAtom("C");
+            var a16 = molcondensed.Builder.NewAtom("C");
             a16.Point2D = new Vector2(609.0614872174388, 860.0);
             molcondensed.Atoms.Add(a16);
-            IBond b1 = molcondensed.Builder.NewBond(a1, a2, BondOrder.Single);
+            var b1 = molcondensed.Builder.NewBond(a1, a2, BondOrder.Single);
             molcondensed.Bonds.Add(b1);
-            IBond b2 = molcondensed.Builder.NewBond(a2, a3, BondOrder.Single);
+            var b2 = molcondensed.Builder.NewBond(a2, a3, BondOrder.Single);
             molcondensed.Bonds.Add(b2);
-            IBond b3 = molcondensed.Builder.NewBond(a3, a4, BondOrder.Single);
+            var b3 = molcondensed.Builder.NewBond(a3, a4, BondOrder.Single);
             molcondensed.Bonds.Add(b3);
-            IBond b4 = molcondensed.Builder.NewBond(a4, a5, BondOrder.Single);
+            var b4 = molcondensed.Builder.NewBond(a4, a5, BondOrder.Single);
             molcondensed.Bonds.Add(b4);
-            IBond b5 = molcondensed.Builder.NewBond(a5, a6, BondOrder.Single);
+            var b5 = molcondensed.Builder.NewBond(a5, a6, BondOrder.Single);
             molcondensed.Bonds.Add(b5);
-            IBond b6 = molcondensed.Builder.NewBond(a6, a1, BondOrder.Single);
+            var b6 = molcondensed.Builder.NewBond(a6, a1, BondOrder.Single);
             molcondensed.Bonds.Add(b6);
-            IBond b7 = molcondensed.Builder.NewBond(a6, a7, BondOrder.Single);
+            var b7 = molcondensed.Builder.NewBond(a6, a7, BondOrder.Single);
             molcondensed.Bonds.Add(b7);
-            IBond b8 = molcondensed.Builder.NewBond(a7, a8, BondOrder.Single);
+            var b8 = molcondensed.Builder.NewBond(a7, a8, BondOrder.Single);
             molcondensed.Bonds.Add(b8);
-            IBond b9 = molcondensed.Builder.NewBond(a8, a9, BondOrder.Single);
+            var b9 = molcondensed.Builder.NewBond(a8, a9, BondOrder.Single);
             molcondensed.Bonds.Add(b9);
-            IBond b10 = molcondensed.Builder.NewBond(a9, a10, BondOrder.Single);
+            var b10 = molcondensed.Builder.NewBond(a9, a10, BondOrder.Single);
             molcondensed.Bonds.Add(b10);
-            IBond b11 = molcondensed.Builder.NewBond(a10, a5, BondOrder.Single);
+            var b11 = molcondensed.Builder.NewBond(a10, a5, BondOrder.Single);
             molcondensed.Bonds.Add(b11);
-            IBond b12 = molcondensed.Builder.NewBond(a9, a11, BondOrder.Single);
+            var b12 = molcondensed.Builder.NewBond(a9, a11, BondOrder.Single);
             molcondensed.Bonds.Add(b12);
-            IBond b13 = molcondensed.Builder.NewBond(a11, a12, BondOrder.Single);
+            var b13 = molcondensed.Builder.NewBond(a11, a12, BondOrder.Single);
             molcondensed.Bonds.Add(b13);
-            IBond b14 = molcondensed.Builder.NewBond(a12, a13, BondOrder.Single);
+            var b14 = molcondensed.Builder.NewBond(a12, a13, BondOrder.Single);
             molcondensed.Bonds.Add(b14);
-            IBond b15 = molcondensed.Builder.NewBond(a13, a14, BondOrder.Single);
+            var b15 = molcondensed.Builder.NewBond(a13, a14, BondOrder.Single);
             molcondensed.Bonds.Add(b15);
-            IBond b16 = molcondensed.Builder.NewBond(a14, a8, BondOrder.Single);
+            var b16 = molcondensed.Builder.NewBond(a14, a8, BondOrder.Single);
             molcondensed.Bonds.Add(b16);
-            IBond b17 = molcondensed.Builder.NewBond(a2, a15, BondOrder.Single);
+            var b17 = molcondensed.Builder.NewBond(a2, a15, BondOrder.Single);
             molcondensed.Bonds.Add(b17);
-            IBond b18 = molcondensed.Builder.NewBond(a13, a16, BondOrder.Single);
+            var b18 = molcondensed.Builder.NewBond(a13, a16, BondOrder.Single);
             molcondensed.Bonds.Add(b18);
 
-            IAtomContainer molsingle = new AtomContainer();
-            IAtom a1s = molsingle.Builder.NewAtom("C");
+            var molsingle = builder.NewAtomContainer();
+            var a1s = molsingle.Builder.NewAtom("C");
             a1s.Point2D = new Vector2(421.99999999999994, 860.0);
             molsingle.Atoms.Add(a1s);
-            IAtom a2s = molsingle.Builder.NewAtom("C");
+            var a2s = molsingle.Builder.NewAtom("C");
             a2s.Point2D = new Vector2(390.8230854637602, 878.0);
             molsingle.Atoms.Add(a2s);
-            IAtom a6s = molsingle.Builder.NewAtom("C");
+            var a6s = molsingle.Builder.NewAtom("C");
             a6s.Point2D = new Vector2(453.1769145362398, 878.0);
             molsingle.Atoms.Add(a6s);
-            IAtom a3s = molsingle.Builder.NewAtom("C");
+            var a3s = molsingle.Builder.NewAtom("C");
             a3s.Point2D = new Vector2(390.8230854637602, 914.0);
             molsingle.Atoms.Add(a3s);
-            IAtom a15s = molsingle.Builder.NewAtom("C");
+            var a15s = molsingle.Builder.NewAtom("C");
             a15s.Point2D = new Vector2(359.6461709275204, 860.0);
             molsingle.Atoms.Add(a15s);
-            IAtom a5s = molsingle.Builder.NewAtom("C");
+            var a5s = molsingle.Builder.NewAtom("C");
             a5s.Point2D = new Vector2(453.1769145362398, 914.0);
             molsingle.Atoms.Add(a5s);
-            IAtom a7s = molsingle.Builder.NewAtom("C");
+            var a7s = molsingle.Builder.NewAtom("C");
             a7s.Point2D = new Vector2(492.8230854637602, 881.0);
             molsingle.Atoms.Add(a7s);
-            IAtom a4s = molsingle.Builder.NewAtom("C");
+            var a4s = molsingle.Builder.NewAtom("C");
             a4s.Point2D = new Vector2(422.0, 932.0);
             molsingle.Atoms.Add(a4s);
-            IAtom a8s = molsingle.Builder.NewAtom("C");
+            var a8s = molsingle.Builder.NewAtom("C");
             a8s.Point2D = new Vector2(524.0, 863.0);
             molsingle.Atoms.Add(a8s);
-            IAtom a9s = molsingle.Builder.NewAtom("C");
+            var a9s = molsingle.Builder.NewAtom("C");
             a9s.Point2D = new Vector2(492.8230854637602, 917.0);
             molsingle.Atoms.Add(a9s);
-            IAtom a10s = molsingle.Builder.NewAtom("C");
+            var a10s = molsingle.Builder.NewAtom("C");
             a10s.Point2D = new Vector2(555.1769145362398, 881.0);
             molsingle.Atoms.Add(a10s);
-            IAtom a11s = molsingle.Builder.NewAtom("C");
+            var a11s = molsingle.Builder.NewAtom("C");
             a11s.Point2D = new Vector2(524.0, 935.0);
             molsingle.Atoms.Add(a11s);
-            IAtom a12s = molsingle.Builder.NewAtom("C");
+            var a12s = molsingle.Builder.NewAtom("C");
             a12s.Point2D = new Vector2(555.1769145362398, 917.0);
             molsingle.Atoms.Add(a12s);
-            IAtom a13s = molsingle.Builder.NewAtom("C");
+            var a13s = molsingle.Builder.NewAtom("C");
             a13s.Point2D = new Vector2(592.8230854637602, 889.0);
             molsingle.Atoms.Add(a13s);
-            IAtom a14s = molsingle.Builder.NewAtom("C");
+            var a14s = molsingle.Builder.NewAtom("C");
             a14s.Point2D = new Vector2(624.0, 871.0);
             molsingle.Atoms.Add(a14s);
-            IAtom a16s = molsingle.Builder.NewAtom("C");
+            var a16s = molsingle.Builder.NewAtom("C");
             a16s.Point2D = new Vector2(592.8230854637602, 925.0);
             molsingle.Atoms.Add(a16s);
-            IAtom a17s = molsingle.Builder.NewAtom("C");
+            var a17s = molsingle.Builder.NewAtom("C");
             a17s.Point2D = new Vector2(655.1769145362398, 889.0);
             molsingle.Atoms.Add(a17s);
-            IAtom a18s = molsingle.Builder.NewAtom("C");
+            var a18s = molsingle.Builder.NewAtom("C");
             a18s.Point2D = new Vector2(624.0, 943.0);
             molsingle.Atoms.Add(a18s);
-            IAtom a19s = molsingle.Builder.NewAtom("C");
+            var a19s = molsingle.Builder.NewAtom("C");
             a19s.Point2D = new Vector2(655.1769145362398, 925.0);
             molsingle.Atoms.Add(a19s);
-            IAtom a20s = molsingle.Builder.NewAtom("C");
+            var a20s = molsingle.Builder.NewAtom("C");
             a20s.Point2D = new Vector2(686.3538290724796, 871.0);
             molsingle.Atoms.Add(a20s);
-            IBond b1s = molsingle.Builder.NewBond(a1s, a2s, BondOrder.Single);
+            var b1s = molsingle.Builder.NewBond(a1s, a2s, BondOrder.Single);
             molsingle.Bonds.Add(b1s);
-            IBond b6s = molsingle.Builder.NewBond(a6s, a1s, BondOrder.Single);
+            var b6s = molsingle.Builder.NewBond(a6s, a1s, BondOrder.Single);
             molsingle.Bonds.Add(b6s);
-            IBond b2s = molsingle.Builder.NewBond(a2s, a3s, BondOrder.Single);
+            var b2s = molsingle.Builder.NewBond(a2s, a3s, BondOrder.Single);
             molsingle.Bonds.Add(b2s);
-            IBond b17s = molsingle.Builder.NewBond(a2s, a15s, BondOrder.Single);
+            var b17s = molsingle.Builder.NewBond(a2s, a15s, BondOrder.Single);
             molsingle.Bonds.Add(b17s);
-            IBond b5s = molsingle.Builder.NewBond(a5s, a6s, BondOrder.Single);
+            var b5s = molsingle.Builder.NewBond(a5s, a6s, BondOrder.Single);
             molsingle.Bonds.Add(b5s);
-            IBond b7s = molsingle.Builder.NewBond(a6s, a7s, BondOrder.Single);
+            var b7s = molsingle.Builder.NewBond(a6s, a7s, BondOrder.Single);
             molsingle.Bonds.Add(b7s);
-            IBond b3s = molsingle.Builder.NewBond(a3s, a4s, BondOrder.Single);
+            var b3s = molsingle.Builder.NewBond(a3s, a4s, BondOrder.Single);
             molsingle.Bonds.Add(b3s);
-            IBond b4s = molsingle.Builder.NewBond(a4s, a5s, BondOrder.Single);
+            var b4s = molsingle.Builder.NewBond(a4s, a5s, BondOrder.Single);
             molsingle.Bonds.Add(b4s);
-            IBond b8s = molsingle.Builder.NewBond(a8s, a7s, BondOrder.Single);
+            var b8s = molsingle.Builder.NewBond(a8s, a7s, BondOrder.Single);
             molsingle.Bonds.Add(b8s);
-            IBond b9s = molsingle.Builder.NewBond(a7s, a9s, BondOrder.Single);
+            var b9s = molsingle.Builder.NewBond(a7s, a9s, BondOrder.Single);
             molsingle.Bonds.Add(b9s);
-            IBond b10s = molsingle.Builder.NewBond(a10s, a8s, BondOrder.Single);
+            var b10s = molsingle.Builder.NewBond(a10s, a8s, BondOrder.Single);
             molsingle.Bonds.Add(b10s);
-            IBond b11s = molsingle.Builder.NewBond(a9s, a11s, BondOrder.Single);
+            var b11s = molsingle.Builder.NewBond(a9s, a11s, BondOrder.Single);
             molsingle.Bonds.Add(b11s);
-            IBond b12s = molsingle.Builder.NewBond(a12s, a10s, BondOrder.Single);
+            var b12s = molsingle.Builder.NewBond(a12s, a10s, BondOrder.Single);
             molsingle.Bonds.Add(b12s);
-            IBond b13s = molsingle.Builder.NewBond(a10s, a13s, BondOrder.Single);
+            var b13s = molsingle.Builder.NewBond(a10s, a13s, BondOrder.Single);
             molsingle.Bonds.Add(b13s);
-            IBond b14s = molsingle.Builder.NewBond(a11s, a12s, BondOrder.Single);
+            var b14s = molsingle.Builder.NewBond(a11s, a12s, BondOrder.Single);
             molsingle.Bonds.Add(b14s);
-            IBond b15s = molsingle.Builder.NewBond(a14s, a13s, BondOrder.Single);
+            var b15s = molsingle.Builder.NewBond(a14s, a13s, BondOrder.Single);
             molsingle.Bonds.Add(b15s);
-            IBond b16s = molsingle.Builder.NewBond(a13s, a16s, BondOrder.Single);
+            var b16s = molsingle.Builder.NewBond(a13s, a16s, BondOrder.Single);
             molsingle.Bonds.Add(b16s);
-            IBond b18s = molsingle.Builder.NewBond(a17s, a14s, BondOrder.Single);
+            var b18s = molsingle.Builder.NewBond(a17s, a14s, BondOrder.Single);
             molsingle.Bonds.Add(b18s);
-            IBond b19s = molsingle.Builder.NewBond(a16s, a18s, BondOrder.Single);
+            var b19s = molsingle.Builder.NewBond(a16s, a18s, BondOrder.Single);
             molsingle.Bonds.Add(b19s);
-            IBond b20s = molsingle.Builder.NewBond(a19s, a17s, BondOrder.Single);
+            var b20s = molsingle.Builder.NewBond(a19s, a17s, BondOrder.Single);
             molsingle.Bonds.Add(b20s);
-            IBond b21s = molsingle.Builder.NewBond(a18s, a19s, BondOrder.Single);
+            var b21s = molsingle.Builder.NewBond(a18s, a19s, BondOrder.Single);
             molsingle.Bonds.Add(b21s);
-            IBond b22s = molsingle.Builder.NewBond(a17s, a20s, BondOrder.Single);
+            var b22s = molsingle.Builder.NewBond(a17s, a20s, BondOrder.Single);
             molsingle.Bonds.Add(b22s);
 
-            IFingerprinter fingerprinter = new ExtendedFingerprinter();
-            BitArray bs1 = fingerprinter.GetBitFingerprint(molsingle).AsBitSet();
-            BitArray bs2 = fingerprinter.GetBitFingerprint(molcondensed).AsBitSet();
+            var fingerprinter = new ExtendedFingerprinter();
+            var bs1 = fingerprinter.GetBitFingerprint(molsingle).AsBitSet();
+            var bs2 = fingerprinter.GetBitFingerprint(molcondensed).AsBitSet();
 
             Assert.IsFalse(FingerprinterTool.IsSubset(bs1, bs2));
             Assert.IsTrue(FingerprinterTool.IsSubset(bs2, bs1));
-
         }
 
         /// <summary>
@@ -388,35 +389,31 @@ namespace NCDK.Fingerprints
         {
             IAtomContainer searchmol = null;
             IAtomContainer findmol = null;
-            string filename = "NCDK.Data.MDL.chebisearch.mol";
+            var filename = "NCDK.Data.MDL.chebisearch.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins);
-            searchmol = reader.Read(new AtomContainer());
+            var reader = new MDLV2000Reader(ins);
+            searchmol = reader.Read(builder.NewAtomContainer());
             reader.Close();
             filename = "NCDK.Data.MDL.chebifind.mol";
             ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLV2000Reader(ins);
-            findmol = reader.Read(new AtomContainer());
+            findmol = reader.Read(builder.NewAtomContainer());
             reader.Close();
-            IFingerprinter fingerprinter = new ExtendedFingerprinter();
-            BitArray superBS = fingerprinter.GetBitFingerprint(findmol).AsBitSet();
-            BitArray subBS = fingerprinter.GetBitFingerprint(searchmol).AsBitSet();
-            bool isSubset = FingerprinterTool.IsSubset(superBS, subBS);
-            bool isSubset2 = FingerprinterTool.IsSubset(subBS, superBS);
+            var fingerprinter = new ExtendedFingerprinter();
+            var superBS = fingerprinter.GetBitFingerprint(findmol).AsBitSet();
+            var subBS = fingerprinter.GetBitFingerprint(searchmol).AsBitSet();
+            var isSubset = FingerprinterTool.IsSubset(superBS, subBS);
+            var isSubset2 = FingerprinterTool.IsSubset(subBS, superBS);
             Assert.IsFalse(isSubset);
             Assert.IsFalse(isSubset2);
         }
 
-        /// <summary>
         // @cdk.bug 2219597
-        // @
-        // @throws CloneNotSupportedException
-        /// </summary>
         [TestMethod()]
         public void TestMoleculeInvariance()
         {
-            IAtomContainer mol = TestMoleculeFactory.MakePyrrole();
-            IAtomContainer clone = (IAtomContainer)mol.Clone();
+            var mol = TestMoleculeFactory.MakePyrrole();
+            var clone = (IAtomContainer)mol.Clone();
 
             // should pass since we have not explicitly detected aromaticity
             foreach (var atom in mol.Atoms)
@@ -424,14 +421,14 @@ namespace NCDK.Fingerprints
                 Assert.IsFalse(atom.IsAromatic);
             }
 
-            string diff1 = AtomContainerDiff.Diff(mol, clone);
+            var diff1 = AtomContainerDiff.Diff(mol, clone);
             Assert.AreEqual("", diff1);
 
-            ExtendedFingerprinter fprinter = new ExtendedFingerprinter();
-            BitArray fp = fprinter.GetBitFingerprint(mol).AsBitSet();
+            var fprinter = new ExtendedFingerprinter();
+            var fp = fprinter.GetBitFingerprint(mol).AsBitSet();
             Assert.IsNotNull(fp);
 
-            string diff2 = AtomContainerDiff.Diff(mol, clone);
+            var diff2 = AtomContainerDiff.Diff(mol, clone);
             Assert.IsTrue(diff2.Length == 0, "There was a difference\n" + diff2);
         }
     }

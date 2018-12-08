@@ -47,7 +47,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestReading()
         {
-            string filename = "NCDK.Data.ShelX.frame_1.res";
+            var filename = "NCDK.Data.ShelX.frame_1.res";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             ShelXReader reader = new ShelXReader(ins);

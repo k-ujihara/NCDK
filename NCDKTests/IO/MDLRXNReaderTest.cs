@@ -19,10 +19,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,8 +35,10 @@ namespace NCDK.IO
     /// <seealso cref="MDLRXNReader"/>
     // @cdk.module test-io
     [TestClass()]
-    public class MDLRXNReaderTest : SimpleChemObjectReaderTest
+    public class MDLRXNReaderTest 
+        : SimpleChemObjectReaderTest
     {
+        private readonly IChemObjectBuilder builder = CDK.Builder;
         protected override string TestFile => "NCDK.Data.MDL.reaction-1.rxn";
         protected override Type ChemObjectIOToTestType => typeof(MDLRXNReader);
 
@@ -45,12 +46,12 @@ namespace NCDK.IO
         public void TestAccepts()
         {
             MDLRXNReader reader = new MDLRXNReader(new StringReader(""));
-            Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
-            Assert.IsTrue(reader.Accepts(typeof(ChemModel)));
-            Assert.IsTrue(reader.Accepts(typeof(Reaction)));
-            Assert.IsTrue(reader.Accepts(typeof(ReactionSet)));
-            Assert.IsFalse(reader.Accepts(typeof(ChemObjectSet<IAtomContainer>)));
-            Assert.IsFalse(reader.Accepts(typeof(AtomContainer)));
+            Assert.IsTrue(reader.Accepts(typeof(IChemFile)));
+            Assert.IsTrue(reader.Accepts(typeof(IChemModel)));
+            Assert.IsTrue(reader.Accepts(typeof(IReaction)));
+            Assert.IsTrue(reader.Accepts(typeof(IReactionSet)));
+            Assert.IsFalse(reader.Accepts(typeof(IChemObjectSet<IAtomContainer>)));
+            Assert.IsFalse(reader.Accepts(typeof(IAtomContainer)));
         }
 
         [TestMethod()]
@@ -60,7 +61,7 @@ namespace NCDK.IO
             Trace.TraceInformation("Testing: " + filename1);
             var ins1 = ResourceLoader.GetAsStream(filename1);
             MDLRXNReader reader1 = new MDLRXNReader(ins1);
-            IReaction reaction1 = new Reaction();
+            IReaction reaction1 = builder.NewReaction();
             reaction1 = (IReaction)reader1.Read(reaction1);
             reader1.Close();
 
@@ -98,7 +99,7 @@ namespace NCDK.IO
             Trace.TraceInformation("Testing: " + filename2);
             var ins2 = ResourceLoader.GetAsStream(filename2);
             MDLRXNReader reader2 = new MDLRXNReader(ins2);
-            IReaction reaction2 = new Reaction();
+            IReaction reaction2 = builder.NewReaction();
             reaction2 = (IReaction)reader2.Read(reaction2);
             reader2.Close();
 
@@ -114,7 +115,7 @@ namespace NCDK.IO
             Trace.TraceInformation("Testing: " + filename2);
             var ins2 = ResourceLoader.GetAsStream(filename2);
             MDLRXNReader reader2 = new MDLRXNReader(ins2);
-            IReaction reaction2 = new Reaction();
+            IReaction reaction2 = builder.NewReaction();
             reaction2 = (IReaction)reader2.Read(reaction2);
             reader2.Close();
 
@@ -126,11 +127,11 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRDFChemFile()
         {
-            string filename = "NCDK.Data.MDL.qsar-reaction-test.rdf";
+            var filename = "NCDK.Data.MDL.qsar-reaction-test.rdf";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             MDLRXNReader reader = new MDLRXNReader(ins);
-            IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
+            var chemFile = reader.Read(builder.NewChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
 
@@ -162,11 +163,11 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRDFModel()
         {
-            string filename = "NCDK.Data.MDL.qsar-reaction-test.rdf";
+            var filename = "NCDK.Data.MDL.qsar-reaction-test.rdf";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             MDLRXNReader reader = new MDLRXNReader(ins);
-            IChemModel chemModel = (IChemModel)reader.Read(new ChemModel());
+            IChemModel chemModel = (IChemModel)reader.Read(builder.NewChemModel());
             reader.Close();
             Assert.IsNotNull(chemModel);
 
@@ -194,11 +195,11 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRDFReactioniSet()
         {
-            string filename = "NCDK.Data.MDL.qsar-reaction-test.rdf";
+            var filename = "NCDK.Data.MDL.qsar-reaction-test.rdf";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             MDLRXNReader reader = new MDLRXNReader(ins);
-            IReactionSet reactionSet = (IReactionSet)reader.Read(new ReactionSet());
+            IReactionSet reactionSet = (IReactionSet)reader.Read(builder.NewReactionSet());
             reader.Close();
             Assert.IsNotNull(reactionSet);
 
@@ -222,17 +223,17 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestAsadExamples()
         {
-            string filename = "NCDK.Data.MDL.output.rxn";
+            var filename = "NCDK.Data.MDL.output.rxn";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             MDLRXNReader reader = new MDLRXNReader(ins);
-            IReactionSet reactionSet = (IReactionSet)reader.Read(new ReactionSet());
+            IReactionSet reactionSet = (IReactionSet)reader.Read(builder.NewReactionSet());
             reader.Close();
             filename = "NCDK.Data.MDL.output_Cleaned.rxn";
             Trace.TraceInformation("Testing: " + filename);
             ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLRXNReader(ins);
-            IReactionSet reactionSet2 = (IReactionSet)reader.Read(new ReactionSet());
+            IReactionSet reactionSet2 = (IReactionSet)reader.Read(builder.NewReactionSet());
             reader.Close();
             Assert.AreEqual(reactionSet[0].Mappings.Count, reactionSet2[0].Mappings.Count);
             for (int i = 0; i < reactionSet[0].Mappings.Count; i++)

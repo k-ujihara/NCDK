@@ -35,6 +35,21 @@ namespace NCDK
         /// </summary>
         /// <returns>The library version</returns>
         public static string Version => typeof(CDK).Assembly.GetName().Version.ToString();
+        private static Config.AtomTypeFactory localAtomTypeFactory = null;
+        private static readonly object lockAtomTypeFactory = new object();
+        public static Config.AtomTypeFactory AtomTypeFactory
+        {
+            get
+            {
+                if (localAtomTypeFactory == null)
+                    lock (lockAtomTypeFactory)
+                    {
+                        if (localAtomTypeFactory == null)
+                            localAtomTypeFactory = Config.AtomTypeFactory.GetInstance();
+                    }
+                return localAtomTypeFactory;
+            }
+        }
         private static Config.AtomTypeFactory localJmolAtomTypeFactory = null;
         private static readonly object lockJmolAtomTypeFactory = new object();
         internal static Config.AtomTypeFactory JmolAtomTypeFactory
@@ -45,7 +60,7 @@ namespace NCDK
                     lock (lockJmolAtomTypeFactory)
                     {
                         if (localJmolAtomTypeFactory == null)
-                            localJmolAtomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt", Silent.ChemObjectBuilder.Instance);
+                            localJmolAtomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt");
                     }
                 return localJmolAtomTypeFactory;
             }
@@ -60,7 +75,7 @@ namespace NCDK
                     lock (lockCdkAtomTypeFactory)
                     {
                         if (localCdkAtomTypeFactory == null)
-                            localCdkAtomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", Silent.ChemObjectBuilder.Instance);
+                            localCdkAtomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl");
                     }
                 return localCdkAtomTypeFactory;
             }
@@ -75,7 +90,7 @@ namespace NCDK
                     lock (lockStructgenAtomTypeFactory)
                     {
                         if (localStructgenAtomTypeFactory == null)
-                            localStructgenAtomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Config.Data.structgen_atomtypes.xml", Silent.ChemObjectBuilder.Instance);
+                            localStructgenAtomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Config.Data.structgen_atomtypes.xml");
                     }
                 return localStructgenAtomTypeFactory;
             }
@@ -120,7 +135,7 @@ namespace NCDK
                     lock (lockSmilesParser)
                     {
                         if (localSmilesParser == null)
-                            localSmilesParser = new Smiles.SmilesParser(Silent.ChemObjectBuilder.Instance);
+                            localSmilesParser = new Smiles.SmilesParser();
                     }
                 return localSmilesParser;
             }
@@ -180,7 +195,7 @@ namespace NCDK
                     lock (lockHydrogenAdder)
                     {
                         if (localHydrogenAdder == null)
-                            localHydrogenAdder = Tools.CDKHydrogenAdder.Instance;
+                            localHydrogenAdder = Tools.CDKHydrogenAdder.GetInstance();
                     }
                 return localHydrogenAdder;
             }
