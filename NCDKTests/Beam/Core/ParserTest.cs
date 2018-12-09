@@ -170,6 +170,12 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
+        public void HydrogenStrictOkay()
+        {
+            Graph g = Parser.GetStrict("[H][H]");
+        }
+
+        [TestMethod()]
         public void Tellurium()
         {
             Graph g = Parser.Losse("[te]");

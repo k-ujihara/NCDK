@@ -685,7 +685,7 @@ namespace NCDK.Beam
                 g.AddFlags(Graph.HAS_AROM);
 
             // element isn't aromatic as per the OpenSMILES specification
-            if (strict && !element.IsAromatic(AromaticSpecification.OpenSmiles))
+            if (strict && aromatic && !element.IsAromatic(Element.AromaticSpecification.OpenSmiles))
                 throw new InvalidSmilesException("abnormal aromatic element", buffer);
 
             if (element == null)

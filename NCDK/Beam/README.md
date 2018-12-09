@@ -1,6 +1,6 @@
 # Beam
 
-This is based on snap shot of cdk-beam on [2018-07-23](https://github.com/johnmay/beam/tree/335ee67bfe886613cd0ed27ae89a98150c46af13).
+This is based on snap shot of cdk-beam on [2018-11-07](https://github.com/johnmay/beam/tree/401d4d24071b699b387dce0f6b0432b3813ab2df ).
 
 [![DOI](https://zenodo.org/badge/12061606.svg)](https://zenodo.org/badge/latestdoi/12061606)
 

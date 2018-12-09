@@ -28,8 +28,8 @@ namespace NCDK
     /// They are specified by <see cref="Vector3"/> containing the components of the vector.
     /// </summary>
     // @author Bradley A. Smith <yeldar@home.com>
-    // @cdk.githash
-    public class Vibration : List<Vector3>
+    public class Vibration 
+        : List<Vector3>
     {
         /// <summary>
         /// Label identifying this vibration. For example, the frequency in reciprocal centimetres could be used.
