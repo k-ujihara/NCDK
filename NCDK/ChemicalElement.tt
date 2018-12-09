@@ -135,7 +135,8 @@ namespace NCDK
 <#
         }    
 #>
-
+        public static ChemicalElement Unknown { get; } = ChemicalElement.R;
+        
         internal static readonly Dictionary<string, ChemicalElement> symbolToElementMap = new Dictionary<string, ChemicalElement>()
             {
 <#

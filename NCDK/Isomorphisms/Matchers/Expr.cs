@@ -74,9 +74,9 @@ namespace NCDK.Isomorphisms.Matchers
     /// <para>
     /// We can construct this tree as follows:
     /// <code>
-    /// var expr = new Expr(ExprType.Element, 35)  // Br
+    /// var expr = new Expr(ExprType.Element, 9)  // F
     ///        .Or(new Expr(ExprType.Element, 17)) // Cl
-    ///        .Or(new Expr(ExprType.Element, 9))  // F
+    ///        .Or(new Expr(ExprType.Element, 35))  // Br
     /// </code>
     /// </para>
     /// <para>

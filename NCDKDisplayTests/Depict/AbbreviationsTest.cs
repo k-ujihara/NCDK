@@ -309,6 +309,21 @@ namespace NCDK.Depict
             Assert.AreEqual("Pd(dppf)Cl2", sgroups[0].Subscript);
         }
 
+        // Don't generate NiPr
+        [TestMethod()]
+        public void AvoidAmbiguity()
+        {
+            var smi = "C1CCCCC1=NC(C)C";
+            var factory = new Abbreviations
+            {
+                "*C(C)C iPr"
+            };
+            var mol = Smi(smi);
+            var sgroups = factory.Generate(mol);
+            Assert.AreEqual(1, sgroups.Count);
+            Assert.AreEqual("iPr", sgroups[0].Subscript);
+        }
+
         [TestMethod()]
         public void LoadFromFile()
         {

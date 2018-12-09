@@ -25,7 +25,6 @@
 
 using NCDK.Common.Mathematics;
 using NCDK.Common.Primitives;
-using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Numerics;
 using NCDK.Renderers.Elements;

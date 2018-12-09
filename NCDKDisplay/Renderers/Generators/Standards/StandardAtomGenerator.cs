@@ -107,7 +107,20 @@ namespace NCDK.Renderers.Generators.Standards
             if (atom is IPseudoAtom pAtom)
             {
                 if (pAtom.AttachPointNum <= 0)
+                {
+                    if ("*".Equals(pAtom.Label, StringComparison.Ordinal))
+                    {
+                        var mass = pAtom.MassNumber ?? 0;
+                        var charge = pAtom.FormalCharge ?? 0;
+                        var hcnt = pAtom.ImplicitHydrogenCount ?? 0;
+                        var nrad = container.GetConnectedSingleElectrons(atom).Count();
+                        if (mass != 0 || charge != 0 || hcnt != 0)
+                        {
+                            return GeneratePeriodicSymbol(0, hcnt, mass, charge, nrad, position);
+                        }
+                    }
                     return GeneratePseudoSymbol(AccessPseudoLabel(pAtom, "?"), position);
+                }
                 else
                     return null; // attach point drawn in bond generator
             }
@@ -115,15 +128,13 @@ namespace NCDK.Renderers.Generators.Standards
             {
                 var number = atom.AtomicNumber;
 
-                if (number == 0)
-                    return GeneratePseudoSymbol("?", position);
-
                 // unset the mass if it's the major isotope (could be an option)
                 var mass = atom.MassNumber;
-                if (mass != null &&
-                    model != null &&
-                    model.GetOmitMajorIsotopes() &&
-                    IsMajorIsotope(number, mass.Value))
+                if (number != 0
+                 && mass != null 
+                 && model != null
+                 && model.GetOmitMajorIsotopes() 
+                 && IsMajorIsotope(number, mass.Value))
                 {
                     mass = null;
                 }
@@ -368,7 +379,9 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>laid out atom symbol</returns>
         public AtomSymbol GeneratePeriodicSymbol(int number, int hydrogens, int mass, int charge, int unpaired, HydrogenPosition position)
         {
-            var element = new TextOutline(ChemicalElement.Of(number).Symbol, font, emSize);
+            var element = number == 0 
+                        ? new TextOutline("*", font, emSize)
+                        : new TextOutline(ChemicalElement.Of(number).Symbol, font, emSize);
             var hydrogenAdjunct = defaultHydrogenLabel;
 
             // the hydrogen count, charge, and mass adjuncts are script size
@@ -387,17 +400,21 @@ namespace NCDK.Renderers.Generators.Standards
             // with the element label
             if (position == HydrogenPosition.Left)
             {
-                double nudgeX = HydrogenXDodge(hydrogens, mass, element, hydrogenAdjunct, hydrogenCount, massAdjunct);
+                var nudgeX = HydrogenXDodge(hydrogens, mass, element, hydrogenAdjunct, hydrogenCount, massAdjunct);
                 hydrogenAdjunct = hydrogenAdjunct.Translate(nudgeX, 0);
                 hydrogenCount = hydrogenCount.Translate(nudgeX, 0);
             }
 
             var adjuncts = new List<TextOutline>(4);
 
-            if (hydrogens > 0) adjuncts.Add(hydrogenAdjunct);
-            if (hydrogens > 1) adjuncts.Add(hydrogenCount);
-            if (charge != 0 || unpaired > 0) adjuncts.Add(chargeAdjunct);
-            if (mass >= 0) adjuncts.Add(massAdjunct);
+            if (hydrogens > 0)
+                adjuncts.Add(hydrogenAdjunct);
+            if (hydrogens > 1)
+                adjuncts.Add(hydrogenCount);
+            if (charge != 0 || unpaired > 0)
+                adjuncts.Add(chargeAdjunct);
+            if (mass > 0)
+                adjuncts.Add(massAdjunct);
 
             return new AtomSymbol(element, adjuncts);
         }

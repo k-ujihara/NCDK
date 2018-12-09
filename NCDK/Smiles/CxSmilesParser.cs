@@ -88,6 +88,10 @@ namespace NCDK.Smiles
                     var rollback = beg;
                     while (iter.HasNext())
                     {
+                        if (iter.pos == beg && iter.Curr() == '_' && iter.Peek() == 'R')
+                        {
+                            ++beg;
+                        }
                         // correct step over of escaped label
                         if (iter.Curr() == '&')
                         {
@@ -730,6 +734,11 @@ namespace NCDK.Smiles
             internal char Next()
             {
                 return str[pos++];
+            }
+
+            public char Peek()
+            {
+                return pos < str.Length ? str[pos + 1] : '\0';
             }
 
             /// <summary>

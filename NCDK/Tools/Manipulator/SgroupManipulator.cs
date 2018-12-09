@@ -95,10 +95,11 @@ namespace NCDK.Tools.Manipulator
                             break;
                         case SgroupKey.CtabBracket:
                             {
-                                var orgVal = (ICollection<IAtom>)orgSgroup.GetValue(key);
-                                if (orgVal != null)
+                                var orgVals = (ICollection<SgroupBracket>)orgSgroup.GetValue(key);
+                                if (orgVals != null)
                                 {
-                                    cpySgroup.PutValue(key, new SgroupBracket((SgroupBracket)orgVal));
+                                    foreach (var bracket in orgVals)
+                                        cpySgroup.AddBracket(new SgroupBracket(bracket));
                                 }
                             }
                             break;

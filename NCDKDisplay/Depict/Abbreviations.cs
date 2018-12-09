@@ -69,7 +69,7 @@ namespace NCDK.Depict
         private readonly HashSet<string> disabled = new HashSet<string>();
         private readonly SmilesGenerator usmigen = SmilesGenerator.Unique();
 
-        private readonly SmilesParser smipar = new SmilesParser();
+        private readonly SmilesParser smipar = CDK.SmilesParser;
 
         public Abbreviations()
         {
@@ -400,6 +400,9 @@ namespace NCDK.Depict
                 }
             }
 
+            if (!ContractOnHetero)
+                return newSgroups;
+
             // now collapse
             foreach (var attach in mol.Atoms)
             {
@@ -425,10 +428,18 @@ namespace NCDK.Depict
                 {
                     if (ContainsChargeChar(sgroup.Subscript))
                         continue;
-                    foreach (var b in sgroup.Bonds)
-                        xbonds.Add(b);
+                    if (sgroup.Bonds.Count != 1)
+                        continue;
+                    var xbond = sgroup.Bonds.First();
+                    xbonds.Add(xbond);
                     foreach (var a in sgroup.Atoms)
                         xatoms.Add(a);
+                    if (attach.Symbol.Length == 1 
+                     && char.IsLower(sgroup.Subscript[0]))
+                    {
+                        if (ChemicalElement.OfSymbol(attach.Symbol + sgroup.Subscript[0]) != ChemicalElement.Unknown)
+                            goto continue_collapse;
+                    }
                     nbrSymbols.Add(sgroup.Subscript);
                     todelete.Add(sgroup);
                 }
@@ -518,6 +529,8 @@ namespace NCDK.Depict
                 newSgroups.Add(newSgroup);
                 foreach (var a in xatoms)
                     usedAtoms.Add(a);
+            continue_collapse:
+                ;
             }
 
             return newSgroups;

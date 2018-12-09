@@ -508,6 +508,24 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         [TestMethod()]
+        public void ZeroAtomicNumberAndNullSymbol()
+        {
+            var mock_container = new Mock<IAtomContainer>();
+            var container = mock_container.Object;
+            var mock_atom = new Mock<IAtom>();
+            var atom = mock_atom.Object;
+            mock_atom.Setup(n => n.AtomicNumber).Returns(0);
+            mock_atom.Setup(n => n.Symbol).Returns((string)null);
+            mock_atom.Setup(n => n.MassNumber).Returns(0);
+            mock_atom.Setup(n => n.ImplicitHydrogenCount).Returns(0);
+            mock_atom.Setup(n => n.FormalCharge).Returns(0);
+            var atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
+            var shapes = atomSymbol.GetOutlines();
+            Assert.AreEqual(1, shapes.Count);
+            Assert.AreEqual("*", atomSymbol.ElementOutline().Text);
+        }
+
+        [TestMethod()]
         public void UnpairedElectronsAreAccessed()
         {
             var mock_container = new Mock<IAtomContainer>(); var container = mock_container.Object;

@@ -91,6 +91,14 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
+        public void RemoveUnderscore()
+        {
+            CxSmilesState state = new CxSmilesState();
+            CxSmilesParser.ProcessCx("|$;;;_R1;$|", state);
+            Assert.AreEqual("R1", state.atomLabels[3]);
+        }
+
+        [TestMethod()]
         public void SkipCis()
         {
             CxSmilesState state = new CxSmilesState();

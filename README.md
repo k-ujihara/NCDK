@@ -5,7 +5,7 @@ NCDK is .NET port of [the Chemistry Development Project (CDK)](https://github.co
 
 NCDK is covered under LGPL v2.1. The modules are free and open-source and is easily integrated with other open-source or in-house projects.
 
-The current release is based on [cdk Release 2.2](https://github.com/cdk/cdk/tree/f7fe4d5f93f75250c1e29473b8f8f35862b51e0b) snapshot.
+The current release is based on [cdk 2018-12-08](https://github.com/cdk/cdk/tree/a75ec0065e39525a86f7f613ce6a6b0fe24b2d35) snapshot.
 
 Getting Started
 ---------------
