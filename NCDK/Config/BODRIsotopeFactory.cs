@@ -116,7 +116,7 @@ namespace NCDK.Config
                 {
                     atom.MassNumber = null;
                     atom.ExactMass = null;
-                    atom.NaturalAbundance = null;
+                    atom.Abundance = null;
                 }
             }
         }
@@ -140,7 +140,7 @@ namespace NCDK.Config
                 if (iso_.MassNumber != null)
                     iso_ = formula.Builder.NewIsotope(iso_.Symbol);
                 iso_.ExactMass = null;
-                iso_.NaturalAbundance = null;
+                iso_.Abundance = null;
                 isotopesToAdd.Add(new Tuple<IIsotope, int>(iso_, count));
             }
             foreach (var isotope in isotopesToRemove)

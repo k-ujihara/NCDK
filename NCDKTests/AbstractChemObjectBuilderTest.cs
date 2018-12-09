@@ -257,7 +257,7 @@ namespace NCDK
         public void TestNewIsotope_int_String_Double_double()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IIsotope isotope = builder.NewIsotope(6, "C", 1.0, 1.0);
+            IIsotope isotope = builder.NewIsotope(6, 1.0, 1.0);
             Assert.IsNotNull(isotope);
         }
 
@@ -265,7 +265,7 @@ namespace NCDK
         public void TestNewIsotope_int_String_int_Double_double()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IIsotope isotope = builder.NewIsotope(6, "C", 13, 1.0, 1.0);
+            IIsotope isotope = builder.NewIsotope("C", 13, 1.0, 1.0);
             Assert.IsNotNull(isotope);
         }
 

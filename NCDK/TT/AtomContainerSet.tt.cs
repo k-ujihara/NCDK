@@ -50,8 +50,6 @@ namespace NCDK.Default
     /// </summary>
     // @author        hel
     // @cdk.module    data
-    // @cdk.githash
-    [Serializable]
     public class ChemObjectSet<T>
         : ChemObject, IChemObjectSet<T>, IChemObjectListener, ICloneable
          where T : IChemObject
@@ -336,8 +334,6 @@ namespace NCDK.Silent
     /// </summary>
     // @author        hel
     // @cdk.module    data
-    // @cdk.githash
-    [Serializable]
     public class ChemObjectSet<T>
         : ChemObject, IChemObjectSet<T>, IChemObjectListener, ICloneable
          where T : IChemObject

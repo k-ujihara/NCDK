@@ -60,7 +60,7 @@ namespace NCDK
             mf.Add(Builder.NewIsotope("H"));
 
             IIsotope hy = Builder.NewIsotope("C");
-            hy.NaturalAbundance = 2.00342342;
+            hy.Abundance = 2.00342342;
             mf.Add(hy);
 
             Assert.AreEqual(3, mf.IsotopesCount);

@@ -333,9 +333,9 @@ namespace NCDK.LibIO.DotNetRDF
             {
                 g.Assert(new Triple(rdfObject, P_HASEXACTMASS, g.CreateLiteralNode(isotope.ExactMass.ToString())));
             }
-            if (isotope.NaturalAbundance != null)
+            if (isotope.Abundance != null)
             {
-                g.Assert(new Triple(rdfObject, P_HASNATURALABUNDANCE, g.CreateLiteralNode(isotope.NaturalAbundance.ToString())));
+                g.Assert(new Triple(rdfObject, P_HASNATURALABUNDANCE, g.CreateLiteralNode(isotope.Abundance.ToString())));
             }
         }
 
@@ -375,8 +375,8 @@ namespace NCDK.LibIO.DotNetRDF
             if (massNumber != null) isotope.MassNumber = int.Parse(massNumber.Object.ToString(), NumberFormatInfo.InvariantInfo);
             var exactMass = g.GetTriplesWithSubjectPredicate(rdfObject, P_HASEXACTMASS).FirstOrDefault();
             if (exactMass != null) isotope.ExactMass = double.Parse(exactMass.Object.ToString(), NumberFormatInfo.InvariantInfo);
-            var naturalAbundance = g.GetTriplesWithSubjectPredicate(rdfObject, P_HASNATURALABUNDANCE).FirstOrDefault();
-            if (naturalAbundance != null) isotope.NaturalAbundance = double.Parse(naturalAbundance.Object.ToString(), NumberFormatInfo.InvariantInfo);
+            var abundance = g.GetTriplesWithSubjectPredicate(rdfObject, P_HASNATURALABUNDANCE).FirstOrDefault();
+            if (abundance != null) isotope.Abundance = double.Parse(abundance.Object.ToString(), NumberFormatInfo.InvariantInfo);
         }
 
         /// <summary>

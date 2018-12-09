@@ -27,7 +27,6 @@ namespace NCDK
     /// </summary>
     // @author        egonw
     // @cdk.module    interfaces
-    // @cdk.githash
     public interface ICDKObject
         : ICloneable
     {

@@ -46,7 +46,7 @@ namespace NCDK.Config
         internal int atomicNumber;
         internal string symbol;
 
-        internal double? naturalAbundance;
+        internal double? abundance;
         internal double? exactMass;
         internal int? massNumber;
 
@@ -137,9 +137,9 @@ namespace NCDK.Config
             set { ThrowModifyException(); }
         }
 
-        public double? NaturalAbundance
+        public double? Abundance
         {
-            get { return naturalAbundance; }
+            get { return abundance; }
             set { ThrowModifyException(); }
         }
 
@@ -210,7 +210,7 @@ namespace NCDK.Config
             this.element = type.Element;
             this.symbol = type.Symbol;
             this.atomicNumber = type.AtomicNumber;
-            this.naturalAbundance = type.NaturalAbundance;
+            this.abundance = type.Abundance;
             this.exactMass = type.ExactMass;
             this.massNumber = type.MassNumber;
             this.formalCharge = type.FormalCharge;

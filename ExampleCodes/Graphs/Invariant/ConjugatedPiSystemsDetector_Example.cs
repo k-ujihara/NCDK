@@ -25,7 +25,7 @@ namespace NCDK.Graphs.Invariant
                 mol.AddBond(a2, h4, BondOrder.Single);
                 mol.AddBond(a2, h5, BondOrder.Single);
                 SingleElectron se = new SingleElectron(a2);
-                mol.AddElectronContainer(se);
+                mol.Add(se);
 
                 var pi_systems = ConjugatedPiSystemsDetector.Detect(mol);
                 #endregion

@@ -86,10 +86,10 @@ namespace NCDK
         }
 
         /// <inheritdoc/>
-        public double? NaturalAbundance
+        public double? Abundance
         {
-            get { return atom.NaturalAbundance; }
-            set { atom.NaturalAbundance = value; }
+            get { return atom.Abundance; }
+            set { atom.Abundance = value; }
         }
 
         /// <inheritdoc/>
@@ -295,7 +295,7 @@ namespace NCDK
         /// <inheritdoc/>
         public override string ToString()
         {
-            return "AtomRef{" + atom + "}";
+            return $"{nameof(AtomRef)}({atom.ToString()})";
         }
     }
 }

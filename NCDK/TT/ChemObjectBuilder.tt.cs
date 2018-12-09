@@ -99,12 +99,14 @@ namespace NCDK.Default
         public IAtom NewAtom() => (IAtom)new Atom();
         public IAtom NewAtom(IElement element) => (IAtom)new Atom(element);
         public IAtom NewAtom(ChemicalElement element) => (IAtom)new Atom(element);
-        public IAtom NewAtom(int elem) => (IAtom)new Atom(elem);
-        public IAtom NewAtom(int elem, int hcnt) => (IAtom)new Atom(elem, hcnt);
-        public IAtom NewAtom(int elem, int hcnt, int fchg) => (IAtom)new Atom(elem, hcnt, fchg);
-        public IAtom NewAtom(string elementSymbol) => (IAtom)new Atom(elementSymbol);
-        public IAtom NewAtom(string elementSymbol, Vector2 point2d) => (IAtom)new Atom(elementSymbol, point2d);
-        public IAtom NewAtom(string elementSymbol, Vector3 point3d) => (IAtom)new Atom(elementSymbol, point3d);
+        public IAtom NewAtom(int atomicNumber) => (IAtom)new Atom(atomicNumber);
+        public IAtom NewAtom(int atomicNumber, int implicitHydrogenCount) => (IAtom)new Atom(atomicNumber, implicitHydrogenCount);
+        public IAtom NewAtom(int atomicNumber, int implicitHydrogenCount, int formalCharge) => (IAtom)new Atom(atomicNumber, implicitHydrogenCount, formalCharge);
+        public IAtom NewAtom(string symbol) => (IAtom)new Atom(symbol);
+        public IAtom NewAtom(ChemicalElement element, Vector2 point2d) => (IAtom)new Atom(element, point2d);
+        public IAtom NewAtom(string symbol, Vector2 point2d) => (IAtom)new Atom(symbol, point2d);
+        public IAtom NewAtom(ChemicalElement element, Vector3 point3d) => (IAtom)new Atom(element, point3d);
+        public IAtom NewAtom(string symbol, Vector3 point3d) => (IAtom)new Atom(symbol, point3d);
         public IChemObjectSet<T> NewChemObjectSet<T>() where T : IAtomContainer => (IChemObjectSet<T>)new ChemObjectSet<T>();
         public IAtomContainer NewAtomContainer() => LegacyAtomContainer ? (IAtomContainer)new AtomContainer() : (IAtomContainer)new AtomContainer2();
         public IAtomContainer NewAtomContainer(IAtomContainer container) => LegacyAtomContainer ? (IAtomContainer)new AtomContainer(container) : (IAtomContainer)new AtomContainer2(container);
@@ -134,10 +136,17 @@ namespace NCDK.Default
         public ILonePair NewLonePair() => (ILonePair)new LonePair();
         public ILonePair NewLonePair(IAtom atom) => (ILonePair)new LonePair(atom);
         public IIsotope NewIsotope(ChemicalElement element) => (IIsotope)new Isotope(element);
-        public IIsotope NewIsotope(string elementSymbol) => (IIsotope)new Isotope(elementSymbol);
-        public IIsotope NewIsotope(int atomicNumber, string elementSymbol, int massNumber, double exactMass, double abundance) => (IIsotope)new Isotope(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
-        public IIsotope NewIsotope(int atomicNumber, string elementSymbol, double exactMass, double abundance) => (IIsotope)new Isotope(atomicNumber, elementSymbol, exactMass, abundance);
-        public IIsotope NewIsotope(string elementSymbol, int massNumber) => (IIsotope)new Isotope(elementSymbol, massNumber);
+        public IIsotope NewIsotope(int atomicNumber) => (IIsotope)new Isotope(atomicNumber);
+        public IIsotope NewIsotope(string symbol) => (IIsotope)new Isotope(symbol);
+        public IIsotope NewIsotope(ChemicalElement element, int massNumber, double exactMass , double abundance) => (IIsotope)new Isotope(element, massNumber, exactMass, abundance);
+        public IIsotope NewIsotope(int atomicNumber, int massNumber, double exactMass , double abundance) => (IIsotope)new Isotope(atomicNumber, massNumber, exactMass, abundance);
+        public IIsotope NewIsotope(string symbol, int massNumber, double exactMass , double abundance) => (IIsotope)new Isotope(symbol, massNumber, exactMass, abundance);
+        public IIsotope NewIsotope(ChemicalElement element, int massNumber) => (IIsotope)new Isotope(element, massNumber);
+        public IIsotope NewIsotope(int atomicNumber, int massNumber) => (IIsotope)new Isotope(atomicNumber, massNumber);
+        public IIsotope NewIsotope(string symbol, int massNumber) => (IIsotope)new Isotope(symbol, massNumber);
+        public IIsotope NewIsotope(ChemicalElement element, double exactMass, double abundance) => (IIsotope)new Isotope(element, exactMass, abundance);
+        public IIsotope NewIsotope(int atomicNumber, double exactMass, double abundance) => (IIsotope)new Isotope(atomicNumber, exactMass, abundance);
+        public IIsotope NewIsotope(string symbol, double exactMass, double abundance) => (IIsotope)new Isotope(symbol, exactMass, abundance);
         public IIsotope NewIsotope(IElement element) => (IIsotope)new Isotope(element);
         public IMapping NewMapping(IChemObject objectOne, IChemObject objectTwo) => (IMapping)new Mapping(objectOne, objectTwo);
         public IMolecularFormula NewMolecularFormula() => (IMolecularFormula)new MolecularFormula();
@@ -241,12 +250,14 @@ namespace NCDK.Silent
         public IAtom NewAtom() => (IAtom)new Atom();
         public IAtom NewAtom(IElement element) => (IAtom)new Atom(element);
         public IAtom NewAtom(ChemicalElement element) => (IAtom)new Atom(element);
-        public IAtom NewAtom(int elem) => (IAtom)new Atom(elem);
-        public IAtom NewAtom(int elem, int hcnt) => (IAtom)new Atom(elem, hcnt);
-        public IAtom NewAtom(int elem, int hcnt, int fchg) => (IAtom)new Atom(elem, hcnt, fchg);
-        public IAtom NewAtom(string elementSymbol) => (IAtom)new Atom(elementSymbol);
-        public IAtom NewAtom(string elementSymbol, Vector2 point2d) => (IAtom)new Atom(elementSymbol, point2d);
-        public IAtom NewAtom(string elementSymbol, Vector3 point3d) => (IAtom)new Atom(elementSymbol, point3d);
+        public IAtom NewAtom(int atomicNumber) => (IAtom)new Atom(atomicNumber);
+        public IAtom NewAtom(int atomicNumber, int implicitHydrogenCount) => (IAtom)new Atom(atomicNumber, implicitHydrogenCount);
+        public IAtom NewAtom(int atomicNumber, int implicitHydrogenCount, int formalCharge) => (IAtom)new Atom(atomicNumber, implicitHydrogenCount, formalCharge);
+        public IAtom NewAtom(string symbol) => (IAtom)new Atom(symbol);
+        public IAtom NewAtom(ChemicalElement element, Vector2 point2d) => (IAtom)new Atom(element, point2d);
+        public IAtom NewAtom(string symbol, Vector2 point2d) => (IAtom)new Atom(symbol, point2d);
+        public IAtom NewAtom(ChemicalElement element, Vector3 point3d) => (IAtom)new Atom(element, point3d);
+        public IAtom NewAtom(string symbol, Vector3 point3d) => (IAtom)new Atom(symbol, point3d);
         public IChemObjectSet<T> NewChemObjectSet<T>() where T : IAtomContainer => (IChemObjectSet<T>)new ChemObjectSet<T>();
         public IAtomContainer NewAtomContainer() => LegacyAtomContainer ? (IAtomContainer)new AtomContainer() : (IAtomContainer)new AtomContainer2();
         public IAtomContainer NewAtomContainer(IAtomContainer container) => LegacyAtomContainer ? (IAtomContainer)new AtomContainer(container) : (IAtomContainer)new AtomContainer2(container);
@@ -276,10 +287,17 @@ namespace NCDK.Silent
         public ILonePair NewLonePair() => (ILonePair)new LonePair();
         public ILonePair NewLonePair(IAtom atom) => (ILonePair)new LonePair(atom);
         public IIsotope NewIsotope(ChemicalElement element) => (IIsotope)new Isotope(element);
-        public IIsotope NewIsotope(string elementSymbol) => (IIsotope)new Isotope(elementSymbol);
-        public IIsotope NewIsotope(int atomicNumber, string elementSymbol, int massNumber, double exactMass, double abundance) => (IIsotope)new Isotope(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
-        public IIsotope NewIsotope(int atomicNumber, string elementSymbol, double exactMass, double abundance) => (IIsotope)new Isotope(atomicNumber, elementSymbol, exactMass, abundance);
-        public IIsotope NewIsotope(string elementSymbol, int massNumber) => (IIsotope)new Isotope(elementSymbol, massNumber);
+        public IIsotope NewIsotope(int atomicNumber) => (IIsotope)new Isotope(atomicNumber);
+        public IIsotope NewIsotope(string symbol) => (IIsotope)new Isotope(symbol);
+        public IIsotope NewIsotope(ChemicalElement element, int massNumber, double exactMass , double abundance) => (IIsotope)new Isotope(element, massNumber, exactMass, abundance);
+        public IIsotope NewIsotope(int atomicNumber, int massNumber, double exactMass , double abundance) => (IIsotope)new Isotope(atomicNumber, massNumber, exactMass, abundance);
+        public IIsotope NewIsotope(string symbol, int massNumber, double exactMass , double abundance) => (IIsotope)new Isotope(symbol, massNumber, exactMass, abundance);
+        public IIsotope NewIsotope(ChemicalElement element, int massNumber) => (IIsotope)new Isotope(element, massNumber);
+        public IIsotope NewIsotope(int atomicNumber, int massNumber) => (IIsotope)new Isotope(atomicNumber, massNumber);
+        public IIsotope NewIsotope(string symbol, int massNumber) => (IIsotope)new Isotope(symbol, massNumber);
+        public IIsotope NewIsotope(ChemicalElement element, double exactMass, double abundance) => (IIsotope)new Isotope(element, exactMass, abundance);
+        public IIsotope NewIsotope(int atomicNumber, double exactMass, double abundance) => (IIsotope)new Isotope(atomicNumber, exactMass, abundance);
+        public IIsotope NewIsotope(string symbol, double exactMass, double abundance) => (IIsotope)new Isotope(symbol, exactMass, abundance);
         public IIsotope NewIsotope(IElement element) => (IIsotope)new Isotope(element);
         public IMapping NewMapping(IChemObject objectOne, IChemObject objectTwo) => (IMapping)new Mapping(objectOne, objectTwo);
         public IMolecularFormula NewMolecularFormula() => (IMolecularFormula)new MolecularFormula();
@@ -316,3 +334,38 @@ namespace NCDK.Silent
         
     }
 }
+namespace NCDK
+{
+    public partial class Chem
+    {
+        public static IAtom NewAtom() => (IAtom)CDK.Builder.NewAtom();
+        public static IAtom NewAtom(IElement element) => (IAtom)CDK.Builder.NewAtom(element);
+        public static IAtom NewAtom(ChemicalElement element) => (IAtom)CDK.Builder.NewAtom(element);
+        public static IAtom NewAtom(int atomicNumber) => (IAtom)CDK.Builder.NewAtom(atomicNumber);
+        public static IAtom NewAtom(int atomicNumber, int implicitHydrogenCount) => (IAtom)CDK.Builder.NewAtom(atomicNumber, implicitHydrogenCount);
+        public static IAtom NewAtom(int atomicNumber, int implicitHydrogenCount, int formalCharge) => (IAtom)CDK.Builder.NewAtom(atomicNumber, implicitHydrogenCount, formalCharge);
+        public static IAtom NewAtom(string symbol) => (IAtom)CDK.Builder.NewAtom(symbol);
+        public static IAtom NewAtom(ChemicalElement element, Vector2 point2d) => (IAtom)CDK.Builder.NewAtom(element, point2d);
+        public static IAtom NewAtom(string symbol, Vector2 point2d) => (IAtom)CDK.Builder.NewAtom(symbol, point2d);
+        public static IAtom NewAtom(ChemicalElement element, Vector3 point3d) => (IAtom)CDK.Builder.NewAtom(element, point3d);
+        public static IAtom NewAtom(string symbol, Vector3 point3d) => (IAtom)CDK.Builder.NewAtom(symbol, point3d);
+        public static IAtomContainer NewAtomContainer() => (IAtomContainer)CDK.Builder.NewAtomContainer();
+        public static IAtomContainer NewAtomContainer(IAtomContainer container) => (IAtomContainer)CDK.Builder.NewAtomContainer(container);
+        public static IAtomContainer NewAtomContainer(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => (IAtomContainer)CDK.Builder.NewAtomContainer(atoms, bonds);
+        public static IBond NewBond() => (IBond)CDK.Builder.NewBond();
+        public static IBond NewBond(IAtom atom1, IAtom atom2) => (IBond)CDK.Builder.NewBond(atom1, atom2);
+        public static IBond NewBond(IAtom atom1, IAtom atom2, BondOrder order) => (IBond)CDK.Builder.NewBond(atom1, atom2, order);
+        public static IBond NewBond(IEnumerable<IAtom> atoms) => (IBond)CDK.Builder.NewBond(atoms);
+        public static IBond NewBond(IEnumerable<IAtom> atoms, BondOrder order) => (IBond)CDK.Builder.NewBond(atoms, order);
+        public static IBond NewBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo) => (IBond)CDK.Builder.NewBond(atom1, atom2, order, stereo);
+        public static IBond NewBond(IEnumerable<IAtom> atoms, BondOrder order, BondStereo stereo) => (IBond)CDK.Builder.NewBond(atoms, order, stereo);
+        public static IChemObject NewChemObject() => (IChemObject)CDK.Builder.NewChemObject();
+        public static IChemObject NewChemObject(IChemObject chemObject) => (IChemObject)CDK.Builder.NewChemObject(chemObject);
+        public static ILonePair NewLonePair() => (ILonePair)CDK.Builder.NewLonePair();
+        public static ILonePair NewLonePair(IAtom atom) => (ILonePair)CDK.Builder.NewLonePair(atom);
+        public static IReaction NewReaction() => (IReaction)CDK.Builder.NewReaction();
+        public static ISingleElectron NewSingleElectron() => (ISingleElectron)CDK.Builder.NewSingleElectron();
+        public static ISingleElectron NewSingleElectron(IAtom atom) => (ISingleElectron)CDK.Builder.NewSingleElectron(atom);
+    }
+}
+

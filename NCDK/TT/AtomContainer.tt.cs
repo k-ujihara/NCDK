@@ -47,10 +47,8 @@ namespace NCDK.Default
     /// }
     /// </code>
     /// </example>
-    // @cdk.githash 
     // @author steinbeck
     // @cdk.created 2000-10-02 
-    [Serializable]
     public partial class AtomContainer
         : ChemObject, IAtomContainer, IChemObjectListener
     {
@@ -438,22 +436,25 @@ namespace NCDK.Default
              NotifyChanged();         }
 
         /// <inheritdoc/>
-        public virtual void AddElectronContainer(IElectronContainer electronContainer)
+        public virtual void Add(IAtom atom)
         {
-            if (electronContainer is IBond bond)
+            Atoms.Add(atom);
+        }
+
+        /// <inheritdoc/>
+        public virtual void Add(IElectronContainer electronContainer)
+        {
+            switch (electronContainer)
             {
-                Bonds.Add(bond);
-                return;
-            }
-            if (electronContainer is ILonePair lonePair)
-            {
-                LonePairs.Add(lonePair);
-                return;
-            }
-            if (electronContainer is ISingleElectron singleElectron)
-            {
-                SingleElectrons.Add(singleElectron);
-                return;
+                case IBond bond:
+                    Bonds.Add(bond);
+                    return;
+                case ILonePair lonePair:
+                    LonePairs.Add(lonePair);
+                    return;
+                case ISingleElectron singleElectron:
+                    SingleElectrons.Add(singleElectron);
+                    return;
             }
         }
 
@@ -594,44 +595,6 @@ namespace NCDK.Default
         }
 
         /// <inheritdoc/>
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("AtomContainer(");
-            sb.Append(ToStringInner());
-            sb.Append(')');
-            return sb.ToString();
-        }
-
-        internal virtual string ToStringInner()
-        {
-            var sb = new StringBuilder();
-            sb.Append(GetHashCode());
-            Append(sb, atoms, "A");
-            Append(sb, bonds, "B");
-            Append(sb, lonePairs, "LP");
-            Append(sb, singleElectrons, "SE");
-            if (stereoElements.Count > 0)
-            {
-                sb.Append(", ST:[#").Append(stereoElements.Count);
-                foreach (var elements in stereoElements)
-                    sb.Append(", ").Append(elements.ToString());
-                sb.Append(']');
-            }
-            return sb.ToString();
-        }
-
-        private static void Append<T>(StringBuilder sb, ICollection<T> os, string tag)
-        {
-            if (os.Count > 0)
-            {
-                sb.Append(", #").Append(tag).Append(":").Append(os.Count);
-                foreach (var e in os)
-                    sb.Append(", ").Append(e.ToString());
-            }
-        }
-
-        /// <inheritdoc/>
         public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (AtomContainer)base.Clone(map);            
@@ -701,10 +664,8 @@ namespace NCDK.Silent
     /// }
     /// </code>
     /// </example>
-    // @cdk.githash 
     // @author steinbeck
     // @cdk.created 2000-10-02 
-    [Serializable]
     public partial class AtomContainer
         : ChemObject, IAtomContainer, IChemObjectListener
     {
@@ -1085,22 +1046,25 @@ namespace NCDK.Silent
                     }
 
         /// <inheritdoc/>
-        public virtual void AddElectronContainer(IElectronContainer electronContainer)
+        public virtual void Add(IAtom atom)
         {
-            if (electronContainer is IBond bond)
+            Atoms.Add(atom);
+        }
+
+        /// <inheritdoc/>
+        public virtual void Add(IElectronContainer electronContainer)
+        {
+            switch (electronContainer)
             {
-                Bonds.Add(bond);
-                return;
-            }
-            if (electronContainer is ILonePair lonePair)
-            {
-                LonePairs.Add(lonePair);
-                return;
-            }
-            if (electronContainer is ISingleElectron singleElectron)
-            {
-                SingleElectrons.Add(singleElectron);
-                return;
+                case IBond bond:
+                    Bonds.Add(bond);
+                    return;
+                case ILonePair lonePair:
+                    LonePairs.Add(lonePair);
+                    return;
+                case ISingleElectron singleElectron:
+                    SingleElectrons.Add(singleElectron);
+                    return;
             }
         }
 
@@ -1238,44 +1202,6 @@ namespace NCDK.Silent
             if (electronContainer is ISingleElectron singleElectron)
                 return Contains(singleElectron);
             return false;
-        }
-
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("AtomContainer(");
-            sb.Append(ToStringInner());
-            sb.Append(')');
-            return sb.ToString();
-        }
-
-        internal virtual string ToStringInner()
-        {
-            var sb = new StringBuilder();
-            sb.Append(GetHashCode());
-            Append(sb, atoms, "A");
-            Append(sb, bonds, "B");
-            Append(sb, lonePairs, "LP");
-            Append(sb, singleElectrons, "SE");
-            if (stereoElements.Count > 0)
-            {
-                sb.Append(", ST:[#").Append(stereoElements.Count);
-                foreach (var elements in stereoElements)
-                    sb.Append(", ").Append(elements.ToString());
-                sb.Append(']');
-            }
-            return sb.ToString();
-        }
-
-        private static void Append<T>(StringBuilder sb, ICollection<T> os, string tag)
-        {
-            if (os.Count > 0)
-            {
-                sb.Append(", #").Append(tag).Append(":").Append(os.Count);
-                foreach (var e in os)
-                    sb.Append(", ").Append(e.ToString());
-            }
         }
 
         /// <inheritdoc/>

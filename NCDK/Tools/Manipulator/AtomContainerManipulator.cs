@@ -290,7 +290,7 @@ namespace NCDK.Tools.Manipulator
             {
                 var isotopes = CDK.IsotopeFactory;
                 double abundance = 1.0;
-                var hAbundance = isotopes.GetMajorIsotope(1).NaturalAbundance.Value;
+                var hAbundance = isotopes.GetMajorIsotope(1).Abundance.Value;
 
                 int nImplH = 0;
 
@@ -298,7 +298,7 @@ namespace NCDK.Tools.Manipulator
                 {
                     if (!atom.ImplicitHydrogenCount.HasValue)
                         throw new ArgumentException("an atom had with unknown (null) implicit hydrogens");
-                    abundance *= atom.NaturalAbundance.Value;
+                    abundance *= atom.Abundance.Value;
                     for (int h = 0; h < atom.ImplicitHydrogenCount.Value; h++)
                         abundance *= hAbundance;
                     nImplH += atom.ImplicitHydrogenCount.Value;
@@ -1295,7 +1295,7 @@ namespace NCDK.Tools.Manipulator
                     intersection.Atoms.Add(atom1);
             foreach (var electronContainer1 in container1.GetElectronContainers())
                 if (container2.Contains(electronContainer1))
-                    intersection.AddElectronContainer(electronContainer1);
+                    intersection.Add(electronContainer1);
 
             return intersection;
         }

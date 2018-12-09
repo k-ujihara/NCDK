@@ -198,10 +198,10 @@ namespace NCDK.Config
             {
                 foreach (var isotope in isotopes)
                 {
-                    if (isotope.NaturalAbundance <= 0)
+                    if (isotope.Abundance <= 0)
                         continue;
                     if (major == null ||
-                        isotope.NaturalAbundance > major.NaturalAbundance)
+                        isotope.Abundance > major.Abundance)
                     {
                         major = isotope;
                     }
@@ -303,7 +303,7 @@ namespace NCDK.Config
             atom.Symbol = isotope.Symbol;
             atom.ExactMass = isotope.ExactMass;
             atom.AtomicNumber = isotope.AtomicNumber;
-            atom.NaturalAbundance = isotope.NaturalAbundance;
+            atom.Abundance = isotope.Abundance;
             return atom;
         }
 
@@ -330,11 +330,11 @@ namespace NCDK.Config
             double getNaturalMass = 0;
             foreach (var isotope in isotopes)
             {
-                if (isotope.NaturalAbundance.HasValue
+                if (isotope.Abundance.HasValue
                  && isotope.ExactMass.HasValue)
                 {
-                    summedAbundances += isotope.NaturalAbundance.Value;
-                    summedWeightedAbundances += isotope.NaturalAbundance.Value * isotope.ExactMass.Value;
+                    summedAbundances += isotope.Abundance.Value;
+                    summedWeightedAbundances += isotope.Abundance.Value * isotope.ExactMass.Value;
                     getNaturalMass = summedWeightedAbundances / summedAbundances;
                 }
             }

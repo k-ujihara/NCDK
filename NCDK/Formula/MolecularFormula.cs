@@ -191,8 +191,8 @@ namespace NCDK.Formula
             if (!object.Equals(isotopeOne.MassNumber, isotopeTwo.MassNumber))
                 return false;
 
-            var natAbund1 = isotopeOne.NaturalAbundance;
-            var natAbund2 = isotopeTwo.NaturalAbundance;
+            var natAbund1 = isotopeOne.Abundance;
+            var natAbund2 = isotopeTwo.Abundance;
 
             var exactMass1 = isotopeOne.ExactMass;
             var exactMass2 = isotopeTwo.ExactMass;

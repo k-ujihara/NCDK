@@ -15,11 +15,11 @@ namespace NCDK.TT
             {
                 #region 2
                 // make deuterium
-                Isotope carbon = new Isotope(1, "H", 2, 2.01410179, 100.0);
+                Isotope carbon = new Isotope(ChemicalElement.H, 2, 2.01410179, 100.0);
                 #endregion
             }
             {
-                #region NaturalAbundance
+                #region Abundance
                 IAtom atom = new Atom();
                 Isotope isotope = new Isotope("C", 13);
                 XMLIsotopeFactory f = XMLIsotopeFactory.Instance;

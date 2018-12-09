@@ -823,9 +823,9 @@ namespace NCDK.Tools.Manipulator
             double abundance = 1.0;
             foreach (var isotope in formula.Isotopes)
             {
-                if (isotope.NaturalAbundance == null)
+                if (isotope.Abundance == null)
                     return 0.0;
-                abundance = abundance * Math.Pow(isotope.NaturalAbundance.Value, formula.GetCount(isotope));
+                abundance = abundance * Math.Pow(isotope.Abundance.Value, formula.GetCount(isotope));
             }
             return abundance / Math.Pow(100, GetAtomCount(formula));
         }

@@ -67,16 +67,6 @@ namespace NCDK.Default
                 NotifyChanged();
             }
         }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("ElectronContainer(").Append(GetHashCode());
-            if (ElectronCount > -1)
-                sb.Append("EC:").Append(ElectronCount);
-            sb.Append(')');
-            return sb.ToString();
-        }
     }
 }
 namespace NCDK.Silent
@@ -117,16 +107,6 @@ namespace NCDK.Silent
             {
                 electronCount = value;
             }
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("ElectronContainer(").Append(GetHashCode());
-            if (ElectronCount > -1)
-                sb.Append("EC:").Append(ElectronCount);
-            sb.Append(')');
-            return sb.ToString();
         }
     }
 }

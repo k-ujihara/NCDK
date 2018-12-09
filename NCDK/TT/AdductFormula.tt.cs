@@ -247,7 +247,7 @@ namespace NCDK.Default
         {
             // XXX - floating point equality!
             if (isotopeOne.Symbol != isotopeTwo.Symbol) return false;
-            if (isotopeOne.NaturalAbundance != isotopeTwo.NaturalAbundance) return false;
+            if (isotopeOne.Abundance != isotopeTwo.Abundance) return false;
             if (isotopeOne.ExactMass != isotopeTwo.ExactMass) return false;
 
             return true;
@@ -500,7 +500,7 @@ namespace NCDK.Silent
         {
             // XXX - floating point equality!
             if (isotopeOne.Symbol != isotopeTwo.Symbol) return false;
-            if (isotopeOne.NaturalAbundance != isotopeTwo.NaturalAbundance) return false;
+            if (isotopeOne.Abundance != isotopeTwo.Abundance) return false;
             if (isotopeOne.ExactMass != isotopeTwo.ExactMass) return false;
 
             return true;

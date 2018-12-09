@@ -26,7 +26,8 @@ using System.Collections.Generic;
 
 namespace NCDK
 {
-    public class ChemObjectRef : IChemObject
+    public class ChemObjectRef 
+        : IChemObject
     {
         private readonly IChemObject chemobj;
 

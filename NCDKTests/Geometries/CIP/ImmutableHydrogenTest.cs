@@ -103,7 +103,7 @@ namespace NCDK.Geometries.CIP
             Assert.AreEqual((BondOrder)0, hydrogen.MaxBondOrder);
             Assert.IsNull(hydrogen.Valency);
             Assert.IsNull(hydrogen.ExactMass);
-            Assert.IsNull(hydrogen.NaturalAbundance);
+            Assert.IsNull(hydrogen.Abundance);
             Assert.IsFalse(hydrogen.IsAromatic);
             Assert.IsFalse(hydrogen.IsVisited);
             Assert.IsFalse(hydrogen.IsPlaced);
@@ -135,7 +135,7 @@ namespace NCDK.Geometries.CIP
                 MaxBondOrder = BondOrder.Quadruple,
                 Valency = 4,
                 ExactMass = 12.0,
-                NaturalAbundance = 100.0,
+                Abundance = 100.0,
                 IsAromatic = true,
                 IsInRing = true,
                 Id = "Me"

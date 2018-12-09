@@ -603,8 +603,8 @@ namespace NCDK.Tools.Manipulator
         {
             var parser = CDK.SmilesParser;
             var mol = parser.ParseSmiles("CCl");
-            mol.Atoms[0].NaturalAbundance = 98.93;
-            mol.Atoms[1].NaturalAbundance = 75.78;
+            mol.Atoms[0].Abundance = 98.93;
+            mol.Atoms[1].Abundance = 75.78;
             double totalAbudance = AtomContainerManipulator.GetTotalNaturalAbundance(mol);
 
             Assert.AreEqual(0.749432, totalAbudance, 0.000001);

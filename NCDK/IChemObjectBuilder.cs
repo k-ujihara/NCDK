@@ -35,12 +35,14 @@ namespace NCDK
         IAtom NewAtom();
         IAtom NewAtom(IElement element);
         IAtom NewAtom(ChemicalElement element);
-        IAtom NewAtom(int elem);
-        IAtom NewAtom(int elem, int hcnt);
-        IAtom NewAtom(int elem, int hcnt, int fchg);
-        IAtom NewAtom(string elementSymbol);
-        IAtom NewAtom(string elementSymbol, Vector2 point2d);
-        IAtom NewAtom(string elementSymbol, Vector3 point3d);
+        IAtom NewAtom(int atomicNumber);
+        IAtom NewAtom(int atomicNumber, int implicitHydrogenCount);
+        IAtom NewAtom(int atomicNumber, int implicitHydrogenCount, int formalCharge);
+        IAtom NewAtom(string symbol);
+        IAtom NewAtom(ChemicalElement element, Vector2 point2d);
+        IAtom NewAtom(string symbol, Vector2 point2d);
+        IAtom NewAtom(ChemicalElement element, Vector3 point3d);
+        IAtom NewAtom(string symbol, Vector3 point3d);
         IChemObjectSet<T> NewChemObjectSet<T>() where T : IAtomContainer;
         IAtomContainer NewAtomContainer();
         IAtomContainer NewAtomContainer(IAtomContainer container);
@@ -70,11 +72,28 @@ namespace NCDK
         ILonePair NewLonePair();
         ILonePair NewLonePair(IAtom atom);
         IIsotope NewIsotope(ChemicalElement element);
-        IIsotope NewIsotope(string elementSymbol);
-        IIsotope NewIsotope(int atomicNumber, string elementSymbol, int massNumber, double exactMass, double abundance);
-        IIsotope NewIsotope(int atomicNumber, string elementSymbol, double exactMass, double abundance);
-        IIsotope NewIsotope(string elementSymbol, int massNumber);
+        IIsotope NewIsotope(int atomicNumber);
+        IIsotope NewIsotope(string symbol);
+        IIsotope NewIsotope(ChemicalElement element, int massNumber, double exactMass , double abundance);
+        IIsotope NewIsotope(int atomicNumber, int massNumber, double exactMass , double abundance);
+        IIsotope NewIsotope(string symbol, int massNumber, double exactMass , double abundance);
+        IIsotope NewIsotope(ChemicalElement element, int massNumber);
+        IIsotope NewIsotope(int atomicNumber, int massNumber);
+        IIsotope NewIsotope(string symbol, int massNumber);
+        IIsotope NewIsotope(ChemicalElement element, double exactMass, double abundance);
+        IIsotope NewIsotope(int atomicNumber, double exactMass, double abundance);
+        IIsotope NewIsotope(string symbol, double exactMass, double abundance);
+
+        /// <summary>
+        /// Constructs an empty by copying the symbol, atomic number,
+        /// flags, and identifier from the given <see cref="IElement"/>. It does
+        /// not copy the listeners and properties. If the element is
+        /// an instance of <see cref="IIsotope"/>, then the exact mass, natural
+        /// abundance and mass number are copied too.
+        /// </summary>
+        /// <param name="element"><see cref="IElement"/> to copy information from</param>
         IIsotope NewIsotope(IElement element);
+
         IMapping NewMapping(IChemObject objectOne, IChemObject objectTwo);
         IMolecularFormula NewMolecularFormula();
         IMolecularFormulaSet NewMolecularFormulaSet();

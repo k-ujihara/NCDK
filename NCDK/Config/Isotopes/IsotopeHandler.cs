@@ -101,7 +101,7 @@ namespace NCDK.Config.Isotopes
                                 workingIsotope.AtomicNumber = int.Parse(element.Value, NumberFormatInfo.InvariantInfo);
                                 break;
                             case "bo:relativeAbundance":
-                                workingIsotope.NaturalAbundance = double.Parse(element.Value, NumberFormatInfo.InvariantInfo);
+                                workingIsotope.Abundance = double.Parse(element.Value, NumberFormatInfo.InvariantInfo);
                                 break;
                             default:
                                 break;
@@ -166,7 +166,7 @@ namespace NCDK.Config.Isotopes
             // we set the natural abundance to 0, since the default is -1, but
             // some isotope entries have no entry for this field, so the values
             // stays at -1
-            isotope.NaturalAbundance = 0;
+            isotope.Abundance = 0;
 
             return isotope;
         }

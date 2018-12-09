@@ -35,7 +35,7 @@ namespace NCDK.Config
             Assert.AreEqual(6, isotope.AtomicNumber);
             Assert.AreEqual(12, isotope.MassNumber.Value);
             Assert.AreEqual(12.0, isotope.ExactMass.Value, 0.001);
-            Assert.AreEqual(99.0, isotope.NaturalAbundance.Value, 0.001);
+            Assert.AreEqual(99.0, isotope.Abundance.Value, 0.001);
         }
 
         [TestMethod()]
@@ -56,13 +56,13 @@ namespace NCDK.Config
                 AtomicNumber = 5,
                 MassNumber = 15,
                 ExactMass = 15.000,
-                NaturalAbundance = 0.364
+                Abundance = 0.364
             };
             // check if original
             Assert.AreEqual(6, isotope.AtomicNumber);
             Assert.AreEqual(12, isotope.MassNumber.Value);
             Assert.AreEqual(12.0, isotope.ExactMass.Value, 0.001);
-            Assert.AreEqual(99.0, isotope.NaturalAbundance.Value, 0.001);
+            Assert.AreEqual(99.0, isotope.Abundance.Value, 0.001);
         }
 
         [TestMethod()]

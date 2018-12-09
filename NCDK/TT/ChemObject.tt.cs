@@ -41,7 +41,8 @@ namespace NCDK.Default
     /// </summary>
     // @author        steinbeck
     // @cdk.module data
-    public class ChemObject : IChemObject
+    public class ChemObject
+        : IChemObject
     {
         private bool isPlaced;
         private bool isVisited;
@@ -300,7 +301,8 @@ namespace NCDK.Silent
     /// </summary>
     // @author        steinbeck
     // @cdk.module data
-    public class ChemObject : IChemObject
+    public class ChemObject
+        : IChemObject
     {
         private bool isPlaced;
         private bool isVisited;

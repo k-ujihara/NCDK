@@ -36,7 +36,6 @@ namespace NCDK.Graphs
     /// <seealso cref="ShortestPaths"/>
     // @author John May
     // @cdk.module core
-    // @cdk.githash
     public sealed class AllPairsShortestPaths
     {
         private readonly IAtomContainer container;
@@ -96,7 +95,8 @@ namespace NCDK.Graphs
         /// </summary>
         private static readonly IAtomContainer EMPTY_CONTAINER = new EmptyAtomContainer();
 
-        private class EmptyAtomContainer : IAtomContainer
+        private class EmptyAtomContainer 
+            : IAtomContainer
         {
             public IList<IAtom> Atoms => Array.Empty<IAtom>();
             public IList<IBond> Bonds => Array.Empty<IBond>();
@@ -147,7 +147,10 @@ namespace NCDK.Graphs
             public void Add(IAtomContainer atomContainer)
             { throw new InvalidOperationException("not supported"); }
 
-            public void AddElectronContainer(IElectronContainer electronContainer)
+            public void Add(IAtom atom)
+            { throw new InvalidOperationException("not supported"); }
+
+            public void Add(IElectronContainer electronContainer)
             { throw new InvalidOperationException("not supported"); }
 
             public object Clone()

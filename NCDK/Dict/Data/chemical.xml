@@ -235,7 +235,7 @@
     </definition>
   </entry>
 
-  <entry id="naturalAbundance" term="Natural Abundance">
+  <entry id="abundance" term="Natural Abundance">
     <annotation>
       <documentation>
         <metadata name="dc:contributor" content="Egon Willighagen"/>

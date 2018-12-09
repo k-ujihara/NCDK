@@ -54,8 +54,8 @@ namespace NCDK.IO.CML
             Assert.AreEqual(1, mol.Atoms.Count);
             var atom = mol.Atoms[0];
             Assert.AreEqual("a1", atom.Id);
-            Assert.IsNotNull(atom.NaturalAbundance);
-            Assert.AreEqual(99.9885, atom.NaturalAbundance.Value, 0.0001);
+            Assert.IsNotNull(atom.Abundance);
+            Assert.AreEqual(99.9885, atom.Abundance.Value, 0.0001);
             Assert.IsNotNull(atom.ExactMass);
             Assert.AreEqual(1.007825032, atom.ExactMass.Value, 0.0000001);
         }

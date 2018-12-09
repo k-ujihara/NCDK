@@ -335,31 +335,6 @@ namespace NCDK.Default
                 NotifyChanged();
             }
         }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("AtomType(").Append(GetHashCode());
-            if (AtomTypeName != null)
-                sb.Append(", N:").Append(AtomTypeName);
-            if (MaxBondOrder != BondOrder.Unset)
-                sb.Append(", MBO:").Append(MaxBondOrder);
-            if (BondOrderSum != null)
-                sb.Append(", BOS:").Append(BondOrderSum);
-            if (FormalCharge != null)
-                sb.Append(", FC:").Append(FormalCharge);
-            if (Hybridization != Hybridization.Unset)
-                sb.Append(", H:").Append(Hybridization);
-            if (FormalNeighbourCount != null)
-                sb.Append(", NC:").Append(FormalNeighbourCount);
-            if (CovalentRadius != null)
-                sb.Append(", CR:").Append(CovalentRadius);
-            if (Valency != null)
-                sb.Append(", EV:").Append(Valency);
-            sb.Append(", ").Append(base.ToString());
-            sb.Append(')');
-            return sb.ToString();
-        }
     }
 }
 namespace NCDK.Silent
@@ -648,31 +623,6 @@ namespace NCDK.Silent
             {
                 isReactiveCenter = value; 
             }
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("AtomType(").Append(GetHashCode());
-            if (AtomTypeName != null)
-                sb.Append(", N:").Append(AtomTypeName);
-            if (MaxBondOrder != BondOrder.Unset)
-                sb.Append(", MBO:").Append(MaxBondOrder);
-            if (BondOrderSum != null)
-                sb.Append(", BOS:").Append(BondOrderSum);
-            if (FormalCharge != null)
-                sb.Append(", FC:").Append(FormalCharge);
-            if (Hybridization != Hybridization.Unset)
-                sb.Append(", H:").Append(Hybridization);
-            if (FormalNeighbourCount != null)
-                sb.Append(", NC:").Append(FormalNeighbourCount);
-            if (CovalentRadius != null)
-                sb.Append(", CR:").Append(CovalentRadius);
-            if (Valency != null)
-                sb.Append(", EV:").Append(Valency);
-            sb.Append(", ").Append(base.ToString());
-            sb.Append(')');
-            return sb.ToString();
         }
     }
 }

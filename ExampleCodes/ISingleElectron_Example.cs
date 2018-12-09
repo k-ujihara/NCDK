@@ -11,7 +11,7 @@ namespace NCDK
                 AtomContainer radical = new AtomContainer();
                 Atom carbon = new Atom("C");
                 carbon.ImplicitHydrogenCount = 3;
-                radical.AddElectronContainer(new SingleElectron(carbon));
+                radical.Add(new SingleElectron(carbon));
                 #endregion
             }
         }

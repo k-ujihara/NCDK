@@ -36,16 +36,16 @@ namespace NCDK.Config
     {
         private readonly string element;
         private readonly int atomicNumber;
-        private readonly double? naturalAbundance;
+        private readonly double? abundance;
         private readonly double? exactMass;
         private readonly int? massNumber;
 
-        public BODRIsotope(string element, int atomicNumber, int? massNumber, double? exactMass, double? naturalAbundance)
+        public BODRIsotope(string element, int atomicNumber, int? massNumber, double? exactMass, double? abundance)
         {
             this.element = element;
             this.atomicNumber = atomicNumber;
             this.massNumber = massNumber;
-            this.naturalAbundance = naturalAbundance;
+            this.abundance = abundance;
             this.exactMass = exactMass;
         }
 
@@ -90,9 +90,9 @@ namespace NCDK.Config
             set { }
         }
 
-        public double? NaturalAbundance
+        public double? Abundance
         {
-            get { return naturalAbundance; }
+            get { return abundance; }
             set { }
         }
 

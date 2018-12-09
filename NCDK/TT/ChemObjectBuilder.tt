@@ -31,6 +31,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 <#
+string fn = Path.Combine(new FileInfo(this.Host.TemplateFile).Directory.FullName, filename);
+
 foreach (var ns in namespaces) 
 {
 #>
@@ -96,8 +98,25 @@ namespace <#= ns.NS #>
 #pragma warning restore
 
 <#
+    WriteMain(fn);
+#>        
+    }
+}
+<#   
+}
+#>
+namespace NCDK
 {
-    const string ptn_type = @"\w+|\w+(((?'Open'<)[^<>]*)+((?'Close-Open'>))+)*(?(Open)(?!))";
+    public partial class Chem
+    {
+<#
+    WriteMain(fn, true);
+#>
+    }
+}
+
+<#+
+    const string ptn_type = @"\w+\??|\w+(((?'Open'<)[^<>]*)+((?'Close-Open'>))+)*(?(Open)(?!))";
     const string ptn_id = "[A-Za-z_][A-Za-z_0-9]*";
     Regex re = new Regex(
           @"^(?<spaces>\s*)"
@@ -124,87 +143,110 @@ namespace <#= ns.NS #>
         ,
         RegexOptions.Compiled);
 
-    var filename = "../IChemObjectBuilder.cs";
-    var fn = Path.Combine(new FileInfo(this.Host.TemplateFile).Directory.FullName, filename);
-    using (var reader = new StreamReader(fn))
-    {
-        string line;
-        while ((line = reader.ReadLine()) != null)
-        {
-            line = line.Trim();
-            if (line == "public interface IChemObjectBuilder")
-                break;
-        }
-        while ((line = reader.ReadLine()) != null)
-        {
-            var tline = line.Trim();
-            switch (tline)
-            {
-                case "":
-                case "{":
-                    continue;
-                case "}":
-                    goto break_line_loop;
-            }
-            var match = re.Match(line);
-            
-            var ret_type = match.Groups["ret_type"].Value;
-            var func_name = match.Groups["name"].Value;
-            if (!func_name.StartsWith("New"))
-                continue;
-            func_name = func_name.Substring(3);
+    const string filename = "../IChemObjectBuilder.cs";
 
-            string new_func_name = null;
-            switch (func_name)
-            {
-                case "AtomContainer":
-                    new_func_name = "AtomContainer2";
-                    break;
-            }
-
-            Write(match.Groups["spaces"].Value);
-            Write("public ");
-            Write(match.Groups["body"].Value);
-            Write(" => ");
-
-            if (new_func_name != null)
-            {
-                Write("LegacyAtomContainer ? ");
-                WriteNew(ret_type, func_name, match);
-                Write(" : ");
-                WriteNew(ret_type, new_func_name, match);
-            }
-            else
-            {
-                WriteNew(ret_type, func_name, match);
-            }
-
-            WriteLine(";");
-        }
-    break_line_loop:
-        ;
-    }
-}
-#>        
-    }
-}
-<#   
-}
-#>
-<#+
     List<string> initbuilder = new List<string>() 
     {
         "TetrahedralChirality",
         "DoubleBondStereochemistry",
     };
 
-    void WriteNew(string ret_type, string func_name, Match match)
+    List<string> forcdkclass = new List<string>() 
+    {
+        "ChemObject",
+        "Atom",
+        "Bond",
+        "LonePair",
+        "SingleElectron",
+        "AtomContainer",
+        "Reaction",
+    };
+
+    void WriteMain(string fn, bool cdk = false)
+    {
+        using (var reader = new StreamReader(fn))
+        {
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                line = line.Trim();
+                if (line == "public interface IChemObjectBuilder")
+                    break;
+            }
+            while ((line = reader.ReadLine()) != null)
+            {
+                var tline = line.Trim();
+                switch (tline)
+                {
+                    case "":
+                    case "{":
+                        continue;
+                    case "}":
+                        goto break_line_loop;
+                }
+                var match = re.Match(line);
+            
+                var ret_type = match.Groups["ret_type"].Value;
+                var func_name = match.Groups["name"].Value;
+                if (!func_name.StartsWith("New"))
+                    continue;
+                func_name = func_name.Substring(3);
+
+                if (cdk && !forcdkclass.Contains(func_name))
+                    continue;
+
+                string adv_func_name = null;
+                switch (func_name)
+                {
+                    case "AtomContainer":
+                        adv_func_name = "AtomContainer2";
+                        break;
+                }
+
+                Write(match.Groups["spaces"].Value);
+                Write("public ");
+                if (cdk)
+                {
+                    Write("static ");
+                }
+                Write(match.Groups["body"].Value);
+                Write(" => ");
+
+                if (!cdk && adv_func_name != null)
+                {
+                    Write("LegacyAtomContainer ? ");
+                    WriteNew(ret_type, func_name, match, cdk);
+                    Write(" : ");
+                    WriteNew(ret_type, adv_func_name, match, cdk);
+                }
+                else
+                {
+                    WriteNew(ret_type, func_name, match, cdk);
+                }
+
+                WriteLine(";");
+            }
+        break_line_loop:
+            ;
+        }
+    }
+
+    void WriteNew(string ret_type, string func_name, Match match, bool cdk = false)
     {
         Write("(");
         Write(ret_type);
         Write(")");
-        Write("new ");
-        Write(func_name);
+
+        if (cdk)
+        {
+            Write("CDK.Builder.New");
+            Write(func_name);
+        }
+        else
+        {
+            Write("new ");
+            Write(func_name);
+        }
 
         if (!string.IsNullOrEmpty(match.Groups["genericT"].Value))
         {
@@ -217,7 +259,7 @@ namespace <#= ns.NS #>
         Write(string.Join(", ", match.Groups["param_name"].Captures.Cast<Capture>().Select(n => n.Value)));
         Write(")");
 
-        if (initbuilder.Contains(func_name))
+        if (!cdk && initbuilder.Contains(func_name))
         {
             Write(" { Builder = this }");
         }

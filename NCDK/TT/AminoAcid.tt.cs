@@ -37,11 +37,9 @@ namespace NCDK.Default
     /// A AminoAcid is Monomer which stores additional amino acid specific
     /// informations, like the N-terminus atom.
     /// </summary>
-    // @cdk.githash
     // @author      Egon Willighagen <e.willighagen@science.ru.nl>
     // @cdk.created 2005-08-11
     // @cdk.keyword amino acid
-    [Serializable]
     public class AminoAcid
         : Monomer, IAminoAcid
     {
@@ -87,21 +85,6 @@ namespace NCDK.Default
             if (cTerminus != null)
                 clone.cTerminus = clone.atoms[this.atoms.IndexOf(cTerminus)];
             return clone;
-        }
-
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("AminoAcid(");
-            sb.Append(GetHashCode());
-            if (nTerminus != null)
-                sb.Append(", N:").Append(nTerminus.ToString());
-            if (cTerminus != null)
-                sb.Append(", C:").Append(cTerminus.ToString());
-            sb.Append(", ").Append(base.ToString());
-            sb.Append(')');
-            return sb.ToString();
         }
     }
 }
@@ -111,11 +94,9 @@ namespace NCDK.Silent
     /// A AminoAcid is Monomer which stores additional amino acid specific
     /// informations, like the N-terminus atom.
     /// </summary>
-    // @cdk.githash
     // @author      Egon Willighagen <e.willighagen@science.ru.nl>
     // @cdk.created 2005-08-11
     // @cdk.keyword amino acid
-    [Serializable]
     public class AminoAcid
         : Monomer, IAminoAcid
     {
@@ -161,21 +142,6 @@ namespace NCDK.Silent
             if (cTerminus != null)
                 clone.cTerminus = clone.atoms[this.atoms.IndexOf(cTerminus)];
             return clone;
-        }
-
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("AminoAcid(");
-            sb.Append(GetHashCode());
-            if (nTerminus != null)
-                sb.Append(", N:").Append(nTerminus.ToString());
-            if (cTerminus != null)
-                sb.Append(", C:").Append(cTerminus.ToString());
-            sb.Append(", ").Append(base.ToString());
-            sb.Append(')');
-            return sb.ToString();
         }
     }
 }

@@ -216,7 +216,7 @@ namespace NCDK
         /// <inheritdoc/>
         public override string ToString()
         {
-            return "BondRef{" + bond + "}";
+            return $"{nameof(BondRef)}({bond.ToString()})";
         }
     }
 }

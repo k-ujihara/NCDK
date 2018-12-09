@@ -39,7 +39,6 @@ namespace NCDK.Default
     /// atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
     /// </summary>
     // @cdk.module  data
-    // @cdk.githash
     // @cdk.keyword ring 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
@@ -113,15 +112,6 @@ namespace NCDK.Default
         /// </summary>
         public int GetBondOrderSum()
             => bonds.Where(n => !n.Order.IsUnset()).Select(n => n.Order.Numeric()).Sum();
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("Ring(");
-            sb.Append(base.ToString());
-            sb.Append(')');
-            return sb.ToString();
-        }
 
         public override ICDKObject Clone(CDKObjectMap map)
         {
@@ -139,7 +129,6 @@ namespace NCDK.Silent
     /// atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
     /// </summary>
     // @cdk.module  data
-    // @cdk.githash
     // @cdk.keyword ring 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
@@ -213,15 +202,6 @@ namespace NCDK.Silent
         /// </summary>
         public int GetBondOrderSum()
             => bonds.Where(n => !n.Order.IsUnset()).Select(n => n.Order.Numeric()).Sum();
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("Ring(");
-            sb.Append(base.ToString());
-            sb.Append(')');
-            return sb.ToString();
-        }
 
         public override ICDKObject Clone(CDKObjectMap map)
         {

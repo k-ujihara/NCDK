@@ -55,12 +55,12 @@ namespace NCDK.Default
         [TestMethod()]
         public void TestIsotope_int_String_int_double_double()
         {
-            IIsotope i = new Isotope(6, "C", 12, 12.001, 80.0);
+            IIsotope i = new Isotope(6, 12, 12.001, 80.0);
             Assert.AreEqual(12, i.MassNumber);
             Assert.AreEqual("C", i.Symbol);
             Assert.AreEqual(6, i.AtomicNumber);
             Assert.AreEqual(12.001, i.ExactMass.Value, 0.001);
-            Assert.AreEqual(80.0, i.NaturalAbundance.Value, 0.001);
+            Assert.AreEqual(80.0, i.Abundance.Value, 0.001);
         }
 
         [TestMethod()]
@@ -74,11 +74,11 @@ namespace NCDK.Default
         [TestMethod()]
         public void TestIsotope_int_String_double_double()
         {
-            IIsotope i = new Isotope(6, "C", 12.001, 80.0);
+            IIsotope i = new Isotope("C", 12.001, 80.0);
             Assert.AreEqual("C", i.Symbol);
             Assert.AreEqual(6, i.AtomicNumber);
             Assert.AreEqual(12.001, i.ExactMass.Value, 0.001);
-            Assert.AreEqual(80.0, i.NaturalAbundance.Value, 0.001);
+            Assert.AreEqual(80.0, i.Abundance.Value, 0.001);
         }
 
         [TestMethod()]
@@ -100,8 +100,8 @@ namespace NCDK.Default
         [TestMethod()]
         public void TestCompare_NaturalAbundance()
         {
-            Isotope iso = new Isotope("C") { NaturalAbundance = 12.000000 };
-            Isotope iso2 = new Isotope("C") { NaturalAbundance = 12.0 };
+            Isotope iso = new Isotope("C") { Abundance = 12.000000 };
+            Isotope iso2 = new Isotope("C") { Abundance = 12.0 };
             Assert.IsTrue(iso.Compare(iso2));
         }
 
@@ -138,12 +138,12 @@ namespace NCDK.Silent
         [TestMethod()]
         public void TestIsotope_int_String_int_double_double()
         {
-            IIsotope i = new Isotope(6, "C", 12, 12.001, 80.0);
+            IIsotope i = new Isotope(6, 12, 12.001, 80.0);
             Assert.AreEqual(12, i.MassNumber);
             Assert.AreEqual("C", i.Symbol);
             Assert.AreEqual(6, i.AtomicNumber);
             Assert.AreEqual(12.001, i.ExactMass.Value, 0.001);
-            Assert.AreEqual(80.0, i.NaturalAbundance.Value, 0.001);
+            Assert.AreEqual(80.0, i.Abundance.Value, 0.001);
         }
 
         [TestMethod()]
@@ -157,11 +157,11 @@ namespace NCDK.Silent
         [TestMethod()]
         public void TestIsotope_int_String_double_double()
         {
-            IIsotope i = new Isotope(6, "C", 12.001, 80.0);
+            IIsotope i = new Isotope("C", 12.001, 80.0);
             Assert.AreEqual("C", i.Symbol);
             Assert.AreEqual(6, i.AtomicNumber);
             Assert.AreEqual(12.001, i.ExactMass.Value, 0.001);
-            Assert.AreEqual(80.0, i.NaturalAbundance.Value, 0.001);
+            Assert.AreEqual(80.0, i.Abundance.Value, 0.001);
         }
 
         [TestMethod()]
@@ -183,8 +183,8 @@ namespace NCDK.Silent
         [TestMethod()]
         public void TestCompare_NaturalAbundance()
         {
-            Isotope iso = new Isotope("C") { NaturalAbundance = 12.000000 };
-            Isotope iso2 = new Isotope("C") { NaturalAbundance = 12.0 };
+            Isotope iso = new Isotope("C") { Abundance = 12.000000 };
+            Isotope iso2 = new Isotope("C") { Abundance = 12.0 };
             Assert.IsTrue(iso.Compare(iso2));
         }
 

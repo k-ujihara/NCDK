@@ -881,26 +881,6 @@ namespace NCDK.Default
             NotifyChanged();
         }
 
-        public int IndexOf(ISingleElectron electron)
-        {
-            for (int i = 0; i < electrons.Count; i++)
-            {
-                if (electrons[i] == electron)
-                    return i;
-            }
-            return -1;
-        }
-
-        public int IndexOf(ILonePair pair)
-        {
-            for (int i = 0; i < lonepairs.Count; i++)
-            {
-                if (lonepairs[i] == pair) 
-                    return i;
-            }
-            return -1;
-        }
-
         public IElectronContainer GetElectronContainer(int number)
         {
             if (number < bonds.Count) 
@@ -1077,7 +1057,13 @@ namespace NCDK.Default
         }
 
         /// <inheritdoc/>
-        public void AddElectronContainer(IElectronContainer electronContainer)
+        public void Add(IAtom atom)
+        {
+            Atoms.Add(atom);
+        }
+
+        /// <inheritdoc/>
+        public void Add(IElectronContainer electronContainer)
         {
             switch (electronContainer)
             {
@@ -1091,7 +1077,6 @@ namespace NCDK.Default
                     SingleElectrons.Add(singleElectron);
                     return;
             }
-            NotifyChanged();
         }
 
         /// <inheritdoc/>
@@ -1210,7 +1195,8 @@ namespace NCDK.Default
                 var atomElements = new List<IStereoElement<IChemObject, IChemObject>>();
                 foreach (var element in stereo)
                 {
-                    if (element.Contains(atom)) atomElements.Add(element);
+                    if (element.Contains(atom)) 
+                        atomElements.Add(element);
                 }
                 foreach (var ae in atomElements)
                     stereo.Remove(ae);
@@ -1291,39 +1277,7 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public override string ToString()
         {
-            var sb = new StringBuilder();
-            sb.Append("AtomContainer(");
-            sb.Append(ToStringInner());
-            sb.Append(')');
-            return sb.ToString();
-        }
-
-        internal string ToStringInner()
-        {
-            var sb = new StringBuilder();
-            sb.Append(GetHashCode());
-            Append(sb, atoms, "A");
-            Append(sb, bonds, "B");
-            Append(sb, lonepairs, "LP");
-            Append(sb, electrons, "SE");
-            if (stereo.Count > 0)
-            {
-                sb.Append(", ST:[#").Append(stereo.Count);
-                foreach (var elements in stereo)
-                    sb.Append(", ").Append(elements.ToString());
-                sb.Append(']');
-            }
-            return sb.ToString();
-        }
-
-        private static void Append<T>(StringBuilder sb, ICollection<T> os, string tag)
-        {
-            if (os.Count > 0)
-            {
-                sb.Append(", #").Append(tag).Append(":").Append(os.Count);
-                foreach (var e in os)
-                    sb.Append(", ").Append(e.ToString());
-            }
+            return CDKStuff.ToString(this);   
         }
 
         /// <inheritdoc/>
@@ -2243,26 +2197,6 @@ namespace NCDK.Silent
 
         }
 
-        public int IndexOf(ISingleElectron electron)
-        {
-            for (int i = 0; i < electrons.Count; i++)
-            {
-                if (electrons[i] == electron)
-                    return i;
-            }
-            return -1;
-        }
-
-        public int IndexOf(ILonePair pair)
-        {
-            for (int i = 0; i < lonepairs.Count; i++)
-            {
-                if (lonepairs[i] == pair) 
-                    return i;
-            }
-            return -1;
-        }
-
         public IElectronContainer GetElectronContainer(int number)
         {
             if (number < bonds.Count) 
@@ -2438,7 +2372,13 @@ namespace NCDK.Silent
         }
 
         /// <inheritdoc/>
-        public void AddElectronContainer(IElectronContainer electronContainer)
+        public void Add(IAtom atom)
+        {
+            Atoms.Add(atom);
+        }
+
+        /// <inheritdoc/>
+        public void Add(IElectronContainer electronContainer)
         {
             switch (electronContainer)
             {
@@ -2569,7 +2509,8 @@ namespace NCDK.Silent
                 var atomElements = new List<IStereoElement<IChemObject, IChemObject>>();
                 foreach (var element in stereo)
                 {
-                    if (element.Contains(atom)) atomElements.Add(element);
+                    if (element.Contains(atom)) 
+                        atomElements.Add(element);
                 }
                 foreach (var ae in atomElements)
                     stereo.Remove(ae);
@@ -2641,39 +2582,7 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public override string ToString()
         {
-            var sb = new StringBuilder();
-            sb.Append("AtomContainer(");
-            sb.Append(ToStringInner());
-            sb.Append(')');
-            return sb.ToString();
-        }
-
-        internal string ToStringInner()
-        {
-            var sb = new StringBuilder();
-            sb.Append(GetHashCode());
-            Append(sb, atoms, "A");
-            Append(sb, bonds, "B");
-            Append(sb, lonepairs, "LP");
-            Append(sb, electrons, "SE");
-            if (stereo.Count > 0)
-            {
-                sb.Append(", ST:[#").Append(stereo.Count);
-                foreach (var elements in stereo)
-                    sb.Append(", ").Append(elements.ToString());
-                sb.Append(']');
-            }
-            return sb.ToString();
-        }
-
-        private static void Append<T>(StringBuilder sb, ICollection<T> os, string tag)
-        {
-            if (os.Count > 0)
-            {
-                sb.Append(", #").Append(tag).Append(":").Append(os.Count);
-                foreach (var e in os)
-                    sb.Append(", ").Append(e.ToString());
-            }
+            return CDKStuff.ToString(this);   
         }
 
         /// <inheritdoc/>

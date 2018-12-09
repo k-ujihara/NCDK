@@ -84,22 +84,9 @@ namespace NCDK.Default
         /// </summary>
         public override int? ElectronCount => 0;
 
-        public override string ToString()
-        {
-            var s = new StringBuilder();
-            s.Append("Association(");
-            s.Append(this.GetHashCode());
-            foreach (var atom in AssociatedAtoms)
-            {
-                s.Append(", ").Append(atom.ToString());
-            }
-            s.Append(')');
-            return s.ToString();
-        }
-
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
-                NotifyChanged(evt);
+            NotifyChanged(evt);
         }
     }
 }
@@ -159,22 +146,8 @@ namespace NCDK.Silent
         /// </summary>
         public override int? ElectronCount => 0;
 
-        public override string ToString()
-        {
-            var s = new StringBuilder();
-            s.Append("Association(");
-            s.Append(this.GetHashCode());
-            foreach (var atom in AssociatedAtoms)
-            {
-                s.Append(", ").Append(atom.ToString());
-            }
-            s.Append(')');
-            return s.ToString();
-        }
-
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
         }
     }
 }
-

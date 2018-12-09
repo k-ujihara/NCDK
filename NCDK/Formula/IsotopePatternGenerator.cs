@@ -143,7 +143,7 @@ namespace NCDK.Formula
                 foreach (var isotope in isoFactory.GetIsotopes(elementSymbol))
                 {
                     double mass = isotope.ExactMass.Value;
-                    double abundance = isotope.NaturalAbundance.Value;
+                    double abundance = isotope.Abundance.Value;
                     if (abundance <= 0.000000001)
                         continue;
                     IsotopeContainer container = new IsotopeContainer(mass, abundance);

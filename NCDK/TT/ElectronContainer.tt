@@ -71,16 +71,6 @@ namespace <#= ns.NS #>
 <# } #>
             }
         }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("ElectronContainer(").Append(GetHashCode());
-            if (ElectronCount > -1)
-                sb.Append("EC:").Append(ElectronCount);
-            sb.Append(')');
-            return sb.ToString();
-        }
     }
 }
 <#

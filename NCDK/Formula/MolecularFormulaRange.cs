@@ -210,7 +210,7 @@ namespace NCDK.Formula
             if (!isotopeOne.Symbol.Equals(isotopeTwo.Symbol, StringComparison.Ordinal))
                 return false;
             // XXX: floating point comparision!
-            if (isotopeOne.NaturalAbundance != isotopeTwo.NaturalAbundance)
+            if (isotopeOne.Abundance != isotopeTwo.Abundance)
                 return false;
             if (isotopeOne.ExactMass != isotopeTwo.ExactMass)
                 return false;

@@ -34,7 +34,6 @@ namespace NCDK
     /// </example>
     // @author     steinbeck
     // @cdk.module interfaces
-    // @cdk.githash
     // @cdk.created    2000-10-02
     public interface IAtomContainer
         : IChemObject, IChemObjectListener
@@ -94,7 +93,7 @@ namespace NCDK
         /// Returns <see cref="IElectronContainer"/>s in the container.
         /// </summary>
         /// <returns><see cref="IElectronContainer"/>s in the container.</returns>
-        /// <seealso cref="AddElectronContainer(IElectronContainer)"/> 
+        /// <seealso cref="Add(IElectronContainer)"/> 
         IEnumerable<IElectronContainer> GetElectronContainers();
 
         /// <summary>
@@ -173,16 +172,22 @@ namespace NCDK
         BondOrder GetMinimumBondOrder(IAtom atom);
 
         /// <summary>
-        ///  Adds all atoms and electron containers of a given <paramref name="atomContainer"/> to this container.
+        /// Adds all atoms and electron containers of a given <paramref name="atomContainer"/> to this container.
         /// </summary>
         /// <param name="atomContainer">The <see cref="IAtomContainer"/> to be added</param>
         void Add(IAtomContainer atomContainer);
 
         /// <summary>
+        /// Add <paramref name="atom"/> to this container.
+        /// </summary>
+        /// <param name="atom">The atom to be added.</param>
+        void Add(IAtom atom);
+
+        /// <summary>
         /// Adds a <see cref="IElectronContainer"/> to this <see cref="IAtomContainer"/>.
         /// </summary>
         /// <param name="electronContainer">The <see cref="IElectronContainer"/> to added to this container</param>
-        void AddElectronContainer(IElectronContainer electronContainer);
+        void Add(IElectronContainer electronContainer);
 
         /// <summary>
         /// Removes all atoms and electronContainers of a given atomcontainer from this container.

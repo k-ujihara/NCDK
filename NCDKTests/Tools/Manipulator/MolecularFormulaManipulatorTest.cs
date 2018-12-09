@@ -432,9 +432,9 @@ namespace NCDK.Tools.Manipulator
         {
             var formula = new MolecularFormula();
             IIsotope carb = builder.NewIsotope("C");
-            carb.NaturalAbundance = 98.93;
+            carb.Abundance = 98.93;
             IIsotope cl = builder.NewIsotope("Cl");
-            cl.NaturalAbundance = 75.78;
+            cl.Abundance = 75.78;
             formula.Add(carb);
             formula.Add(cl);
 
@@ -451,9 +451,9 @@ namespace NCDK.Tools.Manipulator
         {
             IMolecularFormula formula1 = new MolecularFormula();
             IIsotope br1 = builder.NewIsotope("Br");
-            br1.NaturalAbundance = 49.31;
+            br1.Abundance = 49.31;
             IIsotope br2 = builder.NewIsotope("Br");
-            br2.NaturalAbundance = 50.69;
+            br2.Abundance = 50.69;
             formula1.Add(br1);
             formula1.Add(br2);
 
@@ -467,9 +467,9 @@ namespace NCDK.Tools.Manipulator
         {
             IMolecularFormula formula2 = new MolecularFormula();
             IIsotope br1 = builder.NewIsotope("Br");
-            br1.NaturalAbundance = 50.69;
+            br1.Abundance = 50.69;
             IIsotope br2 = builder.NewIsotope("Br");
-            br2.NaturalAbundance = 50.69;
+            br2.Abundance = 50.69;
             formula2.Add(br1);
             formula2.Add(br2);
 
@@ -484,7 +484,7 @@ namespace NCDK.Tools.Manipulator
         {
             IMolecularFormula formula2 = new MolecularFormula();
             IIsotope br1 = builder.NewIsotope("Br");
-            br1.NaturalAbundance = 50.69;
+            br1.Abundance = 50.69;
             formula2.Add(br1);
             formula2.Add(br1);
 
@@ -831,10 +831,10 @@ namespace NCDK.Tools.Manipulator
             formula.Add(builder.NewIsotope("H"), 2);
 
             var br1 = builder.NewIsotope("Br");
-            br1.NaturalAbundance = 50.69;
+            br1.Abundance = 50.69;
             formula.Add(br1);
             var br2 = builder.NewIsotope("Br");
-            br2.NaturalAbundance = 50.69;
+            br2.Abundance = 50.69;
             formula.Add(br2);
 
             var elements = MolecularFormulaManipulator.Elements(formula);

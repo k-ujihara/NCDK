@@ -82,36 +82,11 @@ namespace NCDK.Default
         {
         }
 
-        /// <summary>
-        /// Create a new atom with of the specified element.
-        /// </summary>
-        /// <param name="elem">atomic number</param>
-        public Atom(int elem) 
-            : this(elem, 0, 0)
+        public Atom(int atomicNumber, int implicitHydrogenCount = 0, int formalCharge = 0) 
+            : base(ChemicalElement.Of(atomicNumber))
         {
-        }
-
-        /// <summary>
-        /// Create a new atom with of the specified element and hydrogen count.
-        /// </summary>
-        /// <param name="elem">atomic number</param>
-        /// <param name="hcnt">hydrogen count</param>
-        public Atom(int elem, int hcnt) : this(elem, hcnt, 0)
-        {
-        }
-
-        /// <summary>
-        /// Create a new atom with of the specified element, hydrogen count, and formal charge.
-        /// </summary>
-        /// <param name="elem">atomic number</param>
-        /// <param name="hcnt">hydrogen count</param>
-        /// <param name="fchg">formal charge</param>
-        public Atom(int elem, int hcnt, int fchg) : base((string)null)
-        {
-            AtomicNumber = elem;
-            Symbol = ChemicalElement.Of(elem).Symbol;
-            ImplicitHydrogenCount = hcnt;
-            FormalCharge = fchg;
+            this.implicitHydrogenCount = implicitHydrogenCount;
+            this.formalCharge = formalCharge;
         }
 
         /// <summary>
@@ -137,30 +112,33 @@ namespace NCDK.Default
         /// </pre>
         /// </remarks>
         /// <param name="symbol">string with the element symbol</param>
-        public Atom(string symbol) : base((string)null)
+        public Atom(string symbol) 
+            : base((string)null)
         {
             if (!ParseAtomSymbol(this, symbol))
-                throw new ArgumentException("Cannot pass atom symbol: " + symbol);
+                throw new ArgumentException($"Cannot pass atom symbol: {symbol}");
         }
 
-        /// <summary>
-        /// Constructs an <see cref="IAtom"/> from an element name and a <see cref="Vector2"/>.
-        /// </summary>
-        /// <param name="elementSymbol">The element</param>
-        /// <param name="point2d">The Point</param>
-        public Atom(string elementSymbol, Vector2 point2d)
-            : base(elementSymbol)
+        public Atom(ChemicalElement element, Vector2 point2d)
+            : base(element)
         {
             this.point2D = point2d;
         }
 
-        /// <summary>
-        /// Constructs an <see cref="IAtom"/> from an element name and a <see cref="Vector3"/>.
-        /// </summary>
-        /// <param name="elementSymbol">The element</param>
-        /// <param name="point3d">The Point</param>
-        public Atom(string elementSymbol, Vector3 point3d)
-            : base(elementSymbol)
+        public Atom(string symbol, Vector2 point2d)
+            : base(symbol)
+        {
+            this.point2D = point2d;
+        }
+
+        public Atom(ChemicalElement element, Vector3 point3d)
+            : base(element)
+        {
+            this.point3D = point3d;
+        }
+
+        public Atom(string symbol, Vector3 point3d)
+            : base(symbol)
         {
             this.point3D = point3d;
         }
@@ -309,29 +287,6 @@ namespace NCDK.Default
                 && ImplicitHydrogenCount == aa.ImplicitHydrogenCount
                 && StereoParity == aa.StereoParity
                 && Charge == aa.Charge;
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("Atom(").Append(GetHashCode());
-            if (Symbol != null)
-                sb.Append(", S:").Append(Symbol);
-            if (ImplicitHydrogenCount != null)
-                sb.Append(", H:").Append(ImplicitHydrogenCount);
-            if (StereoParity != 0)
-                sb.Append(", SP:").Append(StereoParity);
-            if (Point2D != null)
-                sb.Append(", 2D:[").Append(Point2D).Append(']');
-            if (Point3D != null)
-                sb.Append(", 3D:[").Append(Point3D).Append(']');
-            if (FractionalPoint3D != null)
-                sb.Append(", F3D:[").Append(FractionalPoint3D);
-            if (Charge != null)
-                sb.Append(", C:").Append(Charge);
-            sb.Append(", ").Append(base.ToString());
-            sb.Append(')');
-            return sb.ToString();
         }
 
         public override ICDKObject Clone(CDKObjectMap map)
@@ -541,36 +496,11 @@ namespace NCDK.Silent
         {
         }
 
-        /// <summary>
-        /// Create a new atom with of the specified element.
-        /// </summary>
-        /// <param name="elem">atomic number</param>
-        public Atom(int elem) 
-            : this(elem, 0, 0)
+        public Atom(int atomicNumber, int implicitHydrogenCount = 0, int formalCharge = 0) 
+            : base(ChemicalElement.Of(atomicNumber))
         {
-        }
-
-        /// <summary>
-        /// Create a new atom with of the specified element and hydrogen count.
-        /// </summary>
-        /// <param name="elem">atomic number</param>
-        /// <param name="hcnt">hydrogen count</param>
-        public Atom(int elem, int hcnt) : this(elem, hcnt, 0)
-        {
-        }
-
-        /// <summary>
-        /// Create a new atom with of the specified element, hydrogen count, and formal charge.
-        /// </summary>
-        /// <param name="elem">atomic number</param>
-        /// <param name="hcnt">hydrogen count</param>
-        /// <param name="fchg">formal charge</param>
-        public Atom(int elem, int hcnt, int fchg) : base((string)null)
-        {
-            AtomicNumber = elem;
-            Symbol = ChemicalElement.Of(elem).Symbol;
-            ImplicitHydrogenCount = hcnt;
-            FormalCharge = fchg;
+            this.implicitHydrogenCount = implicitHydrogenCount;
+            this.formalCharge = formalCharge;
         }
 
         /// <summary>
@@ -596,30 +526,33 @@ namespace NCDK.Silent
         /// </pre>
         /// </remarks>
         /// <param name="symbol">string with the element symbol</param>
-        public Atom(string symbol) : base((string)null)
+        public Atom(string symbol) 
+            : base((string)null)
         {
             if (!ParseAtomSymbol(this, symbol))
-                throw new ArgumentException("Cannot pass atom symbol: " + symbol);
+                throw new ArgumentException($"Cannot pass atom symbol: {symbol}");
         }
 
-        /// <summary>
-        /// Constructs an <see cref="IAtom"/> from an element name and a <see cref="Vector2"/>.
-        /// </summary>
-        /// <param name="elementSymbol">The element</param>
-        /// <param name="point2d">The Point</param>
-        public Atom(string elementSymbol, Vector2 point2d)
-            : base(elementSymbol)
+        public Atom(ChemicalElement element, Vector2 point2d)
+            : base(element)
         {
             this.point2D = point2d;
         }
 
-        /// <summary>
-        /// Constructs an <see cref="IAtom"/> from an element name and a <see cref="Vector3"/>.
-        /// </summary>
-        /// <param name="elementSymbol">The element</param>
-        /// <param name="point3d">The Point</param>
-        public Atom(string elementSymbol, Vector3 point3d)
-            : base(elementSymbol)
+        public Atom(string symbol, Vector2 point2d)
+            : base(symbol)
+        {
+            this.point2D = point2d;
+        }
+
+        public Atom(ChemicalElement element, Vector3 point3d)
+            : base(element)
+        {
+            this.point3D = point3d;
+        }
+
+        public Atom(string symbol, Vector3 point3d)
+            : base(symbol)
         {
             this.point3D = point3d;
         }
@@ -761,29 +694,6 @@ namespace NCDK.Silent
                 && ImplicitHydrogenCount == aa.ImplicitHydrogenCount
                 && StereoParity == aa.StereoParity
                 && Charge == aa.Charge;
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("Atom(").Append(GetHashCode());
-            if (Symbol != null)
-                sb.Append(", S:").Append(Symbol);
-            if (ImplicitHydrogenCount != null)
-                sb.Append(", H:").Append(ImplicitHydrogenCount);
-            if (StereoParity != 0)
-                sb.Append(", SP:").Append(StereoParity);
-            if (Point2D != null)
-                sb.Append(", 2D:[").Append(Point2D).Append(']');
-            if (Point3D != null)
-                sb.Append(", 3D:[").Append(Point3D).Append(']');
-            if (FractionalPoint3D != null)
-                sb.Append(", F3D:[").Append(FractionalPoint3D);
-            if (Charge != null)
-                sb.Append(", C:").Append(Charge);
-            sb.Append(", ").Append(base.ToString());
-            sb.Append(')');
-            return sb.ToString();
         }
 
         public override ICDKObject Clone(CDKObjectMap map)

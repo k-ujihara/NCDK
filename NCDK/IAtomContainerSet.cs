@@ -36,7 +36,6 @@ namespace NCDK
     /// <typeparam name="T">Type of element.</typeparam>
     // @author     egonw
     // @cdk.module interfaces
-    // @cdk.githash
     public interface IChemObjectSet<T>
         : IChemObject, IList<T>, IEnumerableChemObject<T>
         where T : IChemObject

@@ -67,8 +67,8 @@ namespace NCDK.Tools.Diff.Tree
             ChemObjectDifference totalDiff = new ChemObjectDifference("IsotopeDiff");
             totalDiff.AddChild(IntegerDifference.Construct("MN", firstElem.MassNumber, secondElem.MassNumber));
             totalDiff.AddChild(DoubleDifference.Construct("EM", firstElem.ExactMass, secondElem.ExactMass));
-            totalDiff.AddChild(DoubleDifference.Construct("AB", firstElem.NaturalAbundance,
-                    secondElem.NaturalAbundance));
+            totalDiff.AddChild(DoubleDifference.Construct("AB", firstElem.Abundance,
+                    secondElem.Abundance));
             totalDiff.AddChild(ElementDiff.Difference(first, second));
             if (totalDiff.ChildCount() > 0)
             {

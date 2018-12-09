@@ -52,9 +52,9 @@ namespace NCDK.Tools
         public void TestMethane()
         {
             var molecule = builder.NewAtomContainer();
-            IAtom newAtom = builder.NewAtom(ChemicalElement.C);
+            var newAtom = builder.NewAtom(ChemicalElement.C);
             molecule.Atoms.Add(newAtom);
-            IAtomType type = matcher.FindMatchingAtomType(molecule, newAtom);
+            var type = matcher.FindMatchingAtomType(molecule, newAtom);
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(newAtom, type);
 
@@ -68,12 +68,12 @@ namespace NCDK.Tools
         public void TestFormaldehyde()
         {
             var molecule = builder.NewAtomContainer();
-            IAtom newAtom = builder.NewAtom(ChemicalElement.C);
-            IAtom newAtom2 = builder.NewAtom(ChemicalElement.O);
+            var newAtom = builder.NewAtom(ChemicalElement.C);
+            var newAtom2 = builder.NewAtom(ChemicalElement.O);
             molecule.Atoms.Add(newAtom);
             molecule.Atoms.Add(newAtom2);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
-            IAtomType type = matcher.FindMatchingAtomType(molecule, newAtom);
+            var type = matcher.FindMatchingAtomType(molecule, newAtom);
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(newAtom, type);
             type = matcher.FindMatchingAtomType(molecule, newAtom2);
@@ -92,12 +92,12 @@ namespace NCDK.Tools
         public void TestMethanol()
         {
             var molecule = builder.NewAtomContainer();
-            IAtom newAtom = builder.NewAtom(ChemicalElement.C);
-            IAtom newAtom2 = builder.NewAtom(ChemicalElement.O);
+            var newAtom = builder.NewAtom(ChemicalElement.C);
+            var newAtom2 = builder.NewAtom(ChemicalElement.O);
             molecule.Atoms.Add(newAtom);
             molecule.Atoms.Add(newAtom2);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            IAtomType type = matcher.FindMatchingAtomType(molecule, newAtom);
+            var type = matcher.FindMatchingAtomType(molecule, newAtom);
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(newAtom, type);
             type = matcher.FindMatchingAtomType(molecule, newAtom2);
@@ -116,12 +116,12 @@ namespace NCDK.Tools
         public void TestHCN()
         {
             var molecule = builder.NewAtomContainer();
-            IAtom newAtom = builder.NewAtom(ChemicalElement.C);
-            IAtom newAtom2 = builder.NewAtom(ChemicalElement.N);
+            var newAtom = builder.NewAtom(ChemicalElement.C);
+            var newAtom2 = builder.NewAtom(ChemicalElement.N);
             molecule.Atoms.Add(newAtom);
             molecule.Atoms.Add(newAtom2);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Triple);
-            IAtomType type = matcher.FindMatchingAtomType(molecule, newAtom);
+            var type = matcher.FindMatchingAtomType(molecule, newAtom);
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(newAtom, type);
             type = matcher.FindMatchingAtomType(molecule, newAtom2);
@@ -164,12 +164,12 @@ namespace NCDK.Tools
         public void TestMethyleneImine()
         {
             var molecule = builder.NewAtomContainer();
-            IAtom newAtom = builder.NewAtom(ChemicalElement.C);
-            IAtom newAtom2 = builder.NewAtom(ChemicalElement.N);
+            var newAtom = builder.NewAtom(ChemicalElement.C);
+            var newAtom2 = builder.NewAtom(ChemicalElement.N);
             molecule.Atoms.Add(newAtom);
             molecule.Atoms.Add(newAtom2);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
-            IAtomType type = matcher.FindMatchingAtomType(molecule, newAtom);
+            var type = matcher.FindMatchingAtomType(molecule, newAtom);
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(newAtom, type);
             type = matcher.FindMatchingAtomType(molecule, newAtom2);
@@ -190,7 +190,7 @@ namespace NCDK.Tools
             var mol = builder.NewAtomContainer();
             var atom = builder.NewAtom("S");
             mol.Atoms.Add(atom);
-            IAtomType type = matcher.FindMatchingAtomType(mol, atom);
+            var type = matcher.FindMatchingAtomType(mol, atom);
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(atom, type);
 
@@ -208,7 +208,7 @@ namespace NCDK.Tools
             var proton = builder.NewAtom("H");
             proton.FormalCharge = +1;
             mol.Atoms.Add(proton);
-            IAtomType type = matcher.FindMatchingAtomType(mol, proton);
+            var type = matcher.FindMatchingAtomType(mol, proton);
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(proton, type);
 
@@ -229,7 +229,7 @@ namespace NCDK.Tools
             var mol = builder.NewAtomContainer();
             var proton = builder.NewAtom("H");
             mol.Atoms.Add(proton);
-            IAtomType type = matcher.FindMatchingAtomType(mol, proton);
+            var type = matcher.FindMatchingAtomType(mol, proton);
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(proton, type);
 
@@ -249,7 +249,7 @@ namespace NCDK.Tools
             var mol = builder.NewAtomContainer();
             var nitrogen = builder.NewAtom("N");
             mol.Atoms.Add(nitrogen);
-            IAtomType type = matcher.FindMatchingAtomType(mol, nitrogen);
+            var type = matcher.FindMatchingAtomType(mol, nitrogen);
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(nitrogen, type);
 
@@ -265,7 +265,7 @@ namespace NCDK.Tools
             var nitrogen = builder.NewAtom("N");
             nitrogen.FormalCharge = +1;
             mol.Atoms.Add(nitrogen);
-            IAtomType type = matcher.FindMatchingAtomType(mol, nitrogen);
+            var type = matcher.FindMatchingAtomType(mol, nitrogen);
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(nitrogen, type);
 
@@ -280,7 +280,7 @@ namespace NCDK.Tools
             var mol = builder.NewAtomContainer();
             var oxygen = builder.NewAtom("O");
             mol.Atoms.Add(oxygen);
-            IAtomType type = matcher.FindMatchingAtomType(mol, oxygen);
+            var type = matcher.FindMatchingAtomType(mol, oxygen);
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(oxygen, type);
 
@@ -296,7 +296,7 @@ namespace NCDK.Tools
             var oxygen = builder.NewAtom("O");
             oxygen.FormalCharge = +1;
             mol.Atoms.Add(oxygen);
-            IAtomType type = matcher.FindMatchingAtomType(mol, oxygen);
+            var type = matcher.FindMatchingAtomType(mol, oxygen);
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(oxygen, type);
 
@@ -312,7 +312,7 @@ namespace NCDK.Tools
             var oxygen = builder.NewAtom("O");
             oxygen.FormalCharge = -1;
             mol.Atoms.Add(oxygen);
-            IAtomType type = matcher.FindMatchingAtomType(mol, oxygen);
+            var type = matcher.FindMatchingAtomType(mol, oxygen);
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(oxygen, type);
 
@@ -344,7 +344,7 @@ namespace NCDK.Tools
             var mol = builder.NewAtomContainer();
             var atom = builder.NewAtom(halogen);
             mol.Atoms.Add(atom);
-            IAtomType type = matcher.FindMatchingAtomType(mol, atom);
+            var type = matcher.FindMatchingAtomType(mol, atom);
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(atom, type);
 
@@ -360,7 +360,7 @@ namespace NCDK.Tools
             var atom = builder.NewAtom(halogen);
             atom.FormalCharge = -1;
             mol.Atoms.Add(atom);
-            IAtomType type = matcher.FindMatchingAtomType(mol, atom);
+            var type = matcher.FindMatchingAtomType(mol, atom);
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(atom, type);
 
@@ -388,7 +388,7 @@ namespace NCDK.Tools
             mol.Bonds.Add(b1);
             mol.Bonds.Add(b2);
             mol.Bonds.Add(b3);
-            IAtomType type = matcher.FindMatchingAtomType(mol, s);
+            var type = matcher.FindMatchingAtomType(mol, s);
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(s, type);
             type = matcher.FindMatchingAtomType(mol, o1);

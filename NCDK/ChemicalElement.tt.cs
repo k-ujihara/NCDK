@@ -213,7 +213,6 @@ namespace NCDK
         public static ChemicalElement Lv { get; } = new ChemicalElement(116, "Lv", "Livermorium");
         public static ChemicalElement Ts { get; } = new ChemicalElement(117, "Ts", "Tennessine");
         public static ChemicalElement Og { get; } = new ChemicalElement(118, "Og", "Oganesson");
-        public static ChemicalElement Unknown { get; } = ChemicalElement.R;
         
         internal static readonly Dictionary<string, ChemicalElement> symbolToElementMap = new Dictionary<string, ChemicalElement>()
             {

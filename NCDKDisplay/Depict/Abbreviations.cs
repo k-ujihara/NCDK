@@ -437,7 +437,7 @@ namespace NCDK.Depict
                     if (attach.Symbol.Length == 1 
                      && char.IsLower(sgroup.Subscript[0]))
                     {
-                        if (ChemicalElement.OfSymbol(attach.Symbol + sgroup.Subscript[0]) != ChemicalElement.Unknown)
+                        if (ChemicalElement.OfSymbol(attach.Symbol + sgroup.Subscript[0]) != ChemicalElement.R)
                             goto continue_collapse;
                     }
                     nbrSymbols.Add(sgroup.Subscript);

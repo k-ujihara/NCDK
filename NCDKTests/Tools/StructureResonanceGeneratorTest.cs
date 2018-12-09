@@ -203,7 +203,7 @@ namespace NCDK.Tools
         ////        molecule2.AddBond(molecule2.Atoms[3], molecule2.Atoms[8], BondOrder.Single);
         ////        CDK.LonePairElectronChecker.NewSaturate(molecule2);
         ////        IAtom atom2a =  molecule2.Atoms[2];
-        ////        molecule2.AddElectronContainer(new SingleElectron(atom2a));
+        ////        molecule2.Add(new SingleElectron(atom2a));
         ////
         ////        IAtom atom2b =  molecule2.Atoms[4];
         ////        atom2b.SetHydrogenCount(0);

@@ -74,7 +74,7 @@ namespace NCDK.Formula
             mfRange.AddIsotope(builder.NewIsotope("H"), 0, 10);
 
             IIsotope hy = builder.NewIsotope("C");
-            hy.NaturalAbundance = 2.00342342;
+            hy.Abundance = 2.00342342;
             mfRange.AddIsotope(hy, 0, 10);
 
             Assert.AreEqual(3, mfRange.Count);
@@ -164,9 +164,9 @@ namespace NCDK.Formula
             IIsotope h1 = builder.NewIsotope("H");
 
             IIsotope carb2 = builder.NewIsotope("C");
-            carb2.NaturalAbundance = 13.0876689;
+            carb2.Abundance = 13.0876689;
             IIsotope h2 = builder.NewIsotope("H");
-            h2.NaturalAbundance = 2.0968768;
+            h2.Abundance = 2.0968768;
 
             mfRange.AddIsotope(carb1, 0, 10);
             mfRange.AddIsotope(h1, 0, 10);

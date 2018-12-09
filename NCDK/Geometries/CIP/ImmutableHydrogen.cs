@@ -65,7 +65,7 @@ namespace NCDK.Geometries.CIP
         public int? Valency { get { return null; } set { } }
         public double? ExactMass { get { return null; } set { } }
         public int? MassNumber { get { return 1; } set { } }
-        public double? NaturalAbundance { get { return null; } set { } }
+        public double? Abundance { get { return null; } set { } }
         public double? CovalentRadius { get { return null; } set { } }
         public int AtomicNumber { get { return 1; } set { } }
         public string Symbol { get { return SymbolH; } set { } }

@@ -34,7 +34,7 @@ namespace NCDK
         /// <summary>
         /// The natural abundance attribute of the <see cref="IIsotope"/> object.
         /// </summary>
-        double? NaturalAbundance { get; set; }
+        double? Abundance { get; set; }
 
         /// <summary>
         /// The exact mass attribute of the <see cref="IIsotope"/> object.

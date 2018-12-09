@@ -33,8 +33,8 @@ namespace NCDK
         public virtual void TestSetNaturalAbundance_Double()
         {
             IIsotope i = (IIsotope)NewChemObject();
-            i.NaturalAbundance = 80.0;
-            Assert.AreEqual(80.0, i.NaturalAbundance.Value, 0.001);
+            i.Abundance = 80.0;
+            Assert.AreEqual(80.0, i.Abundance.Value, 0.001);
         }
 
         [TestMethod()]
@@ -109,12 +109,12 @@ namespace NCDK
         public virtual void TestClone_NaturalAbundance()
         {
             IIsotope iso = (IIsotope)NewChemObject();
-            iso.NaturalAbundance = 1.0;
+            iso.Abundance = 1.0;
             IIsotope clone = (IIsotope)iso.Clone();
 
             // test cloning of exact mass
-            iso.NaturalAbundance = 2.0;
-            Assert.AreEqual(1.0, clone.NaturalAbundance.Value, 0.001);
+            iso.Abundance = 2.0;
+            Assert.AreEqual(1.0, clone.Abundance.Value, 0.001);
         }
 
         /// <summary>

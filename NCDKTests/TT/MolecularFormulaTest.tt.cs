@@ -53,9 +53,9 @@ namespace NCDK.Default
             anotherCarb.ExactMass = 12.0;
             h.ExactMass = 1.0;
 
-            carb.NaturalAbundance = 34.0;
-            anotherCarb.NaturalAbundance = 34.0;
-            h.NaturalAbundance = 99.0;
+            carb.Abundance = 34.0;
+            anotherCarb.Abundance = 34.0;
+            h.Abundance = 99.0;
 
             Assert.IsTrue(MolecularFormula.IsTheSame(carb, carb));
             Assert.IsTrue(MolecularFormula.IsTheSame(carb, anotherCarb));
@@ -93,9 +93,9 @@ namespace NCDK.Silent
             anotherCarb.ExactMass = 12.0;
             h.ExactMass = 1.0;
 
-            carb.NaturalAbundance = 34.0;
-            anotherCarb.NaturalAbundance = 34.0;
-            h.NaturalAbundance = 99.0;
+            carb.Abundance = 34.0;
+            anotherCarb.Abundance = 34.0;
+            h.Abundance = 99.0;
 
             Assert.IsTrue(MolecularFormula.IsTheSame(carb, carb));
             Assert.IsTrue(MolecularFormula.IsTheSame(carb, anotherCarb));

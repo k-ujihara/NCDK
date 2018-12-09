@@ -34,11 +34,8 @@ namespace NCDK.Default
     /// <summary>
     /// Maintains a set of Ring objects.
     /// </summary>
-    // @cdk.module  silent
-    // @cdk.githash
     // @cdk.keyword ring, set of
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class RingSet
         : ChemObjectSet<IRing>,  IRingSet, ICloneable
     {
@@ -127,11 +124,8 @@ namespace NCDK.Silent
     /// <summary>
     /// Maintains a set of Ring objects.
     /// </summary>
-    // @cdk.module  silent
-    // @cdk.githash
     // @cdk.keyword ring, set of
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class RingSet
         : ChemObjectSet<IRing>,  IRingSet, ICloneable
     {

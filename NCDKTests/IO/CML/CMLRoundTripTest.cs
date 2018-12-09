@@ -291,15 +291,15 @@ namespace NCDK.IO.CML
         public void TestIsotope_Abundance()
         {
             var mol = new AtomContainer();
-            Atom atom = new Atom("C") { NaturalAbundance = 1.0 };
+            Atom atom = new Atom("C") { Abundance = 1.0 };
             mol.Atoms.Add(atom);
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
 
             Assert.AreEqual(1, roundTrippedMol.Atoms.Count);
             IAtom roundTrippedAtom = roundTrippedMol.Atoms[0];
-            Assert.IsNotNull(atom.NaturalAbundance);
-            Assert.IsNotNull(roundTrippedAtom.NaturalAbundance);
-            Assert.AreEqual(atom.NaturalAbundance.Value, roundTrippedAtom.NaturalAbundance.Value, 0.01);
+            Assert.IsNotNull(atom.Abundance);
+            Assert.IsNotNull(roundTrippedAtom.Abundance);
+            Assert.AreEqual(atom.Abundance.Value, roundTrippedAtom.Abundance.Value, 0.01);
         }
 
         /// <summary>

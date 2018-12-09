@@ -74,18 +74,6 @@ namespace NCDK.Default
         {
         }
 
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("Monomer{").Append(GetHashCode());
-            if (MonomerName != null)
-                sb.Append(", N=").Append(MonomerName);
-            if (MonomerType != null)
-                sb.Append(", T=").Append(MonomerType);
-            sb.Append('}');
-            return sb.ToString();
-        }
-
         public override ICDKObject Clone(CDKObjectMap map)
         {
             return base.Clone(map);
@@ -133,18 +121,6 @@ namespace NCDK.Silent
 
         public Monomer()
         {
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("Monomer{").Append(GetHashCode());
-            if (MonomerName != null)
-                sb.Append(", N=").Append(MonomerName);
-            if (MonomerType != null)
-                sb.Append(", T=").Append(MonomerType);
-            sb.Append('}');
-            return sb.ToString();
         }
 
         public override ICDKObject Clone(CDKObjectMap map)

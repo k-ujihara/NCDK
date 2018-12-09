@@ -359,24 +359,6 @@ namespace NCDK.Default
             return base.Equals(other);
         }
 
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("Bond(").Append(this.GetHashCode());
-            if (Order != BondOrder.Unset)
-                sb.Append(", #O:").Append(Order);
-            sb.Append(", #S:").Append(Stereo);
-            if (atoms.Count > 0)
-            {
-                sb.Append(", #A:").Append(atoms.Count);
-                foreach (var atom in atoms)
-                    sb.Append(", ").Append(atom == null ? "null" : atom.ToString());
-            }
-            sb.Append(", ").Append(base.ToString());
-            sb.Append(')');
-            return sb.ToString();
-        }
-
         /// <summary>
         /// Compares a bond with this bond.
         /// </summary>
@@ -730,24 +712,6 @@ namespace NCDK.Silent
             if (other is BondRef)
                 return base.Equals(((BondRef)other).Deref());
             return base.Equals(other);
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("Bond(").Append(this.GetHashCode());
-            if (Order != BondOrder.Unset)
-                sb.Append(", #O:").Append(Order);
-            sb.Append(", #S:").Append(Stereo);
-            if (atoms.Count > 0)
-            {
-                sb.Append(", #A:").Append(atoms.Count);
-                foreach (var atom in atoms)
-                    sb.Append(", ").Append(atom == null ? "null" : atom.ToString());
-            }
-            sb.Append(", ").Append(base.ToString());
-            sb.Append(')');
-            return sb.ToString();
         }
 
         /// <summary>
