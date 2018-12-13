@@ -94,7 +94,7 @@ namespace NCDK.Default
             IAtom a = new Atom(17);
             Assert.AreEqual("Cl", a.Symbol);
             Assert.AreEqual(17, a.AtomicNumber);
-            Assert.AreEqual(0, a.ImplicitHydrogenCount);
+            Assert.AreEqual(null, a.ImplicitHydrogenCount);
             Assert.AreEqual(0, a.FormalCharge);
             Assert.IsNull(a.Point2D);
             Assert.IsNull(a.Point3D);
@@ -266,7 +266,7 @@ namespace NCDK.Silent
             IAtom a = new Atom(17);
             Assert.AreEqual("Cl", a.Symbol);
             Assert.AreEqual(17, a.AtomicNumber);
-            Assert.AreEqual(0, a.ImplicitHydrogenCount);
+            Assert.AreEqual(null, a.ImplicitHydrogenCount);
             Assert.AreEqual(0, a.FormalCharge);
             Assert.IsNull(a.Point2D);
             Assert.IsNull(a.Point3D);

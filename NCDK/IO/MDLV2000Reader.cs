@@ -23,7 +23,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Common.Collections;
 using NCDK.Common.Primitives;
 using NCDK.Config;
 using NCDK.IO.Formats;
@@ -35,7 +34,6 @@ using NCDK.Stereo;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -49,8 +47,8 @@ namespace NCDK.IO
     /// <summary>
     /// Reads content from MDL molfiles and SD files. It can read a <see cref="IAtomContainer"/>
     /// or <see cref="IChemModel"/> from an MDL molfile, and a <see cref="IChemFile"/>
-    ///  from a SD file, with a <see cref="IChemSequence"/> of <see cref="IChemModel"/>'s, 
-    ///  where each IChemModel will contain one <see cref="IAtomContainer"/>.
+    /// from a SD file, with a <see cref="IChemSequence"/> of <see cref="IChemModel"/>'s, 
+    /// where each IChemModel will contain one <see cref="IAtomContainer"/>.
     /// <para>
     /// From the Atom block it reads atomic coordinates, element types and formal
     /// charges. From the Bond block it reads the bonds and the orders. Additionally,
@@ -63,7 +61,7 @@ namespace NCDK.IO
     /// </para>
     /// <para>The title of the MOL file is read and can be retrieved with:
     /// <code>
-    ///   molecule.GetProperty&lt;string&gt;(CDKPropertyName.Title);
+    /// molecule.GetProperty&lt;string&gt;(CDKPropertyName.Title);
     /// </code>
     /// </para>
     /// <para>RGroups which are saved in the MDL molfile as R#, are renamed according to
@@ -75,7 +73,6 @@ namespace NCDK.IO
     // @author steinbeck
     // @author Egon Willighagen
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @cdk.created 2000-10-02
     // @cdk.keyword file format, MDL molfile

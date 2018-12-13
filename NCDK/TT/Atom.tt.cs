@@ -73,20 +73,19 @@ namespace NCDK.Default
         /// Constructs an completely unset Atom.
         /// </summary>
         public Atom()
-            : base((string)null)
+            : base(ChemicalElement.R)
         { 
         }
 
-        public Atom(ChemicalElement element)
-            : base(element)
-        {
-        }
-
-        public Atom(int atomicNumber, int implicitHydrogenCount = 0, int formalCharge = 0) 
-            : base(ChemicalElement.Of(atomicNumber))
+        public Atom(ChemicalElement element, int? implicitHydrogenCount = null, int? formalCharge = 0) 
+            : base(element, formalCharge: formalCharge)
         {
             this.implicitHydrogenCount = implicitHydrogenCount;
-            this.formalCharge = formalCharge;
+        }
+
+        public Atom(int atomicNumber, int? implicitHydrogenCount = null, int? formalCharge = 0) 
+            : this(ChemicalElement.Of(atomicNumber), implicitHydrogenCount, formalCharge)
+        {
         }
 
         /// <summary>
@@ -120,25 +119,25 @@ namespace NCDK.Default
         }
 
         public Atom(ChemicalElement element, Vector2 point2d)
-            : base(element)
+            : this(element)
         {
             this.point2D = point2d;
         }
 
         public Atom(string symbol, Vector2 point2d)
-            : base(symbol)
+            : this(symbol)
         {
             this.point2D = point2d;
         }
 
         public Atom(ChemicalElement element, Vector3 point3d)
-            : base(element)
+            : this(element)
         {
             this.point3D = point3d;
         }
 
         public Atom(string symbol, Vector3 point3d)
-            : base(symbol)
+            : this(symbol)
         {
             this.point3D = point3d;
         }
@@ -487,20 +486,19 @@ namespace NCDK.Silent
         /// Constructs an completely unset Atom.
         /// </summary>
         public Atom()
-            : base((string)null)
+            : base(ChemicalElement.R)
         { 
         }
 
-        public Atom(ChemicalElement element)
-            : base(element)
-        {
-        }
-
-        public Atom(int atomicNumber, int implicitHydrogenCount = 0, int formalCharge = 0) 
-            : base(ChemicalElement.Of(atomicNumber))
+        public Atom(ChemicalElement element, int? implicitHydrogenCount = null, int? formalCharge = 0) 
+            : base(element, formalCharge: formalCharge)
         {
             this.implicitHydrogenCount = implicitHydrogenCount;
-            this.formalCharge = formalCharge;
+        }
+
+        public Atom(int atomicNumber, int? implicitHydrogenCount = null, int? formalCharge = 0) 
+            : this(ChemicalElement.Of(atomicNumber), implicitHydrogenCount, formalCharge)
+        {
         }
 
         /// <summary>
@@ -534,25 +532,25 @@ namespace NCDK.Silent
         }
 
         public Atom(ChemicalElement element, Vector2 point2d)
-            : base(element)
+            : this(element)
         {
             this.point2D = point2d;
         }
 
         public Atom(string symbol, Vector2 point2d)
-            : base(symbol)
+            : this(symbol)
         {
             this.point2D = point2d;
         }
 
         public Atom(ChemicalElement element, Vector3 point3d)
-            : base(element)
+            : this(element)
         {
             this.point3D = point3d;
         }
 
         public Atom(string symbol, Vector3 point3d)
-            : base(symbol)
+            : this(symbol)
         {
             this.point3D = point3d;
         }

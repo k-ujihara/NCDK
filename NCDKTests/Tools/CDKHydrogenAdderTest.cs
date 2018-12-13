@@ -58,7 +58,6 @@ namespace NCDK.Tools
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(newAtom, type);
 
-            Assert.IsNull(newAtom.ImplicitHydrogenCount);
             adder.AddImplicitHydrogens(molecule);
             Assert.IsNotNull(newAtom.ImplicitHydrogenCount);
             Assert.AreEqual(4, newAtom.ImplicitHydrogenCount.Value);
@@ -80,7 +79,6 @@ namespace NCDK.Tools
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(newAtom2, type);
 
-            Assert.IsNull(newAtom.ImplicitHydrogenCount);
             adder.AddImplicitHydrogens(molecule);
             Assert.IsNotNull(newAtom.ImplicitHydrogenCount);
             Assert.IsNotNull(newAtom2.ImplicitHydrogenCount);
@@ -104,7 +102,6 @@ namespace NCDK.Tools
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(newAtom2, type);
 
-            Assert.IsNull(newAtom.ImplicitHydrogenCount);
             adder.AddImplicitHydrogens(molecule);
             Assert.IsNotNull(newAtom.ImplicitHydrogenCount);
             Assert.IsNotNull(newAtom2.ImplicitHydrogenCount);
@@ -128,7 +125,6 @@ namespace NCDK.Tools
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(newAtom2, type);
 
-            Assert.IsNull(newAtom.ImplicitHydrogenCount);
             adder.AddImplicitHydrogens(molecule);
             Assert.IsNotNull(newAtom.ImplicitHydrogenCount);
             Assert.IsNotNull(newAtom2.ImplicitHydrogenCount);
@@ -152,7 +148,6 @@ namespace NCDK.Tools
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(newAtom2, type);
 
-            Assert.IsNull(newAtom.ImplicitHydrogenCount);
             adder.AddImplicitHydrogens(molecule);
             Assert.IsNotNull(newAtom.ImplicitHydrogenCount);
             Assert.IsNotNull(newAtom2.ImplicitHydrogenCount);
@@ -176,7 +171,6 @@ namespace NCDK.Tools
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(newAtom2, type);
 
-            Assert.IsNull(newAtom.ImplicitHydrogenCount);
             adder.AddImplicitHydrogens(molecule);
             Assert.IsNotNull(newAtom.ImplicitHydrogenCount);
             Assert.IsNotNull(newAtom2.ImplicitHydrogenCount);

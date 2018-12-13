@@ -52,21 +52,22 @@ namespace NCDK.AtomTypes
         /// <exception cref="System.Exception">Thrown if something went wrong during the atom type perception.</exception>
         public virtual void AssertAtomTypes(IDictionary<string, int> testedAtomTypes, string[] expectedTypes, IAtomContainer mol)
         {
-            Assert.AreEqual(expectedTypes.Length, mol.Atoms.Count,
-                    "The number of expected atom types is unequal to the number of atoms");
-            IAtomTypeMatcher atm = GetAtomTypeMatcher(mol.Builder);
+            Assert.AreEqual(expectedTypes.Length, mol.Atoms.Count, "The number of expected atom types is unequal to the number of atoms");
+            var atm = GetAtomTypeMatcher(mol.Builder);
             for (int i = 0; i < expectedTypes.Length; i++)
             {
-                IAtom testedAtom = mol.Atoms[i];
-                IAtomType foundType = atm.FindMatchingAtomType(mol, testedAtom);
+                var testedAtom = mol.Atoms[i];
+                var foundType = atm.FindMatchingAtomType(mol, testedAtom);
                 AssertAtomType(testedAtomTypes, "Incorrect perception for atom " + i, expectedTypes[i], foundType);
                 AssertConsistentProperties(mol, testedAtom, foundType);
                 // test for bug #1890702: configure, and then make sure the same atom type is perceived
                 AtomTypeManipulator.Configure(testedAtom, foundType);
-                IAtomType secondType = atm.FindMatchingAtomType(mol, testedAtom);
-                AssertAtomType(testedAtomTypes,
-                        "Incorrect perception *after* assigning atom type properties for atom " + i, expectedTypes[i],
-                        secondType);
+                var secondType = atm.FindMatchingAtomType(mol, testedAtom);
+                AssertAtomType(
+                    testedAtomTypes,
+                    $"Incorrect perception *after* assigning atom type properties for atom {i}", 
+                    expectedTypes[i],
+                    secondType);
             }
         }
 

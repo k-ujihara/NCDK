@@ -64,7 +64,7 @@ namespace NCDK.Default
         internal double? covalentRadius;
 
         /// <summary>
-        /// The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
+        /// The formal charge of the atom with <see langword="null"/> as default.
         /// </summary>
         /// <remarks>
         /// Note that some constructors (<see cref="AtomType(string)"/> and
@@ -97,9 +97,15 @@ namespace NCDK.Default
         internal bool isAromatic;
         internal bool isInRing;
         internal bool isReactiveCenter;
-        
-        public AtomType(ChemicalElement element)
+
+        public AtomType(ChemicalElement element, int? formalCharge = 0)
             : base(element)
+        {
+            this.formalCharge = formalCharge;
+        }
+
+        public AtomType(int atomicNumber, int? formalCharge = 0)
+            : this(ChemicalElement.Of(atomicNumber), formalCharge)
         {
         }
 
@@ -110,20 +116,19 @@ namespace NCDK.Default
         /// Defaults to a zero formal charge. All
         /// other fields are set to <see langword="null"/> or unset.
         /// </remarks>
-        /// <param name="elementSymbol">Symbol of the atom</param>
-        public AtomType(string elementSymbol)
-            : this(ChemicalElement.OfSymbol(elementSymbol))
+        /// <param name="symbol">Symbol of the atom</param>
+        public AtomType(string symbol, int? formalCharge = 0)
+            : this(ChemicalElement.OfSymbol(symbol), formalCharge)
         {
-            this.formalCharge = 0;
         }
 
         /// <summary>
         /// Constructor for the AtomType object. Defaults to a zero formal charge.
         /// </summary>
         /// <param name="identifier">An id for this atom type, like C3 for sp3 carbon</param>
-        /// <param name="elementSymbol">The element symbol identifying the element to which this atom type applies</param>
-        public AtomType(string identifier, string elementSymbol)
-            : this(ChemicalElement.OfSymbol(elementSymbol))
+        /// <param name="symbol">The element symbol identifying the element to which this atom type applies</param>
+        public AtomType(string identifier, string symbol)
+            : this(ChemicalElement.OfSymbol(symbol))
         {
             this.atomTypeName = identifier;
         }
@@ -152,7 +157,6 @@ namespace NCDK.Default
                 valency = aa.Valency;
                 formalNeighbourCount = aa.FormalNeighbourCount;
                 atomTypeName = aa.AtomTypeName;
-
                 isHydrogenBondAcceptor = aa.IsHydrogenBondAcceptor;
                 isHydrogenBondDonor = aa.IsHydrogenBondDonor;
                 isAromatic = aa.IsAromatic;
@@ -367,7 +371,7 @@ namespace NCDK.Silent
         internal double? covalentRadius;
 
         /// <summary>
-        /// The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
+        /// The formal charge of the atom with <see langword="null"/> as default.
         /// </summary>
         /// <remarks>
         /// Note that some constructors (<see cref="AtomType(string)"/> and
@@ -400,9 +404,15 @@ namespace NCDK.Silent
         internal bool isAromatic;
         internal bool isInRing;
         internal bool isReactiveCenter;
-        
-        public AtomType(ChemicalElement element)
+
+        public AtomType(ChemicalElement element, int? formalCharge = 0)
             : base(element)
+        {
+            this.formalCharge = formalCharge;
+        }
+
+        public AtomType(int atomicNumber, int? formalCharge = 0)
+            : this(ChemicalElement.Of(atomicNumber), formalCharge)
         {
         }
 
@@ -413,20 +423,19 @@ namespace NCDK.Silent
         /// Defaults to a zero formal charge. All
         /// other fields are set to <see langword="null"/> or unset.
         /// </remarks>
-        /// <param name="elementSymbol">Symbol of the atom</param>
-        public AtomType(string elementSymbol)
-            : this(ChemicalElement.OfSymbol(elementSymbol))
+        /// <param name="symbol">Symbol of the atom</param>
+        public AtomType(string symbol, int? formalCharge = 0)
+            : this(ChemicalElement.OfSymbol(symbol), formalCharge)
         {
-            this.formalCharge = 0;
         }
 
         /// <summary>
         /// Constructor for the AtomType object. Defaults to a zero formal charge.
         /// </summary>
         /// <param name="identifier">An id for this atom type, like C3 for sp3 carbon</param>
-        /// <param name="elementSymbol">The element symbol identifying the element to which this atom type applies</param>
-        public AtomType(string identifier, string elementSymbol)
-            : this(ChemicalElement.OfSymbol(elementSymbol))
+        /// <param name="symbol">The element symbol identifying the element to which this atom type applies</param>
+        public AtomType(string identifier, string symbol)
+            : this(ChemicalElement.OfSymbol(symbol))
         {
             this.atomTypeName = identifier;
         }
@@ -455,7 +464,6 @@ namespace NCDK.Silent
                 valency = aa.Valency;
                 formalNeighbourCount = aa.FormalNeighbourCount;
                 atomTypeName = aa.AtomTypeName;
-
                 isHydrogenBondAcceptor = aa.IsHydrogenBondAcceptor;
                 isHydrogenBondDonor = aa.IsHydrogenBondDonor;
                 isAromatic = aa.IsAromatic;

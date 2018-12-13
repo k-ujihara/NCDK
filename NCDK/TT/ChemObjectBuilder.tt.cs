@@ -359,8 +359,6 @@ namespace NCDK
         public static IBond NewBond(IEnumerable<IAtom> atoms, BondOrder order) => (IBond)CDK.Builder.NewBond(atoms, order);
         public static IBond NewBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo) => (IBond)CDK.Builder.NewBond(atom1, atom2, order, stereo);
         public static IBond NewBond(IEnumerable<IAtom> atoms, BondOrder order, BondStereo stereo) => (IBond)CDK.Builder.NewBond(atoms, order, stereo);
-        public static IChemObject NewChemObject() => (IChemObject)CDK.Builder.NewChemObject();
-        public static IChemObject NewChemObject(IChemObject chemObject) => (IChemObject)CDK.Builder.NewChemObject(chemObject);
         public static ILonePair NewLonePair() => (ILonePair)CDK.Builder.NewLonePair();
         public static ILonePair NewLonePair(IAtom atom) => (ILonePair)CDK.Builder.NewLonePair(atom);
         public static IReaction NewReaction() => (IReaction)CDK.Builder.NewReaction();

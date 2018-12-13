@@ -97,7 +97,10 @@ namespace NCDK
             this.name = name;
         }
 
-        public override string ToString() => CDKStuff.ToString(this);
+        public override string ToString()
+        {
+            return atomicNumber.ToString() + ":" + (symbol ?? "null");
+        }
 
         public static ChemicalElement Of(int number)
         {
