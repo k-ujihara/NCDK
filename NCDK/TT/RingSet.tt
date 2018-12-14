@@ -24,7 +24,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 <#
@@ -39,7 +38,7 @@ namespace <#= ns.NS #>
     // @cdk.keyword ring, set of
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class RingSet
-        : ChemObjectSet<IRing>,  IRingSet, ICloneable
+        : ChemObjectSet<IRing>, IRingSet, ICloneable
     {
         /// <summary>
         /// The constructor.
@@ -101,24 +100,6 @@ namespace <#= ns.NS #>
         /// <returns>true, if the ringset contains the atom</returns>
         public bool Contains(IAtom atom)
             => this.Any(n => n.Contains(atom));
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("RingSet(");
-            sb.Append(GetHashCode());
-            if (this.Count > 0)
-            {
-                sb.Append(", R=").Append(this.Count).Append(", ");
-                foreach (var possibleRing in this)
-                {
-                    sb.Append(possibleRing.ToString());
-                    sb.Append(", ");
-                }
-            }
-            sb.Append(')');
-            return sb.ToString();
-        }
     }
 }
 <#

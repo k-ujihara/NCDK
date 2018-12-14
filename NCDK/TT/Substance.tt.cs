@@ -29,7 +29,6 @@ using System;
 namespace NCDK.Default
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class Substance
         : ChemObjectSet<IAtomContainer>, ISubstance, ICloneable
     {
@@ -42,7 +41,6 @@ namespace NCDK.Default
 namespace NCDK.Silent
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class Substance
         : ChemObjectSet<IAtomContainer>, ISubstance, ICloneable
     {

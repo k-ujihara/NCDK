@@ -23,7 +23,6 @@
  */
 
 using System;
-using System.Text;
 
 <#
 foreach (var ns in namespaces) 
@@ -36,8 +35,6 @@ namespace <#= ns.NS #>
     /// the other lower level concepts like rings, sequences,
     /// fragments, etc.
     /// </summary>
-    // @cdk.githash 
-    [Serializable]
     public class ChemModel
         : ChemObject, IChemModel, IChemObjectListener, ICloneable
     {
@@ -151,30 +148,6 @@ namespace <#= ns.NS #>
                 NotifyChanged();
 <# } #>
             }
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("ChemModel(");
-            sb.Append(GetHashCode());
-            if (MoleculeSet != null)
-            {
-                sb.Append(", ");
-                sb.Append(MoleculeSet.ToString());
-            }
-            if (Crystal != null)
-            {
-                sb.Append(", ");
-                sb.Append(Crystal.ToString());
-            }
-            if (ReactionSet != null)
-            {
-                sb.Append(", ");
-                sb.Append(ReactionSet.ToString());
-            }
-            sb.Append(')');
-            return sb.ToString();
         }
 
         public override ICDKObject Clone(CDKObjectMap map)

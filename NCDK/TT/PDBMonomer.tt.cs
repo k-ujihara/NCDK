@@ -28,11 +28,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Silent;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace NCDK.Default
 {
@@ -67,23 +63,6 @@ namespace NCDK.Default
         {
             ICode = null;
             ChainID = null;
-        }
-
-        /// <summary>
-        /// Returns a one line string representation of this Atom.
-        /// Methods is conform RFC #9.
-        /// </summary>
-        /// <returns>The string representation of this Atom</returns>
-        public override string ToString()
-        {
-            StringBuilder description = new StringBuilder(50);
-            description.Append("PDBMonomer(");
-            description.Append(this.GetHashCode());
-            description.Append(", iCode=").Append(ICode);
-            description.Append(", chainID=").Append(ChainID).Append(", ");
-            description.Append(base.ToString());
-            description.Append(')');
-            return description.ToString();
         }
 
         /// <inheritdoc/>
@@ -126,23 +105,6 @@ namespace NCDK.Silent
         {
             ICode = null;
             ChainID = null;
-        }
-
-        /// <summary>
-        /// Returns a one line string representation of this Atom.
-        /// Methods is conform RFC #9.
-        /// </summary>
-        /// <returns>The string representation of this Atom</returns>
-        public override string ToString()
-        {
-            StringBuilder description = new StringBuilder(50);
-            description.Append("PDBMonomer(");
-            description.Append(this.GetHashCode());
-            description.Append(", iCode=").Append(ICode);
-            description.Append(", chainID=").Append(ChainID).Append(", ");
-            description.Append(base.ToString());
-            description.Append(')');
-            return description.ToString();
         }
 
         /// <inheritdoc/>

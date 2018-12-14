@@ -28,12 +28,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 using NCDK.Sgroups;
 using NCDK.Tools.Manipulator;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace NCDK.Default
 {
@@ -41,13 +40,11 @@ namespace NCDK.Default
     /// Subclass of Molecule to store Polymer specific attributes that a Polymer has.
     /// </summary>
     // @cdk.module  silent
-    // @cdk.githash
     // @author      Edgar Luttmann <edgar@uni-paderborn.de>
     // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
     // @cdk.created 2001-08-06
     // @cdk.keyword polymer
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class Polymer
         : AtomContainer, IPolymer
     {
@@ -111,16 +108,6 @@ namespace NCDK.Default
                 Remove(monomer);
                 monomers.Remove(name);
             }
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("Polymer(");
-            sb.Append(GetHashCode()).Append(", ");
-            sb.Append(base.ToString());
-            sb.Append(')');
-            return sb.ToString();
         }
 
         public override ICDKObject Clone(CDKObjectMap map)
@@ -152,13 +139,11 @@ namespace NCDK.Silent
     /// Subclass of Molecule to store Polymer specific attributes that a Polymer has.
     /// </summary>
     // @cdk.module  silent
-    // @cdk.githash
     // @author      Edgar Luttmann <edgar@uni-paderborn.de>
     // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
     // @cdk.created 2001-08-06
     // @cdk.keyword polymer
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class Polymer
         : AtomContainer, IPolymer
     {
@@ -222,16 +207,6 @@ namespace NCDK.Silent
                 Remove(monomer);
                 monomers.Remove(name);
             }
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("Polymer(");
-            sb.Append(GetHashCode()).Append(", ");
-            sb.Append(base.ToString());
-            sb.Append(')');
-            return sb.ToString();
         }
 
         public override ICDKObject Clone(CDKObjectMap map)

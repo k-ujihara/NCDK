@@ -26,9 +26,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
 using NCDK.Numerics;
-using System.Text;
+using System;
 
 <#
 foreach (var ns in namespaces) 
@@ -165,32 +164,6 @@ namespace <#= ns.NS #>
         /// </summary>
 
         public double? Occupancy { get; set; }
-
-        /// <summary>
-        /// Returns a one line string representation of this Atom.
-        /// Methods is conform RFC #9.
-        /// </summary>
-        /// <returns>The string representation of this Atom</returns>
-        public override string ToString()
-        {
-            StringBuilder description = new StringBuilder(150);
-            description.Append("PDBAtom(");
-            description.Append(this.GetHashCode());
-            description.Append(", altLoc=").Append(AltLoc);
-            description.Append(", chainID=").Append(ChainID);
-            description.Append(", iCode=").Append(ICode);
-            description.Append(", name=").Append(Name);
-            description.Append(", resName=").Append(ResName);
-            description.Append(", resSeq=").Append(ResSeq);
-            description.Append(", segID=").Append(SegID);
-            description.Append(", serial=").Append(Serial);
-            description.Append(", tempFactor=").Append(TempFactor);
-            description.Append(", oxt=").Append(Oxt);
-            description.Append(", hetatm=").Append(HetAtom).Append(", ");
-            description.Append(base.ToString());
-            description.Append(')');
-            return description.ToString();
-        }
     }
 }
 <#

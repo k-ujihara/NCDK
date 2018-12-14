@@ -28,9 +28,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using System.Collections.ObjectModel;
 using System.Collections;
 
 #pragma warning disable CA1710 // Identifiers should have correct suffix
@@ -209,22 +207,6 @@ namespace NCDK.Default
             if (index == -1)
                 return -1;
             return multipliers[index];
-        }
-
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("ChemObjectSet(");
-            sb.Append(GetHashCode());
-            if (atomContainers.Count > 0)
-            {
-                sb.Append(", M=").Append(atomContainers.Count);
-                foreach (var ac in atomContainers)
-                    sb.Append(", ").Append(ac.ToString());
-            }
-            sb.Append(')');
-            return sb.ToString();
         }
 
         public override ICDKObject Clone(CDKObjectMap map)
@@ -493,22 +475,6 @@ namespace NCDK.Silent
             if (index == -1)
                 return -1;
             return multipliers[index];
-        }
-
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("ChemObjectSet(");
-            sb.Append(GetHashCode());
-            if (atomContainers.Count > 0)
-            {
-                sb.Append(", M=").Append(atomContainers.Count);
-                foreach (var ac in atomContainers)
-                    sb.Append(", ").Append(ac.ToString());
-            }
-            sb.Append(')');
-            return sb.ToString();
         }
 
         public override ICDKObject Clone(CDKObjectMap map)

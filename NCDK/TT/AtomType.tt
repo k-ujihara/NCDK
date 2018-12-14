@@ -30,8 +30,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System.Text;
-
 <#
 foreach (var ns in namespaces) 
 {
@@ -93,12 +91,6 @@ namespace <#= ns.NS #>
         internal int? formalNeighbourCount;
 
         internal string atomTypeName;
-        internal bool isHydrogenBondAcceptor;
-        internal bool isHydrogenBondDonor;
-        internal bool isAliphatic;
-        internal bool isAromatic;
-        internal bool isInRing;
-        internal bool isReactiveCenter;
 
         public AtomType(ChemicalElement element, int? formalCharge = 0)
             : base(element)
@@ -159,10 +151,10 @@ namespace <#= ns.NS #>
                 valency = aa.Valency;
                 formalNeighbourCount = aa.FormalNeighbourCount;
                 atomTypeName = aa.AtomTypeName;
-                isHydrogenBondAcceptor = aa.IsHydrogenBondAcceptor;
-                isHydrogenBondDonor = aa.IsHydrogenBondDonor;
-                isAromatic = aa.IsAromatic;
-                isInRing = aa.IsInRing;
+                SetIsHydrogenBondAcceptorWithoutNotify(aa.IsHydrogenBondAcceptor);
+                SetIsHydrogenBondDonorWithoutNotify(aa.IsHydrogenBondDonor);
+                SetIsAromaticWithoutNotify( aa.IsAromatic);
+                SetIsInRingWithoutNotify(aa.IsInRing);
             }
         }
 
@@ -298,77 +290,14 @@ namespace <#= ns.NS #>
             }
         }
 
-        public virtual bool IsHydrogenBondAcceptor
-        {
-            get { return isHydrogenBondAcceptor; }
-            set
-            {
-                isHydrogenBondAcceptor = value; 
-<# if (!ns.IsSilent) { #>
-                NotifyChanged();
-<# } #>
-            }
-        }
-
-        public virtual bool IsHydrogenBondDonor
-        {
-            get { return isHydrogenBondDonor; }
-            set
-            {
-                isHydrogenBondDonor = value; 
-<# if (!ns.IsSilent) { #>
-                NotifyChanged();
-<# } #>
-            }
-        }
-
-        public virtual bool IsAliphatic
-        {
-            get { return isAliphatic; }
-            set
-            { 
-                isAliphatic = value; 
-<# if (!ns.IsSilent) { #>
-                NotifyChanged();
-<# } #>
-            }
-        }
-
-        public virtual bool IsAromatic
-        {
-            get { return isAromatic; }
-            set
-            {
-                isAromatic = value; 
-<# if (!ns.IsSilent) { #>
-                NotifyChanged();
-<# } #>
-            }
-        }
-
-        public virtual bool IsInRing
-        {
-            get { return isInRing; }
-            set 
-            {
-                isInRing = value; 
-<# if (!ns.IsSilent) { #>
-                NotifyChanged();
-<# } #>
-            }
-        }
-
-        public virtual bool IsReactiveCenter
-        {
-            get { return isReactiveCenter; }
-            set 
-            {
-                isReactiveCenter = value; 
-<# if (!ns.IsSilent) { #>
-                NotifyChanged();
-<# } #>
-            }
-        }
+<#
+        AddIsFlag("virtual", "IsHydrogenBondAcceptor", !ns.IsSilent);
+        AddIsFlag("virtual", "IsHydrogenBondDonor", !ns.IsSilent);
+        AddIsFlag("virtual", "IsAliphatic", !ns.IsSilent);
+        AddIsFlag("virtual", "IsAromatic", !ns.IsSilent);
+        AddIsFlag("virtual", "IsInRing", !ns.IsSilent);
+        AddIsFlag("virtual", "IsReactiveCenter", !ns.IsSilent);
+#>
     }
 }
 <#

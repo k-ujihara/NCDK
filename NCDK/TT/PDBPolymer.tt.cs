@@ -28,11 +28,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Silent;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace NCDK.Default
 {
@@ -42,11 +39,11 @@ namespace NCDK.Default
     /// and other species.
     /// </summary>
     // @cdk.module  data
-    // @cdk.githash
     // @author      Egon Willighagen
     // @cdk.created 2006-04-19
     // @cdk.keyword polymer
-    public class PDBPolymer : BioPolymer, ICloneable, IPDBPolymer
+    public class PDBPolymer 
+        : BioPolymer, ICloneable, IPDBPolymer
     {
         List<string> sequentialListOfMonomers;
         List<IPDBStructure> secondaryStructures;
@@ -124,16 +121,6 @@ namespace NCDK.Default
         public override object Clone()
         {
             return (IPDBPolymer)base.Clone();
-        }
-
-        public override string ToString()
-        {
-            var stringContent = new StringBuilder();
-            stringContent.Append("PDBPolymer(");
-            stringContent.Append(this.GetHashCode()).Append(", ");
-            stringContent.Append(base.ToString());
-            stringContent.Append(')');
-            return stringContent.ToString();
         }
     }
 }
@@ -145,11 +132,11 @@ namespace NCDK.Silent
     /// and other species.
     /// </summary>
     // @cdk.module  data
-    // @cdk.githash
     // @author      Egon Willighagen
     // @cdk.created 2006-04-19
     // @cdk.keyword polymer
-    public class PDBPolymer : BioPolymer, ICloneable, IPDBPolymer
+    public class PDBPolymer 
+        : BioPolymer, ICloneable, IPDBPolymer
     {
         List<string> sequentialListOfMonomers;
         List<IPDBStructure> secondaryStructures;
@@ -227,16 +214,6 @@ namespace NCDK.Silent
         public override object Clone()
         {
             return (IPDBPolymer)base.Clone();
-        }
-
-        public override string ToString()
-        {
-            var stringContent = new StringBuilder();
-            stringContent.Append("PDBPolymer(");
-            stringContent.Append(this.GetHashCode()).Append(", ");
-            stringContent.Append(base.ToString());
-            stringContent.Append(')');
-            return stringContent.ToString();
         }
     }
 }

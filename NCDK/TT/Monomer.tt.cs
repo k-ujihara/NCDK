@@ -29,7 +29,6 @@
  */
 
 using System;
-using System.Text;
 
 namespace NCDK.Default
 {

@@ -27,7 +27,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NCDK.Default
 {
@@ -53,8 +52,6 @@ namespace NCDK.Default
     /// }
     /// </code>
     /// </example>
-    // @cdk.module  silent
-    // @cdk.githash
     // @cdk.keyword reaction
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
@@ -144,18 +141,6 @@ namespace NCDK.Default
 
         public bool IsEmpty() => reactions.Count == 0;
 
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("ReactionSet(");
-            sb.Append(GetHashCode());
-            sb.Append(", R=").Append(Count).Append(", ");
-            foreach (var reaction in reactions)
-                sb.Append(reaction.ToString());
-            sb.Append(')');
-            return sb.ToString();
-        }
-
         public override ICDKObject Clone(CDKObjectMap map)
         {
             var clonedReactions = new List<IReaction>();
@@ -195,8 +180,6 @@ namespace NCDK.Silent
     /// }
     /// </code>
     /// </example>
-    // @cdk.module  silent
-    // @cdk.githash
     // @cdk.keyword reaction
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     [Serializable]
@@ -285,18 +268,6 @@ namespace NCDK.Silent
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public bool IsEmpty() => reactions.Count == 0;
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("ReactionSet(");
-            sb.Append(GetHashCode());
-            sb.Append(", R=").Append(Count).Append(", ");
-            foreach (var reaction in reactions)
-                sb.Append(reaction.ToString());
-            sb.Append(')');
-            return sb.ToString();
-        }
 
         public override ICDKObject Clone(CDKObjectMap map)
         {

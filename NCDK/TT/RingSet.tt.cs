@@ -26,7 +26,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace NCDK.Default
@@ -37,7 +36,7 @@ namespace NCDK.Default
     // @cdk.keyword ring, set of
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class RingSet
-        : ChemObjectSet<IRing>,  IRingSet, ICloneable
+        : ChemObjectSet<IRing>, IRingSet, ICloneable
     {
         /// <summary>
         /// The constructor.
@@ -99,24 +98,6 @@ namespace NCDK.Default
         /// <returns>true, if the ringset contains the atom</returns>
         public bool Contains(IAtom atom)
             => this.Any(n => n.Contains(atom));
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("RingSet(");
-            sb.Append(GetHashCode());
-            if (this.Count > 0)
-            {
-                sb.Append(", R=").Append(this.Count).Append(", ");
-                foreach (var possibleRing in this)
-                {
-                    sb.Append(possibleRing.ToString());
-                    sb.Append(", ");
-                }
-            }
-            sb.Append(')');
-            return sb.ToString();
-        }
     }
 }
 namespace NCDK.Silent
@@ -127,7 +108,7 @@ namespace NCDK.Silent
     // @cdk.keyword ring, set of
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class RingSet
-        : ChemObjectSet<IRing>,  IRingSet, ICloneable
+        : ChemObjectSet<IRing>, IRingSet, ICloneable
     {
         /// <summary>
         /// The constructor.
@@ -189,23 +170,5 @@ namespace NCDK.Silent
         /// <returns>true, if the ringset contains the atom</returns>
         public bool Contains(IAtom atom)
             => this.Any(n => n.Contains(atom));
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("RingSet(");
-            sb.Append(GetHashCode());
-            if (this.Count > 0)
-            {
-                sb.Append(", R=").Append(this.Count).Append(", ");
-                foreach (var possibleRing in this)
-                {
-                    sb.Append(possibleRing.ToString());
-                    sb.Append(", ");
-                }
-            }
-            sb.Append(')');
-            return sb.ToString();
-        }
     }
 }

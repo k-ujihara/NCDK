@@ -22,11 +22,10 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using NCDK.Numerics;
 
 <#
 foreach (var ns in namespaces) 
@@ -52,20 +51,13 @@ namespace <#= ns.NS #>
     /// </para>
     /// </remarks>
     // @author steinbeck
-    // @cdk.githash
     // @cdk.created 2003-10-02
     // @cdk.keyword bond
     // @cdk.keyword atom
     // @cdk.keyword electron
-    [Serializable]
     public class Bond
         : ElectronContainer, IBond, IChemObjectListener
     {
-        internal bool isAromatic;
-        internal bool isAliphatic;
-        internal bool isInRing;
-        internal bool isSingleOrDouble;
-        internal bool isReactiveCenter;
         internal BondOrder order;
         internal BondStereo stereo;
         private IList<IAtom> atoms;
@@ -290,70 +282,13 @@ namespace <#= ns.NS #>
             }
         }
 
-        /// <inheritdoc/>
-        public virtual bool IsAromatic
-        {
-            get { return isAromatic; }
-            set
-            {
-                isAromatic = value; 
-<# if (!ns.IsSilent) { #>
-                NotifyChanged();
-<# } #>
-            }
-        }
-
-        /// <inheritdoc/>
-        public virtual bool IsAliphatic
-        {
-            get { return isAliphatic; }
-            set
-            {
-                isAliphatic = value; 
-<# if (!ns.IsSilent) { #>
-                NotifyChanged();
-<# } #>
-            }
-        }
-
-        /// <inheritdoc/>
-        public virtual bool IsInRing
-        {
-            get { return isInRing; }
-            set
-            {
-                isInRing = value;
-<# if (!ns.IsSilent) { #>
-                NotifyChanged();
-<# } #>
-            }
-        }
-
-        /// <inheritdoc/>
-        public virtual bool IsSingleOrDouble
-        {
-            get { return isSingleOrDouble; }
-            set
-            {
-                isSingleOrDouble = value;
-<# if (!ns.IsSilent) { #>
-                NotifyChanged();
-<# } #>
-            }
-        }
-
-        /// <inheritdoc/>
-        public virtual bool IsReactiveCenter
-        {
-            get { return isReactiveCenter; }
-            set
-            {
-                isReactiveCenter = value;
-<# if (!ns.IsSilent) { #>
-                NotifyChanged();
-<# } #>
-            }
-        }
+<#
+        AddIsFlag("virtual", "IsAromatic", !ns.IsSilent);
+        AddIsFlag("virtual", "IsAliphatic", !ns.IsSilent);
+        AddIsFlag("virtual", "IsInRing", !ns.IsSilent);
+        AddIsFlag("virtual", "IsSingleOrDouble", !ns.IsSilent);
+        AddIsFlag("virtual", "IsReactiveCenter", !ns.IsSilent);
+#>
 
         public override ICDKObject Clone(CDKObjectMap map)
         {

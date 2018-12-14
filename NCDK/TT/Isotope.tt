@@ -27,7 +27,6 @@
  */
 
 using System;
-using System.Text;
 
 <#
 foreach (var ns in namespaces) 
@@ -218,11 +217,6 @@ namespace <#= ns.NS #>
                 NotifyChanged();
 <# } #>
             }
-        }
-
-        public override string ToString()
-        {
-            return CDKStuff.ToString(this);
         }
 
         /// <summary>

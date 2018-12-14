@@ -32,8 +32,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System.Text;
-
 namespace NCDK.Default
 {
     /// <summary>
@@ -91,12 +89,6 @@ namespace NCDK.Default
         internal int? formalNeighbourCount;
 
         internal string atomTypeName;
-        internal bool isHydrogenBondAcceptor;
-        internal bool isHydrogenBondDonor;
-        internal bool isAliphatic;
-        internal bool isAromatic;
-        internal bool isInRing;
-        internal bool isReactiveCenter;
 
         public AtomType(ChemicalElement element, int? formalCharge = 0)
             : base(element)
@@ -157,10 +149,10 @@ namespace NCDK.Default
                 valency = aa.Valency;
                 formalNeighbourCount = aa.FormalNeighbourCount;
                 atomTypeName = aa.AtomTypeName;
-                isHydrogenBondAcceptor = aa.IsHydrogenBondAcceptor;
-                isHydrogenBondDonor = aa.IsHydrogenBondDonor;
-                isAromatic = aa.IsAromatic;
-                isInRing = aa.IsInRing;
+                SetIsHydrogenBondAcceptorWithoutNotify(aa.IsHydrogenBondAcceptor);
+                SetIsHydrogenBondDonorWithoutNotify(aa.IsHydrogenBondDonor);
+                SetIsAromaticWithoutNotify( aa.IsAromatic);
+                SetIsInRingWithoutNotify(aa.IsInRing);
             }
         }
 
@@ -280,64 +272,155 @@ namespace NCDK.Default
             }
         }
 
+        /// <inheritdoc/>
         public virtual bool IsHydrogenBondAcceptor
         {
-            get { return isHydrogenBondAcceptor; }
+            get 
+            { 
+                return (flags & CDKConstants.IsHydrogenBondAcceptorMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isHydrogenBondAcceptor = value; 
+                SetIsHydrogenBondAcceptorWithoutNotify(value);
                 NotifyChanged();
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsHydrogenBondAcceptorWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsHydrogenBondAcceptorMask;
+            else
+                flags &= ~CDKConstants.IsHydrogenBondAcceptorMask; 
+        }
+        /// <inheritdoc/>
         public virtual bool IsHydrogenBondDonor
         {
-            get { return isHydrogenBondDonor; }
+            get 
+            { 
+                return (flags & CDKConstants.IsHydrogenBondDonorMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isHydrogenBondDonor = value; 
+                SetIsHydrogenBondDonorWithoutNotify(value);
                 NotifyChanged();
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsHydrogenBondDonorWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsHydrogenBondDonorMask;
+            else
+                flags &= ~CDKConstants.IsHydrogenBondDonorMask; 
+        }
+        /// <inheritdoc/>
         public virtual bool IsAliphatic
         {
-            get { return isAliphatic; }
-            set
+            get 
             { 
-                isAliphatic = value; 
+                return (flags & CDKConstants.IsAliphaticMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                SetIsAliphaticWithoutNotify(value);
                 NotifyChanged();
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsAliphaticWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsAliphaticMask;
+            else
+                flags &= ~CDKConstants.IsAliphaticMask; 
+        }
+        /// <inheritdoc/>
         public virtual bool IsAromatic
         {
-            get { return isAromatic; }
+            get 
+            { 
+                return (flags & CDKConstants.IsAromaticMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isAromatic = value; 
+                SetIsAromaticWithoutNotify(value);
                 NotifyChanged();
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsAromaticWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsAromaticMask;
+            else
+                flags &= ~CDKConstants.IsAromaticMask; 
+        }
+        /// <inheritdoc/>
         public virtual bool IsInRing
         {
-            get { return isInRing; }
-            set 
+            get 
+            { 
+                return (flags & CDKConstants.IsInRingMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            set
             {
-                isInRing = value; 
+                SetIsInRingWithoutNotify(value);
                 NotifyChanged();
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsInRingWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsInRingMask;
+            else
+                flags &= ~CDKConstants.IsInRingMask; 
+        }
+        /// <inheritdoc/>
         public virtual bool IsReactiveCenter
         {
-            get { return isReactiveCenter; }
-            set 
+            get 
+            { 
+                return (flags & CDKConstants.IsReactiveCenterMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            set
             {
-                isReactiveCenter = value; 
+                SetIsReactiveCenterWithoutNotify(value);
                 NotifyChanged();
             }
+        }
+
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsReactiveCenterWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsReactiveCenterMask;
+            else
+                flags &= ~CDKConstants.IsReactiveCenterMask; 
         }
     }
 }
@@ -398,12 +481,6 @@ namespace NCDK.Silent
         internal int? formalNeighbourCount;
 
         internal string atomTypeName;
-        internal bool isHydrogenBondAcceptor;
-        internal bool isHydrogenBondDonor;
-        internal bool isAliphatic;
-        internal bool isAromatic;
-        internal bool isInRing;
-        internal bool isReactiveCenter;
 
         public AtomType(ChemicalElement element, int? formalCharge = 0)
             : base(element)
@@ -464,10 +541,10 @@ namespace NCDK.Silent
                 valency = aa.Valency;
                 formalNeighbourCount = aa.FormalNeighbourCount;
                 atomTypeName = aa.AtomTypeName;
-                isHydrogenBondAcceptor = aa.IsHydrogenBondAcceptor;
-                isHydrogenBondDonor = aa.IsHydrogenBondDonor;
-                isAromatic = aa.IsAromatic;
-                isInRing = aa.IsInRing;
+                SetIsHydrogenBondAcceptorWithoutNotify(aa.IsHydrogenBondAcceptor);
+                SetIsHydrogenBondDonorWithoutNotify(aa.IsHydrogenBondDonor);
+                SetIsAromaticWithoutNotify( aa.IsAromatic);
+                SetIsInRingWithoutNotify(aa.IsInRing);
             }
         }
 
@@ -579,58 +656,149 @@ namespace NCDK.Silent
             }
         }
 
+        /// <inheritdoc/>
         public virtual bool IsHydrogenBondAcceptor
         {
-            get { return isHydrogenBondAcceptor; }
+            get 
+            { 
+                return (flags & CDKConstants.IsHydrogenBondAcceptorMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isHydrogenBondAcceptor = value; 
+                SetIsHydrogenBondAcceptorWithoutNotify(value);
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsHydrogenBondAcceptorWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsHydrogenBondAcceptorMask;
+            else
+                flags &= ~CDKConstants.IsHydrogenBondAcceptorMask; 
+        }
+        /// <inheritdoc/>
         public virtual bool IsHydrogenBondDonor
         {
-            get { return isHydrogenBondDonor; }
+            get 
+            { 
+                return (flags & CDKConstants.IsHydrogenBondDonorMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isHydrogenBondDonor = value; 
+                SetIsHydrogenBondDonorWithoutNotify(value);
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsHydrogenBondDonorWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsHydrogenBondDonorMask;
+            else
+                flags &= ~CDKConstants.IsHydrogenBondDonorMask; 
+        }
+        /// <inheritdoc/>
         public virtual bool IsAliphatic
         {
-            get { return isAliphatic; }
-            set
+            get 
             { 
-                isAliphatic = value; 
+                return (flags & CDKConstants.IsAliphaticMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                SetIsAliphaticWithoutNotify(value);
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsAliphaticWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsAliphaticMask;
+            else
+                flags &= ~CDKConstants.IsAliphaticMask; 
+        }
+        /// <inheritdoc/>
         public virtual bool IsAromatic
         {
-            get { return isAromatic; }
+            get 
+            { 
+                return (flags & CDKConstants.IsAromaticMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isAromatic = value; 
+                SetIsAromaticWithoutNotify(value);
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsAromaticWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsAromaticMask;
+            else
+                flags &= ~CDKConstants.IsAromaticMask; 
+        }
+        /// <inheritdoc/>
         public virtual bool IsInRing
         {
-            get { return isInRing; }
-            set 
+            get 
+            { 
+                return (flags & CDKConstants.IsInRingMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            set
             {
-                isInRing = value; 
+                SetIsInRingWithoutNotify(value);
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsInRingWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsInRingMask;
+            else
+                flags &= ~CDKConstants.IsInRingMask; 
+        }
+        /// <inheritdoc/>
         public virtual bool IsReactiveCenter
         {
-            get { return isReactiveCenter; }
-            set 
-            {
-                isReactiveCenter = value; 
+            get 
+            { 
+                return (flags & CDKConstants.IsReactiveCenterMask) != 0;
             }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                SetIsReactiveCenterWithoutNotify(value);
+            }
+        }
+
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsReactiveCenterWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsReactiveCenterMask;
+            else
+                flags &= ~CDKConstants.IsReactiveCenterMask; 
         }
     }
 }

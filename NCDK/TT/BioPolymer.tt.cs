@@ -30,7 +30,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace NCDK.Default
@@ -79,9 +78,9 @@ namespace NCDK.Default
             // Add atom to AtomContainer
             base.Atoms.Add(oAtom);
 
-            if (atomCount != base.Atoms.Count && // OK, super did not yet contain the atom
-                                                     // Add atom to Strand (also adds the atom to the monomer).
-                    oStrand != null)
+            if (atomCount != base.Atoms.Count // OK, super did not yet contain the atom
+                                              // Add atom to Strand (also adds the atom to the monomer).
+             && oStrand != null)
             {
                 oStrand.AddAtom(oAtom, oMonomer); // Same problem as above: better to throw nullpointer exception?
                 if (!strands.ContainsKey(oStrand.StrandName))
@@ -167,15 +166,6 @@ namespace NCDK.Default
         public IReadOnlyDictionary<string, IStrand> GetStrandMap()
         {
             return strands;
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append(GetHashCode()).Append(", ");
-            sb.Append(base.ToString());
-            sb.Append(')');
-            return sb.ToString();
         }
 
         public override ICDKObject Clone(CDKObjectMap map)
@@ -239,9 +229,9 @@ namespace NCDK.Silent
             // Add atom to AtomContainer
             base.Atoms.Add(oAtom);
 
-            if (atomCount != base.Atoms.Count && // OK, super did not yet contain the atom
-                                                     // Add atom to Strand (also adds the atom to the monomer).
-                    oStrand != null)
+            if (atomCount != base.Atoms.Count // OK, super did not yet contain the atom
+                                              // Add atom to Strand (also adds the atom to the monomer).
+             && oStrand != null)
             {
                 oStrand.AddAtom(oAtom, oMonomer); // Same problem as above: better to throw nullpointer exception?
                 if (!strands.ContainsKey(oStrand.StrandName))
@@ -327,15 +317,6 @@ namespace NCDK.Silent
         public IReadOnlyDictionary<string, IStrand> GetStrandMap()
         {
             return strands;
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append(GetHashCode()).Append(", ");
-            sb.Append(base.ToString());
-            sb.Append(')');
-            return sb.ToString();
         }
 
         public override ICDKObject Clone(CDKObjectMap map)

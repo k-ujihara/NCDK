@@ -47,8 +47,8 @@ namespace <#= ns.NS #>
     public class ChemObject
         : IChemObject
     {
-        private bool isPlaced;
-        private bool isVisited;
+        /*private protected*/
+        internal int flags;
 
         private ICollection<IChemObjectListener> listeners;
         private bool notification = true;
@@ -80,10 +80,17 @@ namespace <#= ns.NS #>
 
         public bool IsPlaced
         {
-            get { return isPlaced; }
+            get 
+            { 
+                return (flags & CDKConstants.IsPlacedMask) != 0;
+            }
+            
             set
             {
-                isPlaced = value;
+                if (value)
+                    flags |= CDKConstants.IsPlacedMask;
+                else
+                    flags &= ~CDKConstants.IsPlacedMask;
 <# if (addNofityChanged) { #>
                 NotifyChanged();
 <# } #>
@@ -95,10 +102,17 @@ namespace <#= ns.NS #>
         /// </summary>
         public bool IsVisited
         {
-            get { return isVisited; }
+            get 
+            { 
+                return (flags & CDKConstants.IsVisitedMask) != 0;
+            }
+            
             set
             {
-                isVisited = value;
+                if (value)
+                    flags |= CDKConstants.IsVisitedMask;
+                else
+                    flags &= ~CDKConstants.IsVisitedMask;
 <# if (addNofityChanged) { #>
                 NotifyChanged();
 <# } #>

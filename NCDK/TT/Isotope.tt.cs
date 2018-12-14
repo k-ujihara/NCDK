@@ -29,7 +29,6 @@
  */
 
 using System;
-using System.Text;
 
 namespace NCDK.Default
 {
@@ -206,11 +205,6 @@ namespace NCDK.Default
                 massNumber = value;
                 NotifyChanged();
             }
-        }
-
-        public override string ToString()
-        {
-            return CDKStuff.ToString(this);
         }
 
         /// <summary>
@@ -408,11 +402,6 @@ namespace NCDK.Silent
             {
                 massNumber = value;
             }
-        }
-
-        public override string ToString()
-        {
-            return CDKStuff.ToString(this);
         }
 
         /// <summary>

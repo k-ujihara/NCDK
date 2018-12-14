@@ -5,9 +5,6 @@
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 /* Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -27,7 +24,9 @@ using System.Collections.Generic;
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System.Text;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace NCDK.Default
 {
@@ -93,21 +92,6 @@ namespace NCDK.Default
         public void Insert(int index, IChemModel chemModel) => chemModels.Insert(index, chemModel);
         public void RemoveAt(int index) => chemModels.RemoveAt(index);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("ChemSequence(#M=");
-            sb.Append(Count);
-            if (Count > 0)
-            {
-                sb.Append(", ");
-                foreach (var chemModel in chemModels)
-                    sb.Append(chemModel.ToString());
-            }
-            sb.Append(')');
-            return sb.ToString();
-        }
 
         public override ICDKObject Clone(CDKObjectMap map)
         {
@@ -187,21 +171,6 @@ namespace NCDK.Silent
         public void Insert(int index, IChemModel chemModel) => chemModels.Insert(index, chemModel);
         public void RemoveAt(int index) => chemModels.RemoveAt(index);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("ChemSequence(#M=");
-            sb.Append(Count);
-            if (Count > 0)
-            {
-                sb.Append(", ");
-                foreach (var chemModel in chemModels)
-                    sb.Append(chemModel.ToString());
-            }
-            sb.Append(')');
-            return sb.ToString();
-        }
 
         public override ICDKObject Clone(CDKObjectMap map)
         {

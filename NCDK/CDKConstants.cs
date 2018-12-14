@@ -27,6 +27,23 @@ using System;
 
 namespace NCDK
 {
+    internal static class CDKConstants
+    {
+        internal const int IsPlacedMask = 0x0001;
+        internal const int IsInRingMask = 0x0002;
+        internal const int IsNotInIngMask = 0x0004;
+        internal const int IsAliphaticMask = 0x0008;
+        internal const int IsVisitedMask = 0x0010;
+        internal const int IsAromaticMask = 0x0020;
+        internal const int IsConjugatedMask = 0x0040;
+        internal const int IsMappedMask = 0x0080;
+        internal const int IsHydrogenBondDonorMask = 0x0100;
+        internal const int IsHydrogenBondAcceptorMask = 0x0200;
+        internal const int IsReactiveCenterMask = 0x0400;
+        internal const int IsTypeableMask = 0x0800;
+        internal const int IsSingleOrDoubleMask = 0x1000;
+    }
+
     [Obsolete("Use " + nameof(IStereoElement<IChemObject, IChemObject>))]
     public static class StereoAtomParities
     {

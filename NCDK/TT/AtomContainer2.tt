@@ -35,7 +35,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 
 #pragma warning disable CA1710 // Identifiers should have correct suffix
 
@@ -49,7 +48,8 @@ namespace <#= ns.NS #>
     /// This class should not be used directly.
     /// </summary>
     // @author John Mayfield
-    internal sealed class AtomContainer2 : ChemObject, IAtomContainer
+    internal sealed class AtomContainer2 
+        : ChemObject, IAtomContainer
     {
         private static readonly IChemObjectBuilder builder = new ChemObjectBuilder(false);
 
@@ -75,9 +75,6 @@ namespace <#= ns.NS #>
     }
 #>
         internal List<IStereoElement<IChemObject, IChemObject>> stereo;
-
-        internal bool isAromatic;
-        internal bool isSingleOrDouble;
 
         /// <inheritdoc/>
         // TODO: Implements ElectronContainers
@@ -171,31 +168,10 @@ namespace <#= ns.NS #>
                 Bonds.Add(bond);
         }
 
-        /// <inheritdoc/>
-        public bool IsAromatic
-        {
-            get { return isAromatic; }
-            set
-            {
-                isAromatic = value;
-<# if (!ns.IsSilent) { #>
-                NotifyChanged();
-<# } #>
-            }
-        }
-
-        /// <inheritdoc/>
-        public bool IsSingleOrDouble
-        {
-            get { return isSingleOrDouble; }
-            set
-            {
-                isSingleOrDouble = value;
-<# if (!ns.IsSilent) { #>
-                NotifyChanged();
-<# } #>
-            }
-        }
+<#
+        AddIsFlag("", "IsAromatic", !ns.IsSilent);
+        AddIsFlag("", "IsSingleOrDouble", !ns.IsSilent);
+#>
 
         internal class BaseAtomRef : AtomRef
         {

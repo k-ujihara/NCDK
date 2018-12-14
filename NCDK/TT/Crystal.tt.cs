@@ -26,7 +26,6 @@
 
 using System;
 using NCDK.Numerics;
-using System.Text;
 
 namespace NCDK.Default
 {
@@ -39,10 +38,8 @@ namespace NCDK.Default
     /// The crystal is designed to store only the asymmetric atoms.
     /// Though this is not enforced, it is assumed by all methods.
     /// </remarks>
-    // @cdk.githash
     // @cdk.keyword crystal
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class Crystal
         : AtomContainer, ICrystal, ICloneable
     {
@@ -120,24 +117,6 @@ namespace NCDK.Default
             : base(container)
         {
         }
-
-        /// <summary>
-        /// Returns a string representation of this crystal.
-        /// </summary>
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("Crystal(").Append(GetHashCode());
-            if (SpaceGroup != null)
-                sb.Append(", SG=").Append(SpaceGroup);
-            if (Z > 0)
-                sb.Append(", Z=").Append(Z);
-            sb.Append(", a=(").Append(a.X).Append(", ").Append(a.Y).Append(", ").Append(a.Z);
-            sb.Append(", b=(").Append(b.X).Append(", ").Append(b.Y).Append(", ").Append(b.Z);
-            sb.Append(", c=(").Append(c.X).Append(", ").Append(c.Y).Append(", ").Append(c.Z);
-            sb.Append(", ").Append(base.ToString());
-            return sb.ToString();
-        }
     }
 }
 namespace NCDK.Silent
@@ -151,10 +130,8 @@ namespace NCDK.Silent
     /// The crystal is designed to store only the asymmetric atoms.
     /// Though this is not enforced, it is assumed by all methods.
     /// </remarks>
-    // @cdk.githash
     // @cdk.keyword crystal
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class Crystal
         : AtomContainer, ICrystal, ICloneable
     {
@@ -231,24 +208,6 @@ namespace NCDK.Silent
         public Crystal(IAtomContainer container)
             : base(container)
         {
-        }
-
-        /// <summary>
-        /// Returns a string representation of this crystal.
-        /// </summary>
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("Crystal(").Append(GetHashCode());
-            if (SpaceGroup != null)
-                sb.Append(", SG=").Append(SpaceGroup);
-            if (Z > 0)
-                sb.Append(", Z=").Append(Z);
-            sb.Append(", a=(").Append(a.X).Append(", ").Append(a.Y).Append(", ").Append(a.Z);
-            sb.Append(", b=(").Append(b.X).Append(", ").Append(b.Y).Append(", ").Append(b.Z);
-            sb.Append(", c=(").Append(c.X).Append(", ").Append(c.Y).Append(", ").Append(c.Z);
-            sb.Append(", ").Append(base.ToString());
-            return sb.ToString();
         }
     }
 }

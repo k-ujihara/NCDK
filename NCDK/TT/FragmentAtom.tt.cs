@@ -29,7 +29,6 @@
  */
 
 using System;
-using System.Text;
 using System.Linq;
 
 namespace NCDK.Default
@@ -58,18 +57,6 @@ namespace NCDK.Default
         {
             get { return Fragment.Atoms.Select(atom => atom.ExactMass.Value).Sum(); }
             set { throw new InvalidOperationException($"Cannot set the mass of a {nameof(IFragmentAtom)}."); }
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("FragmentAtom{").Append(GetHashCode());
-            sb.Append(", A=").Append(base.ToString());
-            if (Fragment != null) {
-                sb.Append(", F=").Append(Fragment.ToString());
-            }
-            sb.Append('}');
-            return sb.ToString();
         }
 
         public override ICDKObject Clone(CDKObjectMap map)
@@ -107,18 +94,6 @@ namespace NCDK.Silent
         {
             get { return Fragment.Atoms.Select(atom => atom.ExactMass.Value).Sum(); }
             set { throw new InvalidOperationException($"Cannot set the mass of a {nameof(IFragmentAtom)}."); }
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("FragmentAtom{").Append(GetHashCode());
-            sb.Append(", A=").Append(base.ToString());
-            if (Fragment != null) {
-                sb.Append(", F=").Append(Fragment.ToString());
-            }
-            sb.Append('}');
-            return sb.ToString();
         }
 
         public override ICDKObject Clone(CDKObjectMap map)

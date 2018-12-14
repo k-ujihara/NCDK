@@ -26,11 +26,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections;
+using System.Collections.Generic;
 
 <#
 foreach (var ns in namespaces) 
@@ -47,7 +44,6 @@ namespace <#= ns.NS #>
     // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
     // @author      Ola Spjuth <ola.spjuth@farmbio.uu.se>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class Strand 
         : AtomContainer, IStrand
     {
@@ -156,20 +152,6 @@ namespace <#= ns.NS #>
                 Remove(monomer);
                 monomers.Remove(name);
             }
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder(32);
-            sb.Append("Strand(");
-            sb.Append(GetHashCode());
-            if (StrandName != null) 
-                sb.Append(", N:").Append(StrandName);
-            if (StrandType != null) 
-                sb.Append(", T:").Append(StrandType).Append(", ");
-            sb.Append(base.ToString());
-            sb.Append(')');
-            return sb.ToString();
         }
 
         public override ICDKObject Clone(CDKObjectMap map)

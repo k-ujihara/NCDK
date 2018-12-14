@@ -30,14 +30,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NCDK.Default
 {
     /// <inheritdoc cref="IReaction"/>
-    // @cdk.githash
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class Reaction
         : ChemObject, IReaction, ICloneable
     {
@@ -81,19 +78,6 @@ namespace NCDK.Default
             direction = ReactionDirection.Forward;
         }
 
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("Reaction(");
-            sb.Append(Id);
-            sb.Append(", #M:").Append(mappings.Count);
-            sb.Append(", reactants=").Append(reactants.ToString());
-            sb.Append(", products=").Append(products.ToString());
-            sb.Append(", agents=").Append(agents.ToString());
-            sb.Append(')');
-            return sb.ToString();
-        }
-
         public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone_reactants = (IChemObjectSet<IAtomContainer>)reactants.Clone(map);
@@ -117,9 +101,7 @@ namespace NCDK.Default
 namespace NCDK.Silent
 {
     /// <inheritdoc cref="IReaction"/>
-    // @cdk.githash
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class Reaction
         : ChemObject, IReaction, ICloneable
     {
@@ -161,19 +143,6 @@ namespace NCDK.Silent
             this.agents = Builder.NewAtomContainerSet();
             this.mappings = new List<IMapping>();
             direction = ReactionDirection.Forward;
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("Reaction(");
-            sb.Append(Id);
-            sb.Append(", #M:").Append(mappings.Count);
-            sb.Append(", reactants=").Append(reactants.ToString());
-            sb.Append(", products=").Append(products.ToString());
-            sb.Append(", agents=").Append(agents.ToString());
-            sb.Append(')');
-            return sb.ToString();
         }
 
         public override ICDKObject Clone(CDKObjectMap map)

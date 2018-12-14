@@ -25,14 +25,12 @@
  */
 
 using System;
-using System.Text;
 
 namespace NCDK.Default
 {
     /// <summary>
     /// Base class for entities containing electrons, like bonds, orbitals, lone-pairs.
     /// </summary>
-    // @cdk.githash 
     // @cdk.keyword orbital
     // @cdk.keyword lone-pair
     // @cdk.keyword bond 
@@ -74,7 +72,6 @@ namespace NCDK.Silent
     /// <summary>
     /// Base class for entities containing electrons, like bonds, orbitals, lone-pairs.
     /// </summary>
-    // @cdk.githash 
     // @cdk.keyword orbital
     // @cdk.keyword lone-pair
     // @cdk.keyword bond 

@@ -26,7 +26,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using NCDK.Sgroups;
 using NCDK.Tools.Manipulator;
@@ -78,9 +77,6 @@ namespace NCDK.Default
         /// Stereo elements contained by this object.
         /// </summary>
         internal List<IStereoElement<IChemObject, IChemObject>> stereoElements;
-
-        internal bool isAromatic;
-        internal bool isSingleOrDouble;
 
         /// <inheritdoc/>
         public override IChemObjectBuilder Builder => builder;
@@ -256,23 +252,52 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public virtual bool IsAromatic
         {
-            get { return isAromatic; }
+            get 
+            { 
+                return (flags & CDKConstants.IsAromaticMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isAromatic = value; 
+                SetIsAromaticWithoutNotify(value);
                 NotifyChanged();
             }
         }
-        
+
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsAromaticWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsAromaticMask;
+            else
+                flags &= ~CDKConstants.IsAromaticMask; 
+        }
         /// <inheritdoc/>
         public virtual bool IsSingleOrDouble
         {
-            get { return isSingleOrDouble; }
+            get 
+            { 
+                return (flags & CDKConstants.IsSingleOrDoubleMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isSingleOrDouble = value;
+                SetIsSingleOrDoubleWithoutNotify(value);
                 NotifyChanged();
             }
+        }
+
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsSingleOrDoubleWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsSingleOrDoubleMask;
+            else
+                flags &= ~CDKConstants.IsSingleOrDoubleMask; 
         }
 
         /// <inheritdoc/>
@@ -696,9 +721,6 @@ namespace NCDK.Silent
         /// </summary>
         internal List<IStereoElement<IChemObject, IChemObject>> stereoElements;
 
-        internal bool isAromatic;
-        internal bool isSingleOrDouble;
-
         /// <inheritdoc/>
         public override IChemObjectBuilder Builder => builder;
 
@@ -868,21 +890,50 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public virtual bool IsAromatic
         {
-            get { return isAromatic; }
+            get 
+            { 
+                return (flags & CDKConstants.IsAromaticMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isAromatic = value; 
+                SetIsAromaticWithoutNotify(value);
             }
         }
-        
+
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsAromaticWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsAromaticMask;
+            else
+                flags &= ~CDKConstants.IsAromaticMask; 
+        }
         /// <inheritdoc/>
         public virtual bool IsSingleOrDouble
         {
-            get { return isSingleOrDouble; }
+            get 
+            { 
+                return (flags & CDKConstants.IsSingleOrDoubleMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isSingleOrDouble = value;
+                SetIsSingleOrDoubleWithoutNotify(value);
             }
+        }
+
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsSingleOrDoubleWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsSingleOrDoubleMask;
+            else
+                flags &= ~CDKConstants.IsSingleOrDoubleMask; 
         }
 
         /// <inheritdoc/>

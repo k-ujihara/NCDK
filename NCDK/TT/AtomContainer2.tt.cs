@@ -37,7 +37,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 
 #pragma warning disable CA1710 // Identifiers should have correct suffix
 
@@ -47,7 +46,8 @@ namespace NCDK.Default
     /// This class should not be used directly.
     /// </summary>
     // @author John Mayfield
-    internal sealed class AtomContainer2 : ChemObject, IAtomContainer
+    internal sealed class AtomContainer2 
+        : ChemObject, IAtomContainer
     {
         private static readonly IChemObjectBuilder builder = new ChemObjectBuilder(false);
 
@@ -59,9 +59,6 @@ namespace NCDK.Default
         internal ObservableChemObjectCollection<ILonePair> lonepairs;
         internal ObservableChemObjectCollection<ISingleElectron> electrons;
         internal List<IStereoElement<IChemObject, IChemObject>> stereo;
-
-        internal bool isAromatic;
-        internal bool isSingleOrDouble;
 
         /// <inheritdoc/>
         // TODO: Implements ElectronContainers
@@ -142,25 +139,54 @@ namespace NCDK.Default
         }
 
         /// <inheritdoc/>
-        public bool IsAromatic
+        public  bool IsAromatic
         {
-            get { return isAromatic; }
+            get 
+            { 
+                return (flags & CDKConstants.IsAromaticMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isAromatic = value;
+                SetIsAromaticWithoutNotify(value);
                 NotifyChanged();
             }
         }
 
-        /// <inheritdoc/>
-        public bool IsSingleOrDouble
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsAromaticWithoutNotify(bool value)
         {
-            get { return isSingleOrDouble; }
+            if (value)
+                flags |= CDKConstants.IsAromaticMask;
+            else
+                flags &= ~CDKConstants.IsAromaticMask; 
+        }
+        /// <inheritdoc/>
+        public  bool IsSingleOrDouble
+        {
+            get 
+            { 
+                return (flags & CDKConstants.IsSingleOrDoubleMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isSingleOrDouble = value;
+                SetIsSingleOrDoubleWithoutNotify(value);
                 NotifyChanged();
             }
+        }
+
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsSingleOrDoubleWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsSingleOrDoubleMask;
+            else
+                flags &= ~CDKConstants.IsSingleOrDoubleMask; 
         }
 
         internal class BaseAtomRef : AtomRef
@@ -1390,7 +1416,8 @@ namespace NCDK.Silent
     /// This class should not be used directly.
     /// </summary>
     // @author John Mayfield
-    internal sealed class AtomContainer2 : ChemObject, IAtomContainer
+    internal sealed class AtomContainer2 
+        : ChemObject, IAtomContainer
     {
         private static readonly IChemObjectBuilder builder = new ChemObjectBuilder(false);
 
@@ -1402,9 +1429,6 @@ namespace NCDK.Silent
         internal List<ILonePair> lonepairs;
         internal List<ISingleElectron> electrons;
         internal List<IStereoElement<IChemObject, IChemObject>> stereo;
-
-        internal bool isAromatic;
-        internal bool isSingleOrDouble;
 
         /// <inheritdoc/>
         // TODO: Implements ElectronContainers
@@ -1485,23 +1509,52 @@ namespace NCDK.Silent
         }
 
         /// <inheritdoc/>
-        public bool IsAromatic
+        public  bool IsAromatic
         {
-            get { return isAromatic; }
+            get 
+            { 
+                return (flags & CDKConstants.IsAromaticMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isAromatic = value;
+                SetIsAromaticWithoutNotify(value);
             }
         }
 
-        /// <inheritdoc/>
-        public bool IsSingleOrDouble
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsAromaticWithoutNotify(bool value)
         {
-            get { return isSingleOrDouble; }
+            if (value)
+                flags |= CDKConstants.IsAromaticMask;
+            else
+                flags &= ~CDKConstants.IsAromaticMask; 
+        }
+        /// <inheritdoc/>
+        public  bool IsSingleOrDouble
+        {
+            get 
+            { 
+                return (flags & CDKConstants.IsSingleOrDoubleMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isSingleOrDouble = value;
+                SetIsSingleOrDoubleWithoutNotify(value);
             }
+        }
+
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsSingleOrDoubleWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsSingleOrDoubleMask;
+            else
+                flags &= ~CDKConstants.IsSingleOrDoubleMask; 
         }
 
         internal class BaseAtomRef : AtomRef

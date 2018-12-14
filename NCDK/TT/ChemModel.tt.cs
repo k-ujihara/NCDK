@@ -25,7 +25,6 @@
  */
 
 using System;
-using System.Text;
 
 namespace NCDK.Default
 {
@@ -34,8 +33,6 @@ namespace NCDK.Default
     /// the other lower level concepts like rings, sequences,
     /// fragments, etc.
     /// </summary>
-    // @cdk.githash 
-    [Serializable]
     public class ChemModel
         : ChemObject, IChemModel, IChemObjectListener, ICloneable
     {
@@ -143,30 +140,6 @@ namespace NCDK.Default
             }
         }
 
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("ChemModel(");
-            sb.Append(GetHashCode());
-            if (MoleculeSet != null)
-            {
-                sb.Append(", ");
-                sb.Append(MoleculeSet.ToString());
-            }
-            if (Crystal != null)
-            {
-                sb.Append(", ");
-                sb.Append(Crystal.ToString());
-            }
-            if (ReactionSet != null)
-            {
-                sb.Append(", ");
-                sb.Append(ReactionSet.ToString());
-            }
-            sb.Append(')');
-            return sb.ToString();
-        }
-
         public override ICDKObject Clone(CDKObjectMap map)
         {
             ChemModel clone = (ChemModel)base.Clone(map);
@@ -201,8 +174,6 @@ namespace NCDK.Silent
     /// the other lower level concepts like rings, sequences,
     /// fragments, etc.
     /// </summary>
-    // @cdk.githash 
-    [Serializable]
     public class ChemModel
         : ChemObject, IChemModel, IChemObjectListener, ICloneable
     {
@@ -280,30 +251,6 @@ namespace NCDK.Silent
             {
                 setOfReactions = value;
             }
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("ChemModel(");
-            sb.Append(GetHashCode());
-            if (MoleculeSet != null)
-            {
-                sb.Append(", ");
-                sb.Append(MoleculeSet.ToString());
-            }
-            if (Crystal != null)
-            {
-                sb.Append(", ");
-                sb.Append(Crystal.ToString());
-            }
-            if (ReactionSet != null)
-            {
-                sb.Append(", ");
-                sb.Append(ReactionSet.ToString());
-            }
-            sb.Append(')');
-            return sb.ToString();
         }
 
         public override ICDKObject Clone(CDKObjectMap map)

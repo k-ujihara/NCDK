@@ -31,7 +31,6 @@ using NCDK.Numerics;
 using NCDK.Tools;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 <#
 foreach (var ns in namespaces) 
@@ -69,7 +68,6 @@ namespace <#= ns.NS #>
         internal Vector3? point3D;
         internal Vector3? fractionalPoint3D;
         internal int stereoParity;
-        internal bool isSingleOrDouble;
 
         /// <summary>
         /// Constructs an completely unset Atom.
@@ -279,18 +277,9 @@ namespace <#= ns.NS #>
             }
         }
 
-        /// <inheritdoc/>
-        public bool IsSingleOrDouble
-        {
-            get { return isSingleOrDouble; }
-            set 
-            {
-                isSingleOrDouble = value;  
-<# if (!ns.IsSilent) { #>
-                NotifyChanged();
-<# } #>
-            }
-        }
+<#
+        AddIsFlag("", "IsSingleOrDouble", !ns.IsSilent);
+#>
 
         /// <inheritdoc/>
         public override bool Compare(object obj)

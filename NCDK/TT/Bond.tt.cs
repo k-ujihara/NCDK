@@ -24,11 +24,10 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using NCDK.Numerics;
 
 namespace NCDK.Default
 {
@@ -50,20 +49,13 @@ namespace NCDK.Default
     /// </para>
     /// </remarks>
     // @author steinbeck
-    // @cdk.githash
     // @cdk.created 2003-10-02
     // @cdk.keyword bond
     // @cdk.keyword atom
     // @cdk.keyword electron
-    [Serializable]
     public class Bond
         : ElectronContainer, IBond, IChemObjectListener
     {
-        internal bool isAromatic;
-        internal bool isAliphatic;
-        internal bool isInRing;
-        internal bool isSingleOrDouble;
-        internal bool isReactiveCenter;
         internal BondOrder order;
         internal BondStereo stereo;
         private IList<IAtom> atoms;
@@ -276,56 +268,127 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public virtual bool IsAromatic
         {
-            get { return isAromatic; }
+            get 
+            { 
+                return (flags & CDKConstants.IsAromaticMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isAromatic = value; 
+                SetIsAromaticWithoutNotify(value);
                 NotifyChanged();
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsAromaticWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsAromaticMask;
+            else
+                flags &= ~CDKConstants.IsAromaticMask; 
+        }
         /// <inheritdoc/>
         public virtual bool IsAliphatic
         {
-            get { return isAliphatic; }
+            get 
+            { 
+                return (flags & CDKConstants.IsAliphaticMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isAliphatic = value; 
+                SetIsAliphaticWithoutNotify(value);
                 NotifyChanged();
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsAliphaticWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsAliphaticMask;
+            else
+                flags &= ~CDKConstants.IsAliphaticMask; 
+        }
         /// <inheritdoc/>
         public virtual bool IsInRing
         {
-            get { return isInRing; }
+            get 
+            { 
+                return (flags & CDKConstants.IsInRingMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isInRing = value;
+                SetIsInRingWithoutNotify(value);
                 NotifyChanged();
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsInRingWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsInRingMask;
+            else
+                flags &= ~CDKConstants.IsInRingMask; 
+        }
         /// <inheritdoc/>
         public virtual bool IsSingleOrDouble
         {
-            get { return isSingleOrDouble; }
+            get 
+            { 
+                return (flags & CDKConstants.IsSingleOrDoubleMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isSingleOrDouble = value;
+                SetIsSingleOrDoubleWithoutNotify(value);
                 NotifyChanged();
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsSingleOrDoubleWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsSingleOrDoubleMask;
+            else
+                flags &= ~CDKConstants.IsSingleOrDoubleMask; 
+        }
         /// <inheritdoc/>
         public virtual bool IsReactiveCenter
         {
-            get { return isReactiveCenter; }
+            get 
+            { 
+                return (flags & CDKConstants.IsReactiveCenterMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isReactiveCenter = value;
+                SetIsReactiveCenterWithoutNotify(value);
                 NotifyChanged();
             }
+        }
+
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsReactiveCenterWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsReactiveCenterMask;
+            else
+                flags &= ~CDKConstants.IsReactiveCenterMask; 
         }
 
         public override ICDKObject Clone(CDKObjectMap map)
@@ -409,20 +472,13 @@ namespace NCDK.Silent
     /// </para>
     /// </remarks>
     // @author steinbeck
-    // @cdk.githash
     // @cdk.created 2003-10-02
     // @cdk.keyword bond
     // @cdk.keyword atom
     // @cdk.keyword electron
-    [Serializable]
     public class Bond
         : ElectronContainer, IBond, IChemObjectListener
     {
-        internal bool isAromatic;
-        internal bool isAliphatic;
-        internal bool isInRing;
-        internal bool isSingleOrDouble;
-        internal bool isReactiveCenter;
         internal BondOrder order;
         internal BondStereo stereo;
         private IList<IAtom> atoms;
@@ -636,51 +692,122 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public virtual bool IsAromatic
         {
-            get { return isAromatic; }
+            get 
+            { 
+                return (flags & CDKConstants.IsAromaticMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isAromatic = value; 
+                SetIsAromaticWithoutNotify(value);
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsAromaticWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsAromaticMask;
+            else
+                flags &= ~CDKConstants.IsAromaticMask; 
+        }
         /// <inheritdoc/>
         public virtual bool IsAliphatic
         {
-            get { return isAliphatic; }
+            get 
+            { 
+                return (flags & CDKConstants.IsAliphaticMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isAliphatic = value; 
+                SetIsAliphaticWithoutNotify(value);
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsAliphaticWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsAliphaticMask;
+            else
+                flags &= ~CDKConstants.IsAliphaticMask; 
+        }
         /// <inheritdoc/>
         public virtual bool IsInRing
         {
-            get { return isInRing; }
+            get 
+            { 
+                return (flags & CDKConstants.IsInRingMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isInRing = value;
+                SetIsInRingWithoutNotify(value);
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsInRingWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsInRingMask;
+            else
+                flags &= ~CDKConstants.IsInRingMask; 
+        }
         /// <inheritdoc/>
         public virtual bool IsSingleOrDouble
         {
-            get { return isSingleOrDouble; }
+            get 
+            { 
+                return (flags & CDKConstants.IsSingleOrDoubleMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isSingleOrDouble = value;
+                SetIsSingleOrDoubleWithoutNotify(value);
             }
         }
 
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsSingleOrDoubleWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsSingleOrDoubleMask;
+            else
+                flags &= ~CDKConstants.IsSingleOrDoubleMask; 
+        }
         /// <inheritdoc/>
         public virtual bool IsReactiveCenter
         {
-            get { return isReactiveCenter; }
+            get 
+            { 
+                return (flags & CDKConstants.IsReactiveCenterMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             set
             {
-                isReactiveCenter = value;
+                SetIsReactiveCenterWithoutNotify(value);
             }
+        }
+
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsReactiveCenterWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsReactiveCenterMask;
+            else
+                flags &= ~CDKConstants.IsReactiveCenterMask; 
         }
 
         public override ICDKObject Clone(CDKObjectMap map)

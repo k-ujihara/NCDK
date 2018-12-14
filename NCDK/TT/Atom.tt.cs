@@ -33,7 +33,6 @@ using NCDK.Numerics;
 using NCDK.Tools;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NCDK.Default
 {
@@ -67,7 +66,6 @@ namespace NCDK.Default
         internal Vector3? point3D;
         internal Vector3? fractionalPoint3D;
         internal int stereoParity;
-        internal bool isSingleOrDouble;
 
         /// <summary>
         /// Constructs an completely unset Atom.
@@ -266,14 +264,29 @@ namespace NCDK.Default
         }
 
         /// <inheritdoc/>
-        public bool IsSingleOrDouble
+        public  bool IsSingleOrDouble
         {
-            get { return isSingleOrDouble; }
-            set 
+            get 
+            { 
+                return (flags & CDKConstants.IsSingleOrDoubleMask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            set
             {
-                isSingleOrDouble = value;  
+                SetIsSingleOrDoubleWithoutNotify(value);
                 NotifyChanged();
             }
+        }
+
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsSingleOrDoubleWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsSingleOrDoubleMask;
+            else
+                flags &= ~CDKConstants.IsSingleOrDoubleMask; 
         }
 
         /// <inheritdoc/>
@@ -480,7 +493,6 @@ namespace NCDK.Silent
         internal Vector3? point3D;
         internal Vector3? fractionalPoint3D;
         internal int stereoParity;
-        internal bool isSingleOrDouble;
 
         /// <summary>
         /// Constructs an completely unset Atom.
@@ -673,13 +685,28 @@ namespace NCDK.Silent
         }
 
         /// <inheritdoc/>
-        public bool IsSingleOrDouble
+        public  bool IsSingleOrDouble
         {
-            get { return isSingleOrDouble; }
-            set 
-            {
-                isSingleOrDouble = value;  
+            get 
+            { 
+                return (flags & CDKConstants.IsSingleOrDoubleMask) != 0;
             }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                SetIsSingleOrDoubleWithoutNotify(value);
+            }
+        }
+
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void SetIsSingleOrDoubleWithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.IsSingleOrDoubleMask;
+            else
+                flags &= ~CDKConstants.IsSingleOrDoubleMask; 
         }
 
         /// <inheritdoc/>

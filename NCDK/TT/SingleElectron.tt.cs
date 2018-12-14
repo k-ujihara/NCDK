@@ -25,7 +25,6 @@
  */
 
 using System;
-using System.Text;
 
 namespace NCDK.Default
 {
@@ -42,12 +41,9 @@ namespace NCDK.Default
     /// radical.SingleElectrons.Add(new SingleElectron(carbon));
     /// </code>
     /// </example>
-    // @cdk.module  silent
-    // @cdk.githash
     // @cdk.keyword radical
     // @cdk.keyword electron, unpaired
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class SingleElectron
         : ElectronContainer, ISingleElectron, ICloneable
     {
@@ -98,20 +94,6 @@ namespace NCDK.Default
         /// <returns>true if this SingleElectron is associated with the atom</returns>
         public bool Contains(IAtom atom) => this.atom.Equals(atom);
 
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("SingleElectron(");
-            sb.Append(GetHashCode());
-            if (atom != null)
-            {
-                sb.Append(", ");
-                sb.Append(atom.ToString());
-            }
-            sb.Append(')');
-            return sb.ToString();
-        }
-
         public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (SingleElectron)base.Clone(map);
@@ -135,12 +117,9 @@ namespace NCDK.Silent
     /// radical.SingleElectrons.Add(new SingleElectron(carbon));
     /// </code>
     /// </example>
-    // @cdk.module  silent
-    // @cdk.githash
     // @cdk.keyword radical
     // @cdk.keyword electron, unpaired
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class SingleElectron
         : ElectronContainer, ISingleElectron, ICloneable
     {
@@ -190,20 +169,6 @@ namespace NCDK.Silent
         /// <param name="atom">The atom to be tested if it participates in this bond</param>
         /// <returns>true if this SingleElectron is associated with the atom</returns>
         public bool Contains(IAtom atom) => this.atom.Equals(atom);
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("SingleElectron(");
-            sb.Append(GetHashCode());
-            if (atom != null)
-            {
-                sb.Append(", ");
-                sb.Append(atom.ToString());
-            }
-            sb.Append(')');
-            return sb.ToString();
-        }
 
         public override ICDKObject Clone(CDKObjectMap map)
         {

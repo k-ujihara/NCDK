@@ -25,7 +25,6 @@
  */
 
 using System;
-using System.Text;
 
 namespace NCDK.Default
 {
@@ -34,10 +33,8 @@ namespace NCDK.Default
     /// two electrons.
     /// </summary>
     // @cdk.module data
-    // @cdk.githash
     // @cdk.keyword orbital
     // @cdk.keyword lone-pair
-    [Serializable]
     public class LonePair
         : ElectronContainer, ILonePair, ICloneable
     {
@@ -100,27 +97,8 @@ namespace NCDK.Default
             clone.atom = (IAtom)atom?.Clone(map);
             return clone;
         }
-
-        /// <summary>
-        /// Returns a one line string representation of this LonePair.
-        /// This method is conform RFC #9.
-        /// </summary>
-        /// <returns>The string representation of this LonePair</returns>
-        public override string ToString()
-        {
-            var resultString = new StringBuilder();
-            resultString.Append("LonePair(");
-            resultString.Append(this.GetHashCode());
-            if (atom != null)
-            {
-                resultString.Append(", ").Append(atom.ToString());
-            }
-            resultString.Append(')');
-            return resultString.ToString();
-        }
     }
 }
-
 namespace NCDK.Silent
 {
     /// <summary>
@@ -128,10 +106,8 @@ namespace NCDK.Silent
     /// two electrons.
     /// </summary>
     // @cdk.module data
-    // @cdk.githash
     // @cdk.keyword orbital
     // @cdk.keyword lone-pair
-    [Serializable]
     public class LonePair
         : ElectronContainer, ILonePair, ICloneable
     {
@@ -194,24 +170,5 @@ namespace NCDK.Silent
             clone.atom = (IAtom)atom?.Clone(map);
             return clone;
         }
-
-        /// <summary>
-        /// Returns a one line string representation of this LonePair.
-        /// This method is conform RFC #9.
-        /// </summary>
-        /// <returns>The string representation of this LonePair</returns>
-        public override string ToString()
-        {
-            var resultString = new StringBuilder();
-            resultString.Append("LonePair(");
-            resultString.Append(this.GetHashCode());
-            if (atom != null)
-            {
-                resultString.Append(", ").Append(atom.ToString());
-            }
-            resultString.Append(')');
-            return resultString.ToString();
-        }
     }
 }
-

@@ -23,7 +23,6 @@
  */
 
 using System;
-using System.Text;
 
 <#
 foreach (var ns in namespaces) 
@@ -34,7 +33,6 @@ namespace <#= ns.NS #>
     /// <summary>
     /// Base class for entities containing electrons, like bonds, orbitals, lone-pairs.
     /// </summary>
-    // @cdk.githash 
     // @cdk.keyword orbital
     // @cdk.keyword lone-pair
     // @cdk.keyword bond 

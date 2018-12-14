@@ -1,4 +1,3 @@
-using NCDK.Common.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -43,6 +42,7 @@ namespace NCDK
             ["Id"] = "ID",
             ["ImplicitHydrogenCount"] = "HC",
             ["LonePairs"] = "#LP",
+            ["Mappings"] = "#M",
             ["MassNumber"] = "MN",
             ["MaxBondOrder"] = "MBO",
             ["MonomerName"] = "M",
@@ -50,10 +50,14 @@ namespace NCDK
             ["NTerminus"] = "N",
             ["Point2D"] = "2D",
             ["Point3D"] = "3D",
+            ["Reactions"] = "R",
             ["SingleElectrons"] = "#SE",
+            ["SpaceGroup"] = "SG",
             ["Stereo"] = "#S",
             ["StereoElements"] = "#ST",
             ["StereoParity"] = "SP",
+            ["StrandName"] = "N",
+            ["StrandType"] = "T",
             ["Symbol"] = "S",
             ["Valency"] = "EV",
         };
@@ -62,6 +66,7 @@ namespace NCDK
         {
             "Begin",
             "Builder",
+            "Count",
             "ElectronContainer",
             "Element",
             "End",
@@ -70,14 +75,20 @@ namespace NCDK
             "IsVisited",
             "Name",
             "Notification",
+            "SpaceGroup",
         };
 
         private static HashSet<string> ChemObjectsList { get; } = new HashSet<string>()
         {
+            "Agents",
             "AssociatedAtoms",
             "Atoms",
             "Bonds",
             "LonePairs",
+            "Mappings",
+            "Products",
+            "Reactants",
+            "Reactions",
             "SingleElectrons",
             "StereoElements",
         };
@@ -111,6 +122,19 @@ namespace NCDK
                 sb.Append(obj.GetType().Name);
                 sb.Append("(");
                 var list = new List<string> { hashCode.ToString() };
+                if (obj is IEnumerable<IChemObject> v)
+                {
+                    var count = v.Count();
+                    if (count > 0)
+                    {
+                        var s = string.Join(", ", v.Select(o => ToString(o)));
+                        list.Add($"#:{count}[{s}]");
+                    }
+                    else
+                    {
+                        list.Add($"#:{count}");
+                    }
+                }
                 if (!twice)
                 {
                     outputtedList.Add(hashCode);
@@ -152,7 +176,7 @@ namespace NCDK
                                 continue;
                             if (v.Count() == 0)
                                 continue;
-                            str = $"{name}:{v.Count()}({string.Join(", ", v.Select(o => ToString(o)))})";
+                            str = $"{name}:{v.Count()}[{string.Join(", ", v.Select(o => ToString(o)))}]";
                         }
                         else
                         {

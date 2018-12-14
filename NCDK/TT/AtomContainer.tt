@@ -24,7 +24,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using NCDK.Sgroups;
 using NCDK.Tools.Manipulator;
@@ -80,9 +79,6 @@ namespace <#= ns.NS #>
         /// Stereo elements contained by this object.
         /// </summary>
         internal List<IStereoElement<IChemObject, IChemObject>> stereoElements;
-
-        internal bool isAromatic;
-        internal bool isSingleOrDouble;
 
         /// <inheritdoc/>
         public override IChemObjectBuilder Builder => builder;
@@ -257,31 +253,10 @@ var thisListener = ns.IsSilent ? "null" : "this";
                   container.StereoElements)
         { }
 
-        /// <inheritdoc/>
-        public virtual bool IsAromatic
-        {
-            get { return isAromatic; }
-            set
-            {
-                isAromatic = value; 
-<# if (!ns.IsSilent) { #>
-                NotifyChanged();
-<# } #>
-            }
-        }
-        
-        /// <inheritdoc/>
-        public virtual bool IsSingleOrDouble
-        {
-            get { return isSingleOrDouble; }
-            set
-            {
-                isSingleOrDouble = value;
-<# if (!ns.IsSilent) { #>
-                NotifyChanged();
-<# } #>
-            }
-        }
+<#
+        AddIsFlag("virtual", "IsAromatic", !ns.IsSilent);
+        AddIsFlag("virtual", "IsSingleOrDouble", !ns.IsSilent);
+#>
 
         /// <inheritdoc/>
         public virtual IList<IAtom> Atoms => atoms;

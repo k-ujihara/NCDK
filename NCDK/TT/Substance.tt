@@ -31,7 +31,6 @@ foreach (var ns in namespaces)
 namespace <#= ns.NS #>
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class Substance
         : ChemObjectSet<IAtomContainer>, ISubstance, ICloneable
     {

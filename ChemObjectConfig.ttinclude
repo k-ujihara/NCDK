@@ -172,4 +172,37 @@
         }
 <#+
 	}
+
+    public void AddIsFlag(string modifier, string name, bool addNofityChanged)
+    {
+#>
+        /// <inheritdoc/>
+        public <#= modifier #> bool <#= name #>
+        {
+            get 
+            { 
+                return (flags & CDKConstants.<#= name #>Mask) != 0;
+            }
+            
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                Set<#= name #>WithoutNotify(value);
+<#+ if (addNofityChanged) { #>
+                NotifyChanged();
+<#+ } #>
+            }
+        }
+
+        /*private protected*/
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        internal void Set<#= name #>WithoutNotify(bool value)
+        {
+            if (value)
+                flags |= CDKConstants.<#= name #>Mask;
+            else
+                flags &= ~CDKConstants.<#= name #>Mask; 
+        }
+<#+
+    }
 #>

@@ -26,10 +26,10 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// has been perceived.
     /// </summary>
     // @cdk.module  smarts
-    // @cdk.githash
     // @cdk.keyword SMARTS
     [Obsolete]
-    public class AromaticAtom : SMARTSAtom
+    public class AromaticAtom 
+        : SMARTSAtom
     {
         /// <summary>
         /// Creates a new instance
@@ -37,7 +37,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         public AromaticAtom(IChemObjectBuilder builder)
             : base(builder)
         {
-            isAromatic = true;
+            IsAromatic = true;
         }
 
         public override bool Matches(IAtom atom)

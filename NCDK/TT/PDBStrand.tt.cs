@@ -29,7 +29,6 @@
  */
 
 using System.Collections.Generic;
-using System.Text;
 
 namespace NCDK.Default
 {
@@ -39,7 +38,6 @@ namespace NCDK.Default
     /// and other species.
     /// </summary>
     // @cdk.module  pdb
-    // @cdk.githash
     // @author      Egon Willighagen
     // @cdk.created 2006-04-19
     // @cdk.keyword polymer
@@ -80,16 +78,6 @@ namespace NCDK.Default
         {
             // don't return the original
             return new List<string>(sequentialListOfMonomers);
-        }
-
-        public override string ToString()
-        {
-            var stringContent = new StringBuilder();
-            stringContent.Append("PDBPolymer(");
-            stringContent.Append(this.GetHashCode()).Append(", ");
-            stringContent.Append(base.ToString());
-            stringContent.Append(')');
-            return stringContent.ToString();
         }
     }
 }
@@ -101,7 +89,6 @@ namespace NCDK.Silent
     /// and other species.
     /// </summary>
     // @cdk.module  pdb
-    // @cdk.githash
     // @author      Egon Willighagen
     // @cdk.created 2006-04-19
     // @cdk.keyword polymer
@@ -142,16 +129,6 @@ namespace NCDK.Silent
         {
             // don't return the original
             return new List<string>(sequentialListOfMonomers);
-        }
-
-        public override string ToString()
-        {
-            var stringContent = new StringBuilder();
-            stringContent.Append("PDBPolymer(");
-            stringContent.Append(this.GetHashCode()).Append(", ");
-            stringContent.Append(base.ToString());
-            stringContent.Append(')');
-            return stringContent.ToString();
         }
     }
 }

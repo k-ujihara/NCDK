@@ -44,8 +44,8 @@ namespace NCDK.Default
     public class ChemObject
         : IChemObject
     {
-        private bool isPlaced;
-        private bool isVisited;
+        /*private protected*/
+        internal int flags;
 
         private ICollection<IChemObjectListener> listeners;
         private bool notification = true;
@@ -73,10 +73,17 @@ namespace NCDK.Default
 
         public bool IsPlaced
         {
-            get { return isPlaced; }
+            get 
+            { 
+                return (flags & CDKConstants.IsPlacedMask) != 0;
+            }
+            
             set
             {
-                isPlaced = value;
+                if (value)
+                    flags |= CDKConstants.IsPlacedMask;
+                else
+                    flags &= ~CDKConstants.IsPlacedMask;
                 NotifyChanged();
             }
         }
@@ -86,10 +93,17 @@ namespace NCDK.Default
         /// </summary>
         public bool IsVisited
         {
-            get { return isVisited; }
+            get 
+            { 
+                return (flags & CDKConstants.IsVisitedMask) != 0;
+            }
+            
             set
             {
-                isVisited = value;
+                if (value)
+                    flags |= CDKConstants.IsVisitedMask;
+                else
+                    flags &= ~CDKConstants.IsVisitedMask;
                 NotifyChanged();
             }
         }
@@ -304,8 +318,8 @@ namespace NCDK.Silent
     public class ChemObject
         : IChemObject
     {
-        private bool isPlaced;
-        private bool isVisited;
+        /*private protected*/
+        internal int flags;
 
         private ICollection<IChemObjectListener> listeners;
         private bool notification = true;
@@ -333,10 +347,17 @@ namespace NCDK.Silent
 
         public bool IsPlaced
         {
-            get { return isPlaced; }
+            get 
+            { 
+                return (flags & CDKConstants.IsPlacedMask) != 0;
+            }
+            
             set
             {
-                isPlaced = value;
+                if (value)
+                    flags |= CDKConstants.IsPlacedMask;
+                else
+                    flags &= ~CDKConstants.IsPlacedMask;
             }
         }
 
@@ -345,10 +366,17 @@ namespace NCDK.Silent
         /// </summary>
         public bool IsVisited
         {
-            get { return isVisited; }
+            get 
+            { 
+                return (flags & CDKConstants.IsVisitedMask) != 0;
+            }
+            
             set
             {
-                isVisited = value;
+                if (value)
+                    flags |= CDKConstants.IsVisitedMask;
+                else
+                    flags &= ~CDKConstants.IsVisitedMask;
             }
         }
 

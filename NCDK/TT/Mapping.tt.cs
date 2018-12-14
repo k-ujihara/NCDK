@@ -38,7 +38,6 @@ namespace NCDK.Default
     // @cdk.keyword reaction, atom mapping 
     // @author  Egon Willighagen
     // @cdk.created 2003-08-16 
-    [Serializable]
     public class Mapping
         : ChemObject, ICloneable, IMapping
     {
@@ -92,7 +91,6 @@ namespace NCDK.Silent
     // @cdk.keyword reaction, atom mapping 
     // @author  Egon Willighagen
     // @cdk.created 2003-08-16 
-    [Serializable]
     public class Mapping
         : ChemObject, ICloneable, IMapping
     {

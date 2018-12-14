@@ -30,8 +30,8 @@ namespace NCDK.Default
     /// </summary>
     // @author     egonw
     // @cdk.module data
-    // @cdk.githash
-    public class PDBStructure : ChemObject, IPDBStructure
+    public class PDBStructure 
+        : ChemObject, IPDBStructure
     {
         public const string Helix = "helix";
         public const string Sheet = "sheet";
@@ -81,8 +81,8 @@ namespace NCDK.Silent
     /// </summary>
     // @author     egonw
     // @cdk.module data
-    // @cdk.githash
-    public class PDBStructure : ChemObject, IPDBStructure
+    public class PDBStructure 
+        : ChemObject, IPDBStructure
     {
         public const string Helix = "helix";
         public const string Sheet = "sheet";

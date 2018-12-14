@@ -27,7 +27,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
 #pragma warning disable CA1710 // Identifiers should have correct suffix
 
@@ -39,7 +38,6 @@ namespace NCDK.Default
     /// document
     /// </summary>
     // @author        steinbeck
-    // @cdk.githash
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class ChemFile
         : ChemObject, IChemFile, IChemObjectListener
@@ -153,23 +151,6 @@ namespace NCDK.Default
             return this.GetEnumerator();
         }
 
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("ChemFile(#S=");
-            sb.Append(chemSequences.Count);
-            if (chemSequences.Count > 0)
-            {
-                foreach (var chemSequence in chemSequences)
-                {
-                    sb.Append(", ");
-                    sb.Append(chemSequence.ToString());
-                }
-            }
-            sb.Append(')');
-            return sb.ToString(); 
-        }
-
         public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (ChemFile)base.Clone(map);
@@ -197,7 +178,6 @@ namespace NCDK.Silent
     /// document
     /// </summary>
     // @author        steinbeck
-    // @cdk.githash
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class ChemFile
         : ChemObject, IChemFile, IChemObjectListener
@@ -293,23 +273,6 @@ namespace NCDK.Silent
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("ChemFile(#S=");
-            sb.Append(chemSequences.Count);
-            if (chemSequences.Count > 0)
-            {
-                foreach (var chemSequence in chemSequences)
-                {
-                    sb.Append(", ");
-                    sb.Append(chemSequence.ToString());
-                }
-            }
-            sb.Append(')');
-            return sb.ToString(); 
         }
 
         public override ICDKObject Clone(CDKObjectMap map)
