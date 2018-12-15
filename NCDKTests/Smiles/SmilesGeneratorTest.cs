@@ -80,7 +80,7 @@ namespace NCDK.Smiles
         public void TestAlanin()
         {
             IAtomContainer mol1 = builder.NewAtomContainer();
-            var sg = SmilesGenerator.Isomeric();
+            var sg = SmilesGenerator.Isomeric;
             mol1.Atoms.Add(builder.NewAtom("N", new Vector2(1, 0)));
             // 1
             mol1.Atoms.Add(builder.NewAtom("C", new Vector2(1, 2)));
@@ -143,7 +143,7 @@ namespace NCDK.Smiles
         public void TestCisResorcinol()
         {
             IAtomContainer mol1 = builder.NewAtomContainer();
-            var sg = SmilesGenerator.Isomeric();
+            var sg = SmilesGenerator.Isomeric;
             mol1.Atoms.Add(builder.NewAtom("O", new Vector2(3, 1)));
             // 1
             mol1.Atoms.Add(builder.NewAtom("H", new Vector2(2, 0)));
@@ -225,7 +225,7 @@ namespace NCDK.Smiles
         public void TestCisTransDecalin()
         {
             IAtomContainer mol1 = builder.NewAtomContainer();
-            var sg = SmilesGenerator.Isomeric();
+            var sg = SmilesGenerator.Isomeric;
 
             mol1.Atoms.Add(builder.NewAtom("H", new Vector2(0, 3))); // 0
             mol1.Atoms.Add(builder.NewAtom("C", new Vector2(0, 1))); // 1
@@ -309,7 +309,7 @@ namespace NCDK.Smiles
         public void TestDoubleBondConfiguration()
         {
             IAtomContainer mol1 = builder.NewAtomContainer();
-            var sg = SmilesGenerator.Isomeric();
+            var sg = SmilesGenerator.Isomeric;
             mol1.Atoms.Add(builder.NewAtom("S", Vector2.Zero));
             // 1
             mol1.Atoms.Add(builder.NewAtom("C", new Vector2(1, 1)));
@@ -425,7 +425,7 @@ namespace NCDK.Smiles
         {
             var smiles = "";
             var molecule = builder.NewAtomContainer();
-            var sg = SmilesGenerator.Isomeric();
+            var sg = SmilesGenerator.Isomeric;
             molecule.Atoms.Add(builder.NewAtom("C"));
             var carbon2 = builder.NewAtom("C");
             carbon2.MassNumber = 13;
@@ -509,7 +509,7 @@ namespace NCDK.Smiles
             mol.Atoms[4].ImplicitHydrogenCount = 1;
             AddImplicitHydrogens(mol);
             var acap = new AtomContainerAtomPermutor(mol);
-            var sg = SmilesGenerator.Unique();
+            var sg = SmilesGenerator.Unique;
             var smiles = "";
             string oldSmiles = sg.Create(mol);
             while (acap.MoveNext())
@@ -537,7 +537,7 @@ namespace NCDK.Smiles
             mol.Atoms[4].ImplicitHydrogenCount = 1;
             AddImplicitHydrogens(mol);
             AtomContainerBondPermutor acbp = new AtomContainerBondPermutor(mol);
-            var sg = SmilesGenerator.Unique();
+            var sg = SmilesGenerator.Unique;
             var smiles = "";
             string oldSmiles = sg.Create(mol);
             while (acbp.MoveNext())
@@ -626,7 +626,7 @@ namespace NCDK.Smiles
             ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             var mol2 = reader.Read(builder.NewAtomContainer());
-            var sg = SmilesGenerator.Isomeric();
+            var sg = SmilesGenerator.Isomeric;
 
             Define(mol1, Anticlockwise(mol1, 1, 0, 2, 3, 6));
             Define(mol2, Clockwise(mol2, 1, 0, 2, 3, 6));
@@ -650,7 +650,7 @@ namespace NCDK.Smiles
             ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             var mol2 = reader.Read(builder.NewAtomContainer());
-            var sg = SmilesGenerator.Isomeric();
+            var sg = SmilesGenerator.Isomeric;
 
             Define(mol1, Anticlockwise(mol1, 0, 0, 1, 5, 9), Anticlockwise(mol1, 1, 1, 0, 2, 8),
                     Clockwise(mol1, 2, 2, 1, 3, 6), Anticlockwise(mol1, 5, 5, 0, 4, 10));
@@ -773,7 +773,7 @@ namespace NCDK.Smiles
             MDLV2000Reader reader2 = new MDLV2000Reader(ins2, ChemObjectReaderMode.Strict);
             var mol2 = reader2.Read(builder.NewAtomContainer());
 
-            var sg = SmilesGenerator.Isomeric();
+            var sg = SmilesGenerator.Isomeric;
 
             Define(mol1, Clockwise(mol1, 0, 1, 5, 12, 13), Clockwise(mol1, 1, 0, 2, 6, 12),
                     Clockwise(mol1, 2, 1, 3, 9, 10), Clockwise(mol1, 5, 0, 4, 11, 18));
@@ -957,7 +957,7 @@ namespace NCDK.Smiles
             var sp = CDK.SmilesParser;
             var smiles = "[12*H2-]";
             var mol = sp.ParseSmiles(smiles);
-            var smilesGenerator = SmilesGenerator.Isomeric();
+            var smilesGenerator = SmilesGenerator.Isomeric;
             string genSmiles = smilesGenerator.Create(mol);
             Assert.AreEqual(smiles, genSmiles);
         }
@@ -985,7 +985,7 @@ namespace NCDK.Smiles
             var m1 = sp.ParseSmiles(s1);
             var m2 = sp.ParseSmiles(s2);
 
-            var sg = SmilesGenerator.Unique();
+            var sg = SmilesGenerator.Unique;
             string o1 = sg.Create(m1);
             string o2 = sg.Create(m2);
 
@@ -1007,7 +1007,7 @@ namespace NCDK.Smiles
             fact.ConfigureAtoms(m1);
             fact.ConfigureAtoms(m2);
 
-            var sg = SmilesGenerator.Unique();
+            var sg = SmilesGenerator.Unique;
             string o1 = sg.Create(m1);
             string o2 = sg.Create(m2);
 
@@ -1058,7 +1058,7 @@ namespace NCDK.Smiles
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(adenine);
             CDK.HydrogenAdder.AddImplicitHydrogens(adenine);
 
-            var sg = SmilesGenerator.Generic();
+            var sg = SmilesGenerator.Generic;
             var order = new int[adenine.Atoms.Count];
 
             var smi = sg.Create(adenine, order);
@@ -1089,7 +1089,7 @@ namespace NCDK.Smiles
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(adenine);
             CDK.HydrogenAdder.AddImplicitHydrogens(adenine);
 
-            var sg = SmilesGenerator.Unique();
+            var sg = SmilesGenerator.Unique;
             var order = new int[adenine.Atoms.Count];
 
             var smi = sg.Create(adenine, order);
@@ -1117,8 +1117,8 @@ namespace NCDK.Smiles
         public void AtomClasses()
         {
             var ethanol = CDK.SmilesParser.ParseSmiles("C[CH2:6]O");
-            Assert.AreEqual("CCO", SmilesGenerator.Generic().Create(ethanol));
-            Assert.AreEqual("C[CH2:6]O", SmilesGenerator.Generic().WithAtomClasses().Create(ethanol));
+            Assert.AreEqual("CCO", SmilesGenerator.Generic.Create(ethanol));
+            Assert.AreEqual("C[CH2:6]O", SmilesGenerator.Generic.WithAtomClasses().Create(ethanol));
         }
 
         // @cdk.bug 328
@@ -1137,7 +1137,7 @@ namespace NCDK.Smiles
             {
                 var smipar = new SmilesParser(CDK.Builder, false);
                 var mol = smipar.ParseSmiles("c1ccccc1");
-                System.Console.Error.WriteLine(SmilesGenerator.Isomeric().Create(mol));
+                System.Console.Error.WriteLine(SmilesGenerator.Isomeric.Create(mol));
                 Assert.Fail();
             }
             catch (CDKException)
@@ -1153,7 +1153,7 @@ namespace NCDK.Smiles
             string ins = "C(/N)=C\\C=C\\1/N=C1";
             var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles(ins);
-            Assert.AreEqual("C(\\N)=C/C=C/1N=C1", SmilesGenerator.Isomeric().Create(mol));
+            Assert.AreEqual("C(\\N)=C/C=C/1N=C1", SmilesGenerator.Isomeric.Create(mol));
         }
 
         [TestMethod()]
@@ -1274,7 +1274,7 @@ namespace NCDK.Smiles
             AtomContainerManipulator.SuppressHydrogens(container);
             var arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllSimpleFinder);
             arom.Apply(container);
-            return SmilesGenerator.Unique().Create(container);
+            return SmilesGenerator.Unique.Create(container);
         }
     }
 }

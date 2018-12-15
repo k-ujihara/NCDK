@@ -24,19 +24,20 @@
 namespace NCDK
 {
     // @cdk.module standard
-    // @cdk.githash
-    public class UnsupportedChemObjectException : CDKException
+    public class UnsupportedChemObjectException
+        : CDKException
     {
         public UnsupportedChemObjectException()
         {
         }
 
         public UnsupportedChemObjectException(string message)
-                : base(message)
+            : base(message)
         {
         }
 
-        public UnsupportedChemObjectException(string message, System.Exception innerException) : base(message, innerException)
+        public UnsupportedChemObjectException(string message, System.Exception innerException)
+            : base(message, innerException)
         {
         }
     }

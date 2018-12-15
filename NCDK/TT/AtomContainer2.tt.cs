@@ -465,7 +465,8 @@ namespace NCDK.Default
             public double? Occupancy { get => pdbAtom.Occupancy; set => pdbAtom.Occupancy = value; }
         }
 
-        internal sealed class QueryBondRef : BaseBondRef, IQueryBond
+        internal sealed class QueryBondRef 
+            : BaseBondRef, IQueryBond
         {
             public QueryBondRef(AtomContainer2 mol,
                                 IQueryBond bond,
@@ -1833,7 +1834,8 @@ namespace NCDK.Silent
             public double? Occupancy { get => pdbAtom.Occupancy; set => pdbAtom.Occupancy = value; }
         }
 
-        internal sealed class QueryBondRef : BaseBondRef, IQueryBond
+        internal sealed class QueryBondRef 
+            : BaseBondRef, IQueryBond
         {
             public QueryBondRef(AtomContainer2 mol,
                                 IQueryBond bond,

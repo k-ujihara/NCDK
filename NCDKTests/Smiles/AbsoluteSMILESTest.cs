@@ -21,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
@@ -100,10 +101,10 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Test_DbStereoCanonGeneration()
         {
-            string ins = "Oc1ccc(cc1O)C(\\C([O-])=O)=c1/cc(O)\\c(cc1O)=C(/C([O-])=O)c1ccccc1";
-            SmilesParser smipar = CDK.SmilesParser;
+            var ins = "Oc1ccc(cc1O)C(\\C([O-])=O)=c1/cc(O)\\c(cc1O)=C(/C([O-])=O)c1ccccc1";
+            var smipar = CDK.SmilesParser;
             var mol = smipar.ParseSmiles(ins);
-            SmilesGenerator cansmi = SmilesGenerator.CreateAbsolute();
+            var cansmi = SmilesGenerator.Absolute;
             Assert.AreEqual(cansmi.Create(mol), cansmi.Create(smipar.ParseSmiles(cansmi.Create(mol))));
         }
 
@@ -129,9 +130,9 @@ namespace NCDK.Smiles
         static void Test(params string[] inputs)
         {
             var sp = CDK.SmilesParser;
-            SmilesGenerator sg = SmilesGenerator.CreateAbsolute();
+            var sg = SmilesGenerator.Absolute;
 
-            ICollection<string> output = new HashSet<string>();
+            var output = new HashSet<string>();
 
             foreach (var input in inputs)
                 output.Add(sg.Create(sp.ParseSmiles(input)));

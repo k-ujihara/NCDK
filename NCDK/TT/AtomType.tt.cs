@@ -62,12 +62,8 @@ namespace NCDK.Default
         internal double? covalentRadius;
 
         /// <summary>
-        /// The formal charge of the atom with <see langword="null"/> as default.
+        /// The formal charge of the atom with 0 as default.
         /// </summary>
-        /// <remarks>
-        /// Note that some constructors (<see cref="AtomType(string)"/> and
-        /// <see cref="AtomType(string, string)"/>) will explicitly set this field to 0
-        /// </remarks>
         internal int? formalCharge;
 
         /// <summary>
@@ -454,12 +450,8 @@ namespace NCDK.Silent
         internal double? covalentRadius;
 
         /// <summary>
-        /// The formal charge of the atom with <see langword="null"/> as default.
+        /// The formal charge of the atom with 0 as default.
         /// </summary>
-        /// <remarks>
-        /// Note that some constructors (<see cref="AtomType(string)"/> and
-        /// <see cref="AtomType(string, string)"/>) will explicitly set this field to 0
-        /// </remarks>
         internal int? formalCharge;
 
         /// <summary>

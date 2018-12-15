@@ -334,8 +334,9 @@ namespace NCDK
             IAtom c = obj.Builder.NewAtom("C", new Vector2(1, 1));
             IBond b = obj.Builder.NewBond(c, o);
 
-            Assert.AreEqual(0.5, b.Geometric2DCenter.X, 0.001);
-            Assert.AreEqual(0.5, b.Geometric2DCenter.Y, 0.001);
+            var b2d = b.GetGeometric2DCenter();
+            Assert.AreEqual(0.5, b2d.X, 0.001);
+            Assert.AreEqual(0.5, b2d.Y, 0.001);
         }
 
         [TestMethod()]
@@ -346,9 +347,10 @@ namespace NCDK
             IAtom c = obj.Builder.NewAtom("C", new Vector3(1, 1, 1));
             IBond b = obj.Builder.NewBond(c, o);
 
-            Assert.AreEqual(0.5, b.Geometric3DCenter.X, 0.001);
-            Assert.AreEqual(0.5, b.Geometric3DCenter.Y, 0.001);
-            Assert.AreEqual(0.5, b.Geometric3DCenter.Z, 0.001);
+            var b3d = b.GetGeometric3DCenter();
+            Assert.AreEqual(0.5, b3d.X, 0.001);
+            Assert.AreEqual(0.5, b3d.Y, 0.001);
+            Assert.AreEqual(0.5, b3d.Z, 0.001);
         }
 
         [TestMethod()]

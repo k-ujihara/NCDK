@@ -31,7 +31,6 @@ namespace NCDK.IO
     // @author Egon Willighagen
     // @cdk.created 2004-01-01
     // @cdk.module extra
-    // @cdk.githash
     // @cdk.iooptions
     public class CrystClustWriter : DefaultChemObjectWriter
     {
@@ -109,7 +108,7 @@ namespace NCDK.IO
             int count = cs.Count;
             for (int i = 0; i < count; i++)
             {
-                Writeln("frame: " + (i + 1));
+                Writeln($"frame: {i + 1}");
                 WriteCrystal(cs[i].Crystal);
             }
         }
@@ -173,7 +172,7 @@ namespace NCDK.IO
             for (int i = 0; i < noatoms; i++)
             {
                 // output atom sumbol
-                IAtom atom = crystal.Atoms[i];
+                var atom = crystal.Atoms[i];
                 Write(atom.Symbol);
                 Write(":");
                 // output atom charge
@@ -193,7 +192,7 @@ namespace NCDK.IO
             }
             catch (IOException e)
             {
-                Console.Error.WriteLine("CMLWriter IOException while printing \"" + s + "\":" + e.ToString());
+                Console.Error.WriteLine($"CMLWriter IOException while printing \"{s}\":{e.ToString()}");
             }
         }
 
@@ -206,7 +205,7 @@ namespace NCDK.IO
             }
             catch (IOException e)
             {
-                Console.Error.WriteLine("CMLWriter IOException while printing \"" + s + "\":" + e.ToString());
+                Console.Error.WriteLine($"CMLWriter IOException while printing \"{s}\":{e.ToString()}");
             }
         }
 

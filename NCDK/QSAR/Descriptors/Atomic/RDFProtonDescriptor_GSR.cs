@@ -68,7 +68,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                         var thisSingleBond = singles[sing];
                         var position = thisSingleBond;
                         var theSingleBond = mol.Bonds[position];
-                        var middlePoint = theSingleBond.Geometric3DCenter;
+                        var middlePoint = theSingleBond.GetGeometric3DCenter();
                         var singleBondAtom0 = theSingleBond.Atoms[0];
                         var singleBondAtom1 = theSingleBond.Atoms[1];
                         var dist0 = CalculateDistanceBetweenTwoAtoms(singleBondAtom0, atom);

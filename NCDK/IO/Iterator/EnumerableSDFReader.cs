@@ -47,13 +47,13 @@ namespace NCDK.IO.Iterator
     /// <seealso cref="MDLV2000Reader"/>
     /// <seealso cref="MDLV3000Reader"/>
     // @cdk.module io
-    // @cdk.githash
     // @author     Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.created    2003-10-19
     // @cdk.keyword    file format, MDL molfile
     // @cdk.keyword    file format, SDF
     // @cdk.iooptions
-    public class EnumerableSDFReader : DefaultEnumerableChemObjectReader<IAtomContainer>
+    public class EnumerableSDFReader 
+        : DefaultEnumerableChemObjectReader<IAtomContainer>
     {
         private TextReader input;
         private string currentLine;

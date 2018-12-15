@@ -39,9 +39,9 @@ namespace NCDK.IO
     /// </summary>
     // @author johnmay
     // @cdk.module io
-    // @cdk.githash
     // @cdk.created 20.03.2012
-    public abstract class ChemObjectIO : IChemObjectIO
+    public abstract class ChemObjectIO
+        : IChemObjectIO
     {
         /// <summary>
         /// Holder of reader event listeners.

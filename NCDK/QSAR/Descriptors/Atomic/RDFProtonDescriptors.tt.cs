@@ -394,7 +394,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         // and returns distance and coordinates of middle point
         internal static double[] CalculateDistanceBetweenAtomAndBond(IAtom proton, IBond theBond)
         {
-            var middlePoint = theBond.Geometric3DCenter;
+            var middlePoint = theBond.GetGeometric3DCenter();
             var protonPoint = proton.Point3D.Value;
             var values = new double[4];
             values[0] = Vector3.Distance(middlePoint, protonPoint);
@@ -787,7 +787,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         // and returns distance and coordinates of middle point
         internal static double[] CalculateDistanceBetweenAtomAndBond(IAtom proton, IBond theBond)
         {
-            var middlePoint = theBond.Geometric3DCenter;
+            var middlePoint = theBond.GetGeometric3DCenter();
             var protonPoint = proton.Point3D.Value;
             var values = new double[4];
             values[0] = Vector3.Distance(middlePoint, protonPoint);
@@ -1180,7 +1180,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         // and returns distance and coordinates of middle point
         internal static double[] CalculateDistanceBetweenAtomAndBond(IAtom proton, IBond theBond)
         {
-            var middlePoint = theBond.Geometric3DCenter;
+            var middlePoint = theBond.GetGeometric3DCenter();
             var protonPoint = proton.Point3D.Value;
             var values = new double[4];
             values[0] = Vector3.Distance(middlePoint, protonPoint);
@@ -1573,7 +1573,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         // and returns distance and coordinates of middle point
         internal static double[] CalculateDistanceBetweenAtomAndBond(IAtom proton, IBond theBond)
         {
-            var middlePoint = theBond.Geometric3DCenter;
+            var middlePoint = theBond.GetGeometric3DCenter();
             var protonPoint = proton.Point3D.Value;
             var values = new double[4];
             values[0] = Vector3.Distance(middlePoint, protonPoint);
@@ -1966,7 +1966,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         // and returns distance and coordinates of middle point
         internal static double[] CalculateDistanceBetweenAtomAndBond(IAtom proton, IBond theBond)
         {
-            var middlePoint = theBond.Geometric3DCenter;
+            var middlePoint = theBond.GetGeometric3DCenter();
             var protonPoint = proton.Point3D.Value;
             var values = new double[4];
             values[0] = Vector3.Distance(middlePoint, protonPoint);

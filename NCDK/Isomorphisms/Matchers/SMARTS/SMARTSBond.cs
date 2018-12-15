@@ -25,10 +25,10 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// Abstract smarts bond.
     /// </summary>
     // @cdk.module  smarts
-    // @cdk.githash
     // @cdk.keyword SMARTS
     [Obsolete]
-    public class SMARTSBond : QueryBond, IQueryBond
+    public class SMARTSBond 
+        : QueryBond, IQueryBond
     {
         public SMARTSBond(IChemObjectBuilder builder)
             : base(builder)

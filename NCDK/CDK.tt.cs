@@ -230,6 +230,21 @@ namespace NCDK
                 return localGasteigerMarsiliPartialCharges;
             }
         }
+        private static NCDK.IO.ReaderFactory localReaderFactory = null;
+        private static readonly object lockReaderFactory = new object();
+        internal static NCDK.IO.ReaderFactory ReaderFactory
+        {
+            get
+            {
+                if (localReaderFactory == null)
+                    lock (lockReaderFactory)
+                    {
+                        if (localReaderFactory == null)
+                            localReaderFactory = new NCDK.IO.ReaderFactory();
+                    }
+                return localReaderFactory;
+            }
+        }
     }
 }
 

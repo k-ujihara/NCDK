@@ -185,7 +185,7 @@ namespace NCDK.Tools
         /// <exception cref="CDKException">something went wrong with SMILES gen</exception>
         private static string Cansmi(IAtomContainer mol)
         {
-            return SmilesGenerator.Unique().Create(mol);
+            return SmilesGenerator.Unique.Create(mol);
         }
 
         /// <summary>

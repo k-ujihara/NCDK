@@ -32,7 +32,8 @@ namespace NCDK
     /// be used to override the behaviour of the base bond.
     /// </summary>
     // @author John Mayfield 
-    public class BondRef : ChemObjectRef, IBond
+    public class BondRef
+        : ChemObjectRef, IBond
     {
         private readonly IBond bond;
 
@@ -137,10 +138,10 @@ namespace NCDK
         }
 
         /// <inheritdoc/>
-        public Vector2 Geometric2DCenter => bond.Geometric2DCenter;
+        public Vector2 GetGeometric2DCenter() => bond.GetGeometric2DCenter();
 
         /// <inheritdoc/>
-        public Vector3 Geometric3DCenter => bond.Geometric3DCenter;
+        public Vector3 GetGeometric3DCenter() => bond.GetGeometric3DCenter();
 
         /// <inheritdoc/>
         public override bool Compare(object obj)

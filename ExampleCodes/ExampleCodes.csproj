@@ -36,7 +36,7 @@
     <NoWarn>0219, 0612, 0618</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>NCDK.Program</StartupObject>
+    <StartupObject>NCDK.Chem_Example</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -59,6 +59,7 @@
     <Compile Include="Aromaticities\Aromaticity_Example.cs" />
     <Compile Include="Aromaticities\ElectronDonation_Example.cs" />
     <Compile Include="Charges\MMFF94PartialCharges_Example.cs" />
+    <Compile Include="Chem_Example.cs" />
     <Compile Include="Config\AtomTypeFactory_Example.cs" />
     <Compile Include="Config\XMLIsotopeFactory_Example.cs" />
     <Compile Include="Config\ChemicalElement_Example.cs" />
@@ -152,6 +153,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Data\actives_5ht3.sdf.gz">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\input.mol">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="ncdk.snk" />
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +183,19 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="QSAR\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\actives_5ht3.sdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\cnssmarts.sdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\5ht3ligs.sdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

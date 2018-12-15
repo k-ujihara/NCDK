@@ -22,7 +22,6 @@
  */
 
 using NCDK.Beam;
-using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Graphs.Invariant;
 using NCDK.Sgroups;
@@ -119,7 +118,6 @@ namespace NCDK.Smiles
     // @author         John May
     // @cdk.keyword    SMILES, generator
     // @cdk.module     smiles
-    // @cdk.githash
     public sealed class SmilesGenerator
     {
         private readonly SmiFlavors flavour;
@@ -178,40 +176,32 @@ namespace NCDK.Smiles
         }
 
         /// <summary>
-        /// Create a generator for generic SMILES. Generic SMILES are
-        /// non-canonical and useful for storing information when it is not used
-        /// as an index (i.e. unique keys). The generated SMILES is dependant on
-        /// the input order of the atoms.
+        /// A generic SMILES generator.
         /// </summary>
-        /// <returns>a new arbitrary SMILES generator</returns>
-        public static SmilesGenerator Generic()
-        {
-            return new SmilesGenerator(SmiFlavors.Generic);
-        }
+        /// <remarks>
+        /// Generic SMILES are non-canonical and useful for storing information when it is not used
+        /// as an index (i.e. unique keys). The generated SMILES is dependant on the input order of the atoms.
+        /// </remarks>
+        public static SmilesGenerator Generic => new SmilesGenerator(SmiFlavors.Generic);
 
         /// <summary>
-        /// Convenience method for creating an isomeric generator. Isomeric SMILES
-        /// are non-unique but contain isotope numbers (e.g. "[13C]") and
-        /// stereo-chemistry.
+        /// An isomeric SMILES generator.
         /// </summary>
-        /// <returns>a new isomeric SMILES generator</returns>
-        public static SmilesGenerator Isomeric()
-        {
-            return new SmilesGenerator(SmiFlavors.Isomeric);
-        }
+        /// <remarks>
+        /// Isomeric SMILES are non-unique but contain isotope numbers (e.g. "[13C]") and stereo-chemistry.
+        /// </remarks>
+        public static SmilesGenerator Isomeric => new SmilesGenerator(SmiFlavors.Isomeric);
 
         /// <summary>
-        /// Create a unique SMILES generator. Unique SMILES use a fast canonisation
-        /// algorithm but does not encode isotope or stereo-chemistry.
+        /// An Unique SMILES generator
         /// </summary>
-        /// <returns>a new unique SMILES generator</returns>
-        public static SmilesGenerator Unique()
-        {
-            return new SmilesGenerator(SmiFlavors.Unique);
-        }
+        /// <remarks>
+        /// Unique SMILES use a fast canonisation algorithm but does not encode isotope or stereo-chemistry.
+        /// </remarks>
+        public static SmilesGenerator Unique => new SmilesGenerator(SmiFlavors.Unique);
 
         /// <summary>
-        /// Create a absolute SMILES generator. 
+        /// An absolute SMILES generator. 
         /// </summary>
         /// <remarks>
         /// Unique SMILES uses the InChI to
@@ -219,11 +209,7 @@ namespace NCDK.Smiles
         /// module is not a dependency of the SMILES module but should be present
         /// on the path when generation absolute SMILES.
         /// </remarks>
-        /// <returns>a new absolute SMILES generator</returns>
-        public static SmilesGenerator CreateAbsolute()
-        {
-            return new SmilesGenerator(SmiFlavors.Absolute);
-        }
+        public static SmilesGenerator Absolute => new SmilesGenerator(SmiFlavors.Absolute);
 
         /// <summary>
         /// Create a SMILES string for the provided molecule.
@@ -426,37 +412,36 @@ namespace NCDK.Smiles
             var agents = reaction.Agents;
             var products = reaction.Products;
 
-            IAtomContainer reactantPart = reaction.Builder.NewAtomContainer();
-            IAtomContainer agentPart = reaction.Builder.NewAtomContainer();
-            IAtomContainer productPart = reaction.Builder.NewAtomContainer();
+            var reactantPart = reaction.Builder.NewAtomContainer();
+            var agentPart = reaction.Builder.NewAtomContainer();
+            var productPart = reaction.Builder.NewAtomContainer();
 
-            List<Sgroup> sgroups = new List<Sgroup>();
+            var sgroups = new List<Sgroup>();
 
-            foreach (IAtomContainer reactant in reactants)
+            foreach (var reactant in reactants)
             {
                 reactantPart.Add(reactant);
                 SafeAddSgroups(sgroups, reactant);
             }
-            foreach (IAtomContainer agent in agents)
+            foreach (var agent in agents)
             {
                 agentPart.Add(agent);
                 SafeAddSgroups(sgroups, agent);
             }
-            foreach (IAtomContainer product in products)
+            foreach (var product in products)
             {
                 productPart.Add(product);
                 SafeAddSgroups(sgroups, product);
             }
 
-            int[] reactantOrder = new int[reactantPart.Atoms.Count];
-            int[] agentOrder = new int[agentPart.Atoms.Count];
-            int[] productOrder = new int[productPart.Atoms.Count];
+            var reactantOrder = new int[reactantPart.Atoms.Count];
+            var agentOrder = new int[agentPart.Atoms.Count];
+            var productOrder = new int[productPart.Atoms.Count];
 
-            int expectedSize = reactantOrder.Length + agentOrder.Length + productOrder.Length;
+            var expectedSize = reactantOrder.Length + agentOrder.Length + productOrder.Length;
             if (expectedSize != ordering.Length)
             {
-                throw new CDKException("Output ordering array does not have correct amount of space: " + ordering.Length +
-                                       " expected: " + expectedSize);
+                throw new CDKException($"Output ordering array does not have correct amount of space: {ordering.Length} expected: {expectedSize}");
             }
 
             // we need to make sure we generate without the CXSMILES layers
@@ -465,9 +450,9 @@ namespace NCDK.Smiles
                          Create(productPart, flavour & ~SmiFlavors.CxSmilesWithCoords, productOrder);
 
             // copy ordering back to unified array and adjust values
-            int agentBeg = reactantOrder.Length;
-            int agentEnd = reactantOrder.Length + agentOrder.Length;
-            int prodEnd = reactantOrder.Length + agentOrder.Length + productOrder.Length;
+            var agentBeg = reactantOrder.Length;
+            var agentEnd = reactantOrder.Length + agentOrder.Length;
+            var prodEnd = reactantOrder.Length + agentOrder.Length + productOrder.Length;
             System.Array.Copy(reactantOrder, 0, ordering, 0, agentBeg);
             System.Array.Copy(agentOrder, 0, ordering, agentBeg, agentEnd - agentBeg);
             System.Array.Copy(productOrder, 0, ordering, agentEnd, prodEnd - agentEnd);
@@ -891,7 +876,7 @@ namespace NCDK.Smiles
             }
         }
 
-        public static IComparer<IAtom> CreateComparator(IAtomContainer mol, SmiFlavors flavor)
+        static IComparer<IAtom> CreateComparator(IAtomContainer mol, SmiFlavors flavor)
         {
             return new Comparer(mol, flavor);
         }

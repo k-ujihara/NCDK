@@ -95,5 +95,18 @@ namespace NCDK
             var e = mol.Builder.NewSingleElectron(atom);
             mol.SingleElectrons.Add(e);
         }
+
+        /// <summary>
+        /// Add <paramref name="element"/> as <see cref="IAtom"/> to <paramref name="mol"/>.
+        /// </summary>
+        /// <param name="mol">The molecular to add atom.</param>
+        /// <param name="element"><see cref="ChemicalElement"/> to add.</param>
+        /// <returns><see cref="IAtom"/> added.</returns>
+        public static IAtom Add(this IAtomContainer mol, ChemicalElement element)
+        {
+            var atom = mol.Builder.NewAtom(element);
+            mol.Add(atom);
+            return atom;
+        }
     }
 }

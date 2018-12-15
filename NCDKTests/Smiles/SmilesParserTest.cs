@@ -2519,16 +2519,16 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void AtomBasedDbStereo()
         {
-            Assert.AreEqual("F/C=C/F", SmilesGenerator.Isomeric().Create(Load("F[C@H]=[C@@H]F")));
-            Assert.AreEqual("F/C=C\\F", SmilesGenerator.Isomeric().Create(Load("F[C@H]=[C@H]F")));
-            Assert.AreEqual("F/C=C/F", SmilesGenerator.Isomeric().Create(Load("F[C@@H]=[C@H]F")));
-            Assert.AreEqual("F/C=C\\F", SmilesGenerator.Isomeric().Create(Load("F[C@@H]=[C@@H]F")));
+            Assert.AreEqual("F/C=C/F", SmilesGenerator.Isomeric.Create(Load("F[C@H]=[C@@H]F")));
+            Assert.AreEqual("F/C=C\\F", SmilesGenerator.Isomeric.Create(Load("F[C@H]=[C@H]F")));
+            Assert.AreEqual("F/C=C/F", SmilesGenerator.Isomeric.Create(Load("F[C@@H]=[C@H]F")));
+            Assert.AreEqual("F/C=C\\F", SmilesGenerator.Isomeric.Create(Load("F[C@@H]=[C@@H]F")));
         }
 
         [TestMethod()]
         public void AtomBasedDbStereoReversing()
         {
-            Assert.AreEqual("C(\\F)=C\\F", SmilesGenerator.Isomeric().Create(Load("[C@H](F)=[C@@H]F")));
+            Assert.AreEqual("C(\\F)=C\\F", SmilesGenerator.Isomeric.Create(Load("[C@H](F)=[C@@H]F")));
         }
 
         [TestMethod()]

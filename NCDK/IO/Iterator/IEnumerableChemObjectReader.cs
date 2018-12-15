@@ -32,7 +32,6 @@ namespace NCDK.IO.Iterator
     /// </summary>
     /// <seealso cref="IChemObjectIO"/>
     // @cdk.module io
-    // @cdk.githash
     // @author  Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.created 2003-10-19
     public interface IEnumerableChemObjectReader<T> 

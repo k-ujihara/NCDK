@@ -26,9 +26,9 @@ namespace NCDK.Isomorphisms.Matchers
     /// Query bonds can be used to capture types such as "Single or Double" or "Any".
     /// </summary>
     // @cdk.module isomorphism
-    // @cdk.githash
     // @cdk.created 2010-12-16
-    public class QueryBond : Silent.Bond, IQueryBond
+    public class QueryBond
+        : Silent.Bond, IQueryBond
     {
         private readonly IChemObjectBuilder builder;
 

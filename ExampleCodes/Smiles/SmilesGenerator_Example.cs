@@ -27,7 +27,7 @@ namespace NCDK.Smiles
                     sg = new SmilesGenerator(SmiFlavors.Generic);
                     smi = sg.Create(ethanol); // CCO, C(C)O, C(O)C, or OCC
 
-                    sg = SmilesGenerator.Unique();
+                    sg = SmilesGenerator.Unique;
                     smi = sg.Create(ethanol); // only CCO
                     #endregion
 
@@ -99,7 +99,7 @@ namespace NCDK.Smiles
             {
                 #region WithAtomClasses
                 IAtomContainer container = TestMoleculeFactory.MakeAlphaPinene();
-                SmilesGenerator smilesGen = SmilesGenerator.Unique().WithAtomClasses();
+                SmilesGenerator smilesGen = SmilesGenerator.Unique.WithAtomClasses();
                 smilesGen.CreateSMILES(container); // C[CH2:4]O second atom has class = 4
                 #endregion
             }

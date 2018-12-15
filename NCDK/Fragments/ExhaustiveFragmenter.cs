@@ -24,7 +24,6 @@
 using NCDK.Aromaticities;
 using NCDK.Graphs;
 using NCDK.Smiles;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -42,7 +41,6 @@ namespace NCDK.Fragments
     /// </remarks>
     // @author Rajarshi Guha
     // @cdk.module  fragment
-    // @cdk.githash
     // @cdk.keyword fragment
     public class ExhaustiveFragmenter : IFragmenter
     {
@@ -71,7 +69,7 @@ namespace NCDK.Fragments
         {
             this.MinimumFragmentSize = minFragSize;
             fragMap = new Dictionary<string, IAtomContainer>();
-            smilesGenerator = SmilesGenerator.Unique().Aromatic();
+            smilesGenerator = SmilesGenerator.Unique.Aromatic();
         }
 
         /// <summary>
@@ -155,8 +153,8 @@ namespace NCDK.Fragments
         private static List<IBond> GetSplitableBonds(IAtomContainer atomContainer)
         {
             // do ring detection
-            SpanningTree spanningTree = new SpanningTree(atomContainer);
-            IRingSet allRings = spanningTree.GetAllRings();
+            var spanningTree = new SpanningTree(atomContainer);
+            var allRings = spanningTree.GetAllRings();
 
             // find the splitable bonds
             List<IBond> splitableBonds = new List<IBond>();

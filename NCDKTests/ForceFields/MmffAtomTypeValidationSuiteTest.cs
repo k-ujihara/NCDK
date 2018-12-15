@@ -61,7 +61,7 @@ namespace NCDK.ForceFields
                 }
                 try
                 {
-                    mesg = SmilesGenerator.Generic().Aromatic().WithAtomClasses().Create(container);
+                    mesg = SmilesGenerator.Generic.Aromatic().WithAtomClasses().Create(container);
                 }
                 catch (CDKException e)
                 {

@@ -238,31 +238,21 @@ namespace NCDK.Default
             }
         }
 
-        /// <summary>
-        /// The geometric 2D center of the bond.
-        /// </summary>
-        public virtual Vector2 Geometric2DCenter
+        /// <inheritdoc/>
+        public virtual Vector2 GetGeometric2DCenter()
         {
-            get
-            {
-                var x = atoms.Where(n => n != null).Select(n => n.Point2D.Value.X).Average();
-                var y = atoms.Where(n => n != null).Select(n => n.Point2D.Value.Y).Average();
-                return new Vector2(x, y);
-            }
+            var x = atoms.Where(n => n != null).Select(n => n.Point2D.Value.X).Average();
+            var y = atoms.Where(n => n != null).Select(n => n.Point2D.Value.Y).Average();
+            return new Vector2(x, y);
         }
 
-        /// <summary>
-        /// The geometric 3D center of the bond.
-        /// </summary>
-        public virtual Vector3 Geometric3DCenter
+        /// <inheritdoc/>
+        public virtual Vector3 GetGeometric3DCenter()
         {
-            get
-            {
-                var x = atoms.Where(n => n != null).Select(n => n.Point3D.Value.X).Average();
-                var y = atoms.Where(n => n != null).Select(n => n.Point3D.Value.Y).Average();
-                var z = atoms.Where(n => n != null).Select(n => n.Point3D.Value.Z).Average();
-                return new Vector3(x, y, z);
-            }
+            var x = atoms.Where(n => n != null).Select(n => n.Point3D.Value.X).Average();
+            var y = atoms.Where(n => n != null).Select(n => n.Point3D.Value.Y).Average();
+            var z = atoms.Where(n => n != null).Select(n => n.Point3D.Value.Z).Average();
+            return new Vector3(x, y, z);
         }
 
         /// <inheritdoc/>
@@ -662,31 +652,21 @@ namespace NCDK.Silent
             }
         }
 
-        /// <summary>
-        /// The geometric 2D center of the bond.
-        /// </summary>
-        public virtual Vector2 Geometric2DCenter
+        /// <inheritdoc/>
+        public virtual Vector2 GetGeometric2DCenter()
         {
-            get
-            {
-                var x = atoms.Where(n => n != null).Select(n => n.Point2D.Value.X).Average();
-                var y = atoms.Where(n => n != null).Select(n => n.Point2D.Value.Y).Average();
-                return new Vector2(x, y);
-            }
+            var x = atoms.Where(n => n != null).Select(n => n.Point2D.Value.X).Average();
+            var y = atoms.Where(n => n != null).Select(n => n.Point2D.Value.Y).Average();
+            return new Vector2(x, y);
         }
 
-        /// <summary>
-        /// The geometric 3D center of the bond.
-        /// </summary>
-        public virtual Vector3 Geometric3DCenter
+        /// <inheritdoc/>
+        public virtual Vector3 GetGeometric3DCenter()
         {
-            get
-            {
-                var x = atoms.Where(n => n != null).Select(n => n.Point3D.Value.X).Average();
-                var y = atoms.Where(n => n != null).Select(n => n.Point3D.Value.Y).Average();
-                var z = atoms.Where(n => n != null).Select(n => n.Point3D.Value.Z).Average();
-                return new Vector3(x, y, z);
-            }
+            var x = atoms.Where(n => n != null).Select(n => n.Point3D.Value.X).Average();
+            var y = atoms.Where(n => n != null).Select(n => n.Point3D.Value.Y).Average();
+            var z = atoms.Where(n => n != null).Select(n => n.Point3D.Value.Z).Average();
+            return new Vector3(x, y, z);
         }
 
         /// <inheritdoc/>

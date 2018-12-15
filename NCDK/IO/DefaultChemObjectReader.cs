@@ -28,8 +28,8 @@ namespace NCDK.IO
     /// take care of basic stuff, like managing the ReaderListeners.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
-    public abstract class DefaultChemObjectReader : ChemObjectIO, ISimpleChemObjectReader
+    public abstract class DefaultChemObjectReader 
+        : ChemObjectIO, ISimpleChemObjectReader
     {
         /// <summary>
         /// An event to be sent to listeners when a frame is read.

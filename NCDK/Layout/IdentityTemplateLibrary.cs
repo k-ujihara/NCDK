@@ -64,7 +64,7 @@ namespace NCDK.Layout
     {
         private readonly MultiDictionary<string, Vector2[]> templateMap = new MultiDictionary<string, Vector2[]>();
 
-        private readonly SmilesGenerator smigen = SmilesGenerator.Unique();
+        private readonly SmilesGenerator smigen = SmilesGenerator.Unique;
 
         private IdentityTemplateLibrary()
         {

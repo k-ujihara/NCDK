@@ -21,8 +21,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using NCDK.Common.Collections;
-using NCDK.Config;
 using NCDK.Graphs;
 using System;
 using System.Collections;
@@ -31,8 +31,10 @@ using System.Linq;
 namespace NCDK.Aromaticities
 {
     /// <summary>
-    /// Assign a Kekulé representation to the aromatic systems of a compound. Input
-    /// from some file-formats provides some bonds as aromatic / delocalised bond
+    /// Assign a Kekulé representation to the aromatic systems of a compound. 
+    /// </summary>
+    /// <remarks>
+    /// Input from some file-formats provides some bonds as aromatic / delocalised bond
     /// types. This method localises the electrons and assigns single and double
     /// bonds. Different atom and bond orderings may produce distinct but valid
     /// Kekulé forms. Only bond orders are adjusted and any aromatic flags will
@@ -55,7 +57,7 @@ namespace NCDK.Aromaticities
     /// valence. This usually happens when a non-convalent bond has be <i>upgraded</i>
     /// to a sigma bond during format conversion. 
     /// </para>
-    /// </summary>
+    /// </remarks>
     // @author John May
     // @cdk.keyword kekule
     // @cdk.keyword kekulize
@@ -73,7 +75,7 @@ namespace NCDK.Aromaticities
         public static void Kekulize(IAtomContainer ac)
         {
             // storage of pairs of atoms that have pi-bonded
-            Matching matching = Matching.WithCapacity(ac.Atoms.Count);
+            var matching = Matching.WithCapacity(ac.Atoms.Count);
 
             // exract data structures for efficient access
             var atoms = ac.Atoms.ToArray();
@@ -81,7 +83,7 @@ namespace NCDK.Aromaticities
             var graph = GraphUtil.ToAdjList(ac, bonds);
 
             // determine which atoms are available to have a pi bond placed
-            BitArray available = IsAvailable(graph, atoms, bonds);
+            var available = IsAvailable(graph, atoms, bonds);
 
             // attempt to find a perfect matching such that a pi bond is placed
             // next to each available atom. if not found the solution is ambiguous
@@ -96,8 +98,8 @@ namespace NCDK.Aromaticities
             }
             for (int v = BitArrays.NextSetBit(available, 0); v >= 0; v = BitArrays.NextSetBit(available, v + 1))
             {
-                int w = matching.Other(v);
-                IBond bond = bonds[v, w];
+                var w = matching.Other(v);
+                var bond = bonds[v, w];
 
                 // sanity check, something wrong if this happens
                 if (bond.Order.Numeric() > 1)
@@ -107,7 +109,6 @@ namespace NCDK.Aromaticities
                 available.Set(w, false);
             }
         }
-
 
         /// <summary>
         /// Determine the set of atoms that are available to have a double-bond.
@@ -127,9 +128,9 @@ namespace NCDK.Aromaticities
 
                 // preconditions
                 if (atom.FormalCharge == null)
-                    throw new ArgumentException("atom " + (i + 1) + " had unset formal charge");
+                    throw new ArgumentException($"atom {i + 1} had unset formal charge");
                 if (atom.ImplicitHydrogenCount == null)
-                    throw new ArgumentException("atom " + (i + 1) + " had unset implicit hydrogen count");
+                    throw new ArgumentException($"atom {i + 1} had unset implicit hydrogen count");
 
                 if (!atom.IsAromatic)
                     continue;
@@ -150,9 +151,9 @@ namespace NCDK.Aromaticities
                 }
 
                 // check if a pi bond can be assigned
-                int element = atom.AtomicNumber;
-                int charge = atom.FormalCharge.Value;
-                int valence = graph[i].Length + atom.ImplicitHydrogenCount.Value + nPiBonds;
+                var element = atom.AtomicNumber;
+                var charge = atom.FormalCharge.Value;
+                var valence = graph[i].Length + atom.ImplicitHydrogenCount.Value + nPiBonds;
 
                 if (IsAvailable(element, charge, valence))
                 {
@@ -182,21 +183,26 @@ namespace NCDK.Aromaticities
             switch (ChemicalElement.Of(element).AtomicNumber)
             {
                 case 5: // Boron
-                    if (charge == 0 && valence <= 2) return true;
-                    if (charge == -1 && valence <= 3) return true;
+                    if (charge == 0 && valence <= 2)
+                        return true;
+                    if (charge == -1 && valence <= 3)
+                        return true;
                     break;
                 case 6: // Carbon
                 case 14: //  Silicon:
                 case 32: // Germanium:
                 case 50: // Tin:
-                    if (charge == 0 && valence <= 3) return true;
+                    if (charge == 0 && valence <= 3)
+                        return true;
                     break;
                 case 7: // Nitrogen:
                 case 15: // Phosphorus:
                 case 33: // Arsenic:
                 case 51: // Antimony:
-                    if (charge == 0) return valence <= 2 || valence == 4;
-                    if (charge == 1) return valence <= 3;
+                    if (charge == 0)
+                        return valence <= 2 || valence == 4;
+                    if (charge == 1)
+                        return valence <= 3;
                     break;
                 case 8: // Oxygen:
                 case 16: // Sulfur:
@@ -204,8 +210,10 @@ namespace NCDK.Aromaticities
                 case 52: // Tellurium:
                          // valence of three or five are really only for sulphur but
                          // are applied generally to all of group eight for simplicity
-                    if (charge == 0) return valence <= 1 || valence == 3 || valence == 5;
-                    if (charge == 1) return valence <= 2 || valence == 4;
+                    if (charge == 0)
+                        return valence <= 1 || valence == 3 || valence == 5;
+                    if (charge == 1)
+                        return valence <= 2 || valence == 4;
                     break;
                 default:
                     break;

@@ -29,7 +29,6 @@ namespace NCDK.IO.Iterator
     /// take care of basic stuff, like managing the ReaderListeners.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     public abstract class DefaultEnumerableChemObjectReader<T> 
         : ChemObjectIO, IEnumerableChemObjectReader<T> 
         where T : IChemObject
@@ -57,14 +56,17 @@ namespace NCDK.IO.Iterator
         /// <inheritdoc/>
         public void HandleError(string message)
         {
-            if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message);
-            if (this.ReaderMode == ChemObjectReaderMode.Strict) throw new CDKException(message);
+            if (this.ErrorHandler != null)
+                this.ErrorHandler.HandleError(message);
+            if (this.ReaderMode == ChemObjectReaderMode.Strict)
+                throw new CDKException(message);
         }
 
         /// <inheritdoc/>
         public void HandleError(string message, Exception exception)
         {
-            if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message, exception);
+            if (this.ErrorHandler != null)
+                this.ErrorHandler.HandleError(message, exception);
             if (this.ReaderMode == ChemObjectReaderMode.Strict)
             {
                 throw new CDKException(message, exception);
@@ -74,18 +76,19 @@ namespace NCDK.IO.Iterator
         /// <inheritdoc/>
         public void HandleError(string message, int row, int colStart, int colEnd)
         {
-            if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message, row, colStart, colEnd);
-            if (this.ReaderMode == ChemObjectReaderMode.Strict) throw new CDKException(message);
+            if (this.ErrorHandler != null)
+                this.ErrorHandler.HandleError(message, row, colStart, colEnd);
+            if (this.ReaderMode == ChemObjectReaderMode.Strict)
+                throw new CDKException(message);
         }
 
         /// <inheritdoc/>
         public void HandleError(string message, int row, int colStart, int colEnd, Exception exception)
         {
-            if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message, row, colStart, colEnd, exception);
+            if (this.ErrorHandler != null)
+                this.ErrorHandler.HandleError(message, row, colStart, colEnd, exception);
             if (this.ReaderMode == ChemObjectReaderMode.Strict)
-            {
                 throw new CDKException(message, exception);
-            }
         }
 
         public abstract IEnumerator<T> GetEnumerator();

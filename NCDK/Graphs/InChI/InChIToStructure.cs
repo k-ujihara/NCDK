@@ -450,6 +450,11 @@ namespace NCDK.Graphs.InChI
         /// </remarks>
         public IReadOnlyList<ulong> WarningFlags => output.WarningFlags;
 
+        public static InChIToStructure FromInChI(string inchi)
+        {
+            return FromInChI(inchi, CDK.Builder);
+        }
+
         /// <summary>
         /// Gets structure generator for an InChI string.
         /// </summary>

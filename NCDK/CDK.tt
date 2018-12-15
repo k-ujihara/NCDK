@@ -91,6 +91,7 @@ namespace NCDK
         new NC("public", "HydrogenAdder", "Tools.IHydrogenAdder", "Tools.CDKHydrogenAdder.GetInstance()"),
         new NC("internal", "PartialFilledStructureMerger", "StructGen.Stochastic.PartialFilledStructureMerger", "new StructGen.Stochastic.PartialFilledStructureMerger()"),
         new NC("internal", "GasteigerMarsiliPartialCharges", "Charges.GasteigerMarsiliPartialCharges", "new Charges.GasteigerMarsiliPartialCharges()"),
+        new NC("internal", "ReaderFactory", "NCDK.IO.ReaderFactory", "new NCDK.IO.ReaderFactory()"),
     };
 
     public void MakeVar(NC nc)

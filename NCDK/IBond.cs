@@ -30,7 +30,6 @@ namespace NCDK
     /// </summary>
     // @author      egonw
     // @cdk.module interfaces
-    // @cdk.githash
     // @cdk.created 2005-08-24
     // @cdk.keyword bond
     // @cdk.keyword atom
@@ -125,14 +124,14 @@ namespace NCDK
         BondStereo Stereo { get; set; }
 
         /// <summary>
-        /// The geometric 2D center of the bond.
+        /// Calculate the geometric 2D center of the bond.
         /// </summary>
-        Vector2 Geometric2DCenter { get; }
+        Vector2 GetGeometric2DCenter();
 
         /// <summary>
-        /// The geometric 3D center of the bond.
+        /// Calculate the geometric 3D center of the bond.
         /// </summary>
-        Vector3 Geometric3DCenter { get; }
+        Vector3 GetGeometric3DCenter();
 
         /// <summary>
         /// Checks whether a bond is connected to another one. This can only be true if the bonds have an Atom in common.

@@ -31,17 +31,19 @@ namespace NCDK.IO
 {
     /// <summary>
     /// This class is the interface that all IO readers should implement.
+    /// </summary>
+    /// <remarks>
     /// Programs need only care about this interface for any kind of IO.
     /// Currently, database IO and file IO is supported.
     /// 
     /// The easiest way to implement a new <see cref="IChemObjectReader"/> is to
     /// subclass the <see cref="DefaultChemObjectReader"/>.
-    /// </summary>
+    /// </remarks>
     /// <seealso cref="DefaultChemObjectReader"/>
     // @cdk.module  io
-    // @cdk.githash
     // @author Egon Willighagen &gt;egonw&amp;sci.kun.nl&lt; 
-    public interface IChemObjectIO : IDisposable
+    public interface IChemObjectIO
+        : IDisposable
     {
         /// <summary>
         /// Returns the <see cref="IResourceFormat"/> class for this IO class.

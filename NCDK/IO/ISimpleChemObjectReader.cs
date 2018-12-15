@@ -39,9 +39,9 @@ namespace NCDK.IO
     /// </summary>
     /// <seealso cref="DefaultChemObjectReader"/>
     // @cdk.module io
-    // @cdk.githash
     // @author Egon Willighagen <egonw@users.sf.net>
-    public interface ISimpleChemObjectReader : IChemObjectReader
+    public interface ISimpleChemObjectReader 
+        : IChemObjectReader
     {
         /// <summary>
         /// Reads an IChemObject of type "object" from input. The constructor

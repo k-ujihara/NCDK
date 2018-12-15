@@ -164,16 +164,19 @@ namespace NCDK.Aromaticities
         }
 
         /// <summary>
-        /// Apply this aromaticity model to a molecule. Any existing aromaticity
+        /// Apply this aromaticity model to a molecule. 
+        /// </summary>
+        /// <remarks>
+        /// Any existing aromaticity
         /// flags are removed - even if no aromatic bonds were found. This follows
         /// the idea of <i>applying</i> an aromaticity model to a molecule such that
         /// the result is the same irrespective of existing aromatic flags. If you
         /// require aromatic flags to be preserved the <see cref="FindBonds(IAtomContainer)"/>
         /// can be used to find bonds without setting any flags.
-        /// </summary>
         /// <example>
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Aromaticities.Aromaticity_Example.cs+Apply"]/*' />
         /// </example>
+        /// </remarks>
         /// <param name="molecule">the molecule to apply the model to</param>
         /// <returns>the model found the molecule was aromatic</returns>
         public bool Apply(IAtomContainer molecule)

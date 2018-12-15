@@ -217,7 +217,7 @@ namespace NCDK.Fragments
             Assert.AreEqual(f.Count, fc.Count);
             Assert.AreEqual("n1ccccc1Cc2ccccc2", f[0]);
 
-            var sg = SmilesGenerator.Unique().Aromatic();
+            var sg = SmilesGenerator.Unique.Aromatic();
             for (int i = 0; i < f.Count; i++)
             {
                 Aromaticity.CDKLegacy.Apply(fc[i]);
@@ -230,7 +230,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestPirenperone_Bug3088164()
         {
-            var sg = SmilesGenerator.Unique().Aromatic();
+            var sg = SmilesGenerator.Unique.Aromatic();
 
             var mol = smilesParser.ParseSmiles("Fc1ccc(cc1)C(=O)C4CCN(CCC\\3=C(\\N=C2\\C=C/C=C\\N2C/3=O)C)CC4");
             AtomContainerManipulator.ClearAtomConfigurations(mol);
@@ -263,7 +263,7 @@ namespace NCDK.Fragments
         [TestMethod()]
         public void TestIsomoltane_Bug3088164()
         {
-            var sg = SmilesGenerator.Unique().Aromatic();
+            var sg = SmilesGenerator.Unique.Aromatic();
 
             var mol = smilesParser.ParseSmiles("CC(C)NCC(O)COC1=C(C=CC=C1)N1C=CC=C1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);

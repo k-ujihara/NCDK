@@ -36,7 +36,6 @@ namespace NCDK.IO
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.ReaderFactory_Example.cs"]/*' />
     /// </example>
     // @cdk.module io
-    // @cdk.githash
     // @author  Egon Willighagen <egonw@sci.kun.nl>
     // @author  Bradley A. Smith <bradley@baysmith.com>
     public class ReaderFactory
@@ -99,18 +98,18 @@ namespace NCDK.IO
                     }
                     catch (CDKException e1)
                     {
-                        IOException wrapper = new IOException("Exception while setting the Stream: " + e1.Message, e1);
+                        var wrapper = new IOException("Exception while setting the Stream: " + e1.Message, e1);
                         throw wrapper;
                     }
                 }
             }
             else
             {
-                Stream bistream = input;
-                Stream istreamToRead = bistream; // if gzip test fails, then take default
+                var bistream = input;
+                var istreamToRead = bistream; // if gzip test fails, then take default
                                                  //                bistream.Mark(5);
                 int countRead = 0;
-                byte[] abMagic = new byte[4];
+                var abMagic = new byte[4];
                 countRead = bistream.Read(abMagic, 0, 4);
                 bistream.Seek(0, SeekOrigin.Begin);
                 if (countRead == 4)
@@ -131,7 +130,7 @@ namespace NCDK.IO
                     }
                     catch (CDKException e1)
                     {
-                        IOException wrapper = new IOException("Exception while setting the Stream: " + e1.Message, e1);
+                        var wrapper = new IOException("Exception while setting the Stream: " + e1.Message, e1);
                         throw wrapper;
                     }
                 }

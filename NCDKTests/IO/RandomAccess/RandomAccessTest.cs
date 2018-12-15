@@ -20,8 +20,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -34,16 +34,17 @@ namespace NCDK.IO.RandomAccess
     // @author Nina Jeliazkova <nina@acad.bg>
     // @cdk.module test-extra
     [TestClass()]
-    public class RandomAccessTest : CDKTestCase
+    public class RandomAccessTest
+        : CDKTestCase
     {
         [TestMethod()]
         public void Test()
         {
             string path = "NCDK.Data.MDL.test2.sdf";
-            Trace.TraceInformation("Testing: " + path);
+            Trace.TraceInformation($"Testing: {path}");
             using (var ins = ResourceLoader.GetAsStream(path))
             {
-                string f = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".sdf");
+                string f = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid().ToString()}.sdf");
                 try
                 {
                     // copy data to tmp file
@@ -54,27 +55,27 @@ namespace NCDK.IO.RandomAccess
                         output.Write(buf, 0, buf.Length);
                     }
 
-
-                    //System.Console.Out.WriteLine(System.GetProperty("user.dir"));
-                    RandomAccessReader rf = new RandomAccessSDFReader(f, ChemObjectBuilder.Instance);
-                    try
+                    using (var rf = new RandomAccessSDFReader(f))
                     {
                         Assert.AreEqual(6, rf.Count);
 
-                        string[] mdlnumbers = {"MFCD00000387", "MFCD00000661", "MFCD00000662", "MFCD00000663", "MFCD00000664",
-                        "MFCD03453215"};
+                        string[] mdlnumbers =
+                            {
+                                "MFCD00000387",
+                                "MFCD00000661",
+                                "MFCD00000662",
+                                "MFCD00000663",
+                                "MFCD00000664",
+                                "MFCD03453215",
+                            };
                         //reading backwards - just for the test
                         for (int i = rf.Count - 1; i >= 0; i--)
                         {
-                            IChemObject m = rf.ReadRecord(i);
+                            var m = rf[i];
                             Assert.AreEqual(mdlnumbers[i], m.GetProperty<string>("MDLNUMBER"));
                             Assert.IsTrue(m is IAtomContainer);
-                            Assert.IsTrue(((IAtomContainer)m).Atoms.Count > 0);
+                            Assert.IsTrue(m.Atoms.Count > 0);
                         }
-                    }
-                    finally
-                    {
-                        if (rf != null) rf.Close();
                     }
                 }
                 finally

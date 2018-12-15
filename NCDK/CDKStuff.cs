@@ -1,7 +1,30 @@
+/* 
+ * Copyright (C) 2018  Kazuya Ujihara <ujihara.kazuya@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT Any WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace NCDK
@@ -20,6 +43,11 @@ namespace NCDK
                     return new List<TSource>(source);
             }
         }
+
+        private static Dictionary<string, string> TypeNameConvesionMap { get; } = new Dictionary<string, string>()
+        {
+            ["AtomContainer2"] = "AtomContainer",
+        };
 
         private static Dictionary<string, string> PropertyNameConvesionMap { get; } = new Dictionary<string, string>()
         {
@@ -62,7 +90,7 @@ namespace NCDK
             ["Valency"] = "EV",
         };
 
-        private static HashSet<string> SkipList { get; } = new HashSet<string>()
+        private static readonly HashSet<string> listSkips = new HashSet<string>()
         {
             "Begin",
             "Builder",
@@ -78,7 +106,7 @@ namespace NCDK
             "SpaceGroup",
         };
 
-        private static HashSet<string> ChemObjectsList { get; } = new HashSet<string>()
+        private static readonly HashSet<string> listTreatAsChemObjects = new HashSet<string>()
         {
             "Agents",
             "AssociatedAtoms",
@@ -93,6 +121,11 @@ namespace NCDK
             "StereoElements",
         };
 
+        /// <summary>
+        /// Utility method to convert an object especially <see cref="IChemObject"/> to string.
+        /// </summary>
+        /// <param name="obj">The object to convert.</param>
+        /// <returns>The string expression of <paramref name="obj"/></returns>
         public static string ToString(object obj)
         {
             return new StringMaker(obj).ToString();
@@ -100,12 +133,12 @@ namespace NCDK
 
         class StringMaker
         {
-            private readonly List<int> outputtedList;
+            private readonly List<object> outputtedList;
             private readonly object obj;
 
             public StringMaker(object obj, StringMaker parent = null)
             {
-                this.outputtedList = parent == null ? new List<int>() : parent.outputtedList;
+                this.outputtedList = parent == null ? new List<object>() : parent.outputtedList;
                 switch (obj)
                 {
                     case AtomRef o: obj = o.Deref(); break;
@@ -116,12 +149,14 @@ namespace NCDK
 
             public override string ToString()
             {
-                var hashCode = obj.GetHashCode();
-                var twice = outputtedList.Contains(hashCode);
+                var twice = outputtedList.Contains(obj);
                 var sb = new StringBuilder();
-                sb.Append(obj.GetType().Name);
+                string typeName = obj.GetType().Name;
+                if (TypeNameConvesionMap.ContainsKey(typeName))
+                    typeName = TypeNameConvesionMap[typeName];
+                sb.Append(typeName);
                 sb.Append("(");
-                var list = new List<string> { hashCode.ToString() };
+                var list = new List<string> { obj.GetHashCode().ToString() };
                 if (obj is IEnumerable<IChemObject> v)
                 {
                     var count = v.Count();
@@ -137,7 +172,7 @@ namespace NCDK
                 }
                 if (!twice)
                 {
-                    outputtedList.Add(hashCode);
+                    outputtedList.Add(obj);
                     list.AddRange(PropertiesAsStrings(obj));
                 }
                 sb.Append(string.Join(", ", list));
@@ -157,22 +192,78 @@ namespace NCDK
                     return o.ToString();
             }
 
+            interface IA
+            {
+                string Name { get; }
+                object Value { get; }
+                Type PropertyType { get; }
+            }
+
+            class APropertyInfo
+                : IA
+            {
+                private readonly PropertyInfo p;
+                private readonly object obj;
+
+                public APropertyInfo(PropertyInfo p, object obj)
+                {
+                    this.p = p;
+                    this.obj = obj;
+                }
+
+                public string Name => p.Name;
+                public object Value => p.GetValue(obj);
+                public Type PropertyType => p.PropertyType;
+            }
+
+            class ADicProperties
+                : IA
+            {
+                private readonly KeyValuePair<object, object> p;
+                private readonly object obj;
+
+                public ADicProperties(KeyValuePair<object, object> p, object obj)
+                {
+                    this.p = p;
+                    this.obj = obj;
+                }
+
+                public string Name => p.Key.ToString();
+                public object Value => p.Value;
+                public Type PropertyType => Value?.GetType();
+            }
+
+            private IEnumerable<IA> MakeIAs(object obj)
+            {
+                var x = obj.GetType().GetProperties().Select(a => new APropertyInfo(a, obj)).Cast<IA>();
+                if (obj is IChemObject co)
+                {
+                    x = x.Concat(co.GetProperties().Select(a => new ADicProperties(a, obj)));
+                }
+                return x;
+            }
+
             public IEnumerable<string> PropertiesAsStrings(object obj)
             {
-                var type = obj.GetType();
-                foreach (var p in type.GetProperties())
+                var namesFound = new List<string>();
+                foreach (var p in MakeIAs(obj))
                 {
+                    if (namesFound.Contains(p.Name))
+                        continue;
+                    namesFound.Add(p.Name);
                     string str = null;
                     try
                     {
                         var ptype = p.PropertyType;
-                        if (SkipList.Contains(p.Name))
+                        if (ptype == null)
+                            continue;
+                        if (listSkips.Contains(p.Name))
                             continue;
                         if (!PropertyNameConvesionMap.TryGetValue(p.Name, out string name))
                             name = p.Name;
-                        if (ChemObjectsList.Contains(p.Name))
+                        if (listTreatAsChemObjects.Contains(p.Name))
                         {
-                            if (!(p.GetValue(obj) is IEnumerable<IChemObject> v))
+                            if (!(p.Value is IEnumerable<IChemObject> v))
                                 continue;
                             if (v.Count() == 0)
                                 continue;
@@ -182,7 +273,7 @@ namespace NCDK
                         {
                             if (ptype != typeof(string) && typeof(System.Collections.IEnumerable).IsAssignableFrom(ptype))
                                 continue;
-                            var v = p.GetValue(obj);
+                            var v = p.Value;
                             if (v == null)
                                 continue;
                             if (ptype.IsEnum)
@@ -205,12 +296,16 @@ namespace NCDK
                                 }
                             }
                             var sb = new StringBuilder();
-                            sb.Append($"{name}:");
-                            if (ptype == typeof(string))
-                                sb.Append("\"");
-                            sb.Append(ToString(v));
-                            if (ptype == typeof(string))
-                                sb.Append("\"");
+                            sb.Append(name);
+                            if (ptype != typeof(bool))
+                            {
+                                sb.Append(":");
+                                if (ptype == typeof(string))
+                                    sb.Append("\"");
+                                sb.Append(ToString(v));
+                                if (ptype == typeof(string))
+                                    sb.Append("\"");
+                            }
                             str = sb.ToString();
                         }
                     }

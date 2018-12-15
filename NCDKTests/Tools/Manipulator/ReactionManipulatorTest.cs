@@ -286,7 +286,7 @@ namespace NCDK.Tools.Manipulator
             IChemObjectBuilder bldr = ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
             IReaction reaction = smipar.ParseReactionSmiles("CCO.CC(=O)O>[H+]>CCOC(=O)C.O ethyl esterification");
-            SmilesGenerator smigen = SmilesGenerator.Isomeric();
+            SmilesGenerator smigen = SmilesGenerator.Isomeric;
             // convert to molecule
             IAtomContainer mol = ReactionManipulator.ToMolecule(reaction);
             Assert.AreEqual("CCO.CC(=O)O.[H+].CCOC(=O)C.O", smigen.Create(mol));

@@ -950,7 +950,7 @@ namespace NCDK.Tools.Manipulator
             var newAtom = builder.NewAtom("Cl");
             newAtom.ImplicitHydrogenCount = 0;
             AtomContainerManipulator.ReplaceAtomByAtom(mol, mol.Atoms[0], newAtom);
-            Assert.AreEqual("Cl[C@H](CC)O", SmilesGenerator.Isomeric().Create(mol));
+            Assert.AreEqual("Cl[C@H](CC)O", SmilesGenerator.Isomeric.Create(mol));
         }
 
         [TestMethod()]
@@ -1180,7 +1180,7 @@ namespace NCDK.Tools.Manipulator
             SmilesParser smipar = CDK.SmilesParser;
             var m = smipar.ParseSmiles("C[C@H](CC)O");
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(m);
-            Assert.AreEqual("C([C@](C(C([H])([H])[H])([H])[H])(O[H])[H])([H])([H])[H]", SmilesGenerator.Isomeric().Create(m));
+            Assert.AreEqual("C([C@](C(C([H])([H])[H])([H])[H])(O[H])[H])([H])([H])[H]", SmilesGenerator.Isomeric.Create(m));
         }
 
         [TestMethod()]
@@ -1189,7 +1189,7 @@ namespace NCDK.Tools.Manipulator
             SmilesParser smipar = CDK.SmilesParser;
             var m = smipar.ParseSmiles("[S@](=O)(C)CC");
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(m);
-            Assert.AreEqual("[S@](=O)(C([H])([H])[H])C(C([H])([H])[H])([H])[H]", SmilesGenerator.Isomeric().Create(m));
+            Assert.AreEqual("[S@](=O)(C([H])([H])[H])C(C([H])([H])[H])([H])[H]", SmilesGenerator.Isomeric.Create(m));
         }
 
         [TestMethod()]

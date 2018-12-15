@@ -78,7 +78,8 @@ namespace NCDK.IO
     // @cdk.keyword file format, MDL molfile
     // @cdk.keyword file format, SDF
     // @cdk.bug 1587283
-    public class MDLV2000Reader : DefaultChemObjectReader
+    public class MDLV2000Reader 
+        : DefaultChemObjectReader
     {
         TextReader input = null;
 
@@ -401,8 +402,7 @@ namespace NCDK.IO
                     linecount++;
 
                     bonds[i] = ReadBondFast(line, molecule.Builder, atoms, explicitValence, linecount);
-                    hasQueryBonds = hasQueryBonds
-                                 || (bonds[i].Order == BondOrder.Unset && !bonds[i].IsAromatic);
+                    hasQueryBonds = hasQueryBonds || (bonds[i].Order == BondOrder.Unset && !bonds[i].IsAromatic);
                 }
 
                 if (!hasQueryBonds)

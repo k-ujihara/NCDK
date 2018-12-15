@@ -67,7 +67,7 @@ namespace NCDK.Depict
         private readonly SortedDictionary<string, string> disconnectedAbbreviations = new SortedDictionary<string, string>();
         private readonly LinkedHashSet<string> labels = new LinkedHashSet<string>();
         private readonly HashSet<string> disabled = new HashSet<string>();
-        private readonly SmilesGenerator usmigen = SmilesGenerator.Unique();
+        private readonly SmilesGenerator usmigen = SmilesGenerator.Unique;
 
         private readonly SmilesParser smipar = CDK.SmilesParser;
 
@@ -764,7 +764,7 @@ namespace NCDK.Depict
         {
             try
             {
-                var cansmi = SmilesGenerator.Unique().Create(mol);
+                var cansmi = SmilesGenerator.Unique.Create(mol);
                 disconnectedAbbreviations[cansmi] = label;
                 labels.Add(label);
                 return true;

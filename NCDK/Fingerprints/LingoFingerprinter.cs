@@ -43,11 +43,11 @@ namespace NCDK.Fingerprints
     // @cdk.module smiles
     // @cdk.keyword fingerprint
     // @cdk.keyword hologram
-    // @cdk.githash
-    public class LingoFingerprinter : AbstractFingerprinter, IFingerprinter
+    public class LingoFingerprinter 
+        : AbstractFingerprinter, IFingerprinter
     {
         private readonly int n;
-        private readonly SmilesGenerator gen = SmilesGenerator.Unique().Aromatic();
+        private readonly SmilesGenerator gen = SmilesGenerator.Unique.Aromatic();
         private readonly Regex DIGITS = new Regex("[0-9]+", RegexOptions.Compiled);
         private readonly Aromaticity aromaticity = new Aromaticity(ElectronDonation.DaylightModel, Cycles.Or(Cycles.AllSimpleFinder, Cycles.RelevantFinder));
 
@@ -81,7 +81,7 @@ namespace NCDK.Fingerprints
         public override IReadOnlyDictionary<string, int> GetRawFingerprint(IAtomContainer atomContainer)
         {
             aromaticity.Apply(atomContainer);
-            string smiles = ReplaceDigits(gen.Create(atomContainer));
+            var smiles = ReplaceDigits(gen.Create(atomContainer));
             var map = new Dictionary<string, int>();
             for (int i = 0, l = smiles.Length - n + 1; i < l; i++)
             {

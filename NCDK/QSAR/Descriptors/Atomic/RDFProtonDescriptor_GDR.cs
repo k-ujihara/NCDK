@@ -77,7 +77,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                         var goodAtom0P = goodAtom0.Point3D.Value;
                         var goodAtom1P = goodAtom1.Point3D.Value;
 
-                        var middlePoint = theDoubleBond.Geometric3DCenter;
+                        var middlePoint = theDoubleBond.GetGeometric3DCenter();
                         var values = CalculateDistanceBetweenAtomAndBond(atom, theDoubleBond);
 
                         Vector3 aA;
