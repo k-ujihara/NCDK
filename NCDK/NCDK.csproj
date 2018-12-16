@@ -1,26 +1,30 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
-    <RootNamespace>NCDK</RootNamespace>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
-    <Company>Kazuya Ujihara</Company>
-    <Copyright>Copyright © 2016-2018 Kazuya Ujihara</Copyright>
+
     <AssemblyVersion>1.5.0.0</AssemblyVersion>
     <FileVersion>1.5.0.0</FileVersion>
-    <Product>NCDK: Chemistry Development Kit for .NET Framework</Product>
-    <PackageProjectUrl>https://github.com/kazuyaujihara/NCDK</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/kazuyaujihara/NCDK/blob/master/LICENSE</PackageLicenseUrl>
-    <Description>NCDK is C# implementation of The Chemistry Development Kit (CDK), which is an open-source library of algorithms for structural chemo- and bioinformatics.</Description>
     <Version>1.5.0-alpha</Version>
+    <Copyright>Copyright © 2016-2018 Kazuya Ujihara</Copyright>
+
+    <PackageId>NCDK</PackageId>
+    <Product>NCDK: Chemistry Development Kit for .NET Framework</Product>
+    <Description>NCDK is C# implementation of The Chemistry Development Kit (CDK), which is an open-source library of algorithms for structural chemo- and bioinformatics.</Description>
+
+    <PackageTags>cdk cheminformatics chemistry toolkit</PackageTags>
+    <PackageReleaseNotes>This release is based on [cdk 2018-12-08 ](https://github.com/cdk/cdk/tree/a75ec0065e39525a86f7f613ce6a6b0fe24b2d35) snapshot.</PackageReleaseNotes>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+
     <Authors>Kazuya Ujihara</Authors>
+    <Company>Kazuya Ujihara</Company>
     <RepositoryUrl>https://github.com/kazuyaujihara/NCDK</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>cdk cheminformatics chemistry toolkit</PackageTags>
-    <PackageReleaseNotes>This release is based on [cdk Release 2.2](https://github.com/cdk/cdk/tree/f7fe4d5f93f75250c1e29473b8f8f35862b51e0b) snapshot.</PackageReleaseNotes>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <PackageId>NCDK</PackageId>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
+    <RootNamespace>NCDK</RootNamespace>
+    <PackageProjectUrl>https://github.com/kazuyaujihara/NCDK</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/kazuyaujihara/NCDK/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -106,7 +110,6 @@
     <None Remove="Modelings\ForceField\Data\mmff94.prm" />
     <None Remove="Modelings\ForceField\Data\mmffdfsb.par" />
     <None Remove="Modelings\ForceField\Data\mmffvdw.prm" />
-    <None Remove="NCDK.nuspec" />
     <None Remove="NCDK.targets" />
     <None Remove="qsar-descriptors.set" />
     <None Remove="QSAR\Descriptors\Atomic\%24AtomicDescriptor.tt" />
@@ -198,7 +201,7 @@
 
   <ItemGroup>
     <PackageReference Include="dotNetRDF" Version="2.1.0" />
-    <PackageReference Include="MathNet.Numerics.Signed" Version="4.6.0" />
+    <PackageReference Include="MathNet.Numerics.Signed" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>

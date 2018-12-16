@@ -187,7 +187,7 @@ namespace NCDK.Renderers.Generators.Standards
                 }
 
                 int numPrimes = 0;
-            PRIMES:
+
                 while (pos < len)
                 {
                     switch (label[pos])

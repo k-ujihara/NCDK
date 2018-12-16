@@ -1,197 +1,45 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5C750906-0264-482A-8E7D-6C5EB123F53C}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NCDK</RootNamespace>
-    <AssemblyName>NCDKDisplayTests</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
-    <IsCodedUITest>False</IsCodedUITest>
-    <TestProjectType>UnitTest</TestProjectType>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>0612,0618</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>0612,0618</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+    <IsPackable>false</IsPackable>
     <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
+    <RootNamespace>NCDK</RootNamespace>
+    <Authors>Kazuya Ujihara</Authors>
+    <Copyright>Copyright © 2016-2018 Kazuya Ujihara</Copyright>
+    <PackageLicenseUrl>https://github.com/kazuyaujihara/NCDK/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/kazuyaujihara/NCDK</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/kazuyaujihara/NCDK</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;0212;0219;0612;0618</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;0212;0219;0612;0618</NoWarn>
+  </PropertyGroup>
+  
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Core.4.3.1\lib\net45\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Moq, Version=4.10.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\packages\Moq.4.10.0\lib\net45\Moq.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="Moq" Version="4.10.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NCDKDisplay\NCDK.Display.csproj" />
+    <ProjectReference Include="..\NCDK\NCDK.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Presentation" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
-  <Choose>
-    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
-  <ItemGroup>
-    <Compile Include="..\NCDKTests\Templates\TestMoleculeFactory.cs">
-      <Link>Templete\TestMoleculeFactory.cs</Link>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Depict\AbbreviationsTest.cs" />
-    <Compile Include="Depict\SvgDrawVisitorTest.cs" />
-    <Compile Include="Renderers\AtomContainerRendererTest.cs" />
-    <Compile Include="Renderers\BoundsCalculatorTest.cs" />
-    <Compile Include="Renderers\ChemModelRendererTest.cs" />
-    <Compile Include="Renderers\Colors\CDK2DAtomColorsTest.cs" />
-    <Compile Include="Renderers\Colors\CDKAtomColorsTest.cs" />
-    <Compile Include="Renderers\Colors\CPKAtomColorsTest.cs" />
-    <Compile Include="Renderers\Colors\PartialAtomicChargeColorsTest.cs" />
-    <Compile Include="Renderers\Colors\RasmolColorsTest.cs" />
-    <Compile Include="Renderers\Colors\UniColorTest.cs" />
-    <Compile Include="Renderers\Elements\AbstractElementTest.cs" />
-    <Compile Include="Renderers\Elements\ArrowElementTest.cs" />
-    <Compile Include="Renderers\Elements\AtomSymbolElementTest.cs" />
-    <Compile Include="Renderers\Elements\BoundsTest.cs" />
-    <Compile Include="Renderers\Elements\ElementGroupTest.cs" />
-    <Compile Include="Renderers\Elements\GeneralPathTest.cs" />
-    <Compile Include="Renderers\Elements\LineElementTest.cs" />
-    <Compile Include="Renderers\Elements\OvalElementTest.cs" />
-    <Compile Include="Renderers\Elements\RectangleElementTest.cs" />
-    <Compile Include="Renderers\Elements\RingElementTest.cs" />
-    <Compile Include="Renderers\Elements\TextElementTest.cs" />
-    <Compile Include="Renderers\Elements\TextGroupElementTest.cs" />
-    <Compile Include="Renderers\Elements\WedgeLineElementTest.cs" />
-    <Compile Include="Renderers\ElementUtility.cs" />
-    <Compile Include="Renderers\Fonts\AbstractFontManagerTest.cs" />
-    <Compile Include="Renderers\Fonts\WPFFontManagerTest.cs" />
-    <Compile Include="Renderers\Generators\AbstractGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\AtomContainerBoundsGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\AtomMassGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\AtomNumberGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\BasicAtomGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\BasicBondGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\BasicGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\BasicSceneGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\BoundsGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\ExtendedAtomGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\LonePairGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\MappingGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\ProductsBoxGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\RadicalGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\ReactantsBoxGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\ReactionArrowGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\ReactionBoxGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\ReactionPlusGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\ReactionSceneGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\RingGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\Standards\AbbreviationLabelTest.cs" />
-    <Compile Include="Renderers\Generators\Standards\AtomSymbolTest.cs" />
-    <Compile Include="Renderers\Generators\Standards\ConvexHullTest.cs" />
-    <Compile Include="Renderers\Generators\Standards\HydrogenPositionTest.cs" />
-    <Compile Include="Renderers\Generators\Standards\SelectionVisibilityTest.cs" />
-    <Compile Include="Renderers\Generators\Standards\StandardAtomGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\Standards\StandardBondGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\Standards\TextOutlineTest.cs" />
-    <Compile Include="Renderers\Generators\Standards\VecmathUtilTest.cs" />
-    <Compile Include="Renderers\MoleculeSetRendererTest.cs" />
-    <Compile Include="Renderers\ReactionRendererTest.cs" />
-    <Compile Include="Renderers\ReactionSetRendererTest.cs" />
-    <Compile Include="Renderers\RendererModelTest.cs" />
-    <Compile Include="Renderers\SymbolVisibilityTest.cs" />
-    <Compile Include="Renderers\Visitor\AbstractWPFDrawVisitorTest.cs" />
-    <Compile Include="Renderers\Visitor\WPFDrawVisitorTest.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="ncdk.snk" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Renderers\Generators\Parameters\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NCDKDisplay\NCDK.Display.csproj">
-      <Project>{60b8bebc-9968-44a7-ab0b-11c03116579d}</Project>
-      <Name>NCDK.Display</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NCDK\NCDK.csproj">
-      <Project>{b0b5eacf-5f39-42d0-bacd-1ff559ccc8b2}</Project>
-      <Name>NCDK</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Choose>
-    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

@@ -1,18 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5634D0C3-3151-4820-ACEB-7BF02A2F1693}</ProjectGuid>
+    <ProjectGuid>{8E0BEC7D-2EE7-4141-8AD8-C51C8737DDFD}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NCDK</RootNamespace>
     <AssemblyName>ExampleCodes</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -23,7 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>0219, 0612, 0618</NoWarn>
+    <NoWarn>0212;0219;0612;0618</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,10 +47,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>0219, 0612, 0618</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>NCDK.Chem_Example</StartupObject>
+    <NoWarn>0212;0219;0612;0618</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -44,35 +55,40 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>NCDK.Chem_Example</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\NCDKTests\Templates\TestMoleculeFactory.cs">
-      <Link>Templates\TestMoleculeFactory.cs</Link>
-    </Compile>
     <Compile Include="Aromaticities\Aromaticity_Example.cs" />
     <Compile Include="Aromaticities\ElectronDonation_Example.cs" />
     <Compile Include="Charges\MMFF94PartialCharges_Example.cs" />
     <Compile Include="Chem_Example.cs" />
     <Compile Include="Config\AtomTypeFactory_Example.cs" />
-    <Compile Include="Config\XMLIsotopeFactory_Example.cs" />
     <Compile Include="Config\ChemicalElement_Example.cs" />
+    <Compile Include="Config\XMLIsotopeFactory_Example.cs" />
     <Compile Include="ConformerContainer_Example.cs" />
     <Compile Include="Depict\Abbreviations_Example.cs" />
+    <Compile Include="Depict\DepictionGenerator_Example.cs" />
     <Compile Include="Depict\Depiction_Example.cs" />
     <Compile Include="Depict\SvgDrawVisitor_Example.cs" />
-    <Compile Include="Depict\DepictionGenerator_Example.cs" />
     <Compile Include="Fingerprints\FingerprinterTool_Example.cs" />
-    <Compile Include="Fingerprints\ShortestPathFingerprinter_Example.cs" />
-    <Compile Include="Fingerprints\PubchemFingerprinter_Example.cs" />
-    <Compile Include="Fingerprints\HybridizationFingerprinter_Example.cs" />
     <Compile Include="Fingerprints\Fingerprinter_Example.cs" />
+    <Compile Include="Fingerprints\HybridizationFingerprinter_Example.cs" />
+    <Compile Include="Fingerprints\PubchemFingerprinter_Example.cs" />
+    <Compile Include="Fingerprints\ShortestPathFingerprinter_Example.cs" />
     <Compile Include="ForceFields\MmffAtomTypeMatcher_Example.cs" />
     <Compile Include="ForceFields\Mmff_Example.cs" />
     <Compile Include="Formula\FullEnumerationFormulaGenerator_Example.cs" />
@@ -82,25 +98,25 @@
     <Compile Include="Geometries\RDFCalculator_Example.cs" />
     <Compile Include="Graphs\AllCycles_Example.cs" />
     <Compile Include="Graphs\AllPairsShortestPaths_Example.cs" />
+    <Compile Include="Graphs\AtomContainerAtomPermutor_Example.cs" />
+    <Compile Include="Graphs\AtomContainerBondPermutor_Example.cs" />
+    <Compile Include="Graphs\ConnectedComponents_Example.cs" />
+    <Compile Include="Graphs\ConnectivityChecker_Example.cs" />
     <Compile Include="Graphs\Cycles_Example.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Cycles_Example.tt</DependentUpon>
     </Compile>
     <Compile Include="Graphs\GraphUtil_Example.cs" />
-    <Compile Include="Graphs\ConnectivityChecker_Example.cs" />
-    <Compile Include="Graphs\ConnectedComponents_Example.cs" />
-    <Compile Include="Graphs\AtomContainerBondPermutor_Example.cs" />
-    <Compile Include="Graphs\AtomContainerAtomPermutor_Example.cs" />
-    <Compile Include="Graphs\InChI\InChIToStructure_Example.cs" />
     <Compile Include="Graphs\InChI\InChIGenerator_Example.cs" />
+    <Compile Include="Graphs\InChI\InChIToStructure_Example.cs" />
     <Compile Include="Graphs\Invariant\Canon_Example.cs" />
     <Compile Include="Graphs\Invariant\ConjugatedPiSystemsDetector_Example.cs" />
     <Compile Include="Graphs\RelevantCycles_Example.cs" />
     <Compile Include="Graphs\ShortestPaths_Example.cs" />
-    <Compile Include="Groups\PartitionRefinement_Example.cs" />
     <Compile Include="Groups\AtomDiscretePartitionRefiner_Example.cs" />
     <Compile Include="Groups\BondDiscretePartitionRefiner_Example.cs" />
+    <Compile Include="Groups\PartitionRefinement_Example.cs" />
     <Compile Include="Hash\HashGeneratorMaker_Example.cs" />
     <Compile Include="IAtomContainer_Example.cs" />
     <Compile Include="IO\CMLWriter_Example.cs" />
@@ -132,10 +148,10 @@
     <Compile Include="RingSearches\RingSearch_Example.cs" />
     <Compile Include="Signatures\MoleculeSignature_Example.cs" />
     <Compile Include="Similarity\Tanimoto_Example.cs" />
+    <Compile Include="SMARTS\SmartsFragmentExtractor_Example.cs" />
     <Compile Include="Smiles\CDKToBeam_Example.cs" />
     <Compile Include="Smiles\SMARTS\Parser\SMARTSParser_Example.cs" />
     <Compile Include="Smiles\SMARTS\Parser\SmartsQueryVisitor_Example.cs" />
-    <Compile Include="SMARTS\SmartsFragmentExtractor_Example.cs" />
     <Compile Include="Smiles\SMARTS\SmartsPattern_Example.cs" />
     <Compile Include="Smiles\SMARTS\SMARTSQueryTool_Example.cs" />
     <Compile Include="Smiles\SmilesGenerator_Example.cs" />
@@ -148,11 +164,16 @@
     <Compile Include="Tools\CDKHydrogenAdder_Example.cs" />
     <Compile Include="Tools\DataFeatures_Example.cs" />
     <Compile Include="Tools\StructureResonanceGenerator_Example.cs" />
-    <Compile Include="TT\Isotope_Example.cs" />
     <Compile Include="TT\Element_Example.cs" />
+    <Compile Include="TT\Isotope_Example.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Data\5ht3ligs.sdf_cdk.index">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Data\actives_5ht3.sdf.gz">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -162,14 +183,22 @@
     <None Include="ncdk.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Graphs\Cycles_Example.tt">
+    <None Include="Data\5ht3ligs.sdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\actives_5ht3.sdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\cnssmarts.sdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="Graphs\Cycles_Example.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Cycles_Example.tt.cs</LastGenOutput>
-    </None>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NCDKDisplay\NCDK.Display.csproj">
@@ -183,26 +212,19 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="QSAR\" />
+    <Folder Include="Templates\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data\actives_5ht3.sdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\cnssmarts.sdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Data\5ht3ligs.sdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

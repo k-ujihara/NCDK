@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
-xmlns:xi="http://www.w3.org/2001/XInclude"
->
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NCDK.Display</id>
-    <version>1.4.0</version>
+    <version>1.5.0-alpha</version>
     <title>NCDK.Display: Depiction module of NCDK</title>
     <authors>Kazuya Ujihara</authors>
     <owners>kazuya</owners>
@@ -26,7 +24,7 @@ xmlns:xi="http://www.w3.org/2001/XInclude"
     </dependencies>
   </metadata>
   <files>
-    <file src="bin/Release/NCDK.Display.dll" target="lib/net461" />
-    <file src="bin/Release/NCDK.Display.xml" target="lib/net461" />
+    <file src="bin/Release/net461/NCDK.Display.dll" target="lib/net461" />
+    <file src="bin/Release/net461/NCDK.Display.xml" target="lib/net461" />
   </files>
 </package>

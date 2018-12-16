@@ -34,7 +34,7 @@ namespace NCDK.Templates
     /// copy of <see cref="FaulonSignatures.Chemistry.MoleculeFactory"/> for use in tests.
     /// </summary>
     // @cdk.module test-data
-    public static class TestMoleculeFactory
+    internal static class TestMoleculeFactory
     {
         private static IChemObjectBuilder builder = CDK.Builder;
 
