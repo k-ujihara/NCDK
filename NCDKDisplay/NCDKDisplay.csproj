@@ -1,59 +1,52 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon />
     <StartupObject />
     <PackageProjectUrl>https://github.com/kazuyaujihara/NCDK</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/kazuyaujihara/NCDK/blob/master/LICENSE</PackageLicenseUrl>
-    <Copyright>Copyright © 2018 Kazuya Ujihara</Copyright>
+    <Copyright>Copyright © 2016-2018 Kazuya Ujihara</Copyright>
     <PackageId>NCDK.Display</PackageId>
     <Version>1.6.0</Version>
     <Authors>Kazuya Ujihara</Authors>
     <Company>Kazuya Ujihara</Company>
-    <Product>MolViewer</Product>
-    <Description>MOL file viewer, which can depict SMILES. It includes WPF control to show molecular/reaction.</Description>
+    <Product>NCDK.Display: Depiction module of NCDK</Product>
+    <Description>Depiction module of NCDK</Description>
     <RepositoryUrl>https://github.com/kazuyaujihara/NCDK</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>NCDK</RootNamespace>
-
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Prism.Core" Version="7.1.0.431" />
-    <PackageReference Include="Prism.Wpf" Version="7.1.0.431" />
+    <Compile Include="..\NCDK\Properties\InternalVisibles..cs" Link="Properties\InternalVisibles..cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NCDKDisplay\NCDKDisplay.csproj" />
+    <EmbeddedResource Include="Depict\obabel_superatoms.smi" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NCDK\NCDK.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="AppearanceViewModel.tt">
+    <None Update="IncludeExamples.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AppearanceViewModel.tt.cs</LastGenOutput>
+      <LastGenOutput>IncludeExamples.xml</LastGenOutput>
     </None>
-    <None Update="ChemObjectBox_Prop.tt">
+    <None Update="IncludeExamples.xml">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IncludeExamples.tt</DependentUpon>
+    </None>
+    <None Update="Renderers\RendererModelTools.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ChemObjectBox_Prop.tt.cs</LastGenOutput>
+      <LastGenOutput>RendererModelTools.tt.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="AppearanceDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="MolWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 
   <ItemGroup>
@@ -61,15 +54,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="AppearanceViewModel.tt.cs">
+    <Compile Update="Renderers\RendererModelTools.tt.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>AppearanceViewModel.tt</DependentUpon>
-    </Compile>
-    <Compile Update="ChemObjectBox_Prop.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ChemObjectBox_Prop.tt</DependentUpon>
+      <DependentUpon>RendererModelTools.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 
