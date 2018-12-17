@@ -201,7 +201,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NCDKDisplay\NCDK.Display.csproj">
+    <ProjectReference Include="..\NCDK.Display\NCDK.Display.csproj">
       <Project>{60b8bebc-9968-44a7-ab0b-11c03116579d}</Project>
       <Name>NCDK.Display</Name>
     </ProjectReference>

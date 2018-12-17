@@ -6,15 +6,15 @@ dotnet restore
 call :BuildProject NCDK yes
 popd
 
-pushd NCDKDisplay
+pushd NCDK.Display
 call :BuildProject NCDK.Display yes
 popd
 
-pushd NCDKTests
+pushd NCDK.Tests
 call :BuildProject NCDKTests
 popd
 
-pushd NCDKDisplayTests
+pushd NCDK.DisplayTests
 call :BuildProject NCDK.DisplayTests
 popd
 

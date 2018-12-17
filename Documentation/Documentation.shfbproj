@@ -50,10 +50,10 @@
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <MissingTags>AutoDocumentCtors, AutoDocumentDispose</MissingTags>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\NCDKDisplay\bin\Release\net461\NCDK.Display.dll" />
-      <DocumentationSource sourceFile="..\NCDKDisplay\bin\Release\net461\NCDK.Display.xml" />
-      <DocumentationSource sourceFile="..\NCDKDisplay\bin\Release\net461\NCDK.dll" />
-      <DocumentationSource sourceFile="..\NCDKDisplay\bin\Release\net461\NCDK.xml" />
+      <DocumentationSource sourceFile="..\NCDK.Display\bin\Release\net461\NCDK.Display.dll" />
+      <DocumentationSource sourceFile="..\NCDK.Display\bin\Release\net461\NCDK.Display.xml" />
+      <DocumentationSource sourceFile="..\NCDK.Display\bin\Release\net461\NCDK.dll" />
+      <DocumentationSource sourceFile="..\NCDK.Display\bin\Release\net461\NCDK.xml" />
     </DocumentationSources>
     <ProjectSummary>https://github.com/kazuyaujihara/NCDK
 </ProjectSummary>
@@ -159,7 +159,7 @@
     </Tokens>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NCDKDisplay\NCDK.Display.csproj">
+    <ProjectReference Include="..\NCDK.Display\NCDK.Display.csproj">
       <Name>NCDK.Display</Name>
       <Project>{60b8bebc-9968-44a7-ab0b-11c03116579d}</Project>
       <Private>True</Private>

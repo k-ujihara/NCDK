@@ -14,8 +14,8 @@ Most of codes are written in C\#. You can learn NCDK from CDK documents, NCDKTes
 
 * NCDK -- Core module of NCDK
 * NCDK.Display -- Depiction module of NCDK. It is based on WPF.
-* NCDKTests -- Unit tests for NCDK
-* NCDKDisplayTests -- Unit tests for NCDK.Display
+* NCDK.Tests -- Unit tests for NCDK
+* NCDK.DisplayTests -- Unit tests for NCDK.Display
 * MolViewer -- MOL file viewer, which can depict SMILES. It includes WPF control to show molecular/reaction.
 * Documentation -- Sandcastle Help File Builder project
 
@@ -80,10 +80,10 @@ Linux (.NET Core): To build NCDK.dll, launch "dotnet build --framework netstanda
 Test from Command Line
 ---------------------
 
-Windows: Launch "vstest.console.exe NCDKTests\bin\Release\netcoreapp2.1\NCDKTests.dll" and "vstest.console.exe NCDKDisplayTests\bin\Release\NCDKDisplayTests.dll".
+Windows: Launch "vstest.console.exe NCDK.Tests\bin\Release\netcoreapp2.1\NCDK.Tests.dll" and "vstest.console.exe NCDK.DisplayTests\bin\Release\NCDK.DisplayTests.dll".
 
-Linux: Launch "dotnet build" to build assemblies and copy libinchi.so.#.## to output directory of NCDKTests, and make a link of libinchi.so to the libinchi.so.#.##.
-And then, launch "dotnet test" in NCDKTests directory to test it.
+Linux: Launch "dotnet build" to build assemblies and copy libinchi.so.#.## to output directory of NCDK.Tests, and make a link of libinchi.so to the libinchi.so.#.##.
+And then, launch "dotnet test" in NCDK.Tests directory to test it.
 
 NuGet Packages
 --------------
