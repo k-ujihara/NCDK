@@ -27,7 +27,7 @@
       <Argument Key="maxVersionParts" Value="2" />
       <Argument Key="defaultLanguage" Value="cs" />
       <Argument Key="includeEnumValues" Value="false" />
-      <Argument Key="baseSourceCodeUrl" Value="" />
+      <Argument Key="baseSourceCodeUrl" Value="https://github.com/kazuyaujihara/NCDK/tree/master/" />
       <Argument Key="requestExampleUrl" Value="" />
     </TransformComponentArguments>
     <SaveComponentCacheCapacity>0</SaveComponentCacheCapacity>
@@ -124,6 +124,7 @@
     <Folder Include="media" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\VersionHistory\v1.5.0.1.aml" />
     <None Include="Content\VersionHistory\v1.2.0.0.aml" />
     <None Include="Content\VersionHistory\v1.1.0.0.aml" />
     <None Include="Content\VersionHistory\v1.0.0.0.aml" />

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NCDK</id>
-    <version>1.5.0-alpha</version>
+    <version>1.5.0</version>
     <title>NCDK: library of algorithms for structural cheminformatics</title>
     <authors>Kazuya Ujihara</authors>
     <owners>kazuya</owners>
@@ -15,7 +15,7 @@
     <tags>cdk cheminformatics chemistry toolkit</tags>
     <dependencies>
       <dependency id="dotNetRDF" version="2.1.0" />
-      <dependency id="MathNet.Numerics.Signed" version="4.5.0" />
+      <dependency id="MathNet.Numerics.Signed" version="4.7.0" />
     </dependencies>
   </metadata>
   <files>

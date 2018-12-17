@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NCDK.Display</id>
-    <version>1.5.0-alpha</version>
+    <version>1.5.0</version>
     <title>NCDK.Display: Depiction module of NCDK</title>
     <authors>Kazuya Ujihara</authors>
     <owners>kazuya</owners>
@@ -20,7 +20,7 @@
       <frameworkAssembly assemblyName="WindowsBase" />
     </frameworkAssemblies>
     <dependencies>
-      <dependency id="NCDK" version="1.4.0" />
+      <dependency id="NCDK" version="1.5.0" />
     </dependencies>
   </metadata>
   <files>

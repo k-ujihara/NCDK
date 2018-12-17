@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="bb4fe023-dcc8-4325-9925-2f36b1dd4de4" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        Version 1.5.0 was released on 2018-12-18.
+      </para>
+    </introduction>
+
+    <section>
+      <title>Changes in This Release</title>
+      <content>
+        <list class="bullet">
+          <listItem>
+            <para>
+              This release is based on This release is based on
+              <externalLink>
+                <linkText>cdk 2018-12-08 snapshot</linkText>
+                <linkUri>https://github.com/cdk/cdk/tree/a75ec0065e39525a86f7f613ce6a6b0fe24b2d35</linkUri>
+              </externalLink>.
+            </para>
+          </listItem>
+          <listItem>
+            <para>Chem class, utility method collection for quick access to frequently used functions.</para>
+          </listItem>
+          <listItem>
+            <para>QSAR APIs were changed.</para>
+          </listItem>
+        </list>
+      </content>
+    </section>
+
+    <relatedTopics>
+      <link xlink:href="38e429c1-4197-40a9-a1ee-8b5f4c592a1c" />
+    </relatedTopics>
+
+  </developerConceptualDocument>
+</topic>
+

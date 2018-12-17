@@ -9,6 +9,7 @@
     <HelpKeywords>
       <HelpKeyword index="K" term="version, history" />
     </HelpKeywords>
+    <Topic id="bb4fe023-dcc8-4325-9925-2f36b1dd4de4" visible="True" isSelected="true" title="Version 1.5.0" />
     <Topic id="2EF588D9-B863-4828-A7FD-F86B794FE55B" visible="True" title="Version 1.3.1" />
     <Topic id="4DE10F64-7087-4EDD-9982-F0FC13F66841" visible="True" title="Version 1.3.0" />
     <Topic id="f9a2a0d4-b112-4b47-bb74-058769550ffc" visible="True" noFile="true" isExpanded="true" title="Versions 1.0.0 through 1.2.0">
@@ -17,7 +18,7 @@
       <Topic id="397d8d08-1732-4fcb-a0cf-90852c3d3b79" visible="True" />
       <Topic id="3463f77d-eb02-4dd3-bc62-96cd86c87cfd" visible="True" />
       <Topic id="2dc66a5d-2e85-4907-b32e-c005ed6a3c62" visible="True" />
-      <Topic id="5c1f7bab-480e-41fb-b16b-aab842a90ef8" visible="True" isSelected="true" />
+      <Topic id="5c1f7bab-480e-41fb-b16b-aab842a90ef8" visible="True" />
       <Topic id="ce71932b-728b-4efb-b633-b2576df0de36" visible="True" />
     </Topic>
   </Topic>
